@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:penhas/app/design_system/colors.dart';
-import 'package:penhas/app/design_system/logo.dart';
 
 import 'app_controller.dart';
 import 'app_widget.dart';
+import 'shared/design_system/colors.dart';
+import 'shared/design_system/logo.dart';
 
 class AppModule extends MainModule {
   @override
@@ -16,14 +16,7 @@ class AppModule extends MainModule {
   List<Router> get routers => [
         Router(
           '/',
-          child: (_, args) => Scaffold(
-            appBar: _buildAppBar(),
-            body: Center(
-              child: Container(
-                child: Icon(Icons.open_in_browser, size: 200),
-              ),
-            ),
-          ),
+          child: (_, args) => Scaffold(appBar: _buildAppBar()),
         ),
       ];
 
