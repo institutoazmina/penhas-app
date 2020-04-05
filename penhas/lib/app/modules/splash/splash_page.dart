@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/logo.dart';
 import 'splash_controller.dart';
 
 class SplashPage extends StatefulWidget {

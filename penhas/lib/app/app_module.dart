@@ -15,11 +15,8 @@ class AppModule extends MainModule {
         Bind((i) => AuthenticationModule()),
       ];
 
-  // final controller = AppController();
-
   @override
   List<Router> get routers => [
-        // Router(Modular.initialRoute, child: (_, args) => SolliPage()),
         Router('/', module: SplashModule()),
         Router('/authentication', module: AuthenticationModule()),
       ];
