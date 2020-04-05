@@ -6,6 +6,7 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: Modular.navigatorKey,
       title: 'Penhas',
       theme: ThemeData(
         primarySwatch: Colors.blue,
