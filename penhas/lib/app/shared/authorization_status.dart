@@ -1,0 +1,1 @@
+enum AuthorizationStatus { anonymous, authenticated }
