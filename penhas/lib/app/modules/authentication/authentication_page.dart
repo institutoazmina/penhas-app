@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mastodon_dart/mastodon_dart.dart';
+import 'package:penhas/app/shared/design_system/colors.dart';
+import 'package:penhas/app/shared/design_system/logo.dart';
 import 'package:provider/provider.dart';
 import 'package:web_socket_channel/io.dart';
 import 'authentication_controller.dart';
@@ -20,33 +22,123 @@ class _AuthenticationPageState
   //use 'controller' variable to access controller
 
   final instance = Uri.parse("https://mastodon.appcivico.com");
+  bool _passwordVisible = true;
 
   @override
   Widget build(BuildContext context) {
-    return Provider<Mastodon>(
-      create: (_) => Mastodon(
-        instance,
-        websocketFactory: (uri) => IOWebSocketChannel.connect(uri),
-      ),
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          cardTheme: CardTheme(elevation: 0.3),
-          tabBarTheme: TabBarTheme(
-            labelColor: Colors.blue,
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(
+                  'assets/images/background_blur/background_blur.png'),
+              fit: BoxFit.cover),
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: EdgeInsetsDirectional.fromSTEB(16.0, 80.0, 16.0, 8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Icon(DesignSystemLogo.penhasLogo,
+                    color: Colors.white, size: 60),
+                SizedBox(height: 80.0),
+                _buildUserField(),
+                SizedBox(height: 32.0),
+                _buildPasswordField(),
+                SizedBox(height: 32.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      width: 138.0,
+                      height: 40.0,
+                      child: RaisedButton(
+                        onPressed: () {},
+                        elevation: 0,
+                        color: Colors.white,
+                        child: Text("ENTRAR"),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 86.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    RaisedButton(
+                      onPressed: () {},
+                      color: Colors.transparent,
+                      textColor: Colors.white,
+                      child: Text("Esqueci minha senha"),
+                    ),
+                    RaisedButton(
+                      onPressed: () {},
+                      color: Colors.transparent,
+                      textColor: Colors.white,
+                      child: Text("Cadastrar"),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
-        home: AuthScreen(),
       ),
     );
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     title: Text(widget.title),
-    //   ),
-    //   body: Column(
-    //     children: <Widget>[],
-    //   ),
-    // );
+  }
+
+  void _toggle() {
+    setState(() {
+      _passwordVisible = !_passwordVisible;
+    });
+  }
+
+  TextFormField _buildPasswordField() {
+    return TextFormField(
+      obscureText: _passwordVisible,
+      keyboardType: TextInputType.text,
+      autocorrect: false,
+      decoration: InputDecoration(
+        enabledBorder:
+            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
+        focusedBorder:
+            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
+        labelText: "Senha",
+        labelStyle: TextStyle(color: Colors.white),
+        border: OutlineInputBorder(),
+        hintText: "Digite sua senha",
+        hintStyle: TextStyle(color: Colors.white),
+        contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
+        suffixIcon: IconButton(
+          icon: Icon(_passwordVisible ? Icons.visibility_off : Icons.visibility,
+              color: Colors.white70),
+          onPressed: _toggle,
+        ),
+      ),
+    );
+  }
+
+  TextField _buildUserField() {
+    return TextField(
+      keyboardType: TextInputType.emailAddress,
+      autofocus: false,
+      decoration: InputDecoration(
+        enabledBorder:
+            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
+        focusedBorder:
+            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
+        labelText: "Email",
+        labelStyle: TextStyle(color: Colors.white),
+        hintText: "Digite seu email",
+        hintStyle: TextStyle(color: Colors.white),
+        contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
+        border: OutlineInputBorder(),
+      ),
+    );
   }
 }
