@@ -3,6 +3,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
 import 'authentication_controller.dart';
 
+import 'authentication_page.i18n.dart';
+
 class AuthenticationPage extends StatefulWidget {
   final String title;
   const AuthenticationPage({Key key, this.title = "Authentication"})
@@ -54,7 +56,7 @@ class _AuthenticationPageState
                         onPressed: () {},
                         elevation: 0,
                         color: Colors.white,
-                        child: Text("ENTRAR"),
+                        child: Text("ENTRAR".i18n),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)),
                       ),
@@ -69,13 +71,13 @@ class _AuthenticationPageState
                       onPressed: () {},
                       color: Colors.transparent,
                       textColor: Colors.white,
-                      child: Text("Esqueci minha senha"),
+                      child: Text("Esqueci minha senha".i18n),
                     ),
                     RaisedButton(
                       onPressed: () {},
                       color: Colors.transparent,
                       textColor: Colors.white,
-                      child: Text("Cadastrar"),
+                      child: Text("Cadastrar".i18n),
                     ),
                   ],
                 )
@@ -103,10 +105,10 @@ class _AuthenticationPageState
             OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
         focusedBorder:
             OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        labelText: "Senha",
+        labelText: "Senha".i18n,
         labelStyle: TextStyle(color: Colors.white),
         border: OutlineInputBorder(),
-        hintText: "Digite sua senha",
+        hintText: "Digite sua senha".i18n,
         hintStyle: TextStyle(color: Colors.white),
         contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
         suffixIcon: IconButton(
@@ -127,9 +129,9 @@ class _AuthenticationPageState
             OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
         focusedBorder:
             OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        labelText: "Email",
+        labelText: "E-mail".i18n,
         labelStyle: TextStyle(color: Colors.white),
-        hintText: "Digite seu email",
+        hintText: "Digite seu e-mail".i18n,
         hintStyle: TextStyle(color: Colors.white),
         contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
         border: OutlineInputBorder(),
