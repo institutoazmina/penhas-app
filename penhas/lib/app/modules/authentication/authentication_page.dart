@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mastodon_dart/mastodon_dart.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
-import 'package:provider/provider.dart';
-import 'package:web_socket_channel/io.dart';
 import 'authentication_controller.dart';
-import 'mastodon/auth_screen.dart';
 
 class AuthenticationPage extends StatefulWidget {
   final String title;
