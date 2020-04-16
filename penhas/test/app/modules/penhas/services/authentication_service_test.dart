@@ -1,4 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart';
+import 'package:mockito/mockito.dart';
 
 import 'package:penhas/app/modules/penhas/services/authentication_service.dart';
 
@@ -8,8 +13,9 @@ void main() {
   group('AuthenticationService Test', () {
     test("do not call request on initialization", () async {
       final data =
-          await JsonUtil.getJson(from: 'authentication/login_success.json');
-      final httpClient = _HttpClientSpy(response: [data]);
+          await JsonUtil.getString(from: 'authentication/login_success.json');
+      final bodyResponse = Response(data, 200);
+      final httpClient = _HttpClientSpy(response: [bodyResponse]);
       final sut = PenhasAuthenticationService(apiClient: httpClient);
 
       expect(sut, isInstanceOf<PenhasAuthenticationService>());
@@ -18,8 +24,9 @@ void main() {
 
     test("success login with valid parameters", () async {
       final data =
-          await JsonUtil.getJson(from: 'authentication/login_success.json');
-      final httpClient = _HttpClientSpy(response: [data]);
+          await JsonUtil.getString(from: 'authentication/login_success.json');
+      final bodyResponse = Response(data, 200);
+      final httpClient = _HttpClientSpy(response: [bodyResponse]);
       final sut = PenhasAuthenticationService(apiClient: httpClient);
 
       var response =
@@ -28,14 +35,33 @@ void main() {
       expect(response.fakePassword, false);
       expect(response.sessionToken, 'my_strong_password');
     });
+
+    test("failed login with invalid parameters", () async {
+      final data =
+          await JsonUtil.getJson(from: 'authentication/login_failure.json');
+      final bodyResponse = ApiProviderError(data);
+      final httpClient = _HttpClientSpy(response: [bodyResponse]);
+      final sut = PenhasAuthenticationService(apiClient: httpClient);
+
+      expect(
+          () async => await sut.login(
+              email: "user@valid.com", password: 'invalid_password'),
+          throwsA(isA<ApiProviderError>().having(
+            (error) => error.bodyContent,
+            'body content',
+            data,
+          )));
+    });
   });
 }
 
+class MockClient extends Mock implements HttpClient {}
+
 class _HttpClientSpy extends IApiProvider {
   var requestMessages = [];
-  List<Map<String, dynamic>> _stubResponse;
+  List<dynamic> _stubResponse;
 
-  _HttpClientSpy({List<Map<String, dynamic>> response}) {
+  _HttpClientSpy({List<dynamic> response}) {
     if (response == null || response.isEmpty) {
       throw ArgumentError.notNull("response");
     }
@@ -45,6 +71,17 @@ class _HttpClientSpy extends IApiProvider {
 
   @override
   Future<Map<String, dynamic>> request(IRequestBuilder requestBuilder) async {
-    return _stubResponse.removeAt(0);
+    final bodyResponse = _stubResponse.removeAt(0);
+
+    if (bodyResponse is Exception) {
+      throw bodyResponse;
+    }
+
+    if (bodyResponse is Response) {
+      return JsonDecoder().convert(bodyResponse.body);
+    }
+
+    throw ArgumentError.value(bodyResponse,
+        "Invalid argument from _stubResponse, neither Response or Exception");
   }
 }

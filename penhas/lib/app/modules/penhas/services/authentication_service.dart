@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_modular/flutter_modular.dart';
 
 class PenhasAuthenticationService extends Disposable {
@@ -33,3 +35,9 @@ abstract class IApiProvider {
 }
 
 abstract class IRequestBuilder {}
+
+class ApiProviderError implements Exception {
+  final Map<String, dynamic> bodyContent;
+
+  ApiProviderError(this.bodyContent);
+}

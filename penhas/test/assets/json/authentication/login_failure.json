@@ -1,0 +1,6 @@
+{
+  "error": "wrongpassword",
+  "field": "password",
+  "message": "E-mail ou senha inválida.",
+  "reason": "invalid"
+}
