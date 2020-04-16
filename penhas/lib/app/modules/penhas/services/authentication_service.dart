@@ -36,8 +36,8 @@ abstract class IApiProvider {
 
 abstract class IRequestBuilder {}
 
-class ApiProviderError implements Exception {
+class ApiProviderException implements Exception {
   final Map<String, dynamic> bodyContent;
 
-  ApiProviderError(this.bodyContent);
+  ApiProviderException(this.bodyContent);
 }

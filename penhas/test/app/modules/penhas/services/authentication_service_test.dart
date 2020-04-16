@@ -39,14 +39,14 @@ void main() {
     test("failed login with invalid parameters", () async {
       final data =
           await JsonUtil.getJson(from: 'authentication/login_failure.json');
-      final bodyResponse = ApiProviderError(data);
+      final bodyResponse = ApiProviderException(data);
       final httpClient = _HttpClientSpy(response: [bodyResponse]);
       final sut = PenhasAuthenticationService(apiClient: httpClient);
 
       expect(
           () async => await sut.login(
               email: "user@valid.com", password: 'invalid_password'),
-          throwsA(isA<ApiProviderError>().having(
+          throwsA(isA<ApiProviderException>().having(
             (error) => error.bodyContent,
             'body content',
             data,
