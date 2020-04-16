@@ -46,16 +46,10 @@ void main() {
       expect(
           () async => await sut.login(
               email: "user@valid.com", password: 'invalid_password'),
-          throwsA(isA<ApiProviderException>().having(
-            (error) => error.bodyContent,
-            'body content',
-            data,
-          )));
+          throwsA(isA<LoginFormException>()));
     });
   });
 }
-
-class MockClient extends Mock implements HttpClient {}
 
 class _HttpClientSpy extends IApiProvider {
   var requestMessages = [];
