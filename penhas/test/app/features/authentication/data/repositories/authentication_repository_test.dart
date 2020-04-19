@@ -48,18 +48,6 @@ void main() {
       password = Password('_myStrongP4ss@rd');
     });
 
-    test('should check if the device is online', () async {
-      // arrange
-      when(networkInfo.isConnected).thenAnswer((_) async => true);
-      // act
-      repository.signInWithEmailAndPassword(
-        emailAddress: email,
-        password: password,
-      );
-      // assert
-      verify(networkInfo.isConnected);
-    });
-
     group('device is online', () {
       setUp(() async {
         when(networkInfo.isConnected).thenAnswer((_) async => true);
@@ -154,7 +142,11 @@ void main() {
           password: password,
         );
         // assert
-        verifyZeroInteractions(dataSource);
+        verify(dataSource.signInWithEmailAndPassword(
+          emailAddress: email,
+          password: password,
+        ));
+        verify(networkInfo.isConnected);
         expect(result, left(InternetConnectionFailure()));
       });
     });

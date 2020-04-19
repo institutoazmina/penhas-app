@@ -21,27 +21,35 @@ class AuthenticationRepository implements IAuthenticationRepository {
   @override
   Future<Either<Failure, SessionEntity>> signInWithEmailAndPassword(
       {EmailAddress emailAddress, Password password}) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final resultado = await dataSource.signInWithEmailAndPassword(
-          emailAddress: emailAddress,
-          password: password,
-        );
-        return right(resultado);
-      } on ApiProviderException catch (error) {
-        return left(_handleError(error));
-      }
-    } else {
-      return (left(InternetConnectionFailure()));
+    return _mapFromDataSource(
+      emailAddress: emailAddress,
+      password: password,
+    );
+  }
+
+  Future<Either<Failure, SessionEntity>> _mapFromDataSource(
+      {EmailAddress emailAddress, Password password}) async {
+    try {
+      final resultado = await dataSource.signInWithEmailAndPassword(
+        emailAddress: emailAddress,
+        password: password,
+      );
+      return right(resultado);
+    } on ApiProviderException catch (error) {
+      return _handleError(error);
     }
   }
 
-  Failure _handleError(Object error) {
-    if (error is ApiProviderException &&
-        error.bodyContent['error'] == 'wrongpassword') {
-      return UserAuthenticationFailure();
+  Future<Either<Failure, SessionEntity>> _handleError(Object error) async {
+    if (await networkInfo.isConnected == false) {
+      return (left(InternetConnectionFailure()));
     }
 
-    return ServerFailure();
+    if (error is ApiProviderException &&
+        error.bodyContent['error'] == 'wrongpassword') {
+      return left(UserAuthenticationFailure());
+    }
+
+    return left(ServerFailure());
   }
 }
