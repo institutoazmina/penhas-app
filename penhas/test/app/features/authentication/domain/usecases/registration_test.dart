@@ -33,7 +33,7 @@ void main() {
     final fullname = Fullname('Maria da Penha Maia Fernandes');
     final nickName = Nickname('penha');
     final birthday = Birthday('1994-01-01');
-    final race = HumanRace('pardo');
+    final race = HumanRace.brown;
     final genre = Genre.female;
     final successSession = SessionEntity(
       fakePassword: false,

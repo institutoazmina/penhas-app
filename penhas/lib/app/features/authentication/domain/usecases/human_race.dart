@@ -1,26 +1,29 @@
-import 'package:dartz/dartz.dart';
-import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
-import 'package:penhas/app/core/error/failures.dart';
+enum HumanRace {
+  white,
+  black,
+  brown,
+  yellow,
+  indigenous,
+  notDeclared,
+}
 
-@immutable
-class HumanRace extends Equatable {
-  final Either<Failure, String> value;
-
-  factory HumanRace(String input) {
-    return HumanRace._(_validate(input));
-  }
-
-  const HumanRace._(this.value);
-
-  @override
-  List<Object> get props => [value];
-
-  static Either<Failure, String> _validate(String input) {
-    if (input == null || input.isEmpty) {
-      return left(HumanRaceInvalidFailure());
+extension EnumHumanRace on HumanRace {
+  String get rawValue {
+    switch (this) {
+      case HumanRace.white:
+        return 'branco';
+      case HumanRace.brown:
+        return 'pardo';
+      case HumanRace.black:
+        return 'preto';
+      case HumanRace.indigenous:
+        return 'indigena';
+      case HumanRace.yellow:
+        return 'amarelo';
+      case HumanRace.notDeclared:
+        return 'nao_declarado';
+      default:
+        return 'nao_declarado';
     }
-
-    return right(input);
   }
 }
