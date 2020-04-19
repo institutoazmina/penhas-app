@@ -56,12 +56,8 @@ void main() {
       test('should return valid SessionEntity for valid user/password',
           () async {
         // arrange
-        when(
-          dataSource.signInWithEmailAndPassword(
-            emailAddress: anyNamed('emailAddress'),
-            password: anyNamed('password'),
-          ),
-        ).thenAnswer((_) async => sessionModel);
+        mockSignInResponse(dataSource: dataSource)
+            .thenAnswer((_) async => sessionModel);
         // act
         final result = await repository.signInWithEmailAndPassword(
           emailAddress: email,
@@ -79,12 +75,8 @@ void main() {
           'should return server failure when the call to remote server is unsuccessfull',
           () async {
         // arrange
-        when(
-          dataSource.signInWithEmailAndPassword(
-            emailAddress: anyNamed('emailAddress'),
-            password: anyNamed('password'),
-          ),
-        ).thenThrow(ApiProviderException());
+        mockSignInResponse(dataSource: dataSource)
+            .thenThrow(ApiProviderException());
         // act
         final result = await repository.signInWithEmailAndPassword(
           emailAddress: email,
@@ -97,19 +89,14 @@ void main() {
         ));
         expect(result, left(ServerFailure()));
       });
-
       test('should return login failure for unsuccessfull user validation',
           () async {
         // arrange
         final bodyContent =
             await JsonUtil.getJson(from: 'authentication/login_failure.json');
 
-        when(
-          dataSource.signInWithEmailAndPassword(
-            emailAddress: anyNamed('emailAddress'),
-            password: anyNamed('password'),
-          ),
-        ).thenThrow(ApiProviderException(bodyContent: bodyContent));
+        mockSignInResponse(dataSource: dataSource)
+            .thenThrow(ApiProviderException(bodyContent: bodyContent));
         // act
         final result = await repository.signInWithEmailAndPassword(
           emailAddress: email,
@@ -130,12 +117,9 @@ void main() {
       });
 
       test('should return InternetConnectionFailure', () async {
-        when(
-          dataSource.signInWithEmailAndPassword(
-            emailAddress: anyNamed('emailAddress'),
-            password: anyNamed('password'),
-          ),
-        ).thenThrow(ApiProviderException());
+        // arrange
+        mockSignInResponse(dataSource: dataSource)
+            .thenThrow(ApiProviderException());
         // act
         final result = await repository.signInWithEmailAndPassword(
           emailAddress: email,
@@ -151,4 +135,14 @@ void main() {
       });
     });
   });
+}
+
+PostExpectation<dynamic> mockSignInResponse(
+    {dataSource: AuthenticationDataSource}) {
+  return when(
+    dataSource.signInWithEmailAndPassword(
+      emailAddress: anyNamed('emailAddress'),
+      password: anyNamed('password'),
+    ),
+  );
 }

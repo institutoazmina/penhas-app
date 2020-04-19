@@ -35,7 +35,7 @@ class AuthenticationRepository implements IAuthenticationRepository {
         password: password,
       );
       return right(resultado);
-    } on ApiProviderException catch (error) {
+    } catch (error) {
       return _handleError(error);
     }
   }
