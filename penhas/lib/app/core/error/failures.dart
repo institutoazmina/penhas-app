@@ -14,3 +14,15 @@ class UserAndPasswordInvalidFailure extends Failure {}
 class EmailAddressInvalidFailure extends Failure {}
 
 class PasswordInvalidFailure extends Failure {}
+
+class NicknameInvalidFailure extends Failure {}
+
+class CepInvalidFailure extends Failure {}
+
+class CpfInvalidFailure extends Failure {}
+
+class BirthdayInvalidFailure extends Failure {}
+
+class FullnameInvalidFailure extends Failure {}
+
+class HumanRaceInvalidFailure extends Failure {}
