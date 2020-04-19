@@ -135,5 +135,28 @@ void main() {
         expect(result, left(UserAuthenticationFailure()));
       });
     });
+
+    group('device is offline', () {
+      setUp(() async {
+        when(networkInfo.isConnected).thenAnswer((_) async => false);
+      });
+
+      test('should return InternetConnectionFailure', () async {
+        when(
+          dataSource.signInWithEmailAndPassword(
+            emailAddress: anyNamed('emailAddress'),
+            password: anyNamed('password'),
+          ),
+        ).thenThrow(ApiProviderException());
+        // act
+        final result = await repository.signInWithEmailAndPassword(
+          emailAddress: email,
+          password: password,
+        );
+        // assert
+        verifyZeroInteractions(dataSource);
+        expect(result, left(InternetConnectionFailure()));
+      });
+    });
   });
 }

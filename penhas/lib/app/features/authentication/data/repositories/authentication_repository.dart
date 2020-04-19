@@ -21,15 +21,18 @@ class AuthenticationRepository implements IAuthenticationRepository {
   @override
   Future<Either<Failure, SessionEntity>> signInWithEmailAndPassword(
       {EmailAddress emailAddress, Password password}) async {
-    networkInfo.isConnected;
-    try {
-      final resultado = await dataSource.signInWithEmailAndPassword(
-        emailAddress: emailAddress,
-        password: password,
-      );
-      return right(resultado);
-    } on ApiProviderException catch (error) {
-      return left(_handleError(error));
+    if (await networkInfo.isConnected) {
+      try {
+        final resultado = await dataSource.signInWithEmailAndPassword(
+          emailAddress: emailAddress,
+          password: password,
+        );
+        return right(resultado);
+      } on ApiProviderException catch (error) {
+        return left(_handleError(error));
+      }
+    } else {
+      return (left(InternetConnectionFailure()));
     }
   }
 
