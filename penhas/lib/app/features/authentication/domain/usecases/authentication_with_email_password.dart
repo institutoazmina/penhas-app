@@ -6,12 +6,12 @@ import 'package:penhas/app/features/authentication/domain/repositories/i_authent
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
 
-class Authentication {
+class AuthenticationWithEmailAndPassword {
   final IAuthenticationRepository repository;
 
-  Authentication(this.repository);
+  AuthenticationWithEmailAndPassword(this.repository);
 
-  Future<Either<Failure, SessionEntity>> execute({
+  Future<Either<Failure, SessionEntity>> call({
     @required EmailAddress email,
     @required Password password,
   }) async {
