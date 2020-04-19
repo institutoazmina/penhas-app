@@ -24,5 +24,3 @@ class Password extends Equatable {
     return right(input);
   }
 }
-
-class PasswordInvalidFailure extends Failure {}

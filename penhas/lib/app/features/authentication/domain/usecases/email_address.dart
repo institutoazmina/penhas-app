@@ -24,5 +24,3 @@ class EmailAddress extends Equatable {
     return right(input);
   }
 }
-
-class EmailAddressInvalidFailure extends Failure {}

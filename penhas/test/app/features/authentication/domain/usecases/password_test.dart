@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
 
 void main() {
