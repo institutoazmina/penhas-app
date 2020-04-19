@@ -16,6 +16,8 @@ class AuthenticationWithEmailAndPassword {
     @required Password password,
   }) async {
     return await repository.signInWithEmailAndPassword(
-        emailAddress: email, password: password);
+      emailAddress: email,
+      password: password,
+    );
   }
 }

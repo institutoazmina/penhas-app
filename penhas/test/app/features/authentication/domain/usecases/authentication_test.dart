@@ -28,9 +28,9 @@ void main() {
 
     test('should get success response', () async {
       when(mockAuthenticatonRepository.signInWithEmailAndPassword(
-              emailAddress: anyNamed('emailAddress'),
-              password: anyNamed('password')))
-          .thenAnswer((_) async => right(successSession));
+        emailAddress: anyNamed('emailAddress'),
+        password: anyNamed('password'),
+      )).thenAnswer((_) async => right(successSession));
 
       final result = await useCase(email: emailAddress, password: password);
 
