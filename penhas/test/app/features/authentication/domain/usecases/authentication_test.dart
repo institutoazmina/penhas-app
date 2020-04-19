@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/authentication.dart';
@@ -35,6 +36,23 @@ void main() {
           await useCase.execute(email: emailAddress, password: password);
 
       expect(result, right(successSession));
+      verify(mockAuthenticatonRepository.signInWithEmailAndPassword(
+          emailAddress: emailAddress, password: password));
+      verifyNoMoreInteractions(mockAuthenticatonRepository);
+    });
+
+    test(
+        'should get UserAndPasswordInvalidFailure response for invalid user or password',
+        () async {
+      when(mockAuthenticatonRepository.signInWithEmailAndPassword(
+              emailAddress: anyNamed('emailAddress'),
+              password: anyNamed('password')))
+          .thenAnswer((_) async => left(UserAndPasswordInvalidFailure()));
+
+      final result =
+          await useCase.execute(email: emailAddress, password: password);
+
+      expect(result, left(UserAndPasswordInvalidFailure()));
       verify(mockAuthenticatonRepository.signInWithEmailAndPassword(
           emailAddress: emailAddress, password: password));
       verifyNoMoreInteractions(mockAuthenticatonRepository);
