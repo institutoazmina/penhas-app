@@ -34,7 +34,7 @@ void main() {
           await sut.login(email: "user@valid.com", password: 'strong_password');
       expect(response, isInstanceOf<AuthenticationModel>());
       expect(response.fakePassword, false);
-      expect(response.sessionToken, 'my_strong_password');
+      expect(response.sessionToken, 'my_strong_session_token');
     });
 
     test("failed login with invalid parameters", () async {

@@ -1,0 +1,6 @@
+{
+  "error": "email_already_exists",
+  "field": "email",
+  "message": "E-mail já possui uma conta. Por favor, faça o o login, ou utilize a função \"Esqueci minha senha\".",
+  "reason": "duplicate"
+}
