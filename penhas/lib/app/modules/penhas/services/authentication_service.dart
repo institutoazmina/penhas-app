@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:penhas/app/core/error/exceptions.dart';
 
 class PenhasAuthenticationService extends Disposable {
   final IApiProvider apiClient;
@@ -48,11 +49,5 @@ abstract class IApiProvider {
 }
 
 abstract class IRequestBuilder {}
-
-class ApiProviderException implements Exception {
-  final Map<String, dynamic> bodyContent;
-
-  ApiProviderException(this.bodyContent);
-}
 
 class LoginFormException implements Exception {}

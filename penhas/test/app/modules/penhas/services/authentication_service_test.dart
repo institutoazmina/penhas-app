@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:mockito/mockito.dart';
+import 'package:penhas/app/core/error/exceptions.dart';
 
 import 'package:penhas/app/modules/penhas/services/authentication_service.dart';
 
@@ -39,7 +40,7 @@ void main() {
     test("failed login with invalid parameters", () async {
       final data =
           await JsonUtil.getJson(from: 'authentication/login_failure.json');
-      final bodyResponse = ApiProviderException(data);
+      final bodyResponse = ApiProviderException(bodyContent: data);
       final httpClient = _HttpClientSpy(response: [bodyResponse]);
       final sut = PenhasAuthenticationService(apiClient: httpClient);
 
