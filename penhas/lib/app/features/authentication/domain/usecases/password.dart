@@ -7,6 +7,8 @@ import 'package:penhas/app/core/error/failures.dart';
 class Password extends Equatable {
   final Either<Failure, String> value;
 
+  String get rawValue => value.getOrElse(() => null);
+
   factory Password(String input) {
     return Password._(_validate(input));
   }

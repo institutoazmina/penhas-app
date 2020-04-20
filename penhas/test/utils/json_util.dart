@@ -11,4 +11,7 @@ class JsonUtil {
   static Future<String> getString({@required String from}) {
     return File("test/assets/json/$from").readAsString();
   }
+
+  static String getStringSync({@required String from}) =>
+      File("test/assets/json/$from").readAsStringSync();
 }

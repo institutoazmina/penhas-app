@@ -7,6 +7,8 @@ import 'package:penhas/app/core/error/failures.dart';
 class EmailAddress extends Equatable {
   final Either<Failure, String> value;
 
+  String get rawValue => value.getOrElse(() => null);
+
   factory EmailAddress(String input) {
     return EmailAddress._(_validate(input));
   }
