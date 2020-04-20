@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/authentication/data/datasources/authentication_data_source.dart';
+import 'package:penhas/app/features/authentication/data/models/session_model.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
 
@@ -69,6 +70,27 @@ void main() {
           emailAddress: emailAddress, password: password);
       // assert
       verify(mockHttpClient.post(loginUri, headers: headers));
+    });
+
+    test('should return SessionModel when the response code is 200 (success)',
+        () async {
+      // arrange
+      final jsonData =
+          await JsonUtil.getJson(from: 'authentication/login_success.json');
+      final sessionModel = SessionModel.fromJson(jsonData);
+      when(mockHttpClient.post(any, headers: anyNamed('headers'))).thenAnswer(
+        (_) async => http.Response(
+            JsonUtil.getStringSync(from: 'authentication/login_success.json'),
+            200),
+      );
+
+      // act
+      final result = await dataSource.signInWithEmailAndPassword(
+        emailAddress: emailAddress,
+        password: password,
+      );
+      // assert
+      expect(result, sessionModel);
     });
   });
 }

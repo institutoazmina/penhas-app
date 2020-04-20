@@ -52,5 +52,6 @@ class AuthenticationDataSource implements IAuthenticationDataSource {
     );
 
     final response = await apiClient.post(loginUri, headers: headers);
+    return SessionModel.fromJson(json.decode(response.body));
   }
 }
