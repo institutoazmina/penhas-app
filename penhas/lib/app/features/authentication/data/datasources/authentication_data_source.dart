@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
+import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/authentication/data/models/session_model.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
@@ -52,6 +53,11 @@ class AuthenticationDataSource implements IAuthenticationDataSource {
     );
 
     final response = await apiClient.post(loginUri, headers: headers);
-    return SessionModel.fromJson(json.decode(response.body));
+
+    if (response.statusCode == 200) {
+      return SessionModel.fromJson(json.decode(response.body));
+    } else {
+      throw ApiProviderException(bodyContent: json.decode(response.body));
+    }
   }
 }

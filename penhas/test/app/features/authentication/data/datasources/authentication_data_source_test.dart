@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
+import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/authentication/data/datasources/authentication_data_source.dart';
 import 'package:penhas/app/features/authentication/data/models/session_model.dart';
@@ -91,6 +94,24 @@ void main() {
       );
       // assert
       expect(result, sessionModel);
+    });
+
+    test(
+        'should throw ApiProviderException when the response code is nonsuccess (non 200)',
+        () async {
+      final bodyContent =
+          JsonUtil.getStringSync(from: 'authentication/login_failure.json');
+      // arrange
+      when(mockHttpClient.post(any, headers: anyNamed('headers')))
+          .thenAnswer((_) async => http.Response(bodyContent, 400));
+
+      // act
+      final sut = dataSource.signInWithEmailAndPassword;
+      // assert
+      expect(
+          () async => await sut(emailAddress: emailAddress, password: password),
+          throwsA(isA<ApiProviderException>().having((e) => e.bodyContent,
+              'Got bodyContent', json.decode(bodyContent))));
     });
   });
 }
