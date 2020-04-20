@@ -22,6 +22,7 @@ void main() {
   MockApiServerConfigure mockApiServerConfigure;
   EmailAddress emailAddress;
   Password password;
+  Uri serverEndpoint;
 
   setUp(() {
     mockHttpClient = MockHttpClient();
@@ -32,42 +33,64 @@ void main() {
     );
     emailAddress = EmailAddress('valid@email.com');
     password = Password('_veryStr0ngP4ssw@rd');
+    serverEndpoint = Uri.https('api.anyserver.io', '/');
 
     // MockApiServerConfigure configuration
-    when(mockApiServerConfigure.baseUri)
-        .thenAnswer((_) => Uri.https('api.anyserver.io', '/'));
+    when(mockApiServerConfigure.baseUri).thenAnswer((_) => serverEndpoint);
     when(mockApiServerConfigure.userAgent())
         .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
   });
+
+  Future<Map<String, String>> setUpHttpHeader() async {
+    final userAgent = await mockApiServerConfigure.userAgent();
+    return {
+      'User-Agent': userAgent,
+      'Content-Type': 'application/x-www-form-urlencoded'
+    };
+  }
+
+  Future<Map<String, dynamic>> setUpQueryParameters() async {
+    final userAgent = await mockApiServerConfigure.userAgent();
+    return {
+      'app_version': userAgent,
+      'email': emailAddress.rawValue,
+      'senha': password.rawValue,
+    };
+  }
+
+  Future<Uri> setuHttpRequest() async {
+    final queryParameters = await setUpQueryParameters();
+    return Uri(
+      scheme: serverEndpoint.scheme,
+      host: serverEndpoint.host,
+      path: '/login',
+      queryParameters: queryParameters,
+    );
+  }
+
+  void setUpMockHttpClientSuccess200() {
+    final bodyContent =
+        JsonUtil.getStringSync(from: 'authentication/login_success.json');
+    when(mockHttpClient.post(any, headers: anyNamed('headers')))
+        .thenAnswer((_) async => http.Response(bodyContent, 200));
+  }
+
+  void setUpMockHttpClientSuccess400() {
+    final bodyContent =
+        JsonUtil.getStringSync(from: 'authentication/login_failure.json');
+    // arrange
+    when(mockHttpClient.post(any, headers: anyNamed('headers')))
+        .thenAnswer((_) async => http.Response(bodyContent, 400));
+  }
 
   group('AuthenticationDataSource', () {
     test(
         'should perform a POST with parameters and application/x-www-form-urlencoded header',
         () async {
       // arrange
-      when(mockHttpClient.post(any, headers: anyNamed('headers'))).thenAnswer(
-        (_) async => http.Response(
-            JsonUtil.getStringSync(from: 'authentication/login_success.json'),
-            200),
-      );
-
-      final userAgent = await mockApiServerConfigure.userAgent();
-      final queryParameters = {
-        'app_version': userAgent,
-        'email': emailAddress.rawValue,
-        'senha': password.rawValue,
-      };
-      final headers = {
-        'User-Agent': userAgent,
-        'Content-Type': 'application/x-www-form-urlencoded'
-      };
-
-      final loginUri = Uri(
-        scheme: 'https',
-        host: 'api.anyserver.io',
-        path: '/login',
-        queryParameters: queryParameters,
-      );
+      setUpMockHttpClientSuccess200();
+      final headers = await setUpHttpHeader();
+      final loginUri = await setuHttpRequest();
       // act
       await dataSource.signInWithEmailAndPassword(
           emailAddress: emailAddress, password: password);
@@ -81,12 +104,7 @@ void main() {
       final jsonData =
           await JsonUtil.getJson(from: 'authentication/login_success.json');
       final sessionModel = SessionModel.fromJson(jsonData);
-      when(mockHttpClient.post(any, headers: anyNamed('headers'))).thenAnswer(
-        (_) async => http.Response(
-            JsonUtil.getStringSync(from: 'authentication/login_success.json'),
-            200),
-      );
-
+      setUpMockHttpClientSuccess200();
       // act
       final result = await dataSource.signInWithEmailAndPassword(
         emailAddress: emailAddress,
@@ -99,19 +117,17 @@ void main() {
     test(
         'should throw ApiProviderException when the response code is nonsuccess (non 200)',
         () async {
-      final bodyContent =
-          JsonUtil.getStringSync(from: 'authentication/login_failure.json');
       // arrange
-      when(mockHttpClient.post(any, headers: anyNamed('headers')))
-          .thenAnswer((_) async => http.Response(bodyContent, 400));
-
+      final bodyContent =
+          await JsonUtil.getJson(from: 'authentication/login_failure.json');
+      setUpMockHttpClientSuccess400();
       // act
       final sut = dataSource.signInWithEmailAndPassword;
       // assert
       expect(
           () async => await sut(emailAddress: emailAddress, password: password),
-          throwsA(isA<ApiProviderException>().having((e) => e.bodyContent,
-              'Got bodyContent', json.decode(bodyContent))));
+          throwsA(isA<ApiProviderException>()
+              .having((e) => e.bodyContent, 'Got bodyContent', bodyContent)));
     });
   });
 }
