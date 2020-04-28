@@ -21,7 +21,7 @@ void main() {
   });
 
   group('SignInController', () {
-    test("should show error message for invalid email address", () {
+    test("should show warning message for invalid email address", () {
       // arrange
       var invalidEmailAddress = 'myaddress';
       // act
@@ -30,7 +30,19 @@ void main() {
       expect(sut.invalidEmailAddress, 'Endereço de email inválido');
     });
 
-    test('should show error message for a invalid password', () {
+    test("should reset warning message after user input valid email address",
+        () {
+      // arrange
+      var invalidEmailAddress = 'myaddress';
+      var validEmailAddress = 'my_email@app.com';
+      // act
+      sut.setEmail(invalidEmailAddress);
+      sut.setEmail(validEmailAddress);
+      // assert
+      expect(sut.invalidEmailAddress, '');
+    });
+
+    test('should show warning message for a invalid password', () {
       // arrange
       var invalidPassword = '';
       // act
@@ -38,6 +50,17 @@ void main() {
       // assert
       expect(sut.invalidPassword,
           'Senha inválido, favor informar uma senha válida');
+    });
+
+    test('should reset warning message after user input a valid password', () {
+      // arrange
+      var invalidPassword = '';
+      var validPassword = 'sTr0ng';
+      // act
+      sut.setPassword(invalidPassword);
+      sut.setPassword(validPassword);
+      // assert
+      expect(sut.invalidPassword, '');
     });
   });
 }

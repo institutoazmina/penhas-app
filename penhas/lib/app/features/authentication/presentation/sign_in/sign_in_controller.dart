@@ -31,6 +31,8 @@ abstract class _SignInControllerBase with Store {
 
     if (_emailAddress.value.isLeft()) {
       invalidEmailAddress = "Endereço de email inválido".i18n;
+    } else {
+      invalidEmailAddress = "";
     }
   }
 
@@ -40,6 +42,8 @@ abstract class _SignInControllerBase with Store {
 
     if (_password.value.isLeft()) {
       invalidPassword = "Senha inválido, favor informar uma senha válida".i18n;
+    } else {
+      invalidPassword = "";
     }
   }
 }
