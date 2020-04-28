@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
@@ -54,7 +55,7 @@ class AuthenticationDataSource implements IAuthenticationDataSource {
 
     final response = await apiClient.post(loginUri, headers: headers);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       return SessionModel.fromJson(json.decode(response.body));
     } else {
       throw ApiProviderException(bodyContent: json.decode(response.body));

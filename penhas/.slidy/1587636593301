@@ -1,0 +1,5 @@
+lib/app/features/authentication/presentation/sign_in/sign_in_module.dart
+lib/app/features/authentication/presentation/sign_in/sign_in_page.dart
+test/app/features/authentication/presentation/sign_in/sign_in_page_test.dart
+lib/app/features/authentication/presentation/sign_in/sign_in_controller.dart
+test/app/features/authentication/presentation/sign_in/sign_in_controller_test.dart
