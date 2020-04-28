@@ -18,19 +18,22 @@ void main() {
       test(
         'should get PasswordInvalidFailure for empty password',
         () {
-          var result = Password("").value;
+          var result = Password("");
 
-          expect(result, left(PasswordInvalidFailure()));
+          expect(result.value, left(PasswordInvalidFailure()));
+          expect(result.isValid, false);
+          expect(result.rawValue, null);
         },
       );
-
       test(
         'should get value from a valid password',
         () {
           var validPassword = "_myStrongP4ss@rd";
-          var result = Password(validPassword).value;
+          var result = Password(validPassword);
 
-          expect(result, right(validPassword));
+          expect(result.value, right(validPassword));
+          expect(result.isValid, true);
+          expect(result.rawValue, validPassword);
         },
       );
     },

@@ -62,5 +62,27 @@ void main() {
       // assert
       expect(sut.invalidPassword, '');
     });
+
+    test('should be false actived for invalid password and/or email', () {
+      // arrange
+      var invalidEmailAddress = 'myaddress';
+      var invalidPassword = '';
+      // act
+      sut.setPassword(invalidPassword);
+      sut.setEmail(invalidEmailAddress);
+      // assert
+      expect(sut.hasValidEmailAndPassword, false);
+    });
+
+    test('should be true actived for valid password and/or email', () {
+      // arrange
+      var validPassword = 'sTr0ng';
+      var validEmailAddress = 'my_email@app.com';
+      // act
+      sut.setPassword(validPassword);
+      sut.setEmail(validEmailAddress);
+      // assert
+      expect(sut.hasValidEmailAndPassword, true);
+    });
   });
 }

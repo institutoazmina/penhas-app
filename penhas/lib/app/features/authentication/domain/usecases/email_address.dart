@@ -9,6 +9,7 @@ class EmailAddress extends Equatable {
   final Either<Failure, String> value;
 
   String get rawValue => value.getOrElse(() => null);
+  bool get isValid => value.isRight();
 
   factory EmailAddress(String input) {
     return EmailAddress._(_validate(input));

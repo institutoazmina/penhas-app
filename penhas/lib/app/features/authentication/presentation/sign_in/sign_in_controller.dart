@@ -25,6 +25,10 @@ abstract class _SignInControllerBase with Store {
   @observable
   String invalidPassword = "";
 
+  @computed
+  bool get hasValidEmailAndPassword =>
+      _emailAddress.isValid && _password.isValid;
+
   @action
   void setEmail(String address) {
     _emailAddress = EmailAddress(address);

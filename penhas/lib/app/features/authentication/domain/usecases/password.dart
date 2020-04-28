@@ -8,6 +8,7 @@ class Password extends Equatable {
   final Either<Failure, String> value;
 
   String get rawValue => value.getOrElse(() => null);
+  bool get isValid => value.isRight();
 
   factory Password(String input) {
     return Password._(_validate(input));
