@@ -29,5 +29,15 @@ void main() {
       // assert
       expect(sut.invalidEmailAddress, 'Endereço de email inválido');
     });
+
+    test('should show error message for a invalid password', () {
+      // arrange
+      var invalidPassword = '';
+      // act
+      sut.setPassword(invalidPassword);
+      // assert
+      expect(sut.invalidPassword,
+          'Senha inválido, favor informar uma senha válida');
+    });
   });
 }
