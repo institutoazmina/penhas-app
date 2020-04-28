@@ -25,6 +25,15 @@ void main() {
       );
 
       test(
+        'should get EmailAddressInvalidFailure for invalid email address',
+        () {
+          var result = EmailAddress("ola_mundo").value;
+
+          expect(result, left(EmailAddressInvalidFailure()));
+        },
+      );
+
+      test(
         'should get value from a valid email address',
         () {
           var validEmailAddress = "test@g.com";

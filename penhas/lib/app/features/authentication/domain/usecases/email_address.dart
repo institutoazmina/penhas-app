@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -19,7 +20,7 @@ class EmailAddress extends Equatable {
   List<Object> get props => [value];
 
   static Either<Failure, String> _validate(String input) {
-    if (input == null || input.isEmpty) {
+    if (input == null || EmailValidator.validate(input) == false) {
       return left(EmailAddressInvalidFailure());
     }
 
