@@ -4,8 +4,8 @@ import 'package:mockito/mockito.dart';
 import 'package:penhas/app/features/authentication/data/repositories/authentication_repository.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_controller.dart';
 
-class MockAuthenticatonRepository extends AuthenticationRepository
-    implements Mock {}
+class MockAuthenticatonRepository extends Mock
+    implements AuthenticationRepository {}
 
 void main() {
   // initModule(SignInModule());
@@ -21,13 +21,20 @@ void main() {
   });
 
   group('SignInController', () {
+    test('should warning messages be empty on start', () {
+      // assert
+      expect(sut.invalidPassword, "");
+      expect(sut.invalidEmailAddress, "");
+    });
+
     test("should show warning message for invalid email address", () {
+      expect(sut.invalidEmailAddress, "");
       // arrange
       var invalidEmailAddress = 'myaddress';
       // act
       sut.setEmail(invalidEmailAddress);
       // assert
-      expect(sut.invalidEmailAddress, 'Endereço de email inválido');
+      expect(sut.invalidEmailAddress, WARNING_INVALID_EMAIL);
     });
 
     test("should reset warning message after user input valid email address",
@@ -48,8 +55,7 @@ void main() {
       // act
       sut.setPassword(invalidPassword);
       // assert
-      expect(sut.invalidPassword,
-          'Senha inválido, favor informar uma senha válida');
+      expect(sut.invalidPassword, WARNING_INVALID_PASSWORD);
     });
 
     test('should reset warning message after user input a valid password', () {
@@ -63,7 +69,9 @@ void main() {
       expect(sut.invalidPassword, '');
     });
 
-    test('should be false actived for invalid password and/or email', () {
+    test(
+        'should hasValidEmailAndPassword be false for invalid password and/or email',
+        () {
       // arrange
       var invalidEmailAddress = 'myaddress';
       var invalidPassword = '';
@@ -74,7 +82,13 @@ void main() {
       expect(sut.hasValidEmailAndPassword, false);
     });
 
-    test('should be true actived for valid password and/or email', () {
+    test('should hasValidEmailAndPassword be false for on start', () {
+      expect(sut.hasValidEmailAndPassword, false);
+    });
+
+    test(
+        'should hasValidEmailAndPassword be true for valid password and/or email',
+        () {
       // arrange
       var validPassword = 'sTr0ng';
       var validEmailAddress = 'my_email@app.com';
@@ -84,5 +98,35 @@ void main() {
       // assert
       expect(sut.hasValidEmailAndPassword, true);
     });
+
+    test("should validate inputs before hits repository", () async {
+      // arrange
+      when(mock.signInWithEmailAndPassword(
+        emailAddress: anyNamed('emailAddress'),
+        password: anyNamed('password'),
+      )).thenThrow(UnimplementedError());
+
+      // act
+      await sut.login();
+      // assert
+      // verify(mockAuthenticatonRepository.signInWithEmailAndPassword(
+      // emailAddress: emailAddress, password: password));
+      // verifyNoMoreInteractions(mockAuthenticatonRepository);
+
+      verifyZeroInteractions(mock);
+      // expect(sut.serverErrorMessage, '');
+    });
+
+    // test("should validate inputs before hits repository", () async {
+    //   // arrange
+    //   var validPassword = 'sTr0ng';
+    //   var validEmailAddress = 'my_email@app.com';
+    //   // act
+    //   sut.setPassword(validPassword);
+    //   sut.setEmail(validEmailAddress);
+    //   await sut.login();
+    //   // assert
+    //   // expect(sut.serverErrorMessage, '');
+    // });
   });
 }

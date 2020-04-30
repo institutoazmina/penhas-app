@@ -19,6 +19,12 @@ class AuthenticationRepository implements IAuthenticationRepository {
   });
 
   @override
+
+  ///
+  /// Failure :
+  ///   * UserAuthenticationFailure
+  ///   * InternetConnectionFailure
+  ///   * ServerFailure
   Future<Either<Failure, SessionEntity>> signInWithEmailAndPassword(
       {EmailAddress emailAddress, Password password}) async {
     return _mapFromDataSource(
