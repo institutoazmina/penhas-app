@@ -11,6 +11,8 @@ part 'sign_in_controller.g.dart';
 const String WARNING_INVALID_EMAIL = 'Endereço de email inválido';
 const String WARNING_INVALID_PASSWORD =
     'Senha inválido, favor informar uma senha válida';
+const String ERROR_SERVER_FAILURE =
+    "O servidor está com problema neste momento, tente novamente.";
 
 class SignInController extends _SignInControllerBase with _$SignInController {
   SignInController(IAuthenticationRepository repository) : super(repository);
@@ -24,10 +26,13 @@ abstract class _SignInControllerBase with Store {
   _SignInControllerBase(this.repository);
 
   @observable
-  String invalidEmailAddress = "";
+  String warningEmail = "";
 
   @observable
-  String invalidPassword = "";
+  String warningPassword = "";
+
+  @observable
+  String errorMessage = "";
 
   @computed
   bool get hasValidEmailAndPassword =>
@@ -37,7 +42,7 @@ abstract class _SignInControllerBase with Store {
   void setEmail(String address) {
     _emailAddress = EmailAddress(address);
 
-    invalidEmailAddress = _emailAddress.value.fold(
+    warningEmail = _emailAddress.value.fold(
       (failure) => WARNING_INVALID_EMAIL,
       (_) => "",
     );
@@ -47,7 +52,7 @@ abstract class _SignInControllerBase with Store {
   void setPassword(String password) {
     _password = Password(password);
 
-    invalidPassword = _password.value.fold(
+    warningPassword = _password.value.fold(
       (failure) => WARNING_INVALID_PASSWORD,
       (_) => "",
     );
@@ -60,6 +65,21 @@ abstract class _SignInControllerBase with Store {
     }
 
     var foo = await repository.signInWithEmailAndPassword(
-        emailAddress: _emailAddress, password: _password);
+      emailAddress: _emailAddress,
+      password: _password,
+    );
+
+    foo.fold((failure) => _mapFailureToMessage(failure), (session) => "");
+  }
+
+  void _mapFailureToMessage(Failure failure) {
+    switch (failure.runtimeType) {
+      case ServerFailure:
+        errorMessage = ERROR_SERVER_FAILURE;
+
+        break;
+      default:
+        throw UnsupportedError;
+    }
   }
 }

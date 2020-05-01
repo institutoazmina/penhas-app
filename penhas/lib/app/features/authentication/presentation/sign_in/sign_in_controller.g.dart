@@ -16,42 +16,56 @@ mixin _$SignInController on _SignInControllerBase, Store {
           Computed<bool>(() => super.hasValidEmailAndPassword))
       .value;
 
-  final _$invalidEmailAddressAtom =
-      Atom(name: '_SignInControllerBase.invalidEmailAddress');
+  final _$warningEmailAtom = Atom(name: '_SignInControllerBase.warningEmail');
 
   @override
-  String get invalidEmailAddress {
-    _$invalidEmailAddressAtom.context
-        .enforceReadPolicy(_$invalidEmailAddressAtom);
-    _$invalidEmailAddressAtom.reportObserved();
-    return super.invalidEmailAddress;
+  String get warningEmail {
+    _$warningEmailAtom.context.enforceReadPolicy(_$warningEmailAtom);
+    _$warningEmailAtom.reportObserved();
+    return super.warningEmail;
   }
 
   @override
-  set invalidEmailAddress(String value) {
-    _$invalidEmailAddressAtom.context.conditionallyRunInAction(() {
-      super.invalidEmailAddress = value;
-      _$invalidEmailAddressAtom.reportChanged();
-    }, _$invalidEmailAddressAtom,
-        name: '${_$invalidEmailAddressAtom.name}_set');
+  set warningEmail(String value) {
+    _$warningEmailAtom.context.conditionallyRunInAction(() {
+      super.warningEmail = value;
+      _$warningEmailAtom.reportChanged();
+    }, _$warningEmailAtom, name: '${_$warningEmailAtom.name}_set');
   }
 
-  final _$invalidPasswordAtom =
-      Atom(name: '_SignInControllerBase.invalidPassword');
+  final _$warningPasswordAtom =
+      Atom(name: '_SignInControllerBase.warningPassword');
 
   @override
-  String get invalidPassword {
-    _$invalidPasswordAtom.context.enforceReadPolicy(_$invalidPasswordAtom);
-    _$invalidPasswordAtom.reportObserved();
-    return super.invalidPassword;
+  String get warningPassword {
+    _$warningPasswordAtom.context.enforceReadPolicy(_$warningPasswordAtom);
+    _$warningPasswordAtom.reportObserved();
+    return super.warningPassword;
   }
 
   @override
-  set invalidPassword(String value) {
-    _$invalidPasswordAtom.context.conditionallyRunInAction(() {
-      super.invalidPassword = value;
-      _$invalidPasswordAtom.reportChanged();
-    }, _$invalidPasswordAtom, name: '${_$invalidPasswordAtom.name}_set');
+  set warningPassword(String value) {
+    _$warningPasswordAtom.context.conditionallyRunInAction(() {
+      super.warningPassword = value;
+      _$warningPasswordAtom.reportChanged();
+    }, _$warningPasswordAtom, name: '${_$warningPasswordAtom.name}_set');
+  }
+
+  final _$errorMessageAtom = Atom(name: '_SignInControllerBase.errorMessage');
+
+  @override
+  String get errorMessage {
+    _$errorMessageAtom.context.enforceReadPolicy(_$errorMessageAtom);
+    _$errorMessageAtom.reportObserved();
+    return super.errorMessage;
+  }
+
+  @override
+  set errorMessage(String value) {
+    _$errorMessageAtom.context.conditionallyRunInAction(() {
+      super.errorMessage = value;
+      _$errorMessageAtom.reportChanged();
+    }, _$errorMessageAtom, name: '${_$errorMessageAtom.name}_set');
   }
 
   final _$signInWithEmailAndPasswordPressedAsyncAction =
@@ -89,7 +103,7 @@ mixin _$SignInController on _SignInControllerBase, Store {
   @override
   String toString() {
     final string =
-        'invalidEmailAddress: ${invalidEmailAddress.toString()},invalidPassword: ${invalidPassword.toString()},hasValidEmailAndPassword: ${hasValidEmailAndPassword.toString()}';
+        'warningEmail: ${warningEmail.toString()},warningPassword: ${warningPassword.toString()},errorMessage: ${errorMessage.toString()},hasValidEmailAndPassword: ${hasValidEmailAndPassword.toString()}';
     return '{$string}';
   }
 }
