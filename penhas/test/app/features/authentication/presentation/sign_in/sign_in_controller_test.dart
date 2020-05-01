@@ -117,9 +117,9 @@ void main() {
       verifyZeroInteractions(mock);
     });
 
-    test("should show SERVER_FAILURE message when got ServerFailure", () async {
+    void testServerError(Failure failure, String errorMessage) async {
       // arrange
-      mockAuthenticationFailure(ServerFailure());
+      mockAuthenticationFailure(failure);
       var validPassword = 'sTr0ng';
       var validEmailAddress = 'my_email@app.com';
       // act
@@ -127,11 +127,20 @@ void main() {
       sut.setEmail(validEmailAddress);
       await sut.signInWithEmailAndPasswordPressed();
       // assert
-      expect(sut.errorMessage, ERROR_SERVER_FAILURE);
+      expect(sut.errorMessage, errorMessage);
+    }
+
+    test("should show SERVER_FAILURE message when got ServerFailure", () async {
+      testServerError(ServerFailure(), ERROR_SERVER_FAILURE);
+    });
+
+    test(
+        "should show ERROR_INTERNET_CONNECTION_FAILURE message when got ServerFailure",
+        () async {
+      testServerError(
+          InternetConnectionFailure(), ERROR_INTERNET_CONNECTION_FAILURE);
     });
   });
 }
 
 ///   * UserAuthenticationFailure
-///   * InternetConnectionFailure
-///   * ServerFailure

@@ -13,6 +13,8 @@ const String WARNING_INVALID_PASSWORD =
     'Senha inválido, favor informar uma senha válida';
 const String ERROR_SERVER_FAILURE =
     "O servidor está com problema neste momento, tente novamente.";
+const String ERROR_INTERNET_CONNECTION_FAILURE =
+    "O servidor está inacessível, o PenhaS está com acesso à Internet?";
 
 class SignInController extends _SignInControllerBase with _$SignInController {
   SignInController(IAuthenticationRepository repository) : super(repository);
@@ -76,7 +78,9 @@ abstract class _SignInControllerBase with Store {
     switch (failure.runtimeType) {
       case ServerFailure:
         errorMessage = ERROR_SERVER_FAILURE;
-
+        break;
+      case InternetConnectionFailure:
+        errorMessage = ERROR_INTERNET_CONNECTION_FAILURE;
         break;
       default:
         throw UnsupportedError;
