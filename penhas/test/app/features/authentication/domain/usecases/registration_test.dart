@@ -64,8 +64,7 @@ void main() {
             genre: genre);
       }
 
-      test('should get success session', () async {
-        // arrange
+      void mockRepositoryRegister(Either<Failure, SessionEntity> answer) {
         when(repository.signup(
           emailAddress: anyNamed('emailAddress'),
           password: anyNamed('password'),
@@ -76,63 +75,42 @@ void main() {
           birthday: anyNamed('birthday'),
           genre: anyNamed('genre'),
           race: anyNamed('race'),
-        )).thenAnswer((_) async => right(successSession));
+        )).thenAnswer((_) async => answer);
+      }
+
+      void expectResult(Either<Failure, SessionEntity> result,
+          Either<Failure, SessionEntity> expected) {
+        expect(result, expected);
+        verify(repository.signup(
+          emailAddress: emailAddress,
+          password: password,
+          cep: cep,
+          cpf: cpf,
+          fullname: fullname,
+          nickName: nickName,
+          birthday: birthday,
+          genre: genre,
+          race: race,
+        ));
+        verifyNoMoreInteractions(repository);
+      }
+
+      test('should get success session', () async {
+        // arrange
+        mockRepositoryRegister(right(successSession));
         // act
         final result = await runRegister();
         // assert
-        expect(result, right(successSession));
-        verify(repository.signup(
-          emailAddress: emailAddress,
-          password: password,
-          cep: cep,
-          cpf: cpf,
-          fullname: fullname,
-          nickName: nickName,
-          birthday: birthday,
-          genre: genre,
-          race: race,
-        ));
-        verifyNoMoreInteractions(repository);
+        expectResult(result, right(successSession));
       });
-
-      void mockRegisterFailure(Failure failure) {
-        when(repository.signup(
-          emailAddress: anyNamed('emailAddress'),
-          password: anyNamed('password'),
-          cep: anyNamed('cep'),
-          cpf: anyNamed('cpf'),
-          fullname: anyNamed('fullname'),
-          nickName: anyNamed('nickName'),
-          birthday: anyNamed('birthday'),
-          genre: anyNamed('genre'),
-          race: anyNamed('race'),
-        )).thenAnswer((_) async => left(failure));
-      }
-
-      void assertFailed(
-          Either<Failure, SessionEntity> result, Failure failure) {
-        expect(result, left(failure));
-        verify(repository.signup(
-          emailAddress: emailAddress,
-          password: password,
-          cep: cep,
-          cpf: cpf,
-          fullname: fullname,
-          nickName: nickName,
-          birthday: birthday,
-          genre: genre,
-          race: race,
-        ));
-        verifyNoMoreInteractions(repository);
-      }
 
       test('could get error for form field validation from server', () async {
         // arrange
-        mockRegisterFailure(ServerSideFormFieldValidationFailure());
+        mockRepositoryRegister(left(ServerSideFormFieldValidationFailure()));
         // act
         final result = await runRegister();
         // assert
-        assertFailed(result, ServerSideFormFieldValidationFailure());
+        expectResult(result, left(ServerSideFormFieldValidationFailure()));
       });
     });
   });

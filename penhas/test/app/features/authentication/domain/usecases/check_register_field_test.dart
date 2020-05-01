@@ -43,7 +43,21 @@ void main() {
     genre = Genre.female;
   });
 
-  void mockRegisterFailure(Failure failure) {
+  Future<Either<Failure, ValidField>> runRegister() async {
+    return sut(
+      emailAddress: emailAddress,
+      password: password,
+      cep: cep,
+      cpf: cpf,
+      fullname: fullname,
+      nickName: nickName,
+      birthday: birthday,
+      race: race,
+      genre: genre,
+    );
+  }
+
+  void mockRepositoryRegister(Either<Failure, ValidField> answer) {
     when(repository.checkField(
       emailAddress: anyNamed('emailAddress'),
       password: anyNamed('password'),
@@ -54,12 +68,13 @@ void main() {
       birthday: anyNamed('birthday'),
       genre: anyNamed('genre'),
       race: anyNamed('race'),
-    )).thenAnswer((_) async => left(failure));
+    )).thenAnswer((_) async => answer);
   }
 
-  void assertFailed(Either<Failure, ValidField> result, Failure failure) {
-    expect(result, left(failure));
-    verify(repository.signup(
+  void expectResult(Either<Failure, ValidField> result,
+      Either<Failure, ValidField> expected) {
+    expect(result, expected);
+    verify(repository.checkField(
       emailAddress: emailAddress,
       password: password,
       cep: cep,
@@ -76,7 +91,7 @@ void main() {
   group('CheckRegisterField', () {
     test('should get error for empty CheckRegisterField()', () async {
       // arrange
-      mockRegisterFailure(RequiredParameter());
+      mockRepositoryRegister(left(RequiredParameter()));
       // act
       final result = await sut();
       // assert
@@ -84,10 +99,15 @@ void main() {
       verifyZeroInteractions(repository);
     });
 
-    // test('should get error for empty CheckRegisterField()', () async {
-    //   // arrange
-    //   // act
-    //   // assert
-    // });
+    test(
+        'should get ServerSideFormFieldValidationFailure message for validate fields',
+        () async {
+      // arrange
+      mockRepositoryRegister(left(ServerSideFormFieldValidationFailure()));
+      // act
+      final result = await runRegister();
+      // assert
+      expectResult(result, left(ServerSideFormFieldValidationFailure()));
+    });
   });
 }
