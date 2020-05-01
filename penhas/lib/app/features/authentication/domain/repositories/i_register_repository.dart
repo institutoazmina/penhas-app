@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
@@ -12,7 +13,10 @@ import 'package:penhas/app/features/authentication/domain/usecases/human_race.da
 import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
 
-class ValidField {}
+class ValidField extends Equatable {
+  @override
+  List<Object> get props => null;
+}
 
 abstract class IRegisterRepository {
   Future<Either<Failure, SessionEntity>> signup({

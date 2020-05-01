@@ -109,5 +109,14 @@ void main() {
       // assert
       expectResult(result, left(ServerSideFormFieldValidationFailure()));
     });
+
+    test('should get ValidField message for valid field', () async {
+      // arrange
+      mockRepositoryRegister(right(ValidField()));
+      // act
+      final result = await runRegister();
+      // assert
+      expectResult(result, right(ValidField()));
+    });
   });
 }
