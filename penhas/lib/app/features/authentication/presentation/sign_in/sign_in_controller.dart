@@ -15,6 +15,7 @@ const String ERROR_SERVER_FAILURE =
     "O servidor está com problema neste momento, tente novamente.";
 const String ERROR_INTERNET_CONNECTION_FAILURE =
     "O servidor está inacessível, o PenhaS está com acesso à Internet?";
+const String ERROR_USER_AUTHENTICATION_FAILURE = "";
 
 class SignInController extends _SignInControllerBase with _$SignInController {
   SignInController(IAuthenticationRepository repository) : super(repository);
@@ -35,6 +36,9 @@ abstract class _SignInControllerBase with Store {
 
   @observable
   String errorMessage = "";
+
+  @observable
+  String errorAuthenticationMessage = "";
 
   @computed
   bool get hasValidEmailAndPassword =>
@@ -81,6 +85,9 @@ abstract class _SignInControllerBase with Store {
         break;
       case InternetConnectionFailure:
         errorMessage = ERROR_INTERNET_CONNECTION_FAILURE;
+        break;
+      case UserAuthenticationFailure:
+        errorAuthenticationMessage = ERROR_USER_AUTHENTICATION_FAILURE;
         break;
       default:
         throw UnsupportedError;

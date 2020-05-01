@@ -140,7 +140,20 @@ void main() {
       testServerError(
           InternetConnectionFailure(), ERROR_INTERNET_CONNECTION_FAILURE);
     });
+
+    test(
+        'should show ERROR_USER_AUTHENTICATION_FAILURE message when got UserAuthenticationFailure',
+        () async {
+      // arrange
+      mockAuthenticationFailure(UserAuthenticationFailure());
+      var validPassword = 'sTr0ng';
+      var validEmailAddress = 'my_email@app.com';
+      // act
+      sut.setPassword(validPassword);
+      sut.setEmail(validEmailAddress);
+      await sut.signInWithEmailAndPasswordPressed();
+      // assert
+      expect(sut.errorAuthenticationMessage, ERROR_USER_AUTHENTICATION_FAILURE);
+    });
   });
 }
-
-///   * UserAuthenticationFailure

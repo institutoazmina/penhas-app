@@ -68,6 +68,26 @@ mixin _$SignInController on _SignInControllerBase, Store {
     }, _$errorMessageAtom, name: '${_$errorMessageAtom.name}_set');
   }
 
+  final _$errorAuthenticationMessageAtom =
+      Atom(name: '_SignInControllerBase.errorAuthenticationMessage');
+
+  @override
+  String get errorAuthenticationMessage {
+    _$errorAuthenticationMessageAtom.context
+        .enforceReadPolicy(_$errorAuthenticationMessageAtom);
+    _$errorAuthenticationMessageAtom.reportObserved();
+    return super.errorAuthenticationMessage;
+  }
+
+  @override
+  set errorAuthenticationMessage(String value) {
+    _$errorAuthenticationMessageAtom.context.conditionallyRunInAction(() {
+      super.errorAuthenticationMessage = value;
+      _$errorAuthenticationMessageAtom.reportChanged();
+    }, _$errorAuthenticationMessageAtom,
+        name: '${_$errorAuthenticationMessageAtom.name}_set');
+  }
+
   final _$signInWithEmailAndPasswordPressedAsyncAction =
       AsyncAction('signInWithEmailAndPasswordPressed');
 
@@ -103,7 +123,7 @@ mixin _$SignInController on _SignInControllerBase, Store {
   @override
   String toString() {
     final string =
-        'warningEmail: ${warningEmail.toString()},warningPassword: ${warningPassword.toString()},errorMessage: ${errorMessage.toString()},hasValidEmailAndPassword: ${hasValidEmailAndPassword.toString()}';
+        'warningEmail: ${warningEmail.toString()},warningPassword: ${warningPassword.toString()},errorMessage: ${errorMessage.toString()},errorAuthenticationMessage: ${errorAuthenticationMessage.toString()},hasValidEmailAndPassword: ${hasValidEmailAndPassword.toString()}';
     return '{$string}';
   }
 }
