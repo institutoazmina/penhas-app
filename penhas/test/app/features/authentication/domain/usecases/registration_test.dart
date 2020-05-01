@@ -95,7 +95,7 @@ void main() {
         verifyNoMoreInteractions(repository);
       });
 
-      void mockRegisterFaile(Failure failure) {
+      void mockRegisterFailure(Failure failure) {
         when(repository.signup(
           emailAddress: anyNamed('emailAddress'),
           password: anyNamed('password'),
@@ -128,7 +128,7 @@ void main() {
 
       test('could get error for form field validation from server', () async {
         // arrange
-        mockRegisterFaile(ServerSideFormFieldValidationFailure());
+        mockRegisterFailure(ServerSideFormFieldValidationFailure());
         // act
         final result = await runRegister();
         // assert

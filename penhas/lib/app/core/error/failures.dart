@@ -34,3 +34,5 @@ class FullnameInvalidFailure extends Failure {}
 class HumanRaceInvalidFailure extends Failure {}
 
 class ServerSideFormFieldValidationFailure extends Failure {}
+
+class RequiredParameter extends Failure {}
