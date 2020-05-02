@@ -21,8 +21,8 @@ void main() {
       useCase = AuthenticationWithEmailAndPassword(mockAuthenticatonRepository);
     });
 
-    final successSession = SessionEntity(
-        fakePassword: false, sessionToken: 'my_strong_session_token');
+    final successSession =
+        SessionEntity(sessionToken: 'my_strong_session_token');
     final emailAddress = EmailAddress("valid@email.com");
     final password = Password('_myStr0ngP@ssw0rd');
 

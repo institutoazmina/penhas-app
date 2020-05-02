@@ -2,10 +2,13 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
+import 'package:penhas/app/core/network/network_info.dart';
+import 'package:penhas/app/features/authentication/data/datasources/user_register_data_source.dart';
+import 'package:penhas/app/features/authentication/data/models/session_model.dart';
+import 'package:penhas/app/features/authentication/data/repositories/user_register_repository.dart';
+import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/birthday.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/check_register_field.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/cpf.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/full_name.dart';
@@ -14,11 +17,17 @@ import 'package:penhas/app/features/authentication/domain/usecases/human_race.da
 import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
 
-class MockRegisterRepository extends Mock implements IUserRegisterRepository {}
+class MockUserRegisterDataSource extends Mock
+    implements IUserRegisterDataSource {}
+
+class MockNetworkInfo extends Mock implements INetworkInfo {}
 
 void main() {
-  CheckRegisterField sut;
-  MockRegisterRepository repository;
+  INetworkInfo networkInfo;
+  IUserRegisterDataSource dataSource;
+  UserRegisterRepository sut;
+  const String SESSSION_TOKEN = 'my_really.long.JWT';
+
   Cep cep;
   Cpf cpf;
   EmailAddress emailAddress;
@@ -30,8 +39,6 @@ void main() {
   Genre genre;
 
   setUp(() {
-    repository = MockRegisterRepository();
-    sut = CheckRegisterField(repository);
     emailAddress = EmailAddress("valid@email.com");
     password = Password('_myStr0ngP@ssw0rd');
     cep = Cep('63024-370');
@@ -41,24 +48,16 @@ void main() {
     birthday = Birthday('1994-01-01');
     race = HumanRace.brown;
     genre = Genre.female;
+    dataSource = MockUserRegisterDataSource();
+    networkInfo = MockNetworkInfo();
+    sut = UserRegisterRepository(
+      dataSource: dataSource,
+      networkInfo: networkInfo,
+    );
   });
 
-  Future<Either<Failure, ValidField>> runRegister() async {
-    return sut(
-      emailAddress: emailAddress,
-      password: password,
-      cep: cep,
-      cpf: cpf,
-      fullname: fullname,
-      nickName: nickName,
-      birthday: birthday,
-      race: race,
-      genre: genre,
-    );
-  }
-
-  void mockRepositoryRegister(Either<Failure, ValidField> answer) {
-    when(repository.checkField(
+  void mockDataSourceRegister(SessionModel answer) {
+    when(dataSource.register(
       emailAddress: anyNamed('emailAddress'),
       password: anyNamed('password'),
       cep: anyNamed('cep'),
@@ -71,10 +70,8 @@ void main() {
     )).thenAnswer((_) async => answer);
   }
 
-  void expectResult(Either<Failure, ValidField> result,
-      Either<Failure, ValidField> expected) {
-    expect(result, expected);
-    verify(repository.checkField(
+  Future<Either<Failure, SessionEntity>> executeSut() {
+    return sut.signup(
       emailAddress: emailAddress,
       password: password,
       cep: cep,
@@ -82,41 +79,37 @@ void main() {
       fullname: fullname,
       nickName: nickName,
       birthday: birthday,
-      genre: genre,
       race: race,
-    ));
-    verifyNoMoreInteractions(repository);
+      genre: genre,
+    );
   }
 
-  group('CheckRegisterField', () {
-    test('should get error for empty CheckRegisterField()', () async {
-      // arrange
-      mockRepositoryRegister(left(RequiredParameter()));
-      // act
-      final result = await sut();
-      // assert
-      expect(result, left(RequiredParameter()));
-      verifyZeroInteractions(repository);
-    });
+  group('UserRegisterRepository', () {
+    group('device is online', () {
+      setUp(() async {
+        when(networkInfo.isConnected).thenAnswer((_) async => true);
+      });
 
-    test(
-        'should get ServerSideFormFieldValidationFailure message for validate fields',
-        () async {
-      // arrange
-      mockRepositoryRegister(left(ServerSideFormFieldValidationFailure()));
-      // act
-      final result = await runRegister();
-      // assert
-      expectResult(result, left(ServerSideFormFieldValidationFailure()));
-    });
-
-    test('should get ValidField message for valid field', () async {
-      // arrange
-      mockRepositoryRegister(right(ValidField()));
-      // act
-      final result = await runRegister();
-      // assert
-      expectResult(result, right(ValidField()));
+      test('should return valid SessionEntity for valid fields', () async {
+        // arrange
+        mockDataSourceRegister(SessionModel(sessionToken: SESSSION_TOKEN));
+        // act
+        final result = await executeSut();
+        // assert
+        verify(dataSource.register(
+          emailAddress: emailAddress,
+          password: password,
+          cep: cep,
+          cpf: cpf,
+          fullname: fullname,
+          nickName: nickName,
+          birthday: birthday,
+          genre: genre,
+          race: race,
+        ));
+        expect(result, right(SessionEntity(sessionToken: SESSSION_TOKEN)));
+        verifyNoMoreInteractions(dataSource);
+      });
     });
   });
 }

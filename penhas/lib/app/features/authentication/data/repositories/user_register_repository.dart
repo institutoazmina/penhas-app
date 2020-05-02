@@ -1,6 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/network/network_info.dart';
+import 'package:penhas/app/features/authentication/data/datasources/user_register_data_source.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/birthday.dart';
@@ -13,12 +15,37 @@ import 'package:penhas/app/features/authentication/domain/usecases/human_race.da
 import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
 
-class RegisterUser {
-  final IUserRegisterRepository repository;
+class UserRegisterRepository implements IUserRegisterRepository {
+  final IUserRegisterDataSource _dataSource;
+  final INetworkInfo _networkInfo;
 
-  RegisterUser(this.repository);
+  factory UserRegisterRepository({
+    @required IUserRegisterDataSource dataSource,
+    @required INetworkInfo networkInfo,
+  }) {
+    return UserRegisterRepository._(dataSource, networkInfo);
+  }
 
-  Future<Either<Failure, SessionEntity>> call({
+  const UserRegisterRepository._(this._dataSource, this._networkInfo);
+
+  @override
+  Future<Either<Failure, ValidField>> checkField({
+    EmailAddress emailAddress,
+    Password password,
+    Cep cep,
+    Cpf cpf,
+    Fullname fullname,
+    Nickname nickName,
+    Birthday birthday,
+    Genre genre,
+    HumanRace race,
+  }) {
+    // TODO: implement checkField
+    return null;
+  }
+
+  @override
+  Future<Either<Failure, SessionEntity>> signup({
     @required EmailAddress emailAddress,
     @required Password password,
     @required Cep cep,
@@ -29,7 +56,7 @@ class RegisterUser {
     @required Genre genre,
     @required HumanRace race,
   }) async {
-    return repository.signup(
+    final session = await _dataSource.register(
         emailAddress: emailAddress,
         password: password,
         cep: cep,
@@ -37,7 +64,9 @@ class RegisterUser {
         fullname: fullname,
         nickName: nickName,
         birthday: birthday,
-        race: race,
-        genre: genre);
+        genre: genre,
+        race: race);
+
+    return right(SessionEntity(sessionToken: session.sessionToken));
   }
 }

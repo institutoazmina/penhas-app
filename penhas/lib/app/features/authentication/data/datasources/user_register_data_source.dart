@@ -1,8 +1,6 @@
-import 'package:dartz/dartz.dart';
-import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
+import 'package:penhas/app/features/authentication/data/models/session_model.dart';
+import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/birthday.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/cpf.dart';
@@ -13,13 +11,8 @@ import 'package:penhas/app/features/authentication/domain/usecases/human_race.da
 import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
 
-class ValidField extends Equatable {
-  @override
-  List<Object> get props => null;
-}
-
-abstract class IRegisterRepository {
-  Future<Either<Failure, SessionEntity>> signup({
+abstract class IUserRegisterDataSource {
+  Future<SessionModel> register({
     @required EmailAddress emailAddress,
     @required Password password,
     @required Cep cep,
@@ -31,7 +24,7 @@ abstract class IRegisterRepository {
     @required HumanRace race,
   });
 
-  Future<Either<Failure, ValidField>> checkField({
+  Future<ValidField> checkField({
     EmailAddress emailAddress,
     Password password,
     Cep cep,

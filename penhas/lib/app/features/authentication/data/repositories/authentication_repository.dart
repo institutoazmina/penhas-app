@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/network_info.dart';
@@ -10,7 +10,7 @@ import 'package:penhas/app/features/authentication/domain/usecases/email_address
 import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
 
 class AuthenticationRepository implements IAuthenticationRepository {
-  final AuthenticationDataSource dataSource;
+  final IAuthenticationDataSource dataSource;
   final INetworkInfo networkInfo;
 
   AuthenticationRepository({
@@ -19,22 +19,20 @@ class AuthenticationRepository implements IAuthenticationRepository {
   });
 
   @override
-
-  ///
-  /// Failure :
-  ///   * UserAuthenticationFailure
-  ///   * InternetConnectionFailure
-  ///   * ServerFailure
-  Future<Either<Failure, SessionEntity>> signInWithEmailAndPassword(
-      {EmailAddress emailAddress, Password password}) async {
+  Future<Either<Failure, SessionEntity>> signInWithEmailAndPassword({
+    EmailAddress emailAddress,
+    Password password,
+  }) async {
     return _mapFromDataSource(
       emailAddress: emailAddress,
       password: password,
     );
   }
 
-  Future<Either<Failure, SessionEntity>> _mapFromDataSource(
-      {EmailAddress emailAddress, Password password}) async {
+  Future<Either<Failure, SessionEntity>> _mapFromDataSource({
+    EmailAddress emailAddress,
+    Password password,
+  }) async {
     try {
       final resultado = await dataSource.signInWithEmailAndPassword(
         emailAddress: emailAddress,

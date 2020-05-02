@@ -3,13 +3,10 @@ import 'package:penhas/app/features/authentication/domain/entities/session_entit
 
 class SessionModel extends SessionEntity {
   SessionModel({
-    @required bool fakePassword,
     @required String sessionToken,
-  });
+  }) : super(sessionToken: sessionToken);
 
   factory SessionModel.fromJson(Map<String, dynamic> json) {
-    var fakePassword = json['senha_falsa'] > 0;
-    return SessionModel(
-        fakePassword: fakePassword, sessionToken: json['session']);
+    return SessionModel(sessionToken: json['session']);
   }
 }
