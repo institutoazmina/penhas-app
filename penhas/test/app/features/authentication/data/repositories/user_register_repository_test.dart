@@ -141,7 +141,24 @@ void main() {
           reason: serverValidation['reason'],
           message: serverValidation['message'],
         );
+        verify(networkInfo.isConnected);
         expectedResult(result, left(fieldFailure));
+      });
+    });
+
+    group('device is offline', () {
+      setUp(() async {
+        when(networkInfo.isConnected).thenAnswer((_) async => false);
+      });
+
+      test('should return InternetConnectionFailure', () async {
+        // arrange
+        mockDataSourceRegister().thenThrow(ApiProviderException());
+        // act
+        final result = await executeSut();
+        // assert
+        verify(networkInfo.isConnected);
+        expectedResult(result, left(InternetConnectionFailure()));
       });
     });
   });
