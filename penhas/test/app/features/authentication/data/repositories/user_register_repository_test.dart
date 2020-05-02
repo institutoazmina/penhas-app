@@ -8,6 +8,7 @@ import 'package:penhas/app/features/authentication/data/datasources/user_registe
 import 'package:penhas/app/features/authentication/data/models/session_model.dart';
 import 'package:penhas/app/features/authentication/data/repositories/user_register_repository.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
+import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/birthday.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/cpf.dart';
@@ -73,7 +74,21 @@ void main() {
     ));
   }
 
-  Future<Either<Failure, SessionEntity>> executeSut() {
+  PostExpectation<dynamic> mockDataSourceCheckField() {
+    return when(dataSource.checkField(
+      emailAddress: anyNamed('emailAddress'),
+      password: anyNamed('password'),
+      cep: anyNamed('cep'),
+      cpf: anyNamed('cpf'),
+      fullname: anyNamed('fullname'),
+      nickName: anyNamed('nickName'),
+      birthday: anyNamed('birthday'),
+      genre: anyNamed('genre'),
+      race: anyNamed('race'),
+    ));
+  }
+
+  Future<Either<Failure, SessionEntity>> executeRegister() {
     return sut.signup(
       emailAddress: emailAddress,
       password: password,
@@ -87,11 +102,44 @@ void main() {
     );
   }
 
-  void expectedResult(
+  Future<Either<Failure, ValidField>> executeCheck() {
+    return sut.checkField(
+      emailAddress: emailAddress,
+      password: password,
+      cep: cep,
+      cpf: cpf,
+      fullname: fullname,
+      nickName: nickName,
+      birthday: birthday,
+      race: race,
+      genre: genre,
+    );
+  }
+
+  void expectedRegisterResult(
     Either<Failure, SessionEntity> result,
     Either<Failure, SessionEntity> expected,
   ) {
     verify(dataSource.register(
+      emailAddress: emailAddress,
+      password: password,
+      cep: cep,
+      cpf: cpf,
+      fullname: fullname,
+      nickName: nickName,
+      birthday: birthday,
+      genre: genre,
+      race: race,
+    ));
+    expect(result, expected);
+    verifyNoMoreInteractions(dataSource);
+  }
+
+  void expectedCheckResult(
+    Either<Failure, ValidField> result,
+    Either<Failure, ValidField> expected,
+  ) {
+    verify(dataSource.checkField(
       emailAddress: emailAddress,
       password: password,
       cep: cep,
@@ -117,9 +165,9 @@ void main() {
           (_) async => SessionModel(sessionToken: SESSSION_TOKEN),
         );
         // act
-        final result = await executeSut();
+        final result = await executeRegister();
         // assert
-        expectedResult(
+        expectedRegisterResult(
           result,
           right(SessionEntity(sessionToken: SESSSION_TOKEN)),
         );
@@ -133,7 +181,7 @@ void main() {
         mockDataSourceRegister()
             .thenThrow(ApiProviderException(bodyContent: serverValidation));
         // act
-        final result = await executeSut();
+        final result = await executeRegister();
         // assert
         final fieldFailure = ServerSideFormFieldValidationFailure(
           error: serverValidation['error'],
@@ -142,7 +190,7 @@ void main() {
           message: serverValidation['message'],
         );
         verify(networkInfo.isConnected);
-        expectedResult(result, left(fieldFailure));
+        expectedRegisterResult(result, left(fieldFailure));
       });
     });
 
@@ -155,11 +203,25 @@ void main() {
         // arrange
         mockDataSourceRegister().thenThrow(ApiProviderException());
         // act
-        final result = await executeSut();
+        final result = await executeRegister();
         // assert
         verify(networkInfo.isConnected);
-        expectedResult(result, left(InternetConnectionFailure()));
+        expectedRegisterResult(result, left(InternetConnectionFailure()));
       });
+    });
+  });
+
+  group('UserRegisterRepository validating field', () {
+    setUp(() async {
+      when(networkInfo.isConnected).thenAnswer((_) async => true);
+    });
+    test('should return ValidField for valid fields', () async {
+      // arrange
+      mockDataSourceCheckField().thenAnswer((_) async => ValidField());
+      // act
+      final result = await executeCheck();
+      // assert
+      expectedCheckResult(result, right(ValidField()));
     });
   });
 }

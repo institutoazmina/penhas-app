@@ -40,9 +40,19 @@ class UserRegisterRepository implements IUserRegisterRepository {
     Birthday birthday,
     Genre genre,
     HumanRace race,
-  }) {
-    // TODO: implement checkField
-    return null;
+  }) async {
+    final session = await _dataSource.checkField(
+        emailAddress: emailAddress,
+        password: password,
+        cep: cep,
+        cpf: cpf,
+        fullname: fullname,
+        nickName: nickName,
+        birthday: birthday,
+        genre: genre,
+        race: race);
+
+    return right(ValidField());
   }
 
   @override
