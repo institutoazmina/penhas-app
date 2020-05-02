@@ -1,12 +1,9 @@
+import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class Failure extends Equatable {
-  final List<dynamic> properties;
-
-  Failure({this.properties = const <dynamic>[]});
-
   @override
-  List<Object> get props => [properties];
+  List<Object> get props => [];
 }
 
 class ServerFailure extends Failure {}
@@ -33,6 +30,22 @@ class FullnameInvalidFailure extends Failure {}
 
 class HumanRaceInvalidFailure extends Failure {}
 
-class ServerSideFormFieldValidationFailure extends Failure {}
-
 class RequiredParameter extends Failure {}
+
+@immutable
+class ServerSideFormFieldValidationFailure extends Failure {
+  final String error;
+  final String message;
+  final String field;
+  final String reason;
+
+  ServerSideFormFieldValidationFailure({
+    this.error,
+    this.message,
+    this.field,
+    this.reason,
+  });
+
+  @override
+  List<Object> get props => [error, message, field, reason];
+}

@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
+import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/authentication/data/datasources/user_register_data_source.dart';
@@ -56,17 +57,37 @@ class UserRegisterRepository implements IUserRegisterRepository {
     @required Genre genre,
     @required HumanRace race,
   }) async {
-    final session = await _dataSource.register(
-        emailAddress: emailAddress,
-        password: password,
-        cep: cep,
-        cpf: cpf,
-        fullname: fullname,
-        nickName: nickName,
-        birthday: birthday,
-        genre: genre,
-        race: race);
+    try {
+      final session = await _dataSource.register(
+          emailAddress: emailAddress,
+          password: password,
+          cep: cep,
+          cpf: cpf,
+          fullname: fullname,
+          nickName: nickName,
+          birthday: birthday,
+          genre: genre,
+          race: race);
 
-    return right(SessionEntity(sessionToken: session.sessionToken));
+      return right(SessionEntity(sessionToken: session.sessionToken));
+    } catch (e) {
+      return _handleError(e);
+    }
+  }
+
+  Future<Either<Failure, SessionEntity>> _handleError(Object error) async {
+    if (await _networkInfo.isConnected == false) {
+      return (left(InternetConnectionFailure()));
+    }
+
+    if (error is ApiProviderException) {
+      return left(ServerSideFormFieldValidationFailure(
+          error: error.bodyContent['error'],
+          field: error.bodyContent['field'],
+          reason: error.bodyContent['reason'],
+          message: error.bodyContent['message']));
+    }
+
+    return left(ServerFailure());
   }
 }

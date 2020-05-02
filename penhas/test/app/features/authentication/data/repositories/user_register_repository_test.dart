@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/authentication/data/datasources/user_register_data_source.dart';
@@ -16,6 +17,8 @@ import 'package:penhas/app/features/authentication/domain/usecases/genre.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/human_race.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+
+import '../../../../../utils/json_util.dart';
 
 class MockUserRegisterDataSource extends Mock
     implements IUserRegisterDataSource {}
@@ -56,8 +59,8 @@ void main() {
     );
   });
 
-  void mockDataSourceRegister(SessionModel answer) {
-    when(dataSource.register(
+  PostExpectation<dynamic> mockDataSourceRegister() {
+    return when(dataSource.register(
       emailAddress: anyNamed('emailAddress'),
       password: anyNamed('password'),
       cep: anyNamed('cep'),
@@ -67,7 +70,7 @@ void main() {
       birthday: anyNamed('birthday'),
       genre: anyNamed('genre'),
       race: anyNamed('race'),
-    )).thenAnswer((_) async => answer);
+    ));
   }
 
   Future<Either<Failure, SessionEntity>> executeSut() {
@@ -84,31 +87,61 @@ void main() {
     );
   }
 
+  void expectedResult(
+    Either<Failure, SessionEntity> result,
+    Either<Failure, SessionEntity> expected,
+  ) {
+    verify(dataSource.register(
+      emailAddress: emailAddress,
+      password: password,
+      cep: cep,
+      cpf: cpf,
+      fullname: fullname,
+      nickName: nickName,
+      birthday: birthday,
+      genre: genre,
+      race: race,
+    ));
+    expect(result, expected);
+    verifyNoMoreInteractions(dataSource);
+  }
+
   group('UserRegisterRepository', () {
     group('device is online', () {
       setUp(() async {
         when(networkInfo.isConnected).thenAnswer((_) async => true);
       });
-
       test('should return valid SessionEntity for valid fields', () async {
         // arrange
-        mockDataSourceRegister(SessionModel(sessionToken: SESSSION_TOKEN));
+        mockDataSourceRegister().thenAnswer(
+          (_) async => SessionModel(sessionToken: SESSSION_TOKEN),
+        );
         // act
         final result = await executeSut();
         // assert
-        verify(dataSource.register(
-          emailAddress: emailAddress,
-          password: password,
-          cep: cep,
-          cpf: cpf,
-          fullname: fullname,
-          nickName: nickName,
-          birthday: birthday,
-          genre: genre,
-          race: race,
-        ));
-        expect(result, right(SessionEntity(sessionToken: SESSSION_TOKEN)));
-        verifyNoMoreInteractions(dataSource);
+        expectedResult(
+          result,
+          right(SessionEntity(sessionToken: SESSSION_TOKEN)),
+        );
+      });
+      test(
+          'should return ServerSideFormFieldValidationFailure for invalid field',
+          () async {
+        // arrange
+        final serverValidation = await JsonUtil.getJson(
+            from: 'authentication/registration_email_already_exists.json');
+        mockDataSourceRegister()
+            .thenThrow(ApiProviderException(bodyContent: serverValidation));
+        // act
+        final result = await executeSut();
+        // assert
+        final fieldFailure = ServerSideFormFieldValidationFailure(
+          error: serverValidation['error'],
+          field: serverValidation['field'],
+          reason: serverValidation['reason'],
+          message: serverValidation['message'],
+        );
+        expectedResult(result, left(fieldFailure));
       });
     });
   });
