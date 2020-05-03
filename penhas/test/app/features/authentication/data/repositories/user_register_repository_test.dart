@@ -246,5 +246,19 @@ void main() {
         expectedCheckResult(result, left(fieldFailure));
       });
     });
+    group('device is offline', () {
+      setUp(() async {
+        when(networkInfo.isConnected).thenAnswer((_) async => false);
+      });
+      test('should return InternetConnectionFailure', () async {
+        // arrange
+        mockDataSourceCheckField().thenThrow(ApiProviderException());
+        // act
+        final result = await executeCheck();
+        // assert
+        verify(networkInfo.isConnected);
+        expectedCheckResult(result, left(InternetConnectionFailure()));
+      });
+    });
   });
 }
