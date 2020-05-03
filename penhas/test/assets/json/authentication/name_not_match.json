@@ -1,0 +1,6 @@
+{
+  "error": "name_not_match",
+  "field": "nome_completo",
+  "message": "O nome não confere com o titular do CPF. Preencha exatamente como estão no documento.",
+  "reason": "invalid"
+}

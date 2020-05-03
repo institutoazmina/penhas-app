@@ -178,17 +178,18 @@ void main() {
         // arrange
         final serverValidation = await JsonUtil.getJson(
             from: 'authentication/registration_email_already_exists.json');
-        mockDataSourceRegister()
-            .thenThrow(ApiProviderException(bodyContent: serverValidation));
-        // act
-        final result = await executeRegister();
-        // assert
         final fieldFailure = ServerSideFormFieldValidationFailure(
           error: serverValidation['error'],
           field: serverValidation['field'],
           reason: serverValidation['reason'],
           message: serverValidation['message'],
         );
+        mockDataSourceRegister()
+            .thenThrow(ApiProviderException(bodyContent: serverValidation));
+        // act
+        final result = await executeRegister();
+        // assert
+
         verify(networkInfo.isConnected);
         expectedRegisterResult(result, left(fieldFailure));
       });
@@ -212,16 +213,38 @@ void main() {
   });
 
   group('UserRegisterRepository validating field', () {
-    setUp(() async {
-      when(networkInfo.isConnected).thenAnswer((_) async => true);
-    });
-    test('should return ValidField for valid fields', () async {
-      // arrange
-      mockDataSourceCheckField().thenAnswer((_) async => ValidField());
-      // act
-      final result = await executeCheck();
-      // assert
-      expectedCheckResult(result, right(ValidField()));
+    group('device is online', () {
+      setUp(() async {
+        when(networkInfo.isConnected).thenAnswer((_) async => true);
+      });
+      test('should return ValidField for valid fields', () async {
+        // arrange
+        mockDataSourceCheckField().thenAnswer((_) async => ValidField());
+        // act
+        final result = await executeCheck();
+        // assert
+        expectedCheckResult(result, right(ValidField()));
+      });
+      test(
+          'should return ServerSideFormFieldValidationFailure for invalid field',
+          () async {
+        // arrange
+        final invalidField = await JsonUtil.getJson(
+            from: 'authentication/cpf_form_field_error.json');
+        final fieldFailure = ServerSideFormFieldValidationFailure(
+          error: invalidField['error'],
+          field: invalidField['field'],
+          reason: invalidField['reason'],
+          message: invalidField['message'],
+        );
+        mockDataSourceCheckField()
+            .thenThrow(ApiProviderException(bodyContent: invalidField));
+        // act
+        final result = await executeCheck();
+        // assert
+        verify(networkInfo.isConnected);
+        expectedCheckResult(result, left(fieldFailure));
+      });
     });
   });
 }

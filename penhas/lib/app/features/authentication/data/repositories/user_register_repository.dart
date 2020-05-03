@@ -41,18 +41,22 @@ class UserRegisterRepository implements IUserRegisterRepository {
     Genre genre,
     HumanRace race,
   }) async {
-    final session = await _dataSource.checkField(
-        emailAddress: emailAddress,
-        password: password,
-        cep: cep,
-        cpf: cpf,
-        fullname: fullname,
-        nickName: nickName,
-        birthday: birthday,
-        genre: genre,
-        race: race);
+    try {
+      await _dataSource.checkField(
+          emailAddress: emailAddress,
+          password: password,
+          cep: cep,
+          cpf: cpf,
+          fullname: fullname,
+          nickName: nickName,
+          birthday: birthday,
+          genre: genre,
+          race: race);
 
-    return right(ValidField());
+      return right(ValidField());
+    } catch (e) {
+      return left(await _handleError(e));
+    }
   }
 
   @override
@@ -81,23 +85,23 @@ class UserRegisterRepository implements IUserRegisterRepository {
 
       return right(SessionEntity(sessionToken: session.sessionToken));
     } catch (e) {
-      return _handleError(e);
+      return left(await _handleError(e));
     }
   }
 
-  Future<Either<Failure, SessionEntity>> _handleError(Object error) async {
+  Future<Failure> _handleError(Object error) async {
     if (await _networkInfo.isConnected == false) {
-      return (left(InternetConnectionFailure()));
+      return InternetConnectionFailure();
     }
 
     if (error is ApiProviderException) {
-      return left(ServerSideFormFieldValidationFailure(
+      return ServerSideFormFieldValidationFailure(
           error: error.bodyContent['error'],
           field: error.bodyContent['field'],
           reason: error.bodyContent['reason'],
-          message: error.bodyContent['message']));
+          message: error.bodyContent['message']);
     }
 
-    return left(ServerFailure());
+    return ServerFailure();
   }
 }
