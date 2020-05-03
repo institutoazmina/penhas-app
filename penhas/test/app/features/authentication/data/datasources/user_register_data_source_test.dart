@@ -4,6 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:meta/meta.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/authentication/data/datasources/user_register_data_source.dart';
+import 'package:penhas/app/features/authentication/data/models/session_model.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/birthday.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/cpf.dart';
@@ -97,15 +98,19 @@ void main() {
     );
   }
 
+  void setupHttpClientSuccess200() async {
+    final bodyContent =
+        JsonUtil.getStringSync(from: 'authentication/login_success.json');
+    when(apiclient.post(any, headers: anyNamed('headers')))
+        .thenAnswer((_) async => http.Response(bodyContent, 200));
+  }
+
   group('UserRegisterDataSource', () {
     test(
         'should perform a POST with parameters and application/x-www-form-urlencoded header',
         () async {
       // arrange
-      final bodyContent =
-          JsonUtil.getStringSync(from: 'authentication/login_success.json');
-      when(apiclient.post(any, headers: anyNamed('headers')))
-          .thenAnswer((_) async => http.Response(bodyContent, 200));
+      setupHttpClientSuccess200();
       final headers = await setupHttpHeader();
       final loginUri = await setupHttpRequest(justValidadeField: false);
       // act
@@ -121,6 +126,29 @@ void main() {
           race: race);
       // assert
       verify(apiclient.post(loginUri, headers: headers));
+    });
+    group('register', () {
+      test('should return SessionModel when the response code is 200 (success)',
+          () async {
+        // arrange
+        setupHttpClientSuccess200();
+        final jsonData =
+            await JsonUtil.getJson(from: 'authentication/login_success.json');
+        final sessionModel = SessionModel.fromJson(jsonData);
+        // act
+        final result = await dataSource.register(
+            emailAddress: emailAddress,
+            password: password,
+            cep: cep,
+            cpf: cpf,
+            fullname: fullname,
+            nickName: nickName,
+            birthday: birthday,
+            genre: genre,
+            race: race);
+        // assert
+        expect(result, sessionModel);
+      });
     });
   });
 }

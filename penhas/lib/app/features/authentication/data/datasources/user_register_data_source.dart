@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 import 'package:penhas/app/core/network/api_server_configure.dart';
@@ -79,7 +80,7 @@ class UserRegisterDataSource implements IUserRegisterDataSource {
     final httpRequest =
         await _setupHttpRequest(queryParameters: queryParameters);
     final response = await apiClient.post(httpRequest, headers: httpHeader);
-    return SessionModel(sessionToken: "*=-foo-=*");
+    return SessionModel.fromJson(json.decode(response.body));
   }
 
   @override
