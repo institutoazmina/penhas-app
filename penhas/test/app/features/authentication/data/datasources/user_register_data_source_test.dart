@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 import 'package:meta/meta.dart';
+import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/authentication/data/datasources/user_register_data_source.dart';
 import 'package:penhas/app/features/authentication/data/models/session_model.dart';
@@ -98,11 +99,18 @@ void main() {
     );
   }
 
-  void setupHttpClientSuccess200() async {
+  void setupHttpClientSuccess200() {
     final bodyContent =
         JsonUtil.getStringSync(from: 'authentication/login_success.json');
     when(apiclient.post(any, headers: anyNamed('headers')))
         .thenAnswer((_) async => http.Response(bodyContent, 200));
+  }
+
+  void setupHttpClientError400() {
+    final bodyContent = JsonUtil.getStringSync(
+        from: 'authentication/registration_email_already_exists.json');
+    when(apiclient.post(any, headers: anyNamed('headers')))
+        .thenAnswer((_) async => http.Response(bodyContent, 400));
   }
 
   group('UserRegisterDataSource', () {
@@ -148,6 +156,30 @@ void main() {
             race: race);
         // assert
         expect(result, sessionModel);
+      });
+      test(
+          'should return ApiProviderException when the response code is nonsuccess (non 200)',
+          () async {
+        // arrange
+        final bodyContent = await JsonUtil.getJson(
+            from: 'authentication/registration_email_already_exists.json');
+        setupHttpClientError400();
+        // act
+        final sut = dataSource.register;
+        // assert
+        expect(
+            () async => await sut(
+                emailAddress: emailAddress,
+                password: password,
+                cep: cep,
+                cpf: cpf,
+                fullname: fullname,
+                nickName: nickName,
+                birthday: birthday,
+                genre: genre,
+                race: race),
+            throwsA(isA<ApiProviderException>()
+                .having((e) => e.bodyContent, 'Got bodyContent', bodyContent)));
       });
     });
   });

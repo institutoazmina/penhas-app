@@ -73,7 +73,7 @@ void main() {
         .thenAnswer((_) async => http.Response(bodyContent, 200));
   }
 
-  void setUpMockHttpClientSuccess400() {
+  void setUpMockHttpClientError400() {
     final bodyContent =
         JsonUtil.getStringSync(from: 'authentication/login_failure.json');
     // arrange
@@ -118,7 +118,7 @@ void main() {
       // arrange
       final bodyContent =
           await JsonUtil.getJson(from: 'authentication/login_failure.json');
-      setUpMockHttpClientSuccess400();
+      setUpMockHttpClientError400();
       // act
       final sut = dataSource.signInWithEmailAndPassword;
       // assert

@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
+import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/authentication/data/models/session_model.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
@@ -80,7 +82,11 @@ class UserRegisterDataSource implements IUserRegisterDataSource {
     final httpRequest =
         await _setupHttpRequest(queryParameters: queryParameters);
     final response = await apiClient.post(httpRequest, headers: httpHeader);
-    return SessionModel.fromJson(json.decode(response.body));
+    if (response.statusCode == HttpStatus.ok) {
+      return SessionModel.fromJson(json.decode(response.body));
+    } else {
+      throw ApiProviderException(bodyContent: json.decode(response.body));
+    }
   }
 
   @override
