@@ -7,6 +7,9 @@ import 'package:penhas/app/core/error/failures.dart';
 class Cpf extends Equatable {
   final Either<Failure, String> value;
 
+  String get rawValue => value.getOrElse(() => null);
+  bool get isValid => value.isRight();
+
   factory Cpf(String input) {
     return Cpf._(_validate(input));
   }

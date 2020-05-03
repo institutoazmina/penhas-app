@@ -7,6 +7,9 @@ import 'package:penhas/app/core/error/failures.dart';
 class Cep extends Equatable {
   final Either<Failure, String> value;
 
+  String get rawValue => value.getOrElse(() => null);
+  bool get isValid => value.isRight();
+
   factory Cep(String input) {
     return Cep._(_validate(input));
   }

@@ -7,6 +7,9 @@ import 'package:penhas/app/core/error/failures.dart';
 class Fullname extends Equatable {
   final Either<Failure, String> value;
 
+  String get rawValue => value.getOrElse(() => null);
+  bool get isValid => value.isRight();
+
   factory Fullname(String input) {
     return Fullname._(_validate(input));
   }

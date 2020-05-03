@@ -19,6 +19,7 @@ abstract class IAuthenticationDataSource {
   });
 }
 
+@immutable
 class AuthenticationDataSource implements IAuthenticationDataSource {
   final http.Client apiClient;
   final IApiServerConfigure serverConfiguration;
@@ -33,7 +34,7 @@ class AuthenticationDataSource implements IAuthenticationDataSource {
     EmailAddress emailAddress,
     Password password,
   }) async {
-    final _baseUri = serverConfiguration.baseUri;
+    final baseUri = serverConfiguration.baseUri;
     final userAgent = await serverConfiguration.userAgent();
     final queryParameters = {
       'app_version': userAgent,
@@ -46,8 +47,8 @@ class AuthenticationDataSource implements IAuthenticationDataSource {
     };
 
     final loginUri = Uri(
-      scheme: _baseUri.scheme,
-      host: _baseUri.host,
+      scheme: baseUri.scheme,
+      host: baseUri.host,
       path: '/login',
       queryParameters: queryParameters,
     );
