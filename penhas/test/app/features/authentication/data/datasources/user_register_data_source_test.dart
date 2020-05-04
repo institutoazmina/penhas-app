@@ -74,19 +74,21 @@ void main() {
   Future<Map<String, dynamic>> setupQueryParameters(
       {@required bool justValidadeField}) async {
     final userAgent = await serverConfiguration.userAgent();
-    return {
+    final Map<String, String> queryParameters = {
       'app_version': userAgent,
       'dry': justValidadeField ? '1' : '0',
       'email': emailAddress.rawValue,
-      'senha': password.rawValue,
-      'cep': cep.rawValue,
+      'senha': justValidadeField ? null : password.rawValue,
+      'cep': justValidadeField ? null : cep.rawValue,
       'cpf': cpf.rawValue,
-      'nome_completo': fullname.rawValue,
-      'apelido': nickName.rawValue,
-      'dt_nasc': birthday.rawValue,
-      'genero': genre.rawValue,
-      'raca': race.rawValue
+      'nome_completo': justValidadeField ? null : fullname.rawValue,
+      'apelido': justValidadeField ? null : nickName.rawValue,
+      'dt_nasc': justValidadeField ? null : birthday.rawValue,
+      'genero': justValidadeField ? null : genre.rawValue,
+      'raca': justValidadeField ? null : race.rawValue
     };
+    queryParameters.removeWhere((k, v) => v == null);
+    return queryParameters;
   }
 
   Future<Uri> setupHttpRequest({@required bool justValidadeField}) async {
@@ -119,28 +121,28 @@ void main() {
   }
 
   group('UserRegisterDataSource', () {
-    test(
-        'should perform a POST with parameters and application/x-www-form-urlencoded header',
-        () async {
-      // arrange
-      setupHttpClientRegisterSuccess();
-      final headers = await setupHttpHeader();
-      final loginUri = await setupHttpRequest(justValidadeField: false);
-      // act
-      await dataSource.register(
-          emailAddress: emailAddress,
-          password: password,
-          cep: cep,
-          cpf: cpf,
-          fullname: fullname,
-          nickName: nickName,
-          birthday: birthday,
-          genre: genre,
-          race: race);
-      // assert
-      verify(apiclient.post(loginUri, headers: headers));
-    });
     group('register', () {
+      test(
+          'should perform a POST with parameters and application/x-www-form-urlencoded header',
+          () async {
+        // arrange
+        setupHttpClientRegisterSuccess();
+        final headers = await setupHttpHeader();
+        final loginUri = await setupHttpRequest(justValidadeField: false);
+        // act
+        await dataSource.register(
+            emailAddress: emailAddress,
+            password: password,
+            cep: cep,
+            cpf: cpf,
+            fullname: fullname,
+            nickName: nickName,
+            birthday: birthday,
+            genre: genre,
+            race: race);
+        // assert
+        verify(apiclient.post(loginUri, headers: headers));
+      });
       test('should return SessionModel when the response code is 200 (success)',
           () async {
         // arrange
@@ -188,6 +190,18 @@ void main() {
       });
     });
     group('checkField', () {
+      test(
+          'should perform a POST with parameters and application/x-www-form-urlencoded header',
+          () async {
+        // arrange
+        setupHttpClientRegisterSuccess();
+        final headers = await setupHttpHeader();
+        final loginUri = await setupHttpRequest(justValidadeField: true);
+        // act
+        await dataSource.checkField(emailAddress: emailAddress, cpf: cpf);
+        // assert
+        verify(apiclient.post(loginUri, headers: headers));
+      });
       test('should return ValidField when the response code is 200 (success)',
           () async {
         // arrange

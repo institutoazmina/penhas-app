@@ -101,6 +101,25 @@ class UserRegisterDataSource implements IUserRegisterDataSource {
     Genre genre,
     HumanRace race,
   }) async {
+    final userAgent = await serverConfiguration.userAgent();
+    final Map<String, String> queryParameters = {
+      'app_version': userAgent,
+      'dry': '1',
+      'email': emailAddress?.rawValue,
+      'senha': password?.rawValue,
+      'cep': cep?.rawValue,
+      'cpf': cpf?.rawValue,
+      'nome_completo': fullname?.rawValue,
+      'apelido': nickName?.rawValue,
+      'dt_nasc': birthday?.rawValue,
+      'genero': genre?.rawValue,
+      'raca': race?.rawValue,
+    };
+
+    final httpHeader = await _setupHttpHeader();
+    final httpRequest =
+        await _setupHttpRequest(queryParameters: queryParameters);
+    final response = await apiClient.post(httpRequest, headers: httpHeader);
     return ValidField();
   }
 
