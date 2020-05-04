@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/authentication/data/datasources/change_password_data_source.dart';
+import 'package:penhas/app/features/authentication/data/models/password_reset_response_model.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 
 import '../../../../../utils/json_util.dart';
@@ -71,6 +72,21 @@ void main() {
         await dataSource.request(emailAddress: emailAddress);
         // assert
         verify(mockHttpClient.post(httpResquest, headers: httpHeader));
+      });
+      test('should return SessionModel when the response code is 200 (success)',
+          () async {
+        // arrange
+        final jsonData = await JsonUtil.getJson(
+            from: 'authentication/request_reset_password.json');
+        final bodyContent = JsonUtil.getStringSync(
+            from: 'authentication/request_reset_password.json');
+        final expectedModel = PasswordResetResponseModel.fromJson(jsonData);
+        when(mockHttpClient.post(any, headers: anyNamed('headers')))
+            .thenAnswer((_) async => http.Response(bodyContent, 200));
+        // act
+        final result = await dataSource.request(emailAddress: emailAddress);
+        // assert
+        expect(result, expectedModel);
       });
     });
   });
