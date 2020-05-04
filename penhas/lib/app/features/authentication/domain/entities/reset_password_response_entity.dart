@@ -5,7 +5,6 @@ import 'package:equatable/equatable.dart';
 class ResetPasswordResponseEntity extends Equatable {
   final String message;
   final int digits;
-
   final int ttl;
   final int ttlRetry;
 

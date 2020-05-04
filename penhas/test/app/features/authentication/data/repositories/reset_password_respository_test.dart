@@ -5,6 +5,7 @@ import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/network_info.dart';
+import 'package:penhas/app/features/authentication/data/models/password_reset_response_model.dart';
 import 'package:penhas/app/features/authentication/domain/entities/reset_password_response_entity.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
@@ -19,6 +20,8 @@ abstract class IChangePasswordDataSource {
     Password password,
     String resetToken,
   });
+
+  Future<PasswordResetResponseModel> request({EmailAddress emailAddress});
 }
 
 class ChangePasswordRepository
@@ -37,9 +40,15 @@ class ChangePasswordRepository
 
   @override
   Future<Either<Failure, ResetPasswordResponseEntity>> request(
-      {EmailAddress emailAddress}) {
-    // TODO: implement request
-    return null;
+      {EmailAddress emailAddress}) async {
+    final ResetPasswordResponseEntity result =
+        await _dataSource.request(emailAddress: emailAddress);
+
+    return right(result);
+  }
+
+  void xuxa(ResetPasswordResponseEntity v) {
+    print(v);
   }
 
   @override
@@ -108,6 +117,10 @@ void main() {
         resetToken: anyNamed('resetToken')));
   }
 
+  PostExpectation<dynamic> mockRequestDataSource() {
+    return when(dataSource.request(emailAddress: anyNamed('emailAddress')));
+  }
+
   group('ChangePasswordRepository', () {
     setUp(() {
       when(networkInfo.isConnected).thenAnswer((_) async => true);
@@ -148,6 +161,29 @@ void main() {
             field: bodyContent['field'],
             message: bodyContent['message'],
             reason: bodyContent['reason'],
+          )),
+        );
+      });
+    });
+    group('request', () {
+      test(
+          'should response ResetPasswordResponseEntity for a successfull request',
+          () async {
+        // arrange
+        final bodyContent = await JsonUtil.getJson(
+            from: 'authentication/request_reset_password.json');
+        final modelResponse = PasswordResetResponseModel.fromJson(bodyContent);
+        mockRequestDataSource().thenAnswer((_) async => modelResponse);
+        // act
+        final result = await sut.request(emailAddress: emailAddress);
+        // assert
+        expect(
+          result,
+          right(PasswordResetResponseModel(
+            message: bodyContent['message'],
+            digits: bodyContent['digits'],
+            ttl: bodyContent['ttl'],
+            ttlRetry: bodyContent['min_ttl_retry'],
           )),
         );
       });
