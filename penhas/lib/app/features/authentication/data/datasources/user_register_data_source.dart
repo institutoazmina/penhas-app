@@ -120,7 +120,11 @@ class UserRegisterDataSource implements IUserRegisterDataSource {
     final httpRequest =
         await _setupHttpRequest(queryParameters: queryParameters);
     final response = await apiClient.post(httpRequest, headers: httpHeader);
-    return ValidField();
+    if (response.statusCode == HttpStatus.ok) {
+      return ValidField();
+    } else {
+      throw ApiProviderException(bodyContent: json.decode(response.body));
+    }
   }
 
   Future<Map<String, String>> _setupHttpHeader() async {

@@ -213,6 +213,21 @@ void main() {
         // assert
         expect(result, ValidField());
       });
+      test(
+          'should return ApiProviderException when the response code is nonsuccess (non 200)',
+          () async {
+        // arrange
+        final bodyContent = await JsonUtil.getJson(
+            from: 'authentication/registration_email_already_exists.json');
+        setupHttpClientError400();
+        // act
+        final sut = dataSource.checkField;
+        // assert
+        expect(
+            () async => await sut(emailAddress: emailAddress, cpf: cpf),
+            throwsA(isA<ApiProviderException>()
+                .having((e) => e.bodyContent, 'Got bodyContent', bodyContent)));
+      });
     });
   });
 }
