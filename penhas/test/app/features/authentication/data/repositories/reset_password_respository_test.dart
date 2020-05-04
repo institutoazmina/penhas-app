@@ -41,14 +41,14 @@ class ChangePasswordRepository
   @override
   Future<Either<Failure, ResetPasswordResponseEntity>> request(
       {EmailAddress emailAddress}) async {
-    final ResetPasswordResponseEntity result =
-        await _dataSource.request(emailAddress: emailAddress);
-
-    return right(result);
-  }
-
-  void xuxa(ResetPasswordResponseEntity v) {
-    print(v);
+    try {
+      final ResetPasswordResponseEntity result =
+          await _dataSource.request(emailAddress: emailAddress);
+      return right(result);
+    } catch (e) {
+      final fail = await _handleError(e);
+      return left(fail);
+    }
   }
 
   @override
@@ -65,25 +65,26 @@ class ChangePasswordRepository
       );
       return right(ValidField());
     } catch (e) {
-      return _handleError(e);
+      final fail = await _handleError(e);
+      return left(fail);
     }
   }
 
-  Future<Either<Failure, ValidField>> _handleError(Object error) async {
+  Future<Failure> _handleError(Object error) async {
     if (await _networkInfo.isConnected == false) {
-      return left(InternetConnectionFailure());
+      return InternetConnectionFailure();
     }
 
     if (error is ApiProviderException) {
-      return left(ServerSideFormFieldValidationFailure(
+      return ServerSideFormFieldValidationFailure(
         error: error.bodyContent['error'],
         field: error.bodyContent['field'],
         reason: error.bodyContent['reason'],
         message: error.bodyContent['message'],
-      ));
+      );
     }
 
-    return left(ServerFailure());
+    return ServerFailure();
   }
 }
 
@@ -184,6 +185,29 @@ void main() {
             digits: bodyContent['digits'],
             ttl: bodyContent['ttl'],
             ttlRetry: bodyContent['min_ttl_retry'],
+          )),
+        );
+      });
+      test(
+          'should return ServerSideFormFieldValidationFailure for non successfull change password request',
+          () async {
+        // arrange
+        final bodyContent =
+            await JsonUtil.getJson(from: 'authentication/email_not_found.json');
+        mockRequestDataSource()
+            .thenThrow(ApiProviderException(bodyContent: bodyContent));
+        // act
+        final result = await sut.request(
+          emailAddress: emailAddress,
+        );
+        // assert
+        expect(
+          result,
+          left(ServerSideFormFieldValidationFailure(
+            error: bodyContent['error'],
+            field: bodyContent['field'],
+            message: bodyContent['message'],
+            reason: bodyContent['reason'],
           )),
         );
       });

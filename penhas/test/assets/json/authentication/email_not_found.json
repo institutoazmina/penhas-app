@@ -1,0 +1,6 @@
+{
+  "error": "email_not_found",
+  "field": "email",
+  "message": "Não foi encontrado nenhuma conta com esse endereço de e-mail.",
+  "reason": "invalid"
+}
