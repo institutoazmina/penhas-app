@@ -19,7 +19,6 @@ abstract class IAuthenticationDataSource {
   });
 }
 
-@immutable
 class AuthenticationDataSource implements IAuthenticationDataSource {
   final http.Client apiClient;
   final IApiServerConfigure serverConfiguration;
