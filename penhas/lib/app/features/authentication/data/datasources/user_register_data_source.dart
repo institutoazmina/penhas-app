@@ -100,9 +100,8 @@ class UserRegisterDataSource implements IUserRegisterDataSource {
     Birthday birthday,
     Genre genre,
     HumanRace race,
-  }) {
-    // TODO: implement checkField
-    return null;
+  }) async {
+    return ValidField();
   }
 
   Future<Map<String, String>> _setupHttpHeader() async {
@@ -115,6 +114,7 @@ class UserRegisterDataSource implements IUserRegisterDataSource {
 
   Future<Uri> _setupHttpRequest(
       {@required Map<String, String> queryParameters}) async {
+    queryParameters.removeWhere((k, v) => v == null);
     return Uri(
       scheme: serverConfiguration.baseUri.scheme,
       host: serverConfiguration.baseUri.host,

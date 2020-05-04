@@ -6,6 +6,7 @@ import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/authentication/data/datasources/user_register_data_source.dart';
 import 'package:penhas/app/features/authentication/data/models/session_model.dart';
+import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/birthday.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/cpf.dart';
@@ -99,9 +100,7 @@ void main() {
     );
   }
 
-  void setupHttpClientSuccess200() {
-    final bodyContent =
-        JsonUtil.getStringSync(from: 'authentication/login_success.json');
+  void setupHttpClientSuccess200(String bodyContent) {
     when(apiclient.post(any, headers: anyNamed('headers')))
         .thenAnswer((_) async => http.Response(bodyContent, 200));
   }
@@ -113,12 +112,18 @@ void main() {
         .thenAnswer((_) async => http.Response(bodyContent, 400));
   }
 
+  void setupHttpClientRegisterSuccess() {
+    final bodyContent =
+        JsonUtil.getStringSync(from: 'authentication/login_success.json');
+    setupHttpClientSuccess200(bodyContent);
+  }
+
   group('UserRegisterDataSource', () {
     test(
         'should perform a POST with parameters and application/x-www-form-urlencoded header',
         () async {
       // arrange
-      setupHttpClientSuccess200();
+      setupHttpClientRegisterSuccess();
       final headers = await setupHttpHeader();
       final loginUri = await setupHttpRequest(justValidadeField: false);
       // act
@@ -139,7 +144,7 @@ void main() {
       test('should return SessionModel when the response code is 200 (success)',
           () async {
         // arrange
-        setupHttpClientSuccess200();
+        setupHttpClientRegisterSuccess();
         final jsonData =
             await JsonUtil.getJson(from: 'authentication/login_success.json');
         final sessionModel = SessionModel.fromJson(jsonData);
@@ -180,6 +185,19 @@ void main() {
                 race: race),
             throwsA(isA<ApiProviderException>()
                 .having((e) => e.bodyContent, 'Got bodyContent', bodyContent)));
+      });
+    });
+    group('checkField', () {
+      test('should return ValidField when the response code is 200 (success)',
+          () async {
+        // arrange
+        String bodyContent = '{"continue": 1}';
+        setupHttpClientSuccess200(bodyContent);
+        // act
+        final result =
+            await dataSource.checkField(emailAddress: emailAddress, cpf: cpf);
+        // assert
+        expect(result, ValidField());
       });
     });
   });
