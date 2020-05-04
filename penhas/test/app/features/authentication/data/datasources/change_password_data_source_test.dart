@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
+import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/authentication/data/datasources/change_password_data_source.dart';
 import 'package:penhas/app/features/authentication/data/models/password_reset_response_model.dart';
@@ -87,6 +88,24 @@ void main() {
         final result = await dataSource.request(emailAddress: emailAddress);
         // assert
         expect(result, expectedModel);
+      });
+      test(
+          'should throw ApiProviderException when the response code is nonsuccess (non 200)',
+          () async {
+        // arrange
+        final jsonData =
+            JsonUtil.getStringSync(from: 'authentication/email_not_found.json');
+        final bodyContent =
+            await JsonUtil.getJson(from: 'authentication/email_not_found.json');
+        when(mockHttpClient.post(any, headers: anyNamed('headers')))
+            .thenAnswer((_) async => http.Response(jsonData, 400));
+        // act
+        final sut = dataSource.request;
+        // assert
+        expect(
+            () async => await sut(emailAddress: emailAddress),
+            throwsA(isA<ApiProviderException>()
+                .having((e) => e.bodyContent, 'Got bodyContent', bodyContent)));
       });
     });
   });
