@@ -5,7 +5,9 @@ import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/authentication/data/datasources/change_password_data_source.dart';
 import 'package:penhas/app/features/authentication/data/models/password_reset_response_model.dart';
+import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
 
 import '../../../../../utils/json_util.dart';
 
@@ -18,6 +20,8 @@ void main() {
   MockHttpClient mockHttpClient;
   MockApiServerConfigure mockApiServerConfigure;
   EmailAddress emailAddress;
+  Password password;
+  String validToken;
   Uri serverEndpoint;
   String userAgent;
   Map<String, String> httpHeader;
@@ -30,6 +34,9 @@ void main() {
       serverConfiguration: mockApiServerConfigure,
     );
     emailAddress = EmailAddress('valid@email.com');
+    password = Password('my_str0ng_P4ssw@rd');
+    validToken = '666242';
+
     serverEndpoint = Uri.https('api.anyserver.io', '/');
 
     // MockApiServerConfigure configuration
@@ -104,6 +111,80 @@ void main() {
         // assert
         expect(
             () async => await sut(emailAddress: emailAddress),
+            throwsA(isA<ApiProviderException>()
+                .having((e) => e.bodyContent, 'Got bodyContent', bodyContent)));
+      });
+    });
+
+    group('reset', () {
+      setUp(() {
+        queryParameters = {
+          'dry': '0',
+          'app_version': userAgent,
+          'email': emailAddress.rawValue,
+          'password': password.rawValue,
+          'token': validToken,
+        };
+        httpResquest = Uri(
+          scheme: serverEndpoint.scheme,
+          host: serverEndpoint.host,
+          path: '/reset-password/write-new',
+          queryParameters: queryParameters,
+        );
+      });
+
+      test(
+          'should perform a POST with parameters and application/x-www-form-urlencoded header',
+          () async {
+        // arrange
+        final bodyContent = JsonUtil.getStringSync(
+            from: 'authentication/request_reset_password.json');
+        when(mockHttpClient.post(any, headers: anyNamed('headers')))
+            .thenAnswer((_) async => http.Response(bodyContent, 200));
+        // act
+        await dataSource.reset(
+          emailAddress: emailAddress,
+          password: password,
+          resetToken: validToken,
+        );
+        // assert
+        verify(mockHttpClient.post(httpResquest, headers: httpHeader));
+      });
+      test('should return ValidField when the response code is 200 (success)',
+          () async {
+        // arrange
+        final bodyContent = JsonUtil.getStringSync(
+            from: 'authentication/request_reset_password.json');
+        when(mockHttpClient.post(any, headers: anyNamed('headers')))
+            .thenAnswer((_) async => http.Response(bodyContent, 200));
+        // act
+        final result = await dataSource.reset(
+          emailAddress: emailAddress,
+          password: password,
+          resetToken: validToken,
+        );
+        // assert
+        expect(result, ValidField());
+      });
+      test(
+          'should throw ApiProviderException when the response code is nonsuccess (non 200)',
+          () async {
+        // arrange
+        final jsonData =
+            JsonUtil.getStringSync(from: 'authentication/email_not_found.json');
+        final bodyContent =
+            await JsonUtil.getJson(from: 'authentication/email_not_found.json');
+        when(mockHttpClient.post(any, headers: anyNamed('headers')))
+            .thenAnswer((_) async => http.Response(jsonData, 400));
+        // act
+        final sut = dataSource.reset;
+        // assert
+        expect(
+            () async => await sut(
+                  emailAddress: emailAddress,
+                  password: password,
+                  resetToken: validToken,
+                ),
             throwsA(isA<ApiProviderException>()
                 .having((e) => e.bodyContent, 'Got bodyContent', bodyContent)));
       });

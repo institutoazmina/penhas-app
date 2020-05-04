@@ -55,9 +55,30 @@ class ChangePasswordDataSource implements IChangePasswordDataSource {
 
   @override
   Future<ValidField> reset(
-      {EmailAddress emailAddress, Password password, String resetToken}) {
-    // TODO: implement reset
-    return null;
+      {EmailAddress emailAddress, Password password, String resetToken}) async {
+    final userAgent = await serverConfiguration.userAgent();
+    final Map<String, String> queryParameters = {
+      'dry': '0',
+      'app_version': userAgent,
+      'email': emailAddress.rawValue,
+      'password': password.rawValue,
+      'token': resetToken,
+    };
+
+    final httpHeader = await _setupHttpHeader();
+    final httpRequest = Uri(
+      scheme: serverConfiguration.baseUri.scheme,
+      host: serverConfiguration.baseUri.host,
+      path: '/reset-password/write-new',
+      queryParameters: queryParameters,
+    );
+
+    final response = await apiClient.post(httpRequest, headers: httpHeader);
+    if (response.statusCode == HttpStatus.ok) {
+      return ValidField();
+    } else {
+      throw ApiProviderException(bodyContent: json.decode(response.body));
+    }
   }
 
   Future<Map<String, String>> _setupHttpHeader() async {
