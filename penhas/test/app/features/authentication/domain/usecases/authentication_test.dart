@@ -18,7 +18,8 @@ void main() {
   group('authentication with email and password', () {
     setUp(() {
       mockAuthenticatonRepository = MockAuthenticatonRepository();
-      useCase = AuthenticationWithEmailAndPassword(mockAuthenticatonRepository);
+      useCase = AuthenticationWithEmailAndPassword(
+          authenticationRepository: mockAuthenticatonRepository);
     });
 
     final successSession =
@@ -27,13 +28,14 @@ void main() {
     final password = Password('_myStr0ngP@ssw0rd');
 
     test('should get success response', () async {
+      // arrange
       when(mockAuthenticatonRepository.signInWithEmailAndPassword(
         emailAddress: anyNamed('emailAddress'),
         password: anyNamed('password'),
       )).thenAnswer((_) async => right(successSession));
-
+      // act
       final result = await useCase(email: emailAddress, password: password);
-
+      // assert
       expect(result, right(successSession));
       verify(mockAuthenticatonRepository.signInWithEmailAndPassword(
           emailAddress: emailAddress, password: password));
