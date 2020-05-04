@@ -84,27 +84,39 @@ class MockChangePasswordDataSource extends Mock
 class MockNetworkInfo extends Mock implements INetworkInfo {}
 
 void main() {
-  setUp(() {});
+  IChangePasswordDataSource dataSource;
+  INetworkInfo networkInfo;
+  ChangePasswordRepository sut;
+  EmailAddress emailAddress;
+  Password password;
+  String resetToken;
+
+  setUp(() {
+    dataSource = MockChangePasswordDataSource();
+    networkInfo = MockNetworkInfo();
+    sut = ChangePasswordRepository(
+        changePasswordDataSource: dataSource, networkInfo: networkInfo);
+    emailAddress = EmailAddress('valid@email.com');
+    password = Password('my_new_str0ng_P4ssw0rd');
+    resetToken = '666242';
+  });
+
+  PostExpectation<dynamic> mockResetDataSource() {
+    return when(dataSource.reset(
+        emailAddress: anyNamed('emailAddress'),
+        password: anyNamed('password'),
+        resetToken: anyNamed('resetToken')));
+  }
 
   group('ChangePasswordRepository', () {
+    setUp(() {
+      when(networkInfo.isConnected).thenAnswer((_) async => true);
+    });
     group('reset', () {
       test('should return ValidField for successfull password changed',
           () async {
         // arrange
-        final IChangePasswordDataSource dataSource =
-            MockChangePasswordDataSource();
-        final INetworkInfo networkInfo = MockNetworkInfo();
-        final sut = ChangePasswordRepository(
-            changePasswordDataSource: dataSource, networkInfo: networkInfo);
-        final EmailAddress emailAddress = EmailAddress('valid@email.com');
-        final Password password = Password('my_new_str0ng_P4ssw0rd');
-        final String resetToken = '666242';
-        when(networkInfo.isConnected).thenAnswer((_) async => true);
-        when(dataSource.reset(
-                emailAddress: anyNamed('emailAddress'),
-                password: anyNamed('password'),
-                resetToken: anyNamed('resetToken')))
-            .thenAnswer((_) async => ValidField());
+        mockResetDataSource().thenAnswer((_) async => ValidField());
         // act
         final result = await sut.reset(
           emailAddress: emailAddress,
@@ -118,23 +130,10 @@ void main() {
           'should return ServerSideFormFieldValidationFailure for non successfull change password request',
           () async {
         // arrange
-        final IChangePasswordDataSource dataSource =
-            MockChangePasswordDataSource();
-        final INetworkInfo networkInfo = MockNetworkInfo();
         final bodyContent = await JsonUtil.getJson(
             from: 'authentication/invalid_token_error.json');
-        when(networkInfo.isConnected).thenAnswer((_) async => true);
-        when(dataSource.reset(
-                emailAddress: anyNamed('emailAddress'),
-                password: anyNamed('password'),
-                resetToken: anyNamed('resetToken')))
+        mockResetDataSource()
             .thenThrow(ApiProviderException(bodyContent: bodyContent));
-
-        final sut = ChangePasswordRepository(
-            changePasswordDataSource: dataSource, networkInfo: networkInfo);
-        final EmailAddress emailAddress = EmailAddress('valid@email.com');
-        final Password password = Password('my_new_str0ng_P4ssw0rd');
-        final String resetToken = '666242';
         // act
         final result = await sut.reset(
           emailAddress: emailAddress,
@@ -142,8 +141,6 @@ void main() {
           resetToken: resetToken,
         );
         // assert
-        expect(result.isLeft(), true);
-
         expect(
           result,
           left(ServerSideFormFieldValidationFailure(
