@@ -6,6 +6,8 @@ import 'package:penhas/app/core/error/failures.dart';
 @immutable
 class Password extends Equatable {
   final Either<Failure, String> value;
+  static const _minLength = 6;
+  static const _maxLength = 200;
 
   String get rawValue => value.getOrElse(() => null);
   bool get isValid => value.isRight();
@@ -20,7 +22,10 @@ class Password extends Equatable {
   List<Object> get props => [value];
 
   static Either<Failure, String> _validate(String input) {
-    if (input == null || input.isEmpty) {
+    if (input == null ||
+        input.isEmpty ||
+        input.length < _minLength ||
+        input.length > _maxLength) {
       return left(PasswordInvalidFailure());
     }
 
