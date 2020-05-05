@@ -1,5 +1,4 @@
-import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
@@ -10,12 +9,15 @@ part 'sign_in_controller.g.dart';
 
 const String WARNING_INVALID_EMAIL = 'Endereço de email inválido';
 const String WARNING_INVALID_PASSWORD =
-    'Senha inválido, favor informar uma senha válida';
+    'Senha precisa ter no mínimo 6 caracteres';
 const String ERROR_SERVER_FAILURE =
     "O servidor está com problema neste momento, tente novamente.";
 const String ERROR_INTERNET_CONNECTION_FAILURE =
     "O servidor está inacessível, o PenhaS está com acesso à Internet?";
-const String ERROR_USER_AUTHENTICATION_FAILURE = "";
+const String ERROR_USER_AUTHENTICATION_FAILURE =
+    "Usuário ou senha inválida, favor verificar!";
+const String INVALID_FIELD_TO_LOGIN =
+    'E-mail e senha precisam estarem corretos para continuar.';
 
 class SignInController extends _SignInControllerBase with _$SignInController {
   SignInController(IAuthenticationRepository repository) : super(repository);
@@ -35,23 +37,21 @@ abstract class _SignInControllerBase with Store {
   String warningPassword = "";
 
   @observable
-  String errorMessage = "";
-
-  @observable
   String errorAuthenticationMessage = "";
-
-  @computed
-  bool get hasValidEmailAndPassword =>
-      _emailAddress.isValid && _password.isValid;
 
   @action
   void setEmail(String address) {
     _emailAddress = EmailAddress(address);
 
     warningEmail = _emailAddress.value.fold(
-      (failure) => WARNING_INVALID_EMAIL,
-      (_) => "",
+      (failure) => address.length == 0 ? '' : WARNING_INVALID_EMAIL,
+      (_) => '',
     );
+  }
+
+  @action
+  void resetErrorMessage() {
+    _setErrorMessage("");
   }
 
   @action
@@ -59,38 +59,55 @@ abstract class _SignInControllerBase with Store {
     _password = Password(password);
 
     warningPassword = _password.value.fold(
-      (failure) => WARNING_INVALID_PASSWORD,
-      (_) => "",
+      (failure) => password.length == 0 ? '' : WARNING_INVALID_PASSWORD,
+      (_) => '',
     );
   }
 
   @action
   Future<void> signInWithEmailAndPasswordPressed() async {
-    if (!hasValidEmailAndPassword) {
+    if (!_emailAddress.isValid || !_password.isValid) {
+      errorAuthenticationMessage = INVALID_FIELD_TO_LOGIN;
       return;
     }
 
-    var foo = await repository.signInWithEmailAndPassword(
+    final response = await repository.signInWithEmailAndPassword(
       emailAddress: _emailAddress,
       password: _password,
     );
 
-    foo.fold((failure) => _mapFailureToMessage(failure), (session) => "");
+    response.fold(
+      (failure) => _mapFailureToMessage(failure),
+      (session) => print("ola mundo!"),
+    );
+  }
+
+  @action
+  Future<void> registerUserPressed() async {
+    Modular.to.pushNamed('/authentication/signup');
   }
 
   void _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
-      case ServerFailure:
-        errorMessage = ERROR_SERVER_FAILURE;
-        break;
       case InternetConnectionFailure:
-        errorMessage = ERROR_INTERNET_CONNECTION_FAILURE;
+        _setErrorMessage(ERROR_INTERNET_CONNECTION_FAILURE);
+        break;
+      case ServerFailure:
+        _setErrorMessage(ERROR_SERVER_FAILURE);
         break;
       case UserAuthenticationFailure:
-        errorAuthenticationMessage = ERROR_USER_AUTHENTICATION_FAILURE;
+        _setErrorMessage(ERROR_USER_AUTHENTICATION_FAILURE);
+        break;
+      case ServerSideFormFieldValidationFailure:
+        final foo = failure as ServerSideFormFieldValidationFailure;
+        _setErrorMessage(foo.message);
         break;
       default:
         throw UnsupportedError;
     }
+  }
+
+  void _setErrorMessage(String msg) {
+    errorAuthenticationMessage = msg;
   }
 }

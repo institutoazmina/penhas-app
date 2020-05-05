@@ -9,13 +9,6 @@ part of 'sign_in_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$SignInController on _SignInControllerBase, Store {
-  Computed<bool> _$hasValidEmailAndPasswordComputed;
-
-  @override
-  bool get hasValidEmailAndPassword => (_$hasValidEmailAndPasswordComputed ??=
-          Computed<bool>(() => super.hasValidEmailAndPassword))
-      .value;
-
   final _$warningEmailAtom = Atom(name: '_SignInControllerBase.warningEmail');
 
   @override
@@ -51,23 +44,6 @@ mixin _$SignInController on _SignInControllerBase, Store {
     }, _$warningPasswordAtom, name: '${_$warningPasswordAtom.name}_set');
   }
 
-  final _$errorMessageAtom = Atom(name: '_SignInControllerBase.errorMessage');
-
-  @override
-  String get errorMessage {
-    _$errorMessageAtom.context.enforceReadPolicy(_$errorMessageAtom);
-    _$errorMessageAtom.reportObserved();
-    return super.errorMessage;
-  }
-
-  @override
-  set errorMessage(String value) {
-    _$errorMessageAtom.context.conditionallyRunInAction(() {
-      super.errorMessage = value;
-      _$errorMessageAtom.reportChanged();
-    }, _$errorMessageAtom, name: '${_$errorMessageAtom.name}_set');
-  }
-
   final _$errorAuthenticationMessageAtom =
       Atom(name: '_SignInControllerBase.errorAuthenticationMessage');
 
@@ -97,6 +73,14 @@ mixin _$SignInController on _SignInControllerBase, Store {
         .run(() => super.signInWithEmailAndPasswordPressed());
   }
 
+  final _$registerUserPressedAsyncAction = AsyncAction('registerUserPressed');
+
+  @override
+  Future<void> registerUserPressed() {
+    return _$registerUserPressedAsyncAction
+        .run(() => super.registerUserPressed());
+  }
+
   final _$_SignInControllerBaseActionController =
       ActionController(name: '_SignInControllerBase');
 
@@ -105,6 +89,16 @@ mixin _$SignInController on _SignInControllerBase, Store {
     final _$actionInfo = _$_SignInControllerBaseActionController.startAction();
     try {
       return super.setEmail(address);
+    } finally {
+      _$_SignInControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void resetErrorMessage() {
+    final _$actionInfo = _$_SignInControllerBaseActionController.startAction();
+    try {
+      return super.resetErrorMessage();
     } finally {
       _$_SignInControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -123,7 +117,7 @@ mixin _$SignInController on _SignInControllerBase, Store {
   @override
   String toString() {
     final string =
-        'warningEmail: ${warningEmail.toString()},warningPassword: ${warningPassword.toString()},errorMessage: ${errorMessage.toString()},errorAuthenticationMessage: ${errorAuthenticationMessage.toString()},hasValidEmailAndPassword: ${hasValidEmailAndPassword.toString()}';
+        'warningEmail: ${warningEmail.toString()},warningPassword: ${warningPassword.toString()},errorAuthenticationMessage: ${errorAuthenticationMessage.toString()}';
     return '{$string}';
   }
 }

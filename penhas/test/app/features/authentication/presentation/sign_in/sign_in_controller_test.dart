@@ -53,7 +53,7 @@ void main() {
 
     test('should show warning message for a invalid password', () {
       // arrange
-      var invalidPassword = '';
+      var invalidPassword = '1';
       // act
       sut.setPassword(invalidPassword);
       // assert
@@ -69,36 +69,6 @@ void main() {
       sut.setPassword(validPassword);
       // assert
       expect(sut.warningPassword, '');
-    });
-
-    test(
-        'should hasValidEmailAndPassword be false for invalid password and/or email',
-        () {
-      // arrange
-      var invalidEmailAddress = 'myaddress';
-      var invalidPassword = '';
-      // act
-      sut.setPassword(invalidPassword);
-      sut.setEmail(invalidEmailAddress);
-      // assert
-      expect(sut.hasValidEmailAndPassword, false);
-    });
-
-    test('should hasValidEmailAndPassword be false for on start', () {
-      expect(sut.hasValidEmailAndPassword, false);
-    });
-
-    test(
-        'should hasValidEmailAndPassword be true for valid password and/or email',
-        () {
-      // arrange
-      var validPassword = 'sTr0ng';
-      var validEmailAddress = 'my_email@app.com';
-      // act
-      sut.setPassword(validPassword);
-      sut.setEmail(validEmailAddress);
-      // assert
-      expect(sut.hasValidEmailAndPassword, true);
     });
 
     void mockAuthenticationFailure(Failure failure) {
@@ -127,7 +97,7 @@ void main() {
       sut.setEmail(validEmailAddress);
       await sut.signInWithEmailAndPasswordPressed();
       // assert
-      expect(sut.errorMessage, errorMessage);
+      expect(sut.errorAuthenticationMessage, errorMessage);
     }
 
     test("should show SERVER_FAILURE message when got ServerFailure", () async {

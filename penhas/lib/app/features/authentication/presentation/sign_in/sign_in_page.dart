@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mobx/mobx.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
 import 'package:penhas/app/shared/design_system/widget.dart';
@@ -16,12 +18,31 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends ModularState<SignInPage, SignInController> {
-  //use 'controller' variable to access controller
+  List<ReactionDisposer> _disposers;
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   bool _passwordVisible = true;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _disposers ??= [
+      reaction((_) => controller.errorAuthenticationMessage, (String message) {
+        if (message.isNotEmpty) {
+          _scaffoldKey.currentState.showSnackBar(
+            SnackBar(
+              content: Text(message),
+            ),
+          );
+          controller.resetErrorMessage();
+        }
+      }),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.transparent,
       body: SizedBox.expand(
         child: Container(
@@ -35,9 +56,15 @@ class _SignInPageState extends ModularState<SignInPage, SignInController> {
                   Icon(DesignSystemLogo.penhasLogo,
                       color: Colors.white, size: 60),
                   SizedBox(height: 72.0),
-                  SizedBox(height: 40.0, child: _buildUserField()),
+                  Observer(builder: (_) {
+                    return _buildUserField();
+                  }),
                   SizedBox(height: 24.0),
-                  SizedBox(height: 40.0, child: _buildPasswordField()),
+                  Observer(
+                    builder: (_) {
+                      return _buildPasswordField();
+                    },
+                  ),
                   SizedBox(height: 24.0),
                   SizedBox(height: 40.0, child: _buildLoginButton()),
                   SizedBox(height: 24.0),
@@ -53,10 +80,39 @@ class _SignInPageState extends ModularState<SignInPage, SignInController> {
     );
   }
 
+  @override
+  void dispose() {
+    _disposers.forEach((d) => d());
+    super.dispose();
+  }
+
   void _toggle() {
     setState(() {
       _passwordVisible = !_passwordVisible;
     });
+  }
+
+  TextField _buildUserField() {
+    return TextField(
+      keyboardType: TextInputType.emailAddress,
+      style: TextStyle(color: Colors.white),
+      onChanged: controller.setEmail,
+      autofocus: false,
+      decoration: InputDecoration(
+        enabledBorder:
+            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
+        focusedBorder:
+            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
+        labelText: "E-mail".i18n,
+        errorText:
+            controller.warningEmail.isEmpty ? null : controller.warningEmail,
+        labelStyle: TextStyle(color: Colors.white),
+        hintText: "Digite seu e-mail".i18n,
+        hintStyle: TextStyle(color: Colors.white),
+        contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
+        border: OutlineInputBorder(),
+      ),
+    );
   }
 
   TextFormField _buildPasswordField() {
@@ -64,12 +120,16 @@ class _SignInPageState extends ModularState<SignInPage, SignInController> {
       obscureText: _passwordVisible,
       keyboardType: TextInputType.text,
       autocorrect: false,
+      onChanged: controller.setPassword,
       style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
         enabledBorder:
             OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
         focusedBorder:
             OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
+        errorText: controller.warningPassword.isEmpty
+            ? null
+            : controller.warningPassword,
         labelText: "Senha".i18n,
         labelStyle: TextStyle(color: Colors.white),
         border: OutlineInputBorder(),
@@ -85,29 +145,9 @@ class _SignInPageState extends ModularState<SignInPage, SignInController> {
     );
   }
 
-  TextField _buildUserField() {
-    return TextField(
-      keyboardType: TextInputType.emailAddress,
-      style: TextStyle(color: Colors.white),
-      autofocus: false,
-      decoration: InputDecoration(
-        enabledBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        focusedBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        labelText: "E-mail".i18n,
-        labelStyle: TextStyle(color: Colors.white),
-        hintText: "Digite seu e-mail".i18n,
-        hintStyle: TextStyle(color: Colors.white),
-        contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
-        border: OutlineInputBorder(),
-      ),
-    );
-  }
-
   RaisedButton _buildLoginButton() {
     return RaisedButton(
-      onPressed: () {},
+      onPressed: () => controller.signInWithEmailAndPasswordPressed(),
       elevation: 0,
       color: DesignSystemColors.ligthPurple,
       child: Text(
@@ -126,7 +166,9 @@ class _SignInPageState extends ModularState<SignInPage, SignInController> {
 
   RaisedButton _buildRegisterButton() {
     return RaisedButton(
-      onPressed: () {},
+      onPressed: () {
+        controller.registerUserPressed();
+      },
       elevation: 0,
       color: Colors.transparent,
       child: Text(
