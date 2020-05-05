@@ -23,21 +23,12 @@ class AuthenticationRepository implements IAuthenticationRepository {
     EmailAddress emailAddress,
     Password password,
   }) async {
-    return _mapFromDataSource(
-      emailAddress: emailAddress,
-      password: password,
-    );
-  }
-
-  Future<Either<Failure, SessionEntity>> _mapFromDataSource({
-    EmailAddress emailAddress,
-    Password password,
-  }) async {
     try {
       final resultado = await dataSource.signInWithEmailAndPassword(
         emailAddress: emailAddress,
         password: password,
       );
+
       return right(resultado);
     } catch (error) {
       return _handleError(error);
@@ -49,9 +40,19 @@ class AuthenticationRepository implements IAuthenticationRepository {
       return (left(InternetConnectionFailure()));
     }
 
-    if (error is ApiProviderException &&
-        error.bodyContent['error'] == 'wrongpassword') {
-      return left(UserAuthenticationFailure());
+    if (error is ApiProviderException) {
+      if (error.bodyContent['error'] == 'wrongpassword') {
+        return left(UserAuthenticationFailure());
+      } else {
+        return left(
+          ServerSideFormFieldValidationFailure(
+            error: error.bodyContent['error'],
+            field: error.bodyContent['field'],
+            message: error.bodyContent['message'],
+            reason: error.bodyContent['reason'],
+          ),
+        );
+      }
     }
 
     return left(ServerFailure());
