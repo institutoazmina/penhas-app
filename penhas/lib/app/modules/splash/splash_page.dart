@@ -19,7 +19,7 @@ class _SplashPageState extends ModularState<SplashPage, SplashController> {
           child: CircularProgressIndicator(
         backgroundColor: Colors.white,
       )),
-      color: DesignSystemColors.LigthPurple,
+      color: DesignSystemColors.ligthPurple,
     );
   }
 }

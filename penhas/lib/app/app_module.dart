@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 import 'package:penhas/app/modules/authentication/authentication_module.dart';
 import 'package:penhas/app/modules/splash/splash_controller.dart';
 import 'package:penhas/app/modules/splash/splash_module.dart';
@@ -12,13 +13,13 @@ class AppModule extends MainModule {
   List<Bind> get binds => [
         Bind((i) => AppController()),
         Bind((i) => SplashController()),
-        Bind((i) => AuthenticationModule()),
+        Bind((i) => SignInModule()),
       ];
 
   @override
   List<Router> get routers => [
         Router('/', module: SplashModule()),
-        Router('/authentication', module: AuthenticationModule()),
+        Router('/authentication', module: SignInModule()),
       ];
 
   @override

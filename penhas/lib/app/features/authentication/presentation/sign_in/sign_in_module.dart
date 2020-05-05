@@ -19,7 +19,7 @@ class SignInModule extends ChildModule {
         Bind<IAuthenticationDataSource>((i) => AuthenticationDataSource(
             apiClient: i.get<http.Client>(), serverConfiguration: null)),
         Bind<IApiServerConfigure>((i) => ApiServerConfigure(baseUri: null)),
-        Bind((i) => http.Client),
+        Bind<http.Client>((i) => http.Client()),
         Bind<INetworkInfo>((i) => NetworkInfo(i.get<DataConnectionChecker>())),
         Bind((i) => DataConnectionChecker()),
       ];
