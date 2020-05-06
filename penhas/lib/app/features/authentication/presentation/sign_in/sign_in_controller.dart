@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -67,7 +68,7 @@ abstract class _SignInControllerBase with Store {
   @action
   Future<void> signInWithEmailAndPasswordPressed() async {
     if (!_emailAddress.isValid || !_password.isValid) {
-      errorAuthenticationMessage = INVALID_FIELD_TO_LOGIN;
+      _setErrorMessage(INVALID_FIELD_TO_LOGIN);
       return;
     }
 
@@ -78,7 +79,10 @@ abstract class _SignInControllerBase with Store {
 
     response.fold(
       (failure) => _mapFailureToMessage(failure),
-      (session) => print("ola mundo!"),
+      (session) => throw RedirectException(
+        'signInWithEmailAndPasswordPressed não implementada',
+        [],
+      ),
     );
   }
 
@@ -99,8 +103,8 @@ abstract class _SignInControllerBase with Store {
         _setErrorMessage(ERROR_USER_AUTHENTICATION_FAILURE);
         break;
       case ServerSideFormFieldValidationFailure:
-        final foo = failure as ServerSideFormFieldValidationFailure;
-        _setErrorMessage(foo.message);
+        final msg = failure as ServerSideFormFieldValidationFailure;
+        _setErrorMessage(msg.message);
         break;
       default:
         throw UnsupportedError;

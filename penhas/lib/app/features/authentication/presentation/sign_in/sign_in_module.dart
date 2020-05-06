@@ -13,13 +13,17 @@ class SignInModule extends ChildModule {
   @override
   List<Bind> get binds => [
         Bind((i) => SignInController(i.get<IAuthenticationRepository>())),
-        Bind<IAuthenticationRepository>((i) => AuthenticationRepository(
+        Bind<IAuthenticationRepository>(
+          (i) => AuthenticationRepository(
             dataSource: i.get<IAuthenticationDataSource>(),
-            networkInfo: i.get<INetworkInfo>())),
+            networkInfo: i.get<INetworkInfo>(),
+          ),
+        ),
         Bind<IAuthenticationDataSource>(
           (i) => AuthenticationDataSource(
-              apiClient: i.get<http.Client>(),
-              serverConfiguration: i.get<IApiServerConfigure>()),
+            apiClient: i.get<http.Client>(),
+            serverConfiguration: i.get<IApiServerConfigure>(),
+          ),
         ),
       ];
 
