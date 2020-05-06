@@ -120,8 +120,9 @@ abstract class _SignUpControllerBase with Store {
 
     final response = await _progress;
     response.fold(
-      (failure) => _mapFailureToMessage(failure),
-      (session) => _forwardToStep2(),
+      // (failure) => _mapFailureToMessage(failure),
+      (failure) => _forwardToStep2(),
+      (session) => UnimplementedError(),
     );
   }
 
