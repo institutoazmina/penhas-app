@@ -24,6 +24,12 @@ class Cep extends Equatable {
       return left(CepInvalidFailure());
     }
 
-    return right(input);
+    var numbers = input.replaceAll(RegExp(r'\D'), '');
+
+    if (numbers.length < 8) {
+      return left(CepInvalidFailure());
+    }
+
+    return right(numbers);
   }
 }

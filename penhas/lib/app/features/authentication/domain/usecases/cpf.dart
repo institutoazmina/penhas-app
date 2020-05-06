@@ -1,3 +1,4 @@
+import 'package:cpfcnpj/cpfcnpj.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
@@ -20,10 +21,12 @@ class Cpf extends Equatable {
   List<Object> get props => [value];
 
   static Either<Failure, String> _validate(String input) {
-    if (input == null || input.isEmpty) {
+    if (!CPF.isValid(input)) {
       return left(CpfInvalidFailure());
     }
 
-    return right(input);
+    final cleared = input.replaceAll('.', '').replaceAll('-', '');
+
+    return right(cleared);
   }
 }
