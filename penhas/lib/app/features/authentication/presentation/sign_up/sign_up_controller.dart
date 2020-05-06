@@ -1,5 +1,5 @@
-import 'dart:io';
 import 'package:dartz/dartz.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
@@ -54,7 +54,6 @@ abstract class _SignUpControllerBase with Store {
 
   @computed
   StoreState get currentState {
-    print('***currentState***');
     if (_progress == null || _progress.status == FutureStatus.rejected) {
       return StoreState.initial;
     }
@@ -120,14 +119,14 @@ abstract class _SignUpControllerBase with Store {
     );
 
     final response = await _progress;
-
     response.fold(
       (failure) => _mapFailureToMessage(failure),
-      (session) => throw RedirectException(
-        'nextStepPressed não implementada',
-        [],
-      ),
+      (session) => _forwardToStep2(),
     );
+  }
+
+  void _forwardToStep2() {
+    Modular.to.pushNamed('/authentication/signup/step2');
   }
 
   bool _isValidToProceed() {
@@ -164,7 +163,6 @@ abstract class _SignUpControllerBase with Store {
   }
 
   _mapFailureToMessage(Failure failure) {
-    print(failure);
     switch (failure.runtimeType) {
       case InternetConnectionFailure:
         _setErrorMessage(ERROR_INTERNET_CONNECTION_FAILURE);

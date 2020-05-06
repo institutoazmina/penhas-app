@@ -39,7 +39,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController> {
     super.didChangeDependencies();
     _disposers ??= [
       _showErrorMessage(),
-      _showProgress(),
+      // _showProgress(),
     ];
   }
 
@@ -54,7 +54,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController> {
     return GestureDetector(
       onPanDown: (_) {
         FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus) {
+        if (currentFocus != null && !currentFocus.hasPrimaryFocus) {
           currentFocus.unfocus();
         }
       },
@@ -233,7 +233,11 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController> {
           _onLoading();
           break;
         case StoreState.loaded:
-          Navigator.pop(_scaffoldKey.currentContext);
+          final currentContext = _scaffoldKey.currentContext;
+          if (currentContext != null) {
+            Navigator.pop(currentContext);
+          }
+
           break;
       }
     });
@@ -245,12 +249,17 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return Dialog(
-          child: new Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              new CircularProgressIndicator(),
-              new Text("Loading"),
-            ],
+          child: SizedBox(
+            height: 80,
+            width: 100,
+            child: Row(
+              children: [
+                SizedBox(width: 18),
+                CircularProgressIndicator(),
+                SizedBox(width: 18),
+                Text("Processando"),
+              ],
+            ),
           ),
         );
       },

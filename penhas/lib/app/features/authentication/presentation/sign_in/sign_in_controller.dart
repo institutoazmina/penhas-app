@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -79,10 +78,7 @@ abstract class _SignInControllerBase with Store {
 
     response.fold(
       (failure) => _mapFailureToMessage(failure),
-      (session) => throw RedirectException(
-        'signInWithEmailAndPasswordPressed não implementada',
-        [],
-      ),
+      (session) => UnimplementedError(),
     );
   }
 
