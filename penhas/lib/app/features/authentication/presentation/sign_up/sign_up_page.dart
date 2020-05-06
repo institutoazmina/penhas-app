@@ -82,7 +82,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController> {
                       'Para sua segurança pedimos aos nossos usuários o CPF.',
                       style: TextStyle(
                         fontSize: 16.0,
-                        color: Colors.white60,
+                        color: Colors.white70,
                       ),
                       textAlign: TextAlign.center,
                     ),

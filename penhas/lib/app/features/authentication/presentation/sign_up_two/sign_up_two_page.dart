@@ -72,7 +72,7 @@ class _SignUpTwoPageState
                       'Nos conte um pouco mais sobre você',
                       style: TextStyle(
                         fontSize: 16.0,
-                        color: Colors.white60,
+                        color: Colors.white70,
                       ),
                       textAlign: TextAlign.center,
                     ),

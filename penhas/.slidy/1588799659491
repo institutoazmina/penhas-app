@@ -1,0 +1,5 @@
+lib/app/features/authentication/presentation/reset_password/reset_password_module.dart
+lib/app/features/authentication/presentation/reset_password/reset_password_page.dart
+test/app/features/authentication/presentation/reset_password/reset_password_page_test.dart
+lib/app/features/authentication/presentation/reset_password/reset_password_controller.dart
+test/app/features/authentication/presentation/reset_password/reset_password_controller_test.dart

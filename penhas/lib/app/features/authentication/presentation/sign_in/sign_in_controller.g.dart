@@ -81,6 +81,14 @@ mixin _$SignInController on _SignInControllerBase, Store {
         .run(() => super.registerUserPressed());
   }
 
+  final _$resetPasswordPressedAsyncAction = AsyncAction('resetPasswordPressed');
+
+  @override
+  Future<void> resetPasswordPressed() {
+    return _$resetPasswordPressedAsyncAction
+        .run(() => super.resetPasswordPressed());
+  }
+
   final _$_SignInControllerBaseActionController =
       ActionController(name: '_SignInControllerBase');
 

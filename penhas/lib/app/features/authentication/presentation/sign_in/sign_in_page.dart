@@ -184,7 +184,7 @@ class _SignInPageState extends ModularState<SignInPage, SignInController> {
 
   RaisedButton _buildResetPasswordButton() {
     return RaisedButton(
-      onPressed: () {},
+      onPressed: () => controller.resetPasswordPressed(),
       elevation: 0,
       color: Colors.transparent,
       child: Text(

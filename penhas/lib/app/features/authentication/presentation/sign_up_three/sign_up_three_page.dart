@@ -66,7 +66,7 @@ class _SignUpThreePageState
                     height: 78.0,
                     child: Text(
                       'Informe um email e de defina uma senha segura. A senha precisa ter no mínmo 6 caracteres, com letra, números e caracteres espcial.',
-                      style: TextStyle(fontSize: 16.0, color: Colors.white60),
+                      style: TextStyle(fontSize: 16.0, color: Colors.white70),
                       textAlign: TextAlign.center,
                     ),
                   ),

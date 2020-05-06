@@ -87,6 +87,11 @@ abstract class _SignInControllerBase with Store {
     Modular.to.pushNamed('/authentication/signup');
   }
 
+  @action
+  Future<void> resetPasswordPressed() async {
+    Modular.to.pushNamed('/authentication/reset_password');
+  }
+
   void _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
       case InternetConnectionFailure:
