@@ -67,7 +67,7 @@ class _SignUpTwoPageState
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   SizedBox(
-                    height: 48.0,
+                    height: 78.0,
                     child: Text(
                       'Nos conte um pouco mais sobre você',
                       style: TextStyle(
@@ -77,7 +77,7 @@ class _SignUpTwoPageState
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  SizedBox(height: 48.0),
+                  SizedBox(height: 22.0),
                   Observer(builder: (_) {
                     return _buildInputField(
                       labelText: 'Apelido',

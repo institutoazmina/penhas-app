@@ -77,7 +77,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   SizedBox(
-                    height: 48.0,
+                    height: 78.0,
                     child: Text(
                       'Para sua segurança pedimos aos nossos usuários o CPF.',
                       style: TextStyle(
@@ -87,7 +87,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  SizedBox(height: 48.0),
+                  SizedBox(height: 22.0),
                   Observer(builder: (_) {
                     return _buildInputField(
                       labelText: 'Nome completo',
