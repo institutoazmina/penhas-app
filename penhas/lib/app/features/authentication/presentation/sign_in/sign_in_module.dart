@@ -5,6 +5,7 @@ import 'package:penhas/app/features/authentication/data/datasources/authenticati
 import 'package:penhas/app/features/authentication/data/repositories/authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
 import 'package:penhas/app/features/authentication/presentation/reset_password/reset_password_module.dart';
+import 'package:penhas/app/features/authentication/presentation/reset_password_two/reset_password_two_module.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_page.dart';
@@ -36,7 +37,8 @@ class SignInModule extends ChildModule {
         Router('/signup', module: SignUpModule()),
         Router('/signup/step2', module: SignUpTwoModule()),
         Router('/signup/step3', module: SignUpThreeModule()),
-        Router('/reset_password', module: ResetPasswordModule())
+        Router('/reset_password', module: ResetPasswordModule()),
+        Router('/reset_password/step2', module: ResetPasswordTwoModule()),
       ];
 
   static Inject get to => Inject<SignInModule>.of();

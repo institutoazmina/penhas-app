@@ -4,14 +4,15 @@ import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/authentication/data/datasources/change_password_data_source.dart';
 import 'package:penhas/app/features/authentication/data/repositories/change_password_repository.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
-import 'package:penhas/app/features/authentication/presentation/reset_password/reset_password_controller.dart';
+import 'package:penhas/app/features/authentication/presentation/reset_password_two/reset_password_two_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:penhas/app/features/authentication/presentation/reset_password/reset_password_page.dart';
+import 'package:penhas/app/features/authentication/presentation/reset_password_two/reset_password_two_page.dart';
 
-class ResetPasswordModule extends ChildModule {
+class ResetPasswordTwoModule extends ChildModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => ResetPasswordController(i.get<IResetPasswordRepository>())),
+        Bind((i) =>
+            ResetPasswordTwoController(i.get<IResetPasswordRepository>())),
         Bind<IResetPasswordRepository>(
           (i) => ChangePasswordRepository(
             changePasswordDataSource: i.get<IChangePasswordDataSource>(),
@@ -28,8 +29,9 @@ class ResetPasswordModule extends ChildModule {
 
   @override
   List<Router> get routers => [
-        Router(Modular.initialRoute, child: (_, args) => ResetPasswordPage()),
+        Router(Modular.initialRoute,
+            child: (_, args) => ResetPasswordTwoPage()),
       ];
 
-  static Inject get to => Inject<ResetPasswordModule>.of();
+  static Inject get to => Inject<ResetPasswordTwoModule>.of();
 }
