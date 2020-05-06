@@ -6,6 +6,7 @@ import 'package:penhas/app/features/authentication/domain/usecases/full_name.dar
 import 'package:penhas/app/features/authentication/domain/usecases/genre.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/human_race.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
 
 class UserRegisterFormFieldModel {
   Fullname fullname;
@@ -16,4 +17,5 @@ class UserRegisterFormFieldModel {
   EmailAddress emailAddress;
   Genre genre;
   HumanRace race;
+  Password password;
 }

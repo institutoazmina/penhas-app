@@ -8,6 +8,7 @@ import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_page.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_up/sign_up_module.dart';
+import 'package:penhas/app/features/authentication/presentation/sign_up_three/sign_up_three_module.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_up_two/sign_up_two_module.dart';
 
 class SignInModule extends ChildModule {
@@ -32,7 +33,8 @@ class SignInModule extends ChildModule {
   List<Router> get routers => [
         Router(Modular.initialRoute, child: (_, args) => SignInPage()),
         Router('/signup', module: SignUpModule()),
-        Router('/signup/step2', module: SignUpTwoModule())
+        Router('/signup/step2', module: SignUpTwoModule()),
+        Router('/signup/step3', module: SignUpThreeModule()),
       ];
 
   static Inject get to => Inject<SignInModule>.of();
