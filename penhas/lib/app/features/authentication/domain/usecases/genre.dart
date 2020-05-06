@@ -1,4 +1,4 @@
-enum Genre { male, female, transGirl, transBoy, others }
+enum Genre { female, male, transGirl, transBoy, others }
 
 extension EnumGenre on Genre {
   String get rawValue {

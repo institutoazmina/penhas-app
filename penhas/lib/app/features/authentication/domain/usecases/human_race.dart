@@ -1,9 +1,9 @@
 enum HumanRace {
-  white,
-  black,
   brown,
+  black,
   yellow,
   indigenous,
+  white,
   notDeclared,
 }
 
