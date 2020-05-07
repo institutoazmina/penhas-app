@@ -22,6 +22,8 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends ModularState<SignUpPage, SignUpController> {
   List<ReactionDisposer> _disposers;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final GlobalKey navigator = GlobalKey<NavigatorState>();
+
   final format = DateFormat("dd/MM/yyyy");
 
   final _maskCpf = MaskTextInputFormatter(
@@ -233,10 +235,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController> {
           _onLoading();
           break;
         case StoreState.loaded:
-          final currentContext = _scaffoldKey.currentContext;
-          if (currentContext != null) {
-            Navigator.pop(currentContext);
-          }
+          Navigator.of(navigator.currentContext, rootNavigator: true).pop();
 
           break;
       }
@@ -245,7 +244,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController> {
 
   void _onLoading() {
     showDialog(
-      context: _scaffoldKey.currentContext,
+      context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return Dialog(

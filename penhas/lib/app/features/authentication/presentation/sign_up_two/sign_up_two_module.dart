@@ -11,7 +11,8 @@ import 'package:penhas/app/features/authentication/presentation/sign_up_two/sign
 class SignUpTwoModule extends ChildModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => SignUpTwoController(i.get<IUserRegisterRepository>())),
+        Bind((i) =>
+            SignUpTwoController(i.get<IUserRegisterRepository>(), i.args.data)),
         Bind<IUserRegisterRepository>(
           (i) => UserRegisterRepository(
             dataSource: i.get<IUserRegisterDataSource>(),

@@ -29,7 +29,9 @@ class MenuItemModel {
 
 class SignUpTwoController extends _SignUpTwoControllerBase
     with _$SignUpTwoController {
-  SignUpTwoController(IUserRegisterRepository repository) : super(repository);
+  SignUpTwoController(IUserRegisterRepository repository,
+      UserRegisterFormFieldModel userFormFielModel)
+      : super(repository, userFormFielModel);
 
   static List<MenuItemModel> genreDataSource() {
     return Genre.values
@@ -99,9 +101,9 @@ class SignUpTwoController extends _SignUpTwoControllerBase
 
 abstract class _SignUpTwoControllerBase with Store {
   final IUserRegisterRepository repository;
-  UserRegisterFormFieldModel _userRegisterModel = UserRegisterFormFieldModel();
+  final UserRegisterFormFieldModel _userRegisterModel;
 
-  _SignUpTwoControllerBase(this.repository);
+  _SignUpTwoControllerBase(this.repository, this._userRegisterModel);
 
   @observable
   ObservableFuture<Either<Failure, ValidField>> _progress;
@@ -169,14 +171,14 @@ abstract class _SignUpTwoControllerBase with Store {
 
     final response = await _progress;
     response.fold(
-      // (failure) => _mapFailureToMessage(failure),
-      (failure) => _forwardToStep3(),
-      (session) => UnimplementedError(),
+      (failure) => _mapFailureToMessage(failure),
+      (session) => _forwardToStep3(),
     );
   }
 
   void _forwardToStep3() {
-    Modular.to.pushNamed('/authentication/signup/step3');
+    Modular.to.pushNamed('/authentication/signup/step3',
+        arguments: _userRegisterModel);
   }
 
   bool _isValidToProceed() {

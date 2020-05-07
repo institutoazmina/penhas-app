@@ -21,14 +21,16 @@ const String INVALID_FIELD_TO_LOGIN =
 
 class SignUpThreeController extends _SignUpThreeControllerBase
     with _$SignUpThreeController {
-  SignUpThreeController(IUserRegisterRepository repository) : super(repository);
+  SignUpThreeController(IUserRegisterRepository repository,
+      UserRegisterFormFieldModel userFormFielModel)
+      : super(repository, userFormFielModel);
 }
 
 abstract class _SignUpThreeControllerBase with Store {
   final IUserRegisterRepository repository;
-  UserRegisterFormFieldModel _userRegisterModel = UserRegisterFormFieldModel();
+  final UserRegisterFormFieldModel _userRegisterModel;
 
-  _SignUpThreeControllerBase(this.repository);
+  _SignUpThreeControllerBase(this.repository, this._userRegisterModel);
 
   @observable
   ObservableFuture<Either<Failure, SessionEntity>> _progress;
@@ -85,9 +87,8 @@ abstract class _SignUpThreeControllerBase with Store {
 
     final response = await _progress;
     response.fold(
-      // (failure) => _mapFailureToMessage(failure),
-      (failure) => _forwardToLogged(),
-      (session) => UnimplementedError(),
+      (failure) => _mapFailureToMessage(failure),
+      (session) => _forwardToLogged(),
     );
   }
 
@@ -115,5 +116,25 @@ abstract class _SignUpThreeControllerBase with Store {
 
   _forwardToLogged() {
     UnimplementedError();
+  }
+
+  _mapFailureToMessage(Failure failure) {
+    switch (failure.runtimeType) {
+      case InternetConnectionFailure:
+        _setErrorMessage(ERROR_INTERNET_CONNECTION_FAILURE);
+        break;
+      case ServerFailure:
+        _setErrorMessage(ERROR_SERVER_FAILURE);
+        break;
+      case ServerSideFormFieldValidationFailure:
+        _mapFailureToFields(failure);
+        break;
+      default:
+        throw UnsupportedError;
+    }
+  }
+
+  _mapFailureToFields(ServerSideFormFieldValidationFailure failure) {
+    _setErrorMessage(failure.message);
   }
 }

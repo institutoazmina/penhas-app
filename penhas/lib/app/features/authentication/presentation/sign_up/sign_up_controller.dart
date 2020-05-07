@@ -105,6 +105,7 @@ abstract class _SignUpControllerBase with Store {
 
   @action
   Future<void> nextStepPressed() async {
+    _setErrorMessage('');
     if (!_isValidToProceed()) {
       return;
     }
@@ -120,14 +121,14 @@ abstract class _SignUpControllerBase with Store {
 
     final response = await _progress;
     response.fold(
-      // (failure) => _mapFailureToMessage(failure),
-      (failure) => _forwardToStep2(),
-      (session) => UnimplementedError(),
+      (failure) => _mapFailureToMessage(failure),
+      (session) => _forwardToStep2(),
     );
   }
 
   void _forwardToStep2() {
-    Modular.to.pushNamed('/authentication/signup/step2');
+    Modular.to.pushNamed('/authentication/signup/step2',
+        arguments: _userRegisterModel);
   }
 
   bool _isValidToProceed() {
@@ -160,7 +161,6 @@ abstract class _SignUpControllerBase with Store {
 
   void _setErrorMessage(String message) {
     errorMessage = message;
-    errorMessage = '';
   }
 
   _mapFailureToMessage(Failure failure) {

@@ -11,7 +11,8 @@ import 'package:penhas/app/features/authentication/presentation/sign_up_three/si
 class SignUpThreeModule extends ChildModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => SignUpThreeController(i.get<IUserRegisterRepository>())),
+        Bind((i) => SignUpThreeController(
+            i.get<IUserRegisterRepository>(), i.args.data)),
         Bind<IUserRegisterRepository>(
           (i) => UserRegisterRepository(
             dataSource: i.get<IUserRegisterDataSource>(),
