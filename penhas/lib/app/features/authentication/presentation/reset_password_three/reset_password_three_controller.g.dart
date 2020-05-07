@@ -10,6 +10,31 @@ part of 'reset_password_three_controller.dart';
 
 mixin _$ResetPasswordThreeController
     on _ResetPasswordThreeControllerBase, Store {
+  Computed<StoreState> _$currentStateComputed;
+
+  @override
+  StoreState get currentState => (_$currentStateComputed ??=
+          Computed<StoreState>(() => super.currentState))
+      .value;
+
+  final _$_progressAtom =
+      Atom(name: '_ResetPasswordThreeControllerBase._progress');
+
+  @override
+  ObservableFuture<Either<Failure, ValidField>> get _progress {
+    _$_progressAtom.context.enforceReadPolicy(_$_progressAtom);
+    _$_progressAtom.reportObserved();
+    return super._progress;
+  }
+
+  @override
+  set _progress(ObservableFuture<Either<Failure, ValidField>> value) {
+    _$_progressAtom.context.conditionallyRunInAction(() {
+      super._progress = value;
+      _$_progressAtom.reportChanged();
+    }, _$_progressAtom, name: '${_$_progressAtom.name}_set');
+  }
+
   final _$errorMessageAtom =
       Atom(name: '_ResetPasswordThreeControllerBase.errorMessage');
 
@@ -46,6 +71,13 @@ mixin _$ResetPasswordThreeController
     }, _$warningPasswordAtom, name: '${_$warningPasswordAtom.name}_set');
   }
 
+  final _$nextStepPressedAsyncAction = AsyncAction('nextStepPressed');
+
+  @override
+  Future<void> nextStepPressed() {
+    return _$nextStepPressedAsyncAction.run(() => super.nextStepPressed());
+  }
+
   final _$_ResetPasswordThreeControllerBaseActionController =
       ActionController(name: '_ResetPasswordThreeControllerBase');
 
@@ -62,21 +94,9 @@ mixin _$ResetPasswordThreeController
   }
 
   @override
-  void nextStepPressed() {
-    final _$actionInfo =
-        _$_ResetPasswordThreeControllerBaseActionController.startAction();
-    try {
-      return super.nextStepPressed();
-    } finally {
-      _$_ResetPasswordThreeControllerBaseActionController
-          .endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     final string =
-        'errorMessage: ${errorMessage.toString()},warningPassword: ${warningPassword.toString()}';
+        'errorMessage: ${errorMessage.toString()},warningPassword: ${warningPassword.toString()},currentState: ${currentState.toString()}';
     return '{$string}';
   }
 }

@@ -11,9 +11,11 @@ import 'package:penhas/app/features/authentication/presentation/reset_password_t
 class ResetPasswordThreeModule extends ChildModule {
   @override
   List<Bind> get binds => [
-        Bind((i) =>
-            ResetPasswordThreeController(i.get<IResetPasswordRepository>())),
-        Bind<IResetPasswordRepository>(
+        Bind((i) => ResetPasswordThreeController(
+              i.get<IChangePasswordRepository>(),
+              i.args.data,
+            )),
+        Bind<IChangePasswordRepository>(
           (i) => ChangePasswordRepository(
             changePasswordDataSource: i.get<IChangePasswordDataSource>(),
             networkInfo: i.get<INetworkInfo>(),

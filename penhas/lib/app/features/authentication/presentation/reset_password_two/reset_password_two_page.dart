@@ -50,6 +50,7 @@ class _ResetPasswordTwoPageState
         }
       },
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -100,9 +101,11 @@ class _ResetPasswordTwoPageState
                     SizedBox(height: 4),
                     Observer(builder: (_) {
                       return _buildInputField(
-                          labelText: 'E-mail',
-                          keyboardType: TextInputType.number,
-                          onChanged: controller.setToken);
+                        labelText: 'Token',
+                        keyboardType: TextInputType.number,
+                        onChanged: controller.setToken,
+                        onError: controller.warrningToken,
+                      );
                     }),
                     SizedBox(height: 24),
                     Observer(

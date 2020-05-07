@@ -61,6 +61,7 @@ abstract class _ResetPasswordControllerBase with Store {
 
   @action
   Future<void> nextStepPressed() async {
+    _setErrorMessage('');
     if (!_isValidToProceed()) {
       return;
     }
@@ -96,7 +97,6 @@ abstract class _ResetPasswordControllerBase with Store {
   }
 
   void _setErrorMessage(String s) {
-    errorMessage = '';
     errorMessage = s;
   }
 

@@ -18,4 +18,5 @@ class UserRegisterFormFieldModel {
   Genre genre;
   HumanRace race;
   Password password;
+  String token;
 }

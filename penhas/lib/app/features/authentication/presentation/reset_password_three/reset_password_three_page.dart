@@ -45,6 +45,7 @@ class _ResetPasswordThreePageState
         }
       },
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
