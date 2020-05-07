@@ -18,7 +18,9 @@ class SignUpThreePage extends StatefulWidget {
 class _SignUpThreePageState
     extends ModularState<SignUpThreePage, SignUpThreeController> {
   List<ReactionDisposer> _disposers;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final GlobalKey<NavigatorState> _navigator = GlobalKey();
+
   bool _passwordVisible = true;
 
   @override
@@ -26,6 +28,7 @@ class _SignUpThreePageState
     super.didChangeDependencies();
     _disposers ??= [
       _showErrorMessage(),
+      // _showProgress(),
     ];
   }
 
@@ -184,5 +187,44 @@ class _SignUpThreePageState
         );
       }
     });
+  }
+
+  ReactionDisposer _showProgress() {
+    return reaction((_) => controller.currentState, (StoreState state) {
+      switch (state) {
+        case StoreState.initial:
+          break;
+        case StoreState.loading:
+          _onLoading();
+          break;
+        case StoreState.loaded:
+          Navigator.of(_navigator.currentContext, rootNavigator: true).pop();
+
+          break;
+      }
+    });
+  }
+
+  void _onLoading() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: SizedBox(
+            height: 80,
+            width: 100,
+            child: Row(
+              children: [
+                SizedBox(width: 18),
+                CircularProgressIndicator(),
+                SizedBox(width: 18),
+                Text("Processando"),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }

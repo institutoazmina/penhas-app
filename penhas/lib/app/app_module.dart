@@ -5,6 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
+import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_module.dart';
 import 'package:penhas/app/modules/splash/splash_controller.dart';
 import 'package:penhas/app/modules/splash/splash_module.dart';
 
@@ -30,6 +31,7 @@ class AppModule extends MainModule {
   List<Router> get routers => [
         Router('/', module: SplashModule()),
         Router('/authentication', module: SignInModule()),
+        Router('/mainboard', module: MainboardModule()),
       ];
 
   @override

@@ -1,4 +1,6 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
@@ -18,6 +20,8 @@ const String ERROR_INTERNET_CONNECTION_FAILURE =
     "O servidor está inacessível, o PenhaS está com acesso à Internet?";
 const String INVALID_FIELD_TO_LOGIN =
     'E-mail e senha precisam estarem corretos para continuar.';
+
+enum StoreState { initial, loading, loaded }
 
 class SignUpThreeController extends _SignUpThreeControllerBase
     with _$SignUpThreeController {
@@ -43,6 +47,17 @@ abstract class _SignUpThreeControllerBase with Store {
 
   @observable
   String warningPassword = '';
+
+  @computed
+  StoreState get currentState {
+    if (_progress == null || _progress.status == FutureStatus.rejected) {
+      return StoreState.initial;
+    }
+
+    return _progress.status == FutureStatus.pending
+        ? StoreState.loading
+        : StoreState.loaded;
+  }
 
   @action
   void setEmail(String email) {
@@ -115,7 +130,7 @@ abstract class _SignUpThreeControllerBase with Store {
   }
 
   _forwardToLogged() {
-    UnimplementedError();
+    Modular.to.pushReplacementNamed('/mainboard');
   }
 
   _mapFailureToMessage(Failure failure) {

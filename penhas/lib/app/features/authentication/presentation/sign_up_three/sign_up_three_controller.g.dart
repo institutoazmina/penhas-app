@@ -9,6 +9,13 @@ part of 'sign_up_three_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$SignUpThreeController on _SignUpThreeControllerBase, Store {
+  Computed<StoreState> _$currentStateComputed;
+
+  @override
+  StoreState get currentState => (_$currentStateComputed ??=
+          Computed<StoreState>(() => super.currentState))
+      .value;
+
   final _$_progressAtom = Atom(name: '_SignUpThreeControllerBase._progress');
 
   @override
@@ -115,7 +122,7 @@ mixin _$SignUpThreeController on _SignUpThreeControllerBase, Store {
   @override
   String toString() {
     final string =
-        'errorMessage: ${errorMessage.toString()},warningEmail: ${warningEmail.toString()},warningPassword: ${warningPassword.toString()}';
+        'errorMessage: ${errorMessage.toString()},warningEmail: ${warningEmail.toString()},warningPassword: ${warningPassword.toString()},currentState: ${currentState.toString()}';
     return '{$string}';
   }
 }
