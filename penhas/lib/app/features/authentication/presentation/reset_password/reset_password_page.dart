@@ -25,13 +25,14 @@ class _ResetPasswordPageState
     super.didChangeDependencies();
     _disposers ??= [
       _showErrorMessage(),
+      // _showProgress(),
     ];
   }
 
   @override
   void dispose() {
-    super.dispose();
     _disposers.forEach((d) => d());
+    super.dispose();
   }
 
   @override
@@ -44,6 +45,7 @@ class _ResetPasswordPageState
         }
       },
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
