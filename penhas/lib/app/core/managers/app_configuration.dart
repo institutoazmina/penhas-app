@@ -25,7 +25,7 @@ class AppConfiguration implements IAppConfiguration {
 
   @override
   Future<bool> get isAuthenticated async {
-    return apiToken == null;
+    return apiToken != null;
   }
 
   @override

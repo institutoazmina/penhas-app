@@ -129,7 +129,7 @@ abstract class _SignUpThreeControllerBase with Store {
   }
 
   _forwardToLogged() {
-    Modular.to.pushReplacementNamed('/mainboard');
+    Modular.to.pushReplacementNamed('/');
   }
 
   _mapFailureToMessage(Failure failure) {

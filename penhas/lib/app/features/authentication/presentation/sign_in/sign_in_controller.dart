@@ -78,7 +78,7 @@ abstract class _SignInControllerBase with Store {
 
     response.fold(
       (failure) => _mapFailureToMessage(failure),
-      (session) => UnimplementedError(),
+      (session) => _forwardToLogged(),
     );
   }
 
@@ -90,6 +90,10 @@ abstract class _SignInControllerBase with Store {
   @action
   Future<void> resetPasswordPressed() async {
     Modular.to.pushNamed('/authentication/reset_password');
+  }
+
+  _forwardToLogged() {
+    Modular.to.pushReplacementNamed('/mainboard');
   }
 
   void _mapFailureToMessage(Failure failure) {
