@@ -16,6 +16,11 @@ abstract class IChangePasswordDataSource {
     String resetToken,
   });
 
+  Future<ValidField> validToken({
+    EmailAddress emailAddress,
+    String resetToken,
+  });
+
   Future<PasswordResetResponseModel> request({EmailAddress emailAddress});
 }
 
@@ -87,5 +92,32 @@ class ChangePasswordDataSource implements IChangePasswordDataSource {
       'User-Agent': userAgent,
       'Content-Type': 'application/x-www-form-urlencoded'
     };
+  }
+
+  @override
+  Future<ValidField> validToken(
+      {EmailAddress emailAddress, String resetToken}) async {
+    final userAgent = await serverConfiguration.userAgent();
+    final Map<String, String> queryParameters = {
+      'dry': '1',
+      'app_version': userAgent,
+      'email': emailAddress.rawValue,
+      'token': resetToken,
+    };
+
+    final httpHeader = await _setupHttpHeader();
+    final httpRequest = Uri(
+      scheme: serverConfiguration.baseUri.scheme,
+      host: serverConfiguration.baseUri.host,
+      path: '/reset-password/write-new',
+      queryParameters: queryParameters,
+    );
+
+    final response = await apiClient.post(httpRequest, headers: httpHeader);
+    if (response.statusCode == HttpStatus.ok) {
+      return ValidField();
+    } else {
+      throw ApiProviderException(bodyContent: json.decode(response.body));
+    }
   }
 }

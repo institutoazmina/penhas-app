@@ -72,4 +72,19 @@ class ChangePasswordRepository
 
     return ServerFailure();
   }
+
+  @override
+  Future<Either<Failure, ValidField>> validToken(
+      {EmailAddress emailAddress, String resetToken}) async {
+    try {
+      await _dataSource.validToken(
+        emailAddress: emailAddress,
+        resetToken: resetToken,
+      );
+      return right(ValidField());
+    } catch (e) {
+      final fail = await _handleError(e);
+      return left(fail);
+    }
+  }
 }

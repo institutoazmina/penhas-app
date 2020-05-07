@@ -13,6 +13,11 @@ abstract class IResetPasswordRepository {
 }
 
 abstract class IChangePasswordRepository {
+  Future<Either<Failure, ValidField>> validToken({
+    @required EmailAddress emailAddress,
+    @required String resetToken,
+  });
+
   Future<Either<Failure, ValidField>> reset({
     @required EmailAddress emailAddress,
     @required Password password,
