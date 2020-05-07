@@ -30,7 +30,7 @@ void main() {
           var testValue = "63024-370";
           var result = Cep(testValue).value;
 
-          expect(result, right(testValue));
+          expect(result, right('63024370'));
         },
       );
     },

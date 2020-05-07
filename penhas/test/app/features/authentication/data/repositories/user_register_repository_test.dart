@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/authentication/data/datasources/user_register_data_source.dart';
 import 'package:penhas/app/features/authentication/data/models/session_model.dart';
@@ -26,9 +27,12 @@ class MockUserRegisterDataSource extends Mock
 
 class MockNetworkInfo extends Mock implements INetworkInfo {}
 
+class MockAppConfiguration extends Mock implements IAppConfiguration {}
+
 void main() {
   INetworkInfo networkInfo;
   IUserRegisterDataSource dataSource;
+  IAppConfiguration appConfiguration;
   UserRegisterRepository sut;
   const String SESSSION_TOKEN = 'my_really.long.JWT';
 
@@ -52,11 +56,13 @@ void main() {
     birthday = Birthday('1994-01-01');
     race = HumanRace.brown;
     genre = Genre.female;
+    appConfiguration = MockAppConfiguration();
     dataSource = MockUserRegisterDataSource();
     networkInfo = MockNetworkInfo();
     sut = UserRegisterRepository(
       dataSource: dataSource,
       networkInfo: networkInfo,
+      appConfiguration: appConfiguration,
     );
   });
 
@@ -167,6 +173,7 @@ void main() {
         // act
         final result = await executeRegister();
         // assert
+        verify(appConfiguration.saveApiToken(token: SESSSION_TOKEN));
         expectedRegisterResult(
           result,
           right(SessionEntity(sessionToken: SESSSION_TOKEN)),

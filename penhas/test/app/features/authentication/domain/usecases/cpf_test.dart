@@ -30,7 +30,7 @@ void main() {
           var testValue = "236.932.813-43";
           var result = Cpf(testValue).value;
 
-          expect(result, right(testValue));
+          expect(result, right('23693281343'));
         },
       );
     },

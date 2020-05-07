@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/authentication/data/datasources/authentication_data_source.dart';
@@ -22,6 +23,7 @@ class SignInModule extends ChildModule {
           (i) => AuthenticationRepository(
             dataSource: i.get<IAuthenticationDataSource>(),
             networkInfo: i.get<INetworkInfo>(),
+            appConfiguration: i.get<IAppConfiguration>(),
           ),
         ),
         Bind<IAuthenticationDataSource>(

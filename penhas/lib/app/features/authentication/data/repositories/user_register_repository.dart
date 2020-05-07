@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/authentication/data/datasources/user_register_data_source.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
@@ -17,17 +18,27 @@ import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart
 import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
 
 class UserRegisterRepository implements IUserRegisterRepository {
-  final IUserRegisterDataSource _dataSource;
   final INetworkInfo _networkInfo;
+  final IUserRegisterDataSource _dataSource;
+  final IAppConfiguration _appConfiguration;
 
   factory UserRegisterRepository({
-    @required IUserRegisterDataSource dataSource,
     @required INetworkInfo networkInfo,
+    @required IAppConfiguration appConfiguration,
+    @required IUserRegisterDataSource dataSource,
   }) {
-    return UserRegisterRepository._(dataSource, networkInfo);
+    return UserRegisterRepository._(
+      dataSource,
+      networkInfo,
+      appConfiguration,
+    );
   }
 
-  const UserRegisterRepository._(this._dataSource, this._networkInfo);
+  UserRegisterRepository._(
+    this._dataSource,
+    this._networkInfo,
+    this._appConfiguration,
+  );
 
   @override
   Future<Either<Failure, ValidField>> checkField({
@@ -82,6 +93,8 @@ class UserRegisterRepository implements IUserRegisterRepository {
           birthday: birthday,
           genre: genre,
           race: race);
+
+      await _appConfiguration.saveApiToken(token: session.sessionToken);
 
       return right(SessionEntity(sessionToken: session.sessionToken));
     } catch (e) {

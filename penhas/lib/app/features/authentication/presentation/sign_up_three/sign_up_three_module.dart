@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/authentication/data/datasources/user_register_data_source.dart';
@@ -17,6 +18,7 @@ class SignUpThreeModule extends ChildModule {
           (i) => UserRegisterRepository(
             dataSource: i.get<IUserRegisterDataSource>(),
             networkInfo: i.get<INetworkInfo>(),
+            appConfiguration: i.get<IAppConfiguration>(),
           ),
         ),
         Bind<IUserRegisterDataSource>(

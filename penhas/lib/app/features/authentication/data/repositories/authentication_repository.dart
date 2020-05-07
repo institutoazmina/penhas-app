@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/authentication/data/datasources/authentication_data_source.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
@@ -10,13 +11,27 @@ import 'package:penhas/app/features/authentication/domain/usecases/email_address
 import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
 
 class AuthenticationRepository implements IAuthenticationRepository {
-  final IAuthenticationDataSource dataSource;
-  final INetworkInfo networkInfo;
+  final IAuthenticationDataSource _dataSource;
+  final INetworkInfo _networkInfo;
+  final IAppConfiguration _appConfiguration;
 
-  AuthenticationRepository({
-    @required this.dataSource,
-    @required this.networkInfo,
-  });
+  factory AuthenticationRepository({
+    @required INetworkInfo networkInfo,
+    @required IAppConfiguration appConfiguration,
+    @required IAuthenticationDataSource dataSource,
+  }) {
+    return AuthenticationRepository._(
+      dataSource,
+      networkInfo,
+      appConfiguration,
+    );
+  }
+
+  AuthenticationRepository._(
+    this._dataSource,
+    this._networkInfo,
+    this._appConfiguration,
+  );
 
   @override
   Future<Either<Failure, SessionEntity>> signInWithEmailAndPassword({
@@ -24,19 +39,21 @@ class AuthenticationRepository implements IAuthenticationRepository {
     Password password,
   }) async {
     try {
-      final resultado = await dataSource.signInWithEmailAndPassword(
+      final result = await _dataSource.signInWithEmailAndPassword(
         emailAddress: emailAddress,
         password: password,
       );
 
-      return right(resultado);
+      await _appConfiguration.saveApiToken(token: result.sessionToken);
+
+      return right(result);
     } catch (error) {
       return _handleError(error);
     }
   }
 
   Future<Either<Failure, SessionEntity>> _handleError(Object error) async {
-    if (await networkInfo.isConnected == false) {
+    if (await _networkInfo.isConnected == false) {
       return (left(InternetConnectionFailure()));
     }
 

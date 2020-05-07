@@ -122,7 +122,7 @@ void main() {
           'dry': '0',
           'app_version': userAgent,
           'email': emailAddress.rawValue,
-          'password': password.rawValue,
+          'senha': password.rawValue,
           'token': validToken,
         };
         httpResquest = Uri(

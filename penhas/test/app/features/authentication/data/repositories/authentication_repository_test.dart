@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/authentication/data/datasources/authentication_data_source.dart';
 import 'package:penhas/app/features/authentication/data/models/session_model.dart';
@@ -18,15 +19,20 @@ class MockAuthenticationDataSource extends Mock
 
 class MockNetworkInfo extends Mock implements INetworkInfo {}
 
+class MockAppConfiguration extends Mock implements IAppConfiguration {}
+
 void main() {
   AuthenticationRepository repository;
   MockAuthenticationDataSource dataSource;
+  MockAppConfiguration appConfiguration;
   MockNetworkInfo networkInfo;
 
   setUp(() async {
     dataSource = MockAuthenticationDataSource();
+    appConfiguration = MockAppConfiguration();
     networkInfo = MockNetworkInfo();
     repository = AuthenticationRepository(
+      appConfiguration: appConfiguration,
       dataSource: dataSource,
       networkInfo: networkInfo,
     );
@@ -69,6 +75,8 @@ void main() {
           password: password,
         ));
 
+        verify(appConfiguration.saveApiToken(token: sessionModel.sessionToken));
+
         expect(result, right(sessionEntity));
       });
       test(
@@ -83,11 +91,7 @@ void main() {
           password: password,
         );
         // assert
-        verify(dataSource.signInWithEmailAndPassword(
-          emailAddress: email,
-          password: password,
-        ));
-        expect(result, left(ServerFailure()));
+        expect(result, left(ServerSideFormFieldValidationFailure()));
       });
       test('should return login failure for unsuccessfull user validation',
           () async {

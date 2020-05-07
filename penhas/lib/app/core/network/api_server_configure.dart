@@ -3,6 +3,7 @@ import 'package:device_info/device_info.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 import 'package:package_info/package_info.dart';
+import 'package:penhas/app/core/managers/app_configuration.dart';
 
 abstract class IApiServerConfigure {
   Uri get baseUri;
@@ -10,16 +11,16 @@ abstract class IApiServerConfigure {
 }
 
 class ApiServerConfigure implements IApiServerConfigure {
-  final Uri _baseUri;
+  final IAppConfiguration _appConfiguration;
 
   @override
-  Uri get baseUri => _baseUri;
+  Uri get baseUri => _appConfiguration.penhasServer;
 
-  factory ApiServerConfigure({@required Uri baseUri}) {
-    return ApiServerConfigure._(baseUri);
+  factory ApiServerConfigure({@required IAppConfiguration appConfiguration}) {
+    return ApiServerConfigure._(appConfiguration);
   }
 
-  const ApiServerConfigure._(this._baseUri);
+  const ApiServerConfigure._(this._appConfiguration);
 
   @override
   Future<String> userAgent() async {

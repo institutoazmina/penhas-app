@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/birthday.dart';
@@ -17,9 +18,12 @@ import 'package:penhas/app/features/authentication/domain/usecases/register_user
 
 class MockRegisterRepository extends Mock implements IUserRegisterRepository {}
 
+class MockAppConfiguration extends Mock implements IAppConfiguration {}
+
 void main() {
   RegisterUser useCase;
   MockRegisterRepository repository;
+  MockAppConfiguration appConfiguration;
 
   Cep cep;
   Cpf cpf;
@@ -35,7 +39,10 @@ void main() {
   group('SignUp', () {
     setUp(() {
       repository = MockRegisterRepository();
-      useCase = RegisterUser(repository);
+      appConfiguration = MockAppConfiguration();
+      useCase = RegisterUser(
+          appConfiguration: appConfiguration,
+          authenticationRepository: repository);
       emailAddress = EmailAddress("valid@email.com");
       password = Password('_myStr0ngP@ssw0rd');
       cep = Cep('63024-370');
@@ -48,6 +55,9 @@ void main() {
       successSession = SessionEntity(
         sessionToken: 'my_strong_session_token',
       );
+
+      when(appConfiguration.saveApiToken(token: anyNamed('token')))
+          .thenAnswer((_) async => Future.value());
     });
     group('with valid parameters', () {
       Future<Either<Failure, SessionEntity>> runRegister() async {
