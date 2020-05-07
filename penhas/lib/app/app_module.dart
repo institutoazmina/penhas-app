@@ -19,7 +19,9 @@ class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
         Bind((i) => AppController()),
-        Bind((i) => SplashController()),
+        Bind((i) => SplashController(
+              appConfiguration: i.get<IAppConfiguration>(),
+            )),
         Bind((i) => SignInModule()),
         Bind<IApiServerConfigure>(
           (i) =>
