@@ -1,0 +1,5 @@
+lib/app/features/mainboard/presentation/mainboard/mainboard_module.dart
+lib/app/features/mainboard/presentation/mainboard/mainboard_page.dart
+test/app/features/mainboard/presentation/mainboard/mainboard_page_test.dart
+lib/app/features/mainboard/presentation/mainboard/mainboard_controller.dart
+test/app/features/mainboard/presentation/mainboard/mainboard_controller_test.dart
