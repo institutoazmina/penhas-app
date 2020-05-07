@@ -81,8 +81,9 @@ class _ResetPasswordTwoPageState
                         SizedBox(
                           height: 100,
                           width: 107,
-                          child: Container(
-                            color: Colors.red,
+                          child: Image(
+                            image: AssetImage(
+                                'assets/images/reset_password_02/reset_password_02.png'),
                           ),
                         ),
                       ],
