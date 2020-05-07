@@ -2,19 +2,25 @@ enum Genre { female, male, transGirl, transBoy, others }
 
 extension EnumGenre on Genre {
   String get rawValue {
+    String genre;
     switch (this) {
       case Genre.male:
-        return 'masculino';
+        genre = 'Masculino';
+        break;
       case Genre.female:
-        return 'feminino';
+        genre = 'Feminino';
+        break;
       case Genre.transBoy:
-        return 'homenTrans';
+        genre = 'HomenTrans';
+        break;
       case Genre.transGirl:
-        return 'mulherTrans';
+        genre = 'MulherTrans';
+        break;
       case Genre.others:
-        return 'outro';
-      default:
-        return 'outro';
+        genre = 'Outro';
+        break;
     }
+
+    return genre;
   }
 }
