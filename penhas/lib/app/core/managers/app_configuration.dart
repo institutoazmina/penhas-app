@@ -4,6 +4,7 @@ import 'package:penhas/app/core/storage/i_local_storage.dart';
 abstract class IAppConfiguration {
   Future<String> get apiToken;
   Future<void> saveApiToken({@required String token});
+  Future<void> logout();
   Uri get penhasServer;
   Future<bool> get isAuthenticated;
 }
@@ -25,7 +26,8 @@ class AppConfiguration implements IAppConfiguration {
 
   @override
   Future<bool> get isAuthenticated async {
-    return apiToken != null;
+    final value = await apiToken;
+    return value != null;
   }
 
   @override
@@ -34,6 +36,12 @@ class AppConfiguration implements IAppConfiguration {
   @override
   Future<void> saveApiToken({@required String token}) async {
     await _storage.put(_tokenKey, token);
+    return;
+  }
+
+  @override
+  Future<void> logout() async {
+    await _storage.delete(_tokenKey);
     return;
   }
 }
