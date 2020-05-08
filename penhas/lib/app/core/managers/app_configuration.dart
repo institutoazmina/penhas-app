@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:penhas/app/core/data/authorization_status.dart';
 import 'package:penhas/app/core/storage/i_local_storage.dart';
 
 abstract class IAppConfiguration {
@@ -6,7 +7,7 @@ abstract class IAppConfiguration {
   Future<void> saveApiToken({@required String token});
   Future<void> logout();
   Uri get penhasServer;
-  Future<bool> get isAuthenticated;
+  Future<AuthorizationStatus> get authorizationStatus;
 }
 
 class AppConfiguration implements IAppConfiguration {
@@ -25,9 +26,11 @@ class AppConfiguration implements IAppConfiguration {
   }
 
   @override
-  Future<bool> get isAuthenticated async {
+  Future<AuthorizationStatus> get authorizationStatus async {
     final value = await apiToken;
-    return value != null;
+    return value == null
+        ? AuthorizationStatus.anonymous
+        : AuthorizationStatus.authenticated;
   }
 
   @override

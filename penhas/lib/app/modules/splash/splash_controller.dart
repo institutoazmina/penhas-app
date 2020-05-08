@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/core/data/authorization_status.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
 
 part 'splash_controller.g.dart';
@@ -19,10 +20,21 @@ abstract class _SplashControllerBase with Store {
   }
 
   _init() async {
-    if (await _appConfiguration.isAuthenticated) {
-      Modular.to.pushReplacementNamed('/mainboard');
-    } else {
-      Modular.to.pushReplacementNamed('/authentication');
+    final authorizationStatus = await _appConfiguration.authorizationStatus;
+    switch (authorizationStatus) {
+      case AuthorizationStatus.authenticated:
+        _forwardToAuthenticated();
+        break;
+      case AuthorizationStatus.anonymous:
+        _forwardToAnonymous();
     }
+  }
+
+  void _forwardToAuthenticated() {
+    Modular.to.pushReplacementNamed('/mainboard');
+  }
+
+  void _forwardToAnonymous() {
+    Modular.to.pushReplacementNamed('/authentication');
   }
 }
