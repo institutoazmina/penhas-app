@@ -151,7 +151,7 @@ abstract class _SignUpTwoControllerBase with Store {
   }
 
   @action
-  Future<void> nextStepPressed() async {
+  Future nextStepPressed() async {
     _setErrorMessage('');
     if (!_isValidToProceed()) {
       return;

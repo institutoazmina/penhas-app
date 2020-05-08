@@ -79,7 +79,7 @@ abstract class _SignUpThreeControllerBase with Store {
   }
 
   @action
-  Future<void> registerUserPress() async {
+  Future registerUserPress() async {
     _setErrorMessage('');
     if (!_isValidToProceed()) {
       return;
