@@ -1,3 +1,4 @@
+import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_page.dart';
@@ -5,7 +6,9 @@ import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_p
 class MainboardModule extends ChildModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => MainboardController()),
+        Bind(
+          (i) => MainboardController(appConfigure: i.get<IAppConfiguration>()),
+        ),
       ];
 
   @override
