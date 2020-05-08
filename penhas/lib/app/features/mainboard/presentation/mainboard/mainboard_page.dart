@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
-import 'package:penhas/app/shared/design_system/widget.dart';
 import 'mainboard_controller.dart';
 
 class MainboardPage extends StatefulWidget {
