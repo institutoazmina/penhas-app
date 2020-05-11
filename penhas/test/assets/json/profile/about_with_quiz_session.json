@@ -1,0 +1,43 @@
+{
+  "esta_em_situcao_de_violencia": 0,
+  "ja_foi_vitima_de_violencia": 0,
+  "mastodon_username": null,
+  "modo_anonimo_ativo": 0,
+  "modo_camuflado_ativo": 0,
+  "modules": [
+    "quiz"
+  ],
+  "quiz_session": {
+    "current_msgs": [
+      {
+        "content": "Olá, eu sou a Assistente PenhaS ☺️ e vou te ajudar a conhecer o aplicativo 🤳",
+        "style": "normal",
+        "type": "displaytext"
+      },
+      {
+        "content": "Vou começar com algumas perguntas, para saber melhor como te ajudar",
+        "style": "normal",
+        "type": "displaytext"
+      },
+      {
+        "content": "Atualmente, você está em um relacionamento amoroso?",
+        "ref": "YN1",
+        "type": "yesno"
+      }
+    ],
+    "prev_msgs": [],
+    "session_id": 200
+  },
+  "senha_falsa_sha256": null,
+  "user_profile": {
+    "cep": "01209010",
+    "cpf_prefix": "1482",
+    "dt_nasc": "1975-07-03",
+    "email": "shonorio@gmail.com",
+    "genero": "Feminino",
+    "minibio": null,
+    "nome_completo": "Solli Moreira Honorio",
+    "nome_social": "",
+    "raca": "pardo"
+  }
+}
