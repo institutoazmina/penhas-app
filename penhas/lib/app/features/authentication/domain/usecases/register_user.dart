@@ -63,7 +63,6 @@ class RegisterUser {
 
   Future<Either<Failure, SessionEntity>> _saveAthenticationToken(
       SessionEntity session) async {
-    print(session.sessionToken);
     await _appConfiguration.saveApiToken(token: session.sessionToken);
     return Future.value(right(session));
   }

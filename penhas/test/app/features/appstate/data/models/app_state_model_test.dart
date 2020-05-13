@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:penhas/app/features/appstate/data/app_state_model.dart';
+import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 
 import '../../../../../utils/json_util.dart';

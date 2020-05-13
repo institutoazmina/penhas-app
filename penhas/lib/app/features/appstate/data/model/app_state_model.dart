@@ -3,14 +3,10 @@ import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.da
 class AppStateModel extends AppStateEntity {
   final QuizSessionEntity quizSession;
 
-  AppStateModel(this.quizSession)
-      : super(
-          quizSession: quizSession,
-        );
+  AppStateModel(this.quizSession) : super(quizSession: quizSession);
 
   factory AppStateModel.fromJson(Map<String, Object> jsonData) {
     final quizSession = _parseQuizSession(jsonData['quiz_session']);
-
     return AppStateModel(quizSession);
   }
 
