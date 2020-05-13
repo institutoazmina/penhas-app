@@ -22,23 +22,13 @@ class UserRegisterRepository implements IUserRegisterRepository {
   final IUserRegisterDataSource _dataSource;
   final IAppConfiguration _appConfiguration;
 
-  factory UserRegisterRepository({
+  UserRegisterRepository({
     @required INetworkInfo networkInfo,
     @required IAppConfiguration appConfiguration,
     @required IUserRegisterDataSource dataSource,
-  }) {
-    return UserRegisterRepository._(
-      dataSource,
-      networkInfo,
-      appConfiguration,
-    );
-  }
-
-  UserRegisterRepository._(
-    this._dataSource,
-    this._networkInfo,
-    this._appConfiguration,
-  );
+  })  : this._dataSource = dataSource,
+        this._networkInfo = networkInfo,
+        this._appConfiguration = appConfiguration;
 
   @override
   Future<Either<Failure, ValidField>> checkField({

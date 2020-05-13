@@ -3,3 +3,5 @@ class ApiProviderException implements Exception {
 
   ApiProviderException({this.bodyContent = const <String, dynamic>{}});
 }
+
+class ApiProviderSessionExpection implements Exception {}
