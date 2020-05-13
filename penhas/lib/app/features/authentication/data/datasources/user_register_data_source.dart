@@ -63,7 +63,7 @@ class UserRegisterDataSource implements IUserRegisterDataSource {
     @required Genre genre,
     @required HumanRace race,
   }) async {
-    final userAgent = await serverConfiguration.userAgent();
+    final userAgent = await serverConfiguration.userAgent;
     final Map<String, String> queryParameters = {
       'app_version': userAgent,
       'dry': '0',
@@ -101,7 +101,7 @@ class UserRegisterDataSource implements IUserRegisterDataSource {
     Genre genre,
     HumanRace race,
   }) async {
-    final userAgent = await serverConfiguration.userAgent();
+    final userAgent = await serverConfiguration.userAgent;
     final Map<String, String> queryParameters = {
       'app_version': userAgent,
       'dry': '1',
@@ -128,7 +128,7 @@ class UserRegisterDataSource implements IUserRegisterDataSource {
   }
 
   Future<Map<String, String>> _setupHttpHeader() async {
-    final userAgent = await serverConfiguration.userAgent();
+    final userAgent = await serverConfiguration.userAgent;
     return {
       'User-Agent': userAgent,
       'Content-Type': 'application/x-www-form-urlencoded'

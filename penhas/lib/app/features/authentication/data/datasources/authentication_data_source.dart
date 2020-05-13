@@ -34,7 +34,7 @@ class AuthenticationDataSource implements IAuthenticationDataSource {
     Password password,
   }) async {
     final baseUri = serverConfiguration.baseUri;
-    final userAgent = await serverConfiguration.userAgent();
+    final userAgent = await serverConfiguration.userAgent;
     final queryParameters = {
       'app_version': userAgent,
       'email': emailAddress.rawValue,

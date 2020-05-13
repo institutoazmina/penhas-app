@@ -41,10 +41,10 @@ void main() {
 
     // MockApiServerConfigure configuration
     when(mockApiServerConfigure.baseUri).thenAnswer((_) => serverEndpoint);
-    when(mockApiServerConfigure.userAgent())
+    when(mockApiServerConfigure.userAgent)
         .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
 
-    userAgent = await mockApiServerConfigure.userAgent();
+    userAgent = await mockApiServerConfigure.userAgent;
     httpHeader = {
       'User-Agent': userAgent,
       'Content-Type': 'application/x-www-form-urlencoded'

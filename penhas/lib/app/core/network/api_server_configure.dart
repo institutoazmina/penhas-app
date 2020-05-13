@@ -7,20 +7,26 @@ import 'package:penhas/app/core/managers/app_configuration.dart';
 
 abstract class IApiServerConfigure {
   Uri get baseUri;
-  Future<String> userAgent();
+  Future<String> get apiToken;
+  Future<String> get userAgent;
 }
 
 class ApiServerConfigure implements IApiServerConfigure {
   final IAppConfiguration _appConfiguration;
 
-  @override
-  Uri get baseUri => _appConfiguration.penhasServer;
-
   ApiServerConfigure({@required IAppConfiguration appConfiguration})
       : this._appConfiguration = appConfiguration;
 
   @override
-  Future<String> userAgent() async {
+  Uri get baseUri => _appConfiguration.penhasServer;
+
+  @override
+  Future<String> get apiToken => _appConfiguration.apiToken;
+
+  @override
+  Future<String> get userAgent => _userAgent();
+
+  Future<String> _userAgent() async {
     final deviceInfo = await _deviceInfo();
     final appInfo = await _appInfo();
 

@@ -59,12 +59,12 @@ void main() {
 
     // MockApiServerConfigure configuration
     when(serverConfiguration.baseUri).thenAnswer((_) => serverEndpoint);
-    when(serverConfiguration.userAgent())
+    when(serverConfiguration.userAgent)
         .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
   });
 
   Future<Map<String, String>> setupHttpHeader() async {
-    final userAgent = await serverConfiguration.userAgent();
+    final userAgent = await serverConfiguration.userAgent;
     return {
       'User-Agent': userAgent,
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -73,7 +73,7 @@ void main() {
 
   Future<Map<String, dynamic>> setupQueryParameters(
       {@required bool justValidadeField}) async {
-    final userAgent = await serverConfiguration.userAgent();
+    final userAgent = await serverConfiguration.userAgent;
     final Map<String, String> queryParameters = {
       'app_version': userAgent,
       'dry': justValidadeField ? '1' : '0',

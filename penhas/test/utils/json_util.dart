@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:meta/meta.dart';
 
 class JsonUtil {
-  static Future<Map<String, dynamic>> getJson({@required String from}) {
+  static Future<Map<String, Object>> getJson({@required String from}) {
     return JsonUtil.getString(from: from)
         .then((fileContent) => JsonDecoder().convert(fileContent));
   }

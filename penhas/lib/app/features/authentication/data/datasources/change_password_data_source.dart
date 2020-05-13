@@ -36,7 +36,7 @@ class ChangePasswordDataSource implements IChangePasswordDataSource {
   @override
   Future<PasswordResetResponseModel> request(
       {EmailAddress emailAddress}) async {
-    final userAgent = await serverConfiguration.userAgent();
+    final userAgent = await serverConfiguration.userAgent;
     final Map<String, String> queryParameters = {
       'app_version': userAgent,
       'email': emailAddress.rawValue,
@@ -61,7 +61,7 @@ class ChangePasswordDataSource implements IChangePasswordDataSource {
   @override
   Future<ValidField> reset(
       {EmailAddress emailAddress, Password password, String resetToken}) async {
-    final userAgent = await serverConfiguration.userAgent();
+    final userAgent = await serverConfiguration.userAgent;
     final Map<String, String> queryParameters = {
       'dry': '0',
       'app_version': userAgent,
@@ -87,7 +87,7 @@ class ChangePasswordDataSource implements IChangePasswordDataSource {
   }
 
   Future<Map<String, String>> _setupHttpHeader() async {
-    final userAgent = await serverConfiguration.userAgent();
+    final userAgent = await serverConfiguration.userAgent;
     return {
       'User-Agent': userAgent,
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -97,7 +97,7 @@ class ChangePasswordDataSource implements IChangePasswordDataSource {
   @override
   Future<ValidField> validToken(
       {EmailAddress emailAddress, String resetToken}) async {
-    final userAgent = await serverConfiguration.userAgent();
+    final userAgent = await serverConfiguration.userAgent;
     final Map<String, String> queryParameters = {
       'dry': '1',
       'app_version': userAgent,
