@@ -15,23 +15,13 @@ class AuthenticationRepository implements IAuthenticationRepository {
   final INetworkInfo _networkInfo;
   final IAppConfiguration _appConfiguration;
 
-  factory AuthenticationRepository({
+  AuthenticationRepository({
     @required INetworkInfo networkInfo,
     @required IAppConfiguration appConfiguration,
     @required IAuthenticationDataSource dataSource,
-  }) {
-    return AuthenticationRepository._(
-      dataSource,
-      networkInfo,
-      appConfiguration,
-    );
-  }
-
-  AuthenticationRepository._(
-    this._dataSource,
-    this._networkInfo,
-    this._appConfiguration,
-  );
+  })  : this._dataSource = dataSource,
+        this._networkInfo = networkInfo,
+        this._appConfiguration = appConfiguration;
 
   @override
   Future<Either<Failure, SessionEntity>> signInWithEmailAndPassword({

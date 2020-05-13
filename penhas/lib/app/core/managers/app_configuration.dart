@@ -14,11 +14,7 @@ class AppConfiguration implements IAppConfiguration {
   final _tokenKey = 'br.com.penhas.tokenServer';
   final ILocalStorage _storage;
 
-  factory AppConfiguration({@required ILocalStorage storage}) {
-    return AppConfiguration._(storage);
-  }
-
-  AppConfiguration._(this._storage);
+  AppConfiguration({@required ILocalStorage storage}) : this._storage = storage;
 
   @override
   Future<String> get apiToken {

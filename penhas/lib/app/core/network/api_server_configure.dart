@@ -16,11 +16,8 @@ class ApiServerConfigure implements IApiServerConfigure {
   @override
   Uri get baseUri => _appConfiguration.penhasServer;
 
-  factory ApiServerConfigure({@required IAppConfiguration appConfiguration}) {
-    return ApiServerConfigure._(appConfiguration);
-  }
-
-  const ApiServerConfigure._(this._appConfiguration);
+  ApiServerConfigure({@required IAppConfiguration appConfiguration})
+      : this._appConfiguration = appConfiguration;
 
   @override
   Future<String> userAgent() async {

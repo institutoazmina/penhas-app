@@ -11,20 +11,11 @@ class AuthenticationWithEmailAndPassword {
   final IAuthenticationRepository _repository;
   final IAppConfiguration _appConfiguration;
 
-  factory AuthenticationWithEmailAndPassword({
+  AuthenticationWithEmailAndPassword({
     @required IAuthenticationRepository authenticationRepository,
     @required IAppConfiguration appConfiguration,
-  }) {
-    return AuthenticationWithEmailAndPassword._(
-      authenticationRepository,
-      appConfiguration,
-    );
-  }
-
-  AuthenticationWithEmailAndPassword._(
-    this._repository,
-    this._appConfiguration,
-  );
+  })  : this._repository = authenticationRepository,
+        this._appConfiguration = appConfiguration;
 
   Future<Either<Failure, SessionEntity>> call({
     @required EmailAddress email,

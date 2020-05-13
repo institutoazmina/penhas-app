@@ -15,14 +15,11 @@ class ChangePasswordRepository
   final IChangePasswordDataSource _dataSource;
   final INetworkInfo _networkInfo;
 
-  factory ChangePasswordRepository({
+  ChangePasswordRepository({
     @required IChangePasswordDataSource changePasswordDataSource,
     @required INetworkInfo networkInfo,
-  }) {
-    return ChangePasswordRepository._(changePasswordDataSource, networkInfo);
-  }
-
-  ChangePasswordRepository._(this._dataSource, this._networkInfo);
+  })  : this._networkInfo = networkInfo,
+        this._dataSource = changePasswordDataSource;
 
   @override
   Future<Either<Failure, ResetPasswordResponseEntity>> request(
