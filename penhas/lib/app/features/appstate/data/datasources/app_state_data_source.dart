@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
+import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
 
@@ -11,6 +12,8 @@ abstract class IAppStateDataSource {
 class AppStateDataSource implements IAppStateDataSource {
   final http.Client _apiClient;
   final IApiServerConfigure _serverConfiguration;
+  final Set<int> _successfulResponse = {200};
+  final Set<int> _invalidSessionCode = {401, 403};
 
   AppStateDataSource({
     @required http.Client apliClient,
@@ -25,9 +28,15 @@ class AppStateDataSource implements IAppStateDataSource {
         scheme: _serverConfiguration.baseUri.scheme,
         host: _serverConfiguration.baseUri.host,
         path: '/me');
-    final response = await _apiClient.get(httpRequest, headers: httpHeader);
 
-    return AppStateModel.fromJson(json.decode(response.body));
+    final response = await _apiClient.get(httpRequest, headers: httpHeader);
+    if (_successfulResponse.contains(response.statusCode)) {
+      return AppStateModel.fromJson(json.decode(response.body));
+    } else if (_invalidSessionCode.contains(response.statusCode)) {
+      throw ApiProviderSessionExpection();
+    } else {
+      throw ApiProviderException(bodyContent: json.decode(response.body));
+    }
   }
 
   Future<Map<String, String>> _setupHttpHeader() async {

@@ -52,7 +52,7 @@ void main() {
       when(networkInfo.isConnected).thenAnswer((_) async => true);
     });
     group('reset', () {
-      test('should return ValidField for successfull password changed',
+      test('should return ValidField for successful password changed',
           () async {
         // arrange
         mockResetDataSource().thenAnswer((_) async => ValidField());
@@ -66,7 +66,7 @@ void main() {
         expect(result, right(ValidField()));
       });
       test(
-          'should return ServerSideFormFieldValidationFailure for non successfull change password request',
+          'should return ServerSideFormFieldValidationFailure for non successful change password request',
           () async {
         // arrange
         final bodyContent = await JsonUtil.getJson(
@@ -93,7 +93,7 @@ void main() {
     });
     group('request', () {
       test(
-          'should response ResetPasswordResponseEntity for a successfull request',
+          'should response ResetPasswordResponseEntity for a successful request',
           () async {
         // arrange
         final bodyContent = await JsonUtil.getJson(
@@ -114,7 +114,7 @@ void main() {
         );
       });
       test(
-          'should return ServerSideFormFieldValidationFailure for non successfull change password request',
+          'should return ServerSideFormFieldValidationFailure for non successful change password request',
           () async {
         // arrange
         final bodyContent =

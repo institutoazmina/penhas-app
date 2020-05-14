@@ -80,7 +80,7 @@ void main() {
         expect(result, right(sessionEntity));
       });
       test(
-          'should return server failure when the call to remote server is unsuccessfull',
+          'should return server failure when the call to remote server is unsuccessful',
           () async {
         // arrange
         mockSignInResponse(dataSource: dataSource)
@@ -93,7 +93,7 @@ void main() {
         // assert
         expect(result, left(ServerSideFormFieldValidationFailure()));
       });
-      test('should return login failure for unsuccessfull user validation',
+      test('should return login failure for unsuccessful user validation',
           () async {
         // arrange
         final bodyContent =

@@ -26,8 +26,7 @@ void main() {
   });
 
   group('Request reset password', () {
-    test(
-        'should received a ResetPasswordResponseEntity for successfull request',
+    test('should received a ResetPasswordResponseEntity for successful request',
         () async {
       // arrange
       when(repository.request(emailAddress: anyNamed('emailAddress')))

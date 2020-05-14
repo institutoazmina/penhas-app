@@ -1,6 +1,8 @@
+import 'package:meta/meta.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
+import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/appstate/data/datasources/app_state_data_source.dart';
 import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
@@ -54,15 +56,31 @@ void main() {
     );
   }
 
-  void _setUpMockHttpClientSuccess200() {
-    when(apiClient.get(
+  PostExpectation<Future<http.Response>> _mockRequest() {
+    return when(apiClient.get(
       any,
       headers: anyNamed('headers'),
-    )).thenAnswer((_) async => http.Response(
-          bodyContent,
-          200,
-          headers: {'content-type': 'application/json; charset=utf-8'},
-        ));
+    ));
+  }
+
+  void _setUpMockHttpClientSuccess200() {
+    _mockRequest().thenAnswer(
+      (_) async => http.Response(
+        bodyContent,
+        200,
+        headers: {'content-type': 'application/json; charset=utf-8'},
+      ),
+    );
+  }
+
+  void _setUpMockHttpClientFailedWithHttp({@required int code}) {
+    _mockRequest().thenAnswer(
+      (_) async => http.Response(
+        '{"status": $code, "error":"Some error messsage"}',
+        code,
+        headers: {'content-type': 'application/json; charset=utf-8'},
+      ),
+    );
   }
 
   group('AppStateDataSource', () {
@@ -88,19 +106,20 @@ void main() {
       // assert
       expect(result, expected);
     });
+    test('should get ApiProviderSessionExpection for invalid session',
+        () async {
+      // arrange
+      final sessionHttpCodeError = [401, 403];
+      sessionHttpCodeError.forEach((httpCode) {
+        _setUpMockHttpClientFailedWithHttp(code: httpCode);
+        // act
+        final sut = dataSource.check;
+        // assert
+        expect(
+          () async => await sut(),
+          throwsA(isA<ApiProviderSessionExpection>()),
+        );
+      });
+    });
   });
 }
-
-/*
-
-[20:24, 5/8/2020] Renato Cron: vai receber
-[20:24, 5/8/2020] Renato Cron: $c->render(json => {error => "Bad request - Invalid JWT"}, status => 400);
-[20:24, 5/8/2020] Renato Cron: kk
-[20:24, 5/8/2020] Renato Cron: preciso botar message
-[20:24, 5/8/2020] Renato Cron: se vc manda sem
-[20:24, 5/8/2020] Renato Cron: die {status => 401, error => "Not Authenticated"};
-[20:24, 5/8/2020] Renato Cron: se fizeram logout
-[20:24, 5/8/2020] Renato Cron: $c->render(json => {error => "This session was logout"}, status => 403);
-[20:24, 5/8/2020] Renato Cron: tem cada um diferente
-
-*/

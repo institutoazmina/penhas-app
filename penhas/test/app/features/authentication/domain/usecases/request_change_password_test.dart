@@ -36,8 +36,7 @@ void main() {
           )));
     }
 
-    test(
-        'should received a ResetPasswordResponseEntity for successfull request',
+    test('should received a ResetPasswordResponseEntity for successful request',
         () async {
       // arrange
       mockResquest().thenAnswer((_) async => right(ValidField()));
