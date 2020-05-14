@@ -33,6 +33,10 @@ class AppStateRepository implements IAppStateRepository {
     }
 
     if (error is ApiProviderException) {
+      if (error.bodyContent['error'] == 'expired_jwt') {
+        return ServerSideSessionFailed();
+      }
+
       return ServerSideFormFieldValidationFailure(
           error: error.bodyContent['error'],
           field: error.bodyContent['field'],

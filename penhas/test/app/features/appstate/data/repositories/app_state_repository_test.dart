@@ -44,9 +44,25 @@ void main() {
       // assert
       expect(received, right(expectedEntity));
     });
-    test('should return ServerSideSessionFailed', () async {
+    test('should return ServerSideSessionFailed for a invalid session',
+        () async {
       // arrange
       when(dataSource.check()).thenThrow(ApiProviderSessionExpection());
+      final expected = left(ServerSideSessionFailed());
+      // act
+      final received = await sut.check();
+      // assert
+      expect(received, expected);
+    });
+
+    test('should return ServerSideSessionFailed for a invalid JWT', () async {
+      // arrange
+      when(dataSource.check()).thenThrow(
+        ApiProviderException(bodyContent: {
+          "error": "expired_jwt",
+          "nessage": "Bad request - Invalid JWT"
+        }),
+      );
       final expected = left(ServerSideSessionFailed());
       // act
       final received = await sut.check();
