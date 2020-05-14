@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 import 'package:penhas/app/core/network/api_server_configure.dart';
@@ -24,7 +25,9 @@ class AppStateDataSource implements IAppStateDataSource {
         scheme: _serverConfiguration.baseUri.scheme,
         host: _serverConfiguration.baseUri.host,
         path: '/me');
-    _apiClient.get(httpRequest, headers: httpHeader);
+    final response = await _apiClient.get(httpRequest, headers: httpHeader);
+
+    return AppStateModel.fromJson(json.decode(response.body));
   }
 
   Future<Map<String, String>> _setupHttpHeader() async {

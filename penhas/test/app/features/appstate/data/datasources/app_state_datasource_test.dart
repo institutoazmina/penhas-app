@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/appstate/data/datasources/app_state_data_source.dart';
+import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
 
 import '../../../../../utils/json_util.dart';
 
@@ -54,28 +55,52 @@ void main() {
   }
 
   void _setUpMockHttpClientSuccess200() {
-    when(apiClient.post(
+    when(apiClient.get(
       any,
       headers: anyNamed('headers'),
-    )).thenAnswer((_) async => http.Response(bodyContent, 200));
+    )).thenAnswer((_) async => http.Response(
+          bodyContent,
+          200,
+          headers: {'content-type': 'application/json; charset=utf-8'},
+        ));
   }
 
   group('AppStateDataSource', () {
-    test(
-        'should should perform a GET with X-API-Key and application/json header ',
+    test('should perform a GET with X-API-Key and application/json header ',
         () async {
       // arrange
-      _setUpMockHttpClientSuccess200();
-      // act
       final headers = await _setUpHttpHeader();
       final loginUri = _setuHttpRequest();
+      _setUpMockHttpClientSuccess200();
+      // act
       await dataSource.check();
-
       // assert
       verify(apiClient.get(loginUri, headers: headers));
+    });
+    test('should get AppStateModel for valid session', () async {
+      // arrange
+      _setUpMockHttpClientSuccess200();
+      final jsonData =
+          await JsonUtil.getJson(from: 'profile/about_with_quiz_session.json');
+      final expected = AppStateModel.fromJson(jsonData);
+      // act
+      final result = await dataSource.check();
+      // assert
+      expect(result, expected);
     });
   });
 }
 
-//
-// Content-Type: application/json; charset=utf-8
+/*
+
+[20:24, 5/8/2020] Renato Cron: vai receber
+[20:24, 5/8/2020] Renato Cron: $c->render(json => {error => "Bad request - Invalid JWT"}, status => 400);
+[20:24, 5/8/2020] Renato Cron: kk
+[20:24, 5/8/2020] Renato Cron: preciso botar message
+[20:24, 5/8/2020] Renato Cron: se vc manda sem
+[20:24, 5/8/2020] Renato Cron: die {status => 401, error => "Not Authenticated"};
+[20:24, 5/8/2020] Renato Cron: se fizeram logout
+[20:24, 5/8/2020] Renato Cron: $c->render(json => {error => "This session was logout"}, status => 403);
+[20:24, 5/8/2020] Renato Cron: tem cada um diferente
+
+*/
