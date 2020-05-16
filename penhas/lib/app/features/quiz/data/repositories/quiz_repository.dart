@@ -22,7 +22,7 @@ class QuizRepository implements IQuizRepository {
   Future<Either<Failure, AppStateEntity>> update(
       {@required QuizRequestEntity quiz}) async {
     try {
-      final appState = await _dataSource.update();
+      final appState = await _dataSource.update(quiz: quiz);
       return right(appState);
     } catch (e) {
       return left(await _handleError(e));
