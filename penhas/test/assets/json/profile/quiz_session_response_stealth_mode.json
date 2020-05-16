@@ -1,0 +1,25 @@
+{
+  "quiz_session": {
+    "current_msgs": [
+      {
+        "content": "Solli Moreira Honorio, pelas suas respostas avalio que você está em situação de risco ⚠️",
+        "style": "normal",
+        "type": "displaytext"
+      },
+      {
+        "content": "Para garantir sua segurança, nenhuma outra usuária do PenhaS saberá sua identidade e você terá um perfil anônimo 👭",
+        "style": "normal",
+        "type": "displaytext"
+      },
+      {
+        "action": "botao_modo_camuflado",
+        "content": "Também recomendamos que você utilize o PenhaS com o <b>Modo Camuflado ativado<\/b>. Isso criará um disfarce para o app. Veja como funciona",
+        "label": "Ver",
+        "ref": "BT6",
+        "type": "button"
+      }
+    ],
+    "prev_msgs": null,
+    "session_id": 200
+  }
+}
