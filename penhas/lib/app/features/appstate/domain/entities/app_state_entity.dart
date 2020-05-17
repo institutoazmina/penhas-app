@@ -6,6 +6,7 @@ enum QuizMessageType {
   button,
   yesno,
   displayText,
+  displayTextResponse,
   multipleChoices,
 }
 
@@ -21,6 +22,9 @@ extension QuizMessageTypeExtension on QuizMessageType {
         break;
       case 'displaytext':
         type = QuizMessageType.displayText;
+        break;
+      case 'display_response':
+        type = QuizMessageType.displayTextResponse;
         break;
       case 'multiplechoices':
         type = QuizMessageType.multipleChoices;
