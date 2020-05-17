@@ -9,31 +9,32 @@ part of 'quiz_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$QuizController on _QuizControllerBase, Store {
-  final _$valueAtom = Atom(name: '_QuizControllerBase.value');
+  final _$userReplyMessageAtom =
+      Atom(name: '_QuizControllerBase.userReplyMessage');
 
   @override
-  int get value {
-    _$valueAtom.context.enforceReadPolicy(_$valueAtom);
-    _$valueAtom.reportObserved();
-    return super.value;
+  QuizMessageEntity get userReplyMessage {
+    _$userReplyMessageAtom.context.enforceReadPolicy(_$userReplyMessageAtom);
+    _$userReplyMessageAtom.reportObserved();
+    return super.userReplyMessage;
   }
 
   @override
-  set value(int value) {
-    _$valueAtom.context.conditionallyRunInAction(() {
-      super.value = value;
-      _$valueAtom.reportChanged();
-    }, _$valueAtom, name: '${_$valueAtom.name}_set');
+  set userReplyMessage(QuizMessageEntity value) {
+    _$userReplyMessageAtom.context.conditionallyRunInAction(() {
+      super.userReplyMessage = value;
+      _$userReplyMessageAtom.reportChanged();
+    }, _$userReplyMessageAtom, name: '${_$userReplyMessageAtom.name}_set');
   }
 
   final _$_QuizControllerBaseActionController =
       ActionController(name: '_QuizControllerBase');
 
   @override
-  void increment() {
+  void onActionReply(Map<String, String> reply) {
     final _$actionInfo = _$_QuizControllerBaseActionController.startAction();
     try {
-      return super.increment();
+      return super.onActionReply(reply);
     } finally {
       _$_QuizControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -41,7 +42,7 @@ mixin _$QuizController on _QuizControllerBase, Store {
 
   @override
   String toString() {
-    final string = 'value: ${value.toString()}';
+    final string = 'userReplyMessage: ${userReplyMessage.toString()}';
     return '{$string}';
   }
 }

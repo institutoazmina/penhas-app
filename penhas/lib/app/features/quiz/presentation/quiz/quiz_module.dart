@@ -5,7 +5,7 @@ import 'package:penhas/app/features/quiz/presentation/quiz/quiz_page.dart';
 class QuizModule extends ChildModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => QuizController()),
+        Bind((i) => QuizController(quizSession: i.args.data)),
       ];
 
   @override
