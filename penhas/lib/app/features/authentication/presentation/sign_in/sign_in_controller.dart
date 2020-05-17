@@ -65,7 +65,7 @@ abstract class _SignInControllerBase with Store {
   }
 
   @action
-  Future signInWithEmailAndPasswordPressed() async {
+  Future<void> signInWithEmailAndPasswordPressed() async {
     if (!_emailAddress.isValid || !_password.isValid) {
       _setErrorMessage(INVALID_FIELD_TO_LOGIN);
       return;
@@ -83,12 +83,12 @@ abstract class _SignInControllerBase with Store {
   }
 
   @action
-  Future registerUserPressed() async {
+  Future<void> registerUserPressed() async {
     Modular.to.pushNamed('/authentication/signup');
   }
 
   @action
-  Future resetPasswordPressed() async {
+  Future<void> resetPasswordPressed() async {
     Modular.to.pushNamed('/authentication/reset_password');
   }
 

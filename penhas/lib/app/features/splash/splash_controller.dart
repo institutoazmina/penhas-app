@@ -38,7 +38,7 @@ abstract class _SplashControllerBase with Store {
     }
   }
 
-  Future _validateAppStates() async {
+  Future<void> _validateAppStates() async {
     final appState = await _appStateRepository.check();
     appState.fold(
       (failure) => _handleFailure(failure),
@@ -63,6 +63,11 @@ abstract class _SplashControllerBase with Store {
   }
 
   void _handleAppStates(AppStateEntity session) {
+    if (session.quizSession != null) {
+      Modular.to.pushReplacementNamed('/quiz', arguments: session.quizSession);
+      return;
+    }
+
     _forwardToAuthenticated();
   }
 }

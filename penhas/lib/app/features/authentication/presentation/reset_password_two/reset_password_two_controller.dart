@@ -50,12 +50,12 @@ abstract class _ResetPasswordTwoControllerBase with Store {
   }
 
   @action
-  Future setToken(String token) async {
+  Future<void> setToken(String token) async {
     _userRegisterModel.token = token.replaceAll(RegExp(r'\D'), '');
   }
 
   @action
-  Future nextStepPressed() async {
+  Future<void> nextStepPressed() async {
     _setErrorMessage('');
     if (_userRegisterModel.token == null ||
         _userRegisterModel.token.length < 6) {
