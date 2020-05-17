@@ -4,8 +4,8 @@ import 'package:penhas/app/core/storage/i_local_storage.dart';
 
 abstract class IAppConfiguration {
   Future<String> get apiToken;
-  Future saveApiToken({@required String token});
-  Future logout();
+  Future<void> saveApiToken({@required String token});
+  Future<void> logout();
   Uri get penhasServer;
   Future<AuthorizationStatus> get authorizationStatus;
 }
@@ -33,13 +33,13 @@ class AppConfiguration implements IAppConfiguration {
   Uri get penhasServer => Uri.https('elasv2-api.appcivico.com', '/');
 
   @override
-  Future saveApiToken({@required String token}) async {
+  Future<void> saveApiToken({@required String token}) async {
     await _storage.put(_tokenKey, token);
     return;
   }
 
   @override
-  Future logout() async {
+  Future<void> logout() async {
     await _storage.delete(_tokenKey);
     return;
   }

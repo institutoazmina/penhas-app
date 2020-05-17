@@ -14,7 +14,7 @@ class LocalStorageSharedPreferences implements ILocalStorage {
   }
 
   @override
-  Future delete(String key) async {
+  Future<void> delete(String key) async {
     final shared = await _instance.future;
     shared.remove(key);
   }
@@ -26,7 +26,7 @@ class LocalStorageSharedPreferences implements ILocalStorage {
   }
 
   @override
-  Future put(String key, String value) async {
+  Future<void> put(String key, String value) async {
     final shared = await _instance.future;
     shared.setString(key, value);
   }
