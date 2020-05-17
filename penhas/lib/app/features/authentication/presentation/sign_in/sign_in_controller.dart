@@ -93,7 +93,7 @@ abstract class _SignInControllerBase with Store {
   }
 
   _forwardToLogged() {
-    Modular.to.pushReplacementNamed('/mainboard');
+    Modular.to.pushReplacementNamed('/');
   }
 
   void _mapFailureToMessage(Failure failure) {

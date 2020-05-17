@@ -8,8 +8,8 @@ import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_module.dart';
-import 'package:penhas/app/modules/splash/splash_controller.dart';
-import 'package:penhas/app/modules/splash/splash_module.dart';
+import 'package:penhas/app/features/splash/splash_controller.dart';
+import 'package:penhas/app/features/splash/splash_module.dart';
 
 import 'app_controller.dart';
 import 'app_widget.dart';
@@ -19,13 +19,11 @@ class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
         Bind((i) => AppController()),
-        Bind((i) => SplashController(
-              appConfiguration: i.get<IAppConfiguration>(),
-            )),
         Bind((i) => SignInModule()),
         Bind<IApiServerConfigure>(
-          (i) =>
-              ApiServerConfigure(appConfiguration: i.get<IAppConfiguration>()),
+          (i) => ApiServerConfigure(
+            appConfiguration: i.get<IAppConfiguration>(),
+          ),
         ),
         Bind<http.Client>((i) => http.Client()),
         Bind<INetworkInfo>(
