@@ -19,7 +19,6 @@ void main() {
   IQuizDataSource dataSource;
   MockApiServerConfigure serverConfigure;
   QuizRequestEntity quizRequest;
-  Map<String, Object> jsonData;
   String bodyContent;
   Uri serverEndpoint;
   const String SESSSION_TOKEN = 'my_really.long.JWT';
@@ -29,7 +28,7 @@ void main() {
     serverConfigure = MockApiServerConfigure();
     serverEndpoint = Uri.https('api.anyserver.io', '/');
     dataSource = QuizDataSource(
-      apliClient: apiClient,
+      apiClient: apiClient,
       serverConfiguration: serverConfigure,
     );
 

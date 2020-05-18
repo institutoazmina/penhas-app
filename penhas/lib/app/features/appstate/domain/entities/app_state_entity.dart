@@ -45,22 +45,30 @@ class AppStateEntity extends Equatable {
 
   @override
   List<Object> get props => [quizSession];
+
+  @override
+  String toString() {
+    return "AppStateEntity{quizSession : ${quizSession.toString()}";
+  }
 }
 
 @immutable
 class QuizSessionEntity extends Equatable {
   final List<QuizMessageEntity> currentMessage;
-  final List<QuizMessageEntity> previousMessage;
   final int sessionId;
 
   QuizSessionEntity({
     @required this.currentMessage,
-    @required this.previousMessage,
     @required this.sessionId,
   });
 
   @override
-  List<Object> get props => [currentMessage, previousMessage, sessionId];
+  List<Object> get props => [currentMessage, sessionId];
+
+  @override
+  String toString() {
+    return "QuizSessionEntity{currentMessage: ${currentMessage.toString()}, sessionId: ${sessionId.toString()} }";
+  }
 }
 
 @immutable
@@ -81,4 +89,9 @@ class QuizMessageEntity extends Equatable {
 
   @override
   List<Object> get props => [content, style, action, type, ref];
+
+  @override
+  String toString() {
+    return "QuizMessageEntity{content: ${content.toString()}, type: ${type.toString()}, style: ${style.toString()}, action: ${action.toString()}, ref: ${ref.toString()}}";
+  }
 }

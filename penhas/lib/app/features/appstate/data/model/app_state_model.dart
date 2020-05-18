@@ -11,13 +11,16 @@ class AppStateModel extends AppStateEntity {
   }
 
   static QuizSessionEntity _parseQuizSession(Map<String, Object> session) {
-    final foo = session["current_msgs"];
-    final currentMessage = _parseQuizMessage(foo);
+    final currentMessage = _parseQuizMessage(session["current_msgs"]);
     final previousMessage = _parseQuizMessage(session['prev_msgs']);
+
+    if (previousMessage != null) {
+      currentMessage.insertAll(0, previousMessage);
+    }
+
     final int sessionId = (session['session_id'] as num).toInt();
     return QuizSessionEntity(
       currentMessage: currentMessage,
-      previousMessage: previousMessage,
       sessionId: sessionId,
     );
   }
@@ -29,13 +32,39 @@ class AppStateModel extends AppStateEntity {
 
     return data
         .map((e) => e as Map<String, Object>)
-        .map((e) => QuizMessageEntity(
-              content: e['content'],
-              type: QuizMessageType.from[e['type']],
-              action: e['action'],
-              ref: e['ref'],
-              style: e['style'],
-            ))
+        .expand((e) => _buildMessage(e))
         .toList();
+  }
+
+  static List<QuizMessageEntity> _buildMessage(Map<String, Object> message) {
+    if (message['display_response'] != null) {
+      return _buildDisplayResponseMessage(message);
+    }
+
+    return [
+      QuizMessageEntity(
+        content: message['content'],
+        type: QuizMessageType.from[message['type']],
+        action: message['action'],
+        ref: message['ref'],
+        style: message['style'],
+      )
+    ];
+  }
+
+  static List<QuizMessageEntity> _buildDisplayResponseMessage(
+      Map<String, Object> message) {
+    return [
+      QuizMessageEntity(
+        content: message['content'],
+        type: QuizMessageType.displayText,
+        style: "normal",
+      ),
+      QuizMessageEntity(
+        content: message['display_response'],
+        type: QuizMessageType.displayTextResponse,
+        style: "normal",
+      )
+    ];
   }
 }
