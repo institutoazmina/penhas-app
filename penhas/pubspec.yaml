@@ -31,6 +31,7 @@ dependencies:
   mask_text_input_formatter: ^1.0.6
   datetime_picker_formfield: ^1.0.0
   cpfcnpj: ^1.0.3
+  flutter_widget_from_html: ^0.3.3+3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

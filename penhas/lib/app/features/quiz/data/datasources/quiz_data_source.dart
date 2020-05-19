@@ -17,9 +17,9 @@ class QuizDataSource implements IQuizDataSource {
   final Set<int> _invalidSessionCode = {401, 403};
 
   QuizDataSource({
-    @required http.Client apliClient,
+    @required http.Client apiClient,
     @required serverConfiguration,
-  })  : this._apiClient = apliClient,
+  })  : this._apiClient = apiClient,
         this._serverConfiguration = serverConfiguration;
 
   @override

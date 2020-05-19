@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz/quiz_typedef.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-class ButtonYesNoWidget extends StatelessWidget {
+class QuiZButtonYesNoWidget extends StatelessWidget {
   final String reference;
   final UserReaction onPressed;
 
-  const ButtonYesNoWidget({
+  const QuiZButtonYesNoWidget({
     Key key,
     @required this.reference,
     @required this.onPressed,
@@ -30,15 +30,17 @@ class ButtonYesNoWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           _buildActionButton(
-              width: buttonWidthSize,
-              title: 'SIM',
-              actionResponse: {reference: '1'},
-              onPressed: onPressed),
+            width: buttonWidthSize,
+            title: 'SIM',
+            actionResponse: {reference: 'Y'},
+            onPressed: onPressed,
+          ),
           _buildActionButton(
-              width: buttonWidthSize,
-              title: 'NÃO',
-              actionResponse: {reference: '0'},
-              onPressed: onPressed)
+            width: buttonWidthSize,
+            title: 'NÃO',
+            actionResponse: {reference: 'N'},
+            onPressed: onPressed,
+          )
         ],
       ),
     );

@@ -27,6 +27,23 @@ mixin _$QuizController on _QuizControllerBase, Store {
     }, _$userReplyMessageAtom, name: '${_$userReplyMessageAtom.name}_set');
   }
 
+  final _$errorMessageAtom = Atom(name: '_QuizControllerBase.errorMessage');
+
+  @override
+  String get errorMessage {
+    _$errorMessageAtom.context.enforceReadPolicy(_$errorMessageAtom);
+    _$errorMessageAtom.reportObserved();
+    return super.errorMessage;
+  }
+
+  @override
+  set errorMessage(String value) {
+    _$errorMessageAtom.context.conditionallyRunInAction(() {
+      super.errorMessage = value;
+      _$errorMessageAtom.reportChanged();
+    }, _$errorMessageAtom, name: '${_$errorMessageAtom.name}_set');
+  }
+
   final _$_QuizControllerBaseActionController =
       ActionController(name: '_QuizControllerBase');
 
@@ -42,7 +59,8 @@ mixin _$QuizController on _QuizControllerBase, Store {
 
   @override
   String toString() {
-    final string = 'userReplyMessage: ${userReplyMessage.toString()}';
+    final string =
+        'userReplyMessage: ${userReplyMessage.toString()},errorMessage: ${errorMessage.toString()}';
     return '{$string}';
   }
 }

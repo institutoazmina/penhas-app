@@ -1,22 +1,35 @@
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
+import 'package:penhas/app/features/quiz/domain/entities/quiz_request_entity.dart';
+import 'package:penhas/app/features/quiz/domain/repositories/i_quiz_repository.dart';
 
 part 'quiz_controller.g.dart';
+
+const String ERROR_SERVER_FAILURE =
+    "O servidor está com problema neste momento, tente novamente.";
+const String ERROR_INTERNET_CONNECTION_FAILURE =
+    "O servidor está inacessível, o PenhaS está com acesso à Internet?";
 
 class QuizController extends _QuizControllerBase with _$QuizController {
   QuizController({
     @required QuizSessionEntity quizSession,
-  }) : super(quizSession);
+    @required IQuizRepository repository,
+  }) : super(quizSession, repository);
 }
 
 abstract class _QuizControllerBase with Store {
   final QuizSessionEntity _quizSession;
+  final IQuizRepository _repository;
+  int _sessionId;
 
-  _QuizControllerBase(this._quizSession) {
-    final reversedMessages = _quizSession.currentMessage.reversed.toList();
-    messages.addAll(reversedMessages.asObservable());
-    _parseUserReply(reversedMessages);
+  _QuizControllerBase(this._quizSession, this._repository) {
+    final reversedCurrent = _quizSession.currentMessage.reversed.toList();
+    _sessionId = _quizSession.sessionId;
+
+    messages.addAll(reversedCurrent);
+    _parseUserReply(reversedCurrent);
   }
 
   ObservableList<QuizMessageEntity> messages =
@@ -24,6 +37,9 @@ abstract class _QuizControllerBase with Store {
 
   @observable
   QuizMessageEntity userReplyMessage;
+
+  @observable
+  String errorMessage = '';
 
   @action
   void onActionReply(Map<String, String> reply) {
@@ -35,7 +51,7 @@ abstract class _QuizControllerBase with Store {
     if (messageRemoved.type == QuizMessageType.yesno) {
       String newMessageContent;
 
-      if (reply[messageRemoved.ref] == '1') {
+      if (reply[messageRemoved.ref] == 'Y') {
         newMessageContent = "Sim";
       } else {
         newMessageContent = "Não";
@@ -56,11 +72,57 @@ abstract class _QuizControllerBase with Store {
 
       userReplyMessage = newMessage;
     }
+
+    QuizRequestEntity request = QuizRequestEntity(
+      sessionId: _sessionId,
+      options: reply,
+    );
+
+    // _sendUserInteraction(request);
   }
 
   void _parseUserReply(List<QuizMessageEntity> messages) {
     userReplyMessage = messages.firstWhere(
       (e) => e.type != QuizMessageType.displayText,
     );
+  }
+
+  Future<void> _sendUserInteraction(QuizRequestEntity request) async {
+    final response = await _repository.update(quiz: request);
+
+    response.fold(
+      (failure) => _mapFailureToMessage(failure),
+      (state) => _parseState(state),
+    );
+  }
+
+  void _parseState(AppStateEntity state) {
+    _sessionId = state.quizSession.sessionId;
+    messages.insertAll(0, state.quizSession.currentMessage.reversed);
+    _parseUserReply(messages);
+  }
+
+  void _mapFailureToMessage(Failure failure) {
+    switch (failure.runtimeType) {
+      case InternetConnectionFailure:
+        _setErrorMessage(ERROR_INTERNET_CONNECTION_FAILURE);
+        break;
+      case ServerFailure:
+        _setErrorMessage(ERROR_SERVER_FAILURE);
+        break;
+      case ServerSideFormFieldValidationFailure:
+        _mapFailureToFields(failure);
+        break;
+      default:
+        throw UnsupportedError;
+    }
+  }
+
+  void _mapFailureToFields(ServerSideFormFieldValidationFailure failure) {
+    _setErrorMessage(failure.message);
+  }
+
+  void _setErrorMessage(String message) {
+    errorMessage = message;
   }
 }

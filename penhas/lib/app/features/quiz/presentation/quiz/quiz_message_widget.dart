@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
@@ -19,8 +20,7 @@ class QuizMessageWidget extends StatelessWidget {
         : EdgeInsets.only(left: 12.0, right: 36.0, bottom: 8.0, top: 8.0);
 
     EdgeInsetsGeometry padding = EdgeInsets.symmetric(
-      horizontal: 12.0,
-      vertical: 8.0,
+      horizontal: 8.0,
     );
 
     Color color = isDisplayTextResponse
@@ -46,11 +46,10 @@ class QuizMessageWidget extends StatelessWidget {
         padding: padding,
         // margin: margin,
         decoration: BoxDecoration(color: color, borderRadius: borderRadius),
-        child: Text(
-          message.content,
-          style: TextStyle(
-            fontSize: 16.0,
-            color: textColor,
+        child: Container(
+          child: HtmlWidget(
+            message.content,
+            textStyle: TextStyle(fontSize: 15.0, color: textColor),
           ),
         ),
       ),
