@@ -48,14 +48,7 @@ abstract class _QuizControllerBase with Store {
     }
 
     final messageRemoved = messages.removeAt(0);
-    QuizMessageEntity actionMessageResult;
-
-    if (messageRemoved.type == QuizMessageType.yesno) {
-      actionMessageResult = _replyYesNoUserInteraction(reply, messageRemoved);
-    } else if (messageRemoved.type == QuizMessageType.button) {
-      actionMessageResult =
-          _replyButtonTutorialUserInteraction(reply, messageRemoved);
-    }
+    final actionMessageResult = _mapInteractionToMessage(messageRemoved, reply);
 
     userReplyMessage = actionMessageResult;
 
@@ -72,7 +65,26 @@ abstract class _QuizControllerBase with Store {
       options: reply,
     );
 
-    // _sendUserInteraction(request);
+    _sendUserInteraction(request);
+  }
+
+  QuizMessageEntity _mapInteractionToMessage(
+    QuizMessageEntity messageRemoved,
+    Map<String, String> reply,
+  ) {
+    final message = QuizMessageEntity(
+        content: 'Desculpa, não entendi', type: QuizMessageType.displayText);
+
+    switch (messageRemoved.type) {
+      case QuizMessageType.yesno:
+        return _replyYesNoUserInteraction(reply, messageRemoved);
+      case QuizMessageType.button:
+        return _replyButtonTutorialUserInteraction(reply, messageRemoved);
+      case QuizMessageType.multipleChoices:
+        throw UnimplementedError();
+      default:
+        return message;
+    }
   }
 
   QuizMessageEntity _replyButtonTutorialUserInteraction(

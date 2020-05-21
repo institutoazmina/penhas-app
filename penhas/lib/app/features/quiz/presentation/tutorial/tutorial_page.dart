@@ -65,35 +65,39 @@ class _TutorialPageState extends State<TutorialPage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(
-            left: 24.0,
-            right: 24.0,
+            left: 12.0,
+            right: 12.0,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Container(
-                height: 460,
-                child: PageView(
-                  physics: ClampingScrollPhysics(),
-                  children: _contentPageView,
-                  controller: _pageController,
-                  onPageChanged: (int page) {
-                    setState(() {
-                      _currentPage = page;
-                    });
-                  },
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(children: _buildPageIndicator()),
-                  Row(
-                    children: <Widget>[_buildActionButton()],
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Container(
+                  height: 460,
+                  child: PageView(
+                    physics: ClampingScrollPhysics(),
+                    children: _contentPageView,
+                    controller: _pageController,
+                    onPageChanged: (int page) {
+                      setState(() {
+                        _currentPage = page;
+                      });
+                    },
                   ),
-                ],
-              ),
-            ],
+                ),
+                SizedBox(height: 30),
+                Padding(
+                  padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(children: _buildPageIndicator()),
+                      Row(children: <Widget>[_buildActionButton()]),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

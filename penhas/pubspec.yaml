@@ -31,6 +31,7 @@ dependencies:
   mask_text_input_formatter: ^1.0.6
   datetime_picker_formfield: ^1.0.0
   cpfcnpj: ^1.0.3
+  url_launcher: ^5.4.7
   flutter_widget_from_html: ^0.3.3+3
 
   # The following adds the Cupertino Icons font to your application.
@@ -40,13 +41,14 @@ dependencies:
   flutter_mobx: ^1.1.0
   flutter_modular: ^1.0.0
   mobx: ^1.1.1
+  
   ##### Teste do mastodon
   provider: ^4.0.4
   timeago: ^2.0.26
   feather_icons_flutter: ^4.7.4
   web_socket_channel: ^1.1.0
   shared_preferences: ^0.5.6+3
-  url_launcher: ^5.4.2
+
 
 
 dev_dependencies:
