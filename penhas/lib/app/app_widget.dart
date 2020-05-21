@@ -8,6 +8,8 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Penhas',
+      theme: ThemeData(
+          textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Lato')),
       navigatorKey: Modular.navigatorKey,
       localizationsDelegates: [
         GlobalWidgetsLocalizations.delegate,
