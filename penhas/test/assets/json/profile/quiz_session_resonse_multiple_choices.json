@@ -1,0 +1,47 @@
+{
+  "esta_em_situcao_de_violencia": 0,
+  "ja_foi_vitima_de_violencia": 0,
+  "mastodon_username": null,
+  "modo_anonimo_ativo": 0,
+  "modo_camuflado_ativo": 0,
+  "modules": [
+    "quiz"
+  ],
+  "quiz_session": {
+    "current_msgs": [
+      {
+        "content": "Que tal nos contar um pouco como você acha que pode ajudar outras mulheres? Suas opções ficarão visíveis para as outras usuárias",
+        "options": [
+          {
+            "display": "Escuta acolhedora",
+            "index": "0"
+          },
+          {
+            "display": "Psicologia",
+            "index": "1"
+          },
+          {
+            "display": "Abrigo",
+            "index": "2"
+          }
+        ],
+        "ref": "MC7",
+        "type": "multiplechoices"
+      }
+    ],
+    "prev_msgs": [],
+    "session_id": 255
+  },
+  "senha_falsa_sha256": null,
+  "user_profile": {
+    "cep": "01209010",
+    "cpf_prefix": "1482",
+    "dt_nasc": "1975-07-03",
+    "email": "shonorio@gmail.com",
+    "genero": "Feminino",
+    "minibio": null,
+    "nome_completo": "Solli Moreira Honorio",
+    "nome_social": "",
+    "raca": "pardo"
+  }
+}

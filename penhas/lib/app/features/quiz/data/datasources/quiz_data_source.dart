@@ -33,6 +33,7 @@ class QuizDataSource implements IQuizDataSource {
 
     final httpRequest =
         await _setupHttpRequest(queryParameters: queryParameters);
+
     final response = await _apiClient.post(httpRequest, headers: httpHeader);
     if (_successfulResponse.contains(response.statusCode)) {
       return AppStateModel.fromJson(json.decode(response.body));

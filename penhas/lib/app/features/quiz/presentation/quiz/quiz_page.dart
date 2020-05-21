@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz/quiz_message_widget.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz/quiz_user_replay_widget.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
@@ -15,9 +16,31 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends ModularState<QuizPage, QuizController> {
+  List<ReactionDisposer> _disposers;
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _disposers ??= [
+      reaction((_) => controller.errorMessage, (String message) {
+        if (message.isEmpty) {
+          return;
+        }
+
+        _scaffoldKey.currentState.showSnackBar(
+          SnackBar(
+            content: Text(message),
+          ),
+        );
+      }),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.white,
       appBar: _buildAppBar(),
       body: SafeArea(
@@ -25,6 +48,7 @@ class _QuizPageState extends ModularState<QuizPage, QuizController> {
           children: <Widget>[
             Expanded(
               child: Container(
+                color: DesignSystemColors.white,
                 child: Observer(
                   builder: (_) {
                     return ListView.builder(
@@ -52,6 +76,12 @@ class _QuizPageState extends ModularState<QuizPage, QuizController> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _disposers.forEach((d) => d());
   }
 
   AppBar _buildAppBar() {

@@ -81,7 +81,7 @@ abstract class _QuizControllerBase with Store {
       case QuizMessageType.button:
         return _replyButtonTutorialUserInteraction(reply, messageRemoved);
       case QuizMessageType.multipleChoices:
-        throw UnimplementedError();
+        return _replyMultiChoicesInteracton(reply, messageRemoved);
       default:
         return message;
     }
@@ -115,6 +115,22 @@ abstract class _QuizControllerBase with Store {
     );
 
     return newMessage;
+  }
+
+  QuizMessageEntity _replyMultiChoicesInteracton(
+    Map<String, String> reply,
+    QuizMessageEntity messageRemoved,
+  ) {
+    String display = reply[messageRemoved.ref]
+        .split(',')
+        .map((e) => messageRemoved.options.firstWhere((o) => o.index == e))
+        .map((e) => e.display)
+        .join(', ');
+
+    return QuizMessageEntity(
+      content: display,
+      type: QuizMessageType.displayTextResponse,
+    );
   }
 
   void _parseUserReply(List<QuizMessageEntity> messages) {
