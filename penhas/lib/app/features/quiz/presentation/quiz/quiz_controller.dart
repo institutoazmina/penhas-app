@@ -48,30 +48,24 @@ abstract class _QuizControllerBase with Store {
     }
 
     final messageRemoved = messages.removeAt(0);
+    QuizMessageEntity actionMessageResult;
+
     if (messageRemoved.type == QuizMessageType.yesno) {
-      String newMessageContent;
-
-      if (reply[messageRemoved.ref] == 'Y') {
-        newMessageContent = "Sim";
-      } else {
-        newMessageContent = "Não";
-      }
-
-      QuizMessageEntity newMessage = QuizMessageEntity(
-        content: newMessageContent,
-        type: QuizMessageType.displayTextResponse,
-      );
-
-      messages.insertAll(0, [
-        newMessage,
-        QuizMessageEntity(
-          content: messageRemoved.content,
-          type: QuizMessageType.displayText,
-        ),
-      ]);
-
-      userReplyMessage = newMessage;
+      actionMessageResult = _replyYesNoUserInteraction(reply, messageRemoved);
+    } else if (messageRemoved.type == QuizMessageType.button) {
+      actionMessageResult =
+          _replyButtonTutorialUserInteraction(reply, messageRemoved);
     }
+
+    userReplyMessage = actionMessageResult;
+
+    messages.insertAll(0, [
+      actionMessageResult,
+      QuizMessageEntity(
+        content: messageRemoved.content,
+        type: QuizMessageType.displayText,
+      ),
+    ]);
 
     QuizRequestEntity request = QuizRequestEntity(
       sessionId: _sessionId,
@@ -79,6 +73,36 @@ abstract class _QuizControllerBase with Store {
     );
 
     // _sendUserInteraction(request);
+  }
+
+  QuizMessageEntity _replyButtonTutorialUserInteraction(
+    Map<String, String> reply,
+    QuizMessageEntity messageRemoved,
+  ) {
+    return QuizMessageEntity(
+      content: 'Tutorial visto',
+      type: QuizMessageType.displayTextResponse,
+    );
+  }
+
+  QuizMessageEntity _replyYesNoUserInteraction(
+    Map<String, String> reply,
+    QuizMessageEntity messageRemoved,
+  ) {
+    String newMessageContent;
+
+    if (reply[messageRemoved.ref] == 'Y') {
+      newMessageContent = "Sim";
+    } else {
+      newMessageContent = "Não";
+    }
+
+    QuizMessageEntity newMessage = QuizMessageEntity(
+      content: newMessageContent,
+      type: QuizMessageType.displayTextResponse,
+    );
+
+    return newMessage;
   }
 
   void _parseUserReply(List<QuizMessageEntity> messages) {
