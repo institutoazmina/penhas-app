@@ -76,6 +76,23 @@ void main() {
       ];
     }
 
+    List<QuizMessageEntity> _currentMessageWithMultipleChoices() {
+      return [
+        QuizMessageEntity(
+            content:
+                "Que tal nos contar um pouco como você acha que pode ajudar outras mulheres? Suas opções ficarão visíveis para as outras usuárias",
+            type: QuizMessageType.multipleChoices,
+            ref: "MC7",
+            options: [
+              QuizMessageMultiplechoicesOptions(
+                  index: '0', display: 'Escuta acolhedora'),
+              QuizMessageMultiplechoicesOptions(
+                  index: '1', display: 'Psicologia'),
+              QuizMessageMultiplechoicesOptions(index: '2', display: 'Abrigo'),
+            ]),
+      ];
+    }
+
     test('should return a valid model with only current message in JSON',
         () async {
       // arrange
@@ -103,6 +120,24 @@ void main() {
       final QuizSessionEntity quizSession = QuizSessionEntity(
         currentMessage: currentMessage,
         sessionId: 247,
+      );
+      final AppStateEntity expected = AppStateModel(quizSession);
+      // act
+      final result = AppStateModel.fromJson(jsonData);
+      // assert
+      expect(result, expected);
+    });
+
+    test('should return a valid model with JSON with multiplechoices',
+        () async {
+      // arrange
+      final jsonData = await JsonUtil.getJson(
+          from: 'profile/quiz_session_resonse_multiple_choices.json');
+      final List<QuizMessageEntity> currentMessage =
+          _currentMessageWithMultipleChoices();
+      final QuizSessionEntity quizSession = QuizSessionEntity(
+        currentMessage: currentMessage,
+        sessionId: 255,
       );
       final AppStateEntity expected = AppStateModel(quizSession);
       // act

@@ -48,6 +48,7 @@ class AppStateModel extends AppStateEntity {
         action: message['action'],
         ref: message['ref'],
         style: message['style'],
+        options: _mapToOptions(message['options']),
       )
     ];
   }
@@ -66,5 +67,22 @@ class AppStateModel extends AppStateEntity {
         style: "normal",
       )
     ];
+  }
+
+  static List<QuizMessageMultiplechoicesOptions> _mapToOptions(
+      List<Object> options) {
+    if (options == null || options.isEmpty) {
+      return null;
+    }
+
+    return options
+        .map((e) => e as Map<String, Object>)
+        .map(
+          (e) => QuizMessageMultiplechoicesOptions(
+            index: e['index'],
+            display: e['display'],
+          ),
+        )
+        .toList();
   }
 }

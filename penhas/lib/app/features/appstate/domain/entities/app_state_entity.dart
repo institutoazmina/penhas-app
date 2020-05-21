@@ -78,6 +78,7 @@ class QuizMessageEntity extends Equatable {
   final String style;
   final String action;
   final String ref;
+  final List<QuizMessageMultiplechoicesOptions> options;
 
   QuizMessageEntity({
     @required this.content,
@@ -85,13 +86,32 @@ class QuizMessageEntity extends Equatable {
     this.ref,
     this.style,
     this.action,
+    this.options,
   });
 
   @override
-  List<Object> get props => [content, style, action, type, ref];
+  List<Object> get props => [content, style, action, type, ref, options];
 
   @override
   String toString() {
-    return "QuizMessageEntity{content: ${content.toString()}, type: ${type.toString()}, style: ${style.toString()}, action: ${action.toString()}, ref: ${ref.toString()}}";
+    return "QuizMessageEntity{content: ${content.toString()}, type: ${type.toString()}, style: ${style.toString()}, action: ${action.toString()}, ref: ${ref.toString()}} options: ${options.toString()}";
+  }
+}
+
+class QuizMessageMultiplechoicesOptions extends Equatable {
+  final String display;
+  final String index;
+
+  QuizMessageMultiplechoicesOptions({
+    @required this.display,
+    @required this.index,
+  });
+
+  @override
+  List<Object> get props => [display, index];
+
+  @override
+  String toString() {
+    return "QuizMessageMultiplechoicesOptions{index: ${index.toString()}, display: ${display.toString()}}";
   }
 }

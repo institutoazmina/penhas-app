@@ -28,7 +28,7 @@ class QuizUserReplayWidget extends StatelessWidget {
           onPressed: onActionReplay,
         );
       case QuizMessageType.multipleChoices:
-        throw UnimplementedError();
+        return Container();
       case QuizMessageType.from:
       case QuizMessageType.displayText:
       case QuizMessageType.displayTextResponse:
