@@ -111,7 +111,7 @@ void main() {
           content:
               "Também recomendamos que você utilize o PenhaS com o <b>Modo Camuflado ativado<\/b>. Isso criará um disfarce para o app. Veja como funciona",
           type: QuizMessageType.showTutorial,
-          action: 'botao_modo_camuflado',
+          action: 'botao_tela_modo_camuflado',
           buttonLabel: 'Ver',
           ref: 'BT6',
         ),
@@ -193,6 +193,23 @@ void main() {
       final QuizSessionEntity quizSession = QuizSessionEntity(
         currentMessage: currentMessage,
         sessionId: 200,
+      );
+      final AppStateEntity expected = AppStateModel(quizSession);
+      // act
+      final result = AppStateModel.fromJson(jsonData);
+      // assert
+      expect(result, expected);
+    });
+
+    test('should return a valid model with JSON with single button', () async {
+      // arrange
+      final jsonData = await JsonUtil.getJson(
+          from: 'profile/quiz_session_response_button_fim.json');
+      final List<QuizMessageEntity> currentMessage =
+          _currentMessageWithSingleButton();
+      final QuizSessionEntity quizSession = QuizSessionEntity(
+        currentMessage: currentMessage,
+        sessionId: 310,
       );
       final AppStateEntity expected = AppStateModel(quizSession);
       // act

@@ -10,23 +10,15 @@
   "quiz_session": {
     "current_msgs": [
       {
-        "content": "Olá, eu sou a Assistente PenhaS ☺️ e vou te ajudar a conhecer o aplicativo 🤳",
-        "style": "normal",
-        "type": "displaytext"
-      },
-      {
-        "content": "Vou começar com algumas perguntas, para saber melhor como te ajudar",
-        "style": "normal",
-        "type": "displaytext"
-      },
-      {
-        "content": "Atualmente, você está em um relacionamento amoroso?",
-        "ref": "YN1",
-        "type": "yesno"
+        "action": "botao_fim",
+        "content": "Lindo 💜 Obrigada! Assim você nos ajuda a construir um ambiente em que mais mulheres se sintam mais seguras 🤗",
+        "label": "Finalizar",
+        "ref": "BT9",
+        "type": "button"
       }
     ],
-    "prev_msgs": [],
-    "session_id": 200
+    "prev_msgs": null,
+    "session_id": 310
   },
   "senha_falsa_sha256": null,
   "user_profile": {

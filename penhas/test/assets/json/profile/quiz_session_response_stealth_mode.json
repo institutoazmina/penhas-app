@@ -1,8 +1,16 @@
 {
+  "esta_em_situcao_de_violencia": 0,
+  "ja_foi_vitima_de_violencia": 0,
+  "mastodon_username": null,
+  "modo_anonimo_ativo": 0,
+  "modo_camuflado_ativo": 0,
+  "modules": [
+    "quiz"
+  ],
   "quiz_session": {
     "current_msgs": [
       {
-        "content": "Solli Moreira Honorio, pelas suas respostas avalio que você está em situação de risco ⚠️",
+        "content": "Fulana da Silva, pelas suas respostas avalio que você está em situação de risco ⚠️",
         "style": "normal",
         "type": "displaytext"
       },
@@ -12,7 +20,7 @@
         "type": "displaytext"
       },
       {
-        "action": "botao_modo_camuflado",
+        "action": "botao_tela_modo_camuflado",
         "content": "Também recomendamos que você utilize o PenhaS com o <b>Modo Camuflado ativado<\/b>. Isso criará um disfarce para o app. Veja como funciona",
         "label": "Ver",
         "ref": "BT6",
@@ -21,5 +29,17 @@
     ],
     "prev_msgs": null,
     "session_id": 200
+  },
+  "senha_falsa_sha256": null,
+  "user_profile": {
+    "cep": "99309040",
+    "cpf_prefix": "1482",
+    "dt_nasc": "1980-03-03",
+    "email": "email@valid.com",
+    "genero": "Feminino",
+    "minibio": null,
+    "nome_completo": "Fulana da Silva",
+    "nome_social": "",
+    "raca": "pardo"
   }
 }
