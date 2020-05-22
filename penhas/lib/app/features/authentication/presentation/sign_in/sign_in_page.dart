@@ -3,8 +3,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
+import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
-import 'package:penhas/app/shared/design_system/widget.dart';
 import 'sign_in_controller.dart';
 
 import 'sign_in_page.i18n.dart';
@@ -44,9 +44,10 @@ class _SignInPageState extends ModularState<SignInPage, SignInController> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.transparent,
+      resizeToAvoidBottomInset: false,
       body: SizedBox.expand(
         child: Container(
-          decoration: DesignSystemWidget.background(),
+          decoration: kLinearGradientDesignSystem,
           child: SafeArea(
             child: SingleChildScrollView(
               padding: EdgeInsetsDirectional.fromSTEB(16.0, 80.0, 16.0, 8.0),

@@ -4,7 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/widget.dart';
+import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'reset_password_two_controller.dart';
 
 class ResetPasswordTwoPage extends StatefulWidget {
@@ -56,10 +56,11 @@ class _ResetPasswordTwoPageState
           elevation: 0,
         ),
         backgroundColor: Colors.transparent,
+        resizeToAvoidBottomInset: false,
         extendBodyBehindAppBar: true,
         body: SizedBox.expand(
           child: Container(
-            decoration: DesignSystemWidget.background(),
+            decoration: kLinearGradientDesignSystem,
             child: SafeArea(
               child: SingleChildScrollView(
                 padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
