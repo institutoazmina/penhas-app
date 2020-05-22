@@ -6,8 +6,9 @@ enum QuizMessageType {
   button,
   yesno,
   displayText,
-  displayTextResponse,
+  showTutorial,
   multipleChoices,
+  displayTextResponse,
 }
 
 extension QuizMessageTypeExtension on QuizMessageType {
@@ -16,6 +17,9 @@ extension QuizMessageTypeExtension on QuizMessageType {
     switch (key.toLowerCase()) {
       case 'button':
         type = QuizMessageType.button;
+        break;
+      case 'show_tutorial':
+        type = QuizMessageType.showTutorial;
         break;
       case 'yesno':
         type = QuizMessageType.yesno;
@@ -75,9 +79,10 @@ class QuizSessionEntity extends Equatable {
 class QuizMessageEntity extends Equatable {
   final String content;
   final QuizMessageType type;
+  final String ref;
   final String style;
   final String action;
-  final String ref;
+  final String buttonLabel;
   final List<QuizMessageMultiplechoicesOptions> options;
 
   QuizMessageEntity({
@@ -87,14 +92,16 @@ class QuizMessageEntity extends Equatable {
     this.style,
     this.action,
     this.options,
+    this.buttonLabel,
   });
 
   @override
-  List<Object> get props => [content, style, action, type, ref, options];
+  List<Object> get props =>
+      [content, style, action, type, ref, options, buttonLabel];
 
   @override
   String toString() {
-    return "QuizMessageEntity{content: ${content.toString()}, type: ${type.toString()}, style: ${style.toString()}, action: ${action.toString()}, ref: ${ref.toString()}} options: ${options.toString()}";
+    return "QuizMessageEntity{content: ${content.toString()}, type: ${type.toString()}, style: ${style.toString()}, action: ${action.toString()}, ref: ${ref.toString()}}, buttonLabel: ${buttonLabel.toString()}, options: ${options.toString()}";
   }
 }
 

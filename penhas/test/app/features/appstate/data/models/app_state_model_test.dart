@@ -93,6 +93,44 @@ void main() {
       ];
     }
 
+    List<QuizMessageEntity> _currentMessageWithTutorialStealth() {
+      return [
+        QuizMessageEntity(
+          content:
+              "Fulana da Silva, pelas suas respostas avalio que você está em situação de risco ⚠️",
+          type: QuizMessageType.displayText,
+          style: "normal",
+        ),
+        QuizMessageEntity(
+          content:
+              "Para garantir sua segurança, nenhuma outra usuária do PenhaS saberá sua identidade e você terá um perfil anônimo 👭",
+          type: QuizMessageType.displayText,
+          style: "normal",
+        ),
+        QuizMessageEntity(
+          content:
+              "Também recomendamos que você utilize o PenhaS com o <b>Modo Camuflado ativado<\/b>. Isso criará um disfarce para o app. Veja como funciona",
+          type: QuizMessageType.showTutorial,
+          action: 'botao_modo_camuflado',
+          buttonLabel: 'Ver',
+          ref: 'BT6',
+        ),
+      ];
+    }
+
+    List<QuizMessageEntity> _currentMessageWithSingleButton() {
+      return [
+        QuizMessageEntity(
+          content:
+              'Lindo 💜 Obrigada! Assim você nos ajuda a construir um ambiente em que mais mulheres se sintam mais seguras 🤗',
+          type: QuizMessageType.button,
+          action: 'botao_fim',
+          buttonLabel: 'Finalizar',
+          ref: 'BT9',
+        ),
+      ];
+    }
+
     test('should return a valid model with only current message in JSON',
         () async {
       // arrange
@@ -138,6 +176,23 @@ void main() {
       final QuizSessionEntity quizSession = QuizSessionEntity(
         currentMessage: currentMessage,
         sessionId: 255,
+      );
+      final AppStateEntity expected = AppStateModel(quizSession);
+      // act
+      final result = AppStateModel.fromJson(jsonData);
+      // assert
+      expect(result, expected);
+    });
+
+    test('should return a valid model with JSON with showTutorial', () async {
+      // arrange
+      final jsonData = await JsonUtil.getJson(
+          from: 'profile/quiz_session_response_stealth_mode.json');
+      final List<QuizMessageEntity> currentMessage =
+          _currentMessageWithTutorialStealth();
+      final QuizSessionEntity quizSession = QuizSessionEntity(
+        currentMessage: currentMessage,
+        sessionId: 200,
       );
       final AppStateEntity expected = AppStateModel(quizSession);
       // act

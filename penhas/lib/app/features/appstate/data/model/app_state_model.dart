@@ -44,13 +44,23 @@ class AppStateModel extends AppStateEntity {
     return [
       QuizMessageEntity(
         content: message['content'],
-        type: QuizMessageType.from[message['type']],
-        action: message['action'],
         ref: message['ref'],
         style: message['style'],
+        action: message['action'],
+        buttonLabel: message['label'],
+        type: _mapMessageType(message),
         options: _mapToOptions(message['options']),
       )
     ];
+  }
+
+  static QuizMessageType _mapMessageType(Map<String, Object> message) {
+    QuizMessageType type = QuizMessageType.from[message['type']];
+    if (message['action'] == 'botao_modo_camuflado') {
+      type = QuizMessageType.showTutorial;
+    }
+
+    return type;
   }
 
   static List<QuizMessageEntity> _buildDisplayResponseMessage(
