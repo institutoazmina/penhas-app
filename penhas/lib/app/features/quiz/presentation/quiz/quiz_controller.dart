@@ -1,3 +1,4 @@
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -78,13 +79,29 @@ abstract class _QuizControllerBase with Store {
     switch (messageRemoved.type) {
       case QuizMessageType.yesno:
         return _replyYesNoUserInteraction(reply, messageRemoved);
-      case QuizMessageType.button:
+      case QuizMessageType.showTutorial:
         return _replyButtonTutorialUserInteraction(reply, messageRemoved);
       case QuizMessageType.multipleChoices:
         return _replyMultiChoicesInteracton(reply, messageRemoved);
+      case QuizMessageType.button:
+        return _replySingleButton(reply, messageRemoved);
       default:
         return message;
     }
+  }
+
+  QuizMessageEntity _replySingleButton(
+    Map<String, String> reply,
+    QuizMessageEntity messageRemoved,
+  ) {
+    if (messageRemoved.action == 'botao_fim') {
+      Modular.to.pushReplacementNamed('/');
+    }
+
+    return QuizMessageEntity(
+      content: messageRemoved.buttonLabel,
+      type: QuizMessageType.displayText,
+    );
   }
 
   QuizMessageEntity _replyButtonTutorialUserInteraction(

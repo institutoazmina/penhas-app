@@ -6,12 +6,14 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class QuizShowTutorialWidget extends StatelessWidget {
   final String reference;
+  final String buttonLabel;
   final UserReaction onPressed;
 
   const QuizShowTutorialWidget({
     Key key,
     @required this.reference,
     @required this.onPressed,
+    @required this.buttonLabel,
   }) : super(key: key);
 
   @override
@@ -39,7 +41,7 @@ class QuizShowTutorialWidget extends StatelessWidget {
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         child: Text(
-          "Ver tutorial",
+          buttonLabel,
           style: TextStyle(
             color: Colors.white,
             fontSize: 14.0,

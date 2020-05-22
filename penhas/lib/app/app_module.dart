@@ -9,7 +9,6 @@ import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_module.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz/quiz_module.dart';
-import 'package:penhas/app/features/splash/splash_controller.dart';
 import 'package:penhas/app/features/splash/splash_module.dart';
 
 import 'app_controller.dart';
