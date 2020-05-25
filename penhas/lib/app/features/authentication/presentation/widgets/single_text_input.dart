@@ -37,13 +37,13 @@ class SingleTextInput extends StatelessWidget {
             OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
         focusedBorder:
             OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
+        border: OutlineInputBorder(),
         labelText: _labelText,
         labelStyle: kDefaultTextFieldLabelStyle,
-        errorText: _normalizeHitText(_errorText),
         hintText: _hintText,
         hintStyle: kDefaultTextFieldLabelStyle,
+        errorText: _normalizeHitText(_errorText),
         contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
-        border: OutlineInputBorder(),
       ),
     );
   }

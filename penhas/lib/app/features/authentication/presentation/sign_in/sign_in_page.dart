@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/features/authentication/presentation/widgets/password_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/widgets/single_text_input.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
@@ -21,7 +22,6 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends ModularState<SignInPage, SignInController> {
   List<ReactionDisposer> _disposers;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  bool _passwordVisible = true;
 
   @override
   void didChangeDependencies() {
@@ -45,7 +45,6 @@ class _SignInPageState extends ModularState<SignInPage, SignInController> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.transparent,
-      resizeToAvoidBottomInset: false,
       body: SizedBox.expand(
         child: Container(
           decoration: kLinearGradientDesignSystem,
@@ -60,11 +59,7 @@ class _SignInPageState extends ModularState<SignInPage, SignInController> {
                   SizedBox(height: 72.0),
                   Observer(builder: (_) => _buildUserField()),
                   SizedBox(height: 24.0),
-                  Observer(
-                    builder: (_) {
-                      return _buildPasswordField();
-                    },
-                  ),
+                  Observer(builder: (_) => _buildPasswordField()),
                   SizedBox(height: 24.0),
                   SizedBox(height: 40.0, child: _buildLoginButton()),
                   SizedBox(height: 24.0),
@@ -86,12 +81,6 @@ class _SignInPageState extends ModularState<SignInPage, SignInController> {
     super.dispose();
   }
 
-  void _toggle() {
-    setState(() {
-      _passwordVisible = !_passwordVisible;
-    });
-  }
-
   SingleTextInput _buildUserField() {
     return SingleTextInput(
       keyboardType: TextInputType.emailAddress,
@@ -102,33 +91,12 @@ class _SignInPageState extends ModularState<SignInPage, SignInController> {
     );
   }
 
-  TextField _buildPasswordField() {
-    return TextField(
-      obscureText: _passwordVisible,
-      keyboardType: TextInputType.text,
-      autocorrect: false,
+  PassordInputField _buildPasswordField() {
+    return PassordInputField(
+      labelText: 'Senha',
+      hintText: 'Digite sua senha',
+      errorText: controller.warningPassword,
       onChanged: controller.setPassword,
-      style: TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        enabledBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        focusedBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        errorText: controller.warningPassword.isEmpty
-            ? null
-            : controller.warningPassword,
-        labelText: "Senha".i18n,
-        labelStyle: TextStyle(color: Colors.white),
-        border: OutlineInputBorder(),
-        hintText: "Digite sua senha".i18n,
-        hintStyle: TextStyle(color: Colors.white),
-        contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
-        suffixIcon: IconButton(
-          icon: Icon(_passwordVisible ? Icons.visibility_off : Icons.visibility,
-              color: Colors.white70),
-          onPressed: _toggle,
-        ),
-      ),
     );
   }
 
