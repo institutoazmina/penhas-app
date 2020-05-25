@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/widgets/password_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/widgets/single_text_input.dart';
+import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
@@ -106,8 +107,13 @@ class _SignInPageState extends ModularState<SignInPage, SignInController> {
       elevation: 0,
       color: DesignSystemColors.ligthPurple,
       child: Text(
-        "ENTRAR".i18n,
-        style: TextStyle(color: Colors.white, fontSize: 18.0),
+        'Entrar',
+        style: TextStyle(
+          fontFamily: 'Lato',
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+          fontSize: 18.0,
+        ),
       ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -121,19 +127,20 @@ class _SignInPageState extends ModularState<SignInPage, SignInController> {
 
   RaisedButton _buildRegisterButton() {
     return RaisedButton(
-      onPressed: () {
-        controller.registerUserPressed();
-      },
+      onPressed: () => controller.registerUserPressed(),
       elevation: 0,
       color: Colors.transparent,
       child: Text(
-        "CADASTRAR".i18n,
-        style: TextStyle(color: Colors.white),
+        'Cadastrar',
+        style: TextStyle(
+          fontFamily: 'Lato',
+          fontWeight: FontWeight.normal,
+          fontSize: 14.0,
+          letterSpacing: 0.9,
+          color: Colors.white,
+        ),
       ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-        side: BorderSide(color: Colors.white),
-      ),
+      shape: kButtonShapeOutlineWhite,
     );
   }
 
@@ -143,10 +150,12 @@ class _SignInPageState extends ModularState<SignInPage, SignInController> {
       elevation: 0,
       color: Colors.transparent,
       child: Text(
-        "Esqueci minha senha".i18n,
+        "Esqueci minha senha",
         style: TextStyle(
+          fontFamily: 'Lato',
+          fontWeight: FontWeight.normal,
+          fontSize: 14.0,
           color: Colors.white,
-          fontSize: 14,
           decoration: TextDecoration.underline,
         ),
       ),

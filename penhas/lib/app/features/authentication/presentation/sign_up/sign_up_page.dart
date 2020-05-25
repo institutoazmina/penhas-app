@@ -139,6 +139,12 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController> {
     );
   }
 
+  // _handleTap(BuildContext context) {
+  //   //To improve user experience, we'll unfocus any textfields when the users taps oon the background of the form
+  //   if (MediaQuery.of(context).viewInsets.bottom > 0) SystemChannels.textInput.invokeMethod('TextInput.hide');
+  //   WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+  // }
+
   DateTimeField _buildDateTimeField({
     Function(DateTime) onChanged,
     String onError,
