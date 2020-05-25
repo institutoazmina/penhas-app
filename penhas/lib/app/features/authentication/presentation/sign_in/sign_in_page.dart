@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/features/authentication/presentation/widgets/single_text_input.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
@@ -57,9 +58,7 @@ class _SignInPageState extends ModularState<SignInPage, SignInController> {
                   Icon(DesignSystemLogo.penhasLogo,
                       color: Colors.white, size: 60),
                   SizedBox(height: 72.0),
-                  Observer(builder: (_) {
-                    return _buildUserField();
-                  }),
+                  Observer(builder: (_) => _buildUserField()),
                   SizedBox(height: 24.0),
                   Observer(
                     builder: (_) {
@@ -93,31 +92,18 @@ class _SignInPageState extends ModularState<SignInPage, SignInController> {
     });
   }
 
-  TextField _buildUserField() {
-    return TextField(
+  SingleTextInput _buildUserField() {
+    return SingleTextInput(
       keyboardType: TextInputType.emailAddress,
-      style: TextStyle(color: Colors.white),
+      labelText: 'E-mail',
+      hintText: 'Digite seu e-mail',
+      errorText: controller.warningEmail,
       onChanged: controller.setEmail,
-      autofocus: false,
-      decoration: InputDecoration(
-        enabledBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        focusedBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        labelText: "E-mail".i18n,
-        errorText:
-            controller.warningEmail.isEmpty ? null : controller.warningEmail,
-        labelStyle: TextStyle(color: Colors.white),
-        hintText: "Digite seu e-mail".i18n,
-        hintStyle: TextStyle(color: Colors.white),
-        contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
-        border: OutlineInputBorder(),
-      ),
     );
   }
 
-  TextFormField _buildPasswordField() {
-    return TextFormField(
+  TextField _buildPasswordField() {
+    return TextField(
       obscureText: _passwordVisible,
       keyboardType: TextInputType.text,
       autocorrect: false,
