@@ -27,7 +27,7 @@ class Birthday extends Equatable {
     return Birthday._(_validate(input));
   }
 
-  const Birthday._(this.value);
+  Birthday._(this.value);
 
   @override
   List<Object> get props => [value];

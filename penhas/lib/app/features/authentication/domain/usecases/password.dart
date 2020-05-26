@@ -3,8 +3,10 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:penhas/app/core/error/failures.dart';
 
+import 'map_validator_failure.dart';
+
 @immutable
-class Password extends Equatable {
+class Password extends Equatable with MapValidatorFailure {
   final Either<Failure, String> value;
   static const _minLength = 6;
   static const _maxLength = 200;
@@ -16,7 +18,7 @@ class Password extends Equatable {
     return Password._(_validate(input));
   }
 
-  const Password._(this.value);
+  Password._(this.value);
 
   @override
   List<Object> get props => [value];
@@ -31,4 +33,10 @@ class Password extends Equatable {
 
     return right(input);
   }
+
+  @override
+  String get mapFailure => value.fold(
+        (failure) => 'Senha precisa ter no mínimo 6 caracteres',
+        (r) => '',
+      );
 }

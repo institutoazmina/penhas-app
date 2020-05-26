@@ -4,8 +4,10 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:penhas/app/core/error/failures.dart';
 
+import 'map_validator_failure.dart';
+
 @immutable
-class EmailAddress extends Equatable {
+class EmailAddress extends Equatable with MapValidatorFailure {
   final Either<Failure, String> value;
 
   String get rawValue => value.getOrElse(() => null);
@@ -15,7 +17,7 @@ class EmailAddress extends Equatable {
     return EmailAddress._(_validate(input));
   }
 
-  const EmailAddress._(this.value);
+  EmailAddress._(this.value);
 
   @override
   List<Object> get props => [value];
@@ -27,4 +29,10 @@ class EmailAddress extends Equatable {
 
     return right(input);
   }
+
+  @override
+  String get mapFailure => value.fold(
+        (failure) => 'Endereço de email inválido',
+        (r) => '',
+      );
 }
