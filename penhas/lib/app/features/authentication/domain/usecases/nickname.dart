@@ -26,7 +26,7 @@ class Nickname extends Equatable with MapValidatorFailure {
       return left(NicknameInvalidFailure());
     }
 
-    return right(input);
+    return right(input.trim());
   }
 
   @override

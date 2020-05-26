@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/password_text_input.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
+import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'sign_up_three_controller.dart';
 
 class SignUpThreePage extends StatefulWidget {
@@ -16,19 +23,18 @@ class SignUpThreePage extends StatefulWidget {
 }
 
 class _SignUpThreePageState
-    extends ModularState<SignUpThreePage, SignUpThreeController> {
+    extends ModularState<SignUpThreePage, SignUpThreeController>
+    with SnackBarHandler {
   List<ReactionDisposer> _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  final GlobalKey<NavigatorState> _navigator = GlobalKey();
-
-  bool _passwordVisible = true;
+  PageProgressState _currentState = PageProgressState.initial;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _disposers ??= [
       _showErrorMessage(),
-      // _showProgress(),
+      _showProgress(),
     ];
   }
 
@@ -40,126 +46,80 @@ class _SignUpThreePageState
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onPanDown: (_) {
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (currentFocus != null && !currentFocus.hasPrimaryFocus) {
-          currentFocus.unfocus();
-        }
-      },
-      child: Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
+    return SizedBox.expand(
+      child: Container(
+        decoration: kLinearGradientDesignSystem,
+        child: Scaffold(
+          key: _scaffoldKey,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          ),
           backgroundColor: Colors.transparent,
-          title: Text('Criar conta'),
-          elevation: 0,
-        ),
-        backgroundColor: Colors.transparent,
-        resizeToAvoidBottomInset: false,
-        extendBodyBehindAppBar: true,
-        body: SizedBox.expand(
-          child: Container(
-            decoration: kLinearGradientDesignSystem,
-            child: SafeArea(
-                child: SingleChildScrollView(
-              padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  SizedBox(
-                    height: 78.0,
-                    child: Text(
-                      'Informe um email e de defina uma senha segura. A senha precisa ter no mínmo 6 caracteres, com letra, números e caracteres espcial.',
-                      style: TextStyle(fontSize: 16.0, color: Colors.white70),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  SizedBox(height: 22.0),
-                  Observer(builder: (_) {
-                    return _buildInputField(
-                        labelText: 'E-mail',
-                        keyboardType: TextInputType.emailAddress,
-                        onChanged: controller.setEmail,
-                        onError: controller.warningEmail);
-                  }),
-                  SizedBox(height: 22.0),
-                  Observer(
-                    builder: (_) {
-                      return _buildPasswordField();
-                    },
-                  ),
-                  SizedBox(height: 62.0),
-                  SizedBox(height: 40.0, child: _buildNextButton()),
-                ],
-              ),
-            )),
+          extendBodyBehindAppBar: true,
+          body: PageProgressIndicator(
+            progressState: _currentState,
+            child: GestureDetector(
+              onTap: () => _handleTap(context),
+              onPanDown: (_) => _handleTap(context),
+              child: SafeArea(
+                  child: SingleChildScrollView(
+                padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    _buildHeader(),
+                    SizedBox(height: 18.0),
+                    _buildSubHeader(),
+                    SizedBox(height: 22.0),
+                    Observer(builder: (_) => _buildEmailField()),
+                    SizedBox(height: 22.0),
+                    Observer(builder: (_) => _buildPasswordField()),
+                    SizedBox(height: 62.0),
+                    SizedBox(height: 40.0, child: _buildNextButton()),
+                  ],
+                ),
+              )),
+            ),
           ),
         ),
       ),
     );
   }
 
-  TextFormField _buildInputField({
-    String labelText,
-    String hintText,
-    TextInputType keyboardType,
-    Function(String) onChanged,
-    String onError,
-  }) {
-    return TextFormField(
-      onChanged: onChanged,
-      keyboardType: keyboardType,
-      autocorrect: false,
-      textInputAction: TextInputAction.done,
-      style: TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        enabledBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        focusedBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        errorText: (onError?.isEmpty ?? true) ? null : onError,
-        labelText: labelText,
-        labelStyle: TextStyle(color: Colors.white),
-        border: OutlineInputBorder(),
-        hintText: hintText,
-        hintStyle: TextStyle(color: Colors.white),
-        contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
+  SingleTextInput _buildEmailField() {
+    return SingleTextInput(
+        labelText: 'E-mail',
+        keyboardType: TextInputType.emailAddress,
+        onChanged: controller.setEmail,
+        errorText: controller.warningEmail);
+  }
+
+  SizedBox _buildSubHeader() {
+    return SizedBox(
+      height: 60.0,
+      child: Text(
+        'Informe um email e de defina uma senha segura. A senha precisa ter no mínmo 6 caracteres, com letra, números e caracteres espcial.',
+        style: kRegisterSubHeaderLabelStyle,
+        textAlign: TextAlign.center,
       ),
     );
   }
 
-  void _passwordFieldToggle() {
-    setState(() {
-      _passwordVisible = !_passwordVisible;
-    });
+  Text _buildHeader() {
+    return Text(
+      'Crie sua conta',
+      style: kRegisterHeaderLabelStyle,
+      textAlign: TextAlign.center,
+    );
   }
 
-  TextFormField _buildPasswordField() {
-    return TextFormField(
-      obscureText: _passwordVisible,
-      keyboardType: TextInputType.text,
-      autocorrect: false,
+  PassordInputField _buildPasswordField() {
+    return PassordInputField(
+      labelText: 'Senha',
+      hintText: 'Digite sua senha',
+      errorText: controller.warningPassword,
       onChanged: controller.setPassword,
-      style: TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        enabledBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        focusedBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        errorText: controller.warningPassword.isEmpty
-            ? null
-            : controller.warningPassword,
-        labelText: "Senha",
-        labelStyle: TextStyle(color: Colors.white),
-        border: OutlineInputBorder(),
-        hintStyle: TextStyle(color: Colors.white),
-        contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
-        suffixIcon: IconButton(
-          icon: Icon(_passwordVisible ? Icons.visibility_off : Icons.visibility,
-              color: Colors.white70),
-          onPressed: _passwordFieldToggle,
-        ),
-      ),
     );
   }
 
@@ -170,62 +130,29 @@ class _SignUpThreePageState
       color: DesignSystemColors.ligthPurple,
       child: Text(
         "Cadastrar",
-        style: TextStyle(color: Colors.white, fontSize: 14.0),
+        style: kDefaultFilledButtonLabel,
       ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-      ),
+      shape: kButtonShapeFilled,
     );
+  }
+
+  _handleTap(BuildContext context) {
+    if (MediaQuery.of(context).viewInsets.bottom > 0)
+      SystemChannels.textInput.invokeMethod('TextInput.hide');
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
   }
 
   ReactionDisposer _showErrorMessage() {
     return reaction((_) => controller.errorMessage, (String message) {
-      if (message.isNotEmpty) {
-        _scaffoldKey.currentState.showSnackBar(
-          SnackBar(
-            content: Text(message),
-          ),
-        );
-      }
+      showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }
 
   ReactionDisposer _showProgress() {
-    return reaction((_) => controller.currentState, (StoreState state) {
-      switch (state) {
-        case StoreState.initial:
-          break;
-        case StoreState.loading:
-          _onLoading();
-          break;
-        case StoreState.loaded:
-          Navigator.of(_navigator.currentContext, rootNavigator: true).pop();
-
-          break;
-      }
+    return reaction((_) => controller.currentState, (PageProgressState status) {
+      setState(() {
+        _currentState = status;
+      });
     });
-  }
-
-  void _onLoading() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return Dialog(
-          child: SizedBox(
-            height: 80,
-            width: 100,
-            child: Row(
-              children: [
-                SizedBox(width: 18),
-                CircularProgressIndicator(),
-                SizedBox(width: 18),
-                Text("Processando"),
-              ],
-            ),
-          ),
-        );
-      },
-    );
   }
 }

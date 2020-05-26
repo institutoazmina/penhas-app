@@ -9,11 +9,11 @@ part of 'sign_up_three_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$SignUpThreeController on _SignUpThreeControllerBase, Store {
-  Computed<StoreState> _$currentStateComputed;
+  Computed<PageProgressState> _$currentStateComputed;
 
   @override
-  StoreState get currentState => (_$currentStateComputed ??=
-          Computed<StoreState>(() => super.currentState))
+  PageProgressState get currentState => (_$currentStateComputed ??=
+          Computed<PageProgressState>(() => super.currentState))
       .value;
 
   final _$_progressAtom = Atom(name: '_SignUpThreeControllerBase._progress');
@@ -31,24 +31,6 @@ mixin _$SignUpThreeController on _SignUpThreeControllerBase, Store {
       super._progress = value;
       _$_progressAtom.reportChanged();
     }, _$_progressAtom, name: '${_$_progressAtom.name}_set');
-  }
-
-  final _$errorMessageAtom =
-      Atom(name: '_SignUpThreeControllerBase.errorMessage');
-
-  @override
-  String get errorMessage {
-    _$errorMessageAtom.context.enforceReadPolicy(_$errorMessageAtom);
-    _$errorMessageAtom.reportObserved();
-    return super.errorMessage;
-  }
-
-  @override
-  set errorMessage(String value) {
-    _$errorMessageAtom.context.conditionallyRunInAction(() {
-      super.errorMessage = value;
-      _$errorMessageAtom.reportChanged();
-    }, _$errorMessageAtom, name: '${_$errorMessageAtom.name}_set');
   }
 
   final _$warningEmailAtom =
@@ -87,6 +69,24 @@ mixin _$SignUpThreeController on _SignUpThreeControllerBase, Store {
     }, _$warningPasswordAtom, name: '${_$warningPasswordAtom.name}_set');
   }
 
+  final _$errorMessageAtom =
+      Atom(name: '_SignUpThreeControllerBase.errorMessage');
+
+  @override
+  String get errorMessage {
+    _$errorMessageAtom.context.enforceReadPolicy(_$errorMessageAtom);
+    _$errorMessageAtom.reportObserved();
+    return super.errorMessage;
+  }
+
+  @override
+  set errorMessage(String value) {
+    _$errorMessageAtom.context.conditionallyRunInAction(() {
+      super.errorMessage = value;
+      _$errorMessageAtom.reportChanged();
+    }, _$errorMessageAtom, name: '${_$errorMessageAtom.name}_set');
+  }
+
   final _$registerUserPressAsyncAction = AsyncAction('registerUserPress');
 
   @override
@@ -122,7 +122,7 @@ mixin _$SignUpThreeController on _SignUpThreeControllerBase, Store {
   @override
   String toString() {
     final string =
-        'errorMessage: ${errorMessage.toString()},warningEmail: ${warningEmail.toString()},warningPassword: ${warningPassword.toString()},currentState: ${currentState.toString()}';
+        'warningEmail: ${warningEmail.toString()},warningPassword: ${warningPassword.toString()},errorMessage: ${errorMessage.toString()},currentState: ${currentState.toString()}';
     return '{$string}';
   }
 }

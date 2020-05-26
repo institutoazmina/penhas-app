@@ -31,7 +31,7 @@ class Password extends Equatable with MapValidatorFailure {
       return left(PasswordInvalidFailure());
     }
 
-    return right(input);
+    return right(input.trim());
   }
 
   @override

@@ -26,7 +26,7 @@ class Fullname extends Equatable with MapValidatorFailure {
       return left(FullnameInvalidFailure());
     }
 
-    return right(input);
+    return right(input.trim());
   }
 
   @override

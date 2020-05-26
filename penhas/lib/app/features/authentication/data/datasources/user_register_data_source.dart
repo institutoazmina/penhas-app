@@ -85,6 +85,7 @@ class UserRegisterDataSource implements IUserRegisterDataSource {
     final httpHeader = await _setupHttpHeader();
     final httpRequest =
         await _setupHttpRequest(queryParameters: queryParameters);
+
     final response = await apiClient.post(httpRequest, headers: httpHeader);
     if (response.statusCode == HttpStatus.ok) {
       return SessionModel.fromJson(json.decode(response.body));

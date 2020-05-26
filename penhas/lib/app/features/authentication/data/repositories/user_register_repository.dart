@@ -84,7 +84,8 @@ class UserRegisterRepository implements IUserRegisterRepository {
           nickName: nickName,
           birthday: birthday,
           genre: genre,
-          race: race);
+          race: race,
+          socialName: socialName);
 
       await _appConfiguration.saveApiToken(token: session.sessionToken);
 
