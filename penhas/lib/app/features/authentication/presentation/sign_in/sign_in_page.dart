@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
@@ -32,7 +33,6 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
     _disposers ??= [
       reaction((_) => controller.errorMessage, (String message) {
         showSnackBar(scaffoldKey: _scaffoldKey, message: message);
-        controller.resetErrorMessage();
       }),
       reaction((_) => controller.currentState, (PageProgressState status) {
         setState(() {
@@ -52,25 +52,31 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
           backgroundColor: Colors.transparent,
           body: PageProgressIndicator(
             progressState: _currentState,
-            child: SafeArea(
-              child: SingleChildScrollView(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 80.0, 16.0, 8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Icon(DesignSystemLogo.penhasLogo,
-                        color: Colors.white, size: 60),
-                    SizedBox(height: 72.0),
-                    Observer(builder: (_) => _buildUserField()),
-                    SizedBox(height: 24.0),
-                    Observer(builder: (_) => _buildPasswordField()),
-                    SizedBox(height: 24.0),
-                    SizedBox(height: 40.0, child: _buildLoginButton()),
-                    SizedBox(height: 24.0),
-                    SizedBox(height: 40.0, child: _buildRegisterButton()),
-                    SizedBox(height: 24.0),
-                    SizedBox(height: 40.0, child: _buildResetPasswordButton()),
-                  ],
+            child: GestureDetector(
+              onTap: () => _handleTap(context),
+              onPanDown: (_) => _handleTap(context),
+              child: SafeArea(
+                child: SingleChildScrollView(
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(16.0, 80.0, 16.0, 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Icon(DesignSystemLogo.penhasLogo,
+                          color: Colors.white, size: 60),
+                      SizedBox(height: 72.0),
+                      Observer(builder: (_) => _buildUserField()),
+                      SizedBox(height: 24.0),
+                      Observer(builder: (_) => _buildPasswordField()),
+                      SizedBox(height: 24.0),
+                      SizedBox(height: 40.0, child: _buildLoginButton()),
+                      SizedBox(height: 24.0),
+                      SizedBox(height: 40.0, child: _buildRegisterButton()),
+                      SizedBox(height: 24.0),
+                      SizedBox(
+                          height: 40.0, child: _buildResetPasswordButton()),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -164,5 +170,11 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
         ),
       ),
     );
+  }
+
+  _handleTap(BuildContext context) {
+    if (MediaQuery.of(context).viewInsets.bottom > 0)
+      SystemChannels.textInput.invokeMethod('TextInput.hide');
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
   }
 }

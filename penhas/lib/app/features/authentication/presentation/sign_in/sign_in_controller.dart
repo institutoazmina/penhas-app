@@ -55,11 +55,6 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  void resetErrorMessage() {
-    _setErrorMessage("");
-  }
-
-  @action
   void setPassword(String password) {
     _password = Password(password);
 
@@ -68,6 +63,8 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> signInWithEmailAndPasswordPressed() async {
+    _setErrorMessage('');
+
     if (!_emailAddress.isValid || !_password.isValid) {
       _setErrorMessage(_invalidFieldsToProceedLogin);
       return;

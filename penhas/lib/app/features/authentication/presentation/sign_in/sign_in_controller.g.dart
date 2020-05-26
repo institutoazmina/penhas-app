@@ -124,16 +124,6 @@ mixin _$SignInController on _SignInControllerBase, Store {
   }
 
   @override
-  void resetErrorMessage() {
-    final _$actionInfo = _$_SignInControllerBaseActionController.startAction();
-    try {
-      return super.resetErrorMessage();
-    } finally {
-      _$_SignInControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setPassword(String password) {
     final _$actionInfo = _$_SignInControllerBaseActionController.startAction();
     try {
