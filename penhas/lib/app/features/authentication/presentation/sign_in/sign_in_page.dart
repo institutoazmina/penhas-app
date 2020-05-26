@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/features/authentication/presentation/widgets/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/widgets/password_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/widgets/single_text_input.dart';
+import 'package:penhas/app/features/authentication/presentation/widgets/snack_bar_handler.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
 import 'sign_in_controller.dart';
-
-import 'sign_in_page.i18n.dart';
 
 class SignInPage extends StatefulWidget {
   final String title;
@@ -20,54 +20,58 @@ class SignInPage extends StatefulWidget {
   _SignInPageState createState() => _SignInPageState();
 }
 
-class _SignInPageState extends ModularState<SignInPage, SignInController> {
+class _SignInPageState extends ModularState<SignInPage, SignInController>
+    with SnackBarHandler {
   List<ReactionDisposer> _disposers;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  PageProgressState _currentState = PageProgressState.initial;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _disposers ??= [
       reaction((_) => controller.errorAuthenticationMessage, (String message) {
-        if (message.isNotEmpty) {
-          _scaffoldKey.currentState.showSnackBar(
-            SnackBar(
-              content: Text(message),
-            ),
-          );
-          controller.resetErrorMessage();
-        }
+        showSnackBar(scaffoldKey: _scaffoldKey, message: message);
+        controller.resetErrorMessage();
+      }),
+      reaction((_) => controller.currentState, (PageProgressState status) {
+        setState(() {
+          _currentState = status;
+        });
       }),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      backgroundColor: Colors.transparent,
-      body: SizedBox.expand(
-        child: Container(
-          decoration: kLinearGradientDesignSystem,
-          child: SafeArea(
-            child: SingleChildScrollView(
-              padding: EdgeInsetsDirectional.fromSTEB(16.0, 80.0, 16.0, 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Icon(DesignSystemLogo.penhasLogo,
-                      color: Colors.white, size: 60),
-                  SizedBox(height: 72.0),
-                  Observer(builder: (_) => _buildUserField()),
-                  SizedBox(height: 24.0),
-                  Observer(builder: (_) => _buildPasswordField()),
-                  SizedBox(height: 24.0),
-                  SizedBox(height: 40.0, child: _buildLoginButton()),
-                  SizedBox(height: 24.0),
-                  SizedBox(height: 40.0, child: _buildRegisterButton()),
-                  SizedBox(height: 24.0),
-                  SizedBox(height: 40.0, child: _buildResetPasswordButton()),
-                ],
+    return SizedBox.expand(
+      child: Container(
+        decoration: kLinearGradientDesignSystem,
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Colors.transparent,
+          body: PageProgressIndicator(
+            progressState: _currentState,
+            child: SafeArea(
+              child: SingleChildScrollView(
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 80.0, 16.0, 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Icon(DesignSystemLogo.penhasLogo,
+                        color: Colors.white, size: 60),
+                    SizedBox(height: 72.0),
+                    Observer(builder: (_) => _buildUserField()),
+                    SizedBox(height: 24.0),
+                    Observer(builder: (_) => _buildPasswordField()),
+                    SizedBox(height: 24.0),
+                    SizedBox(height: 40.0, child: _buildLoginButton()),
+                    SizedBox(height: 24.0),
+                    SizedBox(height: 40.0, child: _buildRegisterButton()),
+                    SizedBox(height: 24.0),
+                    SizedBox(height: 40.0, child: _buildResetPasswordButton()),
+                  ],
+                ),
               ),
             ),
           ),

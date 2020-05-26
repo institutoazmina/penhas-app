@@ -6,7 +6,7 @@ const kLinearGradientDesignSystem = BoxDecoration(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     stops: [
-      0.15,
+      0.10,
       0.34,
       0.61,
       1.0,

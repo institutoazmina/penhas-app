@@ -1,9 +1,12 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/presentation/widgets/page_progress_indicator.dart';
 
 part 'sign_in_controller.g.dart';
 
@@ -31,6 +34,9 @@ abstract class _SignInControllerBase with Store {
   _SignInControllerBase(this.repository);
 
   @observable
+  ObservableFuture<Either<Failure, SessionEntity>> _progress;
+
+  @observable
   String warningEmail = "";
 
   @observable
@@ -38,6 +44,17 @@ abstract class _SignInControllerBase with Store {
 
   @observable
   String errorAuthenticationMessage = "";
+
+  @computed
+  PageProgressState get currentState {
+    if (_progress == null || _progress.status == FutureStatus.rejected) {
+      return PageProgressState.initial;
+    }
+
+    return _progress.status == FutureStatus.pending
+        ? PageProgressState.loading
+        : PageProgressState.loaded;
+  }
 
   @action
   void setEmail(String address) {
@@ -71,10 +88,12 @@ abstract class _SignInControllerBase with Store {
       return;
     }
 
-    final response = await repository.signInWithEmailAndPassword(
+    _progress = ObservableFuture(repository.signInWithEmailAndPassword(
       emailAddress: _emailAddress,
       password: _password,
-    );
+    ));
+
+    final response = await _progress;
 
     response.fold(
       (failure) => _mapFailureToMessage(failure),

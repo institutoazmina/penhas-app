@@ -41,7 +41,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController> {
     super.didChangeDependencies();
     _disposers ??= [
       _showErrorMessage(),
-      // _showProgress(),
+      _showProgress(),
     ];
   }
 
