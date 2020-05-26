@@ -7,7 +7,7 @@ import 'package:penhas/app/features/authentication/domain/usecases/birthday.dart
 import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/cpf.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/full_name.dart';
-import 'package:penhas/app/features/authentication/presentation/sign_up/user_register_form_field_model.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 

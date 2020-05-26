@@ -1,5 +1,4 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:i18n_extension/i18n_widget.dart';
 import 'package:penhas/app/modules/authentication/authentication_controller.dart';
 import 'package:penhas/app/modules/authentication/authentication_page.dart';
 import 'package:penhas/app/modules/authentication/password_recovery/password_recovery_module.dart';
@@ -15,8 +14,7 @@ class AuthenticationModule extends ChildModule {
 
   @override
   List<Router> get routers => [
-        Router(Modular.initialRoute,
-            child: (_, args) => I18n(child: AuthenticationPage())),
+        Router(Modular.initialRoute, child: (_, args) => AuthenticationPage()),
         Router('registration/', module: RegistrationModule()),
         Router('recovery/', module: PasswordRecoveryModule())
       ];

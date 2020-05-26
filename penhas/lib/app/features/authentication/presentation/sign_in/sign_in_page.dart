@@ -11,6 +11,7 @@ import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
+import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'sign_in_controller.dart';
 
 class SignInPage extends StatefulWidget {
@@ -142,13 +143,7 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
       color: Colors.transparent,
       child: Text(
         'Cadastrar',
-        style: TextStyle(
-          fontFamily: 'Lato',
-          fontWeight: FontWeight.normal,
-          fontSize: 14.0,
-          letterSpacing: 0.9,
-          color: Colors.white,
-        ),
+        style: kDefaultFilledButtonLabel,
       ),
       shape: kButtonShapeOutlineWhite,
     );

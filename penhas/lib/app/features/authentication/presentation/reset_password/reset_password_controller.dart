@@ -5,7 +5,7 @@ import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/domain/entities/reset_password_response_entity.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/presentation/sign_up/user_register_form_field_model.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
 
 part 'reset_password_controller.g.dart';
 

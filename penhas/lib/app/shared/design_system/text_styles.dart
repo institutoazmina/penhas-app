@@ -19,3 +19,10 @@ const kRegisterSubHeaderLabelStyle = TextStyle(
     fontSize: 16.0,
     letterSpacing: 0.15,
     fontWeight: FontWeight.normal);
+
+const kDefaultFilledButtonLabel = TextStyle(
+    color: Colors.white,
+    fontFamily: 'Lato',
+    fontSize: 14.0,
+    letterSpacing: 0.5,
+    fontWeight: FontWeight.bold);

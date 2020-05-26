@@ -6,7 +6,7 @@ import 'package:penhas/app/features/authentication/domain/repositories/i_user_re
 import 'package:penhas/app/features/authentication/domain/usecases/genre.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/human_race.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
-import 'package:penhas/app/features/authentication/presentation/sign_up/user_register_form_field_model.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
 
 part 'sign_up_two_controller.g.dart';
 
