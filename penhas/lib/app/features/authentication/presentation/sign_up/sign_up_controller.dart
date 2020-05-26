@@ -8,8 +8,8 @@ import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/cpf.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/full_name.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_up/user_register_form_field_model.dart';
-import 'package:penhas/app/features/authentication/presentation/widgets/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/widgets/page_progress_indicator.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 
 part 'sign_up_controller.g.dart';
 

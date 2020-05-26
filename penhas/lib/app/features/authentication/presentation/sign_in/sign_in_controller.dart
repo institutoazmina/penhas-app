@@ -6,8 +6,8 @@ import 'package:penhas/app/features/authentication/domain/entities/session_entit
 import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
-import 'package:penhas/app/features/authentication/presentation/widgets/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/widgets/page_progress_indicator.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 
 part 'sign_in_controller.g.dart';
 
