@@ -3,8 +3,10 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:penhas/app/core/error/failures.dart';
 
+import 'map_validator_failure.dart';
+
 @immutable
-class Cep extends Equatable {
+class Cep extends Equatable with MapValidatorFailure {
   final Either<Failure, String> value;
 
   String get rawValue => value.getOrElse(() => null);
@@ -14,7 +16,7 @@ class Cep extends Equatable {
     return Cep._(_validate(input));
   }
 
-  const Cep._(this.value);
+  Cep._(this.value);
 
   @override
   List<Object> get props => [value];
@@ -32,4 +34,10 @@ class Cep extends Equatable {
 
     return right(numbers);
   }
+
+  @override
+  String get mapFailure => value.fold(
+        (failure) => 'CEP inválido',
+        (r) => '',
+      );
 }

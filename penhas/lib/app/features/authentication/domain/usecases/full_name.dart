@@ -3,8 +3,10 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:penhas/app/core/error/failures.dart';
 
+import 'map_validator_failure.dart';
+
 @immutable
-class Fullname extends Equatable {
+class Fullname extends Equatable with MapValidatorFailure {
   final Either<Failure, String> value;
 
   String get rawValue => value.getOrElse(() => null);
@@ -14,7 +16,7 @@ class Fullname extends Equatable {
     return Fullname._(_validate(input));
   }
 
-  const Fullname._(this.value);
+  Fullname._(this.value);
 
   @override
   List<Object> get props => [value];
@@ -26,4 +28,10 @@ class Fullname extends Equatable {
 
     return right(input);
   }
+
+  @override
+  String get mapFailure => value.fold(
+        (failure) => 'Nome inválido para o sistema',
+        (r) => '',
+      );
 }

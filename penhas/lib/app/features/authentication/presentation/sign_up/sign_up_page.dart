@@ -5,8 +5,12 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/features/authentication/presentation/widgets/page_progress_indicator.dart';
+import 'package:penhas/app/features/authentication/presentation/widgets/single_text_input.dart';
+import 'package:penhas/app/features/authentication/presentation/widgets/snack_bar_handler.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
+import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'sign_up_controller.dart';
 
 import 'package:intl/intl.dart';
@@ -19,10 +23,11 @@ class SignUpPage extends StatefulWidget {
   _SignUpPageState createState() => _SignUpPageState();
 }
 
-class _SignUpPageState extends ModularState<SignUpPage, SignUpController> {
+class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
+    with SnackBarHandler {
   List<ReactionDisposer> _disposers;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  final GlobalKey navigator = GlobalKey<NavigatorState>();
+  PageProgressState _currentState = PageProgressState.initial;
 
   final format = DateFormat("dd/MM/yyyy");
 
@@ -53,97 +58,114 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onPanDown: (_) {
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (currentFocus != null && !currentFocus.hasPrimaryFocus) {
-          currentFocus.unfocus();
-        }
-      },
-      child: Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
+    return SizedBox.expand(
+      child: Container(
+        decoration: kLinearGradientDesignSystem,
+        child: Scaffold(
+          key: _scaffoldKey,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          ),
           backgroundColor: Colors.transparent,
-          title: Text('Criar conta'),
-          elevation: 0,
-        ),
-        backgroundColor: Colors.transparent,
-        resizeToAvoidBottomInset: false,
-        extendBodyBehindAppBar: true,
-        body: SizedBox.expand(
-          child: Container(
-            decoration: kLinearGradientDesignSystem,
-            child: SafeArea(
+          extendBodyBehindAppBar: true,
+          body: PageProgressIndicator(
+            progressState: _currentState,
+            child: GestureDetector(
+              onTap: () => _handleTap(context),
+              onPanDown: (_) => _handleTap(context),
+              child: SafeArea(
                 child: SingleChildScrollView(
-              padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  SizedBox(
-                    height: 78.0,
-                    child: Text(
-                      'Para sua segurança pedimos aos nossos usuários o CPF.',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.white70,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+                  padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      _buildHeader(),
+                      SizedBox(height: 18.0),
+                      _buildSubHeader(),
+                      SizedBox(height: 22.0),
+                      Observer(builder: (_) => _buildFullName()),
+                      SizedBox(height: 24.0),
+                      Observer(builder: (_) {
+                        return _buildDateTimeField(
+                          onChanged: controller.setBirthday,
+                          onError: controller.warningBirthday,
+                        );
+                      }),
+                      SizedBox(height: 24.0),
+                      Observer(builder: (_) {
+                        return _buildCpf();
+                      }),
+                      SizedBox(height: 24.0),
+                      Observer(builder: (_) {
+                        return _buildCep();
+                      }),
+                      SizedBox(height: 24.0),
+                      SizedBox(height: 40.0, child: _buildNextButton()),
+                    ],
                   ),
-                  SizedBox(height: 22.0),
-                  Observer(builder: (_) {
-                    return _buildInputField(
-                      labelText: 'Nome completo',
-                      keyboardType: TextInputType.text,
-                      onChanged: controller.setFullname,
-                      onError: controller.warningFullname,
-                    );
-                  }),
-                  SizedBox(height: 24.0),
-                  Observer(builder: (_) {
-                    return _buildDateTimeField(
-                      onChanged: controller.setBirthday,
-                      onError: controller.warningBirthday,
-                    );
-                  }),
-                  SizedBox(height: 24.0),
-                  Observer(builder: (_) {
-                    return _buildInputField(
-                      labelText: 'CPF',
-                      hintText: 'CPF',
-                      keyboardType: TextInputType.number,
-                      onChanged: controller.setCpf,
-                      onError: controller.warningCpf,
-                      inputFormatter: _maskCpf,
-                    );
-                  }),
-                  SizedBox(height: 24.0),
-                  Observer(builder: (_) {
-                    return _buildInputField(
-                      labelText: 'CEP',
-                      hintText: 'CEP',
-                      keyboardType: TextInputType.number,
-                      onChanged: controller.setCep,
-                      onError: controller.warningCep,
-                      inputFormatter: _maskCep,
-                    );
-                  }),
-                  SizedBox(height: 24.0),
-                  SizedBox(height: 40.0, child: _buildNextButton()),
-                ],
+                ),
               ),
-            )),
+            ),
           ),
         ),
       ),
     );
   }
 
-  // _handleTap(BuildContext context) {
-  //   //To improve user experience, we'll unfocus any textfields when the users taps oon the background of the form
-  //   if (MediaQuery.of(context).viewInsets.bottom > 0) SystemChannels.textInput.invokeMethod('TextInput.hide');
-  //   WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
-  // }
+  SingleTextInput _buildCep() {
+    return SingleTextInput(
+      labelText: 'CEP',
+      hintText: 'CEP',
+      keyboardType: TextInputType.number,
+      onChanged: controller.setCep,
+      errorText: controller.warningCep,
+      inputFormatter: _maskCep,
+    );
+  }
+
+  SingleTextInput _buildCpf() {
+    return SingleTextInput(
+      labelText: 'CPF',
+      hintText: 'CPF',
+      keyboardType: TextInputType.number,
+      onChanged: controller.setCpf,
+      errorText: controller.warningCpf,
+      inputFormatter: _maskCpf,
+    );
+  }
+
+  SingleTextInput _buildFullName() {
+    return SingleTextInput(
+        labelText: 'Nome completo',
+        errorText: controller.warningFullname,
+        onChanged: controller.setFullname);
+  }
+
+  SizedBox _buildSubHeader() {
+    return SizedBox(
+      height: 60.0,
+      child: Text(
+        'Para sua segurança pedimos aos nossos usuários o CPF.',
+        style: kRegisterSubHeaderLabelStyle,
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  Text _buildHeader() {
+    return Text(
+      'Crie sua conta',
+      style: kRegisterHeaderLabelStyle,
+      textAlign: TextAlign.center,
+    );
+  }
+
+  _handleTap(BuildContext context) {
+    if (MediaQuery.of(context).viewInsets.bottom > 0)
+      SystemChannels.textInput.invokeMethod('TextInput.hide');
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+  }
 
   DateTimeField _buildDateTimeField({
     Function(DateTime) onChanged,
@@ -175,37 +197,6 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController> {
     );
   }
 
-  TextFormField _buildInputField({
-    String labelText,
-    String hintText,
-    TextInputType keyboardType,
-    Function(String) onChanged,
-    String onError,
-    TextInputFormatter inputFormatter,
-  }) {
-    return TextFormField(
-      onChanged: onChanged,
-      keyboardType: keyboardType,
-      inputFormatters: inputFormatter == null ? null : [inputFormatter],
-      autocorrect: false,
-      textInputAction: TextInputAction.done,
-      style: TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        enabledBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        focusedBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        errorText: (onError?.isEmpty ?? true) ? null : onError,
-        labelText: labelText,
-        labelStyle: TextStyle(color: Colors.white),
-        border: OutlineInputBorder(),
-        hintText: hintText,
-        hintStyle: TextStyle(color: Colors.white),
-        contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
-      ),
-    );
-  }
-
   RaisedButton _buildNextButton() {
     return RaisedButton(
       onPressed: () => controller.nextStepPressed(),
@@ -223,52 +214,15 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController> {
 
   ReactionDisposer _showErrorMessage() {
     return reaction((_) => controller.errorMessage, (String message) {
-      if (message.isNotEmpty) {
-        _scaffoldKey.currentState.showSnackBar(
-          SnackBar(
-            content: Text(message),
-          ),
-        );
-      }
+      showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }
 
   ReactionDisposer _showProgress() {
-    return reaction((_) => controller.currentState, (StoreState state) {
-      switch (state) {
-        case StoreState.initial:
-          break;
-        case StoreState.loading:
-          _onLoading();
-          break;
-        case StoreState.loaded:
-          Navigator.of(navigator.currentContext, rootNavigator: true).pop();
-
-          break;
-      }
+    return reaction((_) => controller.currentState, (PageProgressState status) {
+      setState(() {
+        _currentState = status;
+      });
     });
-  }
-
-  void _onLoading() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return Dialog(
-          child: SizedBox(
-            height: 80,
-            width: 100,
-            child: Row(
-              children: [
-                SizedBox(width: 18),
-                CircularProgressIndicator(),
-                SizedBox(width: 18),
-                Text("Processando"),
-              ],
-            ),
-          ),
-        );
-      },
-    );
   }
 }

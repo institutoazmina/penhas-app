@@ -9,11 +9,11 @@ part of 'sign_up_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$SignUpController on _SignUpControllerBase, Store {
-  Computed<StoreState> _$currentStateComputed;
+  Computed<PageProgressState> _$currentStateComputed;
 
   @override
-  StoreState get currentState => (_$currentStateComputed ??=
-          Computed<StoreState>(() => super.currentState))
+  PageProgressState get currentState => (_$currentStateComputed ??=
+          Computed<PageProgressState>(() => super.currentState))
       .value;
 
   final _$_progressAtom = Atom(name: '_SignUpControllerBase._progress');

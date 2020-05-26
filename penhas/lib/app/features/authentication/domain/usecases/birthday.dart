@@ -4,8 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
 import 'package:penhas/app/core/error/failures.dart';
 
+import 'map_validator_failure.dart';
+
 @immutable
-class Birthday extends Equatable {
+class Birthday extends Equatable with MapValidatorFailure {
   final Either<Failure, String> value;
 
   String get rawValue => value.getOrElse(() => null);
@@ -53,4 +55,10 @@ class Birthday extends Equatable {
     if (n >= 10) return "$n";
     return "0$n";
   }
+
+  @override
+  String get mapFailure => value.fold(
+        (failure) => 'Data de nascimento inválida',
+        (r) => '',
+      );
 }

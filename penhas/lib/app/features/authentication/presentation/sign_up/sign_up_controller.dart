@@ -8,27 +8,16 @@ import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/cpf.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/full_name.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_up/user_register_form_field_model.dart';
+import 'package:penhas/app/features/authentication/presentation/widgets/map_failure_message.dart';
+import 'package:penhas/app/features/authentication/presentation/widgets/page_progress_indicator.dart';
 
 part 'sign_up_controller.g.dart';
-
-const WARNING_FULL_NAME = 'Nome inválido para o sistema';
-const WARNING_BIRTHDAY = 'Data de nascimento inválida';
-const WARNING_CPF = 'CPF inválido';
-const WARNING_CEP = 'CEP inválido';
-const WARNING_INVALID_FIELD_TO_CONTINUE =
-    'Todos os campos precisam estar válidos antes de continguar.';
-const String ERROR_SERVER_FAILURE =
-    "O servidor está com problema neste momento, tente novamente.";
-const String ERROR_INTERNET_CONNECTION_FAILURE =
-    "O servidor está inacessível, o PenhaS está com acesso à Internet?";
 
 class SignUpController extends _SignUpControllerBase with _$SignUpController {
   SignUpController(IUserRegisterRepository repository) : super(repository);
 }
 
-enum StoreState { initial, loading, loaded }
-
-abstract class _SignUpControllerBase with Store {
+abstract class _SignUpControllerBase with Store, MapFailureMessage {
   final IUserRegisterRepository repository;
   UserRegisterFormFieldModel _userRegisterModel = UserRegisterFormFieldModel();
 
@@ -53,54 +42,44 @@ abstract class _SignUpControllerBase with Store {
   String warningCep = '';
 
   @computed
-  StoreState get currentState {
+  PageProgressState get currentState {
     if (_progress == null || _progress.status == FutureStatus.rejected) {
-      return StoreState.initial;
+      return PageProgressState.initial;
     }
 
     return _progress.status == FutureStatus.pending
-        ? StoreState.loading
-        : StoreState.loaded;
+        ? PageProgressState.loading
+        : PageProgressState.loaded;
   }
 
   @action
   void setFullname(String fullname) {
     _userRegisterModel.fullname = Fullname(fullname);
 
-    warningFullname = _userRegisterModel.fullname.value.fold(
-      (failure) => fullname.length == 0 ? '' : WARNING_FULL_NAME,
-      (_) => '',
-    );
+    warningFullname =
+        fullname.length == 0 ? '' : _userRegisterModel.validateFullName;
   }
 
   @action
   void setBirthday(DateTime birthday) {
     _userRegisterModel.birthday = Birthday.datetime(birthday);
 
-    warningBirthday = _userRegisterModel.birthday.value.fold(
-      (failure) => birthday == null ? '' : WARNING_FULL_NAME,
-      (_) => '',
-    );
+    warningBirthday =
+        birthday == null ? '' : _userRegisterModel.validateBirthday;
   }
 
   @action
   void setCpf(String cpf) {
     _userRegisterModel.cpf = Cpf(cpf);
 
-    warningCpf = _userRegisterModel.cpf.value.fold(
-      (failure) => cpf.length == 0 ? '' : WARNING_CPF,
-      (_) => '',
-    );
+    warningCpf = cpf.length == 0 ? '' : _userRegisterModel.validateCpf;
   }
 
   @action
   void setCep(String cep) {
     _userRegisterModel.cep = Cep(cep);
 
-    warningCep = _userRegisterModel.cep.value.fold(
-      (failure) => cep.length == 0 ? '' : WARNING_CEP,
-      (_) => '',
-    );
+    warningCep = cep.length == 0 ? '' : _userRegisterModel.validateCep;
   }
 
   @action
@@ -121,7 +100,7 @@ abstract class _SignUpControllerBase with Store {
 
     final response = await _progress;
     response.fold(
-      (failure) => _mapFailureToMessage(failure),
+      (failure) => _triggerMessageError(failure),
       (session) => _forwardToStep2(),
     );
   }
@@ -134,26 +113,24 @@ abstract class _SignUpControllerBase with Store {
   bool _isValidToProceed() {
     bool isValid = true;
 
-    if (_userRegisterModel.fullname == null ||
-        !_userRegisterModel.fullname.isValid) {
+    if (_userRegisterModel.validateFullName.isNotEmpty) {
       isValid = false;
-      warningFullname = WARNING_FULL_NAME;
+      warningFullname = _userRegisterModel.validateFullName;
     }
 
-    if (_userRegisterModel.birthday == null ||
-        !_userRegisterModel.birthday.isValid) {
+    if (_userRegisterModel.validateBirthday.isNotEmpty) {
       isValid = false;
-      warningBirthday = WARNING_BIRTHDAY;
+      warningBirthday = _userRegisterModel.validateBirthday;
     }
 
-    if (_userRegisterModel.cpf == null || !_userRegisterModel.cpf.isValid) {
+    if (_userRegisterModel.validateCpf.isNotEmpty) {
       isValid = false;
-      warningCpf = WARNING_CPF;
+      warningCpf = _userRegisterModel.validateCpf;
     }
 
-    if (_userRegisterModel.cep == null || !_userRegisterModel.cep.isValid) {
+    if (_userRegisterModel.validateCep.isNotEmpty) {
       isValid = false;
-      warningCep = WARNING_CEP;
+      warningCep = _userRegisterModel.validateCep;
     }
 
     return isValid;
@@ -163,19 +140,11 @@ abstract class _SignUpControllerBase with Store {
     errorMessage = message;
   }
 
-  _mapFailureToMessage(Failure failure) {
-    switch (failure.runtimeType) {
-      case InternetConnectionFailure:
-        _setErrorMessage(ERROR_INTERNET_CONNECTION_FAILURE);
-        break;
-      case ServerFailure:
-        _setErrorMessage(ERROR_SERVER_FAILURE);
-        break;
-      case ServerSideFormFieldValidationFailure:
-        _mapFailureToFields(failure);
-        break;
-      default:
-        throw UnsupportedError;
+  _triggerMessageError(Failure failure) {
+    if (failure is ServerSideFormFieldValidationFailure) {
+      _setErrorMessage(_mapFailureToFields(failure));
+    } else {
+      _setErrorMessage(mapFailureMessage(failure));
     }
   }
 
@@ -193,8 +162,7 @@ abstract class _SignUpControllerBase with Store {
   }
 
   void _mapToFullNameField(ServerSideFormFieldValidationFailure failure) {
-    String message =
-        failure.message == null ? WARNING_FULL_NAME : failure.message;
+    String message = failure.message;
     if (failure.error == 'name_not_match') {
       message = 'Nome não confere com o CPF';
     }
@@ -203,20 +171,19 @@ abstract class _SignUpControllerBase with Store {
   }
 
   void _mapToCpfField(ServerSideFormFieldValidationFailure failure) {
-    String message = failure.message == null ? WARNING_CPF : failure.message;
+    String message = failure.message;
 
     warningCpf = message;
   }
 
   void _mapToCepField(ServerSideFormFieldValidationFailure failure) {
-    String message = failure.message == null ? WARNING_CEP : failure.message;
+    String message = failure.message;
 
     warningCep = message;
   }
 
   void _mapToBirthdayField(ServerSideFormFieldValidationFailure failure) {
-    String message =
-        failure.message == null ? WARNING_BIRTHDAY : failure.message;
+    String message = failure.message;
 
     warningBirthday = message;
   }

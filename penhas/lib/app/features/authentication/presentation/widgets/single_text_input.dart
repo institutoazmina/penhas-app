@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class SingleTextInput extends StatelessWidget {
@@ -8,14 +9,16 @@ class SingleTextInput extends StatelessWidget {
   final String _labelText;
   final String _errorText;
   final String _hintText;
+  final TextInputFormatter _inputFormatter;
 
   const SingleTextInput({
     Key key,
-    keyboardType = TextInputType.text,
-    style = kDefaultTextFieldLabelStyle,
-    @required labelText,
-    @required errorText,
-    @required hintText,
+    String hintText,
+    TextInputFormatter inputFormatter,
+    TextInputType keyboardType = TextInputType.text,
+    TextStyle style = kDefaultTextFieldLabelStyle,
+    @required String labelText,
+    @required String errorText,
     @required onChanged,
   })  : this._keyboardType = keyboardType,
         this._style = style,
@@ -23,13 +26,15 @@ class SingleTextInput extends StatelessWidget {
         this._labelText = labelText,
         this._errorText = errorText,
         this._hintText = hintText,
+        this._inputFormatter = inputFormatter,
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      keyboardType: _keyboardType,
       style: _style,
+      keyboardType: _keyboardType,
+      inputFormatters: _inputFormatter == null ? null : [_inputFormatter],
       onChanged: _onChanged,
       autofocus: false,
       decoration: InputDecoration(
