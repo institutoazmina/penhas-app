@@ -68,24 +68,21 @@ mixin _$SignInController on _SignInControllerBase, Store {
     }, _$warningPasswordAtom, name: '${_$warningPasswordAtom.name}_set');
   }
 
-  final _$errorAuthenticationMessageAtom =
-      Atom(name: '_SignInControllerBase.errorAuthenticationMessage');
+  final _$errorMessageAtom = Atom(name: '_SignInControllerBase.errorMessage');
 
   @override
-  String get errorAuthenticationMessage {
-    _$errorAuthenticationMessageAtom.context
-        .enforceReadPolicy(_$errorAuthenticationMessageAtom);
-    _$errorAuthenticationMessageAtom.reportObserved();
-    return super.errorAuthenticationMessage;
+  String get errorMessage {
+    _$errorMessageAtom.context.enforceReadPolicy(_$errorMessageAtom);
+    _$errorMessageAtom.reportObserved();
+    return super.errorMessage;
   }
 
   @override
-  set errorAuthenticationMessage(String value) {
-    _$errorAuthenticationMessageAtom.context.conditionallyRunInAction(() {
-      super.errorAuthenticationMessage = value;
-      _$errorAuthenticationMessageAtom.reportChanged();
-    }, _$errorAuthenticationMessageAtom,
-        name: '${_$errorAuthenticationMessageAtom.name}_set');
+  set errorMessage(String value) {
+    _$errorMessageAtom.context.conditionallyRunInAction(() {
+      super.errorMessage = value;
+      _$errorMessageAtom.reportChanged();
+    }, _$errorMessageAtom, name: '${_$errorMessageAtom.name}_set');
   }
 
   final _$signInWithEmailAndPasswordPressedAsyncAction =
@@ -149,7 +146,7 @@ mixin _$SignInController on _SignInControllerBase, Store {
   @override
   String toString() {
     final string =
-        'warningEmail: ${warningEmail.toString()},warningPassword: ${warningPassword.toString()},errorAuthenticationMessage: ${errorAuthenticationMessage.toString()},currentState: ${currentState.toString()}';
+        'warningEmail: ${warningEmail.toString()},warningPassword: ${warningPassword.toString()},errorMessage: ${errorMessage.toString()},currentState: ${currentState.toString()}';
     return '{$string}';
   }
 }

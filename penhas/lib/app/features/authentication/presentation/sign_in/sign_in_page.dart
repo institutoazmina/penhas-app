@@ -30,7 +30,7 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
   void didChangeDependencies() {
     super.didChangeDependencies();
     _disposers ??= [
-      reaction((_) => controller.errorAuthenticationMessage, (String message) {
+      reaction((_) => controller.errorMessage, (String message) {
         showSnackBar(scaffoldKey: _scaffoldKey, message: message);
         controller.resetErrorMessage();
       }),
