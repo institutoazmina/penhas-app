@@ -3,22 +3,15 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/full_name.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/genre.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/human_race.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
 
 part 'sign_up_two_controller.g.dart';
-
-const String WARNING_NICK_NAME = 'Apelido inválido para o sistema';
-const String WARNING_GENRE = 'Gênero é requirido';
-const String WARNING_RACE = 'Raça é requerida';
-const WARNING_INVALID_FIELD_TO_CONTINUE =
-    'Todos os campos precisam estar válidos antes de continguar.';
-const String ERROR_SERVER_FAILURE =
-    "O servidor está com problema neste momento, tente novamente.";
-const String ERROR_INTERNET_CONNECTION_FAILURE =
-    "O servidor está inacessível, o PenhaS está com acesso à Internet?";
 
 class MenuItemModel {
   final String display;
@@ -65,7 +58,7 @@ class SignUpTwoController extends _SignUpTwoControllerBase
         label = 'Mulher Trans';
         break;
       case Genre.others:
-        label = 'Indefinido';
+        label = 'Outro';
         break;
     }
 
@@ -99,9 +92,12 @@ class SignUpTwoController extends _SignUpTwoControllerBase
   }
 }
 
-abstract class _SignUpTwoControllerBase with Store {
+abstract class _SignUpTwoControllerBase with Store, MapFailureMessage {
   final IUserRegisterRepository repository;
   final UserRegisterFormFieldModel _userRegisterModel;
+
+  final String genreMessageErro = 'Gênero é requirido';
+  final String raceMessageErro = 'Raça é requerida';
 
   _SignUpTwoControllerBase(this.repository, this._userRegisterModel);
 
@@ -110,6 +106,9 @@ abstract class _SignUpTwoControllerBase with Store {
 
   @observable
   String warningNickname = '';
+
+  @observable
+  String warningSocialName = '';
 
   @observable
   String warningGenre = '';
@@ -126,14 +125,34 @@ abstract class _SignUpTwoControllerBase with Store {
   @observable
   String errorMessage = '';
 
+  @observable
+  bool hasSocialNameField = false;
+
+  @computed
+  PageProgressState get currentState {
+    if (_progress == null || _progress.status == FutureStatus.rejected) {
+      return PageProgressState.initial;
+    }
+
+    return _progress.status == FutureStatus.pending
+        ? PageProgressState.loading
+        : PageProgressState.loaded;
+  }
+
   @action
   void setNickname(String name) {
     _userRegisterModel.nickname = Nickname(name);
 
-    warningNickname = _userRegisterModel.nickname.value.fold(
-      (failure) => name.length == 0 ? '' : WARNING_NICK_NAME,
-      (_) => '',
-    );
+    warningNickname =
+        name.length == 0 ? '' : _userRegisterModel.validateNickname;
+  }
+
+  @action
+  void setSocialName(String name) {
+    _userRegisterModel.socialName = Fullname(name);
+
+    warningSocialName =
+        name.length == 0 ? '' : _userRegisterModel.validateSocialName;
   }
 
   @action
@@ -141,6 +160,14 @@ abstract class _SignUpTwoControllerBase with Store {
     _userRegisterModel.genre = Genre.values[int.parse(label)];
     currentGenre = label;
     warningGenre = '';
+
+    if (_userRegisterModel.genre == null ||
+        _userRegisterModel.genre == Genre.female ||
+        _userRegisterModel.genre == Genre.male) {
+      hasSocialNameField = false;
+    } else {
+      hasSocialNameField = true;
+    }
   }
 
   @action
@@ -171,7 +198,7 @@ abstract class _SignUpTwoControllerBase with Store {
 
     final response = await _progress;
     response.fold(
-      (failure) => _mapFailureToMessage(failure),
+      (failure) => mapFailureMessage(failure),
       (session) => _forwardToStep3(),
     );
   }
@@ -184,20 +211,19 @@ abstract class _SignUpTwoControllerBase with Store {
   bool _isValidToProceed() {
     bool isValid = true;
 
-    if (_userRegisterModel.nickname == null ||
-        !_userRegisterModel.nickname.isValid) {
+    if (_userRegisterModel.validateNickname.isNotEmpty) {
       isValid = false;
-      warningNickname = WARNING_NICK_NAME;
+      warningNickname = _userRegisterModel.validateNickname;
     }
 
     if (_userRegisterModel.genre == null) {
       isValid = false;
-      warningGenre = WARNING_GENRE;
+      warningGenre = genreMessageErro;
     }
 
     if (_userRegisterModel.race == null) {
       isValid = false;
-      warningRace = WARNING_RACE;
+      warningRace = raceMessageErro;
     }
 
     return isValid;
@@ -205,25 +231,5 @@ abstract class _SignUpTwoControllerBase with Store {
 
   void _setErrorMessage(String message) {
     errorMessage = message;
-  }
-
-  _mapFailureToMessage(Failure failure) {
-    switch (failure.runtimeType) {
-      case InternetConnectionFailure:
-        _setErrorMessage(ERROR_INTERNET_CONNECTION_FAILURE);
-        break;
-      case ServerFailure:
-        _setErrorMessage(ERROR_SERVER_FAILURE);
-        break;
-      case ServerSideFormFieldValidationFailure:
-        _mapFailureToFields(failure);
-        break;
-      default:
-        throw UnsupportedError;
-    }
-  }
-
-  _mapFailureToFields(ServerSideFormFieldValidationFailure failure) {
-    _setErrorMessage(failure.message);
   }
 }

@@ -30,5 +30,8 @@ class Nickname extends Equatable with MapValidatorFailure {
   }
 
   @override
-  String get mapFailure => throw UnimplementedError();
+  String get mapFailure => value.fold(
+        (failure) => 'Apelido inválido para o sistema',
+        (r) => '',
+      );
 }

@@ -14,6 +14,7 @@ class UserRegisterFormFieldModel {
   Cpf cpf;
   Cep cep;
   Nickname nickname;
+  Fullname socialName;
   EmailAddress emailAddress;
   Genre genre;
   HumanRace race;
@@ -22,7 +23,6 @@ class UserRegisterFormFieldModel {
 
   String get validateFullName =>
       fullname == null ? Fullname('').mapFailure : fullname.mapFailure;
-
   String get validateBirthday =>
       birthday == null ? Birthday('').mapFailure : birthday.mapFailure;
   String get validateCpf => cpf == null ? Cpf('').mapFailure : cpf.mapFailure;
@@ -32,11 +32,13 @@ class UserRegisterFormFieldModel {
       : emailAddress.mapFailure;
   String get validatePassword =>
       password == null ? Password('').mapFailure : password.mapFailure;
-  // String get validateGenre =>
-  //     genre == null ? Genre('').mapFailure : genre.mapFailure;
-  // String get validateHumanRace =>
-  //     race == null ? HumanRace('').mapFailure : race.mapFailure;
-  // String get validateNickname =>
-  //     nickname == null ? Nickname('').mapFailure : nickname.mapFailure;
+  String get validateNickname =>
+      nickname == null ? Nickname('').mapFailure : nickname.mapFailure;
+  String get validateSocialName {
+    if (genre == null || genre == Genre.female || genre == Genre.male) {
+      return '';
+    }
 
+    return socialName == null ? Fullname('').mapFailure : fullname.mapFailure;
+  }
 }

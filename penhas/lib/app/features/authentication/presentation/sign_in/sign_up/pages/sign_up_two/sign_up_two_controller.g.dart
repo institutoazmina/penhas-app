@@ -9,6 +9,13 @@ part of 'sign_up_two_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
+  Computed<PageProgressState> _$currentStateComputed;
+
+  @override
+  PageProgressState get currentState => (_$currentStateComputed ??=
+          Computed<PageProgressState>(() => super.currentState))
+      .value;
+
   final _$_progressAtom = Atom(name: '_SignUpTwoControllerBase._progress');
 
   @override
@@ -42,6 +49,24 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
       super.warningNickname = value;
       _$warningNicknameAtom.reportChanged();
     }, _$warningNicknameAtom, name: '${_$warningNicknameAtom.name}_set');
+  }
+
+  final _$warningSocialNameAtom =
+      Atom(name: '_SignUpTwoControllerBase.warningSocialName');
+
+  @override
+  String get warningSocialName {
+    _$warningSocialNameAtom.context.enforceReadPolicy(_$warningSocialNameAtom);
+    _$warningSocialNameAtom.reportObserved();
+    return super.warningSocialName;
+  }
+
+  @override
+  set warningSocialName(String value) {
+    _$warningSocialNameAtom.context.conditionallyRunInAction(() {
+      super.warningSocialName = value;
+      _$warningSocialNameAtom.reportChanged();
+    }, _$warningSocialNameAtom, name: '${_$warningSocialNameAtom.name}_set');
   }
 
   final _$warningGenreAtom =
@@ -132,6 +157,25 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
     }, _$errorMessageAtom, name: '${_$errorMessageAtom.name}_set');
   }
 
+  final _$hasSocialNameFieldAtom =
+      Atom(name: '_SignUpTwoControllerBase.hasSocialNameField');
+
+  @override
+  bool get hasSocialNameField {
+    _$hasSocialNameFieldAtom.context
+        .enforceReadPolicy(_$hasSocialNameFieldAtom);
+    _$hasSocialNameFieldAtom.reportObserved();
+    return super.hasSocialNameField;
+  }
+
+  @override
+  set hasSocialNameField(bool value) {
+    _$hasSocialNameFieldAtom.context.conditionallyRunInAction(() {
+      super.hasSocialNameField = value;
+      _$hasSocialNameFieldAtom.reportChanged();
+    }, _$hasSocialNameFieldAtom, name: '${_$hasSocialNameFieldAtom.name}_set');
+  }
+
   final _$nextStepPressedAsyncAction = AsyncAction('nextStepPressed');
 
   @override
@@ -148,6 +192,17 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
         _$_SignUpTwoControllerBaseActionController.startAction();
     try {
       return super.setNickname(name);
+    } finally {
+      _$_SignUpTwoControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setSocialName(String name) {
+    final _$actionInfo =
+        _$_SignUpTwoControllerBaseActionController.startAction();
+    try {
+      return super.setSocialName(name);
     } finally {
       _$_SignUpTwoControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -178,7 +233,7 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
   @override
   String toString() {
     final string =
-        'warningNickname: ${warningNickname.toString()},warningGenre: ${warningGenre.toString()},warningRace: ${warningRace.toString()},currentGenre: ${currentGenre.toString()},currentRace: ${currentRace.toString()},errorMessage: ${errorMessage.toString()}';
+        'warningNickname: ${warningNickname.toString()},warningSocialName: ${warningSocialName.toString()},warningGenre: ${warningGenre.toString()},warningRace: ${warningRace.toString()},currentGenre: ${currentGenre.toString()},currentRace: ${currentRace.toString()},errorMessage: ${errorMessage.toString()},hasSocialNameField: ${hasSocialNameField.toString()},currentState: ${currentState.toString()}';
     return '{$string}';
   }
 }

@@ -15,6 +15,7 @@ import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_page.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/pages/sign_up_three/sign_up_three_page.dart';
+import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/pages/sign_up_two/sign_up_two_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/pages/sign_up_two/sign_up_two_page.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/sign_up_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/sign_up_page.dart';
@@ -25,6 +26,9 @@ class SignInModule extends ChildModule {
         Bind((i) => SignInController(i.get<IAuthenticationRepository>())),
         Bind((i) => SignUpController(i.get<IUserRegisterRepository>()),
             singleton: false),
+        Bind((i) =>
+            SignUpTwoController(i.get<IUserRegisterRepository>(), i.args.data)),
+        // Bind((i) => SignUpThreeController(i.get<IUserRegisterRepository>(), i.args.data)),
         Bind<IAuthenticationRepository>(
           (i) => AuthenticationRepository(
             dataSource: i.get<IAuthenticationDataSource>(),

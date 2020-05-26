@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
+import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'sign_up_two_controller.dart';
 
 class SignUpTwoPage extends StatefulWidget {
@@ -16,9 +22,11 @@ class SignUpTwoPage extends StatefulWidget {
 }
 
 class _SignUpTwoPageState
-    extends ModularState<SignUpTwoPage, SignUpTwoController> {
+    extends ModularState<SignUpTwoPage, SignUpTwoController>
+    with SnackBarHandler {
   List<ReactionDisposer> _disposers;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  PageProgressState _currentState = PageProgressState.initial;
 
   final dataSourceGenre =
       _buildDataSource(SignUpTwoController.genreDataSource());
@@ -29,7 +37,7 @@ class _SignUpTwoPageState
     super.didChangeDependencies();
     _disposers ??= [
       _showErrorMessage(),
-      // _showProgress(),
+      _showProgress(),
     ];
   }
 
@@ -41,81 +49,90 @@ class _SignUpTwoPageState
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onPanDown: (_) {
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (currentFocus != null && !currentFocus.hasPrimaryFocus) {
-          currentFocus.unfocus();
-        }
-      },
-      child: Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
+    return SizedBox.expand(
+      child: Container(
+        decoration: kLinearGradientDesignSystem,
+        child: Scaffold(
+          key: _scaffoldKey,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          ),
           backgroundColor: Colors.transparent,
-          title: Text('Criar conta'),
-          elevation: 0,
-        ),
-        backgroundColor: Colors.transparent,
-        resizeToAvoidBottomInset: false,
-        extendBodyBehindAppBar: true,
-        body: SizedBox.expand(
-          child: Container(
-            decoration: kLinearGradientDesignSystem,
-            child: SafeArea(
-                child: SingleChildScrollView(
-              padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  SizedBox(
-                    height: 78.0,
-                    child: Text(
-                      'Nos conte um pouco mais sobre você',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.white70,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  SizedBox(height: 22.0),
-                  Observer(builder: (_) {
-                    return _buildInputField(
-                      labelText: 'Apelido',
-                      keyboardType: TextInputType.text,
-                      onChanged: controller.setNickname,
-                      onError: controller.warningNickname,
-                    );
-                  }),
-                  SizedBox(height: 24.0),
-                  Observer(builder: (_) {
-                    return _buildDropdownList(
-                      context: context,
-                      labelText: 'Gênero',
-                      onError: controller.warningGenre,
-                      onChange: controller.setGenre,
-                      currentValue: controller.currentGenre,
-                      dataSource: dataSourceGenre,
-                    );
-                  }),
-                  SizedBox(height: 24.0),
-                  Observer(builder: (_) {
-                    return _buildDropdownList(
-                      context: context,
-                      labelText: 'Raça',
-                      onError: controller.warningRace,
-                      onChange: controller.setRace,
-                      currentValue: controller.currentRace,
-                      dataSource: dataSourceRace,
-                    );
-                  }),
-                  SizedBox(height: 24.0),
-                  SizedBox(height: 40.0, child: _buildNextButton()),
-                ],
-              ),
-            )),
+          extendBodyBehindAppBar: true,
+          body: PageProgressIndicator(
+            progressState: _currentState,
+            child: GestureDetector(
+              onTap: () => _handleTap(context),
+              onPanDown: (_) => _handleTap(context),
+              child: SafeArea(
+                  child: SingleChildScrollView(
+                padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    _buildHeader(),
+                    SizedBox(height: 18.0),
+                    _buildSubHeader(),
+                    SizedBox(height: 22.0),
+                    Observer(builder: (_) => _buildNickName()),
+                    Observer(builder: (_) => _buildSocialName()),
+                    SizedBox(height: 24.0),
+                    Observer(builder: (_) {
+                      return _buildDropdownList(
+                        context: context,
+                        labelText: 'Gênero',
+                        onError: controller.warningGenre,
+                        onChange: controller.setGenre,
+                        currentValue: controller.currentGenre,
+                        dataSource: dataSourceGenre,
+                      );
+                    }),
+                    SizedBox(height: 24.0),
+                    Observer(builder: (_) {
+                      return _buildDropdownList(
+                        context: context,
+                        labelText: 'Raça',
+                        onError: controller.warningRace,
+                        onChange: controller.setRace,
+                        currentValue: controller.currentRace,
+                        dataSource: dataSourceRace,
+                      );
+                    }),
+                    SizedBox(height: 24.0),
+                    SizedBox(height: 40.0, child: _buildNextButton()),
+                  ],
+                ),
+              )),
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  SingleTextInput _buildNickName() {
+    return SingleTextInput(
+      labelText: 'Apelido',
+      keyboardType: TextInputType.text,
+      onChanged: controller.setNickname,
+      errorText: controller.warningNickname,
+    );
+  }
+
+  Offstage _buildSocialName() {
+    return Offstage(
+      offstage: !controller.hasSocialNameField,
+      child: Column(
+        children: <Widget>[
+          SizedBox(height: 24.0),
+          SingleTextInput(
+            labelText: 'Nome social',
+            keyboardType: TextInputType.text,
+            onChanged: controller.setSocialName,
+            errorText: controller.warningSocialName,
+          ),
+        ],
       ),
     );
   }
@@ -152,35 +169,6 @@ class _SignUpTwoPageState
     );
   }
 
-  TextFormField _buildInputField({
-    String labelText,
-    String hintText,
-    TextInputType keyboardType,
-    Function(String) onChanged,
-    String onError,
-  }) {
-    return TextFormField(
-      onChanged: onChanged,
-      keyboardType: keyboardType,
-      autocorrect: false,
-      textInputAction: TextInputAction.done,
-      style: TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        enabledBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        focusedBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        errorText: (onError?.isEmpty ?? true) ? null : onError,
-        labelText: labelText,
-        labelStyle: TextStyle(color: Colors.white),
-        border: OutlineInputBorder(),
-        hintText: hintText,
-        hintStyle: TextStyle(color: Colors.white),
-        contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
-      ),
-    );
-  }
-
   RaisedButton _buildNextButton() {
     return RaisedButton(
       onPressed: () => controller.nextStepPressed(),
@@ -188,11 +176,9 @@ class _SignUpTwoPageState
       color: DesignSystemColors.ligthPurple,
       child: Text(
         "Próximo",
-        style: TextStyle(color: Colors.white, fontSize: 14.0),
+        style: kDefaultFilledButtonLabel,
       ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-      ),
+      shape: kButtonShapeFilled,
     );
   }
 
@@ -210,13 +196,40 @@ class _SignUpTwoPageState
 
   ReactionDisposer _showErrorMessage() {
     return reaction((_) => controller.errorMessage, (String message) {
-      if (message.isNotEmpty) {
-        _scaffoldKey.currentState.showSnackBar(
-          SnackBar(
-            content: Text(message),
-          ),
-        );
-      }
+      showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
+  }
+
+  ReactionDisposer _showProgress() {
+    return reaction((_) => controller.currentState, (PageProgressState status) {
+      setState(() {
+        _currentState = status;
+      });
+    });
+  }
+
+  SizedBox _buildSubHeader() {
+    return SizedBox(
+      height: 60.0,
+      child: Text(
+        'Nos conte um pouco mais sobre você.',
+        style: kRegisterSubHeaderLabelStyle,
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  Text _buildHeader() {
+    return Text(
+      'Crie sua conta',
+      style: kRegisterHeaderLabelStyle,
+      textAlign: TextAlign.center,
+    );
+  }
+
+  _handleTap(BuildContext context) {
+    if (MediaQuery.of(context).viewInsets.bottom > 0)
+      SystemChannels.textInput.invokeMethod('TextInput.hide');
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
   }
 }
