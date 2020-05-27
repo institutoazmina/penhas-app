@@ -47,11 +47,11 @@ abstract class _SplashControllerBase with Store {
   }
 
   void _forwardToAuthenticated() {
-    Modular.to.pushReplacementNamed('/mainboard');
+    Modular.to.popAndPushNamed('/mainboard');
   }
 
   void _forwardToAnonymous() {
-    Modular.to.pushReplacementNamed('/authentication');
+    Modular.to.popAndPushNamed('/authentication');
   }
 
   void _handleFailure(Failure failure) {
@@ -63,8 +63,9 @@ abstract class _SplashControllerBase with Store {
   }
 
   void _handleAppStates(AppStateEntity session) {
-    if (session.quizSession != null) {
-      Modular.to.pushReplacementNamed('/quiz', arguments: session.quizSession);
+    if (session.quizSession != null ||
+        session.quizSession.isFinished == false) {
+      Modular.to.popAndPushNamed('/quiz', arguments: session.quizSession);
       return;
     }
 
