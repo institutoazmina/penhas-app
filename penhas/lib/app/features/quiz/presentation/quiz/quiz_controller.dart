@@ -94,10 +94,6 @@ abstract class _QuizControllerBase with Store {
     Map<String, String> reply,
     QuizMessageEntity messageRemoved,
   ) {
-    if (messageRemoved.action == 'botao_fim') {
-      Modular.to.pushReplacementNamed('/');
-    }
-
     return QuizMessageEntity(
       content: messageRemoved.buttonLabel,
       type: QuizMessageType.displayText,
@@ -166,7 +162,13 @@ abstract class _QuizControllerBase with Store {
   }
 
   void _parseState(AppStateEntity state) {
+    if (state.quizSession?.isFinished ?? true) {
+      Modular.to.popAndPushNamed('/');
+      return;
+    }
+
     _sessionId = state.quizSession.sessionId;
+
     if (state?.quizSession?.currentMessage != null) {
       messages.insertAll(0, state.quizSession.currentMessage.reversed);
     }

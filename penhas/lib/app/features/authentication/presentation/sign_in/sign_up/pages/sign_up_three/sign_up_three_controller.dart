@@ -119,6 +119,6 @@ abstract class _SignUpThreeControllerBase with Store, MapFailureMessage {
   }
 
   _forwardToLogged() {
-    Modular.to.pushReplacementNamed('/');
+    Modular.to.popAndPushNamed('/');
   }
 }
