@@ -167,7 +167,10 @@ abstract class _QuizControllerBase with Store {
 
   void _parseState(AppStateEntity state) {
     _sessionId = state.quizSession.sessionId;
-    messages.insertAll(0, state.quizSession.currentMessage.reversed);
+    if (state?.quizSession?.currentMessage != null) {
+      messages.insertAll(0, state.quizSession.currentMessage.reversed);
+    }
+
     _parseUserReply(messages);
   }
 
