@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz/quiz_typedef.dart';
+import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
+import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class QuizMultipleChoicesWidget extends StatefulWidget {
   final String reference;
@@ -43,47 +45,48 @@ class _QuizMultipleChoicesWidgetState extends State<QuizMultipleChoicesWidget> {
       ),
       child: Padding(
         padding: EdgeInsets.fromLTRB(24.0, 0.0, 24.0, 8.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Container(
-                child: ListTileTheme(
-                  contentPadding: EdgeInsets.zero,
-                  child: ListBody(
-                    children: widget.options.map((e) => _buildItem(e)).toList(),
-                  ),
-                ),
-              ),
-              SizedBox(height: 8),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  SizedBox(
-                    height: 40.0,
-                    child: RaisedButton(
-                      elevation: 0.0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      color: DesignSystemColors.ligthPurple,
-                      onPressed: _selectedValues.length == 0
-                          ? null
-                          : () => _onSavePressed(),
-                      child: Text(
-                        'Enviar',
-                        style: TextStyle(
-                          fontFamily: 'Lato',
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          letterSpacing: 0.57,
+        child: Column(
+          children: <Widget>[
+            Container(
+              constraints: BoxConstraints(maxHeight: 208),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      child: ListTileTheme(
+                        contentPadding: EdgeInsets.zero,
+                        child: ListBody(
+                          children:
+                              widget.options.map((e) => _buildItem(e)).toList(),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ],
-          ),
+            ),
+            SizedBox(height: 8),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                SizedBox(
+                  height: 40.0,
+                  child: RaisedButton(
+                    elevation: 0.0,
+                    shape: kButtonShapeFilled,
+                    color: DesignSystemColors.ligthPurple,
+                    onPressed: _selectedValues.length == 0
+                        ? null
+                        : () => _onSavePressed(),
+                    child: Text(
+                      'Enviar',
+                      style: kDefaultFilledButtonLabel,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
