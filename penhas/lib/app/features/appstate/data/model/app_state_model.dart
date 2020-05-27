@@ -13,16 +13,20 @@ class AppStateModel extends AppStateEntity {
   static QuizSessionEntity _parseQuizSession(Map<String, Object> session) {
     final currentMessage = _parseQuizMessage(session["current_msgs"]);
     final previousMessage = _parseQuizMessage(session['prev_msgs']);
+    final isFinished = (session['finished'] != null && session['finished'] == 1)
+        ? true
+        : false;
 
     if (previousMessage != null) {
       currentMessage.insertAll(0, previousMessage);
     }
 
-    final int sessionId = (session['session_id'] as num).toInt();
+    final int sessionId = (session['session_id'] as num)?.toInt();
     return QuizSessionEntity(
-      currentMessage: currentMessage,
-      sessionId: sessionId,
-    );
+        currentMessage: currentMessage,
+        sessionId: sessionId,
+        isFinished: isFinished,
+        endScreen: session['end_screen']);
   }
 
   static List<QuizMessageEntity> _parseQuizMessage(List<Object> data) {

@@ -60,14 +60,18 @@ class AppStateEntity extends Equatable {
 class QuizSessionEntity extends Equatable {
   final List<QuizMessageEntity> currentMessage;
   final int sessionId;
+  final bool isFinished;
+  final String endScreen;
 
   QuizSessionEntity({
     @required this.currentMessage,
     @required this.sessionId,
+    @required this.isFinished,
+    @required this.endScreen,
   });
 
   @override
-  List<Object> get props => [currentMessage, sessionId];
+  List<Object> get props => [currentMessage, sessionId, isFinished, endScreen];
 
   @override
   String toString() {
