@@ -100,7 +100,7 @@ class _SignUpThreePageState
       height: 60.0,
       child: Text(
         'Informe um email e de defina uma senha segura. A senha precisa ter no mínmo 6 caracteres, com letra, números e caracteres espcial.',
-        style: kRegisterSubHeaderLabelStyle,
+        style: kTextStyleRegisterSubHeaderLabelStyle,
         textAlign: TextAlign.center,
       ),
     );
@@ -109,7 +109,7 @@ class _SignUpThreePageState
   Text _buildHeader() {
     return Text(
       'Crie sua conta',
-      style: kRegisterHeaderLabelStyle,
+      style: kTextStyleRegisterHeaderLabelStyle,
       textAlign: TextAlign.center,
     );
   }
@@ -130,7 +130,7 @@ class _SignUpThreePageState
       color: DesignSystemColors.ligthPurple,
       child: Text(
         "Cadastrar",
-        style: kDefaultFilledButtonLabel,
+        style: kTextStyleDefaultFilledButtonLabel,
       ),
       shape: kButtonShapeFilled,
     );

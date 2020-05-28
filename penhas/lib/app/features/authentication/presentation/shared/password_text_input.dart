@@ -10,7 +10,7 @@ class PassordInputField extends StatefulWidget {
 
   PassordInputField({
     Key key,
-    this.style = kDefaultTextFieldLabelStyle,
+    this.style = kTextStyleDefaultTextFieldLabelStyle,
     @required this.onChanged,
     @required this.labelText,
     @required this.errorText,
@@ -41,9 +41,9 @@ class _PassordInputFieldState extends State<PassordInputField> {
             OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
         border: OutlineInputBorder(),
         labelText: widget.labelText,
-        labelStyle: kDefaultTextFieldLabelStyle,
+        labelStyle: kTextStyleDefaultTextFieldLabelStyle,
         hintText: widget.hintText,
-        hintStyle: kDefaultTextFieldLabelStyle,
+        hintStyle: kTextStyleDefaultTextFieldLabelStyle,
         errorText: _normalizeHitText(widget.errorText),
         contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
         suffixIcon: IconButton(

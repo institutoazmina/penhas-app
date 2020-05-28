@@ -80,7 +80,7 @@ class _QuizMultipleChoicesWidgetState extends State<QuizMultipleChoicesWidget> {
                         : () => _onSavePressed(),
                     child: Text(
                       'Enviar',
-                      style: kDefaultFilledButtonLabel,
+                      style: kTextStyleDefaultFilledButtonLabel,
                     ),
                   ),
                 ),

@@ -148,7 +148,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
       height: 60.0,
       child: Text(
         'Para sua segurança pedimos aos nossos usuários o CPF.',
-        style: kRegisterSubHeaderLabelStyle,
+        style: kTextStyleRegisterSubHeaderLabelStyle,
         textAlign: TextAlign.center,
       ),
     );
@@ -157,7 +157,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
   Text _buildHeader() {
     return Text(
       'Crie sua conta',
-      style: kRegisterHeaderLabelStyle,
+      style: kTextStyleRegisterHeaderLabelStyle,
       textAlign: TextAlign.center,
     );
   }
@@ -205,7 +205,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
       color: DesignSystemColors.ligthPurple,
       child: Text(
         "Próximo",
-        style: kDefaultFilledButtonLabel,
+        style: kTextStyleDefaultFilledButtonLabel,
       ),
       shape: kButtonShapeFilled,
     );

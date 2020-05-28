@@ -143,7 +143,7 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
       color: Colors.transparent,
       child: Text(
         'Cadastrar',
-        style: kDefaultFilledButtonLabel,
+        style: kTextStyleDefaultFilledButtonLabel,
       ),
       shape: kButtonShapeOutlineWhite,
     );

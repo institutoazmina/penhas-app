@@ -176,7 +176,7 @@ class _SignUpTwoPageState
       color: DesignSystemColors.ligthPurple,
       child: Text(
         "Próximo",
-        style: kDefaultFilledButtonLabel,
+        style: kTextStyleDefaultFilledButtonLabel,
       ),
       shape: kButtonShapeFilled,
     );
@@ -213,7 +213,7 @@ class _SignUpTwoPageState
       height: 60.0,
       child: Text(
         'Nos conte um pouco mais sobre você.',
-        style: kRegisterSubHeaderLabelStyle,
+        style: kTextStyleRegisterSubHeaderLabelStyle,
         textAlign: TextAlign.center,
       ),
     );
@@ -222,7 +222,7 @@ class _SignUpTwoPageState
   Text _buildHeader() {
     return Text(
       'Crie sua conta',
-      style: kRegisterHeaderLabelStyle,
+      style: kTextStyleRegisterHeaderLabelStyle,
       textAlign: TextAlign.center,
     );
   }

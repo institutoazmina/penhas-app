@@ -36,7 +36,7 @@ class QuizSingleButtonWidget extends StatelessWidget {
         shape: kButtonShapeFilled,
         child: Text(
           buttonLabel,
-          style: kDefaultFilledButtonLabel,
+          style: kTextStyleDefaultFilledButtonLabel,
         ),
       ),
     );

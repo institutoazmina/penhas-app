@@ -51,7 +51,7 @@ abstract class _SplashControllerBase with Store {
   }
 
   void _forwardToAnonymous() {
-    Modular.to.popAndPushNamed('/authentication');
+    Modular.to.pushReplacementNamed('/authentication');
   }
 
   void _handleFailure(Failure failure) {
