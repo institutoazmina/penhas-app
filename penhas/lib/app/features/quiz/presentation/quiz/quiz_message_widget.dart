@@ -44,7 +44,6 @@ class QuizMessageWidget extends StatelessWidget {
       alignment: alignment,
       child: Container(
         padding: padding,
-        // margin: margin,
         decoration: BoxDecoration(color: color, borderRadius: borderRadius),
         child: Container(
           child: HtmlWidget(

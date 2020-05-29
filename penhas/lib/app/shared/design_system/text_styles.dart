@@ -31,4 +31,26 @@ const kTextStyleFeedCategoryButtonLabel = TextStyle(
     fontFamily: 'Lato',
     fontSize: 12.0,
     letterSpacing: 0.4,
-    color: DesignSystemColors.pigPing);
+    color: DesignSystemColors.pigPing,
+    fontWeight: FontWeight.normal);
+
+const kTextStyleFeedTootBody = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 14.0,
+    letterSpacing: 0.1,
+    color: DesignSystemColors.charcoalGrey2,
+    fontWeight: FontWeight.normal);
+
+const kTextStyleFeedTootTitle = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 14.0,
+    letterSpacing: 0.1,
+    color: Colors.black,
+    fontWeight: FontWeight.w900);
+
+const kTextStyleFeedTootTime = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 12.0,
+    letterSpacing: 0.1,
+    color: DesignSystemColors.blueyGrey,
+    fontWeight: FontWeight.normal);
