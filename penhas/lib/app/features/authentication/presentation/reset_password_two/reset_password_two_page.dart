@@ -5,6 +5,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
+import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'reset_password_two_controller.dart';
 
 class ResetPasswordTwoPage extends StatefulWidget {
@@ -71,8 +72,7 @@ class _ResetPasswordTwoPageState
                       height: 40,
                       child: Text(
                         'Verifique seu e-mail',
-                        style: TextStyle(
-                            fontSize: 28.0, color: DesignSystemColors.pigPing),
+                        style: kTextStyleRegisterHeaderLabelStyle,
                         textAlign: TextAlign.center,
                       ),
                     ),

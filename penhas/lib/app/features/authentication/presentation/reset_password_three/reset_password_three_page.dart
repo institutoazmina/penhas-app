@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
+import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'reset_password_three_controller.dart';
 
 class ResetPasswordThreePage extends StatefulWidget {
@@ -66,8 +67,7 @@ class _ResetPasswordThreePageState
                       height: 60,
                       child: Text(
                         'Configure uma nova senha',
-                        style: TextStyle(
-                            fontSize: 28.0, color: DesignSystemColors.pigPing),
+                        style: kTextStyleRegisterHeaderLabelStyle,
                         textAlign: TextAlign.center,
                       ),
                     ),
