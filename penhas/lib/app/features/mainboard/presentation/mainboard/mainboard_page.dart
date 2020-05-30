@@ -32,7 +32,7 @@ class _MainboardPageState
         return BottomAppBar(
           elevation: 20.0,
           child: Container(
-            height: 60,
+            height: 56,
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -73,8 +73,8 @@ class _MainboardPageState
       }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
-        width: 65.0,
-        height: 65.0,
+        width: 60.0,
+        height: 60.0,
         child: FittedBox(
           child: FloatingActionButton(
             backgroundColor: DesignSystemColors.ligthPurple,
