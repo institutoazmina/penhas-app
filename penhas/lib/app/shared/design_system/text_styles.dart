@@ -8,7 +8,7 @@ const kTextStyleDefaultTextFieldLabelStyle = TextStyle(
     fontWeight: FontWeight.normal);
 
 const kTextStyleRegisterHeaderLabelStyle = TextStyle(
-    color: DesignSystemColors.pigPing,
+    color: DesignSystemColors.pinky,
     fontFamily: 'Lato',
     fontSize: 28.0,
     fontWeight: FontWeight.bold);
@@ -31,21 +31,21 @@ const kTextStyleFeedCategoryButtonLabel = TextStyle(
     fontFamily: 'Lato',
     fontSize: 12.0,
     letterSpacing: 0.4,
-    color: DesignSystemColors.pigPing,
-    fontWeight: FontWeight.normal);
+    color: DesignSystemColors.ligthPurple,
+    fontWeight: FontWeight.bold);
 
-const kTextStyleFeedTootBody = TextStyle(
+const kTextStyleFeedTootInput = TextStyle(
     fontFamily: 'Lato',
     fontSize: 14.0,
-    letterSpacing: 0.1,
-    color: DesignSystemColors.charcoalGrey2,
+    letterSpacing: 0.4,
+    color: DesignSystemColors.warnGrey,
     fontWeight: FontWeight.normal);
 
 const kTextStyleFeedTootTitle = TextStyle(
     fontFamily: 'Lato',
     fontSize: 14.0,
     letterSpacing: 0.1,
-    color: Colors.black,
+    color: DesignSystemColors.darkIndigoThree,
     fontWeight: FontWeight.w900);
 
 const kTextStyleFeedTootTime = TextStyle(
@@ -54,6 +54,28 @@ const kTextStyleFeedTootTime = TextStyle(
     letterSpacing: 0.1,
     color: DesignSystemColors.blueyGrey,
     fontWeight: FontWeight.normal);
+
+const kTextStyleFeedTootBody = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 14.0,
+    letterSpacing: 0.4,
+    color: DesignSystemColors.darkIndigoThree,
+    fontWeight: FontWeight.normal);
+
+const kTextStyleFeedTootReplyHeader = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 20.0,
+    letterSpacing: 0.6,
+    color: DesignSystemColors.darkIndigoThree,
+    fontWeight: FontWeight.bold);
+
+const kTextStyleFeedTootShowReply = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 14.0,
+    letterSpacing: 0.4,
+    color: DesignSystemColors.pinky,
+    fontWeight: FontWeight.bold,
+    decoration: TextDecoration.underline);
 
 const kTextStyleDrawerUsername = TextStyle(
     fontFamily: 'Lato',

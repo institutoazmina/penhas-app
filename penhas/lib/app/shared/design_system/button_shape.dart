@@ -12,7 +12,3 @@ const kButtonShapeOutlineWhite = RoundedRectangleBorder(
 const kButtonShapeOutlinePurple = RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(20.0)),
     side: BorderSide(color: DesignSystemColors.ligthPurple));
-
-const kButtonShapeOutlinePink = RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(20.0)),
-    side: BorderSide(color: DesignSystemColors.pigPing));
