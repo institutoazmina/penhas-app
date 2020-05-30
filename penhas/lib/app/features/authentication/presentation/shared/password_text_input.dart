@@ -24,7 +24,7 @@ class PassordInputField extends StatefulWidget {
 class _PassordInputFieldState extends State<PassordInputField> {
   _PassordInputFieldState();
 
-  bool _isPasswordVisible = true;
+  bool _isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
