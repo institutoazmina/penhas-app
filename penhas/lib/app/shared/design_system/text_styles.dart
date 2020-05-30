@@ -54,3 +54,24 @@ const kTextStyleFeedTootTime = TextStyle(
     letterSpacing: 0.1,
     color: DesignSystemColors.blueyGrey,
     fontWeight: FontWeight.normal);
+
+const kTextStyleDrawerUsername = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 16.0,
+    letterSpacing: 0.5,
+    color: DesignSystemColors.darkIndigoThree,
+    fontWeight: FontWeight.bold);
+
+const kTextStyleDrawerListItem = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 14.0,
+    letterSpacing: 0.44,
+    color: DesignSystemColors.darkIndigoThree,
+    fontWeight: FontWeight.bold);
+
+const kTextStyleDrawerUserNameTag = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 12.0,
+    letterSpacing: 0.38,
+    color: DesignSystemColors.warnGrey,
+    fontWeight: FontWeight.normal);
