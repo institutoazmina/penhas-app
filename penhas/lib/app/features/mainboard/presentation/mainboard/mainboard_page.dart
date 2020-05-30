@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/features/feed/presenter/feed_module.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
@@ -40,25 +41,29 @@ class _MainboardPageState
                   iconSize: 30.0,
                   padding: EdgeInsets.only(left: 28.0),
                   tooltip: 'Feed',
-                  icon: Icon(Icons.home),
+                  icon:
+                      SvgPicture.asset('assets/images/svg/bottom_bar/feed.svg'),
                   onPressed: () => controller.changePage(0),
                 ),
                 IconButton(
                   iconSize: 30.0,
                   padding: EdgeInsets.only(right: 28.0),
-                  icon: Icon(Icons.chat_bubble_outline),
+                  icon: SvgPicture.asset(
+                      'assets/images/svg/bottom_bar/new_toot.svg'),
                   onPressed: () => controller.changePage(1),
                 ),
                 IconButton(
                   iconSize: 30.0,
                   padding: EdgeInsets.only(left: 28.0),
-                  icon: Icon(Icons.location_on),
+                  icon:
+                      SvgPicture.asset('assets/images/svg/bottom_bar/chat.svg'),
                   onPressed: () => controller.changePage(2),
                 ),
                 IconButton(
                   iconSize: 30.0,
                   padding: EdgeInsets.only(right: 28.0),
-                  icon: Icon(Icons.settings),
+                  icon: SvgPicture.asset(
+                      'assets/images/svg/bottom_bar/support_point.svg'),
                   onPressed: () => controller.changePage(3),
                 )
               ],
@@ -74,8 +79,8 @@ class _MainboardPageState
           child: FloatingActionButton(
             backgroundColor: DesignSystemColors.ligthPurple,
             onPressed: () {},
-            child: Icon(
-              Icons.ac_unit,
+            child: SvgPicture.asset(
+              'assets/images/svg/bottom_bar/emergency_controll.svg',
               color: Colors.white,
             ),
           ),

@@ -40,21 +40,21 @@ class PenhasDrawer extends StatelessWidget {
               _buildItemList(
                 title: 'Informações pessoais',
                 icon: SvgPicture.asset(
-                  "assets/images/svg/user_profile.svg",
+                  "assets/images/svg/drawer/user_profile.svg",
                   color: DesignSystemColors.darkIndigoThree,
                 ),
               ),
               _buildItemList(
                 title: 'Preferência da conta',
                 icon: SvgPicture.asset(
-                  "assets/images/svg/account_setting.svg",
+                  "assets/images/svg/drawer/account_setting.svg",
                   color: DesignSystemColors.darkIndigoThree,
                 ),
               ),
               _buildItemList(
                 title: 'Exclusão da conta',
                 icon: SvgPicture.asset(
-                  "assets/images/svg/trash.svg",
+                  "assets/images/svg/drawer/trash.svg",
                   color: DesignSystemColors.darkIndigoThree,
                 ),
               ),
