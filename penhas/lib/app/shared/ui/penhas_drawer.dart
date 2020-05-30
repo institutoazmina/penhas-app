@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
@@ -37,14 +38,26 @@ class PenhasDrawer extends StatelessWidget {
               _builderHeader(),
               _buildSwitch(),
               _buildItemList(
-                  title: 'Informações pessoais',
-                  icon: Icon(Icons.person_pin, size: 26)),
+                title: 'Informações pessoais',
+                icon: SvgPicture.asset(
+                  "assets/images/svg/user_profile.svg",
+                  color: DesignSystemColors.darkIndigoThree,
+                ),
+              ),
               _buildItemList(
-                  title: 'Preferência da conta',
-                  icon: Icon(Icons.settings_input_svideo, size: 26)),
+                title: 'Preferência da conta',
+                icon: SvgPicture.asset(
+                  "assets/images/svg/account_setting.svg",
+                  color: DesignSystemColors.darkIndigoThree,
+                ),
+              ),
               _buildItemList(
-                  title: 'Exclusão da conta',
-                  icon: Icon(Icons.delete_outline, size: 26)),
+                title: 'Exclusão da conta',
+                icon: SvgPicture.asset(
+                  "assets/images/svg/trash.svg",
+                  color: DesignSystemColors.darkIndigoThree,
+                ),
+              ),
               Container(
                 constraints: BoxConstraints(minHeight: 126.0),
                 alignment: Alignment.bottomCenter,
@@ -80,7 +93,7 @@ class PenhasDrawer extends StatelessWidget {
               bottom: BorderSide(color: DesignSystemColors.pinkishGrey))),
       child: Row(
         children: <Widget>[
-          icon,
+          SizedBox(height: 26.0, width: 26.0, child: icon),
           SizedBox(width: 9.0),
           Text(
             title,

@@ -32,6 +32,7 @@ dependencies:
   cpfcnpj: ^1.0.3
   url_launcher: ^5.4.7
   flutter_widget_from_html: ^0.3.3+3
+  flutter_svg: ^0.17.4
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -76,6 +77,9 @@ flutter:
    - assets/images/stealth_mode_tutorial_image_1/stealth_mode_tutorial_image_1.png
    - assets/images/stealth_mode_tutorial_image_2/stealth_mode_tutorial_image_2.png
    - assets/images/stealth_mode_tutorial_image_3/stealth_mode_tutorial_image_3.png
+   - assets/images/svg/account_setting.svg
+   - assets/images/svg/trash.svg
+   - assets/images/svg/user_profile.svg
 
   #  - images/a_dot_ham.jpeg
 
