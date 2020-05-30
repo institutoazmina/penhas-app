@@ -11,7 +11,7 @@ extension EnumGenre on Genre {
         genre = 'Feminino';
         break;
       case Genre.transBoy:
-        genre = 'HomenTrans';
+        genre = 'HomemTrans';
         break;
       case Genre.transGirl:
         genre = 'MulherTrans';
