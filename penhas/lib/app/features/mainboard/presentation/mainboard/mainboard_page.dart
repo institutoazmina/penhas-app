@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/features/feed/presenter/feed_module.dart';
+import 'package:penhas/app/features/feed/presenter/new_toot/new_toot/new_toot_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
 import 'package:penhas/app/shared/ui/penhas_drawer.dart';
@@ -19,6 +20,7 @@ class MainboardPage extends StatefulWidget {
 class _MainboardPageState
     extends ModularState<MainboardPage, MainboardController> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final NewTootPage newTootPage = NewTootPage();
 
   @override
   Widget build(BuildContext context) {
@@ -72,20 +74,7 @@ class _MainboardPageState
         );
       }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
-        width: 60.0,
-        height: 60.0,
-        child: FittedBox(
-          child: FloatingActionButton(
-            backgroundColor: DesignSystemColors.ligthPurple,
-            onPressed: () {},
-            child: SvgPicture.asset(
-              'assets/images/svg/bottom_bar/emergency_controll.svg',
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
+      floatingActionButton: _buildFab(),
     );
   }
 
@@ -115,10 +104,31 @@ class _MainboardPageState
       controller: controller.pageController,
       children: <Widget>[
         FeedModule(),
-        Container(color: Colors.blue),
+        newTootPage,
         Container(color: Colors.yellow),
         Container(color: Colors.green),
       ],
     );
+  }
+
+  Container _buildFab() {
+    bool keyboardIsOpened = MediaQuery.of(context).viewInsets.bottom != 0.0;
+
+    return keyboardIsOpened
+        ? Container()
+        : Container(
+            width: 60.0,
+            height: 60.0,
+            child: FittedBox(
+              child: FloatingActionButton(
+                backgroundColor: DesignSystemColors.ligthPurple,
+                onPressed: () {},
+                child: SvgPicture.asset(
+                  'assets/images/svg/bottom_bar/emergency_controll.svg',
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          );
   }
 }

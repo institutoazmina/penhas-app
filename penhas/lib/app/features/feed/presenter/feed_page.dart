@@ -50,6 +50,7 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // resizeToAvoidBottomInset: true,
       floatingActionButton: FloatingActionButton(
           onPressed: () {},
           child: SvgPicture.asset(
@@ -59,7 +60,6 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
       body: SizedBox.expand(
         child: Container(
           color: Color.fromRGBO(248, 248, 248, 1.0),
-          // color: Colors.black26,
           child: SafeArea(
             child: Padding(
               padding: EdgeInsets.only(left: 8, right: 8),
