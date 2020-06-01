@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:penhas/app/features/feed/presenter/compose_toot/compose_toot_page.dart';
 import 'package:penhas/app/features/feed/presenter/widget/reply_toot.dart';
 import 'package:penhas/app/features/feed/presenter/widget/single_toot.dart';
 import 'package:penhas/app/features/feed/toot_entity.dart';
@@ -52,9 +53,9 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
     return Scaffold(
       // resizeToAvoidBottomInset: true,
       floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () => _onFabPressed(context),
           child: SvgPicture.asset(
-            'assets/images/svg/bottom_bar/new_toot.svg',
+            'assets/images/svg/bottom_bar/compose_toot.svg',
             color: Colors.white,
           )),
       body: SizedBox.expand(
@@ -122,7 +123,10 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
                         itemCount: tootList.length,
                         itemBuilder: (context, index) {
                           return tootList[index].reply == null
-                              ? SingleToot(toot: tootList[index])
+                              ? SingleToot(
+                                  toot: tootList[index],
+                                  rootContext: context,
+                                )
                               : ReplyToot(toot: tootList[index]);
                         },
                         separatorBuilder: (context, index) =>
@@ -166,6 +170,39 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
           ),
         ),
       ),
+    );
+  }
+
+  void _onFabPressed(BuildContext context) async {
+    await showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        // return ComposeTootPage();
+        // return Container(
+        //   color: Colors.red,
+        //   child: Column(
+        //     children: <Widget>[
+        //       ListTile(
+        //         leading:
+        //             SvgPicture.asset('assets/images/svg/bottom_bar/chat.svg'),
+        //         title: Text('Conversar'),
+        //         onTap: () {},
+        //       ),
+        //       ListTile(
+        //         leading: Icon(Icons.block),
+        //         title: Text('Bloquear'),
+        //         onTap: () {},
+        //       ),
+        //       ListTile(
+        //         leading: Icon(Icons.report),
+        //         title: Text('Reportar'),
+        //         onTap: () {},
+        //       )
+        //     ],
+        //   ),
+        // );
+      },
     );
   }
 }

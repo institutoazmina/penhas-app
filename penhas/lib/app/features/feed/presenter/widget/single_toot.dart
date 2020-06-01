@@ -7,8 +7,13 @@ import 'package:penhas/app/features/feed/toot_entity.dart';
 
 class SingleToot extends StatelessWidget {
   final TootEntity toot;
+  final BuildContext _rootContext;
 
-  const SingleToot({Key key, @required this.toot}) : super(key: key);
+  const SingleToot(
+      {Key key, @required this.toot, @required BuildContext rootContext})
+      : assert(rootContext != null),
+        this._rootContext = rootContext,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +43,11 @@ class SingleToot extends StatelessWidget {
               flex: 5,
               child: Column(
                 children: <Widget>[
-                  TootTitle(userName: toot.userName, tootTime: toot.time),
+                  TootTitle(
+                    userName: toot.userName,
+                    tootTime: toot.time,
+                    rootContext: _rootContext,
+                  ),
                   TootBody(bodyContent: toot.content),
                   TootBottom()
                 ],

@@ -14,7 +14,7 @@ class TootBody extends StatelessWidget {
     return HtmlWidget(
       bodyContent,
       textStyle: kTextStyleFeedTootBody,
-      bodyPadding: EdgeInsets.fromLTRB(0.0, 12.0, 8.0, 12.0),
+      bodyPadding: EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 12.0),
     );
   }
 }
