@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/feed/presenter/widget/tweet_avatar.dart';
-import 'package:penhas/app/features/feed/presenter/widget/tweet_body.dart';
-import 'package:penhas/app/features/feed/presenter/widget/tweet_bottom.dart';
-import 'package:penhas/app/features/feed/presenter/widget/tweet_title.dart';
+import 'package:penhas/app/features/feed/presentation/widget/tweet_avatar.dart';
+import 'package:penhas/app/features/feed/presentation/widget/tweet_body.dart';
+import 'package:penhas/app/features/feed/presentation/widget/tweet_bottom.dart';
+import 'package:penhas/app/features/feed/presentation/widget/tweet_title.dart';
 import 'package:penhas/app/features/feed/tweet_entity.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
