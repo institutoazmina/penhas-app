@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
-class TootBody extends StatelessWidget {
+class TweetBody extends StatelessWidget {
   final String bodyContent;
-  const TootBody({
+  const TweetBody({
     Key key,
     @required this.bodyContent,
   }) : super(key: key);
@@ -13,7 +13,7 @@ class TootBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return HtmlWidget(
       bodyContent,
-      textStyle: kTextStyleFeedTootBody,
+      textStyle: kTextStyleFeedTweetBody,
       bodyPadding: EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 12.0),
     );
   }

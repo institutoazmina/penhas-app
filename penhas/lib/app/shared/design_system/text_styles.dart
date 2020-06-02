@@ -34,42 +34,42 @@ const kTextStyleFeedCategoryButtonLabel = TextStyle(
     color: DesignSystemColors.ligthPurple,
     fontWeight: FontWeight.bold);
 
-const kTextStyleFeedTootInput = TextStyle(
+const kTextStyleFeedTweetInput = TextStyle(
     fontFamily: 'Lato',
     fontSize: 14.0,
     letterSpacing: 0.4,
     color: DesignSystemColors.warnGrey,
     fontWeight: FontWeight.normal);
 
-const kTextStyleFeedTootTitle = TextStyle(
+const kTextStyleFeedTweetTitle = TextStyle(
     fontFamily: 'Lato',
     fontSize: 14.0,
     letterSpacing: 0.1,
     color: DesignSystemColors.darkIndigoThree,
     fontWeight: FontWeight.w900);
 
-const kTextStyleFeedTootTime = TextStyle(
+const kTextStyleFeedTweetTime = TextStyle(
     fontFamily: 'Lato',
     fontSize: 12.0,
     letterSpacing: 0.1,
     color: DesignSystemColors.blueyGrey,
     fontWeight: FontWeight.normal);
 
-const kTextStyleFeedTootBody = TextStyle(
+const kTextStyleFeedTweetBody = TextStyle(
     fontFamily: 'Lato',
     fontSize: 14.0,
     letterSpacing: 0.4,
     color: DesignSystemColors.darkIndigoThree,
     fontWeight: FontWeight.normal);
 
-const kTextStyleFeedTootReplyHeader = TextStyle(
+const kTextStyleFeedTweetReplyHeader = TextStyle(
     fontFamily: 'Lato',
     fontSize: 20.0,
     letterSpacing: 0.6,
     color: DesignSystemColors.darkIndigoThree,
     fontWeight: FontWeight.bold);
 
-const kTextStyleFeedTootShowReply = TextStyle(
+const kTextStyleFeedTweetShowReply = TextStyle(
     fontFamily: 'Lato',
     fontSize: 14.0,
     letterSpacing: 0.4,

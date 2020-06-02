@@ -5,29 +5,30 @@ import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
-class ComposeTootPage extends StatefulWidget {
+class ComposeTweetPage extends StatefulWidget {
   final String title;
-  const ComposeTootPage({Key key, this.title = "NewToot"}) : super(key: key);
+  const ComposeTweetPage({Key key, this.title = "ComposeTweet"})
+      : super(key: key);
 
   @override
-  _ComposeTootPageState createState() => _ComposeTootPageState();
+  _ComposeTweetPageState createState() => _ComposeTweetPageState();
 }
 
-class _ComposeTootPageState extends State<ComposeTootPage> {
+class _ComposeTweetPageState extends State<ComposeTweetPage> {
   final String inputHint =
       'Gostaria de compartilhar alguma experiência ou história sua?';
   final String anonymousHint =
       'Sua publicação é anônima. As usuárias do app podem comentar sua publicação, mas só você pode iniciar uma conversa come elas.';
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
-  TextStyle get _kTextStyleNewTootAnonymousHint => TextStyle(
+  TextStyle get _kTextStyleNewTweetAnonymousHint => TextStyle(
       fontFamily: 'Lato',
       fontSize: 12.0,
       letterSpacing: 0.38,
       color: DesignSystemColors.warnGrey,
       fontWeight: FontWeight.normal);
 
-  TextStyle get _kTextStyleNewTootAnonymous => TextStyle(
+  TextStyle get _kTextStyleNewTweetAnonymous => TextStyle(
       fontFamily: 'Lato',
       fontSize: 14.0,
       letterSpacing: 0.44,
@@ -108,7 +109,7 @@ class _ComposeTootPageState extends State<ComposeTootPage> {
                               children: <Widget>[
                                 Text(
                                   anonymousHint,
-                                  style: _kTextStyleNewTootAnonymousHint,
+                                  style: _kTextStyleNewTweetAnonymousHint,
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 12.0),
@@ -124,7 +125,7 @@ class _ComposeTootPageState extends State<ComposeTootPage> {
                                             const EdgeInsets.only(left: 12.0),
                                         child: Text(
                                           'Anônima',
-                                          style: _kTextStyleNewTootAnonymous,
+                                          style: _kTextStyleNewTweetAnonymous,
                                         ),
                                       )
                                     ],

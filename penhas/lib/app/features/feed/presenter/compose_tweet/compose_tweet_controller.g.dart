@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'compose_toot_controller.dart';
+part of 'compose_tweet_controller.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,8 +8,8 @@ part of 'compose_toot_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$ComposeTootController on _ComposeTootControllerBase, Store {
-  final _$valueAtom = Atom(name: '_ComposeTootControllerBase.value');
+mixin _$ComposeTweetController on _ComposeTweetControllerBase, Store {
+  final _$valueAtom = Atom(name: '_ComposeTweetControllerBase.value');
 
   @override
   int get value {
@@ -26,17 +26,17 @@ mixin _$ComposeTootController on _ComposeTootControllerBase, Store {
     }, _$valueAtom, name: '${_$valueAtom.name}_set');
   }
 
-  final _$_ComposeTootControllerBaseActionController =
-      ActionController(name: '_ComposeTootControllerBase');
+  final _$_ComposeTweetControllerBaseActionController =
+      ActionController(name: '_ComposeTweetControllerBase');
 
   @override
   void increment() {
     final _$actionInfo =
-        _$_ComposeTootControllerBaseActionController.startAction();
+        _$_ComposeTweetControllerBaseActionController.startAction();
     try {
       return super.increment();
     } finally {
-      _$_ComposeTootControllerBaseActionController.endAction(_$actionInfo);
+      _$_ComposeTweetControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 

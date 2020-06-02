@@ -79,7 +79,7 @@ flutter:
    - assets/images/svg/bottom_bar/chat.svg
    - assets/images/svg/bottom_bar/emergency_controll.svg
    - assets/images/svg/bottom_bar/feed.svg
-   - assets/images/svg/bottom_bar/compose_toot.svg
+   - assets/images/svg/bottom_bar/compose_tweet.svg
    - assets/images/svg/bottom_bar/support_point.svg
 
 

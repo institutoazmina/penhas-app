@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:penhas/app/features/feed/presenter/compose_toot/compose_toot_page.dart';
+import 'package:penhas/app/features/feed/presenter/compose_tweet/compose_tweet_page.dart';
 import 'package:penhas/app/features/feed/presenter/feed_module.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
@@ -20,7 +20,7 @@ class MainboardPage extends StatefulWidget {
 class _MainboardPageState
     extends ModularState<MainboardPage, MainboardController> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  final ComposeTootPage newTootPage = ComposeTootPage();
+  final ComposeTweetPage newTweetPage = ComposeTweetPage();
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class _MainboardPageState
                   iconSize: 30.0,
                   padding: EdgeInsets.only(right: 28.0),
                   icon: SvgPicture.asset(
-                      'assets/images/svg/bottom_bar/compose_toot.svg'),
+                      'assets/images/svg/bottom_bar/compose_tweet.svg'),
                   onPressed: () => controller.changePage(1),
                 ),
                 IconButton(
@@ -104,7 +104,7 @@ class _MainboardPageState
       controller: controller.pageController,
       children: <Widget>[
         FeedModule(),
-        newTootPage,
+        newTweetPage,
         Container(color: Colors.yellow),
         Container(color: Colors.green),
       ],

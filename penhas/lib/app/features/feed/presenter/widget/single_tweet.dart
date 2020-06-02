@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/feed/presenter/widget/toot_avatar.dart';
-import 'package:penhas/app/features/feed/presenter/widget/toot_body.dart';
-import 'package:penhas/app/features/feed/presenter/widget/toot_bottom.dart';
-import 'package:penhas/app/features/feed/presenter/widget/toot_title.dart';
-import 'package:penhas/app/features/feed/toot_entity.dart';
+import 'package:penhas/app/features/feed/presenter/widget/tweet_avatar.dart';
+import 'package:penhas/app/features/feed/presenter/widget/tweet_body.dart';
+import 'package:penhas/app/features/feed/presenter/widget/tweet_bottom.dart';
+import 'package:penhas/app/features/feed/presenter/widget/tweet_title.dart';
+import 'package:penhas/app/features/feed/tweet_entity.dart';
 
-class SingleToot extends StatelessWidget {
-  final TootEntity toot;
+class SingleTweet extends StatelessWidget {
+  final TweetEntity tweet;
   final BuildContext _rootContext;
 
-  const SingleToot(
-      {Key key, @required this.toot, @required BuildContext rootContext})
+  const SingleTweet(
+      {Key key, @required this.tweet, @required BuildContext rootContext})
       : assert(rootContext != null),
         this._rootContext = rootContext,
         super(key: key);
@@ -35,7 +35,7 @@ class SingleToot extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Expanded(
-              child: TootAvatar(),
+              child: TweetAvatar(),
               flex: 1,
             ),
             SizedBox(width: 6.0),
@@ -43,13 +43,13 @@ class SingleToot extends StatelessWidget {
               flex: 5,
               child: Column(
                 children: <Widget>[
-                  TootTitle(
-                    userName: toot.userName,
-                    tootTime: toot.time,
+                  TweetTitle(
+                    userName: tweet.userName,
+                    time: tweet.time,
                     rootContext: _rootContext,
                   ),
-                  TootBody(bodyContent: toot.content),
-                  TootBottom()
+                  TweetBody(bodyContent: tweet.content),
+                  TweetBottom()
                 ],
               ),
             )

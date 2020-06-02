@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class TootAvatar extends StatelessWidget {
-  const TootAvatar({
+class TweetAvatar extends StatelessWidget {
+  const TweetAvatar({
     Key key,
   }) : super(key: key);
 

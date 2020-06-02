@@ -1,12 +1,12 @@
 import 'package:meta/meta.dart';
 
-class TootEntity {
+class TweetEntity {
   final String userName;
   final String time;
   final String content;
-  final TootEntity reply;
+  final TweetEntity reply;
 
-  TootEntity({
+  TweetEntity({
     @required this.userName,
     @required this.time,
     @required this.content,

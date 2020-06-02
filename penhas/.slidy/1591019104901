@@ -1,4 +1,4 @@
-lib/app/features/feed/presenter/compose_toot/new_toot_page.dart
-test/app/features/feed/presenter/compose_toot/new_toot_page_test.dart
-lib/app/features/feed/presenter/compose_toot/new_toot_controller.dart
-test/app/features/feed/presenter/compose_toot/new_toot_controller_test.dart
+lib/app/features/feed/presenter/compose_tweet/new_tweet_page.dart
+test/app/features/feed/presenter/compose_tweet/new_tweet_page_test.dart
+lib/app/features/feed/presenter/compose_tweet/new_tweet_controller.dart
+test/app/features/feed/presenter/compose_tweet/new_tweet_controller_test.dart

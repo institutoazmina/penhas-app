@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/feed/presenter/widget/toot_avatar.dart';
-import 'package:penhas/app/features/feed/presenter/widget/toot_body.dart';
-import 'package:penhas/app/features/feed/presenter/widget/toot_bottom.dart';
-import 'package:penhas/app/features/feed/presenter/widget/toot_title.dart';
-import 'package:penhas/app/features/feed/toot_entity.dart';
+import 'package:penhas/app/features/feed/presenter/widget/tweet_avatar.dart';
+import 'package:penhas/app/features/feed/presenter/widget/tweet_body.dart';
+import 'package:penhas/app/features/feed/presenter/widget/tweet_bottom.dart';
+import 'package:penhas/app/features/feed/presenter/widget/tweet_title.dart';
+import 'package:penhas/app/features/feed/tweet_entity.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
-class ReplyToot extends StatelessWidget {
-  final TootEntity toot;
-  const ReplyToot({
+class ReplyTweet extends StatelessWidget {
+  final TweetEntity tweet;
+  const ReplyTweet({
     Key key,
-    @required this.toot,
+    @required this.tweet,
   }) : super(key: key);
 
   @override
@@ -38,7 +38,7 @@ class ReplyToot extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Expanded(
-                  child: TootAvatar(),
+                  child: TweetAvatar(),
                   flex: 1,
                 ),
                 SizedBox(width: 6.0),
@@ -46,9 +46,9 @@ class ReplyToot extends StatelessWidget {
                   flex: 5,
                   child: Column(
                     children: <Widget>[
-                      TootTitle(userName: toot.userName, tootTime: toot.time),
-                      TootBody(bodyContent: toot.content),
-                      TootBottom()
+                      TweetTitle(userName: tweet.userName, time: tweet.time),
+                      TweetBody(bodyContent: tweet.content),
+                      TweetBottom()
                     ],
                   ),
                 )
@@ -61,11 +61,11 @@ class ReplyToot extends StatelessWidget {
                 color: DesignSystemColors.warnGrey,
               ),
             ),
-            Text('Comentário', style: kTextStyleFeedTootReplyHeader),
+            Text('Comentário', style: kTextStyleFeedTweetReplyHeader),
             SizedBox(height: 20),
-            TootTitle(userName: toot.reply.userName, tootTime: toot.reply.time),
-            TootBody(bodyContent: toot.reply.content),
-            TootBottom(),
+            TweetTitle(userName: tweet.reply.userName, time: tweet.reply.time),
+            TweetBody(bodyContent: tweet.reply.content),
+            TweetBottom(),
             Padding(
               padding: const EdgeInsets.only(bottom: 12.0, top: 12.0),
               child: Divider(
@@ -79,7 +79,7 @@ class ReplyToot extends StatelessWidget {
               color: Colors.transparent,
               child: Text(
                 "Ver todos os comentários",
-                style: kTextStyleFeedTootShowReply,
+                style: kTextStyleFeedTweetShowReply,
               ),
             )
           ],

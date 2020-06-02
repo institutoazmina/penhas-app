@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:penhas/app/features/feed/presenter/compose_toot/compose_toot_page.dart';
-import 'package:penhas/app/features/feed/presenter/widget/reply_toot.dart';
-import 'package:penhas/app/features/feed/presenter/widget/single_toot.dart';
-import 'package:penhas/app/features/feed/toot_entity.dart';
+import 'package:penhas/app/features/feed/presenter/widget/reply_tweet.dart';
+import 'package:penhas/app/features/feed/presenter/widget/single_tweet.dart';
+import 'package:penhas/app/features/feed/tweet_entity.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
@@ -19,29 +18,29 @@ class FeedPage extends StatefulWidget {
 }
 
 class _FeedPageState extends ModularState<FeedPage, FeedController> {
-  final List<TootEntity> tootList = [
-    TootEntity(
+  final List<TweetEntity> tweetList = [
+    TweetEntity(
         userName: 'Luíza',
         time: '10/01/2020',
         content:
             'Eu demorei cerca de 9 anos para até perceber que estava em <b>relacionamento abusivo</b> e por mais que quisesse, demorei 2 anos para sair da situação em que estava.'),
-    TootEntity(
+    TweetEntity(
         userName: 'Luíza',
         time: '10/01/2020',
         content:
             'Lorem Ipsum é que nem os comportamentos machistas dentro da criação. Você não presta atenção, só sai reproduzindo por aí. Mas também, pra que levar a sério um texto que não diz nada ou mulheres que são minoria? Afinal, elas somam só 20% da criação. Um número inversamente proporcional a todas as piadas de cunho machista e sexual que elas escutam todos os dias. Sim, todos os dias.'),
-    TootEntity(
+    TweetEntity(
       userName: 'Luíza',
       time: '10/01/2020',
       content:
           'Sem falar nessa cultura absurda de que quanto mais a pessoa trabalha, mais valorizada é. Em meio a uma sociedade machista e patriarcal, conciliar essa vida de agência com a rotina da casa e a maternidade não é nada fácil.',
-      reply: TootEntity(
+      reply: TweetEntity(
           userName: 'Anônima',
           time: '02/09/2020',
           content:
               'Respeito e feminismo não são assuntos só pra cases. Tá na hora de repensar suas atitudes. Mudar velhos hábitos não é difícil. Você, por exemplo, acabou de mudar um: leu um Lorem Ipsum pela primeira vez.'),
     ),
-    TootEntity(
+    TweetEntity(
         userName: 'Joana',
         time: '10/05/2020',
         content:
@@ -55,7 +54,7 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
       floatingActionButton: FloatingActionButton(
           onPressed: () => _onFabPressed(context),
           child: SvgPicture.asset(
-            'assets/images/svg/bottom_bar/compose_toot.svg',
+            'assets/images/svg/bottom_bar/compose_tweet.svg',
             color: Colors.white,
           )),
       body: SizedBox.expand(
@@ -120,14 +119,14 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
                   ),
                   Expanded(
                     child: ListView.separated(
-                        itemCount: tootList.length,
+                        itemCount: tweetList.length,
                         itemBuilder: (context, index) {
-                          return tootList[index].reply == null
-                              ? SingleToot(
-                                  toot: tootList[index],
+                          return tweetList[index].reply == null
+                              ? SingleTweet(
+                                  tweet: tweetList[index],
                                   rootContext: context,
                                 )
-                              : ReplyToot(toot: tootList[index]);
+                              : ReplyTweet(tweet: tweetList[index]);
                         },
                         separatorBuilder: (context, index) =>
                             SizedBox(height: 12.0)),
@@ -141,7 +140,7 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
     );
   }
 
-  Container _buildInputToot() {
+  Container _buildInputTweet() {
     return Container(
       height: 90.0,
       padding: EdgeInsets.all(12.0),
@@ -166,7 +165,7 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
         child: Center(
           child: Text(
             'Gostaria de compartilhar alguma experiência ou história sua?',
-            style: kTextStyleFeedTootInput,
+            style: kTextStyleFeedTweetInput,
           ),
         ),
       ),
