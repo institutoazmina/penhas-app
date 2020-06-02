@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_modular/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -23,6 +22,15 @@ void main() {
   });
 
   group('SignInController', () {
+    final warningEmail = 'Endereço de email inválido';
+    final warningPassword = 'Senha precisa ter no mínimo 6 caracteres';
+    final String internetConnectionFailure =
+        'O servidor está inacessível, o PenhaS está com acesso à Internet?';
+    final String serverFailure =
+        "O servidor está com problema neste momento, tente novamente.";
+    final String userAuthenticationFailure =
+        "Usuário ou senha inválida, favor verificar!";
+
     test('should warning messages be empty on start', () {
       // assert
       expect(sut.warningPassword, "");
@@ -36,7 +44,7 @@ void main() {
       // act
       sut.setEmail(invalidEmailAddress);
       // assert
-      expect(sut.warningEmail, WARNING_INVALID_EMAIL);
+      expect(sut.warningEmail, warningEmail);
     });
 
     test("should reset warning message after user input valid email address",
@@ -57,7 +65,7 @@ void main() {
       // act
       sut.setPassword(invalidPassword);
       // assert
-      expect(sut.warningPassword, WARNING_INVALID_PASSWORD);
+      expect(sut.warningPassword, warningPassword);
     });
 
     test('should reset warning message after user input a valid password', () {
@@ -97,18 +105,17 @@ void main() {
       sut.setEmail(validEmailAddress);
       await sut.signInWithEmailAndPasswordPressed();
       // assert
-      expect(sut.errorAuthenticationMessage, errorMessage);
+      expect(sut.errorMessage, errorMessage);
     }
 
     test("should show SERVER_FAILURE message when got ServerFailure", () async {
-      testServerError(ServerFailure(), ERROR_SERVER_FAILURE);
+      testServerError(ServerFailure(), serverFailure);
     });
 
     test(
         "should show ERROR_INTERNET_CONNECTION_FAILURE message when got ServerFailure",
         () async {
-      testServerError(
-          InternetConnectionFailure(), ERROR_INTERNET_CONNECTION_FAILURE);
+      testServerError(InternetConnectionFailure(), internetConnectionFailure);
     });
 
     test(
@@ -123,7 +130,7 @@ void main() {
       sut.setEmail(validEmailAddress);
       await sut.signInWithEmailAndPasswordPressed();
       // assert
-      expect(sut.errorAuthenticationMessage, ERROR_USER_AUTHENTICATION_FAILURE);
+      expect(sut.errorMessage, userAuthenticationFailure);
     });
   });
 }
