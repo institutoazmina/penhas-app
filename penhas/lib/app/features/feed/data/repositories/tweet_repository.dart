@@ -26,7 +26,52 @@ class TweetRepository implements ITweetRepository {
     @required TweetRequestOption option,
   }) async {
     try {
-      return right(await _dataSource.retrieve(option: option));
+      final result = await _dataSource.retrieve(option: option);
+      return right(result);
+    } catch (e) {
+      return left(await _handleError(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ValidField>> comment(
+      {TweetEngageRequestOption option}) async {
+    try {
+      final result = await _dataSource.comment(option: option);
+      return right(result);
+    } catch (e) {
+      return left(await _handleError(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ValidField>> create(
+      {TweetCreateRequestOption option}) async {
+    try {
+      final result = await _dataSource.create(option: option);
+      return right(result);
+    } catch (e) {
+      return left(await _handleError(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, TweetEntity>> like(
+      {TweetEngageRequestOption option}) async {
+    try {
+      final result = await _dataSource.like(option: option);
+      return right(result);
+    } catch (e) {
+      return left(await _handleError(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ValidField>> report(
+      {TweetEngageRequestOption option}) async {
+    try {
+      final result = await _dataSource.report(option: option);
+      return right(result);
     } catch (e) {
       return left(await _handleError(e));
     }
@@ -54,28 +99,5 @@ class TweetRepository implements ITweetRepository {
     }
 
     return ServerFailure();
-  }
-
-  @override
-  Future<Either<Failure, ValidField>> comment(
-      {TweetEngageRequestOption option}) {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<Failure, ValidField>> create(
-      {TweetCreateRequestOption option}) {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<Failure, TweetEntity>> like({TweetEngageRequestOption option}) {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<Failure, ValidField>> report(
-      {TweetEngageRequestOption option}) {
-    throw UnimplementedError();
   }
 }
