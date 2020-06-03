@@ -3,13 +3,10 @@ import 'package:meta/meta.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/network_info.dart';
-import 'package:penhas/app/features/feed/data/models/tweet_session_model.dart';
+import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart';
+import 'package:penhas/app/features/feed/domain/entities/tweet_request_option.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
 import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
-
-abstract class ITweetDataSource {
-  Future<TweetSessionMondel> retrieve();
-}
 
 abstract class ITweetRepository {
   Future<Either<Failure, TweetSessionEntity>> retrieve();
@@ -26,9 +23,11 @@ class TweetRepository implements ITweetRepository {
         this._networkInfo = networkInfo;
 
   @override
-  Future<Either<Failure, TweetSessionEntity>> retrieve() async {
+  Future<Either<Failure, TweetSessionEntity>> retrieve({
+    @required TweetRequestOption option,
+  }) async {
     try {
-      return right(await _dataSource.retrieve());
+      return right(await _dataSource.retrieve(option: option));
     } catch (e) {
       return left(await _handleError(e));
     }
