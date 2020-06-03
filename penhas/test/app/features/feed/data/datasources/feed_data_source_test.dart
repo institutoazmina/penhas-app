@@ -2,8 +2,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
+import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_session_model.dart';
+import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_request_option.dart';
 
 import '../../../../../utils/json_util.dart';
@@ -16,9 +18,7 @@ void main() {
   MockHttpClient apiClient;
   ITweetDataSource dataSource;
   MockApiServerConfigure serverConfigure;
-  String bodyContent;
   Uri serverEndpoint;
-  TweetRequestOption requestOption;
   const String SESSSION_TOKEN = 'my_really.long.JWT';
 
   setUp(() async {
@@ -29,9 +29,6 @@ void main() {
       apiClient: apiClient,
       serverConfiguration: serverConfigure,
     );
-
-    requestOption = TweetRequestOption();
-    bodyContent = JsonUtil.getStringSync(from: 'feed/retrieve_response.json');
 
     // MockApiServerConfigure configuration
     when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
@@ -50,12 +47,12 @@ void main() {
     };
   }
 
-  Uri _setuHttpRequest(String path) {
+  Uri _setuHttpRequest(String path, Map<String, String> queryParameters) {
     return Uri(
       scheme: serverEndpoint.scheme,
       host: serverEndpoint.host,
       path: path,
-      queryParameters: {'only_myself': '0', 'skip_myself': '0', 'rows': '100'},
+      queryParameters: queryParameters,
     );
   }
 
@@ -66,8 +63,27 @@ void main() {
     ));
   }
 
-  void _setUpMockHttpClientSuccess200() {
+  PostExpectation<Future<http.Response>> _mockPostRequest() {
+    return when(apiClient.post(
+      any,
+      headers: anyNamed('headers'),
+    ));
+  }
+
+  void _setUpMockGetHttpClientSuccess200(String bodyContent) {
     _mockGetRequest().thenAnswer(
+      (_) async => http.Response(
+        bodyContent,
+        200,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+        },
+      ),
+    );
+  }
+
+  void _setUpMockPostHttpClientSuccess200(String bodyContent) {
+    _mockPostRequest().thenAnswer(
       (_) async => http.Response(
         bodyContent,
         200,
@@ -80,24 +96,76 @@ void main() {
 
   group('FeedDataSource', () {
     group('retrieve()', () {
+      String bodyContent;
+      TweetRequestOption requestOption;
+
+      setUp(() async {
+        bodyContent =
+            JsonUtil.getStringSync(from: 'feed/retrieve_response.json');
+        requestOption = TweetRequestOption();
+      });
+
       test('should perform a GET with X-API-Key', () async {
         // arrange
+        final endPointPath = '/timeline';
+        final queryParameters = {
+          'only_myself': '0',
+          'skip_myself': '0',
+          'rows': '100'
+        };
         final headers = await _setUpHttpHeader();
-        final request = _setuHttpRequest('/timeline');
-        _setUpMockHttpClientSuccess200();
+        final request = _setuHttpRequest(endPointPath, queryParameters);
+        _setUpMockGetHttpClientSuccess200(bodyContent);
         // act
         await dataSource.retrieve(option: requestOption);
         // assert
         verify(apiClient.get(request, headers: headers));
       });
-      test('should get a valid TweetSession', () async {
+      test('should get a valid TweetSession for a successful request',
+          () async {
         // arrange
-        _setUpMockHttpClientSuccess200();
+        _setUpMockGetHttpClientSuccess200(bodyContent);
         final jsonData =
             await JsonUtil.getJson(from: 'feed/retrieve_response.json');
         final expected = TweetSessionMondel.fromJson(jsonData);
         // act
         final received = await dataSource.retrieve(option: requestOption);
+        // assert
+        expect(expected, received);
+      });
+    });
+    group('report()', () {
+      String bodyContent;
+      TweetEngageRequestOption requestOption;
+
+      setUp(() async {
+        bodyContent = '{message: "Report enviado"}';
+        requestOption = TweetEngageRequestOption(
+          tweetId: '200520T0032210001',
+          message: 'esse tweet me ofende pq XPTO',
+        );
+      });
+      test('should perform a POST with X-API-Key', () async {
+        // arrange
+        final endPointPath = '/timeline/${requestOption.tweetId}/report';
+        final queryParameters = {
+          'reason': requestOption.message,
+        };
+
+        final headers = await _setUpHttpHeader();
+        final request = _setuHttpRequest(endPointPath, queryParameters);
+        _setUpMockPostHttpClientSuccess200(bodyContent);
+        // act
+        await dataSource.report(option: requestOption);
+        // assert
+        verify(apiClient.post(request, headers: headers));
+      });
+      test('should get a valid ValidField for a successful request', () async {
+        // arrange
+        _setUpMockPostHttpClientSuccess200(bodyContent);
+        final expected = ValidField();
+        // act
+        final received = await dataSource.report(option: requestOption);
         // assert
         expect(expected, received);
       });

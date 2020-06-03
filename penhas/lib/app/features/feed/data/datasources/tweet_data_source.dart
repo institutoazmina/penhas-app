@@ -3,11 +3,14 @@ import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
+import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_session_model.dart';
+import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_request_option.dart';
 
 abstract class ITweetDataSource {
   Future<TweetSessionMondel> retrieve({@required TweetRequestOption option});
+  Future<ValidField> report({@required TweetEngageRequestOption option});
 }
 
 class TweetDataSource implements ITweetDataSource {
@@ -45,6 +48,27 @@ class TweetDataSource implements ITweetDataSource {
     final response = await _apiClient.get(httpRequest, headers: httpHeader);
     if (_successfulResponse.contains(response.statusCode)) {
       return TweetSessionMondel.fromJson(json.decode(response.body));
+    } else if (_invalidSessionCode.contains(response.statusCode)) {
+      throw ApiProviderSessionExpection();
+    } else {
+      throw ApiProviderException(bodyContent: json.decode(response.body));
+    }
+  }
+
+  @override
+  Future<ValidField> report({TweetEngageRequestOption option}) async {
+    final httpHeader = await _setupHttpHeader();
+
+    Map<String, String> queryParameters = {'reason': option.message};
+
+    final httpRequest = await _setupHttpRequest(
+      path: '/timeline/${option.tweetId}/report',
+      queryParameters: queryParameters,
+    );
+
+    final response = await _apiClient.post(httpRequest, headers: httpHeader);
+    if (_successfulResponse.contains(response.statusCode)) {
+      return ValidField();
     } else if (_invalidSessionCode.contains(response.statusCode)) {
       throw ApiProviderSessionExpection();
     } else {

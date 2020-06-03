@@ -95,7 +95,7 @@ void main() {
   }
 
   group('QuizDataSource', () {
-    test('should perform a GET with X-API-Key and application/json header ',
+    test('should perform a POST with X-API-Key and application/json header ',
         () async {
       // arrange
       final headers = await _setUpHttpHeader();
