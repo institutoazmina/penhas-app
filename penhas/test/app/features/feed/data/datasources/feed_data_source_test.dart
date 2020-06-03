@@ -205,5 +205,72 @@ void main() {
         expect(expected, received);
       });
     });
+    group('create()', () {
+      String bodyContent;
+      TweetCreateRequestOption requestOption;
+
+      setUp(() async {
+        bodyContent =
+            JsonUtil.getStringSync(from: 'feed/tweet_create_response.json');
+        requestOption = TweetCreateRequestOption('are you talk to me?');
+      });
+      test('should perform a POST with X-API-Key', () async {
+        // arrange
+        final endPointPath = '/me/tweets';
+        final queryParameters = {'content': 'are you talk to me?'};
+
+        final headers = await _setUpHttpHeader();
+        final request = _setuHttpRequest(endPointPath, queryParameters);
+        _setUpMockPostHttpClientSuccess200(bodyContent);
+        // act
+        await dataSource.create(option: requestOption);
+        // assert
+        verify(apiClient.post(request, headers: headers));
+      });
+      test('should get a valid ValidField for a successful request', () async {
+        // arrange
+        _setUpMockPostHttpClientSuccess200(bodyContent);
+        final expected = ValidField();
+        // act
+        final received = await dataSource.create(option: requestOption);
+        // assert
+        expect(expected, received);
+      });
+    });
+    group('comment()', () {
+      String bodyContent;
+      TweetEngageRequestOption requestOption;
+
+      setUp(() async {
+        bodyContent =
+            JsonUtil.getStringSync(from: 'feed/tweet_create_response.json');
+        requestOption = TweetEngageRequestOption(
+          tweetId: '200528T2055370004',
+          message: 'um breve comentario',
+        );
+      });
+      test('should perform a POST with X-API-Key', () async {
+        // arrange
+        final endPointPath = '/timeline/${requestOption.tweetId}/comment';
+        final queryParameters = {'content': 'um breve comentario'};
+
+        final headers = await _setUpHttpHeader();
+        final request = _setuHttpRequest(endPointPath, queryParameters);
+        _setUpMockPostHttpClientSuccess200(bodyContent);
+        // act
+        await dataSource.comment(option: requestOption);
+        // assert
+        verify(apiClient.post(request, headers: headers));
+      });
+      test('should get a valid ValidField for a successful request', () async {
+        // arrange
+        _setUpMockPostHttpClientSuccess200(bodyContent);
+        final expected = ValidField();
+        // act
+        final received = await dataSource.comment(option: requestOption);
+        // assert
+        expect(expected, received);
+      });
+    });
   });
 }

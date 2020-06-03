@@ -12,8 +12,10 @@ import 'package:penhas/app/features/feed/domain/entities/tweet_request_option.da
 
 abstract class ITweetDataSource {
   Future<TweetSessionModel> retrieve({@required TweetRequestOption option});
-  Future<ValidField> report({@required TweetEngageRequestOption option});
   Future<TweetEntity> like({@required TweetEngageRequestOption option});
+  Future<ValidField> create({@required TweetCreateRequestOption option});
+  Future<ValidField> report({@required TweetEngageRequestOption option});
+  Future<ValidField> comment({@required TweetEngageRequestOption option});
 }
 
 class TweetDataSource implements ITweetDataSource {
@@ -76,6 +78,25 @@ class TweetDataSource implements ITweetDataSource {
   }
 
   @override
+  Future<ValidField> comment({TweetEngageRequestOption option}) async {
+    final httpHeader = await _setupHttpHeader();
+    Map<String, String> queryParameters = {'content': option.message};
+    final httpRequest = await _setupHttpRequest(
+      path: '/timeline/${option.tweetId}/comment',
+      queryParameters: queryParameters,
+    );
+
+    final response = await _apiClient.post(httpRequest, headers: httpHeader);
+    if (_successfulResponse.contains(response.statusCode)) {
+      return ValidField();
+    } else if (_invalidSessionCode.contains(response.statusCode)) {
+      throw ApiProviderSessionExpection();
+    } else {
+      throw ApiProviderException(bodyContent: json.decode(response.body));
+    }
+  }
+
+  @override
   Future<TweetModel> like({TweetEngageRequestOption option}) async {
     final httpHeader = await _setupHttpHeader();
     final httpRequest = await _setupHttpRequest(
@@ -87,6 +108,25 @@ class TweetDataSource implements ITweetDataSource {
     if (_successfulResponse.contains(response.statusCode)) {
       final jsonData = json.decode(response.body);
       return TweetModel.fromJson(jsonData['tweet']);
+    } else if (_invalidSessionCode.contains(response.statusCode)) {
+      throw ApiProviderSessionExpection();
+    } else {
+      throw ApiProviderException(bodyContent: json.decode(response.body));
+    }
+  }
+
+  @override
+  Future<ValidField> create({TweetCreateRequestOption option}) async {
+    final httpHeader = await _setupHttpHeader();
+    Map<String, String> queryParameters = {'content': option.message};
+    final httpRequest = await _setupHttpRequest(
+      path: '/me/tweets',
+      queryParameters: queryParameters,
+    );
+
+    final response = await _apiClient.post(httpRequest, headers: httpHeader);
+    if (_successfulResponse.contains(response.statusCode)) {
+      return ValidField();
     } else if (_invalidSessionCode.contains(response.statusCode)) {
       throw ApiProviderSessionExpection();
     } else {
