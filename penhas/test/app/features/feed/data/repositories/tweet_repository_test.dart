@@ -6,6 +6,7 @@ import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart
 import 'package:penhas/app/features/feed/data/models/tweet_session_model.dart';
 import 'package:penhas/app/features/feed/data/repositories/tweet_repository.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
+import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
 
 import '../../../../../utils/json_util.dart';
 

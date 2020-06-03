@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/presentation/widget/tweet_avatar.dart';
 import 'package:penhas/app/features/feed/presentation/widget/tweet_body.dart';
 import 'package:penhas/app/features/feed/presentation/widget/tweet_bottom.dart';
 import 'package:penhas/app/features/feed/presentation/widget/tweet_title.dart';
-import 'package:penhas/app/features/feed/tweet_entity.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
@@ -46,7 +46,8 @@ class ReplyTweet extends StatelessWidget {
                   flex: 5,
                   child: Column(
                     children: <Widget>[
-                      TweetTitle(userName: tweet.userName, time: tweet.time),
+                      TweetTitle(
+                          userName: tweet.userName, time: tweet.createdAt),
                       TweetBody(bodyContent: tweet.content),
                       TweetBottom()
                     ],
@@ -63,8 +64,10 @@ class ReplyTweet extends StatelessWidget {
             ),
             Text('Comentário', style: kTextStyleFeedTweetReplyHeader),
             SizedBox(height: 20),
-            TweetTitle(userName: tweet.reply.userName, time: tweet.reply.time),
-            TweetBody(bodyContent: tweet.reply.content),
+            TweetTitle(
+                userName: tweet.lastReplay.userName,
+                time: tweet.lastReplay.createdAt),
+            TweetBody(bodyContent: tweet.lastReplay.content),
             TweetBottom(),
             Padding(
               padding: const EdgeInsets.only(bottom: 12.0, top: 12.0),

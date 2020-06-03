@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/birthday.dart';

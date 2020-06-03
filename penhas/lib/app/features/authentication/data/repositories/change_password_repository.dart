@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/authentication/data/datasources/change_password_data_source.dart';
 import 'package:penhas/app/features/authentication/domain/entities/reset_password_response_entity.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
-import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
 

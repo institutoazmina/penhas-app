@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/presentation/widget/tweet_avatar.dart';
 import 'package:penhas/app/features/feed/presentation/widget/tweet_body.dart';
 import 'package:penhas/app/features/feed/presentation/widget/tweet_bottom.dart';
 import 'package:penhas/app/features/feed/presentation/widget/tweet_title.dart';
-import 'package:penhas/app/features/feed/tweet_entity.dart';
 
 class SingleTweet extends StatelessWidget {
   final TweetEntity tweet;
@@ -45,7 +45,7 @@ class SingleTweet extends StatelessWidget {
                 children: <Widget>[
                   TweetTitle(
                     userName: tweet.userName,
-                    time: tweet.time,
+                    time: tweet.createdAt,
                     rootContext: _rootContext,
                   ),
                   TweetBody(bodyContent: tweet.content),

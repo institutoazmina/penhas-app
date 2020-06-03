@@ -1,13 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/authentication/data/datasources/change_password_data_source.dart';
 import 'package:penhas/app/features/authentication/data/models/password_reset_response_model.dart';
 import 'package:penhas/app/features/authentication/data/repositories/change_password_repository.dart';
-import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
 

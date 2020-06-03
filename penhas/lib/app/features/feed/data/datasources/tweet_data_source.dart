@@ -1,18 +1,17 @@
 import 'dart:convert';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
-import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_model.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_session_model.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_request_option.dart';
 
 abstract class ITweetDataSource {
   Future<TweetSessionModel> retrieve({@required TweetRequestOption option});
-  Future<TweetEntity> like({@required TweetEngageRequestOption option});
+  Future<TweetModel> like({@required TweetEngageRequestOption option});
   Future<ValidField> create({@required TweetCreateRequestOption option});
   Future<ValidField> report({@required TweetEngageRequestOption option});
   Future<ValidField> comment({@required TweetEngageRequestOption option});

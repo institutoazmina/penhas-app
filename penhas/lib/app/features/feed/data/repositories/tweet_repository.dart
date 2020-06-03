@@ -1,16 +1,15 @@
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart';
+import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
+import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_request_option.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
 import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
-
-abstract class ITweetRepository {
-  Future<Either<Failure, TweetSessionEntity>> retrieve();
-}
 
 class TweetRepository implements ITweetRepository {
   final INetworkInfo _networkInfo;
@@ -55,5 +54,28 @@ class TweetRepository implements ITweetRepository {
     }
 
     return ServerFailure();
+  }
+
+  @override
+  Future<Either<Failure, ValidField>> comment(
+      {TweetEngageRequestOption option}) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, ValidField>> create(
+      {TweetCreateRequestOption option}) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, TweetEntity>> like({TweetEngageRequestOption option}) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, ValidField>> report(
+      {TweetEngageRequestOption option}) {
+    throw UnimplementedError();
   }
 }

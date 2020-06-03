@@ -18,7 +18,7 @@ class _ComposeTweetPageState extends State<ComposeTweetPage> {
   final String inputHint =
       'Gostaria de compartilhar alguma experiência ou história sua?';
   final String anonymousHint =
-      'Sua publicação é anônima. As usuárias do app podem comentar sua publicação, mas só você pode iniciar uma conversa come elas.';
+      'Sua publicação é anônima. As usuárias do app podem comentar sua publicação, mas só você pode iniciar uma conversa com elas.';
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   TextStyle get _kTextStyleNewTweetAnonymousHint => TextStyle(
@@ -57,7 +57,7 @@ class _ComposeTweetPageState extends State<ComposeTweetPage> {
                         right: 2.0,
                       ),
                       child: Text(
-                        'Publique algo para outras mulhres que usam o Penhas.',
+                        'Publique algo para outras mulheres que usam o Penhas.',
                         style: kTextStyleDrawerListItem,
                       ),
                     ),

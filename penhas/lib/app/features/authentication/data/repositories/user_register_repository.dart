@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
