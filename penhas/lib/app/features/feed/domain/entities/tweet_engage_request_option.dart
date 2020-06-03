@@ -7,3 +7,9 @@ class TweetEngageRequestOption {
     this.message,
   }) : assert(tweetId != null);
 }
+
+class TweetCreateRequestOption {
+  final String message;
+
+  TweetCreateRequestOption(this.message);
+}

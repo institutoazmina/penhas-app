@@ -4,6 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart';
+import 'package:penhas/app/features/feed/data/models/tweet_model.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_session_model.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_request_option.dart';
@@ -52,7 +53,7 @@ void main() {
       scheme: serverEndpoint.scheme,
       host: serverEndpoint.host,
       path: path,
-      queryParameters: queryParameters,
+      queryParameters: queryParameters.isEmpty ? null : queryParameters,
     );
   }
 
@@ -127,7 +128,7 @@ void main() {
         _setUpMockGetHttpClientSuccess200(bodyContent);
         final jsonData =
             await JsonUtil.getJson(from: 'feed/retrieve_response.json');
-        final expected = TweetSessionMondel.fromJson(jsonData);
+        final expected = TweetSessionModel.fromJson(jsonData);
         // act
         final received = await dataSource.retrieve(option: requestOption);
         // assert
@@ -166,6 +167,40 @@ void main() {
         final expected = ValidField();
         // act
         final received = await dataSource.report(option: requestOption);
+        // assert
+        expect(expected, received);
+      });
+    });
+    group('like()', () {
+      String bodyContent;
+      TweetEngageRequestOption requestOption;
+
+      setUp(() async {
+        bodyContent =
+            JsonUtil.getStringSync(from: 'feed/tweet_like_response.json');
+        requestOption = TweetEngageRequestOption(tweetId: '200520T0032210001');
+      });
+      test('should perform a POST with X-API-Key', () async {
+        // arrange
+        final endPointPath = '/timeline/${requestOption.tweetId}/like';
+        final queryParameters = Map<String, String>();
+
+        final headers = await _setUpHttpHeader();
+        final request = _setuHttpRequest(endPointPath, queryParameters);
+        _setUpMockPostHttpClientSuccess200(bodyContent);
+        // act
+        await dataSource.like(option: requestOption);
+        // assert
+        verify(apiClient.post(request, headers: headers));
+      });
+      test('should get a valid ValidField for a successful request', () async {
+        // arrange
+        _setUpMockPostHttpClientSuccess200(bodyContent);
+        final jsonData =
+            await JsonUtil.getJson(from: 'feed/tweet_like_response.json');
+        final expected = TweetModel.fromJson(jsonData['tweet']);
+        // act
+        final received = await dataSource.like(option: requestOption);
         // assert
         expect(expected, received);
       });

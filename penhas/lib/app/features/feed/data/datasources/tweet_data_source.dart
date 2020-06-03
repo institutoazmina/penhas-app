@@ -4,13 +4,16 @@ import 'package:http/http.dart' as http;
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
+import 'package:penhas/app/features/feed/data/models/tweet_model.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_session_model.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
+import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_request_option.dart';
 
 abstract class ITweetDataSource {
-  Future<TweetSessionMondel> retrieve({@required TweetRequestOption option});
+  Future<TweetSessionModel> retrieve({@required TweetRequestOption option});
   Future<ValidField> report({@required TweetEngageRequestOption option});
+  Future<TweetEntity> like({@required TweetEngageRequestOption option});
 }
 
 class TweetDataSource implements ITweetDataSource {
@@ -26,11 +29,10 @@ class TweetDataSource implements ITweetDataSource {
         this._serverConfiguration = serverConfiguration;
 
   @override
-  Future<TweetSessionMondel> retrieve({
+  Future<TweetSessionModel> retrieve({
     @required TweetRequestOption option,
   }) async {
     final httpHeader = await _setupHttpHeader();
-
     Map<String, String> queryParameters = {
       'after': option.after,
       'before': option.before,
@@ -39,7 +41,6 @@ class TweetDataSource implements ITweetDataSource {
       'rows': "${option.rows}",
       'reply_to': option.replyTo,
     };
-
     final httpRequest = await _setupHttpRequest(
       path: '/timeline',
       queryParameters: queryParameters,
@@ -47,7 +48,7 @@ class TweetDataSource implements ITweetDataSource {
 
     final response = await _apiClient.get(httpRequest, headers: httpHeader);
     if (_successfulResponse.contains(response.statusCode)) {
-      return TweetSessionMondel.fromJson(json.decode(response.body));
+      return TweetSessionModel.fromJson(json.decode(response.body));
     } else if (_invalidSessionCode.contains(response.statusCode)) {
       throw ApiProviderSessionExpection();
     } else {
@@ -58,9 +59,7 @@ class TweetDataSource implements ITweetDataSource {
   @override
   Future<ValidField> report({TweetEngageRequestOption option}) async {
     final httpHeader = await _setupHttpHeader();
-
     Map<String, String> queryParameters = {'reason': option.message};
-
     final httpRequest = await _setupHttpRequest(
       path: '/timeline/${option.tweetId}/report',
       queryParameters: queryParameters,
@@ -69,6 +68,25 @@ class TweetDataSource implements ITweetDataSource {
     final response = await _apiClient.post(httpRequest, headers: httpHeader);
     if (_successfulResponse.contains(response.statusCode)) {
       return ValidField();
+    } else if (_invalidSessionCode.contains(response.statusCode)) {
+      throw ApiProviderSessionExpection();
+    } else {
+      throw ApiProviderException(bodyContent: json.decode(response.body));
+    }
+  }
+
+  @override
+  Future<TweetModel> like({TweetEngageRequestOption option}) async {
+    final httpHeader = await _setupHttpHeader();
+    final httpRequest = await _setupHttpRequest(
+      path: '/timeline/${option.tweetId}/like',
+      queryParameters: Map<String, String>(),
+    );
+
+    final response = await _apiClient.post(httpRequest, headers: httpHeader);
+    if (_successfulResponse.contains(response.statusCode)) {
+      final jsonData = json.decode(response.body);
+      return TweetModel.fromJson(jsonData['tweet']);
     } else if (_invalidSessionCode.contains(response.statusCode)) {
       throw ApiProviderSessionExpection();
     } else {
@@ -95,7 +113,7 @@ class TweetDataSource implements ITweetDataSource {
       scheme: _serverConfiguration.baseUri.scheme,
       host: _serverConfiguration.baseUri.host,
       path: path,
-      queryParameters: queryParameters,
+      queryParameters: queryParameters.isEmpty ? null : queryParameters,
     );
   }
 }
