@@ -46,6 +46,11 @@ class TweetModel extends TweetEntity {
       owner: meta['owner'] == 1 ?? false,
     );
 
+    TweetModel lastReply;
+    if (jsonData['last_reply'] != null) {
+      lastReply = TweetModel.fromJson(jsonData['last_reply']);
+    }
+
     return TweetModel(
         jsonData['id'],
         jsonData['name'],
@@ -57,6 +62,6 @@ class TweetModel extends TweetEntity {
         jsonData['content'],
         jsonData['icon'],
         tweetMeta,
-        null);
+        lastReply);
   }
 }

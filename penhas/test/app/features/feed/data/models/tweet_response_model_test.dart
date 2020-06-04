@@ -60,5 +60,43 @@ void main() {
       // assert
       expect(expectedSession, result);
     });
+
+    test('should get lastReplay when it exists', () async {
+      // arrange
+      final jsonData = await JsonUtil.getJson(
+          from: 'feed/retrieve_with_last_replay_response.json');
+      final TweetSessionEntity expectedSession =
+          TweetSessionModel(true, TweetSessionOrder.latestFirst, [
+        TweetModel(
+          '200528T2055370004',
+          'penhas',
+          551,
+          '2020-05-28 20:55:37',
+          1,
+          1,
+          false,
+          'sleep 6',
+          'https:\/\/elasv2-api.appcivico.com\/avatar\/padrao.svg',
+          TweetMeta(liked: true, owner: true),
+          TweetModel(
+            '200603T1121340001',
+            'penhas',
+            551,
+            '2020-06-03 11:21:34',
+            0,
+            0,
+            false,
+            'um breve comentario',
+            'https:\/\/elasv2-api.appcivico.com\/avatar\/padrao.svg',
+            TweetMeta(liked: false, owner: true),
+            null,
+          ),
+        ),
+      ]);
+      // act
+      final result = TweetSessionModel.fromJson(jsonData);
+      // assert
+      expect(expectedSession, result);
+    });
   });
 }
