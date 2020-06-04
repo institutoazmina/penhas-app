@@ -13,8 +13,9 @@ import 'package:penhas/app/features/feed/presentation/feed_page.dart';
 class FeedModule extends ModuleWidget {
   @override
   List<Bind> get binds => [
-        Bind((i) => ComposeTweetController()),
         Bind((i) => FeedController(repository: i.get<ITweetRepository>())),
+        Bind((i) =>
+            ComposeTweetController(repository: i.get<ITweetRepository>())),
         Bind<ITweetRepository>(
           (i) => TweetRepository(
             networkInfo: i.get<INetworkInfo>(),

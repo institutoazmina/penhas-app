@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 class TweetEngageRequestOption {
   final String tweetId;
   final String message;
@@ -11,5 +13,7 @@ class TweetEngageRequestOption {
 class TweetCreateRequestOption {
   final String message;
 
-  TweetCreateRequestOption(this.message);
+  TweetCreateRequestOption({
+    @required this.message,
+  });
 }

@@ -212,7 +212,9 @@ void main() {
       setUp(() async {
         bodyContent =
             JsonUtil.getStringSync(from: 'feed/tweet_create_response.json');
-        requestOption = TweetCreateRequestOption('are you talk to me?');
+        requestOption = TweetCreateRequestOption(
+          message: 'are you talk to me?',
+        );
       });
       test('should perform a POST with X-API-Key', () async {
         // arrange

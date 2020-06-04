@@ -74,6 +74,20 @@ mixin _$FeedController on _FeedControllerBase, Store {
     return _$fetchNextPageAsyncAction.run(() => super.fetchNextPage());
   }
 
+  final _$likeAsyncAction = AsyncAction('like');
+
+  @override
+  Future<void> like(TweetEntity tweet) {
+    return _$likeAsyncAction.run(() => super.like(tweet));
+  }
+
+  final _$replyAsyncAction = AsyncAction('reply');
+
+  @override
+  Future<void> reply(TweetEntity tweet) {
+    return _$replyAsyncAction.run(() => super.reply(tweet));
+  }
+
   @override
   String toString() {
     final string =

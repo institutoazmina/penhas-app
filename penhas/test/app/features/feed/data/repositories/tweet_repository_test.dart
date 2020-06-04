@@ -59,7 +59,8 @@ void main() {
       });
       test('should create tweet from a valid session', () async {
         // arrange
-        final requestOption = TweetCreateRequestOption('are you talk to me?');
+        final requestOption =
+            TweetCreateRequestOption(message: 'are you talk to me?');
         final expected = right(ValidField());
         // act
         final received = await repository.create(option: requestOption);
