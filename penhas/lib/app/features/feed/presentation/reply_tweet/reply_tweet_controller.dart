@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
@@ -7,21 +8,25 @@ import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
+import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
 
-part 'compose_tweet_controller.g.dart';
+part 'reply_tweet_controller.g.dart';
 
-class ComposeTweetController extends _ComposeTweetControllerBase
-    with _$ComposeTweetController {
-  ComposeTweetController({@required ITweetRepository repository})
-      : super(repository);
+class ReplyTweetController extends _ReplyTweetControllerBase
+    with _$ReplyTweetController {
+  ReplyTweetController({
+    @required ITweetRepository repository,
+    @required TweetEntity tweet,
+  }) : super(repository, tweet);
 }
 
-abstract class _ComposeTweetControllerBase with Store, MapFailureMessage {
+abstract class _ReplyTweetControllerBase with Store, MapFailureMessage {
+  final TweetEntity tweet;
   final ITweetRepository repository;
   String tweetContent;
 
-  _ComposeTweetControllerBase(this.repository);
+  _ReplyTweetControllerBase(this.repository, this.tweet);
 
   @observable
   ObservableFuture<Either<Failure, ValidField>> _progress;
@@ -56,15 +61,16 @@ abstract class _ComposeTweetControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  Future<void> createTweetPressed() async {
+  Future<void> replyTweetPressed() async {
     _setErrorMessage('');
     if (!isEnableCreateButton) {
       return;
     }
 
-    final requestOption = TweetCreateRequestOption(message: tweetContent);
+    final requestOption =
+        TweetEngageRequestOption(tweetId: tweet.id, message: tweetContent);
     _progress = ObservableFuture(
-      repository.create(
+      repository.comment(
         option: requestOption,
       ),
     );
@@ -82,5 +88,6 @@ abstract class _ComposeTweetControllerBase with Store, MapFailureMessage {
 
   void _updatedTweet() {
     editingController.clear();
+    Modular.to.pop();
   }
 }

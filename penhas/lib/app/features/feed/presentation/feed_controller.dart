@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -13,9 +14,9 @@ import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositorie
 part 'feed_controller.g.dart';
 
 class FeedController extends _FeedControllerBase with _$FeedController {
-  final ITweetRepository repository;
-
-  FeedController({@required this.repository}) : super(repository);
+  FeedController({
+    @required ITweetRepository repository,
+  }) : super(repository);
 }
 
 abstract class _FeedControllerBase with Store, MapFailureMessage {
@@ -76,6 +77,8 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
     if (tweet == null) {
       return;
     }
+
+    Modular.to.pushNamed('/mainboard/reply', arguments: tweet);
   }
 
   void _setErrorMessage(String msg) {

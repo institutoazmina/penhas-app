@@ -62,7 +62,6 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
                             },
                           ),
                         );
-                        // return
                       }
                     }),
                   ),
