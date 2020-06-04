@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/presentation/widget/tweet_avatar.dart';
 import 'package:penhas/app/features/feed/presentation/widget/tweet_body.dart';
@@ -38,13 +39,20 @@ class ReplyTweet extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Expanded(
-                  child: TweetAvatar(),
+                  child: TweetAvatar(
+                    avatar: SvgPicture.network(
+                      tweet.avatar,
+                      color: DesignSystemColors.darkIndigo,
+                      height: 36,
+                    ),
+                  ),
                   flex: 1,
                 ),
                 SizedBox(width: 6.0),
                 Expanded(
                   flex: 5,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       TweetTitle(
                         userName: tweet.userName,
@@ -52,7 +60,13 @@ class ReplyTweet extends StatelessWidget {
                         context: context,
                       ),
                       TweetBody(content: tweet.content),
-                      TweetBottom()
+                      TweetBottom(
+                        replyCount: tweet.totalReply,
+                        likeCount: tweet.totalLikes,
+                        isLiked: tweet.meta.liked,
+                        onLikePressed: () => print('onLikePressed'),
+                        onReplyPressed: () => print('onReplyPressed'),
+                      )
                     ],
                   ),
                 )
@@ -73,7 +87,13 @@ class ReplyTweet extends StatelessWidget {
               context: context,
             ),
             TweetBody(content: tweet.lastReplay.content),
-            TweetBottom(),
+            TweetBottom(
+              replyCount: tweet.lastReplay.totalReply,
+              likeCount: tweet.lastReplay.totalLikes,
+              isLiked: tweet.lastReplay.meta.liked,
+              onLikePressed: () => print('onLikePressed'),
+              onReplyPressed: () => print('onReplyPressed'),
+            ),
             Padding(
               padding: const EdgeInsets.only(bottom: 12.0, top: 12.0),
               child: Divider(

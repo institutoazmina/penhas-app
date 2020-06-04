@@ -4,8 +4,9 @@ class TweetAvatar extends StatelessWidget {
   final Widget avatar;
   const TweetAvatar({
     Key key,
-    this.avatar,
-  }) : super(key: key);
+    @required this.avatar,
+  })  : assert(avatar != null),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
