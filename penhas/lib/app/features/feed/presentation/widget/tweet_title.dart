@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class TweetTitle extends StatelessWidget {
   final String userName;
@@ -10,8 +11,9 @@ class TweetTitle extends StatelessWidget {
     Key key,
     @required this.userName,
     @required this.time,
-    @required this.rootContext,
-  }) : super(key: key);
+    @required BuildContext context,
+  })  : rootContext = context,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class TweetTitle extends StatelessWidget {
         children: <Widget>[
           Expanded(
               child: Text(userName, style: kTextStyleFeedTweetTitle), flex: 2),
-          Text(time, style: kTextStyleFeedTweetTime),
+          _buildTime(),
           IconButton(
             icon: Icon(Icons.more_vert),
             onPressed: () => _showTweetAction(),
@@ -28,6 +30,13 @@ class TweetTitle extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget _buildTime() {
+    timeago.setLocaleMessages('pt_br', timeago.PtBrMessages());
+    final parsedTime = DateTime.parse(time);
+    return Text(timeago.format(parsedTime, locale: 'pt_br'),
+        style: kTextStyleFeedTweetTime);
   }
 
   double fullWidth(BuildContext context) {

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class TweetAvatar extends StatelessWidget {
+  final Widget avatar;
   const TweetAvatar({
     Key key,
+    this.avatar,
   }) : super(key: key);
 
   @override
@@ -10,10 +12,7 @@ class TweetAvatar extends StatelessWidget {
     return CircleAvatar(
       backgroundColor: Color.fromRGBO(239, 239, 239, 1.0),
       radius: 24.0,
-      child: Icon(
-        Icons.person_outline,
-        color: Colors.black,
-      ),
+      child: avatar,
     );
   }
 }

@@ -47,8 +47,11 @@ class ReplyTweet extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       TweetTitle(
-                          userName: tweet.userName, time: tweet.createdAt),
-                      TweetBody(bodyContent: tweet.content),
+                        userName: tweet.userName,
+                        time: tweet.createdAt,
+                        context: context,
+                      ),
+                      TweetBody(content: tweet.content),
                       TweetBottom()
                     ],
                   ),
@@ -65,9 +68,11 @@ class ReplyTweet extends StatelessWidget {
             Text('Comentário', style: kTextStyleFeedTweetReplyHeader),
             SizedBox(height: 20),
             TweetTitle(
-                userName: tweet.lastReplay.userName,
-                time: tweet.lastReplay.createdAt),
-            TweetBody(bodyContent: tweet.lastReplay.content),
+              userName: tweet.lastReplay.userName,
+              time: tweet.lastReplay.createdAt,
+              context: context,
+            ),
+            TweetBody(content: tweet.lastReplay.content),
             TweetBottom(),
             Padding(
               padding: const EdgeInsets.only(bottom: 12.0, top: 12.0),

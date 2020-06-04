@@ -6,8 +6,9 @@ class TweetBody extends StatelessWidget {
   final String bodyContent;
   const TweetBody({
     Key key,
-    @required this.bodyContent,
-  }) : super(key: key);
+    @required String content,
+  })  : this.bodyContent = content,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +16,7 @@ class TweetBody extends StatelessWidget {
       bodyContent,
       textStyle: kTextStyleFeedTweetBody,
       bodyPadding: EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 12.0),
+      webViewJs: false,
     );
   }
 }

@@ -14,4 +14,5 @@ class DesignSystemColors {
   static const white = const Color.fromRGBO(252, 252, 252, 1);
   static const pinkishGrey = const Color.fromRGBO(214, 210, 195, 1);
   static const pinky = const Color.fromRGBO(249, 130, 180, 1);
+  static const pumpkinOrange = const Color.fromRGBO(255, 130, 0, 1);
 }

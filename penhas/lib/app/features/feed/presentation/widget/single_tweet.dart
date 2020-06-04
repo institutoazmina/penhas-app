@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/presentation/widget/tweet_avatar.dart';
 import 'package:penhas/app/features/feed/presentation/widget/tweet_body.dart';
 import 'package:penhas/app/features/feed/presentation/widget/tweet_bottom.dart';
 import 'package:penhas/app/features/feed/presentation/widget/tweet_title.dart';
+import 'package:penhas/app/shared/design_system/colors.dart';
 
 class SingleTweet extends StatelessWidget {
   final TweetEntity tweet;
@@ -35,21 +37,34 @@ class SingleTweet extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Expanded(
-              child: TweetAvatar(),
+              child: TweetAvatar(
+                avatar: SvgPicture.network(
+                  tweet.avatar,
+                  color: DesignSystemColors.darkIndigo,
+                  height: 36,
+                ),
+              ),
               flex: 1,
             ),
             SizedBox(width: 6.0),
             Expanded(
               flex: 5,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   TweetTitle(
                     userName: tweet.userName,
                     time: tweet.createdAt,
-                    rootContext: _rootContext,
+                    context: _rootContext,
                   ),
-                  TweetBody(bodyContent: tweet.content),
-                  TweetBottom()
+                  TweetBody(content: tweet.content),
+                  TweetBottom(
+                    replyCount: tweet.totalReply,
+                    likeCount: tweet.totalLikes,
+                    isLiked: tweet.meta.liked,
+                    onLikePressed: () => print('onLikePressed'),
+                    onReplyPressed: () => print('onReplyPressed'),
+                  )
                 ],
               ),
             )
