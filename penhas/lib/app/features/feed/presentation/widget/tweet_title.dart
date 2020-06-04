@@ -34,9 +34,15 @@ class TweetTitle extends StatelessWidget {
 
   Widget _buildTime() {
     timeago.setLocaleMessages('pt_br', timeago.PtBrMessages());
-    final parsedTime = DateTime.parse(time);
+    final parsedTime = _mapServerUtcToLocalDate(time);
     return Text(timeago.format(parsedTime, locale: 'pt_br'),
         style: kTextStyleFeedTweetTime);
+  }
+
+  DateTime _mapServerUtcToLocalDate(String time) {
+    final utcEnabled = "${time}Z";
+
+    return DateTime.parse(utcEnabled).toLocal();
   }
 
   double fullWidth(BuildContext context) {
