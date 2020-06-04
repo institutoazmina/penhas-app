@@ -11,7 +11,7 @@ class TweetModel extends TweetEntity {
   final String content;
   final String avatar;
   final TweetMeta meta;
-  final TweetEntity lastReplay;
+  final TweetEntity lastReply;
 
   TweetModel(
     this.id,
@@ -24,7 +24,7 @@ class TweetModel extends TweetEntity {
     this.content,
     this.avatar,
     this.meta,
-    this.lastReplay,
+    this.lastReply,
   ) : super(
           id: id,
           userName: userName,
@@ -36,7 +36,7 @@ class TweetModel extends TweetEntity {
           content: content,
           avatar: avatar,
           meta: meta,
-          lastReplay: lastReplay,
+          lastReply: lastReply,
         );
 
   factory TweetModel.fromJson(Map<String, Object> jsonData) {

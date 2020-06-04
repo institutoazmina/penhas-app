@@ -12,7 +12,7 @@ class TweetEntity extends Equatable {
   final String content;
   final String avatar;
   final TweetMeta meta;
-  final TweetEntity lastReplay;
+  final TweetEntity lastReply;
 
   TweetEntity({
     @required this.id,
@@ -25,7 +25,7 @@ class TweetEntity extends Equatable {
     @required this.content,
     @required this.avatar,
     @required this.meta,
-    this.lastReplay,
+    this.lastReply,
   });
 
   @override
@@ -40,12 +40,12 @@ class TweetEntity extends Equatable {
         createdAt,
         totalReply,
         totalLikes,
-        lastReplay,
+        lastReply,
       ];
 
   @override
   String toString() {
-    return 'TweetEntity{id: ${id.toString()}, name: ${userName.toString()}, clientId: ${clientId.toString()}, createdAt: ${createdAt.toString()}, totalReply: ${totalReply.toString()}, totalLikes: ${totalLikes.toString()}, anonymous: ${anonymous.toString()}, content: ${content.toString()}, avatar: ${avatar.toString()}, meta: ${meta.toString()}, lastReplay: ${lastReplay.toString()}}';
+    return 'TweetEntity{id: ${id.toString()}, name: ${userName.toString()}, clientId: ${clientId.toString()}, createdAt: ${createdAt.toString()}, totalReply: ${totalReply.toString()}, totalLikes: ${totalLikes.toString()}, anonymous: ${anonymous.toString()}, content: ${content.toString()}, avatar: ${avatar.toString()}, meta: ${meta.toString()}, lastReplay: ${lastReply.toString()}}';
   }
 }
 

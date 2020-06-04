@@ -4,6 +4,7 @@ import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
+import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_request_option.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
@@ -56,11 +57,42 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
     );
   }
 
+  @action
+  Future<void> like(TweetEntity tweet) async {
+    if (tweet == null) {
+      return;
+    }
+
+    final requestOption = TweetEngageRequestOption(tweetId: tweet.id);
+    final result = await repository.like(option: requestOption);
+    result.fold(
+      (failure) => _setErrorMessage(mapFailureMessage(failure)),
+      (tweet) => _updateTweetList(tweet),
+    );
+  }
+
+  @action
+  Future<void> reply(TweetEntity tweet) async {
+    if (tweet == null) {
+      return;
+    }
+  }
+
   void _setErrorMessage(String msg) {
     errorMessage = msg;
   }
 
   void _updateSessionAction(TweetSessionEntity session) {
     listTweets = session.tweets.asObservable();
+  }
+
+  void _updateTweetList(TweetEntity tweet) {
+    final index = listTweets.indexWhere(
+      (e) => e.id == tweet.id,
+    );
+
+    if (index > 0) {
+      listTweets[index] = tweet;
+    }
   }
 }

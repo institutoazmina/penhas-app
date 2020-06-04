@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/presentation/widget/reply_tweet.dart';
@@ -84,10 +83,21 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
 
   Widget _buildTweetItem(TweetEntity tweet, BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(bottom: 6.0, top: 6.0),
-        child: tweet.lastReplay == null
-            ? SingleTweet(tweet: tweet, rootContext: context)
-            : ReplyTweet(tweet: tweet));
+      padding: EdgeInsets.only(bottom: 6.0, top: 6.0),
+      child: tweet.lastReply == null
+          ? SingleTweet(
+              tweet: tweet,
+              context: context,
+              onLikePressed: controller.like,
+              onReplyPressed: controller.reply,
+            )
+          : ReplyTweet(
+              tweet: tweet,
+              context: context,
+              onLikePressed: controller.like,
+              onReplyPressed: controller.reply,
+            ),
+    );
   }
 
   bool _handleScrollNotification(ScrollNotification notification) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
+import 'package:penhas/app/features/feed/presentation/feed_typedef.dart';
 import 'package:penhas/app/features/feed/presentation/widget/tweet_avatar.dart';
 import 'package:penhas/app/features/feed/presentation/widget/tweet_body.dart';
 import 'package:penhas/app/features/feed/presentation/widget/tweet_bottom.dart';
@@ -10,13 +11,24 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ReplyTweet extends StatelessWidget {
   final TweetEntity tweet;
+  final TweetReaction onLikePressed;
+  final TweetReaction onReplyPressed;
+  final BuildContext _context;
+
   const ReplyTweet({
     Key key,
     @required this.tweet,
-  }) : super(key: key);
+    @required BuildContext context,
+    @required this.onLikePressed,
+    @required this.onReplyPressed,
+  })  : assert(context != null),
+        this._context = context,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final lastReply = tweet.lastReply;
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -64,8 +76,8 @@ class ReplyTweet extends StatelessWidget {
                         replyCount: tweet.totalReply,
                         likeCount: tweet.totalLikes,
                         isLiked: tweet.meta.liked,
-                        onLikePressed: () => print('onLikePressed'),
-                        onReplyPressed: () => print('onReplyPressed'),
+                        onLikePressed: () => onLikePressed(tweet),
+                        onReplyPressed: () => onReplyPressed(tweet),
                       )
                     ],
                   ),
@@ -82,17 +94,17 @@ class ReplyTweet extends StatelessWidget {
             Text('Comentário', style: kTextStyleFeedTweetReplyHeader),
             SizedBox(height: 20),
             TweetTitle(
-              userName: tweet.lastReplay.userName,
-              time: tweet.lastReplay.createdAt,
+              userName: lastReply.userName,
+              time: lastReply.createdAt,
               context: context,
             ),
-            TweetBody(content: tweet.lastReplay.content),
+            TweetBody(content: lastReply.content),
             TweetBottom(
-              replyCount: tweet.lastReplay.totalReply,
-              likeCount: tweet.lastReplay.totalLikes,
-              isLiked: tweet.lastReplay.meta.liked,
-              onLikePressed: () => print('onLikePressed'),
-              onReplyPressed: () => print('onReplyPressed'),
+              replyCount: lastReply.totalReply,
+              likeCount: lastReply.totalLikes,
+              isLiked: lastReply.meta.liked,
+              onLikePressed: () => onLikePressed(lastReply),
+              onReplyPressed: () => onReplyPressed(lastReply),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 12.0, top: 12.0),
