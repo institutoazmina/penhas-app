@@ -43,30 +43,34 @@ class _MainboardPageState
                   iconSize: 30.0,
                   padding: EdgeInsets.only(left: 28.0),
                   tooltip: 'Feed',
-                  icon:
-                      SvgPicture.asset('assets/images/svg/bottom_bar/feed.svg'),
+                  icon: _buildBottomBarIcon(0, controller.selectedIndex),
                   onPressed: () => controller.changePage(0),
+                  splashColor: Colors.white,
+                  highlightColor: Colors.white,
                 ),
                 IconButton(
                   iconSize: 30.0,
                   padding: EdgeInsets.only(right: 28.0),
-                  icon: SvgPicture.asset(
-                      'assets/images/svg/bottom_bar/compose_tweet.svg'),
+                  icon: _buildBottomBarIcon(1, controller.selectedIndex),
                   onPressed: () => controller.changePage(1),
+                  splashColor: Colors.white,
+                  highlightColor: Colors.white,
                 ),
                 IconButton(
                   iconSize: 30.0,
                   padding: EdgeInsets.only(left: 28.0),
-                  icon:
-                      SvgPicture.asset('assets/images/svg/bottom_bar/chat.svg'),
+                  icon: _buildBottomBarIcon(2, controller.selectedIndex),
                   onPressed: () => controller.changePage(2),
+                  splashColor: Colors.white,
+                  highlightColor: Colors.white,
                 ),
                 IconButton(
                   iconSize: 30.0,
                   padding: EdgeInsets.only(right: 28.0),
-                  icon: SvgPicture.asset(
-                      'assets/images/svg/bottom_bar/support_point.svg'),
+                  icon: _buildBottomBarIcon(3, controller.selectedIndex),
                   onPressed: () => controller.changePage(3),
+                  splashColor: Colors.white,
+                  highlightColor: Colors.white,
                 )
               ],
             ),
@@ -76,6 +80,33 @@ class _MainboardPageState
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: _buildFab(),
     );
+  }
+
+  Widget _buildBottomBarIcon(int index, int selected) {
+    String asset;
+    if (index == 0) {
+      asset = 'assets/images/svg/bottom_bar/feed.svg';
+    } else if (index == 1) {
+      asset = 'assets/images/svg/bottom_bar/compose_tweet.svg';
+    } else if (index == 2) {
+      asset = 'assets/images/svg/bottom_bar/chat.svg';
+    } else if (index == 3) {
+      asset = 'assets/images/svg/bottom_bar/support_point.svg';
+    }
+
+    if (index == selected) {
+      if (selected == 0) {
+        asset = 'assets/images/svg/bottom_bar/feed_selected.svg';
+      } else if (selected == 1) {
+        asset = 'assets/images/svg/bottom_bar/compose_tweet_selected.svg';
+      } else if (selected == 2) {
+        asset = 'assets/images/svg/bottom_bar/chat_selected.svg';
+      } else if (selected == 3) {
+        asset = 'assets/images/svg/bottom_bar/support_point_selected.svg';
+      }
+    }
+
+    return SvgPicture.asset(asset);
   }
 
   AppBar _buildAppBar() {
