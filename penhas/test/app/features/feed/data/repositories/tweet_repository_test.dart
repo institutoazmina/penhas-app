@@ -85,17 +85,17 @@ void main() {
         final requestOption =
             TweetEngageRequestOption(tweetId: '200520T0032210001');
         final expected = right(TweetModel(
-          '200528T2055370004',
-          'penhas',
-          551,
-          '2020-05-28 20:55:37',
-          0,
-          1,
-          false,
-          'sleep 6',
-          'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-          TweetMeta(liked: true, owner: true),
-          null,
+          id: '200528T2055370004',
+          userName: 'penhas',
+          clientId: 551,
+          createdAt: '2020-05-28 20:55:37',
+          totalReply: 0,
+          totalLikes: 1,
+          anonymous: false,
+          content: 'sleep 6',
+          avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
+          meta: TweetMeta(liked: true, owner: true),
+          lastReply: [],
         ));
         // act
         final received = await repository.like(option: requestOption);

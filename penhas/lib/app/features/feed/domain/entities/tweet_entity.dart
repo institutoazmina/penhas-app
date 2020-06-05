@@ -12,7 +12,7 @@ class TweetEntity extends Equatable {
   final String content;
   final String avatar;
   final TweetMeta meta;
-  final TweetEntity lastReply;
+  final List<TweetEntity> lastReply;
 
   TweetEntity({
     @required this.id,

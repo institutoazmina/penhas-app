@@ -83,7 +83,7 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
   Widget _buildTweetItem(TweetEntity tweet, BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(bottom: 6.0, top: 6.0),
-      child: tweet.lastReply == null
+      child: tweet.lastReply.length == 0
           ? SingleTweet(
               tweet: tweet,
               context: context,

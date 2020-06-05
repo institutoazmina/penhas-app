@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 
 class TweetModel extends TweetEntity {
@@ -11,21 +12,21 @@ class TweetModel extends TweetEntity {
   final String content;
   final String avatar;
   final TweetMeta meta;
-  final TweetEntity lastReply;
+  final List<TweetEntity> lastReply;
 
-  TweetModel(
-    this.id,
-    this.userName,
-    this.clientId,
-    this.createdAt,
-    this.totalReply,
-    this.totalLikes,
-    this.anonymous,
-    this.content,
-    this.avatar,
-    this.meta,
-    this.lastReply,
-  ) : super(
+  TweetModel({
+    @required this.id,
+    @required this.userName,
+    @required this.clientId,
+    @required this.createdAt,
+    @required this.totalReply,
+    @required this.totalLikes,
+    @required this.anonymous,
+    @required this.content,
+    @required this.avatar,
+    @required this.meta,
+    @required this.lastReply,
+  }) : super(
           id: id,
           userName: userName,
           clientId: clientId,
@@ -46,22 +47,23 @@ class TweetModel extends TweetEntity {
       owner: meta['owner'] == 1 ?? false,
     );
 
-    TweetModel lastReply;
+    List<TweetModel> lastReply = List<TweetModel>();
     if (jsonData['last_reply'] != null) {
-      lastReply = TweetModel.fromJson(jsonData['last_reply']);
+      lastReply = [TweetModel.fromJson(jsonData['last_reply'])];
     }
 
     return TweetModel(
-        jsonData['id'],
-        jsonData['name'],
-        (jsonData['cliente_id'] as num).toInt(),
-        jsonData['created_at'],
-        (jsonData['qtde_comentarios'] as num).toInt(),
-        (jsonData['qtde_likes'] as num).toInt(),
-        jsonData['anonimo'] != 0,
-        jsonData['content'],
-        jsonData['icon'],
-        tweetMeta,
-        lastReply);
+      id: jsonData['id'],
+      userName: jsonData['name'],
+      clientId: (jsonData['cliente_id'] as num).toInt(),
+      createdAt: jsonData['created_at'],
+      totalReply: (jsonData['qtde_comentarios'] as num).toInt(),
+      totalLikes: (jsonData['qtde_likes'] as num).toInt(),
+      anonymous: jsonData['anonimo'] != 0,
+      content: jsonData['content'],
+      avatar: jsonData['icon'],
+      meta: tweetMeta,
+      lastReply: lastReply,
+    );
   }
 }

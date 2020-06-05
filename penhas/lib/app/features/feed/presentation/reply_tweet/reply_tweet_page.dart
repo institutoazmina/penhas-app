@@ -13,8 +13,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ReplyTweetPage extends StatefulWidget {
   final String title;
-  const ReplyTweetPage({Key key, this.title = "ComposeTweet"})
-      : super(key: key);
+  const ReplyTweetPage({Key key, this.title = "ReplyTweet"}) : super(key: key);
 
   @override
   _ReplyTweetPageState createState() => _ReplyTweetPageState();

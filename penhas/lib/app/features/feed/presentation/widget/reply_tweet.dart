@@ -27,8 +27,6 @@ class ReplyTweet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lastReply = tweet.lastReply;
-
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -47,43 +45,7 @@ class ReplyTweet extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: TweetAvatar(
-                    avatar: SvgPicture.network(
-                      tweet.avatar,
-                      color: DesignSystemColors.darkIndigo,
-                      height: 36,
-                    ),
-                  ),
-                  flex: 1,
-                ),
-                SizedBox(width: 6.0),
-                Expanded(
-                  flex: 5,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      TweetTitle(
-                        userName: tweet.userName,
-                        time: tweet.createdAt,
-                        context: context,
-                      ),
-                      TweetBody(content: tweet.content),
-                      TweetBottom(
-                        replyCount: tweet.totalReply,
-                        likeCount: tweet.totalLikes,
-                        isLiked: tweet.meta.liked,
-                        onLikePressed: () => onLikePressed(tweet),
-                        onReplyPressed: () => onReplyPressed(tweet),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
+            _buildMainTweet(context),
             Padding(
               padding: const EdgeInsets.only(bottom: 12.0, top: 12.0),
               child: Divider(
@@ -93,38 +55,129 @@ class ReplyTweet extends StatelessWidget {
             ),
             Text('Comentário', style: kTextStyleFeedTweetReplyHeader),
             SizedBox(height: 20),
-            TweetTitle(
-              userName: lastReply.userName,
-              time: lastReply.createdAt,
-              context: context,
-            ),
-            TweetBody(content: lastReply.content),
-            TweetBottom(
-              replyCount: lastReply.totalReply,
-              likeCount: lastReply.totalLikes,
-              isLiked: lastReply.meta.liked,
-              onLikePressed: () => onLikePressed(lastReply),
-              onReplyPressed: () => onReplyPressed(lastReply),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 12.0, top: 12.0),
-              child: Divider(
-                height: 2,
-                color: DesignSystemColors.warnGrey,
-              ),
-            ),
-            RaisedButton(
-              onPressed: () {},
-              elevation: 0,
-              color: Colors.transparent,
-              child: Text(
-                "Ver todos os comentários",
-                style: kTextStyleFeedTweetShowReply,
-              ),
-            )
+            // expanded replied tweets
+            ..._expandeRepliedTweeters(context),
+            //
+            _buildReplyAction(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildMainTweet(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Expanded(
+          child: TweetAvatar(
+            avatar: SvgPicture.network(
+              tweet.avatar,
+              color: DesignSystemColors.darkIndigo,
+              height: 36,
+            ),
+          ),
+          flex: 1,
+        ),
+        SizedBox(width: 6.0),
+        Expanded(
+          flex: 5,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              TweetTitle(
+                userName: tweet.userName,
+                time: tweet.createdAt,
+                context: context,
+              ),
+              TweetBody(content: tweet.content),
+              TweetBottom(
+                replyCount: tweet.totalReply,
+                likeCount: tweet.totalLikes,
+                isLiked: tweet.meta.liked,
+                onLikePressed: () => onLikePressed(tweet),
+                onReplyPressed: () => onReplyPressed(tweet),
+              )
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  List<Widget> _expandeRepliedTweeters(BuildContext context) {
+    return tweet.lastReply
+        .map(
+          (e) => RepliedTweet(
+            repliedTweet: e,
+            onLikePressed: onLikePressed,
+            onReplyPressed: onReplyPressed,
+            context: context,
+          ),
+        )
+        .toList();
+  }
+
+  Widget _buildReplyAction() {
+    return tweet.totalReply > 1
+        ? Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(bottom: 12.0, top: 12.0),
+                child: Divider(
+                  height: 2,
+                  color: DesignSystemColors.warnGrey,
+                ),
+              ),
+              RaisedButton(
+                onPressed: () {},
+                elevation: 0,
+                color: Colors.transparent,
+                child: Text(
+                  "Ver todos os comentários",
+                  style: kTextStyleFeedTweetShowReply,
+                ),
+              )
+            ],
+          )
+        : Container();
+  }
+}
+
+class RepliedTweet extends StatelessWidget {
+  final TweetEntity repliedTweet;
+  final TweetReaction onLikePressed;
+  final TweetReaction onReplyPressed;
+  final BuildContext _context;
+
+  const RepliedTweet({
+    Key key,
+    @required this.repliedTweet,
+    @required this.onLikePressed,
+    @required this.onReplyPressed,
+    @required BuildContext context,
+  })  : assert(repliedTweet != null),
+        _context = context,
+        super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        TweetTitle(
+          userName: repliedTweet.userName,
+          time: repliedTweet.createdAt,
+          context: context,
+        ),
+        TweetBody(content: repliedTweet.content),
+        TweetBottom(
+          replyCount: repliedTweet.totalReply,
+          likeCount: repliedTweet.totalLikes,
+          isLiked: repliedTweet.meta.liked,
+          onLikePressed: () => onLikePressed(repliedTweet),
+          onReplyPressed: () => onReplyPressed(repliedTweet),
+        ),
+      ],
     );
   }
 }
