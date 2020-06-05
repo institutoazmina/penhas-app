@@ -33,6 +33,7 @@
         "type": "yesno"
       }
     ],
+    "finished": 0,
     "session_id": 247
   },
   "senha_falsa_sha256": null,

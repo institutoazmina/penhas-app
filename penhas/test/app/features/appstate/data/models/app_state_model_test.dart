@@ -12,9 +12,10 @@ void main() {
     test('should be a subclass of AppStateEntity', () async {
       // arrange
       final session = QuizSessionEntity(
-        currentMessage: [],
-        sessionId: 1,
-      );
+          currentMessage: [],
+          sessionId: 1,
+          endScreen: 'home',
+          isFinished: false);
       // act
       appStateModel = AppStateModel(session);
       // assert
@@ -140,6 +141,8 @@ void main() {
       final QuizSessionEntity quizSession = QuizSessionEntity(
         currentMessage: currentMessage,
         sessionId: 200,
+        endScreen: null,
+        isFinished: false,
       );
       final AppStateEntity expected = AppStateModel(quizSession);
       // act
@@ -158,6 +161,8 @@ void main() {
       final QuizSessionEntity quizSession = QuizSessionEntity(
         currentMessage: currentMessage,
         sessionId: 247,
+        endScreen: null,
+        isFinished: false,
       );
       final AppStateEntity expected = AppStateModel(quizSession);
       // act
@@ -176,6 +181,8 @@ void main() {
       final QuizSessionEntity quizSession = QuizSessionEntity(
         currentMessage: currentMessage,
         sessionId: 255,
+        endScreen: null,
+        isFinished: false,
       );
       final AppStateEntity expected = AppStateModel(quizSession);
       // act
@@ -193,6 +200,8 @@ void main() {
       final QuizSessionEntity quizSession = QuizSessionEntity(
         currentMessage: currentMessage,
         sessionId: 200,
+        endScreen: null,
+        isFinished: false,
       );
       final AppStateEntity expected = AppStateModel(quizSession);
       // act
@@ -210,6 +219,8 @@ void main() {
       final QuizSessionEntity quizSession = QuizSessionEntity(
         currentMessage: currentMessage,
         sessionId: 310,
+        endScreen: 'home',
+        isFinished: true,
       );
       final AppStateEntity expected = AppStateModel(quizSession);
       // act

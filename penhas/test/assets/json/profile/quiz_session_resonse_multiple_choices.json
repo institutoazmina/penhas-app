@@ -30,6 +30,7 @@
       }
     ],
     "prev_msgs": [],
+    "finished": 0,
     "session_id": 255
   },
   "senha_falsa_sha256": null,

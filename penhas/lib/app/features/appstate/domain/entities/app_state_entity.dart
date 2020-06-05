@@ -75,7 +75,7 @@ class QuizSessionEntity extends Equatable {
 
   @override
   String toString() {
-    return "QuizSessionEntity{currentMessage: ${currentMessage.toString()}, sessionId: ${sessionId.toString()} }";
+    return "QuizSessionEntity{currentMessage: ${currentMessage.toString()}, sessionId: ${sessionId.toString()}, endScreen: ${endScreen.toString()}, isFinished: ${isFinished.toString()} }";
   }
 }
 

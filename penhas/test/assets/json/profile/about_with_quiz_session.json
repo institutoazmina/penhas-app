@@ -26,6 +26,7 @@
       }
     ],
     "prev_msgs": [],
+    "finished": 0,
     "session_id": 200
   },
   "senha_falsa_sha256": null,
