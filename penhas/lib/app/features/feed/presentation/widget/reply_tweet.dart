@@ -45,7 +45,7 @@ class ReplyTweet extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            _buildMainTweet(context),
+            _buildMainTweet(_context),
             Padding(
               padding: const EdgeInsets.only(bottom: 12.0, top: 12.0),
               child: Divider(
@@ -56,7 +56,7 @@ class ReplyTweet extends StatelessWidget {
             Text('Comentário', style: kTextStyleFeedTweetReplyHeader),
             SizedBox(height: 20),
             // expanded replied tweets
-            ..._expandeRepliedTweeters(context),
+            ..._expandeRepliedTweeters(_context),
             //
             _buildReplyAction(),
           ],
