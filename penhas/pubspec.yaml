@@ -71,11 +71,14 @@ flutter:
    - assets/images/svg/drawer/trash.svg
    - assets/images/svg/drawer/user_profile.svg
    - assets/images/svg/bottom_bar/chat.svg
+   - assets/images/svg/bottom_bar/chat_selected.svg
+   - assets/images/svg/bottom_bar/compose_tweet.svg
+   - assets/images/svg/bottom_bar/compose_tweet_selected.svg
    - assets/images/svg/bottom_bar/emergency_controll.svg
    - assets/images/svg/bottom_bar/feed.svg
-   - assets/images/svg/bottom_bar/compose_tweet.svg
+   - assets/images/svg/bottom_bar/feed_selected.svg
    - assets/images/svg/bottom_bar/support_point.svg
-
+   - assets/images/svg/bottom_bar/support_point_selected.svg
 
   #  - images/a_dot_ham.jpeg
 
