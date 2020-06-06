@@ -180,6 +180,7 @@ void main() {
       int maxRowsPerRequet;
       TweetSessionEntity firstSessionResponse;
       TweetSessionEntity secondSessionResponse;
+      TweetSessionEntity thirdSessionResponse;
 
       setUp(() {
         maxRowsPerRequet = 5;
@@ -245,6 +246,37 @@ void main() {
                 lastReply: [],
               ),
             ]);
+        thirdSessionResponse = TweetSessionEntity(
+            hasMore: true,
+            orderBy: TweetSessionOrder.oldestFirst,
+            tweets: [
+              TweetEntity(
+                id: 'id_1',
+                userName: 'user_2',
+                clientId: 2,
+                createdAt: '2020-01-01 00:00:01',
+                totalReply: 0,
+                totalLikes: 1,
+                anonymous: false,
+                content: 'content 1',
+                avatar: 'http://site.com/avatar_2.png',
+                meta: TweetMeta(liked: false, owner: true),
+                lastReply: [],
+              ),
+              TweetEntity(
+                id: 'id_2',
+                userName: 'user_1',
+                clientId: 1,
+                createdAt: '2020-01-02 00:00:01',
+                totalReply: 0,
+                totalLikes: 1,
+                anonymous: false,
+                content: 'content 2',
+                avatar: 'http://site.com/avatar_1.png',
+                meta: TweetMeta(liked: false, owner: true),
+                lastReply: [],
+              ),
+            ]);
       });
       test('should get the newest tweets for first time', () async {
         // arrange
@@ -281,6 +313,41 @@ void main() {
 
         when(repository.retrieve(option: anyNamed('option')))
             .thenAnswer((_) async => right(secondSessionResponse));
+        // act
+        final received = await sut.fetchOldestTweet();
+        // assert
+        verify(
+          repository.retrieve(
+              option: TweetRequestOption(
+            rows: maxRowsPerRequet,
+            after: firstSessionResponse.tweets.last.id,
+          )),
+        );
+        expect(expected, received);
+      });
+      test(
+          'should do pagination sorted with the oldest tweets when received a TweetSessionOrder.oldestFirst. ',
+          () async {
+        // arrange
+        final sut = FeedUseCases(
+          repository: repository,
+          maxRows: maxRowsPerRequet,
+        );
+        final expected = right(
+          FeedCache(
+            tweets: [
+              ...firstSessionResponse.tweets,
+              ...thirdSessionResponse.tweets.reversed,
+            ],
+          ),
+        );
+
+        when(repository.retrieve(option: anyNamed('option')))
+            .thenAnswer((_) async => right(firstSessionResponse));
+        await sut.fetchOldestTweet();
+
+        when(repository.retrieve(option: anyNamed('option')))
+            .thenAnswer((_) async => right(thirdSessionResponse));
         // act
         final received = await sut.fetchOldestTweet();
         // assert
