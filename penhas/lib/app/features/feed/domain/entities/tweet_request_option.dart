@@ -1,4 +1,6 @@
-class TweetRequestOption {
+import 'package:equatable/equatable.dart';
+
+class TweetRequestOption extends Equatable {
   final String after;
   final String before;
   final bool onlyMyself;
@@ -16,4 +18,17 @@ class TweetRequestOption {
   })  : assert(rows != null),
         assert(onlyMyself != null),
         assert(skipMyself != null);
+
+  @override
+  List<Object> get props => [
+        after,
+        before,
+        onlyMyself,
+        skipMyself,
+        rows,
+        replyTo,
+      ];
+
+  @override
+  bool get stringify => true;
 }
