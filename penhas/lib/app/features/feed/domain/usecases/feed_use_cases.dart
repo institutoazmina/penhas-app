@@ -23,7 +23,7 @@ class FeedCache extends Equatable {
 class FeedUseCases {
   final ITweetRepository _repository;
   final int _maxRowsPerRequest;
-  List<TweetEntity> _tweetList = List<TweetEntity>();
+  List<TweetEntity> _tweetCacheFetch = List<TweetEntity>();
 
   FeedUseCases({
     @required ITweetRepository repository,
@@ -53,23 +53,23 @@ class FeedUseCases {
   }
 
   TweetRequestOption _newestRequestOption() {
-    if (_tweetList.length == 0) {
+    if (_tweetCacheFetch.length == 0) {
       return TweetRequestOption(rows: _maxRowsPerRequest);
     } else {
       return TweetRequestOption(
         rows: _maxRowsPerRequest,
-        after: _tweetList.first.id,
+        after: _tweetCacheFetch.first.id,
       );
     }
   }
 
   TweetRequestOption _oldestRequestOption() {
-    if (_tweetList.length == 0) {
+    if (_tweetCacheFetch.length == 0) {
       return TweetRequestOption(rows: _maxRowsPerRequest);
     } else {
       return TweetRequestOption(
         rows: _maxRowsPerRequest,
-        after: _tweetList.last.id,
+        after: _tweetCacheFetch.last.id,
       );
     }
   }
@@ -77,24 +77,24 @@ class FeedUseCases {
   FeedCache _updateCache(TweetSessionEntity session) {
     if (session.tweets != null && session.tweets.length > 0) {
       if (session.orderBy == TweetSessionOrder.latestFirst) {
-        _tweetList.insertAll(0, session.tweets);
+        _tweetCacheFetch.insertAll(0, session.tweets);
       } else {
-        _tweetList.insertAll(0, session.tweets.reversed);
+        _tweetCacheFetch.insertAll(0, session.tweets.reversed);
       }
     }
 
-    return FeedCache(tweets: _tweetList);
+    return FeedCache(tweets: _tweetCacheFetch);
   }
 
   FeedCache _appendCache(TweetSessionEntity session) {
     if (session.tweets != null && session.tweets.length > 0) {
       if (session.orderBy == TweetSessionOrder.latestFirst) {
-        _tweetList.addAll(session.tweets);
+        _tweetCacheFetch.addAll(session.tweets);
       } else {
-        _tweetList.addAll(session.tweets.reversed);
+        _tweetCacheFetch.addAll(session.tweets.reversed);
       }
     }
 
-    return FeedCache(tweets: _tweetList);
+    return FeedCache(tweets: _tweetCacheFetch);
   }
 }
