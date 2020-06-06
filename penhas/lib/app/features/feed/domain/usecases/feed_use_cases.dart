@@ -42,12 +42,28 @@ class FeedUseCases {
     );
   }
 
+  Future<Either<Failure, FeedCache>> fetchOldestTweet() async {
+    final option = _oldestRequestOption();
+    final result = await _repository.retrieve(option: option);
+
+    return result.fold<Either<Failure, FeedCache>>(
+      (failure) => left(failure),
+      (session) => right(_updateCache(session)),
+    );
+  }
+
   TweetRequestOption _newestRequestOption() {
     if (_tweetList.length == 0) {
       return TweetRequestOption(rows: _maxRowsPerRequest);
     } else {
       final firstId = _tweetList.first.id;
       return TweetRequestOption(rows: _maxRowsPerRequest, after: firstId);
+    }
+  }
+
+  TweetRequestOption _oldestRequestOption() {
+    if (_tweetList.length == 0) {
+      return TweetRequestOption(rows: _maxRowsPerRequest);
     }
   }
 

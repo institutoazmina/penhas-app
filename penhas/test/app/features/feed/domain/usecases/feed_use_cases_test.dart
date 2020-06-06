@@ -39,10 +39,11 @@ void main() {
       verifyNoMoreInteractions(repository);
     });
     group('fetchNewestTweet', () {
+      int maxRowsPerRequet;
       TweetSessionEntity firstSessionResponse;
       TweetSessionEntity secondSessionResponse;
       TweetSessionEntity thirdSessionResponse;
-      int maxRowsPerRequet;
+
       setUp(() {
         maxRowsPerRequet = 5;
         firstSessionResponse = TweetSessionEntity(
@@ -126,7 +127,6 @@ void main() {
         // assert
         expect(expected, received);
       });
-
       test('should do pagination', () async {
         // arrange
         final sut =
@@ -173,6 +173,57 @@ void main() {
         when(repository.retrieve(option: anyNamed('option')))
             .thenAnswer((_) async => right(thirdSessionResponse));
         final received = await sut.fetchNewestTweet();
+        // assert
+        expect(expected, received);
+      });
+    });
+    group('fetchOldestTweet', () {
+      int maxRowsPerRequet;
+      TweetSessionEntity firstSessionResponse;
+      setUp(() {
+        maxRowsPerRequet = 5;
+        firstSessionResponse = TweetSessionEntity(
+            hasMore: true,
+            orderBy: TweetSessionOrder.latestFirst,
+            tweets: [
+              TweetEntity(
+                id: 'id_2',
+                userName: 'user_2',
+                clientId: 2,
+                createdAt: '2020-01-01 00:00:02',
+                totalReply: 0,
+                totalLikes: 1,
+                anonymous: false,
+                content: 'content 2',
+                avatar: 'http://site.com/avatar_2.png',
+                meta: TweetMeta(liked: false, owner: true),
+                lastReply: [],
+              ),
+              TweetEntity(
+                id: 'id_1',
+                userName: 'user_1',
+                clientId: 1,
+                createdAt: '2020-01-01 00:00:01',
+                totalReply: 0,
+                totalLikes: 1,
+                anonymous: false,
+                content: 'content 1',
+                avatar: 'http://site.com/avatar_1.png',
+                meta: TweetMeta(liked: false, owner: true),
+                lastReply: [],
+              ),
+            ]);
+      });
+      test('should get the newest tweets for first time', () async {
+        // arrange
+        when(repository.retrieve(option: anyNamed('option')))
+            .thenAnswer((_) async => right(firstSessionResponse));
+
+        final Either<Failure, FeedCache> expected =
+            right(FeedCache(tweets: firstSessionResponse.tweets));
+        final sut = FeedUseCases(repository: repository);
+        // act
+        final received = await sut.fetchOldestTweet();
         // assert
         expect(expected, received);
       });
