@@ -11,19 +11,6 @@ import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
 
 class MockTweetRepository extends Mock implements ITweetRepository {}
 
-class Foo extends Equatable {
-  final String bar;
-  final List<int> zoo;
-
-  Foo(this.bar, this.zoo);
-
-  @override
-  List<Object> get props => [bar, zoo];
-
-  @override
-  bool get stringify => true;
-}
-
 void main() {
   ITweetRepository repository;
 
