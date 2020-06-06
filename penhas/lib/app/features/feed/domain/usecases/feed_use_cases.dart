@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_request_option.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
@@ -38,7 +39,7 @@ class FeedUseCases {
 
     return result.fold<Either<Failure, FeedCache>>(
       (failure) => left(failure),
-      (session) => right(_updateCache(session)),
+      (session) => right(_updateFetchCache(session)),
     );
   }
 
@@ -48,7 +49,17 @@ class FeedUseCases {
 
     return result.fold<Either<Failure, FeedCache>>(
       (failure) => left(failure),
-      (session) => right(_appendCache(session)),
+      (session) => right(_appendFetchCache(session)),
+    );
+  }
+
+  Future<Either<Failure, FeedCache>> delete(TweetEntity tweet) async {
+    final option = TweetEngageRequestOption(tweetId: tweet.id);
+    final result = await _repository.delete(option: option);
+
+    return result.fold<Either<Failure, FeedCache>>(
+      (failure) => left(failure),
+      (session) => right(_deleteFetchCache(tweet)),
     );
   }
 
@@ -74,7 +85,7 @@ class FeedUseCases {
     }
   }
 
-  FeedCache _updateCache(TweetSessionEntity session) {
+  FeedCache _updateFetchCache(TweetSessionEntity session) {
     if (session.tweets != null && session.tweets.length > 0) {
       if (session.orderBy == TweetSessionOrder.latestFirst) {
         _tweetCacheFetch.insertAll(0, session.tweets);
@@ -86,7 +97,7 @@ class FeedUseCases {
     return FeedCache(tweets: _tweetCacheFetch);
   }
 
-  FeedCache _appendCache(TweetSessionEntity session) {
+  FeedCache _appendFetchCache(TweetSessionEntity session) {
     if (session.tweets != null && session.tweets.length > 0) {
       if (session.orderBy == TweetSessionOrder.latestFirst) {
         _tweetCacheFetch.addAll(session.tweets);
@@ -94,6 +105,14 @@ class FeedUseCases {
         _tweetCacheFetch.addAll(session.tweets.reversed);
       }
     }
+
+    return FeedCache(tweets: _tweetCacheFetch);
+  }
+
+  FeedCache _deleteFetchCache(TweetEntity tweet) {
+    _tweetCacheFetch.removeWhere(
+      (e) => e.id == tweet.id,
+    );
 
     return FeedCache(tweets: _tweetCacheFetch);
   }
