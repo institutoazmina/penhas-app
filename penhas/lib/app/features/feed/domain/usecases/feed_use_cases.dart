@@ -48,7 +48,7 @@ class FeedUseCases {
 
     return result.fold<Either<Failure, FeedCache>>(
       (failure) => left(failure),
-      (session) => right(_updateCache(session)),
+      (session) => right(_appendCache(session)),
     );
   }
 
@@ -56,14 +56,21 @@ class FeedUseCases {
     if (_tweetList.length == 0) {
       return TweetRequestOption(rows: _maxRowsPerRequest);
     } else {
-      final firstId = _tweetList.first.id;
-      return TweetRequestOption(rows: _maxRowsPerRequest, after: firstId);
+      return TweetRequestOption(
+        rows: _maxRowsPerRequest,
+        after: _tweetList.first.id,
+      );
     }
   }
 
   TweetRequestOption _oldestRequestOption() {
     if (_tweetList.length == 0) {
       return TweetRequestOption(rows: _maxRowsPerRequest);
+    } else {
+      return TweetRequestOption(
+        rows: _maxRowsPerRequest,
+        after: _tweetList.last.id,
+      );
     }
   }
 
@@ -73,6 +80,18 @@ class FeedUseCases {
         _tweetList.insertAll(0, session.tweets);
       } else {
         _tweetList.insertAll(0, session.tweets.reversed);
+      }
+    }
+
+    return FeedCache(tweets: _tweetList);
+  }
+
+  FeedCache _appendCache(TweetSessionEntity session) {
+    if (session.tweets != null && session.tweets.length > 0) {
+      if (session.orderBy == TweetSessionOrder.latestFirst) {
+        _tweetList.addAll(session.tweets);
+      } else {
+        _tweetList.addAll(session.tweets.reversed);
       }
     }
 

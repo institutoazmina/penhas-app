@@ -141,12 +141,12 @@ void main() {
             ],
           ),
         );
-        // act
         await sut.fetchNewestTweet();
         when(repository.retrieve(option: anyNamed('option')))
             .thenAnswer((_) async => right(secondSessionResponse));
-
+        // act
         final received = await sut.fetchNewestTweet();
+        // assert
         verify(
           repository.retrieve(
               option: TweetRequestOption(
@@ -154,7 +154,6 @@ void main() {
             after: firstSessionResponse.tweets.first.id,
           )),
         );
-        // assert
         expect(expected, received);
       });
       test('should not update cache if has no more tweets', () async {
@@ -180,6 +179,8 @@ void main() {
     group('fetchOldestTweet', () {
       int maxRowsPerRequet;
       TweetSessionEntity firstSessionResponse;
+      TweetSessionEntity secondSessionResponse;
+
       setUp(() {
         maxRowsPerRequet = 5;
         firstSessionResponse = TweetSessionEntity(
@@ -187,28 +188,59 @@ void main() {
             orderBy: TweetSessionOrder.latestFirst,
             tweets: [
               TweetEntity(
-                id: 'id_2',
+                id: 'id_4',
                 userName: 'user_2',
                 clientId: 2,
-                createdAt: '2020-01-01 00:00:02',
+                createdAt: '2020-02-04 00:00:02',
                 totalReply: 0,
                 totalLikes: 1,
                 anonymous: false,
-                content: 'content 2',
+                content: 'content 4',
                 avatar: 'http://site.com/avatar_2.png',
                 meta: TweetMeta(liked: false, owner: true),
                 lastReply: [],
               ),
               TweetEntity(
-                id: 'id_1',
+                id: 'id_3',
                 userName: 'user_1',
                 clientId: 1,
+                createdAt: '2020-02-03 00:00:01',
+                totalReply: 0,
+                totalLikes: 1,
+                anonymous: false,
+                content: 'content 3',
+                avatar: 'http://site.com/avatar_1.png',
+                meta: TweetMeta(liked: false, owner: true),
+                lastReply: [],
+              ),
+            ]);
+        secondSessionResponse = TweetSessionEntity(
+            hasMore: true,
+            orderBy: TweetSessionOrder.latestFirst,
+            tweets: [
+              TweetEntity(
+                id: 'id_2',
+                userName: 'user_1',
+                clientId: 1,
+                createdAt: '2020-01-02 00:00:01',
+                totalReply: 0,
+                totalLikes: 1,
+                anonymous: false,
+                content: 'content 2',
+                avatar: 'http://site.com/avatar_1.png',
+                meta: TweetMeta(liked: false, owner: true),
+                lastReply: [],
+              ),
+              TweetEntity(
+                id: 'id_1',
+                userName: 'user_2',
+                clientId: 2,
                 createdAt: '2020-01-01 00:00:01',
                 totalReply: 0,
                 totalLikes: 1,
                 anonymous: false,
                 content: 'content 1',
-                avatar: 'http://site.com/avatar_1.png',
+                avatar: 'http://site.com/avatar_2.png',
                 meta: TweetMeta(liked: false, owner: true),
                 lastReply: [],
               ),
@@ -225,6 +257,40 @@ void main() {
         // act
         final received = await sut.fetchOldestTweet();
         // assert
+        expect(expected, received);
+      });
+
+      test('should do pagination with the oldest tweets', () async {
+        // arrange
+        final sut = FeedUseCases(
+          repository: repository,
+          maxRows: maxRowsPerRequet,
+        );
+        final expected = right(
+          FeedCache(
+            tweets: [
+              ...firstSessionResponse.tweets,
+              ...secondSessionResponse.tweets,
+            ],
+          ),
+        );
+
+        when(repository.retrieve(option: anyNamed('option')))
+            .thenAnswer((_) async => right(firstSessionResponse));
+        await sut.fetchOldestTweet();
+
+        when(repository.retrieve(option: anyNamed('option')))
+            .thenAnswer((_) async => right(secondSessionResponse));
+        // act
+        final received = await sut.fetchOldestTweet();
+        // assert
+        verify(
+          repository.retrieve(
+              option: TweetRequestOption(
+            rows: maxRowsPerRequet,
+            after: firstSessionResponse.tweets.last.id,
+          )),
+        );
         expect(expected, received);
       });
     });
