@@ -41,6 +41,7 @@ void main() {
     group('fetchNewestTweet', () {
       TweetSessionEntity firstSessionResponse;
       TweetSessionEntity secondSessionResponse;
+      TweetSessionEntity thirdSessionResponse;
       int maxRowsPerRequet;
       setUp(() {
         maxRowsPerRequet = 5;
@@ -75,7 +76,6 @@ void main() {
                 lastReply: [],
               ),
             ]);
-
         secondSessionResponse = TweetSessionEntity(
             hasMore: false,
             orderBy: TweetSessionOrder.oldestFirst,
@@ -107,6 +107,11 @@ void main() {
                 lastReply: [],
               ),
             ]);
+        thirdSessionResponse = TweetSessionEntity(
+          hasMore: false,
+          orderBy: TweetSessionOrder.oldestFirst,
+          tweets: [],
+        );
       });
       test('should get the newest tweets', () async {
         // arrange
@@ -149,6 +154,25 @@ void main() {
             after: firstSessionResponse.tweets.first.id,
           )),
         );
+        // assert
+        expect(expected, received);
+      });
+      test('should not update cache if has no more tweets', () async {
+        // arrange
+        final sut =
+            FeedUseCases(repository: repository, maxRows: maxRowsPerRequet);
+
+        when(repository.retrieve(option: anyNamed('option')))
+            .thenAnswer((_) async => right(firstSessionResponse));
+        await sut.fetchNewestTweet();
+
+        when(repository.retrieve(option: anyNamed('option')))
+            .thenAnswer((_) async => right(secondSessionResponse));
+        final expected = await sut.fetchNewestTweet();
+        // act
+        when(repository.retrieve(option: anyNamed('option')))
+            .thenAnswer((_) async => right(thirdSessionResponse));
+        final received = await sut.fetchNewestTweet();
         // assert
         expect(expected, received);
       });

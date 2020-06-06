@@ -4,7 +4,7 @@ import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositorie
 import 'package:penhas/app/features/feed/presentation/feed_controller.dart';
 import 'package:penhas/app/features/feed/presentation/feed_page.dart';
 
-class FeedModule extends ModuleWidget {
+class FeedModule extends WidgetModule {
   @override
   List<Bind> get binds => [
         Bind(
