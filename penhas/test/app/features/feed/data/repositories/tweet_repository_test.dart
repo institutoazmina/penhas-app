@@ -69,6 +69,24 @@ void main() {
       });
     });
 
+    group('delete', () {
+      setUp(() async {
+        when(dataSource.delete(option: anyNamed('option')))
+            .thenAnswer((_) => Future.value(ValidField()));
+      });
+      test('should detete tweet from a valid session', () async {
+        // arrange
+        final requestOption = TweetEngageRequestOption(
+          tweetId: '200528T2055370004',
+        );
+        final expected = right(ValidField());
+        // act
+        final received = await repository.delete(option: requestOption);
+        // assert
+        expect(expected, received);
+      });
+    });
+
     group('like()', () {
       Map<String, Object> jsonData;
       setUp(() async {

@@ -45,6 +45,17 @@ class TweetRepository implements ITweetRepository {
   }
 
   @override
+  Future<Either<Failure, ValidField>> delete(
+      {TweetEngageRequestOption option}) async {
+    try {
+      final result = await _dataSource.delete(option: option);
+      return right(result);
+    } catch (e) {
+      return left(await _handleError(e));
+    }
+  }
+
+  @override
   Future<Either<Failure, ValidField>> create(
       {TweetCreateRequestOption option}) async {
     try {

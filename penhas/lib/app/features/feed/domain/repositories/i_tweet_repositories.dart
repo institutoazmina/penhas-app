@@ -18,4 +18,6 @@ abstract class ITweetRepository {
       {@required TweetEngageRequestOption option});
   Future<Either<Failure, ValidField>> comment(
       {@required TweetEngageRequestOption option});
+  Future<Either<Failure, ValidField>> delete(
+      {@required TweetEngageRequestOption option});
 }
