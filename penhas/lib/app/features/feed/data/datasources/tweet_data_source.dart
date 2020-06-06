@@ -15,12 +15,13 @@ abstract class ITweetDataSource {
   Future<ValidField> create({@required TweetCreateRequestOption option});
   Future<ValidField> report({@required TweetEngageRequestOption option});
   Future<ValidField> comment({@required TweetEngageRequestOption option});
+  Future<ValidField> delete({@required TweetEngageRequestOption option});
 }
 
 class TweetDataSource implements ITweetDataSource {
   final http.Client _apiClient;
   final IApiServerConfigure _serverConfiguration;
-  final Set<int> _successfulResponse = {200};
+  final Set<int> _successfulResponse = {200, 204};
   final Set<int> _invalidSessionCode = {401, 403};
 
   TweetDataSource({
@@ -124,6 +125,25 @@ class TweetDataSource implements ITweetDataSource {
     );
 
     final response = await _apiClient.post(httpRequest, headers: httpHeader);
+    if (_successfulResponse.contains(response.statusCode)) {
+      return ValidField();
+    } else if (_invalidSessionCode.contains(response.statusCode)) {
+      throw ApiProviderSessionExpection();
+    } else {
+      throw ApiProviderException(bodyContent: json.decode(response.body));
+    }
+  }
+
+  @override
+  Future<ValidField> delete({TweetEngageRequestOption option}) async {
+    final httpHeader = await _setupHttpHeader();
+    Map<String, String> queryParameters = {'id': option.tweetId};
+    final httpRequest = await _setupHttpRequest(
+      path: '/me/tweets',
+      queryParameters: queryParameters,
+    );
+
+    final response = await _apiClient.delete(httpRequest, headers: httpHeader);
     if (_successfulResponse.contains(response.statusCode)) {
       return ValidField();
     } else if (_invalidSessionCode.contains(response.statusCode)) {

@@ -95,6 +95,23 @@ void main() {
     );
   }
 
+  void _setUpMockPostHttpClientSuccess204() {
+    when(
+      apiClient.delete(
+        any,
+        headers: anyNamed('headers'),
+      ),
+    ).thenAnswer(
+      (_) async => http.Response(
+        '',
+        204,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+        },
+      ),
+    );
+  }
+
   group('FeedDataSource', () {
     group('retrieve()', () {
       String bodyContent;
@@ -270,6 +287,38 @@ void main() {
         final expected = ValidField();
         // act
         final received = await dataSource.comment(option: requestOption);
+        // assert
+        expect(expected, received);
+      });
+    });
+
+    group('delete()', () {
+      TweetEngageRequestOption requestOption;
+
+      setUp(() {
+        requestOption = TweetEngageRequestOption(tweetId: '200528T2055370004');
+      });
+
+      test('should perform a DELETE with X-API-Key', () async {
+        // arrange
+        final endPointPath = '/me/tweets';
+        final queryParameters = {'id': requestOption.tweetId};
+
+        final headers = await _setUpHttpHeader();
+        final request = _setuHttpRequest(endPointPath, queryParameters);
+        _setUpMockPostHttpClientSuccess204();
+        // act
+        await dataSource.delete(option: requestOption);
+        // assert
+        verify(apiClient.delete(request, headers: headers));
+      });
+
+      test('should get a valid ValidField for a successful delete', () async {
+        // arrange
+        _setUpMockPostHttpClientSuccess204();
+        final expected = ValidField();
+        // act
+        final received = await dataSource.delete(option: requestOption);
         // assert
         expect(expected, received);
       });
