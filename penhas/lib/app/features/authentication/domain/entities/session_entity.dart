@@ -10,4 +10,7 @@ class SessionEntity extends Equatable {
 
   @override
   List<Object> get props => [sessionToken];
+
+  @override
+  bool get stringify => true;
 }

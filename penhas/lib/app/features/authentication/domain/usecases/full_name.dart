@@ -21,6 +21,9 @@ class Fullname extends Equatable with MapValidatorFailure {
   @override
   List<Object> get props => [value];
 
+  @override
+  bool get stringify => true;
+
   static Either<Failure, String> _validate(String input) {
     if (input == null || input.isEmpty) {
       return left(FullnameInvalidFailure());

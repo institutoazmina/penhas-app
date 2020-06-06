@@ -17,4 +17,7 @@ class ResetPasswordResponseEntity extends Equatable {
 
   @override
   List<Object> get props => [message, digits, ttl, ttlRetry];
+
+  @override
+  bool get stringify => true;
 }
