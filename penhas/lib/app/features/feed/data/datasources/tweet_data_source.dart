@@ -61,13 +61,17 @@ class TweetDataSource implements ITweetDataSource {
   @override
   Future<ValidField> report({TweetEngageRequestOption option}) async {
     final httpHeader = await _setupHttpHeader();
-    Map<String, String> queryParameters = {'reason': option.message};
     final httpRequest = await _setupHttpRequest(
       path: '/timeline/${option.tweetId}/report',
-      queryParameters: queryParameters,
+      queryParameters: {},
     );
+    final bodyContent = Uri.encodeComponent(option.message);
 
-    final response = await _apiClient.post(httpRequest, headers: httpHeader);
+    final response = await _apiClient.post(
+      httpRequest,
+      headers: httpHeader,
+      body: 'reason=$bodyContent',
+    );
     if (_successfulResponse.contains(response.statusCode)) {
       return ValidField();
     } else if (_invalidSessionCode.contains(response.statusCode)) {
@@ -80,13 +84,17 @@ class TweetDataSource implements ITweetDataSource {
   @override
   Future<ValidField> comment({TweetEngageRequestOption option}) async {
     final httpHeader = await _setupHttpHeader();
-    Map<String, String> queryParameters = {'content': option.message};
     final httpRequest = await _setupHttpRequest(
       path: '/timeline/${option.tweetId}/comment',
-      queryParameters: queryParameters,
+      queryParameters: {},
     );
+    final bodyContent = Uri.encodeComponent(option.message);
 
-    final response = await _apiClient.post(httpRequest, headers: httpHeader);
+    final response = await _apiClient.post(
+      httpRequest,
+      headers: httpHeader,
+      body: 'content=$bodyContent',
+    );
     if (_successfulResponse.contains(response.statusCode)) {
       return ValidField();
     } else if (_invalidSessionCode.contains(response.statusCode)) {
@@ -118,13 +126,16 @@ class TweetDataSource implements ITweetDataSource {
   @override
   Future<ValidField> create({TweetCreateRequestOption option}) async {
     final httpHeader = await _setupHttpHeader();
-    Map<String, String> queryParameters = {'content': option.message};
     final httpRequest = await _setupHttpRequest(
       path: '/me/tweets',
-      queryParameters: queryParameters,
+      queryParameters: {},
     );
-
-    final response = await _apiClient.post(httpRequest, headers: httpHeader);
+    final bodyContent = Uri.encodeComponent(option.message);
+    final response = await _apiClient.post(
+      httpRequest,
+      headers: httpHeader,
+      body: 'content=$bodyContent',
+    );
     if (_successfulResponse.contains(response.statusCode)) {
       return ValidField();
     } else if (_invalidSessionCode.contains(response.statusCode)) {

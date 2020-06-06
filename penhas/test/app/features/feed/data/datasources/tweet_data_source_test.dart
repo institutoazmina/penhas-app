@@ -68,6 +68,7 @@ void main() {
     return when(apiClient.post(
       any,
       headers: anyNamed('headers'),
+      body: anyNamed('body'),
     ));
   }
 
@@ -166,17 +167,21 @@ void main() {
       test('should perform a POST with X-API-Key', () async {
         // arrange
         final endPointPath = '/timeline/${requestOption.tweetId}/report';
-        final queryParameters = {
-          'reason': requestOption.message,
-        };
+        final bodyContent = Uri.encodeComponent('esse tweet me ofende pq XPTO');
 
         final headers = await _setUpHttpHeader();
-        final request = _setuHttpRequest(endPointPath, queryParameters);
+        final request = _setuHttpRequest(endPointPath, {});
         _setUpMockPostHttpClientSuccess200(bodyContent);
         // act
         await dataSource.report(option: requestOption);
         // assert
-        verify(apiClient.post(request, headers: headers));
+        verify(
+          apiClient.post(
+            request,
+            headers: headers,
+            body: 'reason=esse%20tweet%20me%20ofende%20pq%20XPTO',
+          ),
+        );
       });
       test('should get a valid ValidField for a successful request', () async {
         // arrange
@@ -236,15 +241,21 @@ void main() {
       test('should perform a POST with X-API-Key', () async {
         // arrange
         final endPointPath = '/me/tweets';
-        final queryParameters = {'content': 'are you talk to me?'};
+        final bodyContent = Uri.encodeComponent('are you talk to me?');
 
         final headers = await _setUpHttpHeader();
-        final request = _setuHttpRequest(endPointPath, queryParameters);
+        final request = _setuHttpRequest(endPointPath, {});
         _setUpMockPostHttpClientSuccess200(bodyContent);
         // act
         await dataSource.create(option: requestOption);
         // assert
-        verify(apiClient.post(request, headers: headers));
+        verify(
+          apiClient.post(
+            request,
+            headers: headers,
+            body: 'content=are%20you%20talk%20to%20me%3F',
+          ),
+        );
       });
       test('should get a valid ValidField for a successful request', () async {
         // arrange
@@ -271,15 +282,21 @@ void main() {
       test('should perform a POST with X-API-Key', () async {
         // arrange
         final endPointPath = '/timeline/${requestOption.tweetId}/comment';
-        final queryParameters = {'content': 'um breve comentario'};
+        final bodyContent = Uri.encodeComponent('um breve comentario');
 
         final headers = await _setUpHttpHeader();
-        final request = _setuHttpRequest(endPointPath, queryParameters);
+        final request = _setuHttpRequest(endPointPath, {});
         _setUpMockPostHttpClientSuccess200(bodyContent);
         // act
         await dataSource.comment(option: requestOption);
         // assert
-        verify(apiClient.post(request, headers: headers));
+        verify(
+          apiClient.post(
+            request,
+            headers: headers,
+            body: 'content=um%20breve%20comentario',
+          ),
+        );
       });
       test('should get a valid ValidField for a successful request', () async {
         // arrange
