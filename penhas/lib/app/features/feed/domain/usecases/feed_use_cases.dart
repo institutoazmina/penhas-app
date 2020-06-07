@@ -74,6 +74,16 @@ class FeedUseCases {
     );
   }
 
+  Future<Either<Failure, FeedCache>> like(TweetEntity tweet) async {
+    final option = TweetEngageRequestOption(tweetId: tweet.id);
+    final result = await _repository.like(option: option);
+
+    return result.fold<Either<Failure, FeedCache>>(
+      (failure) => left(failure),
+      (session) => right(_rebuildFetchCache(session)),
+    );
+  }
+
   Future<Either<Failure, FeedCache>> comment(TweetEntity tweet) async {
     throw UnimplementedError();
     // final result = await _repository.comment(option: option);
@@ -148,7 +158,15 @@ class FeedUseCases {
     return FeedCache(tweets: _tweetCacheFetch);
   }
 
-  FeedCache _detailFetchCache(TweetEngageRequestOption option) {
-    throw UnimplementedError();
+  FeedCache _rebuildFetchCache(TweetEntity tweet) {
+    final index = _tweetCacheFetch.indexWhere(
+      (e) => e.id == tweet.id,
+    );
+
+    if (index >= 0) {
+      _tweetCacheFetch[index] = tweet;
+    }
+
+    return FeedCache(tweets: _tweetCacheFetch);
   }
 }
