@@ -54,6 +54,16 @@ class FeedUseCases {
     );
   }
 
+  Future<Either<Failure, ValidField>> create(String content) async {
+    final option = TweetCreateRequestOption(message: content);
+    final result = await _repository.create(option: option);
+
+    return result.fold<Either<Failure, ValidField>>(
+      (failure) => left(failure),
+      (session) => right(session),
+    );
+  }
+
   Future<Either<Failure, FeedCache>> delete(TweetEntity tweet) async {
     final option = TweetEngageRequestOption(tweetId: tweet.id);
     final result = await _repository.delete(option: option);
