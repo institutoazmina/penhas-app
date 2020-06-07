@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
@@ -63,6 +64,26 @@ class FeedUseCases {
     );
   }
 
+  Future<Either<Failure, FeedCache>> comment(TweetEntity tweet) async {
+    throw UnimplementedError();
+    // final result = await _repository.comment(option: option);
+
+    // return result.fold<Either<Failure, FeedCache>>(
+    //   (failure) => left(failure),
+    //   (session) => right(_detailFetchCache(option)),
+    // );
+  }
+
+  Future<Either<Failure, ValidField>> report(TweetEntity tweet) async {
+    final option = TweetEngageRequestOption(tweetId: tweet.id);
+    final result = await _repository.report(option: option);
+
+    return result.fold<Either<Failure, ValidField>>(
+      (failure) => left(failure),
+      (session) => right(session),
+    );
+  }
+
   TweetRequestOption _newestRequestOption() {
     if (_tweetCacheFetch.length == 0) {
       return TweetRequestOption(rows: _maxRowsPerRequest);
@@ -115,5 +136,9 @@ class FeedUseCases {
     );
 
     return FeedCache(tweets: _tweetCacheFetch);
+  }
+
+  FeedCache _detailFetchCache(TweetEngageRequestOption option) {
+    throw UnimplementedError();
   }
 }

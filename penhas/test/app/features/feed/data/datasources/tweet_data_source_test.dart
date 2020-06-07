@@ -158,7 +158,7 @@ void main() {
       TweetEngageRequestOption requestOption;
 
       setUp(() async {
-        bodyContent = '{message: "Report enviado"}';
+        bodyContent = '{"message": "Report enviado"}';
         requestOption = TweetEngageRequestOption(
           tweetId: '200520T0032210001',
           message: 'esse tweet me ofende pq XPTO',
@@ -167,7 +167,6 @@ void main() {
       test('should perform a POST with X-API-Key', () async {
         // arrange
         final endPointPath = '/timeline/${requestOption.tweetId}/report';
-        final bodyContent = Uri.encodeComponent('esse tweet me ofende pq XPTO');
 
         final headers = await _setUpHttpHeader();
         final request = _setuHttpRequest(endPointPath, {});

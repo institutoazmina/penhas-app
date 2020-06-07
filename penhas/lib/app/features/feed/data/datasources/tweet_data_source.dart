@@ -73,7 +73,7 @@ class TweetDataSource implements ITweetDataSource {
       body: 'reason=$bodyContent',
     );
     if (_successfulResponse.contains(response.statusCode)) {
-      return ValidField();
+      return ValidField.fromJson(json.decode(response.body));
     } else if (_invalidSessionCode.contains(response.statusCode)) {
       throw ApiProviderSessionExpection();
     } else {
