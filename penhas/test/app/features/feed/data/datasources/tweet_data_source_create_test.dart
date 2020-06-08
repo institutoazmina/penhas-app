@@ -4,7 +4,9 @@ import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart';
+import 'package:penhas/app/features/feed/data/models/tweet_model.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
+import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 
 import '../../../../../utils/json_util.dart';
 
@@ -83,14 +85,13 @@ void main() {
         bodyContent =
             JsonUtil.getStringSync(from: 'feed/tweet_create_response.json');
         requestOption = TweetCreateRequestOption(
-          message: 'are you talk to me?',
+          message: 'Mensagem 1',
         );
       });
       test('should perform a POST with X-API-Key', () async {
         // arrange
         final endPointPath = '/me/tweets';
-        final bodyContent = Uri.encodeComponent('are you talk to me?');
-
+        final bodyRequest = Uri.encodeComponent(requestOption.message);
         final headers = await _setUpHttpHeader();
         final request = _setuHttpRequest(endPointPath, {});
         _setUpMockPostHttpClientSuccess200(bodyContent);
@@ -101,14 +102,25 @@ void main() {
           apiClient.post(
             request,
             headers: headers,
-            body: 'content=are%20you%20talk%20to%20me%3F',
+            body: 'content=$bodyRequest',
           ),
         );
       });
       test('should get a valid ValidField for a successful request', () async {
         // arrange
         _setUpMockPostHttpClientSuccess200(bodyContent);
-        final expected = ValidField();
+        final expected = TweetModel(
+            id: '200608T1805540001',
+            userName: 'maria',
+            clientId: 424,
+            createdAt: '2020-06-08 18:05:54',
+            totalReply: 0,
+            totalLikes: 0,
+            anonymous: false,
+            content: 'Mensagem 1',
+            avatar: 'https:\/\/elasv2-api.appcivico.com\/avatar\/padrao.svg',
+            meta: TweetMeta(liked: false, owner: true),
+            lastReply: []);
         // act
         final received = await dataSource.create(option: requestOption);
         // assert

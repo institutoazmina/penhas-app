@@ -15,9 +15,9 @@ abstract class ITweetDataSource {
     @required TweetEngageRequestOption option,
   });
   Future<TweetModel> like({@required TweetEngageRequestOption option});
-  Future<ValidField> create({@required TweetCreateRequestOption option});
+  Future<TweetModel> create({@required TweetCreateRequestOption option});
+  Future<TweetModel> reply({@required TweetEngageRequestOption option});
   Future<ValidField> report({@required TweetEngageRequestOption option});
-  Future<ValidField> reply({@required TweetEngageRequestOption option});
   Future<ValidField> delete({@required TweetEngageRequestOption option});
 }
 
@@ -85,7 +85,7 @@ class TweetDataSource implements ITweetDataSource {
   }
 
   @override
-  Future<ValidField> reply({TweetEngageRequestOption option}) async {
+  Future<TweetModel> reply({TweetEngageRequestOption option}) async {
     final httpHeader = await _setupHttpHeader();
     final httpRequest = await _setupHttpRequest(
       path: '/timeline/${option.tweetId}/comment',
@@ -99,7 +99,7 @@ class TweetDataSource implements ITweetDataSource {
       body: 'content=$bodyContent',
     );
     if (_successfulResponse.contains(response.statusCode)) {
-      return ValidField();
+      return TweetModel.fromJson(json.decode(response.body));
     } else if (_invalidSessionCode.contains(response.statusCode)) {
       throw ApiProviderSessionExpection();
     } else {
@@ -127,7 +127,7 @@ class TweetDataSource implements ITweetDataSource {
   }
 
   @override
-  Future<ValidField> create({TweetCreateRequestOption option}) async {
+  Future<TweetModel> create({TweetCreateRequestOption option}) async {
     final httpHeader = await _setupHttpHeader();
     final httpRequest = await _setupHttpRequest(
       path: '/me/tweets',
@@ -139,8 +139,9 @@ class TweetDataSource implements ITweetDataSource {
       headers: httpHeader,
       body: 'content=$bodyContent',
     );
+
     if (_successfulResponse.contains(response.statusCode)) {
-      return ValidField();
+      return TweetModel.fromJson(json.decode(response.body));
     } else if (_invalidSessionCode.contains(response.statusCode)) {
       throw ApiProviderSessionExpection();
     } else {
