@@ -109,7 +109,7 @@ class TweetDataSource implements ITweetDataSource {
     final httpHeader = await _setupHttpHeader();
     final httpRequest = await _setupHttpRequest(
       path: '/timeline/${option.tweetId}/like',
-      queryParameters: Map<String, String>(),
+      queryParameters: {'remove': option.dislike ? '1' : null},
     );
 
     final response = await _apiClient.post(httpRequest, headers: httpHeader);

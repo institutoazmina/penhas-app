@@ -84,6 +84,16 @@ class FeedUseCases {
     );
   }
 
+  Future<Either<Failure, FeedCache>> unlike(TweetEntity tweet) async {
+    final option = TweetEngageRequestOption(tweetId: tweet.id, dislike: true);
+    final result = await _repository.like(option: option);
+
+    return result.fold<Either<Failure, FeedCache>>(
+      (failure) => left(failure),
+      (session) => right(_rebuildFetchCache(session)),
+    );
+  }
+
   Future<Either<Failure, FeedCache>> comment(TweetEntity tweet) async {
     throw UnimplementedError();
     // final result = await _repository.comment(option: option);

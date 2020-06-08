@@ -226,6 +226,44 @@ void main() {
         expect(expected, received);
       });
     });
+    group('dislike()', () {
+      String bodyContent;
+      TweetEngageRequestOption requestOption;
+
+      setUp(() async {
+        bodyContent =
+            JsonUtil.getStringSync(from: 'feed/tweet_like_response.json');
+        requestOption = TweetEngageRequestOption(
+          tweetId: '200520T0032210001',
+          dislike: true,
+        );
+      });
+      test('should perform a POST with X-API-Key', () async {
+        // arrange
+        final endPointPath = '/timeline/${requestOption.tweetId}/like';
+        final queryParameters = {'remove': '1'};
+
+        final headers = await _setUpHttpHeader();
+        final request = _setuHttpRequest(endPointPath, queryParameters);
+        _setUpMockPostHttpClientSuccess200(bodyContent);
+        // act
+        await dataSource.like(option: requestOption);
+        // assert
+        verify(apiClient.post(request, headers: headers));
+      });
+      test('should get a valid ValidField for a successful request', () async {
+        // arrange
+        _setUpMockPostHttpClientSuccess200(bodyContent);
+        final jsonData =
+            await JsonUtil.getJson(from: 'feed/tweet_like_response.json');
+        final expected = TweetModel.fromJson(jsonData['tweet']);
+        // act
+        final received = await dataSource.like(option: requestOption);
+        // assert
+        expect(expected, received);
+      });
+    });
+
     group('create()', () {
       String bodyContent;
       TweetCreateRequestOption requestOption;

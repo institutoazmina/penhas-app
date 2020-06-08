@@ -136,5 +136,118 @@ void main() {
         expect(expected, received);
       });
     });
+    group('unlike', () {
+      int maxRowsPerRequet;
+      TweetSessionEntity firstSessionResponse;
+      TweetEntity tweetEntity1;
+      TweetEntity tweetEntity2;
+      TweetEntity tweetEntity3;
+
+      setUp(() {
+        maxRowsPerRequet = 5;
+        tweetEntity1 = TweetEntity(
+          id: 'id_1',
+          userName: 'user_2',
+          clientId: 2,
+          createdAt: '2020-02-04 00:00:02',
+          totalReply: 0,
+          totalLikes: 1,
+          anonymous: false,
+          content: 'content 4',
+          avatar: 'http://site.com/avatar_2.png',
+          meta: TweetMeta(liked: true, owner: true),
+          lastReply: [],
+        );
+        tweetEntity3 = TweetEntity(
+          id: 'id_3',
+          userName: 'user_6',
+          clientId: 6,
+          createdAt: '2020-03-01 00:00:01',
+          totalReply: 0,
+          totalLikes: 1,
+          anonymous: false,
+          content: 'comment 3',
+          avatar: 'http://site.com/avatar_1.png',
+          meta: TweetMeta(liked: true, owner: true),
+          lastReply: [],
+        );
+        tweetEntity2 = TweetEntity(
+          id: 'id_2',
+          userName: 'user_1',
+          clientId: 1,
+          createdAt: '2020-02-03 00:00:01',
+          totalReply: 1,
+          totalLikes: 1,
+          anonymous: false,
+          content: 'content 3',
+          avatar: 'http://site.com/avatar_1.png',
+          meta: TweetMeta(liked: true, owner: true),
+          lastReply: [tweetEntity3],
+        );
+
+        firstSessionResponse = TweetSessionEntity(
+            hasMore: true,
+            orderBy: TweetSessionOrder.latestFirst,
+            tweets: [
+              tweetEntity1,
+              tweetEntity2,
+            ]);
+      });
+
+      test('main tweet should get updated cache', () async {
+        // arrange
+        final sut = FeedUseCases(
+          repository: repository,
+          maxRows: maxRowsPerRequet,
+        );
+        when(repository.retrieve(option: anyNamed('option')))
+            .thenAnswer((_) async => right(firstSessionResponse));
+        await sut.fetchOldestTweet();
+
+        final likeResponse = tweetEntity1.copyWith(
+            totalLikes: (tweetEntity1.totalLikes - 1),
+            meta: TweetMeta(liked: false, owner: true));
+        final expected = right(
+          FeedCache(tweets: [
+            likeResponse,
+            tweetEntity2,
+          ]),
+        );
+        when(repository.like(option: anyNamed('option')))
+            .thenAnswer((_) async => right(likeResponse));
+        // act
+        final received = await sut.unlike(tweetEntity1);
+        // assert
+        expect(received, expected);
+      });
+
+      test('sub tweet should get updated cache', () async {
+        // arrange
+        final sut = FeedUseCases(
+          repository: repository,
+          maxRows: maxRowsPerRequet,
+        );
+        when(repository.retrieve(option: anyNamed('option')))
+            .thenAnswer((_) async => right(firstSessionResponse));
+        await sut.fetchOldestTweet();
+
+        final likeResponse = tweetEntity3.copyWith(
+            totalLikes: 0, meta: TweetMeta(liked: false, owner: true));
+        when(repository.like(option: anyNamed('option')))
+            .thenAnswer((_) async => right(likeResponse));
+        final expected = right(
+          FeedCache(tweets: [
+            tweetEntity1,
+            tweetEntity2.copyWith(
+              lastReply: [likeResponse],
+            ),
+          ]),
+        );
+        // act
+        final received = await sut.unlike(tweetEntity3);
+        // assert
+        expect(expected, received);
+      });
+    });
   });
 }
