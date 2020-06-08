@@ -22,7 +22,7 @@ class TweetRepository implements ITweetRepository {
         this._networkInfo = networkInfo;
 
   @override
-  Future<Either<Failure, TweetSessionEntity>> retrieve({
+  Future<Either<Failure, TweetSessionEntity>> fetch({
     @required TweetRequestOption option,
   }) async {
     try {
@@ -34,10 +34,11 @@ class TweetRepository implements ITweetRepository {
   }
 
   @override
-  Future<Either<Failure, ValidField>> comment(
-      {TweetEngageRequestOption option}) async {
+  Future<Either<Failure, TweetSessionEntity>> current({
+    TweetEngageRequestOption option,
+  }) async {
     try {
-      final result = await _dataSource.reply(option: option);
+      final result = await _dataSource.current(option: option);
       return right(result);
     } catch (e) {
       return left(await _handleError(e));
@@ -45,21 +46,21 @@ class TweetRepository implements ITweetRepository {
   }
 
   @override
-  Future<Either<Failure, ValidField>> delete(
-      {TweetEngageRequestOption option}) async {
-    try {
-      final result = await _dataSource.delete(option: option);
-      return right(result);
-    } catch (e) {
-      return left(await _handleError(e));
-    }
-  }
-
-  @override
-  Future<Either<Failure, ValidField>> create(
+  Future<Either<Failure, TweetEntity>> create(
       {TweetCreateRequestOption option}) async {
     try {
       final result = await _dataSource.create(option: option);
+      return right(result);
+    } catch (e) {
+      return left(await _handleError(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, TweetEntity>> reply(
+      {TweetEngageRequestOption option}) async {
+    try {
+      final result = await _dataSource.reply(option: option);
       return right(result);
     } catch (e) {
       return left(await _handleError(e));
@@ -71,6 +72,17 @@ class TweetRepository implements ITweetRepository {
       {TweetEngageRequestOption option}) async {
     try {
       final result = await _dataSource.like(option: option);
+      return right(result);
+    } catch (e) {
+      return left(await _handleError(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ValidField>> delete(
+      {TweetEngageRequestOption option}) async {
+    try {
+      final result = await _dataSource.delete(option: option);
       return right(result);
     } catch (e) {
       return left(await _handleError(e));

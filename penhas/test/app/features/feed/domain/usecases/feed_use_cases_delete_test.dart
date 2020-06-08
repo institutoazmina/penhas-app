@@ -101,7 +101,7 @@ void main() {
           ]),
         );
 
-        when(repository.retrieve(option: anyNamed('option')))
+        when(repository.fetch(option: anyNamed('option')))
             .thenAnswer((_) async => right(firstSessionResponse));
         await sut.fetchNewestTweet();
 

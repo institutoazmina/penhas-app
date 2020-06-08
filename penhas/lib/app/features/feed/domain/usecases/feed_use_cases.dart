@@ -36,7 +36,7 @@ class FeedUseCases {
 
   Future<Either<Failure, FeedCache>> fetchNewestTweet() async {
     final option = _newestRequestOption();
-    final result = await _repository.retrieve(option: option);
+    final result = await _repository.fetch(option: option);
 
     return result.fold<Either<Failure, FeedCache>>(
       (failure) => left(failure),
@@ -46,7 +46,7 @@ class FeedUseCases {
 
   Future<Either<Failure, FeedCache>> fetchOldestTweet() async {
     final option = _oldestRequestOption();
-    final result = await _repository.retrieve(option: option);
+    final result = await _repository.fetch(option: option);
 
     return result.fold<Either<Failure, FeedCache>>(
       (failure) => left(failure),

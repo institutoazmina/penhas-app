@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/network/network_info.dart';
+import 'package:penhas/app/features/authentication/data/models/session_model.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_model.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_session_model.dart';
@@ -34,41 +35,55 @@ void main() {
 
   group('TweetRepository', () {
     TweetSessionModel sessionModel;
+
     setUp(() async {
       jsonSession = await JsonUtil.getJson(from: 'feed/retrieve_response.json');
       sessionModel = TweetSessionModel.fromJson(jsonSession);
       when(dataSource.fetch(option: anyNamed('option')))
           .thenAnswer((_) => Future.value(sessionModel));
     });
-    group('retrieve()', () {
+    group('fetch()', () {
       test('should retrieve tweets from a valid session', () async {
         // arrange
         final TweetSessionEntity expectedSession = sessionModel;
         // act
         final receivedSession =
-            await repository.retrieve(option: TweetRequestOption());
+            await repository.fetch(option: TweetRequestOption());
         // assert
         expect(receivedSession, right(expectedSession));
       });
     });
-
     group('create()', () {
       setUp(() async {
+        final jsonData =
+            await JsonUtil.getJson(from: 'feed/tweet_create_response.json');
         when(dataSource.create(option: anyNamed('option')))
-            .thenAnswer((_) => Future.value(ValidField()));
+            .thenAnswer((_) => Future.value(TweetModel.fromJson(jsonData)));
       });
       test('should create tweet from a valid session', () async {
         // arrange
-        final requestOption =
-            TweetCreateRequestOption(message: 'are you talk to me?');
-        final expected = right(ValidField());
+        final requestOption = TweetCreateRequestOption(message: 'Mensagem 1');
+        final expected = right(
+          TweetModel(
+            id: '200608T1805540001',
+            userName: 'maria',
+            clientId: 424,
+            createdAt: '2020-06-08 18:05:54',
+            totalReply: 0,
+            totalLikes: 0,
+            anonymous: false,
+            content: 'Mensagem 1',
+            avatar: 'https:\/\/elasv2-api.appcivico.com\/avatar\/padrao.svg',
+            meta: TweetMeta(liked: false, owner: true),
+            lastReply: [],
+          ),
+        );
         // act
         final received = await repository.create(option: requestOption);
         // assert
         expect(expected, received);
       });
     });
-
     group('delete', () {
       setUp(() async {
         when(dataSource.delete(option: anyNamed('option')))
@@ -86,7 +101,6 @@ void main() {
         expect(expected, received);
       });
     });
-
     group('like()', () {
       Map<String, Object> jsonData;
       setUp(() async {
@@ -97,7 +111,6 @@ void main() {
         when(dataSource.like(option: anyNamed('option')))
             .thenAnswer((_) => Future.value(tweetModel));
       });
-
       test('should favorite a valid tweet', () async {
         // arrange
         final requestOption =
@@ -121,11 +134,12 @@ void main() {
         expect(expected, received);
       });
     });
-
-    group('comment()', () {
+    group('reply()', () {
       setUp(() async {
+        final jsonData =
+            await JsonUtil.getJson(from: 'feed/tweet_reply_response.json');
         when(dataSource.reply(option: anyNamed('option')))
-            .thenAnswer((_) => Future.value(ValidField()));
+            .thenAnswer((_) => Future.value(TweetModel.fromJson(jsonData)));
       });
 
       test('should reply a valid tweet', () async {
@@ -134,9 +148,62 @@ void main() {
           tweetId: '200528T2055370004',
           message: 'um breve comentario',
         );
-        final expected = right(ValidField());
+        final expected = right(
+          TweetModel(
+            id: '200608T1809090001',
+            userName: 'rosa',
+            clientId: 551,
+            createdAt: '2020-06-08 18:09:09',
+            totalReply: 0,
+            totalLikes: 0,
+            anonymous: false,
+            content: 'um breve comentario',
+            avatar: 'https:\/\/elasv2-api.appcivico.com\/avatar\/padrao.svg',
+            meta: TweetMeta(liked: false, owner: true),
+            lastReply: [],
+          ),
+        );
         // act
-        final received = await repository.comment(option: requestOption);
+        final received = await repository.reply(option: requestOption);
+        // assert
+        expect(expected, received);
+      });
+    });
+    group('current()', () {
+      setUp(() async {
+        final jsonData =
+            await JsonUtil.getJson(from: 'feed/tweet_current_response.json');
+        when(dataSource.current(option: anyNamed('option'))).thenAnswer(
+          (_) => Future.value(TweetSessionModel.fromJson(jsonData)),
+        );
+      });
+
+      test('should get a current version of a tweet', () async {
+        // arrange
+        final requestOption = TweetEngageRequestOption(
+          tweetId: '200528T2055370004',
+        );
+        final expected = right(TweetSessionModel(
+          false,
+          TweetSessionOrder.latestFirst,
+          [
+            TweetModel(
+              id: '200608T1545460001',
+              userName: 'maria',
+              clientId: 551,
+              createdAt: '2020-06-08 15:45:46',
+              totalReply: 0,
+              totalLikes: 0,
+              anonymous: false,
+              content: 'Comentário 7',
+              avatar: 'https:\/\/elasv2-api.appcivico.com\/avatar\/padrao.svg',
+              meta: TweetMeta(liked: false, owner: true),
+              lastReply: [],
+            )
+          ],
+        ));
+        // act
+        final received = await repository.current(option: requestOption);
         // assert
         expect(expected, received);
       });
@@ -147,7 +214,6 @@ void main() {
         when(dataSource.report(option: anyNamed('option')))
             .thenAnswer((_) => Future.value(ValidField()));
       });
-
       test('should report a valid tweet', () async {
         // arrange
         final requestOption = TweetEngageRequestOption(

@@ -87,7 +87,7 @@ void main() {
           repository: repository,
           maxRows: maxRowsPerRequet,
         );
-        when(repository.retrieve(option: anyNamed('option')))
+        when(repository.fetch(option: anyNamed('option')))
             .thenAnswer((_) async => right(firstSessionResponse));
         await sut.fetchOldestTweet();
         final newTweet = TweetEntity(
@@ -112,7 +112,7 @@ void main() {
           tweetEntity2,
         ]);
 
-        when(repository.comment(option: anyNamed('option')))
+        when(repository.reply(option: anyNamed('option')))
             .thenAnswer((_) async => right(ValidField()));
         when(repository.current(option: anyNamed('option'))).thenAnswer(
             (_) async => right(TweetSessionEntity(

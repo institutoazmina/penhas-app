@@ -102,7 +102,7 @@ void main() {
       });
       test('should get the newest tweets', () async {
         // arrange
-        when(repository.retrieve(option: anyNamed('option')))
+        when(repository.fetch(option: anyNamed('option')))
             .thenAnswer((_) async => right(firstSessionResponse));
 
         final Either<Failure, FeedCache> expected =
@@ -117,7 +117,7 @@ void main() {
         // arrange
         final sut =
             FeedUseCases(repository: repository, maxRows: maxRowsPerRequet);
-        when(repository.retrieve(option: anyNamed('option')))
+        when(repository.fetch(option: anyNamed('option')))
             .thenAnswer((_) async => right(firstSessionResponse));
         final expected = right(
           FeedCache(
@@ -128,13 +128,13 @@ void main() {
           ),
         );
         await sut.fetchNewestTweet();
-        when(repository.retrieve(option: anyNamed('option')))
+        when(repository.fetch(option: anyNamed('option')))
             .thenAnswer((_) async => right(secondSessionResponse));
         // act
         final received = await sut.fetchNewestTweet();
         // assert
         verify(
-          repository.retrieve(
+          repository.fetch(
               option: TweetRequestOption(
             rows: maxRowsPerRequet,
             after: firstSessionResponse.tweets.first.id,
@@ -147,15 +147,15 @@ void main() {
         final sut =
             FeedUseCases(repository: repository, maxRows: maxRowsPerRequet);
 
-        when(repository.retrieve(option: anyNamed('option')))
+        when(repository.fetch(option: anyNamed('option')))
             .thenAnswer((_) async => right(firstSessionResponse));
         await sut.fetchNewestTweet();
 
-        when(repository.retrieve(option: anyNamed('option')))
+        when(repository.fetch(option: anyNamed('option')))
             .thenAnswer((_) async => right(secondSessionResponse));
         final expected = await sut.fetchNewestTweet();
         // act
-        when(repository.retrieve(option: anyNamed('option')))
+        when(repository.fetch(option: anyNamed('option')))
             .thenAnswer((_) async => right(thirdSessionResponse));
         final received = await sut.fetchNewestTweet();
         // assert
@@ -266,7 +266,7 @@ void main() {
       });
       test('should get the newest tweets for first time', () async {
         // arrange
-        when(repository.retrieve(option: anyNamed('option')))
+        when(repository.fetch(option: anyNamed('option')))
             .thenAnswer((_) async => right(firstSessionResponse));
 
         final Either<Failure, FeedCache> expected =
@@ -293,17 +293,17 @@ void main() {
           ),
         );
 
-        when(repository.retrieve(option: anyNamed('option')))
+        when(repository.fetch(option: anyNamed('option')))
             .thenAnswer((_) async => right(firstSessionResponse));
         await sut.fetchOldestTweet();
 
-        when(repository.retrieve(option: anyNamed('option')))
+        when(repository.fetch(option: anyNamed('option')))
             .thenAnswer((_) async => right(secondSessionResponse));
         // act
         final received = await sut.fetchOldestTweet();
         // assert
         verify(
-          repository.retrieve(
+          repository.fetch(
               option: TweetRequestOption(
             rows: maxRowsPerRequet,
             after: firstSessionResponse.tweets.last.id,
@@ -328,17 +328,17 @@ void main() {
           ),
         );
 
-        when(repository.retrieve(option: anyNamed('option')))
+        when(repository.fetch(option: anyNamed('option')))
             .thenAnswer((_) async => right(firstSessionResponse));
         await sut.fetchOldestTweet();
 
-        when(repository.retrieve(option: anyNamed('option')))
+        when(repository.fetch(option: anyNamed('option')))
             .thenAnswer((_) async => right(thirdSessionResponse));
         // act
         final received = await sut.fetchOldestTweet();
         // assert
         verify(
-          repository.retrieve(
+          repository.fetch(
               option: TweetRequestOption(
             rows: maxRowsPerRequet,
             after: firstSessionResponse.tweets.last.id,

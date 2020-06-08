@@ -70,7 +70,7 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
     final requestOption =
         TweetEngageRequestOption(tweetId: tweet.id, message: tweetContent);
     _progress = ObservableFuture(
-      repository.comment(
+      repository.reply(
         option: requestOption,
       ),
     );

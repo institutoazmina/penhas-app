@@ -48,7 +48,7 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
   @action
   Future<void> fetchNextPage() async {
     _progress = ObservableFuture(
-      repository.retrieve(option: fetchOption),
+      repository.fetch(option: fetchOption),
     );
 
     final response = await _progress;
