@@ -4,7 +4,9 @@ import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart';
+import 'package:penhas/app/features/feed/data/models/tweet_model.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
+import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 
 import '../../../../../utils/json_util.dart';
 
@@ -54,31 +56,12 @@ void main() {
     );
   }
 
-  PostExpectation<Future<http.Response>> _mockGetRequest() {
-    return when(apiClient.get(
-      any,
-      headers: anyNamed('headers'),
-    ));
-  }
-
   PostExpectation<Future<http.Response>> _mockPostRequest() {
     return when(apiClient.post(
       any,
       headers: anyNamed('headers'),
       body: anyNamed('body'),
     ));
-  }
-
-  void _setUpMockGetHttpClientSuccess200(String bodyContent) {
-    _mockGetRequest().thenAnswer(
-      (_) async => http.Response(
-        bodyContent,
-        200,
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-        },
-      ),
-    );
   }
 
   void _setUpMockPostHttpClientSuccess200(String bodyContent) {
@@ -93,23 +76,6 @@ void main() {
     );
   }
 
-  void _setUpMockPostHttpClientSuccess204() {
-    when(
-      apiClient.delete(
-        any,
-        headers: anyNamed('headers'),
-      ),
-    ).thenAnswer(
-      (_) async => http.Response(
-        '',
-        204,
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-        },
-      ),
-    );
-  }
-
   group('FeedDataSource', () {
     group('reply()', () {
       String bodyContent;
@@ -117,7 +83,7 @@ void main() {
 
       setUp(() async {
         bodyContent =
-            JsonUtil.getStringSync(from: 'feed/tweet_create_response.json');
+            JsonUtil.getStringSync(from: 'feed/tweet_reply_response.json');
         requestOption = TweetEngageRequestOption(
           tweetId: '200528T2055370004',
           message: 'um breve comentario',
@@ -126,8 +92,7 @@ void main() {
       test('should perform a POST with X-API-Key', () async {
         // arrange
         final endPointPath = '/timeline/${requestOption.tweetId}/comment';
-        final bodyContent = Uri.encodeComponent('um breve comentario');
-
+        final bodyRequest = Uri.encodeComponent('um breve comentario');
         final headers = await _setUpHttpHeader();
         final request = _setuHttpRequest(endPointPath, {});
         _setUpMockPostHttpClientSuccess200(bodyContent);
@@ -138,14 +103,26 @@ void main() {
           apiClient.post(
             request,
             headers: headers,
-            body: 'content=um%20breve%20comentario',
+            body: 'content=$bodyRequest',
           ),
         );
       });
       test('should get a valid ValidField for a successful request', () async {
         // arrange
         _setUpMockPostHttpClientSuccess200(bodyContent);
-        final expected = ValidField();
+        final expected = TweetModel(
+          id: '200608T1809090001',
+          userName: 'rosa',
+          clientId: 551,
+          createdAt: '2020-06-08 18:09:09',
+          totalReply: 0,
+          totalLikes: 0,
+          anonymous: false,
+          content: 'um breve comentario',
+          avatar: 'https:\/\/elasv2-api.appcivico.com\/avatar\/padrao.svg',
+          meta: TweetMeta(liked: false, owner: true),
+          lastReply: [],
+        );
         // act
         final received = await dataSource.reply(option: requestOption);
         // assert
