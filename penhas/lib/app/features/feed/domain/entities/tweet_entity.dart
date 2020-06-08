@@ -47,6 +47,33 @@ class TweetEntity extends Equatable {
   String toString() {
     return 'TweetEntity{id: ${id.toString()}, name: ${userName.toString()}, clientId: ${clientId.toString()}, createdAt: ${createdAt.toString()}, totalReply: ${totalReply.toString()}, totalLikes: ${totalLikes.toString()}, anonymous: ${anonymous.toString()}, content: ${content.toString()}, avatar: ${avatar.toString()}, meta: ${meta.toString()}, lastReplay: ${lastReply.toString()}}';
   }
+
+  TweetEntity copyWith({
+    String id,
+    String userName,
+    int clientId,
+    String createdAt,
+    int totalReply,
+    int totalLikes,
+    bool anonymous,
+    String content,
+    String avatar,
+    TweetMeta meta,
+    List<TweetEntity> lastReply,
+  }) {
+    return TweetEntity(
+      id: id ?? this.id,
+      userName: userName ?? this.userName,
+      clientId: clientId ?? this.clientId,
+      createdAt: createdAt ?? this.createdAt,
+      totalReply: totalReply ?? this.totalReply,
+      totalLikes: totalLikes ?? this.totalLikes,
+      anonymous: anonymous ?? this.anonymous,
+      content: content ?? this.content,
+      avatar: avatar ?? this.avatar,
+      meta: meta ?? this.meta,
+    );
+  }
 }
 
 class TweetMeta extends Equatable {

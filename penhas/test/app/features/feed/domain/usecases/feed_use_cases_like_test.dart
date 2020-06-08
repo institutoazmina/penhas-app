@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
 import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
@@ -91,19 +90,9 @@ void main() {
             .thenAnswer((_) async => right(firstSessionResponse));
         await sut.fetchOldestTweet();
 
-        final likeResponse = TweetEntity(
-          id: tweetEntity1.id,
-          userName: tweetEntity1.userName,
-          clientId: tweetEntity1.clientId,
-          createdAt: tweetEntity1.createdAt,
-          totalReply: tweetEntity1.totalReply,
-          totalLikes: (tweetEntity1.totalLikes + 1),
-          anonymous: tweetEntity1.anonymous,
-          content: tweetEntity1.content,
-          avatar: tweetEntity1.avatar,
-          meta: tweetEntity1.meta,
-          lastReply: [],
-        );
+        final likeResponse = tweetEntity1.copyWith(
+            totalLikes: (tweetEntity1.totalLikes + 1),
+            meta: TweetMeta(liked: true, owner: true));
         final expected = right(
           FeedCache(tweets: [
             likeResponse,
@@ -128,35 +117,17 @@ void main() {
             .thenAnswer((_) async => right(firstSessionResponse));
         await sut.fetchOldestTweet();
 
-        final likeResponse = TweetEntity(
-            id: tweetEntity3.id,
-            userName: tweetEntity3.userName,
-            clientId: tweetEntity3.clientId,
-            createdAt: tweetEntity3.createdAt,
-            totalReply: tweetEntity3.totalReply,
-            totalLikes: (tweetEntity3.totalLikes + 1),
-            anonymous: tweetEntity3.anonymous,
-            content: tweetEntity3.content,
-            avatar: tweetEntity3.avatar,
-            meta: tweetEntity3.meta);
+        final likeResponse = tweetEntity3.copyWith(
+            totalLikes: tweetEntity3.totalLikes + 1,
+            meta: TweetMeta(liked: true, owner: true));
         when(repository.like(option: anyNamed('option')))
             .thenAnswer((_) async => right(likeResponse));
         final expected = right(
           FeedCache(tweets: [
             tweetEntity1,
-            TweetEntity(
-              id: 'id_2',
-              userName: 'user_1',
-              clientId: 1,
-              createdAt: '2020-02-03 00:00:01',
-              totalReply: 1,
-              totalLikes: 0,
-              anonymous: false,
-              content: 'content 3',
-              avatar: 'http://site.com/avatar_1.png',
-              meta: TweetMeta(liked: false, owner: true),
+            tweetEntity2.copyWith(
               lastReply: [likeResponse],
-            )
+            ),
           ]),
         );
         // act

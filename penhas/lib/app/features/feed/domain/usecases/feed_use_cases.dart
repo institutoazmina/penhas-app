@@ -158,15 +158,40 @@ class FeedUseCases {
     return FeedCache(tweets: _tweetCacheFetch);
   }
 
-  FeedCache _rebuildFetchCache(TweetEntity tweet) {
+  FeedCache _rebuildFetchCache(TweetEntity newTweet) {
     final index = _tweetCacheFetch.indexWhere(
-      (e) => e.id == tweet.id,
+      (e) =>
+          (e.id == newTweet.id) ||
+          (e.lastReply.isNotEmpty && e.lastReply.first.id == newTweet.id),
     );
 
     if (index >= 0) {
-      _tweetCacheFetch[index] = tweet;
+      final currentTweet = _tweetCacheFetch[index];
+      if (currentTweet.id == newTweet.id) {
+        _tweetCacheFetch[index] = newTweet.copyWith(
+          lastReply: currentTweet.lastReply,
+        );
+      }
+      // se a tweet for um reply, reconstrua o principal com o novo reply
+      else if (currentTweet.lastReply.isNotEmpty &&
+          currentTweet.lastReply.first.id == newTweet.id) {
+        final reply = newTweet.copyWith(
+            lastReply: currentTweet.lastReply.first.lastReply);
+        final princialTweet = currentTweet.copyWith(lastReply: [reply]);
+        _tweetCacheFetch[index] = princialTweet;
+      }
     }
 
     return FeedCache(tweets: _tweetCacheFetch);
   }
 }
+
+/*
+var oldTweet = _tweetCacheFetch[index];
+      if (_tweetCacheFetch[index].id == tweet.id) {
+        _tweetCacheFetch[index] = _rebuildTweet(tweet);
+      } else if (_tweetCacheFetch[index].lastReply.isNotEmpty &&
+          (_tweetCacheFetch[index].lastReply.first.id == tweet.id)) {
+        _tweetCacheFetch[index].lastReply = tweet;
+      }
+*/
