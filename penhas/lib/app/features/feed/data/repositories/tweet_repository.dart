@@ -26,7 +26,7 @@ class TweetRepository implements ITweetRepository {
     @required TweetRequestOption option,
   }) async {
     try {
-      final result = await _dataSource.retrieve(option: option);
+      final result = await _dataSource.fetch(option: option);
       return right(result);
     } catch (e) {
       return left(await _handleError(e));
@@ -37,7 +37,7 @@ class TweetRepository implements ITweetRepository {
   Future<Either<Failure, ValidField>> comment(
       {TweetEngageRequestOption option}) async {
     try {
-      final result = await _dataSource.comment(option: option);
+      final result = await _dataSource.reply(option: option);
       return right(result);
     } catch (e) {
       return left(await _handleError(e));

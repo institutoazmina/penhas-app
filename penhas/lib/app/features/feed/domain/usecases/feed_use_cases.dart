@@ -94,7 +94,10 @@ class FeedUseCases {
     );
   }
 
-  Future<Either<Failure, FeedCache>> comment(TweetEntity tweet) async {
+  Future<Either<Failure, FeedCache>> comment({
+    @required TweetEntity mainTweet,
+    @required String comment,
+  }) async {
     throw UnimplementedError();
     // final result = await _repository.comment(option: option);
 

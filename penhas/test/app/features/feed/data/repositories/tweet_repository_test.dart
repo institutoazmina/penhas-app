@@ -37,7 +37,7 @@ void main() {
     setUp(() async {
       jsonSession = await JsonUtil.getJson(from: 'feed/retrieve_response.json');
       sessionModel = TweetSessionModel.fromJson(jsonSession);
-      when(dataSource.retrieve(option: anyNamed('option')))
+      when(dataSource.fetch(option: anyNamed('option')))
           .thenAnswer((_) => Future.value(sessionModel));
     });
     group('retrieve()', () {
@@ -124,7 +124,7 @@ void main() {
 
     group('comment()', () {
       setUp(() async {
-        when(dataSource.comment(option: anyNamed('option')))
+        when(dataSource.reply(option: anyNamed('option')))
             .thenAnswer((_) => Future.value(ValidField()));
       });
 
