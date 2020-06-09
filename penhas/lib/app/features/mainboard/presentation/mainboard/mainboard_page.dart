@@ -37,11 +37,12 @@ class _MainboardPageState
             height: 56,
             child: Row(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 IconButton(
                   iconSize: 30.0,
-                  padding: EdgeInsets.only(left: 28.0),
+                  constraints: BoxConstraints(minWidth: 80.0),
+                  padding: EdgeInsets.only(left: 16.0),
                   tooltip: 'Feed',
                   icon: _buildBottomBarIcon(0, controller.selectedIndex),
                   onPressed: () => controller.changePage(0),
@@ -50,6 +51,7 @@ class _MainboardPageState
                 ),
                 IconButton(
                   iconSize: 30.0,
+                  constraints: BoxConstraints(minWidth: 80.0),
                   padding: EdgeInsets.only(right: 28.0),
                   icon: _buildBottomBarIcon(1, controller.selectedIndex),
                   onPressed: () => controller.changePage(1),
@@ -58,6 +60,7 @@ class _MainboardPageState
                 ),
                 IconButton(
                   iconSize: 30.0,
+                  constraints: BoxConstraints(minWidth: 80.0),
                   padding: EdgeInsets.only(left: 28.0),
                   icon: _buildBottomBarIcon(2, controller.selectedIndex),
                   onPressed: () => controller.changePage(2),
@@ -66,7 +69,8 @@ class _MainboardPageState
                 ),
                 IconButton(
                   iconSize: 30.0,
-                  padding: EdgeInsets.only(right: 28.0),
+                  constraints: BoxConstraints(minWidth: 80.0),
+                  padding: EdgeInsets.only(right: 16.0),
                   icon: _buildBottomBarIcon(3, controller.selectedIndex),
                   onPressed: () => controller.changePage(3),
                   splashColor: Colors.white,
