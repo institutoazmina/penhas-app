@@ -20,13 +20,13 @@ mixin _$FeedController on _FeedControllerBase, Store {
   final _$_progressAtom = Atom(name: '_FeedControllerBase._progress');
 
   @override
-  ObservableFuture<Either<Failure, TweetSessionEntity>> get _progress {
+  ObservableFuture<Either<Failure, FeedCache>> get _progress {
     _$_progressAtom.reportRead();
     return super._progress;
   }
 
   @override
-  set _progress(ObservableFuture<Either<Failure, TweetSessionEntity>> value) {
+  set _progress(ObservableFuture<Either<Failure, FeedCache>> value) {
     _$_progressAtom.reportWrite(value, super._progress, () {
       super._progress = value;
     });
