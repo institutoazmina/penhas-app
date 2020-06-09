@@ -90,3 +90,5 @@ class TweetMeta extends Equatable {
     return 'TweetMeta {liked: ${liked.toString()}, owner: ${owner.toString()}}';
   }
 }
+
+class TweetGap extends TweetEntity {}

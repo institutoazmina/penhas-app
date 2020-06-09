@@ -54,13 +54,13 @@ class FeedUseCases {
     );
   }
 
-  Future<Either<Failure, ValidField>> create(String content) async {
+  Future<Either<Failure, FeedCache>> create(String content) async {
     final option = TweetCreateRequestOption(message: content);
     final result = await _repository.create(option: option);
 
-    return result.fold<Either<Failure, ValidField>>(
+    return result.fold<Either<Failure, FeedCache>>(
       (failure) => left(failure),
-      (session) => right(session),
+      (session) => right(_insertCreatedTweetIntoCache(session)),
     );
   }
 
@@ -197,14 +197,19 @@ class FeedUseCases {
 
     return FeedCache(tweets: _tweetCacheFetch);
   }
-}
 
-/*
-var oldTweet = _tweetCacheFetch[index];
-      if (_tweetCacheFetch[index].id == tweet.id) {
-        _tweetCacheFetch[index] = _rebuildTweet(tweet);
-      } else if (_tweetCacheFetch[index].lastReply.isNotEmpty &&
-          (_tweetCacheFetch[index].lastReply.first.id == tweet.id)) {
-        _tweetCacheFetch[index].lastReply = tweet;
-      }
-*/
+  // TODO
+  // Insere o tweet criado justo com uma marcação de gap entre o que existia
+  // e o novo. Pretendo usar estar marcação para, no futuro, recriar o gap
+  // de conteúdo entre eles
+  FeedCache _insertCreatedTweetIntoCache(TweetEntity tweet) {
+    if (tweet != null) {
+      _tweetCacheFetch.insertAll(
+        0,
+        [tweet, TweetGap()],
+      );
+    }
+
+    return FeedCache(tweets: _tweetCacheFetch);
+  }
+}
