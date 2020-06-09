@@ -173,9 +173,21 @@ class FeedUseCases {
   }
 
   FeedCache _deleteFetchCache(TweetEntity tweet) {
-    _tweetCacheFetch.removeWhere(
-      (e) => e.id == tweet.id,
+    final index = _tweetCacheFetch.indexWhere(
+      (e) =>
+          (e.id == tweet.id) ||
+          (e.lastReply.isNotEmpty && e.lastReply.first.id == tweet.id),
     );
+
+    if (index >= 0 && _tweetCacheFetch[index].id == tweet.id) {
+      _tweetCacheFetch.removeAt(index);
+    } else {
+      final current = _tweetCacheFetch[index];
+      _tweetCacheFetch[index] = _tweetCacheFetch[index].copyWith(
+        lastReply: [],
+        totalReply: current.totalReply - 1,
+      );
+    }
 
     return FeedCache(tweets: _tweetCacheFetch);
   }
