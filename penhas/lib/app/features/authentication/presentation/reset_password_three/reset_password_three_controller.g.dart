@@ -13,26 +13,25 @@ mixin _$ResetPasswordThreeController
   Computed<StoreState> _$currentStateComputed;
 
   @override
-  StoreState get currentState => (_$currentStateComputed ??=
-          Computed<StoreState>(() => super.currentState))
-      .value;
+  StoreState get currentState =>
+      (_$currentStateComputed ??= Computed<StoreState>(() => super.currentState,
+              name: '_ResetPasswordThreeControllerBase.currentState'))
+          .value;
 
   final _$_progressAtom =
       Atom(name: '_ResetPasswordThreeControllerBase._progress');
 
   @override
   ObservableFuture<Either<Failure, ValidField>> get _progress {
-    _$_progressAtom.context.enforceReadPolicy(_$_progressAtom);
-    _$_progressAtom.reportObserved();
+    _$_progressAtom.reportRead();
     return super._progress;
   }
 
   @override
   set _progress(ObservableFuture<Either<Failure, ValidField>> value) {
-    _$_progressAtom.context.conditionallyRunInAction(() {
+    _$_progressAtom.reportWrite(value, super._progress, () {
       super._progress = value;
-      _$_progressAtom.reportChanged();
-    }, _$_progressAtom, name: '${_$_progressAtom.name}_set');
+    });
   }
 
   final _$errorMessageAtom =
@@ -40,17 +39,15 @@ mixin _$ResetPasswordThreeController
 
   @override
   String get errorMessage {
-    _$errorMessageAtom.context.enforceReadPolicy(_$errorMessageAtom);
-    _$errorMessageAtom.reportObserved();
+    _$errorMessageAtom.reportRead();
     return super.errorMessage;
   }
 
   @override
   set errorMessage(String value) {
-    _$errorMessageAtom.context.conditionallyRunInAction(() {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
       super.errorMessage = value;
-      _$errorMessageAtom.reportChanged();
-    }, _$errorMessageAtom, name: '${_$errorMessageAtom.name}_set');
+    });
   }
 
   final _$warningPasswordAtom =
@@ -58,20 +55,19 @@ mixin _$ResetPasswordThreeController
 
   @override
   String get warningPassword {
-    _$warningPasswordAtom.context.enforceReadPolicy(_$warningPasswordAtom);
-    _$warningPasswordAtom.reportObserved();
+    _$warningPasswordAtom.reportRead();
     return super.warningPassword;
   }
 
   @override
   set warningPassword(String value) {
-    _$warningPasswordAtom.context.conditionallyRunInAction(() {
+    _$warningPasswordAtom.reportWrite(value, super.warningPassword, () {
       super.warningPassword = value;
-      _$warningPasswordAtom.reportChanged();
-    }, _$warningPasswordAtom, name: '${_$warningPasswordAtom.name}_set');
+    });
   }
 
-  final _$nextStepPressedAsyncAction = AsyncAction('nextStepPressed');
+  final _$nextStepPressedAsyncAction =
+      AsyncAction('_ResetPasswordThreeControllerBase.nextStepPressed');
 
   @override
   Future<void> nextStepPressed() {
@@ -83,8 +79,8 @@ mixin _$ResetPasswordThreeController
 
   @override
   void setPassword(String password) {
-    final _$actionInfo =
-        _$_ResetPasswordThreeControllerBaseActionController.startAction();
+    final _$actionInfo = _$_ResetPasswordThreeControllerBaseActionController
+        .startAction(name: '_ResetPasswordThreeControllerBase.setPassword');
     try {
       return super.setPassword(password);
     } finally {
@@ -95,8 +91,10 @@ mixin _$ResetPasswordThreeController
 
   @override
   String toString() {
-    final string =
-        'errorMessage: ${errorMessage.toString()},warningPassword: ${warningPassword.toString()},currentState: ${currentState.toString()}';
-    return '{$string}';
+    return '''
+errorMessage: $errorMessage,
+warningPassword: $warningPassword,
+currentState: $currentState
+    ''';
   }
 }

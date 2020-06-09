@@ -13,24 +13,23 @@ mixin _$SignUpThreeController on _SignUpThreeControllerBase, Store {
 
   @override
   PageProgressState get currentState => (_$currentStateComputed ??=
-          Computed<PageProgressState>(() => super.currentState))
+          Computed<PageProgressState>(() => super.currentState,
+              name: '_SignUpThreeControllerBase.currentState'))
       .value;
 
   final _$_progressAtom = Atom(name: '_SignUpThreeControllerBase._progress');
 
   @override
   ObservableFuture<Either<Failure, SessionEntity>> get _progress {
-    _$_progressAtom.context.enforceReadPolicy(_$_progressAtom);
-    _$_progressAtom.reportObserved();
+    _$_progressAtom.reportRead();
     return super._progress;
   }
 
   @override
   set _progress(ObservableFuture<Either<Failure, SessionEntity>> value) {
-    _$_progressAtom.context.conditionallyRunInAction(() {
+    _$_progressAtom.reportWrite(value, super._progress, () {
       super._progress = value;
-      _$_progressAtom.reportChanged();
-    }, _$_progressAtom, name: '${_$_progressAtom.name}_set');
+    });
   }
 
   final _$warningEmailAtom =
@@ -38,17 +37,15 @@ mixin _$SignUpThreeController on _SignUpThreeControllerBase, Store {
 
   @override
   String get warningEmail {
-    _$warningEmailAtom.context.enforceReadPolicy(_$warningEmailAtom);
-    _$warningEmailAtom.reportObserved();
+    _$warningEmailAtom.reportRead();
     return super.warningEmail;
   }
 
   @override
   set warningEmail(String value) {
-    _$warningEmailAtom.context.conditionallyRunInAction(() {
+    _$warningEmailAtom.reportWrite(value, super.warningEmail, () {
       super.warningEmail = value;
-      _$warningEmailAtom.reportChanged();
-    }, _$warningEmailAtom, name: '${_$warningEmailAtom.name}_set');
+    });
   }
 
   final _$warningPasswordAtom =
@@ -56,17 +53,15 @@ mixin _$SignUpThreeController on _SignUpThreeControllerBase, Store {
 
   @override
   String get warningPassword {
-    _$warningPasswordAtom.context.enforceReadPolicy(_$warningPasswordAtom);
-    _$warningPasswordAtom.reportObserved();
+    _$warningPasswordAtom.reportRead();
     return super.warningPassword;
   }
 
   @override
   set warningPassword(String value) {
-    _$warningPasswordAtom.context.conditionallyRunInAction(() {
+    _$warningPasswordAtom.reportWrite(value, super.warningPassword, () {
       super.warningPassword = value;
-      _$warningPasswordAtom.reportChanged();
-    }, _$warningPasswordAtom, name: '${_$warningPasswordAtom.name}_set');
+    });
   }
 
   final _$errorMessageAtom =
@@ -74,20 +69,19 @@ mixin _$SignUpThreeController on _SignUpThreeControllerBase, Store {
 
   @override
   String get errorMessage {
-    _$errorMessageAtom.context.enforceReadPolicy(_$errorMessageAtom);
-    _$errorMessageAtom.reportObserved();
+    _$errorMessageAtom.reportRead();
     return super.errorMessage;
   }
 
   @override
   set errorMessage(String value) {
-    _$errorMessageAtom.context.conditionallyRunInAction(() {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
       super.errorMessage = value;
-      _$errorMessageAtom.reportChanged();
-    }, _$errorMessageAtom, name: '${_$errorMessageAtom.name}_set');
+    });
   }
 
-  final _$registerUserPressAsyncAction = AsyncAction('registerUserPress');
+  final _$registerUserPressAsyncAction =
+      AsyncAction('_SignUpThreeControllerBase.registerUserPress');
 
   @override
   Future<void> registerUserPress() {
@@ -99,8 +93,8 @@ mixin _$SignUpThreeController on _SignUpThreeControllerBase, Store {
 
   @override
   void setEmail(String email) {
-    final _$actionInfo =
-        _$_SignUpThreeControllerBaseActionController.startAction();
+    final _$actionInfo = _$_SignUpThreeControllerBaseActionController
+        .startAction(name: '_SignUpThreeControllerBase.setEmail');
     try {
       return super.setEmail(email);
     } finally {
@@ -110,8 +104,8 @@ mixin _$SignUpThreeController on _SignUpThreeControllerBase, Store {
 
   @override
   void setPassword(String password) {
-    final _$actionInfo =
-        _$_SignUpThreeControllerBaseActionController.startAction();
+    final _$actionInfo = _$_SignUpThreeControllerBaseActionController
+        .startAction(name: '_SignUpThreeControllerBase.setPassword');
     try {
       return super.setPassword(password);
     } finally {
@@ -121,8 +115,11 @@ mixin _$SignUpThreeController on _SignUpThreeControllerBase, Store {
 
   @override
   String toString() {
-    final string =
-        'warningEmail: ${warningEmail.toString()},warningPassword: ${warningPassword.toString()},errorMessage: ${errorMessage.toString()},currentState: ${currentState.toString()}';
-    return '{$string}';
+    return '''
+warningEmail: ${warningEmail},
+warningPassword: ${warningPassword},
+errorMessage: ${errorMessage},
+currentState: ${currentState}
+    ''';
   }
 }

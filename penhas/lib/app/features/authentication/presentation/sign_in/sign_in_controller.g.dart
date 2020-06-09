@@ -13,41 +13,38 @@ mixin _$SignInController on _SignInControllerBase, Store {
 
   @override
   PageProgressState get currentState => (_$currentStateComputed ??=
-          Computed<PageProgressState>(() => super.currentState))
+          Computed<PageProgressState>(() => super.currentState,
+              name: '_SignInControllerBase.currentState'))
       .value;
 
   final _$_progressAtom = Atom(name: '_SignInControllerBase._progress');
 
   @override
   ObservableFuture<Either<Failure, SessionEntity>> get _progress {
-    _$_progressAtom.context.enforceReadPolicy(_$_progressAtom);
-    _$_progressAtom.reportObserved();
+    _$_progressAtom.reportRead();
     return super._progress;
   }
 
   @override
   set _progress(ObservableFuture<Either<Failure, SessionEntity>> value) {
-    _$_progressAtom.context.conditionallyRunInAction(() {
+    _$_progressAtom.reportWrite(value, super._progress, () {
       super._progress = value;
-      _$_progressAtom.reportChanged();
-    }, _$_progressAtom, name: '${_$_progressAtom.name}_set');
+    });
   }
 
   final _$warningEmailAtom = Atom(name: '_SignInControllerBase.warningEmail');
 
   @override
   String get warningEmail {
-    _$warningEmailAtom.context.enforceReadPolicy(_$warningEmailAtom);
-    _$warningEmailAtom.reportObserved();
+    _$warningEmailAtom.reportRead();
     return super.warningEmail;
   }
 
   @override
   set warningEmail(String value) {
-    _$warningEmailAtom.context.conditionallyRunInAction(() {
+    _$warningEmailAtom.reportWrite(value, super.warningEmail, () {
       super.warningEmail = value;
-      _$warningEmailAtom.reportChanged();
-    }, _$warningEmailAtom, name: '${_$warningEmailAtom.name}_set');
+    });
   }
 
   final _$warningPasswordAtom =
@@ -55,38 +52,34 @@ mixin _$SignInController on _SignInControllerBase, Store {
 
   @override
   String get warningPassword {
-    _$warningPasswordAtom.context.enforceReadPolicy(_$warningPasswordAtom);
-    _$warningPasswordAtom.reportObserved();
+    _$warningPasswordAtom.reportRead();
     return super.warningPassword;
   }
 
   @override
   set warningPassword(String value) {
-    _$warningPasswordAtom.context.conditionallyRunInAction(() {
+    _$warningPasswordAtom.reportWrite(value, super.warningPassword, () {
       super.warningPassword = value;
-      _$warningPasswordAtom.reportChanged();
-    }, _$warningPasswordAtom, name: '${_$warningPasswordAtom.name}_set');
+    });
   }
 
   final _$errorMessageAtom = Atom(name: '_SignInControllerBase.errorMessage');
 
   @override
   String get errorMessage {
-    _$errorMessageAtom.context.enforceReadPolicy(_$errorMessageAtom);
-    _$errorMessageAtom.reportObserved();
+    _$errorMessageAtom.reportRead();
     return super.errorMessage;
   }
 
   @override
   set errorMessage(String value) {
-    _$errorMessageAtom.context.conditionallyRunInAction(() {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
       super.errorMessage = value;
-      _$errorMessageAtom.reportChanged();
-    }, _$errorMessageAtom, name: '${_$errorMessageAtom.name}_set');
+    });
   }
 
   final _$signInWithEmailAndPasswordPressedAsyncAction =
-      AsyncAction('signInWithEmailAndPasswordPressed');
+      AsyncAction('_SignInControllerBase.signInWithEmailAndPasswordPressed');
 
   @override
   Future<void> signInWithEmailAndPasswordPressed() {
@@ -94,7 +87,8 @@ mixin _$SignInController on _SignInControllerBase, Store {
         .run(() => super.signInWithEmailAndPasswordPressed());
   }
 
-  final _$registerUserPressedAsyncAction = AsyncAction('registerUserPressed');
+  final _$registerUserPressedAsyncAction =
+      AsyncAction('_SignInControllerBase.registerUserPressed');
 
   @override
   Future<void> registerUserPressed() {
@@ -102,7 +96,8 @@ mixin _$SignInController on _SignInControllerBase, Store {
         .run(() => super.registerUserPressed());
   }
 
-  final _$resetPasswordPressedAsyncAction = AsyncAction('resetPasswordPressed');
+  final _$resetPasswordPressedAsyncAction =
+      AsyncAction('_SignInControllerBase.resetPasswordPressed');
 
   @override
   Future<void> resetPasswordPressed() {
@@ -115,7 +110,8 @@ mixin _$SignInController on _SignInControllerBase, Store {
 
   @override
   void setEmail(String address) {
-    final _$actionInfo = _$_SignInControllerBaseActionController.startAction();
+    final _$actionInfo = _$_SignInControllerBaseActionController.startAction(
+        name: '_SignInControllerBase.setEmail');
     try {
       return super.setEmail(address);
     } finally {
@@ -125,7 +121,8 @@ mixin _$SignInController on _SignInControllerBase, Store {
 
   @override
   void setPassword(String password) {
-    final _$actionInfo = _$_SignInControllerBaseActionController.startAction();
+    final _$actionInfo = _$_SignInControllerBaseActionController.startAction(
+        name: '_SignInControllerBase.setPassword');
     try {
       return super.setPassword(password);
     } finally {
@@ -135,8 +132,11 @@ mixin _$SignInController on _SignInControllerBase, Store {
 
   @override
   String toString() {
-    final string =
-        'warningEmail: ${warningEmail.toString()},warningPassword: ${warningPassword.toString()},errorMessage: ${errorMessage.toString()},currentState: ${currentState.toString()}';
-    return '{$string}';
+    return '''
+warningEmail: ${warningEmail},
+warningPassword: ${warningPassword},
+errorMessage: ${errorMessage},
+currentState: ${currentState}
+    ''';
   }
 }

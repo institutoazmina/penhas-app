@@ -3,33 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
+import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
 
 part 'reply_tweet_controller.g.dart';
 
 class ReplyTweetController extends _ReplyTweetControllerBase
     with _$ReplyTweetController {
   ReplyTweetController({
-    @required ITweetRepository repository,
+    @required FeedUseCases useCase,
     @required TweetEntity tweet,
-  }) : super(repository, tweet);
+  }) : super(useCase, tweet);
 }
 
 abstract class _ReplyTweetControllerBase with Store, MapFailureMessage {
   final TweetEntity tweet;
-  final ITweetRepository repository;
+  final FeedUseCases useCase;
   String tweetContent;
 
-  _ReplyTweetControllerBase(this.repository, this.tweet);
+  _ReplyTweetControllerBase(this.useCase, this.tweet);
 
   @observable
-  ObservableFuture<Either<Failure, ValidField>> _progress;
+  ObservableFuture<Either<Failure, FeedCache>> _progress;
 
   @observable
   bool isAnonymousMode = false;
@@ -67,11 +65,10 @@ abstract class _ReplyTweetControllerBase with Store, MapFailureMessage {
       return;
     }
 
-    final requestOption =
-        TweetEngageRequestOption(tweetId: tweet.id, message: tweetContent);
     _progress = ObservableFuture(
-      repository.reply(
-        option: requestOption,
+      useCase.reply(
+        mainTweet: tweet,
+        comment: tweetContent,
       ),
     );
 

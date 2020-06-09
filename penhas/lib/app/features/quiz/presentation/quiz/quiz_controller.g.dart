@@ -14,34 +14,30 @@ mixin _$QuizController on _QuizControllerBase, Store {
 
   @override
   QuizMessageEntity get userReplyMessage {
-    _$userReplyMessageAtom.context.enforceReadPolicy(_$userReplyMessageAtom);
-    _$userReplyMessageAtom.reportObserved();
+    _$userReplyMessageAtom.reportRead();
     return super.userReplyMessage;
   }
 
   @override
   set userReplyMessage(QuizMessageEntity value) {
-    _$userReplyMessageAtom.context.conditionallyRunInAction(() {
+    _$userReplyMessageAtom.reportWrite(value, super.userReplyMessage, () {
       super.userReplyMessage = value;
-      _$userReplyMessageAtom.reportChanged();
-    }, _$userReplyMessageAtom, name: '${_$userReplyMessageAtom.name}_set');
+    });
   }
 
   final _$errorMessageAtom = Atom(name: '_QuizControllerBase.errorMessage');
 
   @override
   String get errorMessage {
-    _$errorMessageAtom.context.enforceReadPolicy(_$errorMessageAtom);
-    _$errorMessageAtom.reportObserved();
+    _$errorMessageAtom.reportRead();
     return super.errorMessage;
   }
 
   @override
   set errorMessage(String value) {
-    _$errorMessageAtom.context.conditionallyRunInAction(() {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
       super.errorMessage = value;
-      _$errorMessageAtom.reportChanged();
-    }, _$errorMessageAtom, name: '${_$errorMessageAtom.name}_set');
+    });
   }
 
   final _$_QuizControllerBaseActionController =
@@ -49,7 +45,8 @@ mixin _$QuizController on _QuizControllerBase, Store {
 
   @override
   void onActionReply(Map<String, String> reply) {
-    final _$actionInfo = _$_QuizControllerBaseActionController.startAction();
+    final _$actionInfo = _$_QuizControllerBaseActionController.startAction(
+        name: '_QuizControllerBase.onActionReply');
     try {
       return super.onActionReply(reply);
     } finally {
@@ -59,8 +56,9 @@ mixin _$QuizController on _QuizControllerBase, Store {
 
   @override
   String toString() {
-    final string =
-        'userReplyMessage: ${userReplyMessage.toString()},errorMessage: ${errorMessage.toString()}';
-    return '{$string}';
+    return '''
+userReplyMessage: ${userReplyMessage},
+errorMessage: ${errorMessage}
+    ''';
   }
 }

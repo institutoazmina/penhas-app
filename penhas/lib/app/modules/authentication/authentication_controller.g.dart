@@ -13,17 +13,15 @@ mixin _$AuthenticationController on _AuthenticationControllerBase, Store {
 
   @override
   int get value {
-    _$valueAtom.context.enforceReadPolicy(_$valueAtom);
-    _$valueAtom.reportObserved();
+    _$valueAtom.reportRead();
     return super.value;
   }
 
   @override
   set value(int value) {
-    _$valueAtom.context.conditionallyRunInAction(() {
+    _$valueAtom.reportWrite(value, super.value, () {
       super.value = value;
-      _$valueAtom.reportChanged();
-    }, _$valueAtom, name: '${_$valueAtom.name}_set');
+    });
   }
 
   final _$_AuthenticationControllerBaseActionController =
@@ -31,8 +29,8 @@ mixin _$AuthenticationController on _AuthenticationControllerBase, Store {
 
   @override
   void increment() {
-    final _$actionInfo =
-        _$_AuthenticationControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AuthenticationControllerBaseActionController
+        .startAction(name: '_AuthenticationControllerBase.increment');
     try {
       return super.increment();
     } finally {
@@ -42,7 +40,8 @@ mixin _$AuthenticationController on _AuthenticationControllerBase, Store {
 
   @override
   String toString() {
-    final string = 'value: ${value.toString()}';
-    return '{$string}';
+    return '''
+value: ${value}
+    ''';
   }
 }

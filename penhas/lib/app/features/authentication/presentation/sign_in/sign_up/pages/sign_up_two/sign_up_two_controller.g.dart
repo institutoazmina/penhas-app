@@ -13,24 +13,23 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
 
   @override
   PageProgressState get currentState => (_$currentStateComputed ??=
-          Computed<PageProgressState>(() => super.currentState))
+          Computed<PageProgressState>(() => super.currentState,
+              name: '_SignUpTwoControllerBase.currentState'))
       .value;
 
   final _$_progressAtom = Atom(name: '_SignUpTwoControllerBase._progress');
 
   @override
   ObservableFuture<Either<Failure, ValidField>> get _progress {
-    _$_progressAtom.context.enforceReadPolicy(_$_progressAtom);
-    _$_progressAtom.reportObserved();
+    _$_progressAtom.reportRead();
     return super._progress;
   }
 
   @override
   set _progress(ObservableFuture<Either<Failure, ValidField>> value) {
-    _$_progressAtom.context.conditionallyRunInAction(() {
+    _$_progressAtom.reportWrite(value, super._progress, () {
       super._progress = value;
-      _$_progressAtom.reportChanged();
-    }, _$_progressAtom, name: '${_$_progressAtom.name}_set');
+    });
   }
 
   final _$warningNicknameAtom =
@@ -38,17 +37,15 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
 
   @override
   String get warningNickname {
-    _$warningNicknameAtom.context.enforceReadPolicy(_$warningNicknameAtom);
-    _$warningNicknameAtom.reportObserved();
+    _$warningNicknameAtom.reportRead();
     return super.warningNickname;
   }
 
   @override
   set warningNickname(String value) {
-    _$warningNicknameAtom.context.conditionallyRunInAction(() {
+    _$warningNicknameAtom.reportWrite(value, super.warningNickname, () {
       super.warningNickname = value;
-      _$warningNicknameAtom.reportChanged();
-    }, _$warningNicknameAtom, name: '${_$warningNicknameAtom.name}_set');
+    });
   }
 
   final _$warningSocialNameAtom =
@@ -56,17 +53,15 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
 
   @override
   String get warningSocialName {
-    _$warningSocialNameAtom.context.enforceReadPolicy(_$warningSocialNameAtom);
-    _$warningSocialNameAtom.reportObserved();
+    _$warningSocialNameAtom.reportRead();
     return super.warningSocialName;
   }
 
   @override
   set warningSocialName(String value) {
-    _$warningSocialNameAtom.context.conditionallyRunInAction(() {
+    _$warningSocialNameAtom.reportWrite(value, super.warningSocialName, () {
       super.warningSocialName = value;
-      _$warningSocialNameAtom.reportChanged();
-    }, _$warningSocialNameAtom, name: '${_$warningSocialNameAtom.name}_set');
+    });
   }
 
   final _$warningGenreAtom =
@@ -74,34 +69,30 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
 
   @override
   String get warningGenre {
-    _$warningGenreAtom.context.enforceReadPolicy(_$warningGenreAtom);
-    _$warningGenreAtom.reportObserved();
+    _$warningGenreAtom.reportRead();
     return super.warningGenre;
   }
 
   @override
   set warningGenre(String value) {
-    _$warningGenreAtom.context.conditionallyRunInAction(() {
+    _$warningGenreAtom.reportWrite(value, super.warningGenre, () {
       super.warningGenre = value;
-      _$warningGenreAtom.reportChanged();
-    }, _$warningGenreAtom, name: '${_$warningGenreAtom.name}_set');
+    });
   }
 
   final _$warningRaceAtom = Atom(name: '_SignUpTwoControllerBase.warningRace');
 
   @override
   String get warningRace {
-    _$warningRaceAtom.context.enforceReadPolicy(_$warningRaceAtom);
-    _$warningRaceAtom.reportObserved();
+    _$warningRaceAtom.reportRead();
     return super.warningRace;
   }
 
   @override
   set warningRace(String value) {
-    _$warningRaceAtom.context.conditionallyRunInAction(() {
+    _$warningRaceAtom.reportWrite(value, super.warningRace, () {
       super.warningRace = value;
-      _$warningRaceAtom.reportChanged();
-    }, _$warningRaceAtom, name: '${_$warningRaceAtom.name}_set');
+    });
   }
 
   final _$currentGenreAtom =
@@ -109,34 +100,30 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
 
   @override
   String get currentGenre {
-    _$currentGenreAtom.context.enforceReadPolicy(_$currentGenreAtom);
-    _$currentGenreAtom.reportObserved();
+    _$currentGenreAtom.reportRead();
     return super.currentGenre;
   }
 
   @override
   set currentGenre(String value) {
-    _$currentGenreAtom.context.conditionallyRunInAction(() {
+    _$currentGenreAtom.reportWrite(value, super.currentGenre, () {
       super.currentGenre = value;
-      _$currentGenreAtom.reportChanged();
-    }, _$currentGenreAtom, name: '${_$currentGenreAtom.name}_set');
+    });
   }
 
   final _$currentRaceAtom = Atom(name: '_SignUpTwoControllerBase.currentRace');
 
   @override
   String get currentRace {
-    _$currentRaceAtom.context.enforceReadPolicy(_$currentRaceAtom);
-    _$currentRaceAtom.reportObserved();
+    _$currentRaceAtom.reportRead();
     return super.currentRace;
   }
 
   @override
   set currentRace(String value) {
-    _$currentRaceAtom.context.conditionallyRunInAction(() {
+    _$currentRaceAtom.reportWrite(value, super.currentRace, () {
       super.currentRace = value;
-      _$currentRaceAtom.reportChanged();
-    }, _$currentRaceAtom, name: '${_$currentRaceAtom.name}_set');
+    });
   }
 
   final _$errorMessageAtom =
@@ -144,17 +131,15 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
 
   @override
   String get errorMessage {
-    _$errorMessageAtom.context.enforceReadPolicy(_$errorMessageAtom);
-    _$errorMessageAtom.reportObserved();
+    _$errorMessageAtom.reportRead();
     return super.errorMessage;
   }
 
   @override
   set errorMessage(String value) {
-    _$errorMessageAtom.context.conditionallyRunInAction(() {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
       super.errorMessage = value;
-      _$errorMessageAtom.reportChanged();
-    }, _$errorMessageAtom, name: '${_$errorMessageAtom.name}_set');
+    });
   }
 
   final _$hasSocialNameFieldAtom =
@@ -162,21 +147,19 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
 
   @override
   bool get hasSocialNameField {
-    _$hasSocialNameFieldAtom.context
-        .enforceReadPolicy(_$hasSocialNameFieldAtom);
-    _$hasSocialNameFieldAtom.reportObserved();
+    _$hasSocialNameFieldAtom.reportRead();
     return super.hasSocialNameField;
   }
 
   @override
   set hasSocialNameField(bool value) {
-    _$hasSocialNameFieldAtom.context.conditionallyRunInAction(() {
+    _$hasSocialNameFieldAtom.reportWrite(value, super.hasSocialNameField, () {
       super.hasSocialNameField = value;
-      _$hasSocialNameFieldAtom.reportChanged();
-    }, _$hasSocialNameFieldAtom, name: '${_$hasSocialNameFieldAtom.name}_set');
+    });
   }
 
-  final _$nextStepPressedAsyncAction = AsyncAction('nextStepPressed');
+  final _$nextStepPressedAsyncAction =
+      AsyncAction('_SignUpTwoControllerBase.nextStepPressed');
 
   @override
   Future<void> nextStepPressed() {
@@ -188,8 +171,8 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
 
   @override
   void setNickname(String name) {
-    final _$actionInfo =
-        _$_SignUpTwoControllerBaseActionController.startAction();
+    final _$actionInfo = _$_SignUpTwoControllerBaseActionController.startAction(
+        name: '_SignUpTwoControllerBase.setNickname');
     try {
       return super.setNickname(name);
     } finally {
@@ -199,8 +182,8 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
 
   @override
   void setSocialName(String name) {
-    final _$actionInfo =
-        _$_SignUpTwoControllerBaseActionController.startAction();
+    final _$actionInfo = _$_SignUpTwoControllerBaseActionController.startAction(
+        name: '_SignUpTwoControllerBase.setSocialName');
     try {
       return super.setSocialName(name);
     } finally {
@@ -210,8 +193,8 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
 
   @override
   void setGenre(String label) {
-    final _$actionInfo =
-        _$_SignUpTwoControllerBaseActionController.startAction();
+    final _$actionInfo = _$_SignUpTwoControllerBaseActionController.startAction(
+        name: '_SignUpTwoControllerBase.setGenre');
     try {
       return super.setGenre(label);
     } finally {
@@ -221,8 +204,8 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
 
   @override
   void setRace(String label) {
-    final _$actionInfo =
-        _$_SignUpTwoControllerBaseActionController.startAction();
+    final _$actionInfo = _$_SignUpTwoControllerBaseActionController.startAction(
+        name: '_SignUpTwoControllerBase.setRace');
     try {
       return super.setRace(label);
     } finally {
@@ -232,8 +215,16 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
 
   @override
   String toString() {
-    final string =
-        'warningNickname: ${warningNickname.toString()},warningSocialName: ${warningSocialName.toString()},warningGenre: ${warningGenre.toString()},warningRace: ${warningRace.toString()},currentGenre: ${currentGenre.toString()},currentRace: ${currentRace.toString()},errorMessage: ${errorMessage.toString()},hasSocialNameField: ${hasSocialNameField.toString()},currentState: ${currentState.toString()}';
-    return '{$string}';
+    return '''
+warningNickname: ${warningNickname},
+warningSocialName: ${warningSocialName},
+warningGenre: ${warningGenre},
+warningRace: ${warningRace},
+currentGenre: ${currentGenre},
+currentRace: ${currentRace},
+errorMessage: ${errorMessage},
+hasSocialNameField: ${hasSocialNameField},
+currentState: ${currentState}
+    ''';
   }
 }

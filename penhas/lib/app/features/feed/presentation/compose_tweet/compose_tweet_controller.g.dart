@@ -13,24 +13,23 @@ mixin _$ComposeTweetController on _ComposeTweetControllerBase, Store {
 
   @override
   PageProgressState get currentState => (_$currentStateComputed ??=
-          Computed<PageProgressState>(() => super.currentState))
+          Computed<PageProgressState>(() => super.currentState,
+              name: '_ComposeTweetControllerBase.currentState'))
       .value;
 
   final _$_progressAtom = Atom(name: '_ComposeTweetControllerBase._progress');
 
   @override
-  ObservableFuture<Either<Failure, ValidField>> get _progress {
-    _$_progressAtom.context.enforceReadPolicy(_$_progressAtom);
-    _$_progressAtom.reportObserved();
+  ObservableFuture<Either<Failure, FeedCache>> get _progress {
+    _$_progressAtom.reportRead();
     return super._progress;
   }
 
   @override
-  set _progress(ObservableFuture<Either<Failure, ValidField>> value) {
-    _$_progressAtom.context.conditionallyRunInAction(() {
+  set _progress(ObservableFuture<Either<Failure, FeedCache>> value) {
+    _$_progressAtom.reportWrite(value, super._progress, () {
       super._progress = value;
-      _$_progressAtom.reportChanged();
-    }, _$_progressAtom, name: '${_$_progressAtom.name}_set');
+    });
   }
 
   final _$isAnonymousModeAtom =
@@ -38,17 +37,15 @@ mixin _$ComposeTweetController on _ComposeTweetControllerBase, Store {
 
   @override
   bool get isAnonymousMode {
-    _$isAnonymousModeAtom.context.enforceReadPolicy(_$isAnonymousModeAtom);
-    _$isAnonymousModeAtom.reportObserved();
+    _$isAnonymousModeAtom.reportRead();
     return super.isAnonymousMode;
   }
 
   @override
   set isAnonymousMode(bool value) {
-    _$isAnonymousModeAtom.context.conditionallyRunInAction(() {
+    _$isAnonymousModeAtom.reportWrite(value, super.isAnonymousMode, () {
       super.isAnonymousMode = value;
-      _$isAnonymousModeAtom.reportChanged();
-    }, _$isAnonymousModeAtom, name: '${_$isAnonymousModeAtom.name}_set');
+    });
   }
 
   final _$isEnableCreateButtonAtom =
@@ -56,19 +53,16 @@ mixin _$ComposeTweetController on _ComposeTweetControllerBase, Store {
 
   @override
   bool get isEnableCreateButton {
-    _$isEnableCreateButtonAtom.context
-        .enforceReadPolicy(_$isEnableCreateButtonAtom);
-    _$isEnableCreateButtonAtom.reportObserved();
+    _$isEnableCreateButtonAtom.reportRead();
     return super.isEnableCreateButton;
   }
 
   @override
   set isEnableCreateButton(bool value) {
-    _$isEnableCreateButtonAtom.context.conditionallyRunInAction(() {
+    _$isEnableCreateButtonAtom.reportWrite(value, super.isEnableCreateButton,
+        () {
       super.isEnableCreateButton = value;
-      _$isEnableCreateButtonAtom.reportChanged();
-    }, _$isEnableCreateButtonAtom,
-        name: '${_$isEnableCreateButtonAtom.name}_set');
+    });
   }
 
   final _$editingControllerAtom =
@@ -76,17 +70,15 @@ mixin _$ComposeTweetController on _ComposeTweetControllerBase, Store {
 
   @override
   TextEditingController get editingController {
-    _$editingControllerAtom.context.enforceReadPolicy(_$editingControllerAtom);
-    _$editingControllerAtom.reportObserved();
+    _$editingControllerAtom.reportRead();
     return super.editingController;
   }
 
   @override
   set editingController(TextEditingController value) {
-    _$editingControllerAtom.context.conditionallyRunInAction(() {
+    _$editingControllerAtom.reportWrite(value, super.editingController, () {
       super.editingController = value;
-      _$editingControllerAtom.reportChanged();
-    }, _$editingControllerAtom, name: '${_$editingControllerAtom.name}_set');
+    });
   }
 
   final _$errorMessageAtom =
@@ -94,20 +86,19 @@ mixin _$ComposeTweetController on _ComposeTweetControllerBase, Store {
 
   @override
   String get errorMessage {
-    _$errorMessageAtom.context.enforceReadPolicy(_$errorMessageAtom);
-    _$errorMessageAtom.reportObserved();
+    _$errorMessageAtom.reportRead();
     return super.errorMessage;
   }
 
   @override
   set errorMessage(String value) {
-    _$errorMessageAtom.context.conditionallyRunInAction(() {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
       super.errorMessage = value;
-      _$errorMessageAtom.reportChanged();
-    }, _$errorMessageAtom, name: '${_$errorMessageAtom.name}_set');
+    });
   }
 
-  final _$createTweetPressedAsyncAction = AsyncAction('createTweetPressed');
+  final _$createTweetPressedAsyncAction =
+      AsyncAction('_ComposeTweetControllerBase.createTweetPressed');
 
   @override
   Future<void> createTweetPressed() {
@@ -120,8 +111,8 @@ mixin _$ComposeTweetController on _ComposeTweetControllerBase, Store {
 
   @override
   void setTweetContent(String content) {
-    final _$actionInfo =
-        _$_ComposeTweetControllerBaseActionController.startAction();
+    final _$actionInfo = _$_ComposeTweetControllerBaseActionController
+        .startAction(name: '_ComposeTweetControllerBase.setTweetContent');
     try {
       return super.setTweetContent(content);
     } finally {
@@ -131,8 +122,12 @@ mixin _$ComposeTweetController on _ComposeTweetControllerBase, Store {
 
   @override
   String toString() {
-    final string =
-        'isAnonymousMode: ${isAnonymousMode.toString()},isEnableCreateButton: ${isEnableCreateButton.toString()},editingController: ${editingController.toString()},errorMessage: ${errorMessage.toString()},currentState: ${currentState.toString()}';
-    return '{$string}';
+    return '''
+isAnonymousMode: ${isAnonymousMode},
+isEnableCreateButton: ${isEnableCreateButton},
+editingController: ${editingController},
+errorMessage: ${errorMessage},
+currentState: ${currentState}
+    ''';
   }
 }

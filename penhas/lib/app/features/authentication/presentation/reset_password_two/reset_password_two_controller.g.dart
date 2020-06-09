@@ -12,26 +12,25 @@ mixin _$ResetPasswordTwoController on _ResetPasswordTwoControllerBase, Store {
   Computed<StoreState> _$currentStateComputed;
 
   @override
-  StoreState get currentState => (_$currentStateComputed ??=
-          Computed<StoreState>(() => super.currentState))
-      .value;
+  StoreState get currentState =>
+      (_$currentStateComputed ??= Computed<StoreState>(() => super.currentState,
+              name: '_ResetPasswordTwoControllerBase.currentState'))
+          .value;
 
   final _$_progressAtom =
       Atom(name: '_ResetPasswordTwoControllerBase._progress');
 
   @override
   ObservableFuture<Either<Failure, ValidField>> get _progress {
-    _$_progressAtom.context.enforceReadPolicy(_$_progressAtom);
-    _$_progressAtom.reportObserved();
+    _$_progressAtom.reportRead();
     return super._progress;
   }
 
   @override
   set _progress(ObservableFuture<Either<Failure, ValidField>> value) {
-    _$_progressAtom.context.conditionallyRunInAction(() {
+    _$_progressAtom.reportWrite(value, super._progress, () {
       super._progress = value;
-      _$_progressAtom.reportChanged();
-    }, _$_progressAtom, name: '${_$_progressAtom.name}_set');
+    });
   }
 
   final _$errorMessageAtom =
@@ -39,17 +38,15 @@ mixin _$ResetPasswordTwoController on _ResetPasswordTwoControllerBase, Store {
 
   @override
   String get errorMessage {
-    _$errorMessageAtom.context.enforceReadPolicy(_$errorMessageAtom);
-    _$errorMessageAtom.reportObserved();
+    _$errorMessageAtom.reportRead();
     return super.errorMessage;
   }
 
   @override
   set errorMessage(String value) {
-    _$errorMessageAtom.context.conditionallyRunInAction(() {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
       super.errorMessage = value;
-      _$errorMessageAtom.reportChanged();
-    }, _$errorMessageAtom, name: '${_$errorMessageAtom.name}_set');
+    });
   }
 
   final _$warrningTokenAtom =
@@ -57,27 +54,27 @@ mixin _$ResetPasswordTwoController on _ResetPasswordTwoControllerBase, Store {
 
   @override
   String get warrningToken {
-    _$warrningTokenAtom.context.enforceReadPolicy(_$warrningTokenAtom);
-    _$warrningTokenAtom.reportObserved();
+    _$warrningTokenAtom.reportRead();
     return super.warrningToken;
   }
 
   @override
   set warrningToken(String value) {
-    _$warrningTokenAtom.context.conditionallyRunInAction(() {
+    _$warrningTokenAtom.reportWrite(value, super.warrningToken, () {
       super.warrningToken = value;
-      _$warrningTokenAtom.reportChanged();
-    }, _$warrningTokenAtom, name: '${_$warrningTokenAtom.name}_set');
+    });
   }
 
-  final _$setTokenAsyncAction = AsyncAction('setToken');
+  final _$setTokenAsyncAction =
+      AsyncAction('_ResetPasswordTwoControllerBase.setToken');
 
   @override
   Future<void> setToken(String token) {
     return _$setTokenAsyncAction.run(() => super.setToken(token));
   }
 
-  final _$nextStepPressedAsyncAction = AsyncAction('nextStepPressed');
+  final _$nextStepPressedAsyncAction =
+      AsyncAction('_ResetPasswordTwoControllerBase.nextStepPressed');
 
   @override
   Future<void> nextStepPressed() {
@@ -86,8 +83,10 @@ mixin _$ResetPasswordTwoController on _ResetPasswordTwoControllerBase, Store {
 
   @override
   String toString() {
-    final string =
-        'errorMessage: ${errorMessage.toString()},warrningToken: ${warrningToken.toString()},currentState: ${currentState.toString()}';
-    return '{$string}';
+    return '''
+errorMessage: ${errorMessage},
+warrningToken: ${warrningToken},
+currentState: ${currentState}
+    ''';
   }
 }

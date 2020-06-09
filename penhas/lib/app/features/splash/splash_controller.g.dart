@@ -11,7 +11,8 @@ part of 'splash_controller.dart';
 mixin _$SplashController on _SplashControllerBase, Store {
   @override
   String toString() {
-    final string = '';
-    return '{$string}';
+    return '''
+
+    ''';
   }
 }

@@ -13,41 +13,38 @@ mixin _$SignUpController on _SignUpControllerBase, Store {
 
   @override
   PageProgressState get currentState => (_$currentStateComputed ??=
-          Computed<PageProgressState>(() => super.currentState))
+          Computed<PageProgressState>(() => super.currentState,
+              name: '_SignUpControllerBase.currentState'))
       .value;
 
   final _$_progressAtom = Atom(name: '_SignUpControllerBase._progress');
 
   @override
   ObservableFuture<Either<Failure, ValidField>> get _progress {
-    _$_progressAtom.context.enforceReadPolicy(_$_progressAtom);
-    _$_progressAtom.reportObserved();
+    _$_progressAtom.reportRead();
     return super._progress;
   }
 
   @override
   set _progress(ObservableFuture<Either<Failure, ValidField>> value) {
-    _$_progressAtom.context.conditionallyRunInAction(() {
+    _$_progressAtom.reportWrite(value, super._progress, () {
       super._progress = value;
-      _$_progressAtom.reportChanged();
-    }, _$_progressAtom, name: '${_$_progressAtom.name}_set');
+    });
   }
 
   final _$errorMessageAtom = Atom(name: '_SignUpControllerBase.errorMessage');
 
   @override
   String get errorMessage {
-    _$errorMessageAtom.context.enforceReadPolicy(_$errorMessageAtom);
-    _$errorMessageAtom.reportObserved();
+    _$errorMessageAtom.reportRead();
     return super.errorMessage;
   }
 
   @override
   set errorMessage(String value) {
-    _$errorMessageAtom.context.conditionallyRunInAction(() {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
       super.errorMessage = value;
-      _$errorMessageAtom.reportChanged();
-    }, _$errorMessageAtom, name: '${_$errorMessageAtom.name}_set');
+    });
   }
 
   final _$warningFullnameAtom =
@@ -55,17 +52,15 @@ mixin _$SignUpController on _SignUpControllerBase, Store {
 
   @override
   String get warningFullname {
-    _$warningFullnameAtom.context.enforceReadPolicy(_$warningFullnameAtom);
-    _$warningFullnameAtom.reportObserved();
+    _$warningFullnameAtom.reportRead();
     return super.warningFullname;
   }
 
   @override
   set warningFullname(String value) {
-    _$warningFullnameAtom.context.conditionallyRunInAction(() {
+    _$warningFullnameAtom.reportWrite(value, super.warningFullname, () {
       super.warningFullname = value;
-      _$warningFullnameAtom.reportChanged();
-    }, _$warningFullnameAtom, name: '${_$warningFullnameAtom.name}_set');
+    });
   }
 
   final _$warningBirthdayAtom =
@@ -73,54 +68,49 @@ mixin _$SignUpController on _SignUpControllerBase, Store {
 
   @override
   String get warningBirthday {
-    _$warningBirthdayAtom.context.enforceReadPolicy(_$warningBirthdayAtom);
-    _$warningBirthdayAtom.reportObserved();
+    _$warningBirthdayAtom.reportRead();
     return super.warningBirthday;
   }
 
   @override
   set warningBirthday(String value) {
-    _$warningBirthdayAtom.context.conditionallyRunInAction(() {
+    _$warningBirthdayAtom.reportWrite(value, super.warningBirthday, () {
       super.warningBirthday = value;
-      _$warningBirthdayAtom.reportChanged();
-    }, _$warningBirthdayAtom, name: '${_$warningBirthdayAtom.name}_set');
+    });
   }
 
   final _$warningCpfAtom = Atom(name: '_SignUpControllerBase.warningCpf');
 
   @override
   String get warningCpf {
-    _$warningCpfAtom.context.enforceReadPolicy(_$warningCpfAtom);
-    _$warningCpfAtom.reportObserved();
+    _$warningCpfAtom.reportRead();
     return super.warningCpf;
   }
 
   @override
   set warningCpf(String value) {
-    _$warningCpfAtom.context.conditionallyRunInAction(() {
+    _$warningCpfAtom.reportWrite(value, super.warningCpf, () {
       super.warningCpf = value;
-      _$warningCpfAtom.reportChanged();
-    }, _$warningCpfAtom, name: '${_$warningCpfAtom.name}_set');
+    });
   }
 
   final _$warningCepAtom = Atom(name: '_SignUpControllerBase.warningCep');
 
   @override
   String get warningCep {
-    _$warningCepAtom.context.enforceReadPolicy(_$warningCepAtom);
-    _$warningCepAtom.reportObserved();
+    _$warningCepAtom.reportRead();
     return super.warningCep;
   }
 
   @override
   set warningCep(String value) {
-    _$warningCepAtom.context.conditionallyRunInAction(() {
+    _$warningCepAtom.reportWrite(value, super.warningCep, () {
       super.warningCep = value;
-      _$warningCepAtom.reportChanged();
-    }, _$warningCepAtom, name: '${_$warningCepAtom.name}_set');
+    });
   }
 
-  final _$nextStepPressedAsyncAction = AsyncAction('nextStepPressed');
+  final _$nextStepPressedAsyncAction =
+      AsyncAction('_SignUpControllerBase.nextStepPressed');
 
   @override
   Future<void> nextStepPressed() {
@@ -132,7 +122,8 @@ mixin _$SignUpController on _SignUpControllerBase, Store {
 
   @override
   void setFullname(String fullname) {
-    final _$actionInfo = _$_SignUpControllerBaseActionController.startAction();
+    final _$actionInfo = _$_SignUpControllerBaseActionController.startAction(
+        name: '_SignUpControllerBase.setFullname');
     try {
       return super.setFullname(fullname);
     } finally {
@@ -142,7 +133,8 @@ mixin _$SignUpController on _SignUpControllerBase, Store {
 
   @override
   void setBirthday(DateTime birthday) {
-    final _$actionInfo = _$_SignUpControllerBaseActionController.startAction();
+    final _$actionInfo = _$_SignUpControllerBaseActionController.startAction(
+        name: '_SignUpControllerBase.setBirthday');
     try {
       return super.setBirthday(birthday);
     } finally {
@@ -152,7 +144,8 @@ mixin _$SignUpController on _SignUpControllerBase, Store {
 
   @override
   void setCpf(String cpf) {
-    final _$actionInfo = _$_SignUpControllerBaseActionController.startAction();
+    final _$actionInfo = _$_SignUpControllerBaseActionController.startAction(
+        name: '_SignUpControllerBase.setCpf');
     try {
       return super.setCpf(cpf);
     } finally {
@@ -162,7 +155,8 @@ mixin _$SignUpController on _SignUpControllerBase, Store {
 
   @override
   void setCep(String cep) {
-    final _$actionInfo = _$_SignUpControllerBaseActionController.startAction();
+    final _$actionInfo = _$_SignUpControllerBaseActionController.startAction(
+        name: '_SignUpControllerBase.setCep');
     try {
       return super.setCep(cep);
     } finally {
@@ -172,8 +166,13 @@ mixin _$SignUpController on _SignUpControllerBase, Store {
 
   @override
   String toString() {
-    final string =
-        'errorMessage: ${errorMessage.toString()},warningFullname: ${warningFullname.toString()},warningBirthday: ${warningBirthday.toString()},warningCpf: ${warningCpf.toString()},warningCep: ${warningCep.toString()},currentState: ${currentState.toString()}';
-    return '{$string}';
+    return '''
+errorMessage: ${errorMessage},
+warningFullname: ${warningFullname},
+warningBirthday: ${warningBirthday},
+warningCpf: ${warningCpf},
+warningCep: ${warningCep},
+currentState: ${currentState}
+    ''';
   }
 }

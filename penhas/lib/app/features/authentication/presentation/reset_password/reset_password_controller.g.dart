@@ -12,26 +12,25 @@ mixin _$ResetPasswordController on _ResetPasswordControllerBase, Store {
   Computed<StoreState> _$currentStateComputed;
 
   @override
-  StoreState get currentState => (_$currentStateComputed ??=
-          Computed<StoreState>(() => super.currentState))
-      .value;
+  StoreState get currentState =>
+      (_$currentStateComputed ??= Computed<StoreState>(() => super.currentState,
+              name: '_ResetPasswordControllerBase.currentState'))
+          .value;
 
   final _$_progressAtom = Atom(name: '_ResetPasswordControllerBase._progress');
 
   @override
   ObservableFuture<Either<Failure, ResetPasswordResponseEntity>> get _progress {
-    _$_progressAtom.context.enforceReadPolicy(_$_progressAtom);
-    _$_progressAtom.reportObserved();
+    _$_progressAtom.reportRead();
     return super._progress;
   }
 
   @override
   set _progress(
       ObservableFuture<Either<Failure, ResetPasswordResponseEntity>> value) {
-    _$_progressAtom.context.conditionallyRunInAction(() {
+    _$_progressAtom.reportWrite(value, super._progress, () {
       super._progress = value;
-      _$_progressAtom.reportChanged();
-    }, _$_progressAtom, name: '${_$_progressAtom.name}_set');
+    });
   }
 
   final _$errorMessageAtom =
@@ -39,17 +38,15 @@ mixin _$ResetPasswordController on _ResetPasswordControllerBase, Store {
 
   @override
   String get errorMessage {
-    _$errorMessageAtom.context.enforceReadPolicy(_$errorMessageAtom);
-    _$errorMessageAtom.reportObserved();
+    _$errorMessageAtom.reportRead();
     return super.errorMessage;
   }
 
   @override
   set errorMessage(String value) {
-    _$errorMessageAtom.context.conditionallyRunInAction(() {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
       super.errorMessage = value;
-      _$errorMessageAtom.reportChanged();
-    }, _$errorMessageAtom, name: '${_$errorMessageAtom.name}_set');
+    });
   }
 
   final _$warningEmailAtom =
@@ -57,20 +54,19 @@ mixin _$ResetPasswordController on _ResetPasswordControllerBase, Store {
 
   @override
   String get warningEmail {
-    _$warningEmailAtom.context.enforceReadPolicy(_$warningEmailAtom);
-    _$warningEmailAtom.reportObserved();
+    _$warningEmailAtom.reportRead();
     return super.warningEmail;
   }
 
   @override
   set warningEmail(String value) {
-    _$warningEmailAtom.context.conditionallyRunInAction(() {
+    _$warningEmailAtom.reportWrite(value, super.warningEmail, () {
       super.warningEmail = value;
-      _$warningEmailAtom.reportChanged();
-    }, _$warningEmailAtom, name: '${_$warningEmailAtom.name}_set');
+    });
   }
 
-  final _$nextStepPressedAsyncAction = AsyncAction('nextStepPressed');
+  final _$nextStepPressedAsyncAction =
+      AsyncAction('_ResetPasswordControllerBase.nextStepPressed');
 
   @override
   Future<void> nextStepPressed() {
@@ -82,8 +78,8 @@ mixin _$ResetPasswordController on _ResetPasswordControllerBase, Store {
 
   @override
   void setEmail(String address) {
-    final _$actionInfo =
-        _$_ResetPasswordControllerBaseActionController.startAction();
+    final _$actionInfo = _$_ResetPasswordControllerBaseActionController
+        .startAction(name: '_ResetPasswordControllerBase.setEmail');
     try {
       return super.setEmail(address);
     } finally {
@@ -93,8 +89,10 @@ mixin _$ResetPasswordController on _ResetPasswordControllerBase, Store {
 
   @override
   String toString() {
-    final string =
-        'errorMessage: ${errorMessage.toString()},warningEmail: ${warningEmail.toString()},currentState: ${currentState.toString()}';
-    return '{$string}';
+    return '''
+errorMessage: ${errorMessage},
+warningEmail: ${warningEmail},
+currentState: ${currentState}
+    ''';
   }
 }

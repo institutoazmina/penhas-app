@@ -9,21 +9,21 @@ import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_op
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_request_option.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
-import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
+import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
 
 part 'feed_controller.g.dart';
 
 class FeedController extends _FeedControllerBase with _$FeedController {
   FeedController({
-    @required ITweetRepository repository,
-  }) : super(repository);
+    @required FeedUseCases useCase,
+  }) : super(useCase);
 }
 
 abstract class _FeedControllerBase with Store, MapFailureMessage {
-  final ITweetRepository repository;
+  final FeedUseCases useCase;
   final TweetRequestOption fetchOption = TweetRequestOption();
 
-  _FeedControllerBase(this.repository);
+  _FeedControllerBase(this.useCase);
 
   @observable
   ObservableFuture<Either<Failure, TweetSessionEntity>> _progress;
@@ -47,29 +47,29 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> fetchNextPage() async {
-    _progress = ObservableFuture(
-      repository.fetch(option: fetchOption),
-    );
+    // _progress = ObservableFuture(
+    //   repository.fetch(option: fetchOption),
+    // );
 
-    final response = await _progress;
-    response.fold(
-      (failure) => _setErrorMessage(mapFailureMessage(failure)),
-      (session) => _updateSessionAction(session),
-    );
+    // final response = await _progress;
+    // response.fold(
+    //   (failure) => _setErrorMessage(mapFailureMessage(failure)),
+    //   (session) => _updateSessionAction(session),
+    // );
   }
 
   @action
   Future<void> like(TweetEntity tweet) async {
-    if (tweet == null) {
-      return;
-    }
+    // if (tweet == null) {
+    //   return;
+    // }
 
-    final requestOption = TweetEngageRequestOption(tweetId: tweet.id);
-    final result = await repository.like(option: requestOption);
-    result.fold(
-      (failure) => _setErrorMessage(mapFailureMessage(failure)),
-      (tweet) => _updateTweetList(tweet),
-    );
+    // final requestOption = TweetEngageRequestOption(tweetId: tweet.id);
+    // final result = await repository.like(option: requestOption);
+    // result.fold(
+    //   (failure) => _setErrorMessage(mapFailureMessage(failure)),
+    //   (tweet) => _updateTweetList(tweet),
+    // );
   }
 
   @action

@@ -2,29 +2,26 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
-import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
+import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
 
 part 'compose_tweet_controller.g.dart';
 
 class ComposeTweetController extends _ComposeTweetControllerBase
     with _$ComposeTweetController {
-  ComposeTweetController({@required ITweetRepository repository})
-      : super(repository);
+  ComposeTweetController({@required FeedUseCases useCase}) : super(useCase);
 }
 
 abstract class _ComposeTweetControllerBase with Store, MapFailureMessage {
-  final ITweetRepository repository;
+  final FeedUseCases useCase;
   String tweetContent;
 
-  _ComposeTweetControllerBase(this.repository);
+  _ComposeTweetControllerBase(this.useCase);
 
   @observable
-  ObservableFuture<Either<Failure, ValidField>> _progress;
+  ObservableFuture<Either<Failure, FeedCache>> _progress;
 
   @observable
   bool isAnonymousMode = false;
@@ -62,11 +59,8 @@ abstract class _ComposeTweetControllerBase with Store, MapFailureMessage {
       return;
     }
 
-    final requestOption = TweetCreateRequestOption(message: tweetContent);
     _progress = ObservableFuture(
-      repository.create(
-        option: requestOption,
-      ),
+      useCase.create(tweetContent),
     );
 
     final response = await _progress;

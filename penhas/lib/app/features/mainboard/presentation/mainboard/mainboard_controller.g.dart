@@ -14,17 +14,15 @@ mixin _$MainboardController on _MainboardControllerBase, Store {
 
   @override
   int get selectedIndex {
-    _$selectedIndexAtom.context.enforceReadPolicy(_$selectedIndexAtom);
-    _$selectedIndexAtom.reportObserved();
+    _$selectedIndexAtom.reportRead();
     return super.selectedIndex;
   }
 
   @override
   set selectedIndex(int value) {
-    _$selectedIndexAtom.context.conditionallyRunInAction(() {
+    _$selectedIndexAtom.reportWrite(value, super.selectedIndex, () {
       super.selectedIndex = value;
-      _$selectedIndexAtom.reportChanged();
-    }, _$selectedIndexAtom, name: '${_$selectedIndexAtom.name}_set');
+    });
   }
 
   final _$_MainboardControllerBaseActionController =
@@ -32,8 +30,8 @@ mixin _$MainboardController on _MainboardControllerBase, Store {
 
   @override
   void logoutPressed() {
-    final _$actionInfo =
-        _$_MainboardControllerBaseActionController.startAction();
+    final _$actionInfo = _$_MainboardControllerBaseActionController.startAction(
+        name: '_MainboardControllerBase.logoutPressed');
     try {
       return super.logoutPressed();
     } finally {
@@ -43,8 +41,8 @@ mixin _$MainboardController on _MainboardControllerBase, Store {
 
   @override
   void changePage(int index) {
-    final _$actionInfo =
-        _$_MainboardControllerBaseActionController.startAction();
+    final _$actionInfo = _$_MainboardControllerBaseActionController.startAction(
+        name: '_MainboardControllerBase.changePage');
     try {
       return super.changePage(index);
     } finally {
@@ -54,7 +52,8 @@ mixin _$MainboardController on _MainboardControllerBase, Store {
 
   @override
   String toString() {
-    final string = 'selectedIndex: ${selectedIndex.toString()}';
-    return '{$string}';
+    return '''
+selectedIndex: $selectedIndex
+    ''';
   }
 }

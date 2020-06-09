@@ -13,75 +13,71 @@ mixin _$FeedController on _FeedControllerBase, Store {
 
   @override
   PageProgressState get currentState => (_$currentStateComputed ??=
-          Computed<PageProgressState>(() => super.currentState))
+          Computed<PageProgressState>(() => super.currentState,
+              name: '_FeedControllerBase.currentState'))
       .value;
 
   final _$_progressAtom = Atom(name: '_FeedControllerBase._progress');
 
   @override
   ObservableFuture<Either<Failure, TweetSessionEntity>> get _progress {
-    _$_progressAtom.context.enforceReadPolicy(_$_progressAtom);
-    _$_progressAtom.reportObserved();
+    _$_progressAtom.reportRead();
     return super._progress;
   }
 
   @override
   set _progress(ObservableFuture<Either<Failure, TweetSessionEntity>> value) {
-    _$_progressAtom.context.conditionallyRunInAction(() {
+    _$_progressAtom.reportWrite(value, super._progress, () {
       super._progress = value;
-      _$_progressAtom.reportChanged();
-    }, _$_progressAtom, name: '${_$_progressAtom.name}_set');
+    });
   }
 
   final _$listTweetsAtom = Atom(name: '_FeedControllerBase.listTweets');
 
   @override
   ObservableList<TweetEntity> get listTweets {
-    _$listTweetsAtom.context.enforceReadPolicy(_$listTweetsAtom);
-    _$listTweetsAtom.reportObserved();
+    _$listTweetsAtom.reportRead();
     return super.listTweets;
   }
 
   @override
   set listTweets(ObservableList<TweetEntity> value) {
-    _$listTweetsAtom.context.conditionallyRunInAction(() {
+    _$listTweetsAtom.reportWrite(value, super.listTweets, () {
       super.listTweets = value;
-      _$listTweetsAtom.reportChanged();
-    }, _$listTweetsAtom, name: '${_$listTweetsAtom.name}_set');
+    });
   }
 
   final _$errorMessageAtom = Atom(name: '_FeedControllerBase.errorMessage');
 
   @override
   String get errorMessage {
-    _$errorMessageAtom.context.enforceReadPolicy(_$errorMessageAtom);
-    _$errorMessageAtom.reportObserved();
+    _$errorMessageAtom.reportRead();
     return super.errorMessage;
   }
 
   @override
   set errorMessage(String value) {
-    _$errorMessageAtom.context.conditionallyRunInAction(() {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
       super.errorMessage = value;
-      _$errorMessageAtom.reportChanged();
-    }, _$errorMessageAtom, name: '${_$errorMessageAtom.name}_set');
+    });
   }
 
-  final _$fetchNextPageAsyncAction = AsyncAction('fetchNextPage');
+  final _$fetchNextPageAsyncAction =
+      AsyncAction('_FeedControllerBase.fetchNextPage');
 
   @override
   Future<void> fetchNextPage() {
     return _$fetchNextPageAsyncAction.run(() => super.fetchNextPage());
   }
 
-  final _$likeAsyncAction = AsyncAction('like');
+  final _$likeAsyncAction = AsyncAction('_FeedControllerBase.like');
 
   @override
   Future<void> like(TweetEntity tweet) {
     return _$likeAsyncAction.run(() => super.like(tweet));
   }
 
-  final _$replyAsyncAction = AsyncAction('reply');
+  final _$replyAsyncAction = AsyncAction('_FeedControllerBase.reply');
 
   @override
   Future<void> reply(TweetEntity tweet) {
@@ -90,8 +86,10 @@ mixin _$FeedController on _FeedControllerBase, Store {
 
   @override
   String toString() {
-    final string =
-        'listTweets: ${listTweets.toString()},errorMessage: ${errorMessage.toString()},currentState: ${currentState.toString()}';
-    return '{$string}';
+    return '''
+listTweets: ${listTweets},
+errorMessage: ${errorMessage},
+currentState: ${currentState}
+    ''';
   }
 }
