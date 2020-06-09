@@ -60,8 +60,7 @@ class SingleTweet extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   TweetTitle(
-                    userName: tweet.userName,
-                    time: tweet.createdAt,
+                    tweet: tweet,
                     context: _context,
                   ),
                   TweetBody(content: tweet.content),

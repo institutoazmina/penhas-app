@@ -86,8 +86,7 @@ class ReplyTweet extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               TweetTitle(
-                userName: tweet.userName,
-                time: tweet.createdAt,
+                tweet: tweet,
                 context: context,
               ),
               TweetBody(content: tweet.content),
@@ -165,8 +164,7 @@ class RepliedTweet extends StatelessWidget {
     return Column(
       children: <Widget>[
         TweetTitle(
-          userName: repliedTweet.userName,
-          time: repliedTweet.createdAt,
+          tweet: repliedTweet,
           context: context,
         ),
         TweetBody(content: repliedTweet.content),

@@ -78,6 +78,10 @@ flutter:
    - assets/images/svg/bottom_bar/feed_selected.svg
    - assets/images/svg/bottom_bar/support_point.svg
    - assets/images/svg/bottom_bar/support_point_selected.svg
+   - assets/images/svg/tweet_action/tweet_action_block.svg
+   - assets/images/svg/tweet_action/tweet_action_chat.svg
+   - assets/images/svg/tweet_action/tweet_action_delete.svg
+   - assets/images/svg/tweet_action/tweet_action_report.svg
 
   #  - images/a_dot_ham.jpeg
 
