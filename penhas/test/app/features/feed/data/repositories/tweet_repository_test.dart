@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/network/network_info.dart';
-import 'package:penhas/app/features/authentication/data/models/session_model.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_model.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_session_model.dart';

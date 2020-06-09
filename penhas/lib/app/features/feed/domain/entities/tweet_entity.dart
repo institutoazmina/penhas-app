@@ -72,6 +72,7 @@ class TweetEntity extends Equatable {
       content: content ?? this.content,
       avatar: avatar ?? this.avatar,
       meta: meta ?? this.meta,
+      lastReply: lastReply ?? this.lastReply,
     );
   }
 }

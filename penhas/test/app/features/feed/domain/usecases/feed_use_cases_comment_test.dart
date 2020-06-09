@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
 import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
@@ -23,7 +22,7 @@ void main() {
       // assert
       verifyNoMoreInteractions(repository);
     });
-    group('comment', () {
+    group('reply', () {
       int maxRowsPerRequet;
       TweetSessionEntity firstSessionResponse;
       TweetEntity tweetEntity1;
@@ -40,7 +39,7 @@ void main() {
           totalReply: 0,
           totalLikes: 1,
           anonymous: false,
-          content: 'content 4',
+          content: 'content 1',
           avatar: 'http://site.com/avatar_2.png',
           meta: TweetMeta(liked: true, owner: true),
           lastReply: [],
@@ -66,7 +65,7 @@ void main() {
           totalReply: 1,
           totalLikes: 1,
           anonymous: false,
-          content: 'content 3',
+          content: 'content 2',
           avatar: 'http://site.com/avatar_1.png',
           meta: TweetMeta(liked: true, owner: true),
           lastReply: [tweetEntity3],
@@ -98,35 +97,74 @@ void main() {
           totalReply: 0,
           totalLikes: 0,
           anonymous: false,
-          content: 'commented tweet',
+          content: 'commented tweet = 5',
           avatar: 'http://site.com/avatar_42.png',
           meta: TweetMeta(liked: false, owner: true),
           lastReply: [],
         );
         final commentedTweet = tweetEntity1.copyWith(
-          totalReply: 1,
+          totalReply: tweetEntity1.totalReply + 1,
           lastReply: [newTweet],
         );
-        final expected = FeedCache(tweets: [
-          commentedTweet,
-          tweetEntity2,
-        ]);
+        final expected = right(
+          FeedCache(tweets: [
+            commentedTweet,
+            tweetEntity2,
+          ]),
+        );
 
         when(repository.reply(option: anyNamed('option')))
-            .thenAnswer((_) async => right(ValidField()));
-        when(repository.current(option: anyNamed('option'))).thenAnswer(
-            (_) async => right(TweetSessionEntity(
-                hasMore: false,
-                orderBy: TweetSessionOrder.latestFirst,
-                tweets: [newTweet])));
-
+            .thenAnswer((_) async => right(newTweet));
         // act
-        final received = await sut.comment(
+        final received = await sut.reply(
           mainTweet: tweetEntity1,
           comment: 'commented tweet',
         );
         // assert
-        expect(expected, received);
+        expect(received, expected);
+      });
+      test('should replaced current commented by new replied tweet', () async {
+        // arrange
+        final sut = FeedUseCases(
+          repository: repository,
+          maxRows: maxRowsPerRequet,
+        );
+        when(repository.fetch(option: anyNamed('option')))
+            .thenAnswer((_) async => right(firstSessionResponse));
+        await sut.fetchOldestTweet();
+        final newTweet = TweetEntity(
+          id: 'id_5',
+          userName: 'maria',
+          clientId: 42,
+          createdAt: '2020-05-05 05:05:05',
+          totalReply: 0,
+          totalLikes: 0,
+          anonymous: false,
+          content: 'commented tweet',
+          avatar: 'http://site.com/avatar_42.png',
+          meta: TweetMeta(liked: false, owner: true),
+          lastReply: [],
+        );
+        final commentedTweet = tweetEntity2.copyWith(
+          totalReply: 2,
+          lastReply: [newTweet],
+        );
+        final expected = right(
+          FeedCache(tweets: [
+            tweetEntity1,
+            commentedTweet,
+          ]),
+        );
+
+        when(repository.reply(option: anyNamed('option')))
+            .thenAnswer((_) async => right(newTweet));
+        // act
+        final received = await sut.reply(
+          mainTweet: tweetEntity2,
+          comment: 'commented tweet',
+        );
+        // assert
+        expect(received, expected);
       });
     });
   });

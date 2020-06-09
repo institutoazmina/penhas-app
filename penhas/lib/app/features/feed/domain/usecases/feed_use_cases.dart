@@ -94,17 +94,26 @@ class FeedUseCases {
     );
   }
 
-  Future<Either<Failure, FeedCache>> comment({
+  Future<Either<Failure, FeedCache>> reply({
     @required TweetEntity mainTweet,
     @required String comment,
   }) async {
-    throw UnimplementedError();
-    // final result = await _repository.comment(option: option);
+    final option = TweetEngageRequestOption(
+      tweetId: mainTweet.id,
+      message: comment,
+    );
 
-    // return result.fold<Either<Failure, FeedCache>>(
-    //   (failure) => left(failure),
-    //   (session) => right(_detailFetchCache(option)),
-    // );
+    final result = await _repository.reply(option: option);
+
+    return result.fold<Either<Failure, FeedCache>>(
+      (failure) => left(failure),
+      (repliedTweet) => right(
+        _updateRepliedTweetIntoCache(
+          mainTweet,
+          repliedTweet,
+        ),
+      ),
+    );
   }
 
   Future<Either<Failure, ValidField>> report(TweetEntity tweet) async {
@@ -208,6 +217,22 @@ class FeedUseCases {
         0,
         [tweet, TweetGap()],
       );
+    }
+
+    return FeedCache(tweets: _tweetCacheFetch);
+  }
+
+  FeedCache _updateRepliedTweetIntoCache(
+      TweetEntity mainTweet, TweetEntity repliedTweet) {
+    final index = _tweetCacheFetch.indexWhere((e) => (e.id == mainTweet.id));
+
+    if (index >= 0) {
+      TweetEntity rebuildedTweet = mainTweet.copyWith(
+        totalReply: mainTweet.totalReply + 1,
+        lastReply: [repliedTweet],
+      );
+
+      _tweetCacheFetch[index] = rebuildedTweet;
     }
 
     return FeedCache(tweets: _tweetCacheFetch);
