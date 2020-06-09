@@ -12,6 +12,8 @@ class SingleTweet extends StatelessWidget {
   final TweetEntity tweet;
   final TweetReaction onLikePressed;
   final TweetReaction onReplyPressed;
+  final TweetReaction actionDelete;
+  final TweetReaction actionReport;
   final BuildContext _context;
 
   const SingleTweet({
@@ -20,6 +22,8 @@ class SingleTweet extends StatelessWidget {
     @required BuildContext context,
     @required this.onLikePressed,
     @required this.onReplyPressed,
+    @required this.actionDelete,
+    @required this.actionReport,
   })  : assert(context != null),
         this._context = context,
         super(key: key);
@@ -62,6 +66,14 @@ class SingleTweet extends StatelessWidget {
                   TweetTitle(
                     tweet: tweet,
                     context: _context,
+                    actionDelete: () {
+                      actionDelete(tweet);
+                      Navigator.of(_context).pop();
+                    },
+                    actionReport: () {
+                      actionReport(tweet);
+                      Navigator.of(_context).pop();
+                    },
                   ),
                   TweetBody(content: tweet.content),
                   TweetBottom(

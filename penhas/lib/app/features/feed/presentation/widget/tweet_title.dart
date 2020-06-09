@@ -9,10 +9,10 @@ import '../feed_typedef.dart';
 class TweetTitle extends StatelessWidget {
   final TweetEntity tweet;
   final BuildContext rootContext;
-  final TweetReaction actionChat;
-  final TweetReaction actionBlock;
-  final TweetReaction actionReport;
-  final TweetReaction actionDelete;
+  final VoidCallback actionChat;
+  final VoidCallback actionBlock;
+  final VoidCallback actionReport;
+  final VoidCallback actionDelete;
 
   const TweetTitle({
     Key key,
@@ -102,19 +102,19 @@ class TweetTitle extends StatelessWidget {
         leading: SvgPicture.asset(
             'assets/images/svg/tweet_action/tweet_action_chat.svg'),
         title: Text('Conversar'),
-        onTap: () => actionChat(tweet),
+        onTap: () => actionChat(),
       ),
       ListTile(
         leading: SvgPicture.asset(
             'assets/images/svg/tweet_action/tweet_action_block.svg'),
         title: Text('Bloquear'),
-        onTap: () => actionBlock(tweet),
+        onTap: () => actionBlock(),
       ),
       ListTile(
         leading: SvgPicture.asset(
             'assets/images/svg/tweet_action/tweet_action_report.svg'),
         title: Text('Denunciar'),
-        onTap: () => actionReport(tweet),
+        onTap: () => actionReport(),
       )
     ];
 
@@ -125,7 +125,7 @@ class TweetTitle extends StatelessWidget {
           leading: SvgPicture.asset(
               'assets/images/svg/tweet_action/tweet_action_delete.svg'),
           title: Text('Apagar'),
-          onTap: () => actionDelete(tweet),
+          onTap: () => actionDelete(),
         ),
       );
     }

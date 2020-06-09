@@ -13,6 +13,9 @@ class ReplyTweet extends StatelessWidget {
   final TweetEntity tweet;
   final TweetReaction onLikePressed;
   final TweetReaction onReplyPressed;
+  final TweetReaction actionDelete;
+  final TweetReaction actionReport;
+
   final BuildContext _context;
 
   const ReplyTweet({
@@ -21,6 +24,8 @@ class ReplyTweet extends StatelessWidget {
     @required BuildContext context,
     @required this.onLikePressed,
     @required this.onReplyPressed,
+    @required this.actionDelete,
+    @required this.actionReport,
   })  : assert(context != null),
         this._context = context,
         super(key: key);
@@ -88,6 +93,14 @@ class ReplyTweet extends StatelessWidget {
               TweetTitle(
                 tweet: tweet,
                 context: context,
+                actionDelete: () {
+                  Navigator.of(_context).pop();
+                  actionDelete(tweet);
+                },
+                actionReport: () {
+                  Navigator.of(_context).pop();
+                  actionReport(tweet);
+                },
               ),
               TweetBody(content: tweet.content),
               TweetBottom(
@@ -109,9 +122,11 @@ class ReplyTweet extends StatelessWidget {
         .map(
           (e) => RepliedTweet(
             repliedTweet: e,
+            context: context,
             onLikePressed: onLikePressed,
             onReplyPressed: onReplyPressed,
-            context: context,
+            actionDelete: actionDelete,
+            actionReport: actionReport,
           ),
         )
         .toList();
@@ -144,18 +159,23 @@ class ReplyTweet extends StatelessWidget {
 }
 
 class RepliedTweet extends StatelessWidget {
-  final TweetEntity repliedTweet;
+  final TweetEntity tweet;
   final TweetReaction onLikePressed;
   final TweetReaction onReplyPressed;
+  final TweetReaction actionDelete;
+  final TweetReaction actionReport;
   final BuildContext _context;
 
   const RepliedTweet({
     Key key,
-    @required this.repliedTweet,
+    @required TweetEntity repliedTweet,
+    @required BuildContext context,
     @required this.onLikePressed,
     @required this.onReplyPressed,
-    @required BuildContext context,
+    @required this.actionDelete,
+    @required this.actionReport,
   })  : assert(repliedTweet != null),
+        tweet = repliedTweet,
         _context = context,
         super(key: key);
 
@@ -164,16 +184,24 @@ class RepliedTweet extends StatelessWidget {
     return Column(
       children: <Widget>[
         TweetTitle(
-          tweet: repliedTweet,
+          tweet: tweet,
           context: context,
+          actionDelete: () {
+            actionDelete(tweet);
+            Navigator.of(_context).pop();
+          },
+          actionReport: () {
+            actionReport(tweet);
+            Navigator.of(_context).pop();
+          },
         ),
-        TweetBody(content: repliedTweet.content),
+        TweetBody(content: tweet.content),
         TweetBottom(
-          replyCount: repliedTweet.totalReply,
-          likeCount: repliedTweet.totalLikes,
-          isLiked: repliedTweet.meta.liked,
-          onLikePressed: () => onLikePressed(repliedTweet),
-          onReplyPressed: () => onReplyPressed(repliedTweet),
+          replyCount: tweet.totalReply,
+          likeCount: tweet.totalLikes,
+          isLiked: tweet.meta.liked,
+          onLikePressed: () => onLikePressed(tweet),
+          onReplyPressed: () => onReplyPressed(tweet),
         ),
       ],
     );

@@ -89,12 +89,16 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
               context: context,
               onLikePressed: controller.like,
               onReplyPressed: controller.reply,
+              actionDelete: controller.actionDelete,
+              actionReport: controller.actionReport,
             )
           : ReplyTweet(
               tweet: tweet,
               context: context,
               onLikePressed: controller.like,
               onReplyPressed: controller.reply,
+              actionDelete: controller.actionDelete,
+              actionReport: controller.actionReport,
             ),
     );
   }
