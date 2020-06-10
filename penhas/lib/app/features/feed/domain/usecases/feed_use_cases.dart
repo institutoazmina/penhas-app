@@ -76,16 +76,17 @@ class FeedUseCases {
 
   Future<Either<Failure, FeedCache>> like(TweetEntity tweet) async {
     final option = TweetEngageRequestOption(tweetId: tweet.id);
-    final result = await _repository.like(option: option);
-
-    return result.fold<Either<Failure, FeedCache>>(
-      (failure) => left(failure),
-      (session) => right(_rebuildFetchCache(session)),
-    );
+    return _processTweetFavorite(option);
   }
 
   Future<Either<Failure, FeedCache>> unlike(TweetEntity tweet) async {
     final option = TweetEngageRequestOption(tweetId: tweet.id, dislike: true);
+    return _processTweetFavorite(option);
+  }
+
+  Future<Either<Failure, FeedCache>> _processTweetFavorite(
+    TweetEngageRequestOption option,
+  ) async {
     final result = await _repository.like(option: option);
 
     return result.fold<Either<Failure, FeedCache>>(

@@ -70,13 +70,9 @@ class _TweetBottomState extends State<TweetBottom> {
   }
 
   void _toogleLike() {
-    if (_isLiked) {
-      return;
-    }
-
     setState(() {
+      _likeCount += _isLiked ? -1 : 1;
       _isLiked = !_isLiked;
-      _likeCount += 1;
     });
 
     widget.onLikePressed();

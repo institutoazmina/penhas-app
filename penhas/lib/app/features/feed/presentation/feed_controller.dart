@@ -59,7 +59,14 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
       return;
     }
 
-    final result = await useCase.like(tweet);
+    Either<Failure, FeedCache> result;
+
+    if (tweet.meta.liked) {
+      result = await useCase.unlike(tweet);
+    } else {
+      result = await useCase.like(tweet);
+    }
+
     result.fold(
       (failure) => _setErrorMessage(mapFailureMessage(failure)),
       (cache) => _updateSessionAction(cache),
