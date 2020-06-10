@@ -143,15 +143,16 @@ class ReplyTweet extends StatelessWidget {
                   color: DesignSystemColors.warnGrey,
                 ),
               ),
-              RaisedButton(
+              FlatButton(
                 onPressed: () {},
-                elevation: 0,
-                color: Colors.transparent,
+                color: Colors.white,
+                highlightColor: Colors.white,
+                splashColor: Colors.white,
                 child: Text(
                   "Ver todos os comentários",
                   style: kTextStyleFeedTweetShowReply,
                 ),
-              )
+              ),
             ],
           )
         : Container();
