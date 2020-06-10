@@ -92,8 +92,8 @@ class _ComposeTweetPageState
                         height: 160,
                         child: TextField(
                           controller: controller.editingController,
-                          maxLength: 500,
-                          maxLines: 15,
+                          maxLength: 2200,
+                          maxLines: 20,
                           maxLengthEnforced: true,
                           onChanged: controller.setTweetContent,
                           decoration: InputDecoration(

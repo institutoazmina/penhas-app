@@ -92,7 +92,7 @@ class _ReplyTweetPageState
                         height: 160,
                         child: TextField(
                           controller: controller.editingController,
-                          maxLength: 500,
+                          maxLength: 2200,
                           maxLines: 15,
                           maxLengthEnforced: true,
                           onChanged: controller.setTweetContent,
