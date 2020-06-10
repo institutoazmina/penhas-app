@@ -117,8 +117,11 @@ class FeedUseCases {
     );
   }
 
-  Future<Either<Failure, ValidField>> report(TweetEntity tweet) async {
-    final option = TweetEngageRequestOption(tweetId: tweet.id);
+  Future<Either<Failure, ValidField>> report(
+    TweetEntity tweet,
+    String reason,
+  ) async {
+    final option = TweetEngageRequestOption(tweetId: tweet.id, message: reason);
     final result = await _repository.report(option: option);
 
     return result.fold<Either<Failure, ValidField>>(

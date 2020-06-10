@@ -97,7 +97,39 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> actionReport(TweetEntity tweet) async {
-    Modular.to.showDialog(child: Text('Ola Mundo!'));
+    Modular.to.showDialog(
+      builder: (context) {
+        TextEditingController _controller = TextEditingController();
+
+        return AlertDialog(
+          title: Text('Denunciar'),
+          content: TextFormField(
+            controller: _controller,
+            maxLength: 500,
+            maxLines: 5,
+            maxLengthEnforced: true,
+            decoration: InputDecoration(
+                hintText: 'Informe o motivo de denúncia deste post',
+                filled: true),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Enviar'),
+              onPressed: () async {
+                await useCase.report(tweet, _controller.text);
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('Fechar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
+    );
   }
 
   void _setErrorMessage(String msg) {

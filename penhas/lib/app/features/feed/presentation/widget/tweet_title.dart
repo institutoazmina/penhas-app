@@ -4,8 +4,6 @@ import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-import '../feed_typedef.dart';
-
 class TweetTitle extends StatelessWidget {
   final TweetEntity tweet;
   final BuildContext rootContext;

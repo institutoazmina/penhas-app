@@ -71,8 +71,8 @@ class SingleTweet extends StatelessWidget {
                       Navigator.of(_context).pop();
                     },
                     actionReport: () {
-                      actionReport(tweet);
                       Navigator.of(_context).pop();
+                      actionReport(tweet);
                     },
                   ),
                   TweetBody(content: tweet.content),

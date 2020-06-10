@@ -94,8 +94,8 @@ class ReplyTweet extends StatelessWidget {
                 tweet: tweet,
                 context: context,
                 actionDelete: () {
-                  Navigator.of(_context).pop();
                   actionDelete(tweet);
+                  Navigator.of(_context).pop();
                 },
                 actionReport: () {
                   Navigator.of(_context).pop();
