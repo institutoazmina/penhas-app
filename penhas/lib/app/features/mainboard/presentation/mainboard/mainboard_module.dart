@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
+import 'package:penhas/app/core/states/mainboard_store.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart';
 import 'package:penhas/app/features/feed/data/repositories/tweet_repository.dart';
 import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
@@ -17,10 +18,16 @@ class MainboardModule extends ChildModule {
   @override
   List<Bind> get binds => [
         Bind(
-          (i) => MainboardController(appConfigure: i.get<IAppConfiguration>()),
+          (i) => MainboardController(
+            appConfigure: i.get<IAppConfiguration>(),
+            mainboardStore: i.get<MainboardStore>(),
+          ),
         ),
         Bind(
-          (i) => ComposeTweetController(useCase: i.get<FeedUseCases>()),
+          (i) => ComposeTweetController(
+            useCase: i.get<FeedUseCases>(),
+            mainboardStore: i.get<MainboardStore>(),
+          ),
           singleton: false,
         ),
         Bind(
@@ -33,6 +40,7 @@ class MainboardModule extends ChildModule {
         Bind(
           (i) => FeedUseCases(repository: i.get<ITweetRepository>()),
         ),
+        Bind<MainboardStore>((i) => MainboardStore()),
         Bind<ITweetRepository>(
           (i) => TweetRepository(
             networkInfo: i.get<INetworkInfo>(),

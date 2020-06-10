@@ -92,9 +92,9 @@ mixin _$ResetPasswordThreeController
   @override
   String toString() {
     return '''
-errorMessage: $errorMessage,
-warningPassword: $warningPassword,
-currentState: $currentState
+errorMessage: ${errorMessage},
+warningPassword: ${warningPassword},
+currentState: ${currentState}
     ''';
   }
 }

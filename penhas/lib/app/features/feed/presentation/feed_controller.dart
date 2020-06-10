@@ -107,14 +107,4 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
   void _updateSessionAction(FeedCache cache) {
     listTweets = cache.tweets.asObservable();
   }
-
-  void _updateTweetList(TweetEntity tweet) {
-    final index = listTweets.indexWhere(
-      (e) => e.id == tweet.id,
-    );
-
-    if (index > 0) {
-      listTweets[index] = tweet;
-    }
-  }
 }

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/states/mainboard_state.dart';
+import 'package:penhas/app/core/states/mainboard_store.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
@@ -11,14 +13,18 @@ part 'compose_tweet_controller.g.dart';
 
 class ComposeTweetController extends _ComposeTweetControllerBase
     with _$ComposeTweetController {
-  ComposeTweetController({@required FeedUseCases useCase}) : super(useCase);
+  ComposeTweetController({
+    @required FeedUseCases useCase,
+    @required MainboardStore mainboardStore,
+  }) : super(useCase, mainboardStore);
 }
 
 abstract class _ComposeTweetControllerBase with Store, MapFailureMessage {
   final FeedUseCases useCase;
+  final MainboardStore mainboardStore;
   String tweetContent;
 
-  _ComposeTweetControllerBase(this.useCase);
+  _ComposeTweetControllerBase(this.useCase, this.mainboardStore);
 
   @observable
   ObservableFuture<Either<Failure, FeedCache>> _progress;
@@ -76,5 +82,6 @@ abstract class _ComposeTweetControllerBase with Store, MapFailureMessage {
 
   void _updatedTweet() {
     editingController.clear();
+    mainboardStore.changePage(to: MainboardState.feed());
   }
 }

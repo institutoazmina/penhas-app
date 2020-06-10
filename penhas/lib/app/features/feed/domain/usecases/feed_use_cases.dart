@@ -220,15 +220,11 @@ class FeedUseCases {
     return FeedCache(tweets: _tweetCacheFetch);
   }
 
-  // TODO
-  // Insere o tweet criado justo com uma marcação de gap entre o que existia
-  // e o novo. Pretendo usar estar marcação para, no futuro, recriar o gap
-  // de conteúdo entre eles
   FeedCache _insertCreatedTweetIntoCache(TweetEntity tweet) {
     if (tweet != null) {
       _tweetCacheFetch.insertAll(
         0,
-        [tweet, TweetGap()],
+        [tweet],
       );
     }
 

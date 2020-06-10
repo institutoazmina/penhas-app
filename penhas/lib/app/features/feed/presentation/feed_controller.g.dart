@@ -84,6 +84,22 @@ mixin _$FeedController on _FeedControllerBase, Store {
     return _$replyAsyncAction.run(() => super.reply(tweet));
   }
 
+  final _$actionDeleteAsyncAction =
+      AsyncAction('_FeedControllerBase.actionDelete');
+
+  @override
+  Future<void> actionDelete(TweetEntity tweet) {
+    return _$actionDeleteAsyncAction.run(() => super.actionDelete(tweet));
+  }
+
+  final _$actionReportAsyncAction =
+      AsyncAction('_FeedControllerBase.actionReport');
+
+  @override
+  Future<void> actionReport(TweetEntity tweet) {
+    return _$actionReportAsyncAction.run(() => super.actionReport(tweet));
+  }
+
   @override
   String toString() {
     return '''

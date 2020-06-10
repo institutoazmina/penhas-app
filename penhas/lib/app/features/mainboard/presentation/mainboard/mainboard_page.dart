@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:penhas/app/core/states/mainboard_state.dart';
 import 'package:penhas/app/features/feed/presentation/compose_tweet/compose_tweet_page.dart';
 import 'package:penhas/app/features/feed/presentation/feed_module.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
@@ -44,8 +45,13 @@ class _MainboardPageState
                   constraints: BoxConstraints(minWidth: 80.0),
                   padding: EdgeInsets.only(left: 16.0),
                   tooltip: 'Feed',
-                  icon: _buildBottomBarIcon(0, controller.selectedIndex),
-                  onPressed: () => controller.changePage(0),
+                  icon: _buildBottomBarIcon(
+                    MainboardState.feed(),
+                    controller.mainboardStore.selectedPage,
+                  ),
+                  onPressed: () => controller.mainboardStore.changePage(
+                    to: MainboardState.feed(),
+                  ),
                   splashColor: Colors.white,
                   highlightColor: Colors.white,
                 ),
@@ -53,8 +59,13 @@ class _MainboardPageState
                   iconSize: 30.0,
                   constraints: BoxConstraints(minWidth: 80.0),
                   padding: EdgeInsets.only(right: 28.0),
-                  icon: _buildBottomBarIcon(1, controller.selectedIndex),
-                  onPressed: () => controller.changePage(1),
+                  icon: _buildBottomBarIcon(
+                    MainboardState.compose(),
+                    controller.mainboardStore.selectedPage,
+                  ),
+                  onPressed: () => controller.mainboardStore.changePage(
+                    to: MainboardState.compose(),
+                  ),
                   splashColor: Colors.white,
                   highlightColor: Colors.white,
                 ),
@@ -62,8 +73,13 @@ class _MainboardPageState
                   iconSize: 30.0,
                   constraints: BoxConstraints(minWidth: 80.0),
                   padding: EdgeInsets.only(left: 28.0),
-                  icon: _buildBottomBarIcon(2, controller.selectedIndex),
-                  onPressed: () => controller.changePage(2),
+                  icon: _buildBottomBarIcon(
+                    MainboardState.chat(),
+                    controller.mainboardStore.selectedPage,
+                  ),
+                  onPressed: () => controller.mainboardStore.changePage(
+                    to: MainboardState.chat(),
+                  ),
                   splashColor: Colors.white,
                   highlightColor: Colors.white,
                 ),
@@ -71,8 +87,13 @@ class _MainboardPageState
                   iconSize: 30.0,
                   constraints: BoxConstraints(minWidth: 80.0),
                   padding: EdgeInsets.only(right: 16.0),
-                  icon: _buildBottomBarIcon(3, controller.selectedIndex),
-                  onPressed: () => controller.changePage(3),
+                  icon: _buildBottomBarIcon(
+                    MainboardState.supportPoint(),
+                    controller.mainboardStore.selectedPage,
+                  ),
+                  onPressed: () => controller.mainboardStore.changePage(
+                    to: MainboardState.supportPoint(),
+                  ),
                   splashColor: Colors.white,
                   highlightColor: Colors.white,
                 )
@@ -86,28 +107,24 @@ class _MainboardPageState
     );
   }
 
-  Widget _buildBottomBarIcon(int index, int selected) {
+  Widget _buildBottomBarIcon(MainboardState current, MainboardState selected) {
     String asset;
-    if (index == 0) {
-      asset = 'assets/images/svg/bottom_bar/feed.svg';
-    } else if (index == 1) {
-      asset = 'assets/images/svg/bottom_bar/compose_tweet.svg';
-    } else if (index == 2) {
-      asset = 'assets/images/svg/bottom_bar/chat.svg';
-    } else if (index == 3) {
-      asset = 'assets/images/svg/bottom_bar/support_point.svg';
-    }
+    String rootPath = 'assets/images/svg/bottom_bar';
 
-    if (index == selected) {
-      if (selected == 0) {
-        asset = 'assets/images/svg/bottom_bar/feed_selected.svg';
-      } else if (selected == 1) {
-        asset = 'assets/images/svg/bottom_bar/compose_tweet_selected.svg';
-      } else if (selected == 2) {
-        asset = 'assets/images/svg/bottom_bar/chat_selected.svg';
-      } else if (selected == 3) {
-        asset = 'assets/images/svg/bottom_bar/support_point_selected.svg';
-      }
+    asset = current.when(
+      chat: () => '$rootPath/chat.svg',
+      feed: () => '$rootPath/feed.svg',
+      compose: () => '$rootPath/compose_tweet.svg',
+      supportPoint: () => '$rootPath/support_point.svg',
+    );
+
+    if (current == selected) {
+      asset = current.when(
+        chat: () => '$rootPath/chat_selected.svg',
+        feed: () => '$rootPath/feed_selected.svg',
+        compose: () => '$rootPath/compose_tweet_selected.svg',
+        supportPoint: () => '$rootPath/support_point_selected.svg',
+      );
     }
 
     return SvgPicture.asset(asset);
@@ -136,7 +153,7 @@ class _MainboardPageState
   PageView _buildBody() {
     return PageView(
       physics: NeverScrollableScrollPhysics(),
-      controller: controller.pageController,
+      controller: controller.mainboardStore.pageController,
       children: <Widget>[
         FeedModule(),
         newTweetPage,

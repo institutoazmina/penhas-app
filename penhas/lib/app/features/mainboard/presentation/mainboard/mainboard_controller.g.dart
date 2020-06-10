@@ -40,20 +40,9 @@ mixin _$MainboardController on _MainboardControllerBase, Store {
   }
 
   @override
-  void changePage(int index) {
-    final _$actionInfo = _$_MainboardControllerBaseActionController.startAction(
-        name: '_MainboardControllerBase.changePage');
-    try {
-      return super.changePage(index);
-    } finally {
-      _$_MainboardControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
-selectedIndex: $selectedIndex
+selectedIndex: ${selectedIndex}
     ''';
   }
 }

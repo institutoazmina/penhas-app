@@ -88,44 +88,41 @@ class _ComposeTweetPageState
                           style: kTextStyleDrawerListItem,
                         ),
                       ),
-                      SizedBox(
-                        height: 160,
-                        child: TextField(
-                          controller: controller.editingController,
-                          maxLength: 2200,
-                          maxLines: 20,
-                          maxLengthEnforced: true,
-                          onChanged: controller.setTweetContent,
-                          decoration: InputDecoration(
-                            filled: true,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(12),
-                                topRight: Radius.circular(12),
-                                bottomRight: Radius.circular(12),
-                              ),
-                              borderSide: BorderSide(
-                                  color: DesignSystemColors.ligthPurple),
+                      TextField(
+                        controller: controller.editingController,
+                        maxLength: 2200,
+                        maxLines: 10,
+                        maxLengthEnforced: true,
+                        onChanged: controller.setTweetContent,
+                        decoration: InputDecoration(
+                          filled: true,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(12),
+                              topRight: Radius.circular(12),
+                              bottomRight: Radius.circular(12),
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(12),
-                                topRight: Radius.circular(12),
-                                bottomRight: Radius.circular(12),
-                              ),
-                              borderSide: BorderSide(
-                                  color: DesignSystemColors.ligthPurple,
-                                  width: 2.0),
+                            borderSide: BorderSide(
+                                color: DesignSystemColors.ligthPurple),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(12),
+                              topRight: Radius.circular(12),
+                              bottomRight: Radius.circular(12),
                             ),
-                            alignLabelWithHint: true,
-                            hintText: inputHint,
+                            borderSide: BorderSide(
+                                color: DesignSystemColors.ligthPurple,
+                                width: 2.0),
                           ),
-                          toolbarOptions: ToolbarOptions(
-                            copy: true,
-                            cut: true,
-                            selectAll: true,
-                            paste: true,
-                          ),
+                          alignLabelWithHint: true,
+                          hintText: inputHint,
+                        ),
+                        toolbarOptions: ToolbarOptions(
+                          copy: true,
+                          cut: true,
+                          selectAll: true,
+                          paste: true,
                         ),
                       ),
                       Observer(builder: (context) {
