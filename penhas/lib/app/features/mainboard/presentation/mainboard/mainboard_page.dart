@@ -40,63 +40,54 @@ class _MainboardPageState
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                IconButton(
-                  iconSize: 30.0,
-                  constraints: BoxConstraints(minWidth: 80.0),
-                  padding: EdgeInsets.only(left: 16.0),
-                  tooltip: 'Feed',
-                  icon: _buildBottomBarIcon(
-                    MainboardState.feed(),
-                    controller.mainboardStore.selectedPage,
-                  ),
+                FlatButton(
+                  splashColor: Colors.white,
+                  highlightColor: Colors.white,
+                  padding: EdgeInsets.only(right: 6.0),
                   onPressed: () => controller.mainboardStore.changePage(
                     to: MainboardState.feed(),
                   ),
-                  splashColor: Colors.white,
-                  highlightColor: Colors.white,
-                ),
-                IconButton(
-                  iconSize: 30.0,
-                  constraints: BoxConstraints(minWidth: 80.0),
-                  padding: EdgeInsets.only(right: 28.0),
-                  icon: _buildBottomBarIcon(
-                    MainboardState.compose(),
+                  child: _buildBottomBarIcon(
+                    MainboardState.feed(),
                     controller.mainboardStore.selectedPage,
                   ),
+                ),
+                FlatButton(
+                  splashColor: Colors.white,
+                  highlightColor: Colors.white,
+                  padding: EdgeInsets.only(right: 32.0),
                   onPressed: () => controller.mainboardStore.changePage(
                     to: MainboardState.compose(),
                   ),
-                  splashColor: Colors.white,
-                  highlightColor: Colors.white,
-                ),
-                IconButton(
-                  iconSize: 30.0,
-                  constraints: BoxConstraints(minWidth: 80.0),
-                  padding: EdgeInsets.only(left: 28.0),
-                  icon: _buildBottomBarIcon(
-                    MainboardState.chat(),
+                  child: _buildBottomBarIcon(
+                    MainboardState.compose(),
                     controller.mainboardStore.selectedPage,
                   ),
+                ),
+                FlatButton(
+                  splashColor: Colors.white,
+                  highlightColor: Colors.white,
+                  padding: EdgeInsets.only(left: 32.0),
                   onPressed: () => controller.mainboardStore.changePage(
                     to: MainboardState.chat(),
                   ),
-                  splashColor: Colors.white,
-                  highlightColor: Colors.white,
-                ),
-                IconButton(
-                  iconSize: 30.0,
-                  constraints: BoxConstraints(minWidth: 80.0),
-                  padding: EdgeInsets.only(right: 16.0),
-                  icon: _buildBottomBarIcon(
-                    MainboardState.supportPoint(),
+                  child: _buildBottomBarIcon(
+                    MainboardState.chat(),
                     controller.mainboardStore.selectedPage,
                   ),
+                ),
+                FlatButton(
+                  splashColor: Colors.white,
+                  highlightColor: Colors.white,
+                  padding: EdgeInsets.only(left: 6.0),
                   onPressed: () => controller.mainboardStore.changePage(
                     to: MainboardState.supportPoint(),
                   ),
-                  splashColor: Colors.white,
-                  highlightColor: Colors.white,
-                )
+                  child: _buildBottomBarIcon(
+                    MainboardState.supportPoint(),
+                    controller.mainboardStore.selectedPage,
+                  ),
+                ),
               ],
             ),
           ),
