@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
 import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
@@ -66,11 +65,10 @@ void main() {
               meta: TweetMeta(liked: false, owner: true),
               lastReply: [],
             ),
-            TweetGap()
           ],
         ));
         // act
-        final received = await sut.create('New content');
+        final received = await sut.create('Mensagem 1');
         // assert
         expect(expected, received);
       });

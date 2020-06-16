@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
+import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class TweetTitle extends StatelessWidget {
   final TweetEntity tweet;
-  final BuildContext rootContext;
-  final VoidCallback actionChat;
-  final VoidCallback actionBlock;
-  final VoidCallback actionReport;
-  final VoidCallback actionDelete;
+  final BuildContext _context;
+  final ITweetController controller;
 
   const TweetTitle({
     Key key,
     @required this.tweet,
     @required BuildContext context,
-    this.actionChat,
-    this.actionBlock,
-    this.actionReport,
-    this.actionDelete,
-  })  : rootContext = context,
+    @required this.controller,
+  })  : assert(tweet != null),
+        _context = context,
         super(key: key);
 
   @override
@@ -32,10 +28,11 @@ class TweetTitle extends StatelessWidget {
               child: Text(tweet.userName, style: kTextStyleFeedTweetTitle),
               flex: 2),
           _buildTime(),
-          IconButton(
-            icon: Icon(Icons.more_vert),
-            onPressed: () => _showTweetAction(),
-          ),
+          controller == null
+              ? Container()
+              : IconButton(
+                  icon: Icon(Icons.more_vert),
+                  onPressed: () => _showTweetAction()),
         ],
       ),
     );
@@ -60,7 +57,7 @@ class TweetTitle extends StatelessWidget {
 
   void _showTweetAction() async {
     await showModalBottomSheet(
-      context: rootContext,
+      context: _context,
       backgroundColor: Colors.transparent,
       builder: (context) {
         return Container(
@@ -100,19 +97,19 @@ class TweetTitle extends StatelessWidget {
         leading: SvgPicture.asset(
             'assets/images/svg/tweet_action/tweet_action_chat.svg'),
         title: Text('Conversar'),
-        onTap: () => actionChat(),
+        onTap: () {},
       ),
       ListTile(
         leading: SvgPicture.asset(
             'assets/images/svg/tweet_action/tweet_action_block.svg'),
         title: Text('Bloquear'),
-        onTap: () => actionBlock(),
+        onTap: () {},
       ),
       ListTile(
         leading: SvgPicture.asset(
             'assets/images/svg/tweet_action/tweet_action_report.svg'),
         title: Text('Denunciar'),
-        onTap: () => actionReport(),
+        onTap: () => controller.report(tweet),
       )
     ];
 
@@ -123,7 +120,11 @@ class TweetTitle extends StatelessWidget {
           leading: SvgPicture.asset(
               'assets/images/svg/tweet_action/tweet_action_delete.svg'),
           title: Text('Apagar'),
-          onTap: () => actionDelete(),
+          onTap: () {
+            controller
+                .delete(tweet)
+                .whenComplete(() => Navigator.of(_context).pop());
+          },
         ),
       );
     }

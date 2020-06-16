@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
 import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
 import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
 
@@ -55,7 +54,7 @@ void main() {
         when(repository.report(option: anyNamed('option')))
             .thenAnswer((_) async => right(validField));
         // act
-        final received = await sut.report(tweet);
+        final received = await sut.report(tweet, 'reason');
         // assert
         expect(expected, received);
       });

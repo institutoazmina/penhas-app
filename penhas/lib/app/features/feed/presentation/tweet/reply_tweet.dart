@@ -1,32 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/presentation/feed_typedef.dart';
-import 'package:penhas/app/features/feed/presentation/widget/tweet_avatar.dart';
-import 'package:penhas/app/features/feed/presentation/widget/tweet_body.dart';
-import 'package:penhas/app/features/feed/presentation/widget/tweet_bottom.dart';
-import 'package:penhas/app/features/feed/presentation/widget/tweet_title.dart';
+import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_avatar.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_body.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_bottom.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_title.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ReplyTweet extends StatelessWidget {
   final TweetEntity tweet;
-  final TweetReaction onLikePressed;
-  final TweetReaction onReplyPressed;
-  final TweetReaction actionDelete;
-  final TweetReaction actionReport;
-
   final BuildContext _context;
+
+  final ITweetController controller;
 
   const ReplyTweet({
     Key key,
     @required this.tweet,
+    @required this.controller,
     @required BuildContext context,
-    @required this.onLikePressed,
-    @required this.onReplyPressed,
-    @required this.actionDelete,
-    @required this.actionReport,
-  })  : assert(context != null),
+  })  : assert(tweet != null),
+        assert(context != null),
+        assert(controller != null),
         this._context = context,
         super(key: key);
 
@@ -62,7 +58,6 @@ class ReplyTweet extends StatelessWidget {
             SizedBox(height: 20),
             // expanded replied tweets
             ..._expandeRepliedTweeters(_context),
-            //
             _buildReplyAction(),
           ],
         ),
@@ -93,22 +88,12 @@ class ReplyTweet extends StatelessWidget {
               TweetTitle(
                 tweet: tweet,
                 context: context,
-                actionDelete: () {
-                  actionDelete(tweet);
-                  Navigator.of(_context).pop();
-                },
-                actionReport: () {
-                  Navigator.of(_context).pop();
-                  actionReport(tweet);
-                },
+                controller: controller,
               ),
               TweetBody(content: tweet.content),
               TweetBottom(
-                replyCount: tweet.totalReply,
-                likeCount: tweet.totalLikes,
-                isLiked: tweet.meta.liked,
-                onLikePressed: () => onLikePressed(tweet),
-                onReplyPressed: () => onReplyPressed(tweet),
+                tweet: tweet,
+                controller: controller,
               )
             ],
           ),
@@ -120,13 +105,10 @@ class ReplyTweet extends StatelessWidget {
   List<Widget> _expandeRepliedTweeters(BuildContext context) {
     return tweet.lastReply
         .map(
-          (e) => RepliedTweet(
+          (e) => _RepliedTweet(
             repliedTweet: e,
             context: context,
-            onLikePressed: onLikePressed,
-            onReplyPressed: onReplyPressed,
-            actionDelete: actionDelete,
-            actionReport: actionReport,
+            controller: controller,
           ),
         )
         .toList();
@@ -159,22 +141,16 @@ class ReplyTweet extends StatelessWidget {
   }
 }
 
-class RepliedTweet extends StatelessWidget {
+class _RepliedTweet extends StatelessWidget {
   final TweetEntity tweet;
-  final TweetReaction onLikePressed;
-  final TweetReaction onReplyPressed;
-  final TweetReaction actionDelete;
-  final TweetReaction actionReport;
   final BuildContext _context;
+  final ITweetController controller;
 
-  const RepliedTweet({
+  const _RepliedTweet({
     Key key,
     @required TweetEntity repliedTweet,
     @required BuildContext context,
-    @required this.onLikePressed,
-    @required this.onReplyPressed,
-    @required this.actionDelete,
-    @required this.actionReport,
+    @required this.controller,
   })  : assert(repliedTweet != null),
         tweet = repliedTweet,
         _context = context,
@@ -187,23 +163,10 @@ class RepliedTweet extends StatelessWidget {
         TweetTitle(
           tweet: tweet,
           context: context,
-          actionDelete: () {
-            actionDelete(tweet);
-            Navigator.of(_context).pop();
-          },
-          actionReport: () {
-            actionReport(tweet);
-            Navigator.of(_context).pop();
-          },
+          controller: controller,
         ),
         TweetBody(content: tweet.content),
-        TweetBottom(
-          replyCount: tweet.totalReply,
-          likeCount: tweet.totalLikes,
-          isLiked: tweet.meta.liked,
-          onLikePressed: () => onLikePressed(tweet),
-          onReplyPressed: () => onReplyPressed(tweet),
-        ),
+        TweetBottom(tweet: tweet, controller: controller),
       ],
     );
   }

@@ -1,30 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/presentation/feed_typedef.dart';
-import 'package:penhas/app/features/feed/presentation/widget/tweet_avatar.dart';
-import 'package:penhas/app/features/feed/presentation/widget/tweet_body.dart';
-import 'package:penhas/app/features/feed/presentation/widget/tweet_bottom.dart';
-import 'package:penhas/app/features/feed/presentation/widget/tweet_title.dart';
+import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_avatar.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_body.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_bottom.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_title.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class SingleTweet extends StatelessWidget {
   final TweetEntity tweet;
-  final TweetReaction onLikePressed;
-  final TweetReaction onReplyPressed;
-  final TweetReaction actionDelete;
-  final TweetReaction actionReport;
   final BuildContext _context;
+  final ITweetController controller;
 
   const SingleTweet({
     Key key,
     @required this.tweet,
     @required BuildContext context,
-    @required this.onLikePressed,
-    @required this.onReplyPressed,
-    @required this.actionDelete,
-    @required this.actionReport,
+    @required this.controller,
   })  : assert(context != null),
+        assert(controller != null),
         this._context = context,
         super(key: key);
 
@@ -66,23 +61,10 @@ class SingleTweet extends StatelessWidget {
                   TweetTitle(
                     tweet: tweet,
                     context: _context,
-                    actionDelete: () {
-                      actionDelete(tweet);
-                      Navigator.of(_context).pop();
-                    },
-                    actionReport: () {
-                      Navigator.of(_context).pop();
-                      actionReport(tweet);
-                    },
+                    controller: controller,
                   ),
                   TweetBody(content: tweet.content),
-                  TweetBottom(
-                    replyCount: tweet.totalReply,
-                    likeCount: tweet.totalLikes,
-                    isLiked: tweet.meta.liked,
-                    onLikePressed: () => onLikePressed(tweet),
-                    onReplyPressed: () => onReplyPressed(tweet),
-                  )
+                  TweetBottom(tweet: tweet, controller: controller)
                 ],
               ),
             )

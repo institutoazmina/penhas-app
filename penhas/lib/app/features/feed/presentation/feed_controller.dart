@@ -20,7 +20,9 @@ class FeedController extends _FeedControllerBase with _$FeedController {
 abstract class _FeedControllerBase with Store, MapFailureMessage {
   final FeedUseCases useCase;
 
-  _FeedControllerBase(this.useCase);
+  _FeedControllerBase(this.useCase) {
+    _registerDataSource();
+  }
 
   @observable
   ObservableFuture<Either<Failure, FeedCache>> _progress;
@@ -53,87 +55,14 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
     );
   }
 
-  @action
-  Future<void> like(TweetEntity tweet) async {
-    if (tweet == null) {
-      return;
-    }
-
-    Either<Failure, FeedCache> result;
-
-    if (tweet.meta.liked) {
-      result = await useCase.unlike(tweet);
-    } else {
-      result = await useCase.like(tweet);
-    }
-
-    result.fold(
-      (failure) => _setErrorMessage(mapFailureMessage(failure)),
-      (cache) => _updateSessionAction(cache),
-    );
-  }
-
-  @action
-  Future<void> reply(TweetEntity tweet) async {
-    if (tweet == null) {
-      return;
-    }
-
-    Modular.to.pushNamed('/mainboard/reply', arguments: tweet);
-  }
-
-  @action
-  Future<void> actionDelete(TweetEntity tweet) async {
-    if (tweet == null) {
-      return;
-    }
-
-    final response = await useCase.delete(tweet);
-    response.fold(
-      (failure) => _setErrorMessage(mapFailureMessage(failure)),
-      (cache) => _updateSessionAction(cache),
-    );
-  }
-
-  @action
-  Future<void> actionReport(TweetEntity tweet) async {
-    Modular.to.showDialog(
-      builder: (context) {
-        TextEditingController _controller = TextEditingController();
-
-        return AlertDialog(
-          title: Text('Denunciar'),
-          content: TextFormField(
-            controller: _controller,
-            maxLength: 500,
-            maxLines: 5,
-            maxLengthEnforced: true,
-            decoration: InputDecoration(
-                hintText: 'Informe o motivo de denúncia deste post',
-                filled: true),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Enviar'),
-              onPressed: () async {
-                await useCase.report(tweet, _controller.text);
-                Navigator.of(context).pop();
-              },
-            ),
-            FlatButton(
-              child: Text('Fechar'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            )
-          ],
-        );
-      },
-    );
-  }
-
   void _setErrorMessage(String msg) {
     errorMessage = msg;
+  }
+
+  _registerDataSource() {
+    useCase.dataSource.listen((cache) {
+      _updateSessionAction(cache);
+    });
   }
 
   void _updateSessionAction(FeedCache cache) {

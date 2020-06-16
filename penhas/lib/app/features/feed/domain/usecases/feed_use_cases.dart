@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
@@ -25,6 +26,10 @@ class FeedCache extends Equatable {
 class FeedUseCases {
   final ITweetRepository _repository;
   final int _maxRowsPerRequest;
+  final StreamController<FeedCache> _streamController =
+      StreamController.broadcast();
+  Stream<FeedCache> get dataSource => _streamController.stream;
+
   List<TweetEntity> _tweetCacheFetch = List<TweetEntity>();
 
   FeedUseCases({
@@ -161,6 +166,7 @@ class FeedUseCases {
       }
     }
 
+    _updateStream();
     return FeedCache(tweets: _tweetCacheFetch);
   }
 
@@ -173,6 +179,7 @@ class FeedUseCases {
       }
     }
 
+    _updateStream();
     return FeedCache(tweets: _tweetCacheFetch);
   }
 
@@ -193,6 +200,7 @@ class FeedUseCases {
       );
     }
 
+    _updateStream();
     return FeedCache(tweets: _tweetCacheFetch);
   }
 
@@ -220,6 +228,7 @@ class FeedUseCases {
       }
     }
 
+    _updateStream();
     return FeedCache(tweets: _tweetCacheFetch);
   }
 
@@ -231,6 +240,7 @@ class FeedUseCases {
       );
     }
 
+    _updateStream();
     return FeedCache(tweets: _tweetCacheFetch);
   }
 
@@ -247,6 +257,15 @@ class FeedUseCases {
       _tweetCacheFetch[index] = rebuildedTweet;
     }
 
+    _updateStream();
     return FeedCache(tweets: _tweetCacheFetch);
+  }
+
+  _updateStream() {
+    _streamController.add(FeedCache(tweets: _tweetCacheFetch));
+  }
+
+  void dispose() {
+    _streamController.close();
   }
 }

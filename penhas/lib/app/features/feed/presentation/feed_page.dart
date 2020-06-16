@@ -3,8 +3,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/presentation/widget/reply_tweet.dart';
-import 'package:penhas/app/features/feed/presentation/widget/single_tweet.dart';
+import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/tweet.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
@@ -12,7 +12,12 @@ import 'feed_controller.dart';
 
 class FeedPage extends StatefulWidget {
   final String title;
-  const FeedPage({Key key, this.title = "Feed"}) : super(key: key);
+  final ITweetController tweetController;
+  const FeedPage({
+    Key key,
+    this.title = "Feed",
+    @required this.tweetController,
+  }) : super(key: key);
 
   @override
   _FeedPageState createState() => _FeedPageState();
@@ -83,23 +88,10 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
   Widget _buildTweetItem(TweetEntity tweet, BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(bottom: 6.0, top: 6.0),
-      child: tweet.lastReply.length == 0
-          ? SingleTweet(
-              tweet: tweet,
-              context: context,
-              onLikePressed: controller.like,
-              onReplyPressed: controller.reply,
-              actionDelete: controller.actionDelete,
-              actionReport: controller.actionReport,
-            )
-          : ReplyTweet(
-              tweet: tweet,
-              context: context,
-              onLikePressed: controller.like,
-              onReplyPressed: controller.reply,
-              actionDelete: controller.actionDelete,
-              actionReport: controller.actionReport,
-            ),
+      child: Tweet(
+        model: tweet,
+        controller: widget.tweetController,
+      ),
     );
   }
 

@@ -10,6 +10,7 @@ import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
 import 'package:penhas/app/features/feed/presentation/compose_tweet/compose_tweet_controller.dart';
 import 'package:penhas/app/features/feed/presentation/reply_tweet/reply_tweet_controller.dart';
 import 'package:penhas/app/features/feed/presentation/reply_tweet/reply_tweet_page.dart';
+import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_page.dart';
@@ -37,9 +38,11 @@ class MainboardModule extends ChildModule {
           ),
           singleton: false,
         ),
-        Bind(
-          (i) => FeedUseCases(repository: i.get<ITweetRepository>()),
+        Bind<ITweetController>(
+          (i) => TweetController(useCase: i.get<FeedUseCases>()),
         ),
+        Bind((i) => FeedUseCases(repository: i.get<ITweetRepository>()),
+            singleton: true),
         Bind<MainboardStore>((i) => MainboardStore()),
         Bind<ITweetRepository>(
           (i) => TweetRepository(

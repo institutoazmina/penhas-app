@@ -1,24 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
+import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class TweetBottom extends StatefulWidget {
-  final bool isLiked;
-  final int likeCount;
-  final int replyCount;
-  final VoidCallback onLikePressed;
-  final VoidCallback onReplyPressed;
+  final TweetEntity tweet;
+  final ITweetController controller;
 
   TweetBottom({
     Key key,
-    @required this.isLiked,
-    @required this.likeCount,
-    @required this.replyCount,
-    @required this.onLikePressed,
-    @required this.onReplyPressed,
-  })  : assert(isLiked != null),
-        assert(likeCount != null),
-        assert(replyCount != null),
+    @required this.tweet,
+    @required this.controller,
+  })  : assert(tweet != null),
+        assert(controller != null),
         super(key: key);
 
   @override
@@ -32,8 +27,8 @@ class _TweetBottomState extends State<TweetBottom> {
   @override
   void initState() {
     super.initState();
-    _isLiked = widget.isLiked;
-    _likeCount = widget.likeCount;
+    _isLiked = widget.tweet.meta.liked;
+    _likeCount = widget.tweet.totalLikes;
   }
 
   @override
@@ -59,11 +54,14 @@ class _TweetBottomState extends State<TweetBottom> {
           Text('$_likeCount', style: kTextStyleFeedTweetTime),
           SizedBox(width: 20),
           IconButton(
-            icon: Icon(Icons.chat_bubble_outline,
-                size: 30.0, color: DesignSystemColors.blueyGrey),
-            onPressed: widget.onReplyPressed,
+            icon: Icon(
+              Icons.chat_bubble_outline,
+              size: 30.0,
+              color: DesignSystemColors.blueyGrey,
+            ),
+            onPressed: () => widget.controller.reply(widget.tweet),
           ),
-          Text('${widget.replyCount}', style: kTextStyleFeedTweetTime),
+          Text('${widget.tweet.totalReply}', style: kTextStyleFeedTweetTime),
         ],
       ),
     );
@@ -75,6 +73,6 @@ class _TweetBottomState extends State<TweetBottom> {
       _isLiked = !_isLiked;
     });
 
-    widget.onLikePressed();
+    widget.controller.like(widget.tweet);
   }
 }

@@ -7,6 +7,9 @@ import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/feed/presentation/reply_tweet/reply_tweet_controller.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_avatar.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_body.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_title.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
@@ -22,8 +25,7 @@ class ReplyTweetPage extends StatefulWidget {
 class _ReplyTweetPageState
     extends ModularState<ReplyTweetPage, ReplyTweetController>
     with SnackBarHandler {
-  final String inputHint =
-      'Gostaria de compartilhar alguma experiência ou história sua?';
+  final String inputHint = 'Comente sua experiência sobre a postagem acima...';
   final String anonymousHint =
       'Sua publicação é anônima. As usuárias do app podem comentar sua publicação, mas só você pode iniciar uma conversa com elas.';
   List<ReactionDisposer> _disposers;
@@ -77,16 +79,44 @@ class _ReplyTweetPageState
                   padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 24.0),
                   child: Column(
                     children: <Widget>[
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                            flex: 1,
+                            child: TweetAvatar(
+                              avatar: SvgPicture.network(
+                                controller.tweet.avatar,
+                                height: 36.0,
+                                color: DesignSystemColors.darkIndigo,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 6.0,
+                          ),
+                          Expanded(
+                            flex: 5,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                TweetTitle(
+                                  tweet: controller.tweet,
+                                  context: context,
+                                  controller: null,
+                                ),
+                                TweetBody(content: controller.tweet.content),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                       Padding(
-                        padding: const EdgeInsets.only(
-                          bottom: 24.0,
-                          left: 2.0,
-                          right: 2.0,
-                        ),
-                        child: Text(
-                          'Publique algo para outras mulheres que usam o Penhas.',
-                          style: kTextStyleDrawerListItem,
-                        ),
+                        padding: const EdgeInsets.fromLTRB(8.0, 24.0, 8.0, 8.0),
+                        child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text('contribua comentando na postagem')),
                       ),
                       SizedBox(
                         height: 160,
