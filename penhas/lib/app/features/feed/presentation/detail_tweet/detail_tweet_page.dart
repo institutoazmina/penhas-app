@@ -6,6 +6,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/single_tweet.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_avatar.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_body.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_bottom.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_title.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
@@ -14,8 +20,12 @@ import 'detail_tweet_controller.dart';
 
 class DetailTweetPage extends StatefulWidget {
   final String title;
-  const DetailTweetPage({Key key, this.title = "DetailTweet"})
-      : super(key: key);
+  final ITweetController tweetController;
+  const DetailTweetPage({
+    Key key,
+    this.title = "DetailTweet",
+    @required this.tweetController,
+  }) : super(key: key);
 
   @override
   _DetailTweetPageState createState() => _DetailTweetPageState();
@@ -24,27 +34,9 @@ class DetailTweetPage extends StatefulWidget {
 class _DetailTweetPageState
     extends ModularState<DetailTweetPage, DetailTweetController>
     with SnackBarHandler {
-  final String inputHint =
-      'Gostaria de compartilhar alguma experiência ou história sua?';
-  final String anonymousHint =
-      'Sua publicação é anônima. As usuárias do app podem comentar sua publicação, mas só você pode iniciar uma conversa com elas.';
   List<ReactionDisposer> _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   PageProgressState _currentState = PageProgressState.initial;
-
-  TextStyle get _kTextStyleNewTweetAnonymousHint => TextStyle(
-      fontFamily: 'Lato',
-      fontSize: 12.0,
-      letterSpacing: 0.38,
-      color: DesignSystemColors.warnGrey,
-      fontWeight: FontWeight.normal);
-
-  TextStyle get _kTextStyleNewTweetAnonymous => TextStyle(
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      letterSpacing: 0.44,
-      color: DesignSystemColors.darkIndigoThree,
-      fontWeight: FontWeight.bold);
 
   @override
   void didChangeDependencies() {
@@ -63,6 +55,7 @@ class _DetailTweetPageState
 
   @override
   Widget build(BuildContext context) {
+    final tweet = controller.tweet;
     return Scaffold(
       key: _scaffoldKey,
       appBar: _buildAppBar(),
@@ -71,94 +64,51 @@ class _DetailTweetPageState
           color: Color.fromRGBO(248, 248, 248, 1.0),
           child: PageProgressIndicator(
             progressState: _currentState,
-            child: GestureDetector(
-              onTap: () => _handleTap(context),
-              onPanDown: (_) => _handleTap(context),
-              child: SafeArea(
-                child: SingleChildScrollView(
-                  padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 24.0),
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          bottom: 24.0,
-                          left: 2.0,
-                          right: 2.0,
-                        ),
-                        child: Text(
-                          'Publique algo para outras mulheres que usam o Penhas.',
-                          style: kTextStyleDrawerListItem,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 160,
-                        child: TextField(
-                          controller: controller.editingController,
-                          maxLength: 500,
-                          maxLines: 15,
-                          maxLengthEnforced: true,
-                          onChanged: controller.setTweetContent,
-                          decoration: InputDecoration(
-                            filled: true,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(12),
-                                topRight: Radius.circular(12),
-                                bottomRight: Radius.circular(12),
-                              ),
-                              borderSide: BorderSide(
-                                  color: DesignSystemColors.ligthPurple),
+            child: SafeArea(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 24.0),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Expanded(
+                          child: TweetAvatar(
+                            avatar: SvgPicture.network(
+                              tweet.avatar,
+                              color: DesignSystemColors.darkIndigo,
+                              height: 36,
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(12),
-                                topRight: Radius.circular(12),
-                                bottomRight: Radius.circular(12),
-                              ),
-                              borderSide: BorderSide(
-                                  color: DesignSystemColors.ligthPurple,
-                                  width: 2.0),
-                            ),
-                            alignLabelWithHint: true,
-                            hintText: inputHint,
                           ),
-                          toolbarOptions: ToolbarOptions(
-                            copy: true,
-                            cut: true,
-                            selectAll: true,
-                            paste: true,
-                          ),
+                          flex: 1,
                         ),
-                      ),
-                      Observer(builder: (context) {
-                        return Visibility(
-                            visible: controller.isAnonymousMode,
-                            replacement: SizedBox(height: 20.0),
-                            child: _buildAnonymousWarning());
-                      }),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30.0),
-                        child: SizedBox(
-                          height: 40,
-                          width: 220,
-                          child: Observer(builder: (_) {
-                            return RaisedButton(
-                              onPressed: controller.isEnableCreateButton
-                                  ? () => controller.replyTweetPressed()
-                                  : null,
-                              elevation: 0.0,
-                              shape: kButtonShapeFilled,
-                              color: DesignSystemColors.ligthPurple,
-                              child: Text(
-                                'Publicar',
-                                style: kTextStyleDefaultFilledButtonLabel,
+                        SizedBox(width: 6.0),
+                        Expanded(
+                          flex: 5,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              TweetTitle(
+                                tweet: tweet,
+                                context: context,
+                                isDetail: true,
+                                controller: widget.tweetController,
                               ),
-                            );
-                          }),
-                        ),
-                      )
-                    ],
-                  ),
+                              TweetBody(content: tweet.content),
+                              TweetBottom(
+                                  tweet: tweet,
+                                  controller: widget.tweetController)
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    // SingleTweet(
+                    //   tweet: controller.tweet,
+                    //   context: context,
+                    //   controller: widget.tweetController,
+                    // )
+                  ],
                 ),
               ),
             ),
@@ -170,51 +120,9 @@ class _DetailTweetPageState
 
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
-      title: Text('Comentário'),
+      title: Text('Detalhe'),
       backgroundColor: DesignSystemColors.ligthPurple,
     );
-  }
-
-  Padding _buildAnonymousWarning() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 40.0),
-      child: Container(
-          decoration: _buildInputTextBoxDecoration(),
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              children: <Widget>[
-                Text(
-                  anonymousHint,
-                  style: _kTextStyleNewTweetAnonymousHint,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 12.0),
-                  child: Row(
-                    children: <Widget>[
-                      SvgPicture.asset(
-                        "assets/images/svg/drawer/user_profile.svg",
-                        color: DesignSystemColors.darkIndigoThree,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 12.0),
-                        child: Text(
-                          'Anônima',
-                          style: _kTextStyleNewTweetAnonymous,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          )),
-    );
-  }
-
-  BoxDecoration _buildInputTextBoxDecoration() {
-    return BoxDecoration(
-        color: Colors.white, borderRadius: BorderRadius.circular(8.0));
   }
 
   _handleTap(BuildContext context) {

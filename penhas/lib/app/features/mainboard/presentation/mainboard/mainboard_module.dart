@@ -8,6 +8,8 @@ import 'package:penhas/app/features/feed/data/repositories/tweet_repository.dart
 import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
 import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
 import 'package:penhas/app/features/feed/presentation/compose_tweet/compose_tweet_controller.dart';
+import 'package:penhas/app/features/feed/presentation/detail_tweet/detail_tweet_controller.dart';
+import 'package:penhas/app/features/feed/presentation/detail_tweet/detail_tweet_page.dart';
 import 'package:penhas/app/features/feed/presentation/reply_tweet/reply_tweet_controller.dart';
 import 'package:penhas/app/features/feed/presentation/reply_tweet/reply_tweet_page.dart';
 import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
@@ -38,6 +40,12 @@ class MainboardModule extends ChildModule {
           ),
           singleton: false,
         ),
+        Bind(
+            (i) => DetailTweetController(
+                  useCase: i.get<FeedUseCases>(),
+                  tweet: i.args.data,
+                ),
+            singleton: false),
         Bind<ITweetController>(
           (i) => TweetController(useCase: i.get<FeedUseCases>()),
         ),
@@ -65,7 +73,14 @@ class MainboardModule extends ChildModule {
           '/reply',
           child: (_, args) => ReplyTweetPage(),
           transition: TransitionType.rightToLeft,
-        )
+        ),
+        Router(
+          '/detail',
+          child: (context, args) => DetailTweetPage(
+            tweetController: Modular.get<ITweetController>(),
+          ),
+          transition: TransitionType.rightToLeft,
+        ),
       ];
 
   static Inject get to => Inject<MainboardModule>.of();

@@ -7,8 +7,9 @@ import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
 abstract class ITweetController {
   Future<void> like(TweetEntity tweet);
   Future<void> reply(TweetEntity tweet);
-  Future<void> delete(TweetEntity twee);
-  Future<void> report(TweetEntity twee);
+  Future<void> delete(TweetEntity tweet);
+  Future<void> report(TweetEntity tweet);
+  Future<void> detail(TweetEntity tweet);
 }
 
 class TweetController implements ITweetController {
@@ -84,5 +85,11 @@ class TweetController implements ITweetController {
         );
       },
     );
+  }
+
+  @override
+  Future<void> detail(TweetEntity tweet) async {
+    print('ola mundo!');
+    Modular.to.pushNamed('/mainboard/detail', arguments: tweet);
   }
 }

@@ -9,12 +9,14 @@ class TweetTitle extends StatelessWidget {
   final TweetEntity tweet;
   final BuildContext _context;
   final ITweetController controller;
+  final bool isDetail;
 
   const TweetTitle({
     Key key,
     @required this.tweet,
     @required BuildContext context,
     @required this.controller,
+    this.isDetail = false,
   })  : assert(tweet != null),
         _context = context,
         super(key: key);
@@ -27,7 +29,7 @@ class TweetTitle extends StatelessWidget {
           Expanded(
               child: Text(tweet.userName, style: kTextStyleFeedTweetTitle),
               flex: 2),
-          _buildTime(),
+          isDetail ? Container() : _buildTime(),
           controller == null
               ? Container()
               : IconButton(
