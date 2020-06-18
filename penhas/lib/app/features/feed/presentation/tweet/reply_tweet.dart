@@ -66,39 +66,44 @@ class ReplyTweet extends StatelessWidget {
   }
 
   Widget _buildMainTweet(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Expanded(
-          child: TweetAvatar(
-            avatar: SvgPicture.network(
-              tweet.avatar,
-              color: DesignSystemColors.darkIndigo,
-              height: 36,
-            ),
-          ),
-          flex: 1,
-        ),
-        SizedBox(width: 6.0),
-        Expanded(
-          flex: 5,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              TweetTitle(
-                tweet: tweet,
-                context: context,
-                controller: controller,
+    return GestureDetector(
+      onTap: () => controller.detail(tweet),
+      child: Container(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: TweetAvatar(
+                avatar: SvgPicture.network(
+                  tweet.avatar,
+                  color: DesignSystemColors.darkIndigo,
+                  height: 36,
+                ),
               ),
-              TweetBody(content: tweet.content),
-              TweetBottom(
-                tweet: tweet,
-                controller: controller,
-              )
-            ],
-          ),
-        )
-      ],
+              flex: 1,
+            ),
+            SizedBox(width: 6.0),
+            Expanded(
+              flex: 5,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  TweetTitle(
+                    tweet: tweet,
+                    context: context,
+                    controller: controller,
+                  ),
+                  TweetBody(content: tweet.content),
+                  TweetBottom(
+                    tweet: tweet,
+                    controller: controller,
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -158,16 +163,23 @@ class _RepliedTweet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        TweetTitle(
-          tweet: tweet,
-          context: context,
-          controller: controller,
+    return GestureDetector(
+      onTap: () => controller.detail(tweet),
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            TweetTitle(
+              tweet: tweet,
+              context: context,
+              controller: controller,
+            ),
+            TweetBody(content: tweet.content),
+            TweetBottom(tweet: tweet, controller: controller),
+          ],
         ),
-        TweetBody(content: tweet.content),
-        TweetBottom(tweet: tweet, controller: controller),
-      ],
+      ),
     );
   }
 }
