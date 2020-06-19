@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 class TweetRequestOption extends Equatable {
   final String after;
   final String before;
+  final String parent;
   final bool onlyMyself;
   final bool skipMyself;
   final int rows;
@@ -11,6 +12,7 @@ class TweetRequestOption extends Equatable {
   TweetRequestOption({
     this.after,
     this.before,
+    this.parent,
     this.onlyMyself = false,
     this.skipMyself = false,
     this.rows = 100,
@@ -23,6 +25,7 @@ class TweetRequestOption extends Equatable {
   List<Object> get props => [
         after,
         before,
+        parent,
         onlyMyself,
         skipMyself,
         rows,

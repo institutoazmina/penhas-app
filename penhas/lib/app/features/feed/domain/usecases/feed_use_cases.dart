@@ -59,6 +59,14 @@ class FeedUseCases {
     );
   }
 
+  Future<Either<Failure, FeedCache>> fetchTweetDetail(TweetEntity tweet) async {
+    final option = TweetRequestOption(
+      parent: tweet.id,
+      rows: _maxRowsPerRequest,
+    );
+    final result = await _repository.fetch(option: option);
+  }
+
   Future<Either<Failure, FeedCache>> create(String content) async {
     final option = TweetCreateRequestOption(message: content);
     final result = await _repository.create(option: option);

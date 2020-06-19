@@ -41,6 +41,7 @@ class TweetDataSource implements ITweetDataSource {
     Map<String, String> queryParameters = {
       'after': option.after,
       'before': option.before,
+      'parent_id': option.parent,
       'only_myself': option.onlyMyself ? '1' : '0',
       'skip_myself': option.skipMyself ? '1' : '0',
       'rows': "${option.rows}",
