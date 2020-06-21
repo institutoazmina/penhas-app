@@ -26,6 +26,7 @@ void main() {
     group('fetchTweetDetail', () {
       TweetEntity tweetRequest;
       TweetSessionEntity emptySession;
+      TweetSessionEntity firstSession;
       int maxRowsPerRequest;
 
       setUp(() {
@@ -47,6 +48,17 @@ void main() {
           orderBy: TweetSessionOrder.latestFirst,
           tweets: [],
         );
+
+        firstSession = TweetSessionEntity(
+            hasMore: false,
+            orderBy: TweetSessionOrder.latestFirst,
+            tweets: [
+              tweetRequest.copyWith(
+                  id: 'id_5',
+                  userName: 'user_2',
+                  clientId: 2,
+                  content: 'reply 1')
+            ]);
       });
 
       test('should request with parent_id ', () async {
@@ -76,6 +88,29 @@ void main() {
             .thenAnswer((_) async => right(emptySession));
         final sut = FeedUseCases(repository: repository);
         final expected = right(FeedCache(tweets: []));
+        // act
+        final received = await sut.fetchTweetDetail(tweetRequest);
+        // assert
+        expect(expected, received);
+      });
+
+      test('should get a list of tweet from detail', () async {
+        // arrange
+        when(repository.fetch(option: anyNamed('option')))
+            .thenAnswer((_) async => right(firstSession));
+        final sut = FeedUseCases(repository: repository);
+        final expected = right(
+          FeedCache(
+            tweets: [
+              tweetRequest.copyWith(
+                id: 'id_5',
+                userName: 'user_2',
+                clientId: 2,
+                content: 'reply 1',
+              )
+            ],
+          ),
+        );
         // act
         final received = await sut.fetchTweetDetail(tweetRequest);
         // assert
