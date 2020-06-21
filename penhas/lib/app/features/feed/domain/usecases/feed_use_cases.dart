@@ -31,6 +31,7 @@ class FeedUseCases {
   Stream<FeedCache> get dataSource => _streamController.stream;
 
   List<TweetEntity> _tweetCacheFetch = List<TweetEntity>();
+  Map<String, List<TweetEntity>> _tweetReplyMap = {};
 
   FeedUseCases({
     @required ITweetRepository repository,
@@ -60,15 +61,37 @@ class FeedUseCases {
   }
 
   Future<Either<Failure, FeedCache>> fetchTweetDetail(TweetEntity tweet) async {
-    final option = TweetRequestOption(
-      parent: tweet.id,
-      rows: _maxRowsPerRequest,
-    );
+    final option = _buildTweetDetailRequest(tweet);
     final result = await _repository.fetch(option: option);
 
     return result.fold<Either<Failure, FeedCache>>(
       (failure) => left(failure),
       (session) => right(_buildTweetDetail(session, tweet)),
+    );
+  }
+
+  Future<Either<Failure, FeedCache>> fetchNewestTweetDetail(
+      TweetEntity tweet) async {
+    final option = _buildTweetDetailRequest(tweet);
+    final result = await _repository.fetch(option: option);
+
+    return result.fold<Either<Failure, FeedCache>>(
+      (failure) => left(failure),
+      (session) => right(_buildTweetDetail(session, tweet)),
+    );
+  }
+
+  TweetRequestOption _buildTweetDetailRequest(TweetEntity tweet) {
+    String afterTweetId = tweet.id;
+    if (_tweetReplyMap[tweet.id] != null &&
+        _tweetReplyMap[tweet.id].isNotEmpty) {
+      afterTweetId = _tweetReplyMap[tweet.id].last.id;
+    }
+
+    return TweetRequestOption(
+      after: afterTweetId,
+      parent: tweet.id,
+      rows: _maxRowsPerRequest,
     );
   }
 
@@ -279,6 +302,7 @@ class FeedUseCases {
   }
 
   FeedCache _buildTweetDetail(TweetSessionEntity session, TweetEntity tweet) {
+    _tweetReplyMap[tweet.id] = session.tweets;
     return FeedCache(tweets: session.tweets);
   }
 
