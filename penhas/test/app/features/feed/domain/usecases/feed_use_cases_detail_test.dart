@@ -225,6 +225,42 @@ void main() {
         // assert
         expect(expected, received);
       });
+      test('should keep tweets if get a empty response', () async {
+        // arrange
+        final sut = FeedUseCases(
+          repository: repository,
+          maxRows: maxRowsPerRequest,
+        );
+        when(repository.fetch(option: anyNamed('option')))
+            .thenAnswer((_) async => right(firstSession));
+        await sut.fetchTweetDetail(tweetRequest);
+        when(repository.fetch(option: anyNamed('option'))).thenAnswer(
+          (_) async => right(
+            TweetSessionEntity(
+                hasMore: false,
+                orderBy: TweetSessionOrder.oldestFirst,
+                tweets: []),
+          ),
+        );
+        final expected = right(FeedCache(tweets: [
+          tweetRequest.copyWith(
+              id: 'id_5',
+              createdAt: '1600-01-01 01:01:01',
+              userName: 'user_2',
+              clientId: 2,
+              content: 'reply 1'),
+          tweetRequest.copyWith(
+              id: 'id_6',
+              createdAt: '1600-02-02 02:02:02',
+              userName: 'user_2',
+              clientId: 2,
+              content: 'reply 2'),
+        ]));
+        // act
+        final received = await sut.fetchNewestTweetDetail(tweetRequest);
+        // assert
+        expect(expected, received);
+      });
     });
   });
 }
