@@ -120,19 +120,39 @@ void main() {
 
       setUp(() {
         firstSession = TweetSessionEntity(
-            hasMore: false,
+            hasMore: true,
             orderBy: TweetSessionOrder.oldestFirst,
             tweets: [
               tweetRequest.copyWith(
                   id: 'id_5',
+                  createdAt: '1600-01-01 01:01:01',
                   userName: 'user_2',
                   clientId: 2,
                   content: 'reply 1'),
               tweetRequest.copyWith(
                   id: 'id_6',
+                  createdAt: '1600-02-02 02:02:02',
                   userName: 'user_2',
                   clientId: 2,
                   content: 'reply 2'),
+            ]);
+
+        secondSession = TweetSessionEntity(
+            hasMore: true,
+            orderBy: TweetSessionOrder.oldestFirst,
+            tweets: [
+              tweetRequest.copyWith(
+                  id: 'id_7',
+                  userName: 'user_2',
+                  createdAt: '1600-03-03 03:03:03',
+                  clientId: 2,
+                  content: 'reply 3'),
+              tweetRequest.copyWith(
+                  id: 'id_8',
+                  userName: 'user_2',
+                  createdAt: '1600-04-04 04:04:04',
+                  clientId: 2,
+                  content: 'reply 4'),
             ]);
       });
       test('should request with parent_id and after of last tweet', () async {
@@ -163,19 +183,48 @@ void main() {
           ),
         );
       });
-      // test('should get the newest tweets', () async {
-      //   // arrange
-      //   when(repository.fetch(option: anyNamed('option')))
-      //       .thenAnswer((_) async => right(firstSession));
-      //   FeedUseCases(repository: repository);
-
-      //   // act
-      //   final sut =
-      //       FeedUseCases(repository: repository, maxRows: maxRowsPerRequest);
-      //   final received = await sut.fetchNewestTweetDetail(tweetRequest);
-      //   // assert
-      //   expect(expected, received);
-      // });
+      test('should get the newest tweets', () async {
+        // arrange
+        final sut = FeedUseCases(
+          repository: repository,
+          maxRows: maxRowsPerRequest,
+        );
+        when(repository.fetch(option: anyNamed('option')))
+            .thenAnswer((_) async => right(firstSession));
+        await sut.fetchTweetDetail(tweetRequest);
+        when(repository.fetch(option: anyNamed('option')))
+            .thenAnswer((_) async => right(secondSession));
+        final expected = right(FeedCache(tweets: [
+          tweetRequest.copyWith(
+              id: 'id_5',
+              createdAt: '1600-01-01 01:01:01',
+              userName: 'user_2',
+              clientId: 2,
+              content: 'reply 1'),
+          tweetRequest.copyWith(
+              id: 'id_6',
+              createdAt: '1600-02-02 02:02:02',
+              userName: 'user_2',
+              clientId: 2,
+              content: 'reply 2'),
+          tweetRequest.copyWith(
+              id: 'id_7',
+              createdAt: '1600-03-03 03:03:03',
+              userName: 'user_2',
+              clientId: 2,
+              content: 'reply 3'),
+          tweetRequest.copyWith(
+              id: 'id_8',
+              createdAt: '1600-04-04 04:04:04',
+              userName: 'user_2',
+              clientId: 2,
+              content: 'reply 4'),
+        ]));
+        // act
+        final received = await sut.fetchNewestTweetDetail(tweetRequest);
+        // assert
+        expect(expected, received);
+      });
     });
   });
 }

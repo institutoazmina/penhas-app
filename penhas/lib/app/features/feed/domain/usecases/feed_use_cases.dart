@@ -81,20 +81,6 @@ class FeedUseCases {
     );
   }
 
-  TweetRequestOption _buildTweetDetailRequest(TweetEntity tweet) {
-    String afterTweetId = tweet.id;
-    if (_tweetReplyMap[tweet.id] != null &&
-        _tweetReplyMap[tweet.id].isNotEmpty) {
-      afterTweetId = _tweetReplyMap[tweet.id].last.id;
-    }
-
-    return TweetRequestOption(
-      after: afterTweetId,
-      parent: tweet.id,
-      rows: _maxRowsPerRequest,
-    );
-  }
-
   Future<Either<Failure, FeedCache>> create(String content) async {
     final option = TweetCreateRequestOption(message: content);
     final result = await _repository.create(option: option);
@@ -301,9 +287,34 @@ class FeedUseCases {
     _streamController.add(FeedCache(tweets: _tweetCacheFetch));
   }
 
+  TweetRequestOption _buildTweetDetailRequest(TweetEntity tweet) {
+    String afterTweetId = tweet.id;
+    if (_tweetReplyMap[tweet.id] != null &&
+        _tweetReplyMap[tweet.id].isNotEmpty) {
+      afterTweetId = _tweetReplyMap[tweet.id].last.id;
+    }
+
+    return TweetRequestOption(
+      after: afterTweetId,
+      parent: tweet.id,
+      rows: _maxRowsPerRequest,
+    );
+  }
+
   FeedCache _buildTweetDetail(TweetSessionEntity session, TweetEntity tweet) {
-    _tweetReplyMap[tweet.id] = session.tweets;
-    return FeedCache(tweets: session.tweets);
+    if (_tweetReplyMap[tweet.id] == null) {
+      _tweetReplyMap[tweet.id] = [];
+    }
+
+    if (session.tweets != null && session.tweets.length > 0) {
+      if (session.orderBy == TweetSessionOrder.latestFirst) {
+        _tweetReplyMap[tweet.id].addAll(session.tweets.reversed);
+      } else {
+        _tweetReplyMap[tweet.id].addAll(session.tweets);
+      }
+    }
+
+    return FeedCache(tweets: _tweetReplyMap[tweet.id]);
   }
 
   void dispose() {
