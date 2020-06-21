@@ -65,6 +65,11 @@ class FeedUseCases {
       rows: _maxRowsPerRequest,
     );
     final result = await _repository.fetch(option: option);
+
+    return result.fold<Either<Failure, FeedCache>>(
+      (failure) => left(failure),
+      (session) => right(_buildTweetDetail(session, tweet)),
+    );
   }
 
   Future<Either<Failure, FeedCache>> create(String content) async {
@@ -271,6 +276,10 @@ class FeedUseCases {
 
   _updateStream() {
     _streamController.add(FeedCache(tweets: _tweetCacheFetch));
+  }
+
+  FeedCache _buildTweetDetail(TweetSessionEntity session, TweetEntity tweet) {
+    return FeedCache(tweets: session.tweets);
   }
 
   void dispose() {

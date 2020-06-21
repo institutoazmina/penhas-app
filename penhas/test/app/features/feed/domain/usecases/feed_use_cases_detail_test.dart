@@ -70,17 +70,17 @@ void main() {
         );
       });
 
-      // test('should get empty response if tweet does not have detail', () async {
-      //   // arrange
-      //   when(repository.fetch(option: anyNamed('option')))
-      //       .thenAnswer((_) async => null);
-      //   final sut = FeedUseCases(repository: repository);
-      //   final expected = FeedCache(tweets: []);
-      //   // act
-      //   final received = await sut.fetchTweetDetail(tweetRequest);
-      //   // assert
-      //   expect(expected, received);
-      // });
+      test('should get empty response if tweet does not have detail', () async {
+        // arrange
+        when(repository.fetch(option: anyNamed('option')))
+            .thenAnswer((_) async => right(emptySession));
+        final sut = FeedUseCases(repository: repository);
+        final expected = right(FeedCache(tweets: []));
+        // act
+        final received = await sut.fetchTweetDetail(tweetRequest);
+        // assert
+        expect(expected, received);
+      });
     });
   });
 }
