@@ -17,7 +17,8 @@
       },
       "name": "maria",
       "qtde_comentarios": 0,
-      "qtde_likes": 0
+      "qtde_likes": 0,
+      "type": "tweet"
     }
   ]
 }

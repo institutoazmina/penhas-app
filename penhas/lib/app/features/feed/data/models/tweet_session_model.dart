@@ -27,7 +27,16 @@ class TweetSessionModel extends TweetSessionEntity {
 
     return tweets
         .map((e) => e as Map<String, Object>)
-        .map((e) => TweetModel.fromJson(e))
+        .map((e) => _parseJson(e))
+        .where((e) => e != null)
         .toList();
+  }
+
+  static TweetEntity _parseJson(Map<String, Object> json) {
+    if (json['type'] == 'tweet') {
+      return TweetModel.fromJson(json);
+    }
+
+    return null;
   }
 }

@@ -32,7 +32,8 @@
       },
       "name": "penhas",
       "qtde_comentarios": 1,
-      "qtde_likes": 1
+      "qtde_likes": 1,
+      "type": "tweet"
     }
   ]
 }
