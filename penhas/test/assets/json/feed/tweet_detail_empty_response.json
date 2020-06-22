@@ -1,0 +1,22 @@
+{
+  "has_more": 0,
+  "order_by": "latest_first",
+  "parent": {
+    "anonimo": 0,
+    "cliente_id": 551,
+    "content": "Comentário 5",
+    "created_at": "2020-06-06 14:53:07",
+    "icon": "https:\/\/elasv2-api.appcivico.com\/avatar\/padrao.svg",
+    "id": "200606T1453070001",
+    "last_reply": null,
+    "media": [],
+    "meta": {
+      "liked": 0,
+      "owner": 1
+    },
+    "name": "maria",
+    "qtde_comentarios": 0,
+    "qtde_likes": 0
+  },
+  "tweets": []
+}

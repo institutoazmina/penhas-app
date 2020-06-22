@@ -24,10 +24,15 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
   final FeedUseCases useCase;
   String tweetContent;
 
-  _DetailTweetControllerBase(this.useCase, this.tweet);
+  _DetailTweetControllerBase(this.useCase, this.tweet) {
+    this.fetchNextPage();
+  }
 
   @observable
   ObservableFuture<Either<Failure, FeedCache>> _progress;
+
+  @observable
+  ObservableList<TweetEntity> listTweets = ObservableList<TweetEntity>();
 
   @observable
   bool isAnonymousMode = false;
@@ -53,25 +58,13 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  void setTweetContent(String content) {
-    isEnableCreateButton = (content != null) && content.isNotEmpty;
-    tweetContent = content;
-  }
-
-  @action
-  Future<void> replyTweetPressed() async {
-    _setErrorMessage('');
-    if (!isEnableCreateButton) {
-      return;
-    }
-
-    _progress = ObservableFuture(
-        useCase.reply(mainTweet: tweet, comment: tweetContent));
+  Future<void> fetchNextPage() async {
+    _progress = ObservableFuture(useCase.fetchNewestTweetDetail(tweet));
 
     final response = await _progress;
     response.fold(
       (failure) => _setErrorMessage(mapFailureMessage(failure)),
-      (valid) => _updatedTweet(),
+      (cache) => _updateListOfTweets(cache),
     );
   }
 
@@ -79,8 +72,7 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
     errorMessage = message;
   }
 
-  void _updatedTweet() {
-    editingController.clear();
-    Modular.to.pop();
+  void _updateListOfTweets(FeedCache cache) {
+    listTweets = cache.tweets.asObservable();
   }
 }

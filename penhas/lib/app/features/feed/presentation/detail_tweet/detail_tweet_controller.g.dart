@@ -32,6 +32,21 @@ mixin _$DetailTweetController on _DetailTweetControllerBase, Store {
     });
   }
 
+  final _$listTweetsAtom = Atom(name: '_DetailTweetControllerBase.listTweets');
+
+  @override
+  ObservableList<TweetEntity> get listTweets {
+    _$listTweetsAtom.reportRead();
+    return super.listTweets;
+  }
+
+  @override
+  set listTweets(ObservableList<TweetEntity> value) {
+    _$listTweetsAtom.reportWrite(value, super.listTweets, () {
+      super.listTweets = value;
+    });
+  }
+
   final _$isAnonymousModeAtom =
       Atom(name: '_DetailTweetControllerBase.isAnonymousMode');
 
@@ -97,31 +112,18 @@ mixin _$DetailTweetController on _DetailTweetControllerBase, Store {
     });
   }
 
-  final _$replyTweetPressedAsyncAction =
-      AsyncAction('_DetailTweetControllerBase.replyTweetPressed');
+  final _$fetchNextPageAsyncAction =
+      AsyncAction('_DetailTweetControllerBase.fetchNextPage');
 
   @override
-  Future<void> replyTweetPressed() {
-    return _$replyTweetPressedAsyncAction.run(() => super.replyTweetPressed());
-  }
-
-  final _$_DetailTweetControllerBaseActionController =
-      ActionController(name: '_DetailTweetControllerBase');
-
-  @override
-  void setTweetContent(String content) {
-    final _$actionInfo = _$_DetailTweetControllerBaseActionController
-        .startAction(name: '_DetailTweetControllerBase.setTweetContent');
-    try {
-      return super.setTweetContent(content);
-    } finally {
-      _$_DetailTweetControllerBaseActionController.endAction(_$actionInfo);
-    }
+  Future<void> fetchNextPage() {
+    return _$fetchNextPageAsyncAction.run(() => super.fetchNextPage());
   }
 
   @override
   String toString() {
     return '''
+listTweets: ${listTweets},
 isAnonymousMode: ${isAnonymousMode},
 isEnableCreateButton: ${isEnableCreateButton},
 editingController: ${editingController},

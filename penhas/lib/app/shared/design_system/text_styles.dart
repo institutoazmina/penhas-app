@@ -51,7 +51,7 @@ const kTextStyleFeedTweetTitle = TextStyle(
 const kTextStyleFeedTweetTime = TextStyle(
     fontFamily: 'Lato',
     fontSize: 12.0,
-    letterSpacing: 0.1,
+    letterSpacing: 0.5,
     color: DesignSystemColors.blueyGrey,
     fontWeight: FontWeight.normal);
 

@@ -52,7 +52,7 @@ class TweetController implements ITweetController {
 
   @override
   Future<void> report(TweetEntity tweet) async {
-    Modular.to.showDialog(
+    return Modular.to.showDialog(
       builder: (context) {
         TextEditingController _controller = TextEditingController();
 
@@ -89,7 +89,6 @@ class TweetController implements ITweetController {
 
   @override
   Future<void> detail(TweetEntity tweet) async {
-    print('ola mundo!');
     Modular.to.pushNamed('/mainboard/detail', arguments: tweet);
   }
 }

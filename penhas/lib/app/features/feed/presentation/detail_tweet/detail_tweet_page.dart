@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/single_tweet.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/tweet.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_avatar.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_body.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_bottom.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_title.dart';
-import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
@@ -35,15 +34,14 @@ class _DetailTweetPageState
     extends ModularState<DetailTweetPage, DetailTweetController>
     with SnackBarHandler {
   List<ReactionDisposer> _disposers;
+  final _scrollController = ScrollController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  PageProgressState _currentState = PageProgressState.initial;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _disposers ??= [
       _showErrorMessage(),
-      _showProgress(),
     ];
   }
 
@@ -62,54 +60,44 @@ class _DetailTweetPageState
       body: SizedBox.expand(
         child: Container(
           color: Color.fromRGBO(248, 248, 248, 1.0),
-          child: PageProgressIndicator(
-            progressState: _currentState,
-            child: SafeArea(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 24.0),
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          child: TweetAvatar(
-                            avatar: SvgPicture.network(
-                              tweet.avatar,
-                              color: DesignSystemColors.darkIndigo,
-                              height: 36,
-                            ),
-                          ),
-                          flex: 1,
-                        ),
-                        SizedBox(width: 6.0),
-                        Expanded(
-                          flex: 5,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: <Widget>[
-                              TweetTitle(
-                                tweet: tweet,
-                                context: context,
-                                isDetail: true,
-                                controller: widget.tweetController,
-                              ),
-                              TweetBody(content: tweet.content),
-                              TweetBottom(
-                                  tweet: tweet,
-                                  controller: widget.tweetController)
-                            ],
-                          ),
-                        )
-                      ],
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 12.0, right: 12.0, top: 8.0),
+                    child: _MainTweet(
+                      tweet: tweet,
+                      controller: widget.tweetController,
                     ),
-                    // SingleTweet(
-                    //   tweet: controller.tweet,
-                    //   context: context,
-                    //   controller: widget.tweetController,
-                    // )
-                  ],
-                ),
+                  ),
+                  Expanded(
+                    child: Observer(builder: (_) {
+                      if (controller.currentState != PageProgressState.loaded) {
+                        return _buildLoaderListItem();
+                      } else {
+                        return NotificationListener<ScrollNotification>(
+                          onNotification: _handleScrollNotification,
+                          child: ListView.builder(
+                            itemCount: controller.listTweets.length,
+                            controller: _scrollController,
+                            itemBuilder: (context, index) {
+                              return index >= controller.listTweets.length
+                                  ? _buildLoaderListItem()
+                                  : _buildTweetItem(
+                                      controller.listTweets[index],
+                                      context,
+                                    );
+                            },
+                          ),
+                        );
+                      }
+                    }),
+                  ),
+                ],
               ),
             ),
           ),
@@ -125,10 +113,29 @@ class _DetailTweetPageState
     );
   }
 
-  _handleTap(BuildContext context) {
-    if (MediaQuery.of(context).viewInsets.bottom > 0)
-      SystemChannels.textInput.invokeMethod('TextInput.hide');
-    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+  Widget _buildLoaderListItem() {
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  Widget _buildTweetItem(TweetEntity tweet, BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 6.0, top: 6.0),
+      child: Tweet(
+        model: tweet,
+        controller: widget.tweetController,
+      ),
+    );
+  }
+
+  bool _handleScrollNotification(ScrollNotification notification) {
+    if (notification is ScrollNotification &&
+        _scrollController.position.extentAfter == 0) {
+      controller.fetchNextPage();
+    }
+
+    return false;
   }
 
   ReactionDisposer _showErrorMessage() {
@@ -136,12 +143,71 @@ class _DetailTweetPageState
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }
+}
 
-  ReactionDisposer _showProgress() {
-    return reaction((_) => controller.currentState, (PageProgressState status) {
-      setState(() {
-        _currentState = status;
-      });
-    });
+class _MainTweet extends StatelessWidget {
+  final TweetEntity tweet;
+  final ITweetController controller;
+  const _MainTweet({
+    Key key,
+    this.tweet,
+    this.controller,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 6.0, top: 8.0, right: 6.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  child: TweetAvatar(
+                    avatar: SvgPicture.network(
+                      tweet.avatar,
+                      color: DesignSystemColors.darkIndigo,
+                      height: 36,
+                    ),
+                  ),
+                  flex: 1,
+                ),
+                SizedBox(width: 6.0),
+                Expanded(
+                  flex: 5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      TweetTitle(
+                          tweet: tweet,
+                          context: context,
+                          isDetail: true,
+                          controller: controller),
+                      TweetBody(content: tweet.content),
+                      TweetBottom(tweet: tweet, controller: controller)
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            margin: EdgeInsets.only(top: 8, bottom: 8),
+            height: 28,
+            child: Container(),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(color: Colors.grey[350]),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

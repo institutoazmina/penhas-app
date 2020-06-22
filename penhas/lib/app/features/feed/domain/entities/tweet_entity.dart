@@ -1,7 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-class TweetEntity extends Equatable {
+abstract class TweetTiles extends Equatable {}
+
+class TweetEntity extends TweetTiles {
   final String id;
   final String userName;
   final int clientId;
