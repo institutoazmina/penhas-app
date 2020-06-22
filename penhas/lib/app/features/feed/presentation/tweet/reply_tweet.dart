@@ -69,6 +69,7 @@ class ReplyTweet extends StatelessWidget {
     return GestureDetector(
       onTap: () => controller.detail(tweet),
       child: Container(
+        color: Colors.white,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -112,7 +113,6 @@ class ReplyTweet extends StatelessWidget {
         .map(
           (e) => _RepliedTweet(
             repliedTweet: e,
-            context: context,
             controller: controller,
           ),
         )
@@ -131,7 +131,7 @@ class ReplyTweet extends StatelessWidget {
                 ),
               ),
               FlatButton(
-                onPressed: () {},
+                onPressed: () => controller.detail(tweet),
                 color: Colors.white,
                 highlightColor: Colors.white,
                 splashColor: Colors.white,
@@ -148,17 +148,14 @@ class ReplyTweet extends StatelessWidget {
 
 class _RepliedTweet extends StatelessWidget {
   final TweetEntity tweet;
-  final BuildContext _context;
   final ITweetController controller;
 
   const _RepliedTweet({
     Key key,
     @required TweetEntity repliedTweet,
-    @required BuildContext context,
     @required this.controller,
   })  : assert(repliedTweet != null),
         tweet = repliedTweet,
-        _context = context,
         super(key: key);
 
   @override
@@ -166,6 +163,7 @@ class _RepliedTweet extends StatelessWidget {
     return GestureDetector(
       onTap: () => controller.detail(tweet),
       child: Container(
+        color: Colors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,

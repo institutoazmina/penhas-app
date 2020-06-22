@@ -7,13 +7,11 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/tweet.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_avatar.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_body.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_bottom.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_title.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 import 'detail_tweet_controller.dart';
 
@@ -49,6 +47,7 @@ class _DetailTweetPageState
   void dispose() {
     super.dispose();
     _disposers.forEach((d) => d());
+    _scrollController.dispose();
   }
 
   @override
@@ -67,8 +66,8 @@ class _DetailTweetPageState
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(
-                        left: 12.0, right: 12.0, top: 8.0),
+                    padding:
+                        const EdgeInsets.only(left: 6.0, right: 6.0, top: 8.0),
                     child: _MainTweet(
                       tweet: tweet,
                       controller: widget.tweetController,
@@ -76,25 +75,21 @@ class _DetailTweetPageState
                   ),
                   Expanded(
                     child: Observer(builder: (_) {
-                      if (controller.currentState != PageProgressState.loaded) {
-                        return _buildLoaderListItem();
-                      } else {
-                        return NotificationListener<ScrollNotification>(
-                          onNotification: _handleScrollNotification,
-                          child: ListView.builder(
-                            itemCount: controller.listTweets.length,
-                            controller: _scrollController,
-                            itemBuilder: (context, index) {
-                              return index >= controller.listTweets.length
-                                  ? _buildLoaderListItem()
-                                  : _buildTweetItem(
-                                      controller.listTweets[index],
-                                      context,
-                                    );
-                            },
-                          ),
-                        );
-                      }
+                      return NotificationListener<ScrollNotification>(
+                        onNotification: _handleScrollNotification,
+                        child: ListView.builder(
+                          itemCount: controller.listTweets.length + 1,
+                          controller: _scrollController,
+                          itemBuilder: (context, index) {
+                            return index >= controller.listTweets.length
+                                ? _buildLoaderListItem()
+                                : _buildTweetItem(
+                                    controller.listTweets[index],
+                                    context,
+                                  );
+                          },
+                        ),
+                      );
                     }),
                   ),
                 ],
@@ -114,18 +109,22 @@ class _DetailTweetPageState
   }
 
   Widget _buildLoaderListItem() {
-    return Center(
-      child: CircularProgressIndicator(),
-    );
+    if (controller.currentState != PageProgressState.loaded) {
+      return Padding(
+        padding: const EdgeInsets.all(22.0),
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 
   Widget _buildTweetItem(TweetEntity tweet, BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 6.0, top: 6.0),
-      child: Tweet(
-        model: tweet,
-        controller: widget.tweetController,
-      ),
+      padding: const EdgeInsets.only(left: 6.0, right: 6.0),
+      child: _ReplyTweet(tweet: tweet, controller: widget.tweetController),
     );
   }
 
@@ -199,6 +198,53 @@ class _MainTweet extends StatelessWidget {
             alignment: Alignment.centerLeft,
             margin: EdgeInsets.only(top: 8, bottom: 8),
             height: 28,
+            child: Container(),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(color: Colors.grey[350]),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ReplyTweet extends StatelessWidget {
+  final TweetEntity tweet;
+  final ITweetController controller;
+  const _ReplyTweet({
+    Key key,
+    this.tweet,
+    this.controller,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 12.0, top: 8.0, right: 6.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                TweetTitle(
+                    tweet: tweet,
+                    context: context,
+                    isDetail: true,
+                    controller: controller),
+                TweetBody(content: tweet.content),
+                TweetBottom(tweet: tweet, controller: controller)
+              ],
+            ),
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            margin: EdgeInsets.only(top: 8, bottom: 8),
             child: Container(),
             decoration: BoxDecoration(
               border: Border(

@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -25,7 +24,7 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
   String tweetContent;
 
   _DetailTweetControllerBase(this.useCase, this.tweet) {
-    this.fetchNextPage();
+    this.getDetail();
   }
 
   @observable
@@ -55,6 +54,17 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
     return _progress.status == FutureStatus.pending
         ? PageProgressState.loading
         : PageProgressState.loaded;
+  }
+
+  @action
+  Future<void> getDetail() async {
+    _progress = ObservableFuture(useCase.fetchTweetDetail(tweet));
+
+    final response = await _progress;
+    response.fold(
+      (failure) => _setErrorMessage(mapFailureMessage(failure)),
+      (cache) => _updateListOfTweets(cache),
+    );
   }
 
   @action
