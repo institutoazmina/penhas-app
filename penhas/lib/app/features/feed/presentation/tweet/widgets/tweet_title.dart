@@ -29,7 +29,7 @@ class TweetTitle extends StatelessWidget {
           Expanded(
               child: Text(tweet.userName, style: kTextStyleFeedTweetTitle),
               flex: 2),
-          isDetail ? Container() : _buildTime(),
+          isDetail ? _buildDetailTime() : _buildTime(),
           controller == null
               ? Container()
               : IconButton(
@@ -45,6 +45,26 @@ class TweetTitle extends StatelessWidget {
     final parsedTime = _mapServerUtcToLocalDate(tweet.createdAt);
     return Text(timeago.format(parsedTime, locale: 'pt_br'),
         style: kTextStyleFeedTweetTime);
+  }
+
+  Widget _buildDetailTime() {
+    final parsedTime = _mapServerUtcToLocalDate(tweet.createdAt);
+    final hour = _stringfyFormatted(parsedTime.hour);
+    final minute = _stringfyFormatted(parsedTime.minute);
+    final day = _stringfyFormatted(parsedTime.day);
+    final month = _stringfyFormatted(parsedTime.month);
+
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0),
+      child: Text(
+        "$day/$month/${parsedTime.year} · $hour:$minute",
+        style: kTextStyleFeedTweetTime,
+      ),
+    );
+  }
+
+  String _stringfyFormatted(int value) {
+    return value > 9 ? "$value" : "0$value";
   }
 
   DateTime _mapServerUtcToLocalDate(String time) {
@@ -111,7 +131,10 @@ class TweetTitle extends StatelessWidget {
         leading: SvgPicture.asset(
             'assets/images/svg/tweet_action/tweet_action_report.svg'),
         title: Text('Denunciar'),
-        onTap: () => controller.report(tweet),
+        onTap: () {
+          Navigator.of(_context).pop();
+          controller.report(tweet);
+        },
       )
     ];
 
