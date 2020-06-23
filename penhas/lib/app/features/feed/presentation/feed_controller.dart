@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -51,7 +50,17 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
     final response = await _progress;
     response.fold(
       (failure) => _setErrorMessage(mapFailureMessage(failure)),
-      (cache) => _updateSessionAction(cache),
+      (_) {}, // é atualizado via stream no _registerDataSource
+    );
+  }
+
+  @action
+  Future<void> fetchOldestPage() async {
+    final response = await useCase.fetchOldestTweet();
+
+    response.fold(
+      (failure) => _setErrorMessage(mapFailureMessage(failure)),
+      (_) {}, // é atualizado via stream no _registerDataSource
     );
   }
 
@@ -61,11 +70,7 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
 
   _registerDataSource() {
     useCase.dataSource.listen((cache) {
-      _updateSessionAction(cache);
+      listTweets = cache.tweets.asObservable();
     });
-  }
-
-  void _updateSessionAction(FeedCache cache) {
-    listTweets = cache.tweets.asObservable();
   }
 }

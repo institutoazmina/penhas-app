@@ -49,7 +49,11 @@ class MainboardModule extends ChildModule {
         Bind<ITweetController>(
           (i) => TweetController(useCase: i.get<FeedUseCases>()),
         ),
-        Bind((i) => FeedUseCases(repository: i.get<ITweetRepository>()),
+        Bind(
+            (i) => FeedUseCases(
+                  repository: i.get<ITweetRepository>(),
+                  maxRows: 10,
+                ),
             singleton: true),
         Bind<MainboardStore>((i) => MainboardStore()),
         Bind<ITweetRepository>(

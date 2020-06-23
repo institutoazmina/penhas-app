@@ -25,11 +25,15 @@ class FeedPage extends StatefulWidget {
 
 class _FeedPageState extends ModularState<FeedPage, FeedController> {
   final _scrollController = ScrollController();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
     super.initState();
-    controller.fetchNextPage();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _refreshIndicatorKey.currentState.show();
+    });
   }
 
   @override
@@ -48,27 +52,7 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
                     child: _buildFiltersButton(),
                   ),
                   Expanded(
-                    child: Observer(builder: (_) {
-                      if (controller.currentState != PageProgressState.loaded) {
-                        return _buildLoaderListItem();
-                      } else {
-                        return NotificationListener<ScrollNotification>(
-                          onNotification: _handleScrollNotification,
-                          child: ListView.builder(
-                            itemCount: _calculateListItemCount(),
-                            controller: _scrollController,
-                            itemBuilder: (context, index) {
-                              return index >= controller.listTweets.length
-                                  ? _buildLoaderListItem()
-                                  : _buildTweetItem(
-                                      controller.listTweets[index],
-                                      context,
-                                    );
-                            },
-                          ),
-                        );
-                      }
-                    }),
+                    child: _buildFeedObserver(),
                   ),
                 ],
               ),
@@ -79,10 +63,48 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
     );
   }
 
-  Widget _buildLoaderListItem() {
-    return Center(
-      child: CircularProgressIndicator(),
+  Observer _buildFeedObserver() {
+    return Observer(
+      builder: (_) {
+        return _buildRefreshIndicator();
+      },
     );
+  }
+
+  RefreshIndicator _buildRefreshIndicator() {
+    return RefreshIndicator(
+      key: _refreshIndicatorKey,
+      onRefresh: onRefresh,
+      notificationPredicate: _handleScrollNotification,
+      child: ListView.builder(
+        itemCount: controller.listTweets.length,
+        controller: _scrollController,
+        itemBuilder: (context, index) {
+          return _buildTweetItem(
+            controller.listTweets[index],
+            context,
+          );
+        },
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
+  Future<void> onRefresh() async {
+    final bool isTopOfListView = _scrollController.position.pixels == 0;
+    if (isTopOfListView) {
+      return controller.fetchNextPage();
+    }
+
+    final bool isEndOfListView = _scrollController.position.extentAfter == 0;
+    if (isEndOfListView) {
+      return controller.fetchOldestPage();
+    }
   }
 
   Widget _buildTweetItem(TweetEntity tweet, BuildContext context) {
@@ -96,16 +118,12 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
   }
 
   bool _handleScrollNotification(ScrollNotification notification) {
-    if (notification is ScrollNotification &&
-        _scrollController.position.extentAfter == 0) {
-      controller.fetchNextPage();
+    final bool isEndOfListView = _scrollController.position.extentAfter == 0;
+    if (isEndOfListView) {
+      _refreshIndicatorKey.currentState.show(atTop: false);
     }
 
-    return false;
-  }
-
-  int _calculateListItemCount() {
-    return controller.listTweets.length;
+    return true;
   }
 
   Row _buildFiltersButton() {
