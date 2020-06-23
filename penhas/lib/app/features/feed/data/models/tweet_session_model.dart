@@ -5,7 +5,7 @@ import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.da
 class TweetSessionModel extends TweetSessionEntity {
   final bool hasMore;
   final TweetSessionOrder orderBy;
-  final List<TweetEntity> tweets;
+  final List<TweetTiles> tweets;
 
   TweetSessionModel(this.hasMore, this.orderBy, this.tweets)
       : super(hasMore: hasMore, orderBy: orderBy, tweets: tweets);
@@ -20,7 +20,7 @@ class TweetSessionModel extends TweetSessionEntity {
     return TweetSessionModel(hasMore, orderBy, tweets);
   }
 
-  static List<TweetEntity> _parseTweet(List<Object> tweets) {
+  static List<TweetTiles> _parseTweet(List<Object> tweets) {
     if (tweets == null || tweets.isEmpty) {
       return [];
     }
@@ -32,7 +32,7 @@ class TweetSessionModel extends TweetSessionEntity {
         .toList();
   }
 
-  static TweetEntity _parseJson(Map<String, Object> json) {
+  static TweetTiles _parseJson(Map<String, Object> json) {
     if (json['type'] == 'tweet') {
       return TweetModel.fromJson(json);
     }

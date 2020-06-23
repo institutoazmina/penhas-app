@@ -7,7 +7,7 @@ enum TweetSessionOrder { latestFirst, oldestFirst }
 class TweetSessionEntity extends Equatable {
   final bool hasMore;
   final TweetSessionOrder orderBy;
-  final List<TweetEntity> tweets;
+  final List<TweetTiles> tweets;
 
   TweetSessionEntity({
     @required this.hasMore,

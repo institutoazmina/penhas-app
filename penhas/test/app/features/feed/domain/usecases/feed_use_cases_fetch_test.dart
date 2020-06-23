@@ -133,11 +133,12 @@ void main() {
         // act
         final received = await sut.fetchNewestTweet();
         // assert
+
         verify(
           repository.fetch(
               option: TweetRequestOption(
             rows: maxRowsPerRequet,
-            after: firstSessionResponse.tweets.first.id,
+            after: (firstSessionResponse.tweets.first as TweetEntity).id,
           )),
         );
         expect(expected, received);
@@ -306,7 +307,7 @@ void main() {
           repository.fetch(
               option: TweetRequestOption(
             rows: maxRowsPerRequet,
-            before: firstSessionResponse.tweets.last.id,
+            before: (firstSessionResponse.tweets.last as TweetEntity).id,
           )),
         );
         expect(expected, received);
@@ -341,7 +342,7 @@ void main() {
           repository.fetch(
               option: TweetRequestOption(
             rows: maxRowsPerRequet,
-            before: firstSessionResponse.tweets.last.id,
+            before: (firstSessionResponse.tweets.last as TweetEntity).id,
           )),
         );
         expect(expected, received);

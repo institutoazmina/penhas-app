@@ -12,7 +12,7 @@ import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositorie
 
 @immutable
 class FeedCache extends Equatable {
-  final List<TweetEntity> tweets;
+  final List<TweetTiles> tweets;
 
   FeedCache({@required this.tweets});
 
@@ -30,7 +30,7 @@ class FeedUseCases {
       StreamController.broadcast();
   Stream<FeedCache> get dataSource => _streamController.stream;
 
-  List<TweetEntity> _tweetCacheFetch = List<TweetEntity>();
+  List<TweetTiles> _tweetCacheFetch = List<TweetTiles>();
   Map<String, List<TweetEntity>> _tweetReplyMap = {};
 
   FeedUseCases({
@@ -158,23 +158,31 @@ class FeedUseCases {
   }
 
   TweetRequestOption _newestRequestOption() {
-    if (_tweetCacheFetch.length == 0) {
+    final TweetEntity firstValid = _tweetCacheFetch.length > 0
+        ? _tweetCacheFetch.firstWhere((e) => e is TweetEntity)
+        : null;
+
+    if (firstValid == null) {
       return TweetRequestOption(rows: _maxRowsPerRequest);
     } else {
       return TweetRequestOption(
         rows: _maxRowsPerRequest,
-        after: _tweetCacheFetch.first.id,
+        after: firstValid.id,
       );
     }
   }
 
   TweetRequestOption _oldestRequestOption() {
-    if (_tweetCacheFetch.length == 0) {
+    final TweetEntity lastValid = _tweetCacheFetch.length > 0
+        ? _tweetCacheFetch.lastWhere((e) => e is TweetEntity)
+        : null;
+
+    if (lastValid == null) {
       return TweetRequestOption(rows: _maxRowsPerRequest);
     } else {
       return TweetRequestOption(
         rows: _maxRowsPerRequest,
-        before: _tweetCacheFetch.last.id,
+        before: lastValid.id,
       );
     }
   }
@@ -205,20 +213,36 @@ class FeedUseCases {
     return FeedCache(tweets: _tweetCacheFetch);
   }
 
+  TweetEntity _extractTweetEntity(int index) {
+    if (index >= 0 && _tweetCacheFetch[index] is TweetEntity) {
+      return _tweetCacheFetch[index];
+    }
+
+    return null;
+  }
+
   FeedCache _deleteFetchCache(TweetEntity tweet) {
     final index = _tweetCacheFetch.indexWhere(
-      (e) =>
-          (e.id == tweet.id) ||
-          (e.lastReply.isNotEmpty && e.lastReply.first.id == tweet.id),
+      (e) {
+        if (e is TweetEntity) {
+          return (e.id == tweet.id) ||
+              (e.lastReply.isNotEmpty && e.lastReply.first.id == tweet.id);
+        }
+        return false;
+      },
     );
 
-    if (index >= 0 && _tweetCacheFetch[index].id == tweet.id) {
+    final currentTweet = _extractTweetEntity(index);
+    if (currentTweet == null) {
+      return FeedCache(tweets: _tweetCacheFetch);
+    }
+
+    if (currentTweet.id == tweet.id) {
       _tweetCacheFetch.removeAt(index);
     } else {
-      final current = _tweetCacheFetch[index];
-      _tweetCacheFetch[index] = _tweetCacheFetch[index].copyWith(
+      _tweetCacheFetch[index] = currentTweet.copyWith(
         lastReply: [],
-        totalReply: current.totalReply - 1,
+        totalReply: currentTweet.totalReply - 1,
       );
     }
 
@@ -228,26 +252,31 @@ class FeedUseCases {
 
   FeedCache _rebuildFetchCache(TweetEntity newTweet) {
     final index = _tweetCacheFetch.indexWhere(
-      (e) =>
-          (e.id == newTweet.id) ||
-          (e.lastReply.isNotEmpty && e.lastReply.first.id == newTweet.id),
+      (e) {
+        if (e is TweetEntity) {
+          return (e.id == newTweet.id) ||
+              (e.lastReply.isNotEmpty && e.lastReply.first.id == newTweet.id);
+        }
+        return false;
+      },
     );
 
-    if (index >= 0) {
-      final currentTweet = _tweetCacheFetch[index];
-      if (currentTweet.id == newTweet.id) {
-        _tweetCacheFetch[index] = newTweet.copyWith(
-          lastReply: currentTweet.lastReply,
-        );
-      }
+    final currentTweet = _extractTweetEntity(index);
+    if (currentTweet == null) {
+      return FeedCache(tweets: _tweetCacheFetch);
+    }
+
+    if (currentTweet.id == newTweet.id) {
+      _tweetCacheFetch[index] = newTweet.copyWith(
+        lastReply: currentTweet.lastReply,
+      );
+    } else if (currentTweet.lastReply.isNotEmpty &&
+        currentTweet.lastReply.first.id == newTweet.id) {
       // se a tweet for um reply, reconstrua o principal com o novo reply
-      else if (currentTweet.lastReply.isNotEmpty &&
-          currentTweet.lastReply.first.id == newTweet.id) {
-        final reply = newTweet.copyWith(
-            lastReply: currentTweet.lastReply.first.lastReply);
-        final princialTweet = currentTweet.copyWith(lastReply: [reply]);
-        _tweetCacheFetch[index] = princialTweet;
-      }
+      final reply =
+          newTweet.copyWith(lastReply: currentTweet.lastReply.first.lastReply);
+      final princialTweet = currentTweet.copyWith(lastReply: [reply]);
+      _tweetCacheFetch[index] = princialTweet;
     }
 
     _updateStream();
@@ -268,7 +297,8 @@ class FeedUseCases {
 
   FeedCache _updateRepliedTweetIntoCache(
       TweetEntity mainTweet, TweetEntity repliedTweet) {
-    final index = _tweetCacheFetch.indexWhere((e) => (e.id == mainTweet.id));
+    final index = _tweetCacheFetch
+        .indexWhere((e) => (e is TweetEntity && e.id == mainTweet.id));
 
     if (index >= 0) {
       TweetEntity rebuildedTweet = mainTweet.copyWith(
@@ -306,11 +336,16 @@ class FeedUseCases {
       _tweetReplyMap[tweet.id] = [];
     }
 
-    if (session.tweets != null && session.tweets.length > 0) {
+    final List<TweetEntity> filteredResponse = session.tweets
+        .map((e) => e is TweetEntity ? e : null)
+        .where((e) => e != null)
+        .toList();
+
+    if (filteredResponse != null && filteredResponse.length > 0) {
       if (session.orderBy == TweetSessionOrder.latestFirst) {
-        _tweetReplyMap[tweet.id].addAll(session.tweets.reversed);
+        _tweetReplyMap[tweet.id].addAll(filteredResponse.reversed);
       } else {
-        _tweetReplyMap[tweet.id].addAll(session.tweets);
+        _tweetReplyMap[tweet.id].addAll(filteredResponse);
       }
     }
 
