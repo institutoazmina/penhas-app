@@ -174,7 +174,7 @@ class FeedUseCases {
     } else {
       return TweetRequestOption(
         rows: _maxRowsPerRequest,
-        after: _tweetCacheFetch.last.id,
+        before: _tweetCacheFetch.last.id,
       );
     }
   }

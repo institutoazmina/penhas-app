@@ -306,7 +306,7 @@ void main() {
           repository.fetch(
               option: TweetRequestOption(
             rows: maxRowsPerRequet,
-            after: firstSessionResponse.tweets.last.id,
+            before: firstSessionResponse.tweets.last.id,
           )),
         );
         expect(expected, received);
@@ -341,7 +341,7 @@ void main() {
           repository.fetch(
               option: TweetRequestOption(
             rows: maxRowsPerRequet,
-            after: firstSessionResponse.tweets.last.id,
+            before: firstSessionResponse.tweets.last.id,
           )),
         );
         expect(expected, received);
