@@ -112,6 +112,14 @@ mixin _$DetailTweetController on _DetailTweetControllerBase, Store {
     });
   }
 
+  final _$getDetailAsyncAction =
+      AsyncAction('_DetailTweetControllerBase.getDetail');
+
+  @override
+  Future<void> getDetail() {
+    return _$getDetailAsyncAction.run(() => super.getDetail());
+  }
+
   final _$fetchNextPageAsyncAction =
       AsyncAction('_DetailTweetControllerBase.fetchNextPage');
 

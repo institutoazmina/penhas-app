@@ -27,7 +27,7 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
   ObservableFuture<Either<Failure, FeedCache>> _progress;
 
   @observable
-  ObservableList<TweetEntity> listTweets = ObservableList<TweetEntity>();
+  ObservableList<TweetTiles> listTweets = ObservableList<TweetTiles>();
 
   @observable
   String errorMessage;

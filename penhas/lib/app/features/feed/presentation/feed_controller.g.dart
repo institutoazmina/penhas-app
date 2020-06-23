@@ -35,13 +35,13 @@ mixin _$FeedController on _FeedControllerBase, Store {
   final _$listTweetsAtom = Atom(name: '_FeedControllerBase.listTweets');
 
   @override
-  ObservableList<TweetEntity> get listTweets {
+  ObservableList<TweetTiles> get listTweets {
     _$listTweetsAtom.reportRead();
     return super.listTweets;
   }
 
   @override
-  set listTweets(ObservableList<TweetEntity> value) {
+  set listTweets(ObservableList<TweetTiles> value) {
     _$listTweetsAtom.reportWrite(value, super.listTweets, () {
       super.listTweets = value;
     });
@@ -68,6 +68,14 @@ mixin _$FeedController on _FeedControllerBase, Store {
   @override
   Future<void> fetchNextPage() {
     return _$fetchNextPageAsyncAction.run(() => super.fetchNextPage());
+  }
+
+  final _$fetchOldestPageAsyncAction =
+      AsyncAction('_FeedControllerBase.fetchOldestPage');
+
+  @override
+  Future<void> fetchOldestPage() {
+    return _$fetchOldestPageAsyncAction.run(() => super.fetchOldestPage());
   }
 
   @override

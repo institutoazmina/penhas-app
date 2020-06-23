@@ -107,14 +107,18 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
     }
   }
 
-  Widget _buildTweetItem(TweetEntity tweet, BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 6.0, top: 6.0),
-      child: Tweet(
-        model: tweet,
-        controller: widget.tweetController,
-      ),
-    );
+  Widget _buildTweetItem(TweetTiles tweet, BuildContext context) {
+    if (tweet is TweetEntity) {
+      return Padding(
+        padding: EdgeInsets.only(bottom: 6.0, top: 6.0),
+        child: Tweet(
+          model: tweet,
+          controller: widget.tweetController,
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 
   bool _handleScrollNotification(ScrollNotification notification) {
