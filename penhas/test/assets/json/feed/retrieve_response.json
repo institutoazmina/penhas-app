@@ -1,7 +1,7 @@
 {
   "has_more": 1,
   "order_by": "latest_first",
-  "next_page": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJuZXh0X3BhZ2UiLCJ0YWdzIjoiIiwiYmVmb3JlIjoiMjAwNTI4VDIwNDYzMzAwMDEifQ.2fXaKcIc5G9PVBdo12TOWN8FCuux4_TrnYjnxNCy5e4",
+  "next_page": "_next_page_token_",
   "tweets": [
     {
       "anonimo": 0,

@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_model.dart';

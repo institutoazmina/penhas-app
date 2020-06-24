@@ -200,6 +200,7 @@ void main() {
               lastReply: [],
             )
           ],
+          null,
         ));
         // act
         final received = await repository.current(option: requestOption);

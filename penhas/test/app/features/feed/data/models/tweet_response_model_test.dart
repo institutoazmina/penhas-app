@@ -17,6 +17,7 @@ void main() {
         false,
         TweetSessionOrder.latestFirst,
         [],
+        null,
       );
       // assert
       expect(tweetSessionMondel, isA<TweetSessionEntity>());
@@ -26,35 +27,38 @@ void main() {
       // arrange
       final jsonData =
           await JsonUtil.getJson(from: 'feed/retrieve_response.json');
-      final TweetSessionEntity expectedSession =
-          TweetSessionModel(true, TweetSessionOrder.latestFirst, [
-        TweetModel(
-          id: '200528T2055380001',
-          userName: 'penhas',
-          clientId: 551,
-          createdAt: '2020-05-28 20:55:38',
-          totalReply: 0,
-          totalLikes: 0,
-          anonymous: false,
-          content: 'sleep 7',
-          avatar: 'https:\/\/elasv2-api.appcivico.com\/avatar\/padrao.svg',
-          meta: TweetMeta(liked: false, owner: true),
-          lastReply: [],
-        ),
-        TweetModel(
-          id: '200528T2055370004',
-          userName: 'penhas',
-          clientId: 551,
-          createdAt: '2020-05-28 20:55:37',
-          totalReply: 0,
-          totalLikes: 0,
-          anonymous: false,
-          content: 'sleep 6',
-          avatar: 'https:\/\/elasv2-api.appcivico.com\/avatar\/padrao.svg',
-          meta: TweetMeta(liked: false, owner: true),
-          lastReply: [],
-        ),
-      ]);
+      final TweetSessionEntity expectedSession = TweetSessionModel(
+          true,
+          TweetSessionOrder.latestFirst,
+          [
+            TweetModel(
+              id: '200528T2055380001',
+              userName: 'penhas',
+              clientId: 551,
+              createdAt: '2020-05-28 20:55:38',
+              totalReply: 0,
+              totalLikes: 0,
+              anonymous: false,
+              content: 'sleep 7',
+              avatar: 'https:\/\/elasv2-api.appcivico.com\/avatar\/padrao.svg',
+              meta: TweetMeta(liked: false, owner: true),
+              lastReply: [],
+            ),
+            TweetModel(
+              id: '200528T2055370004',
+              userName: 'penhas',
+              clientId: 551,
+              createdAt: '2020-05-28 20:55:37',
+              totalReply: 0,
+              totalLikes: 0,
+              anonymous: false,
+              content: 'sleep 6',
+              avatar: 'https:\/\/elasv2-api.appcivico.com\/avatar\/padrao.svg',
+              meta: TweetMeta(liked: false, owner: true),
+              lastReply: [],
+            ),
+          ],
+          '_next_page_token_');
       // act
       final result = TweetSessionModel.fromJson(jsonData);
       // assert
@@ -65,36 +69,40 @@ void main() {
       // arrange
       final jsonData = await JsonUtil.getJson(
           from: 'feed/retrieve_with_last_replay_response.json');
-      final TweetSessionEntity expectedSession =
-          TweetSessionModel(true, TweetSessionOrder.latestFirst, [
-        TweetModel(
-          id: '200528T2055370004',
-          userName: 'penhas',
-          clientId: 551,
-          createdAt: '2020-05-28 20:55:37',
-          totalReply: 1,
-          totalLikes: 1,
-          anonymous: false,
-          content: 'sleep 6',
-          avatar: 'https:\/\/elasv2-api.appcivico.com\/avatar\/padrao.svg',
-          meta: TweetMeta(liked: true, owner: true),
-          lastReply: [
+      final TweetSessionEntity expectedSession = TweetSessionModel(
+          true,
+          TweetSessionOrder.latestFirst,
+          [
             TweetModel(
-              id: '200603T1121340001',
+              id: '200528T2055370004',
               userName: 'penhas',
               clientId: 551,
-              createdAt: '2020-06-03 11:21:34',
-              totalReply: 0,
-              totalLikes: 0,
+              createdAt: '2020-05-28 20:55:37',
+              totalReply: 1,
+              totalLikes: 1,
               anonymous: false,
-              content: 'um breve comentario',
+              content: 'sleep 6',
               avatar: 'https:\/\/elasv2-api.appcivico.com\/avatar\/padrao.svg',
-              meta: TweetMeta(liked: false, owner: true),
-              lastReply: [],
-            )
+              meta: TweetMeta(liked: true, owner: true),
+              lastReply: [
+                TweetModel(
+                  id: '200603T1121340001',
+                  userName: 'penhas',
+                  clientId: 551,
+                  createdAt: '2020-06-03 11:21:34',
+                  totalReply: 0,
+                  totalLikes: 0,
+                  anonymous: false,
+                  content: 'um breve comentario',
+                  avatar:
+                      'https:\/\/elasv2-api.appcivico.com\/avatar\/padrao.svg',
+                  meta: TweetMeta(liked: false, owner: true),
+                  lastReply: [],
+                )
+              ],
+            ),
           ],
-        ),
-      ]);
+          null);
       // act
       final result = TweetSessionModel.fromJson(jsonData);
       // assert
