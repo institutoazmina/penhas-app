@@ -86,6 +86,24 @@ class TweetRelatedNewsModel extends TweetRelatedNews {
   }
 }
 
+class TweetNewsGroupModel extends TweetNewsGroup {
+  static TweetNewsGroup fromJson(Map<String, Object> jsonData) {
+    final List<TweetNews> news = _parseNews(jsonData['news']);
+
+    return TweetNewsGroup(
+      header: jsonData['header'] ?? '',
+      news: news,
+    );
+  }
+
+  static List<TweetNews> _parseNews(List<Object> news) {
+    return news
+        .map((e) => e as Map<String, Object>)
+        .map((e) => TweetNewsModel.fromJson(e))
+        .toList();
+  }
+}
+
 class TweetNewsModel extends TweetNews {
   static TweetNews fromJson(Map<String, Object> jsonData) {
     return TweetNews(

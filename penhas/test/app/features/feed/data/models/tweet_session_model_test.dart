@@ -71,6 +71,26 @@ void main() {
                 imageUri: "https://s2.glbimg.com/n.jpg",
                 source: "Google News",
                 title: "Title News 1"),
+            TweetNewsGroup(header: 'Relacionamento API Random', news: [
+              TweetNews(
+                  date: "18/06/2020",
+                  newsUri: "https://site.com/news-redirect/?uid=600",
+                  imageUri: "https://s2.glbimg.com/n.jpg",
+                  source: "Google News",
+                  title: "Title News Group - 0"),
+              TweetNews(
+                  date: "18/06/2020",
+                  newsUri: "https://site.com/news-redirect/?uid=601",
+                  imageUri: "https://s2.glbimg.com/n.jpg",
+                  source: "Google News",
+                  title: "Title News Group - 1"),
+              TweetNews(
+                  date: "18/06/2020",
+                  newsUri: "https://site.com/news-redirect/?uid=602",
+                  imageUri: "https://s2.glbimg.com/n.jpg",
+                  source: "Google News",
+                  title: "Title News Group - 2"),
+            ])
           ],
           '_next_page_token_');
       // act

@@ -56,6 +56,10 @@ class TweetSessionModel extends TweetSessionEntity {
       return TweetNewsModel.fromJson(json);
     }
 
+    if (json['type'] == 'news_group') {
+      return TweetNewsGroupModel.fromJson(json);
+    }
+
     return null;
   }
 }
