@@ -22,6 +22,6 @@ class TweetSessionEntity extends Equatable {
 
   @override
   String toString() {
-    return 'TweetSessionEntity{hasMore: ${hasMore.toString()}, orderBy: ${orderBy.toString()}, tweets: ${tweets.toString()}}';
+    return 'TweetSessionEntity{hasMore: ${hasMore.toString()}, orderBy: ${orderBy.toString()}, nextPage: ${nextPage.toString()}, tweets: ${tweets.toString()}}';
   }
 }

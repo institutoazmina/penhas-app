@@ -10,7 +10,7 @@ void main() {
   TweetSessionModel tweetSessionMondel;
   setUp(() {});
 
-  group('TweetResponseModel', () {
+  group('TweetSessionModel', () {
     test('tweets should be a subclass of TweetSessionEntity', () async {
       // arrange
       tweetSessionMondel = TweetSessionModel(
@@ -27,7 +27,7 @@ void main() {
       // arrange
       final jsonData =
           await JsonUtil.getJson(from: 'feed/retrieve_response.json');
-      final TweetSessionEntity expectedSession = TweetSessionModel(
+      final TweetSessionModel expectedSession = TweetSessionModel(
           true,
           TweetSessionOrder.latestFirst,
           [
@@ -44,6 +44,14 @@ void main() {
               meta: TweetMeta(liked: false, owner: true),
               lastReply: [],
             ),
+            TweetRelatedNews(header: 'google', news: [
+              TweetNews(
+                  title: 'Titulo muito grande',
+                  newsUri: 'https://site.com/news-redirect/?uid=551',
+                  date: null,
+                  imageUri: null,
+                  source: null)
+            ]),
             TweetModel(
               id: '200528T2055370004',
               userName: 'penhas',

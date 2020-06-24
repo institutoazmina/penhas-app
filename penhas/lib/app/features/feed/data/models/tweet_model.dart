@@ -67,3 +67,33 @@ class TweetModel extends TweetEntity {
     );
   }
 }
+
+class TweetRelatedNewsModel extends TweetRelatedNews {
+  static TweetRelatedNews fromJson(Map<String, Object> jsonData) {
+    final List<TweetNews> news = _parseNews(jsonData['news']);
+
+    return TweetRelatedNews(
+      header: jsonData['header'] ?? '',
+      news: news,
+    );
+  }
+
+  static List<TweetNews> _parseNews(List<Object> news) {
+    return news
+        .map((e) => e as Map<String, Object>)
+        .map((e) => TweetNewsModel.fromJson(e))
+        .toList();
+  }
+}
+
+class TweetNewsModel extends TweetNews {
+  static TweetNews fromJson(Map<String, Object> jsonData) {
+    return TweetNews(
+      date: jsonData['date_str'],
+      title: jsonData['title'],
+      source: jsonData['source'],
+      imageUri: jsonData['image'],
+      newsUri: jsonData['href'],
+    );
+  }
+}

@@ -22,6 +22,16 @@
       "type": "tweet"
     },
     {
+      "header": "google",
+      "news": [
+        {
+          "href": "https:\/\/site.com\/news-redirect\/?uid=551",
+          "title": "Titulo muito grande"
+        }
+      ],
+      "type": "related_news"
+    },
+    {
       "anonimo": 0,
       "cliente_id": 551,
       "content": "sleep 6",
@@ -37,12 +47,6 @@
       "name": "penhas",
       "qtde_comentarios": 0,
       "qtde_likes": 0,
-      "related_news": [
-        {
-          "hyperlink": "https:\/\/elasv2-api.appcivico.com\/news-redirect\/?uid=551&nid=746&u=1592775325&t=50D8&h=ce8dbb06bd10&url=https%3A%2F%2Fwww.google.com%2Furl%3Frct%3Dj%26sa%3Dt%26url%3Dhttps%3A%2F%2Fwww.ururau.com.br%2Fnoticias%2Fcidades%2Fpodcast-meu-corpo-minhas-regras%2F33855%2F%26ct%3Dga%26cd%3Dcaiyhda0mzrinta4yzu1mznkotg6y29tonb0okjsoli%26usg%3Dafqjcnf51tftreq4-crmx6s-hnqukejkfq",
-          "title": "Podcast: Meu corpo minhas regras!"
-        }
-      ],
       "type": "tweet"
     },
     {

@@ -94,4 +94,50 @@ class TweetMeta extends Equatable {
   }
 }
 
-class TweetGap extends TweetEntity {}
+class TweetNewsGroup extends TweetTiles {
+  final String header;
+  final List<TweetNews> news;
+
+  TweetNewsGroup({@required this.header, @required this.news});
+
+  @override
+  List<Object> get props => [header, news];
+
+  @override
+  bool get stringify => true;
+}
+
+class TweetNews extends TweetTiles {
+  final String date;
+  final String newsUri;
+  final String imageUri;
+  final String source;
+  final String title;
+
+  TweetNews({
+    @required this.date,
+    @required this.newsUri,
+    @required this.imageUri,
+    @required this.source,
+    @required this.title,
+  });
+
+  @override
+  List<Object> get props => [date, newsUri, imageUri, source, title];
+
+  @override
+  bool get stringify => true;
+}
+
+class TweetRelatedNews extends TweetTiles {
+  final String header;
+  final List<TweetNews> news;
+
+  TweetRelatedNews({@required this.header, @required this.news});
+
+  @override
+  List<Object> get props => [header, news];
+
+  @override
+  bool get stringify => true;
+}
