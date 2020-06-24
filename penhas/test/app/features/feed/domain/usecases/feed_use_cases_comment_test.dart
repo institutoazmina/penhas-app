@@ -72,6 +72,7 @@ void main() {
         );
 
         firstSessionResponse = TweetSessionEntity(
+            nextPage: null,
             hasMore: true,
             orderBy: TweetSessionOrder.latestFirst,
             tweets: [

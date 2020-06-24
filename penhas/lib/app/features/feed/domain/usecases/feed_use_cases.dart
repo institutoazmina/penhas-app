@@ -28,10 +28,11 @@ class FeedUseCases {
   final int _maxRowsPerRequest;
   final StreamController<FeedCache> _streamController =
       StreamController.broadcast();
-  Stream<FeedCache> get dataSource => _streamController.stream;
 
+  Stream<FeedCache> get dataSource => _streamController.stream;
   List<TweetTiles> _tweetCacheFetch = List<TweetTiles>();
   Map<String, List<TweetEntity>> _tweetReplyMap = {};
+  String _nextPage = '';
 
   FeedUseCases({
     @required ITweetRepository repository,
@@ -182,12 +183,14 @@ class FeedUseCases {
     } else {
       return TweetRequestOption(
         rows: _maxRowsPerRequest,
-        before: lastValid.id,
+        before: _nextPage == null ? lastValid.id : null,
+        nextPageToken: _nextPage,
       );
     }
   }
 
   FeedCache _updateFetchCache(TweetSessionEntity session) {
+    _nextPage = session.nextPage;
     if (session.tweets != null && session.tweets.length > 0) {
       if (session.orderBy == TweetSessionOrder.latestFirst) {
         _tweetCacheFetch.insertAll(0, session.tweets);
@@ -201,6 +204,7 @@ class FeedUseCases {
   }
 
   FeedCache _appendFetchCache(TweetSessionEntity session) {
+    _nextPage = session.nextPage;
     if (session.tweets != null && session.tweets.length > 0) {
       if (session.orderBy == TweetSessionOrder.latestFirst) {
         _tweetCacheFetch.addAll(session.tweets);

@@ -1,13 +1,14 @@
 import 'package:equatable/equatable.dart';
 
 class TweetRequestOption extends Equatable {
+  final int rows;
   final String after;
   final String before;
   final String parent;
+  final String replyTo;
+  final String nextPageToken;
   final bool onlyMyself;
   final bool skipMyself;
-  final int rows;
-  final String replyTo;
 
   TweetRequestOption({
     this.after,
@@ -17,6 +18,7 @@ class TweetRequestOption extends Equatable {
     this.skipMyself = false,
     this.rows = 100,
     this.replyTo,
+    this.nextPageToken,
   })  : assert(rows != null),
         assert(onlyMyself != null),
         assert(skipMyself != null);

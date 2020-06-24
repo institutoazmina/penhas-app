@@ -42,6 +42,7 @@ class TweetDataSource implements ITweetDataSource {
       'after': option.after,
       'before': option.before,
       'parent_id': option.parent,
+      'next_page': option.nextPageToken,
       'only_myself': option.onlyMyself ? '1' : '0',
       'skip_myself': option.skipMyself ? '1' : '0',
       'rows': "${option.rows}",

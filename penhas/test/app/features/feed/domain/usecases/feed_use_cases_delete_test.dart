@@ -30,6 +30,7 @@ void main() {
       setUp(() {
         maxRowsPerRequet = 5;
         firstSessionResponse = TweetSessionEntity(
+          nextPage: null,
           hasMore: true,
           orderBy: TweetSessionOrder.latestFirst,
           tweets: [

@@ -43,12 +43,14 @@ void main() {
 
       setUp(() {
         emptySession = TweetSessionEntity(
+          nextPage: null,
           hasMore: false,
           orderBy: TweetSessionOrder.oldestFirst,
           tweets: [],
         );
 
         firstSession = TweetSessionEntity(
+            nextPage: null,
             hasMore: false,
             orderBy: TweetSessionOrder.oldestFirst,
             tweets: [
@@ -120,6 +122,7 @@ void main() {
 
       setUp(() {
         firstSession = TweetSessionEntity(
+            nextPage: null,
             hasMore: true,
             orderBy: TweetSessionOrder.oldestFirst,
             tweets: [
@@ -138,6 +141,7 @@ void main() {
             ]);
 
         secondSession = TweetSessionEntity(
+            nextPage: null,
             hasMore: true,
             orderBy: TweetSessionOrder.oldestFirst,
             tweets: [
@@ -237,6 +241,7 @@ void main() {
         when(repository.fetch(option: anyNamed('option'))).thenAnswer(
           (_) async => right(
             TweetSessionEntity(
+                nextPage: null,
                 hasMore: false,
                 orderBy: TweetSessionOrder.oldestFirst,
                 tweets: []),

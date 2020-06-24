@@ -33,6 +33,7 @@ void main() {
       setUp(() {
         maxRowsPerRequet = 5;
         firstSessionResponse = TweetSessionEntity(
+            nextPage: '_next_page_request_1_',
             hasMore: true,
             orderBy: TweetSessionOrder.latestFirst,
             tweets: [
@@ -64,6 +65,7 @@ void main() {
               ),
             ]);
         secondSessionResponse = TweetSessionEntity(
+            nextPage: '_next_page_request_1_',
             hasMore: false,
             orderBy: TweetSessionOrder.oldestFirst,
             tweets: [
@@ -95,6 +97,7 @@ void main() {
               ),
             ]);
         thirdSessionResponse = TweetSessionEntity(
+          nextPage: '_next_page_request_1_',
           hasMore: false,
           orderBy: TweetSessionOrder.oldestFirst,
           tweets: [],
@@ -172,6 +175,7 @@ void main() {
       setUp(() {
         maxRowsPerRequet = 5;
         firstSessionResponse = TweetSessionEntity(
+            nextPage: '_next_page_request_1_',
             hasMore: true,
             orderBy: TweetSessionOrder.latestFirst,
             tweets: [
@@ -203,6 +207,7 @@ void main() {
               ),
             ]);
         secondSessionResponse = TweetSessionEntity(
+            nextPage: '_next_page_request_2_',
             hasMore: true,
             orderBy: TweetSessionOrder.latestFirst,
             tweets: [
@@ -234,6 +239,7 @@ void main() {
               ),
             ]);
         thirdSessionResponse = TweetSessionEntity(
+            nextPage: '_next_page_request_3_',
             hasMore: true,
             orderBy: TweetSessionOrder.oldestFirst,
             tweets: [
@@ -307,7 +313,7 @@ void main() {
           repository.fetch(
               option: TweetRequestOption(
             rows: maxRowsPerRequet,
-            before: (firstSessionResponse.tweets.last as TweetEntity).id,
+            nextPageToken: '_next_page_request_1_',
           )),
         );
         expect(expected, received);
@@ -342,7 +348,7 @@ void main() {
           repository.fetch(
               option: TweetRequestOption(
             rows: maxRowsPerRequet,
-            before: (firstSessionResponse.tweets.last as TweetEntity).id,
+            nextPageToken: '_next_page_request_1_',
           )),
         );
         expect(expected, received);
