@@ -40,7 +40,7 @@ void main() {
               totalLikes: 0,
               anonymous: false,
               content: 'sleep 7',
-              avatar: 'https:\/\/elasv2-api.appcivico.com\/avatar\/padrao.svg',
+              avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
               meta: TweetMeta(liked: false, owner: true),
               lastReply: [],
             ),
@@ -61,10 +61,16 @@ void main() {
               totalLikes: 0,
               anonymous: false,
               content: 'sleep 6',
-              avatar: 'https:\/\/elasv2-api.appcivico.com\/avatar\/padrao.svg',
+              avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
               meta: TweetMeta(liked: false, owner: true),
               lastReply: [],
             ),
+            TweetNews(
+                date: '18/06/2020',
+                newsUri: "https://site.com/news-redirect/?uid=552",
+                imageUri: "https://s2.glbimg.com/n.jpg",
+                source: "Google News",
+                title: "Title News 1"),
           ],
           '_next_page_token_');
       // act
