@@ -83,6 +83,8 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
   }
 
   void _updateListOfTweets(FeedCache cache) {
-    listTweets = cache.tweets.asObservable();
+    final List<TweetEntity> tweets =
+        cache.tweets.where((e) => e is TweetEntity).toList();
+    listTweets = tweets.asObservable();
   }
 }
