@@ -23,9 +23,7 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
   final FeedUseCases useCase;
   String tweetContent;
 
-  _DetailTweetControllerBase(this.useCase, this.tweet) {
-    this.getDetail();
-  }
+  _DetailTweetControllerBase(this.useCase, this.tweet);
 
   @observable
   ObservableFuture<Either<Failure, FeedCache>> _progress;

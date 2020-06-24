@@ -3,7 +3,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
@@ -34,6 +33,16 @@ class _DetailTweetPageState
   List<ReactionDisposer> _disposers;
   final _scrollController = ScrollController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _refreshIndicatorKey.currentState.show();
+    });
+  }
 
   @override
   void didChangeDependencies() {
@@ -75,18 +84,18 @@ class _DetailTweetPageState
                   ),
                   Expanded(
                     child: Observer(builder: (_) {
-                      return NotificationListener<ScrollNotification>(
-                        onNotification: _handleScrollNotification,
+                      return RefreshIndicator(
+                        key: _refreshIndicatorKey,
+                        onRefresh: _onRefresh,
+                        notificationPredicate: _handleScrollNotification,
                         child: ListView.builder(
-                          itemCount: controller.listTweets.length + 1,
+                          itemCount: controller.listTweets.length,
                           controller: _scrollController,
                           itemBuilder: (context, index) {
-                            return index >= controller.listTweets.length
-                                ? _buildLoaderListItem()
-                                : _buildTweetItem(
-                                    controller.listTweets[index],
-                                    context,
-                                  );
+                            return _buildTweetItem(
+                              controller.listTweets[index],
+                              context,
+                            );
                           },
                         ),
                       );
@@ -108,16 +117,10 @@ class _DetailTweetPageState
     );
   }
 
-  Widget _buildLoaderListItem() {
-    if (controller.currentState != PageProgressState.loaded) {
-      return Padding(
-        padding: const EdgeInsets.all(22.0),
-        child: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
-    } else {
-      return Container();
+  Future<void> _onRefresh() async {
+    final bool isEndOfListView = _scrollController.position.extentAfter == 0;
+    if (isEndOfListView) {
+      return controller.fetchNextPage();
     }
   }
 
@@ -129,12 +132,12 @@ class _DetailTweetPageState
   }
 
   bool _handleScrollNotification(ScrollNotification notification) {
-    if (notification is ScrollNotification &&
-        _scrollController.position.extentAfter == 0) {
-      controller.fetchNextPage();
+    final bool isEndOfListView = _scrollController.position.extentAfter == 0;
+    if (isEndOfListView) {
+      _refreshIndicatorKey.currentState.show(atTop: false);
     }
 
-    return false;
+    return isEndOfListView;
   }
 
   ReactionDisposer _showErrorMessage() {

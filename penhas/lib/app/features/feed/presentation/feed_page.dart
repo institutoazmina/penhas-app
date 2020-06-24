@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/tweet.dart';
@@ -74,7 +73,7 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
   RefreshIndicator _buildRefreshIndicator() {
     return RefreshIndicator(
       key: _refreshIndicatorKey,
-      onRefresh: onRefresh,
+      onRefresh: _onRefresh,
       notificationPredicate: _handleScrollNotification,
       child: ListView.builder(
         itemCount: controller.listTweets.length,
@@ -95,7 +94,7 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
     _scrollController.dispose();
   }
 
-  Future<void> onRefresh() async {
+  Future<void> _onRefresh() async {
     final bool isTopOfListView = _scrollController.position.pixels == 0;
     if (isTopOfListView) {
       return controller.fetchNextPage();
