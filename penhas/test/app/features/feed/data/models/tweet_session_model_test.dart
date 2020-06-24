@@ -44,8 +44,8 @@ void main() {
               meta: TweetMeta(liked: false, owner: true),
               lastReply: [],
             ),
-            TweetRelatedNews(header: 'google', news: [
-              TweetNews(
+            TweetRelatedNewsEntity(header: 'google', news: [
+              TweetNewsEntity(
                   title: 'Titulo muito grande',
                   newsUri: 'https://site.com/news-redirect/?uid=551',
                   date: null,
@@ -65,26 +65,26 @@ void main() {
               meta: TweetMeta(liked: false, owner: true),
               lastReply: [],
             ),
-            TweetNews(
+            TweetNewsEntity(
                 date: '18/06/2020',
                 newsUri: "https://site.com/news-redirect/?uid=552",
                 imageUri: "https://s2.glbimg.com/n.jpg",
                 source: "Google News",
                 title: "Title News 1"),
-            TweetNewsGroup(header: 'Relacionamento API Random', news: [
-              TweetNews(
+            TweetNewsGroupEntity(header: 'Relacionamento API Random', news: [
+              TweetNewsEntity(
                   date: "18/06/2020",
                   newsUri: "https://site.com/news-redirect/?uid=600",
                   imageUri: "https://s2.glbimg.com/n.jpg",
                   source: "Google News",
                   title: "Title News Group - 0"),
-              TweetNews(
+              TweetNewsEntity(
                   date: "18/06/2020",
                   newsUri: "https://site.com/news-redirect/?uid=601",
                   imageUri: "https://s2.glbimg.com/n.jpg",
                   source: "Google News",
                   title: "Title News Group - 1"),
-              TweetNews(
+              TweetNewsEntity(
                   date: "18/06/2020",
                   newsUri: "https://site.com/news-redirect/?uid=602",
                   imageUri: "https://s2.glbimg.com/n.jpg",

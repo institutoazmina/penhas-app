@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/tweet.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_related_news.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
@@ -42,19 +43,16 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
         child: Container(
           color: Color.fromRGBO(248, 248, 248, 1.0),
           child: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.only(left: 8, right: 8),
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(top: 19.0, bottom: 19.0),
-                    child: _buildFiltersButton(),
-                  ),
-                  Expanded(
-                    child: _buildFeedObserver(),
-                  ),
-                ],
-              ),
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                  child: _buildFiltersButton(),
+                ),
+                Expanded(
+                  child: _buildFeedObserver(),
+                ),
+              ],
             ),
           ),
         ),
@@ -109,14 +107,21 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
   Widget _buildTweetItem(TweetTiles tweet, BuildContext context) {
     if (tweet is TweetEntity) {
       return Padding(
-        padding: EdgeInsets.only(bottom: 6.0, top: 6.0),
+        padding: EdgeInsets.only(
+          left: 12.0,
+          right: 12.0,
+          bottom: 6.0,
+          top: 6.0,
+        ),
         child: Tweet(
           model: tweet,
           controller: widget.tweetController,
         ),
       );
+    } else if (tweet is TweetRelatedNewsEntity) {
+      return TweetRelatedNews(related: tweet);
     } else {
-      return Container();
+      return Container(height: 80, color: Colors.red);
     }
   }
 

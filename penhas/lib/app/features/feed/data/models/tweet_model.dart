@@ -68,17 +68,17 @@ class TweetModel extends TweetEntity {
   }
 }
 
-class TweetRelatedNewsModel extends TweetRelatedNews {
-  static TweetRelatedNews fromJson(Map<String, Object> jsonData) {
-    final List<TweetNews> news = _parseNews(jsonData['news']);
+class TweetRelatedNewsModel extends TweetRelatedNewsEntity {
+  static TweetRelatedNewsEntity fromJson(Map<String, Object> jsonData) {
+    final List<TweetNewsEntity> news = _parseNews(jsonData['news']);
 
-    return TweetRelatedNews(
+    return TweetRelatedNewsEntity(
       header: jsonData['header'] ?? '',
       news: news,
     );
   }
 
-  static List<TweetNews> _parseNews(List<Object> news) {
+  static List<TweetNewsEntity> _parseNews(List<Object> news) {
     return news
         .map((e) => e as Map<String, Object>)
         .map((e) => TweetNewsModel.fromJson(e))
@@ -86,17 +86,17 @@ class TweetRelatedNewsModel extends TweetRelatedNews {
   }
 }
 
-class TweetNewsGroupModel extends TweetNewsGroup {
-  static TweetNewsGroup fromJson(Map<String, Object> jsonData) {
-    final List<TweetNews> news = _parseNews(jsonData['news']);
+class TweetNewsGroupModel extends TweetNewsGroupEntity {
+  static TweetNewsGroupEntity fromJson(Map<String, Object> jsonData) {
+    final List<TweetNewsEntity> news = _parseNews(jsonData['news']);
 
-    return TweetNewsGroup(
+    return TweetNewsGroupEntity(
       header: jsonData['header'] ?? '',
       news: news,
     );
   }
 
-  static List<TweetNews> _parseNews(List<Object> news) {
+  static List<TweetNewsEntity> _parseNews(List<Object> news) {
     return news
         .map((e) => e as Map<String, Object>)
         .map((e) => TweetNewsModel.fromJson(e))
@@ -104,9 +104,9 @@ class TweetNewsGroupModel extends TweetNewsGroup {
   }
 }
 
-class TweetNewsModel extends TweetNews {
-  static TweetNews fromJson(Map<String, Object> jsonData) {
-    return TweetNews(
+class TweetNewsModel extends TweetNewsEntity {
+  static TweetNewsEntity fromJson(Map<String, Object> jsonData) {
+    return TweetNewsEntity(
       date: jsonData['date_str'],
       title: jsonData['title'],
       source: jsonData['source'],

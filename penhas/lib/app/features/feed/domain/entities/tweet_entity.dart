@@ -94,11 +94,11 @@ class TweetMeta extends Equatable {
   }
 }
 
-class TweetNewsGroup extends TweetTiles {
+class TweetNewsGroupEntity extends TweetTiles {
   final String header;
-  final List<TweetNews> news;
+  final List<TweetNewsEntity> news;
 
-  TweetNewsGroup({@required this.header, @required this.news});
+  TweetNewsGroupEntity({@required this.header, @required this.news});
 
   @override
   List<Object> get props => [header, news];
@@ -107,14 +107,14 @@ class TweetNewsGroup extends TweetTiles {
   bool get stringify => true;
 }
 
-class TweetNews extends TweetTiles {
+class TweetNewsEntity extends TweetTiles {
   final String date;
   final String newsUri;
   final String imageUri;
   final String source;
   final String title;
 
-  TweetNews({
+  TweetNewsEntity({
     @required this.date,
     @required this.newsUri,
     @required this.imageUri,
@@ -129,11 +129,11 @@ class TweetNews extends TweetTiles {
   bool get stringify => true;
 }
 
-class TweetRelatedNews extends TweetTiles {
+class TweetRelatedNewsEntity extends TweetTiles {
   final String header;
-  final List<TweetNews> news;
+  final List<TweetNewsEntity> news;
 
-  TweetRelatedNews({@required this.header, @required this.news});
+  TweetRelatedNewsEntity({@required this.header, @required this.news});
 
   @override
   List<Object> get props => [header, news];
