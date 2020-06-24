@@ -12,11 +12,13 @@ class TweetBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HtmlWidget(
-      bodyContent,
-      textStyle: kTextStyleFeedTweetBody,
-      bodyPadding: EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 12.0),
-      webViewJs: false,
+    return Padding(
+      padding: EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 12.0),
+      child: HtmlWidget(
+        bodyContent,
+        webViewJs: false,
+        textStyle: kTextStyleFeedTweetBody,
+      ),
     );
   }
 }
