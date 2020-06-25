@@ -15,8 +15,6 @@ class TweetRelatedNews extends StatefulWidget {
 }
 
 class _TweetRelatedNewsState extends State<TweetRelatedNews> {
-  int _index = 0;
-
   @override
   Widget build(BuildContext context) {
     final double viewPortScale = widget.related.news.length > 1 ? 0.80 : 0.95;
@@ -39,47 +37,45 @@ class _TweetRelatedNewsState extends State<TweetRelatedNews> {
           SizedBox(
             height: 110,
             child: PageView.builder(
-                itemCount: widget.related.news.length,
-                controller: PageController(viewportFraction: viewPortScale),
-                onPageChanged: (int index) => setState(() => _index = index),
-                itemBuilder: (context, i) {
-                  return Transform.scale(
-                      scale: i == _index ? 1 : 0.9,
-                      child: Container(
-                          padding: EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(8.0)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black12,
-                                offset: Offset(0.0, 1.0),
-                                blurRadius: 4.0,
-                              )
-                            ],
+              itemCount: widget.related.news.length,
+              controller: PageController(viewportFraction: viewPortScale),
+              itemBuilder: (context, i) {
+                return Container(
+                  padding: EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        offset: Offset(0.0, 1.0),
+                        blurRadius: 4.0,
+                      )
+                    ],
+                  ),
+                  child: GestureDetector(
+                    onTap: () async =>
+                        _launchURL(widget.related.news[i].newsUri),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Text(
+                          widget.related.news[i].title,
+                          style: kTextStyleDrawerUsername,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Text(
+                            widget.related.news[i].source ?? "",
+                            style: kTextStyleFeedTweetShowReply,
                           ),
-                          child: GestureDetector(
-                            onTap: () async =>
-                                _launchURL(widget.related.news[i].newsUri),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: <Widget>[
-                                Text(
-                                  widget.related.news[i].title,
-                                  style: kTextStyleDrawerUsername,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
-                                  child: Text(
-                                    widget.related.news[i].source ?? "",
-                                    style: kTextStyleFeedTweetShowReply,
-                                  ),
-                                )
-                              ],
-                            ),
-                          )));
-                }),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
           )
         ],
       ),

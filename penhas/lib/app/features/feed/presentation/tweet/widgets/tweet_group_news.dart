@@ -43,8 +43,8 @@ class _TweetGroupNewsState extends State<TweetGroupNews> {
                     onPageChanged: (int page) =>
                         setState(() => _currentPage = page),
                     itemBuilder: (context, i) {
-                      return Transform.scale(
-                        scale: i == _currentPage ? 1 : 0.9,
+                      return Padding(
+                        padding: EdgeInsets.only(right: 6.0, left: 6.0),
                         child: _NewsItem(news: widget._group.news[i]),
                       );
                     }),
