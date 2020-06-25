@@ -22,17 +22,17 @@ class _TweetRelatedNewsState extends State<TweetRelatedNews> {
     final double viewPortScale = widget.related.news.length > 1 ? 0.80 : 0.95;
 
     return Padding(
-      padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
+      padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(left: 12.0),
+            padding: EdgeInsets.only(left: 12.0),
             child: Text('Conteúdo relacionado a',
                 style: kTextStyleFeedTweetReplyHeader),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 12.0, bottom: 12.0),
+            padding: EdgeInsets.only(left: 12.0, bottom: 12.0),
             child: Text('"${widget.related.header}"',
                 style: kTextStyleDrawerUsername),
           ),

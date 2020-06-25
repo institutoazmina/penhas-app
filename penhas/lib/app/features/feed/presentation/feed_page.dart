@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/tweet.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_group_news.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_related_news.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
@@ -120,6 +121,8 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
       );
     } else if (tweet is TweetRelatedNewsEntity) {
       return TweetRelatedNews(related: tweet);
+    } else if (tweet is TweetNewsGroupEntity) {
+      return TweetGroupNews(group: tweet);
     } else {
       return Container(height: 80, color: Colors.red);
     }

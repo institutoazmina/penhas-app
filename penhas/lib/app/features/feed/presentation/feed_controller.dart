@@ -45,6 +45,10 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> fetchNextPage() async {
+    if (currentState == PageProgressState.loading) {
+      return;
+    }
+
     _progress = ObservableFuture(useCase.fetchNewestTweet());
 
     final response = await _progress;
@@ -56,6 +60,10 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> fetchOldestPage() async {
+    if (currentState == PageProgressState.loading) {
+      return;
+    }
+
     final response = await useCase.fetchOldestTweet();
 
     response.fold(
