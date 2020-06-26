@@ -40,37 +40,40 @@ class _TweetRelatedNewsState extends State<TweetRelatedNews> {
               itemCount: widget.related.news.length,
               controller: PageController(viewportFraction: viewPortScale),
               itemBuilder: (context, i) {
-                return Container(
-                  padding: EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        offset: Offset(0.0, 1.0),
-                        blurRadius: 4.0,
-                      )
-                    ],
-                  ),
-                  child: GestureDetector(
-                    onTap: () async =>
-                        _launchURL(widget.related.news[i].newsUri),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        Text(
-                          widget.related.news[i].title,
-                          style: kTextStyleDrawerUsername,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Text(
-                            widget.related.news[i].source ?? "",
-                            style: kTextStyleFeedTweetShowReply,
-                          ),
+                return Padding(
+                  padding: const EdgeInsets.only(left: 6.0, right: 6.0),
+                  child: Container(
+                    padding: EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          offset: Offset(0.0, 1.0),
+                          blurRadius: 4.0,
                         )
                       ],
+                    ),
+                    child: GestureDetector(
+                      onTap: () async =>
+                          _launchURL(widget.related.news[i].newsUri),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          Text(
+                            widget.related.news[i].title,
+                            style: kTextStyleDrawerUsername,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Text(
+                              widget.related.news[i].source ?? "",
+                              style: kTextStyleFeedTweetShowReply,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 );
