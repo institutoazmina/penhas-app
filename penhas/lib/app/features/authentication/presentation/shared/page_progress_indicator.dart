@@ -64,8 +64,8 @@ class _PageProgressIndicator extends State<PageProgressIndicator>
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   @override
