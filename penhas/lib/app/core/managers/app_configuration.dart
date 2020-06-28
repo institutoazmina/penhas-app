@@ -10,7 +10,7 @@ abstract class IAppConfiguration {
   Future<AuthorizationStatus> get authorizationStatus;
   Future<void> saveCategoryPreference({@required List<String> codes});
   Future<void> saveTagsPreference({@required List<String> codes});
-  // Future<void> loadPreferenceCategory();
+  Future<List<String>> getCategoryPreference();
   // Future<void> loadPreferenceFilter();
 }
 
@@ -62,5 +62,12 @@ class AppConfiguration implements IAppConfiguration {
     final String data = codes.join(',');
     await _storage.put(_preferenceTagsKey, data);
     return;
+  }
+
+  @override
+  Future<List<String>> getCategoryPreference() async {
+    return _storage
+        .get(_preferenceCategoryKey)
+        .then((value) => value.split(','));
   }
 }

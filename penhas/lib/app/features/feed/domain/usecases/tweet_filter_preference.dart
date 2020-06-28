@@ -31,4 +31,8 @@ class TweetFilterPreference {
     final List<String> codes = tags.map((e) => e.id).toList();
     return _appConfiguration.saveTagsPreference(codes: codes);
   }
+
+  Future<List<String>> getCategory() {
+    return _appConfiguration.getCategoryPreference();
+  }
 }

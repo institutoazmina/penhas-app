@@ -63,6 +63,17 @@ void main() {
       verify(mockConfiguration.saveCategoryPreference(codes: codes));
     });
 
+    test('should retrieve categories preference', () async {
+      // arrange
+      when(mockConfiguration.getCategoryPreference())
+          .thenAnswer((_) async => ['1']);
+      final expected = ['1'];
+      // act
+      final received = await sut.getCategory();
+      // assert
+      expect(received, expected);
+    });
+
     test('should store tags preference', () async {
       // arrange
       final categories = [
