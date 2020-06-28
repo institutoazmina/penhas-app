@@ -89,8 +89,8 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
 
   @override
   void dispose() {
-    super.dispose();
     _scrollController.dispose();
+    super.dispose();
   }
 
   Future<void> _onRefresh() async {

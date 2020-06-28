@@ -110,13 +110,15 @@ class _ExpandChildState extends State<ExpandChild>
     _iconTurns = _controller.drive(_halfTurn.chain(_easeInCurve));
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      RenderBox renderBox = _localChildrenKey.currentContext.findRenderObject();
-      setState(() {
-        _foo = widget.trimSize > renderBox.size.height
-            ? 1.0
-            : widget.trimSize / renderBox.size.height;
+      final context = _localChildrenKey.currentContext;
+      if (context == null) return;
 
-        _showExpand = renderBox.size.height > widget.trimSize;
+      setState(() {
+        _foo = widget.trimSize > context.size.height
+            ? 1.0
+            : widget.trimSize / context.size.height;
+
+        _showExpand = context.size.height > widget.trimSize;
       });
     });
   }
