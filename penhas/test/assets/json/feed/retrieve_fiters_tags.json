@@ -1,0 +1,38 @@
+{
+  "categories": [
+    {
+      "default": 1,
+      "label": "Tudo",
+      "value": "all"
+    },
+    {
+      "default": 0,
+      "label": "Apenas notícias",
+      "value": "only_news"
+    },
+    {
+      "default": 0,
+      "label": "Apenas publicações",
+      "value": "only_tweets"
+    },
+    {
+      "default": 0,
+      "label": "Minhas publicações e comentários",
+      "value": "all_myself"
+    }
+  ],
+  "tags": [
+    {
+      "id": 371,
+      "title": "Direitos Humanos"
+    },
+    {
+      "id": "370",
+      "title": "Elas no Congresso"
+    },
+    {
+      "id": 375,
+      "title": "Violência doméstica"
+    }
+  ]
+}
