@@ -8,10 +8,16 @@ abstract class IAppConfiguration {
   Future<void> logout();
   Uri get penhasServer;
   Future<AuthorizationStatus> get authorizationStatus;
+  Future<void> saveCategoryPreference({@required List<String> codes});
+  // Future<void> saveFilterPreference(List<String> codes);
+  // Future<void> loadPreferenceCategory();
+  // Future<void> loadPreferenceFilter();
 }
 
 class AppConfiguration implements IAppConfiguration {
   final _tokenKey = 'br.com.penhas.tokenServer';
+  final _preferenceCategoryKey = 'br.com.penhas.preferenceCategory';
+
   final ILocalStorage _storage;
 
   AppConfiguration({@required ILocalStorage storage}) : this._storage = storage;
@@ -41,6 +47,13 @@ class AppConfiguration implements IAppConfiguration {
   @override
   Future<void> logout() async {
     await _storage.delete(_tokenKey);
+    return;
+  }
+
+  @override
+  Future<void> saveCategoryPreference({List<String> codes}) async {
+    final String data = codes.join(',');
+    await _storage.put(_preferenceCategoryKey, data);
     return;
   }
 }
