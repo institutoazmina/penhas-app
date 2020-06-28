@@ -35,4 +35,8 @@ class TweetFilterPreference {
   Future<List<String>> getCategory() {
     return _appConfiguration.getCategoryPreference();
   }
+
+  Future<List<String>> getTags() {
+    return _appConfiguration.getTagsPreference();
+  }
 }

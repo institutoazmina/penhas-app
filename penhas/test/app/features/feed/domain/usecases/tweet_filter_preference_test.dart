@@ -88,5 +88,16 @@ void main() {
       // assert
       verify(mockConfiguration.saveTagsPreference(codes: codes));
     });
+
+    test('should retrieve tags preference', () async {
+      // arrange
+      when(mockConfiguration.getTagsPreference())
+          .thenAnswer((_) async => ['1', '2']);
+      final expected = ['1', '2'];
+      // act
+      final received = await sut.getTags();
+      // assert
+      expect(received, expected);
+    });
   });
 }

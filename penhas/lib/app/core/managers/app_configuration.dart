@@ -11,7 +11,7 @@ abstract class IAppConfiguration {
   Future<void> saveCategoryPreference({@required List<String> codes});
   Future<void> saveTagsPreference({@required List<String> codes});
   Future<List<String>> getCategoryPreference();
-  // Future<void> loadPreferenceFilter();
+  Future<List<String>> getTagsPreference();
 }
 
 class AppConfiguration implements IAppConfiguration {
@@ -69,5 +69,10 @@ class AppConfiguration implements IAppConfiguration {
     return _storage
         .get(_preferenceCategoryKey)
         .then((value) => value.split(','));
+  }
+
+  @override
+  Future<List<String>> getTagsPreference() {
+    return _storage.get(_preferenceTagsKey).then((value) => value.split(','));
   }
 }
