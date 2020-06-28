@@ -9,15 +9,15 @@ abstract class IAppConfiguration {
   Uri get penhasServer;
   Future<AuthorizationStatus> get authorizationStatus;
   Future<void> saveCategoryPreference({@required List<String> codes});
-  // Future<void> saveFilterPreference(List<String> codes);
+  Future<void> saveTagsPreference({@required List<String> codes});
   // Future<void> loadPreferenceCategory();
   // Future<void> loadPreferenceFilter();
 }
 
 class AppConfiguration implements IAppConfiguration {
   final _tokenKey = 'br.com.penhas.tokenServer';
+  final _preferenceTagsKey = 'br.com.penhas.preferenceTags';
   final _preferenceCategoryKey = 'br.com.penhas.preferenceCategory';
-
   final ILocalStorage _storage;
 
   AppConfiguration({@required ILocalStorage storage}) : this._storage = storage;
@@ -54,6 +54,13 @@ class AppConfiguration implements IAppConfiguration {
   Future<void> saveCategoryPreference({List<String> codes}) async {
     final String data = codes.join(',');
     await _storage.put(_preferenceCategoryKey, data);
+    return;
+  }
+
+  @override
+  Future<void> saveTagsPreference({List<String> codes}) async {
+    final String data = codes.join(',');
+    await _storage.put(_preferenceTagsKey, data);
     return;
   }
 }

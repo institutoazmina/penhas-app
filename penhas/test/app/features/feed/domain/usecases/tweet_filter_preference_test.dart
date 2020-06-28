@@ -62,5 +62,20 @@ void main() {
       // assert
       verify(mockConfiguration.saveCategoryPreference(codes: codes));
     });
+
+    test('should store tags preference', () async {
+      // arrange
+      final categories = [
+        TweetFilterTag(id: '1', title: 'T-1'),
+        TweetFilterTag(id: '2', title: 'T-2'),
+      ];
+      final codes = categories.map((e) => e.id).toList();
+      when(mockConfiguration.saveTagsPreference(codes: anyNamed('codes')))
+          .thenAnswer((_) async => codes);
+      // act
+      await sut.saveTags(categories);
+      // assert
+      verify(mockConfiguration.saveTagsPreference(codes: codes));
+    });
   });
 }
