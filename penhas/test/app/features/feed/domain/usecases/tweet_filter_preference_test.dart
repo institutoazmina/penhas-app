@@ -23,11 +23,11 @@ void main() {
       appConfiguration: mockConfiguration,
     );
     response = TweetFilterSessionEntity(categories: [
-      TweetFilterCategory(id: '1', isDefault: true, label: 'C 1'),
-      TweetFilterCategory(id: '2', isDefault: false, label: 'C 2'),
+      TweetFilterEntity(id: '1', isSelected: true, label: 'C 1'),
+      TweetFilterEntity(id: '2', isSelected: false, label: 'C 2'),
     ], tags: [
-      TweetFilterTag(id: '1', title: 'Tag - 1'),
-      TweetFilterTag(id: '2', title: 'Tag - 2')
+      TweetFilterEntity(id: '1', isSelected: false, label: 'Tag - 1'),
+      TweetFilterEntity(id: '2', isSelected: false, label: 'Tag - 2')
     ]);
   });
 
@@ -37,11 +37,11 @@ void main() {
       when(mockRepository.retreive()).thenAnswer((_) async => right(response));
 
       final expected = right(TweetFilterSessionEntity(categories: [
-        TweetFilterCategory(id: '1', isDefault: true, label: 'C 1'),
-        TweetFilterCategory(id: '2', isDefault: false, label: 'C 2'),
+        TweetFilterEntity(id: '1', isSelected: true, label: 'C 1'),
+        TweetFilterEntity(id: '2', isSelected: false, label: 'C 2'),
       ], tags: [
-        TweetFilterTag(id: '1', title: 'Tag - 1'),
-        TweetFilterTag(id: '2', title: 'Tag - 2')
+        TweetFilterEntity(id: '1', isSelected: false, label: 'Tag - 1'),
+        TweetFilterEntity(id: '2', isSelected: false, label: 'Tag - 2')
       ]));
       // act
       final received = await sut.retreive();
@@ -49,10 +49,27 @@ void main() {
       expect(received, expected);
     });
 
+    test('should retrieve upgated tag and categories list from server',
+        () async {
+      // arrange
+      when(mockRepository.retreive()).thenAnswer((_) async => right(response));
+
+      final expected = right(TweetFilterSessionEntity(categories: [
+        TweetFilterEntity(id: '1', isSelected: true, label: 'C 1'),
+        TweetFilterEntity(id: '2', isSelected: false, label: 'C 2'),
+      ], tags: [
+        TweetFilterEntity(id: '1', isSelected: false, label: 'Tag - 1'),
+        TweetFilterEntity(id: '2', isSelected: false, label: 'Tag - 2')
+      ]));
+      // act
+      final received = await sut.retreive();
+      // assert
+      expect(received, expected);
+    });
     test('should store categories preference', () async {
       // arrange
       final categories = [
-        TweetFilterCategory(id: '1', isDefault: true, label: 'C 1'),
+        TweetFilterEntity(id: '1', isSelected: true, label: 'C 1'),
       ];
       final codes = categories.map((e) => e.id).toList();
       when(mockConfiguration.saveCategoryPreference(codes: anyNamed('codes')))
@@ -77,8 +94,8 @@ void main() {
     test('should store tags preference', () async {
       // arrange
       final categories = [
-        TweetFilterTag(id: '1', title: 'T-1'),
-        TweetFilterTag(id: '2', title: 'T-2'),
+        TweetFilterEntity(id: '1', isSelected: false, label: 'T-1'),
+        TweetFilterEntity(id: '2', isSelected: false, label: 'T-2'),
       ];
       final codes = categories.map((e) => e.id).toList();
       when(mockConfiguration.saveTagsPreference(codes: anyNamed('codes')))

@@ -22,12 +22,12 @@ class TweetFilterPreference {
     return _repository.retreive();
   }
 
-  Future<void> saveCategory(List<TweetFilterCategory> categories) {
+  Future<void> saveCategory(List<TweetFilterEntity> categories) {
     final List<String> codes = categories.map((e) => e.id).toList();
     return _appConfiguration.saveCategoryPreference(codes: codes);
   }
 
-  Future<void> saveTags(List<TweetFilterTag> tags) {
+  Future<void> saveTags(List<TweetFilterEntity> tags) {
     final List<String> codes = tags.map((e) => e.id).toList();
     return _appConfiguration.saveTagsPreference(codes: codes);
   }

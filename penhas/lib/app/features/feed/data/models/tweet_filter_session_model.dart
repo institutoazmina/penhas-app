@@ -2,8 +2,8 @@ import 'package:meta/meta.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_filter_session_entity.dart';
 
 class TweetFilterSessionModel extends TweetFilterSessionEntity {
-  final List<TweetFilterCategory> categories;
-  final List<TweetFilterTag> tags;
+  final List<TweetFilterEntity> categories;
+  final List<TweetFilterEntity> tags;
 
   TweetFilterSessionModel({
     @required this.categories,
@@ -13,15 +13,15 @@ class TweetFilterSessionModel extends TweetFilterSessionEntity {
   factory TweetFilterSessionModel.fromJson(Map<String, Object> jsonData) {
     final List<Object> tagsObject = jsonData['tags'];
     final List<Object> categoriesObject = jsonData['categories'];
-    final List<TweetFilterCategory> categories = categoriesObject
+    final List<TweetFilterEntity> categories = categoriesObject
         .map((e) => e as Map<String, Object>)
-        .map((e) => TweetFilterCategoryModel.fromJson(e))
+        .map((e) => TweetFilterEntityModel.fromJson(e))
         .where((e) => e != null)
         .toList();
 
-    final List<TweetFilterTag> tags = tagsObject
+    final List<TweetFilterEntity> tags = tagsObject
         .map((e) => e as Map<String, Object>)
-        .map((e) => TweetFilterTagModel.fromJson(e))
+        .map((e) => TweetFilterEntityModel.fromJson(e))
         .where((e) => e != null)
         .toList();
 
@@ -32,23 +32,13 @@ class TweetFilterSessionModel extends TweetFilterSessionEntity {
   }
 }
 
-class TweetFilterCategoryModel {
-  static TweetFilterCategory fromJson(Map<String, Object> jsonData) {
+class TweetFilterEntityModel {
+  static TweetFilterEntity fromJson(Map<String, Object> jsonData) {
     if (jsonData == null) return null;
-    return TweetFilterCategory(
-      id: jsonData['value'],
-      label: jsonData['label'],
-      isDefault: (jsonData['default'] as num) == 1 ?? false,
-    );
-  }
-}
-
-class TweetFilterTagModel {
-  static TweetFilterTag fromJson(Map<String, Object> jsonData) {
-    if (jsonData == null) return null;
-    return TweetFilterTag(
-      id: "${jsonData['id']}",
-      title: jsonData['title'],
+    return TweetFilterEntity(
+      id: jsonData['value'] ?? "${jsonData['id']}",
+      label: jsonData['label'] ?? jsonData['title'],
+      isSelected: (jsonData['default'] as num) == 1 ?? false,
     );
   }
 }

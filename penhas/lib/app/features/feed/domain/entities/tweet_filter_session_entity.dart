@@ -3,8 +3,8 @@ import 'package:meta/meta.dart';
 
 @immutable
 class TweetFilterSessionEntity extends Equatable {
-  final List<TweetFilterCategory> categories;
-  final List<TweetFilterTag> tags;
+  final List<TweetFilterEntity> categories;
+  final List<TweetFilterEntity> tags;
 
   TweetFilterSessionEntity({
     @required this.categories,
@@ -13,36 +13,25 @@ class TweetFilterSessionEntity extends Equatable {
 
   @override
   List<Object> get props => [categories, tags];
-}
-
-@immutable
-class TweetFilterCategory extends Equatable {
-  final String id;
-  final String label;
-  final bool isDefault;
-
-  TweetFilterCategory({
-    @required this.id,
-    @required this.label,
-    @required this.isDefault,
-  });
-
-  @override
-  List<Object> get props => [id, label, isDefault];
 
   @override
   bool get stringify => true;
 }
 
 @immutable
-class TweetFilterTag extends Equatable {
+class TweetFilterEntity extends Equatable {
   final String id;
-  final String title;
+  final String label;
+  final bool isSelected;
 
-  TweetFilterTag({@required this.id, @required this.title});
+  TweetFilterEntity({
+    @required this.id,
+    @required this.label,
+    @required this.isSelected,
+  });
 
   @override
-  List<Object> get props => [id, title];
+  List<Object> get props => [id, label, isSelected];
 
   @override
   bool get stringify => true;
