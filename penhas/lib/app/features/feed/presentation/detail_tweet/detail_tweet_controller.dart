@@ -23,7 +23,9 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
   final FeedUseCases useCase;
   String tweetContent;
 
-  _DetailTweetControllerBase(this.useCase, this.tweet);
+  _DetailTweetControllerBase(this.useCase, this.tweet) {
+    listTweets = ObservableList.of([tweet]);
+  }
 
   @observable
   ObservableFuture<Either<Failure, FeedCache>> _progress;
@@ -81,8 +83,9 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
   }
 
   void _updateListOfTweets(FeedCache cache) {
-    final List<TweetEntity> tweets =
+    List<TweetEntity> tweets =
         cache.tweets.where((e) => e is TweetEntity).toList();
+    tweets.insert(0, tweet);
     listTweets = tweets.asObservable();
   }
 }

@@ -40,7 +40,7 @@ class _DetailTweetPageState
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _refreshIndicatorKey.currentState.show();
+      _refreshIndicatorKey.currentState.show(atTop: false);
     });
   }
 
@@ -61,7 +61,6 @@ class _DetailTweetPageState
 
   @override
   Widget build(BuildContext context) {
-    final tweet = controller.tweet;
     return Scaffold(
       key: _scaffoldKey,
       appBar: _buildAppBar(),
@@ -71,38 +70,23 @@ class _DetailTweetPageState
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 6.0, right: 6.0, top: 8.0),
-                    child: _MainTweet(
-                      tweet: tweet,
-                      controller: widget.tweetController,
-                    ),
-                  ),
-                  Expanded(
-                    child: Observer(builder: (_) {
-                      return RefreshIndicator(
-                        key: _refreshIndicatorKey,
-                        onRefresh: _onRefresh,
-                        notificationPredicate: _handleScrollNotification,
-                        child: ListView.builder(
-                          itemCount: controller.listTweets.length,
-                          controller: _scrollController,
-                          itemBuilder: (context, index) {
-                            return _buildTweetItem(
-                              controller.listTweets[index],
-                              context,
-                            );
-                          },
-                        ),
+              child: Observer(builder: (_) {
+                return RefreshIndicator(
+                  key: _refreshIndicatorKey,
+                  onRefresh: _onRefresh,
+                  notificationPredicate: _handleScrollNotification,
+                  child: ListView.builder(
+                    itemCount: controller.listTweets.length,
+                    controller: _scrollController,
+                    itemBuilder: (context, index) {
+                      return _buildTweetItem(
+                        controller.listTweets[index],
+                        context,
                       );
-                    }),
+                    },
                   ),
-                ],
-              ),
+                );
+              }),
             ),
           ),
         ),
