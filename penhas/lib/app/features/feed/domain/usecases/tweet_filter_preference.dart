@@ -2,18 +2,15 @@ import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
+import 'package:penhas/app/features/feed/data/repositories/tweet_filter_preference_repository.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_filter_session_entity.dart';
 
-abstract class ITweetRepository {
-  Future<Either<Failure, TweetFilterSessionEntity>> retreive();
-}
-
 class TweetFilterPreference {
-  final ITweetRepository _repository;
   final IAppConfiguration _appConfiguration;
+  final ITweetFilterPreferenceRepository _repository;
 
   TweetFilterPreference(
-      {@required ITweetRepository repository,
+      {@required ITweetFilterPreferenceRepository repository,
       @required IAppConfiguration appConfiguration})
       : _repository = repository,
         _appConfiguration = appConfiguration;

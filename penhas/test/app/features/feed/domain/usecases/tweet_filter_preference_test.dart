@@ -2,16 +2,18 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
+import 'package:penhas/app/features/feed/data/repositories/tweet_filter_preference_repository.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_filter_session_entity.dart';
 import 'package:penhas/app/features/feed/domain/usecases/tweet_filter_preference.dart';
 
-class MockTweetRepository extends Mock implements ITweetRepository {}
+class MockTweetRepository extends Mock
+    implements ITweetFilterPreferenceRepository {}
 
 class MockAppConfiguration extends Mock implements IAppConfiguration {}
 
 void main() {
   TweetFilterPreference sut;
-  ITweetRepository mockRepository;
+  ITweetFilterPreferenceRepository mockRepository;
   IAppConfiguration mockConfiguration;
   TweetFilterSessionEntity response;
 
