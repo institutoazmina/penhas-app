@@ -35,4 +35,11 @@ class TweetFilterEntity extends Equatable {
 
   @override
   bool get stringify => true;
+
+  TweetFilterEntity copyWith({String id, String label, bool isSelected}) {
+    return TweetFilterEntity(
+        id: id ?? this.id,
+        label: label ?? this.label,
+        isSelected: isSelected ?? this.isSelected);
+  }
 }

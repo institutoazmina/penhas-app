@@ -19,7 +19,48 @@ class TweetFilterPreference {
         _appConfiguration = appConfiguration;
 
   Future<Either<Failure, TweetFilterSessionEntity>> retreive() async {
-    return _repository.retreive();
+    final serverResponse = await _repository.retreive();
+
+    return serverResponse.fold(
+      (failure) => left(failure),
+      (session) => _rebuildResponse(session),
+    );
+  }
+
+  Future<Either<Failure, TweetFilterSessionEntity>> _rebuildResponse(
+      TweetFilterSessionEntity response) async {
+    final currentCategory =
+        await _appConfiguration.getCategoryPreference() ?? [];
+    final currentTags = await _appConfiguration.getTagsPreference() ?? [];
+
+    if (currentCategory.isEmpty && currentTags.isEmpty) {
+      return right(response);
+    }
+
+    List<TweetFilterEntity> rebuildedCategory;
+    if (currentCategory.isNotEmpty) {
+      final setCategory = Set<String>.from(currentCategory);
+      final indexCategory = response.categories.indexWhere(
+        (e) => setCategory.contains(e.id),
+      );
+      if (indexCategory >= 0) {
+        rebuildedCategory = response.categories
+            .map((e) => e.copyWith(isSelected: setCategory.contains(e.id)))
+            .toList();
+      }
+    }
+
+    List<TweetFilterEntity> rebuildedTags;
+    if (currentTags.isNotEmpty) {
+      final setTags = Set<String>.from(currentTags);
+      rebuildedTags = response.tags
+          .map((e) => e.copyWith(isSelected: setTags.contains(e.id)))
+          .toList();
+    }
+
+    return right(TweetFilterSessionEntity(
+        categories: rebuildedCategory ?? response.categories,
+        tags: rebuildedTags ?? response.tags));
   }
 
   Future<void> saveCategory(List<TweetFilterEntity> categories) {

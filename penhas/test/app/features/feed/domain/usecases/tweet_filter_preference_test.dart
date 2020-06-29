@@ -27,7 +27,8 @@ void main() {
       TweetFilterEntity(id: '2', isSelected: false, label: 'C 2'),
     ], tags: [
       TweetFilterEntity(id: '1', isSelected: false, label: 'Tag - 1'),
-      TweetFilterEntity(id: '2', isSelected: false, label: 'Tag - 2')
+      TweetFilterEntity(id: '2', isSelected: false, label: 'Tag - 2'),
+      TweetFilterEntity(id: '3', isSelected: false, label: 'Tag - 3')
     ]);
   });
 
@@ -41,7 +42,8 @@ void main() {
         TweetFilterEntity(id: '2', isSelected: false, label: 'C 2'),
       ], tags: [
         TweetFilterEntity(id: '1', isSelected: false, label: 'Tag - 1'),
-        TweetFilterEntity(id: '2', isSelected: false, label: 'Tag - 2')
+        TweetFilterEntity(id: '2', isSelected: false, label: 'Tag - 2'),
+        TweetFilterEntity(id: '3', isSelected: false, label: 'Tag - 3')
       ]));
       // act
       final received = await sut.retreive();
@@ -53,13 +55,18 @@ void main() {
         () async {
       // arrange
       when(mockRepository.retreive()).thenAnswer((_) async => right(response));
+      when(mockConfiguration.getCategoryPreference())
+          .thenAnswer((_) async => ['2']);
+      when(mockConfiguration.getTagsPreference())
+          .thenAnswer((_) async => ['2', '3']);
 
       final expected = right(TweetFilterSessionEntity(categories: [
-        TweetFilterEntity(id: '1', isSelected: true, label: 'C 1'),
-        TweetFilterEntity(id: '2', isSelected: false, label: 'C 2'),
+        TweetFilterEntity(id: '1', isSelected: false, label: 'C 1'),
+        TweetFilterEntity(id: '2', isSelected: true, label: 'C 2'),
       ], tags: [
         TweetFilterEntity(id: '1', isSelected: false, label: 'Tag - 1'),
-        TweetFilterEntity(id: '2', isSelected: false, label: 'Tag - 2')
+        TweetFilterEntity(id: '2', isSelected: true, label: 'Tag - 2'),
+        TweetFilterEntity(id: '3', isSelected: true, label: 'Tag - 3')
       ]));
       // act
       final received = await sut.retreive();
