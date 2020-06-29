@@ -62,8 +62,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    - assets/images/penhas_symbol/penhas_symbol.png
-   - assets/images/reset_password_01/reset_password_01.png
-   - assets/images/reset_password_02/reset_password_02.png
    - assets/images/stealth_mode_tutorial_image_1/stealth_mode_tutorial_image_1.png
    - assets/images/stealth_mode_tutorial_image_2/stealth_mode_tutorial_image_2.png
    - assets/images/stealth_mode_tutorial_image_3/stealth_mode_tutorial_image_3.png
@@ -83,8 +81,10 @@ flutter:
    - assets/images/svg/tweet_action/tweet_action_chat.svg
    - assets/images/svg/tweet_action/tweet_action_delete.svg
    - assets/images/svg/tweet_action/tweet_action_report.svg
-
-  #  - images/a_dot_ham.jpeg
+   - assets/images/svg/reset_password/recovery_password_step_1.svg
+   - assets/images/svg/reset_password/recovery_password_step_2.svg
+   - assets/images/svg/reset_password/recovery_password_step_3.svg
+   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
