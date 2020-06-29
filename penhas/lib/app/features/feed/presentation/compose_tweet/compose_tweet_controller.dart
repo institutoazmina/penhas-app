@@ -22,6 +22,7 @@ class ComposeTweetController extends _ComposeTweetControllerBase
 abstract class _ComposeTweetControllerBase with Store, MapFailureMessage {
   final FeedUseCases useCase;
   final MainboardStore mainboardStore;
+  final _tweetContentLimitSize = 2200;
   String tweetContent;
 
   _ComposeTweetControllerBase(this.useCase, this.mainboardStore);
@@ -65,8 +66,12 @@ abstract class _ComposeTweetControllerBase with Store, MapFailureMessage {
       return;
     }
 
+    final content = tweetContent.length > _tweetContentLimitSize
+        ? tweetContent.substring(0, _tweetContentLimitSize - 1)
+        : tweetContent;
+
     _progress = ObservableFuture(
-      useCase.create(tweetContent),
+      useCase.create(content),
     );
 
     final response = await _progress;
