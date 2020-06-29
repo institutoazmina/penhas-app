@@ -32,7 +32,7 @@ class FeedUseCases {
   Stream<FeedCache> get dataSource => _streamController.stream;
   List<TweetTiles> _tweetCacheFetch = List<TweetTiles>();
   Map<String, List<TweetEntity>> _tweetReplyMap = {};
-  String _nextPage = '';
+  String _nextPage;
 
   FeedUseCases({
     @required ITweetRepository repository,
@@ -190,7 +190,10 @@ class FeedUseCases {
   }
 
   FeedCache _updateFetchCache(TweetSessionEntity session) {
-    _nextPage = session.nextPage;
+    if (_nextPage == null || _nextPage.isEmpty) {
+      _nextPage = session.nextPage;
+    }
+
     if (session.tweets != null && session.tweets.length > 0) {
       if (session.orderBy == TweetSessionOrder.latestFirst) {
         _tweetCacheFetch.insertAll(0, session.tweets);
