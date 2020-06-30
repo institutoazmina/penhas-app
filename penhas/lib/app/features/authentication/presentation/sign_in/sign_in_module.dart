@@ -3,14 +3,16 @@ import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/authentication/data/datasources/authentication_data_source.dart';
+import 'package:penhas/app/features/authentication/data/datasources/change_password_data_source.dart';
 import 'package:penhas/app/features/authentication/data/datasources/user_register_data_source.dart';
 import 'package:penhas/app/features/authentication/data/repositories/authentication_repository.dart';
+import 'package:penhas/app/features/authentication/data/repositories/change_password_repository.dart';
 import 'package:penhas/app/features/authentication/data/repositories/user_register_repository.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
+import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
-import 'package:penhas/app/features/authentication/presentation/reset_password/reset_password_module.dart';
-import 'package:penhas/app/features/authentication/presentation/reset_password_three/reset_password_three_module.dart';
-import 'package:penhas/app/features/authentication/presentation/reset_password_two/reset_password_two_module.dart';
+import 'package:penhas/app/features/authentication/presentation/reset_password/reset_password_controller.dart';
+import 'package:penhas/app/features/authentication/presentation/reset_password/reset_password_page.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_page.dart';
@@ -24,13 +26,37 @@ import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/
 class SignInModule extends ChildModule {
   @override
   List<Bind> get binds => [
+        // reset password
+        Bind((i) => ResetPasswordController(i.get<IResetPasswordRepository>())),
+        Bind<IResetPasswordRepository>(
+          (i) => ChangePasswordRepository(
+            changePasswordDataSource: i.get<IChangePasswordDataSource>(),
+            networkInfo: i.get<INetworkInfo>(),
+          ),
+        ),
+        Bind<IChangePasswordDataSource>(
+          (i) => ChangePasswordDataSource(
+            apiClient: i.get<http.Client>(),
+            serverConfiguration: i.get<IApiServerConfigure>(),
+          ),
+        ),
+        // Sign-In
         Bind((i) => SignInController(i.get<IAuthenticationRepository>())),
+        // Sign-Up
         Bind((i) => SignUpController(i.get<IUserRegisterRepository>()),
             singleton: false),
-        Bind((i) =>
-            SignUpTwoController(i.get<IUserRegisterRepository>(), i.args.data)),
-        Bind((i) => SignUpThreeController(
-            i.get<IUserRegisterRepository>(), i.args.data)),
+        Bind(
+          (i) => SignUpTwoController(
+            i.get<IUserRegisterRepository>(),
+            i.args.data,
+          ),
+        ),
+        Bind(
+          (i) => SignUpThreeController(
+            i.get<IUserRegisterRepository>(),
+            i.args.data,
+          ),
+        ),
         Bind<IAuthenticationRepository>(
           (i) => AuthenticationRepository(
             dataSource: i.get<IAuthenticationDataSource>(),
@@ -67,9 +93,9 @@ class SignInModule extends ChildModule {
             transition: TransitionType.rightToLeft),
         Router('/signup/step2', child: (_, args) => SignUpTwoPage()),
         Router('/signup/step3', child: (_, args) => SignUpThreePage()),
-        Router('/reset_password', module: ResetPasswordModule()),
-        Router('/reset_password/step2', module: ResetPasswordTwoModule()),
-        Router('/reset_password/step3', module: ResetPasswordThreeModule()),
+        Router('/reset_password', child: (_, args) => ResetPasswordPage()),
+        // Router('/reset_password/step2', module: ResetPasswordTwoModule()),
+        // Router('/reset_password/step3', module: ResetPasswordThreeModule()),
       ];
 
   static Inject get to => Inject<SignInModule>.of();

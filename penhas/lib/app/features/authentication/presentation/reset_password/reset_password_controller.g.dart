@@ -9,13 +9,13 @@ part of 'reset_password_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ResetPasswordController on _ResetPasswordControllerBase, Store {
-  Computed<StoreState> _$currentStateComputed;
+  Computed<PageProgressState> _$currentStateComputed;
 
   @override
-  StoreState get currentState =>
-      (_$currentStateComputed ??= Computed<StoreState>(() => super.currentState,
+  PageProgressState get currentState => (_$currentStateComputed ??=
+          Computed<PageProgressState>(() => super.currentState,
               name: '_ResetPasswordControllerBase.currentState'))
-          .value;
+      .value;
 
   final _$_progressAtom = Atom(name: '_ResetPasswordControllerBase._progress');
 

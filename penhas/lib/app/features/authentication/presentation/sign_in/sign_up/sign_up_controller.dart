@@ -141,7 +141,7 @@ abstract class _SignUpControllerBase with Store, MapFailureMessage {
     errorMessage = message;
   }
 
-  _triggerMessageError(Failure failure) {
+  void _triggerMessageError(Failure failure) {
     if (failure is ServerSideFormFieldValidationFailure) {
       _setErrorMessage(_mapFailureToFields(failure));
     } else {

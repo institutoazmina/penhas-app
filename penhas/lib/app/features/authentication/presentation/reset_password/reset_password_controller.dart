@@ -5,15 +5,11 @@ import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/domain/entities/reset_password_response_entity.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
 
 part 'reset_password_controller.g.dart';
-
-const String WARNING_INVALID_EMAIL = 'Endereço de email inválido';
-const String ERROR_SERVER_FAILURE =
-    "O servidor está com problema neste momento, tente novamente.";
-const String ERROR_INTERNET_CONNECTION_FAILURE =
-    "O servidor está inacessível, o PenhaS está com acesso à Internet?";
 
 class ResetPasswordController extends _ResetPasswordControllerBase
     with _$ResetPasswordController {
@@ -21,9 +17,7 @@ class ResetPasswordController extends _ResetPasswordControllerBase
       : super(repository);
 }
 
-enum StoreState { initial, loading, loaded }
-
-abstract class _ResetPasswordControllerBase with Store {
+abstract class _ResetPasswordControllerBase with Store, MapFailureMessage {
   final IResetPasswordRepository repository;
   UserRegisterFormFieldModel _userRegisterModel = UserRegisterFormFieldModel();
 
@@ -39,24 +33,22 @@ abstract class _ResetPasswordControllerBase with Store {
   String warningEmail = '';
 
   @computed
-  StoreState get currentState {
+  PageProgressState get currentState {
     if (_progress == null || _progress.status == FutureStatus.rejected) {
-      return StoreState.initial;
+      return PageProgressState.initial;
     }
 
     return _progress.status == FutureStatus.pending
-        ? StoreState.loading
-        : StoreState.loaded;
+        ? PageProgressState.loading
+        : PageProgressState.loaded;
   }
 
   @action
   void setEmail(String address) {
     _userRegisterModel.emailAddress = EmailAddress(address);
 
-    warningEmail = _userRegisterModel.emailAddress.value.fold(
-      (failure) => address.length == 0 ? '' : WARNING_INVALID_EMAIL,
-      (_) => '',
-    );
+    warningEmail =
+        address.length == 0 ? '' : _userRegisterModel.validateEmailAddress;
   }
 
   @action
@@ -65,30 +57,23 @@ abstract class _ResetPasswordControllerBase with Store {
     if (!_isValidToProceed()) {
       return;
     }
+
     _progress = ObservableFuture(
       repository.request(emailAddress: _userRegisterModel.emailAddress),
     );
 
     final response = await _progress;
     response.fold(
-      (failure) => _mapFailureToMessage(failure),
+      (failure) => _triggerMessageError(failure),
       (session) => _forwardToStep2(session),
     );
   }
 
-  _mapFailureToMessage(Failure failure) {
-    switch (failure.runtimeType) {
-      case InternetConnectionFailure:
-        _setErrorMessage(ERROR_INTERNET_CONNECTION_FAILURE);
-        break;
-      case ServerFailure:
-        _setErrorMessage(ERROR_SERVER_FAILURE);
-        break;
-      case ServerSideFormFieldValidationFailure:
-        _mapFailureToFields(failure);
-        break;
-      default:
-        throw UnsupportedError;
+  void _triggerMessageError(Failure failure) {
+    if (failure is ServerSideFormFieldValidationFailure) {
+      _setErrorMessage(_mapFailureToFields(failure));
+    } else {
+      _setErrorMessage(mapFailureMessage(failure));
     }
   }
 
@@ -103,10 +88,9 @@ abstract class _ResetPasswordControllerBase with Store {
   bool _isValidToProceed() {
     bool isValid = true;
 
-    if (_userRegisterModel.emailAddress == null ||
-        !_userRegisterModel.emailAddress.isValid) {
+    if (_userRegisterModel.validateEmailAddress.isNotEmpty) {
       isValid = false;
-      warningEmail = WARNING_INVALID_EMAIL;
+      warningEmail = _userRegisterModel.validateEmailAddress;
     }
 
     return isValid;

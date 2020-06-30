@@ -162,7 +162,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
     );
   }
 
-  _handleTap(BuildContext context) {
+  void _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0)
       SystemChannels.textInput.invokeMethod('TextInput.hide');
     WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();

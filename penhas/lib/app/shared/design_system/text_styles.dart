@@ -10,8 +10,16 @@ const kTextStyleDefaultTextFieldLabelStyle = TextStyle(
 const kTextStyleRegisterHeaderLabelStyle = TextStyle(
     color: DesignSystemColors.pinky,
     fontFamily: 'Lato',
-    fontSize: 28.0,
+    fontSize: 20.0,
+    letterSpacing: 0.63,
     fontWeight: FontWeight.bold);
+
+const kTextStyleRegisterSubtitleLabelStyle = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 14.0,
+    letterSpacing: 0.4,
+    color: Colors.white,
+    fontWeight: FontWeight.normal);
 
 const kTextStyleRegisterSubHeaderLabelStyle = TextStyle(
     color: Colors.white70,
