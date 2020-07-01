@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
+import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
 import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
@@ -9,17 +10,31 @@ import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
 
 class MockTweetRepository extends Mock implements ITweetRepository {}
 
+class MockAppConfiguration extends Mock implements IAppConfiguration {
+  @override
+  Future<List<String>> getCategoryPreference() {
+    return Future.value(['all']);
+  }
+
+  @override
+  Future<List<String>> getTagsPreference() {
+    return Future.value([]);
+  }
+}
+
 void main() {
   ITweetRepository repository;
+  IAppConfiguration appConfiguration;
 
   setUp(() {
     repository = MockTweetRepository();
+    appConfiguration = MockAppConfiguration();
   });
 
   group('FeedUseCases', () {
     test('should not hit datasource on instantiate', () async {
       // act
-      FeedUseCases(repository: repository);
+      FeedUseCases(repository: repository, appConfiguration: appConfiguration);
       // assert
       verifyNoMoreInteractions(repository);
     });
@@ -96,6 +111,7 @@ void main() {
 
         final sut = FeedUseCases(
           repository: repository,
+          appConfiguration: appConfiguration,
           maxRows: maxRowsPerRequet,
         );
 
@@ -149,6 +165,7 @@ void main() {
 
         final sut = FeedUseCases(
           repository: repository,
+          appConfiguration: appConfiguration,
           maxRows: maxRowsPerRequet,
         );
 

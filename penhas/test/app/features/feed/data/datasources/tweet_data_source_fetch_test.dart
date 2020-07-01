@@ -90,7 +90,8 @@ void main() {
         final queryParameters = {
           'only_myself': '0',
           'skip_myself': '0',
-          'rows': '100'
+          'rows': '100',
+          'category': 'all',
         };
         final headers = await _setUpHttpHeader();
         final request = _setuHttpRequest(endPointPath, queryParameters);

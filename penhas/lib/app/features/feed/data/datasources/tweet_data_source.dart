@@ -47,6 +47,8 @@ class TweetDataSource implements ITweetDataSource {
       'skip_myself': option.skipMyself ? '1' : '0',
       'rows': "${option.rows}",
       'reply_to': option.replyTo,
+      'category': option.category,
+      'tags': (option.tags == null || option.tags.isEmpty) ? null : option.tags,
     };
     final httpRequest = await _setupHttpRequest(
       path: '/timeline',

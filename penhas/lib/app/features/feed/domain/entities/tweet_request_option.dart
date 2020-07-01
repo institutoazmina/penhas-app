@@ -9,6 +9,8 @@ class TweetRequestOption extends Equatable {
   final String nextPageToken;
   final bool onlyMyself;
   final bool skipMyself;
+  final String category;
+  final String tags;
 
   TweetRequestOption({
     this.after,
@@ -19,6 +21,8 @@ class TweetRequestOption extends Equatable {
     this.rows = 100,
     this.replyTo,
     this.nextPageToken,
+    this.category = 'all',
+    this.tags,
   })  : assert(rows != null),
         assert(onlyMyself != null),
         assert(skipMyself != null);
@@ -32,6 +36,7 @@ class TweetRequestOption extends Equatable {
         skipMyself,
         rows,
         replyTo,
+        category,
       ];
 
   @override
