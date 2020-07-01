@@ -1,11 +1,6 @@
-import 'package:flutter_modular/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:penhas/app/features/authentication/presentation/reset_password/reset_password_controller.dart';
-import 'package:penhas/app/features/authentication/presentation/reset_password/reset_password_module.dart';
-
 void main() {
-  initModule(ResetPasswordModule());
   // ResetPasswordController resetpassword;
   //
   setUp(() {

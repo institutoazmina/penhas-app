@@ -33,15 +33,15 @@ class _SignUpThreePageState
   void didChangeDependencies() {
     super.didChangeDependencies();
     _disposers ??= [
-      _showErrorMessage(),
       _showProgress(),
+      _showErrorMessage(),
     ];
   }
 
   @override
   void dispose() {
-    super.dispose();
     _disposers.forEach((d) => d());
+    super.dispose();
   }
 
   @override

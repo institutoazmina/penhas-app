@@ -149,8 +149,8 @@ abstract class _SignUpControllerBase with Store, MapFailureMessage {
     }
   }
 
-  _mapFailureToFields(ServerSideFormFieldValidationFailure failure) {
-    _setErrorMessage(failure.message);
+  String _mapFailureToFields(ServerSideFormFieldValidationFailure failure) {
+    String message = '';
     if (failure.field == 'nome_completo') {
       _mapToFullNameField(failure);
     } else if (failure.field == 'dt_nasc') {
@@ -159,7 +159,11 @@ abstract class _SignUpControllerBase with Store, MapFailureMessage {
       _mapToCpfField(failure);
     } else if (failure.field == 'cep') {
       _mapToCepField(failure);
+    } else {
+      message = failure.message;
     }
+
+    return message;
   }
 
   void _mapToFullNameField(ServerSideFormFieldValidationFailure failure) {

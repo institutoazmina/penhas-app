@@ -1,10 +1,6 @@
-import 'package:flutter_modular/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:penhas/app/features/authentication/presentation/reset_password_three/reset_password_three_module.dart';
-
 void main() {
-  initModule(ResetPasswordThreeModule());
   // ResetPasswordThreeController resetpasswordthree;
   //
   setUp(() {

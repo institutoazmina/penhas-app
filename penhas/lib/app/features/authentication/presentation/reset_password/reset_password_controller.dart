@@ -64,21 +64,9 @@ abstract class _ResetPasswordControllerBase with Store, MapFailureMessage {
 
     final response = await _progress;
     response.fold(
-      (failure) => _triggerMessageError(failure),
+      (failure) => _setErrorMessage(mapFailureMessage(failure)),
       (session) => _forwardToStep2(session),
     );
-  }
-
-  void _triggerMessageError(Failure failure) {
-    if (failure is ServerSideFormFieldValidationFailure) {
-      _setErrorMessage(_mapFailureToFields(failure));
-    } else {
-      _setErrorMessage(mapFailureMessage(failure));
-    }
-  }
-
-  _mapFailureToFields(ServerSideFormFieldValidationFailure failure) {
-    _setErrorMessage(failure.message);
   }
 
   void _setErrorMessage(String s) {

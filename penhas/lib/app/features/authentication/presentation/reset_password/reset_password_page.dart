@@ -103,11 +103,7 @@ class _ResetPasswordPageState
                         return _buildEmail();
                       }),
                       SizedBox(height: 30),
-                      Observer(
-                        builder: (_) {
-                          return _buildNextButton();
-                        },
-                      ),
+                      SizedBox(height: 40.0, child: _buildNextButton()),
                     ],
                   ),
                 ),
@@ -122,6 +118,7 @@ class _ResetPasswordPageState
   SingleTextInput _buildEmail() {
     return SingleTextInput(
       labelText: 'E-mail',
+      keyboardType: TextInputType.emailAddress,
       errorText: controller.warningEmail,
       onChanged: controller.setEmail,
     );

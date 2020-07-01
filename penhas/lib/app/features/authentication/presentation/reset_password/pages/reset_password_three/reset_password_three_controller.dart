@@ -1,125 +1,96 @@
-// import 'package:dartz/dartz.dart';
-// import 'package:flutter_modular/flutter_modular.dart';
-// import 'package:mobx/mobx.dart';
-// import 'package:penhas/app/core/entities/valid_fiel.dart';
-// import 'package:penhas/app/core/error/failures.dart';
-// import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
-// import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
-// import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
+import 'package:dartz/dartz.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mobx/mobx.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
+import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
 
-// part 'reset_password_three_controller.g.dart';
+part 'reset_password_three_controller.g.dart';
 
-// const String ERROR_SERVER_FAILURE =
-//     "O servidor está com problema neste momento, tente novamente.";
-// const String ERROR_INTERNET_CONNECTION_FAILURE =
-//     "O servidor está inacessível, o PenhaS está com acesso à Internet?";
-// const String WARNING_INVALID_PASSWORD = 'Senha inválid';
+class ResetPasswordThreeController extends _ResetPasswordThreeControllerBase
+    with _$ResetPasswordThreeController {
+  ResetPasswordThreeController(
+    IChangePasswordRepository repository,
+    UserRegisterFormFieldModel userRegisterModel,
+  ) : super(repository, userRegisterModel);
+}
 
-// class ResetPasswordThreeController extends _ResetPasswordThreeControllerBase
-//     with _$ResetPasswordThreeController {
-//   ResetPasswordThreeController(
-//     IChangePasswordRepository repository,
-//     UserRegisterFormFieldModel userRegisterModel,
-//   ) : super(repository, userRegisterModel);
-// }
+abstract class _ResetPasswordThreeControllerBase with Store, MapFailureMessage {
+  final IChangePasswordRepository _repository;
+  final UserRegisterFormFieldModel _userRegisterModel;
 
-// enum StoreState { initial, loading, loaded }
+  _ResetPasswordThreeControllerBase(this._repository, this._userRegisterModel);
 
-// abstract class _ResetPasswordThreeControllerBase with Store {
-//   final IChangePasswordRepository _repository;
-//   final UserRegisterFormFieldModel _userRegisterModel;
+  @observable
+  ObservableFuture<Either<Failure, ValidField>> _progress;
 
-//   _ResetPasswordThreeControllerBase(this._repository, this._userRegisterModel);
+  @observable
+  String errorMessage = '';
 
-//   @observable
-//   ObservableFuture<Either<Failure, ValidField>> _progress;
+  @observable
+  String warningPassword = '';
 
-//   @observable
-//   String errorMessage = '';
+  @computed
+  PageProgressState get currentState {
+    if (_progress == null || _progress.status == FutureStatus.rejected) {
+      return PageProgressState.initial;
+    }
 
-//   @observable
-//   String warningPassword = '';
+    return _progress.status == FutureStatus.pending
+        ? PageProgressState.loading
+        : PageProgressState.loaded;
+  }
 
-//   @computed
-//   StoreState get currentState {
-//     if (_progress == null || _progress.status == FutureStatus.rejected) {
-//       return StoreState.initial;
-//     }
+  @action
+  void setPassword(String password) {
+    _userRegisterModel.password = Password(password);
 
-//     return _progress.status == FutureStatus.pending
-//         ? StoreState.loading
-//         : StoreState.loaded;
-//   }
+    warningPassword =
+        password.length == 0 ? '' : _userRegisterModel.validatePassword;
+  }
 
-//   @action
-//   void setPassword(String password) {
-//     _userRegisterModel.password = Password(password);
+  @action
+  Future<void> nextStepPressed() async {
+    _setErrorMessage('');
+    if (!_isValidToProceed()) {
+      return;
+    }
 
-//     warningPassword = _userRegisterModel.password.value.fold(
-//       (failure) => password.length == 0 ? '' : WARNING_INVALID_PASSWORD,
-//       (_) => '',
-//     );
-//   }
+    _progress = ObservableFuture(
+      _repository.reset(
+        emailAddress: _userRegisterModel.emailAddress,
+        password: _userRegisterModel.password,
+        resetToken: _userRegisterModel.token,
+      ),
+    );
 
-//   @action
-//   Future<void> nextStepPressed() async {
-//     _setErrorMessage('');
-//     if (!_isValidToProceed()) {
-//       return;
-//     }
+    final response = await _progress;
+    response.fold(
+      (failure) => _setErrorMessage(mapFailureMessage(failure)),
+      (session) => _forwardLogin(),
+    );
+  }
 
-//     _progress = ObservableFuture(
-//       _repository.reset(
-//         emailAddress: _userRegisterModel.emailAddress,
-//         password: _userRegisterModel.password,
-//         resetToken: _userRegisterModel.token,
-//       ),
-//     );
+  void _setErrorMessage(String message) {
+    errorMessage = message;
+  }
 
-//     final response = await _progress;
-//     response.fold(
-//       (failure) => _mapFailureToMessage(failure),
-//       (session) => _forwardLogin(),
-//     );
-//   }
+  bool _isValidToProceed() {
+    bool isValid = true;
 
-//   void _setErrorMessage(String s) {
-//     errorMessage = s;
-//   }
+    if (_userRegisterModel.validatePassword.isNotEmpty) {
+      isValid = false;
+      warningPassword = _userRegisterModel.validatePassword;
+    }
 
-//   bool _isValidToProceed() {
-//     bool isValid = true;
+    return isValid;
+  }
 
-//     if (_userRegisterModel.password == null ||
-//         !_userRegisterModel.password.isValid) {
-//       isValid = false;
-//       warningPassword = WARNING_INVALID_PASSWORD;
-//     }
-
-//     return isValid;
-//   }
-
-//   _mapFailureToMessage(Failure failure) {
-//     switch (failure.runtimeType) {
-//       case InternetConnectionFailure:
-//         _setErrorMessage(ERROR_INTERNET_CONNECTION_FAILURE);
-//         break;
-//       case ServerFailure:
-//         _setErrorMessage(ERROR_SERVER_FAILURE);
-//         break;
-//       case ServerSideFormFieldValidationFailure:
-//         _mapFailureToFields(failure);
-//         break;
-//       default:
-//         throw UnsupportedError;
-//     }
-//   }
-
-//   _mapFailureToFields(ServerSideFormFieldValidationFailure failure) {
-//     _setErrorMessage(failure.message);
-//   }
-
-//   void _forwardLogin() {
-//     Modular.to.pushReplacementNamed('/authentication');
-//   }
-// }
+  void _forwardLogin() {
+    Modular.to.pushReplacementNamed('/authentication');
+  }
+}

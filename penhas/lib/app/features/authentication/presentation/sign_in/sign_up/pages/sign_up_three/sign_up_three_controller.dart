@@ -12,11 +12,6 @@ import 'package:penhas/app/features/authentication/presentation/shared/user_regi
 
 part 'sign_up_three_controller.g.dart';
 
-const String ERROR_SERVER_FAILURE =
-    "O servidor está com problema neste momento, tente novamente.";
-const String ERROR_INTERNET_CONNECTION_FAILURE =
-    "O servidor está inacessível, o PenhaS está com acesso à Internet?";
-
 class SignUpThreeController extends _SignUpThreeControllerBase
     with _$SignUpThreeController {
   SignUpThreeController(IUserRegisterRepository repository,
