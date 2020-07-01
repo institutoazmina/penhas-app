@@ -19,6 +19,7 @@ class CategoryTweetController extends _CategoryTweetControllerBase
 
 abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
   final TweetFilterPreference useCase;
+  String _currentCategory;
 
   _CategoryTweetControllerBase(this.useCase);
 
@@ -35,6 +36,9 @@ abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
   @observable
   String errorMessage = '';
 
+  @observable
+  String selectedRadio = '';
+
   @computed
   PageProgressState get currentState {
     if (_progress == null || _progress.status == FutureStatus.rejected) {
@@ -46,8 +50,10 @@ abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
         : PageProgressState.loaded;
   }
 
-  @observable
-  String selectedRadio = '';
+  @computed
+  bool get reloadFeed {
+    return _currentCategory != selectedRadio;
+  }
 
   @action
   Future<void> getCategories() async {
@@ -73,6 +79,7 @@ abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
     final seleted = filters.categories.firstWhere((e) => e.isSelected);
     if (seleted != null) {
       this.selectedRadio = seleted.id;
+      this._currentCategory = seleted.id;
     }
 
     this.categories = filters.categories.asObservable();

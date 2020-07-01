@@ -16,6 +16,13 @@ mixin _$CategoryTweetController on _CategoryTweetControllerBase, Store {
           Computed<PageProgressState>(() => super.currentState,
               name: '_CategoryTweetControllerBase.currentState'))
       .value;
+  Computed<bool> _$reloadFeedComputed;
+
+  @override
+  bool get reloadFeed =>
+      (_$reloadFeedComputed ??= Computed<bool>(() => super.reloadFeed,
+              name: '_CategoryTweetControllerBase.reloadFeed'))
+          .value;
 
   final _$_progressAtom = Atom(name: '_CategoryTweetControllerBase._progress');
 
@@ -120,7 +127,8 @@ categories: ${categories},
 editingController: ${editingController},
 errorMessage: ${errorMessage},
 selectedRadio: ${selectedRadio},
-currentState: ${currentState}
+currentState: ${currentState},
+reloadFeed: ${reloadFeed}
     ''';
   }
 }

@@ -52,33 +52,41 @@ class _CategoryTweetPageState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: _buildAppBar(),
-      body: PageProgressIndicator(
-        progressState: _currentState,
-        child: SizedBox.expand(
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 4, bottom: 20),
-                  child: Text(
-                    'Selecione uma das categoria:',
-                    style: kTextStyleFeedTweetBody,
+    return WillPopScope(
+      onWillPop: () => _requestPop(),
+      child: Scaffold(
+        key: _scaffoldKey,
+        appBar: _buildAppBar(),
+        body: PageProgressIndicator(
+          progressState: _currentState,
+          child: SizedBox.expand(
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(top: 4, bottom: 20),
+                    child: Text(
+                      'Selecione uma das categoria:',
+                      style: kTextStyleFeedTweetBody,
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: _builderListView(),
-                ),
-              ],
+                  Expanded(
+                    child: _builderListView(),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
+  }
+
+  Future<bool> _requestPop() {
+    Modular.to.pop(controller.reloadFeed);
+    return Future.value(true);
   }
 
   Observer _builderListView() {
