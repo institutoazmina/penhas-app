@@ -78,6 +78,13 @@ mixin _$FeedController on _FeedControllerBase, Store {
     return _$fetchOldestPageAsyncAction.run(() => super.fetchOldestPage());
   }
 
+  final _$reloadFeedAsyncAction = AsyncAction('_FeedControllerBase.reloadFeed');
+
+  @override
+  Future<void> reloadFeed() {
+    return _$reloadFeedAsyncAction.run(() => super.reloadFeed());
+  }
+
   @override
   String toString() {
     return '''

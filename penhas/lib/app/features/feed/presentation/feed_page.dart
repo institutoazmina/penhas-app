@@ -146,7 +146,13 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
           width: 140.0,
           child: RaisedButton(
             elevation: 0.0,
-            onPressed: () => Modular.to.pushNamed('/mainboard/category'),
+            onPressed: () async {
+              Modular.to.pushNamed('/mainboard/category').then((reloadFeed) {
+                if (reloadFeed) {
+                  controller.reloadFeed();
+                }
+              });
+            },
             color: DesignSystemColors.white,
             shape: kButtonShapeOutlinePurple,
             child: Row(

@@ -72,6 +72,21 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
     );
   }
 
+  @action
+  Future<void> reloadFeed() async {
+    if (currentState == PageProgressState.loading) {
+      return;
+    }
+
+    _progress = ObservableFuture(useCase.reloadTweetFeed());
+
+    final response = await _progress;
+    response.fold(
+      (failure) => _setErrorMessage(mapFailureMessage(failure)),
+      (_) {}, // é atualizado via stream no _registerDataSource
+    );
+  }
+
   void _setErrorMessage(String msg) {
     errorMessage = msg;
   }

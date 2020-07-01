@@ -37,6 +37,7 @@ class MainboardModule extends ChildModule {
         Bind(
           (i) => FeedUseCases(
             repository: i.get<ITweetRepository>(),
+            appConfiguration: i.get<IAppConfiguration>(),
             maxRows: 10,
           ),
           singleton: true,
