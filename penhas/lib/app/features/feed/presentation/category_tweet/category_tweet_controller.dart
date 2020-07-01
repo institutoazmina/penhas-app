@@ -5,39 +5,29 @@ import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
+import 'package:penhas/app/features/feed/domain/entities/tweet_filter_session_entity.dart';
+import 'package:penhas/app/features/feed/domain/usecases/tweet_filter_preference.dart';
 
 part 'category_tweet_controller.g.dart';
 
 class CategoryTweetController extends _CategoryTweetControllerBase
     with _$CategoryTweetController {
   CategoryTweetController({
-    @required FeedUseCases useCase,
-    @required TweetEntity tweet,
-  }) : super(useCase, tweet);
+    @required TweetFilterPreference useCase,
+  }) : super(useCase);
 }
 
 abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
-  final TweetEntity tweet;
-  final FeedUseCases useCase;
-  String tweetContent;
+  final TweetFilterPreference useCase;
 
-  _CategoryTweetControllerBase(this.useCase, this.tweet) {
-    listTweets = ObservableList.of([tweet]);
-  }
+  _CategoryTweetControllerBase(this.useCase);
 
   @observable
-  ObservableFuture<Either<Failure, FeedCache>> _progress;
+  ObservableFuture<Either<Failure, TweetFilterSessionEntity>> _progress;
 
   @observable
-  ObservableList<TweetEntity> listTweets = ObservableList<TweetEntity>();
-
-  @observable
-  bool isAnonymousMode = false;
-
-  @observable
-  bool isEnableCreateButton = false;
+  ObservableList<TweetFilterEntity> categories =
+      ObservableList<TweetFilterEntity>();
 
   @observable
   TextEditingController editingController = TextEditingController();
@@ -56,36 +46,35 @@ abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
         : PageProgressState.loaded;
   }
 
+  @observable
+  String selectedRadio = '';
+
   @action
-  Future<void> getDetail() async {
-    _progress = ObservableFuture(useCase.fetchTweetDetail(tweet));
+  Future<void> getCategories() async {
+    _progress = ObservableFuture(useCase.retreive());
 
     final response = await _progress;
     response.fold(
       (failure) => _setErrorMessage(mapFailureMessage(failure)),
-      (cache) => _updateListOfTweets(cache),
+      (filters) => _updateCategory(filters),
     );
   }
 
   @action
-  Future<void> fetchNextPage() async {
-    _progress = ObservableFuture(useCase.fetchNewestTweetDetail(tweet));
-
-    final response = await _progress;
-    response.fold(
-      (failure) => _setErrorMessage(mapFailureMessage(failure)),
-      (cache) => _updateListOfTweets(cache),
-    );
+  Future<void> setCategory(String id) async {
+    return useCase.saveCategory([id]).then((_) => selectedRadio = id);
   }
 
   void _setErrorMessage(String message) {
     errorMessage = message;
   }
 
-  void _updateListOfTweets(FeedCache cache) {
-    List<TweetEntity> tweets =
-        cache.tweets.where((e) => e is TweetEntity).toList();
-    tweets.insert(0, tweet);
-    listTweets = tweets.asObservable();
+  void _updateCategory(TweetFilterSessionEntity filters) {
+    final seleted = filters.categories.firstWhere((e) => e.isSelected);
+    if (seleted != null) {
+      this.selectedRadio = seleted.id;
+    }
+
+    this.categories = filters.categories.asObservable();
   }
 }

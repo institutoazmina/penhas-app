@@ -68,11 +68,15 @@ class AppConfiguration implements IAppConfiguration {
   Future<List<String>> getCategoryPreference() async {
     return _storage
         .get(_preferenceCategoryKey)
+        .then((value) => value == null ? '' : value)
         .then((value) => value.split(','));
   }
 
   @override
   Future<List<String>> getTagsPreference() {
-    return _storage.get(_preferenceTagsKey).then((value) => value.split(','));
+    return _storage
+        .get(_preferenceTagsKey)
+        .then((value) => value == null ? '' : value)
+        .then((value) => value.split(','));
   }
 }

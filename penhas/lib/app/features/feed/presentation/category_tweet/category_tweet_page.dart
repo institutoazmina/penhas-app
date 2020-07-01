@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_avatar.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_body.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_bottom.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_title.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
+import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 import 'category_tweet_controller.dart';
 
@@ -29,16 +24,14 @@ class _CategoryTweetPageState
     extends ModularState<CategoryTweetPage, CategoryTweetController>
     with SnackBarHandler {
   List<ReactionDisposer> _disposers;
-  final _scrollController = ScrollController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
+  PageProgressState _currentState = PageProgressState.initial;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _refreshIndicatorKey.currentState.show(atTop: false);
+      controller.getCategories();
     });
   }
 
@@ -46,15 +39,15 @@ class _CategoryTweetPageState
   void didChangeDependencies() {
     super.didChangeDependencies();
     _disposers ??= [
+      _showProgress(),
       _showErrorMessage(),
     ];
   }
 
   @override
   void dispose() {
-    super.dispose();
     _disposers.forEach((d) => d());
-    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -62,29 +55,25 @@ class _CategoryTweetPageState
     return Scaffold(
       key: _scaffoldKey,
       appBar: _buildAppBar(),
-      body: SizedBox.expand(
-        child: Container(
-          color: Color.fromRGBO(248, 248, 248, 1.0),
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
-              child: Observer(builder: (_) {
-                return RefreshIndicator(
-                  key: _refreshIndicatorKey,
-                  onRefresh: _onRefresh,
-                  notificationPredicate: _handleScrollNotification,
-                  child: ListView.builder(
-                    itemCount: controller.listTweets.length,
-                    controller: _scrollController,
-                    itemBuilder: (context, index) {
-                      return _buildTweetItem(
-                        controller.listTweets[index],
-                        context,
-                      );
-                    },
+      body: PageProgressIndicator(
+        progressState: _currentState,
+        child: SizedBox.expand(
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(top: 4, bottom: 20),
+                  child: Text(
+                    'Selecione uma das categoria:',
+                    style: kTextStyleFeedTweetBody,
                   ),
-                );
-              }),
+                ),
+                Expanded(
+                  child: _builderListView(),
+                ),
+              ],
             ),
           ),
         ),
@@ -92,34 +81,36 @@ class _CategoryTweetPageState
     );
   }
 
+  Observer _builderListView() {
+    return Observer(
+      builder: (_) {
+        return ListView.builder(
+            itemCount: controller.categories.length,
+            itemBuilder: (context, index) {
+              final item = controller.categories[index];
+              return Observer(builder: (_) {
+                return RadioListTile(
+                  activeColor: DesignSystemColors.ligthPurple,
+                  value: item.id,
+                  title: Text(
+                    item.label,
+                    style: kTextStyleFeedTweetBody,
+                  ),
+                  groupValue: controller.selectedRadio,
+                  selected: item.isSelected,
+                  onChanged: (value) => controller.setCategory(value),
+                );
+              });
+            });
+      },
+    );
+  }
+
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
-      title: Text('Detalhe'),
+      title: Text('Categoria'),
       backgroundColor: DesignSystemColors.ligthPurple,
     );
-  }
-
-  Future<void> _onRefresh() async {
-    final bool isEndOfListView = _scrollController.position.extentAfter == 0;
-    if (isEndOfListView) {
-      return controller.fetchNextPage();
-    }
-  }
-
-  Widget _buildTweeotItem(TweetEntity tweet, BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 6.0, right: 6.0),
-      child: Text('Ola mundo!'),
-    );
-  }
-
-  bool _handleScrollNotification(ScrollNotification notification) {
-    final bool isEndOfListView = _scrollController.position.extentAfter == 0;
-    if (isEndOfListView) {
-      _refreshIndicatorKey.currentState.show(atTop: false);
-    }
-
-    return isEndOfListView;
   }
 
   ReactionDisposer _showErrorMessage() {
@@ -127,118 +118,12 @@ class _CategoryTweetPageState
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }
-}
 
-class _MainTweet extends StatelessWidget {
-  final TweetEntity tweet;
-  final ITweetController controller;
-  const _MainTweet({
-    Key key,
-    this.tweet,
-    this.controller,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 6.0, top: 8.0, right: 6.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: TweetAvatar(
-                    avatar: SvgPicture.network(
-                      tweet.avatar,
-                      color: DesignSystemColors.darkIndigo,
-                      height: 36,
-                    ),
-                  ),
-                  flex: 1,
-                ),
-                SizedBox(width: 6.0),
-                Expanded(
-                  flex: 5,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      TweetTitle(
-                          tweet: tweet,
-                          context: context,
-                          isDetail: true,
-                          controller: controller),
-                      TweetBody(content: tweet.content),
-                      TweetBottom(tweet: tweet, controller: controller)
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            alignment: Alignment.centerLeft,
-            margin: EdgeInsets.only(top: 8, bottom: 8),
-            height: 28,
-            child: Container(),
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(color: Colors.grey[350]),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ReplyTweet extends StatelessWidget {
-  final TweetEntity tweet;
-  final ITweetController controller;
-  const _ReplyTweet({
-    Key key,
-    this.tweet,
-    this.controller,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 12.0, top: 8.0, right: 6.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                TweetTitle(
-                    tweet: tweet,
-                    context: context,
-                    isDetail: true,
-                    controller: controller),
-                TweetBody(content: tweet.content),
-                TweetBottom(tweet: tweet, controller: controller)
-              ],
-            ),
-          ),
-          Container(
-            alignment: Alignment.centerLeft,
-            margin: EdgeInsets.only(top: 8, bottom: 8),
-            child: Container(),
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(color: Colors.grey[350]),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+  ReactionDisposer _showProgress() {
+    return reaction((_) => controller.currentState, (PageProgressState status) {
+      setState(() {
+        _currentState = status;
+      });
+    });
   }
 }

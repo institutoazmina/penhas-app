@@ -84,7 +84,7 @@ void main() {
       when(mockConfiguration.saveCategoryPreference(codes: anyNamed('codes')))
           .thenAnswer((_) async => codes);
       // act
-      await sut.saveCategory(categories);
+      await sut.saveCategory(categories.map((e) => e.id).toList());
       // assert
       verify(mockConfiguration.saveCategoryPreference(codes: codes));
     });

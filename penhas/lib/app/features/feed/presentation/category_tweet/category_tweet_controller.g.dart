@@ -20,64 +20,32 @@ mixin _$CategoryTweetController on _CategoryTweetControllerBase, Store {
   final _$_progressAtom = Atom(name: '_CategoryTweetControllerBase._progress');
 
   @override
-  ObservableFuture<Either<Failure, FeedCache>> get _progress {
+  ObservableFuture<Either<Failure, TweetFilterSessionEntity>> get _progress {
     _$_progressAtom.reportRead();
     return super._progress;
   }
 
   @override
-  set _progress(ObservableFuture<Either<Failure, FeedCache>> value) {
+  set _progress(
+      ObservableFuture<Either<Failure, TweetFilterSessionEntity>> value) {
     _$_progressAtom.reportWrite(value, super._progress, () {
       super._progress = value;
     });
   }
 
-  final _$listTweetsAtom =
-      Atom(name: '_CategoryTweetControllerBase.listTweets');
+  final _$categoriesAtom =
+      Atom(name: '_CategoryTweetControllerBase.categories');
 
   @override
-  ObservableList<TweetEntity> get listTweets {
-    _$listTweetsAtom.reportRead();
-    return super.listTweets;
+  ObservableList<TweetFilterEntity> get categories {
+    _$categoriesAtom.reportRead();
+    return super.categories;
   }
 
   @override
-  set listTweets(ObservableList<TweetEntity> value) {
-    _$listTweetsAtom.reportWrite(value, super.listTweets, () {
-      super.listTweets = value;
-    });
-  }
-
-  final _$isAnonymousModeAtom =
-      Atom(name: '_CategoryTweetControllerBase.isAnonymousMode');
-
-  @override
-  bool get isAnonymousMode {
-    _$isAnonymousModeAtom.reportRead();
-    return super.isAnonymousMode;
-  }
-
-  @override
-  set isAnonymousMode(bool value) {
-    _$isAnonymousModeAtom.reportWrite(value, super.isAnonymousMode, () {
-      super.isAnonymousMode = value;
-    });
-  }
-
-  final _$isEnableCreateButtonAtom =
-      Atom(name: '_CategoryTweetControllerBase.isEnableCreateButton');
-
-  @override
-  bool get isEnableCreateButton {
-    _$isEnableCreateButtonAtom.reportRead();
-    return super.isEnableCreateButton;
-  }
-
-  @override
-  set isEnableCreateButton(bool value) {
-    _$isEnableCreateButtonAtom.reportWrite(value, super.isEnableCreateButton,
-        () {
-      super.isEnableCreateButton = value;
+  set categories(ObservableList<TweetFilterEntity> value) {
+    _$categoriesAtom.reportWrite(value, super.categories, () {
+      super.categories = value;
     });
   }
 
@@ -113,30 +81,45 @@ mixin _$CategoryTweetController on _CategoryTweetControllerBase, Store {
     });
   }
 
-  final _$getDetailAsyncAction =
-      AsyncAction('_CategoryTweetControllerBase.getDetail');
+  final _$selectedRadioAtom =
+      Atom(name: '_CategoryTweetControllerBase.selectedRadio');
 
   @override
-  Future<void> getDetail() {
-    return _$getDetailAsyncAction.run(() => super.getDetail());
+  String get selectedRadio {
+    _$selectedRadioAtom.reportRead();
+    return super.selectedRadio;
   }
 
-  final _$fetchNextPageAsyncAction =
-      AsyncAction('_CategoryTweetControllerBase.fetchNextPage');
+  @override
+  set selectedRadio(String value) {
+    _$selectedRadioAtom.reportWrite(value, super.selectedRadio, () {
+      super.selectedRadio = value;
+    });
+  }
+
+  final _$getCategoriesAsyncAction =
+      AsyncAction('_CategoryTweetControllerBase.getCategories');
 
   @override
-  Future<void> fetchNextPage() {
-    return _$fetchNextPageAsyncAction.run(() => super.fetchNextPage());
+  Future<void> getCategories() {
+    return _$getCategoriesAsyncAction.run(() => super.getCategories());
+  }
+
+  final _$setCategoryAsyncAction =
+      AsyncAction('_CategoryTweetControllerBase.setCategory');
+
+  @override
+  Future<void> setCategory(String id) {
+    return _$setCategoryAsyncAction.run(() => super.setCategory(id));
   }
 
   @override
   String toString() {
     return '''
-listTweets: ${listTweets},
-isAnonymousMode: ${isAnonymousMode},
-isEnableCreateButton: ${isEnableCreateButton},
+categories: ${categories},
 editingController: ${editingController},
 errorMessage: ${errorMessage},
+selectedRadio: ${selectedRadio},
 currentState: ${currentState}
     ''';
   }

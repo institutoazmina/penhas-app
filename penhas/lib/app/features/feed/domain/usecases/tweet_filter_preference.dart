@@ -60,9 +60,8 @@ class TweetFilterPreference {
         tags: rebuildedTags ?? response.tags));
   }
 
-  Future<void> saveCategory(List<TweetFilterEntity> categories) {
-    final List<String> codes = categories.map((e) => e.id).toList();
-    return _appConfiguration.saveCategoryPreference(codes: codes);
+  Future<void> saveCategory(List<String> categories) {
+    return _appConfiguration.saveCategoryPreference(codes: categories);
   }
 
   Future<void> saveTags(List<TweetFilterEntity> tags) {
