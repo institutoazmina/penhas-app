@@ -7,33 +7,28 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/feed/domain/entities/tweet_filter_session_entity.dart';
 import 'package:penhas/app/features/feed/domain/usecases/tweet_filter_preference.dart';
 
-part 'category_tweet_controller.g.dart';
+part 'filter_tweet_controller.g.dart';
 
-class CategoryTweetController extends _CategoryTweetControllerBase
-    with _$CategoryTweetController {
-  CategoryTweetController({
+class FilterTweetController extends _FilterTweetControllerBase
+    with _$FilterTweetController {
+  FilterTweetController({
     @required TweetFilterPreference useCase,
   }) : super(useCase);
 }
 
-abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
+abstract class _FilterTweetControllerBase with Store, MapFailureMessage {
   final TweetFilterPreference useCase;
-  String _currentCategory;
 
-  _CategoryTweetControllerBase(this.useCase);
+  _FilterTweetControllerBase(this.useCase);
 
   @observable
   ObservableFuture<Either<Failure, TweetFilterSessionEntity>> _progress;
 
   @observable
-  ObservableList<TweetFilterEntity> categories =
-      ObservableList<TweetFilterEntity>();
+  ObservableList<TweetFilterEntity> tags = ObservableList<TweetFilterEntity>();
 
   @observable
   String errorMessage = '';
-
-  @observable
-  String selectedRadio = '';
 
   @computed
   PageProgressState get currentState {
@@ -46,38 +41,27 @@ abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
         : PageProgressState.loaded;
   }
 
-  @computed
-  bool get reloadFeed {
-    return _currentCategory != selectedRadio;
-  }
-
   @action
-  Future<void> getCategories() async {
+  Future<void> getTags() async {
     _progress = ObservableFuture(useCase.retreive());
 
     final response = await _progress;
     response.fold(
       (failure) => _setErrorMessage(mapFailureMessage(failure)),
-      (filters) => _updateCategory(filters),
+      (tags) => _updateTags(tags),
     );
   }
 
   @action
-  Future<void> setCategory(String id) async {
-    return useCase.saveCategory([id]).then((_) => selectedRadio = id);
+  Future<void> setTags(List<String> tags) async {
+    return useCase.saveTags(tags);
   }
 
   void _setErrorMessage(String message) {
     errorMessage = message;
   }
 
-  void _updateCategory(TweetFilterSessionEntity filters) {
-    final seleted = filters.categories.firstWhere((e) => e.isSelected);
-    if (seleted != null) {
-      this.selectedRadio = seleted.id;
-      this._currentCategory = seleted.id;
-    }
-
-    this.categories = filters.categories.asObservable();
+  void _updateTags(TweetFilterSessionEntity filter) {
+    this.tags = filter.tags.asObservable();
   }
 }

@@ -110,7 +110,7 @@ void main() {
       when(mockConfiguration.saveTagsPreference(codes: anyNamed('codes')))
           .thenAnswer((_) async => codes);
       // act
-      await sut.saveTags(categories);
+      await sut.saveTags(categories.map((e) => e.id).toList());
       // assert
       verify(mockConfiguration.saveTagsPreference(codes: codes));
     });

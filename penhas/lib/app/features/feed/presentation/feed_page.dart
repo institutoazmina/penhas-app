@@ -173,7 +173,11 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
           width: 160.0,
           child: RaisedButton(
             elevation: 0.0,
-            onPressed: () {},
+            onPressed: () async {
+              Modular.to.pushNamed('/mainboard/tags').then((value) {
+                print(value);
+              });
+            },
             color: DesignSystemColors.white,
             shape: kButtonShapeOutlinePurple,
             child: Row(

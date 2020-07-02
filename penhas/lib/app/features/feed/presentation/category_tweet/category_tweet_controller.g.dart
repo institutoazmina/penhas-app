@@ -56,22 +56,6 @@ mixin _$CategoryTweetController on _CategoryTweetControllerBase, Store {
     });
   }
 
-  final _$editingControllerAtom =
-      Atom(name: '_CategoryTweetControllerBase.editingController');
-
-  @override
-  TextEditingController get editingController {
-    _$editingControllerAtom.reportRead();
-    return super.editingController;
-  }
-
-  @override
-  set editingController(TextEditingController value) {
-    _$editingControllerAtom.reportWrite(value, super.editingController, () {
-      super.editingController = value;
-    });
-  }
-
   final _$errorMessageAtom =
       Atom(name: '_CategoryTweetControllerBase.errorMessage');
 
@@ -124,7 +108,6 @@ mixin _$CategoryTweetController on _CategoryTweetControllerBase, Store {
   String toString() {
     return '''
 categories: ${categories},
-editingController: ${editingController},
 errorMessage: ${errorMessage},
 selectedRadio: ${selectedRadio},
 currentState: ${currentState},

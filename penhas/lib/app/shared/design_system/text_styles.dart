@@ -105,3 +105,10 @@ const kTextStyleDrawerUserNameTag = TextStyle(
     letterSpacing: 0.38,
     color: DesignSystemColors.warnGrey,
     fontWeight: FontWeight.normal);
+
+const kTextStyleTitleTag = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 14.0,
+    letterSpacing: 0.38,
+    color: DesignSystemColors.ligthPurple,
+    fontWeight: FontWeight.normal);

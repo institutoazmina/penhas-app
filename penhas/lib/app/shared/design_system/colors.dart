@@ -2,6 +2,7 @@ import 'dart:ui';
 
 class DesignSystemColors {
   static const ligthPurple = const Color.fromRGBO(160, 101, 255, 1);
+  static const easterPurple = const Color.fromRGBO(159, 99, 255, 1);
   static const darkIndigo = const Color.fromRGBO(8, 8, 40, 1);
   static const darkIndigoTwo = const Color.fromRGBO(16, 14, 87, 1);
   static const darkIndigoThree = const Color.fromRGBO(10, 17, 95, 1);

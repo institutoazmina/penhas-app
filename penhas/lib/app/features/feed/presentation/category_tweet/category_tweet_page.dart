@@ -24,7 +24,7 @@ class _CategoryTweetPageState
     extends ModularState<CategoryTweetPage, CategoryTweetController>
     with SnackBarHandler {
   List<ReactionDisposer> _disposers;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
 
   @override
@@ -60,22 +60,24 @@ class _CategoryTweetPageState
         body: PageProgressIndicator(
           progressState: _currentState,
           child: SizedBox.expand(
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(top: 4, bottom: 20),
-                    child: Text(
-                      'Selecione uma das categoria:',
-                      style: kTextStyleFeedTweetBody,
+            child: SafeArea(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(top: 4, bottom: 20),
+                      child: Text(
+                        'Selecione uma das categoria:',
+                        style: kTextStyleFeedTweetBody,
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: _builderListView(),
-                  ),
-                ],
+                    Expanded(
+                      child: _builderListView(),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

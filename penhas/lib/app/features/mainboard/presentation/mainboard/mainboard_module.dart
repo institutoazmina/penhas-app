@@ -15,6 +15,8 @@ import 'package:penhas/app/features/feed/presentation/category_tweet/category_tw
 import 'package:penhas/app/features/feed/presentation/compose_tweet/compose_tweet_controller.dart';
 import 'package:penhas/app/features/feed/presentation/detail_tweet/detail_tweet_controller.dart';
 import 'package:penhas/app/features/feed/presentation/detail_tweet/detail_tweet_page.dart';
+import 'package:penhas/app/features/feed/presentation/filter_tweet/filter_tweet_controller.dart';
+import 'package:penhas/app/features/feed/presentation/filter_tweet/filter_tweet_page.dart';
 import 'package:penhas/app/features/feed/presentation/reply_tweet/reply_tweet_controller.dart';
 import 'package:penhas/app/features/feed/presentation/reply_tweet/reply_tweet_page.dart';
 import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
@@ -69,6 +71,11 @@ class MainboardModule extends ChildModule {
           '/category',
           child: (context, args) => CategoryTweetPage(),
           transition: TransitionType.rightToLeft,
+        ),
+        Router(
+          '/tags',
+          child: (context, args) => FilterTweetPage(),
+          transition: TransitionType.rightToLeft,
         )
       ];
 
@@ -96,6 +103,11 @@ class MainboardModule extends ChildModule {
         ),
         Bind(
           (i) => CategoryTweetController(
+            useCase: i.get<TweetFilterPreference>(),
+          ),
+        ),
+        Bind(
+          (i) => FilterTweetController(
             useCase: i.get<TweetFilterPreference>(),
           ),
         ),
