@@ -170,7 +170,10 @@ class FeedUseCases {
 
   Future<TweetRequestOption> _newestRequestOption() async {
     final TweetEntity firstValid = _tweetCacheFetch.length > 0
-        ? _tweetCacheFetch.firstWhere((e) => e is TweetEntity)
+        ? _tweetCacheFetch.firstWhere(
+            (e) => e is TweetEntity,
+            orElse: () => null,
+          )
         : null;
     final String category = await _appConfiguration
         .getCategoryPreference()
@@ -199,7 +202,10 @@ class FeedUseCases {
 
   Future<TweetRequestOption> _oldestRequestOption() async {
     final TweetEntity lastValid = _tweetCacheFetch.length > 0
-        ? _tweetCacheFetch.lastWhere((e) => e is TweetEntity)
+        ? _tweetCacheFetch.lastWhere(
+            (e) => e is TweetEntity,
+            orElse: () => null,
+          )
         : null;
     final String category = await _appConfiguration
         .getCategoryPreference()
