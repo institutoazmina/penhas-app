@@ -9,26 +9,49 @@ part of 'feed_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$FeedController on _FeedControllerBase, Store {
-  Computed<PageProgressState> _$currentStateComputed;
+  Computed<PageProgressState> _$reloadStateComputed;
 
   @override
-  PageProgressState get currentState => (_$currentStateComputed ??=
-          Computed<PageProgressState>(() => super.currentState,
-              name: '_FeedControllerBase.currentState'))
+  PageProgressState get reloadState => (_$reloadStateComputed ??=
+          Computed<PageProgressState>(() => super.reloadState,
+              name: '_FeedControllerBase.reloadState'))
+      .value;
+  Computed<PageProgressState> _$fetchStateComputed;
+
+  @override
+  PageProgressState get fetchState => (_$fetchStateComputed ??=
+          Computed<PageProgressState>(() => super.fetchState,
+              name: '_FeedControllerBase.fetchState'))
       .value;
 
-  final _$_progressAtom = Atom(name: '_FeedControllerBase._progress');
+  final _$_fetchProgressAtom = Atom(name: '_FeedControllerBase._fetchProgress');
 
   @override
-  ObservableFuture<Either<Failure, FeedCache>> get _progress {
-    _$_progressAtom.reportRead();
-    return super._progress;
+  ObservableFuture<Either<Failure, FeedCache>> get _fetchProgress {
+    _$_fetchProgressAtom.reportRead();
+    return super._fetchProgress;
   }
 
   @override
-  set _progress(ObservableFuture<Either<Failure, FeedCache>> value) {
-    _$_progressAtom.reportWrite(value, super._progress, () {
-      super._progress = value;
+  set _fetchProgress(ObservableFuture<Either<Failure, FeedCache>> value) {
+    _$_fetchProgressAtom.reportWrite(value, super._fetchProgress, () {
+      super._fetchProgress = value;
+    });
+  }
+
+  final _$_reloadProgressAtom =
+      Atom(name: '_FeedControllerBase._reloadProgress');
+
+  @override
+  ObservableFuture<Either<Failure, FeedCache>> get _reloadProgress {
+    _$_reloadProgressAtom.reportRead();
+    return super._reloadProgress;
+  }
+
+  @override
+  set _reloadProgress(ObservableFuture<Either<Failure, FeedCache>> value) {
+    _$_reloadProgressAtom.reportWrite(value, super._reloadProgress, () {
+      super._reloadProgress = value;
     });
   }
 
@@ -90,7 +113,8 @@ mixin _$FeedController on _FeedControllerBase, Store {
     return '''
 listTweets: ${listTweets},
 errorMessage: ${errorMessage},
-currentState: ${currentState}
+reloadState: ${reloadState},
+fetchState: ${fetchState}
     ''';
   }
 }

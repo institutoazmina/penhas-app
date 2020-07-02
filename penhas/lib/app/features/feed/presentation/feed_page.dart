@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mobx/mobx.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/tweet.dart';
@@ -24,10 +27,16 @@ class FeedPage extends StatefulWidget {
   _FeedPageState createState() => _FeedPageState();
 }
 
-class _FeedPageState extends ModularState<FeedPage, FeedController> {
+class _FeedPageState extends ModularState<FeedPage, FeedController>
+    with SnackBarHandler {
+  List<ReactionDisposer> _disposers;
+
   final _scrollController = ScrollController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
+
+  PageProgressState _currentState = PageProgressState.initial;
 
   @override
   void initState() {
@@ -38,22 +47,43 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _disposers ??= [
+      _showProgress(),
+      _showErrorMessage(),
+    ];
+  }
+
+  @override
+  void dispose() {
+    _disposers.forEach((d) => d());
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox.expand(
-        child: Container(
-          color: Color.fromRGBO(248, 248, 248, 1.0),
-          child: SafeArea(
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                  child: _buildFiltersButton(),
-                ),
-                Expanded(
-                  child: _buildFeedObserver(),
-                ),
-              ],
+      key: _scaffoldKey,
+      body: PageProgressIndicator(
+        progressState: _currentState,
+        progressMessage: 'Aplicando os filtros',
+        child: SizedBox.expand(
+          child: Container(
+            color: Color.fromRGBO(248, 248, 248, 1.0),
+            child: SafeArea(
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                    child: _buildFiltersButton(),
+                  ),
+                  Expanded(
+                    child: _buildFeedObserver(),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -87,13 +117,9 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
     );
   }
 
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
   Future<void> _onRefresh() async {
+    print(
+        '[DEBUG][_onRefresh][userScrollDirection] ${_scrollController.position.userScrollDirection}');
     final bool isTopOfListView = _scrollController.position.pixels == 0;
     if (isTopOfListView) {
       return controller.fetchNextPage();
@@ -148,7 +174,7 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
             elevation: 0.0,
             onPressed: () async {
               Modular.to.pushNamed('/mainboard/category').then((reloadFeed) {
-                if (reloadFeed) {
+                if (reloadFeed ?? false) {
                   controller.reloadFeed();
                 }
               });
@@ -174,8 +200,10 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
           child: RaisedButton(
             elevation: 0.0,
             onPressed: () async {
-              Modular.to.pushNamed('/mainboard/tags').then((value) {
-                print(value);
+              Modular.to.pushNamed('/mainboard/tags').then((reloadFeed) {
+                if (reloadFeed ?? false) {
+                  controller.reloadFeed();
+                }
               });
             },
             color: DesignSystemColors.white,
@@ -196,5 +224,19 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
         ),
       ],
     );
+  }
+
+  ReactionDisposer _showErrorMessage() {
+    return reaction((_) => controller.errorMessage, (String message) {
+      showSnackBar(scaffoldKey: _scaffoldKey, message: message);
+    });
+  }
+
+  ReactionDisposer _showProgress() {
+    return reaction((_) => controller.reloadState, (PageProgressState status) {
+      setState(() {
+        _currentState = status;
+      });
+    });
   }
 }

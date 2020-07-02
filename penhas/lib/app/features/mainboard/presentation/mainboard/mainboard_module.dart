@@ -39,6 +39,7 @@ class MainboardModule extends ChildModule {
         Bind(
           (i) => FeedUseCases(
             repository: i.get<ITweetRepository>(),
+            filterPreference: i.get<TweetFilterPreference>(),
             maxRows: 10,
           ),
           singleton: true,
@@ -109,6 +110,7 @@ class MainboardModule extends ChildModule {
           (i) => FilterTweetController(
             useCase: i.get<TweetFilterPreference>(),
           ),
+          singleton: true,
         ),
       ];
 

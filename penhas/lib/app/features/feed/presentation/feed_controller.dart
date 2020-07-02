@@ -24,7 +24,10 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
   }
 
   @observable
-  ObservableFuture<Either<Failure, FeedCache>> _progress;
+  ObservableFuture<Either<Failure, FeedCache>> _fetchProgress;
+
+  @observable
+  ObservableFuture<Either<Failure, FeedCache>> _reloadProgress;
 
   @observable
   ObservableList<TweetTiles> listTweets = ObservableList<TweetTiles>();
@@ -33,25 +36,39 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
   String errorMessage;
 
   @computed
-  PageProgressState get currentState {
-    if (_progress == null || _progress.status == FutureStatus.rejected) {
+  PageProgressState get reloadState {
+    if (_reloadProgress == null ||
+        _reloadProgress.status == FutureStatus.rejected) {
       return PageProgressState.initial;
     }
 
-    return _progress.status == FutureStatus.pending
+    return _reloadProgress.status == FutureStatus.pending
+        ? PageProgressState.loading
+        : PageProgressState.loaded;
+  }
+
+  @computed
+  PageProgressState get fetchState {
+    if (_fetchProgress == null ||
+        _fetchProgress.status == FutureStatus.rejected) {
+      return PageProgressState.initial;
+    }
+
+    return _fetchProgress.status == FutureStatus.pending
         ? PageProgressState.loading
         : PageProgressState.loaded;
   }
 
   @action
   Future<void> fetchNextPage() async {
-    if (currentState == PageProgressState.loading) {
+    _setErrorMessage('');
+    if (fetchState == PageProgressState.loading) {
       return;
     }
 
-    _progress = ObservableFuture(useCase.fetchNewestTweet());
+    _fetchProgress = ObservableFuture(useCase.fetchNewestTweet());
 
-    final response = await _progress;
+    final response = await _fetchProgress;
     response.fold(
       (failure) => _setErrorMessage(mapFailureMessage(failure)),
       (_) {}, // é atualizado via stream no _registerDataSource
@@ -60,11 +77,14 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> fetchOldestPage() async {
-    if (currentState == PageProgressState.loading) {
+    _setErrorMessage('');
+    if (fetchState == PageProgressState.loading) {
       return;
     }
 
-    final response = await useCase.fetchOldestTweet();
+    _fetchProgress = ObservableFuture(useCase.fetchOldestTweet());
+
+    final response = await _fetchProgress;
 
     response.fold(
       (failure) => _setErrorMessage(mapFailureMessage(failure)),
@@ -74,13 +94,14 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> reloadFeed() async {
-    if (currentState == PageProgressState.loading) {
+    _setErrorMessage('');
+    if (reloadState == PageProgressState.loading) {
       return;
     }
 
-    _progress = ObservableFuture(useCase.reloadTweetFeed());
+    _reloadProgress = ObservableFuture(useCase.reloadTweetFeed());
 
-    final response = await _progress;
+    final response = await _reloadProgress;
     response.fold(
       (failure) => _setErrorMessage(mapFailureMessage(failure)),
       (_) {}, // é atualizado via stream no _registerDataSource
@@ -88,6 +109,7 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
   }
 
   void _setErrorMessage(String msg) {
+    print(msg);
     errorMessage = msg;
   }
 

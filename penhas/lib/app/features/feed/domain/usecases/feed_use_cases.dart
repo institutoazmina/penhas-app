@@ -9,6 +9,7 @@ import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_request_option.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
 import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
+import 'package:penhas/app/features/feed/domain/usecases/tweet_filter_preference.dart';
 
 @immutable
 class FeedCache extends Equatable {
@@ -25,6 +26,7 @@ class FeedCache extends Equatable {
 
 class FeedUseCases {
   final ITweetRepository _repository;
+  final TweetFilterPreference _filterPreference;
   final int _maxRowsPerRequest;
   final StreamController<FeedCache> _streamController =
       StreamController.broadcast();
@@ -36,9 +38,12 @@ class FeedUseCases {
 
   FeedUseCases({
     @required ITweetRepository repository,
+    @required TweetFilterPreference filterPreference,
     int maxRows = 100,
   })  : assert(repository != null),
+        assert(filterPreference != null),
         _repository = repository,
+        _filterPreference = filterPreference,
         _maxRowsPerRequest = maxRows;
 
   Future<Either<Failure, FeedCache>> fetchNewestTweet() async {
@@ -62,7 +67,9 @@ class FeedUseCases {
   }
 
   Future<Either<Failure, FeedCache>> reloadTweetFeed() async {
+    _nextPage = null;
     _tweetCacheFetch = [];
+    _streamController.add(FeedCache(tweets: _tweetCacheFetch));
     return this.fetchNewestTweet();
   }
 
@@ -170,29 +177,34 @@ class FeedUseCases {
             orElse: () => null,
           )
         : null;
-    // final String category = await _appConfiguration
-    //     .getCategoryPreference()
-    //     .then((s) => s.join(','))
-    //     .catchError((_) => 'all');
-    // final String tags = await _appConfiguration
-    //     .getTagsPreference()
-    //     .then((s) => s.join(','))
-    //     .catchError((_) => null);
+
+    final String category = _getCategory();
+    final String tags = _getTags();
 
     if (firstValid == null) {
       return TweetRequestOption(
         rows: _maxRowsPerRequest,
-        // category: category,
-        // tags: tags,
+        category: category,
+        tags: tags,
       );
     } else {
       return TweetRequestOption(
         rows: _maxRowsPerRequest,
         after: firstValid.id,
-        // category: category,
-        // tags: tags,
+        category: category,
+        tags: tags,
       );
     }
+  }
+
+  String _getTags() {
+    List<String> tags = _filterPreference.getTags();
+    return (tags == null || tags.isEmpty) ? null : tags.join(',');
+  }
+
+  String _getCategory() {
+    List<String> category = _filterPreference.getCategory();
+    return (category == null || category.isEmpty) ? null : category.join(',');
   }
 
   Future<TweetRequestOption> _oldestRequestOption() async {
@@ -202,28 +214,23 @@ class FeedUseCases {
             orElse: () => null,
           )
         : null;
-    // final String category = await _appConfiguration
-    //     .getCategoryPreference()
-    //     .then((s) => s.join(','))
-    //     .catchError((_) => 'all');
-    // final String tags = await _appConfiguration
-    //     .getTagsPreference()
-    //     .then((s) => s.join(','))
-    //     .catchError((_) => null);
+
+    final String category = _getCategory();
+    final String tags = _getTags();
 
     if (lastValid == null) {
       return TweetRequestOption(
         rows: _maxRowsPerRequest,
-        // category: category,
-        // tags: tags,
+        category: category,
+        tags: tags,
       );
     } else {
       return TweetRequestOption(
         rows: _maxRowsPerRequest,
         before: _nextPage == null ? lastValid.id : null,
         nextPageToken: _nextPage,
-        // category: category,
-        // tags: tags,
+        category: category,
+        tags: tags,
       );
     }
   }

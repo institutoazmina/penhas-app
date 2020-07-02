@@ -80,6 +80,13 @@ mixin _$FilterTweetController on _FilterTweetControllerBase, Store {
     return _$setTagsAsyncAction.run(() => super.setTags(tags));
   }
 
+  final _$resetAsyncAction = AsyncAction('_FilterTweetControllerBase.reset');
+
+  @override
+  Future<void> reset() {
+    return _$resetAsyncAction.run(() => super.reset());
+  }
+
   @override
   String toString() {
     return '''

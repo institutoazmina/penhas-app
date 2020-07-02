@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -54,7 +55,15 @@ abstract class _FilterTweetControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> setTags(List<String> tags) async {
-    return useCase.saveTags(tags);
+    useCase.saveTags(tags);
+    Modular.to.pop(true);
+  }
+
+  @action
+  Future<void> reset() async {
+    final reset = (useCase.getTags().length > 0);
+    useCase.saveTags([]);
+    Modular.to.pop(reset);
   }
 
   void _setErrorMessage(String message) {

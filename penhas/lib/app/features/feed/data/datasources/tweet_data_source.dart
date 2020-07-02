@@ -54,8 +54,10 @@ class TweetDataSource implements ITweetDataSource {
       path: '/timeline',
       queryParameters: queryParameters,
     );
-    print(httpRequest);
+    print('[DEBUG][httpHeader] $httpHeader');
+    print('[DEBUG][httpRequest] $httpRequest');
     final response = await _apiClient.get(httpRequest, headers: httpHeader);
+    print('[DEBUG][httpRequest] ${response.body}');
     if (_successfulResponse.contains(response.statusCode)) {
       return TweetSessionModel.fromJson(json.decode(response.body));
     } else if (_invalidSessionCode.contains(response.statusCode)) {

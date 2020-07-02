@@ -58,6 +58,7 @@ class _CategoryTweetPageState
       appBar: _buildAppBar(),
       body: PageProgressIndicator(
         progressState: _currentState,
+        progressMessage: 'Carregando as categorias',
         child: SizedBox.expand(
           child: SafeArea(
             child: Padding(

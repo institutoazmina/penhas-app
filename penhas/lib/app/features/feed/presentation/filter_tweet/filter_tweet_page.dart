@@ -50,60 +50,59 @@ class _FilterTweetPageState
   }
 
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () => _requestPop(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Filtrar temas'),
-          backgroundColor: DesignSystemColors.ligthPurple,
-        ),
-        body: PageProgressIndicator(
-            progressState: _currentState,
-            child: SizedBox.expand(
-              child: SafeArea(
-                child: Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Container(
-                    color: Color.fromRGBO(248, 248, 248, 1),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(top: 4, bottom: 20),
-                          child: Text(
-                            'Selecione os temas de seu interesse:',
-                            style: kTextStyleFeedTweetBody,
-                          ),
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: AppBar(
+        title: Text('Filtrar temas'),
+        backgroundColor: DesignSystemColors.ligthPurple,
+      ),
+      body: PageProgressIndicator(
+          progressState: _currentState,
+          progressMessage: 'Carregando os temas',
+          child: SizedBox.expand(
+            child: SafeArea(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Container(
+                  color: Color.fromRGBO(248, 248, 248, 1),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top: 4, bottom: 20),
+                        child: Text(
+                          'Selecione os temas de seu interesse:',
+                          style: kTextStyleFeedTweetBody,
                         ),
-                        Expanded(
-                          child: Tags(
-                            spacing: 12.0,
-                            symmetry: false,
-                            key: _tagStateKey,
-                            alignment: WrapAlignment.start,
-                            runAlignment: WrapAlignment.start,
-                            itemCount: controller.tags.length,
-                            itemBuilder: (int index) {
-                              final item = controller.tags[index];
-                              return _builtTagItem(item, index);
-                            },
-                          ),
+                      ),
+                      Expanded(
+                        child: Tags(
+                          spacing: 12.0,
+                          symmetry: false,
+                          key: _tagStateKey,
+                          alignment: WrapAlignment.start,
+                          runAlignment: WrapAlignment.start,
+                          itemCount: controller.tags.length,
+                          itemBuilder: (int index) {
+                            final item = controller.tags[index];
+                            return _builtTagItem(item, index);
+                          },
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[
-                            _buildResetPasswordButton(),
-                            _buildApplyButton(),
-                          ],
-                        )
-                      ],
-                    ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          _buildResetPasswordButton(),
+                          _buildApplyButton(),
+                        ],
+                      )
+                    ],
                   ),
                 ),
               ),
-            )),
-      ),
+            ),
+          )),
     );
   }
 
@@ -132,19 +131,22 @@ class _FilterTweetPageState
     return SizedBox(
       height: 40,
       width: 160,
-      child: RaisedButton(
-        onPressed: () => print('ola mundo'),
-        elevation: 0,
+      child: FlatButton(
+        onPressed: () => controller.reset(),
         color: Colors.transparent,
-        child: Text("Limpar",
-            style: TextStyle(
-              fontFamily: 'Lato',
-              fontWeight: FontWeight.bold,
-              fontSize: 14.0,
-              color: DesignSystemColors.easterPurple,
-              decoration: TextDecoration.underline,
-              letterSpacing: 0.45,
-            )),
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        child: Text(
+          "Limpar",
+          style: TextStyle(
+            fontFamily: 'Lato',
+            fontWeight: FontWeight.bold,
+            fontSize: 14.0,
+            color: DesignSystemColors.easterPurple,
+            decoration: TextDecoration.underline,
+            letterSpacing: 0.45,
+          ),
+        ),
       ),
     );
   }
@@ -154,15 +156,15 @@ class _FilterTweetPageState
       height: 40,
       width: 160,
       child: RaisedButton(
-        onPressed: () => print('ola mundo'),
+        onPressed: () => _apply(),
         elevation: 0,
-        color: Colors.transparent,
+        color: DesignSystemColors.ligthPurple,
         child: Text("Aplicar filtro",
             style: TextStyle(
               fontFamily: 'Lato',
               fontWeight: FontWeight.bold,
               fontSize: 14.0,
-              color: DesignSystemColors.easterPurple,
+              color: Colors.white,
               letterSpacing: 0.45,
             )),
         shape: kButtonShapeOutlineWhite,
@@ -184,7 +186,7 @@ class _FilterTweetPageState
     });
   }
 
-  Future<bool> _requestPop() {
+  Future<bool> _apply() {
     if (_tagStateKey.currentState == null) {
       return Future.value(true);
     }
