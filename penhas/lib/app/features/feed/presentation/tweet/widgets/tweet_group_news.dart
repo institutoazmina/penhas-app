@@ -15,12 +15,13 @@ class TweetGroupNews extends StatefulWidget {
 }
 
 class _TweetGroupNewsState extends State<TweetGroupNews> {
-  final PageController _pageController =
-      PageController(initialPage: 0, viewportFraction: 0.85);
   int _currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
+    final group = widget._group;
+    final viewportFraction = widget._group.news.length > 1 ? 0.85 : 0.95;
+
     return Padding(
       padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
       child: Container(
@@ -30,36 +31,46 @@ class _TweetGroupNewsState extends State<TweetGroupNews> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left: 12.0, bottom: 20.0),
-                child: Text(widget._group.header,
-                    style: kTextStyleFeedTweetReplyHeader),
-              ),
+              group.header.isEmpty ? Container() : _buildHeader(group),
               SizedBox(
                 height: 216.0,
                 child: PageView.builder(
-                    itemCount: widget._group.news.length,
-                    controller: _pageController,
+                    itemCount: group.news.length,
+                    controller: PageController(
+                        initialPage: 0, viewportFraction: viewportFraction),
                     onPageChanged: (int page) =>
                         setState(() => _currentPage = page),
                     itemBuilder: (context, i) {
                       return Padding(
                         padding: EdgeInsets.only(right: 6.0, left: 6.0),
-                        child: _NewsItem(news: widget._group.news[i]),
+                        child: _NewsItem(news: group.news[i]),
                       );
                     }),
               ),
-              Container(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 22.0, bottom: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: _buildPageIndicator(),
-                  ),
-                ),
-              )
+              group.news.length > 1
+                  ? _buildPaginationController()
+                  : Container(),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Padding _buildHeader(TweetNewsGroupEntity group) {
+    return Padding(
+      padding: EdgeInsets.only(left: 12.0, bottom: 20.0),
+      child: Text(group.header, style: kTextStyleFeedTweetReplyHeader),
+    );
+  }
+
+  Container _buildPaginationController() {
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 22.0, bottom: 8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: _buildPageIndicator(),
         ),
       ),
     );

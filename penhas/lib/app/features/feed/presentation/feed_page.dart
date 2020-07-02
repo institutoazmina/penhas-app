@@ -124,7 +124,7 @@ class _FeedPageState extends ModularState<FeedPage, FeedController> {
     } else if (tweet is TweetNewsGroupEntity) {
       return TweetGroupNews(group: tweet);
     } else {
-      return Container(height: 80, color: Colors.red);
+      return Container();
     }
   }
 
