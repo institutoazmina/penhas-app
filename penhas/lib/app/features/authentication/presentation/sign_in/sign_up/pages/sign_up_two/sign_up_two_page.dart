@@ -25,7 +25,7 @@ class _SignUpTwoPageState
     extends ModularState<SignUpTwoPage, SignUpTwoController>
     with SnackBarHandler {
   List<ReactionDisposer> _disposers;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
 
   final dataSourceGenre =

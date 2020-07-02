@@ -20,7 +20,7 @@ class MainboardPage extends StatefulWidget {
 
 class _MainboardPageState
     extends ModularState<MainboardPage, MainboardController> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ComposeTweetPage newTweetPage = ComposeTweetPage();
 
   @override

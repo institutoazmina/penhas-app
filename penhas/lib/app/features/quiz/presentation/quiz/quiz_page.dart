@@ -17,7 +17,7 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends ModularState<QuizPage, QuizController> {
   List<ReactionDisposer> _disposers;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void didChangeDependencies() {

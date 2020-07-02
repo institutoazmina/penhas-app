@@ -26,7 +26,7 @@ class _ResetPasswordTwoPageState
     extends ModularState<ResetPasswordTwoPage, ResetPasswordTwoController>
     with SnackBarHandler {
   List<ReactionDisposer> _disposers;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
 
   final _maskToken = MaskTextInputFormatter(

@@ -26,7 +26,7 @@ class _ResetPasswordThreePageState
     extends ModularState<ResetPasswordThreePage, ResetPasswordThreeController>
     with SnackBarHandler {
   List<ReactionDisposer> _disposers;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
 
   @override
