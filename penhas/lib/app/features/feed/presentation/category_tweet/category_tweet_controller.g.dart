@@ -104,6 +104,13 @@ mixin _$CategoryTweetController on _CategoryTweetControllerBase, Store {
     return _$setCategoryAsyncAction.run(() => super.setCategory(id));
   }
 
+  final _$applyAsyncAction = AsyncAction('_CategoryTweetControllerBase.apply');
+
+  @override
+  Future<void> apply() {
+    return _$applyAsyncAction.run(() => super.apply());
+  }
+
   @override
   String toString() {
     return '''

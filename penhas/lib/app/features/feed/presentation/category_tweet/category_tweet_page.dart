@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
@@ -52,43 +53,43 @@ class _CategoryTweetPageState
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () => _requestPop(),
-      child: Scaffold(
-        key: _scaffoldKey,
-        appBar: _buildAppBar(),
-        body: PageProgressIndicator(
-          progressState: _currentState,
-          child: SizedBox.expand(
-            child: SafeArea(
-              child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top: 4, bottom: 20),
-                      child: Text(
-                        'Selecione uma das categoria:',
-                        style: kTextStyleFeedTweetBody,
-                      ),
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: _buildAppBar(),
+      body: PageProgressIndicator(
+        progressState: _currentState,
+        child: SizedBox.expand(
+          child: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(top: 4, bottom: 20),
+                    child: Text(
+                      'Selecione uma das categoria:',
+                      style: kTextStyleFeedTweetBody,
                     ),
-                    Expanded(
-                      child: _builderListView(),
-                    ),
-                  ],
-                ),
+                  ),
+                  Expanded(
+                    child: _builderListView(),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      SizedBox(height: 40, width: 160),
+                      _buildApplyButton(),
+                    ],
+                  )
+                ],
               ),
             ),
           ),
         ),
       ),
     );
-  }
-
-  Future<bool> _requestPop() {
-    Modular.to.pop(controller.reloadFeed);
-    return Future.value(true);
   }
 
   Observer _builderListView() {
@@ -120,6 +121,27 @@ class _CategoryTweetPageState
     return AppBar(
       title: Text('Categoria'),
       backgroundColor: DesignSystemColors.ligthPurple,
+    );
+  }
+
+  Widget _buildApplyButton() {
+    return SizedBox(
+      height: 40,
+      width: 160,
+      child: RaisedButton(
+        onPressed: () => controller.apply(),
+        elevation: 0,
+        color: DesignSystemColors.ligthPurple,
+        child: Text("Aplicar filtro",
+            style: TextStyle(
+              fontFamily: 'Lato',
+              fontWeight: FontWeight.bold,
+              fontSize: 14.0,
+              color: Colors.white,
+              letterSpacing: 0.45,
+            )),
+        shape: kButtonShapeOutlinePurple,
+      ),
     );
   }
 

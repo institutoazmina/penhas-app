@@ -9,31 +9,18 @@ import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
 
 class MockTweetRepository extends Mock implements ITweetRepository {}
 
-class MockAppConfiguration extends Mock implements IAppConfiguration {
-  @override
-  Future<List<String>> getCategoryPreference() {
-    return Future.value(['all']);
-  }
-
-  @override
-  Future<List<String>> getTagsPreference() {
-    return Future.value([]);
-  }
-}
-
 void main() {
   ITweetRepository repository;
   IAppConfiguration appConfiguration;
 
   setUp(() {
     repository = MockTweetRepository();
-    appConfiguration = MockAppConfiguration();
   });
 
   group('FeedUseCases', () {
     test('should not hit datasource on instantiate', () async {
       // act
-      FeedUseCases(repository: repository, appConfiguration: appConfiguration);
+      FeedUseCases(repository: repository);
       // assert
       verifyNoMoreInteractions(repository);
     });
@@ -100,7 +87,6 @@ void main() {
         // arrange
         final sut = FeedUseCases(
           repository: repository,
-          appConfiguration: appConfiguration,
           maxRows: maxRowsPerRequet,
         );
         when(repository.fetch(option: anyNamed('option')))
@@ -128,7 +114,6 @@ void main() {
         // arrange
         final sut = FeedUseCases(
           repository: repository,
-          appConfiguration: appConfiguration,
           maxRows: maxRowsPerRequet,
         );
         when(repository.fetch(option: anyNamed('option')))
@@ -217,7 +202,6 @@ void main() {
         // arrange
         final sut = FeedUseCases(
           repository: repository,
-          appConfiguration: appConfiguration,
           maxRows: maxRowsPerRequet,
         );
         when(repository.fetch(option: anyNamed('option')))
@@ -245,7 +229,6 @@ void main() {
         // arrange
         final sut = FeedUseCases(
           repository: repository,
-          appConfiguration: appConfiguration,
           maxRows: maxRowsPerRequet,
         );
         when(repository.fetch(option: anyNamed('option')))

@@ -39,7 +39,6 @@ class MainboardModule extends ChildModule {
         Bind(
           (i) => FeedUseCases(
             repository: i.get<ITweetRepository>(),
-            appConfiguration: i.get<IAppConfiguration>(),
             maxRows: 10,
           ),
           singleton: true,
@@ -143,7 +142,6 @@ class MainboardModule extends ChildModule {
         ),
         Bind<TweetFilterPreference>(
           (i) => TweetFilterPreference(
-            appConfiguration: i.get<IAppConfiguration>(),
             repository: i.get<ITweetFilterPreferenceRepository>(),
           ),
         ),

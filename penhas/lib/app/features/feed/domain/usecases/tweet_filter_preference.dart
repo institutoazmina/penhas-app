@@ -1,19 +1,17 @@
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/features/feed/data/repositories/tweet_filter_preference_repository.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_filter_session_entity.dart';
 
 class TweetFilterPreference {
-  final IAppConfiguration _appConfiguration;
   final ITweetFilterPreferenceRepository _repository;
+  List<String> _currentTags = List<String>();
+  List<String> _currentCategory = List<String>();
 
-  TweetFilterPreference(
-      {@required ITweetFilterPreferenceRepository repository,
-      @required IAppConfiguration appConfiguration})
-      : _repository = repository,
-        _appConfiguration = appConfiguration;
+  TweetFilterPreference({
+    @required ITweetFilterPreferenceRepository repository,
+  }) : _repository = repository;
 
   Future<Either<Failure, TweetFilterSessionEntity>> retreive() async {
     final serverResponse = await _repository.retreive();
@@ -24,19 +22,15 @@ class TweetFilterPreference {
     );
   }
 
-  Future<Either<Failure, TweetFilterSessionEntity>> _rebuildResponse(
-      TweetFilterSessionEntity response) async {
-    final currentCategory =
-        await _appConfiguration.getCategoryPreference() ?? [];
-    final currentTags = await _appConfiguration.getTagsPreference() ?? [];
-
-    if (currentCategory.isEmpty && currentTags.isEmpty) {
+  Either<Failure, TweetFilterSessionEntity> _rebuildResponse(
+      TweetFilterSessionEntity response) {
+    if (_currentCategory.isEmpty && _currentTags.isEmpty) {
       return right(response);
     }
 
     List<TweetFilterEntity> rebuildedCategory;
-    if (currentCategory.isNotEmpty) {
-      final setCategory = Set<String>.from(currentCategory);
+    if (_currentCategory.isNotEmpty) {
+      final setCategory = Set<String>.from(_currentCategory);
       final indexCategory = response.categories.indexWhere(
         (e) => setCategory.contains(e.id),
       );
@@ -48,8 +42,8 @@ class TweetFilterPreference {
     }
 
     List<TweetFilterEntity> rebuildedTags;
-    if (currentTags.isNotEmpty) {
-      final setTags = Set<String>.from(currentTags);
+    if (_currentTags.isNotEmpty) {
+      final setTags = Set<String>.from(_currentTags);
       rebuildedTags = response.tags
           .map((e) => e.copyWith(isSelected: setTags.contains(e.id)))
           .toList();
@@ -60,19 +54,19 @@ class TweetFilterPreference {
         tags: rebuildedTags ?? response.tags));
   }
 
-  Future<void> saveCategory(List<String> categories) {
-    return _appConfiguration.saveCategoryPreference(codes: categories);
+  void saveCategory(List<String> categories) {
+    _currentCategory = categories;
   }
 
-  Future<void> saveTags(List<String> tags) {
-    return _appConfiguration.saveTagsPreference(codes: tags);
+  void saveTags(List<String> tags) {
+    _currentTags = tags;
   }
 
-  Future<List<String>> getCategory() {
-    return _appConfiguration.getCategoryPreference();
+  List<String> getCategory() {
+    return _currentCategory;
   }
 
-  Future<List<String>> getTags() {
-    return _appConfiguration.getTagsPreference();
+  List<String> getTags() {
+    return _currentTags;
   }
 }

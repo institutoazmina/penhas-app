@@ -6,6 +6,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_filter_session_entity.dart';
 import 'package:penhas/app/features/feed/presentation/filter_tweet/filter_tweet_controller.dart';
+import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
@@ -60,37 +61,47 @@ class _FilterTweetPageState
             progressState: _currentState,
             child: SizedBox.expand(
               child: SafeArea(
-                  child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Container(
-                  color: Color.fromRGBO(248, 248, 248, 1),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(top: 4, bottom: 20),
-                        child: Text(
-                          'Selecione os temas de seu interesse:',
-                          style: kTextStyleFeedTweetBody,
+                child: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Container(
+                    color: Color.fromRGBO(248, 248, 248, 1),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(top: 4, bottom: 20),
+                          child: Text(
+                            'Selecione os temas de seu interesse:',
+                            style: kTextStyleFeedTweetBody,
+                          ),
                         ),
-                      ),
-                      Expanded(
+                        Expanded(
                           child: Tags(
-                        spacing: 12.0,
-                        symmetry: false,
-                        key: _tagStateKey,
-                        alignment: WrapAlignment.start,
-                        runAlignment: WrapAlignment.start,
-                        itemCount: controller.tags.length,
-                        itemBuilder: (int index) {
-                          final item = controller.tags[index];
-                          return _builtTagItem(item, index);
-                        },
-                      )),
-                    ],
+                            spacing: 12.0,
+                            symmetry: false,
+                            key: _tagStateKey,
+                            alignment: WrapAlignment.start,
+                            runAlignment: WrapAlignment.start,
+                            itemCount: controller.tags.length,
+                            itemBuilder: (int index) {
+                              final item = controller.tags[index];
+                              return _builtTagItem(item, index);
+                            },
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            _buildResetPasswordButton(),
+                            _buildApplyButton(),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              )),
+              ),
             )),
       ),
     );
@@ -115,6 +126,48 @@ class _FilterTweetPageState
           ),
           padding: EdgeInsets.fromLTRB(16, 6, 16, 6),
         ));
+  }
+
+  Widget _buildResetPasswordButton() {
+    return SizedBox(
+      height: 40,
+      width: 160,
+      child: RaisedButton(
+        onPressed: () => print('ola mundo'),
+        elevation: 0,
+        color: Colors.transparent,
+        child: Text("Limpar",
+            style: TextStyle(
+              fontFamily: 'Lato',
+              fontWeight: FontWeight.bold,
+              fontSize: 14.0,
+              color: DesignSystemColors.easterPurple,
+              decoration: TextDecoration.underline,
+              letterSpacing: 0.45,
+            )),
+      ),
+    );
+  }
+
+  Widget _buildApplyButton() {
+    return SizedBox(
+      height: 40,
+      width: 160,
+      child: RaisedButton(
+        onPressed: () => print('ola mundo'),
+        elevation: 0,
+        color: Colors.transparent,
+        child: Text("Aplicar filtro",
+            style: TextStyle(
+              fontFamily: 'Lato',
+              fontWeight: FontWeight.bold,
+              fontSize: 14.0,
+              color: DesignSystemColors.easterPurple,
+              letterSpacing: 0.45,
+            )),
+        shape: kButtonShapeOutlineWhite,
+      ),
+    );
   }
 
   ReactionDisposer _showErrorMessage() {

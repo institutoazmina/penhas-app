@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -64,7 +65,13 @@ abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> setCategory(String id) async {
-    return useCase.saveCategory([id]).then((_) => selectedRadio = id);
+    selectedRadio = id;
+  }
+
+  @action
+  Future<void> apply() async {
+    useCase.saveCategory([selectedRadio]);
+    Modular.to.pop(true);
   }
 
   void _setErrorMessage(String message) {
