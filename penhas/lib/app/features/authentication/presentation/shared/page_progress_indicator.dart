@@ -5,11 +5,13 @@ enum PageProgressState { initial, loading, loaded }
 class PageProgressIndicator extends StatefulWidget {
   final Widget child;
   final PageProgressState progressState;
+  final String progressMessage;
 
   PageProgressIndicator({
     Key key,
     @required this.child,
     @required this.progressState,
+    this.progressMessage = 'Processando',
   }) : super(key: key);
 
   @override
@@ -105,7 +107,7 @@ class _PageProgressIndicator extends State<PageProgressIndicator>
             SizedBox(width: 18),
             CircularProgressIndicator(),
             SizedBox(width: 18),
-            Text("Processando"),
+            Text(widget.progressMessage),
           ],
         ),
       ),
