@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/core/states/mainboard_state.dart';
 import 'package:penhas/app/features/feed/presentation/compose_tweet/compose_tweet_page.dart';
 import 'package:penhas/app/features/feed/presentation/feed_module.dart';
+import 'package:penhas/app/features/help_center/presentation/help_center_module.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
@@ -28,10 +29,10 @@ class _MainboardPageState
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: _buildAppBar(),
+      appBar: _appBarBuilder(),
       drawer: PenhasDrawer(onLogout: () => controller.logoutPressed()),
       backgroundColor: Colors.white,
-      body: _buildBody(),
+      body: _pagesBodyBuilder(),
       bottomNavigationBar: Observer(builder: (_) {
         return BottomAppBar(
           elevation: 20.0,
@@ -148,7 +149,7 @@ class _MainboardPageState
     );
   }
 
-  AppBar _buildAppBar() {
+  AppBar _appBarBuilder() {
     return AppBar(
       titleSpacing: 0,
       backgroundColor: _helpCenterEnabled
@@ -177,7 +178,7 @@ class _MainboardPageState
     );
   }
 
-  PageView _buildBody() {
+  PageView _pagesBodyBuilder() {
     return PageView(
       physics: NeverScrollableScrollPhysics(),
       controller: controller.mainboardStore.pageController,
@@ -186,7 +187,7 @@ class _MainboardPageState
         ComposeTweetPage(),
         Container(color: Colors.yellow),
         Container(color: Colors.green),
-        Container(color: DesignSystemColors.helpCenterBackGround),
+        HelpCenterModule(),
       ],
     );
   }
