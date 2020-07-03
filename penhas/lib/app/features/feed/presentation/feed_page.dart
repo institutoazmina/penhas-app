@@ -118,8 +118,6 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
   }
 
   Future<void> _onRefresh() async {
-    print(
-        '[DEBUG][_onRefresh][userScrollDirection] ${_scrollController.position.userScrollDirection}');
     final bool isTopOfListView = _scrollController.position.pixels == 0;
     if (isTopOfListView) {
       return controller.fetchNextPage();
