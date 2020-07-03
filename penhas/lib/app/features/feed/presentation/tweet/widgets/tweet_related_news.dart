@@ -63,6 +63,8 @@ class _TweetRelatedNewsState extends State<TweetRelatedNews> {
                         children: <Widget>[
                           Text(
                             widget.related.news[i].title,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 3,
                             style: kTextStyleDrawerUsername,
                           ),
                           Padding(
