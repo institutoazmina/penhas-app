@@ -27,6 +27,10 @@ class _$MainboardStateTearOff {
   _SupportPoint supportPoint() {
     return const _SupportPoint();
   }
+
+  _HelpCenter helpCenter() {
+    return const _HelpCenter();
+  }
 }
 
 // ignore: unused_element
@@ -39,6 +43,7 @@ mixin _$MainboardState {
     @required Result feed(),
     @required Result compose(),
     @required Result supportPoint(),
+    @required Result helpCenter(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
@@ -46,6 +51,7 @@ mixin _$MainboardState {
     Result feed(),
     Result compose(),
     Result supportPoint(),
+    Result helpCenter(),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -54,6 +60,7 @@ mixin _$MainboardState {
     @required Result feed(_Feed value),
     @required Result compose(_Compose value),
     @required Result supportPoint(_SupportPoint value),
+    @required Result helpCenter(_HelpCenter value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
@@ -61,6 +68,7 @@ mixin _$MainboardState {
     Result feed(_Feed value),
     Result compose(_Compose value),
     Result supportPoint(_SupportPoint value),
+    Result helpCenter(_HelpCenter value),
     @required Result orElse(),
   });
 }
@@ -117,11 +125,13 @@ class _$_Chat implements _Chat {
     @required Result feed(),
     @required Result compose(),
     @required Result supportPoint(),
+    @required Result helpCenter(),
   }) {
     assert(chat != null);
     assert(feed != null);
     assert(compose != null);
     assert(supportPoint != null);
+    assert(helpCenter != null);
     return chat();
   }
 
@@ -132,6 +142,7 @@ class _$_Chat implements _Chat {
     Result feed(),
     Result compose(),
     Result supportPoint(),
+    Result helpCenter(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -148,11 +159,13 @@ class _$_Chat implements _Chat {
     @required Result feed(_Feed value),
     @required Result compose(_Compose value),
     @required Result supportPoint(_SupportPoint value),
+    @required Result helpCenter(_HelpCenter value),
   }) {
     assert(chat != null);
     assert(feed != null);
     assert(compose != null);
     assert(supportPoint != null);
+    assert(helpCenter != null);
     return chat(this);
   }
 
@@ -163,6 +176,7 @@ class _$_Chat implements _Chat {
     Result feed(_Feed value),
     Result compose(_Compose value),
     Result supportPoint(_SupportPoint value),
+    Result helpCenter(_HelpCenter value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -214,11 +228,13 @@ class _$_Feed implements _Feed {
     @required Result feed(),
     @required Result compose(),
     @required Result supportPoint(),
+    @required Result helpCenter(),
   }) {
     assert(chat != null);
     assert(feed != null);
     assert(compose != null);
     assert(supportPoint != null);
+    assert(helpCenter != null);
     return feed();
   }
 
@@ -229,6 +245,7 @@ class _$_Feed implements _Feed {
     Result feed(),
     Result compose(),
     Result supportPoint(),
+    Result helpCenter(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -245,11 +262,13 @@ class _$_Feed implements _Feed {
     @required Result feed(_Feed value),
     @required Result compose(_Compose value),
     @required Result supportPoint(_SupportPoint value),
+    @required Result helpCenter(_HelpCenter value),
   }) {
     assert(chat != null);
     assert(feed != null);
     assert(compose != null);
     assert(supportPoint != null);
+    assert(helpCenter != null);
     return feed(this);
   }
 
@@ -260,6 +279,7 @@ class _$_Feed implements _Feed {
     Result feed(_Feed value),
     Result compose(_Compose value),
     Result supportPoint(_SupportPoint value),
+    Result helpCenter(_HelpCenter value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -311,11 +331,13 @@ class _$_Compose implements _Compose {
     @required Result feed(),
     @required Result compose(),
     @required Result supportPoint(),
+    @required Result helpCenter(),
   }) {
     assert(chat != null);
     assert(feed != null);
     assert(compose != null);
     assert(supportPoint != null);
+    assert(helpCenter != null);
     return compose();
   }
 
@@ -326,6 +348,7 @@ class _$_Compose implements _Compose {
     Result feed(),
     Result compose(),
     Result supportPoint(),
+    Result helpCenter(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -342,11 +365,13 @@ class _$_Compose implements _Compose {
     @required Result feed(_Feed value),
     @required Result compose(_Compose value),
     @required Result supportPoint(_SupportPoint value),
+    @required Result helpCenter(_HelpCenter value),
   }) {
     assert(chat != null);
     assert(feed != null);
     assert(compose != null);
     assert(supportPoint != null);
+    assert(helpCenter != null);
     return compose(this);
   }
 
@@ -357,6 +382,7 @@ class _$_Compose implements _Compose {
     Result feed(_Feed value),
     Result compose(_Compose value),
     Result supportPoint(_SupportPoint value),
+    Result helpCenter(_HelpCenter value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -411,11 +437,13 @@ class _$_SupportPoint implements _SupportPoint {
     @required Result feed(),
     @required Result compose(),
     @required Result supportPoint(),
+    @required Result helpCenter(),
   }) {
     assert(chat != null);
     assert(feed != null);
     assert(compose != null);
     assert(supportPoint != null);
+    assert(helpCenter != null);
     return supportPoint();
   }
 
@@ -426,6 +454,7 @@ class _$_SupportPoint implements _SupportPoint {
     Result feed(),
     Result compose(),
     Result supportPoint(),
+    Result helpCenter(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -442,11 +471,13 @@ class _$_SupportPoint implements _SupportPoint {
     @required Result feed(_Feed value),
     @required Result compose(_Compose value),
     @required Result supportPoint(_SupportPoint value),
+    @required Result helpCenter(_HelpCenter value),
   }) {
     assert(chat != null);
     assert(feed != null);
     assert(compose != null);
     assert(supportPoint != null);
+    assert(helpCenter != null);
     return supportPoint(this);
   }
 
@@ -457,6 +488,7 @@ class _$_SupportPoint implements _SupportPoint {
     Result feed(_Feed value),
     Result compose(_Compose value),
     Result supportPoint(_SupportPoint value),
+    Result helpCenter(_HelpCenter value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -469,4 +501,109 @@ class _$_SupportPoint implements _SupportPoint {
 
 abstract class _SupportPoint implements MainboardState {
   const factory _SupportPoint() = _$_SupportPoint;
+}
+
+abstract class _$HelpCenterCopyWith<$Res> {
+  factory _$HelpCenterCopyWith(
+          _HelpCenter value, $Res Function(_HelpCenter) then) =
+      __$HelpCenterCopyWithImpl<$Res>;
+}
+
+class __$HelpCenterCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
+    implements _$HelpCenterCopyWith<$Res> {
+  __$HelpCenterCopyWithImpl(
+      _HelpCenter _value, $Res Function(_HelpCenter) _then)
+      : super(_value, (v) => _then(v as _HelpCenter));
+
+  @override
+  _HelpCenter get _value => super._value as _HelpCenter;
+}
+
+class _$_HelpCenter implements _HelpCenter {
+  const _$_HelpCenter();
+
+  @override
+  String toString() {
+    return 'MainboardState.helpCenter()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _HelpCenter);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result chat(),
+    @required Result feed(),
+    @required Result compose(),
+    @required Result supportPoint(),
+    @required Result helpCenter(),
+  }) {
+    assert(chat != null);
+    assert(feed != null);
+    assert(compose != null);
+    assert(supportPoint != null);
+    assert(helpCenter != null);
+    return helpCenter();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result chat(),
+    Result feed(),
+    Result compose(),
+    Result supportPoint(),
+    Result helpCenter(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (helpCenter != null) {
+      return helpCenter();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result chat(_Chat value),
+    @required Result feed(_Feed value),
+    @required Result compose(_Compose value),
+    @required Result supportPoint(_SupportPoint value),
+    @required Result helpCenter(_HelpCenter value),
+  }) {
+    assert(chat != null);
+    assert(feed != null);
+    assert(compose != null);
+    assert(supportPoint != null);
+    assert(helpCenter != null);
+    return helpCenter(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result chat(_Chat value),
+    Result feed(_Feed value),
+    Result compose(_Compose value),
+    Result supportPoint(_SupportPoint value),
+    Result helpCenter(_HelpCenter value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (helpCenter != null) {
+      return helpCenter(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _HelpCenter implements MainboardState {
+  const factory _HelpCenter() = _$_HelpCenter;
 }

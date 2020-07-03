@@ -16,4 +16,8 @@ class DesignSystemColors {
   static const pinkishGrey = const Color.fromRGBO(214, 210, 195, 1);
   static const pinky = const Color.fromRGBO(249, 130, 180, 1);
   static const pumpkinOrange = const Color.fromRGBO(255, 130, 0, 1);
+  static const helpCenterBackGround = const Color.fromRGBO(10, 15, 95, 1);
+  static const buttonBarIconColor = const Color.fromRGBO(10, 17, 96, 1);
+  static const helpCenterButtonBar = const Color.fromRGBO(34, 29, 116, 1);
+  static const helpCenterNavigationBar = const Color.fromRGBO(33, 29, 116, 1);
 }

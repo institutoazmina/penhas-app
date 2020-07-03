@@ -7,6 +7,7 @@ import 'package:penhas/app/features/feed/presentation/compose_tweet/compose_twee
 import 'package:penhas/app/features/feed/presentation/feed_module.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
+import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'package:penhas/app/shared/ui/penhas_drawer.dart';
 import 'mainboard_controller.dart';
 
@@ -21,7 +22,7 @@ class MainboardPage extends StatefulWidget {
 class _MainboardPageState
     extends ModularState<MainboardPage, MainboardController> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final ComposeTweetPage newTweetPage = ComposeTweetPage();
+  bool _helpCenterEnabled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -34,60 +35,19 @@ class _MainboardPageState
       bottomNavigationBar: Observer(builder: (_) {
         return BottomAppBar(
           elevation: 20.0,
+          color: _helpCenterEnabled
+              ? DesignSystemColors.helpCenterButtonBar
+              : Colors.white,
           child: Container(
             height: 56,
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                FlatButton(
-                  splashColor: Colors.white,
-                  highlightColor: Colors.white,
-                  padding: EdgeInsets.only(right: 6.0),
-                  onPressed: () => controller.mainboardStore.changePage(
-                    to: MainboardState.feed(),
-                  ),
-                  child: _buildBottomBarIcon(
-                    MainboardState.feed(),
-                    controller.mainboardStore.selectedPage,
-                  ),
-                ),
-                FlatButton(
-                  splashColor: Colors.white,
-                  highlightColor: Colors.white,
-                  padding: EdgeInsets.only(right: 32.0),
-                  onPressed: () => controller.mainboardStore.changePage(
-                    to: MainboardState.compose(),
-                  ),
-                  child: _buildBottomBarIcon(
-                    MainboardState.compose(),
-                    controller.mainboardStore.selectedPage,
-                  ),
-                ),
-                FlatButton(
-                  splashColor: Colors.white,
-                  highlightColor: Colors.white,
-                  padding: EdgeInsets.only(left: 32.0),
-                  onPressed: () => controller.mainboardStore.changePage(
-                    to: MainboardState.chat(),
-                  ),
-                  child: _buildBottomBarIcon(
-                    MainboardState.chat(),
-                    controller.mainboardStore.selectedPage,
-                  ),
-                ),
-                FlatButton(
-                  splashColor: Colors.white,
-                  highlightColor: Colors.white,
-                  padding: EdgeInsets.only(left: 6.0),
-                  onPressed: () => controller.mainboardStore.changePage(
-                    to: MainboardState.supportPoint(),
-                  ),
-                  child: _buildBottomBarIcon(
-                    MainboardState.supportPoint(),
-                    controller.mainboardStore.selectedPage,
-                  ),
-                ),
+                _buildFeedButton(),
+                _buildComposeButton(),
+                _buildChatButton(),
+                _buildSupportButton(),
               ],
             ),
           ),
@@ -96,6 +56,66 @@ class _MainboardPageState
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: _buildFab(),
     );
+  }
+
+  FlatButton _buildSupportButton() {
+    return FlatButton(
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      padding: EdgeInsets.only(left: 6.0),
+      onPressed: () => _changePage(MainboardState.supportPoint()),
+      child: _buildBottomBarIcon(
+        MainboardState.supportPoint(),
+        controller.mainboardStore.selectedPage,
+      ),
+    );
+  }
+
+  FlatButton _buildChatButton() {
+    return FlatButton(
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      padding: EdgeInsets.only(left: 48.0),
+      onPressed: () => _changePage(MainboardState.chat()),
+      child: _buildBottomBarIcon(
+        MainboardState.chat(),
+        controller.mainboardStore.selectedPage,
+      ),
+    );
+  }
+
+  FlatButton _buildComposeButton() {
+    return FlatButton(
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      padding: EdgeInsets.only(right: 48.0),
+      onPressed: () => _changePage(MainboardState.compose()),
+      child: _buildBottomBarIcon(
+        MainboardState.compose(),
+        controller.mainboardStore.selectedPage,
+      ),
+    );
+  }
+
+  FlatButton _buildFeedButton() {
+    return FlatButton(
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      padding: EdgeInsets.only(right: 6.0),
+      onPressed: () => _changePage(MainboardState.feed()),
+      child: _buildBottomBarIcon(
+        MainboardState.feed(),
+        controller.mainboardStore.selectedPage,
+      ),
+    );
+  }
+
+  void _changePage(MainboardState page) {
+    setState(() {
+      _helpCenterEnabled = page == MainboardState.helpCenter();
+    });
+
+    controller.mainboardStore.changePage(to: page);
   }
 
   Widget _buildBottomBarIcon(MainboardState current, MainboardState selected) {
@@ -107,6 +127,7 @@ class _MainboardPageState
       feed: () => '$rootPath/feed.svg',
       compose: () => '$rootPath/compose_tweet.svg',
       supportPoint: () => '$rootPath/support_point.svg',
+      helpCenter: () => '$rootPath/emergency_controll.svg',
     );
 
     if (current == selected) {
@@ -115,28 +136,43 @@ class _MainboardPageState
         feed: () => '$rootPath/feed_selected.svg',
         compose: () => '$rootPath/compose_tweet_selected.svg',
         supportPoint: () => '$rootPath/support_point_selected.svg',
+        helpCenter: () => '$rootPath/emergency_controll.svg',
       );
     }
 
-    return SvgPicture.asset(asset);
+    return SvgPicture.asset(
+      asset,
+      color: _helpCenterEnabled
+          ? Colors.white
+          : DesignSystemColors.buttonBarIconColor,
+    );
   }
 
   AppBar _buildAppBar() {
     return AppBar(
       titleSpacing: 0,
-      backgroundColor: DesignSystemColors.ligthPurple,
+      backgroundColor: _helpCenterEnabled
+          ? DesignSystemColors.helpCenterNavigationBar
+          : DesignSystemColors.ligthPurple,
       elevation: 0.0,
       centerTitle: false,
-      title: Icon(
-        DesignSystemLogo.penhasLogo,
-        color: Colors.white,
-        size: 30,
-      ),
+      title: _helpCenterEnabled
+          ? Text(
+              'Precisa de ajuda?',
+              style: kTextStyleHelpCenterTitle,
+            )
+          : Icon(
+              DesignSystemLogo.penhasLogo,
+              color: Colors.white,
+              size: 30,
+            ),
       actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.notifications_none),
-          onPressed: () => {},
-        )
+        _helpCenterEnabled
+            ? Container()
+            : IconButton(
+                icon: Icon(Icons.notifications_none),
+                onPressed: () => {},
+              )
       ],
     );
   }
@@ -147,28 +183,32 @@ class _MainboardPageState
       controller: controller.mainboardStore.pageController,
       children: <Widget>[
         FeedModule(),
-        newTweetPage,
+        ComposeTweetPage(),
         Container(color: Colors.yellow),
         Container(color: Colors.green),
+        Container(color: DesignSystemColors.helpCenterBackGround),
       ],
     );
   }
 
-  Container _buildFab() {
+  Widget _buildFab() {
     bool keyboardIsOpened = MediaQuery.of(context).viewInsets.bottom != 0.0;
 
     return keyboardIsOpened
         ? Container()
-        : Container(
-            width: 60.0,
-            height: 60.0,
-            child: FittedBox(
-              child: FloatingActionButton(
-                backgroundColor: DesignSystemColors.ligthPurple,
-                onPressed: () {},
-                child: SvgPicture.asset(
-                  'assets/images/svg/bottom_bar/emergency_controll.svg',
-                  color: Colors.white,
+        : Padding(
+            padding: EdgeInsets.only(top: 30.0),
+            child: Container(
+              width: 60.0,
+              height: 60.0,
+              child: FittedBox(
+                child: FloatingActionButton(
+                  backgroundColor: DesignSystemColors.ligthPurple,
+                  onPressed: () => _changePage(MainboardState.helpCenter()),
+                  child: SvgPicture.asset(
+                    'assets/images/svg/bottom_bar/emergency_controll.svg',
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),

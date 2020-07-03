@@ -112,3 +112,10 @@ const kTextStyleTitleTag = TextStyle(
     letterSpacing: 0.38,
     color: DesignSystemColors.ligthPurple,
     fontWeight: FontWeight.normal);
+
+const kTextStyleHelpCenterTitle = TextStyle(
+    color: Colors.white,
+    fontFamily: 'Lato',
+    fontSize: 20.0,
+    letterSpacing: 0.63,
+    fontWeight: FontWeight.bold);

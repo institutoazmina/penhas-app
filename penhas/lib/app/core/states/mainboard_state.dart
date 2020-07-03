@@ -9,4 +9,5 @@ abstract class MainboardState with _$MainboardState {
   const factory MainboardState.feed() = _Feed;
   const factory MainboardState.compose() = _Compose;
   const factory MainboardState.supportPoint() = _SupportPoint;
+  const factory MainboardState.helpCenter() = _HelpCenter;
 }

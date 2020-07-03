@@ -10,7 +10,8 @@ abstract class _MainboardStoreBase with Store {
     MainboardState.feed(),
     MainboardState.compose(),
     MainboardState.chat(),
-    MainboardState.supportPoint()
+    MainboardState.supportPoint(),
+    MainboardState.helpCenter(),
   ];
 
   final PageController pageController = PageController(initialPage: 0);
