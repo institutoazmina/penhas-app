@@ -7,20 +7,35 @@ import 'package:penhas/app/features/feed/domain/entities/tweet_request_option.da
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
 import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
 import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
+import 'package:penhas/app/features/feed/domain/usecases/tweet_filter_preference.dart';
 
 class MockTweetRepository extends Mock implements ITweetRepository {}
 
+class MockTweetFilterPreference extends Mock implements TweetFilterPreference {
+  @override
+  List<String> getTags() {
+    return [];
+  }
+
+  @override
+  List<String> getCategory() {
+    return [];
+  }
+}
+
 void main() {
   ITweetRepository repository;
+  TweetFilterPreference filterPreference;
 
   setUp(() {
     repository = MockTweetRepository();
+    filterPreference = MockTweetFilterPreference();
   });
 
   group('FeedUseCases', () {
     test('should not hit datasource on instantiate', () async {
       // act
-      FeedUseCases(repository: repository);
+      FeedUseCases(repository: repository, filterPreference: filterPreference);
       // assert
       verifyNoMoreInteractions(repository);
     });
@@ -110,7 +125,8 @@ void main() {
 
         final Either<Failure, FeedCache> expected =
             right(FeedCache(tweets: firstSessionResponse.tweets));
-        final sut = FeedUseCases(repository: repository);
+        final sut = FeedUseCases(
+            repository: repository, filterPreference: filterPreference);
         // act
         final received = await sut.fetchNewestTweet();
         // assert
@@ -120,6 +136,7 @@ void main() {
         // arrange
         final sut = FeedUseCases(
           repository: repository,
+          filterPreference: filterPreference,
           maxRows: maxRowsPerRequet,
         );
         when(repository.fetch(option: anyNamed('option')))
@@ -152,6 +169,7 @@ void main() {
         // arrange
         final sut = FeedUseCases(
           repository: repository,
+          filterPreference: filterPreference,
           maxRows: maxRowsPerRequet,
         );
 
@@ -282,7 +300,8 @@ void main() {
 
         final Either<Failure, FeedCache> expected =
             right(FeedCache(tweets: firstSessionResponse.tweets));
-        final sut = FeedUseCases(repository: repository);
+        final sut = FeedUseCases(
+            repository: repository, filterPreference: filterPreference);
         // act
         final received = await sut.fetchOldestTweet();
         // assert
@@ -293,6 +312,7 @@ void main() {
         // arrange
         final sut = FeedUseCases(
           repository: repository,
+          filterPreference: filterPreference,
           maxRows: maxRowsPerRequet,
         );
         final expected = right(
@@ -306,20 +326,26 @@ void main() {
 
         when(repository.fetch(option: anyNamed('option')))
             .thenAnswer((_) async => right(firstSessionResponse));
-        await sut.fetchOldestTweet();
+        await sut.fetchNewestTweet();
 
         when(repository.fetch(option: anyNamed('option')))
             .thenAnswer((_) async => right(secondSessionResponse));
         // act
         final received = await sut.fetchOldestTweet();
         // assert
-        verify(
+        verifyInOrder([
           repository.fetch(
-              option: TweetRequestOption(
-            rows: maxRowsPerRequet,
-            nextPageToken: '_next_page_request_1_',
-          )),
-        );
+            option: TweetRequestOption(
+              rows: maxRowsPerRequet,
+            ),
+          ),
+          repository.fetch(
+            option: TweetRequestOption(
+              rows: maxRowsPerRequet,
+              nextPageToken: '_next_page_request_1_',
+            ),
+          ),
+        ]);
         expect(expected, received);
       });
       test(
@@ -328,6 +354,7 @@ void main() {
         // arrange
         final sut = FeedUseCases(
           repository: repository,
+          filterPreference: filterPreference,
           maxRows: maxRowsPerRequet,
         );
         final expected = right(
@@ -348,13 +375,27 @@ void main() {
         // act
         final received = await sut.fetchOldestTweet();
         // assert
-        verify(
+        // verify(
+        //   repository.fetch(
+        //       option: TweetRequestOption(
+        //     rows: maxRowsPerRequet,
+        //     nextPageToken: '_next_page_request_1_',
+        //   )),
+        // );
+        verifyInOrder([
           repository.fetch(
-              option: TweetRequestOption(
-            rows: maxRowsPerRequet,
-            nextPageToken: '_next_page_request_1_',
-          )),
-        );
+            option: TweetRequestOption(
+              rows: maxRowsPerRequet,
+            ),
+          ),
+          repository.fetch(
+            option: TweetRequestOption(
+              rows: maxRowsPerRequet,
+              nextPageToken: '_next_page_request_1_',
+            ),
+          ),
+        ]);
+
         expect(expected, received);
       });
     });

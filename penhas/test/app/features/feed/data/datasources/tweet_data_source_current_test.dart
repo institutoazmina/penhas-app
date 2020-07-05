@@ -88,8 +88,6 @@ void main() {
         // arrange
         final endPointPath = '/timeline';
         final queryParameters = {
-          'only_myself': '0',
-          'skip_myself': '0',
           'id': '200608T1545460001',
         };
         final headers = await _setUpHttpHeader();

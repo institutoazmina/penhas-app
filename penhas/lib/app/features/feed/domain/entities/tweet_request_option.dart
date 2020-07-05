@@ -7,8 +7,6 @@ class TweetRequestOption extends Equatable {
   final String parent;
   final String replyTo;
   final String nextPageToken;
-  final bool onlyMyself;
-  final bool skipMyself;
   final String category;
   final String tags;
 
@@ -16,28 +14,16 @@ class TweetRequestOption extends Equatable {
     this.after,
     this.before,
     this.parent,
-    this.onlyMyself = false,
-    this.skipMyself = false,
     this.rows = 100,
     this.replyTo,
     this.nextPageToken,
-    this.category = 'all',
+    this.category,
     this.tags,
-  })  : assert(rows != null),
-        assert(onlyMyself != null),
-        assert(skipMyself != null);
+  }) : assert(rows != null);
 
   @override
-  List<Object> get props => [
-        after,
-        before,
-        parent,
-        onlyMyself,
-        skipMyself,
-        rows,
-        replyTo,
-        category,
-      ];
+  List<Object> get props =>
+      [rows, after, before, parent, replyTo, nextPageToken, category, tags];
 
   @override
   bool get stringify => true;

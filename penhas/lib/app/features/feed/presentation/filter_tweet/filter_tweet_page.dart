@@ -167,7 +167,7 @@ class _FilterTweetPageState
               color: Colors.white,
               letterSpacing: 0.45,
             )),
-        shape: kButtonShapeOutlineWhite,
+        shape: kButtonShapeOutlinePurple,
       ),
     );
   }

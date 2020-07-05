@@ -43,8 +43,6 @@ class TweetDataSource implements ITweetDataSource {
       'before': option.before,
       'parent_id': option.parent,
       'next_page': option.nextPageToken,
-      'only_myself': option.onlyMyself ? '1' : '0',
-      'skip_myself': option.skipMyself ? '1' : '0',
       'rows': "${option.rows}",
       'reply_to': option.replyTo,
       'category': option.category,
@@ -178,8 +176,6 @@ class TweetDataSource implements ITweetDataSource {
   Future<TweetSessionModel> current({TweetEngageRequestOption option}) async {
     final httpHeader = await _setupHttpHeader();
     Map<String, String> queryParameters = {
-      'only_myself': '0',
-      'skip_myself': '0',
       'id': option.tweetId,
     };
     final httpRequest = await _setupHttpRequest(

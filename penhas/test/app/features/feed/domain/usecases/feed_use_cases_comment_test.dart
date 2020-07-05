@@ -5,20 +5,25 @@ import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
 import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
 import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
+import 'package:penhas/app/features/feed/domain/usecases/tweet_filter_preference.dart';
 
 class MockTweetRepository extends Mock implements ITweetRepository {}
 
+class MockTweetFilterPreference extends Mock implements TweetFilterPreference {}
+
 void main() {
   ITweetRepository repository;
+  TweetFilterPreference filterPreference;
 
   setUpAll(() {
     repository = MockTweetRepository();
+    filterPreference = MockTweetFilterPreference();
   });
 
   group('FeedUseCases', () {
     test('should not hit datasource on instantiate', () async {
       // act
-      FeedUseCases(repository: repository);
+      FeedUseCases(repository: repository, filterPreference: filterPreference);
       // assert
       verifyNoMoreInteractions(repository);
     });
@@ -85,6 +90,7 @@ void main() {
         // arrange
         final sut = FeedUseCases(
           repository: repository,
+          filterPreference: filterPreference,
           maxRows: maxRowsPerRequet,
         );
         when(repository.fetch(option: anyNamed('option')))
@@ -128,6 +134,7 @@ void main() {
         // arrange
         final sut = FeedUseCases(
           repository: repository,
+          filterPreference: filterPreference,
           maxRows: maxRowsPerRequet,
         );
         when(repository.fetch(option: anyNamed('option')))

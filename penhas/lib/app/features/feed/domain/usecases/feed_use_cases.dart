@@ -47,8 +47,8 @@ class FeedUseCases {
         _maxRowsPerRequest = maxRows;
 
   Future<Either<Failure, FeedCache>> fetchNewestTweet() async {
-    final result = await _newestRequestOption()
-        .then((request) => _repository.fetch(option: request));
+    final request = _newestRequestOption();
+    final result = await _repository.fetch(option: request);
 
     return result.fold<Either<Failure, FeedCache>>(
       (failure) => left(failure),
@@ -57,8 +57,8 @@ class FeedUseCases {
   }
 
   Future<Either<Failure, FeedCache>> fetchOldestTweet() async {
-    final result = await _oldestRequestOption()
-        .then((request) => _repository.fetch(option: request));
+    final request = _oldestRequestOption();
+    final result = await _repository.fetch(option: request);
 
     return result.fold<Either<Failure, FeedCache>>(
       (failure) => left(failure),
@@ -170,7 +170,7 @@ class FeedUseCases {
     );
   }
 
-  Future<TweetRequestOption> _newestRequestOption() async {
+  TweetRequestOption _newestRequestOption() {
     final TweetEntity firstValid = _tweetCacheFetch.length > 0
         ? _tweetCacheFetch.firstWhere(
             (e) => e is TweetEntity,
@@ -186,6 +186,7 @@ class FeedUseCases {
         rows: _maxRowsPerRequest,
         category: category,
         tags: tags,
+        after: (_tweetCacheFetch.length > 0) ? '000000T0000000000' : null,
       );
     } else {
       return TweetRequestOption(
@@ -207,7 +208,7 @@ class FeedUseCases {
     return (category == null || category.isEmpty) ? null : category.join(',');
   }
 
-  Future<TweetRequestOption> _oldestRequestOption() async {
+  TweetRequestOption _oldestRequestOption() {
     final TweetEntity lastValid = _tweetCacheFetch.length > 0
         ? _tweetCacheFetch.lastWhere(
             (e) => e is TweetEntity,
@@ -221,6 +222,7 @@ class FeedUseCases {
     if (lastValid == null) {
       return TweetRequestOption(
         rows: _maxRowsPerRequest,
+        nextPageToken: _nextPage,
         category: category,
         tags: tags,
       );
