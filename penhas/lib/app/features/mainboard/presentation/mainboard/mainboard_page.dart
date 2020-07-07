@@ -47,6 +47,9 @@ class _MainboardPageState
               children: <Widget>[
                 _buildFeedButton(),
                 _buildComposeButton(),
+                Container(
+                  width: 62,
+                ),
                 _buildChatButton(),
                 _buildSupportButton(),
               ],
@@ -59,54 +62,58 @@ class _MainboardPageState
     );
   }
 
-  FlatButton _buildSupportButton() {
-    return FlatButton(
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      padding: EdgeInsets.only(left: 6.0),
-      onPressed: () => _changePage(MainboardState.supportPoint()),
-      child: _buildBottomBarIcon(
-        MainboardState.supportPoint(),
-        controller.mainboardStore.selectedPage,
+  Widget _buildSupportButton() {
+    return Expanded(
+      child: FlatButton(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        onPressed: () => _changePage(MainboardState.supportPoint()),
+        child: _buildBottomBarIcon(
+          MainboardState.supportPoint(),
+          controller.mainboardStore.selectedPage,
+        ),
       ),
     );
   }
 
-  FlatButton _buildChatButton() {
-    return FlatButton(
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      padding: EdgeInsets.only(left: 48.0),
-      onPressed: () => _changePage(MainboardState.chat()),
-      child: _buildBottomBarIcon(
-        MainboardState.chat(),
-        controller.mainboardStore.selectedPage,
+  Widget _buildChatButton() {
+    return Expanded(
+      child: FlatButton(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        onPressed: () => _changePage(MainboardState.chat()),
+        child: _buildBottomBarIcon(
+          MainboardState.chat(),
+          controller.mainboardStore.selectedPage,
+        ),
       ),
     );
   }
 
-  FlatButton _buildComposeButton() {
-    return FlatButton(
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      padding: EdgeInsets.only(right: 48.0),
-      onPressed: () => _changePage(MainboardState.compose()),
-      child: _buildBottomBarIcon(
-        MainboardState.compose(),
-        controller.mainboardStore.selectedPage,
+  Widget _buildComposeButton() {
+    return Expanded(
+      child: FlatButton(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        onPressed: () => _changePage(MainboardState.compose()),
+        child: _buildBottomBarIcon(
+          MainboardState.compose(),
+          controller.mainboardStore.selectedPage,
+        ),
       ),
     );
   }
 
-  FlatButton _buildFeedButton() {
-    return FlatButton(
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      padding: EdgeInsets.only(right: 6.0),
-      onPressed: () => _changePage(MainboardState.feed()),
-      child: _buildBottomBarIcon(
-        MainboardState.feed(),
-        controller.mainboardStore.selectedPage,
+  Widget _buildFeedButton() {
+    return Expanded(
+      child: FlatButton(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        onPressed: () => _changePage(MainboardState.feed()),
+        child: _buildBottomBarIcon(
+          MainboardState.feed(),
+          controller.mainboardStore.selectedPage,
+        ),
       ),
     );
   }
