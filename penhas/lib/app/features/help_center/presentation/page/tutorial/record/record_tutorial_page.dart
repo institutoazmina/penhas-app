@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/quiz/presentation/tutorial/tutorial_page_view_widget.dart';
+import 'package:penhas/app/core/pages/tutorial_page_view_widget.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-class TutorialPage extends StatefulWidget {
-  TutorialPage({Key key}) : super(key: key);
+class RecordTutorialPage extends StatefulWidget {
+  RecordTutorialPage({Key key}) : super(key: key);
 
   @override
-  _TutorialPageState createState() => _TutorialPageState();
+  _RecordTutorialPageState createState() => _RecordTutorialPageState();
 }
 
-class _TutorialPageState extends State<TutorialPage> {
+class _RecordTutorialPageState extends State<RecordTutorialPage> {
   List<TutorialPageViewWidget> _contentPageView = [
     TutorialPageViewWidget(
-      title: 'Garanta sua privacidade',
       description:
-          'Aplique um disfarce de app de signo para esconder o verdadeiro conteúdo do PenhaS.',
+          'Coleta de provas é um passo essencial para sair de uma situação de violência. Por isso, com o PenhaS você pode gravar áudios que sirvam de provas contra o agressor.',
       bodyWidget: Image(
         image: AssetImage(
             'assets/images/stealth_mode_tutorial_image_1/stealth_mode_tutorial_image_1.png'),
@@ -24,9 +23,8 @@ class _TutorialPageState extends State<TutorialPage> {
       ),
     ),
     TutorialPageViewWidget(
-      title: 'Login disfarçado',
       description:
-          'Clique no link "diário astrólogico" para fazer login no aplicativo.',
+          'As gravações ficam salvas em ambiente seguro e você poder acessá-las a qualquer momento em "Minhas gravações".',
       bodyWidget: Image(
         image: AssetImage(
             'assets/images/stealth_mode_tutorial_image_2/stealth_mode_tutorial_image_2.png'),
@@ -36,9 +34,19 @@ class _TutorialPageState extends State<TutorialPage> {
       ),
     ),
     TutorialPageViewWidget(
-      title: 'Feed Anônimo',
       description:
-          'Ao habilitar o modo camuflado o seu feed ficará anônimo para manter o seu perfil sigiloso',
+          'Use o alerta de guardiões quando estiver em situação de violência. Eles receberão um aviso de que você está em risco com informações da sua localização.',
+      bodyWidget: Image(
+        image: AssetImage(
+            'assets/images/stealth_mode_tutorial_image_3/stealth_mode_tutorial_image_3.png'),
+        width: 270,
+        fit: BoxFit.fitWidth,
+        alignment: FractionalOffset.topCenter,
+      ),
+    ),
+    TutorialPageViewWidget(
+      description:
+          'Os áudios gravados no acionamento do botão de pânico ficam disponíveis em "Minhas gravações". Quando estiver segura, decida entre salvar ou descartar essas gravações.',
       bodyWidget: Image(
         image: AssetImage(
             'assets/images/stealth_mode_tutorial_image_3/stealth_mode_tutorial_image_3.png'),

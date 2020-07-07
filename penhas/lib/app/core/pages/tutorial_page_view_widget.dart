@@ -6,7 +6,7 @@ class TutorialPageViewWidget extends StatelessWidget {
   final Widget _bodyWidget;
   const TutorialPageViewWidget({
     Key key,
-    @required String title,
+    String title,
     @required String description,
     @required Widget bodyWidget,
   })  : this._title = title,
@@ -24,7 +24,40 @@ class TutorialPageViewWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Center(
+          _titleBuilder(),
+          SizedBox(height: 30.0),
+          _bodyWidgetBuilder(),
+          SizedBox(height: 30.0),
+          _descriptionBuilder(),
+        ],
+      ),
+    );
+  }
+
+  Text _descriptionBuilder() {
+    return Text(
+      _description,
+      style: TextStyle(
+        fontFamily: 'Lato',
+        fontSize: 18.0,
+        fontWeight: FontWeight.normal,
+        color: Colors.white,
+        letterSpacing: 0.12,
+      ),
+    );
+  }
+
+  Widget _bodyWidgetBuilder() {
+    return SizedBox(
+      child: Center(child: _bodyWidget),
+      height: 290.0,
+    );
+  }
+
+  Widget _titleBuilder() {
+    return _title == null
+        ? Container()
+        : Center(
             child: Text(
               _title,
               style: TextStyle(
@@ -35,25 +68,6 @@ class TutorialPageViewWidget extends StatelessWidget {
                 letterSpacing: 0.15,
               ),
             ),
-          ),
-          SizedBox(height: 30.0),
-          SizedBox(
-            child: Center(child: _bodyWidget),
-            height: 290.0,
-          ),
-          SizedBox(height: 30.0),
-          Text(
-            _description,
-            style: TextStyle(
-              fontFamily: 'Lato',
-              fontSize: 18.0,
-              fontWeight: FontWeight.normal,
-              color: Colors.white,
-              letterSpacing: 0.12,
-            ),
-          ),
-        ],
-      ),
-    );
+          );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:penhas/app/core/pages/tutorial_scale_route.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz/quiz_typedef.dart';
-import 'package:penhas/app/features/quiz/presentation/tutorial/tutorial_page.dart';
-import 'package:penhas/app/features/quiz/presentation/tutorial/tutorial_scale_route.dart';
+import 'package:penhas/app/features/quiz/presentation/tutorial/quiz_tutorial_page.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
@@ -37,7 +37,7 @@ class QuizShowTutorialWidget extends StatelessWidget {
         onPressed: () async {
           await Navigator.push(
             context,
-            TutorialScaleRoute(page: TutorialPage()),
+            TutorialScaleRoute(page: QuizTutorialPage()),
           ).whenComplete(() => onPressed({reference: '1'}));
         },
         shape: kButtonShapeFilled,

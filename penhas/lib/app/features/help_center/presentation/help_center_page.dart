@@ -2,6 +2,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:penhas/app/core/pages/tutorial_scale_route.dart';
+import 'package:penhas/app/features/help_center/presentation/page/tutorial/guardian/guardian_tutorial_page.dart';
+import 'package:penhas/app/features/help_center/presentation/page/tutorial/record/record_tutorial_page.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
@@ -49,7 +52,6 @@ class _HelpCenterPageState
         bottom: 16.0,
       ),
       child: Container(
-        // height: 196,
         decoration: BoxDecoration(
           color: DesignSystemColors.cobaltTwo,
           borderRadius: BorderRadius.only(
@@ -80,7 +82,12 @@ class _HelpCenterPageState
                       Icons.help_outline,
                       color: DesignSystemColors.pumpkinOrange,
                     ),
-                    onPressed: () => print('Ola mundo'),
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        TutorialScaleRoute(page: RecordTutorialPage()),
+                      ).whenComplete(() => print('ola mundo!'));
+                    },
                   )
                 ],
               ),
@@ -113,7 +120,6 @@ class _HelpCenterPageState
         bottom: 16.0,
       ),
       child: Container(
-        // height: 196,
         decoration: BoxDecoration(
           color: DesignSystemColors.cobaltTwo,
           borderRadius: BorderRadius.only(
@@ -144,7 +150,12 @@ class _HelpCenterPageState
                       Icons.help_outline,
                       color: DesignSystemColors.pumpkinOrange,
                     ),
-                    onPressed: () => print('Ola mundo'),
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        TutorialScaleRoute(page: GuardianTutorialPage()),
+                      ).whenComplete(() => print('ola mundo!'));
+                    },
                   )
                 ],
               ),
