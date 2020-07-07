@@ -25,9 +25,9 @@ class TutorialPageViewWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           _titleBuilder(),
-          SizedBox(height: 30.0),
+          _title == null ? Container() : SizedBox(height: 28.0),
           _bodyWidgetBuilder(),
-          SizedBox(height: 30.0),
+          SizedBox(height: 28.0),
           _descriptionBuilder(),
         ],
       ),
@@ -39,10 +39,10 @@ class TutorialPageViewWidget extends StatelessWidget {
       _description,
       style: TextStyle(
         fontFamily: 'Lato',
-        fontSize: 18.0,
+        fontSize: 16.0,
         fontWeight: FontWeight.normal,
         color: Colors.white,
-        letterSpacing: 0.12,
+        letterSpacing: 0.44,
       ),
     );
   }
@@ -50,7 +50,7 @@ class TutorialPageViewWidget extends StatelessWidget {
   Widget _bodyWidgetBuilder() {
     return SizedBox(
       child: Center(child: _bodyWidget),
-      height: 290.0,
+      height: 280.0,
     );
   }
 

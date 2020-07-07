@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/core/pages/tutorial_page_view_widget.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
@@ -13,34 +14,28 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
   List<TutorialPageViewWidget> _contentPageView = [
     TutorialPageViewWidget(
       description:
-          'Aplique um disfarce de app de signo para esconder o verdadeiro conteúdo do PenhaS.',
+          'Guardiões são pessoas de sua confiança que você cadastra para te ajudar em situações de perigo.\nSeus guardiões não precisam ser usuários do PenhaS, pode ser qualquer pessoa desde que ela aceite o convite que será disparado para o número de telefone dela.',
+      bodyWidget: SvgPicture.asset(
+        'assets/images/svg/tutorial/tutorial_guardian_01.svg',
+      ),
+    ),
+    TutorialPageViewWidget(
+      description:
+          'Em situações de emergência, abra a app, clique e segure no símbolo do seu signo para acionar o botão de pânico. Isso enviará um alerta para seus guardiões e durante 15 minutos um áudio será gravado.',
       bodyWidget: Image(
         image: AssetImage(
-            'assets/images/stealth_mode_tutorial_image_1/stealth_mode_tutorial_image_1.png'),
+            'assets/images/tutorial_guardian_2/tutorial_guardian_2.png'),
         width: 270,
         fit: BoxFit.fitWidth,
         alignment: FractionalOffset.topCenter,
       ),
     ),
     TutorialPageViewWidget(
-      title: 'Login disfarçado',
       description:
-          'Clique no link "diário astrólogico" para fazer login no aplicativo.',
+          'Use o alerta de guardiões quando estiver em situação de violência. Eles receberão um aviso de que você está com risco com informações da sua localização.',
       bodyWidget: Image(
         image: AssetImage(
-            'assets/images/stealth_mode_tutorial_image_2/stealth_mode_tutorial_image_2.png'),
-        width: 270,
-        fit: BoxFit.fitWidth,
-        alignment: FractionalOffset.topCenter,
-      ),
-    ),
-    TutorialPageViewWidget(
-      title: 'Feed Anônimo',
-      description:
-          'Ao habilitar o modo camuflado o seu feed ficará anônimo para manter o seu perfil sigiloso',
-      bodyWidget: Image(
-        image: AssetImage(
-            'assets/images/stealth_mode_tutorial_image_3/stealth_mode_tutorial_image_3.png'),
+            'assets/images/tutorial_guardian_3/tutorial_guardian_3.png'),
         width: 270,
         fit: BoxFit.fitWidth,
         alignment: FractionalOffset.topCenter,
@@ -58,6 +53,8 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           leading: IconButton(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
             icon: Icon(Icons.cancel),
             onPressed: () => Navigator.of(context).pop(),
           )),

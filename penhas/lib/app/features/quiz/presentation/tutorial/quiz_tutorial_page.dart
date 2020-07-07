@@ -59,6 +59,8 @@ class _QuizTutorialPageState extends State<QuizTutorialPage> {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           leading: IconButton(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
             icon: Icon(Icons.cancel),
             onPressed: () => Navigator.of(context).pop(),
           )),
