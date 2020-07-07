@@ -15,8 +15,8 @@ class _RecordTutorialPageState extends State<RecordTutorialPage> {
       description:
           'Coleta de provas é um passo essencial para sair de uma situação de violência. Por isso, com o PenhaS você pode gravar áudios que sirvam de provas contra o agressor.',
       bodyWidget: Image(
-        image: AssetImage(
-            'assets/images/stealth_mode_tutorial_image_1/stealth_mode_tutorial_image_1.png'),
+        image:
+            AssetImage('assets/images/tutorial_record_1/tutorial_record_1.png'),
         width: 270,
         fit: BoxFit.fitWidth,
         alignment: FractionalOffset.topCenter,
@@ -26,19 +26,18 @@ class _RecordTutorialPageState extends State<RecordTutorialPage> {
       description:
           'As gravações ficam salvas em ambiente seguro e você poder acessá-las a qualquer momento em "Minhas gravações".',
       bodyWidget: Image(
-        image: AssetImage(
-            'assets/images/stealth_mode_tutorial_image_2/stealth_mode_tutorial_image_2.png'),
-        width: 270,
-        fit: BoxFit.fitWidth,
-        alignment: FractionalOffset.topCenter,
-      ),
+          image: AssetImage(
+              'assets/images/tutorial_record_2/tutorial_record_2.png'),
+          width: 270,
+          fit: BoxFit.fitWidth,
+          alignment: FractionalOffset.bottomCenter),
     ),
     TutorialPageViewWidget(
       description:
           'Use o alerta de guardiões quando estiver em situação de violência. Eles receberão um aviso de que você está em risco com informações da sua localização.',
       bodyWidget: Image(
-        image: AssetImage(
-            'assets/images/stealth_mode_tutorial_image_3/stealth_mode_tutorial_image_3.png'),
+        image:
+            AssetImage('assets/images/tutorial_record_3/tutorial_record_3.png'),
         width: 270,
         fit: BoxFit.fitWidth,
         alignment: FractionalOffset.topCenter,
@@ -48,8 +47,8 @@ class _RecordTutorialPageState extends State<RecordTutorialPage> {
       description:
           'Os áudios gravados no acionamento do botão de pânico ficam disponíveis em "Minhas gravações". Quando estiver segura, decida entre salvar ou descartar essas gravações.',
       bodyWidget: Image(
-        image: AssetImage(
-            'assets/images/stealth_mode_tutorial_image_3/stealth_mode_tutorial_image_3.png'),
+        image:
+            AssetImage('assets/images/tutorial_record_4/tutorial_record_4.png'),
         width: 270,
         fit: BoxFit.fitWidth,
         alignment: FractionalOffset.topCenter,

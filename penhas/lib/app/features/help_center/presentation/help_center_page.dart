@@ -33,8 +33,8 @@ class _HelpCenterPageState
               children: <Widget>[
                 _actionBuilder(),
                 _warnningBuilder(),
-                _guardianCardBuilder(),
-                _recordCardBuilder(),
+                _guardianCardBuilder(context),
+                _recordCardBuilder(context),
               ],
             ),
           ),
@@ -43,7 +43,7 @@ class _HelpCenterPageState
     );
   }
 
-  Padding _recordCardBuilder() {
+  Padding _recordCardBuilder(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
         top: 4.0,
@@ -100,6 +100,7 @@ class _HelpCenterPageState
               SizedBox(
                 height: 40,
                 child: FloatingActionButton(
+                    heroTag: 'recordCard_1',
                     backgroundColor: DesignSystemColors.easterPurple,
                     child: Text('Meus guardiões'),
                     onPressed: null,
@@ -112,7 +113,7 @@ class _HelpCenterPageState
     );
   }
 
-  Padding _guardianCardBuilder() {
+  Padding _guardianCardBuilder(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
         left: 16.0,
@@ -173,6 +174,7 @@ class _HelpCenterPageState
                     child: SizedBox(
                       height: 40,
                       child: FloatingActionButton(
+                        heroTag: 'guardian_1',
                         backgroundColor: DesignSystemColors.cobaltTwo,
                         child: Text('Novo guardião'),
                         onPressed: null,
@@ -188,6 +190,7 @@ class _HelpCenterPageState
                     child: SizedBox(
                       height: 40,
                       child: FloatingActionButton(
+                          heroTag: 'guardian_2',
                           backgroundColor: DesignSystemColors.easterPurple,
                           child: Text('Meus guardiões'),
                           onPressed: null,
