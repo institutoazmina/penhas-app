@@ -52,6 +52,16 @@ dev_dependencies:
   mockito: ^4.1.1
   mobx_codegen: ^1.0.3
   build_runner: ^1.8.0
+  flutter_launcher_icons: ^0.7.5
+  flutter_launcher_name: ^0.0.1
+
+flutter_icons:
+  ios: true
+  android: true
+  image_path: 'assets/images/icon/icon.png'
+
+flutter_launcher_name:
+  name: 'PenhaS'
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -146,3 +156,5 @@ flutter:
 
 scripts:
   mobx: flutter pub run build_runner watch --delete-conflicting-outputs
+  icon: flutter pub run flutter_launcher_icons:main
+  name: flutter pub run flutter_launcher_name:main
