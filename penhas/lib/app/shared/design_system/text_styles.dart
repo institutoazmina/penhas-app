@@ -119,3 +119,38 @@ const kTextStyleHelpCenterTitle = TextStyle(
     fontSize: 20.0,
     letterSpacing: 0.63,
     fontWeight: FontWeight.bold);
+
+const kTextStyleHelpCenterPanicButonHelp = TextStyle(
+    color: DesignSystemColors.pumpkinOrange,
+    fontFamily: 'Lato',
+    fontSize: 14.0,
+    letterSpacing: 0.45,
+    fontWeight: FontWeight.bold);
+
+const kTextStyleHelpCenterActionCallPolice = TextStyle(
+    color: DesignSystemColors.pumpkinOrange,
+    fontFamily: 'Lato',
+    fontSize: 12.0,
+    letterSpacing: 0.3,
+    fontWeight: FontWeight.bold);
+
+const kTextStyleHelpCenterActionGuardian = TextStyle(
+    color: DesignSystemColors.easterPurple,
+    fontFamily: 'Lato',
+    fontSize: 12.0,
+    letterSpacing: 0.3,
+    fontWeight: FontWeight.bold);
+
+const kTextStyleHelpCenterActionRecord = TextStyle(
+    color: DesignSystemColors.pinky,
+    fontFamily: 'Lato',
+    fontSize: 12.0,
+    letterSpacing: 0.3,
+    fontWeight: FontWeight.bold);
+
+const kTextStyleHelpCenterActionHeader = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 20.0,
+    letterSpacing: 0.6,
+    color: Colors.white,
+    fontWeight: FontWeight.bold);

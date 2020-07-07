@@ -85,7 +85,9 @@ flutter:
    - assets/images/svg/reset_password/recovery_password_step_1.svg
    - assets/images/svg/reset_password/recovery_password_step_2.svg
    - assets/images/svg/reset_password/recovery_password_step_3.svg
-   #  - images/a_dot_ham.jpeg
+   - assets/images/svg/help_center/help_center_call_police.svg
+   - assets/images/svg/help_center/help_center_guardian.svg
+   - assets/images/svg/help_center/help_center_record.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
