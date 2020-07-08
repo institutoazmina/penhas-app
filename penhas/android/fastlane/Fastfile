@@ -28,6 +28,7 @@ platform :android do
       app: "1:51928851553:android:e8d613020f76da0b663620",
       release_notes_file: "../deploy/beta/release_notes",
       testers_file: "../deploy/beta/testers.android",
+      groups: "androidtestersgroup",
       apk_path: "../build/app/outputs/apk/release/app-release.apk"
     )
   end
