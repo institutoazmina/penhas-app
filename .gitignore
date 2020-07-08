@@ -33,6 +33,9 @@ doc/api/
 .pub-cache/
 .pub/
 
+# Fastlane
+**/fastlane/report.xml
+
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle

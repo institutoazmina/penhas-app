@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd ../android
+fastlane android_beta_app
+
+cd ../ios
+fastlane ios_beta_app
