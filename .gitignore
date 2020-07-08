@@ -57,6 +57,9 @@ doc/api/
 # Fastlane.swift runner binary
 **/fastlane/FastlaneRunner
 
+# Fastlane sigh certificates
+**/ios/certificates
+
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
