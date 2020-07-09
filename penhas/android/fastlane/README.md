@@ -16,9 +16,9 @@ or alternatively using `brew install fastlane`
 
 # Available Actions
 ## Android
-### android android_beta_app
+### android distribute_android_beta
 ```
-fastlane android android_beta_app
+fastlane android distribute_android_beta
 ```
 Ambiente Android do PenhaS
 

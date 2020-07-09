@@ -16,11 +16,21 @@ or alternatively using `brew install fastlane`
 
 # Available Actions
 ## iOS
-### ios ios_beta_app
+### ios update_profile
 ```
-fastlane ios ios_beta_app
+fastlane ios update_profile
 ```
 Ambiente iOS do PenhaS
+### ios sync_device_info
+```
+fastlane ios sync_device_info
+```
+
+### ios distribute_iOS_beta
+```
+fastlane ios distribute_iOS_beta
+```
+
 
 ----
 

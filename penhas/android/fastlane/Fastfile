@@ -17,12 +17,7 @@ default_platform(:android)
 
 platform :android do
   desc "Ambiente Android do PenhaS"
-  gradle(
-    task: 'assemble',
-    build_type: 'Release'
-  )
-
-  lane :android_beta_app do 
+  lane :distribute_android_beta do 
     firebase_app_distribution(
       firebase_cli_path: "/usr/local/bin/firebase",
       app: "1:51928851553:android:e8d613020f76da0b663620",

@@ -17,21 +17,40 @@ default_platform(:ios)
 
 platform :ios do
   desc "Ambiente iOS do PenhaS"
-  lane :ios_beta_app do
-      build_app(
-          scheme: "Runner",
-          archive_path: "./build/Runner.xcarchive",
-          export_method: "development",
-          output_directory: "./build/Runner"
-      )
-      firebase_app_distribution(
-          app: "1:51928851553:ios:7c0749cc33a54b43663620",
-          release_notes_file: "../deploy/beta/release_notes",
-          testers_file: "../deploy/beta/testers.ios",
-          groups: "iostestersgroup",
-          firebase_cli_path: "/usr/local/bin/firebase",
-          ipa_path: "./build/Runner/Runner.ipa",
-          debug: true
-      )
+  lane :update_profile do
+    sigh(
+      provisioning_name: "PenhaS AdHoc",
+      force: true,
+      adhoc: true,
+      output_path: './certificates'
+    )
+  end
+
+  lane :sync_device_info do
+    register_devices(
+      devices_file: "../deploy/beta/device_file.ios"
+    )
+  end
+
+  lane :distribute_iOS_beta do
+    sync_device_info
+    update_profile
+
+    gym(
+      scheme: "Runner",
+      archive_path: "./build/Runner.xcarchive",
+      export_method: "ad-hoc",
+      output_directory: "./build/Runner"
+    )
+
+    firebase_app_distribution(
+        app: "1:51928851553:ios:7c0749cc33a54b43663620",
+        release_notes_file: "../deploy/beta/release_notes",
+        testers_file: "../deploy/beta/testers.ios",
+        groups: "iostestersgroup",
+        firebase_cli_path: "/usr/local/bin/firebase",
+        ipa_path: "./build/Runner/Runner.ipa",
+      #   debug: true
+    )
   end
 end

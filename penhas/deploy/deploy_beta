@@ -1,7 +1,10 @@
 #!/bin/bash
 
-cd ../android
-fastlane android_beta_app
-
 cd ../ios
-fastlane ios_beta_app
+  flutter build ios --release --no-codesign
+  fastlane distribute_iOS_beta
+
+cd ../android
+  flutter build apk --release
+  fastlane distribute_android_beta
+
