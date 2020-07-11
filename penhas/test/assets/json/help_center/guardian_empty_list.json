@@ -1,0 +1,27 @@
+{
+  "guards": [
+    {
+      "meta": {
+        "can_resend": 0,
+        "delete_warning": "",
+        "description": "Guardiões que recebem seus pedidos de socorro.",
+        "header": "Guardiões",
+        "layout": "accepted"
+      },
+      "rows": []
+    },
+    {
+      "meta": {
+        "can_resend": 0,
+        "delete_warning": "",
+        "description": "Guardiões que ainda não aceitaram seu convite.",
+        "header": "Pendentes",
+        "layout": "pending"
+      },
+      "rows": []
+    }
+  ],
+  "remaing_invites": 5
+}
+
+

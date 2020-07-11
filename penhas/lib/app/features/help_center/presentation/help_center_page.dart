@@ -223,7 +223,7 @@ class _HelpCenterPageState
               Expanded(
                 flex: 6,
                 child: Text(
-                  'Se o agressor estiver com arma de fogo ou objetos que possam machucar, chame a polícia!',
+                  'Se o agressor estiver com arma de fogo ou objetos que possam machucar, chame a pol��cia!',
                   style: kTextStyleRegisterSubtitleLabelStyle,
                 ),
               ),
@@ -240,99 +240,109 @@ class _HelpCenterPageState
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Container(
-            width: 95,
-            height: 95,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0),
-              border:
-                  Border.all(width: 2, color: DesignSystemColors.pumpkinOrange),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 10),
-                  child: SizedBox(
-                    height: 41,
-                    width: 49,
-                    child: SvgPicture.asset(
-                        'assets/images/svg/help_center/help_center_call_police.svg'),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 6.0, bottom: 6.0),
-                  child: Text(
-                    'Ligar para a policia',
-                    style: kTextStyleHelpCenterActionCallPolice,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                  ),
-                )
-              ],
+          _callPoliceAction(),
+          _callGuardianAction(),
+          _callRecordAction()
+        ],
+      ),
+    );
+  }
+
+  Container _callRecordAction() {
+    return Container(
+      width: 95,
+      height: 95,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        border: Border.all(width: 2, color: DesignSystemColors.pinky),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(top: 10),
+            child: SizedBox(
+              height: 41,
+              width: 49,
+              child: SvgPicture.asset(
+                  'assets/images/svg/help_center/help_center_record.svg'),
             ),
           ),
-          Container(
-            width: 95,
-            height: 95,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0),
-              border:
-                  Border.all(width: 2, color: DesignSystemColors.easterPurple),
+          Padding(
+            padding: EdgeInsets.only(top: 6.0, bottom: 6.0),
+            child: Text(
+              'Gravar áudio',
+              style: kTextStyleHelpCenterActionRecord,
+              maxLines: 2,
+              textAlign: TextAlign.center,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 10),
-                  child: SizedBox(
-                    height: 41,
-                    width: 49,
-                    child: SvgPicture.asset(
-                        'assets/images/svg/help_center/help_center_guardian.svg'),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 6.0, bottom: 6.0),
-                  child: Text(
-                    'Alertar guardiões',
-                    style: kTextStyleHelpCenterActionGuardian,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                  ),
-                )
-              ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Container _callGuardianAction() {
+    return Container(
+      width: 95,
+      height: 95,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        border: Border.all(width: 2, color: DesignSystemColors.easterPurple),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(top: 10),
+            child: SizedBox(
+              height: 41,
+              width: 49,
+              child: SvgPicture.asset(
+                  'assets/images/svg/help_center/help_center_guardian.svg'),
             ),
           ),
-          Container(
-            width: 95,
-            height: 95,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0),
-              border: Border.all(width: 2, color: DesignSystemColors.pinky),
+          Padding(
+            padding: EdgeInsets.only(top: 6.0, bottom: 6.0),
+            child: Text(
+              'Alertar guardiões',
+              style: kTextStyleHelpCenterActionGuardian,
+              maxLines: 2,
+              textAlign: TextAlign.center,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 10),
-                  child: SizedBox(
-                    height: 41,
-                    width: 49,
-                    child: SvgPicture.asset(
-                        'assets/images/svg/help_center/help_center_record.svg'),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 6.0, bottom: 6.0),
-                  child: Text(
-                    'Gravar áudio',
-                    style: kTextStyleHelpCenterActionRecord,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                  ),
-                )
-              ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _callPoliceAction() {
+    return Container(
+      width: 95,
+      height: 95,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        border: Border.all(width: 2, color: DesignSystemColors.pumpkinOrange),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(top: 10),
+            child: SizedBox(
+              height: 41,
+              width: 49,
+              child: SvgPicture.asset(
+                  'assets/images/svg/help_center/help_center_call_police.svg'),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 6.0, bottom: 6.0),
+            child: Text(
+              'Ligar para a policia',
+              style: kTextStyleHelpCenterActionCallPolice,
+              maxLines: 2,
+              textAlign: TextAlign.center,
             ),
           )
         ],
