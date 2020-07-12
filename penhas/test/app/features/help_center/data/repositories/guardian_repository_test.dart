@@ -62,9 +62,15 @@ void main() {
     });
     test('should get a list of guardians', () async {
       // arrange
+      final jsonSession =
+          await JsonUtil.getJson(from: 'help_center/guardian_list.json');
+      final sessionModel = GuardianSessionModel.fromJson(jsonSession);
+      when(dataSource.fetch()).thenAnswer((_) async => sessionModel);
+      final expected = right(sessionModel);
       // act
+      final receceived = await sut.fetch();
       // assert
-      expect(1, 0);
+      expect(receceived, expected);
     });
     test('should get ok message for a valid guardian inserted', () async {
       // arrange
