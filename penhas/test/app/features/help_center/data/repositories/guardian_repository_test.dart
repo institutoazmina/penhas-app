@@ -116,9 +116,22 @@ void main() {
     });
     test('should update guardian name', () async {
       // arrange
+      final jsonSession =
+          await JsonUtil.getJson(from: 'help_center/guardian_update_name.json');
+      final guardian = GuardianContactEntity(
+        id: 1,
+        mobile: '(11) 91910101',
+        name: 'Maria (PenhaS)',
+        status: 'pending',
+      );
+
+      final response = ValidField.fromJson(jsonSession);
+      final expected = right(response);
+      when(dataSource.update(any)).thenAnswer((_) async => response);
       // act
+      final received = await sut.update(guardian);
       // assert
-      expect(1, 0);
+      expect(received, expected);
     });
     test('should remove one of my guardian', () async {
       // arrange

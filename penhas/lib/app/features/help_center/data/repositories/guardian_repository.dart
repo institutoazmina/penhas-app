@@ -10,11 +10,13 @@ import 'package:penhas/app/features/help_center/domain/entities/guardian_session
 abstract class IGuardianRepository {
   Future<Either<Failure, GuardianSessioEntity>> fetch();
   Future<Either<Failure, ValidField>> create(GuardianContactEntity guardian);
+  Future<Either<Failure, ValidField>> update(GuardianContactEntity guardian);
 }
 
 abstract class IGuardianDataSource {
   Future<GuardianSessionModel> fetch();
   Future<ValidField> create(GuardianContactEntity guardian);
+  Future<ValidField> update(GuardianContactEntity guardian);
 }
 
 @immutable
@@ -43,6 +45,17 @@ class GuardianRepository extends IGuardianRepository {
       GuardianContactEntity guardian) async {
     try {
       final result = await _dataSource.create(guardian);
+      return right(result);
+    } catch (e) {
+      return left(await _handleError(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ValidField>> update(
+      GuardianContactEntity guardian) async {
+    try {
+      final result = await _dataSource.update(guardian);
       return right(result);
     } catch (e) {
       return left(await _handleError(e));
