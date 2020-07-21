@@ -154,3 +154,10 @@ const kTextStyleHelpCenterActionHeader = TextStyle(
     letterSpacing: 0.6,
     color: Colors.white,
     fontWeight: FontWeight.bold);
+
+const kTextStyleHelpCenterButtonLabel = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 12.0,
+    letterSpacing: 0.4,
+    color: Colors.white,
+    fontWeight: FontWeight.bold);

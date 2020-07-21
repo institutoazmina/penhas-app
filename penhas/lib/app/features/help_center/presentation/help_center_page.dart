@@ -102,7 +102,8 @@ class _HelpCenterPageState
                 child: FloatingActionButton(
                     heroTag: 'recordCard_1',
                     backgroundColor: DesignSystemColors.easterPurple,
-                    child: Text('Meus guardiões'),
+                    child: Text('Minha gravações',
+                        style: kTextStyleHelpCenterButtonLabel),
                     onPressed: null,
                     shape: kButtonShapeOutlinePurple),
               ),
@@ -176,7 +177,8 @@ class _HelpCenterPageState
                       child: FloatingActionButton(
                         heroTag: 'guardian_1',
                         backgroundColor: DesignSystemColors.cobaltTwo,
-                        child: Text('Novo guardião'),
+                        child: Text('Novo guardião',
+                            style: kTextStyleHelpCenterButtonLabel),
                         onPressed: null,
                         shape: kButtonShapeOutlineWhite,
                       ),
@@ -192,7 +194,10 @@ class _HelpCenterPageState
                       child: FloatingActionButton(
                           heroTag: 'guardian_2',
                           backgroundColor: DesignSystemColors.easterPurple,
-                          child: Text('Meus guardiões'),
+                          child: Text(
+                            'Meus guardiões',
+                            style: kTextStyleHelpCenterButtonLabel,
+                          ),
                           onPressed: null,
                           shape: kButtonShapeOutlinePurple),
                     ),
@@ -223,7 +228,7 @@ class _HelpCenterPageState
               Expanded(
                 flex: 6,
                 child: Text(
-                  'Se o agressor estiver com arma de fogo ou objetos que possam machucar, chame a pol��cia!',
+                  'Se o agressor estiver com arma de fogo ou objetos que possam machucar, chame a polícia!',
                   style: kTextStyleRegisterSubtitleLabelStyle,
                 ),
               ),
