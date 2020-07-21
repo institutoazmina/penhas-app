@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/network_info.dart';
@@ -8,10 +9,12 @@ import 'package:penhas/app/features/help_center/domain/entities/guardian_session
 
 abstract class IGuardianRepository {
   Future<Either<Failure, GuardianSessioEntity>> fetch();
+  Future<Either<Failure, ValidField>> create(GuardianContactEntity guardian);
 }
 
 abstract class IGuardianDataSource {
   Future<GuardianSessionModel> fetch();
+  Future<ValidField> create(GuardianContactEntity guardian);
 }
 
 @immutable
@@ -29,6 +32,17 @@ class GuardianRepository extends IGuardianRepository {
   Future<Either<Failure, GuardianSessioEntity>> fetch() async {
     try {
       final result = await _dataSource.fetch();
+      return right(result);
+    } catch (e) {
+      return left(await _handleError(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ValidField>> create(
+      GuardianContactEntity guardian) async {
+    try {
+      final result = await _dataSource.create(guardian);
       return right(result);
     } catch (e) {
       return left(await _handleError(e));

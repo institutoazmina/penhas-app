@@ -80,6 +80,18 @@ class GuardianContactEntity extends Equatable {
     @required this.status,
   });
 
+  factory GuardianContactEntity.createRequest({
+    @required String name,
+    @required String mobile,
+  }) {
+    return GuardianContactEntity(
+      id: null,
+      status: null,
+      name: name,
+      mobile: mobile,
+    );
+  }
+
   @override
   List<Object> get props => [
         id,

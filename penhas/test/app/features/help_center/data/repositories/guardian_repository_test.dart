@@ -1,6 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
+import 'package:penhas/app/core/error/exceptions.dart';
+import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/help_center/data/models/guardian_session_model.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
@@ -74,15 +77,42 @@ void main() {
     });
     test('should get ok message for a valid guardian inserted', () async {
       // arrange
+      final jsonSession = await JsonUtil.getJson(
+          from: 'help_center/guardian_create_successful.json');
+      final guardian = GuardianContactEntity.createRequest(
+        name: 'Maria',
+        mobile: '1191910101',
+      );
+      final response = ValidField.fromJson(jsonSession);
+      final expected = right(response);
+      when(dataSource.create(any)).thenAnswer((_) async => response);
       // act
+      final received = await sut.create(guardian);
       // assert
-      expect(1, 0);
+      expect(received, expected);
     });
     test('should get invalid message for a invalid number', () async {
       // arrange
+      final bodyContent = await JsonUtil.getJson(
+          from: 'help_center/guardian_bad_celular_number.json');
+      final guardian = GuardianContactEntity.createRequest(
+        name: 'Maria',
+        mobile: '91910101',
+      );
+      final expected = left(
+        ServerSideFormFieldValidationFailure(
+          error: bodyContent['error'],
+          field: bodyContent['field'],
+          message: bodyContent['message'],
+          reason: bodyContent['reason'],
+        ),
+      );
+      when(dataSource.create(any))
+          .thenThrow(ApiProviderException(bodyContent: bodyContent));
       // act
+      final received = await sut.create(guardian);
       // assert
-      expect(1, 0);
+      expect(received, expected);
     });
     test('should update guardian name', () async {
       // arrange

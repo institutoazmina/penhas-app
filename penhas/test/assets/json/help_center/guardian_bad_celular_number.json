@@ -1,0 +1,6 @@
+{
+  "error": "parser_error",
+  "field": "celular",
+  "message": "Não conseguimos decodificar o número enviado. Lembre-se de incluir o DDD para Brasil.\nPara números internacionais inicie com +código-do-país.",
+  "reason": "invalid"
+}
