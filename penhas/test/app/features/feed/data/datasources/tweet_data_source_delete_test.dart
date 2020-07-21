@@ -81,7 +81,6 @@ void main() {
         // arrange
         final endPointPath = '/me/tweets';
         final queryParameters = {'id': requestOption.tweetId};
-
         final headers = await _setUpHttpHeader();
         final request = _setuHttpRequest(endPointPath, queryParameters);
         _setUpMockPostHttpClientSuccess204();

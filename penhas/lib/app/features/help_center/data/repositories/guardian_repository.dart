@@ -11,12 +11,14 @@ abstract class IGuardianRepository {
   Future<Either<Failure, GuardianSessioEntity>> fetch();
   Future<Either<Failure, ValidField>> create(GuardianContactEntity guardian);
   Future<Either<Failure, ValidField>> update(GuardianContactEntity guardian);
+  Future<Either<Failure, ValidField>> delete(GuardianContactEntity guardian);
 }
 
 abstract class IGuardianDataSource {
   Future<GuardianSessionModel> fetch();
   Future<ValidField> create(GuardianContactEntity guardian);
   Future<ValidField> update(GuardianContactEntity guardian);
+  Future<ValidField> delete(GuardianContactEntity guardian);
 }
 
 @immutable
@@ -56,6 +58,17 @@ class GuardianRepository extends IGuardianRepository {
       GuardianContactEntity guardian) async {
     try {
       final result = await _dataSource.update(guardian);
+      return right(result);
+    } catch (e) {
+      return left(await _handleError(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ValidField>> delete(
+      GuardianContactEntity guardian) async {
+    try {
+      final result = await _dataSource.delete(guardian);
       return right(result);
     } catch (e) {
       return left(await _handleError(e));
