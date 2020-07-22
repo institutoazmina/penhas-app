@@ -54,16 +54,15 @@ void main() {
     );
   }
 
-  PostExpectation<Future<http.Response>> _mockPostRequest() {
-    return when(apiClient.post(
+  PostExpectation<Future<http.Response>> _mockPutRequest() {
+    return when(apiClient.put(
       any,
       headers: anyNamed('headers'),
-      body: anyNamed('body'),
     ));
   }
 
-  void _setUpMockPostHttpClientSuccess200(String bodyContent) {
-    _mockPostRequest().thenAnswer(
+  void _setUpMockPutHttpClientSuccess200(String bodyContent) {
+    _mockPutRequest().thenAnswer(
       (_) async => http.Response(
         bodyContent,
         200,
@@ -82,41 +81,41 @@ void main() {
 
       setUp(() async {
         bodyContent = JsonUtil.getStringSync(
-            from: 'help_center/guardian_create_successful.json');
-        guardian = GuardianContactEntity.createRequest(
+            from: 'help_center/guardian_update_name.json');
+        guardian = GuardianContactEntity(
+          id: 1,
           name: 'Maria',
           mobile: '1191910101',
+          status: 'pending',
         );
       });
-
       group('create()', () {
         test(
-          'should perform a POST with X-API-Key',
+          'should perform a PUT with X-API-Key',
           () async {
             // arrange
-            final endPointPath = '/me/guardioes';
+            final endPointPath = '/me/guardioes/${guardian.id}';
             final headers = await _setUpHttpHeader();
             final request = _setuHttpRequest(endPointPath, {
               'nome': guardian.name,
-              'celular': guardian.mobile,
             });
-            _setUpMockPostHttpClientSuccess200(bodyContent);
+            _setUpMockPutHttpClientSuccess200(bodyContent);
             // act
-            await dataSource.create(guardian);
+            await dataSource.update(guardian);
             // assert
-            verify(apiClient.post(request, headers: headers));
+            verify(apiClient.put(request, headers: headers));
           },
         );
         test(
           'should get a valid ValidField for a successful request',
           () async {
             // arrange
-            _setUpMockPostHttpClientSuccess200(bodyContent);
+            _setUpMockPutHttpClientSuccess200(bodyContent);
             final jsonData = await JsonUtil.getJson(
-                from: 'help_center/guardian_create_successful.json');
+                from: 'help_center/guardian_update_name.json');
             final expected = ValidField.fromJson(jsonData);
             // act
-            final received = await dataSource.create(guardian);
+            final received = await dataSource.update(guardian);
             // assert
             expect(expected, received);
           },

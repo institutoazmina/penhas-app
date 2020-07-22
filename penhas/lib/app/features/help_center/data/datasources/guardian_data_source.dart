@@ -69,12 +69,30 @@ class GuardianDataSource implements IGuardianDataSource {
   }
 
   @override
-  Future<ValidField> delete(GuardianContactEntity guardian) {
-    throw UnimplementedError();
+  Future<ValidField> update(GuardianContactEntity guardian) async {
+    final httpHeader = await _setupHttpHeader();
+    final httpRequest = await _setupHttpRequest(
+      path: '/me/guardioes/${guardian.id}',
+      queryParameters: {
+        'nome': guardian.name,
+      },
+    );
+    final response = await _apiClient.put(
+      httpRequest,
+      headers: httpHeader,
+    );
+
+    if (_successfulResponse.contains(response.statusCode)) {
+      return ValidField.fromJson(json.decode(response.body));
+    } else if (_invalidSessionCode.contains(response.statusCode)) {
+      throw ApiProviderSessionExpection();
+    } else {
+      throw ApiProviderException(bodyContent: json.decode(response.body));
+    }
   }
 
   @override
-  Future<ValidField> update(GuardianContactEntity guardian) {
+  Future<ValidField> delete(GuardianContactEntity guardian) {
     throw UnimplementedError();
   }
 
