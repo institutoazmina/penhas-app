@@ -82,35 +82,36 @@ void main() {
             JsonUtil.getStringSync(from: 'help_center/guardian_list.json');
       });
 
-      test(
-        'should perform a GET with X-API-Key',
-        () async {
-          // arrange
-          final endPointPath = '/me/guardioes';
-          final headers = await _setUpHttpHeader();
-          final request = _setuHttpRequest(endPointPath, {});
-          _setUpMockGetHttpClientSuccess200(bodyContent);
-          // act
-          await dataSource.fetch();
-          // assert
-          verify(apiClient.get(request, headers: headers));
-        },
-      );
-
-      test(
-        'should get a valid GuardianSession for a successful request',
-        () async {
-          // arrange
-          _setUpMockGetHttpClientSuccess200(bodyContent);
-          final jsonData =
-              await JsonUtil.getJson(from: 'help_center/guardian_list.json');
-          final expected = GuardianSessionModel.fromJson(jsonData);
-          // act
-          final received = await dataSource.fetch();
-          // assert
-          expect(expected, received);
-        },
-      );
+      group('fetch', () {
+        test(
+          'should perform a GET with X-API-Key',
+          () async {
+            // arrange
+            final endPointPath = '/me/guardioes';
+            final headers = await _setUpHttpHeader();
+            final request = _setuHttpRequest(endPointPath, {});
+            _setUpMockGetHttpClientSuccess200(bodyContent);
+            // act
+            await dataSource.fetch();
+            // assert
+            verify(apiClient.get(request, headers: headers));
+          },
+        );
+        test(
+          'should get a valid GuardianSession for a successful request',
+          () async {
+            // arrange
+            _setUpMockGetHttpClientSuccess200(bodyContent);
+            final jsonData =
+                await JsonUtil.getJson(from: 'help_center/guardian_list.json');
+            final expected = GuardianSessionModel.fromJson(jsonData);
+            // act
+            final received = await dataSource.fetch();
+            // assert
+            expect(expected, received);
+          },
+        );
+      });
     },
   );
 }
