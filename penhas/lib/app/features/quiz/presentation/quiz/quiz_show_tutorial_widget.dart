@@ -38,7 +38,9 @@ class QuizShowTutorialWidget extends StatelessWidget {
           await Navigator.push(
             context,
             TutorialScaleRoute(page: QuizTutorialPage()),
-          ).whenComplete(() => onPressed({reference: '1'}));
+          ).then(
+            (value) => onPressed({reference: value ? '1' : '0'}),
+          );
         },
         shape: kButtonShapeFilled,
         child: Text(

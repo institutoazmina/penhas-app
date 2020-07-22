@@ -62,7 +62,7 @@ class _QuizTutorialPageState extends State<QuizTutorialPage> {
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             icon: Icon(Icons.cancel),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => Navigator.of(context).pop(false),
           )),
       body: SafeArea(
         child: Padding(
@@ -121,7 +121,7 @@ class _QuizTutorialPageState extends State<QuizTutorialPage> {
           isLastPage ? _dispose() : _nextPage();
         },
         child: Text(
-          isLastPage ? "Obrigado" : "Próximo",
+          isLastPage ? "Habilitar" : "Próximo",
           style: TextStyle(
             fontFamily: 'Lato',
             fontSize: 16.0,
@@ -142,7 +142,7 @@ class _QuizTutorialPageState extends State<QuizTutorialPage> {
   }
 
   void _dispose() {
-    Navigator.of(context).pop();
+    Navigator.of(context).pop(true);
   }
 
   List<Widget> _buildPageIndicator() {
