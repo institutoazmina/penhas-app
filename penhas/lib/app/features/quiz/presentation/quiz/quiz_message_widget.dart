@@ -19,9 +19,9 @@ class QuizMessageWidget extends StatelessWidget {
         ? EdgeInsets.only(left: 36.0, right: 12.0, bottom: 8.0, top: 8.0)
         : EdgeInsets.only(left: 12.0, right: 36.0, bottom: 8.0, top: 8.0);
 
-    EdgeInsetsGeometry padding = EdgeInsets.symmetric(
-      horizontal: 8.0,
-    );
+    EdgeInsetsGeometry padding = isDisplayTextResponse
+        ? EdgeInsets.only(left: 18.0, right: 8.0, bottom: 10.0, top: 10.0)
+        : EdgeInsets.only(left: 8.0, right: 18.0, bottom: 10.0, top: 10.0);
 
     Color color = isDisplayTextResponse
         ? DesignSystemColors.ligthPurple
@@ -46,6 +46,7 @@ class QuizMessageWidget extends StatelessWidget {
         padding: padding,
         decoration: BoxDecoration(color: color, borderRadius: borderRadius),
         child: Container(
+          constraints: BoxConstraints(minWidth: 60.0),
           child: HtmlWidget(
             message.content,
             textStyle: TextStyle(fontSize: 15.0, color: textColor),
