@@ -1,9 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/help_center/data/datasources/guardian_data_source.dart';
 import 'package:penhas/app/features/help_center/data/models/guardian_session_model.dart';
+import 'package:penhas/app/features/help_center/domain/entities/guardian_session_entity.dart';
 
 import '../../../../../utils/json_util.dart';
 
@@ -53,15 +55,16 @@ void main() {
     );
   }
 
-  PostExpectation<Future<http.Response>> _mockGetRequest() {
-    return when(apiClient.get(
+  PostExpectation<Future<http.Response>> _mockPostRequest() {
+    return when(apiClient.post(
       any,
       headers: anyNamed('headers'),
+      body: anyNamed('body'),
     ));
   }
 
-  void _setUpMockGetHttpClientSuccess200(String bodyContent) {
-    _mockGetRequest().thenAnswer(
+  void _setUpMockPostHttpClientSuccess200(String bodyContent) {
+    _mockPostRequest().thenAnswer(
       (_) async => http.Response(
         bodyContent,
         200,
@@ -76,37 +79,45 @@ void main() {
     'GuardianDataSource',
     () {
       String bodyContent;
+      GuardianContactEntity guardian;
 
       setUp(() async {
-        bodyContent =
-            JsonUtil.getStringSync(from: 'help_center/guardian_list.json');
+        bodyContent = JsonUtil.getStringSync(
+            from: 'help_center/guardian_create_successful.json');
+        guardian = GuardianContactEntity.createRequest(
+          name: 'Maria',
+          mobile: '1191910101',
+        );
       });
 
-      group('fetch()', () {
+      group('create()', () {
         test(
-          'should perform a GET with X-API-Key',
+          'should perform a POST with X-API-Key',
           () async {
             // arrange
             final endPointPath = '/me/guardioes';
             final headers = await _setUpHttpHeader();
-            final request = _setuHttpRequest(endPointPath, {});
-            _setUpMockGetHttpClientSuccess200(bodyContent);
+            final request = _setuHttpRequest(endPointPath, {
+              'nome': guardian.name,
+              'celular': guardian.mobile,
+            });
+            _setUpMockPostHttpClientSuccess200(bodyContent);
             // act
-            await dataSource.fetch();
+            await dataSource.create(guardian);
             // assert
-            verify(apiClient.get(request, headers: headers));
+            verify(apiClient.post(request, headers: headers));
           },
         );
         test(
-          'should get a valid GuardianSession for a successful request',
+          'should get a valid ValidField for a successful request',
           () async {
             // arrange
-            _setUpMockGetHttpClientSuccess200(bodyContent);
-            final jsonData =
-                await JsonUtil.getJson(from: 'help_center/guardian_list.json');
-            final expected = GuardianSessionModel.fromJson(jsonData);
+            _setUpMockPostHttpClientSuccess200(bodyContent);
+            final jsonData = await JsonUtil.getJson(
+                from: 'help_center/guardian_create_successful.json');
+            final expected = ValidField.fromJson(jsonData);
             // act
-            final received = await dataSource.fetch();
+            final received = await dataSource.create(guardian);
             // assert
             expect(expected, received);
           },
