@@ -1,13 +1,7 @@
-* Versão em ambiente de desenvolvimento
-* Fluxo :
-  - Authenticação
-    Fluxo de authenticação complexo com Login, recuperação de senha e a autenticação propriamente dita.
+* Builder 8
+* Bugfixes:
+  - Corrigido textos na tela 'Preciso de ajuda'
+  - Correção da margem nos textos do chat no Quiz
+  - Informa o server quando o usuário aborta o tutorial 'Modo anônimo', para não ativar o modo anônimo.
 
-  - Quiz
-    Chat do quiz obedecendo interação enviado pelo servidor
-
-  - Feed
-    Todo fluxo relacionado ao 'tweet' como: listagem, paginação, curtir, comentar, apagar, denunciar, filtros e categoria
-
-  - Socorro
-    Tela inicial, com os tutoriais
+* Fluxo
