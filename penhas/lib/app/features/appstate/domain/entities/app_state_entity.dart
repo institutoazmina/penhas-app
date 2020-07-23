@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
+import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 
 enum QuizMessageType {
   from,
@@ -42,18 +43,18 @@ extension QuizMessageTypeExtension on QuizMessageType {
 @immutable
 class AppStateEntity extends Equatable {
   final QuizSessionEntity quizSession;
+  final UserProfileEntity userProfile;
 
   AppStateEntity({
     @required this.quizSession,
+    @required this.userProfile,
   });
 
   @override
-  List<Object> get props => [quizSession];
+  List<Object> get props => [quizSession, userProfile];
 
   @override
-  String toString() {
-    return "AppStateEntity{quizSession : ${quizSession.toString()}";
-  }
+  bool get stringify => true;
 }
 
 @immutable

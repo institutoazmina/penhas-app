@@ -41,6 +41,8 @@
     "minibio": null,
     "nome_completo": "Fulana da Silva",
     "nome_social": "",
-    "raca": "pardo"
+    "raca": "pardo",
+    "apelido": "maria",
+    "avatar_url": "https:\/\/api.com\/avatar\/padrao.svg"
   }
 }

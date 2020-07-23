@@ -1,12 +1,19 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
+import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 
 import '../../../../../utils/json_util.dart';
 
 void main() {
   AppStateModel appStateModel;
-  setUp(() {});
+  UserProfileEntity userProfile;
+  setUp(() {
+    userProfile = UserProfileEntity(
+      nickname: 'maria',
+      avatar: 'https://api.com/avatar/padrao.svg',
+    );
+  });
 
   group('AppStateModel', () {
     test('should be a subclass of AppStateEntity', () async {
@@ -17,7 +24,7 @@ void main() {
           endScreen: 'home',
           isFinished: false);
       // act
-      appStateModel = AppStateModel(session);
+      appStateModel = AppStateModel(session, userProfile);
       // assert
       expect(appStateModel, isA<AppStateEntity>());
     });
@@ -144,7 +151,7 @@ void main() {
         endScreen: null,
         isFinished: false,
       );
-      final AppStateEntity expected = AppStateModel(quizSession);
+      final AppStateEntity expected = AppStateModel(quizSession, userProfile);
       // act
       final result = AppStateModel.fromJson(jsonData);
       // assert
@@ -164,7 +171,7 @@ void main() {
         endScreen: null,
         isFinished: false,
       );
-      final AppStateEntity expected = AppStateModel(quizSession);
+      final AppStateEntity expected = AppStateModel(quizSession, userProfile);
       // act
       final result = AppStateModel.fromJson(jsonData);
       // assert
@@ -184,7 +191,7 @@ void main() {
         endScreen: null,
         isFinished: false,
       );
-      final AppStateEntity expected = AppStateModel(quizSession);
+      final AppStateEntity expected = AppStateModel(quizSession, userProfile);
       // act
       final result = AppStateModel.fromJson(jsonData);
       // assert
@@ -203,7 +210,7 @@ void main() {
         endScreen: null,
         isFinished: false,
       );
-      final AppStateEntity expected = AppStateModel(quizSession);
+      final AppStateEntity expected = AppStateModel(quizSession, userProfile);
       // act
       final result = AppStateModel.fromJson(jsonData);
       // assert
@@ -222,7 +229,7 @@ void main() {
         endScreen: 'home',
         isFinished: true,
       );
-      final AppStateEntity expected = AppStateModel(quizSession);
+      final AppStateEntity expected = AppStateModel(quizSession, userProfile);
       // act
       final result = AppStateModel.fromJson(jsonData);
       // assert

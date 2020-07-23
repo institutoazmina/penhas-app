@@ -38,14 +38,16 @@
   },
   "senha_falsa_sha256": null,
   "user_profile": {
-    "cep": "99909900",
+    "cep": "99309040",
     "cpf_prefix": "1482",
-    "dt_nasc": "1975-07-03",
-    "email": "fluna@emai.com",
+    "dt_nasc": "1980-03-03",
+    "email": "email@valid.com",
     "genero": "Feminino",
     "minibio": null,
-    "nome_completo": "Solli Moreira Honorio",
+    "nome_completo": "Fulana da Silva",
     "nome_social": "",
-    "raca": "pardo"
+    "raca": "pardo",
+    "apelido": "maria",
+    "avatar_url": "https:\/\/api.com\/avatar\/padrao.svg"
   }
 }

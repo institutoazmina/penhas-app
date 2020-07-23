@@ -1,13 +1,17 @@
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
+import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 
 class AppStateModel extends AppStateEntity {
   final QuizSessionEntity quizSession;
+  final UserProfileEntity userProfile;
 
-  AppStateModel(this.quizSession) : super(quizSession: quizSession);
+  AppStateModel(this.quizSession, this.userProfile)
+      : super(quizSession: quizSession, userProfile: userProfile);
 
   factory AppStateModel.fromJson(Map<String, Object> jsonData) {
     final quizSession = _parseQuizSession(jsonData['quiz_session']);
-    return AppStateModel(quizSession);
+    final userProfile = _parseUserProfile(jsonData['user_profile']);
+    return AppStateModel(quizSession, userProfile);
   }
 
   static QuizSessionEntity _parseQuizSession(Map<String, Object> session) {
@@ -98,5 +102,16 @@ class AppStateModel extends AppStateEntity {
           ),
         )
         .toList();
+  }
+
+  static UserProfileEntity _parseUserProfile(Map<String, Object> jsonData) {
+    if (jsonData == null || jsonData.isEmpty) {
+      return null;
+    }
+
+    String nickname = jsonData['apelido'];
+    String avatar = jsonData['avatar_url'];
+
+    return UserProfileEntity(nickname: nickname, avatar: avatar);
   }
 }
