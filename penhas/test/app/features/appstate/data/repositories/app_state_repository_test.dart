@@ -54,7 +54,6 @@ void main() {
       // assert
       expect(received, expected);
     });
-
     test('should return ServerSideSessionFailed for a invalid JWT', () async {
       // arrange
       when(dataSource.check()).thenThrow(

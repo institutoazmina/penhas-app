@@ -1,3 +1,4 @@
+import 'package:penhas/app/features/appstate/data/model/user_profile_model.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 
@@ -109,9 +110,6 @@ class AppStateModel extends AppStateEntity {
       return null;
     }
 
-    String nickname = jsonData['apelido'];
-    String avatar = jsonData['avatar_url'];
-
-    return UserProfileEntity(nickname: nickname, avatar: avatar);
+    return UserProfileModel.fromJson(jsonData);
   }
 }

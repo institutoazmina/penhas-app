@@ -1,15 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
+import 'package:penhas/app/features/appstate/data/model/user_profile_model.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
-import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 
 import '../../../../../utils/json_util.dart';
 
 void main() {
   AppStateModel appStateModel;
-  UserProfileEntity userProfile;
+  UserProfileModel userProfile;
   setUp(() {
-    userProfile = UserProfileEntity(
+    userProfile = UserProfileModel(
       nickname: 'maria',
       avatar: 'https://api.com/avatar/padrao.svg',
     );
