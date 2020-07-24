@@ -4,8 +4,8 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class PenhasDrawer extends StatelessWidget {
-  final String userName = 'Luíza';
-  final Widget userAvatar = Icon(Icons.person_outline, color: Colors.black);
+  final String _userName;
+  final Widget _userAvatar;
   final Color drawerGrey = Color.fromRGBO(239, 239, 239, 1.0);
   final double listHeight = 80;
 
@@ -20,8 +20,12 @@ class PenhasDrawer extends StatelessWidget {
 
   PenhasDrawer({
     Key key,
+    @required String userName,
+    @required Widget userAvatar,
     @required void Function() onLogout,
-  })  : this._onLogout = onLogout,
+  })  : this._userName = userName,
+        this._userAvatar = userAvatar,
+        this._onLogout = onLogout,
         super(key: key);
 
   @override
@@ -132,11 +136,11 @@ class PenhasDrawer extends StatelessWidget {
             CircleAvatar(
               backgroundColor: drawerGrey,
               radius: 25,
-              child: userAvatar,
+              child: _userAvatar,
             ),
             SizedBox(width: 9.0),
             Text(
-              userName,
+              _userName,
               style: kTextStyleDrawerUsername,
             ),
             SizedBox(width: 9.0),

@@ -4,5 +4,6 @@
   - Correção da margem nos textos do chat no Quiz
   - Informa o server quando o usuário aborta o tutorial 'Modo anônimo', para não ativar o modo anônimo.
   - App crash quando servidor não retorna sessão de quiz
+  - Menu lateral apresenta apelido e avatar do usuário corrente
 
 * Fluxo

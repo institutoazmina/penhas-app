@@ -24,13 +24,39 @@ class _MainboardPageState
     extends ModularState<MainboardPage, MainboardController> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool _helpCenterEnabled = false;
+  String userName;
+  Widget userAvatar;
+
+  @override
+  void initState() {
+    super.initState();
+    controller.userName.then((value) {
+      setState(() {
+        userName = value;
+      });
+    });
+    controller.userAvatar
+        .then((value) => SvgPicture.network(
+              value,
+              color: DesignSystemColors.darkIndigo,
+              height: 36,
+            ))
+        .then((value) {
+      setState(() {
+        userAvatar = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
       appBar: _appBarBuilder(),
-      drawer: PenhasDrawer(onLogout: () => controller.logoutPressed()),
+      drawer: PenhasDrawer(
+          userName: userName,
+          userAvatar: userAvatar,
+          onLogout: () => controller.logoutPressed()),
       backgroundColor: Colors.white,
       body: _pagesBodyBuilder(),
       bottomNavigationBar: Observer(builder: (_) {
@@ -47,9 +73,7 @@ class _MainboardPageState
               children: <Widget>[
                 _buildFeedButton(),
                 _buildComposeButton(),
-                Container(
-                  width: 62,
-                ),
+                Container(width: 62),
                 _buildChatButton(),
                 _buildSupportButton(),
               ],

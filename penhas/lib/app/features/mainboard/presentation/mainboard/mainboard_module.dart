@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:penhas/app/core/managers/app_configuration.dart';
+import 'package:penhas/app/core/managers/user_profile_store.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/core/states/mainboard_store.dart';
@@ -34,6 +35,7 @@ class MainboardModule extends ChildModule {
           (i) => MainboardController(
             appConfigure: i.get<IAppConfiguration>(),
             mainboardStore: i.get<MainboardStore>(),
+            userProfileStore: i.get<IUserProfileStore>(),
           ),
         ),
         Bind(
