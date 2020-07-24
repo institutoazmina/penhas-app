@@ -16,6 +16,10 @@ class AppStateModel extends AppStateEntity {
   }
 
   static QuizSessionEntity _parseQuizSession(Map<String, Object> session) {
+    if (session == null || session.isEmpty) {
+      return null;
+    }
+
     final currentMessage = _parseQuizMessage(session["current_msgs"]);
     final previousMessage = _parseQuizMessage(session['prev_msgs']);
     final isFinished = (session['finished'] != null && session['finished'] == 1)

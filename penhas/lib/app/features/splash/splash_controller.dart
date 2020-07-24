@@ -5,25 +5,25 @@ import 'package:penhas/app/core/data/authorization_status.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
-import 'package:penhas/app/features/appstate/domain/repositories/i_app_state_repository.dart';
+import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
 
 part 'splash_controller.g.dart';
 
 class SplashController extends _SplashControllerBase with _$SplashController {
   SplashController({
     @required IAppConfiguration appConfiguration,
-    @required IAppStateRepository appStateRepository,
-  }) : super(appConfiguration, appStateRepository);
+    @required AppStateUseCase appStateUseCase,
+  }) : super(appConfiguration, appStateUseCase);
 }
 
 abstract class _SplashControllerBase with Store {
+  final AppStateUseCase _appStateUseCase;
   final IAppConfiguration _appConfiguration;
-  final IAppStateRepository _appStateRepository;
 
   _SplashControllerBase(
     this._appConfiguration,
-    this._appStateRepository,
-  ) : assert(_appConfiguration != null && _appStateRepository != null) {
+    this._appStateUseCase,
+  ) : assert(_appConfiguration != null && _appStateUseCase != null) {
     _init();
   }
 
@@ -39,7 +39,7 @@ abstract class _SplashControllerBase with Store {
   }
 
   Future<void> _validateAppStates() async {
-    final appState = await _appStateRepository.check();
+    final appState = await _appStateUseCase.check();
     appState.fold(
       (failure) => _handleFailure(failure),
       (state) => _handleAppStates(state),
@@ -63,7 +63,7 @@ abstract class _SplashControllerBase with Store {
   }
 
   void _handleAppStates(AppStateEntity session) {
-    if (session.quizSession != null ||
+    if (session.quizSession != null &&
         session.quizSession.isFinished == false) {
       Modular.to.popAndPushNamed('/quiz', arguments: session.quizSession);
       return;
