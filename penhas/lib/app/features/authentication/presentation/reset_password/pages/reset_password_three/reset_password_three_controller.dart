@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
@@ -91,6 +92,9 @@ abstract class _ResetPasswordThreeControllerBase with Store, MapFailureMessage {
   }
 
   void _forwardLogin() {
-    Modular.to.pushReplacementNamed('/authentication');
+    Modular.to.pushNamedAndRemoveUntil(
+      '/authentication',
+      ModalRoute.withName('/'),
+    );
   }
 }

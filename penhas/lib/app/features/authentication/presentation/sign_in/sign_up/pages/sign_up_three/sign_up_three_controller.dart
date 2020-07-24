@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -114,6 +115,9 @@ abstract class _SignUpThreeControllerBase with Store, MapFailureMessage {
   }
 
   _forwardToLogged() {
-    Modular.to.popAndPushNamed('/');
+    Modular.to.pushNamedAndRemoveUntil(
+      '/',
+      ModalRoute.withName('/'),
+    );
   }
 }
