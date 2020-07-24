@@ -11,6 +11,7 @@ void main() {
   setUp(() {
     userProfile = UserProfileModel(
       nickname: 'maria',
+      email: 'email@valid.com',
       avatar: 'https://api.com/avatar/padrao.svg',
     );
   });

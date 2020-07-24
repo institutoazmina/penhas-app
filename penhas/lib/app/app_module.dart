@@ -13,6 +13,7 @@ import 'package:penhas/app/features/splash/splash_module.dart';
 
 import 'app_controller.dart';
 import 'app_widget.dart';
+import 'core/managers/user_profile_store.dart';
 import 'core/storage/local_storage_shared_preferences.dart';
 
 class AppModule extends MainModule {
@@ -27,11 +28,20 @@ class AppModule extends MainModule {
         ),
         Bind<http.Client>((i) => http.Client()),
         Bind<INetworkInfo>(
-          (i) => NetworkInfo(i.get<DataConnectionChecker>()),
+          (i) => NetworkInfo(
+            i.get<DataConnectionChecker>(),
+          ),
         ),
         Bind((i) => DataConnectionChecker()),
         Bind<IAppConfiguration>(
-          (i) => AppConfiguration(storage: i.get<ILocalStorage>()),
+          (i) => AppConfiguration(
+            storage: i.get<ILocalStorage>(),
+          ),
+        ),
+        Bind<IUserProfileStore>(
+          (i) => UserProfileStore(
+            storage: i.get<ILocalStorage>(),
+          ),
         ),
         Bind<ILocalStorage>((i) => LocalStorageSharedPreferences()),
       ];

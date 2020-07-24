@@ -8,7 +8,11 @@ void main() {
   group('UserProfileModel', () {
     test('should be a subclass of UserProfileEntity', () async {
       // act
-      final profileModel = UserProfileModel(avatar: null, nickname: null);
+      final profileModel = UserProfileModel(
+        avatar: null,
+        nickname: null,
+        email: null,
+      );
       // assert
       expect(profileModel, isA<UserProfileEntity>());
     });
@@ -19,6 +23,7 @@ void main() {
           await JsonUtil.getJson(from: 'profile/about_with_quiz_session.json');
       final Map<String, Object> userProfileData = jsonData['user_profile'];
       final expected = UserProfileModel(
+        email: userProfileData['email'],
         nickname: userProfileData['apelido'],
         avatar: userProfileData['avatar_url'],
       );
@@ -38,6 +43,7 @@ void main() {
         'avatar_url': userProfileData['avatar_url']
       };
       final userModel = UserProfileModel(
+        email: userProfileData['email'],
         nickname: userProfileData['apelido'],
         avatar: userProfileData['avatar_url'],
       );
