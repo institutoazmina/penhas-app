@@ -42,6 +42,7 @@ void main() {
           final sessionModel = GuardianSessionModel.fromJson(jsonSession);
           final emptySession = GuardianSessionModel(
             remainingInvites: 5,
+            maximumInvites: 5,
             guards: [
               GuardianEntity(
                   meta: GuardianSessionMeta(

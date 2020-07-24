@@ -4,15 +4,17 @@ import 'package:equatable/equatable.dart';
 @immutable
 class GuardianSessioEntity extends Equatable {
   final int remainingInvites;
+  final int maximumInvites;
   final List<GuardianEntity> guards;
 
   GuardianSessioEntity({
     @required this.remainingInvites,
+    @required this.maximumInvites,
     @required this.guards,
   });
 
   @override
-  List<Object> get props => [remainingInvites, guards];
+  List<Object> get props => [remainingInvites, maximumInvites, guards];
 
   @override
   bool get stringify => true;

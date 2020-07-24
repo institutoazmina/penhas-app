@@ -3,15 +3,22 @@ import 'package:penhas/app/features/help_center/domain/entities/guardian_session
 
 class GuardianSessionModel extends GuardianSessioEntity {
   final int remainingInvites;
+  final int maximumInvites;
   final List<GuardianEntity> guards;
 
   GuardianSessionModel({
     @required this.guards,
     @required this.remainingInvites,
-  }) : super(remainingInvites: remainingInvites, guards: guards);
+    @required this.maximumInvites,
+  }) : super(
+          remainingInvites: remainingInvites,
+          guards: guards,
+          maximumInvites: maximumInvites,
+        );
 
   factory GuardianSessionModel.fromJson(Map<String, Object> jsonData) {
     final remainingInvites = (jsonData['remaing_invites'] as num).toInt() ?? 0;
+    final maximumInvites = (jsonData['invites_max'] as num).toInt() ?? 0;
     final List<Object> guardsData = jsonData['guards'];
     final List<GuardianEntity> guards = guardsData
         .map((e) => e as Map<String, Object>)
@@ -22,6 +29,7 @@ class GuardianSessionModel extends GuardianSessioEntity {
     return GuardianSessionModel(
       guards: guards,
       remainingInvites: remainingInvites,
+      maximumInvites: maximumInvites,
     );
   }
 }

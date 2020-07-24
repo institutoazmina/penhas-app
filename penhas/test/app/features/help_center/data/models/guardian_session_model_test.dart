@@ -11,7 +11,11 @@ void main() {
   group('GuardianSessionModel', () {
     test('should be a subclass of GuardianSessioEntity', () async {
       // arrange
-      sessionModel = GuardianSessionModel(guards: [], remainingInvites: 0);
+      sessionModel = GuardianSessionModel(
+        guards: [],
+        remainingInvites: 0,
+        maximumInvites: 0,
+      );
       // assert
       expect(sessionModel, isA<GuardianSessioEntity>());
     });
@@ -22,6 +26,7 @@ void main() {
           await JsonUtil.getJson(from: 'help_center/guardian_list.json');
       final expected = GuardianSessionModel(
         remainingInvites: 5,
+        maximumInvites: 5,
         guards: [
           GuardianEntity(
             meta: GuardianSessionMeta(
