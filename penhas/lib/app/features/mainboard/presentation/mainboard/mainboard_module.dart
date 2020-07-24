@@ -21,6 +21,8 @@ import 'package:penhas/app/features/feed/presentation/filter_tweet/filter_tweet_
 import 'package:penhas/app/features/feed/presentation/reply_tweet/reply_tweet_controller.dart';
 import 'package:penhas/app/features/feed/presentation/reply_tweet/reply_tweet_page.dart';
 import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
+import 'package:penhas/app/features/help_center/presentation/guardians/guardians_page.dart';
+import 'package:penhas/app/features/help_center/presentation/new_guardian/new_guardian_page.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_page.dart';
@@ -52,6 +54,7 @@ class MainboardModule extends ChildModule {
   List<Router> get routers => [
         Router(Modular.initialRoute, child: (_, args) => MainboardPage()),
         ...tweetRoutes,
+        ...helpCenter,
       ];
 
   static Inject get to => Inject<MainboardModule>.of();
@@ -79,6 +82,19 @@ class MainboardModule extends ChildModule {
           child: (context, args) => FilterTweetPage(),
           transition: TransitionType.rightToLeft,
         )
+      ];
+
+  List<Router> get helpCenter => [
+        Router(
+          '/helpcenter/newGuardian',
+          child: (context, args) => NewGuardianPage(),
+          transition: TransitionType.rightToLeft,
+        ),
+        Router(
+          '/helpcenter/guardians',
+          child: (context, args) => GuardiansPage(),
+          transition: TransitionType.rightToLeft,
+        ),
       ];
 
   List<Bind> get tweetBinds => [

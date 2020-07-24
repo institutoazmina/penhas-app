@@ -156,7 +156,7 @@ class _HelpCenterPageState
                       await Navigator.push(
                         context,
                         TutorialScaleRoute(page: GuardianTutorialPage()),
-                      ).whenComplete(() => print('ola mundo!'));
+                      );
                     },
                   )
                 ],
@@ -179,7 +179,7 @@ class _HelpCenterPageState
                         backgroundColor: DesignSystemColors.cobaltTwo,
                         child: Text('Novo guardião',
                             style: kTextStyleHelpCenterButtonLabel),
-                        onPressed: null,
+                        onPressed: () => controller.newGuardian(),
                         shape: kButtonShapeOutlineWhite,
                       ),
                     ),
@@ -198,7 +198,7 @@ class _HelpCenterPageState
                             'Meus guardiões',
                             style: kTextStyleHelpCenterButtonLabel,
                           ),
-                          onPressed: null,
+                          onPressed: () => controller.guardians(),
                           shape: kButtonShapeOutlinePurple),
                     ),
                   ),
@@ -351,20 +351,6 @@ class _HelpCenterPageState
             ),
           )
         ],
-      ),
-    );
-  }
-
-  Widget _panicButtomHelpBuilder() {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: Padding(
-        padding:
-            const EdgeInsets.only(top: 16, bottom: 16, left: 16.0, right: 16.0),
-        child: Text(
-          'Botão de pânico',
-          style: kTextStyleHelpCenterPanicButonHelp,
-        ),
       ),
     );
   }
