@@ -102,12 +102,18 @@ class __$ChatCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
   _Chat get _value => super._value as _Chat;
 }
 
-class _$_Chat implements _Chat {
+class _$_Chat with DiagnosticableTreeMixin implements _Chat {
   const _$_Chat();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'MainboardState.chat()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'MainboardState.chat'));
   }
 
   @override
@@ -205,12 +211,18 @@ class __$FeedCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
   _Feed get _value => super._value as _Feed;
 }
 
-class _$_Feed implements _Feed {
+class _$_Feed with DiagnosticableTreeMixin implements _Feed {
   const _$_Feed();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'MainboardState.feed()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'MainboardState.feed'));
   }
 
   @override
@@ -308,12 +320,18 @@ class __$ComposeCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
   _Compose get _value => super._value as _Compose;
 }
 
-class _$_Compose implements _Compose {
+class _$_Compose with DiagnosticableTreeMixin implements _Compose {
   const _$_Compose();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'MainboardState.compose()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'MainboardState.compose'));
   }
 
   @override
@@ -414,12 +432,18 @@ class __$SupportPointCopyWithImpl<$Res>
   _SupportPoint get _value => super._value as _SupportPoint;
 }
 
-class _$_SupportPoint implements _SupportPoint {
+class _$_SupportPoint with DiagnosticableTreeMixin implements _SupportPoint {
   const _$_SupportPoint();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'MainboardState.supportPoint()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'MainboardState.supportPoint'));
   }
 
   @override
@@ -519,12 +543,18 @@ class __$HelpCenterCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
   _HelpCenter get _value => super._value as _HelpCenter;
 }
 
-class _$_HelpCenter implements _HelpCenter {
+class _$_HelpCenter with DiagnosticableTreeMixin implements _HelpCenter {
   const _$_HelpCenter();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'MainboardState.helpCenter()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'MainboardState.helpCenter'));
   }
 
   @override
