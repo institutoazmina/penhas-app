@@ -1,6 +1,8 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
@@ -18,6 +20,8 @@ class NewGuardianController extends _NewGuardianControllerBase
 
 abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
   final IGuardianRepository _guardianRepository;
+  String guardianName;
+  String guardianMobile;
 
   _NewGuardianControllerBase(this._guardianRepository);
 
@@ -25,7 +29,16 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
   ObservableFuture<Either<Failure, GuardianSessioEntity>> _fetchProgress;
 
   @observable
+  ObservableFuture<Either<Failure, ValidField>> _creatProgress;
+
+  @observable
   String errorMessage = '';
+
+  @observable
+  String warningMobile = '';
+
+  @observable
+  String warningName = '';
 
   @observable
   GuardianState currentState = GuardianState.initial();
@@ -38,6 +51,18 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
     }
 
     return _fetchProgress.status == FutureStatus.pending
+        ? PageProgressState.loading
+        : PageProgressState.loaded;
+  }
+
+  @computed
+  PageProgressState get createState {
+    if (_creatProgress == null ||
+        _creatProgress.status == FutureStatus.rejected) {
+      return PageProgressState.initial;
+    }
+
+    return _creatProgress.status == FutureStatus.pending
         ? PageProgressState.loading
         : PageProgressState.loaded;
   }
@@ -55,6 +80,57 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
     );
   }
 
+  @action
+  void setGuardianName(String name) {
+    guardianName = name;
+
+    if (guardianName != null || guardianName.isNotEmpty) {
+      warningName = '';
+    }
+  }
+
+  @action
+  void setGuardianMobile(String mobile) {
+    guardianMobile = mobile;
+
+    if (guardianMobile != null || guardianMobile.isNotEmpty) {
+      warningMobile = '';
+    }
+  }
+
+  @action
+  Future<void> addGuardian() async {
+    warningName = '';
+    warningMobile = '';
+
+    if (guardianName == null || guardianName.isEmpty) {
+      warningName = 'É necessário informar o nome';
+    }
+
+    if (guardianMobile == null || guardianMobile.isEmpty) {
+      warningMobile = 'É necessário informar o celular';
+    }
+
+    if (warningMobile.isNotEmpty || warningName.isNotEmpty) {
+      return;
+    }
+
+    _setErrorMessage('');
+    final guardian = GuardianContactEntity.createRequest(
+      name: guardianName,
+      mobile: guardianMobile,
+    );
+
+    _creatProgress = ObservableFuture(_guardianRepository.create(guardian));
+
+    final response = await _creatProgress;
+
+    response.fold(
+      (failure) => _setErrorMessage(mapFailureMessage(failure)),
+      (session) => _handleCreatedGuardian(session),
+    );
+  }
+
   void _setErrorMessage(String message) {
     errorMessage = message;
   }
@@ -64,5 +140,11 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
       currentState = GuardianState.rateLimit(session.maximumInvites);
       return;
     }
+
+    currentState = GuardianState.loaded();
+  }
+
+  void _handleCreatedGuardian(ValidField field) {
+    Modular.to.pop();
   }
 }

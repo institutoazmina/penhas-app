@@ -16,6 +16,13 @@ mixin _$NewGuardianController on _NewGuardianControllerBase, Store {
           Computed<PageProgressState>(() => super.loadState,
               name: '_NewGuardianControllerBase.loadState'))
       .value;
+  Computed<PageProgressState> _$createStateComputed;
+
+  @override
+  PageProgressState get createState => (_$createStateComputed ??=
+          Computed<PageProgressState>(() => super.createState,
+              name: '_NewGuardianControllerBase.createState'))
+      .value;
 
   final _$_fetchProgressAtom =
       Atom(name: '_NewGuardianControllerBase._fetchProgress');
@@ -34,6 +41,22 @@ mixin _$NewGuardianController on _NewGuardianControllerBase, Store {
     });
   }
 
+  final _$_creatProgressAtom =
+      Atom(name: '_NewGuardianControllerBase._creatProgress');
+
+  @override
+  ObservableFuture<Either<Failure, ValidField>> get _creatProgress {
+    _$_creatProgressAtom.reportRead();
+    return super._creatProgress;
+  }
+
+  @override
+  set _creatProgress(ObservableFuture<Either<Failure, ValidField>> value) {
+    _$_creatProgressAtom.reportWrite(value, super._creatProgress, () {
+      super._creatProgress = value;
+    });
+  }
+
   final _$errorMessageAtom =
       Atom(name: '_NewGuardianControllerBase.errorMessage');
 
@@ -47,6 +70,38 @@ mixin _$NewGuardianController on _NewGuardianControllerBase, Store {
   set errorMessage(String value) {
     _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
       super.errorMessage = value;
+    });
+  }
+
+  final _$warningMobileAtom =
+      Atom(name: '_NewGuardianControllerBase.warningMobile');
+
+  @override
+  String get warningMobile {
+    _$warningMobileAtom.reportRead();
+    return super.warningMobile;
+  }
+
+  @override
+  set warningMobile(String value) {
+    _$warningMobileAtom.reportWrite(value, super.warningMobile, () {
+      super.warningMobile = value;
+    });
+  }
+
+  final _$warningNameAtom =
+      Atom(name: '_NewGuardianControllerBase.warningName');
+
+  @override
+  String get warningName {
+    _$warningNameAtom.reportRead();
+    return super.warningName;
+  }
+
+  @override
+  set warningName(String value) {
+    _$warningNameAtom.reportWrite(value, super.warningName, () {
+      super.warningName = value;
     });
   }
 
@@ -74,12 +129,48 @@ mixin _$NewGuardianController on _NewGuardianControllerBase, Store {
     return _$loadPageAsyncAction.run(() => super.loadPage());
   }
 
+  final _$addGuardianAsyncAction =
+      AsyncAction('_NewGuardianControllerBase.addGuardian');
+
+  @override
+  Future<void> addGuardian() {
+    return _$addGuardianAsyncAction.run(() => super.addGuardian());
+  }
+
+  final _$_NewGuardianControllerBaseActionController =
+      ActionController(name: '_NewGuardianControllerBase');
+
+  @override
+  void setGuardianName(String name) {
+    final _$actionInfo = _$_NewGuardianControllerBaseActionController
+        .startAction(name: '_NewGuardianControllerBase.setGuardianName');
+    try {
+      return super.setGuardianName(name);
+    } finally {
+      _$_NewGuardianControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setGuardianMobile(String mobile) {
+    final _$actionInfo = _$_NewGuardianControllerBaseActionController
+        .startAction(name: '_NewGuardianControllerBase.setGuardianMobile');
+    try {
+      return super.setGuardianMobile(mobile);
+    } finally {
+      _$_NewGuardianControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
 errorMessage: ${errorMessage},
+warningMobile: ${warningMobile},
+warningName: ${warningName},
 currentState: ${currentState},
-loadState: ${loadState}
+loadState: ${loadState},
+createState: ${createState}
     ''';
   }
 }
