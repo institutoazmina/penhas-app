@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/input_box_style.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
@@ -116,31 +117,38 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
 
   SingleTextInput _buildCep() {
     return SingleTextInput(
-      labelText: 'CEP',
-      hintText: 'CEP',
-      keyboardType: TextInputType.number,
-      onChanged: controller.setCep,
-      errorText: controller.warningCep,
       inputFormatter: _maskCep,
+      onChanged: controller.setCep,
+      keyboardType: TextInputType.number,
+      boxDecoration: WhiteBoxDecorationStyle(
+        hintText: 'CEP',
+        labelText: 'CEP',
+        errorText: controller.warningCep,
+      ),
     );
   }
 
   SingleTextInput _buildCpf() {
     return SingleTextInput(
-      labelText: 'CPF',
-      hintText: 'CPF',
-      keyboardType: TextInputType.number,
-      onChanged: controller.setCpf,
-      errorText: controller.warningCpf,
       inputFormatter: _maskCpf,
+      onChanged: controller.setCpf,
+      keyboardType: TextInputType.number,
+      boxDecoration: WhiteBoxDecorationStyle(
+        hintText: 'CPF',
+        labelText: 'CPF',
+        errorText: controller.warningCpf,
+      ),
     );
   }
 
   SingleTextInput _buildFullName() {
     return SingleTextInput(
+      onChanged: controller.setFullname,
+      boxDecoration: WhiteBoxDecorationStyle(
         labelText: 'Nome completo',
         errorText: controller.warningFullname,
-        onChanged: controller.setFullname);
+      ),
+    );
   }
 
   SizedBox _buildSubHeader() {

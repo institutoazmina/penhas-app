@@ -7,6 +7,12 @@ const kTextStyleDefaultTextFieldLabelStyle = TextStyle(
     fontSize: 16.0,
     fontWeight: FontWeight.normal);
 
+const kTextStyleGreyDefaultTextFieldLabelStyle = TextStyle(
+    color: Colors.grey,
+    fontFamily: 'Lato',
+    fontSize: 16.0,
+    fontWeight: FontWeight.normal);
+
 const kTextStyleRegisterHeaderLabelStyle = TextStyle(
     color: DesignSystemColors.pinky,
     fontFamily: 'Lato',

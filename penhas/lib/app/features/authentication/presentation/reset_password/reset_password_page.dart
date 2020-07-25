@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/input_box_style.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
@@ -117,10 +118,12 @@ class _ResetPasswordPageState
 
   SingleTextInput _buildEmail() {
     return SingleTextInput(
-      labelText: 'E-mail',
       keyboardType: TextInputType.emailAddress,
-      errorText: controller.warningEmail,
       onChanged: controller.setEmail,
+      boxDecoration: WhiteBoxDecorationStyle(
+        labelText: 'E-mail',
+        errorText: controller.warningEmail,
+      ),
     );
   }
 

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/input_box_style.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/password_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
@@ -89,10 +90,13 @@ class _SignUpThreePageState
 
   SingleTextInput _buildEmailField() {
     return SingleTextInput(
+      keyboardType: TextInputType.emailAddress,
+      onChanged: controller.setEmail,
+      boxDecoration: WhiteBoxDecorationStyle(
         labelText: 'E-mail',
-        keyboardType: TextInputType.emailAddress,
-        onChanged: controller.setEmail,
-        errorText: controller.warningEmail);
+        errorText: controller.warningEmail,
+      ),
+    );
   }
 
   SizedBox _buildSubHeader() {

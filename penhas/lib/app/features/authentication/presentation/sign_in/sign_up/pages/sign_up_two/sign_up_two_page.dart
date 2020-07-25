@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/input_box_style.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
@@ -113,10 +114,12 @@ class _SignUpTwoPageState
 
   SingleTextInput _buildNickName() {
     return SingleTextInput(
-      labelText: 'Apelido',
       keyboardType: TextInputType.text,
       onChanged: controller.setNickname,
-      errorText: controller.warningNickname,
+      boxDecoration: WhiteBoxDecorationStyle(
+        labelText: 'Apelido',
+        errorText: controller.warningNickname,
+      ),
     );
   }
 
@@ -127,10 +130,12 @@ class _SignUpTwoPageState
         children: <Widget>[
           SizedBox(height: 24.0),
           SingleTextInput(
-            labelText: 'Nome social',
             keyboardType: TextInputType.text,
             onChanged: controller.setSocialName,
-            errorText: controller.warningSocialName,
+            boxDecoration: WhiteBoxDecorationStyle(
+              labelText: 'Nome social',
+              errorText: controller.warningSocialName,
+            ),
           ),
         ],
       ),

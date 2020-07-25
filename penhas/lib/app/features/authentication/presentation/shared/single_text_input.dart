@@ -6,27 +6,21 @@ class SingleTextInput extends StatelessWidget {
   final TextInputType _keyboardType;
   final TextStyle _style;
   final void Function(String) _onChanged;
-  final String _labelText;
-  final String _errorText;
-  final String _hintText;
   final TextInputFormatter _inputFormatter;
+  final InputDecoration _boxDecoration;
 
   const SingleTextInput({
     Key key,
-    String hintText,
     TextInputFormatter inputFormatter,
     TextInputType keyboardType = TextInputType.text,
     TextStyle style = kTextStyleDefaultTextFieldLabelStyle,
-    @required String labelText,
-    @required String errorText,
     @required onChanged,
+    @required InputDecoration boxDecoration,
   })  : this._keyboardType = keyboardType,
         this._style = style,
         this._onChanged = onChanged,
-        this._labelText = labelText,
-        this._errorText = errorText,
-        this._hintText = hintText,
         this._inputFormatter = inputFormatter,
+        this._boxDecoration = boxDecoration,
         super(key: key);
 
   @override
@@ -37,27 +31,7 @@ class SingleTextInput extends StatelessWidget {
       inputFormatters: _inputFormatter == null ? null : [_inputFormatter],
       onChanged: _onChanged,
       autofocus: false,
-      decoration: InputDecoration(
-        enabledBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        focusedBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        border: OutlineInputBorder(),
-        labelText: _labelText,
-        labelStyle: kTextStyleDefaultTextFieldLabelStyle,
-        hintText: _hintText,
-        hintStyle: kTextStyleDefaultTextFieldLabelStyle,
-        errorText: _normalizeHitText(_errorText),
-        contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
-      ),
+      decoration: _boxDecoration,
     );
-  }
-
-  String _normalizeHitText(String text) {
-    if (text == null || text.isEmpty) {
-      return null;
-    }
-
-    return text;
   }
 }
