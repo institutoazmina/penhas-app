@@ -6,6 +6,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/help_center/domain/states/guardian_state.dart';
 import 'package:penhas/app/features/help_center/presentation/new_guardian/new_guardian_controller.dart';
+import 'package:penhas/app/features/help_center/presentation/pages/guardian_rate_limit_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class NewGuardianPage extends StatefulWidget {
@@ -72,12 +73,8 @@ class _NewGuardianPageState
       initial: () => Container(color: DesignSystemColors.white),
       loaded: () => Container(color: Colors.cyan),
       error: (messages) => Container(color: Colors.redAccent),
-      rateLimit: (maxLimit) => _rateLimit(maxLimit),
+      rateLimit: (maxLimit) => GuardianRateLimitPage(maxLimit: maxLimit),
     );
-  }
-
-  Widget _rateLimit(int maxLimit) {
-    return Container(color: Colors.yellow);
   }
 
   ReactionDisposer _showErrorMessage() {

@@ -48,11 +48,10 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
     _fetchProgress = ObservableFuture(_guardianRepository.fetch());
 
     final response = await _fetchProgress;
-    currentState = GuardianState.rateLimit(10);
 
     response.fold(
       (failure) => _setErrorMessage(mapFailureMessage(failure)),
-      (session) => _doNothing(session),
+      (session) => _handleSession(session),
     );
   }
 
@@ -60,5 +59,10 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
     errorMessage = message;
   }
 
-  void _doNothing(GuardianSessioEntity session) {}
+  void _handleSession(GuardianSessioEntity session) {
+    if (session.remainingInvites == 0) {
+      currentState = GuardianState.rateLimit(session.maximumInvites);
+      return;
+    }
+  }
 }
