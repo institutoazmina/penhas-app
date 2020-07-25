@@ -21,7 +21,11 @@ import 'package:penhas/app/features/feed/presentation/filter_tweet/filter_tweet_
 import 'package:penhas/app/features/feed/presentation/reply_tweet/reply_tweet_controller.dart';
 import 'package:penhas/app/features/feed/presentation/reply_tweet/reply_tweet_page.dart';
 import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
+import 'package:penhas/app/features/help_center/data/datasources/guardian_data_source.dart';
+import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
+import 'package:penhas/app/features/help_center/presentation/guardians/guardians_controller.dart';
 import 'package:penhas/app/features/help_center/presentation/guardians/guardians_page.dart';
+import 'package:penhas/app/features/help_center/presentation/new_guardian/new_guardian_controller.dart';
 import 'package:penhas/app/features/help_center/presentation/new_guardian/new_guardian_page.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -32,6 +36,7 @@ class MainboardModule extends ChildModule {
   List<Bind> get binds => [
         ...interfaceBinds,
         ...tweetBinds,
+        ...helpCenterBinds,
         Bind<MainboardStore>((i) => MainboardStore()),
         Bind(
           (i) => MainboardController(
@@ -163,6 +168,24 @@ class MainboardModule extends ChildModule {
         Bind<TweetFilterPreference>(
           (i) => TweetFilterPreference(
             repository: i.get<ITweetFilterPreferenceRepository>(),
+          ),
+        ),
+      ];
+
+  List<Bind> get helpCenterBinds => [
+        Bind((i) => NewGuardianController(
+            guardianRepository: i.get<IGuardianRepository>())),
+        Bind((i) => GuardiansController()),
+        Bind<IGuardianRepository>(
+          (i) => GuardianRepository(
+            dataSource: i.get<IGuardianDataSource>(),
+            networkInfo: i.get<INetworkInfo>(),
+          ),
+        ),
+        Bind<IGuardianDataSource>(
+          (i) => GuardianDataSource(
+            apiClient: i.get<http.Client>(),
+            serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
       ];

@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:penhas/app/features/help_center/presentation/guardians/guardians_controller.dart';
-import 'package:penhas/app/features/help_center/presentation/guardians/guardians_page.dart';
 import 'package:penhas/app/features/help_center/presentation/help_center_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/help_center/presentation/help_center_page.dart';
 import 'package:penhas/app/features/help_center/presentation/new_guardian/new_guardian_controller.dart';
-import 'package:penhas/app/features/help_center/presentation/new_guardian/new_guardian_page.dart';
 
 class HelpCenterModule extends WidgetModule {
   @override
   List<Bind> get binds => [
         Bind((i) => HelpCenterController()),
-        Bind((i) => NewGuardianController()),
-        Bind((i) => GuardiansController()),
       ];
 
   @override
