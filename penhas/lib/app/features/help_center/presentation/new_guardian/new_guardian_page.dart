@@ -9,6 +9,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/single_te
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/help_center/domain/states/guardian_state.dart';
 import 'package:penhas/app/features/help_center/presentation/new_guardian/new_guardian_controller.dart';
+import 'package:penhas/app/features/help_center/presentation/pages/guardian_error_page.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/guardian_rate_limit_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
@@ -85,10 +86,15 @@ class _NewGuardianPageState
           onTap: () => _handleTap(context),
           onPanDown: (_) => _handleTap(context),
           child: SafeArea(
-            child: SingleChildScrollView(
-              child: Observer(
-                builder: (context) => _buildBody(controller.currentState),
-              ),
+            child: CustomScrollView(
+              slivers: <Widget>[
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Observer(
+                    builder: (context) => _buildBody(controller.currentState),
+                  ),
+                )
+              ],
             ),
           ),
         ),
@@ -100,7 +106,10 @@ class _NewGuardianPageState
     return state.when(
       initial: () => Container(color: DesignSystemColors.white),
       loaded: () => _buildInputScreen(),
-      error: (messages) => Container(color: Colors.redAccent),
+      error: (message) => GuardianErrorPage(
+        message: message,
+        onPressed: controller.loadPage,
+      ),
       rateLimit: (maxLimit) => GuardianRateLimitPage(maxLimit: maxLimit),
     );
   }

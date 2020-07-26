@@ -75,7 +75,7 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
     final response = await _fetchProgress;
 
     response.fold(
-      (failure) => _setErrorMessage(mapFailureMessage(failure)),
+      (failure) => _handleLoadPageError(failure),
       (session) => _handleSession(session),
     );
   }
@@ -131,10 +131,6 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
     );
   }
 
-  void _setErrorMessage(String message) {
-    errorMessage = message;
-  }
-
   void _handleSession(GuardianSessioEntity session) {
     if (session.remainingInvites == 0) {
       currentState = GuardianState.rateLimit(session.maximumInvites);
@@ -144,7 +140,12 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
     currentState = GuardianState.loaded();
   }
 
-  void _handleCreatedGuardian(ValidField field) {
-    Modular.to.pop();
+  void _handleLoadPageError(Failure failure) {
+    final message = mapFailureMessage(failure);
+    currentState = GuardianState.error(message);
   }
+
+  void _setErrorMessage(String message) => errorMessage = message;
+
+  void _handleCreatedGuardian(ValidField field) => Modular.to.pop();
 }
