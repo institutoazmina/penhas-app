@@ -102,7 +102,7 @@ class _HelpCenterPageState
                 child: FloatingActionButton(
                     heroTag: 'recordCard_1',
                     backgroundColor: DesignSystemColors.easterPurple,
-                    child: Text('Minha gravações',
+                    child: Text('Minhas gravações',
                         style: kTextStyleHelpCenterButtonLabel),
                     onPressed: null,
                     shape: kButtonShapeOutlinePurple),
