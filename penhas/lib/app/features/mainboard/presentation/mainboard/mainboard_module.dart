@@ -173,9 +173,16 @@ class MainboardModule extends ChildModule {
       ];
 
   List<Bind> get helpCenterBinds => [
-        Bind((i) => NewGuardianController(
-            guardianRepository: i.get<IGuardianRepository>())),
-        Bind((i) => GuardiansController()),
+        Bind(
+          (i) => NewGuardianController(
+            guardianRepository: i.get<IGuardianRepository>(),
+          ),
+        ),
+        Bind(
+          (i) => GuardiansController(
+            guardianRepository: i.get<IGuardianRepository>(),
+          ),
+        ),
         Bind<IGuardianRepository>(
           (i) => GuardianRepository(
             dataSource: i.get<IGuardianDataSource>(),
