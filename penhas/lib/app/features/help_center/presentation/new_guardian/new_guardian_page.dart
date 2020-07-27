@@ -31,22 +31,6 @@ class _NewGuardianPageState
 
   PageProgressState _loadState = PageProgressState.initial;
 
-  final bodyTextStyle = TextStyle(
-    color: DesignSystemColors.darkIndigoThree,
-    fontSize: 15.0,
-    letterSpacing: 0.44,
-    fontFamily: 'Lato',
-    fontWeight: FontWeight.normal,
-  );
-
-  final bodyTextBoldStyle = TextStyle(
-    color: DesignSystemColors.darkIndigoThree,
-    fontSize: 15.0,
-    letterSpacing: 0.44,
-    fontFamily: 'Lato',
-    fontWeight: FontWeight.bold,
-  );
-
   @override
   void initState() {
     super.initState();
@@ -136,11 +120,11 @@ class _NewGuardianPageState
     return RichText(
       text: TextSpan(
         text: 'Cadastre uma pessoa próxima e de confiança para ser guardião.',
-        style: bodyTextStyle,
+        style: kTextStyleGuardianBodyTextStyle,
         children: <TextSpan>[
           TextSpan(
               text: ' Não precisa ser usuário do PenhaS.',
-              style: bodyTextBoldStyle)
+              style: kTextStyleGuardianBodyTextBoldStyle)
         ],
       ),
     );
@@ -192,15 +176,15 @@ class _NewGuardianPageState
               text: TextSpan(
                   text:
                       '• Para que esta pessoa se torne sua guardiã, é preciso que ela',
-                  style: bodyTextStyle,
+                  style: kTextStyleGuardianBodyTextStyle,
                   children: <TextSpan>[
                     TextSpan(
                       text: ' aceite o convite ',
-                      style: bodyTextBoldStyle,
+                      style: kTextStyleGuardianBodyTextBoldStyle,
                     ),
                     TextSpan(
                       text: 'que será enviado no número cadastrado.',
-                      style: bodyTextStyle,
+                      style: kTextStyleGuardianBodyTextStyle,
                     )
                   ]),
             ),
@@ -211,15 +195,15 @@ class _NewGuardianPageState
               text: TextSpan(
                 text:
                     '• Lembre-se de conversar com a pessoa antes de cadastra-la. É importante que ela esteja',
-                style: bodyTextStyle,
+                style: kTextStyleGuardianBodyTextStyle,
                 children: <TextSpan>[
                   TextSpan(
                     text: ' ciente que receberá seus pedidos de socorro ',
-                    style: bodyTextBoldStyle,
+                    style: kTextStyleGuardianBodyTextBoldStyle,
                   ),
                   TextSpan(
                     text: 'via SMS.',
-                    style: bodyTextStyle,
+                    style: kTextStyleGuardianBodyTextStyle,
                   )
                 ],
               ),

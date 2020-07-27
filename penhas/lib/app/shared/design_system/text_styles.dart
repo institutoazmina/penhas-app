@@ -167,3 +167,19 @@ const kTextStyleHelpCenterButtonLabel = TextStyle(
     letterSpacing: 0.4,
     color: Colors.white,
     fontWeight: FontWeight.bold);
+
+const kTextStyleGuardianBodyTextStyle = TextStyle(
+  color: DesignSystemColors.darkIndigoThree,
+  fontSize: 15.0,
+  letterSpacing: 0.44,
+  fontFamily: 'Lato',
+  fontWeight: FontWeight.normal,
+);
+
+const kTextStyleGuardianBodyTextBoldStyle = TextStyle(
+  color: DesignSystemColors.darkIndigoThree,
+  fontSize: 15.0,
+  letterSpacing: 0.44,
+  fontFamily: 'Lato',
+  fontWeight: FontWeight.bold,
+);

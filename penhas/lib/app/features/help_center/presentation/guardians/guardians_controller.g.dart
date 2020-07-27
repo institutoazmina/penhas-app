@@ -9,39 +9,77 @@ part of 'guardians_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$GuardiansController on _GuardiansControllerBase, Store {
-  final _$valueAtom = Atom(name: '_GuardiansControllerBase.value');
+  Computed<PageProgressState> _$loadStateComputed;
 
   @override
-  int get value {
-    _$valueAtom.reportRead();
-    return super.value;
+  PageProgressState get loadState => (_$loadStateComputed ??=
+          Computed<PageProgressState>(() => super.loadState,
+              name: '_GuardiansControllerBase.loadState'))
+      .value;
+
+  final _$_fetchProgressAtom =
+      Atom(name: '_GuardiansControllerBase._fetchProgress');
+
+  @override
+  ObservableFuture<Either<Failure, GuardianSessioEntity>> get _fetchProgress {
+    _$_fetchProgressAtom.reportRead();
+    return super._fetchProgress;
   }
 
   @override
-  set value(int value) {
-    _$valueAtom.reportWrite(value, super.value, () {
-      super.value = value;
+  set _fetchProgress(
+      ObservableFuture<Either<Failure, GuardianSessioEntity>> value) {
+    _$_fetchProgressAtom.reportWrite(value, super._fetchProgress, () {
+      super._fetchProgress = value;
     });
   }
 
-  final _$_GuardiansControllerBaseActionController =
-      ActionController(name: '_GuardiansControllerBase');
+  final _$errorMessageAtom =
+      Atom(name: '_GuardiansControllerBase.errorMessage');
 
   @override
-  void increment() {
-    final _$actionInfo = _$_GuardiansControllerBaseActionController.startAction(
-        name: '_GuardiansControllerBase.increment');
-    try {
-      return super.increment();
-    } finally {
-      _$_GuardiansControllerBaseActionController.endAction(_$actionInfo);
-    }
+  String get errorMessage {
+    _$errorMessageAtom.reportRead();
+    return super.errorMessage;
+  }
+
+  @override
+  set errorMessage(String value) {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
+      super.errorMessage = value;
+    });
+  }
+
+  final _$currentStateAtom =
+      Atom(name: '_GuardiansControllerBase.currentState');
+
+  @override
+  GuardianState get currentState {
+    _$currentStateAtom.reportRead();
+    return super.currentState;
+  }
+
+  @override
+  set currentState(GuardianState value) {
+    _$currentStateAtom.reportWrite(value, super.currentState, () {
+      super.currentState = value;
+    });
+  }
+
+  final _$loadPageAsyncAction =
+      AsyncAction('_GuardiansControllerBase.loadPage');
+
+  @override
+  Future<void> loadPage() {
+    return _$loadPageAsyncAction.run(() => super.loadPage());
   }
 
   @override
   String toString() {
     return '''
-value: ${value}
+errorMessage: ${errorMessage},
+currentState: ${currentState},
+loadState: ${loadState}
     ''';
   }
 }
