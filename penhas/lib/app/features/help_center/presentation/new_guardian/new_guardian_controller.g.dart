@@ -109,13 +109,13 @@ mixin _$NewGuardianController on _NewGuardianControllerBase, Store {
       Atom(name: '_NewGuardianControllerBase.currentState');
 
   @override
-  GuardianState get currentState {
+  NewGuardianState get currentState {
     _$currentStateAtom.reportRead();
     return super.currentState;
   }
 
   @override
-  set currentState(GuardianState value) {
+  set currentState(NewGuardianState value) {
     _$currentStateAtom.reportWrite(value, super.currentState, () {
       super.currentState = value;
     });

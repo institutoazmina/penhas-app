@@ -8,7 +8,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/map_failu
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
 import 'package:penhas/app/features/help_center/domain/entities/guardian_session_entity.dart';
-import 'package:penhas/app/features/help_center/domain/states/guardian_state.dart';
+import 'package:penhas/app/features/help_center/domain/states/new_guardian_state.dart';
 
 part 'new_guardian_controller.g.dart';
 
@@ -41,7 +41,7 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
   String warningName = '';
 
   @observable
-  GuardianState currentState = GuardianState.initial();
+  NewGuardianState currentState = NewGuardianState.initial();
 
   @computed
   PageProgressState get loadState {
@@ -133,16 +133,16 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
 
   void _handleSession(GuardianSessioEntity session) {
     if (session.remainingInvites == 0) {
-      currentState = GuardianState.rateLimit(session.maximumInvites);
+      currentState = NewGuardianState.rateLimit(session.maximumInvites);
       return;
     }
 
-    currentState = GuardianState.loaded();
+    currentState = NewGuardianState.loaded();
   }
 
   void _handleLoadPageError(Failure failure) {
     final message = mapFailureMessage(failure);
-    currentState = GuardianState.error(message);
+    currentState = NewGuardianState.error(message);
   }
 
   void _setErrorMessage(String message) => errorMessage = message;

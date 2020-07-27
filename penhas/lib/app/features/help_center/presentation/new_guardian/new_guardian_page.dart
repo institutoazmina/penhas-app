@@ -7,7 +7,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/input_box
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/features/help_center/domain/states/guardian_state.dart';
+import 'package:penhas/app/features/help_center/domain/states/new_guardian_state.dart';
 import 'package:penhas/app/features/help_center/presentation/new_guardian/new_guardian_controller.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/guardian_error_page.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/guardian_rate_limit_page.dart';
@@ -86,7 +86,7 @@ class _NewGuardianPageState
     );
   }
 
-  Widget _buildBody(GuardianState state) {
+  Widget _buildBody(NewGuardianState state) {
     return state.when(
       initial: () => Container(color: DesignSystemColors.white),
       loaded: () => _buildInputScreen(),
