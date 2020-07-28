@@ -58,12 +58,19 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
 
   void _handleSession(GuardianSessioEntity session) {
     final headers = session.guards
-        .map(
-          (guardian) => GuardianTileHeaderEntity(title: guardian.meta.header),
+        .expand(
+          (guardian) => _parseGuard(guardian),
         )
         .toList();
 
     currentState = GuardianState.loaded(headers);
+  }
+
+  List<GuardianTileEntity> _parseGuard(GuardianEntity guardian) {
+    return [
+      GuardianTileHeaderEntity(title: guardian.meta.header),
+      GuardianTileDescriptionEntity(description: guardian.meta.description),
+    ];
   }
 
   void _handleLoadPageError(Failure failure) {

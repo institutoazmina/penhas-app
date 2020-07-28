@@ -8,6 +8,7 @@ import 'package:penhas/app/features/help_center/domain/entities/guardian_tile_en
 import 'package:penhas/app/features/help_center/domain/states/guardian_state.dart';
 import 'package:penhas/app/features/help_center/presentation/guardians/guardians_controller.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/guardian_error_page.dart';
+import 'package:penhas/app/features/help_center/presentation/pages/guardian_tiles_description.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/guardian_tiles_header.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
@@ -96,6 +97,10 @@ class _GuardiansPageState
                 final tile = tiles[index];
                 if (tile is GuardianTileHeaderEntity) {
                   return GuardianTilesHeader(title: tile.title);
+                }
+                if (tile is GuardianTileDescriptionEntity) {
+                  return GuardianTilesDescription(
+                      description: tile.description);
                 }
 
                 return Container(

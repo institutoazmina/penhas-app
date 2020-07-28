@@ -11,3 +11,12 @@ class GuardianTileHeaderEntity extends GuardianTileEntity {
   @override
   List<Object> get props => [title];
 }
+
+class GuardianTileDescriptionEntity extends GuardianTileEntity {
+  final String description;
+
+  GuardianTileDescriptionEntity({@required this.description});
+
+  @override
+  List<Object> get props => [description];
+}
