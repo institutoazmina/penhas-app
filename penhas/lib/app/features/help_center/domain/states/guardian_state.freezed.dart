@@ -16,19 +16,15 @@ class _$GuardianStateTearOff {
     return const _Initial();
   }
 
-  _Loaded loaded() {
-    return const _Loaded();
+  _Loaded loaded(List<GuardianTileEntity> tiles) {
+    return _Loaded(
+      tiles,
+    );
   }
 
   _ErrorDetails error([String message]) {
     return _ErrorDetails(
       message,
-    );
-  }
-
-  _RateLimit rateLimit(int maxLimit) {
-    return _RateLimit(
-      maxLimit,
     );
   }
 }
@@ -40,16 +36,14 @@ mixin _$GuardianState {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(),
+    @required Result loaded(List<GuardianTileEntity> tiles),
     @required Result error(String message),
-    @required Result rateLimit(int maxLimit),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(),
+    Result loaded(List<GuardianTileEntity> tiles),
     Result error(String message),
-    Result rateLimit(int maxLimit),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -57,14 +51,12 @@ mixin _$GuardianState {
     @required Result initial(_Initial value),
     @required Result loaded(_Loaded value),
     @required Result error(_ErrorDetails value),
-    @required Result rateLimit(_RateLimit value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
     Result loaded(_Loaded value),
     Result error(_ErrorDetails value),
-    Result rateLimit(_RateLimit value),
     @required Result orElse(),
   });
 }
@@ -124,14 +116,12 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(),
+    @required Result loaded(List<GuardianTileEntity> tiles),
     @required Result error(String message),
-    @required Result rateLimit(int maxLimit),
   }) {
     assert(initial != null);
     assert(loaded != null);
     assert(error != null);
-    assert(rateLimit != null);
     return initial();
   }
 
@@ -139,9 +129,8 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(),
+    Result loaded(List<GuardianTileEntity> tiles),
     Result error(String message),
-    Result rateLimit(int maxLimit),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -157,12 +146,10 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
     @required Result initial(_Initial value),
     @required Result loaded(_Loaded value),
     @required Result error(_ErrorDetails value),
-    @required Result rateLimit(_RateLimit value),
   }) {
     assert(initial != null);
     assert(loaded != null);
     assert(error != null);
-    assert(rateLimit != null);
     return initial(this);
   }
 
@@ -172,7 +159,6 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
     Result initial(_Initial value),
     Result loaded(_Loaded value),
     Result error(_ErrorDetails value),
-    Result rateLimit(_RateLimit value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -190,6 +176,7 @@ abstract class _Initial implements GuardianState {
 abstract class _$LoadedCopyWith<$Res> {
   factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
       __$LoadedCopyWithImpl<$Res>;
+  $Res call({List<GuardianTileEntity> tiles});
 }
 
 class __$LoadedCopyWithImpl<$Res> extends _$GuardianStateCopyWithImpl<$Res>
@@ -199,57 +186,76 @@ class __$LoadedCopyWithImpl<$Res> extends _$GuardianStateCopyWithImpl<$Res>
 
   @override
   _Loaded get _value => super._value as _Loaded;
+
+  @override
+  $Res call({
+    Object tiles = freezed,
+  }) {
+    return _then(_Loaded(
+      tiles == freezed ? _value.tiles : tiles as List<GuardianTileEntity>,
+    ));
+  }
 }
 
 class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
-  const _$_Loaded();
+  const _$_Loaded(this.tiles) : assert(tiles != null);
+
+  @override
+  final List<GuardianTileEntity> tiles;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'GuardianState.loaded()';
+    return 'GuardianState.loaded(tiles: $tiles)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'GuardianState.loaded'));
+    properties
+      ..add(DiagnosticsProperty('type', 'GuardianState.loaded'))
+      ..add(DiagnosticsProperty('tiles', tiles));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _Loaded);
+    return identical(this, other) ||
+        (other is _Loaded &&
+            (identical(other.tiles, tiles) ||
+                const DeepCollectionEquality().equals(other.tiles, tiles)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(tiles);
+
+  @override
+  _$LoadedCopyWith<_Loaded> get copyWith =>
+      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(),
+    @required Result loaded(List<GuardianTileEntity> tiles),
     @required Result error(String message),
-    @required Result rateLimit(int maxLimit),
   }) {
     assert(initial != null);
     assert(loaded != null);
     assert(error != null);
-    assert(rateLimit != null);
-    return loaded();
+    return loaded(tiles);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(),
+    Result loaded(List<GuardianTileEntity> tiles),
     Result error(String message),
-    Result rateLimit(int maxLimit),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (loaded != null) {
-      return loaded();
+      return loaded(tiles);
     }
     return orElse();
   }
@@ -260,12 +266,10 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
     @required Result initial(_Initial value),
     @required Result loaded(_Loaded value),
     @required Result error(_ErrorDetails value),
-    @required Result rateLimit(_RateLimit value),
   }) {
     assert(initial != null);
     assert(loaded != null);
     assert(error != null);
-    assert(rateLimit != null);
     return loaded(this);
   }
 
@@ -275,7 +279,6 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
     Result initial(_Initial value),
     Result loaded(_Loaded value),
     Result error(_ErrorDetails value),
-    Result rateLimit(_RateLimit value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -287,7 +290,10 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 }
 
 abstract class _Loaded implements GuardianState {
-  const factory _Loaded() = _$_Loaded;
+  const factory _Loaded(List<GuardianTileEntity> tiles) = _$_Loaded;
+
+  List<GuardianTileEntity> get tiles;
+  _$LoadedCopyWith<_Loaded> get copyWith;
 }
 
 abstract class _$ErrorDetailsCopyWith<$Res> {
@@ -356,14 +362,12 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(),
+    @required Result loaded(List<GuardianTileEntity> tiles),
     @required Result error(String message),
-    @required Result rateLimit(int maxLimit),
   }) {
     assert(initial != null);
     assert(loaded != null);
     assert(error != null);
-    assert(rateLimit != null);
     return error(message);
   }
 
@@ -371,9 +375,8 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(),
+    Result loaded(List<GuardianTileEntity> tiles),
     Result error(String message),
-    Result rateLimit(int maxLimit),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -389,12 +392,10 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
     @required Result initial(_Initial value),
     @required Result loaded(_Loaded value),
     @required Result error(_ErrorDetails value),
-    @required Result rateLimit(_RateLimit value),
   }) {
     assert(initial != null);
     assert(loaded != null);
     assert(error != null);
-    assert(rateLimit != null);
     return error(this);
   }
 
@@ -404,7 +405,6 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
     Result initial(_Initial value),
     Result loaded(_Loaded value),
     Result error(_ErrorDetails value),
-    Result rateLimit(_RateLimit value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -420,135 +420,4 @@ abstract class _ErrorDetails implements GuardianState {
 
   String get message;
   _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith;
-}
-
-abstract class _$RateLimitCopyWith<$Res> {
-  factory _$RateLimitCopyWith(
-          _RateLimit value, $Res Function(_RateLimit) then) =
-      __$RateLimitCopyWithImpl<$Res>;
-  $Res call({int maxLimit});
-}
-
-class __$RateLimitCopyWithImpl<$Res> extends _$GuardianStateCopyWithImpl<$Res>
-    implements _$RateLimitCopyWith<$Res> {
-  __$RateLimitCopyWithImpl(_RateLimit _value, $Res Function(_RateLimit) _then)
-      : super(_value, (v) => _then(v as _RateLimit));
-
-  @override
-  _RateLimit get _value => super._value as _RateLimit;
-
-  @override
-  $Res call({
-    Object maxLimit = freezed,
-  }) {
-    return _then(_RateLimit(
-      maxLimit == freezed ? _value.maxLimit : maxLimit as int,
-    ));
-  }
-}
-
-class _$_RateLimit with DiagnosticableTreeMixin implements _RateLimit {
-  const _$_RateLimit(this.maxLimit) : assert(maxLimit != null);
-
-  @override
-  final int maxLimit;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'GuardianState.rateLimit(maxLimit: $maxLimit)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'GuardianState.rateLimit'))
-      ..add(DiagnosticsProperty('maxLimit', maxLimit));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is _RateLimit &&
-            (identical(other.maxLimit, maxLimit) ||
-                const DeepCollectionEquality()
-                    .equals(other.maxLimit, maxLimit)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(maxLimit);
-
-  @override
-  _$RateLimitCopyWith<_RateLimit> get copyWith =>
-      __$RateLimitCopyWithImpl<_RateLimit>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(),
-    @required Result error(String message),
-    @required Result rateLimit(int maxLimit),
-  }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(error != null);
-    assert(rateLimit != null);
-    return rateLimit(maxLimit);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(),
-    Result error(String message),
-    Result rateLimit(int maxLimit),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (rateLimit != null) {
-      return rateLimit(maxLimit);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result error(_ErrorDetails value),
-    @required Result rateLimit(_RateLimit value),
-  }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(error != null);
-    assert(rateLimit != null);
-    return rateLimit(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result error(_ErrorDetails value),
-    Result rateLimit(_RateLimit value),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (rateLimit != null) {
-      return rateLimit(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _RateLimit implements GuardianState {
-  const factory _RateLimit(int maxLimit) = _$_RateLimit;
-
-  int get maxLimit;
-  _$RateLimitCopyWith<_RateLimit> get copyWith;
 }

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/features/help_center/domain/entities/guardian_tile_entity.dart';
 import 'package:penhas/app/features/help_center/domain/states/guardian_state.dart';
 import 'package:penhas/app/features/help_center/presentation/guardians/guardians_controller.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/guardian_error_page.dart';
+import 'package:penhas/app/features/help_center/presentation/pages/guardian_tiles_header.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class GuardiansPage extends StatefulWidget {
@@ -23,6 +24,8 @@ class _GuardiansPageState
     with SnackBarHandler {
   List<ReactionDisposer> _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
   PageProgressState _loadState = PageProgressState.initial;
 
@@ -59,13 +62,9 @@ class _GuardiansPageState
       body: PageProgressIndicator(
         progressState: _loadState,
         progressMessage: 'Carregando...',
-        child: GestureDetector(
-          onTap: () => _handleTap(context),
-          onPanDown: (_) => _handleTap(context),
-          child: SafeArea(
-            child: Observer(
-              builder: (context) => _buildBody(controller.currentState),
-            ),
+        child: SafeArea(
+          child: Observer(
+            builder: (context) => _buildBody(controller.currentState),
           ),
         ),
       ),
@@ -74,33 +73,42 @@ class _GuardiansPageState
 
   Widget _buildBody(GuardianState state) {
     return state.when(
-      initial: () => Container(color: DesignSystemColors.white),
-      loaded: () => _buildInputScreen(),
+      initial: () => _empty(),
+      loaded: (tiles) => _buildInputScreen(tiles),
       error: (message) => GuardianErrorPage(
         message: message,
         onPressed: controller.loadPage,
       ),
-      rateLimit: (maxLimit) => _buildInputScreen(),
     );
   }
 
-  Widget _buildInputScreen() {
+  Widget _buildInputScreen(List<GuardianTileEntity> tiles) {
     return Container(
       color: Color.fromRGBO(248, 248, 248, 1),
       child: Padding(
         padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 22.0),
-        child: Column(
-          children: <Widget>[
-            // _headerMessage(),
-            // _guardianNameInput(),
-            // _guardianMobileInput(),
-            // _description(),
-            // _addGuardianButton(),
-          ],
+        child: RefreshIndicator(
+          key: _refreshIndicatorKey,
+          onRefresh: () async => controller.loadPage(),
+          child: ListView.builder(
+              itemCount: tiles.length,
+              itemBuilder: (context, index) {
+                final tile = tiles[index];
+                if (tile is GuardianTileHeaderEntity) {
+                  return GuardianTilesHeader(title: tile.title);
+                }
+
+                return Container(
+                  height: 60,
+                  color: Colors.black,
+                );
+              }),
         ),
       ),
     );
   }
+
+  Widget _empty() => Container(color: DesignSystemColors.white);
 
   ReactionDisposer _showErrorMessage() {
     return reaction((_) => controller.errorMessage, (String message) {
@@ -114,11 +122,5 @@ class _GuardiansPageState
         _loadState = status;
       });
     });
-  }
-
-  _handleTap(BuildContext context) {
-    if (MediaQuery.of(context).viewInsets.bottom > 0)
-      SystemChannels.textInput.invokeMethod('TextInput.hide');
-    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
   }
 }
