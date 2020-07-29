@@ -183,3 +183,24 @@ const kTextStyleGuardianBodyTextBoldStyle = TextStyle(
   fontFamily: 'Lato',
   fontWeight: FontWeight.bold,
 );
+
+const kTextStyleGuardianCardTitle = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 16.0,
+    letterSpacing: 0.45,
+    color: DesignSystemColors.darkIndigoThree,
+    fontWeight: FontWeight.bold);
+
+const kTextStyleGuardianCardMobile = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 14.0,
+    letterSpacing: 0.45,
+    color: DesignSystemColors.warnGrey,
+    fontWeight: FontWeight.normal);
+
+const kTextStyleGuardianStatusMobile = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 12.0,
+    letterSpacing: 0.1,
+    color: DesignSystemColors.warnGrey,
+    fontWeight: FontWeight.normal);

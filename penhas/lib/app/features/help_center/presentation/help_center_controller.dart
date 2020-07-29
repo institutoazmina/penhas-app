@@ -9,10 +9,10 @@ class HelpCenterController = _HelpCenterControllerBase
 abstract class _HelpCenterControllerBase with Store {
   @action
   void newGuardian() {
-    Modular.link.pushNamed('/helpcenter/newGuardian');
+    Modular.to.pushNamed('/mainboard/helpcenter/newGuardian');
   }
 
   void guardians() {
-    Modular.link.pushNamed('/helpcenter/guardians');
+    Modular.to.pushNamed('/mainboard/helpcenter/guardians');
   }
 }

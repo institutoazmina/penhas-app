@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-class GuardianTilesDescription extends StatelessWidget {
+class GuardianTileDescription extends StatelessWidget {
   final String description;
-  const GuardianTilesDescription({
+  const GuardianTileDescription({
     Key key,
     @required this.description,
   }) : super(key: key);

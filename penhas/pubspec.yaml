@@ -108,6 +108,8 @@ flutter:
    - assets/images/tutorial_record_2/tutorial_record_2.png
    - assets/images/tutorial_record_3/tutorial_record_3.png
    - assets/images/tutorial_record_4/tutorial_record_4.png
+   - assets/images/svg/help_center/guardians/guardians_delete.svg
+   - assets/images/svg/help_center/guardians/guardians_edit.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

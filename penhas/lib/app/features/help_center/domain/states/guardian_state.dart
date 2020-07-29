@@ -8,5 +8,5 @@ part 'guardian_state.freezed.dart';
 abstract class GuardianState with _$GuardianState {
   const factory GuardianState.initial() = _Initial;
   const factory GuardianState.loaded(List<GuardianTileEntity> tiles) = _Loaded;
-  const factory GuardianState.error([String message]) = _ErrorDetails;
+  const factory GuardianState.error(String message) = _ErrorDetails;
 }

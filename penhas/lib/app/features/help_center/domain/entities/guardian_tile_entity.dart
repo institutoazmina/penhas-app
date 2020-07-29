@@ -20,3 +20,26 @@ class GuardianTileDescriptionEntity extends GuardianTileEntity {
   @override
   List<Object> get props => [description];
 }
+
+class GuardianTileCardEntity extends GuardianTileEntity {
+  final String name;
+  final String mobile;
+  final String status;
+  final void Function() onEditPressed;
+  final void Function() onDeletePressed;
+  final void Function() onResendPressed;
+
+// typedef VoidCallback = void Function();
+
+  GuardianTileCardEntity({
+    @required this.name,
+    @required this.mobile,
+    @required this.status,
+    this.onEditPressed,
+    this.onDeletePressed,
+    this.onResendPressed,
+  });
+
+  @override
+  List<Object> get props => [name, mobile, status];
+}

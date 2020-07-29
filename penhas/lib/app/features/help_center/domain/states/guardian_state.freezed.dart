@@ -22,7 +22,7 @@ class _$GuardianStateTearOff {
     );
   }
 
-  _ErrorDetails error([String message]) {
+  _ErrorDetails error(String message) {
     return _ErrorDetails(
       message,
     );
@@ -324,7 +324,7 @@ class __$ErrorDetailsCopyWithImpl<$Res>
 }
 
 class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
-  const _$_ErrorDetails([this.message]);
+  const _$_ErrorDetails(this.message) : assert(message != null);
 
   @override
   final String message;
@@ -416,7 +416,7 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
 }
 
 abstract class _ErrorDetails implements GuardianState {
-  const factory _ErrorDetails([String message]) = _$_ErrorDetails;
+  const factory _ErrorDetails(String message) = _$_ErrorDetails;
 
   String get message;
   _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith;

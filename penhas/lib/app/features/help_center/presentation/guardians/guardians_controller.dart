@@ -67,10 +67,24 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
   }
 
   List<GuardianTileEntity> _parseGuard(GuardianEntity guardian) {
-    return [
-      GuardianTileHeaderEntity(title: guardian.meta.header),
-      GuardianTileDescriptionEntity(description: guardian.meta.description),
-    ];
+    final header = GuardianTileHeaderEntity(title: guardian.meta.header);
+    final description =
+        GuardianTileDescriptionEntity(description: guardian.meta.description);
+    final cards = guardian.contacts.map(
+      (e) => GuardianTileCardEntity(
+        name: e.name,
+        mobile: e.mobile,
+        status: e.status,
+        onResendPressed:
+            guardian.meta.canResend ? () async => _onResendPressed() : null,
+        onEditPressed:
+            guardian.meta.canEdit ? () async => _onEditPressed() : null,
+        onDeletePressed:
+            guardian.meta.canDelete ? () async => _onDeletePressed() : null,
+      ),
+    );
+
+    return [header, description, ...cards, ...cards];
   }
 
   void _handleLoadPageError(Failure failure) {
@@ -79,4 +93,16 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
   }
 
   void _setErrorMessage(String message) => errorMessage = message;
+
+  Future<void> _onEditPressed() async {
+    print("_onEditPressed");
+  }
+
+  Future<void> _onDeletePressed() async {
+    print("_onDeletePressed");
+  }
+
+  Future<void> _onResendPressed() async {
+    print("_onResendPressed");
+  }
 }
