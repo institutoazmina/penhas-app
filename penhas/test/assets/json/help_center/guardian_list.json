@@ -2,6 +2,8 @@
   "guards": [
     {
       "meta": {
+        "can_edit": 1,
+        "can_delete": 1,
         "can_resend": 0,
         "delete_warning": "",
         "description": "Guardiões que recebem seus pedidos de socorro.",
@@ -19,6 +21,8 @@
     },
     {
       "meta": {
+        "can_edit": 1,
+        "can_delete": 1,
         "can_resend": 0,
         "delete_warning": "",
         "description": "Guardiões que ainda não aceitaram seu convite.",

@@ -30,6 +30,8 @@ void main() {
         guards: [
           GuardianEntity(
             meta: GuardianSessionMeta(
+                canEdit: true,
+                canDelete: true,
                 canResend: false,
                 deleteWarning: "",
                 description: "Guardiões que recebem seus pedidos de socorro.",
@@ -46,6 +48,8 @@ void main() {
           ),
           GuardianEntity(
             meta: GuardianSessionMeta(
+                canEdit: true,
+                canDelete: true,
                 canResend: false,
                 deleteWarning: "",
                 description: "Guardiões que ainda não aceitaram seu convite.",

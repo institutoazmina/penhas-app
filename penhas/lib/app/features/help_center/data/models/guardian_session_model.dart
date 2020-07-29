@@ -40,6 +40,8 @@ class _GuardianModel {
     final List<Object> contactsData = jsonData['rows'];
 
     final meta = GuardianSessionMeta(
+        canEdit: metaData['can_edit'] == 1,
+        canDelete: metaData['can_delete'] == 1,
         canResend: metaData['can_resend'] == 1,
         deleteWarning: metaData['delete_warning'],
         description: metaData['description'],

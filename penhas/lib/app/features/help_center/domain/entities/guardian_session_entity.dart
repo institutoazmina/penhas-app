@@ -41,6 +41,8 @@ enum GuardianStatus { accepted, pending }
 
 @immutable
 class GuardianSessionMeta extends Equatable {
+  final bool canEdit;
+  final bool canDelete;
   final bool canResend;
   final String deleteWarning;
   final String description;
@@ -48,6 +50,8 @@ class GuardianSessionMeta extends Equatable {
   final GuardianStatus status;
 
   GuardianSessionMeta({
+    @required this.canEdit,
+    @required this.canDelete,
     @required this.canResend,
     @required this.deleteWarning,
     @required this.description,
@@ -57,6 +61,8 @@ class GuardianSessionMeta extends Equatable {
 
   @override
   List<Object> get props => [
+        canEdit,
+        canDelete,
         canResend,
         deleteWarning,
         description,

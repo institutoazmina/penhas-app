@@ -46,6 +46,8 @@ void main() {
             guards: [
               GuardianEntity(
                   meta: GuardianSessionMeta(
+                      canEdit: true,
+                      canDelete: true,
                       canResend: false,
                       deleteWarning: '',
                       description:
@@ -55,6 +57,8 @@ void main() {
                   contacts: []),
               GuardianEntity(
                   meta: GuardianSessionMeta(
+                      canEdit: true,
+                      canDelete: true,
                       canResend: false,
                       deleteWarning: '',
                       description:
