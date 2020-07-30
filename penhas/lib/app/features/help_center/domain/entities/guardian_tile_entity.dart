@@ -41,3 +41,11 @@ class GuardianTileCardEntity extends GuardianTileEntity {
   @override
   List<Object> get props => [guardian, deleteWarning];
 }
+
+class GuardianTileEmptyCardEntity extends GuardianTileEntity {
+  final void Function() onPressed;
+
+  GuardianTileEmptyCardEntity({@required this.onPressed});
+  @override
+  List<Object> get props => [];
+}

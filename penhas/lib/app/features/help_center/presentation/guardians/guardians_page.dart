@@ -10,6 +10,7 @@ import 'package:penhas/app/features/help_center/presentation/guardians/guardians
 import 'package:penhas/app/features/help_center/presentation/pages/guardian_error_page.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/guardian_tile_action_card.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/guardian_tile_description.dart';
+import 'package:penhas/app/features/help_center/presentation/pages/guardian_tile_empty_card.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/guardian_tile_header.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
@@ -105,6 +106,11 @@ class _GuardiansPageState
                 }
                 if (tile is GuardianTileCardEntity) {
                   return GuardianTileActionCard(
+                    card: tile,
+                  );
+                }
+                if (tile is GuardianTileEmptyCardEntity) {
+                  return GuardianTileEmptyCard(
                     card: tile,
                   );
                 }

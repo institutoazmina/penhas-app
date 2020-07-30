@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
@@ -84,19 +85,29 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
     final header = GuardianTileHeaderEntity(title: guardian.meta.header);
     final description =
         GuardianTileDescriptionEntity(description: guardian.meta.description);
-    final cards = guardian.contacts.map(
-      (e) => GuardianTileCardEntity(
-        guardian: e,
-        deleteWarning: guardian.meta.deleteWarning,
-        onEditPressed: guardian.meta.canEdit
-            ? (name) async => _onEditPressed(e, name)
-            : null,
-        onResendPressed:
-            guardian.meta.canResend ? () async => _onResendPressed(e) : null,
-        onDeletePressed:
-            guardian.meta.canDelete ? () async => _onDeletePressed(e) : null,
-      ),
-    );
+    List<GuardianTileEntity> cards = guardian.contacts
+        .map(
+          (e) => GuardianTileCardEntity(
+            guardian: e,
+            deleteWarning: guardian.meta.deleteWarning,
+            onEditPressed: guardian.meta.canEdit
+                ? (name) async => _onEditPressed(e, name)
+                : null,
+            onResendPressed: guardian.meta.canResend
+                ? () async => _onResendPressed(e)
+                : null,
+            onDeletePressed: guardian.meta.canDelete
+                ? () async => _onDeletePressed(e)
+                : null,
+          ),
+        )
+        .toList();
+
+    if (cards.isEmpty) {
+      cards = [
+        GuardianTileEmptyCardEntity(onPressed: () async => _onRegisterGuadian())
+      ];
+    }
 
     return [header, description, ...cards];
   }
@@ -147,5 +158,9 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
       (failure) => _setErrorMessage(mapFailureMessage(failure)),
       (session) async => loadPage(),
     );
+  }
+
+  Future<void> _onRegisterGuadian() async {
+    Modular.to.pushNamed('/mainboard/helpcenter/newGuardian');
   }
 }
