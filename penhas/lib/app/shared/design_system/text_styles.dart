@@ -204,3 +204,17 @@ const kTextStyleGuardianStatusMobile = TextStyle(
     letterSpacing: 0.1,
     color: DesignSystemColors.warnGrey,
     fontWeight: FontWeight.normal);
+
+const kTextStyleAlertDialogTitle = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 20.0,
+    letterSpacing: 0.6,
+    color: DesignSystemColors.darkIndigoThree,
+    fontWeight: FontWeight.bold);
+
+const kTextStyleAlertDialogDescription = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 14.0,
+    letterSpacing: 0.45,
+    color: DesignSystemColors.darkIndigoThree,
+    fontWeight: FontWeight.normal);

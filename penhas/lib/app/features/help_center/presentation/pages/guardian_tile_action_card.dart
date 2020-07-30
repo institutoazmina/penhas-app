@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/input_box_style.dart';
-import 'package:penhas/app/features/help_center/domain/entities/guardian_session_entity.dart';
 import 'package:penhas/app/features/help_center/domain/entities/guardian_tile_entity.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class GuardianTileActionCard extends StatelessWidget {
   final GuardianTileCardEntity card;
+
   const GuardianTileActionCard({
     Key key,
     @required this.card,
@@ -31,12 +31,18 @@ class GuardianTileActionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 8.0),
+      margin: EdgeInsets.only(top: 12.0),
+      padding: EdgeInsets.only(left: 8.0, top: 8.0, bottom: 8.0),
       decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(color: DesignSystemColors.warnGrey),
-          bottom: BorderSide(color: DesignSystemColors.warnGrey),
-        ),
+        color: DesignSystemColors.white,
+        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            offset: Offset(0.0, 1.0),
+            blurRadius: 8.0,
+          )
+        ],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -64,26 +70,41 @@ class GuardianTileActionCard extends StatelessWidget {
             ),
           ),
           _buildEditAction(card.onEditPressed),
-          _buildAction(_canDeleteIcon, card.onDeletePressed),
-          _buildAction(_canResendIcon, card.onResendPressed),
+          _buildDeleteAction(card.onDeletePressed),
+          _buildResendAction(card.onResendPressed),
         ],
       ),
     );
   }
 
-  Widget _buildAction(Widget icon, void Function() action) {
-    return action == null
-        ? Container()
-        : IconButton(icon: icon, onPressed: action);
+  Widget _buildEditAction(void Function(String name) action) {
+    return optionOf(action).fold(
+      () => Container(),
+      (a) => IconButton(
+        icon: _canEditIcon,
+        onPressed: () => _onEditPressed(a),
+      ),
+    );
   }
 
-  Widget _buildEditAction(void Function(String name) action) {
-    return action == null
-        ? Container()
-        : IconButton(
-            icon: _canEditIcon,
-            onPressed: () => _onEditPressed(action),
-          );
+  Widget _buildDeleteAction(void Function() action) {
+    return optionOf(action).fold(
+      () => Container(),
+      (a) => IconButton(
+        icon: _canDeleteIcon,
+        onPressed: () => _onDeletePressed(a),
+      ),
+    );
+  }
+
+  Widget _buildResendAction(void Function() action) {
+    return optionOf(action).fold(
+      () => Container(),
+      (a) => IconButton(
+        icon: _canResendIcon,
+        onPressed: () => _onResendPressed(a),
+      ),
+    );
   }
 
   void _onEditPressed(void Function(String name) action) {
@@ -92,7 +113,7 @@ class GuardianTileActionCard extends StatelessWidget {
         TextEditingController _controller = TextEditingController();
 
         return AlertDialog(
-          title: Text('Alterar nome'),
+          title: Text('Alterar nome', style: kTextStyleAlertDialogTitle),
           content: TextFormField(
             style: kTextStyleGreyDefaultTextFieldLabelStyle,
             controller: _controller,
@@ -107,7 +128,9 @@ class GuardianTileActionCard extends StatelessWidget {
           actions: <Widget>[
             FlatButton(
               child: Text('Fechar'),
-              onPressed: () => Modular.to.canPop(),
+              onPressed: () {
+                Modular.to.pop();
+              },
             ),
             FlatButton(
               color: DesignSystemColors.easterPurple,
@@ -126,8 +149,29 @@ class GuardianTileActionCard extends StatelessWidget {
   void _onDeletePressed(void Function() action) {
     Modular.to.showDialog(
       child: AlertDialog(
-        title: Text('Title'),
-        content: Text('My content my _onDeletePressed'),
+        title: Text('Apagar', style: kTextStyleAlertDialogTitle),
+        content: Text(
+          card.deleteWarning ?? 'Deseja excluir ${card.guardian.name}?',
+          style: kTextStyleAlertDialogDescription,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Não'),
+            onPressed: () {
+              Modular.to.pop();
+            },
+          ),
+          FlatButton(
+            child: Text('Sim'),
+            onPressed: () {
+              action();
+              Modular.to.pop();
+            },
+          )
+        ],
       ),
       barrierDismissible: true,
     );
@@ -136,8 +180,29 @@ class GuardianTileActionCard extends StatelessWidget {
   void _onResendPressed(void Function() action) {
     Modular.to.showDialog(
       child: AlertDialog(
-        title: Text('Title'),
-        content: Text('My content my _onResendPressed'),
+        title: Text('Reenviar', style: kTextStyleAlertDialogTitle),
+        content: Text(
+          'Deseja reenviar o convite para ${card.guardian.name}?',
+          style: kTextStyleAlertDialogDescription,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Não'),
+            onPressed: () {
+              Modular.to.pop();
+            },
+          ),
+          FlatButton(
+            child: Text('Sim'),
+            onPressed: () {
+              action();
+              Modular.to.pop();
+            },
+          )
+        ],
       ),
       barrierDismissible: true,
     );

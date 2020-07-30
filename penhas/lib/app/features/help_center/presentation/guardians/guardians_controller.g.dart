@@ -16,6 +16,13 @@ mixin _$GuardiansController on _GuardiansControllerBase, Store {
           Computed<PageProgressState>(() => super.loadState,
               name: '_GuardiansControllerBase.loadState'))
       .value;
+  Computed<PageProgressState> _$updateStateComputed;
+
+  @override
+  PageProgressState get updateState => (_$updateStateComputed ??=
+          Computed<PageProgressState>(() => super.updateState,
+              name: '_GuardiansControllerBase.updateState'))
+      .value;
 
   final _$_fetchProgressAtom =
       Atom(name: '_GuardiansControllerBase._fetchProgress');
@@ -95,7 +102,8 @@ mixin _$GuardiansController on _GuardiansControllerBase, Store {
     return '''
 errorMessage: ${errorMessage},
 currentState: ${currentState},
-loadState: ${loadState}
+loadState: ${loadState},
+updateState: ${updateState}
     ''';
   }
 }

@@ -48,6 +48,18 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
         : PageProgressState.loaded;
   }
 
+  @computed
+  PageProgressState get updateState {
+    if (_updateProgress == null ||
+        _updateProgress.status == FutureStatus.rejected) {
+      return PageProgressState.initial;
+    }
+
+    return _updateProgress.status == FutureStatus.pending
+        ? PageProgressState.loading
+        : PageProgressState.loaded;
+  }
+
   @action
   Future<void> loadPage() async {
     _setErrorMessage('');
@@ -62,11 +74,8 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
   }
 
   void _handleSession(GuardianSessioEntity session) {
-    final headers = session.guards
-        .expand(
-          (guardian) => _parseGuard(guardian),
-        )
-        .toList();
+    final headers =
+        session.guards.expand((guardian) => _parseGuard(guardian)).toList();
 
     currentState = GuardianState.loaded(headers);
   }
@@ -78,13 +87,14 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
     final cards = guardian.contacts.map(
       (e) => GuardianTileCardEntity(
         guardian: e,
+        deleteWarning: guardian.meta.deleteWarning,
         onEditPressed: guardian.meta.canEdit
             ? (name) async => _onEditPressed(e, name)
             : null,
         onResendPressed:
-            guardian.meta.canResend ? () async => _onResendPressed() : null,
+            guardian.meta.canResend ? () async => _onResendPressed(e) : null,
         onDeletePressed:
-            guardian.meta.canDelete ? () async => _onDeletePressed() : null,
+            guardian.meta.canDelete ? () async => _onDeletePressed(e) : null,
       ),
     );
 
@@ -107,7 +117,7 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
     final newContact = contact.copyWith(name: name);
 
     _updateProgress = ObservableFuture(_guardianRepository.update(newContact));
-    final response = await _fetchProgress;
+    final response = await _updateProgress;
 
     response.fold(
       (failure) => _setErrorMessage(mapFailureMessage(failure)),
@@ -115,12 +125,27 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
     );
   }
 
-  Future<void> _onDeletePressed() async {
-    print("_onDeletePressed");
+  Future<void> _onDeletePressed(GuardianContactEntity contact) async {
+    if (contact == null) return;
+
+    _updateProgress = ObservableFuture(_guardianRepository.delete(contact));
+    final response = await _updateProgress;
+
+    response.fold(
+      (failure) => _setErrorMessage(mapFailureMessage(failure)),
+      (session) async => loadPage(),
+    );
   }
 
-  Future<void> _onResendPressed() async {
-    // _guardianRepository.create(guardian)
-    print("_onResendPressed");
+  Future<void> _onResendPressed(GuardianContactEntity contact) async {
+    if (contact == null) return;
+
+    _updateProgress = ObservableFuture(_guardianRepository.create(contact));
+    final response = await _updateProgress;
+
+    response.fold(
+      (failure) => _setErrorMessage(mapFailureMessage(failure)),
+      (session) async => loadPage(),
+    );
   }
 }

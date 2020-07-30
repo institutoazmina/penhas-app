@@ -25,17 +25,19 @@ class GuardianTileDescriptionEntity extends GuardianTileEntity {
 
 class GuardianTileCardEntity extends GuardianTileEntity {
   final GuardianContactEntity guardian;
+  final String deleteWarning;
   final void Function(String name) onEditPressed;
   final void Function() onDeletePressed;
   final void Function() onResendPressed;
 
   GuardianTileCardEntity({
     @required this.guardian,
+    @required this.deleteWarning,
     this.onEditPressed,
     this.onDeletePressed,
     this.onResendPressed,
   });
 
   @override
-  List<Object> get props => [guardian];
+  List<Object> get props => [guardian, deleteWarning];
 }

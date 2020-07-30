@@ -45,6 +45,7 @@ class _GuardiansPageState
     _disposers ??= [
       _showErrorMessage(),
       _showLoadProgress(),
+      _showUpdateProgress(),
     ];
   }
 
@@ -86,7 +87,7 @@ class _GuardiansPageState
 
   Widget _buildInputScreen(List<GuardianTileEntity> tiles) {
     return Container(
-      color: Color.fromRGBO(248, 248, 248, 1),
+      color: Color.fromRGBO(240, 240, 240, 1),
       child: Padding(
         padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 22.0),
         child: RefreshIndicator(
@@ -127,6 +128,14 @@ class _GuardiansPageState
 
   ReactionDisposer _showLoadProgress() {
     return reaction((_) => controller.loadState, (PageProgressState status) {
+      setState(() {
+        _loadState = status;
+      });
+    });
+  }
+
+  ReactionDisposer _showUpdateProgress() {
+    return reaction((_) => controller.updateState, (PageProgressState status) {
       setState(() {
         _loadState = status;
       });
