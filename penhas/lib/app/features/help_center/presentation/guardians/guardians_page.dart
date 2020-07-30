@@ -59,6 +59,7 @@ class _GuardiansPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text('Meus Guardiões'),
         backgroundColor: DesignSystemColors.ligthPurple,

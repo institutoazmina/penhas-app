@@ -120,7 +120,10 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
   void _setErrorMessage(String message) => errorMessage = message;
 
   Future<void> _onEditPressed(
-      GuardianContactEntity contact, String name) async {
+    GuardianContactEntity contact,
+    String name,
+  ) async {
+    _setErrorMessage('');
     if (contact == null || name == null) {
       return;
     }
@@ -137,6 +140,7 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
   }
 
   Future<void> _onDeletePressed(GuardianContactEntity contact) async {
+    _setErrorMessage('');
     if (contact == null) return;
 
     _updateProgress = ObservableFuture(_guardianRepository.delete(contact));
@@ -149,6 +153,7 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
   }
 
   Future<void> _onResendPressed(GuardianContactEntity contact) async {
+    _setErrorMessage('');
     if (contact == null) return;
 
     _updateProgress = ObservableFuture(_guardianRepository.create(contact));
