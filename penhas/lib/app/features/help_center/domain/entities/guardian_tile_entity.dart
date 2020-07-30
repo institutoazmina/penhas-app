@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
+import 'guardian_session_entity.dart';
+
 abstract class GuardianTileEntity extends Equatable {}
 
 class GuardianTileHeaderEntity extends GuardianTileEntity {
@@ -22,24 +24,18 @@ class GuardianTileDescriptionEntity extends GuardianTileEntity {
 }
 
 class GuardianTileCardEntity extends GuardianTileEntity {
-  final String name;
-  final String mobile;
-  final String status;
-  final void Function() onEditPressed;
+  final GuardianContactEntity guardian;
+  final void Function(String name) onEditPressed;
   final void Function() onDeletePressed;
   final void Function() onResendPressed;
 
-// typedef VoidCallback = void Function();
-
   GuardianTileCardEntity({
-    @required this.name,
-    @required this.mobile,
-    @required this.status,
+    @required this.guardian,
     this.onEditPressed,
     this.onDeletePressed,
     this.onResendPressed,
   });
 
   @override
-  List<Object> get props => [name, mobile, status];
+  List<Object> get props => [guardian];
 }

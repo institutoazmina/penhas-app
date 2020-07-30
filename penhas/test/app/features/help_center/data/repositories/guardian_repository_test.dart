@@ -145,7 +145,7 @@ void main() {
           final guardian = GuardianContactEntity(
             id: 1,
             mobile: '(11) 91910101',
-            name: 'Maria (PenhaS)',
+            name: 'Renato Lindão',
             status: 'pending',
           );
 

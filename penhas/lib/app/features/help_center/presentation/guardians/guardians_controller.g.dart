@@ -34,6 +34,22 @@ mixin _$GuardiansController on _GuardiansControllerBase, Store {
     });
   }
 
+  final _$_updateProgressAtom =
+      Atom(name: '_GuardiansControllerBase._updateProgress');
+
+  @override
+  ObservableFuture<Either<Failure, ValidField>> get _updateProgress {
+    _$_updateProgressAtom.reportRead();
+    return super._updateProgress;
+  }
+
+  @override
+  set _updateProgress(ObservableFuture<Either<Failure, ValidField>> value) {
+    _$_updateProgressAtom.reportWrite(value, super._updateProgress, () {
+      super._updateProgress = value;
+    });
+  }
+
   final _$errorMessageAtom =
       Atom(name: '_GuardiansControllerBase.errorMessage');
 

@@ -100,6 +100,19 @@ class GuardianContactEntity extends Equatable {
     );
   }
 
+  GuardianContactEntity copyWith({
+    int id,
+    String name,
+    String mobile,
+    String status,
+  }) =>
+      GuardianContactEntity(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        mobile: mobile ?? this.mobile,
+        status: status ?? this.status,
+      );
+
   @override
   List<Object> get props => [
         id,

@@ -107,7 +107,6 @@ class _GuardiansPageState
                     card: tile,
                   );
                 }
-
                 return Container(
                   height: 60,
                   color: Colors.black,
