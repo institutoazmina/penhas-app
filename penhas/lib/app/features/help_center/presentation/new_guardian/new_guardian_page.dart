@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/input_box_style.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/help_center/domain/states/new_guardian_state.dart';
 import 'package:penhas/app/features/help_center/presentation/new_guardian/new_guardian_controller.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/guardian_error_page.dart';
@@ -46,6 +48,7 @@ class _NewGuardianPageState
       _showErrorMessage(),
       _showLoadProgress(),
       _showCreateProgress(),
+      _showAlert(),
     ];
   }
 
@@ -263,9 +266,55 @@ class _NewGuardianPageState
     });
   }
 
+  ReactionDisposer _showAlert() {
+    return reaction((_) => controller.alertState, (GuardianAlertState status) {
+      status.when(
+        initial: () => print('dentro do _showAlert'),
+        alert: (action) => _showSentInvite(action),
+      );
+    });
+  }
+
   _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0)
       SystemChannels.textInput.invokeMethod('TextInput.hide');
     WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+  }
+
+  void _showSentInvite(GuardianAlertMessageAction action) {
+    Modular.to.showDialog(
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: Column(
+            children: <Widget>[
+              SvgPicture.asset(
+                  'assets/images/svg/help_center/guardians/guardians_sent_invite.svg'),
+              Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child:
+                    Text('Convite enviado', style: kTextStyleAlertDialogTitle),
+              ),
+            ],
+          ),
+          content: Text(
+            action.message,
+            style: kTextStyleAlertDialogDescription,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Fechar'),
+              onPressed: () async {
+                Modular.to.pop();
+                action.onPressed();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

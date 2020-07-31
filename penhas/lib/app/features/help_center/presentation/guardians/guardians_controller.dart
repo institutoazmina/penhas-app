@@ -166,6 +166,16 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
   }
 
   Future<void> _onRegisterGuadian() async {
-    Modular.to.pushNamed('/mainboard/helpcenter/newGuardian');
+    Modular.to.pushNamed('/mainboard/helpcenter/newGuardian').then(
+      (value) {
+        // Se o new_guardian inserir um usuário, aparecerá um popup
+        // com uma mensagem. Ao selecionar o 'Fechar' retornará
+        // um boolean == true, que vou utilizar aqui para fazer
+        // reload da pagina
+        if (value != null && value is bool && value == true) {
+          loadPage();
+        }
+      },
+    );
   }
 }

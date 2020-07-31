@@ -121,6 +121,21 @@ mixin _$NewGuardianController on _NewGuardianControllerBase, Store {
     });
   }
 
+  final _$alertStateAtom = Atom(name: '_NewGuardianControllerBase.alertState');
+
+  @override
+  GuardianAlertState get alertState {
+    _$alertStateAtom.reportRead();
+    return super.alertState;
+  }
+
+  @override
+  set alertState(GuardianAlertState value) {
+    _$alertStateAtom.reportWrite(value, super.alertState, () {
+      super.alertState = value;
+    });
+  }
+
   final _$loadPageAsyncAction =
       AsyncAction('_NewGuardianControllerBase.loadPage');
 
@@ -169,6 +184,7 @@ errorMessage: ${errorMessage},
 warningMobile: ${warningMobile},
 warningName: ${warningName},
 currentState: ${currentState},
+alertState: ${alertState},
 loadState: ${loadState},
 createState: ${createState}
     ''';

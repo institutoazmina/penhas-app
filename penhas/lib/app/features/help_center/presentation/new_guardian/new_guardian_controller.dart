@@ -8,6 +8,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/map_failu
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
 import 'package:penhas/app/features/help_center/domain/entities/guardian_session_entity.dart';
+import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/help_center/domain/states/new_guardian_state.dart';
 
 part 'new_guardian_controller.g.dart';
@@ -42,6 +43,9 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
 
   @observable
   NewGuardianState currentState = NewGuardianState.initial();
+
+  @observable
+  GuardianAlertState alertState = GuardianAlertState.initial();
 
   @computed
   PageProgressState get loadState {
@@ -147,5 +151,14 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
 
   void _setErrorMessage(String message) => errorMessage = message;
 
-  void _handleCreatedGuardian(ValidField field) => Modular.to.pop();
+  void _handleCreatedGuardian(ValidField field) {
+    alertState = GuardianAlertState.alert(
+      GuardianAlertMessageAction(
+        message: field.message,
+        onPressed: () async => _actionAfterNotice(),
+      ),
+    );
+  }
+
+  void _actionAfterNotice() => Modular.to.pop(true);
 }
