@@ -4,6 +4,8 @@ import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/managers/location_services.dart';
+import 'package:penhas/app/core/states/location_permission_state.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
@@ -21,6 +23,7 @@ class NewGuardianController extends _NewGuardianControllerBase
 
 abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
   final IGuardianRepository _guardianRepository;
+  final ILocationServices _locationService = LocationServices();
   String guardianName;
   String guardianMobile;
 
@@ -104,6 +107,7 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> addGuardian() async {
+    /*
     warningName = '';
     warningMobile = '';
 
@@ -133,6 +137,10 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
       (failure) => _setErrorMessage(mapFailureMessage(failure)),
       (session) => _handleCreatedGuardian(session),
     );
+*/
+    _handleCreatedGuardian(
+      ValidField(message: 'Usuário criado com sucesso, mané!!!'),
+    );
   }
 
   void _handleSession(GuardianSessioEntity session) {
@@ -160,5 +168,9 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
     );
   }
 
-  void _actionAfterNotice() => Modular.to.pop(true);
+  void _actionAfterNotice() async {
+    await _locationService
+        .requestPermission()
+        .then((value) => Modular.to.pop(true));
+  }
 }

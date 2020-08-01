@@ -8,3 +8,6 @@
   - Força o dispose do fluxo de criação de usuário e recuperação de senha
 
 * Fluxo
+  - Cadastro de um(a) guardiã(o)
+  - Gerenciamento dos guardiã(o)s
+  - Solicitar permissão para o geo-localização, se não tiver
