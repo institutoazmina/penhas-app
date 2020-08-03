@@ -107,7 +107,6 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> addGuardian() async {
-    /*
     warningName = '';
     warningMobile = '';
 
@@ -136,10 +135,6 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
     response.fold(
       (failure) => _setErrorMessage(mapFailureMessage(failure)),
       (session) => _handleCreatedGuardian(session),
-    );
-*/
-    _handleCreatedGuardian(
-      ValidField(message: 'Usuário criado com sucesso, mané!!!'),
     );
   }
 

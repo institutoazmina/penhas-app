@@ -7,6 +7,8 @@ part 'location_permission_state.freezed.dart';
 abstract class LocationPermissionState with _$LocationPermissionState {
   const factory LocationPermissionState.granted() = _Granted;
   const factory LocationPermissionState.denied() = _Denied;
-  const factory LocationPermissionState.deniedForever() = _DeniedForever;
+  const factory LocationPermissionState.permanentlyDenied() =
+      _PermanentlyDenied;
+  const factory LocationPermissionState.restricted() = _Restricted;
   const factory LocationPermissionState.undefined() = _Undefined;
 }

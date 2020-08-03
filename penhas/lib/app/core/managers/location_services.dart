@@ -1,63 +1,41 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:location/location.dart';
 import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/states/location_permission_state.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
+import 'package:permission_handler/permission_handler.dart' as handlePermission;
 
 class LocationFailure {}
 
 abstract class ILocationServices {
   Future<Either<LocationFailure, UserLocation>> currentLocation();
   Future<LocationPermissionState> requestPermission();
-  Future<LocationPermissionState> hasPermission();
+  Future<LocationPermissionState> permissionStatus();
 }
 
 class LocationServices implements ILocationServices {
-  final Location _location = Location();
-
-// bool _serviceEnabled;
-//  _permissionGranted;
-// LocationData _locationData;
-
-// _serviceEnabled = await location.serviceEnabled();
-// if (!_serviceEnabled) {
-//   _serviceEnabled = await location.requestService();
-//   if (!_serviceEnabled) {
-//     return;
-//   }
-// }
-
-// _permissionGranted = await location.hasPermission();
-// if (_permissionGranted == PermissionStatus.denied) {
-//   _permissionGranted = await location.requestPermission();
-//   if (_permissionGranted != PermissionStatus.granted) {
-//     return;
-//   }
-// }
-
-// _locationData = await location.getLocation();
-
   @override
   Future<Either<LocationFailure, UserLocation>> currentLocation() {
     throw UnimplementedError();
   }
 
   @override
-  Future<LocationPermissionState> hasPermission() async {
-    return _location.hasPermission().then((value) => value.mapFrom());
+  Future<LocationPermissionState> permissionStatus() async {
+    return handlePermission.Permission.location.status
+        .then((value) => value.mapFrom());
   }
 
   @override
   Future<LocationPermissionState> requestPermission() async {
-    return hasPermission().then(
+    return permissionStatus().then(
       (p) => p.when(
         granted: () => LocationPermissionState.granted(),
-        denied: () => _requestPermission(),
-        deniedForever: () => _requestDeniedPermission(),
-        undefined: () => LocationPermissionState.undefined(),
+        denied: () => _requestDeniedPermission(),
+        permanentlyDenied: () => _requestDeniedPermission(),
+        restricted: () => LocationPermissionState.restricted(),
+        undefined: () => _requestPermission(),
       ),
     );
   }
@@ -117,17 +95,21 @@ class LocationServices implements ILocationServices {
                     Modular.to.pop(LocationPermissionState.denied());
                   },
                 ),
-                FlatButton(
-                  color: DesignSystemColors.easterPurple,
-                  child:
-                      Text('Sim claro!', style: TextStyle(color: Colors.white)),
-                  onPressed: () async {
-                    _location
-                        .requestPermission()
-                        .then((value) => value.mapFrom())
-                        .then((value) => _requestDeniedPermissionIfNeed(value))
-                        .then((value) => Modular.to.pop(value));
-                  },
+                SizedBox(
+                  width: 120,
+                  child: FlatButton(
+                    color: DesignSystemColors.easterPurple,
+                    child: Text('Sim claro!',
+                        style: TextStyle(color: Colors.white)),
+                    onPressed: () async {
+                      handlePermission.Permission.locationWhenInUse
+                          .request()
+                          .then((value) => value.mapFrom())
+                          .then((value) =>
+                              _requestDeniedPermissionIfNeeded(value))
+                          .then((value) => Modular.to.pop(value));
+                    },
+                  ),
                 ),
               ],
             );
@@ -139,30 +121,113 @@ class LocationServices implements ILocationServices {
         );
   }
 
-  Future<LocationPermissionState> _requestDeniedPermissionIfNeed(
-      LocationPermissionState value) async {
-    return value.maybeWhen(
-      deniedForever: () async => _requestDeniedPermission(),
-      orElse: () => value,
+  Future<LocationPermissionState> _requestDeniedPermissionIfNeeded(
+      LocationPermissionState state) async {
+    return state.maybeWhen(
+      permanentlyDenied: () => _requestDeniedPermission(),
+      orElse: () => state,
     );
   }
 
   Future<LocationPermissionState> _requestDeniedPermission() {
-    Modular.to.showDialog();
+    return Modular.to
+        .showDialog(
+          barrierDismissible: false,
+          builder: (context) {
+            return AlertDialog(
+              title: Column(
+                children: <Widget>[
+                  Icon(
+                    Icons.location_off,
+                    color: DesignSystemColors.easterPurple,
+                    size: 48,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12.0),
+                    child: Text('Localização bloqueada',
+                        style: kTextStyleAlertDialogTitle),
+                  ),
+                ],
+              ),
+              content: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  RichText(
+                    text: TextSpan(
+                      text: 'O acesso a tua ',
+                      style: kTextStyleAlertDialogDescription,
+                      children: [
+                        TextSpan(
+                          text: 'localização está bloqueada',
+                          style: kTextStyleAlertDialogDescriptionBold,
+                        ),
+                        TextSpan(
+                          text:
+                              '. Agora a autorização precisa ser realizada manualmente.',
+                          style: kTextStyleAlertDialogDescription,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12.0),
+                    child: RichText(
+                      text: TextSpan(
+                        text: 'Você quer liberar o acesso agora?',
+                        style: kTextStyleAlertDialogDescriptionBold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('Não'),
+                  onPressed: () async {
+                    Modular.to.pop(LocationPermissionState.denied());
+                  },
+                ),
+                SizedBox(
+                  width: 120,
+                  child: FlatButton(
+                    color: DesignSystemColors.easterPurple,
+                    child: Text('Sim', style: TextStyle(color: Colors.white)),
+                    onPressed: () async {
+                      handlePermission.openAppSettings().then((value) =>
+                          Modular.to.pop(LocationPermissionState.undefined()));
+                    },
+                  ),
+                ),
+              ],
+            );
+          },
+        )
+        .then((value) => value as LocationPermissionState)
+        .catchError(
+          (_) => LocationPermissionState.undefined(),
+        );
   }
 }
 
-extension PermissionStatusMap on PermissionStatus {
+extension PermissionStatusMap on handlePermission.PermissionStatus {
   LocationPermissionState mapFrom() {
     switch (this) {
-      case PermissionStatus.denied:
+      case handlePermission.PermissionStatus.denied:
         return LocationPermissionState.denied();
-      case PermissionStatus.deniedForever:
-        return LocationPermissionState.deniedForever();
-      case PermissionStatus.granted:
+      case handlePermission.PermissionStatus.granted:
         return LocationPermissionState.granted();
-      default:
+      case handlePermission.PermissionStatus.restricted:
+        return LocationPermissionState.restricted();
+      case handlePermission.PermissionStatus.permanentlyDenied:
+        return LocationPermissionState.permanentlyDenied();
+      case handlePermission.PermissionStatus.undetermined:
         return LocationPermissionState.undefined();
     }
+
+    return LocationPermissionState.undefined();
   }
 }

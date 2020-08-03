@@ -20,8 +20,12 @@ class _$LocationPermissionStateTearOff {
     return const _Denied();
   }
 
-  _DeniedForever deniedForever() {
-    return const _DeniedForever();
+  _PermanentlyDenied permanentlyDenied() {
+    return const _PermanentlyDenied();
+  }
+
+  _Restricted restricted() {
+    return const _Restricted();
   }
 
   _Undefined undefined() {
@@ -37,14 +41,16 @@ mixin _$LocationPermissionState {
   Result when<Result extends Object>({
     @required Result granted(),
     @required Result denied(),
-    @required Result deniedForever(),
+    @required Result permanentlyDenied(),
+    @required Result restricted(),
     @required Result undefined(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result granted(),
     Result denied(),
-    Result deniedForever(),
+    Result permanentlyDenied(),
+    Result restricted(),
     Result undefined(),
     @required Result orElse(),
   });
@@ -52,14 +58,16 @@ mixin _$LocationPermissionState {
   Result map<Result extends Object>({
     @required Result granted(_Granted value),
     @required Result denied(_Denied value),
-    @required Result deniedForever(_DeniedForever value),
+    @required Result permanentlyDenied(_PermanentlyDenied value),
+    @required Result restricted(_Restricted value),
     @required Result undefined(_Undefined value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result granted(_Granted value),
     Result denied(_Denied value),
-    Result deniedForever(_DeniedForever value),
+    Result permanentlyDenied(_PermanentlyDenied value),
+    Result restricted(_Restricted value),
     Result undefined(_Undefined value),
     @required Result orElse(),
   });
@@ -123,12 +131,14 @@ class _$_Granted with DiagnosticableTreeMixin implements _Granted {
   Result when<Result extends Object>({
     @required Result granted(),
     @required Result denied(),
-    @required Result deniedForever(),
+    @required Result permanentlyDenied(),
+    @required Result restricted(),
     @required Result undefined(),
   }) {
     assert(granted != null);
     assert(denied != null);
-    assert(deniedForever != null);
+    assert(permanentlyDenied != null);
+    assert(restricted != null);
     assert(undefined != null);
     return granted();
   }
@@ -138,7 +148,8 @@ class _$_Granted with DiagnosticableTreeMixin implements _Granted {
   Result maybeWhen<Result extends Object>({
     Result granted(),
     Result denied(),
-    Result deniedForever(),
+    Result permanentlyDenied(),
+    Result restricted(),
     Result undefined(),
     @required Result orElse(),
   }) {
@@ -154,12 +165,14 @@ class _$_Granted with DiagnosticableTreeMixin implements _Granted {
   Result map<Result extends Object>({
     @required Result granted(_Granted value),
     @required Result denied(_Denied value),
-    @required Result deniedForever(_DeniedForever value),
+    @required Result permanentlyDenied(_PermanentlyDenied value),
+    @required Result restricted(_Restricted value),
     @required Result undefined(_Undefined value),
   }) {
     assert(granted != null);
     assert(denied != null);
-    assert(deniedForever != null);
+    assert(permanentlyDenied != null);
+    assert(restricted != null);
     assert(undefined != null);
     return granted(this);
   }
@@ -169,7 +182,8 @@ class _$_Granted with DiagnosticableTreeMixin implements _Granted {
   Result maybeMap<Result extends Object>({
     Result granted(_Granted value),
     Result denied(_Denied value),
-    Result deniedForever(_DeniedForever value),
+    Result permanentlyDenied(_PermanentlyDenied value),
+    Result restricted(_Restricted value),
     Result undefined(_Undefined value),
     @required Result orElse(),
   }) {
@@ -228,12 +242,14 @@ class _$_Denied with DiagnosticableTreeMixin implements _Denied {
   Result when<Result extends Object>({
     @required Result granted(),
     @required Result denied(),
-    @required Result deniedForever(),
+    @required Result permanentlyDenied(),
+    @required Result restricted(),
     @required Result undefined(),
   }) {
     assert(granted != null);
     assert(denied != null);
-    assert(deniedForever != null);
+    assert(permanentlyDenied != null);
+    assert(restricted != null);
     assert(undefined != null);
     return denied();
   }
@@ -243,7 +259,8 @@ class _$_Denied with DiagnosticableTreeMixin implements _Denied {
   Result maybeWhen<Result extends Object>({
     Result granted(),
     Result denied(),
-    Result deniedForever(),
+    Result permanentlyDenied(),
+    Result restricted(),
     Result undefined(),
     @required Result orElse(),
   }) {
@@ -259,12 +276,14 @@ class _$_Denied with DiagnosticableTreeMixin implements _Denied {
   Result map<Result extends Object>({
     @required Result granted(_Granted value),
     @required Result denied(_Denied value),
-    @required Result deniedForever(_DeniedForever value),
+    @required Result permanentlyDenied(_PermanentlyDenied value),
+    @required Result restricted(_Restricted value),
     @required Result undefined(_Undefined value),
   }) {
     assert(granted != null);
     assert(denied != null);
-    assert(deniedForever != null);
+    assert(permanentlyDenied != null);
+    assert(restricted != null);
     assert(undefined != null);
     return denied(this);
   }
@@ -274,7 +293,8 @@ class _$_Denied with DiagnosticableTreeMixin implements _Denied {
   Result maybeMap<Result extends Object>({
     Result granted(_Granted value),
     Result denied(_Denied value),
-    Result deniedForever(_DeniedForever value),
+    Result permanentlyDenied(_PermanentlyDenied value),
+    Result restricted(_Restricted value),
     Result undefined(_Undefined value),
     @required Result orElse(),
   }) {
@@ -290,42 +310,44 @@ abstract class _Denied implements LocationPermissionState {
   const factory _Denied() = _$_Denied;
 }
 
-abstract class _$DeniedForeverCopyWith<$Res> {
-  factory _$DeniedForeverCopyWith(
-          _DeniedForever value, $Res Function(_DeniedForever) then) =
-      __$DeniedForeverCopyWithImpl<$Res>;
+abstract class _$PermanentlyDeniedCopyWith<$Res> {
+  factory _$PermanentlyDeniedCopyWith(
+          _PermanentlyDenied value, $Res Function(_PermanentlyDenied) then) =
+      __$PermanentlyDeniedCopyWithImpl<$Res>;
 }
 
-class __$DeniedForeverCopyWithImpl<$Res>
+class __$PermanentlyDeniedCopyWithImpl<$Res>
     extends _$LocationPermissionStateCopyWithImpl<$Res>
-    implements _$DeniedForeverCopyWith<$Res> {
-  __$DeniedForeverCopyWithImpl(
-      _DeniedForever _value, $Res Function(_DeniedForever) _then)
-      : super(_value, (v) => _then(v as _DeniedForever));
+    implements _$PermanentlyDeniedCopyWith<$Res> {
+  __$PermanentlyDeniedCopyWithImpl(
+      _PermanentlyDenied _value, $Res Function(_PermanentlyDenied) _then)
+      : super(_value, (v) => _then(v as _PermanentlyDenied));
 
   @override
-  _DeniedForever get _value => super._value as _DeniedForever;
+  _PermanentlyDenied get _value => super._value as _PermanentlyDenied;
 }
 
-class _$_DeniedForever with DiagnosticableTreeMixin implements _DeniedForever {
-  const _$_DeniedForever();
+class _$_PermanentlyDenied
+    with DiagnosticableTreeMixin
+    implements _PermanentlyDenied {
+  const _$_PermanentlyDenied();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'LocationPermissionState.deniedForever()';
+    return 'LocationPermissionState.permanentlyDenied()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(
-          DiagnosticsProperty('type', 'LocationPermissionState.deniedForever'));
+      ..add(DiagnosticsProperty(
+          'type', 'LocationPermissionState.permanentlyDenied'));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _DeniedForever);
+    return identical(this, other) || (other is _PermanentlyDenied);
   }
 
   @override
@@ -336,14 +358,16 @@ class _$_DeniedForever with DiagnosticableTreeMixin implements _DeniedForever {
   Result when<Result extends Object>({
     @required Result granted(),
     @required Result denied(),
-    @required Result deniedForever(),
+    @required Result permanentlyDenied(),
+    @required Result restricted(),
     @required Result undefined(),
   }) {
     assert(granted != null);
     assert(denied != null);
-    assert(deniedForever != null);
+    assert(permanentlyDenied != null);
+    assert(restricted != null);
     assert(undefined != null);
-    return deniedForever();
+    return permanentlyDenied();
   }
 
   @override
@@ -351,13 +375,14 @@ class _$_DeniedForever with DiagnosticableTreeMixin implements _DeniedForever {
   Result maybeWhen<Result extends Object>({
     Result granted(),
     Result denied(),
-    Result deniedForever(),
+    Result permanentlyDenied(),
+    Result restricted(),
     Result undefined(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (deniedForever != null) {
-      return deniedForever();
+    if (permanentlyDenied != null) {
+      return permanentlyDenied();
     }
     return orElse();
   }
@@ -367,14 +392,16 @@ class _$_DeniedForever with DiagnosticableTreeMixin implements _DeniedForever {
   Result map<Result extends Object>({
     @required Result granted(_Granted value),
     @required Result denied(_Denied value),
-    @required Result deniedForever(_DeniedForever value),
+    @required Result permanentlyDenied(_PermanentlyDenied value),
+    @required Result restricted(_Restricted value),
     @required Result undefined(_Undefined value),
   }) {
     assert(granted != null);
     assert(denied != null);
-    assert(deniedForever != null);
+    assert(permanentlyDenied != null);
+    assert(restricted != null);
     assert(undefined != null);
-    return deniedForever(this);
+    return permanentlyDenied(this);
   }
 
   @override
@@ -382,20 +409,134 @@ class _$_DeniedForever with DiagnosticableTreeMixin implements _DeniedForever {
   Result maybeMap<Result extends Object>({
     Result granted(_Granted value),
     Result denied(_Denied value),
-    Result deniedForever(_DeniedForever value),
+    Result permanentlyDenied(_PermanentlyDenied value),
+    Result restricted(_Restricted value),
     Result undefined(_Undefined value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (deniedForever != null) {
-      return deniedForever(this);
+    if (permanentlyDenied != null) {
+      return permanentlyDenied(this);
     }
     return orElse();
   }
 }
 
-abstract class _DeniedForever implements LocationPermissionState {
-  const factory _DeniedForever() = _$_DeniedForever;
+abstract class _PermanentlyDenied implements LocationPermissionState {
+  const factory _PermanentlyDenied() = _$_PermanentlyDenied;
+}
+
+abstract class _$RestrictedCopyWith<$Res> {
+  factory _$RestrictedCopyWith(
+          _Restricted value, $Res Function(_Restricted) then) =
+      __$RestrictedCopyWithImpl<$Res>;
+}
+
+class __$RestrictedCopyWithImpl<$Res>
+    extends _$LocationPermissionStateCopyWithImpl<$Res>
+    implements _$RestrictedCopyWith<$Res> {
+  __$RestrictedCopyWithImpl(
+      _Restricted _value, $Res Function(_Restricted) _then)
+      : super(_value, (v) => _then(v as _Restricted));
+
+  @override
+  _Restricted get _value => super._value as _Restricted;
+}
+
+class _$_Restricted with DiagnosticableTreeMixin implements _Restricted {
+  const _$_Restricted();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'LocationPermissionState.restricted()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'LocationPermissionState.restricted'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _Restricted);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result granted(),
+    @required Result denied(),
+    @required Result permanentlyDenied(),
+    @required Result restricted(),
+    @required Result undefined(),
+  }) {
+    assert(granted != null);
+    assert(denied != null);
+    assert(permanentlyDenied != null);
+    assert(restricted != null);
+    assert(undefined != null);
+    return restricted();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result granted(),
+    Result denied(),
+    Result permanentlyDenied(),
+    Result restricted(),
+    Result undefined(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (restricted != null) {
+      return restricted();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result granted(_Granted value),
+    @required Result denied(_Denied value),
+    @required Result permanentlyDenied(_PermanentlyDenied value),
+    @required Result restricted(_Restricted value),
+    @required Result undefined(_Undefined value),
+  }) {
+    assert(granted != null);
+    assert(denied != null);
+    assert(permanentlyDenied != null);
+    assert(restricted != null);
+    assert(undefined != null);
+    return restricted(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result granted(_Granted value),
+    Result denied(_Denied value),
+    Result permanentlyDenied(_PermanentlyDenied value),
+    Result restricted(_Restricted value),
+    Result undefined(_Undefined value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (restricted != null) {
+      return restricted(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Restricted implements LocationPermissionState {
+  const factory _Restricted() = _$_Restricted;
 }
 
 abstract class _$UndefinedCopyWith<$Res> {
@@ -442,12 +583,14 @@ class _$_Undefined with DiagnosticableTreeMixin implements _Undefined {
   Result when<Result extends Object>({
     @required Result granted(),
     @required Result denied(),
-    @required Result deniedForever(),
+    @required Result permanentlyDenied(),
+    @required Result restricted(),
     @required Result undefined(),
   }) {
     assert(granted != null);
     assert(denied != null);
-    assert(deniedForever != null);
+    assert(permanentlyDenied != null);
+    assert(restricted != null);
     assert(undefined != null);
     return undefined();
   }
@@ -457,7 +600,8 @@ class _$_Undefined with DiagnosticableTreeMixin implements _Undefined {
   Result maybeWhen<Result extends Object>({
     Result granted(),
     Result denied(),
-    Result deniedForever(),
+    Result permanentlyDenied(),
+    Result restricted(),
     Result undefined(),
     @required Result orElse(),
   }) {
@@ -473,12 +617,14 @@ class _$_Undefined with DiagnosticableTreeMixin implements _Undefined {
   Result map<Result extends Object>({
     @required Result granted(_Granted value),
     @required Result denied(_Denied value),
-    @required Result deniedForever(_DeniedForever value),
+    @required Result permanentlyDenied(_PermanentlyDenied value),
+    @required Result restricted(_Restricted value),
     @required Result undefined(_Undefined value),
   }) {
     assert(granted != null);
     assert(denied != null);
-    assert(deniedForever != null);
+    assert(permanentlyDenied != null);
+    assert(restricted != null);
     assert(undefined != null);
     return undefined(this);
   }
@@ -488,7 +634,8 @@ class _$_Undefined with DiagnosticableTreeMixin implements _Undefined {
   Result maybeMap<Result extends Object>({
     Result granted(_Granted value),
     Result denied(_Denied value),
-    Result deniedForever(_DeniedForever value),
+    Result permanentlyDenied(_PermanentlyDenied value),
+    Result restricted(_Restricted value),
     Result undefined(_Undefined value),
     @required Result orElse(),
   }) {
