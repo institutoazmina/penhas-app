@@ -1,30 +1,42 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/states/location_permission_state.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
-import 'package:permission_handler/permission_handler.dart' as handlePermission;
+import 'package:permission_handler/permission_handler.dart';
 
 class LocationFailure {}
 
 abstract class ILocationServices {
-  Future<Either<LocationFailure, UserLocation>> currentLocation();
+  Future<Either<LocationFailure, UserLocationEntity>> currentLocation();
   Future<LocationPermissionState> requestPermission();
   Future<LocationPermissionState> permissionStatus();
 }
 
 class LocationServices implements ILocationServices {
   @override
-  Future<Either<LocationFailure, UserLocation>> currentLocation() {
-    throw UnimplementedError();
+  Future<Either<LocationFailure, UserLocationEntity>> currentLocation() async {
+    if (await Permission.location.isGranted) {
+      final position = await Geolocator()
+          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+      return right(
+        UserLocationEntity(
+          latitude: position.latitude,
+          longitude: position.longitude,
+        ),
+      );
+    } else {
+      return right(UserLocationEntity());
+    }
   }
 
   @override
   Future<LocationPermissionState> permissionStatus() async {
-    return handlePermission.Permission.location.status
-        .then((value) => value.mapFrom());
+    return Permission.location.status.then((value) => value.mapFrom());
   }
 
   @override
@@ -102,7 +114,7 @@ class LocationServices implements ILocationServices {
                     child: Text('Sim claro!',
                         style: TextStyle(color: Colors.white)),
                     onPressed: () async {
-                      handlePermission.Permission.locationWhenInUse
+                      Permission.locationWhenInUse
                           .request()
                           .then((value) => value.mapFrom())
                           .then((value) =>
@@ -197,8 +209,10 @@ class LocationServices implements ILocationServices {
                     color: DesignSystemColors.easterPurple,
                     child: Text('Sim', style: TextStyle(color: Colors.white)),
                     onPressed: () async {
-                      handlePermission.openAppSettings().then((value) =>
-                          Modular.to.pop(LocationPermissionState.undefined()));
+                      openAppSettings().then(
+                        (value) =>
+                            Modular.to.pop(LocationPermissionState.undefined()),
+                      );
                     },
                   ),
                 ),
@@ -213,18 +227,18 @@ class LocationServices implements ILocationServices {
   }
 }
 
-extension PermissionStatusMap on handlePermission.PermissionStatus {
+extension PermissionStatusMap on PermissionStatus {
   LocationPermissionState mapFrom() {
     switch (this) {
-      case handlePermission.PermissionStatus.denied:
+      case PermissionStatus.denied:
         return LocationPermissionState.denied();
-      case handlePermission.PermissionStatus.granted:
+      case PermissionStatus.granted:
         return LocationPermissionState.granted();
-      case handlePermission.PermissionStatus.restricted:
+      case PermissionStatus.restricted:
         return LocationPermissionState.restricted();
-      case handlePermission.PermissionStatus.permanentlyDenied:
+      case PermissionStatus.permanentlyDenied:
         return LocationPermissionState.permanentlyDenied();
-      case handlePermission.PermissionStatus.undetermined:
+      case PermissionStatus.undetermined:
         return LocationPermissionState.undefined();
     }
 

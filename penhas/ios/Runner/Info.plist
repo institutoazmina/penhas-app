@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>A PenhaS precisa da tua autorização para enviar a tua localização a(o)s guardiã(o)s quando o botão de Alerta for acionado.</string>
+	<string>A PenhaS precisa da tua autorização para enviar a tua localização as guardiãs quando o botão de Alerta for acionado.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>A PenhaS precisa da tua autorização para enviar a tua localização a(o)s guardiã(o)s quando o botão de Alerta for acionado.</string>
+	<string>A PenhaS precisa da tua autorização para enviar a tua localização as guardiãs quando o botão de Alerta for acionado.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
