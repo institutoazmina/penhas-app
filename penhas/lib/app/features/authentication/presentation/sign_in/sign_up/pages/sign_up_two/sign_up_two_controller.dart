@@ -70,19 +70,19 @@ class SignUpTwoController extends _SignUpTwoControllerBase
     String label;
     switch (race) {
       case HumanRace.white:
-        label = 'Branco';
+        label = 'Branca';
         break;
       case HumanRace.brown:
-        label = 'Pardo';
+        label = 'Parda';
         break;
       case HumanRace.black:
-        label = 'Preto';
+        label = 'Preta';
         break;
       case HumanRace.indigenous:
         label = 'Índigena';
         break;
       case HumanRace.yellow:
-        label = 'Amarelo';
+        label = 'Amarela';
         break;
       case HumanRace.notDeclared:
         label = 'Não declarar';
