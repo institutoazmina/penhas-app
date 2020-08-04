@@ -5,14 +5,39 @@ import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity
 class AppStateModel extends AppStateEntity {
   final QuizSessionEntity quizSession;
   final UserProfileEntity userProfile;
+  final bool enabledStealthMode;
+  final bool hasActivedGuardian;
+  final bool enabledAnonymousMode;
 
-  AppStateModel(this.quizSession, this.userProfile)
-      : super(quizSession: quizSession, userProfile: userProfile);
+  AppStateModel(
+    this.quizSession,
+    this.userProfile,
+    this.enabledStealthMode,
+    this.hasActivedGuardian,
+    this.enabledAnonymousMode,
+  ) : super(
+          quizSession: quizSession,
+          userProfile: userProfile,
+          enabledStealthMode: enabledStealthMode,
+          hasActivedGuardian: hasActivedGuardian,
+          enabledAnonymousMode: enabledAnonymousMode,
+        );
 
   factory AppStateModel.fromJson(Map<String, Object> jsonData) {
+    final enabledStealthMode = jsonData['modo_camuflado_ativo'] == 1;
+    final enabledAnonymousMode = jsonData['modo_anonimo_ativo'] == 1;
+    final hasActivedGuardian =
+        ((jsonData['qtde_guardioes_ativos'] as num)?.toInt() ?? 0) > 0;
+
     final quizSession = _parseQuizSession(jsonData['quiz_session']);
     final userProfile = _parseUserProfile(jsonData['user_profile']);
-    return AppStateModel(quizSession, userProfile);
+    return AppStateModel(
+      quizSession,
+      userProfile,
+      enabledStealthMode,
+      hasActivedGuardian,
+      enabledAnonymousMode,
+    );
   }
 
   static QuizSessionEntity _parseQuizSession(Map<String, Object> session) {

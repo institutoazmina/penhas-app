@@ -44,14 +44,26 @@ extension QuizMessageTypeExtension on QuizMessageType {
 class AppStateEntity extends Equatable {
   final QuizSessionEntity quizSession;
   final UserProfileEntity userProfile;
+  final bool enabledStealthMode;
+  final bool hasActivedGuardian;
+  final bool enabledAnonymousMode;
 
   AppStateEntity({
+    @required this.enabledAnonymousMode,
+    @required this.enabledStealthMode,
+    @required this.hasActivedGuardian,
     @required this.quizSession,
     @required this.userProfile,
   });
 
   @override
-  List<Object> get props => [quizSession, userProfile];
+  List<Object> get props => [
+        quizSession,
+        userProfile,
+        enabledAnonymousMode,
+        enabledStealthMode,
+        hasActivedGuardian
+      ];
 
   @override
   bool get stringify => true;

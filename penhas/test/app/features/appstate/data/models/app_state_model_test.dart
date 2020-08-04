@@ -24,8 +24,17 @@ void main() {
           sessionId: 1,
           endScreen: 'home',
           isFinished: false);
+      bool enabledStealthMode = false;
+      bool hasActivedGuardian = false;
+      bool enabledAnonymousMode = false;
       // act
-      appStateModel = AppStateModel(session, userProfile);
+      appStateModel = AppStateModel(
+        session,
+        userProfile,
+        enabledStealthMode,
+        hasActivedGuardian,
+        enabledAnonymousMode,
+      );
       // assert
       expect(appStateModel, isA<AppStateEntity>());
     });
@@ -152,7 +161,17 @@ void main() {
         endScreen: null,
         isFinished: false,
       );
-      final AppStateEntity expected = AppStateModel(quizSession, userProfile);
+      bool enabledStealthMode = false;
+      bool hasActivedGuardian = false;
+      bool enabledAnonymousMode = false;
+
+      final AppStateEntity expected = AppStateModel(
+        quizSession,
+        userProfile,
+        enabledStealthMode,
+        hasActivedGuardian,
+        enabledAnonymousMode,
+      );
       // act
       final result = AppStateModel.fromJson(jsonData);
       // assert
@@ -172,7 +191,17 @@ void main() {
         endScreen: null,
         isFinished: false,
       );
-      final AppStateEntity expected = AppStateModel(quizSession, userProfile);
+      bool enabledStealthMode = false;
+      bool hasActivedGuardian = false;
+      bool enabledAnonymousMode = false;
+
+      final AppStateEntity expected = AppStateModel(
+        quizSession,
+        userProfile,
+        enabledStealthMode,
+        hasActivedGuardian,
+        enabledAnonymousMode,
+      );
       // act
       final result = AppStateModel.fromJson(jsonData);
       // assert
@@ -192,7 +221,17 @@ void main() {
         endScreen: null,
         isFinished: false,
       );
-      final AppStateEntity expected = AppStateModel(quizSession, userProfile);
+      bool enabledStealthMode = false;
+      bool hasActivedGuardian = false;
+      bool enabledAnonymousMode = false;
+
+      final AppStateEntity expected = AppStateModel(
+        quizSession,
+        userProfile,
+        enabledStealthMode,
+        hasActivedGuardian,
+        enabledAnonymousMode,
+      );
       // act
       final result = AppStateModel.fromJson(jsonData);
       // assert
@@ -211,7 +250,17 @@ void main() {
         endScreen: null,
         isFinished: false,
       );
-      final AppStateEntity expected = AppStateModel(quizSession, userProfile);
+      bool enabledStealthMode = false;
+      bool hasActivedGuardian = false;
+      bool enabledAnonymousMode = false;
+
+      final AppStateEntity expected = AppStateModel(
+        quizSession,
+        userProfile,
+        enabledStealthMode,
+        hasActivedGuardian,
+        enabledAnonymousMode,
+      );
       // act
       final result = AppStateModel.fromJson(jsonData);
       // assert
@@ -230,7 +279,17 @@ void main() {
         endScreen: 'home',
         isFinished: true,
       );
-      final AppStateEntity expected = AppStateModel(quizSession, userProfile);
+      bool enabledStealthMode = false;
+      bool hasActivedGuardian = false;
+      bool enabledAnonymousMode = false;
+
+      final AppStateEntity expected = AppStateModel(
+        quizSession,
+        userProfile,
+        enabledStealthMode,
+        hasActivedGuardian,
+        enabledAnonymousMode,
+      );
       // act
       final result = AppStateModel.fromJson(jsonData);
       // assert
