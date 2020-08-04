@@ -35,6 +35,8 @@ class FullnameInvalidFailure extends Failure {}
 
 class HumanRaceInvalidFailure extends Failure {}
 
+class GuardianAlertGpsFailure extends Failure {}
+
 class RequiredParameter extends Failure {}
 
 @immutable

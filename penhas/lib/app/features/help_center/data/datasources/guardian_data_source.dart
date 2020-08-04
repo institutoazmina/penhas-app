@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
+import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
+import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/help_center/data/models/guardian_session_model.dart';
 import 'package:penhas/app/features/help_center/domain/entities/guardian_session_entity.dart';
@@ -12,6 +14,7 @@ abstract class IGuardianDataSource {
   Future<ValidField> create(GuardianContactEntity guardian);
   Future<ValidField> update(GuardianContactEntity guardian);
   Future<ValidField> delete(GuardianContactEntity guardian);
+  Future<ValidField> alert(UserLocationEntity location);
 }
 
 class GuardianDataSource implements IGuardianDataSource {
@@ -109,6 +112,36 @@ class GuardianDataSource implements IGuardianDataSource {
       throw ApiProviderSessionExpection();
     } else {
       throw ApiProviderException(bodyContent: json.decode(response.body));
+    }
+  }
+
+  @override
+  Future<ValidField> alert(UserLocationEntity location) async {
+    final httpHeader = await _setupHttpHeader();
+    final httpRequest = await _setupHttpRequest(
+      path: '/me/guardioes/alert',
+      queryParameters: {
+        'gps_lat': "${location.latitude}",
+        'gps_long': "${location.longitude}"
+      },
+    );
+
+    final response = await _apiClient.post(
+      httpRequest,
+      headers: httpHeader,
+    );
+
+    if (_successfulResponse.contains(response.statusCode)) {
+      return ValidField.fromJson(json.decode(response.body));
+    } else if (_invalidSessionCode.contains(response.statusCode)) {
+      throw ApiProviderSessionExpection();
+    } else {
+      final jsonData = json.decode(response.body);
+      if (jsonData['error'] == "gps_position_invalid") {
+        throw GuardianAlertGpsFailure();
+      } else {
+        throw ApiProviderException(bodyContent: json.decode(response.body));
+      }
     }
   }
 

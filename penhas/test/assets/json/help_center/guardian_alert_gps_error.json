@@ -1,0 +1,6 @@
+{
+  "error": "gps_position_invalid",
+  "field": "gps_lat",
+  "message": "gps_lat não passa na regexp: (?^a:^-?\\d{1,2}(?:\\.\\d{1,15})?$)",
+  "reason": "invalid"
+}
