@@ -44,6 +44,7 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> triggerGuardian() async {
+    _setErrorMessage('');
     _getCurrentLocatin()
         .then((location) => _triggerGuardian(location))
         .then((value) => alertState = value);
@@ -67,7 +68,6 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   }
 
   HelpCenterState _parseFailure(Failure failure) {
-    _setErrorMessage('');
     final state = HelpCenterState.initial();
     if (failure is GuardianAlertGpsFailure) {
       return state;
