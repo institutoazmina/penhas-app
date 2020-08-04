@@ -121,8 +121,10 @@ class GuardianDataSource implements IGuardianDataSource {
     final httpRequest = await _setupHttpRequest(
       path: '/me/guardioes/alert',
       queryParameters: {
-        'gps_lat': "${location.latitude}",
-        'gps_long': "${location.longitude}"
+        'gps_lat':
+            location.latitude == null ? null : location.latitude.toString(),
+        'gps_long':
+            location.longitude == null ? null : location.longitude.toString()
       },
     );
 
