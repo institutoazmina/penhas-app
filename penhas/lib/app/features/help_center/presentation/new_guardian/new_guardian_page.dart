@@ -103,7 +103,7 @@ class _NewGuardianPageState
 
   Widget _buildInputScreen() {
     return Container(
-      color: Color.fromRGBO(240, 240, 240, 1),
+      color: Color.fromRGBO(248, 248, 248, 1.0),
       child: Padding(
         padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 22.0),
         child: Column(
@@ -269,7 +269,7 @@ class _NewGuardianPageState
   ReactionDisposer _showAlert() {
     return reaction((_) => controller.alertState, (GuardianAlertState status) {
       status.when(
-        initial: () => print('dentro do _showAlert'),
+        initial: () {},
         alert: (action) => _showSentInvite(action),
       );
     });

@@ -16,8 +16,10 @@ class _$HelpCenterStateTearOff {
     return const _Initial();
   }
 
-  _GuardianTriggered guardianTriggered() {
-    return const _GuardianTriggered();
+  _GuardianTriggered guardianTriggered(GuardianAlertMessageAction action) {
+    return _GuardianTriggered(
+      action,
+    );
   }
 }
 
@@ -28,12 +30,12 @@ mixin _$HelpCenterState {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result guardianTriggered(),
+    @required Result guardianTriggered(GuardianAlertMessageAction action),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result guardianTriggered(),
+    Result guardianTriggered(GuardianAlertMessageAction action),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -104,7 +106,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result guardianTriggered(),
+    @required Result guardianTriggered(GuardianAlertMessageAction action),
   }) {
     assert(initial != null);
     assert(guardianTriggered != null);
@@ -115,7 +117,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result guardianTriggered(),
+    Result guardianTriggered(GuardianAlertMessageAction action),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -159,6 +161,7 @@ abstract class _$GuardianTriggeredCopyWith<$Res> {
   factory _$GuardianTriggeredCopyWith(
           _GuardianTriggered value, $Res Function(_GuardianTriggered) then) =
       __$GuardianTriggeredCopyWithImpl<$Res>;
+  $Res call({GuardianAlertMessageAction action});
 }
 
 class __$GuardianTriggeredCopyWithImpl<$Res>
@@ -170,54 +173,75 @@ class __$GuardianTriggeredCopyWithImpl<$Res>
 
   @override
   _GuardianTriggered get _value => super._value as _GuardianTriggered;
+
+  @override
+  $Res call({
+    Object action = freezed,
+  }) {
+    return _then(_GuardianTriggered(
+      action == freezed ? _value.action : action as GuardianAlertMessageAction,
+    ));
+  }
 }
 
 class _$_GuardianTriggered
     with DiagnosticableTreeMixin
     implements _GuardianTriggered {
-  const _$_GuardianTriggered();
+  const _$_GuardianTriggered(this.action) : assert(action != null);
+
+  @override
+  final GuardianAlertMessageAction action;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'HelpCenterState.guardianTriggered()';
+    return 'HelpCenterState.guardianTriggered(action: $action)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'HelpCenterState.guardianTriggered'));
+      ..add(DiagnosticsProperty('type', 'HelpCenterState.guardianTriggered'))
+      ..add(DiagnosticsProperty('action', action));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _GuardianTriggered);
+    return identical(this, other) ||
+        (other is _GuardianTriggered &&
+            (identical(other.action, action) ||
+                const DeepCollectionEquality().equals(other.action, action)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(action);
+
+  @override
+  _$GuardianTriggeredCopyWith<_GuardianTriggered> get copyWith =>
+      __$GuardianTriggeredCopyWithImpl<_GuardianTriggered>(this, _$identity);
 
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result guardianTriggered(),
+    @required Result guardianTriggered(GuardianAlertMessageAction action),
   }) {
     assert(initial != null);
     assert(guardianTriggered != null);
-    return guardianTriggered();
+    return guardianTriggered(action);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result guardianTriggered(),
+    Result guardianTriggered(GuardianAlertMessageAction action),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (guardianTriggered != null) {
-      return guardianTriggered();
+      return guardianTriggered(action);
     }
     return orElse();
   }
@@ -249,5 +273,9 @@ class _$_GuardianTriggered
 }
 
 abstract class _GuardianTriggered implements HelpCenterState {
-  const factory _GuardianTriggered() = _$_GuardianTriggered;
+  const factory _GuardianTriggered(GuardianAlertMessageAction action) =
+      _$_GuardianTriggered;
+
+  GuardianAlertMessageAction get action;
+  _$GuardianTriggeredCopyWith<_GuardianTriggered> get copyWith;
 }

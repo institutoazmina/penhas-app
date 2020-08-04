@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:penhas/app/core/managers/app_configuration.dart';
+import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/core/managers/user_profile_store.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
@@ -170,13 +171,16 @@ class MainboardModule extends ChildModule {
             repository: i.get<ITweetFilterPreferenceRepository>(),
           ),
         ),
+        Bind<ILocationServices>(
+          (i) => LocationServices(),
+        )
       ];
 
   List<Bind> get helpCenterBinds => [
         Bind(
           (i) => NewGuardianController(
-            guardianRepository: i.get<IGuardianRepository>(),
-          ),
+              guardianRepository: i.get<IGuardianRepository>(),
+              locationService: i.get<ILocationServices>()),
         ),
         Bind(
           (i) => GuardiansController(

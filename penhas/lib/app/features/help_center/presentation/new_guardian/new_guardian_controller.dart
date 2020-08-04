@@ -5,7 +5,6 @@ import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
-import 'package:penhas/app/core/states/location_permission_state.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
@@ -17,17 +16,22 @@ part 'new_guardian_controller.g.dart';
 
 class NewGuardianController extends _NewGuardianControllerBase
     with _$NewGuardianController {
-  NewGuardianController({@required IGuardianRepository guardianRepository})
-      : super(guardianRepository);
+  NewGuardianController({
+    @required IGuardianRepository guardianRepository,
+    @required ILocationServices locationService,
+  }) : super(guardianRepository, locationService);
 }
 
 abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
   final IGuardianRepository _guardianRepository;
-  final ILocationServices _locationService = LocationServices();
+  final ILocationServices _locationService;
   String guardianName;
   String guardianMobile;
 
-  _NewGuardianControllerBase(this._guardianRepository);
+  _NewGuardianControllerBase(
+    this._guardianRepository,
+    this._locationService,
+  );
 
   @observable
   ObservableFuture<Either<Failure, GuardianSessioEntity>> _fetchProgress;

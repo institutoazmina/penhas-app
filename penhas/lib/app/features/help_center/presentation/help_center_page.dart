@@ -2,7 +2,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/pages/tutorial_scale_route.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
+import 'package:penhas/app/features/help_center/domain/states/help_center_state.dart';
 import 'package:penhas/app/features/help_center/presentation/page/tutorial/guardian/guardian_tutorial_page.dart';
 import 'package:penhas/app/features/help_center/presentation/page/tutorial/record/record_tutorial_page.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
@@ -19,10 +23,24 @@ class HelpCenterPage extends StatefulWidget {
 }
 
 class _HelpCenterPageState
-    extends ModularState<HelpCenterPage, HelpCenterController> {
+    extends ModularState<HelpCenterPage, HelpCenterController>
+    with SnackBarHandler {
+  List<ReactionDisposer> _disposers;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _disposers ??= [
+      _showAlert(),
+      _showErrorMessage(),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: DesignSystemColors.helpCenterBackGround,
       body: SafeArea(
         child: Padding(
@@ -287,36 +305,39 @@ class _HelpCenterPageState
     );
   }
 
-  Container _callGuardianAction() {
-    return Container(
-      width: 95,
-      height: 95,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
-        border: Border.all(width: 2, color: DesignSystemColors.easterPurple),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(top: 10),
-            child: SizedBox(
-              height: 41,
-              width: 49,
-              child: SvgPicture.asset(
-                  'assets/images/svg/help_center/help_center_guardian.svg'),
+  Widget _callGuardianAction() {
+    return GestureDetector(
+      onTap: () => controller.triggerGuardian(),
+      child: Container(
+        width: 95,
+        height: 95,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+          border: Border.all(width: 2, color: DesignSystemColors.easterPurple),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 10),
+              child: SizedBox(
+                height: 41,
+                width: 49,
+                child: SvgPicture.asset(
+                    'assets/images/svg/help_center/help_center_guardian.svg'),
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 6.0, bottom: 6.0),
-            child: Text(
-              'Alertar guardiões',
-              style: kTextStyleHelpCenterActionGuardian,
-              maxLines: 2,
-              textAlign: TextAlign.center,
-            ),
-          )
-        ],
+            Padding(
+              padding: EdgeInsets.only(top: 6.0, bottom: 6.0),
+              child: Text(
+                'Alertar guardiões',
+                style: kTextStyleHelpCenterActionGuardian,
+                maxLines: 2,
+                textAlign: TextAlign.center,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -352,6 +373,58 @@ class _HelpCenterPageState
           )
         ],
       ),
+    );
+  }
+
+  ReactionDisposer _showErrorMessage() {
+    return reaction((_) => controller.errorMessage, (String message) {
+      showSnackBar(scaffoldKey: _scaffoldKey, message: message);
+    });
+  }
+
+  ReactionDisposer _showAlert() {
+    return reaction((_) => controller.alertState, (HelpCenterState status) {
+      status.when(
+        initial: () {},
+        guardianTriggered: (action) => _showGuardianTrigger(action),
+      );
+    });
+  }
+
+  void _showGuardianTrigger(GuardianAlertMessageAction action) {
+    Modular.to.showDialog(
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: Column(
+            children: <Widget>[
+              SvgPicture.asset(
+                  'assets/images/svg/help_center/guardians/guardians_alert.svg'),
+              Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child:
+                    Text('Alerta enviado!', style: kTextStyleAlertDialogTitle),
+              ),
+            ],
+          ),
+          content: Text(
+            action.message,
+            style: kTextStyleAlertDialogDescription,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Fechar'),
+              onPressed: () async {
+                Modular.to.pop();
+                action.onPressed();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

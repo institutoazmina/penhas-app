@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -176,6 +177,24 @@ void main() {
           expect(received, expected);
         },
       );
+
+      group('alert', () {
+        test(
+          'should get a valid message for valid request',
+          () async {
+            // arrange
+            final location = UserLocationEntity(latitude: 1.0, longitude: -1.0);
+            final expected = right(ValidField(
+                message: "Alerta disparado com sucesso para 1 guardião."));
+            when(dataSource.alert(any)).thenAnswer((_) async => ValidField(
+                message: "Alerta disparado com sucesso para 1 guardião."));
+            // act
+            final received = await sut.alert(location);
+            // assert
+            expect(received, expected);
+          },
+        );
+      });
     },
   );
 }

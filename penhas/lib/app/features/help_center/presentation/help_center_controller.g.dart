@@ -9,6 +9,45 @@ part of 'help_center_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HelpCenterController on _HelpCenterControllerBase, Store {
+  final _$alertStateAtom = Atom(name: '_HelpCenterControllerBase.alertState');
+
+  @override
+  HelpCenterState get alertState {
+    _$alertStateAtom.reportRead();
+    return super.alertState;
+  }
+
+  @override
+  set alertState(HelpCenterState value) {
+    _$alertStateAtom.reportWrite(value, super.alertState, () {
+      super.alertState = value;
+    });
+  }
+
+  final _$errorMessageAtom =
+      Atom(name: '_HelpCenterControllerBase.errorMessage');
+
+  @override
+  String get errorMessage {
+    _$errorMessageAtom.reportRead();
+    return super.errorMessage;
+  }
+
+  @override
+  set errorMessage(String value) {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
+      super.errorMessage = value;
+    });
+  }
+
+  final _$triggerGuardianAsyncAction =
+      AsyncAction('_HelpCenterControllerBase.triggerGuardian');
+
+  @override
+  Future<void> triggerGuardian() {
+    return _$triggerGuardianAsyncAction.run(() => super.triggerGuardian());
+  }
+
   final _$_HelpCenterControllerBaseActionController =
       ActionController(name: '_HelpCenterControllerBase');
 
@@ -24,9 +63,21 @@ mixin _$HelpCenterController on _HelpCenterControllerBase, Store {
   }
 
   @override
+  void guardians() {
+    final _$actionInfo = _$_HelpCenterControllerBaseActionController
+        .startAction(name: '_HelpCenterControllerBase.guardians');
+    try {
+      return super.guardians();
+    } finally {
+      _$_HelpCenterControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-
+alertState: ${alertState},
+errorMessage: ${errorMessage}
     ''';
   }
 }
