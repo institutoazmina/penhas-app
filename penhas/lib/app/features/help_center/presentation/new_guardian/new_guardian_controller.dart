@@ -37,7 +37,7 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
   ObservableFuture<Either<Failure, GuardianSessioEntity>> _fetchProgress;
 
   @observable
-  ObservableFuture<Either<Failure, ValidField>> _creatProgress;
+  ObservableFuture<Either<Failure, ValidField>> _createProgress;
 
   @observable
   String errorMessage = '';
@@ -68,12 +68,12 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
 
   @computed
   PageProgressState get createState {
-    if (_creatProgress == null ||
-        _creatProgress.status == FutureStatus.rejected) {
+    if (_createProgress == null ||
+        _createProgress.status == FutureStatus.rejected) {
       return PageProgressState.initial;
     }
 
-    return _creatProgress.status == FutureStatus.pending
+    return _createProgress.status == FutureStatus.pending
         ? PageProgressState.loading
         : PageProgressState.loaded;
   }
@@ -132,9 +132,9 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
       mobile: guardianMobile,
     );
 
-    _creatProgress = ObservableFuture(_guardianRepository.create(guardian));
+    _createProgress = ObservableFuture(_guardianRepository.create(guardian));
 
-    final response = await _creatProgress;
+    final response = await _createProgress;
 
     response.fold(
       (failure) => _setErrorMessage(mapFailureMessage(failure)),
