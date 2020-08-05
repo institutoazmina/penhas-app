@@ -1,4 +1,4 @@
-* Builder 8
+* Versão : 1.0.8
 * Bugfixes:
   - Corrigido textos na tela 'Preciso de ajuda'
   - Correção da margem nos textos do chat no Quiz
@@ -6,9 +6,9 @@
   - App crash quando servidor não retorna sessão de quiz
   - Menu lateral apresenta apelido e avatar do usuário corrente
   - Força o dispose do fluxo de criação de usuário e recuperação de senha
+  - Atualizado labels de gênero
 
 * Novidades
-  - Atualizado labels de gênero
   - Cadastro de um(a) guardiã(o)
   - Gerenciamento dos guardiã(o)s
-  - Solicitar permissão para o geo-localização, se não tiver
+  - Fluxo para solicitar permissão da geo-localização, se não necessário
