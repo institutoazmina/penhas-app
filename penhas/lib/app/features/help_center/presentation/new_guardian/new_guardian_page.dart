@@ -103,7 +103,7 @@ class _NewGuardianPageState
 
   Widget _buildInputScreen() {
     return Container(
-      color: Color.fromRGBO(248, 248, 248, 1.0),
+      color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 22.0),
         child: Column(

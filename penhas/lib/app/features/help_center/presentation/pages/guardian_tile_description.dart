@@ -11,16 +11,14 @@ class GuardianTileDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(
-        child: Text(
-          description,
-          style: TextStyle(
-            color: DesignSystemColors.darkIndigoThree,
-            fontSize: 14.0,
-            letterSpacing: 0.45,
-            fontFamily: 'Lato',
-            fontWeight: FontWeight.normal,
-          ),
+      child: Text(
+        description,
+        style: TextStyle(
+          color: DesignSystemColors.darkIndigoThree,
+          fontSize: 14.0,
+          letterSpacing: 0.45,
+          fontFamily: 'Lato',
+          fontWeight: FontWeight.normal,
         ),
       ),
     );
