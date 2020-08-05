@@ -44,25 +44,19 @@ extension QuizMessageTypeExtension on QuizMessageType {
 class AppStateEntity extends Equatable {
   final QuizSessionEntity quizSession;
   final UserProfileEntity userProfile;
-  final bool enabledStealthMode;
-  final bool hasActivedGuardian;
-  final bool enabledAnonymousMode;
+  final AppStateModeEntity appMode;
 
   AppStateEntity({
-    @required this.enabledAnonymousMode,
-    @required this.enabledStealthMode,
-    @required this.hasActivedGuardian,
     @required this.quizSession,
     @required this.userProfile,
+    @required this.appMode,
   });
 
   @override
   List<Object> get props => [
         quizSession,
         userProfile,
-        enabledAnonymousMode,
-        enabledStealthMode,
-        hasActivedGuardian
+        appMode,
       ];
 
   @override
@@ -138,4 +132,33 @@ class QuizMessageMultiplechoicesOptions extends Equatable {
   String toString() {
     return "QuizMessageMultiplechoicesOptions{index: ${index.toString()}, display: ${display.toString()}}";
   }
+}
+
+@immutable
+class AppStateModeEntity extends Equatable {
+  final bool stealthModeEnabled;
+  final bool hasActivedGuardian;
+  final bool anonymousModeEnabled;
+
+  AppStateModeEntity({
+    @required this.stealthModeEnabled,
+    @required this.hasActivedGuardian,
+    @required this.anonymousModeEnabled,
+  });
+
+  @override
+  bool get stringify => true;
+
+  @override
+  List<Object> get props => [
+        stealthModeEnabled,
+        hasActivedGuardian,
+        anonymousModeEnabled,
+      ];
+
+  Map<String, Object> toJson() => {
+        'hasActivedGuardian': hasActivedGuardian,
+        'stealthModeEnabled': stealthModeEnabled,
+        'anonymousModeEnabled': anonymousModeEnabled,
+      };
 }
