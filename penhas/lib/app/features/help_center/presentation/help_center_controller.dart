@@ -6,6 +6,7 @@ import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
@@ -20,20 +21,26 @@ class HelpCenterController extends _HelpCenterControllerBase
   HelpCenterController({
     @required IGuardianRepository guardianRepository,
     @required ILocationServices locationService,
-  }) : super(guardianRepository, locationService);
+    @required IAppConfiguration appConfiguration,
+  }) : super(guardianRepository, locationService, appConfiguration);
 }
 
 abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   final IGuardianRepository _guardianRepository;
   final ILocationServices _locationService;
+  final IAppConfiguration _appConfiguration;
 
-  _HelpCenterControllerBase(this._guardianRepository, this._locationService);
+  _HelpCenterControllerBase(
+      this._guardianRepository, this._locationService, this._appConfiguration);
 
   @observable
   ObservableFuture<Either<Failure, ValidField>> _alertProgress;
 
   @observable
   HelpCenterState alertState = HelpCenterState.initial();
+
+  @observable
+  bool isLocationPermissionRequired = false;
 
   @observable
   String errorMessage = '';
@@ -52,12 +59,16 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
 
   @action
   void newGuardian() {
-    Modular.to.pushNamed('/mainboard/helpcenter/newGuardian');
+    Modular.to
+        .pushNamed('/mainboard/helpcenter/newGuardian')
+        .then((value) => checkLocalicationRequired());
   }
 
   @action
   void guardians() {
-    Modular.to.pushNamed('/mainboard/helpcenter/guardians');
+    Modular.to
+        .pushNamed('/mainboard/helpcenter/guardians')
+        .then((value) => checkLocalicationRequired());
   }
 
   @action
@@ -66,6 +77,20 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
     _getCurrentLocatin()
         .then((location) => _triggerGuardian(location))
         .then((value) => alertState = value);
+  }
+
+  @action
+  Future<void> checkLocalicationRequired() async {
+    _locationService
+        .permissionStatus()
+        .then(
+          (value) => value.maybeWhen(
+            granted: () => false,
+            orElse: () async => _hasActivedGuardian(),
+          ),
+        )
+        .then((value) => value as bool)
+        .then((value) => isLocationPermissionRequired = value);
   }
 
   Future<UserLocationEntity> _getCurrentLocatin() async {
@@ -94,6 +119,10 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
 
     _setErrorMessage(mapFailureMessage(failure));
     return state;
+  }
+
+  Future<bool> _hasActivedGuardian() {
+    return _appConfiguration.appMode.then((mode) => mode.hasActivedGuardian);
   }
 
   void _setErrorMessage(String message) => errorMessage = message;

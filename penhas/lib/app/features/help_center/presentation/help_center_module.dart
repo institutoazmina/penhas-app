@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
 import 'package:penhas/app/features/help_center/presentation/help_center_controller.dart';
@@ -10,8 +11,10 @@ class HelpCenterModule extends WidgetModule {
   List<Bind> get binds => [
         Bind(
           (i) => HelpCenterController(
-              guardianRepository: i.get<IGuardianRepository>(),
-              locationService: i.get<ILocationServices>()),
+            locationService: i.get<ILocationServices>(),
+            appConfiguration: i.get<IAppConfiguration>(),
+            guardianRepository: i.get<IGuardianRepository>(),
+          ),
         ),
       ];
 

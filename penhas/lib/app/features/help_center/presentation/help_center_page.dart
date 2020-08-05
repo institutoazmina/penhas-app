@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
@@ -31,6 +32,14 @@ class _HelpCenterPageState
   PageProgressState _loadState = PageProgressState.initial;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.checkLocalicationRequired();
+    });
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _disposers ??= [
@@ -56,7 +65,13 @@ class _HelpCenterPageState
                 children: <Widget>[
                   _actionBuilder(),
                   _warnningBuilder(),
-                  _warrningLocation(),
+                  Observer(
+                    builder: (_) {
+                      return controller.isLocationPermissionRequired
+                          ? _warrningLocation()
+                          : Container();
+                    },
+                  ),
                   _guardianCardBuilder(),
                   _recordCardBuilder(),
                 ],

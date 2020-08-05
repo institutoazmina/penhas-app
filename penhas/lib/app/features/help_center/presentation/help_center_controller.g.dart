@@ -48,6 +48,23 @@ mixin _$HelpCenterController on _HelpCenterControllerBase, Store {
     });
   }
 
+  final _$isLocationPermissionRequiredAtom =
+      Atom(name: '_HelpCenterControllerBase.isLocationPermissionRequired');
+
+  @override
+  bool get isLocationPermissionRequired {
+    _$isLocationPermissionRequiredAtom.reportRead();
+    return super.isLocationPermissionRequired;
+  }
+
+  @override
+  set isLocationPermissionRequired(bool value) {
+    _$isLocationPermissionRequiredAtom
+        .reportWrite(value, super.isLocationPermissionRequired, () {
+      super.isLocationPermissionRequired = value;
+    });
+  }
+
   final _$errorMessageAtom =
       Atom(name: '_HelpCenterControllerBase.errorMessage');
 
@@ -70,6 +87,15 @@ mixin _$HelpCenterController on _HelpCenterControllerBase, Store {
   @override
   Future<void> triggerGuardian() {
     return _$triggerGuardianAsyncAction.run(() => super.triggerGuardian());
+  }
+
+  final _$checkLocalicationRequiredAsyncAction =
+      AsyncAction('_HelpCenterControllerBase.checkLocalicationRequired');
+
+  @override
+  Future<void> checkLocalicationRequired() {
+    return _$checkLocalicationRequiredAsyncAction
+        .run(() => super.checkLocalicationRequired());
   }
 
   final _$_HelpCenterControllerBaseActionController =
@@ -101,6 +127,7 @@ mixin _$HelpCenterController on _HelpCenterControllerBase, Store {
   String toString() {
     return '''
 alertState: ${alertState},
+isLocationPermissionRequired: ${isLocationPermissionRequired},
 errorMessage: ${errorMessage},
 loadState: ${loadState}
     ''';
