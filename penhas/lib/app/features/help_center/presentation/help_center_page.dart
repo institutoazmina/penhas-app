@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/help_center/domain/states/help_center_state.dart';
@@ -27,6 +28,7 @@ class _HelpCenterPageState
     with SnackBarHandler {
   List<ReactionDisposer> _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  PageProgressState _loadState = PageProgressState.initial;
 
   @override
   void didChangeDependencies() {
@@ -34,6 +36,7 @@ class _HelpCenterPageState
     _disposers ??= [
       _showAlert(),
       _showErrorMessage(),
+      _showLoadProgress(),
     ];
   }
 
@@ -42,19 +45,22 @@ class _HelpCenterPageState
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: DesignSystemColors.helpCenterBackGround,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 20.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                _actionBuilder(),
-                _warnningBuilder(),
-                _warrningLocation(),
-                _guardianCardBuilder(),
-                _recordCardBuilder(),
-              ],
+      body: PageProgressIndicator(
+        progressState: _loadState,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  _actionBuilder(),
+                  _warnningBuilder(),
+                  _warrningLocation(),
+                  _guardianCardBuilder(),
+                  _recordCardBuilder(),
+                ],
+              ),
             ),
           ),
         ),
@@ -161,6 +167,14 @@ class _HelpCenterPageState
         initial: () {},
         guardianTriggered: (action) => _showGuardianTrigger(action),
       );
+    });
+  }
+
+  ReactionDisposer _showLoadProgress() {
+    return reaction((_) => controller.loadState, (PageProgressState status) {
+      setState(() {
+        _loadState = status;
+      });
     });
   }
 

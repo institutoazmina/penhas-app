@@ -9,6 +9,30 @@ part of 'help_center_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HelpCenterController on _HelpCenterControllerBase, Store {
+  Computed<PageProgressState> _$loadStateComputed;
+
+  @override
+  PageProgressState get loadState => (_$loadStateComputed ??=
+          Computed<PageProgressState>(() => super.loadState,
+              name: '_HelpCenterControllerBase.loadState'))
+      .value;
+
+  final _$_alertProgressAtom =
+      Atom(name: '_HelpCenterControllerBase._alertProgress');
+
+  @override
+  ObservableFuture<Either<Failure, ValidField>> get _alertProgress {
+    _$_alertProgressAtom.reportRead();
+    return super._alertProgress;
+  }
+
+  @override
+  set _alertProgress(ObservableFuture<Either<Failure, ValidField>> value) {
+    _$_alertProgressAtom.reportWrite(value, super._alertProgress, () {
+      super._alertProgress = value;
+    });
+  }
+
   final _$alertStateAtom = Atom(name: '_HelpCenterControllerBase.alertState');
 
   @override
@@ -77,7 +101,8 @@ mixin _$HelpCenterController on _HelpCenterControllerBase, Store {
   String toString() {
     return '''
 alertState: ${alertState},
-errorMessage: ${errorMessage}
+errorMessage: ${errorMessage},
+loadState: ${loadState}
     ''';
   }
 }
