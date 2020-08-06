@@ -40,5 +40,23 @@ void main() {
       // assert
       verify(storage.put(appModuleKey, jsonString));
     });
+
+    test('should get the module if exist on storage', () async {
+      // arrange
+      final expected = AppStateModuleEntity(
+        code: 'module_2',
+        meta: '{"data":true}',
+      );
+      final modules = [
+        AppStateModuleEntity(code: 'module_1', meta: '{}'),
+        AppStateModuleEntity(code: 'module_2', meta: '{"data":true}'),
+      ];
+      final jsonString = _convert(modules);
+      when(storage.get(any)).thenAnswer((_) => Future.value(jsonString));
+      // act
+      final received = await sut.feature(name: 'module_2');
+      // assert
+      expect(received, expected);
+    });
   });
 }

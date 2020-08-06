@@ -6,6 +6,11 @@ import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.da
 
 abstract class IAppModulesServices {
   Future<void> save(List<AppStateModuleEntity> modules);
+  Future<AppStateModuleEntity> feature({@required String name});
+}
+
+abstract class IAppModulesFeature {
+  dynamic fromJson(Map<String, Object> data) {}
 }
 
 class AppModulesServices implements IAppModulesServices {
@@ -21,8 +26,30 @@ class AppModulesServices implements IAppModulesServices {
     final jsonString = jsonEncode(foo);
     return _storage.put(_appModuleKey, jsonString);
   }
+
+  @override
+  Future<AppStateModuleEntity> feature({@required String name}) {
+    return _storage
+        .get(_appModuleKey)
+        .then((source) => jsonDecode(source) as List<Object>)
+        .then((value) => _filterFeature(name: name, objects: value));
+  }
+
+  AppStateModuleEntity _filterFeature({String name, List<Object> objects}) {
+    final object = objects
+        .map((e) => e as Map<String, Object>)
+        .firstWhere((e) => e['code'] == name);
+
+    return AppStateModuleEntityJson.fromJson(object);
+  }
 }
 
 extension AppStateModuleEntityJson on AppStateModuleEntity {
   Map<String, Object> toJson() => {'code': this.code, 'meta': this.meta};
+
+  static AppStateModuleEntity fromJson(Map<String, Object> object) =>
+      AppStateModuleEntity(
+        code: object['code'],
+        meta: object['meta'],
+      );
 }
