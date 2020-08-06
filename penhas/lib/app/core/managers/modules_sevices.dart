@@ -38,7 +38,11 @@ class AppModulesServices implements IAppModulesServices {
   AppStateModuleEntity _filterFeature({String name, List<Object> objects}) {
     final object = objects
         .map((e) => e as Map<String, Object>)
-        .firstWhere((e) => e['code'] == name);
+        .firstWhere((e) => e['code'] == name, orElse: () => null);
+
+    if (object == null || object.isEmpty) {
+      return null;
+    }
 
     return AppStateModuleEntityJson.fromJson(object);
   }
