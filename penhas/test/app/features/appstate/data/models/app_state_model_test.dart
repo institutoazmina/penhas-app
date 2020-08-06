@@ -29,12 +29,9 @@ void main() {
         hasActivedGuardian: false,
         stealthModeEnabled: false,
       );
+      final modes = List<AppStateModuleEntity>();
       // act
-      appStateModel = AppStateModel(
-        session,
-        userProfile,
-        appMode,
-      );
+      appStateModel = AppStateModel(session, userProfile, appMode, modes);
       // assert
       expect(appStateModel, isA<AppStateEntity>());
     });
@@ -149,6 +146,14 @@ void main() {
       ];
     }
 
+    List<AppStateModuleEntity> _currentModules() {
+      return [
+        AppStateModuleEntity(code: 'modo_anonimo', meta: '{}'),
+        AppStateModuleEntity(code: 'modo_seguranca', meta: '{"numero":"000"}'),
+        AppStateModuleEntity(code: 'modo_camuflado', meta: '{}'),
+      ];
+    }
+
     test('should return a valid model with only current message in JSON',
         () async {
       // arrange
@@ -163,14 +168,16 @@ void main() {
       );
       final appMode = AppStateModeEntity(
         anonymousModeEnabled: false,
-        hasActivedGuardian: false,
+        hasActivedGuardian: true,
         stealthModeEnabled: false,
       );
+      final modules = _currentModules();
 
       final AppStateEntity expected = AppStateModel(
         quizSession,
         userProfile,
         appMode,
+        modules,
       );
       // act
       final result = AppStateModel.fromJson(jsonData);
@@ -192,14 +199,17 @@ void main() {
         isFinished: false,
       );
       final appMode = AppStateModeEntity(
-        anonymousModeEnabled: false,
+        anonymousModeEnabled: true,
         hasActivedGuardian: false,
         stealthModeEnabled: false,
       );
+      final modules = _currentModules();
+
       final AppStateEntity expected = AppStateModel(
         quizSession,
         userProfile,
         appMode,
+        modules,
       );
       // act
       final result = AppStateModel.fromJson(jsonData);
@@ -223,12 +233,14 @@ void main() {
       final appMode = AppStateModeEntity(
         anonymousModeEnabled: false,
         hasActivedGuardian: false,
-        stealthModeEnabled: false,
+        stealthModeEnabled: true,
       );
+      final modules = _currentModules();
       final AppStateEntity expected = AppStateModel(
         quizSession,
         userProfile,
         appMode,
+        modules,
       );
       // act
       final result = AppStateModel.fromJson(jsonData);
@@ -250,13 +262,15 @@ void main() {
       );
       final appMode = AppStateModeEntity(
         anonymousModeEnabled: false,
-        hasActivedGuardian: false,
+        hasActivedGuardian: true,
         stealthModeEnabled: false,
       );
+      final modules = _currentModules();
       final AppStateEntity expected = AppStateModel(
         quizSession,
         userProfile,
         appMode,
+        modules,
       );
       // act
       final result = AppStateModel.fromJson(jsonData);
@@ -281,11 +295,12 @@ void main() {
         hasActivedGuardian: false,
         stealthModeEnabled: false,
       );
-
+      final modules = _currentModules();
       final AppStateEntity expected = AppStateModel(
         quizSession,
         userProfile,
         appMode,
+        modules,
       );
       // act
       final result = AppStateModel.fromJson(jsonData);

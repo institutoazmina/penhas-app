@@ -1,10 +1,9 @@
 #!/bin/bash
 
-cd ../ios
-  flutter build ios --release --no-codesign
-  fastlane distribute_iOS_beta
-
 cd ../android
   flutter build apk --release
-  fastlane distribute_android_beta
+  fastlane distribute_android_beta --verbose
 
+cd ../ios
+  flutter build ios --release --no-codesign
+  fastlane distribute_iOS_beta --verbose

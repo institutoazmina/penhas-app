@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:penhas/app/features/appstate/data/model/user_profile_model.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
@@ -6,15 +8,18 @@ class AppStateModel extends AppStateEntity {
   final QuizSessionEntity quizSession;
   final UserProfileEntity userProfile;
   final AppStateModeEntity appMode;
+  final List<AppStateModuleEntity> modules;
 
   AppStateModel(
     this.quizSession,
     this.userProfile,
     this.appMode,
+    this.modules,
   ) : super(
           quizSession: quizSession,
           userProfile: userProfile,
           appMode: appMode,
+          modules: modules,
         );
 
   factory AppStateModel.fromJson(Map<String, Object> jsonData) {
@@ -22,13 +27,14 @@ class AppStateModel extends AppStateEntity {
         ((jsonData['qtde_guardioes_ativos'] as num)?.toInt() ?? 0) > 0;
     final appMode = AppStateModeEntity(
       stealthModeEnabled: jsonData['modo_camuflado_ativo'] == 1,
-      hasActivedGuardian: jsonData['modo_anonimo_ativo'] == 1,
-      anonymousModeEnabled: hasActivedGuardian,
+      hasActivedGuardian: hasActivedGuardian,
+      anonymousModeEnabled: jsonData['modo_anonimo_ativo'] == 1,
     );
 
     final quizSession = _parseQuizSession(jsonData['quiz_session']);
     final userProfile = _parseUserProfile(jsonData['user_profile']);
-    return AppStateModel(quizSession, userProfile, appMode);
+    final modules = _parseAppModules(jsonData['modules']);
+    return AppStateModel(quizSession, userProfile, appMode, modules);
   }
 
   static QuizSessionEntity _parseQuizSession(Map<String, Object> session) {
@@ -63,6 +69,34 @@ class AppStateModel extends AppStateEntity {
         .map((e) => e as Map<String, Object>)
         .expand((e) => _buildMessage(e))
         .toList();
+  }
+
+  static List<AppStateModuleEntity> _parseAppModules(List<Object> data) {
+    if (data == null || data.isEmpty) {
+      return null;
+    }
+
+    List<AppStateModuleEntity> result = data
+        .map((e) => e as Map<String, Object>)
+        .map((e) => _buildModule(e))
+        .toList();
+
+    result.removeWhere((e) => e == null);
+    return result;
+  }
+
+  static AppStateModuleEntity _buildModule(Map<String, Object> message) {
+    if (message == null || message.isEmpty) {
+      return null;
+    }
+
+    String code = message['code'];
+    if (message['code'] == null || message['code'].toString().isEmpty) {
+      return null;
+    }
+
+    String meta = message['meta'] == null ? '{}' : jsonEncode(message['meta']);
+    return AppStateModuleEntity(code: code, meta: meta);
   }
 
   static List<QuizMessageEntity> _buildMessage(Map<String, Object> message) {

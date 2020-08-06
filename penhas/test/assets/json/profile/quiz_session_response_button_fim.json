@@ -1,11 +1,24 @@
 {
-  "esta_em_situcao_de_violencia": 0,
-  "ja_foi_vitima_de_violencia": 0,
-  "mastodon_username": null,
   "modo_anonimo_ativo": 0,
   "modo_camuflado_ativo": 0,
+  "qtde_guardioes_ativos": 0,
   "modules": [
-    "quiz"
+    {
+      "code": "modo_anonimo",
+      "meta": {}
+    },
+    {
+      "code": "modo_seguranca",
+      "meta": {
+        "numero": "000"
+      }
+    },
+    {
+      "meta": {}
+    },
+    {
+      "code": "modo_camuflado"
+    }
   ],
   "quiz_session": {
     "current_msgs": [
@@ -30,6 +43,7 @@
     "email": "email@valid.com",
     "genero": "Feminino",
     "minibio": null,
+    "ja_foi_vitima_de_violencia": 0,
     "nome_completo": "Fulana da Silva",
     "nome_social": "",
     "raca": "pardo",

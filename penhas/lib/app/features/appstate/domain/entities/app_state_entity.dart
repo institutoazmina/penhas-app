@@ -45,11 +45,13 @@ class AppStateEntity extends Equatable {
   final QuizSessionEntity quizSession;
   final UserProfileEntity userProfile;
   final AppStateModeEntity appMode;
+  final List<AppStateModuleEntity> modules;
 
   AppStateEntity({
     @required this.quizSession,
     @required this.userProfile,
     @required this.appMode,
+    @required this.modules,
   });
 
   @override
@@ -57,6 +59,7 @@ class AppStateEntity extends Equatable {
         quizSession,
         userProfile,
         appMode,
+        modules,
       ];
 
   @override
@@ -147,7 +150,9 @@ class AppStateModeEntity extends Equatable {
   });
 
   @override
-  bool get stringify => true;
+  String toString() {
+    return 'AppStateModeEntity(stealthModeEnabled: ${stealthModeEnabled.toString()}, hasActivedGuardian: ${hasActivedGuardian.toString()}, anonymousModeEnabled: ${anonymousModeEnabled.toString()})';
+  }
 
   @override
   List<Object> get props => [
@@ -161,4 +166,21 @@ class AppStateModeEntity extends Equatable {
         'stealthModeEnabled': stealthModeEnabled,
         'anonymousModeEnabled': anonymousModeEnabled,
       };
+}
+
+@immutable
+class AppStateModuleEntity extends Equatable {
+  final String code;
+  final String meta;
+
+  AppStateModuleEntity({
+    @required this.code,
+    @required this.meta,
+  });
+
+  @override
+  bool get stringify => true;
+
+  @override
+  List<Object> get props => [code, meta];
 }
