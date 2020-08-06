@@ -89,6 +89,14 @@ mixin _$HelpCenterController on _HelpCenterControllerBase, Store {
     return _$triggerGuardianAsyncAction.run(() => super.triggerGuardian());
   }
 
+  final _$triggerCallPoliceAsyncAction =
+      AsyncAction('_HelpCenterControllerBase.triggerCallPolice');
+
+  @override
+  Future<void> triggerCallPolice() {
+    return _$triggerCallPoliceAsyncAction.run(() => super.triggerCallPolice());
+  }
+
   final _$checkLocalicationRequiredAsyncAction =
       AsyncAction('_HelpCenterControllerBase.checkLocalicationRequired');
 

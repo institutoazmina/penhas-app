@@ -14,6 +14,7 @@ import 'package:penhas/app/features/help_center/presentation/pages/help_center/h
 import 'package:penhas/app/features/help_center/presentation/pages/help_center/help_center_card_record.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'help_center_controller.dart';
 
 class HelpCenterPage extends StatefulWidget {
@@ -160,7 +161,9 @@ class _HelpCenterPageState
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          HelpCenterActionPolice(),
+          HelpCenterActionPolice(
+            onPressed: () => controller.triggerCallPolice(),
+          ),
           HelpCenterActionGuardian(
             onPressed: () => controller.triggerGuardian(),
           ),
@@ -181,8 +184,14 @@ class _HelpCenterPageState
       status.when(
         initial: () {},
         guardianTriggered: (action) => _showGuardianTrigger(action),
+        callingPolice: (callingNumber) async => _actionOnTap(callingNumber),
       );
     });
+  }
+
+  Future<void> _actionOnTap(String callingNumber) async {
+    String urlString = 'tel:$callingNumber';
+    await launch(urlString);
   }
 
   ReactionDisposer _showLoadProgress() {

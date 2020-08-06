@@ -13,6 +13,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
 import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/help_center/domain/states/help_center_state.dart';
+import 'package:penhas/app/features/help_center/domain/usecases/help_center_call_action_feature.dart';
 
 part 'help_center_controller.g.dart';
 
@@ -22,16 +23,27 @@ class HelpCenterController extends _HelpCenterControllerBase
     @required IGuardianRepository guardianRepository,
     @required ILocationServices locationService,
     @required IAppConfiguration appConfiguration,
-  }) : super(guardianRepository, locationService, appConfiguration);
+    @required HelpCenterCallActionFeature helpCenterCallActionFeature,
+  }) : super(
+          guardianRepository,
+          locationService,
+          appConfiguration,
+          helpCenterCallActionFeature,
+        );
 }
 
 abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   final IGuardianRepository _guardianRepository;
   final ILocationServices _locationService;
   final IAppConfiguration _appConfiguration;
+  final HelpCenterCallActionFeature _callingFeature;
 
   _HelpCenterControllerBase(
-      this._guardianRepository, this._locationService, this._appConfiguration);
+    this._guardianRepository,
+    this._locationService,
+    this._appConfiguration,
+    this._callingFeature,
+  );
 
   @observable
   ObservableFuture<Either<Failure, ValidField>> _alertProgress;
@@ -77,6 +89,13 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
     _getCurrentLocatin()
         .then((location) => _triggerGuardian(location))
         .then((value) => alertState = value);
+  }
+
+  @action
+  Future<void> triggerCallPolice() async {
+    _setErrorMessage('');
+    _callingFeature.callingNumber
+        .then((number) => alertState = HelpCenterState.callingPolice(number));
   }
 
   @action

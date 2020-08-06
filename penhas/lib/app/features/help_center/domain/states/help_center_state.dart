@@ -9,4 +9,6 @@ abstract class HelpCenterState with _$HelpCenterState {
   const factory HelpCenterState.initial() = _Initial;
   const factory HelpCenterState.guardianTriggered(
       GuardianAlertMessageAction action) = _GuardianTriggered;
+  const factory HelpCenterState.callingPolice(String callingNumber) =
+      _CallingPolice;
 }

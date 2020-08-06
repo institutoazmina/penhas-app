@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named
+// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
 
 part of 'help_center_state.dart';
 
@@ -12,13 +12,22 @@ T _$identity<T>(T value) => value;
 class _$HelpCenterStateTearOff {
   const _$HelpCenterStateTearOff();
 
+// ignore: unused_element
   _Initial initial() {
     return const _Initial();
   }
 
+// ignore: unused_element
   _GuardianTriggered guardianTriggered(GuardianAlertMessageAction action) {
     return _GuardianTriggered(
       action,
+    );
+  }
+
+// ignore: unused_element
+  _CallingPolice callingPolice(String callingNumber) {
+    return _CallingPolice(
+      callingNumber,
     );
   }
 }
@@ -31,22 +40,26 @@ mixin _$HelpCenterState {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result guardianTriggered(GuardianAlertMessageAction action),
+    @required Result callingPolice(String callingNumber),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result guardianTriggered(GuardianAlertMessageAction action),
+    Result callingPolice(String callingNumber),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
     @required Result guardianTriggered(_GuardianTriggered value),
+    @required Result callingPolice(_CallingPolice value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
     Result guardianTriggered(_GuardianTriggered value),
+    Result callingPolice(_CallingPolice value),
     @required Result orElse(),
   });
 }
@@ -107,9 +120,11 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result guardianTriggered(GuardianAlertMessageAction action),
+    @required Result callingPolice(String callingNumber),
   }) {
     assert(initial != null);
     assert(guardianTriggered != null);
+    assert(callingPolice != null);
     return initial();
   }
 
@@ -118,6 +133,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result guardianTriggered(GuardianAlertMessageAction action),
+    Result callingPolice(String callingNumber),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -132,9 +148,11 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
     @required Result guardianTriggered(_GuardianTriggered value),
+    @required Result callingPolice(_CallingPolice value),
   }) {
     assert(initial != null);
     assert(guardianTriggered != null);
+    assert(callingPolice != null);
     return initial(this);
   }
 
@@ -143,6 +161,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
     Result guardianTriggered(_GuardianTriggered value),
+    Result callingPolice(_CallingPolice value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -226,9 +245,11 @@ class _$_GuardianTriggered
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result guardianTriggered(GuardianAlertMessageAction action),
+    @required Result callingPolice(String callingNumber),
   }) {
     assert(initial != null);
     assert(guardianTriggered != null);
+    assert(callingPolice != null);
     return guardianTriggered(action);
   }
 
@@ -237,6 +258,7 @@ class _$_GuardianTriggered
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result guardianTriggered(GuardianAlertMessageAction action),
+    Result callingPolice(String callingNumber),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -251,9 +273,11 @@ class _$_GuardianTriggered
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
     @required Result guardianTriggered(_GuardianTriggered value),
+    @required Result callingPolice(_CallingPolice value),
   }) {
     assert(initial != null);
     assert(guardianTriggered != null);
+    assert(callingPolice != null);
     return guardianTriggered(this);
   }
 
@@ -262,6 +286,7 @@ class _$_GuardianTriggered
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
     Result guardianTriggered(_GuardianTriggered value),
+    Result callingPolice(_CallingPolice value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -278,4 +303,131 @@ abstract class _GuardianTriggered implements HelpCenterState {
 
   GuardianAlertMessageAction get action;
   _$GuardianTriggeredCopyWith<_GuardianTriggered> get copyWith;
+}
+
+abstract class _$CallingPoliceCopyWith<$Res> {
+  factory _$CallingPoliceCopyWith(
+          _CallingPolice value, $Res Function(_CallingPolice) then) =
+      __$CallingPoliceCopyWithImpl<$Res>;
+  $Res call({String callingNumber});
+}
+
+class __$CallingPoliceCopyWithImpl<$Res>
+    extends _$HelpCenterStateCopyWithImpl<$Res>
+    implements _$CallingPoliceCopyWith<$Res> {
+  __$CallingPoliceCopyWithImpl(
+      _CallingPolice _value, $Res Function(_CallingPolice) _then)
+      : super(_value, (v) => _then(v as _CallingPolice));
+
+  @override
+  _CallingPolice get _value => super._value as _CallingPolice;
+
+  @override
+  $Res call({
+    Object callingNumber = freezed,
+  }) {
+    return _then(_CallingPolice(
+      callingNumber == freezed ? _value.callingNumber : callingNumber as String,
+    ));
+  }
+}
+
+class _$_CallingPolice with DiagnosticableTreeMixin implements _CallingPolice {
+  const _$_CallingPolice(this.callingNumber) : assert(callingNumber != null);
+
+  @override
+  final String callingNumber;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'HelpCenterState.callingPolice(callingNumber: $callingNumber)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'HelpCenterState.callingPolice'))
+      ..add(DiagnosticsProperty('callingNumber', callingNumber));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _CallingPolice &&
+            (identical(other.callingNumber, callingNumber) ||
+                const DeepCollectionEquality()
+                    .equals(other.callingNumber, callingNumber)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(callingNumber);
+
+  @override
+  _$CallingPoliceCopyWith<_CallingPolice> get copyWith =>
+      __$CallingPoliceCopyWithImpl<_CallingPolice>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initial(),
+    @required Result guardianTriggered(GuardianAlertMessageAction action),
+    @required Result callingPolice(String callingNumber),
+  }) {
+    assert(initial != null);
+    assert(guardianTriggered != null);
+    assert(callingPolice != null);
+    return callingPolice(callingNumber);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initial(),
+    Result guardianTriggered(GuardianAlertMessageAction action),
+    Result callingPolice(String callingNumber),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (callingPolice != null) {
+      return callingPolice(callingNumber);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initial(_Initial value),
+    @required Result guardianTriggered(_GuardianTriggered value),
+    @required Result callingPolice(_CallingPolice value),
+  }) {
+    assert(initial != null);
+    assert(guardianTriggered != null);
+    assert(callingPolice != null);
+    return callingPolice(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initial(_Initial value),
+    Result guardianTriggered(_GuardianTriggered value),
+    Result callingPolice(_CallingPolice value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (callingPolice != null) {
+      return callingPolice(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _CallingPolice implements HelpCenterState {
+  const factory _CallingPolice(String callingNumber) = _$_CallingPolice;
+
+  String get callingNumber;
+  _$CallingPoliceCopyWith<_CallingPolice> get copyWith;
 }
