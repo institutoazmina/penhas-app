@@ -9,10 +9,6 @@ abstract class IAppModulesServices {
   Future<AppStateModuleEntity> feature({@required String name});
 }
 
-abstract class IAppModulesFeature {
-  dynamic fromJson(Map<String, Object> data) {}
-}
-
 class AppModulesServices implements IAppModulesServices {
   final ILocalStorage _storage;
   final _appModuleKey = 'br.com.penhas.appModules';

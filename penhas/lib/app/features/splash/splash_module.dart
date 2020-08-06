@@ -1,6 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:penhas/app/core/managers/modules_sevices.dart';
 import 'package:penhas/app/core/managers/user_profile_store.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
@@ -22,10 +23,10 @@ class SplashModule extends ChildModule {
         ),
         Bind<AppStateUseCase>(
           (i) => AppStateUseCase(
-            appStateRepository: i.get<IAppStateRepository>(),
-            userProfileStore: i.get<IUserProfileStore>(),
-            appConfiguration: i.get<IAppConfiguration>(),
-          ),
+              appStateRepository: i.get<IAppStateRepository>(),
+              userProfileStore: i.get<IUserProfileStore>(),
+              appConfiguration: i.get<IAppConfiguration>(),
+              appModulesServices: i.get<IAppModulesServices>()),
         ),
         Bind<IAppStateRepository>(
           (i) => AppStateRepository(
