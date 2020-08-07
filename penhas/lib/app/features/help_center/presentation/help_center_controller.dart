@@ -86,6 +86,7 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   @action
   Future<void> triggerGuardian() async {
     _setErrorMessage('');
+    _resetAlertState();
     _getCurrentLocatin()
         .then((location) => _triggerGuardian(location))
         .then((value) => alertState = value);
@@ -94,6 +95,7 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   @action
   Future<void> triggerCallPolice() async {
     _setErrorMessage('');
+    _resetAlertState();
     _callingFeature.callingNumber
         .then((number) => alertState = HelpCenterState.callingPolice(number));
   }
@@ -145,4 +147,6 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   }
 
   void _setErrorMessage(String message) => errorMessage = message;
+
+  void _resetAlertState() => alertState = HelpCenterState.initial();
 }
