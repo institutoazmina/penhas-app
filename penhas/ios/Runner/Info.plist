@@ -2,10 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>A PenhaS precisa da tua autorização para gravar os áudios</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
-	<string>A PenhaS precisa da tua autorização para conseguir ligar no número de emergência</string>
+	<array>
+		<string>tel</string>
+	</array>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>A PenhaS precisa da tua autorização para enviar a tua localização as guardiãs quando o botão de Alerta for acionado.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

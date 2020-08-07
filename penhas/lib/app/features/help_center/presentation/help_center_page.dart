@@ -167,7 +167,9 @@ class _HelpCenterPageState
           HelpCenterActionGuardian(
             onPressed: () => controller.triggerGuardian(),
           ),
-          HelpCenterActionRecord(),
+          HelpCenterActionRecord(
+            onPressed: () => controller.triggerAudioRecord(),
+          ),
         ],
       ),
     );

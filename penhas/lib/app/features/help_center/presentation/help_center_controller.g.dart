@@ -97,6 +97,15 @@ mixin _$HelpCenterController on _HelpCenterControllerBase, Store {
     return _$triggerCallPoliceAsyncAction.run(() => super.triggerCallPolice());
   }
 
+  final _$triggerAudioRecordAsyncAction =
+      AsyncAction('_HelpCenterControllerBase.triggerAudioRecord');
+
+  @override
+  Future<void> triggerAudioRecord() {
+    return _$triggerAudioRecordAsyncAction
+        .run(() => super.triggerAudioRecord());
+  }
+
   final _$checkLocalicationRequiredAsyncAction =
       AsyncAction('_HelpCenterControllerBase.checkLocalicationRequired');
 

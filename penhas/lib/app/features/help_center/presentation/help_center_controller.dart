@@ -101,6 +101,13 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   }
 
   @action
+  Future<void> triggerAudioRecord() async {
+    _setErrorMessage('');
+    _resetAlertState();
+    Modular.to.pushNamed('/mainboard/helpcenter/audioRecord');
+  }
+
+  @action
   Future<void> checkLocalicationRequired() async {
     _locationService
         .permissionStatus()

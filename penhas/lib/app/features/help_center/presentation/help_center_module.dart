@@ -7,6 +7,7 @@ import 'package:penhas/app/features/help_center/domain/usecases/help_center_call
 import 'package:penhas/app/features/help_center/presentation/help_center_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/help_center/presentation/help_center_page.dart';
+import 'package:penhas/app/features/help_center/presentation/pages/audio/audio_record_controller.dart';
 
 class HelpCenterModule extends WidgetModule {
   @override
@@ -23,7 +24,10 @@ class HelpCenterModule extends WidgetModule {
           (i) => HelpCenterCallActionFeature(
             modulesServices: i.get<IAppModulesServices>(),
           ),
-        )
+        ),
+        Bind(
+          (i) => AudioRecordController(),
+        ),
       ];
 
   @override

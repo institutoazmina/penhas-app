@@ -28,6 +28,7 @@ import 'package:penhas/app/features/help_center/presentation/guardians/guardians
 import 'package:penhas/app/features/help_center/presentation/guardians/guardians_page.dart';
 import 'package:penhas/app/features/help_center/presentation/new_guardian/new_guardian_controller.dart';
 import 'package:penhas/app/features/help_center/presentation/new_guardian/new_guardian_page.dart';
+import 'package:penhas/app/features/help_center/presentation/pages/audio/audio_record_page.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_page.dart';
@@ -61,6 +62,7 @@ class MainboardModule extends ChildModule {
         Router(Modular.initialRoute, child: (_, args) => MainboardPage()),
         ...tweetRoutes,
         ...helpCenter,
+        ...audioRecord,
       ];
 
   static Inject get to => Inject<MainboardModule>.of();
@@ -101,6 +103,14 @@ class MainboardModule extends ChildModule {
           child: (context, args) => GuardiansPage(),
           transition: TransitionType.rightToLeft,
         ),
+      ];
+
+  List<Router> get audioRecord => [
+        Router(
+          '/helpcenter/audioRecord',
+          child: (context, args) => AudioRecordPage(),
+          transition: TransitionType.rightToLeft,
+        )
       ];
 
   List<Bind> get tweetBinds => [
