@@ -11,7 +11,7 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.9+9
+version: 1.0.10+1
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
@@ -45,6 +45,10 @@ dependencies:
   freezed_annotation: ^0.11.0
   permission_handler: ^5.0.1+1
   geolocator: ^5.3.2+2
+  flutter_phone_direct_caller: ^1.0.1
+
+
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -70,57 +74,54 @@ flutter_launcher_name:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - assets/images/penhas_symbol/penhas_symbol.png
-   - assets/images/stealth_mode_tutorial_image_1/stealth_mode_tutorial_image_1.png
-   - assets/images/stealth_mode_tutorial_image_2/stealth_mode_tutorial_image_2.png
-   - assets/images/stealth_mode_tutorial_image_3/stealth_mode_tutorial_image_3.png
-   - assets/images/svg/drawer/account_setting.svg
-   - assets/images/svg/drawer/trash.svg
-   - assets/images/svg/drawer/user_profile.svg
-   - assets/images/svg/bottom_bar/chat.svg
-   - assets/images/svg/bottom_bar/chat_selected.svg
-   - assets/images/svg/bottom_bar/compose_tweet.svg
-   - assets/images/svg/bottom_bar/compose_tweet_selected.svg
-   - assets/images/svg/bottom_bar/emergency_controll.svg
-   - assets/images/svg/bottom_bar/feed.svg
-   - assets/images/svg/bottom_bar/feed_selected.svg
-   - assets/images/svg/bottom_bar/support_point.svg
-   - assets/images/svg/bottom_bar/support_point_selected.svg
-   - assets/images/svg/tweet_action/tweet_action_block.svg
-   - assets/images/svg/tweet_action/tweet_action_chat.svg
-   - assets/images/svg/tweet_action/tweet_action_delete.svg
-   - assets/images/svg/tweet_action/tweet_action_report.svg
-   - assets/images/svg/reset_password/recovery_password_step_1.svg
-   - assets/images/svg/reset_password/recovery_password_step_2.svg
-   - assets/images/svg/reset_password/recovery_password_step_3.svg
-   - assets/images/svg/help_center/help_center_call_police.svg
-   - assets/images/svg/help_center/help_center_guardian.svg
-   - assets/images/svg/help_center/help_center_record.svg
-   - assets/images/svg/tutorial/tutorial_guardian_01.svg
-   - assets/images/tutorial_guardian_2/tutorial_guardian_2.png
-   - assets/images/tutorial_guardian_3/tutorial_guardian_3.png
-   - assets/images/tutorial_record_1/tutorial_record_1.png
-   - assets/images/tutorial_record_2/tutorial_record_2.png
-   - assets/images/tutorial_record_3/tutorial_record_3.png
-   - assets/images/tutorial_record_4/tutorial_record_4.png
-   - assets/images/svg/help_center/guardians/guardians_delete.svg
-   - assets/images/svg/help_center/guardians/guardians_edit.svg
-   - assets/images/svg/help_center/guardians/guardians_sent_invite.svg
-   - assets/images/svg/help_center/guardians/guardians_alert.svg
+    - assets/images/penhas_symbol/penhas_symbol.png
+    - assets/images/stealth_mode_tutorial_image_1/stealth_mode_tutorial_image_1.png
+    - assets/images/stealth_mode_tutorial_image_2/stealth_mode_tutorial_image_2.png
+    - assets/images/stealth_mode_tutorial_image_3/stealth_mode_tutorial_image_3.png
+    - assets/images/svg/drawer/account_setting.svg
+    - assets/images/svg/drawer/trash.svg
+    - assets/images/svg/drawer/user_profile.svg
+    - assets/images/svg/bottom_bar/chat.svg
+    - assets/images/svg/bottom_bar/chat_selected.svg
+    - assets/images/svg/bottom_bar/compose_tweet.svg
+    - assets/images/svg/bottom_bar/compose_tweet_selected.svg
+    - assets/images/svg/bottom_bar/emergency_controll.svg
+    - assets/images/svg/bottom_bar/feed.svg
+    - assets/images/svg/bottom_bar/feed_selected.svg
+    - assets/images/svg/bottom_bar/support_point.svg
+    - assets/images/svg/bottom_bar/support_point_selected.svg
+    - assets/images/svg/tweet_action/tweet_action_block.svg
+    - assets/images/svg/tweet_action/tweet_action_chat.svg
+    - assets/images/svg/tweet_action/tweet_action_delete.svg
+    - assets/images/svg/tweet_action/tweet_action_report.svg
+    - assets/images/svg/reset_password/recovery_password_step_1.svg
+    - assets/images/svg/reset_password/recovery_password_step_2.svg
+    - assets/images/svg/reset_password/recovery_password_step_3.svg
+    - assets/images/svg/help_center/help_center_call_police.svg
+    - assets/images/svg/help_center/help_center_guardian.svg
+    - assets/images/svg/help_center/help_center_record.svg
+    - assets/images/svg/tutorial/tutorial_guardian_01.svg
+    - assets/images/tutorial_guardian_2/tutorial_guardian_2.png
+    - assets/images/tutorial_guardian_3/tutorial_guardian_3.png
+    - assets/images/tutorial_record_1/tutorial_record_1.png
+    - assets/images/tutorial_record_2/tutorial_record_2.png
+    - assets/images/tutorial_record_3/tutorial_record_3.png
+    - assets/images/tutorial_record_4/tutorial_record_4.png
+    - assets/images/svg/help_center/guardians/guardians_delete.svg
+    - assets/images/svg/help_center/guardians/guardians_edit.svg
+    - assets/images/svg/help_center/guardians/guardians_sent_invite.svg
+    - assets/images/svg/help_center/guardians/guardians_alert.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
@@ -130,8 +131,8 @@ flutter:
     - family: DesignSystemLogo
       fonts:
         - asset: assets/fonts/ds/DesignSystemLogo.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+    #       - asset: fonts/Schyler-Italic.ttf
+    #         style: italic
     - family: Lato
       fonts:
         - asset: assets/fonts/lato/Lato-Black.ttf
@@ -158,12 +159,10 @@ flutter:
         - asset: assets/fonts/lato/Lato-LightItalic.ttf
           style: italic
           weight: 300
-
-  #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
-
 scripts:
   mobx: flutter pub run build_runner watch --delete-conflicting-outputs
   icon: flutter pub run flutter_launcher_icons:main
   name: flutter pub run flutter_launcher_name:main
+
