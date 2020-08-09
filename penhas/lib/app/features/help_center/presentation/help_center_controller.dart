@@ -7,6 +7,7 @@ import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
+import 'package:penhas/app/core/managers/audio_services.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
@@ -37,6 +38,7 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   final ILocationServices _locationService;
   final IAppConfiguration _appConfiguration;
   final HelpCenterCallActionFeature _callingFeature;
+  final IAudioServices _audioServices = AudioServices();
 
   _HelpCenterControllerBase(
     this._guardianRepository,
@@ -104,7 +106,15 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   Future<void> triggerAudioRecord() async {
     _setErrorMessage('');
     _resetAlertState();
-    Modular.to.pushNamed('/mainboard/helpcenter/audioRecord');
+    await _audioServices.requestPermission().then(
+          (value) => {
+            value.maybeWhen(
+              granted: () =>
+                  Modular.to.pushNamed('/mainboard/helpcenter/audioRecord'),
+              orElse: () {},
+            )
+          },
+        );
   }
 
   @action
