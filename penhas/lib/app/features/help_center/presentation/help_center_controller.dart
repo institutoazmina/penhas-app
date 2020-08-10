@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
@@ -24,12 +23,14 @@ class HelpCenterController extends _HelpCenterControllerBase
     @required IGuardianRepository guardianRepository,
     @required ILocationServices locationService,
     @required IAppConfiguration appConfiguration,
-    @required HelpCenterCallActionFeature helpCenterCallActionFeature,
+    @required HelpCenterCallActionFeature featureToogle,
+    @required IAudioServices audioServices,
   }) : super(
           guardianRepository,
           locationService,
           appConfiguration,
-          helpCenterCallActionFeature,
+          featureToogle,
+          audioServices,
         );
 }
 
@@ -37,14 +38,15 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   final IGuardianRepository _guardianRepository;
   final ILocationServices _locationService;
   final IAppConfiguration _appConfiguration;
-  final HelpCenterCallActionFeature _callingFeature;
-  final IAudioServices _audioServices = AudioServices();
+  final HelpCenterCallActionFeature _featureToogle;
+  final IAudioServices _audioServices;
 
   _HelpCenterControllerBase(
     this._guardianRepository,
     this._locationService,
     this._appConfiguration,
-    this._callingFeature,
+    this._featureToogle,
+    this._audioServices,
   );
 
   @observable
@@ -98,7 +100,7 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   Future<void> triggerCallPolice() async {
     _setErrorMessage('');
     _resetAlertState();
-    _callingFeature.callingNumber
+    _featureToogle.callingNumber
         .then((number) => alertState = HelpCenterState.callingPolice(number));
   }
 

@@ -18,7 +18,7 @@ class AudioSyncManager implements IAudioSyncManager {
     }
 
     final prefix = DateTime.now().millisecondsSinceEpoch.toString();
-    final fileName = '${prefix}_${Uuid().v4()}_$suffix';
+    final fileName = '${prefix}_${Uuid().v4()}$suffix';
     final path = await getApplicationDocumentsDirectory()
         .then((dir) => join(dir.path, fileName));
     final directory = dirname(path);

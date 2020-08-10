@@ -12,10 +12,18 @@ import 'package:permission_handler/permission_handler.dart';
 
 import 'audio_sync_manager.dart';
 
+class AudioActivity {
+  final String time;
+  final double decibels;
+
+  AudioActivity(this.time, this.decibels);
+}
+
 abstract class IAudioServices {
   Future<AudioPermissionState> requestPermission();
   Future<AudioPermissionState> permissionStatus();
   Future<void> start();
+  Stream<AudioActivity> get onProgress;
   // Future<void> stop();
   void dispose();
 }
@@ -24,10 +32,16 @@ class AudioServices implements IAudioServices {
   FlutterSoundRecorder _recorder = FlutterSoundRecorder();
   final IAudioSyncManager _audioSyncManager = AudioSyncManager();
   final _audioCodec = Codec.aacADTS;
-  final _rateHertz = 8000;
+  int _rateHertz = 8000;
+
   StreamSubscription _recorderSubscription;
+  StreamController<AudioActivity> _streamController =
+      StreamController.broadcast();
 
   String _recordingFile;
+
+  @override
+  Stream<AudioActivity> get onProgress => _streamController.stream;
 
   @override
   Future<void> start() async {
@@ -42,6 +56,14 @@ class AudioServices implements IAudioServices {
   void dispose() {
     _cancelRecorderSubscriptions();
     _releaseAudioSession();
+    try {
+      if (_streamController != null) {
+        _streamController.close();
+        _streamController = null;
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   void _cancelRecorderSubscriptions() {
@@ -49,6 +71,8 @@ class AudioServices implements IAudioServices {
       _recorderSubscription.cancel();
       _recorderSubscription = null;
     }
+
+    _streamController?.close();
   }
 
   Future<void> _releaseAudioSession() async {
@@ -88,7 +112,7 @@ class AudioServices implements IAudioServices {
                 isUtc: true);
             String recordTime =
                 DateFormat('mm:ss:SS', 'en_GB').format(date).substring(0, 8);
-            print('[DEBUG] $recordTime => ${e.decibels}');
+            _streamController.add(AudioActivity(recordTime, e.decibels));
           }
         },
       );

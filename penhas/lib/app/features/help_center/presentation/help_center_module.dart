@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
+import 'package:penhas/app/core/managers/audio_services.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
@@ -17,7 +18,8 @@ class HelpCenterModule extends WidgetModule {
             locationService: i.get<ILocationServices>(),
             appConfiguration: i.get<IAppConfiguration>(),
             guardianRepository: i.get<IGuardianRepository>(),
-            helpCenterCallActionFeature: i.get<HelpCenterCallActionFeature>(),
+            featureToogle: i.get<HelpCenterCallActionFeature>(),
+            audioServices: i.get<IAudioServices>(),
           ),
         ),
         Bind<HelpCenterCallActionFeature>(
@@ -26,7 +28,10 @@ class HelpCenterModule extends WidgetModule {
           ),
         ),
         Bind(
-          (i) => AudioRecordController(),
+          (i) => AudioRecordController(
+            featureToogle: i.get<HelpCenterCallActionFeature>(),
+            audioServices: i.get<IAudioServices>(),
+          ),
         ),
       ];
 
