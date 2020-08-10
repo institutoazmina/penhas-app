@@ -1,13 +1,16 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
+import 'package:intl/intl.dart' show DateFormat;
 import 'package:penhas/app/core/states/audio_permission_state.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import 'audio_sync_manager.dart';
 
 abstract class IAudioServices {
   Future<AudioPermissionState> requestPermission();
@@ -18,26 +21,92 @@ abstract class IAudioServices {
 }
 
 class AudioServices implements IAudioServices {
-  FlutterSoundRecorder _recorderModule = FlutterSoundRecorder();
+  FlutterSoundRecorder _recorder = FlutterSoundRecorder();
+  final IAudioSyncManager _audioSyncManager = AudioSyncManager();
+  final _audioCodec = Codec.aacADTS;
+  final _rateHertz = 8000;
+  StreamSubscription _recorderSubscription;
+
+  String _recordingFile;
 
   @override
   Future<void> start() async {
-    await _recorderModule.setSubscriptionDuration(Duration(milliseconds: 10));
-      Directory tempDir = await getTemporaryDirectory();
-
-    
-    await _recorderModule.startRecorder(toFile: );
+    await permissionStatus().then(
+      (p) => p.maybeWhen(
+          granted: () async => _setupRecordEnviroment(),
+          orElse: () => requestPermission()),
+    );
   }
 
   @override
   void dispose() {
+    _cancelRecorderSubscriptions();
     _releaseAudioSession();
+  }
+
+  void _cancelRecorderSubscriptions() {
+    if (_recorderSubscription != null) {
+      _recorderSubscription.cancel();
+      _recorderSubscription = null;
+    }
   }
 
   Future<void> _releaseAudioSession() async {
     try {
-      await _recorderModule.closeAudioSession();
-    } catch (e) {}
+      await _recorder.stopRecorder();
+      await _recorder.closeAudioSession();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> _setupRecordEnviroment() async {
+    await _releaseAudioSession();
+    await _recorder.openAudioSession(
+        focus: AudioFocus.requestFocusAndDuckOthers);
+
+    _audioSyncManager
+        .audioFile()
+        .then((path) => _recordingFile = path)
+        .then((file) => _startRecorder(file));
+  }
+
+  Future<void> _startRecorder(String path) async {
+    try {
+      _recorder.startRecorder(
+        codec: _audioCodec,
+        toFile: path,
+        bitRate: _rateHertz,
+        sampleRate: _rateHertz,
+      );
+
+      _recorderSubscription = _recorder.onProgress.listen(
+        (e) {
+          if (e != null && e.duration != null) {
+            DateTime date = new DateTime.fromMillisecondsSinceEpoch(
+                e.duration.inMilliseconds,
+                isUtc: true);
+            String recordTime =
+                DateFormat('mm:ss:SS', 'en_GB').format(date).substring(0, 8);
+            print('[DEBUG] $recordTime => ${e.decibels}');
+          }
+        },
+      );
+    } catch (err) {
+      print('startRecorder error: $err');
+      _stopRecorder();
+    }
+  }
+
+  void _stopRecorder() async {
+    try {
+      await _recorder.stopRecorder();
+      print('stopRecorder');
+      _cancelRecorderSubscriptions();
+    } catch (err) {
+      print('stopRecorder error: $err');
+      _cancelRecorderSubscriptions();
+    }
   }
 
   @override
@@ -57,20 +126,6 @@ class AudioServices implements IAudioServices {
       ),
     );
   }
-
-  //   void cancelRecorderSubscriptions() {
-  //   if (_recorderSubscription != null) {
-  //     _recorderSubscription.cancel();
-  //     _recorderSubscription = null;
-  //   }
-  //    }
-
-  // void cancelPlayerSubscriptions() {
-  //   if (_playerSubscription != null) {
-  //     _playerSubscription.cancel();
-  //     _playerSubscription = null;
-  //   }
-  // }
 
   Future<AudioPermissionState> _requestPermission() {
     return Modular.to
