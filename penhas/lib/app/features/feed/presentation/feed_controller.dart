@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
@@ -18,6 +20,7 @@ class FeedController extends _FeedControllerBase with _$FeedController {
 
 abstract class _FeedControllerBase with Store, MapFailureMessage {
   final FeedUseCases useCase;
+  StreamSubscription _streamCache;
 
   _FeedControllerBase(this.useCase) {
     _registerDataSource();
@@ -108,14 +111,25 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
     );
   }
 
+  @action
+  void dispose() {
+    _cancelDataSource();
+  }
+
   void _setErrorMessage(String msg) {
     print(msg);
     errorMessage = msg;
   }
 
   _registerDataSource() {
-    useCase.dataSource.listen((cache) {
-      listTweets = cache.tweets.asObservable();
-    });
+    _streamCache = useCase.dataSource
+        .listen((cache) => listTweets = cache.tweets.asObservable());
+  }
+
+  _cancelDataSource() {
+    if (_streamCache != null) {
+      _streamCache.cancel();
+      _streamCache = null;
+    }
   }
 }
