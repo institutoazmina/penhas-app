@@ -118,6 +118,7 @@ class MainboardModule extends ChildModule {
   List<Bind> get audioRecordBinds => [
         Bind<IAudioServices>(
           (i) => AudioServices(),
+          singleton: false,
         )
       ];
 
