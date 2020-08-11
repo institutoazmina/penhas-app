@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/core/managers/audio_services.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/features/help_center/presentation/pages/audio/sound_record_widget.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 import 'audio_record_controller.dart';
@@ -54,77 +55,9 @@ class _AudioRecordState
         backgroundColor: DesignSystemColors.ligthPurple,
       ),
       body: SafeArea(
-        child: GlossAnimated(
+        child: SoundRecordWidget(
           audioActivity: _audioActivity,
-        ),
-      ),
-    );
-  }
-}
-
-class GlossAnimated extends StatefulWidget {
-  final AudioActivity audioActivity;
-  GlossAnimated({Key key, this.audioActivity}) : super(key: key);
-
-  @override
-  _GlossAnimatedState createState() => _GlossAnimatedState();
-}
-
-class _GlossAnimatedState extends State<GlossAnimated>
-    with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-
-  @override
-  void initState() {
-    _animationController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 100),
-    );
-    _animationController.repeat(reverse: true);
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width: 200,
-        height: 200,
-        decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: DesignSystemColors.easterPurple,
-            boxShadow: [
-              BoxShadow(
-                color: DesignSystemColors.easterPurple,
-                blurRadius: widget?.audioActivity?.decibels?.abs() ?? 2.0,
-                spreadRadius: widget?.audioActivity?.decibels?.abs() ?? 2.0,
-              )
-            ]),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(
-              Icons.mic,
-              color: Colors.white,
-              size: 42,
-            ),
-            Text(
-              widget.audioActivity?.time ?? '',
-              style: TextStyle(
-                  fontFamily: 'Lato',
-                  fontSize: 35.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.normal),
-            ),
-          ],
+          onPressed: () async => controller.stopAudioRecord(),
         ),
       ),
     );
