@@ -22,6 +22,8 @@ abstract class _AudioRecordController with Store, MapFailureMessage {
   final IAudioServices _audioServices;
   final HelpCenterCallActionFeature _featureToogle;
 
+  bool _recording = true;
+  Timer _rotateAudioTimer;
   int _currentRecordDurantion = 0;
   AudioDurationEntity _audioDurationEntity;
 
@@ -33,24 +35,41 @@ abstract class _AudioRecordController with Store, MapFailureMessage {
       _audioDurationEntity = await _featureToogle.audioDuration;
     }
 
-    Timer.periodic(Duration(seconds: _audioDurationEntity.audioEachDuration),
-        (timer) {
-      _currentRecordDurantion += _audioDurationEntity.audioEachDuration;
-
-      if (_currentRecordDurantion >= _audioDurationEntity.audioFullDuration) {
-        timer.cancel();
-        Modular.to.pop();
-      }
-
-      print("ola mundo cruel! => $_currentRecordDurantion");
-    });
-
+    _setRotateTimer();
     return _audioServices.start();
+  }
+
+  @action
+  Future<void> stopAudioRecord() async {
+    dispose();
+    Modular.to.pop();
   }
 
   Stream<AudioActivity> get audioActivity => _audioServices.onProgress;
 
   void dispose() {
+    _recording = false;
+    _rotateAudioTimer?.cancel();
     _audioServices.dispose();
+  }
+
+  void _setRotateTimer() {
+    _rotateAudioTimer = Timer.periodic(
+        Duration(seconds: _audioDurationEntity.audioEachDuration), (timer) {
+      if (!_recording) {
+        timer.cancel();
+        return;
+      }
+
+      _currentRecordDurantion += _audioDurationEntity.audioEachDuration;
+
+      if (_currentRecordDurantion >= 60) {
+        timer.cancel();
+        Modular.to.pop();
+      }
+
+      print("ola mundo cruel! => $_currentRecordDurantion");
+      _audioServices.rotate();
+    });
   }
 }
