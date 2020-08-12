@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -23,6 +22,7 @@ abstract class IAudioServices {
   Future<AudioPermissionState> requestPermission();
   Future<AudioPermissionState> permissionStatus();
   Future<void> start();
+  Future<void> rotate();
   Stream<AudioActivity> get onProgress;
   // Future<void> stop();
   void dispose();
@@ -33,6 +33,8 @@ class AudioServices implements IAudioServices {
   final IAudioSyncManager _audioSyncManager = AudioSyncManager();
   final _audioCodec = Codec.aacADTS;
   int _rateHertz = 8000;
+  Duration _currentDuration = Duration(milliseconds: 0);
+  Duration _runningDuration = Duration(milliseconds: 0);
 
   StreamSubscription _recorderSubscription;
   StreamController<AudioActivity> _streamController =
@@ -49,6 +51,14 @@ class AudioServices implements IAudioServices {
       (p) => p.maybeWhen(
           granted: () async => _setupRecordEnviroment(),
           orElse: () => requestPermission()),
+    );
+  }
+
+  @override
+  Future<void> rotate() {
+    final currentAudioFile = _recordingFile;
+    return _setupRecordEnviroment().then(
+      (_) => _audioSyncManager.syncAudio(currentAudioFile),
     );
   }
 
@@ -89,6 +99,10 @@ class AudioServices implements IAudioServices {
     await _recorder.openAudioSession(
         focus: AudioFocus.requestFocusAndDuckOthers);
 
+    _currentDuration = Duration(
+        milliseconds:
+            _currentDuration.inMilliseconds + _runningDuration.inMilliseconds);
+
     _audioSyncManager
         .audioFile()
         .then((path) => _recordingFile = path)
@@ -107,8 +121,10 @@ class AudioServices implements IAudioServices {
       _recorderSubscription = _recorder.onProgress.listen(
         (e) {
           if (e != null && e.duration != null) {
+            _runningDuration = e.duration;
             DateTime date = new DateTime.fromMillisecondsSinceEpoch(
-                e.duration.inMilliseconds,
+                _runningDuration.inMilliseconds +
+                    _currentDuration.inMilliseconds,
                 isUtc: true);
             String recordTime =
                 DateFormat('mm:ss:SS', 'en_GB').format(date).substring(0, 8);
@@ -125,7 +141,6 @@ class AudioServices implements IAudioServices {
   void _stopRecorder() async {
     try {
       await _recorder.stopRecorder();
-      print('stopRecorder');
       _cancelRecorderSubscriptions();
     } catch (err) {
       print('stopRecorder error: $err');

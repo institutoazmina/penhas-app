@@ -7,9 +7,12 @@ import 'package:uuid/uuid.dart';
 
 abstract class IAudioSyncManager {
   Future<String> audioFile({String suffix});
+  Future<bool> syncAudio(String path);
 }
 
 class AudioSyncManager implements IAudioSyncManager {
+  List<String> queueAudioFiles = List<String>();
+
   @override
   Future<String> audioFile({String suffix}) async {
     suffix ??= '.aac';
@@ -25,5 +28,13 @@ class AudioSyncManager implements IAudioSyncManager {
     Directory(directory).createSync(recursive: true);
 
     return path;
+  }
+
+  @override
+  Future<bool> syncAudio(String path) async {
+    queueAudioFiles.add(path);
+    print(path);
+
+    return true;
   }
 }

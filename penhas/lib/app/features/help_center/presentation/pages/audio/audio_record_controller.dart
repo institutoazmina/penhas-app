@@ -73,3 +73,11 @@ abstract class _AudioRecordController with Store, MapFailureMessage {
     });
   }
 }
+
+/*
+            DateTime date = new DateTime.fromMillisecondsSinceEpoch(
+                e.duration.inMilliseconds,
+                isUtc: true);
+            String recordTime =
+                DateFormat('mm:ss:SS', 'en_GB').format(date).substring(0, 8);
+*/
