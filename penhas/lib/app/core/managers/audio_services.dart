@@ -30,7 +30,7 @@ abstract class IAudioServices {
 
 class AudioServices implements IAudioServices {
   FlutterSoundRecorder _recorder = FlutterSoundRecorder();
-  final IAudioSyncManager _audioSyncManager = AudioSyncManager();
+  final IAudioSyncManager _audioSyncManager;
   final _audioCodec = Codec.aacADTS;
   int _rateHertz = 8000;
   Duration _currentDuration = Duration(milliseconds: 0);
@@ -41,6 +41,9 @@ class AudioServices implements IAudioServices {
       StreamController.broadcast();
 
   String _recordingFile;
+
+  AudioServices({@required IAudioSyncManager audioSyncManager})
+      : this._audioSyncManager = audioSyncManager;
 
   @override
   Stream<AudioActivity> get onProgress => _streamController.stream;

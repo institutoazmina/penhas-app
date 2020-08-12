@@ -13,6 +13,7 @@ import 'package:penhas/app/features/splash/splash_module.dart';
 
 import 'app_controller.dart';
 import 'app_widget.dart';
+import 'core/managers/audio_sync_manager.dart';
 import 'core/managers/modules_sevices.dart';
 import 'core/managers/user_profile_store.dart';
 import 'core/storage/local_storage_shared_preferences.dart';
@@ -50,6 +51,11 @@ class AppModule extends MainModule {
           ),
         ),
         Bind<ILocalStorage>((i) => LocalStorageSharedPreferences()),
+        Bind<IAudioSyncManager>(
+          (i) => AudioSyncManager(),
+          singleton: true,
+          lazy: false,
+        ),
       ];
 
   @override
