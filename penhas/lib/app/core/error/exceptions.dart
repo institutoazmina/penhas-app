@@ -4,4 +4,8 @@ class ApiProviderException implements Exception {
   ApiProviderException({this.bodyContent = const <String, dynamic>{}});
 }
 
+class NetworkServerException implements Exception {}
+
 class ApiProviderSessionExpection implements Exception {}
+
+class InternetConnectionException implements Exception {}
