@@ -14,7 +14,7 @@ abstract class IAudioSyncRepository {
 }
 
 class AudioData {
-  final int createdAt;
+  final String createdAt;
   final String eventId;
   final File media;
 
@@ -58,13 +58,13 @@ class AudioSyncRepository implements IAudioSyncRepository {
   }
 }
 
-extension FileExtention on File {
+extension _FileExtention on File {
   String get name {
     return this?.path?.split(Platform.pathSeparator)?.last;
   }
 }
 
-extension FutureExtension<T extends String> on Future<T> {
+extension _FutureExtension<T extends String> on Future<T> {
   Future<ValidField> parseAPI() async {
     return this.then((data) async {
       final jsonData = jsonDecode(data) as Map<String, Object>;

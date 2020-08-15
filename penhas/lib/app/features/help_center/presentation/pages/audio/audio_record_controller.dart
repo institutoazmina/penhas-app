@@ -68,16 +68,7 @@ abstract class _AudioRecordController with Store, MapFailureMessage {
         Modular.to.pop();
       }
 
-      print("ola mundo cruel! => $_currentRecordDurantion");
       _audioServices.rotate();
     });
   }
 }
-
-/*
-            DateTime date = new DateTime.fromMillisecondsSinceEpoch(
-                e.duration.inMilliseconds,
-                isUtc: true);
-            String recordTime =
-                DateFormat('mm:ss:SS', 'en_GB').format(date).substring(0, 8);
-*/

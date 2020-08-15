@@ -80,44 +80,44 @@ class ApiProvider implements IApiProvider {
   }
 }
 
-extension FutureExtension<T extends BaseResponse> on Future<T> {
-  T get data => this as T;
-
+extension _FutureExtension<T extends BaseResponse> on Future<T> {
   Future<T> parseError(INetworkInfo networkInfo) async {
     final Set<int> successfulResponse = {200, 204};
     final Set<int> invalidSessionCode = {401, 403};
     final Set<int> serverExceptions = {500, 501, 502, 503, 504, 505};
-    final statusCode = this.data.statusCode;
 
-    if (successfulResponse.contains(statusCode)) {
-      return Future.value(this);
-    } else if (invalidSessionCode.contains(statusCode)) {
-      throw ApiProviderSessionExpection();
-    } else if (serverExceptions.contains(statusCode)) {
-      throw NetworkServerException();
-    } else {
-      if (await networkInfo.isConnected == false) {
-        throw InternetConnectionException();
-      }
+    return this.then(
+      (value) async {
+        final statusCode = value.statusCode;
 
-      String jsonData;
+        if (successfulResponse.contains(statusCode)) {
+          return Future.value(value);
+        } else if (invalidSessionCode.contains(statusCode)) {
+          throw ApiProviderSessionExpection();
+        } else if (serverExceptions.contains(statusCode)) {
+          throw NetworkServerException();
+        } else {
+          if (await networkInfo.isConnected == false) {
+            throw InternetConnectionException();
+          }
 
-      if (this is StreamedResponse) {
-        StreamedResponse response = this as StreamedResponse;
-        jsonData = await response.stream.bytesToString();
-      } else if (this is Response) {
-        Response response = this as Response;
-        jsonData = response.body;
-      }
+          String jsonData;
+          if (value is StreamedResponse) {
+            jsonData = await value.stream.bytesToString();
+          } else if (value is Response) {
+            jsonData = value.body;
+          }
 
-      try {
-        Map<String, dynamic> bodyContent = jsonDecode(jsonData);
-        throw ApiProviderException(bodyContent: bodyContent);
-      } catch (e) {
-        throw ApiProviderException(bodyContent: {
-          'parserError': e.toString(),
-        });
-      }
-    }
+          try {
+            Map<String, dynamic> bodyContent = jsonDecode(jsonData);
+            throw ApiProviderException(bodyContent: bodyContent);
+          } catch (e) {
+            throw ApiProviderException(bodyContent: {
+              'parserError': e.toString(),
+            });
+          }
+        }
+      },
+    );
   }
 }

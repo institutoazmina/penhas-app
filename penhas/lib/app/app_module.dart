@@ -16,7 +16,9 @@ import 'app_widget.dart';
 import 'core/managers/audio_sync_manager.dart';
 import 'core/managers/modules_sevices.dart';
 import 'core/managers/user_profile_store.dart';
+import 'core/network/api_client.dart';
 import 'core/storage/local_storage_shared_preferences.dart';
+import 'features/help_center/data/repositories/audio_sync_repository.dart';
 
 class AppModule extends MainModule {
   @override
@@ -33,6 +35,13 @@ class AppModule extends MainModule {
           (i) => NetworkInfo(
             i.get<DataConnectionChecker>(),
           ),
+        ),
+        Bind<IApiProvider>(
+          (i) => ApiProvider(
+            serverConfiguration: i.get<IApiServerConfigure>(),
+            networkInfo: i.get<INetworkInfo>(),
+          ),
+          singleton: false,
         ),
         Bind((i) => DataConnectionChecker()),
         Bind<IAppConfiguration>(
@@ -52,9 +61,17 @@ class AppModule extends MainModule {
         ),
         Bind<ILocalStorage>((i) => LocalStorageSharedPreferences()),
         Bind<IAudioSyncManager>(
-          (i) => AudioSyncManager(),
+          (i) => AudioSyncManager(
+            audioRepository: i.get<IAudioSyncRepository>(),
+          ),
           singleton: true,
           lazy: false,
+        ),
+        Bind<IAudioSyncRepository>(
+          (i) => AudioSyncRepository(
+            apiProvider: i.get<IApiProvider>(),
+          ),
+          singleton: false,
         ),
       ];
 

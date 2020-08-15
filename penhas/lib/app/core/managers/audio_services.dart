@@ -8,6 +8,7 @@ import 'package:penhas/app/core/states/audio_permission_state.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:uuid/uuid.dart';
 
 import 'audio_sync_manager.dart';
 
@@ -33,6 +34,7 @@ class AudioServices implements IAudioServices {
   final IAudioSyncManager _audioSyncManager;
   final _audioCodec = Codec.aacADTS;
   int _rateHertz = 8000;
+  String _currentAudionSession;
   Duration _currentDuration = Duration(milliseconds: 0);
   Duration _runningDuration = Duration(milliseconds: 0);
 
@@ -50,6 +52,7 @@ class AudioServices implements IAudioServices {
 
   @override
   Future<void> start() async {
+    _currentAudionSession = Uuid().v4();
     await permissionStatus().then(
       (p) => p.maybeWhen(
           granted: () async => _setupRecordEnviroment(),
@@ -107,7 +110,7 @@ class AudioServices implements IAudioServices {
             _currentDuration.inMilliseconds + _runningDuration.inMilliseconds);
 
     _audioSyncManager
-        .audioFile()
+        .audioFile(session: _currentAudionSession)
         .then((path) => _recordingFile = path)
         .then((file) => _startRecorder(file));
   }

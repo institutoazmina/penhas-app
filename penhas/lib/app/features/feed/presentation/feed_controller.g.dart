@@ -108,6 +108,20 @@ mixin _$FeedController on _FeedControllerBase, Store {
     return _$reloadFeedAsyncAction.run(() => super.reloadFeed());
   }
 
+  final _$_FeedControllerBaseActionController =
+      ActionController(name: '_FeedControllerBase');
+
+  @override
+  void dispose() {
+    final _$actionInfo = _$_FeedControllerBaseActionController.startAction(
+        name: '_FeedControllerBase.dispose');
+    try {
+      return super.dispose();
+    } finally {
+      _$_FeedControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
