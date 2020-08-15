@@ -33,8 +33,9 @@ class AudioServices implements IAudioServices {
   FlutterSoundRecorder _recorder = FlutterSoundRecorder();
   final IAudioSyncManager _audioSyncManager;
   final _audioCodec = Codec.aacADTS;
-  int _rateHertz = 8000;
+  int _rateHertz = 96000;
   String _currentAudionSession;
+  int _sessionSequence;
   Duration _currentDuration = Duration(milliseconds: 0);
   Duration _runningDuration = Duration(milliseconds: 0);
 
@@ -52,7 +53,9 @@ class AudioServices implements IAudioServices {
 
   @override
   Future<void> start() async {
+    _sessionSequence = 0;
     _currentAudionSession = Uuid().v4();
+
     await permissionStatus().then(
       (p) => p.maybeWhen(
           granted: () async => _setupRecordEnviroment(),
@@ -109,8 +112,11 @@ class AudioServices implements IAudioServices {
         milliseconds:
             _currentDuration.inMilliseconds + _runningDuration.inMilliseconds);
 
+    _sessionSequence += 1;
     _audioSyncManager
-        .audioFile(session: _currentAudionSession)
+        .audioFile(
+            session: _currentAudionSession,
+            sequence: _sessionSequence.toString())
         .then((path) => _recordingFile = path)
         .then((file) => _startRecorder(file));
   }
@@ -346,7 +352,7 @@ class AudioServices implements IAudioServices {
   }
 }
 
-extension PermissionStatusMap on PermissionStatus {
+extension _PermissionStatusMap on PermissionStatus {
   AudioPermissionState mapFrom() {
     switch (this) {
       case PermissionStatus.denied:

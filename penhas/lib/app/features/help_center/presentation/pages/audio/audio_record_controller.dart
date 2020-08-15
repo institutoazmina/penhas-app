@@ -63,7 +63,7 @@ abstract class _AudioRecordController with Store, MapFailureMessage {
 
       _currentRecordDurantion += _audioDurationEntity.audioEachDuration;
 
-      if (_currentRecordDurantion >= 60) {
+      if (_currentRecordDurantion >= _audioDurationEntity.audioFullDuration) {
         timer.cancel();
         Modular.to.pop();
       }

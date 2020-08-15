@@ -15,11 +15,13 @@ abstract class IAudioSyncRepository {
 
 class AudioData {
   final String createdAt;
+  final String sequence;
   final String eventId;
   final File media;
 
   AudioData({
     @required this.createdAt,
+    @required this.sequence,
     @required this.eventId,
     @required this.media,
   });
@@ -41,10 +43,12 @@ class AudioSyncRepository implements IAudioSyncRepository {
       filename: fileName,
       contentType: MediaType('audio', 'acc'),
     );
+
     final fields = {
       'event_id': audio.eventId,
-      'cliente_created_at': audio.createdAt.toString(),
-      'current_time': DateTime.now().millisecondsSinceEpoch.toString(),
+      'event_sequence': audio.sequence,
+      'cliente_created_at': audio.createdAt,
+      'current_time': DateTime.now().toUtc().toIso8601String(),
     };
 
     try {

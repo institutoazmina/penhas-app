@@ -1,21 +1,26 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:io';
 
 import 'package:meta/meta.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/help_center/data/repositories/audio_sync_repository.dart';
 
 abstract class IAudioSyncManager {
-  Future<String> audioFile({@required String session, String suffix});
+  Future<String> audioFile({
+    @required String session,
+    @required String sequence,
+    String suffix,
+  });
   Future<bool> syncAudio(String path);
 }
 
 class AudioSyncManager implements IAudioSyncManager {
-  List<File> _pendingUploadAudio = List<File>();
-  bool _syncAudioRunning = false;
   Timer _syncTimer;
-
+  bool _syncAudioRunning = false;
+  final _pendingUploadAudio = Queue<File>();
   final IAudioSyncRepository _audioRepository;
 
   AudioSyncManager({@required IAudioSyncRepository audioRepository})
@@ -24,29 +29,23 @@ class AudioSyncManager implements IAudioSyncManager {
   }
 
   _init() async {
+    await _loadAudioQueue();
     _setupUploadTimer();
-    _pendingUploadAudio = await _dirContent();
-  }
-
-  Future<List<File>> _dirContent() async {
-    List<File> files = await getApplicationDocumentsDirectory()
-        .then((dir) => dir.listSync(recursive: true))
-        .then((value) => value.map((e) => File.fromUri(e.uri)).toList());
-
-    files.retainWhere((f) => f.path.endsWith('.aac'));
-    files.sort((a, b) => a.path.compareTo(b.path));
-    return files;
   }
 
   @override
-  Future<String> audioFile({@required String session, String suffix}) async {
+  Future<String> audioFile({
+    @required String session,
+    @required String sequence,
+    String suffix,
+  }) async {
     suffix ??= '.aac';
     if (!suffix.startsWith('.')) {
       suffix = '.$suffix';
     }
 
     final prefix = DateTime.now().millisecondsSinceEpoch.toString();
-    final fileName = '${prefix}_${session}_$suffix';
+    final fileName = '${prefix}_${session}_${sequence}_$suffix';
     final path = await getApplicationDocumentsDirectory()
         .then((dir) => join(dir.path, fileName));
     final directory = dirname(path);
@@ -61,11 +60,7 @@ class AudioSyncManager implements IAudioSyncManager {
       final file = File(path);
 
       if (file == null || file.existsSync() == false) return false;
-      if (_pendingUploadAudio == null) {
-        _pendingUploadAudio = [file];
-      } else {
-        _pendingUploadAudio.add(file);
-      }
+      _pendingUploadAudio.addLast(file);
 
       _setupUploadTimer();
       _syncAudios();
@@ -76,19 +71,23 @@ class AudioSyncManager implements IAudioSyncManager {
     }
   }
 
-  void _syncAudios() async {
-    if (_syncAudioRunning) {
-      return;
+  Future<List<File>> _dirContent() async {
+    List<File> files = await getApplicationDocumentsDirectory()
+        .then((dir) => dir.listSync(recursive: true))
+        .then((value) => value.map((e) => File.fromUri(e.uri)).toList());
+
+    files.retainWhere((f) => f.path.endsWith('.aac'));
+    files.sort((a, b) => a.path.compareTo(b.path));
+    return files;
+  }
+
+  Future<void> _loadAudioQueue() async {
+    if (_pendingUploadAudio.isEmpty) {
+      final dirs = await _dirContent();
+      _pendingUploadAudio.addAll(dirs);
     }
 
-    _syncAudioRunning = true;
-    _setupUploadTimer();
-
-    _pendingUploadAudio.forEach((file) async => await _syncAudio(file));
-    _pendingUploadAudio.retainWhere((e) => e.existsSync());
-    if (_pendingUploadAudio?.isEmpty ?? true) {
-      _pendingUploadAudio = await _dirContent();
-    }
+    return Future.value();
   }
 
   Future<void> _syncAudio(File file) async {
@@ -98,17 +97,58 @@ class AudioSyncManager implements IAudioSyncManager {
       final audio = AudioData(
         media: file,
         eventId: parts[1],
-        createdAt: parts[0],
+        sequence: parts[2],
+        createdAt: _mapEpochToUTC(parts[0]),
       );
 
       final result = await _audioRepository.upload(audio);
       result.fold(
-        (l) {
-          print(l);
-        },
+        (l) => _handleUploadFailure(l, file),
         (r) => file.deleteSync(),
       );
     } catch (e) {}
+
+    return Future.value();
+  }
+
+  void _handleUploadFailure(Failure failure, File file) {
+    print(failure);
+    if (file.existsSync()) {
+      Future.delayed(Duration(seconds: 30), () {
+        _pendingUploadAudio.addLast(file);
+        _setupUploadTimer();
+      });
+    }
+  }
+
+  String _mapEpochToUTC(String time) {
+    int epoch;
+    try {
+      epoch = int.parse(time);
+    } catch (e) {
+      epoch =
+          DateTime.now().subtract(Duration(minutes: 1)).millisecondsSinceEpoch;
+    }
+
+    return DateTime.fromMillisecondsSinceEpoch(epoch).toUtc().toIso8601String();
+  }
+
+  void _syncAudios() async {
+    if (_syncAudioRunning || _pendingUploadAudio.isEmpty) {
+      return;
+    }
+
+    _syncAudioRunning = true;
+    _setupUploadTimer();
+    try {
+      while (_pendingUploadAudio.isNotEmpty) {
+        final file = _pendingUploadAudio.removeFirst();
+        await _syncAudio(file);
+      }
+    } catch (e) {}
+
+    _pendingUploadAudio.retainWhere((e) => e.existsSync());
+    _syncAudioRunning = false;
   }
 
   void _setupUploadTimer() {
@@ -119,7 +159,7 @@ class AudioSyncManager implements IAudioSyncManager {
     _syncTimer = Timer.periodic(
       Duration(seconds: 10),
       (timer) {
-        if (_pendingUploadAudio.length == 0) {
+        if (_pendingUploadAudio?.isEmpty ?? true) {
           timer.cancel();
           _syncTimer.cancel();
           _syncTimer = null;

@@ -27,9 +27,12 @@ void main() {
         ValidField(message: "Áudio recebido com sucesso!"),
       );
       final audio = AudioData(
+        sequence: '1',
         createdAt: '1',
         eventId: '15dba431-b9c9-4983-af75-9f08c3070c15',
-        media: File('test/assets/audio/silence.aac'),
+        media: File(
+          'test/assets/audio/silence.aac',
+        ),
       );
       final bodyMessage =
           '{"message":"Áudio recebido com sucesso!","success":1,"data":{"id":1234}}';
@@ -52,6 +55,7 @@ void main() {
           .thenThrow(ApiProviderSessionExpection());
       final audio = AudioData(
         createdAt: '1',
+        sequence: '1',
         eventId: '15dba431-b9c9-4983-af75-9f08c3070c15',
         media: File('test/assets/audio/silence.aac'),
       );
