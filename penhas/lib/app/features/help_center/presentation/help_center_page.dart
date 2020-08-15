@@ -85,7 +85,9 @@ class _HelpCenterPageState
   }
 
   Widget _recordCardBuilder() {
-    return HelpCenterCardRecord();
+    return HelpCenterCardRecord(
+      onPressed: () => controller.audios(),
+    );
   }
 
   Widget _guardianCardBuilder() {

@@ -6,8 +6,11 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class HelpCenterCardRecord extends StatelessWidget {
+  final VoidCallback onPressed;
+
   const HelpCenterCardRecord({
     Key key,
+    @required this.onPressed,
   }) : super(key: key);
 
   @override
@@ -72,7 +75,7 @@ class HelpCenterCardRecord extends StatelessWidget {
                     backgroundColor: DesignSystemColors.easterPurple,
                     child: Text('Minhas gravações',
                         style: kTextStyleHelpCenterButtonLabel),
-                    onPressed: null,
+                    onPressed: onPressed,
                     shape: kButtonShapeOutlinePurple),
               ),
             ],

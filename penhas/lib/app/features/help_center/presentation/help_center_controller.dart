@@ -88,6 +88,11 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   }
 
   @action
+  void audios() {
+    Modular.to.pushNamed('/mainboard/helpcenter/audios');
+  }
+
+  @action
   Future<void> triggerGuardian() async {
     _setErrorMessage('');
     _resetAlertState();

@@ -26,6 +26,8 @@ import 'package:penhas/app/features/feed/presentation/reply_tweet/reply_tweet_pa
 import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
 import 'package:penhas/app/features/help_center/data/datasources/guardian_data_source.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
+import 'package:penhas/app/features/help_center/presentation/audios/audios_controller.dart';
+import 'package:penhas/app/features/help_center/presentation/audios/audios_page.dart';
 import 'package:penhas/app/features/help_center/presentation/guardians/guardians_controller.dart';
 import 'package:penhas/app/features/help_center/presentation/guardians/guardians_page.dart';
 import 'package:penhas/app/features/help_center/presentation/new_guardian/new_guardian_controller.dart';
@@ -104,6 +106,11 @@ class MainboardModule extends ChildModule {
         Router(
           '/helpcenter/guardians',
           child: (context, args) => GuardiansPage(),
+          transition: TransitionType.rightToLeft,
+        ),
+        Router(
+          '/helpcenter/audios',
+          child: (context, args) => AudiosPage(),
           transition: TransitionType.rightToLeft,
         ),
       ];
@@ -204,6 +211,11 @@ class MainboardModule extends ChildModule {
         ),
         Bind(
           (i) => GuardiansController(
+            guardianRepository: i.get<IGuardianRepository>(),
+          ),
+        ),
+        Bind(
+          (i) => AudiosController(
             guardianRepository: i.get<IGuardianRepository>(),
           ),
         ),

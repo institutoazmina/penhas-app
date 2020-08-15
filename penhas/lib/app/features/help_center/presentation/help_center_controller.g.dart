@@ -141,6 +141,17 @@ mixin _$HelpCenterController on _HelpCenterControllerBase, Store {
   }
 
   @override
+  void audios() {
+    final _$actionInfo = _$_HelpCenterControllerBaseActionController
+        .startAction(name: '_HelpCenterControllerBase.audios');
+    try {
+      return super.audios();
+    } finally {
+      _$_HelpCenterControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 alertState: ${alertState},
