@@ -108,14 +108,14 @@ extension _FutureExtension<T extends BaseResponse> on Future<T> {
             jsonData = value.body;
           }
 
+          Map<String, dynamic> bodyContent = Map<String, dynamic>();
           try {
-            Map<String, dynamic> bodyContent = jsonDecode(jsonData);
-            throw ApiProviderException(bodyContent: bodyContent);
+            bodyContent = jsonDecode(jsonData);
           } catch (e) {
-            throw ApiProviderException(bodyContent: {
-              'parserError': e.toString(),
-            });
+            bodyContent = {'parserError': e.toString()};
           }
+
+          throw ApiProviderException(bodyContent: bodyContent);
         }
       },
     );
