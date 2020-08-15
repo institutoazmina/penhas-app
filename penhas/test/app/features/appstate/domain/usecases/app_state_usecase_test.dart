@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
+import 'package:penhas/app/core/managers/modules_sevices.dart';
 import 'package:penhas/app/core/managers/user_profile_store.dart';
 import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
@@ -17,21 +18,26 @@ class MockUserProfileStore extends Mock implements IUserProfileStore {}
 
 class MockAppConfiguration extends Mock implements IAppConfiguration {}
 
+class MockAppModulesServices extends Mock implements IAppModulesServices {}
+
 void main() {
   AppStateUseCase sut;
   IAppStateRepository appStateRepository;
   IAppConfiguration appConfiguration;
   IUserProfileStore profileStore;
+  IAppModulesServices appModulesServices;
 
   setUp(() {
     profileStore = MockUserProfileStore();
     appConfiguration = MockAppConfiguration();
     appStateRepository = MockAppStateRepository();
+    appModulesServices = MockAppModulesServices();
 
     sut = AppStateUseCase(
-      appStateRepository: appStateRepository,
       userProfileStore: profileStore,
       appConfiguration: appConfiguration,
+      appStateRepository: appStateRepository,
+      appModulesServices: appModulesServices,
     );
   });
 
@@ -50,6 +56,7 @@ void main() {
       await sut.check();
       // assert
       verify(profileStore.save(expectedModel.userProfile));
+      verify(appModulesServices.save(expectedModel.modules));
       verify(appConfiguration.saveAppModes(expectedModel.appMode));
     });
     test('should not hit store user profile when get failure', () async {

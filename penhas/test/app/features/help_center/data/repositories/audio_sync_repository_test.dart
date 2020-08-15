@@ -27,7 +27,7 @@ void main() {
         ValidField(message: "Áudio recebido com sucesso!"),
       );
       final audio = AudioData(
-        createdAt: 1,
+        createdAt: '1',
         eventId: '15dba431-b9c9-4983-af75-9f08c3070c15',
         media: File('test/assets/audio/silence.aac'),
       );
@@ -51,7 +51,7 @@ void main() {
               fields: anyNamed('fields')))
           .thenThrow(ApiProviderSessionExpection());
       final audio = AudioData(
-        createdAt: 1,
+        createdAt: '1',
         eventId: '15dba431-b9c9-4983-af75-9f08c3070c15',
         media: File('test/assets/audio/silence.aac'),
       );
@@ -64,12 +64,3 @@ void main() {
     });
   });
 }
-
-/*
-      when(dataSource.check()).thenThrow(ApiProviderSessionExpection());
-
-      // act
-      final received = await sut.check();
-      // assert
-      expect(received, expected);
-    */
