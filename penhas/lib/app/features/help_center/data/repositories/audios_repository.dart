@@ -13,6 +13,7 @@ import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dar
 abstract class IAudiosRepository {
   Future<Either<Failure, List<AudioEntity>>> fetch();
   Future<Either<Failure, ValidField>> delete(AudioEntity audio);
+  Future<Either<Failure, ValidField>> requestAccess(AudioEntity audio);
 }
 
 class AudiosRepository implements IAudiosRepository {
@@ -48,9 +49,21 @@ class AudiosRepository implements IAudiosRepository {
     final endPoint = '/me/audios/${audio.id}';
 
     try {
-      final response = await _apiProvider
-          .delete(path: endPoint)
-          .then((value) => ValidField());
+      final response =
+          await _apiProvider.delete(path: endPoint).parseValidField();
+      return right(response);
+    } catch (error) {
+      return left(MapExceptionToFailure.map(error));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ValidField>> requestAccess(AudioEntity audio) async {
+    final endPoint = '/me/audios/${audio.id}';
+
+    try {
+      final response =
+          await _apiProvider.post(path: endPoint).parseValidField();
       return right(response);
     } catch (error) {
       return left(MapExceptionToFailure.map(error));
@@ -63,6 +76,17 @@ extension _FutureExtension<T extends String> on Future<T> {
     return this.then((data) async {
       final jsonData = jsonDecode(data) as Map<String, Object>;
       return AudioModel.fromJson(jsonData, baseUri);
+    });
+  }
+
+  Future<ValidField> parseValidField() async {
+    return this.then((data) async {
+      try {
+        final jsonData = jsonDecode(data) as Map<String, Object>;
+        return ValidField.fromJson(jsonData);
+      } catch (e) {
+        return ValidField();
+      }
     });
   }
 }

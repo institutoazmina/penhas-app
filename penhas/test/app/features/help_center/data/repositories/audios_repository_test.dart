@@ -87,5 +87,32 @@ void main() {
       // assert
       expect(actual, matcher);
     });
+
+    test('should request audio', () async {
+      // arrange
+      final actual = right(ValidField(
+          message:
+              'Enviaremos uma mensagem quando o arquivo estiver disponível.'));
+      final audio = AudioEntity(
+          id: "6db0260b-9733-4610-9586-de5141d79c32",
+          audioDuration: "2m18s",
+          path: null,
+          createdAt: DateTime.parse("2020-08-15T16:58:54Z").toLocal(),
+          canPlay: false,
+          isRequested: true,
+          isRequestGranted: false);
+      when(
+        apiProvider.post(
+          path: anyNamed('path'),
+          headers: anyNamed('headers'),
+          parameters: anyNamed('parameters'),
+        ),
+      ).thenAnswer((_) => Future.value(
+          '{"message":"Enviaremos uma mensagem quando o arquivo estiver disponível","success":1}'));
+      // act
+      final matcher = await sut.requestAccess(audio);
+      // assert
+      expect(actual, matcher);
+    });
   });
 }
