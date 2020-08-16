@@ -75,40 +75,9 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
 
   void _handleSession(GuardianSessioEntity session) {
     final headers =
-        session.guards.expand((guardian) => _parseGuard(guardian)).toList();
+        session.guards.expand((guardian) => parseGuard(guardian)).toList();
 
     currentState = GuardianState.loaded(headers);
-  }
-
-  List<GuardianTileEntity> _parseGuard(GuardianEntity guardian) {
-    final header = GuardianTileHeaderEntity(title: guardian.meta.header);
-    final description =
-        GuardianTileDescriptionEntity(description: guardian.meta.description);
-    List<GuardianTileEntity> cards = guardian.contacts
-        .map(
-          (e) => GuardianTileCardEntity(
-            guardian: e,
-            deleteWarning: guardian.meta.deleteWarning,
-            onEditPressed: guardian.meta.canEdit
-                ? (name) async => _onEditPressed(e, name)
-                : null,
-            onResendPressed: guardian.meta.canResend
-                ? () async => _onResendPressed(e)
-                : null,
-            onDeletePressed: guardian.meta.canDelete
-                ? () async => _onDeletePressed(e)
-                : null,
-          ),
-        )
-        .toList();
-
-    if (cards.isEmpty) {
-      cards = [
-        GuardianTileEmptyCardEntity(onPressed: () async => _onRegisterGuadian())
-      ];
-    }
-
-    return [header, description, ...cards];
   }
 
   void _handleLoadPageError(Failure failure) {
@@ -176,5 +145,38 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
         }
       },
     );
+  }
+}
+
+extension _AudiosControllerBasePrivate on _AudiosControllerBase {
+  List<GuardianTileEntity> parseGuard(GuardianEntity guardian) {
+    final header = GuardianTileHeaderEntity(title: guardian.meta.header);
+    final description =
+        GuardianTileDescriptionEntity(description: guardian.meta.description);
+    List<GuardianTileEntity> cards = guardian.contacts
+        .map(
+          (e) => GuardianTileCardEntity(
+            guardian: e,
+            deleteWarning: guardian.meta.deleteWarning,
+            onEditPressed: guardian.meta.canEdit
+                ? (name) async => _onEditPressed(e, name)
+                : null,
+            onResendPressed: guardian.meta.canResend
+                ? () async => _onResendPressed(e)
+                : null,
+            onDeletePressed: guardian.meta.canDelete
+                ? () async => _onDeletePressed(e)
+                : null,
+          ),
+        )
+        .toList();
+
+    if (cards.isEmpty) {
+      cards = [
+        GuardianTileEmptyCardEntity(onPressed: () async => _onRegisterGuadian())
+      ];
+    }
+
+    return [header, description, ...cards];
   }
 }

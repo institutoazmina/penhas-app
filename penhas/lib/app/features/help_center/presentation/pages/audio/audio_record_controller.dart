@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/managers/audio_services.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/help_center/domain/entities/audio_duration_entity.dart';
+import 'package:penhas/app/features/help_center/domain/entities/audio_record_duration_entity.dart';
 import 'package:penhas/app/features/help_center/domain/usecases/help_center_call_action_feature.dart';
 
 part 'audio_record_controller.g.dart';
@@ -25,7 +25,7 @@ abstract class _AudioRecordController with Store, MapFailureMessage {
   bool _recording = true;
   Timer _rotateAudioTimer;
   int _currentRecordDurantion = 0;
-  AudioDurationEntity _audioDurationEntity;
+  AudioRecordDurationEntity _audioDurationEntity;
 
   _AudioRecordController(this._audioServices, this._featureToogle);
 
