@@ -14,6 +14,12 @@ abstract class IApiProvider {
     Map<String, String> fields,
     @required MultipartFile file,
   });
+
+  Future<String> get({
+    @required String path,
+    Map<String, String> headers,
+    Map<String, String> parameters,
+  });
 }
 
 class ApiProvider implements IApiProvider {
@@ -33,11 +39,11 @@ class ApiProvider implements IApiProvider {
     Map<String, String> fields,
     @required MultipartFile file,
   }) async {
-    final Uri uriRequest = await _setupHttpRequest(
+    final Uri uriRequest = setupHttpRequest(
       path: path,
       queryParameters: {},
     );
-    final header = await _setupHttpHeader(headers);
+    final header = await setupHttpHeader(headers);
     final MultipartRequest request = MultipartRequest('POST', uriRequest);
     final cleanedField = fields == null ? Map<String, String>() : fields;
     request
@@ -51,7 +57,26 @@ class ApiProvider implements IApiProvider {
         .then((response) => response.stream.bytesToString());
   }
 
-  Future<Map<String, String>> _setupHttpHeader(
+  @override
+  Future<String> get({
+    @required String path,
+    Map<String, String> headers,
+    Map<String, String> parameters,
+  }) async {
+    final Uri uriRequest = setupHttpRequest(
+      path: path,
+      queryParameters: parameters,
+    );
+    final header = await setupHttpHeader(headers);
+    return Client()
+        .get(uriRequest, headers: header)
+        .parseError(_networkInfo)
+        .then((response) => response.body);
+  }
+}
+
+extension _ApiProvider on ApiProvider {
+  Future<Map<String, String>> setupHttpHeader(
       Map<String, String> headers) async {
     Map<String, String> localHeader =
         headers == null ? Map<String, String>() : headers;
@@ -66,14 +91,12 @@ class ApiProvider implements IApiProvider {
     return localHeader;
   }
 
-  Future<Uri> _setupHttpRequest({
+  Uri setupHttpRequest({
     @required String path,
     @required Map<String, String> queryParameters,
-  }) async {
+  }) {
     queryParameters.removeWhere((k, v) => v == null);
-    return Uri(
-      scheme: _serverConfiguration.baseUri.scheme,
-      host: _serverConfiguration.baseUri.host,
+    return _serverConfiguration.baseUri.replace(
       path: path,
       queryParameters: queryParameters.isEmpty ? null : queryParameters,
     );
