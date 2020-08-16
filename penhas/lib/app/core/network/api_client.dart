@@ -20,6 +20,11 @@ abstract class IApiProvider {
     Map<String, String> headers,
     Map<String, String> parameters,
   });
+
+  Future<String> delete({
+    @required String path,
+    Map<String, String> parameters,
+  });
 }
 
 class ApiProvider implements IApiProvider {
@@ -70,6 +75,19 @@ class ApiProvider implements IApiProvider {
     final header = await setupHttpHeader(headers);
     return Client()
         .get(uriRequest, headers: header)
+        .parseError(_networkInfo)
+        .then((response) => response.body);
+  }
+
+  @override
+  Future<String> delete({String path, Map<String, String> parameters}) async {
+    final Uri uriRequest = setupHttpRequest(
+      path: path,
+      queryParameters: parameters,
+    );
+    final header = await setupHttpHeader({});
+    return Client()
+        .delete(uriRequest, headers: header)
         .parseError(_networkInfo)
         .then((response) => response.body);
   }
