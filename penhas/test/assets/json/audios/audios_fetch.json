@@ -1,0 +1,30 @@
+{
+  "rows": [
+    {
+      "data": {
+        "audio_duration": "0m55s",
+        "event_id": "c6711926-0ca8-47fd-bed3-5a803c422904",
+        "last_cliente_created_at": "2020-08-15T17:23:06",
+        "total_bytes": "434KiB"
+      },
+      "meta": {
+        "download_granted": 1,
+        "request_granted": 0,
+        "requested_by_user": 0
+      }
+    },
+    {
+      "data": {
+        "audio_duration": "2m18s",
+        "event_id": "6db0260b-9733-4610-9586-de5141d79c32",
+        "last_cliente_created_at": "2020-08-15T16:58:54",
+        "total_bytes": "2MiB"
+      },
+      "meta": {
+        "download_granted": 0,
+        "request_granted": 0,
+        "requested_by_user": 1
+      }
+    }
+  ]
+}
