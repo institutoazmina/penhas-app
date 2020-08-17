@@ -1,17 +1,15 @@
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/features/help_center/domain/entities/guardian_tile_entity.dart';
-import 'package:penhas/app/features/help_center/domain/states/guardian_state.dart';
+import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
+import 'package:penhas/app/features/help_center/domain/states/audios_state.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/guardian_error_page.dart';
-import 'package:penhas/app/features/help_center/presentation/pages/guardian_tile_action_card.dart';
-import 'package:penhas/app/features/help_center/presentation/pages/guardian_tile_description.dart';
-import 'package:penhas/app/features/help_center/presentation/pages/guardian_tile_empty_card.dart';
-import 'package:penhas/app/features/help_center/presentation/pages/guardian_tile_header.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
+import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 import 'audios_controller.dart';
 
@@ -76,7 +74,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
     );
   }
 
-  Widget _buildBody(GuardianState state) {
+  Widget _buildBody(AudiosState state) {
     return state.when(
       initial: () => _empty(),
       loaded: (tiles) => _buildInputScreen(tiles),
@@ -87,40 +85,93 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
     );
   }
 
-  Widget _buildInputScreen(List<GuardianTileEntity> tiles) {
+  Widget _buildInputScreen(List<AudioEntity> tiles) {
     return Container(
       color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 22.0),
+        padding: EdgeInsets.only(top: 22),
         child: RefreshIndicator(
           key: _refreshIndicatorKey,
           onRefresh: () async => controller.loadPage(),
           child: ListView.builder(
               itemCount: tiles.length,
               itemBuilder: (context, index) {
-                final tile = tiles[index];
-                if (tile is GuardianTileHeaderEntity) {
-                  return GuardianTileHeader(title: tile.title);
-                }
-                if (tile is GuardianTileDescriptionEntity) {
-                  return GuardianTileDescription(description: tile.description);
-                }
-                if (tile is GuardianTileCardEntity) {
-                  return GuardianTileActionCard(
-                    card: tile,
-                  );
-                }
-                if (tile is GuardianTileEmptyCardEntity) {
-                  return GuardianTileEmptyCard(
-                    card: tile,
-                  );
-                }
-                return Container(
-                  height: 60,
-                  color: Colors.black,
-                );
+                return _buildAudioPlayer(tiles[index], (index + 1));
               }),
         ),
+      ),
+    );
+  }
+
+  Widget _buildAudioPlayer(AudioEntity audio, int index) {
+    return Container(
+      height: 80,
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: Colors.grey[350]),
+        ),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  IconButton(
+                      icon: Icon(
+                        Icons.play_circle_filled,
+                        size: 40,
+                      ),
+                      onPressed: null),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 2.0),
+                    child: Text(
+                      audio.audioDuration,
+                      style: kTextStyleAudioDuration,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 4,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                          flex: 2,
+                          child: Text("Gravação $index",
+                              style: kTextStyleAudioTitle)),
+                      Expanded(
+                        child: Text(
+                          DateFormat.yMd('pt_BR').format(audio.createdAt),
+                          style: kTextStyleAudioTime,
+                          textAlign: TextAlign.right,
+                        ),
+                      )
+                    ],
+                  ),
+                  Text('Download requisitado, aguardando autorização',
+                      style: kTextStyleAudioDescription),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+              child: SizedBox(
+                  height: 44,
+                  width: 44,
+                  child:
+                      IconButton(icon: Icon(Icons.more_vert), onPressed: null)))
+        ],
       ),
     );
   }

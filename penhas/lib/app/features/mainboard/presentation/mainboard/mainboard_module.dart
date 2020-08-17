@@ -4,6 +4,7 @@ import 'package:penhas/app/core/managers/audio_services.dart';
 import 'package:penhas/app/core/managers/audio_sync_manager.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/core/managers/user_profile_store.dart';
+import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/core/states/mainboard_store.dart';
@@ -25,6 +26,7 @@ import 'package:penhas/app/features/feed/presentation/reply_tweet/reply_tweet_co
 import 'package:penhas/app/features/feed/presentation/reply_tweet/reply_tweet_page.dart';
 import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
 import 'package:penhas/app/features/help_center/data/datasources/guardian_data_source.dart';
+import 'package:penhas/app/features/help_center/data/repositories/audios_repository.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
 import 'package:penhas/app/features/help_center/presentation/audios/audios_controller.dart';
 import 'package:penhas/app/features/help_center/presentation/audios/audios_page.dart';
@@ -216,7 +218,13 @@ class MainboardModule extends ChildModule {
         ),
         Bind(
           (i) => AudiosController(
-            guardianRepository: i.get<IGuardianRepository>(),
+            audiosRepository: i.get<IAudiosRepository>(),
+          ),
+        ),
+        Bind(
+          (i) => AudiosRepository(
+            apiProvider: i.get<IApiProvider>(),
+            serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
         Bind<IGuardianRepository>(

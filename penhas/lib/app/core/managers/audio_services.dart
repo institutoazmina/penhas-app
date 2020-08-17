@@ -33,7 +33,6 @@ class AudioServices implements IAudioServices {
   FlutterSoundRecorder _recorder = FlutterSoundRecorder();
   final IAudioSyncManager _audioSyncManager;
   final _audioCodec = Codec.aacADTS;
-  int _rateHertz = 96000;
   String _currentAudionSession;
   int _sessionSequence;
   Duration _currentDuration = Duration(milliseconds: 0);
@@ -126,8 +125,8 @@ class AudioServices implements IAudioServices {
       _recorder.startRecorder(
         codec: _audioCodec,
         toFile: path,
-        bitRate: _rateHertz,
-        sampleRate: _rateHertz,
+        bitRate: 96000,
+        sampleRate: 32000,
       );
 
       _recorderSubscription = _recorder.onProgress.listen(

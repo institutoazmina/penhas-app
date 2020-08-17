@@ -119,23 +119,22 @@ class ApiProvider implements IApiProvider {
 extension _ApiProvider on ApiProvider {
   Future<Map<String, String>> setupHttpHeader(
       Map<String, String> headers) async {
-    Map<String, String> localHeader =
-        headers == null ? Map<String, String>() : headers;
-
-    localHeader.addAll(
+    headers ??= {};
+    headers.addAll(
       {
         'X-Api-Key': await _serverConfiguration.apiToken,
         'User-Agent': await _serverConfiguration.userAgent,
       },
     );
 
-    return localHeader;
+    return headers;
   }
 
   Uri setupHttpRequest({
     @required String path,
     @required Map<String, String> queryParameters,
   }) {
+    queryParameters ??= {};
     queryParameters.removeWhere((k, v) => v == null);
     return _serverConfiguration.baseUri.replace(
       path: path,

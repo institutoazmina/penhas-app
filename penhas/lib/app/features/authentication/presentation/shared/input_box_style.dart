@@ -53,18 +53,3 @@ class PurpleBoxDecorationStyle extends InputDecoration {
           ),
         );
 }
-/*
-InputDecoration(
-        enabledBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        focusedBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        border: OutlineInputBorder(),
-        labelText: _labelText,
-        
-        hintText: _hintText,
-        
-        errorText: _normalizeHitText(_errorText),
-        contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
-      ),
-*/

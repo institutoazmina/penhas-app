@@ -225,3 +225,30 @@ const kTextStyleAlertDialogDescriptionBold = TextStyle(
     letterSpacing: 0.45,
     color: DesignSystemColors.darkIndigoThree,
     fontWeight: FontWeight.bold);
+
+const kTextStyleAudioTitle = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 16.0,
+    letterSpacing: 0.4,
+    color: DesignSystemColors.darkIndigoThree,
+    fontWeight: FontWeight.bold);
+
+const kTextStyleAudioTime = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 12.0,
+    letterSpacing: 0.4,
+    color: DesignSystemColors.warnGrey,
+    fontWeight: FontWeight.normal);
+
+const kTextStyleAudioDescription = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 14.0,
+    letterSpacing: 0.45,
+    color: DesignSystemColors.darkIndigoThree,
+    fontWeight: FontWeight.normal);
+
+const kTextStyleAudioDuration = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 12.0,
+    letterSpacing: 0.4,
+    fontWeight: FontWeight.normal);

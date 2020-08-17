@@ -28,14 +28,14 @@ mixin _$AudiosController on _AudiosControllerBase, Store {
       Atom(name: '_AudiosControllerBase._fetchProgress');
 
   @override
-  ObservableFuture<Either<Failure, GuardianSessioEntity>> get _fetchProgress {
+  ObservableFuture<Either<Failure, List<AudioEntity>>> get _fetchProgress {
     _$_fetchProgressAtom.reportRead();
     return super._fetchProgress;
   }
 
   @override
   set _fetchProgress(
-      ObservableFuture<Either<Failure, GuardianSessioEntity>> value) {
+      ObservableFuture<Either<Failure, List<AudioEntity>>> value) {
     _$_fetchProgressAtom.reportWrite(value, super._fetchProgress, () {
       super._fetchProgress = value;
     });
@@ -75,13 +75,13 @@ mixin _$AudiosController on _AudiosControllerBase, Store {
   final _$currentStateAtom = Atom(name: '_AudiosControllerBase.currentState');
 
   @override
-  GuardianState get currentState {
+  AudiosState get currentState {
     _$currentStateAtom.reportRead();
     return super.currentState;
   }
 
   @override
-  set currentState(GuardianState value) {
+  set currentState(AudiosState value) {
     _$currentStateAtom.reportWrite(value, super.currentState, () {
       super.currentState = value;
     });
