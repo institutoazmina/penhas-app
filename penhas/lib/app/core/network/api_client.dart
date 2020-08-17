@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:meta/meta.dart';
 import 'package:http/http.dart';
@@ -8,13 +9,6 @@ import 'api_server_configure.dart';
 import 'network_info.dart';
 
 abstract class IApiProvider {
-  Future<String> upload({
-    @required String path,
-    Map<String, String> headers,
-    Map<String, String> fields,
-    @required MultipartFile file,
-  });
-
   Future<String> get({
     @required String path,
     Map<String, String> headers,
@@ -31,42 +25,32 @@ abstract class IApiProvider {
     @required String path,
     Map<String, String> parameters,
   });
+
+  Future<String> upload({
+    @required String path,
+    @required MultipartFile file,
+    Map<String, String> headers,
+    Map<String, String> fields,
+  });
+
+  Future<String> download({
+    @required String path,
+    @required File file,
+    Map<String, String> headers,
+    Map<String, String> fields,
+  });
 }
 
 class ApiProvider implements IApiProvider {
   final INetworkInfo _networkInfo;
   final IApiServerConfigure _serverConfiguration;
+  final foo = HttpClient();
 
   ApiProvider({
     @required IApiServerConfigure serverConfiguration,
     @required INetworkInfo networkInfo,
   })  : this._serverConfiguration = serverConfiguration,
         this._networkInfo = networkInfo;
-
-  @override
-  Future<String> upload({
-    @required String path,
-    Map<String, String> headers,
-    Map<String, String> fields,
-    @required MultipartFile file,
-  }) async {
-    final Uri uriRequest = setupHttpRequest(
-      path: path,
-      queryParameters: {},
-    );
-    final header = await setupHttpHeader(headers);
-    final MultipartRequest request = MultipartRequest('POST', uriRequest);
-    final cleanedField = fields == null ? Map<String, String>() : fields;
-    request
-      ..headers.addAll(header)
-      ..fields.addAll(cleanedField)
-      ..files.add(file);
-
-    return request
-        .send()
-        .parseError(_networkInfo)
-        .then((response) => response.stream.bytesToString());
-  }
 
   @override
   Future<String> get({
@@ -113,6 +97,51 @@ class ApiProvider implements IApiProvider {
         .delete(uriRequest, headers: header)
         .parseError(_networkInfo)
         .then((response) => response.body);
+  }
+
+  @override
+  Future<String> upload({
+    @required String path,
+    @required MultipartFile file,
+    Map<String, String> headers,
+    Map<String, String> fields,
+  }) async {
+    final Uri uriRequest = setupHttpRequest(
+      path: path,
+      queryParameters: {},
+    );
+    final header = await setupHttpHeader(headers);
+    final MultipartRequest request = MultipartRequest('POST', uriRequest);
+    final cleanedField = fields == null ? Map<String, String>() : fields;
+    request
+      ..headers.addAll(header)
+      ..fields.addAll(cleanedField)
+      ..files.add(file);
+
+    return request
+        .send()
+        .parseError(_networkInfo)
+        .then((response) => response.stream.bytesToString());
+  }
+
+  @override
+  Future<String> download({
+    @required String path,
+    @required File file,
+    Map<String, String> headers,
+    Map<String, String> fields,
+  }) async {
+    final Uri uriRequest = setupHttpRequest(
+      path: path,
+      queryParameters: fields,
+    );
+
+    final header = await setupHttpHeader(headers);
+    return Client()
+        .get(uriRequest, headers: header)
+        .parseError(_networkInfo)
+        .then((response) => file.writeAsBytesSync(response.bodyBytes))
+        .then((value) => '{"message": "Ok"}');
   }
 }
 
