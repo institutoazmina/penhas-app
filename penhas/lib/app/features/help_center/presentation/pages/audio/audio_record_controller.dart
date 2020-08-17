@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/managers/audio_services.dart';
+import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_record_duration_entity.dart';
 import 'package:penhas/app/features/help_center/domain/usecases/help_center_call_action_feature.dart';
@@ -13,13 +13,13 @@ part 'audio_record_controller.g.dart';
 class AudioRecordController extends _AudioRecordController
     with _$AudioRecordController {
   AudioRecordController({
-    @required IAudioServices audioServices,
+    @required IAudioRecordServices audioServices,
     @required HelpCenterCallActionFeature featureToogle,
   }) : super(audioServices, featureToogle);
 }
 
 abstract class _AudioRecordController with Store, MapFailureMessage {
-  final IAudioServices _audioServices;
+  final IAudioRecordServices _audioServices;
   final HelpCenterCallActionFeature _featureToogle;
 
   bool _recording = true;

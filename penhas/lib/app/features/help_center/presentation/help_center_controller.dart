@@ -6,7 +6,7 @@ import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
-import 'package:penhas/app/core/managers/audio_services.dart';
+import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
@@ -24,7 +24,7 @@ class HelpCenterController extends _HelpCenterControllerBase
     @required ILocationServices locationService,
     @required IAppConfiguration appConfiguration,
     @required HelpCenterCallActionFeature featureToogle,
-    @required IAudioServices audioServices,
+    @required IAudioRecordServices audioServices,
   }) : super(
           guardianRepository,
           locationService,
@@ -39,7 +39,7 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   final ILocationServices _locationService;
   final IAppConfiguration _appConfiguration;
   final HelpCenterCallActionFeature _featureToogle;
-  final IAudioServices _audioServices;
+  final IAudioRecordServices _audioServices;
 
   _HelpCenterControllerBase(
     this._guardianRepository,

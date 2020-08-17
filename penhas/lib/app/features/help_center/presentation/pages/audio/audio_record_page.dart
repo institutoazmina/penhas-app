@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:penhas/app/core/managers/audio_services.dart';
+import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/audio/sound_record_widget.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';

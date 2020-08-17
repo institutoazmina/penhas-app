@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
@@ -61,18 +65,37 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> loadPage() async {
-    _setErrorMessage('');
+    setErrorMessage('');
     _fetchProgress = ObservableFuture(_audiosRepository.fetch());
 
     final response = await _fetchProgress;
 
     response.fold(
       (failure) => handleLoadPageError(failure),
-      (session) => handleSession(session),
+      (session) => handleLoadSession(session),
     );
   }
 
-  void _setErrorMessage(String message) => errorMessage = message;
+  @action
+  Future<void> requestAudio(AudioEntity audio) async {
+    setErrorMessage('');
+
+    final fileName = ['play', audio.id].join('_');
+
+    final path = await getApplicationDocumentsDirectory()
+        .then((dir) => join(dir.path, fileName));
+    File(path).createSync(recursive: true);
+    File file = File(path);
+
+    _updateProgress =
+        ObservableFuture(_audiosRepository.requestAudio(audio, file));
+
+    final response = await _updateProgress;
+    response.fold(
+      (failure) => handleLoadPageError(failure),
+      (session) => handleAudioSession(audio, file),
+    );
+  }
 
   // Future<void> _onEditPressed(
   //   GuardianContactEntity contact,
@@ -136,43 +159,18 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
 }
 
 extension _AudiosControllerBasePrivate on _AudiosControllerBase {
-  void handleSession(List<AudioEntity> session) {
+  void setErrorMessage(String message) => errorMessage = message;
+
+  void handleLoadSession(List<AudioEntity> session) {
     currentState = AudiosState.loaded(session);
+  }
+
+  void handleAudioSession(AudioEntity audio, File file) {
+    // playAudio = AudiosState.play(audio, file);
   }
 
   void handleLoadPageError(Failure failure) {
     final message = mapFailureMessage(failure);
     currentState = AudiosState.error(message);
   }
-
-  // List<GuardianTileEntity> parseGuard(GuardianEntity guardian) {
-  //   final header = GuardianTileHeaderEntity(title: guardian.meta.header);
-  //   final description =
-  //       GuardianTileDescriptionEntity(description: guardian.meta.description);
-  //   List<GuardianTileEntity> cards = guardian.contacts
-  //       .map(
-  //         (e) => GuardianTileCardEntity(
-  //           guardian: e,
-  //           deleteWarning: guardian.meta.deleteWarning,
-  //           onEditPressed: guardian.meta.canEdit
-  //               ? (name) async => _onEditPressed(e, name)
-  //               : null,
-  //           onResendPressed: guardian.meta.canResend
-  //               ? () async => _onResendPressed(e)
-  //               : null,
-  //           onDeletePressed: guardian.meta.canDelete
-  //               ? () async => _onDeletePressed(e)
-  //               : null,
-  //         ),
-  //       )
-  //       .toList();
-
-  //   if (cards.isEmpty) {
-  //     cards = [
-  //       GuardianTileEmptyCardEntity(onPressed: () async => _onRegisterGuadian())
-  //     ];
-  //   }
-
-  //   return [header, description, ...cards];
-  // }
 }

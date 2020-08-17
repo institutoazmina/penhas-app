@@ -19,17 +19,16 @@ class AudioActivity {
   AudioActivity(this.time, this.decibels);
 }
 
-abstract class IAudioServices {
+abstract class IAudioRecordServices {
   Future<AudioPermissionState> requestPermission();
   Future<AudioPermissionState> permissionStatus();
   Future<void> start();
   Future<void> rotate();
   Stream<AudioActivity> get onProgress;
-  // Future<void> stop();
   void dispose();
 }
 
-class AudioServices implements IAudioServices {
+class AudioRecordServices implements IAudioRecordServices {
   FlutterSoundRecorder _recorder = FlutterSoundRecorder();
   final IAudioSyncManager _audioSyncManager;
   final _audioCodec = Codec.aacADTS;
@@ -44,7 +43,7 @@ class AudioServices implements IAudioServices {
 
   String _recordingFile;
 
-  AudioServices({@required IAudioSyncManager audioSyncManager})
+  AudioRecordServices({@required IAudioSyncManager audioSyncManager})
       : this._audioSyncManager = audioSyncManager;
 
   @override

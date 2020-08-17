@@ -104,6 +104,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
   }
 
   Widget _buildAudioPlayer(AudioEntity audio, int index) {
+    print(audio.path.toString());
     return Container(
       height: 80,
       decoration: BoxDecoration(
@@ -125,7 +126,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
                         Icons.play_circle_filled,
                         size: 40,
                       ),
-                      onPressed: null),
+                      onPressed: () => controller.requestAudio(audio)),
                   Padding(
                     padding: const EdgeInsets.only(top: 2.0),
                     child: Text(
@@ -176,7 +177,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
     );
   }
 
-  Widget _empty() => Container(color: DesignSystemColors.white);
+  Widget _empty() => Container(width: 0.0, height: 0.0);
 
   ReactionDisposer _showErrorMessage() {
     return reaction((_) => controller.errorMessage, (String message) {

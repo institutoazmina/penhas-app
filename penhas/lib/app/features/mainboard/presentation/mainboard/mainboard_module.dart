@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:penhas/app/core/managers/app_configuration.dart';
-import 'package:penhas/app/core/managers/audio_services.dart';
+import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/core/managers/audio_sync_manager.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/core/managers/user_profile_store.dart';
@@ -126,8 +126,9 @@ class MainboardModule extends ChildModule {
       ];
 
   List<Bind> get audioRecordBinds => [
-        Bind<IAudioServices>(
-          (i) => AudioServices(audioSyncManager: i.get<IAudioSyncManager>()),
+        Bind<IAudioRecordServices>(
+          (i) =>
+              AudioRecordServices(audioSyncManager: i.get<IAudioSyncManager>()),
           singleton: false,
         ),
       ];

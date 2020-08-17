@@ -94,6 +94,14 @@ mixin _$AudiosController on _AudiosControllerBase, Store {
     return _$loadPageAsyncAction.run(() => super.loadPage());
   }
 
+  final _$requestAudioAsyncAction =
+      AsyncAction('_AudiosControllerBase.requestAudio');
+
+  @override
+  Future<void> requestAudio(AudioEntity audio) {
+    return _$requestAudioAsyncAction.run(() => super.requestAudio(audio));
+  }
+
   @override
   String toString() {
     return '''
