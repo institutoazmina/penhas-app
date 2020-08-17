@@ -32,6 +32,7 @@ doc/api/
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
+**/ios/Flutter/.last_build_id
 
 ### fastlane ###
 # fastlane - A streamlined workflow tool for Cocoa deployment
