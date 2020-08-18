@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
@@ -15,10 +14,6 @@ abstract class IAudiosRepository {
   Future<Either<Failure, List<AudioEntity>>> fetch();
   Future<Either<Failure, ValidField>> delete(AudioEntity audio);
   Future<Either<Failure, ValidField>> requestAccess(AudioEntity audio);
-  Future<Either<Failure, ValidField>> requestAudio(
-    AudioEntity audio,
-    File file,
-  );
 }
 
 class AudiosRepository implements IAudiosRepository {
@@ -73,23 +68,6 @@ class AudiosRepository implements IAudiosRepository {
       final response =
           await _apiProvider.post(path: endPoint).parseValidField();
       return right(response);
-    } catch (error) {
-      return left(MapExceptionToFailure.map(error));
-    }
-  }
-
-  @override
-  Future<Either<Failure, ValidField>> requestAudio(
-      AudioEntity audio, File file) async {
-    final endPoint = ['me', 'audios', audio.id, 'download'].join('/');
-    final fields = {'audio_sequences': 'all'};
-    try {
-      await _apiProvider.download(
-        path: endPoint,
-        file: file,
-        fields: fields,
-      );
-      return right(ValidField());
     } catch (error) {
       return left(MapExceptionToFailure.map(error));
     }

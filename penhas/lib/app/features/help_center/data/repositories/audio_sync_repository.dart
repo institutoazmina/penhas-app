@@ -8,9 +8,11 @@ import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_exception_to_failure.dart';
+import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
 
 abstract class IAudioSyncRepository {
   Future<Either<Failure, ValidField>> upload(AudioData audio);
+  Future<Either<Failure, ValidField>> download(AudioEntity audio, File file);
 }
 
 class AudioData {
@@ -56,6 +58,23 @@ class AudioSyncRepository implements IAudioSyncRepository {
           .upload(path: '/me/audios', file: fileData, fields: fields)
           .parseAPI();
       return right(result);
+    } catch (error) {
+      return left(MapExceptionToFailure.map(error));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ValidField>> download(
+      AudioEntity audio, File file) async {
+    final endPoint = ['me', 'audios', audio.id, 'download'].join('/');
+    final fields = {'audio_sequences': 'all'};
+    try {
+      await _apiProvider.download(
+        path: endPoint,
+        file: file,
+        fields: fields,
+      );
+      return right(ValidField());
     } catch (error) {
       return left(MapExceptionToFailure.map(error));
     }
