@@ -1,15 +1,17 @@
+import 'dart:io';
+
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 
 class MapExceptionToFailure {
   static Failure map(Object error) {
-    if (error is InternetConnectionException) {
+    if (error is InternetConnectionException)
       return InternetConnectionFailure();
-    } else if (error is ApiProviderSessionExpection) {
+    else if (error is ApiProviderSessionExpection)
       return ServerSideSessionFailed();
-    } else if (error is NetworkServerException) {
+    else if (error is NetworkServerException)
       return ServerFailure();
-    }
+    else if (error is FileSystemException) return FileSystemFailure();
 
     if (error is ApiProviderException) {
       if (error.bodyContent['error'] == 'expired_jwt') {
