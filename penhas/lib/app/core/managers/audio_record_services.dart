@@ -126,6 +126,7 @@ class AudioRecordServices implements IAudioRecordServices {
         toFile: path,
         bitRate: 96000,
         sampleRate: 32000,
+        numChannels: 1,
       );
 
       _recorderSubscription = _recorder.onProgress.listen(
