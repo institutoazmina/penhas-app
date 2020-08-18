@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/managers/audio_play_services.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/help_center/data/repositories/audios_repository.dart';
@@ -18,14 +18,17 @@ import 'package:penhas/app/features/help_center/domain/states/audios_state.dart'
 part 'audios_controller.g.dart';
 
 class AudiosController extends _AudiosControllerBase with _$AudiosController {
-  AudiosController({@required IAudiosRepository audiosRepository})
-      : super(audiosRepository);
+  AudiosController(
+      {@required IAudiosRepository audiosRepository,
+      @required IAudioPlayServices audioPlayServices})
+      : super(audiosRepository, audioPlayServices);
 }
 
 abstract class _AudiosControllerBase with Store, MapFailureMessage {
+  final IAudioPlayServices _audioPlayer;
   final IAudiosRepository _audiosRepository;
 
-  _AudiosControllerBase(this._audiosRepository);
+  _AudiosControllerBase(this._audiosRepository, this._audioPlayer);
 
   @observable
   ObservableFuture<Either<Failure, List<AudioEntity>>> _fetchProgress;
@@ -80,21 +83,15 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
   Future<void> requestAudio(AudioEntity audio) async {
     setErrorMessage('');
 
-    final fileName = ['play', audio.id].join('_');
+    // _updateProgress =
+    // ObservableFuture(_audioPlayer.start(audio));
+    _audioPlayer.start(audio);
 
-    final path = await getApplicationDocumentsDirectory()
-        .then((dir) => join(dir.path, fileName));
-    File(path).createSync(recursive: true);
-    File file = File(path);
-
-    _updateProgress =
-        ObservableFuture(_audiosRepository.requestAudio(audio, file));
-
-    final response = await _updateProgress;
-    response.fold(
-      (failure) => handleLoadPageError(failure),
-      (session) => handleAudioSession(audio, file),
-    );
+    // final response = await _updateProgress;
+    // response.fold(
+    //   (failure) => handleLoadPageError(failure),
+    //   (session) => handleAudioSession(audio, file),
+    // );
   }
 
   // Future<void> _onEditPressed(

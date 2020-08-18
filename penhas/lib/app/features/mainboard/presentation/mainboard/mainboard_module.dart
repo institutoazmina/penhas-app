@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:penhas/app/core/managers/app_configuration.dart';
+import 'package:penhas/app/core/managers/audio_play_services.dart';
 import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/core/managers/audio_sync_manager.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
@@ -45,7 +46,7 @@ class MainboardModule extends ChildModule {
         ...interfaceBinds,
         ...tweetBinds,
         ...helpCenterBinds,
-        ...audioRecordBinds,
+        ...audioServicesBinds,
         Bind<MainboardStore>((i) => MainboardStore()),
         Bind(
           (i) => MainboardController(
@@ -125,12 +126,18 @@ class MainboardModule extends ChildModule {
         )
       ];
 
-  List<Bind> get audioRecordBinds => [
+  List<Bind> get audioServicesBinds => [
         Bind<IAudioRecordServices>(
-          (i) =>
-              AudioRecordServices(audioSyncManager: i.get<IAudioSyncManager>()),
+          (i) => AudioRecordServices(
+            audioSyncManager: i.get<IAudioSyncManager>(),
+          ),
           singleton: false,
         ),
+        Bind<IAudioPlayServices>(
+          (i) => AudioPlayServices(
+            audioSyncManager: i.get<IAudioSyncManager>(),
+          ),
+        )
       ];
 
   List<Bind> get tweetBinds => [
@@ -219,8 +226,8 @@ class MainboardModule extends ChildModule {
         ),
         Bind(
           (i) => AudiosController(
-            audiosRepository: i.get<IAudiosRepository>(),
-          ),
+              audiosRepository: i.get<IAudiosRepository>(),
+              audioPlayServices: i.get<IAudioPlayServices>()),
         ),
         Bind(
           (i) => AudiosRepository(
