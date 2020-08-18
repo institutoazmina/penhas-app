@@ -39,6 +39,10 @@ class GuardianAlertGpsFailure extends Failure {}
 
 class RequiredParameter extends Failure {}
 
+class AudioDownloadFailure extends Failure {}
+
+class FileSystemFailure extends Failure {}
+
 @immutable
 class ServerSideFormFieldValidationFailure extends Failure {
   final String error;
