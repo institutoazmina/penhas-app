@@ -62,7 +62,7 @@ class AudiosRepository implements IAudiosRepository {
 
   @override
   Future<Either<Failure, ValidField>> requestAccess(AudioEntity audio) async {
-    final endPoint = ['me', 'audios', audio.id].join('/');
+    final endPoint = ['me', 'audios', audio.id, 'request-access'].join('/');
 
     try {
       final response =
