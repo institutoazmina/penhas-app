@@ -13,10 +13,11 @@ abstract class IAudioPlayServices {
 }
 
 class AudioPlayServices implements IAudioPlayServices {
+  final _audioCodec = Codec.aacADTS;
   FlutterSoundPlayer _playerModule = FlutterSoundPlayer();
+
   final IAudioSyncManager _audioSyncManager;
   StreamSubscription _playerSubscription;
-  final _audioCodec = Codec.aacADTS;
 
   AudioPlayServices({@required IAudioSyncManager audioSyncManager})
       : this._audioSyncManager = audioSyncManager;

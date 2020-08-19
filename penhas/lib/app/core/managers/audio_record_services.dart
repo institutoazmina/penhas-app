@@ -83,6 +83,45 @@ class AudioRecordServices implements IAudioRecordServices {
     }
   }
 
+  @override
+  Future<AudioPermissionState> permissionStatus() {
+    return Permission.microphone.status.then((value) => value.mapFrom());
+  }
+
+  @override
+  Future<AudioPermissionState> requestPermission() {
+    return permissionStatus().then(
+      (p) => p.when(
+        granted: () => AudioPermissionState.granted(),
+        denied: () => askWhenPermissionIsDenied(),
+        permanentlyDenied: () => askWhenPermissionIsDenied(),
+        restricted: () => AudioPermissionState.restricted(),
+        undefined: () => askForPermission(),
+      ),
+    );
+  }
+}
+
+extension _PermissionStatusMap on PermissionStatus {
+  AudioPermissionState mapFrom() {
+    switch (this) {
+      case PermissionStatus.denied:
+        return AudioPermissionState.denied();
+      case PermissionStatus.granted:
+        return AudioPermissionState.granted();
+      case PermissionStatus.restricted:
+        return AudioPermissionState.restricted();
+      case PermissionStatus.permanentlyDenied:
+        return AudioPermissionState.permanentlyDenied();
+      case PermissionStatus.undetermined:
+        return AudioPermissionState.undefined();
+    }
+
+    return AudioPermissionState.undefined();
+  }
+}
+
+extension _AudioRecordServices on AudioRecordServices {
   void _cancelRecorderSubscriptions() {
     if (_recorderSubscription != null) {
       _recorderSubscription.cancel();
@@ -159,25 +198,15 @@ class AudioRecordServices implements IAudioRecordServices {
     }
   }
 
-  @override
-  Future<AudioPermissionState> permissionStatus() {
-    return Permission.microphone.status.then((value) => value.mapFrom());
-  }
-
-  @override
-  Future<AudioPermissionState> requestPermission() {
-    return permissionStatus().then(
-      (p) => p.when(
-        granted: () => AudioPermissionState.granted(),
-        denied: () => _requestDeniedPermission(),
-        permanentlyDenied: () => _requestDeniedPermission(),
-        restricted: () => AudioPermissionState.restricted(),
-        undefined: () => _requestPermission(),
-      ),
+  Future<AudioPermissionState> askForPermissionIfNeeded(
+      AudioPermissionState state) async {
+    return state.maybeWhen(
+      permanentlyDenied: () => askWhenPermissionIsDenied(),
+      orElse: () => state,
     );
   }
 
-  Future<AudioPermissionState> _requestPermission() {
+  Future<AudioPermissionState> askForPermission() {
     return Modular.to
         .showDialog(
           barrierDismissible: false,
@@ -241,8 +270,7 @@ class AudioRecordServices implements IAudioRecordServices {
                       Permission.microphone
                           .request()
                           .then((value) => value.mapFrom())
-                          .then((value) =>
-                              _requestDeniedPermissionIfNeeded(value))
+                          .then((value) => askForPermissionIfNeeded(value))
                           .then((value) => Modular.to.pop(value));
                     },
                   ),
@@ -257,15 +285,7 @@ class AudioRecordServices implements IAudioRecordServices {
         );
   }
 
-  Future<AudioPermissionState> _requestDeniedPermissionIfNeeded(
-      AudioPermissionState state) async {
-    return state.maybeWhen(
-      permanentlyDenied: () => _requestDeniedPermission(),
-      orElse: () => state,
-    );
-  }
-
-  Future<AudioPermissionState> _requestDeniedPermission() {
+  Future<AudioPermissionState> askWhenPermissionIsDenied() {
     return Modular.to
         .showDialog(
           barrierDismissible: false,
@@ -348,24 +368,5 @@ class AudioRecordServices implements IAudioRecordServices {
         .catchError(
           (_) => AudioPermissionState.undefined(),
         );
-  }
-}
-
-extension _PermissionStatusMap on PermissionStatus {
-  AudioPermissionState mapFrom() {
-    switch (this) {
-      case PermissionStatus.denied:
-        return AudioPermissionState.denied();
-      case PermissionStatus.granted:
-        return AudioPermissionState.granted();
-      case PermissionStatus.restricted:
-        return AudioPermissionState.restricted();
-      case PermissionStatus.permanentlyDenied:
-        return AudioPermissionState.permanentlyDenied();
-      case PermissionStatus.undetermined:
-        return AudioPermissionState.undefined();
-    }
-
-    return AudioPermissionState.undefined();
   }
 }
