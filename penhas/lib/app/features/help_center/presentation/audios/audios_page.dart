@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
@@ -137,7 +138,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
       actionSheetState.when(
         initial: () {},
         notice: (message) => _showActionNotice(message),
-        actionSheet: (action) {},
+        actionSheet: (action) => _actionSheet(action),
       );
     });
   }
@@ -165,6 +166,58 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
         ],
       ),
       barrierDismissible: true,
+    );
+  }
+
+  void _actionSheet(AudioEntity audio) async {
+    final BuildContext _context = _scaffoldKey.currentContext;
+    await showModalBottomSheet(
+      context: _context,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return Container(
+          padding: EdgeInsets.only(top: 5, bottom: 0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+          ),
+          height: 200,
+          child: Column(
+            children: <Widget>[
+              _buildDivider(),
+              ListTile(
+                leading: SvgPicture.asset(
+                    'assets/images/svg/tweet_action/tweet_action_delete.svg'),
+                title: Text('Apagar'),
+                onTap: () {
+                  Navigator.of(_context).pop();
+                  controller.delete(audio);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  double _fullWidth() {
+    return MediaQuery.of(_scaffoldKey.currentContext).size.width;
+  }
+
+  Widget _buildDivider() {
+    return Container(
+      width: _fullWidth() * .2,
+      height: 5,
+      decoration: BoxDecoration(
+        color: Theme.of(context).dividerColor,
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
     );
   }
 }

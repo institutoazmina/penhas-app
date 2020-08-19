@@ -110,6 +110,13 @@ mixin _$AudiosController on _AudiosControllerBase, Store {
     return _$loadPageAsyncAction.run(() => super.loadPage());
   }
 
+  final _$deleteAsyncAction = AsyncAction('_AudiosControllerBase.delete');
+
+  @override
+  Future<void> delete(AudioEntity audio) {
+    return _$deleteAsyncAction.run(() => super.delete(audio));
+  }
+
   @override
   String toString() {
     return '''

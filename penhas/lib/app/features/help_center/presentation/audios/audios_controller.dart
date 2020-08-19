@@ -80,6 +80,18 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
     );
   }
 
+  @action
+  Future<void> delete(AudioEntity audio) async {
+    setErrorMessage('');
+    _updateProgress = ObservableFuture(_audiosRepository.delete(audio));
+
+    final response = await _updateProgress;
+    response.fold(
+      (failure) => setErrorMessage(mapFailureMessage(failure)),
+      (session) async => loadPage(),
+    );
+  }
+
   void dispose() {
     _audioPlayer.dispose();
   }
@@ -141,7 +153,8 @@ extension _AudiosControllerBasePrivate on _AudiosControllerBase {
       audio: audio,
       description: description,
       onPlayAudio: (audio) async => requestAudio(audio),
-      onActionSheet: (audio) => print('ola mundo cruel'),
+      onActionSheet: (audio) async =>
+          actionSheetState = AudioTileAction.actionSheet(audio),
     );
   }
 }

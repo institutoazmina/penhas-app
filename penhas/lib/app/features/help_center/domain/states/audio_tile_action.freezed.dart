@@ -25,9 +25,9 @@ class _$AudioTileActionTearOff {
   }
 
 // ignore: unused_element
-  _ActionSheet actionSheet(AudioTileActionSheetEntity actionSheet) {
+  _ActionSheet actionSheet(AudioEntity audio) {
     return _ActionSheet(
-      actionSheet,
+      audio,
     );
   }
 }
@@ -40,13 +40,13 @@ mixin _$AudioTileAction {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result notice(String message),
-    @required Result actionSheet(AudioTileActionSheetEntity actionSheet),
+    @required Result actionSheet(AudioEntity audio),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result notice(String message),
-    Result actionSheet(AudioTileActionSheetEntity actionSheet),
+    Result actionSheet(AudioEntity audio),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -120,7 +120,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result notice(String message),
-    @required Result actionSheet(AudioTileActionSheetEntity actionSheet),
+    @required Result actionSheet(AudioEntity audio),
   }) {
     assert(initial != null);
     assert(notice != null);
@@ -133,7 +133,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result notice(String message),
-    Result actionSheet(AudioTileActionSheetEntity actionSheet),
+    Result actionSheet(AudioEntity audio),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -240,7 +240,7 @@ class _$_Notice with DiagnosticableTreeMixin implements _Notice {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result notice(String message),
-    @required Result actionSheet(AudioTileActionSheetEntity actionSheet),
+    @required Result actionSheet(AudioEntity audio),
   }) {
     assert(initial != null);
     assert(notice != null);
@@ -253,7 +253,7 @@ class _$_Notice with DiagnosticableTreeMixin implements _Notice {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result notice(String message),
-    Result actionSheet(AudioTileActionSheetEntity actionSheet),
+    Result actionSheet(AudioEntity audio),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -303,7 +303,7 @@ abstract class _$ActionSheetCopyWith<$Res> {
   factory _$ActionSheetCopyWith(
           _ActionSheet value, $Res Function(_ActionSheet) then) =
       __$ActionSheetCopyWithImpl<$Res>;
-  $Res call({AudioTileActionSheetEntity actionSheet});
+  $Res call({AudioEntity audio});
 }
 
 class __$ActionSheetCopyWithImpl<$Res>
@@ -318,25 +318,23 @@ class __$ActionSheetCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object actionSheet = freezed,
+    Object audio = freezed,
   }) {
     return _then(_ActionSheet(
-      actionSheet == freezed
-          ? _value.actionSheet
-          : actionSheet as AudioTileActionSheetEntity,
+      audio == freezed ? _value.audio : audio as AudioEntity,
     ));
   }
 }
 
 class _$_ActionSheet with DiagnosticableTreeMixin implements _ActionSheet {
-  const _$_ActionSheet(this.actionSheet) : assert(actionSheet != null);
+  const _$_ActionSheet(this.audio) : assert(audio != null);
 
   @override
-  final AudioTileActionSheetEntity actionSheet;
+  final AudioEntity audio;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AudioTileAction.actionSheet(actionSheet: $actionSheet)';
+    return 'AudioTileAction.actionSheet(audio: $audio)';
   }
 
   @override
@@ -344,21 +342,20 @@ class _$_ActionSheet with DiagnosticableTreeMixin implements _ActionSheet {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'AudioTileAction.actionSheet'))
-      ..add(DiagnosticsProperty('actionSheet', actionSheet));
+      ..add(DiagnosticsProperty('audio', audio));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _ActionSheet &&
-            (identical(other.actionSheet, actionSheet) ||
-                const DeepCollectionEquality()
-                    .equals(other.actionSheet, actionSheet)));
+            (identical(other.audio, audio) ||
+                const DeepCollectionEquality().equals(other.audio, audio)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(actionSheet);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(audio);
 
   @override
   _$ActionSheetCopyWith<_ActionSheet> get copyWith =>
@@ -369,12 +366,12 @@ class _$_ActionSheet with DiagnosticableTreeMixin implements _ActionSheet {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result notice(String message),
-    @required Result actionSheet(AudioTileActionSheetEntity actionSheet),
+    @required Result actionSheet(AudioEntity audio),
   }) {
     assert(initial != null);
     assert(notice != null);
     assert(actionSheet != null);
-    return actionSheet(this.actionSheet);
+    return actionSheet(audio);
   }
 
   @override
@@ -382,12 +379,12 @@ class _$_ActionSheet with DiagnosticableTreeMixin implements _ActionSheet {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result notice(String message),
-    Result actionSheet(AudioTileActionSheetEntity actionSheet),
+    Result actionSheet(AudioEntity audio),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (actionSheet != null) {
-      return actionSheet(this.actionSheet);
+      return actionSheet(audio);
     }
     return orElse();
   }
@@ -422,9 +419,8 @@ class _$_ActionSheet with DiagnosticableTreeMixin implements _ActionSheet {
 }
 
 abstract class _ActionSheet implements AudioTileAction {
-  const factory _ActionSheet(AudioTileActionSheetEntity actionSheet) =
-      _$_ActionSheet;
+  const factory _ActionSheet(AudioEntity audio) = _$_ActionSheet;
 
-  AudioTileActionSheetEntity get actionSheet;
+  AudioEntity get audio;
   _$ActionSheetCopyWith<_ActionSheet> get copyWith;
 }
