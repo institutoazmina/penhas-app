@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -6,10 +5,11 @@ import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
+import 'package:penhas/app/features/help_center/domain/entities/audio_play_tile_entity.dart';
 import 'package:penhas/app/features/help_center/domain/states/audios_state.dart';
+import 'package:penhas/app/features/help_center/presentation/pages/audio/audio_play_widget.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/guardian_error_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 import 'audios_controller.dart';
 
@@ -51,6 +51,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
   @override
   void dispose() {
     _disposers.forEach((d) => d());
+    controller.dispose();
     super.dispose();
   }
 
@@ -85,7 +86,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
     );
   }
 
-  Widget _buildInputScreen(List<AudioEntity> tiles) {
+  Widget _buildInputScreen(List<AudioPlayTileEntity> tiles) {
     return Container(
       color: Colors.white,
       child: Padding(
@@ -96,83 +97,9 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
           child: ListView.builder(
               itemCount: tiles.length,
               itemBuilder: (context, index) {
-                return _buildAudioPlayer(tiles[index], (index + 1));
+                return AudioPlayWidget(audioPlay: tiles[index]);
               }),
         ),
-      ),
-    );
-  }
-
-  Widget _buildAudioPlayer(AudioEntity audio, int index) {
-    print(audio.path.toString());
-    return Container(
-      height: 80,
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: Colors.grey[350]),
-        ),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  IconButton(
-                      icon: Icon(
-                        Icons.play_circle_filled,
-                        size: 40,
-                      ),
-                      onPressed: () => controller.requestAudio(audio)),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 2.0),
-                    child: Text(
-                      audio.audioDuration,
-                      style: kTextStyleAudioDuration,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 4,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                          flex: 2,
-                          child: Text("Gravação $index",
-                              style: kTextStyleAudioTitle)),
-                      Expanded(
-                        child: Text(
-                          DateFormat.yMd('pt_BR').format(audio.createdAt),
-                          style: kTextStyleAudioTime,
-                          textAlign: TextAlign.right,
-                        ),
-                      )
-                    ],
-                  ),
-                  Text('Download requisitado, aguardando autorização',
-                      style: kTextStyleAudioDescription),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-              child: SizedBox(
-                  height: 44,
-                  width: 44,
-                  child:
-                      IconButton(icon: Icon(Icons.more_vert), onPressed: null)))
-        ],
       ),
     );
   }

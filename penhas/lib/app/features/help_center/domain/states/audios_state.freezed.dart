@@ -18,7 +18,7 @@ class _$AudiosStateTearOff {
   }
 
 // ignore: unused_element
-  _Loaded loaded(List<AudioEntity> audios) {
+  _Loaded loaded(List<AudioPlayTileEntity> audios) {
     return _Loaded(
       audios,
     );
@@ -39,13 +39,13 @@ mixin _$AudiosState {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(List<AudioEntity> audios),
+    @required Result loaded(List<AudioPlayTileEntity> audios),
     @required Result error(String message),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(List<AudioEntity> audios),
+    Result loaded(List<AudioPlayTileEntity> audios),
     Result error(String message),
     @required Result orElse(),
   });
@@ -118,7 +118,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(List<AudioEntity> audios),
+    @required Result loaded(List<AudioPlayTileEntity> audios),
     @required Result error(String message),
   }) {
     assert(initial != null);
@@ -131,7 +131,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(List<AudioEntity> audios),
+    Result loaded(List<AudioPlayTileEntity> audios),
     Result error(String message),
     @required Result orElse(),
   }) {
@@ -178,7 +178,7 @@ abstract class _Initial implements AudiosState {
 abstract class _$LoadedCopyWith<$Res> {
   factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
       __$LoadedCopyWithImpl<$Res>;
-  $Res call({List<AudioEntity> audios});
+  $Res call({List<AudioPlayTileEntity> audios});
 }
 
 class __$LoadedCopyWithImpl<$Res> extends _$AudiosStateCopyWithImpl<$Res>
@@ -194,7 +194,7 @@ class __$LoadedCopyWithImpl<$Res> extends _$AudiosStateCopyWithImpl<$Res>
     Object audios = freezed,
   }) {
     return _then(_Loaded(
-      audios == freezed ? _value.audios : audios as List<AudioEntity>,
+      audios == freezed ? _value.audios : audios as List<AudioPlayTileEntity>,
     ));
   }
 }
@@ -203,7 +203,7 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   const _$_Loaded(this.audios) : assert(audios != null);
 
   @override
-  final List<AudioEntity> audios;
+  final List<AudioPlayTileEntity> audios;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -238,7 +238,7 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(List<AudioEntity> audios),
+    @required Result loaded(List<AudioPlayTileEntity> audios),
     @required Result error(String message),
   }) {
     assert(initial != null);
@@ -251,7 +251,7 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(List<AudioEntity> audios),
+    Result loaded(List<AudioPlayTileEntity> audios),
     Result error(String message),
     @required Result orElse(),
   }) {
@@ -292,9 +292,9 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 }
 
 abstract class _Loaded implements AudiosState {
-  const factory _Loaded(List<AudioEntity> audios) = _$_Loaded;
+  const factory _Loaded(List<AudioPlayTileEntity> audios) = _$_Loaded;
 
-  List<AudioEntity> get audios;
+  List<AudioPlayTileEntity> get audios;
   _$LoadedCopyWith<_Loaded> get copyWith;
 }
 
@@ -363,7 +363,7 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(List<AudioEntity> audios),
+    @required Result loaded(List<AudioPlayTileEntity> audios),
     @required Result error(String message),
   }) {
     assert(initial != null);
@@ -376,7 +376,7 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(List<AudioEntity> audios),
+    Result loaded(List<AudioPlayTileEntity> audios),
     Result error(String message),
     @required Result orElse(),
   }) {

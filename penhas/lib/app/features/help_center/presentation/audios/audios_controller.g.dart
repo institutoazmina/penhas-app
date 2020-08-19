@@ -87,6 +87,21 @@ mixin _$AudiosController on _AudiosControllerBase, Store {
     });
   }
 
+  final _$actionStateAtom = Atom(name: '_AudiosControllerBase.actionState');
+
+  @override
+  AudiosState get actionState {
+    _$actionStateAtom.reportRead();
+    return super.actionState;
+  }
+
+  @override
+  set actionState(AudiosState value) {
+    _$actionStateAtom.reportWrite(value, super.actionState, () {
+      super.actionState = value;
+    });
+  }
+
   final _$loadPageAsyncAction = AsyncAction('_AudiosControllerBase.loadPage');
 
   @override
@@ -94,19 +109,12 @@ mixin _$AudiosController on _AudiosControllerBase, Store {
     return _$loadPageAsyncAction.run(() => super.loadPage());
   }
 
-  final _$requestAudioAsyncAction =
-      AsyncAction('_AudiosControllerBase.requestAudio');
-
-  @override
-  Future<void> requestAudio(AudioEntity audio) {
-    return _$requestAudioAsyncAction.run(() => super.requestAudio(audio));
-  }
-
   @override
   String toString() {
     return '''
 errorMessage: ${errorMessage},
 currentState: ${currentState},
+actionState: ${actionState},
 loadState: ${loadState},
 updateState: ${updateState}
     ''';

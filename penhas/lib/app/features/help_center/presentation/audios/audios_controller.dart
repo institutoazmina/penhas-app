@@ -1,11 +1,7 @@
-import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/audio_play_services.dart';
@@ -13,15 +9,16 @@ import 'package:penhas/app/features/authentication/presentation/shared/map_failu
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/help_center/data/repositories/audios_repository.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
+import 'package:penhas/app/features/help_center/domain/entities/audio_play_tile_entity.dart';
 import 'package:penhas/app/features/help_center/domain/states/audios_state.dart';
 
 part 'audios_controller.g.dart';
 
 class AudiosController extends _AudiosControllerBase with _$AudiosController {
-  AudiosController(
-      {@required IAudiosRepository audiosRepository,
-      @required IAudioPlayServices audioPlayServices})
-      : super(audiosRepository, audioPlayServices);
+  AudiosController({
+    @required IAudiosRepository audiosRepository,
+    @required IAudioPlayServices audioPlayServices,
+  }) : super(audiosRepository, audioPlayServices);
 }
 
 abstract class _AudiosControllerBase with Store, MapFailureMessage {
@@ -41,6 +38,9 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
 
   @observable
   AudiosState currentState = AudiosState.initial();
+
+  @observable
+  AudiosState actionState = AudiosState.initial();
 
   @computed
   PageProgressState get loadState {
@@ -79,95 +79,95 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
     );
   }
 
-  @action
-  Future<void> requestAudio(AudioEntity audio) async {
-    setErrorMessage('');
-
-    // _updateProgress =
-    // ObservableFuture(_audioPlayer.start(audio));
-    _audioPlayer.start(audio);
-
-    // final response = await _updateProgress;
-    // response.fold(
-    //   (failure) => handleLoadPageError(failure),
-    //   (session) => handleAudioSession(audio, file),
-    // );
+  void dispose() {
+    _audioPlayer.dispose();
   }
-
-  // Future<void> _onEditPressed(
-  //   GuardianContactEntity contact,
-  //   String name,
-  // ) async {
-  //   _setErrorMessage('');
-  //   if (contact == null || name == null) {
-  //     return;
-  //   }
-
-  //   final newContact = contact.copyWith(name: name);
-
-  //   _updateProgress = ObservableFuture(_guardianRepository.update(newContact));
-  //   final response = await _updateProgress;
-
-  //   response.fold(
-  //     (failure) => _setErrorMessage(mapFailureMessage(failure)),
-  //     (session) async => loadPage(),
-  //   );
-  // }
-
-  // Future<void> _onDeletePressed(GuardianContactEntity contact) async {
-  //   _setErrorMessage('');
-  //   if (contact == null) return;
-
-  //   _updateProgress = ObservableFuture(_guardianRepository.delete(contact));
-  //   final response = await _updateProgress;
-
-  //   response.fold(
-  //     (failure) => _setErrorMessage(mapFailureMessage(failure)),
-  //     (session) async => loadPage(),
-  //   );
-  // }
-
-  // Future<void> _onResendPressed(GuardianContactEntity contact) async {
-  //   _setErrorMessage('');
-  //   if (contact == null) return;
-
-  //   _updateProgress = ObservableFuture(_guardianRepository.create(contact));
-  //   final response = await _updateProgress;
-
-  //   response.fold(
-  //     (failure) => _setErrorMessage(mapFailureMessage(failure)),
-  //     (session) async => loadPage(),
-  //   );
-  // }
-
-  // Future<void> _onRegisterGuadian() async {
-  //   Modular.to.pushNamed('/mainboard/helpcenter/newGuardian').then(
-  //     (value) {
-  //       // Se o new_guardian inserir um usuário, aparecerá um popup
-  //       // com uma mensagem. Ao selecionar o 'Fechar' retornará
-  //       // um boolean == true, que vou utilizar aqui para fazer
-  //       // reload da pagina
-  //       if (value != null && value is bool && value == true) {
-  //         loadPage();
-  //       }
-  //     },
-  //   );
-  // }
 }
 
 extension _AudiosControllerBasePrivate on _AudiosControllerBase {
   void setErrorMessage(String message) => errorMessage = message;
 
   void handleLoadSession(List<AudioEntity> session) {
-    currentState = AudiosState.loaded(session);
-  }
-
-  void handleAudioSession(AudioEntity audio, File file) {
-    // playAudio = AudiosState.play(audio, file);
+    final audios = session.map((e) => buildTile(e)).toList();
+    currentState = AudiosState.loaded(audios);
   }
 
   void handleLoadPageError(Failure failure) {
     final message = mapFailureMessage(failure);
     currentState = AudiosState.error(message);
   }
+
+  Future<void> requestAudio(AudioEntity audio) async {
+    setErrorMessage('');
+
+    bool isRequestRequired = !audio.canPlay && !audio.isRequested;
+    if (isRequestRequired) {
+      _updateProgress =
+          ObservableFuture(_audiosRepository.requestAccess(audio));
+    }
+
+    if (audio.canPlay) {
+      _updateProgress = ObservableFuture(_audioPlayer.start(audio));
+    }
+
+    final response = await _updateProgress;
+    response.fold(
+      (failure) => handleLoadPageError(failure),
+      (session) => handleRequestAudio(audio),
+    );
+  }
+
+  void handleRequestAudio(AudioEntity audio) {}
+
+  AudioPlayTileEntity buildTile(AudioEntity audio) {
+    String description = "";
+    bool requireRequestDownloadAudio =
+        (!audio.canPlay && !audio.isRequested && !audio.isRequestGranted);
+    bool requestGrantedAndCanPlay =
+        (audio.canPlay && audio.isRequested && audio.isRequestGranted);
+    bool waitingAutorization =
+        (!audio.canPlay && audio.isRequested && !audio.isRequestGranted);
+
+    if (requireRequestDownloadAudio) {
+      description = 'Toque no botão de play para solicitar o audio';
+    } else if (requestGrantedAndCanPlay) {
+      description = 'Audio liberado, toque no play para ouvir';
+    } else if (waitingAutorization) {
+      description = 'Aguardando autorização para realizar o download do audio';
+    } else if (audio.canPlay) {
+      description = 'Toque no botão de play para inicar o audio';
+    }
+
+    return AudioPlayTileEntity(
+      audio: audio,
+      description: description,
+      playAudio: (audio) async => requestAudio(audio),
+      action: (audio) => print('ola mundo cruel'),
+    );
+  }
 }
+
+/*
+
+então, basicamente, tem 4 states:
+1 0 0 - can download, not asked, therefore not granted 
+        -- gera a url pra baixar, status é o tempo
+
+0 1 0 - cannot download, asked, still not granted 
+        -- nao pode baixar, mas já pediu, status é o 'aguardando bla bla'
+
+
+0 0 0 - cannot download, not asked, therefore not granted 
+        -- nao pode baixar, pois nunca pediu, status é 'toque aqui para requisitar audio'
+1 1 1 - can download, already asked, already granted 
+        -- pode baixar, pq já foi liberado, acho que pode usar o mesmo status do anterior, mas o ideial seria avisar que o audio está liberado
+
+        "download_granted": 1,
+        "request_granted": 0,
+        "requested_by_user": 0
+
+1	00000001	0x1
+2	00000010	0x2
+4	00000100	0x4
+
+*/
