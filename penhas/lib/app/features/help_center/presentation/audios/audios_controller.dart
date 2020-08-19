@@ -10,6 +10,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/help_center/data/repositories/audios_repository.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_play_tile_entity.dart';
+import 'package:penhas/app/features/help_center/domain/states/audio_tile_action.dart';
 import 'package:penhas/app/features/help_center/domain/states/audios_state.dart';
 
 part 'audios_controller.g.dart';
@@ -40,7 +41,7 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
   AudiosState currentState = AudiosState.initial();
 
   @observable
-  AudiosState actionState = AudiosState.initial();
+  AudioTileAction actionSheetState = AudioTileAction.initial();
 
   @computed
   PageProgressState get loadState {
@@ -112,12 +113,10 @@ extension _AudiosControllerBasePrivate on _AudiosControllerBase {
 
     final response = await _updateProgress;
     response.fold(
-      (failure) => handleLoadPageError(failure),
-      (session) => handleRequestAudio(audio),
+      (failure) => setErrorMessage(mapFailureMessage(failure)),
+      (session) => actionSheetState = AudioTileAction.notice(session.message),
     );
   }
-
-  void handleRequestAudio(AudioEntity audio) {}
 
   AudioPlayTileEntity buildTile(AudioEntity audio) {
     String description = "";
@@ -141,33 +140,8 @@ extension _AudiosControllerBasePrivate on _AudiosControllerBase {
     return AudioPlayTileEntity(
       audio: audio,
       description: description,
-      playAudio: (audio) async => requestAudio(audio),
-      action: (audio) => print('ola mundo cruel'),
+      onPlayAudio: (audio) async => requestAudio(audio),
+      onActionSheet: (audio) => print('ola mundo cruel'),
     );
   }
 }
-
-/*
-
-então, basicamente, tem 4 states:
-1 0 0 - can download, not asked, therefore not granted 
-        -- gera a url pra baixar, status é o tempo
-
-0 1 0 - cannot download, asked, still not granted 
-        -- nao pode baixar, mas já pediu, status é o 'aguardando bla bla'
-
-
-0 0 0 - cannot download, not asked, therefore not granted 
-        -- nao pode baixar, pois nunca pediu, status é 'toque aqui para requisitar audio'
-1 1 1 - can download, already asked, already granted 
-        -- pode baixar, pq já foi liberado, acho que pode usar o mesmo status do anterior, mas o ideial seria avisar que o audio está liberado
-
-        "download_granted": 1,
-        "request_granted": 0,
-        "requested_by_user": 0
-
-1	00000001	0x1
-2	00000010	0x2
-4	00000100	0x4
-
-*/

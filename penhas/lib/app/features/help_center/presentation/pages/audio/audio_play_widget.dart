@@ -30,7 +30,7 @@ class AudioPlayWidget extends StatelessWidget {
                         Icons.play_circle_filled,
                         size: 40,
                       ),
-                      onPressed: () => audioPlay.playAudio(audioPlay.audio)),
+                      onPressed: () => audioPlay.onPlayAudio(audioPlay.audio)),
                   Padding(
                     padding: const EdgeInsets.only(top: 2.0),
                     child: Text(
@@ -73,7 +73,7 @@ class AudioPlayWidget extends StatelessWidget {
               width: 44,
               child: IconButton(
                 icon: Icon(Icons.more_vert),
-                onPressed: () => audioPlay.action(audioPlay.audio),
+                onPressed: () => audioPlay.onActionSheet(audioPlay.audio),
               ),
             ),
           )

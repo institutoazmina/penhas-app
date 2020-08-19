@@ -6,10 +6,12 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_play_tile_entity.dart';
+import 'package:penhas/app/features/help_center/domain/states/audio_tile_action.dart';
 import 'package:penhas/app/features/help_center/domain/states/audios_state.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/audio/audio_play_widget.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/guardian_error_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
+import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 import 'audios_controller.dart';
 
@@ -45,6 +47,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
       _showErrorMessage(),
       _showLoadProgress(),
       _showUpdateProgress(),
+      _showActionSheet(),
     ];
   }
 
@@ -126,5 +129,42 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
         _loadState = status;
       });
     });
+  }
+
+  ReactionDisposer _showActionSheet() {
+    return reaction((_) => controller.actionSheetState,
+        (AudioTileAction actionSheetState) {
+      actionSheetState.when(
+        initial: () {},
+        notice: (message) => _showActionNotice(message),
+        actionSheet: (action) {},
+      );
+    });
+  }
+
+  void _showActionNotice(String message) {
+    if (message == null || message.isEmpty) return;
+
+    Modular.to.showDialog(
+      child: AlertDialog(
+        title: Text('Informação', style: kTextStyleAlertDialogTitle),
+        content: Text(
+          message,
+          style: kTextStyleAlertDialogDescription,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Ok'),
+            onPressed: () {
+              Modular.to.pop();
+            },
+          )
+        ],
+      ),
+      barrierDismissible: true,
+    );
   }
 }
