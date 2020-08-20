@@ -1,7 +1,7 @@
 import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
 
 class AudioModel {
-  static List<AudioEntity> fromJson(Map<String, Object> json, Uri baseUri) {
+  static List<AudioEntity> fromJson(Map<String, Object> json) {
     if (json == null || json.isEmpty || json['rows'] == null) {
       return List<AudioEntity>();
     }
@@ -9,13 +9,13 @@ class AudioModel {
     final rows = json['rows'] as List<Object>;
     return rows
         .map((e) => e as Map<String, Object>)
-        .map((e) => _AudioModelParseData.parseEntity(e, baseUri))
+        .map((e) => _AudioModelParseData.parseEntity(e))
         .toList();
   }
 }
 
 class _AudioModelParseData {
-  static AudioEntity parseEntity(Map<String, Object> json, Uri baseUri) {
+  static AudioEntity parseEntity(Map<String, Object> json) {
     final meta = json['meta'] as Map<String, Object>;
     final data = json['data'] as Map<String, Object>;
 
@@ -29,19 +29,9 @@ class _AudioModelParseData {
     final createdAt =
         _AudioModelParseData.parseDate(data['last_cliente_created_at']);
 
-    Uri audioUri;
-    if (canPlay) {
-      List<String> endPointList = baseUri.path.split('/');
-      endPointList.retainWhere((e) => e.isNotEmpty);
-      endPointList.addAll([id, 'download']);
-      final endPointPath = endPointList.join('/');
-      audioUri = baseUri.replace(path: endPointPath);
-    }
-
     return AudioEntity(
       id: id,
       audioDuration: data['audio_duration'],
-      path: audioUri,
       createdAt: createdAt,
       canPlay: canPlay,
       isRequested: isRequested,

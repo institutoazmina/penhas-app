@@ -232,7 +232,6 @@ class MainboardModule extends ChildModule {
         Bind(
           (i) => AudiosRepository(
             apiProvider: i.get<IApiProvider>(),
-            serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
         Bind<IGuardianRepository>(

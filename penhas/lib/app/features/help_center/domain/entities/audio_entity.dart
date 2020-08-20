@@ -6,7 +6,6 @@ class AudioEntity extends Equatable {
   final String id;
   final String audioDuration;
   final DateTime createdAt;
-  final Uri path;
   final bool canPlay;
   final bool isRequested;
   final bool isRequestGranted;
@@ -14,7 +13,6 @@ class AudioEntity extends Equatable {
   AudioEntity({
     @required this.id,
     @required this.audioDuration,
-    @required this.path,
     @required this.createdAt,
     @required this.canPlay,
     @required this.isRequested,
@@ -26,7 +24,6 @@ class AudioEntity extends Equatable {
         id,
         audioDuration,
         createdAt,
-        path,
         canPlay,
         isRequested,
         isRequestGranted,
