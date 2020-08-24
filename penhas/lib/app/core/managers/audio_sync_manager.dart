@@ -16,7 +16,7 @@ abstract class IAudioSyncManager {
     @required String sequence,
     String suffix,
   });
-  Future<bool> syncAudio(String path);
+  Future<bool> syncAudio();
   Future<Either<Failure, File>> cache(AudioEntity audio);
 }
 
@@ -58,13 +58,9 @@ class AudioSyncManager implements IAudioSyncManager {
   }
 
   @override
-  Future<bool> syncAudio(String path) async {
+  Future<bool> syncAudio() async {
     try {
-      final file = File(path);
-
-      if (file == null || file.existsSync() == false) return false;
-      _pendingUploadAudio.addLast(file);
-
+      await loadAudioQueue();
       setupUploadTimer();
       syncAudios();
 
@@ -118,7 +114,9 @@ extension _AudioSyncManager on AudioSyncManager {
 
     _syncTimer = Timer.periodic(
       Duration(seconds: 10),
-      (timer) {
+      (timer) async {
+        await loadAudioQueue();
+
         if (_pendingUploadAudio?.isEmpty ?? true) {
           timer.cancel();
           _syncTimer.cancel();
@@ -219,10 +217,17 @@ extension _AudioSyncManager on AudioSyncManager {
   }
 
   Future<void> loadAudioQueue() async {
-    if (_pendingUploadAudio.isEmpty) {
-      final dirs = await dirAudioUploadContent();
-      _pendingUploadAudio.addAll(dirs);
-    }
+    final dirs = await dirAudioUploadContent();
+    dirs.forEach((file) {
+      var foo = _pendingUploadAudio.firstWhere(
+        (e) => e.path == file.path,
+        orElse: () => null,
+      );
+
+      if (foo == null) {
+        _pendingUploadAudio.add(file);
+      }
+    });
 
     return Future.value();
   }

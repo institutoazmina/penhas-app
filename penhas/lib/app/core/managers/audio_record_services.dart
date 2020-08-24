@@ -41,8 +41,6 @@ class AudioRecordServices implements IAudioRecordServices {
   StreamController<AudioActivity> _streamController =
       StreamController.broadcast();
 
-  String _recordingFile;
-
   AudioRecordServices({@required IAudioSyncManager audioSyncManager})
       : this._audioSyncManager = audioSyncManager;
 
@@ -63,9 +61,8 @@ class AudioRecordServices implements IAudioRecordServices {
 
   @override
   Future<void> rotate() {
-    final currentAudioFile = _recordingFile;
     return _setupRecordEnviroment().then(
-      (_) => _audioSyncManager.syncAudio(currentAudioFile),
+      (_) => _audioSyncManager.syncAudio(),
     );
   }
 
@@ -73,6 +70,8 @@ class AudioRecordServices implements IAudioRecordServices {
   void dispose() {
     _cancelRecorderSubscriptions();
     _releaseAudioSession();
+    _audioSyncManager.syncAudio();
+
     try {
       if (_streamController != null) {
         _streamController.close();
@@ -154,7 +153,6 @@ extension _AudioRecordServices on AudioRecordServices {
         .audioFile(
             session: _currentAudionSession,
             sequence: _sessionSequence.toString())
-        .then((path) => _recordingFile = path)
         .then((file) => _startRecorder(file));
   }
 
