@@ -24,6 +24,7 @@ abstract class IAudioRecordServices {
   Future<AudioPermissionState> permissionStatus();
   Future<void> start();
   Future<void> rotate();
+  Future<void> stop();
   Stream<AudioActivity> get onProgress;
   void dispose();
 }
@@ -57,6 +58,13 @@ class AudioRecordServices implements IAudioRecordServices {
           granted: () async => _setupRecordEnviroment(),
           orElse: () => requestPermission()),
     );
+  }
+
+  @override
+  Future<void> stop() async {
+    await _recorder
+        .stopRecorder()
+        .then((value) => _audioSyncManager.syncAudio());
   }
 
   @override

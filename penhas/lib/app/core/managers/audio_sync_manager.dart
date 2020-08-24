@@ -219,12 +219,12 @@ extension _AudioSyncManager on AudioSyncManager {
   Future<void> loadAudioQueue() async {
     final dirs = await dirAudioUploadContent();
     dirs.forEach((file) {
-      var foo = _pendingUploadAudio.firstWhere(
+      var status = _pendingUploadAudio.firstWhere(
         (e) => e.path == file.path,
         orElse: () => null,
       );
 
-      if (foo == null) {
+      if (status == null) {
         _pendingUploadAudio.add(file);
       }
     });

@@ -50,6 +50,7 @@ abstract class _AudioRecordController with Store, MapFailureMessage {
   void dispose() {
     _recording = false;
     _rotateAudioTimer?.cancel();
+    _audioServices.stop();
     _audioServices.dispose();
   }
 

@@ -140,7 +140,7 @@ extension _AudiosControllerBasePrivate on _AudiosControllerBase {
         (!audio.canPlay && audio.isRequested && !audio.isRequestGranted);
 
     if (requireRequestDownloadAudio) {
-      description = 'Toque no botão de play para solicitar o audio';
+      description = 'Toque no ícone para solicitar o audio';
     } else if (requestGrantedAndCanPlay) {
       description = 'Audio liberado, toque no play para ouvir';
     } else if (waitingAutorization) {
