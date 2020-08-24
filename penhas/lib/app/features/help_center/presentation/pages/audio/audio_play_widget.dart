@@ -26,10 +26,7 @@ class AudioPlayWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   IconButton(
-                      icon: Icon(
-                        Icons.play_circle_filled,
-                        size: 40,
-                      ),
+                      icon: _buildPlayIcone,
                       onPressed: () => audioPlay.onPlayAudio(audioPlay.audio)),
                   Padding(
                     padding: const EdgeInsets.only(top: 2.0),
@@ -80,5 +77,11 @@ class AudioPlayWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget get _buildPlayIcone {
+    return audioPlay.audio.canPlay
+        ? Icon(Icons.play_circle_filled, size: 36)
+        : Icon(Icons.save_alt, size: 26);
   }
 }

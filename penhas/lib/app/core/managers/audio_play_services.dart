@@ -1,14 +1,17 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:meta/meta.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
+import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
 
 import 'audio_sync_manager.dart';
 
 abstract class IAudioPlayServices {
-  Future<void> start(AudioEntity audio);
+  Future<Either<Failure, ValidField>> start(AudioEntity audio);
   void dispose();
 }
 
@@ -23,7 +26,7 @@ class AudioPlayServices implements IAudioPlayServices {
       : this._audioSyncManager = audioSyncManager;
 
   @override
-  Future<void> start(AudioEntity audio) async {
+  Future<Either<Failure, ValidField>> start(AudioEntity audio) async {
     final foo = await _audioSyncManager.cache(audio);
     foo.fold((l) {}, (file) => play(file));
   }
