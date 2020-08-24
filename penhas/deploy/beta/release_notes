@@ -1,3 +1,10 @@
-* Versão : 1.0.10+1
+* Versão : 1.0.11
 * Novidades
-  - Ligar para a polícia
+  - Gravação de audio
+    . servidor informa o tempo máximo de gravação
+    . servidor informa o tempo máximo de captura antes de enviar para o servidor
+    . fluxo de sincronização para enviar os audios temporariamente armazenado local enquanto aguarda a confirmação de sincronizado com o servidor
+
+  - Minhas gravações
+    . solicitar um audio que está no servidor
+    . play do audio
