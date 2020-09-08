@@ -139,32 +139,22 @@ class QuizMessageMultiplechoicesOptions extends Equatable {
 
 @immutable
 class AppStateModeEntity extends Equatable {
-  final bool stealthModeEnabled;
   final bool hasActivedGuardian;
-  final bool anonymousModeEnabled;
 
   AppStateModeEntity({
-    @required this.stealthModeEnabled,
     @required this.hasActivedGuardian,
-    @required this.anonymousModeEnabled,
   });
 
   @override
-  String toString() {
-    return 'AppStateModeEntity(stealthModeEnabled: ${stealthModeEnabled.toString()}, hasActivedGuardian: ${hasActivedGuardian.toString()}, anonymousModeEnabled: ${anonymousModeEnabled.toString()})';
-  }
+  bool get stringify => true;
 
   @override
   List<Object> get props => [
-        stealthModeEnabled,
         hasActivedGuardian,
-        anonymousModeEnabled,
       ];
 
   Map<String, Object> toJson() => {
         'hasActivedGuardian': hasActivedGuardian,
-        'stealthModeEnabled': stealthModeEnabled,
-        'anonymousModeEnabled': anonymousModeEnabled,
       };
 }
 

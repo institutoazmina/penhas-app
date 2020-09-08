@@ -9,7 +9,7 @@ import 'package:penhas/app/features/help_center/presentation/help_center_module.
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
-import 'package:penhas/app/shared/ui/penhas_drawer.dart';
+import 'package:penhas/app/features/main_menu/presentation/penhas_drawer.dart';
 import 'mainboard_controller.dart';
 
 class MainboardPage extends StatefulWidget {

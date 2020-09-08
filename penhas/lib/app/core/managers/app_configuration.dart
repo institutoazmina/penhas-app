@@ -69,9 +69,7 @@ class AppConfiguration implements IAppConfiguration {
 
   AppStateModeEntity _buildAppStateMode(Map<String, Object> data) {
     return AppStateModeEntity(
-      stealthModeEnabled: data['stealthModeEnabled'],
       hasActivedGuardian: data['hasActivedGuardian'],
-      anonymousModeEnabled: data['anonymousModeEnabled'],
     );
   }
 }

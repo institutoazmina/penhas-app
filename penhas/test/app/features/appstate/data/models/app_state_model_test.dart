@@ -25,9 +25,7 @@ void main() {
           endScreen: 'home',
           isFinished: false);
       final appMode = AppStateModeEntity(
-        anonymousModeEnabled: false,
         hasActivedGuardian: false,
-        stealthModeEnabled: false,
       );
       final modes = List<AppStateModuleEntity>();
       // act
@@ -167,9 +165,7 @@ void main() {
         isFinished: false,
       );
       final appMode = AppStateModeEntity(
-        anonymousModeEnabled: false,
         hasActivedGuardian: true,
-        stealthModeEnabled: false,
       );
       final modules = _currentModules();
 
@@ -199,9 +195,7 @@ void main() {
         isFinished: false,
       );
       final appMode = AppStateModeEntity(
-        anonymousModeEnabled: true,
         hasActivedGuardian: false,
-        stealthModeEnabled: false,
       );
       final modules = _currentModules();
 
@@ -231,9 +225,7 @@ void main() {
         isFinished: false,
       );
       final appMode = AppStateModeEntity(
-        anonymousModeEnabled: false,
         hasActivedGuardian: false,
-        stealthModeEnabled: true,
       );
       final modules = _currentModules();
       final AppStateEntity expected = AppStateModel(
@@ -261,9 +253,7 @@ void main() {
         isFinished: false,
       );
       final appMode = AppStateModeEntity(
-        anonymousModeEnabled: false,
         hasActivedGuardian: true,
-        stealthModeEnabled: false,
       );
       final modules = _currentModules();
       final AppStateEntity expected = AppStateModel(
@@ -291,9 +281,7 @@ void main() {
         isFinished: true,
       );
       final appMode = AppStateModeEntity(
-        anonymousModeEnabled: false,
         hasActivedGuardian: false,
-        stealthModeEnabled: false,
       );
       final modules = _currentModules();
       final AppStateEntity expected = AppStateModel(

@@ -26,9 +26,7 @@ class AppStateModel extends AppStateEntity {
     final hasActivedGuardian =
         ((jsonData['qtde_guardioes_ativos'] as num)?.toInt() ?? 0) > 0;
     final appMode = AppStateModeEntity(
-      stealthModeEnabled: jsonData['modo_camuflado_ativo'] == 1,
       hasActivedGuardian: hasActivedGuardian,
-      anonymousModeEnabled: jsonData['modo_anonimo_ativo'] == 1,
     );
 
     final quizSession = _parseQuizSession(jsonData['quiz_session']);

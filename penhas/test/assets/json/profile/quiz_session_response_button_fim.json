@@ -1,6 +1,4 @@
 {
-  "modo_anonimo_ativo": 0,
-  "modo_camuflado_ativo": 0,
   "qtde_guardioes_ativos": 0,
   "modules": [
     {
@@ -42,6 +40,8 @@
     "dt_nasc": "1980-03-03",
     "email": "email@valid.com",
     "genero": "Feminino",
+    "modo_anonimo_ativo": 0,
+    "modo_camuflado_ativo": 0,
     "minibio": null,
     "ja_foi_vitima_de_violencia": 0,
     "nome_completo": "Fulana da Silva",
