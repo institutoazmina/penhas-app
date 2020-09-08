@@ -12,6 +12,8 @@ void main() {
         avatar: null,
         nickname: null,
         email: null,
+        stealthModeEnabled: null,
+        anonymousModeEnabled: null,
       );
       // assert
       expect(profileModel, isA<UserProfileEntity>());
@@ -26,6 +28,8 @@ void main() {
         email: userProfileData['email'],
         nickname: userProfileData['apelido'],
         avatar: userProfileData['avatar_url'],
+        anonymousModeEnabled: userProfileData['modo_anonimo_ativo'] == 1,
+        stealthModeEnabled: userProfileData['modo_camuflado_ativo'] == 1,
       );
       // act
       final received = UserProfileModel.fromJson(userProfileData);
@@ -46,6 +50,8 @@ void main() {
         email: userProfileData['email'],
         nickname: userProfileData['apelido'],
         avatar: userProfileData['avatar_url'],
+        anonymousModeEnabled: userProfileData['modo_anonimo_ativo'] == 1,
+        stealthModeEnabled: userProfileData['modo_camuflado_ativo'] == 1,
       );
       // act
       final received = userModel.toJson();

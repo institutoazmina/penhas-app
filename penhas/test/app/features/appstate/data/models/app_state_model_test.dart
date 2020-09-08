@@ -13,6 +13,8 @@ void main() {
       nickname: 'maria',
       email: 'email@valid.com',
       avatar: 'https://api.com/avatar/padrao.svg',
+      anonymousModeEnabled: false,
+      stealthModeEnabled: false,
     );
   });
 
@@ -198,7 +200,13 @@ void main() {
         hasActivedGuardian: false,
       );
       final modules = _currentModules();
-
+      final userProfile = UserProfileModel(
+        nickname: 'maria',
+        email: 'email@valid.com',
+        avatar: 'https://api.com/avatar/padrao.svg',
+        anonymousModeEnabled: true,
+        stealthModeEnabled: false,
+      );
       final AppStateEntity expected = AppStateModel(
         quizSession,
         userProfile,
@@ -228,6 +236,13 @@ void main() {
         hasActivedGuardian: false,
       );
       final modules = _currentModules();
+      final userProfile = UserProfileModel(
+        nickname: 'maria',
+        email: 'email@valid.com',
+        avatar: 'https://api.com/avatar/padrao.svg',
+        anonymousModeEnabled: false,
+        stealthModeEnabled: true,
+      );
       final AppStateEntity expected = AppStateModel(
         quizSession,
         userProfile,

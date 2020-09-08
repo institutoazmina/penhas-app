@@ -31,6 +31,8 @@ class UserProfileStore implements IUserProfileStore {
         email: null,
         nickname: null,
         avatar: null,
+        stealthModeEnabled: null,
+        anonymousModeEnabled: null,
       ),
     );
   }
@@ -41,6 +43,8 @@ class UserProfileStore implements IUserProfileStore {
       email: userProfile.email,
       nickname: userProfile.nickname,
       avatar: userProfile.avatar,
+      stealthModeEnabled: userProfile.stealthModeEnabled,
+      anonymousModeEnabled: userProfile.anonymousModeEnabled,
     )..toJson();
 
     final jsonString = json.encode(profileJson);
