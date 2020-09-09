@@ -6,7 +6,7 @@ import 'package:penhas/app/features/help_center/domain/entities/audio_record_dur
 
 class HelpCenterCallActionFeature {
   final IAppModulesServices _modulesServices;
-  final String _featureCode = 'modo_seguranca';
+  static String featureCode = 'modo_seguranca';
 
   Future<String> get callingNumber => _callingNumber();
   Future<AudioRecordDurationEntity> get audioDuration => _audioDuration();
@@ -16,7 +16,7 @@ class HelpCenterCallActionFeature {
 
   Future<String> _callingNumber() {
     return _modulesServices
-        .feature(name: _featureCode)
+        .feature(name: HelpCenterCallActionFeature.featureCode)
         .then((module) => jsonDecode(module.meta))
         .then((json) => json as Map<String, Object>)
         .then((json) => json['numero']);
@@ -24,7 +24,7 @@ class HelpCenterCallActionFeature {
 
   Future<AudioRecordDurationEntity> _audioDuration() {
     return _modulesServices
-        .feature(name: _featureCode)
+        .feature(name: HelpCenterCallActionFeature.featureCode)
         .then((module) => jsonDecode(module.meta))
         .then((json) => json as Map<String, Object>)
         .then((json) => _mapAudioDuration(json));
