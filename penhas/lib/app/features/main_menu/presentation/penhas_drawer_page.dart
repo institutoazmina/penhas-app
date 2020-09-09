@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:penhas/app/features/main_menu/presentation/pages/penhas_drawer_header_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_controller.dart';
@@ -30,7 +32,14 @@ class _PenhasDrawerPageState
           color: Colors.white,
           child: ListView(
             children: <Widget>[
-              _builderHeader(),
+              Observer(
+                builder: (_) {
+                  return PenhasDrawerHeaderPage(
+                    userName: controller.userName,
+                    userAvatar: _buildAvatar(controller.userAvatar),
+                  );
+                },
+              ),
               _buildAnonymousMode(),
               _buildStealthMode(),
               _buildItemList(
@@ -76,6 +85,18 @@ class _PenhasDrawerPageState
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildAvatar(String avatarPath) {
+    if (avatarPath == null || avatarPath.isEmpty) {
+      return Container();
+    }
+
+    return SvgPicture.network(
+      avatarPath,
+      color: DesignSystemColors.darkIndigo,
+      height: 36,
     );
   }
 
@@ -144,36 +165,6 @@ class _PenhasDrawerPageState
 
   Widget _builderHeader() {
     return Container();
-    //   return Container(
-    //     padding: EdgeInsets.only(left: 16.0),
-    //     height: 100,
-    //     child: Row(
-    //       children: <Widget>[
-    //         CircleAvatar(
-    //           backgroundColor: drawerGrey,
-    //           radius: 25,
-    //           child: _userAvatar,
-    //         ),
-    //         SizedBox(width: 9.0),
-    //         Text(
-    //           _userName,
-    //           style: kTextStyleDrawerUsername,
-    //         ),
-    //         SizedBox(width: 9.0),
-    //         Container(
-    //           padding: EdgeInsets.fromLTRB(6.0, 4.0, 6.0, 4.0),
-    //           decoration: BoxDecoration(
-    //               color: Color.fromRGBO(234, 234, 234, 1),
-    //               borderRadius: BorderRadius.only(
-    //                 topLeft: Radius.circular(6.0),
-    //                 bottomLeft: Radius.circular(6.0),
-    //                 bottomRight: Radius.circular(6.0),
-    //               )),
-    //           child: Text('Você', style: kTextStyleDrawerUserNameTag),
-    //         ),
-    //       ],
-    //     ),
-    //   );
   }
 }
 

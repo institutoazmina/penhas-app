@@ -9,8 +9,60 @@ part of 'penhas_drawer_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$PenhasDrawerController on _PenhasDrawerControllerBase, Store {
+  final _$userNameAtom = Atom(name: '_PenhasDrawerControllerBase.userName');
+
+  @override
+  String get userName {
+    _$userNameAtom.reportRead();
+    return super.userName;
+  }
+
+  @override
+  set userName(String value) {
+    _$userNameAtom.reportWrite(value, super.userName, () {
+      super.userName = value;
+    });
+  }
+
+  final _$userAvatarAtom = Atom(name: '_PenhasDrawerControllerBase.userAvatar');
+
+  @override
+  String get userAvatar {
+    _$userAvatarAtom.reportRead();
+    return super.userAvatar;
+  }
+
+  @override
+  set userAvatar(String value) {
+    _$userAvatarAtom.reportWrite(value, super.userAvatar, () {
+      super.userAvatar = value;
+    });
+  }
+
   final _$_PenhasDrawerControllerBaseActionController =
       ActionController(name: '_PenhasDrawerControllerBase');
+
+  @override
+  void toggleStealthMode() {
+    final _$actionInfo = _$_PenhasDrawerControllerBaseActionController
+        .startAction(name: '_PenhasDrawerControllerBase.toggleStealthMode');
+    try {
+      return super.toggleStealthMode();
+    } finally {
+      _$_PenhasDrawerControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void toggleAnymousMode() {
+    final _$actionInfo = _$_PenhasDrawerControllerBaseActionController
+        .startAction(name: '_PenhasDrawerControllerBase.toggleAnymousMode');
+    try {
+      return super.toggleAnymousMode();
+    } finally {
+      _$_PenhasDrawerControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void logoutPressed() {
@@ -26,7 +78,8 @@ mixin _$PenhasDrawerController on _PenhasDrawerControllerBase, Store {
   @override
   String toString() {
     return '''
-
+userName: ${userName},
+userAvatar: ${userAvatar}
     ''';
   }
 }

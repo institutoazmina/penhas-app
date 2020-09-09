@@ -31,7 +31,25 @@ class UserProfile {
     return _repository.anonymousMode(toggle: false);
   }
 
+  Future<String> userName() async {
+    return _userProfileStore
+        .retreive()
+        .then((v) => v.nickname)
+        .catchError(_handleError);
+  }
+
+  Future<String> userAvatar() async {
+    return _userProfileStore
+        .retreive()
+        .then((v) => v.avatar)
+        .catchError(_handleError);
+  }
+
   Future<void> logout() {
     return _userProfileStore.delete();
+  }
+
+  Future<String> _handleError(Object error) async {
+    return "";
   }
 }

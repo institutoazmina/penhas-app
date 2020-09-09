@@ -18,8 +18,8 @@ class AppModulesServices implements IAppModulesServices {
 
   @override
   Future<void> save(List<AppStateModuleEntity> modules) {
-    final foo = modules.map((e) => e.toJson()).toList();
-    final jsonString = jsonEncode(foo);
+    final data = modules.map((e) => e.toJson()).toList();
+    final jsonString = jsonEncode(data);
     return _storage.put(_appModuleKey, jsonString);
   }
 

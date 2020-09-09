@@ -4,6 +4,7 @@ import 'package:penhas/app/core/managers/audio_play_services.dart';
 import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/core/managers/audio_sync_manager.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
+import 'package:penhas/app/core/managers/modules_sevices.dart';
 import 'package:penhas/app/core/managers/user_profile_store.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
@@ -215,6 +216,7 @@ class MainboardModule extends ChildModule {
           (i) => PenhasDrawerController(
             appConfigure: i.get<IAppConfiguration>(),
             userProfile: i.get<UserProfile>(),
+            modulesServices: i.get<IAppModulesServices>(),
           ),
         ),
         Bind<UserProfile>(

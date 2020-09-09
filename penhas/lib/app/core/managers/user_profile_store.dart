@@ -56,32 +56,3 @@ class UserProfileStore implements IUserProfileStore {
     return _storage.delete(_profileKey);
   }
 }
-
-/*
-  Future<String> _getUserName() async {
-    if (_userProfileStore == null) {
-      return "";
-    }
-
-    return _userProfileStore
-        .retreive()
-        .then((v) => v.nickname)
-        .catchError(_handleError);
-  }
-
-  Future<String> _getUserAvatar() async {
-    if (_userProfileStore == null) {
-      return "";
-    }
-
-    return _userProfileStore
-        .retreive()
-        .then((v) => v.avatar)
-        .catchError(_handleError);
-  }
-
-    Future<String> _handleError(Object error) async {
-    return "";
-  }
-
-*/
