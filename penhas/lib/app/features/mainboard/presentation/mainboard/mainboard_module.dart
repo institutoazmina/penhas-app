@@ -4,7 +4,6 @@ import 'package:penhas/app/core/managers/audio_play_services.dart';
 import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/core/managers/audio_sync_manager.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
-import 'package:penhas/app/core/managers/user_profile_store.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
@@ -50,10 +49,8 @@ class MainboardModule extends ChildModule {
         Bind<MainboardStore>((i) => MainboardStore()),
         Bind(
           (i) => MainboardController(
-            appConfigure: i.get<IAppConfiguration>(),
-            mainboardStore: i.get<MainboardStore>(),
-            userProfileStore: i.get<IUserProfileStore>(),
-          ),
+              appConfigure: i.get<IAppConfiguration>(),
+              mainboardStore: i.get<MainboardStore>()),
         ),
         Bind(
           (i) => FeedUseCases(

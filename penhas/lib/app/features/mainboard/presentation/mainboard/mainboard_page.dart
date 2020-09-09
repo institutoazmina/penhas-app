@@ -28,27 +28,6 @@ class _MainboardPageState
   Widget userAvatar;
 
   @override
-  void initState() {
-    super.initState();
-    controller.userName.then((value) {
-      setState(() {
-        userName = value;
-      });
-    });
-    controller.userAvatar
-        .then((value) => SvgPicture.network(
-              value,
-              color: DesignSystemColors.darkIndigo,
-              height: 36,
-            ))
-        .then((value) {
-      setState(() {
-        userAvatar = value;
-      });
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
