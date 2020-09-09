@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
@@ -47,18 +45,5 @@ class UserProfileEntity implements IUserProfileRepository {
     } catch (error) {
       return left(MapExceptionToFailure.map(error));
     }
-  }
-}
-
-extension _FutureExtension<T extends String> on Future<T> {
-  Future<ValidField> parseValidField() async {
-    return this.then((data) async {
-      try {
-        final jsonData = jsonDecode(data) as Map<String, Object>;
-        return ValidField.fromJson(jsonData);
-      } catch (e) {
-        return ValidField();
-      }
-    });
   }
 }

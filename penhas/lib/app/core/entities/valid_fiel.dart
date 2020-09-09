@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class ValidField extends Equatable {
@@ -18,3 +19,16 @@ class ValidField extends Equatable {
 }
 
 class ValidFieldModel extends ValidField {}
+
+extension ValidFieldFutureExtension<T extends String> on Future<T> {
+  Future<ValidField> parseValidField() async {
+    return this.then((data) async {
+      try {
+        final jsonData = jsonDecode(data) as Map<String, Object>;
+        return ValidField.fromJson(jsonData);
+      } catch (e) {
+        return ValidField();
+      }
+    });
+  }
+}

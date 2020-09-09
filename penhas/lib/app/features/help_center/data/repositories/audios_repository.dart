@@ -68,15 +68,4 @@ extension _FutureExtension<T extends String> on Future<T> {
       return AudioModel.fromJson(jsonData);
     });
   }
-
-  Future<ValidField> parseValidField() async {
-    return this.then((data) async {
-      try {
-        final jsonData = jsonDecode(data) as Map<String, Object>;
-        return ValidField.fromJson(jsonData);
-      } catch (e) {
-        return ValidField();
-      }
-    });
-  }
 }
