@@ -6,10 +6,10 @@ import 'package:penhas/app/core/states/mainboard_state.dart';
 import 'package:penhas/app/features/feed/presentation/compose_tweet/compose_tweet_page.dart';
 import 'package:penhas/app/features/feed/presentation/feed_module.dart';
 import 'package:penhas/app/features/help_center/presentation/help_center_module.dart';
+import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
-import 'package:penhas/app/features/main_menu/presentation/penhas_drawer.dart';
 import 'mainboard_controller.dart';
 
 class MainboardPage extends StatefulWidget {
@@ -32,10 +32,7 @@ class _MainboardPageState
     return Scaffold(
       key: _scaffoldKey,
       appBar: _appBarBuilder(),
-      drawer: PenhasDrawer(
-          userName: userName,
-          userAvatar: userAvatar,
-          onLogout: () => controller.logoutPressed()),
+      drawer: PenhasDrawerPage(),
       backgroundColor: Colors.white,
       body: _pagesBodyBuilder(),
       bottomNavigationBar: Observer(builder: (_) {

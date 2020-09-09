@@ -98,6 +98,13 @@ const kTextStyleDrawerUsername = TextStyle(
     color: DesignSystemColors.darkIndigoThree,
     fontWeight: FontWeight.bold);
 
+const kTextStyleDrawerLogoutLabel = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 16.0,
+    letterSpacing: 0.5,
+    color: DesignSystemColors.ligthPurple,
+    fontWeight: FontWeight.bold);
+
 const kTextStyleDrawerListItem = TextStyle(
     fontFamily: 'Lato',
     fontSize: 14.0,

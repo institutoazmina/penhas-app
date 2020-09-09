@@ -1,57 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
+import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_controller.dart';
 
-/*
+class PenhasDrawerPage extends StatefulWidget {
+  final String title;
+  const PenhasDrawerPage({Key key, this.title = "Penhas Drawer"})
+      : super(key: key);
 
-  void initState() {
-    super.initState();
-    controller.userName.then((value) {
-      setState(() {
-        userName = value;
-      });
-    });
-    controller.userAvatar
-        .then((value) => SvgPicture.network(
-              value,
-              color: DesignSystemColors.darkIndigo,
-              height: 36,
-            ))
-        .then((value) {
-      setState(() {
-        userAvatar = value;
-      });
-    });
-  }
+  @override
+  _PenhasDrawerPageState createState() => _PenhasDrawerPageState();
+}
 
-
-*/
-
-class PenhasDrawer extends StatelessWidget {
-  final String _userName;
-  final Widget _userAvatar;
-  final Color drawerGrey = Color.fromRGBO(239, 239, 239, 1.0);
+class _PenhasDrawerPageState
+    extends ModularState<PenhasDrawerPage, PenhasDrawerController> {
   final double listHeight = 80;
-
-  final void Function() _onLogout;
-
-  final _kLogoutLabelStyle = TextStyle(
-      color: DesignSystemColors.ligthPurple,
-      fontFamily: 'Lato',
-      fontSize: 16.0,
-      letterSpacing: 0.5,
-      fontWeight: FontWeight.bold);
-
-  PenhasDrawer({
-    Key key,
-    @required String userName,
-    @required Widget userAvatar,
-    @required void Function() onLogout,
-  })  : this._userName = userName,
-        this._userAvatar = userAvatar,
-        this._onLogout = onLogout,
-        super(key: key);
+  final Color drawerGrey = Color.fromRGBO(239, 239, 239, 1.0);
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +58,7 @@ class PenhasDrawer extends StatelessWidget {
                 constraints: BoxConstraints(minHeight: 126.0),
                 alignment: Alignment.bottomCenter,
                 child: FlatButton(
-                    onPressed: () => _onLogout(),
+                    onPressed: () => controller.logoutPressed(),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -102,7 +68,7 @@ class PenhasDrawer extends StatelessWidget {
                           color: DesignSystemColors.ligthPurple,
                         ),
                         SizedBox(width: 12),
-                        Text('Sair', style: _kLogoutLabelStyle),
+                        Text('Sair', style: kTextStyleDrawerLogoutLabel),
                       ],
                     )),
               ),
@@ -177,34 +143,58 @@ class PenhasDrawer extends StatelessWidget {
   }
 
   Widget _builderHeader() {
-    return Container(
-        padding: EdgeInsets.only(left: 16.0),
-        height: 100,
-        child: Row(
-          children: <Widget>[
-            CircleAvatar(
-              backgroundColor: drawerGrey,
-              radius: 25,
-              child: _userAvatar,
-            ),
-            SizedBox(width: 9.0),
-            Text(
-              _userName,
-              style: kTextStyleDrawerUsername,
-            ),
-            SizedBox(width: 9.0),
-            Container(
-              padding: EdgeInsets.fromLTRB(6.0, 4.0, 6.0, 4.0),
-              decoration: BoxDecoration(
-                  color: Color.fromRGBO(234, 234, 234, 1),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(6.0),
-                    bottomLeft: Radius.circular(6.0),
-                    bottomRight: Radius.circular(6.0),
-                  )),
-              child: Text('Você', style: kTextStyleDrawerUserNameTag),
-            ),
-          ],
-        ));
+    return Container();
+    //   return Container(
+    //     padding: EdgeInsets.only(left: 16.0),
+    //     height: 100,
+    //     child: Row(
+    //       children: <Widget>[
+    //         CircleAvatar(
+    //           backgroundColor: drawerGrey,
+    //           radius: 25,
+    //           child: _userAvatar,
+    //         ),
+    //         SizedBox(width: 9.0),
+    //         Text(
+    //           _userName,
+    //           style: kTextStyleDrawerUsername,
+    //         ),
+    //         SizedBox(width: 9.0),
+    //         Container(
+    //           padding: EdgeInsets.fromLTRB(6.0, 4.0, 6.0, 4.0),
+    //           decoration: BoxDecoration(
+    //               color: Color.fromRGBO(234, 234, 234, 1),
+    //               borderRadius: BorderRadius.only(
+    //                 topLeft: Radius.circular(6.0),
+    //                 bottomLeft: Radius.circular(6.0),
+    //                 bottomRight: Radius.circular(6.0),
+    //               )),
+    //           child: Text('Você', style: kTextStyleDrawerUserNameTag),
+    //         ),
+    //       ],
+    //     ),
+    //   );
   }
 }
+
+/*
+  void initState() {
+    super.initState();
+    controller.userName.then((value) {
+      setState(() {
+        userName = value;
+      });
+    });
+    controller.userAvatar
+        .then((value) => SvgPicture.network(
+              value,
+              color: DesignSystemColors.darkIndigo,
+              height: 36,
+            ))
+        .then((value) {
+      setState(() {
+        userAvatar = value;
+      });
+    });
+  }
+*/

@@ -10,10 +10,10 @@ abstract class IUserProfileRepository {
   Future<Either<Failure, ValidField>> anonymousMode({@required bool toggle});
 }
 
-class UserProfileEntity implements IUserProfileRepository {
+class UserProfileRepository implements IUserProfileRepository {
   final IApiProvider _apiProvider;
 
-  UserProfileEntity({
+  UserProfileRepository({
     @required IApiProvider apiProvider,
   }) : this._apiProvider = apiProvider;
 

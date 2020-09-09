@@ -4,6 +4,7 @@ import 'package:penhas/app/core/managers/audio_play_services.dart';
 import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/core/managers/audio_sync_manager.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
+import 'package:penhas/app/core/managers/user_profile_store.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
@@ -35,7 +36,10 @@ import 'package:penhas/app/features/help_center/presentation/guardians/guardians
 import 'package:penhas/app/features/help_center/presentation/new_guardian/new_guardian_controller.dart';
 import 'package:penhas/app/features/help_center/presentation/new_guardian/new_guardian_page.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/audio/audio_record_page.dart';
+import 'package:penhas/app/features/main_menu/domain/repositories/user_profile_repository.dart';
+import 'package:penhas/app/features/main_menu/domain/usecases/user_profile.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_controller.dart';
+import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_page.dart';
 
@@ -43,15 +47,13 @@ class MainboardModule extends ChildModule {
   @override
   List<Bind> get binds => [
         ...interfaceBinds,
+        ...drawerBinds,
         ...tweetBinds,
         ...helpCenterBinds,
         ...audioServicesBinds,
         Bind<MainboardStore>((i) => MainboardStore()),
-        Bind(
-          (i) => MainboardController(
-              appConfigure: i.get<IAppConfiguration>(),
-              mainboardStore: i.get<MainboardStore>()),
-        ),
+        Bind((i) =>
+            MainboardController(mainboardStore: i.get<MainboardStore>())),
         Bind(
           (i) => FeedUseCases(
             repository: i.get<ITweetRepository>(),
@@ -69,8 +71,6 @@ class MainboardModule extends ChildModule {
         ...helpCenter,
         ...audioRecord,
       ];
-
-  static Inject get to => Inject<MainboardModule>.of();
 
   List<Router> get tweetRoutes => [
         Router(
@@ -207,6 +207,26 @@ class MainboardModule extends ChildModule {
         ),
         Bind<ILocationServices>(
           (i) => LocationServices(),
+        ),
+      ];
+
+  List<Bind> get drawerBinds => [
+        Bind(
+          (i) => PenhasDrawerController(
+            appConfigure: i.get<IAppConfiguration>(),
+            userProfile: i.get<UserProfile>(),
+          ),
+        ),
+        Bind<UserProfile>(
+          (i) => UserProfile(
+            repository: i.get<IUserProfileRepository>(),
+            userProfileStore: i.get<IUserProfileStore>(),
+          ),
+        ),
+        Bind<IUserProfileRepository>(
+          (i) => UserProfileRepository(
+            apiProvider: i.get<IApiProvider>(),
+          ),
         )
       ];
 
@@ -244,4 +264,6 @@ class MainboardModule extends ChildModule {
           ),
         ),
       ];
+
+  static Inject get to => Inject<MainboardModule>.of();
 }

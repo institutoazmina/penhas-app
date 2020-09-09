@@ -13,7 +13,7 @@ void main() {
 
   setUp(() {
     apiProvider = MockApiProvider();
-    sut = UserProfileEntity(apiProvider: apiProvider);
+    sut = UserProfileRepository(apiProvider: apiProvider);
   });
 
   void _setUpMockGet() {
