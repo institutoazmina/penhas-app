@@ -132,7 +132,7 @@ mixin _$SignUpController on _SignUpControllerBase, Store {
   }
 
   @override
-  void setBirthday(DateTime birthday) {
+  void setBirthday(String birthday) {
     final _$actionInfo = _$_SignUpControllerBaseActionController.startAction(
         name: '_SignUpControllerBase.setBirthday');
     try {

@@ -62,8 +62,8 @@ abstract class _SignUpControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  void setBirthday(DateTime birthday) {
-    _userRegisterModel.birthday = Birthday.datetime(birthday);
+  void setBirthday(String birthday) {
+    _userRegisterModel.birthday = Birthday(birthday);
 
     warningBirthday =
         birthday == null ? '' : _userRegisterModel.validateBirthday;

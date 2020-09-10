@@ -1,4 +1,3 @@
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -40,6 +39,11 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
 
   final _maskCep = MaskTextInputFormatter(
     mask: '#####-###',
+    filter: {"#": RegExp(r'[0-9]')},
+  );
+
+  final _maskDate = MaskTextInputFormatter(
+    mask: '##/##/####',
     filter: {"#": RegExp(r'[0-9]')},
   );
 
@@ -88,12 +92,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
                       SizedBox(height: 22.0),
                       Observer(builder: (_) => _buildFullName()),
                       SizedBox(height: 24.0),
-                      Observer(builder: (_) {
-                        return _buildDateTimeField(
-                          onChanged: controller.setBirthday,
-                          onError: controller.warningBirthday,
-                        );
-                      }),
+                      Observer(builder: (_) => _builBirthday()),
                       SizedBox(height: 24.0),
                       Observer(builder: (_) {
                         return _buildCpf();
@@ -176,33 +175,16 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
     WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
   }
 
-  DateTimeField _buildDateTimeField({
-    Function(DateTime) onChanged,
-    String onError,
-  }) {
-    return DateTimeField(
-      format: format,
-      style: TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        enabledBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        focusedBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
+  SingleTextInput _builBirthday() {
+    return SingleTextInput(
+      inputFormatter: _maskDate,
+      onChanged: controller.setBirthday,
+      keyboardType: TextInputType.datetime,
+      boxDecoration: WhiteBoxDecorationStyle(
+        hintText: 'Dia / Mês / Ano',
         labelText: 'Data de nascimento',
-        labelStyle: TextStyle(color: Colors.white),
-        errorText: (onError?.isEmpty ?? true) ? null : onError,
-        border: OutlineInputBorder(),
-        contentPadding:
-            EdgeInsetsDirectional.only(end: 8.0, start: 8.0, bottom: 8.0),
+        errorText: controller.warningBirthday,
       ),
-      onShowPicker: (context, currentValue) {
-        return showDatePicker(
-            context: context,
-            firstDate: DateTime(1900),
-            initialDate: currentValue ?? DateTime.now(),
-            lastDate: DateTime(2100));
-      },
-      onChanged: onChanged,
     );
   }
 

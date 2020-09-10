@@ -28,7 +28,6 @@ dependencies:
   package_info: '>=0.4.0+16 <2.0.0'
   email_validator: ^1.0.4
   mask_text_input_formatter: ^1.0.6
-  datetime_picker_formfield: ^1.0.0
   cpfcnpj: ^1.0.3
   url_launcher: ^5.4.7
   flutter_widget_from_html: ^0.4.1
