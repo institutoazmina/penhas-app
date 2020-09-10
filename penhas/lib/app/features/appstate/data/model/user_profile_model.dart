@@ -24,7 +24,10 @@ class UserProfileModel extends UserProfileEntity {
         anonymousModeEnabled = jsonData['modo_anonimo_ativo'] == 1;
 
   Map<String, Object> toJson() => {
+        'email': email,
         'apelido': nickname,
         'avatar_url': avatar,
+        'modo_camuflado_ativo': stealthModeEnabled ? 1 : 0,
+        'modo_anonimo_ativo': anonymousModeEnabled ? 1 : 0,
       };
 }

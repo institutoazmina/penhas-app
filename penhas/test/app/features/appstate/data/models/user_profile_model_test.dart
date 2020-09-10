@@ -43,8 +43,11 @@ void main() {
           await JsonUtil.getJson(from: 'profile/about_with_quiz_session.json');
       final Map<String, Object> userProfileData = jsonData['user_profile'];
       final Map<String, Object> expected = {
+        'email': userProfileData['email'],
         'apelido': userProfileData['apelido'],
-        'avatar_url': userProfileData['avatar_url']
+        'avatar_url': userProfileData['avatar_url'],
+        'modo_anonimo_ativo': userProfileData['modo_anonimo_ativo'],
+        'modo_camuflado_ativo': userProfileData['modo_camuflado_ativo'],
       };
       final userModel = UserProfileModel(
         email: userProfileData['email'],
