@@ -91,28 +91,6 @@ mixin _$PenhasDrawerController on _PenhasDrawerControllerBase, Store {
       ActionController(name: '_PenhasDrawerControllerBase');
 
   @override
-  void toggleStealthMode() {
-    final _$actionInfo = _$_PenhasDrawerControllerBaseActionController
-        .startAction(name: '_PenhasDrawerControllerBase.toggleStealthMode');
-    try {
-      return super.toggleStealthMode();
-    } finally {
-      _$_PenhasDrawerControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void toggleAnymousMode() {
-    final _$actionInfo = _$_PenhasDrawerControllerBaseActionController
-        .startAction(name: '_PenhasDrawerControllerBase.toggleAnymousMode');
-    try {
-      return super.toggleAnymousMode();
-    } finally {
-      _$_PenhasDrawerControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void logoutPressed() {
     final _$actionInfo = _$_PenhasDrawerControllerBaseActionController
         .startAction(name: '_PenhasDrawerControllerBase.logoutPressed');

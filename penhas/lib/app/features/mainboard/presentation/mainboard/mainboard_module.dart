@@ -10,6 +10,10 @@ import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/core/states/mainboard_store.dart';
+import 'package:penhas/app/features/appstate/data/datasources/app_state_data_source.dart';
+import 'package:penhas/app/features/appstate/data/repositories/app_state_repository.dart';
+import 'package:penhas/app/features/appstate/domain/repositories/i_app_state_repository.dart';
+import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_filter_preference_data_source.dart';
 import 'package:penhas/app/features/feed/data/repositories/tweet_filter_preference_repository.dart';
@@ -223,6 +227,26 @@ class MainboardModule extends ChildModule {
           (i) => UserProfile(
             repository: i.get<IUserProfileRepository>(),
             userProfileStore: i.get<IUserProfileStore>(),
+            appStateUseCase: i.get<AppStateUseCase>(),
+          ),
+        ),
+        Bind<AppStateUseCase>(
+          (i) => AppStateUseCase(
+              appStateRepository: i.get<IAppStateRepository>(),
+              userProfileStore: i.get<IUserProfileStore>(),
+              appConfiguration: i.get<IAppConfiguration>(),
+              appModulesServices: i.get<IAppModulesServices>()),
+        ),
+        Bind<IAppStateRepository>(
+          (i) => AppStateRepository(
+            networkInfo: i.get<INetworkInfo>(),
+            dataSource: i.get<IAppStateDataSource>(),
+          ),
+        ),
+        Bind<IAppStateDataSource>(
+          (i) => AppStateDataSource(
+            apliClient: i.get<http.Client>(),
+            serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
         Bind<IUserProfileRepository>(

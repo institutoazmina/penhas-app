@@ -30,11 +30,7 @@ abstract class _PenhasDrawerControllerBase with Store {
 
   _init() async {
     showSecurityOptions = await _showSecurityModeToggle();
-    final profile = await _userProfile.currentProfile();
-    userName = profile.nickname ?? "";
-    userAvatar = profile.avatar ?? "";
-    stealthModeState = _stealthToggleState(profile);
-    anonymousModeState = _anonyousToggleState(profile);
+    await _updateProfileInformation();
   }
 
   @observable
@@ -53,15 +49,27 @@ abstract class _PenhasDrawerControllerBase with Store {
   SecurityToggleState anonymousModeState = SecurityToggleState.empty();
 
   @action
-  void toggleStealthMode() {}
-
-  @action
-  void toggleAnymousMode() {}
-
-  @action
   void logoutPressed() {
     // appConfigure.logout();
     // Modular.to.pushReplacementNamed('/');
+  }
+
+  Future<void> _toggleAnymousMode(bool toggle) async {
+    final action = await _userProfile.anonymousMode(toggle);
+
+    action.fold(
+      (failure) => null,
+      (success) async => _updateProfileInformation(),
+    );
+  }
+
+  Future<void> _toggleStealthMode(bool toggle) async {
+    final action = await _userProfile.stealthMode(toggle);
+
+    action.fold(
+      (failure) => null,
+      (success) async => _updateProfileInformation(),
+    );
   }
 
   Future<bool> _showSecurityModeToggle() async {
@@ -72,11 +80,19 @@ abstract class _PenhasDrawerControllerBase with Store {
     return data != null;
   }
 
+  Future<void> _updateProfileInformation() async {
+    final profile = await _userProfile.currentProfile();
+    userName = profile.nickname ?? "";
+    userAvatar = profile.avatar ?? "";
+    stealthModeState = _stealthToggleState(profile);
+    anonymousModeState = _anonyousToggleState(profile);
+  }
+
   SecurityToggleState _anonyousToggleState(UserProfileEntity profile) {
     return SecurityToggleState(
       title: 'Estou em situação de violência',
       isEnabled: profile.anonymousModeEnabled,
-      onChanged: (value) => print("_anonyousToggleState => $value"),
+      onChanged: (value) async => _toggleAnymousMode(value),
     );
   }
 
@@ -84,7 +100,7 @@ abstract class _PenhasDrawerControllerBase with Store {
     return SecurityToggleState(
       title: 'Modo camuflado',
       isEnabled: profile.stealthModeEnabled,
-      onChanged: (value) => print("_stealthToggleState => $value"),
+      onChanged: (value) => _toggleStealthMode(value),
     );
   }
 }
