@@ -23,7 +23,7 @@ class Birthday extends Equatable with MapValidatorFailure {
       final day = _twoDigits(dt.day);
       final month = _twoDigits(dt.month);
       final year = _fourDigits(dt.year);
-      input = "$year-$month-$day";
+      input = "$day/$month/$year";
     }
 
     return Birthday._(_validate(input));
@@ -42,7 +42,33 @@ class Birthday extends Equatable with MapValidatorFailure {
       return left(BirthdayInvalidFailure());
     }
 
-    return right(input);
+    final dates = input.split('/');
+    bool isValid = false;
+    String formatedDate;
+
+    if (dates.length == 3) {
+      final year = _parseIntSafety(dates[2]);
+      final month = _parseIntSafety(dates[1]);
+      final day = _parseIntSafety(dates[0]);
+
+      final dt = DateTime.utc(year, month, day);
+
+      final d = _twoDigits(dt.day);
+      final m = _twoDigits(dt.month);
+      final y = _fourDigits(dt.year);
+
+      formatedDate = "$y-$m-$d";
+      isValid = dt.day == day &&
+          dt.month == month &&
+          dt.year == year &&
+          dates[2].length == 4;
+    }
+
+    if (isValid) {
+      return right(formatedDate);
+    } else {
+      return left(BirthdayInvalidFailure());
+    }
   }
 
   static String _fourDigits(int n) {
@@ -57,6 +83,14 @@ class Birthday extends Equatable with MapValidatorFailure {
   static String _twoDigits(int n) {
     if (n >= 10) return "$n";
     return "0$n";
+  }
+
+  static int _parseIntSafety(String value) {
+    try {
+      return int.parse(value);
+    } catch (e) {
+      return 99;
+    }
   }
 
   @override

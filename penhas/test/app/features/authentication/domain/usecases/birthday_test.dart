@@ -27,10 +27,20 @@ void main() {
       test(
         'should get value from a valid birthday',
         () {
-          var testValue = "1994-01-01";
+          var testValue = "01/01/1994";
           var result = Birthday(testValue).value;
 
-          expect(result, right(testValue));
+          expect(result, right("1994-01-01"));
+        },
+      );
+
+      test(
+        'should get value from a valid birthday from Datetime',
+        () {
+          var testValue = DateTime.utc(1994, 1, 1);
+          var result = Birthday.datetime(testValue).value;
+
+          expect(result, right("1994-01-01"));
         },
       );
     },
