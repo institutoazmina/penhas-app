@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:penhas/app/core/states/security_toggle_state.dart';
 import 'package:penhas/app/features/main_menu/presentation/pages/penhas_drawer_header_page.dart';
+import 'package:penhas/app/features/main_menu/presentation/pages/penhas_drawer_toogle_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_controller.dart';
@@ -40,8 +42,22 @@ class _PenhasDrawerPageState
                   );
                 },
               ),
-              _buildAnonymousMode(),
-              _buildStealthMode(),
+              Observer(
+                builder: (_) {
+                  return _buildSecurityToggle(
+                    controller.showSecurityOptions,
+                    controller.anonymousModeState,
+                  );
+                },
+              ),
+              Observer(
+                builder: (_) {
+                  return _buildSecurityToggle(
+                    controller.showSecurityOptions,
+                    controller.stealthModeState,
+                  );
+                },
+              ),
               _buildItemList(
                 title: 'Informações pessoais',
                 icon: SvgPicture.asset(
@@ -121,71 +137,9 @@ class _PenhasDrawerPageState
     );
   }
 
-  Widget _buildStealthMode() {
-    return Container(
-      padding: EdgeInsets.only(left: 16.0),
-      height: listHeight,
-      color: drawerGrey,
-      child: Center(
-        child: SwitchListTile(
-          contentPadding: EdgeInsets.only(left: 0.0, right: 16.0),
-          value: false,
-          onChanged: (_) {},
-          title: Text(
-            'Modo camuflado',
-            style: kTextStyleDrawerListItem,
-          ),
-        ),
-      ),
-    );
-  }
+  Widget _buildSecurityToggle(bool isVisible, SecurityToggleState state) {
+    if (!isVisible) return Container();
 
-  Widget _buildAnonymousMode() {
-    bool _lights = false;
-    return Container(
-      padding: EdgeInsets.only(left: 16.0),
-      height: listHeight,
-      decoration: BoxDecoration(
-          color: drawerGrey,
-          shape: BoxShape.rectangle,
-          border: Border(bottom: BorderSide(color: DesignSystemColors.white))),
-      child: Center(
-        child: SwitchListTile(
-          contentPadding: EdgeInsets.only(left: 0.0, right: 16.0),
-          value: _lights,
-          onChanged: (_) {},
-          title: Text(
-            'Estou em situação de violência',
-            style: kTextStyleDrawerListItem,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _builderHeader() {
-    return Container();
+    return PenhasDrawerTooglePage(state: state);
   }
 }
-
-/*
-  void initState() {
-    super.initState();
-    controller.userName.then((value) {
-      setState(() {
-        userName = value;
-      });
-    });
-    controller.userAvatar
-        .then((value) => SvgPicture.network(
-              value,
-              color: DesignSystemColors.darkIndigo,
-              height: 36,
-            ))
-        .then((value) {
-      setState(() {
-        userAvatar = value;
-      });
-    });
-  }
-*/

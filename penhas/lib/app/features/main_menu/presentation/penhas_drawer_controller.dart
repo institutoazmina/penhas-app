@@ -2,6 +2,8 @@ import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
+import 'package:penhas/app/core/states/security_toggle_state.dart';
+import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/help_center/domain/usecases/help_center_call_action_feature.dart';
 import 'package:penhas/app/features/main_menu/domain/usecases/user_profile.dart';
 
@@ -16,18 +18,6 @@ class PenhasDrawerController extends _PenhasDrawerControllerBase
   }) : super(appConfigure, userProfile, modulesServices);
 }
 
-/*
-  AudioSyncManager({@required IAudioSyncRepository audioRepository})
-      : this._audioRepository = audioRepository {
-    _init();
-  }
-
-  _init() async {
-    await loadAudioQueue();
-    setupUploadTimer();
-  }
-*/
-
 abstract class _PenhasDrawerControllerBase with Store {
   final UserProfile _userProfile;
   final IAppConfiguration _appConfigure;
@@ -39,8 +29,12 @@ abstract class _PenhasDrawerControllerBase with Store {
   }
 
   _init() async {
-    userName = await _userProfile.userName();
-    userAvatar = await _userProfile.userAvatar();
+    showSecurityOptions = await _showSecurityModeToggle();
+    final profile = await _userProfile.currentProfile();
+    userName = profile.nickname ?? "";
+    userAvatar = profile.avatar ?? "";
+    stealthModeState = _stealthToggleState(profile);
+    anonymousModeState = _anonyousToggleState(profile);
   }
 
   @observable
@@ -48,6 +42,15 @@ abstract class _PenhasDrawerControllerBase with Store {
 
   @observable
   String userAvatar = "";
+
+  @observable
+  bool showSecurityOptions = false;
+
+  @observable
+  SecurityToggleState stealthModeState = SecurityToggleState.empty();
+
+  @observable
+  SecurityToggleState anonymousModeState = SecurityToggleState.empty();
 
   @action
   void toggleStealthMode() {}
@@ -61,8 +64,27 @@ abstract class _PenhasDrawerControllerBase with Store {
     // Modular.to.pushReplacementNamed('/');
   }
 
-  // bool _showSecurityModeToggle() async {
-  //   final data = await _modulesServices.feature(
-  //       name: HelpCenterCallActionFeature.featureCode);
-  // }
+  Future<bool> _showSecurityModeToggle() async {
+    final data = await _modulesServices.feature(
+      name: HelpCenterCallActionFeature.featureCode,
+    );
+
+    return data != null;
+  }
+
+  SecurityToggleState _anonyousToggleState(UserProfileEntity profile) {
+    return SecurityToggleState(
+      title: 'Estou em situação de violência',
+      isEnabled: profile.anonymousModeEnabled,
+      onChanged: (value) => print("_anonyousToggleState => $value"),
+    );
+  }
+
+  SecurityToggleState _stealthToggleState(UserProfileEntity profile) {
+    return SecurityToggleState(
+      title: 'Modo camuflado',
+      isEnabled: profile.stealthModeEnabled,
+      onChanged: (value) => print("_stealthToggleState => $value"),
+    );
+  }
 }

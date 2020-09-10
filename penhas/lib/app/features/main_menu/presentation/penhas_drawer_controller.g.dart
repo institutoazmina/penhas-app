@@ -39,6 +39,54 @@ mixin _$PenhasDrawerController on _PenhasDrawerControllerBase, Store {
     });
   }
 
+  final _$showSecurityOptionsAtom =
+      Atom(name: '_PenhasDrawerControllerBase.showSecurityOptions');
+
+  @override
+  bool get showSecurityOptions {
+    _$showSecurityOptionsAtom.reportRead();
+    return super.showSecurityOptions;
+  }
+
+  @override
+  set showSecurityOptions(bool value) {
+    _$showSecurityOptionsAtom.reportWrite(value, super.showSecurityOptions, () {
+      super.showSecurityOptions = value;
+    });
+  }
+
+  final _$stealthModeStateAtom =
+      Atom(name: '_PenhasDrawerControllerBase.stealthModeState');
+
+  @override
+  SecurityToggleState get stealthModeState {
+    _$stealthModeStateAtom.reportRead();
+    return super.stealthModeState;
+  }
+
+  @override
+  set stealthModeState(SecurityToggleState value) {
+    _$stealthModeStateAtom.reportWrite(value, super.stealthModeState, () {
+      super.stealthModeState = value;
+    });
+  }
+
+  final _$anonymousModeStateAtom =
+      Atom(name: '_PenhasDrawerControllerBase.anonymousModeState');
+
+  @override
+  SecurityToggleState get anonymousModeState {
+    _$anonymousModeStateAtom.reportRead();
+    return super.anonymousModeState;
+  }
+
+  @override
+  set anonymousModeState(SecurityToggleState value) {
+    _$anonymousModeStateAtom.reportWrite(value, super.anonymousModeState, () {
+      super.anonymousModeState = value;
+    });
+  }
+
   final _$_PenhasDrawerControllerBaseActionController =
       ActionController(name: '_PenhasDrawerControllerBase');
 
@@ -79,7 +127,10 @@ mixin _$PenhasDrawerController on _PenhasDrawerControllerBase, Store {
   String toString() {
     return '''
 userName: ${userName},
-userAvatar: ${userAvatar}
+userAvatar: ${userAvatar},
+showSecurityOptions: ${showSecurityOptions},
+stealthModeState: ${stealthModeState},
+anonymousModeState: ${anonymousModeState}
     ''';
   }
 }
