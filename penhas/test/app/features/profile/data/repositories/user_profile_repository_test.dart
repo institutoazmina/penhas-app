@@ -16,8 +16,8 @@ void main() {
     sut = UserProfileRepository(apiProvider: apiProvider);
   });
 
-  void _setUpMockGet() {
-    when(apiProvider.get(
+  void _setUpMockPost() {
+    when(apiProvider.post(
       path: anyNamed('path'),
       parameters: anyNamed('parameters'),
     )).thenAnswer((_) async => Future.value(""));
@@ -27,14 +27,14 @@ void main() {
     group('stealth mode', () {
       test('should hit endpoint /me/modo-camuflado-toggle', () async {
         // arrange
-        _setUpMockGet();
+        _setUpMockPost();
         final endPoint = ['me', 'modo-camuflado-toggle'].join('/');
         final parameters = {'active': '1'};
         // act
         await sut.stealthMode(toggle: true);
         // assert
         verify(
-          apiProvider.get(
+          apiProvider.post(
             path: endPoint,
             parameters: parameters,
           ),
@@ -42,27 +42,27 @@ void main() {
       });
       test('should receive ValidField', () async {
         // arrange
-        _setUpMockGet();
+        _setUpMockPost();
         final actual = right(ValidField());
         final toggle = true;
         // act
-        final matcher = await sut.stealthMode(toggle: toggle);
+        final expected = await sut.stealthMode(toggle: toggle);
         // assert
-        expect(actual, matcher);
+        expect(actual, expected);
       });
     });
 
     group('anonymous mode', () {
       test('should hit endpoint /me/modo-anonimo-toggle', () async {
         // arrange
-        _setUpMockGet();
+        _setUpMockPost();
         final endPoint = ['me', 'modo-anonimo-toggle'].join('/');
         final parameters = {'active': '1'};
         // act
         await sut.anonymousMode(toggle: true);
         // assert
         verify(
-          apiProvider.get(
+          apiProvider.post(
             path: endPoint,
             parameters: parameters,
           ),
@@ -70,7 +70,7 @@ void main() {
       });
       test('should receive ValidField', () async {
         // arrange
-        _setUpMockGet();
+        _setUpMockPost();
         final actual = right(ValidField());
         final toggle = false;
         // act

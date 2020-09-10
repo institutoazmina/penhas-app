@@ -24,7 +24,7 @@ class UserProfileRepository implements IUserProfileRepository {
 
     try {
       final response = await _apiProvider
-          .get(path: endPoint, parameters: parameters)
+          .post(path: endPoint, parameters: parameters)
           .parseValidField();
       return right(response);
     } catch (error) {
@@ -39,7 +39,7 @@ class UserProfileRepository implements IUserProfileRepository {
 
     try {
       final response = await _apiProvider
-          .get(path: endPoint, parameters: parameters)
+          .post(path: endPoint, parameters: parameters)
           .parseValidField();
       return right(response);
     } catch (error) {
