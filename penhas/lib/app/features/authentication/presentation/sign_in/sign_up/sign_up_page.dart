@@ -12,6 +12,7 @@ import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'sign_up_controller.dart';
 
 import 'package:intl/intl.dart';
@@ -101,6 +102,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
                       Observer(builder: (_) {
                         return _buildCep();
                       }),
+                      _forgetCep(),
                       SizedBox(height: 24.0),
                       SizedBox(height: 40.0, child: _buildNextButton()),
                     ],
@@ -123,6 +125,36 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
         hintText: 'CEP',
         labelText: 'CEP',
         errorText: controller.warningCep,
+      ),
+    );
+  }
+
+  Widget _forgetCep() {
+    return Container(
+      width: 100,
+      alignment: Alignment.topLeft,
+      child: Padding(
+        padding: EdgeInsets.only(left: 0.0, bottom: 0.0),
+        child: RaisedButton(
+          onPressed: () async {
+            final url =
+                'http://www.buscacep.correios.com.br/sistemas/buscacep/buscaCepEndereco.cfm';
+            launch(url);
+          },
+          elevation: 0,
+          padding: EdgeInsets.only(left: 0.0, bottom: 0.0),
+          color: Colors.transparent,
+          child: Text(
+            "Não sei o meu CEP",
+            style: TextStyle(
+              fontFamily: 'Lato',
+              fontWeight: FontWeight.normal,
+              fontSize: 14.0,
+              color: Colors.white,
+              decoration: TextDecoration.underline,
+            ),
+          ),
+        ),
       ),
     );
   }
