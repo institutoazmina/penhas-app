@@ -1,3 +1,4 @@
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
@@ -50,8 +51,8 @@ abstract class _PenhasDrawerControllerBase with Store {
 
   @action
   void logoutPressed() {
-    // appConfigure.logout();
-    // Modular.to.pushReplacementNamed('/');
+    _appConfigure.logout();
+    Modular.to.pushReplacementNamed('/');
   }
 
   Future<void> _toggleAnymousMode(bool toggle) async {
