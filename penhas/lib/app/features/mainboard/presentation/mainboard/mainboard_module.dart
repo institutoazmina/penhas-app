@@ -57,8 +57,11 @@ class MainboardModule extends ChildModule {
         ...helpCenterBinds,
         ...audioServicesBinds,
         Bind<MainboardStore>((i) => MainboardStore()),
-        Bind((i) =>
-            MainboardController(mainboardStore: i.get<MainboardStore>())),
+        Bind(
+          (i) => MainboardController(
+              mainboardStore: i.get<MainboardStore>(),
+              userProfileStore: i.get<IUserProfileStore>()),
+        ),
         Bind(
           (i) => FeedUseCases(
             repository: i.get<ITweetRepository>(),
