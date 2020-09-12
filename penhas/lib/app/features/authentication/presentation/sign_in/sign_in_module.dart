@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:penhas/app/core/managers/app_configuration.dart';
+import 'package:penhas/app/core/managers/user_profile_store.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/authentication/data/datasources/authentication_data_source.dart';
@@ -148,8 +149,11 @@ class SignInModule extends ChildModule {
       ];
 
   List<Bind> get _signInAnonymous => [
-        Bind((i) =>
-            SignInAnonymousController(i.get<IAuthenticationRepository>())),
+        Bind(
+          (i) => SignInAnonymousController(
+              repository: i.get<IAuthenticationRepository>(),
+              userProfileStore: i.get<IUserProfileStore>()),
+        )
       ];
 
   static Inject get to => Inject<SignInModule>.of();

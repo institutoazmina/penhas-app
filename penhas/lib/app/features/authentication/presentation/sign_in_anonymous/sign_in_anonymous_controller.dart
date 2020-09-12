@@ -1,7 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/managers/user_profile_store.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
@@ -13,24 +15,40 @@ part 'sign_in_anonymous_controller.g.dart';
 
 class SignInAnonymousController extends _SignInAnonymousController
     with _$SignInAnonymousController {
-  SignInAnonymousController(IAuthenticationRepository repository)
-      : super(repository);
+  SignInAnonymousController({
+    @required IAuthenticationRepository repository,
+    @required IUserProfileStore userProfileStore,
+  }) : super(repository, userProfileStore);
 }
 
 abstract class _SignInAnonymousController with Store, MapFailureMessage {
   final String _invalidFieldsToProceedLogin =
       'E-mail e senha precisam estarem corretos para continuar.';
-  final IAuthenticationRepository repository;
+  final IUserProfileStore _userProfileStore;
+  final IAuthenticationRepository _repository;
+
   EmailAddress _emailAddress = EmailAddress("");
   Password _password = Password("");
 
-  _SignInAnonymousController(this.repository);
+  _SignInAnonymousController(this._repository, this._userProfileStore) {
+    _init();
+  }
+
+  void _init() async {
+    final profile = await _userProfileStore.retreive();
+    _emailAddress = EmailAddress(profile.email);
+    userEmail = profile.email;
+    userGreetings = "Bem-vinda, ${profile.nickname}";
+  }
 
   @observable
   ObservableFuture<Either<Failure, SessionEntity>> _progress;
 
   @observable
-  String warningEmail = "";
+  String userGreetings = "";
+
+  @observable
+  String userEmail = "";
 
   @observable
   String warningPassword = "";
@@ -50,13 +68,6 @@ abstract class _SignInAnonymousController with Store, MapFailureMessage {
   }
 
   @action
-  void setEmail(String address) {
-    _emailAddress = EmailAddress(address);
-
-    warningEmail = address.length == 0 ? '' : _emailAddress.mapFailure;
-  }
-
-  @action
   void setPassword(String password) {
     _password = Password(password);
 
@@ -72,7 +83,7 @@ abstract class _SignInAnonymousController with Store, MapFailureMessage {
       return;
     }
 
-    _progress = ObservableFuture(repository.signInWithEmailAndPassword(
+    _progress = ObservableFuture(_repository.signInWithEmailAndPassword(
       emailAddress: _emailAddress,
       password: _password,
     ));

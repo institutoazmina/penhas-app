@@ -96,14 +96,14 @@ class _SignInAnonymousPage
         Padding(
           padding: EdgeInsets.only(top: 52.0),
           child: Text(
-            "Bem-vinda, Luíza",
+            controller.userGreetings,
             style: kTextStyleRegisterHeaderLabelStyle,
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(bottom: 30, top: 30),
           child: Text(
-            "harold.brekker@hotmail.com",
+            controller.userEmail,
             style: kTextStyleRegisterSubtitleLabelStyle,
           ),
         )

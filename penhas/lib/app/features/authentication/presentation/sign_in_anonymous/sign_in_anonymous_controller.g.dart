@@ -32,19 +32,34 @@ mixin _$SignInAnonymousController on _SignInAnonymousController, Store {
     });
   }
 
-  final _$warningEmailAtom =
-      Atom(name: '_SignInAnonymousController.warningEmail');
+  final _$userGreetingsAtom =
+      Atom(name: '_SignInAnonymousController.userGreetings');
 
   @override
-  String get warningEmail {
-    _$warningEmailAtom.reportRead();
-    return super.warningEmail;
+  String get userGreetings {
+    _$userGreetingsAtom.reportRead();
+    return super.userGreetings;
   }
 
   @override
-  set warningEmail(String value) {
-    _$warningEmailAtom.reportWrite(value, super.warningEmail, () {
-      super.warningEmail = value;
+  set userGreetings(String value) {
+    _$userGreetingsAtom.reportWrite(value, super.userGreetings, () {
+      super.userGreetings = value;
+    });
+  }
+
+  final _$userEmailAtom = Atom(name: '_SignInAnonymousController.userEmail');
+
+  @override
+  String get userEmail {
+    _$userEmailAtom.reportRead();
+    return super.userEmail;
+  }
+
+  @override
+  set userEmail(String value) {
+    _$userEmailAtom.reportWrite(value, super.userEmail, () {
+      super.userEmail = value;
     });
   }
 
@@ -110,17 +125,6 @@ mixin _$SignInAnonymousController on _SignInAnonymousController, Store {
       ActionController(name: '_SignInAnonymousController');
 
   @override
-  void setEmail(String address) {
-    final _$actionInfo = _$_SignInAnonymousControllerActionController
-        .startAction(name: '_SignInAnonymousController.setEmail');
-    try {
-      return super.setEmail(address);
-    } finally {
-      _$_SignInAnonymousControllerActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setPassword(String password) {
     final _$actionInfo = _$_SignInAnonymousControllerActionController
         .startAction(name: '_SignInAnonymousController.setPassword');
@@ -134,7 +138,8 @@ mixin _$SignInAnonymousController on _SignInAnonymousController, Store {
   @override
   String toString() {
     return '''
-warningEmail: ${warningEmail},
+userGreetings: ${userGreetings},
+userEmail: ${userEmail},
 warningPassword: ${warningPassword},
 errorMessage: ${errorMessage},
 currentState: ${currentState}
