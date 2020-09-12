@@ -21,11 +21,30 @@ class MainboardPage extends StatefulWidget {
 }
 
 class _MainboardPageState
-    extends ModularState<MainboardPage, MainboardController> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  bool _helpCenterEnabled = false;
+    extends ModularState<MainboardPage, MainboardController>
+    with WidgetsBindingObserver {
   String userName;
   Widget userAvatar;
+  bool _helpCenterEnabled = false;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    controller.changeAppState(state);
+  }
 
   @override
   Widget build(BuildContext context) {

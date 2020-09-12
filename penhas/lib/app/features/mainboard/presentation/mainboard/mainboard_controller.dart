@@ -20,4 +20,20 @@ abstract class _MainboardControllerBase with Store {
 
   @observable
   int selectedIndex = 0;
+
+  @action
+  void changeAppState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.paused:
+        print("AppLifecycleState.paused");
+        break;
+      case AppLifecycleState.resumed:
+        print("AppLifecycleState.resumed");
+        break;
+      case AppLifecycleState.detached:
+        print("AppLifecycleState.detached");
+        break;
+    }
+  }
 }

@@ -25,6 +25,20 @@ mixin _$MainboardController on _MainboardControllerBase, Store {
     });
   }
 
+  final _$_MainboardControllerBaseActionController =
+      ActionController(name: '_MainboardControllerBase');
+
+  @override
+  void changeAppState(AppLifecycleState state) {
+    final _$actionInfo = _$_MainboardControllerBaseActionController.startAction(
+        name: '_MainboardControllerBase.changeAppState');
+    try {
+      return super.changeAppState(state);
+    } finally {
+      _$_MainboardControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
