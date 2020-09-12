@@ -66,17 +66,11 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
                     children: <Widget>[
                       Icon(DesignSystemLogo.penhasLogo,
                           color: Colors.white, size: 60),
-                      SizedBox(height: 72.0),
                       Observer(builder: (_) => _buildUserField()),
-                      SizedBox(height: 24.0),
                       Observer(builder: (_) => _buildPasswordField()),
-                      SizedBox(height: 24.0),
-                      SizedBox(height: 40.0, child: _buildLoginButton()),
-                      SizedBox(height: 24.0),
-                      SizedBox(height: 40.0, child: _buildRegisterButton()),
-                      SizedBox(height: 24.0),
-                      SizedBox(
-                          height: 40.0, child: _buildResetPasswordButton()),
+                      _buildLoginButton(),
+                      _buildRegisterButton(),
+                      _buildResetPasswordButton(),
                     ],
                   ),
                 ),
@@ -94,77 +88,95 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
     super.dispose();
   }
 
-  SingleTextInput _buildUserField() {
-    return SingleTextInput(
-      keyboardType: TextInputType.emailAddress,
-      onChanged: controller.setEmail,
-      boxDecoration: WhiteBoxDecorationStyle(
-        labelText: 'E-mail',
-        hintText: 'Digite seu e-mail',
-        errorText: controller.warningEmail,
-      ),
-    );
-  }
-
-  PassordInputField _buildPasswordField() {
-    return PassordInputField(
-      labelText: 'Senha',
-      hintText: 'Digite sua senha',
-      errorText: controller.warningPassword,
-      onChanged: controller.setPassword,
-    );
-  }
-
-  RaisedButton _buildLoginButton() {
-    return RaisedButton(
-      onPressed: () => controller.signInWithEmailAndPasswordPressed(),
-      elevation: 0,
-      color: DesignSystemColors.ligthPurple,
-      child: Text(
-        'Entrar',
-        style: TextStyle(
-          fontFamily: 'Lato',
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-          fontSize: 18.0,
-        ),
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20.0),
-          bottomLeft: Radius.circular(20.0),
-          bottomRight: Radius.circular(20.0),
+  Widget _buildUserField() {
+    return Padding(
+      padding: EdgeInsets.only(top: 72),
+      child: SingleTextInput(
+        keyboardType: TextInputType.emailAddress,
+        onChanged: controller.setEmail,
+        boxDecoration: WhiteBoxDecorationStyle(
+          labelText: 'E-mail',
+          hintText: 'Digite seu e-mail',
+          errorText: controller.warningEmail,
         ),
       ),
     );
   }
 
-  RaisedButton _buildRegisterButton() {
-    return RaisedButton(
-      onPressed: () => controller.registerUserPressed(),
-      elevation: 0,
-      color: Colors.transparent,
-      child: Text(
-        'Cadastrar',
-        style: kTextStyleDefaultFilledButtonLabel,
+  Widget _buildPasswordField() {
+    return Padding(
+      padding: EdgeInsets.only(top: 24),
+      child: PassordInputField(
+        labelText: 'Senha',
+        hintText: 'Digite sua senha',
+        errorText: controller.warningPassword,
+        onChanged: controller.setPassword,
       ),
-      shape: kButtonShapeOutlineWhite,
     );
   }
 
-  RaisedButton _buildResetPasswordButton() {
-    return RaisedButton(
-      onPressed: () => controller.resetPasswordPressed(),
-      elevation: 0,
-      color: Colors.transparent,
-      child: Text(
-        "Esqueci minha senha",
-        style: TextStyle(
-          fontFamily: 'Lato',
-          fontWeight: FontWeight.normal,
-          fontSize: 14.0,
-          color: Colors.white,
-          decoration: TextDecoration.underline,
+  Widget _buildLoginButton() {
+    return Padding(
+      padding: EdgeInsets.only(top: 24),
+      child: SizedBox(
+        height: 44,
+        child: RaisedButton(
+          onPressed: () => controller.signInWithEmailAndPasswordPressed(),
+          elevation: 0,
+          color: DesignSystemColors.ligthPurple,
+          child: Text(
+            'Entrar',
+            style: TextStyle(
+              fontFamily: 'Lato',
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontSize: 18.0,
+            ),
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.0),
+              bottomLeft: Radius.circular(20.0),
+              bottomRight: Radius.circular(20.0),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRegisterButton() {
+    return Padding(
+      padding: EdgeInsets.only(top: 24),
+      child: SizedBox(
+        height: 44,
+        child: RaisedButton(
+          onPressed: () => controller.registerUserPressed(),
+          elevation: 0,
+          color: Colors.transparent,
+          child: Text(
+            'Cadastrar',
+            style: kTextStyleDefaultFilledButtonLabel,
+          ),
+          shape: kButtonShapeOutlineWhite,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildResetPasswordButton() {
+    return Padding(
+      padding: EdgeInsets.only(top: 16),
+      child: SizedBox(
+        height: 44.0,
+        child: RaisedButton(
+          onPressed: () => controller.resetPasswordPressed(),
+          elevation: 0,
+          color: Colors.transparent,
+          child: Text(
+            "Esqueci minha senha",
+            style: kTextStyleFeedTweetShowReply,
+          ),
         ),
       ),
     );
