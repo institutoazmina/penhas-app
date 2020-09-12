@@ -26,6 +26,8 @@ import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/pages/sign_up_two/sign_up_two_page.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/sign_up_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/sign_up_page.dart';
+import 'package:penhas/app/features/authentication/presentation/sign_in_anonymous/sign_in_anonymous_controller.dart';
+import 'package:penhas/app/features/authentication/presentation/sign_in_anonymous/sign_in_anonymous_page.dart';
 
 class SignInModule extends ChildModule {
   @override
@@ -35,6 +37,7 @@ class SignInModule extends ChildModule {
         Bind((i) => SignInController(i.get<IAuthenticationRepository>())),
         ..._signUp,
         ..._resetPassword,
+        ..._signInAnonymous,
       ];
 
   @override
@@ -62,7 +65,11 @@ class SignInModule extends ChildModule {
         Router(
           '/reset_password/step3',
           child: (_, args) => ResetPasswordThreePage(),
-        )
+        ),
+        Router(
+          '/sign_in_anonymous',
+          child: (_, args) => SignInAnonymousPage(),
+        ),
       ];
 
   List<Bind> get _interfaces => [
@@ -138,6 +145,11 @@ class SignInModule extends ChildModule {
             i.args.data,
           ),
         ),
+      ];
+
+  List<Bind> get _signInAnonymous => [
+        Bind((i) =>
+            SignInAnonymousController(i.get<IAuthenticationRepository>())),
       ];
 
   static Inject get to => Inject<SignInModule>.of();
