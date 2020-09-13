@@ -69,6 +69,11 @@ abstract class _SplashControllerBase with Store {
       return;
     }
 
+    if (session.userProfile.anonymousModeEnabled) {
+      Modular.to.pushReplacementNamed('/authentication/sign_in_anonymous');
+      return;
+    }
+
     _forwardToAuthenticated();
   }
 }

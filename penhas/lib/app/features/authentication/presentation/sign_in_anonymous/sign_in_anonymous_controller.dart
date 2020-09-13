@@ -107,7 +107,7 @@ abstract class _SignInAnonymousController with Store, MapFailureMessage {
   }
 
   Future<void> _forwardToLogged() async {
-    Modular.to.pushReplacementNamed('/');
+    Modular.to.pushReplacementNamed('/mainboard');
   }
 
   void _setErrorMessage(String msg) {
