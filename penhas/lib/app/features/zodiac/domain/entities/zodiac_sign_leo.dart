@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:penhas/app/shared/design_system/colors.dart';
 
 import 'izodiac.dart';
 
@@ -15,7 +16,12 @@ class ZodiacSignLeo implements IZodiac {
   List<String> get feeling => throw UnimplementedError();
 
   @override
-  Widget get icone => Image.asset('assets/images/zodiac/icon_leo/leo.png');
+  Widget get icone => Image.asset(
+        'assets/images/zodiac/icon_leo/leo.png',
+        color: DesignSystemColors.white,
+        height: 24.0,
+        width: 24.0,
+      );
 
   @override
   String get name => 'Leão';

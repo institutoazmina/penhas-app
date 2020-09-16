@@ -29,6 +29,7 @@ import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/sign_up_page.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in_anonymous/sign_in_anonymous_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in_anonymous/sign_in_anonymous_page.dart';
+import 'package:penhas/app/features/zodiac/presentation/zodiac_page.dart';
 
 class SignInModule extends ChildModule {
   @override
@@ -69,7 +70,8 @@ class SignInModule extends ChildModule {
         ),
         Router(
           '/sign_in_anonymous',
-          child: (_, args) => SignInAnonymousPage(),
+          // child: (_, args) => SignInAnonymousPage(),
+          child: (_, args) => ZodiacPage(),
         ),
       ];
 
