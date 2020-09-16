@@ -1,0 +1,22 @@
+import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
+
+import 'izodiac.dart';
+
+class ZodiacSignAries implements IZodiac {
+  @override
+  Widget get constelation =>
+      SvgPicture.asset('assets/images/zodiac/svg/constelation_aries.svg');
+
+  @override
+  String get date => '21 MAR - 20 ABR';
+
+  @override
+  List<String> get feeling => throw UnimplementedError();
+
+  @override
+  Widget get icone => Image.asset('assets/images/zodiac/icon_aries/aries.png');
+
+  @override
+  String get name => 'Áries';
+}
