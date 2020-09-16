@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="182" height="181" viewBox="0 0 182 181">
+    <defs>
+        <path id="oknfgbkuea" d="M2.368 119.774L36.197 119.774 43.639 87.293 10.825 17.932 109.606 3.383 170.16 84.248 153.584 158.346 178.617 176.617"/>
+        <mask id="phgz75s47b" width="176.249" height="173.233" x="0" y="0" fill="#fff" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox">
+            <use xlink:href="#oknfgbkuea"/>
+        </mask>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <path stroke="#EF8106" stroke-dasharray="3" stroke-width="2" d="M10 19L170 84"/>
+                <g>
+                    <use stroke="#EF8106" stroke-dasharray="3" stroke-width="8" mask="url(#phgz75s47b)" xlink:href="#oknfgbkuea"/>
+                    <ellipse cx="4.494" cy="120.886" fill="#FF8200" rx="4.494" ry="4.495"/>
+                    <ellipse cx="37.647" cy="120.886" fill="#FF8200" rx="4.494" ry="4.495"/>
+                    <ellipse cx="43.736" cy="86.375" fill="#FF8200" rx="4.494" ry="4.495"/>
+                    <ellipse cx="12.613" cy="19.382" fill="#FF8200" rx="4.494" ry="4.495"/>
+                    <ellipse cx="108.011" cy="4.495" fill="#FF8200" rx="4.494" ry="4.495"/>
+                    <ellipse cx="168.903" cy="84.345" fill="#FF8200" rx="4.494" ry="4.495"/>
+                    <ellipse cx="153.342" cy="158.781" fill="#FF8200" rx="4.494" ry="4.495"/>
+                    <ellipse cx="177.699" cy="175.698" fill="#FF8200" rx="4.494" ry="4.495"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

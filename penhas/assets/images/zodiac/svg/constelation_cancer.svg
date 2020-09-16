@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="176px" height="185px" viewBox="0 0 176 185" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 64 (101010) - https://sketch.com -->
+    <title>481AB7CF-2E9F-436D-A81F-4260E15AD1AB</title>
+    <desc>Created with sketchtool.</desc>
+    <g id="Icones-constelação" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Câncer" transform="translate(-3.000000, 0.000000)">
+            <g id="cancer" transform="translate(3.000000, 0.000000)">
+                <path d="M5,4 L47.25,65.0178571 L69.5707547,104.5 L174,138" id="Path-17" stroke="#EF8106" stroke-width="2" stroke-dasharray="3"></path>
+                <line x1="60" y1="180" x2="69" y2="104" id="Path-18" stroke="#EF8106" stroke-width="2" stroke-dasharray="3"></line>
+                <circle id="Oval-Copy-48" fill="#FA9A2E" cx="4.495" cy="4.495" r="4.495"></circle>
+                <circle id="Oval-Copy-49" fill="#FA9A2E" cx="45.495" cy="62.495" r="4.495"></circle>
+                <circle id="Oval-Copy-50" fill="#FA9A2E" cx="70.495" cy="105.495" r="4.495"></circle>
+                <circle id="Oval-Copy-51" fill="#FA9A2E" cx="171.495" cy="137.495" r="4.495"></circle>
+                <circle id="Oval-Copy-52" fill="#FA9A2E" cx="59.495" cy="180.495" r="4.495"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

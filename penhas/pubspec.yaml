@@ -118,6 +118,31 @@ flutter:
     - assets/images/svg/help_center/guardians/guardians_edit.svg
     - assets/images/svg/help_center/guardians/guardians_sent_invite.svg
     - assets/images/svg/help_center/guardians/guardians_alert.svg
+    # Zodiac
+    - assets/images/zodiac/svg/constelation_aquarius.svg
+    - assets/images/zodiac/svg/constelation_aries.svg
+    - assets/images/zodiac/svg/constelation_cancer.svg
+    - assets/images/zodiac/svg/constelation_capricorn.svg
+    - assets/images/zodiac/svg/constelation_gemini.svg
+    - assets/images/zodiac/svg/constelation_leo.svg
+    - assets/images/zodiac/svg/constelation_libra.svg
+    - assets/images/zodiac/svg/constelation_pisces.svg
+    - assets/images/zodiac/svg/constelation_sagittarius.svg
+    - assets/images/zodiac/svg/constelation_scorpio.svg
+    - assets/images/zodiac/svg/constelation_taurus.svg
+    - assets/images/zodiac/svg/constelation_virgo.svg
+    - assets/images/zodiac/icon_aquarius/aquarius.png
+    - assets/images/zodiac/icon_aries/aries.png
+    - assets/images/zodiac/icon_cancer/cancer.png
+    - assets/images/zodiac/icon_capricorn/capricorn.png
+    - assets/images/zodiac/icon_gemini/gemini.png
+    - assets/images/zodiac/icon_leo/leo.png
+    - assets/images/zodiac/icon_libra/libra.png
+    - assets/images/zodiac/icon_pisces/pisces.png
+    - assets/images/zodiac/icon_sagittarius/sagittarius.png
+    - assets/images/zodiac/icon_scorpio/scorpio.png
+    - assets/images/zodiac/icon_taurus/taurus.png
+    - assets/images/zodiac/icon_virgo/virgo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

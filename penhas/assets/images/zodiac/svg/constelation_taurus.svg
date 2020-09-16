@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="182" height="243" viewBox="0 0 182 243">
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <path stroke="#EF8106" stroke-dasharray="3" stroke-width="2" d="M4 58.512l58.1 78.346L99 153v-26.772l-16.095-3.543 10.6-16.93L76.23 71.505 29.124 3M178 241v-26.44l-49.13-33.937L99 153"/>
+                <circle cx="177.495" cy="238.495" r="4.495" fill="#FA9A2E"/>
+                <circle cx="176.495" cy="212.495" r="4.495" fill="#FA9A2E"/>
+                <circle cx="128.495" cy="180.495" r="4.495" fill="#FA9A2E"/>
+                <circle cx="98.495" cy="152.495" r="4.495" fill="#FA9A2E"/>
+                <circle cx="62.495" cy="135.495" r="4.495" fill="#FA9A2E"/>
+                <ellipse cx="82.495" cy="122.996" fill="#FA9A2E" rx="4.495" ry="3.996"/>
+                <circle cx="98.495" cy="126.495" r="4.495" fill="#FA9A2E"/>
+                <circle cx="77.495" cy="73.495" r="4.495" fill="#FA9A2E"/>
+                <circle cx="30.495" cy="4.495" r="4.495" fill="#FA9A2E"/>
+                <circle cx="4.495" cy="59.495" r="4.495" fill="#FA9A2E"/>
+            </g>
+        </g>
+    </g>
+</svg>
