@@ -3,12 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/input_box_style.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/login_button.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/password_text_input.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
@@ -123,29 +121,8 @@ class _SignInAnonymousPage
   Widget _buildLoginButton() {
     return Padding(
       padding: EdgeInsets.only(top: 32.0),
-      child: SizedBox(
-        height: 44,
-        child: RaisedButton(
-          onPressed: () => controller.signInWithEmailAndPasswordPressed(),
-          elevation: 0,
-          color: DesignSystemColors.ligthPurple,
-          child: Text(
-            'Entrar',
-            style: TextStyle(
-              fontFamily: 'Lato',
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              fontSize: 18.0,
-            ),
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              bottomLeft: Radius.circular(20.0),
-              bottomRight: Radius.circular(20.0),
-            ),
-          ),
-        ),
+      child: LoginButton(
+        onChanged: () async => controller.signInWithEmailAndPasswordPressed(),
       ),
     );
   }
