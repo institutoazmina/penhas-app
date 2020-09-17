@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:flutter_tags/flutter_tags.dart';
-import 'package:penhas/app/features/zodiac/domain/entities/zodiac_Sign_gemini.dart';
-import 'package:penhas/app/features/zodiac/domain/entities/zodiac_sign_aquarius.dart';
-import 'package:penhas/app/features/zodiac/domain/entities/zodiac_sign_aries.dart';
-import 'package:penhas/app/features/zodiac/domain/entities/zodiac_sign_cancer.dart';
-import 'package:penhas/app/features/zodiac/domain/entities/zodiac_sign_capricorn.dart';
-import 'package:penhas/app/features/zodiac/domain/entities/zodiac_sign_leo.dart';
-import 'package:penhas/app/features/zodiac/domain/entities/zodiac_sign_pisces.dart';
-import 'package:penhas/app/features/zodiac/domain/entities/zodiac_sign_sagittarius.dart';
-import 'package:penhas/app/features/zodiac/domain/entities/zodiac_sign_taurus.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:penhas/app/features/zodiac/presentation/pages/zodiac_action_button.dart';
+import 'package:penhas/app/features/zodiac/presentation/pages/zodiac_felling_page.dart';
+import 'package:penhas/app/features/zodiac/presentation/pages/zodiac_rulling_page.dart';
+import 'package:penhas/app/features/zodiac/presentation/pages/zodiac_sign_page.dart';
+import 'package:penhas/app/features/zodiac/presentation/zodiac_controller.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ZodiacPage extends StatefulWidget {
-  ZodiacPage({Key key}) : super(key: key);
+  final String title;
+  ZodiacPage({
+    Key key,
+    this.title = "ZodiacPage",
+  }) : super(key: key);
 
   @override
   _ZodiacPageState createState() => _ZodiacPageState();
 }
 
-class _ZodiacPageState extends State<ZodiacPage> {
+class _ZodiacPageState extends ModularState<ZodiacPage, ZodiacController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,125 +37,41 @@ class _ZodiacPageState extends State<ZodiacPage> {
                 children: [
                   Text(
                     "Hoje",
-                    style: kTextStyleFeedTweetReplyHeader,
+                    style: kTextStyleZodiacHoje,
                   ),
-                  SizedBox(
-                    height: 44.0,
-                    child: Row(
-                      children: [
-                        RaisedButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () {},
-                          elevation: 0,
-                          color: Colors.transparent,
-                          child: Text(
-                            "Diário astrólogico",
-                            style: kTextStyleFeedTweetShowReply,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 30),
-                    child: ZodiacSignCancer().constelation,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 30.0),
-                    child: Text(
-                      ZodiacSignCancer().name,
-                      style: kTextStyleZodiacTitle,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 30),
-                    child: Text(
-                      ZodiacSignCancer().date,
-                      style: kTextStyleGuardianBodyTextStyle,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(
-                                'assets/images/zodiac/svg/sun.svg'),
-                            Padding(
-                              padding: EdgeInsets.only(left: 12.0),
-                              child: Text('Sol'),
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(
-                                'assets/images/zodiac/svg/moon.svg'),
-                            Padding(
-                              padding: EdgeInsets.only(left: 12.0),
-                              child: Text(
-                                'Lua',
-                                style: kTextStyleZodiacRulling,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(
-                                'assets/images/zodiac/svg/venus.svg'),
-                            Padding(
-                              padding: EdgeInsets.only(left: 12.0),
-                              child: Text(
-                                'Vênus',
-                                style: kTextStyleZodiacRulling,
-                              ),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: Tags(
-                      spacing: 8.0,
-                      symmetry: false,
-                      alignment: WrapAlignment.start,
-                      runAlignment: WrapAlignment.start,
-                      itemCount: 5,
-                      itemBuilder: (int index) {
-                        return Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                          decoration: BoxDecoration(
-                            color: DesignSystemColors.easterPurple,
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(14),
-                              topRight: Radius.circular(14),
-                              bottomRight: Radius.circular(8),
-                            ),
-                          ),
-                          child: Text(
-                            'Amor',
-                            style: kTextStyleZodiacFelling,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                  _buildLoginButton(),
+                  Observer(builder: (_) {
+                    return ZodiacSignPage(sign: controller.sign);
+                  }),
+                  ZodiacRullingPage(),
+                  Observer(builder: (_) {
+                    return ZodiacFellingPage(sign: controller.sign);
+                  }),
                 ],
               ),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildLoginButton() {
+    return SizedBox(
+      height: 44.0,
+      child: Row(
+        children: [
+          FlatButton(
+            padding: EdgeInsets.zero,
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onPressed: () => controller.forwardStealthLogin(),
+            child: Text(
+              "Diário astrólogico",
+              style: kTextStyleFeedTweetShowReply,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -174,34 +90,16 @@ class _ZodiacPageState extends State<ZodiacPage> {
             color: Colors.white,
             size: 36,
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 18.0),
-            child: Container(
-              height: 44.0,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ZodiacSignAquarius().icone,
-                  ZodiacSignAries().icone,
-                  ZodiacSignCapricorn().icone,
-                  ZodiacSignGemini().icone,
-                  FlatButton(
-                    child: ZodiacSignCancer().icone,
-                    onPressed: () {},
-                    color: DesignSystemColors.bluishPurple,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                  ZodiacSignPisces().icone,
-                  ZodiacSignLeo().icone,
-                  ZodiacSignSagittarius().icone,
-                  ZodiacSignTaurus().icone,
-                ],
-              ),
-            ),
-          )
+          Observer(
+            name: '_appBarBuilder',
+            builder: (_) {
+              return ZodiacActionButton(
+                sign: controller.sign,
+                listOfSign: controller.signList,
+                onPressed: () => controller.stealthAction(),
+              );
+            },
+          ),
         ],
       ),
     );

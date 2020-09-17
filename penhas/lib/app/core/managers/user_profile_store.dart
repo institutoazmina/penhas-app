@@ -33,6 +33,7 @@ class UserProfileStore implements IUserProfileStore {
         avatar: null,
         stealthModeEnabled: null,
         anonymousModeEnabled: null,
+        birthdate: DateTime.now(),
       ),
     );
   }
@@ -45,6 +46,7 @@ class UserProfileStore implements IUserProfileStore {
       avatar: userProfile.avatar,
       stealthModeEnabled: userProfile.stealthModeEnabled,
       anonymousModeEnabled: userProfile.anonymousModeEnabled,
+      birthdate: userProfile.birthdate,
     )..toJson();
 
     final jsonString = json.encode(profileJson);

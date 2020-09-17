@@ -260,6 +260,13 @@ const kTextStyleAudioDuration = TextStyle(
     letterSpacing: 0.4,
     fontWeight: FontWeight.normal);
 
+const kTextStyleZodiacHoje = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 20.0,
+    letterSpacing: 0.6,
+    color: DesignSystemColors.darkIndigoThree,
+    fontWeight: FontWeight.bold);
+
 const kTextStyleZodiacTitle = TextStyle(
     fontFamily: 'Lato',
     fontSize: 36.0,
@@ -280,3 +287,10 @@ const kTextStyleZodiacFelling = TextStyle(
     letterSpacing: 0.4,
     color: DesignSystemColors.white,
     fontWeight: FontWeight.normal);
+
+const kTextStyleZodiacFellingTitle = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 14.0,
+    letterSpacing: 0.4,
+    color: DesignSystemColors.darkIndigoThree,
+    fontWeight: FontWeight.bold);

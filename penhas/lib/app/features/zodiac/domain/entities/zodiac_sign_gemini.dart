@@ -13,7 +13,14 @@ class ZodiacSignGemini implements IZodiac {
   String get date => '21 MAI - 20 JUN';
 
   @override
-  List<String> get feeling => throw UnimplementedError();
+  List<String> get feeling => [
+        'Feliz',
+        'Introspectiva',
+        'Estressada',
+        'Ansiosa',
+        'Animada',
+        'Cansada',
+      ];
 
   @override
   Widget get icone => Image.asset(

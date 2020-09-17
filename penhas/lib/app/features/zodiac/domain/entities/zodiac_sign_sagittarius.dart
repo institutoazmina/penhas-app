@@ -13,7 +13,14 @@ class ZodiacSignSagittarius implements IZodiac {
   String get date => '22 NOV - 21 DEZ';
 
   @override
-  List<String> get feeling => throw UnimplementedError();
+  List<String> get feeling => [
+        'Feliz',
+        'Introspectiva',
+        'Estressada',
+        'Ansiosa',
+        'Animada',
+        'Cansada',
+      ];
 
   @override
   Widget get icone => Image.asset(

@@ -13,7 +13,14 @@ class ZodiacSignAquarius implements IZodiac {
   String get date => '21 JAN - 19 FEV';
 
   @override
-  List<String> get feeling => throw UnimplementedError();
+  List<String> get feeling => [
+        'Feliz',
+        'Introspectiva',
+        'Estressada',
+        'Ansiosa',
+        'Animada',
+        'Cansada',
+      ];
 
   @override
   Widget get icone => Image.asset(

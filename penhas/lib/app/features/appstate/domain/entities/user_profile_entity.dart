@@ -8,6 +8,7 @@ class UserProfileEntity extends Equatable {
   final String nickname;
   final bool stealthModeEnabled;
   final bool anonymousModeEnabled;
+  final DateTime birthdate;
 
   UserProfileEntity({
     @required this.email,
@@ -15,6 +16,7 @@ class UserProfileEntity extends Equatable {
     @required this.avatar,
     @required this.stealthModeEnabled,
     @required this.anonymousModeEnabled,
+    @required this.birthdate,
   });
 
   @override
@@ -24,6 +26,7 @@ class UserProfileEntity extends Equatable {
         avatar,
         stealthModeEnabled,
         anonymousModeEnabled,
+        birthdate,
       ];
 
   @override

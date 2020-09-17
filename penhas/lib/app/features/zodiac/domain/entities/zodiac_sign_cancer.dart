@@ -13,7 +13,14 @@ class ZodiacSignCancer implements IZodiac {
   String get date => '21 JUN - 22 JUL';
 
   @override
-  List<String> get feeling => throw UnimplementedError();
+  List<String> get feeling => [
+        'Feliz',
+        'Introspectiva',
+        'Estressada',
+        'Ansiosa',
+        'Animada',
+        'Cansada',
+      ];
 
   @override
   Widget get icone => Image.asset(

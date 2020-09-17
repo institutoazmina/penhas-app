@@ -13,7 +13,14 @@ class ZodiacSignLibra implements IZodiac {
   String get date => '23 SET - 22 OUT';
 
   @override
-  List<String> get feeling => throw UnimplementedError();
+  List<String> get feeling => [
+        'Feliz',
+        'Introspectiva',
+        'Estressada',
+        'Ansiosa',
+        'Animada',
+        'Cansada',
+      ];
 
   @override
   Widget get icone => Image.asset(

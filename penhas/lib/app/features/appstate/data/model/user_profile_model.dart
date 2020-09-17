@@ -7,6 +7,7 @@ class UserProfileModel extends UserProfileEntity {
   final String avatar;
   final bool stealthModeEnabled;
   final bool anonymousModeEnabled;
+  final DateTime birthdate;
 
   UserProfileModel({
     @required this.email,
@@ -14,6 +15,7 @@ class UserProfileModel extends UserProfileEntity {
     @required this.avatar,
     @required this.stealthModeEnabled,
     @required this.anonymousModeEnabled,
+    @required this.birthdate,
   });
 
   UserProfileModel.fromJson(Map<String, Object> jsonData)
@@ -21,7 +23,8 @@ class UserProfileModel extends UserProfileEntity {
         nickname = jsonData['apelido'],
         avatar = jsonData['avatar_url'],
         stealthModeEnabled = jsonData['modo_camuflado_ativo'] == 1,
-        anonymousModeEnabled = jsonData['modo_anonimo_ativo'] == 1;
+        anonymousModeEnabled = jsonData['modo_anonimo_ativo'] == 1,
+        birthdate = DateTime.parse(jsonData['dt_nasc']);
 
   Map<String, Object> toJson() => {
         'email': email,
@@ -29,5 +32,6 @@ class UserProfileModel extends UserProfileEntity {
         'avatar_url': avatar,
         'modo_camuflado_ativo': stealthModeEnabled ? 1 : 0,
         'modo_anonimo_ativo': anonymousModeEnabled ? 1 : 0,
+        'dt_nasc': birthdate.toIso8601String()
       };
 }
