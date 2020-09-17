@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/features/zodiac/domain/entities/zodiac_Sign_gemini.dart';
 import 'package:penhas/app/features/zodiac/domain/entities/zodiac_sign_aquarius.dart';
 import 'package:penhas/app/features/zodiac/domain/entities/zodiac_sign_aries.dart';
@@ -24,40 +25,108 @@ class _ZodiacPageState extends State<ZodiacPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBarBuilder(),
-      body: SizedBox.expand(
-        child: SafeArea(
-          child: Container(
-            color: Color.fromRGBO(248, 248, 248, 1.0),
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  "Hoje",
-                  style: kTextStyleFeedTweetReplyHeader,
-                ),
-                SizedBox(
-                  height: 44.0,
-                  child: Row(
+      body: SafeArea(
+        child: SizedBox.expand(
+          child: SingleChildScrollView(
+            child: Container(
+              color: Color.fromRGBO(248, 248, 248, 1.0),
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    "Hoje",
+                    style: kTextStyleFeedTweetReplyHeader,
+                  ),
+                  SizedBox(
+                    height: 44.0,
+                    child: Row(
+                      children: [
+                        RaisedButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () {},
+                          elevation: 0,
+                          color: Colors.transparent,
+                          child: Text(
+                            "Diário astrólogico",
+                            style: kTextStyleFeedTweetShowReply,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 30),
+                    child: ZodiacSignCancer().constelation,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 30.0),
+                    child: Text(
+                      ZodiacSignCancer().name,
+                      style: kTextStyleZodiacTitle,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 30),
+                    child: Text(
+                      ZodiacSignCancer().date,
+                      style: kTextStyleGuardianBodyTextStyle,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      RaisedButton(
-                        padding: EdgeInsets.zero,
-                        onPressed: () {},
-                        elevation: 0,
-                        color: Colors.transparent,
-                        child: Text(
-                          "Diário astrólogico",
-                          style: kTextStyleFeedTweetShowReply,
+                      Container(
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(
+                                'assets/images/zodiac/svg/sun.svg'),
+                            Padding(
+                              padding: EdgeInsets.only(left: 12.0),
+                              child: Text('Sol'),
+                            )
+                          ],
                         ),
                       ),
+                      Container(
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(
+                                'assets/images/zodiac/svg/moon.svg'),
+                            Padding(
+                              padding: EdgeInsets.only(left: 12.0),
+                              child: Text(
+                                'Lua',
+                                style: kTextStyleZodiacRulling,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(
+                                'assets/images/zodiac/svg/venus.svg'),
+                            Padding(
+                              padding: EdgeInsets.only(left: 12.0),
+                              child: Text(
+                                'Vênus',
+                                style: kTextStyleZodiacRulling,
+                              ),
+                            )
+                          ],
+                        ),
+                      )
                     ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: ZodiacSignCancer().constelation,
-                ),
-              ],
+                  )
+
+                  //                   - assets/images/zodiac/svg/moon.svg
+                  // - assets/images/zodiac/svg/venus.svg
+                ],
+              ),
             ),
           ),
         ),

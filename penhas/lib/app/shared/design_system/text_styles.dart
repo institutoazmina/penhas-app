@@ -177,7 +177,7 @@ const kTextStyleHelpCenterButtonLabel = TextStyle(
 
 const kTextStyleGuardianBodyTextStyle = TextStyle(
   color: DesignSystemColors.darkIndigoThree,
-  fontSize: 15.0,
+  fontSize: 16.0,
   letterSpacing: 0.44,
   fontFamily: 'Lato',
   fontWeight: FontWeight.normal,
@@ -258,4 +258,18 @@ const kTextStyleAudioDuration = TextStyle(
     fontFamily: 'Lato',
     fontSize: 12.0,
     letterSpacing: 0.4,
+    fontWeight: FontWeight.normal);
+
+const kTextStyleZodiacTitle = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 36.0,
+    letterSpacing: 0.25,
+    color: DesignSystemColors.darkIndigoThree,
+    fontWeight: FontWeight.bold);
+
+const kTextStyleZodiacRulling = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 14.0,
+    letterSpacing: 0.45,
+    color: DesignSystemColors.darkIndigoThree,
     fontWeight: FontWeight.normal);
