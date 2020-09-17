@@ -19,6 +19,7 @@ class SplashModule extends ChildModule {
           (i) => SplashController(
             appConfiguration: i.get<IAppConfiguration>(),
             appStateUseCase: i.get<AppStateUseCase>(),
+            userProfileStore: i.get<IUserProfileStore>(),
           ),
         ),
         Bind<AppStateUseCase>(
