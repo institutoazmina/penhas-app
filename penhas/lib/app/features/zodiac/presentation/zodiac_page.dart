@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_tags/flutter_tags.dart';
 import 'package:penhas/app/features/zodiac/domain/entities/zodiac_Sign_gemini.dart';
 import 'package:penhas/app/features/zodiac/domain/entities/zodiac_sign_aquarius.dart';
 import 'package:penhas/app/features/zodiac/domain/entities/zodiac_sign_aries.dart';
@@ -121,10 +122,35 @@ class _ZodiacPageState extends State<ZodiacPage> {
                         ),
                       )
                     ],
-                  )
-
-                  //                   - assets/images/zodiac/svg/moon.svg
-                  // - assets/images/zodiac/svg/venus.svg
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Tags(
+                      spacing: 8.0,
+                      symmetry: false,
+                      alignment: WrapAlignment.start,
+                      runAlignment: WrapAlignment.start,
+                      itemCount: 5,
+                      itemBuilder: (int index) {
+                        return Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: DesignSystemColors.easterPurple,
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(14),
+                              topRight: Radius.circular(14),
+                              bottomRight: Radius.circular(8),
+                            ),
+                          ),
+                          child: Text(
+                            'Amor',
+                            style: kTextStyleZodiacFelling,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),

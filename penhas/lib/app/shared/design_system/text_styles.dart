@@ -273,3 +273,10 @@ const kTextStyleZodiacRulling = TextStyle(
     letterSpacing: 0.45,
     color: DesignSystemColors.darkIndigoThree,
     fontWeight: FontWeight.normal);
+
+const kTextStyleZodiacFelling = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 12.0,
+    letterSpacing: 0.4,
+    color: DesignSystemColors.white,
+    fontWeight: FontWeight.normal);
