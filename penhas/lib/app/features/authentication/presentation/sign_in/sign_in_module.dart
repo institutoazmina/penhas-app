@@ -29,6 +29,8 @@ import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/sign_up_page.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in_anonymous/sign_in_anonymous_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in_anonymous/sign_in_anonymous_page.dart';
+import 'package:penhas/app/features/authentication/presentation/sign_in_stealth/sign_in_stealth_controller.dart';
+import 'package:penhas/app/features/authentication/presentation/sign_in_stealth/sign_in_stealth_page.dart';
 import 'package:penhas/app/features/zodiac/presentation/zodiac_module.dart';
 
 class SignInModule extends ChildModule {
@@ -40,6 +42,7 @@ class SignInModule extends ChildModule {
         ..._signUp,
         ..._resetPassword,
         ..._signInAnonymous,
+        ..._signInStealth,
       ];
 
   @override
@@ -71,6 +74,10 @@ class SignInModule extends ChildModule {
         Router(
           '/sign_in_anonymous',
           child: (_, args) => SignInAnonymousPage(),
+        ),
+        Router(
+          '/sign_in_stealth',
+          child: (_, args) => SignInStealthPage(),
         ),
         Router(
           '/stealth',
@@ -156,6 +163,14 @@ class SignInModule extends ChildModule {
   List<Bind> get _signInAnonymous => [
         Bind(
           (i) => SignInAnonymousController(
+              repository: i.get<IAuthenticationRepository>(),
+              userProfileStore: i.get<IUserProfileStore>()),
+        )
+      ];
+
+  List<Bind> get _signInStealth => [
+        Bind(
+          (i) => SignInStealthController(
               repository: i.get<IAuthenticationRepository>(),
               userProfileStore: i.get<IUserProfileStore>()),
         )

@@ -1,7 +1,7 @@
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/managers/user_profile_store.dart';
-import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/zodiac/domain/entities/izodiac.dart';
 import 'package:penhas/app/features/zodiac/domain/entities/zodiac_sign_aquarius.dart';
 import 'package:penhas/app/features/zodiac/domain/usecases/zodiac.dart';
@@ -16,15 +16,14 @@ class ZodiacController extends _ZodiacControllerBase with _$ZodiacController {
 
 abstract class _ZodiacControllerBase with Store {
   final IUserProfileStore _userProfileStore;
-  UserProfileEntity _userProfile;
 
   _ZodiacControllerBase(this._userProfileStore) {
     _init();
   }
 
   void _init() async {
-    _userProfile = await _userProfileStore.retreive();
-    final Zodiac zodiac = Zodiac();
+    final zodiac = Zodiac();
+    final _userProfile = await _userProfileStore.retreive();
     sign = zodiac.sign(_userProfile.birthdate);
     signList =
         zodiac.pickEigthRandonSign(_userProfile.birthdate).asObservable();
@@ -38,9 +37,10 @@ abstract class _ZodiacControllerBase with Store {
 
   @action
   void forwardStealthLogin() {
-    print('forwardStealthLogin');
+    Modular.to.pushReplacementNamed('/authentication/sign_in_stealth');
   }
 
+  @action
   void stealthAction() {
     print('stealthAction');
   }

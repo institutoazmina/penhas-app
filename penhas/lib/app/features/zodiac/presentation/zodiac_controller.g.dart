@@ -54,6 +54,17 @@ mixin _$ZodiacController on _ZodiacControllerBase, Store {
   }
 
   @override
+  void stealthAction() {
+    final _$actionInfo = _$_ZodiacControllerBaseActionController.startAction(
+        name: '_ZodiacControllerBase.stealthAction');
+    try {
+      return super.stealthAction();
+    } finally {
+      _$_ZodiacControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 sign: ${sign},
