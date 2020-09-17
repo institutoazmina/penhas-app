@@ -131,6 +131,9 @@ flutter:
     - assets/images/zodiac/svg/constelation_scorpio.svg
     - assets/images/zodiac/svg/constelation_taurus.svg
     - assets/images/zodiac/svg/constelation_virgo.svg
+    - assets/images/zodiac/svg/moon.svg
+    - assets/images/zodiac/svg/sun.svg
+    - assets/images/zodiac/svg/venus.svg
     - assets/images/zodiac/icon_aquarius/aquarius.png
     - assets/images/zodiac/icon_aries/aries.png
     - assets/images/zodiac/icon_cancer/cancer.png
