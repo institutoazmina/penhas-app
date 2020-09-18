@@ -33,6 +33,10 @@ abstract class _MainboardControllerBase with Store {
 
     switch (state) {
       case AppLifecycleState.paused:
+        if (profile.stealthModeEnabled) {
+          Modular.to.pushReplacementNamed('/authentication/stealth');
+          return;
+        }
         if (profile.anonymousModeEnabled) {
           Modular.to.pushReplacementNamed('/authentication/sign_in_anonymous');
         }

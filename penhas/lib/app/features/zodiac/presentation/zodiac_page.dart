@@ -93,10 +93,13 @@ class _ZodiacPageState extends ModularState<ZodiacPage, ZodiacController> {
           Observer(
             name: '_appBarBuilder',
             builder: (_) {
-              return ZodiacActionButton(
-                sign: controller.sign,
-                listOfSign: controller.signList,
-                onPressed: () => controller.stealthAction(),
+              return Padding(
+                padding: EdgeInsets.only(top: 16.0),
+                child: ZodiacActionButton(
+                  sign: controller.sign,
+                  listOfSign: controller.signList,
+                  onPressed: () => controller.stealthAction(),
+                ),
               );
             },
           ),
