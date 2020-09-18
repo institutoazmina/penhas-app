@@ -1,8 +1,4 @@
-* Versão : 1.0.12
+* Versão : 1.0.13
 * Novidades
-  - Ativação do modo anonimo
-  - Ativação do modo camuflado
-  - Link para o site do Correios para procurar pelo CEP
-
-* Correção
-  - Alterado a forma de inserir a data de nascimento
+  - Tela de login para o modo anonimo
+  - Tela de login para o modo camuflado
