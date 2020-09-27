@@ -23,6 +23,12 @@ class ZodiacPage extends StatefulWidget {
 
 class _ZodiacPageState extends ModularState<ZodiacPage, ZodiacController> {
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBarBuilder(),
@@ -91,7 +97,6 @@ class _ZodiacPageState extends ModularState<ZodiacPage, ZodiacController> {
             size: 36,
           ),
           Observer(
-            name: '_appBarBuilder',
             builder: (_) {
               return Padding(
                 padding: EdgeInsets.only(top: 16.0),
