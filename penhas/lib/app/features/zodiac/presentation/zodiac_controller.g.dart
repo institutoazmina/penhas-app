@@ -39,6 +39,22 @@ mixin _$ZodiacController on _ZodiacControllerBase, Store {
     });
   }
 
+  final _$isSecurityRunningAtom =
+      Atom(name: '_ZodiacControllerBase.isSecurityRunning');
+
+  @override
+  bool get isSecurityRunning {
+    _$isSecurityRunningAtom.reportRead();
+    return super.isSecurityRunning;
+  }
+
+  @override
+  set isSecurityRunning(bool value) {
+    _$isSecurityRunningAtom.reportWrite(value, super.isSecurityRunning, () {
+      super.isSecurityRunning = value;
+    });
+  }
+
   final _$_ZodiacControllerBaseActionController =
       ActionController(name: '_ZodiacControllerBase');
 
@@ -65,10 +81,22 @@ mixin _$ZodiacController on _ZodiacControllerBase, Store {
   }
 
   @override
+  void dispose() {
+    final _$actionInfo = _$_ZodiacControllerBaseActionController.startAction(
+        name: '_ZodiacControllerBase.dispose');
+    try {
+      return super.dispose();
+    } finally {
+      _$_ZodiacControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 sign: ${sign},
-signList: ${signList}
+signList: ${signList},
+isSecurityRunning: ${isSecurityRunning}
     ''';
   }
 }

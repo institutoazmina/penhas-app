@@ -100,10 +100,16 @@ class _ZodiacPageState extends ModularState<ZodiacPage, ZodiacController> {
             builder: (_) {
               return Padding(
                 padding: EdgeInsets.only(top: 16.0),
-                child: ZodiacActionButton(
-                  sign: controller.sign,
-                  listOfSign: controller.signList,
-                  onPressed: () => controller.stealthAction(),
+                child: Observer(
+                  name: "solli_appBarBuilder",
+                  builder: (_) {
+                    return ZodiacActionButton(
+                      sign: controller.sign,
+                      listOfSign: controller.signList,
+                      isRunning: controller.isSecurityRunning,
+                      onPressed: () => controller.stealthAction(),
+                    );
+                  },
                 ),
               );
             },

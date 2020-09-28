@@ -48,6 +48,9 @@ abstract class _ZodiacControllerBase with Store {
   @observable
   ObservableList<IZodiac> signList = ObservableList<IZodiac>();
 
+  @observable
+  bool isSecurityRunning = false;
+
   @action
   void forwardStealthLogin() {
     Modular.to.pushReplacementNamed('/authentication/sign_in_stealth');
@@ -58,6 +61,7 @@ abstract class _ZodiacControllerBase with Store {
     if (_isSecurityRunning) {
       _securityAction.stop();
     } else {
+      isSecurityRunning = true;
       _securityAction.start();
     }
 
@@ -67,11 +71,12 @@ abstract class _ZodiacControllerBase with Store {
   @action
   void dispose() {
     _cancelDataSource();
+    _securityAction.dispose();
   }
 
   _registerDataSource() {
     _streamCache = _securityAction.isRunning.listen((event) {
-      print(event);
+      isSecurityRunning = event;
     });
   }
 
