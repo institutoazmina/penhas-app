@@ -43,12 +43,12 @@ class StealthSecurityAction {
     _recording = false;
     _rotateAudioTimer?.cancel();
     _audioServices.stop();
-    _audioServices.dispose();
     _streamController.add(false);
   }
 
   void dispose() async {
     await stop();
+    _audioServices.dispose();
 
     try {
       if (_streamController != null) {
