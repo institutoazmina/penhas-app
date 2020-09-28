@@ -6,9 +6,12 @@ class ZodiacActionButton extends StatelessWidget {
   final IZodiac sign;
   final List<IZodiac> listOfSign;
   final VoidCallback onPressed;
+  final bool isRunning;
+
   const ZodiacActionButton({
     @required this.sign,
     @required this.listOfSign,
+    @required this.isRunning,
     @required this.onPressed,
     Key key,
   }) : super(key: key);
@@ -32,9 +35,11 @@ class ZodiacActionButton extends StatelessWidget {
           FlatButton(
             child: sign.icone,
             onPressed: onPressed,
-            color: DesignSystemColors.bluishPurple,
+            color: isRunning
+                ? DesignSystemColors.pinky
+                : DesignSystemColors.bluishPurple,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(isRunning ? 12 : 20),
             ),
           ),
           listOfSign[4].icone,
