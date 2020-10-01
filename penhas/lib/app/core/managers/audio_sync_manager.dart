@@ -163,6 +163,11 @@ extension _AudioSyncManager on AudioSyncManager {
 
   Future<void> _syncAudio(File file) async {
     try {
+      if (file.statSync().size < 30) {
+        file.deleteSync();
+        return;
+      }
+
       final fileName = file.name;
       final parts = fileName.split('_');
       final audio = AudioData(
@@ -184,12 +189,6 @@ extension _AudioSyncManager on AudioSyncManager {
 
   void handleUploadFailure(Failure failure, File file) {
     print(failure);
-    if (file.existsSync()) {
-      Future.delayed(Duration(seconds: 30), () {
-        _pendingUploadAudio.addLast(file);
-        setupUploadTimer();
-      });
-    }
   }
 
   String mapEpochToUTC(String time) {
