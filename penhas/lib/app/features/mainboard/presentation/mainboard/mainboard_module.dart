@@ -215,6 +215,7 @@ class MainboardModule extends ChildModule {
         ),
         Bind<ILocationServices>(
           (i) => LocationServices(),
+          singleton: false,
         ),
       ];
 

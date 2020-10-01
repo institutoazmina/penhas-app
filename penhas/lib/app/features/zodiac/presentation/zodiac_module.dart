@@ -23,6 +23,7 @@ class ZodiacModule extends WidgetModule {
             userProfileStore: i.get<IUserProfileStore>(),
             securityAction: i.get<StealthSecurityAction>(),
           ),
+          singleton: false,
         ),
         Bind(
           (i) => StealthSecurityAction(
@@ -30,26 +31,31 @@ class ZodiacModule extends WidgetModule {
               featureToogle: i.get<HelpCenterCallActionFeature>(),
               locationService: i.get<ILocationServices>(),
               guardianRepository: i.get<IGuardianRepository>()),
+          singleton: false,
         ),
         Bind<HelpCenterCallActionFeature>(
           (i) => HelpCenterCallActionFeature(
             modulesServices: i.get<IAppModulesServices>(),
           ),
+          singleton: false,
         ),
         Bind<IGuardianRepository>(
           (i) => GuardianRepository(
             dataSource: i.get<IGuardianDataSource>(),
             networkInfo: i.get<INetworkInfo>(),
           ),
+          singleton: false,
         ),
         Bind<ILocationServices>(
           (i) => LocationServices(),
+          singleton: false,
         ),
         Bind<IGuardianDataSource>(
           (i) => GuardianDataSource(
             apiClient: i.get<http.Client>(),
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
+          singleton: false,
         ),
         Bind<IAudioRecordServices>(
           (i) => AudioRecordServices(
