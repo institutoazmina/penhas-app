@@ -46,13 +46,17 @@ class _ZodiacPageState extends ModularState<ZodiacPage, ZodiacController> {
                     style: kTextStyleZodiacHoje,
                   ),
                   _buildLoginButton(),
-                  Observer(builder: (_) {
-                    return ZodiacSignPage(sign: controller.sign);
-                  }),
+                  Observer(
+                      name: "ZodiacPage.build.ZodiacSignPage",
+                      builder: (_) {
+                        return ZodiacSignPage(sign: controller.sign);
+                      }),
                   ZodiacRullingPage(),
-                  Observer(builder: (_) {
-                    return ZodiacFellingPage(sign: controller.sign);
-                  }),
+                  Observer(
+                      name: "ZodiacPage.build.ZodiacFellingPage",
+                      builder: (_) {
+                        return ZodiacFellingPage(sign: controller.sign);
+                      }),
                 ],
               ),
             ),
@@ -97,19 +101,15 @@ class _ZodiacPageState extends ModularState<ZodiacPage, ZodiacController> {
             size: 36,
           ),
           Observer(
+            name: "ZodiacPage.appBarBuilder",
             builder: (_) {
               return Padding(
                 padding: EdgeInsets.only(top: 16.0),
-                child: Observer(
-                  name: "solli_appBarBuilder",
-                  builder: (_) {
-                    return ZodiacActionButton(
-                      sign: controller.sign,
-                      listOfSign: controller.signList,
-                      isRunning: controller.isSecurityRunning,
-                      onPressed: () => controller.stealthAction(),
-                    );
-                  },
+                child: ZodiacActionButton(
+                  sign: controller.sign,
+                  listOfSign: controller.signList,
+                  isRunning: controller.isSecurityRunning,
+                  onPressed: () => controller.stealthAction(),
                 ),
               );
             },

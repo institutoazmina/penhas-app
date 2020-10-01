@@ -125,6 +125,22 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
     });
   }
 
+  final _$isSecurityRunningAtom =
+      Atom(name: '_SignInStealthController.isSecurityRunning');
+
+  @override
+  bool get isSecurityRunning {
+    _$isSecurityRunningAtom.reportRead();
+    return super.isSecurityRunning;
+  }
+
+  @override
+  set isSecurityRunning(bool value) {
+    _$isSecurityRunningAtom.reportWrite(value, super.isSecurityRunning, () {
+      super.isSecurityRunning = value;
+    });
+  }
+
   final _$signInWithEmailAndPasswordPressedAsyncAction =
       AsyncAction('_SignInStealthController.signInWithEmailAndPasswordPressed');
 
@@ -177,6 +193,17 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
   }
 
   @override
+  void dispose() {
+    final _$actionInfo = _$_SignInStealthControllerActionController.startAction(
+        name: '_SignInStealthController.dispose');
+    try {
+      return super.dispose();
+    } finally {
+      _$_SignInStealthControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 userGreetings: ${userGreetings},
@@ -185,6 +212,7 @@ warningPassword: ${warningPassword},
 errorMessage: ${errorMessage},
 sign: ${sign},
 signList: ${signList},
+isSecurityRunning: ${isSecurityRunning},
 currentState: ${currentState}
     ''';
   }

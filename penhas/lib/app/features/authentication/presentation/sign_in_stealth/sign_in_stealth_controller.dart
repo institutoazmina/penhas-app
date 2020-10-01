@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
@@ -12,6 +14,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/map_failu
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/zodiac/domain/entities/izodiac.dart';
 import 'package:penhas/app/features/zodiac/domain/entities/zodiac_sign_aquarius.dart';
+import 'package:penhas/app/features/zodiac/domain/usecases/stealth_security_action.dart';
 import 'package:penhas/app/features/zodiac/domain/usecases/zodiac.dart';
 
 part 'sign_in_stealth_controller.g.dart';
@@ -21,7 +24,8 @@ class SignInStealthController extends _SignInStealthController
   SignInStealthController({
     @required IAuthenticationRepository repository,
     @required IUserProfileStore userProfileStore,
-  }) : super(repository, userProfileStore);
+    @required StealthSecurityAction securityAction,
+  }) : super(repository, userProfileStore, securityAction);
 }
 
 abstract class _SignInStealthController with Store, MapFailureMessage {
@@ -29,11 +33,18 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
       'E-mail e senha precisam estarem corretos para continuar.';
   final IUserProfileStore _userProfileStore;
   final IAuthenticationRepository _repository;
+  final StealthSecurityAction _securityAction;
 
   EmailAddress _emailAddress = EmailAddress("");
   Password _password = Password("");
+  bool _isSecurityRunning = false;
+  StreamSubscription _streamCache;
 
-  _SignInStealthController(this._repository, this._userProfileStore) {
+  _SignInStealthController(
+    this._repository,
+    this._userProfileStore,
+    this._securityAction,
+  ) {
     _init();
   }
 
@@ -48,6 +59,8 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
     sign = zodiac.sign(_userProfile.birthdate);
     signList =
         zodiac.pickEigthRandonSign(_userProfile.birthdate).asObservable();
+
+    _registerDataSource();
   }
 
   @observable
@@ -70,6 +83,9 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
 
   @observable
   ObservableList<IZodiac> signList = ObservableList<IZodiac>();
+
+  @observable
+  bool isSecurityRunning = false;
 
   @computed
   PageProgressState get currentState {
@@ -123,7 +139,20 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
 
   @action
   void stealthAction() {
-    print('stealthAction');
+    if (_isSecurityRunning) {
+      _securityAction.stop();
+    } else {
+      isSecurityRunning = true;
+      _securityAction.start();
+    }
+
+    _isSecurityRunning = !_isSecurityRunning;
+  }
+
+  @action
+  void dispose() {
+    _cancelDataSource();
+    _securityAction.dispose();
   }
 
   Future<void> _forwardToLogged() async {
@@ -132,5 +161,18 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
 
   void _setErrorMessage(String msg) {
     errorMessage = msg;
+  }
+
+  _registerDataSource() {
+    _streamCache = _securityAction.isRunning.listen((event) {
+      isSecurityRunning = event;
+    });
+  }
+
+  _cancelDataSource() {
+    if (_streamCache != null) {
+      _streamCache.cancel();
+      _streamCache = null;
+    }
   }
 }

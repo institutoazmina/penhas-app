@@ -34,7 +34,8 @@ class ZodiacActionButton extends StatelessWidget {
           listOfSign[3].icone,
           FlatButton(
             child: sign.icone,
-            onPressed: onPressed,
+            onPressed: () => null,
+            onLongPress: onPressed,
             color: isRunning
                 ? DesignSystemColors.pinky
                 : DesignSystemColors.bluishPurple,

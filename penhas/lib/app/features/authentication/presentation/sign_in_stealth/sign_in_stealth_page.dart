@@ -73,6 +73,7 @@ class _SignInStealthPage
                           padding: EdgeInsets.only(bottom: 44),
                           child: ZodiacActionButton(
                             sign: controller.sign,
+                            isRunning: controller.isSecurityRunning,
                             listOfSign: controller.signList,
                             onPressed: () => controller.stealthAction(),
                           ),
@@ -96,6 +97,7 @@ class _SignInStealthPage
   @override
   void dispose() {
     _disposers.forEach((d) => d());
+    controller.dispose();
     super.dispose();
   }
 

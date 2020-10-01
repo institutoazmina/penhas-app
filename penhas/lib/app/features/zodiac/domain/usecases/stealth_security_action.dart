@@ -33,6 +33,8 @@ class StealthSecurityAction {
   Stream<bool> get isRunning => _streamController.stream;
 
   Future<void> start() async {
+    _streamController ??= StreamController.broadcast();
+
     return _getCurrentLocatin()
         .then((location) => _triggerGuardian(location))
         .then((_) => _startAudioRecord())
@@ -67,9 +69,7 @@ class StealthSecurityAction {
   }
 
   Future<void> _triggerGuardian(UserLocationEntity location) async {
-    final foo = await _guardianRepository.alert(location);
-    print(foo);
-    return;
+    await _guardianRepository.alert(location);
   }
 
   Future<void> _startAudioRecord() async {
