@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:crypto/crypto.dart';
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
@@ -39,6 +40,7 @@ class AudioSyncRepository implements IAudioSyncRepository {
   @override
   Future<Either<Failure, ValidField>> upload(AudioData audio) async {
     final fileName = audio.media.name;
+    final fileSha1 = sha1.convert(audio.media.readAsBytesSync()).toString();
     final fileData = http.MultipartFile.fromBytes(
       'media',
       audio.media.readAsBytesSync(),
@@ -47,6 +49,7 @@ class AudioSyncRepository implements IAudioSyncRepository {
     );
 
     final fields = {
+      'sha1': fileSha1,
       'event_id': audio.eventId,
       'event_sequence': audio.sequence,
       'cliente_created_at': audio.createdAt,
