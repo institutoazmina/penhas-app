@@ -52,6 +52,7 @@ class AudioRecordServices implements IAudioRecordServices {
   Future<void> start() async {
     _sessionSequence = 0;
     _currentAudionSession = Uuid().v4();
+    _streamController ??= StreamController.broadcast();
 
     await permissionStatus().then(
       (p) => p.maybeWhen(
@@ -62,9 +63,13 @@ class AudioRecordServices implements IAudioRecordServices {
 
   @override
   Future<void> stop() async {
-    await _recorder
-        .stopRecorder()
-        .then((value) => _audioSyncManager.syncAudio());
+    try {
+      await _recorder
+          .stopRecorder()
+          .then((value) => _audioSyncManager.syncAudio());
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -150,7 +155,8 @@ extension _AudioRecordServices on AudioRecordServices {
   Future<void> _setupRecordEnviroment() async {
     await _releaseAudioSession();
     await _recorder.openAudioSession(
-        focus: AudioFocus.requestFocusAndDuckOthers);
+      focus: AudioFocus.requestFocusAndDuckOthers,
+    );
 
     _currentDuration = Duration(
         milliseconds:
