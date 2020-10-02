@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/core/states/mainboard_state.dart';
+import 'package:penhas/app/features/chat/presentation/chat_main_module.dart';
 import 'package:penhas/app/features/feed/presentation/compose_tweet/compose_tweet_page.dart';
 import 'package:penhas/app/features/feed/presentation/feed_module.dart';
 import 'package:penhas/app/features/help_center/presentation/help_center_module.dart';
@@ -211,7 +212,7 @@ class _MainboardPageState
       children: <Widget>[
         FeedModule(),
         ComposeTweetPage(),
-        Container(color: Colors.yellow),
+        ChatMainModule(),
         Container(color: Colors.green),
         HelpCenterModule(),
       ],
