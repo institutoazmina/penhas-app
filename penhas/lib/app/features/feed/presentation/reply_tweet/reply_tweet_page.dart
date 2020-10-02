@@ -68,7 +68,7 @@ class _ReplyTweetPageState
       appBar: _buildAppBar(),
       body: SizedBox.expand(
         child: Container(
-          color: Color.fromRGBO(248, 248, 248, 1.0),
+          color: DesignSystemColors.systemBackgroundColor,
           child: PageProgressIndicator(
             progressState: _currentState,
             child: GestureDetector(

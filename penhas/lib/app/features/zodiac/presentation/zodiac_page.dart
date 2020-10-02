@@ -36,7 +36,7 @@ class _ZodiacPageState extends ModularState<ZodiacPage, ZodiacController> {
         child: SizedBox.expand(
           child: SingleChildScrollView(
             child: Container(
-              color: Color.fromRGBO(248, 248, 248, 1.0),
+              color: DesignSystemColors.systemBackgroundColor,
               padding: EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

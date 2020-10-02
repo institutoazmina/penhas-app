@@ -66,7 +66,7 @@ class _DetailTweetPageState
       appBar: _buildAppBar(),
       body: SizedBox.expand(
         child: Container(
-          color: Color.fromRGBO(248, 248, 248, 1.0),
+          color: DesignSystemColors.systemBackgroundColor,
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),

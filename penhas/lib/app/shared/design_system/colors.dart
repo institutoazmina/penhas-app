@@ -23,4 +23,5 @@ class DesignSystemColors {
   static const helpCenterNavigationBar = Color.fromRGBO(33, 29, 116, 1);
   static const nigthBlue = Color.fromRGBO(5, 8, 70, 1);
   static const bluishPurple = Color.fromRGBO(129, 51, 255, 1);
+  static const systemBackgroundColor = Color.fromRGBO(248, 248, 248, 1);
 }

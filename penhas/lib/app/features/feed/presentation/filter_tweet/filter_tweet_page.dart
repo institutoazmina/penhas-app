@@ -64,7 +64,7 @@ class _FilterTweetPageState
               child: Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Container(
-                  color: Color.fromRGBO(248, 248, 248, 1),
+                  color: DesignSystemColors.systemBackgroundColor,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[

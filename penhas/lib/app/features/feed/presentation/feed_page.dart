@@ -72,7 +72,7 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
         progressMessage: 'Aplicando os filtros',
         child: SizedBox.expand(
           child: Container(
-            color: Color.fromRGBO(248, 248, 248, 1.0),
+            color: DesignSystemColors.systemBackgroundColor,
             child: SafeArea(
               child: Column(
                 children: <Widget>[
