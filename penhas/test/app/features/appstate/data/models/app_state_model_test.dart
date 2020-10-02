@@ -15,6 +15,7 @@ void main() {
       avatar: 'https://api.com/avatar/padrao.svg',
       anonymousModeEnabled: false,
       stealthModeEnabled: false,
+      birthdate: DateTime(1980, 3, 3),
     );
   });
 
@@ -206,6 +207,7 @@ void main() {
         avatar: 'https://api.com/avatar/padrao.svg',
         anonymousModeEnabled: true,
         stealthModeEnabled: false,
+        birthdate: DateTime(1980, 3, 3),
       );
       final AppStateEntity expected = AppStateModel(
         quizSession,
@@ -242,6 +244,7 @@ void main() {
         avatar: 'https://api.com/avatar/padrao.svg',
         anonymousModeEnabled: false,
         stealthModeEnabled: true,
+        birthdate: DateTime(1980, 3, 3),
       );
       final AppStateEntity expected = AppStateModel(
         quizSession,
