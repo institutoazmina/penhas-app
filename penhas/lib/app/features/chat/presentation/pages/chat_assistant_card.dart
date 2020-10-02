@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-class ChatTalkCard extends StatelessWidget {
+class ChatAssistantCard extends StatelessWidget {
   final String title;
   final String description;
   final Widget icon;
 
-  const ChatTalkCard({
+  const ChatAssistantCard({
     Key key,
     this.title,
     this.description,
@@ -45,7 +45,7 @@ class ChatTalkCard extends StatelessWidget {
   }
 }
 
-extension _ChatTalkCardPrivate on ChatTalkCard {
+extension _ChatTalkCardPrivate on ChatAssistantCard {
   TextStyle get titleStyle => TextStyle(
       fontFamily: 'Lato',
       fontSize: 14.0,
