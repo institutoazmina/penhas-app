@@ -4,6 +4,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 import 'chat_main_controller.dart';
+import 'chat_main_talks_page.dart';
 
 class ChatMainPage extends StatefulWidget {
   ChatMainPage({Key key}) : super(key: key);
@@ -27,9 +28,7 @@ class _ChatMainPageState
         ),
         body: TabBarView(
           children: [
-            Center(
-              child: Text("Conversar"),
-            ),
+            ChatMainTalksPage(),
             Center(
               child: Text("Pessoas"),
             ),

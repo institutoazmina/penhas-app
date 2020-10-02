@@ -11,7 +11,7 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.14+14
+version: 1.0.15+15
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
@@ -146,6 +146,9 @@ flutter:
     - assets/images/zodiac/icon_scorpio/scorpio.png
     - assets/images/zodiac/icon_taurus/taurus.png
     - assets/images/zodiac/icon_virgo/virgo.png
+    # Chat
+    - assets/images/chat/penhasAssistant/penhasAssistant.png
+    - assets/images/chat/penhasContact/penhasContact.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
