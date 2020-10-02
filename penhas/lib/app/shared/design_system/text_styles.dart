@@ -294,3 +294,17 @@ const kTextStyleZodiacFellingTitle = TextStyle(
     letterSpacing: 0.4,
     color: DesignSystemColors.darkIndigoThree,
     fontWeight: FontWeight.bold);
+
+const kTextStyleChatTabSelected = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 14.0,
+    letterSpacing: 0.4,
+    color: DesignSystemColors.pinky,
+    fontWeight: FontWeight.bold);
+
+const kTextStyleChatTabUnselected = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 14.0,
+    letterSpacing: 0.4,
+    color: DesignSystemColors.pinky,
+    fontWeight: FontWeight.normal);
