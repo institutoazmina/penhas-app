@@ -9,37 +9,40 @@ class ChatMainTalksPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16.0),
-      color: Colors.greenAccent,
+      padding: EdgeInsets.symmetric(vertical: 16.0),
+      color: DesignSystemColors.systemBackgroundColor,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ChatAssistantCard(
-                title: "Assistente PenhaS",
-                description: "Entenda se você está em situação de violência",
-                icon: Image.asset(
-                  "assets/images/chat/penhasAssistant/penhasAssistant.png",
-                  width: 40,
-                  height: 40,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ChatAssistantCard(
+                  title: "Assistente PenhaS",
+                  description: "Entenda se você está em situação de violência",
+                  icon: Image.asset(
+                    "assets/images/chat/penhasAssistant/penhasAssistant.png",
+                    width: 40,
+                    height: 40,
+                  ),
                 ),
-              ),
-              ChatAssistantCard(
-                title: "Contato PenhaS",
-                description: "Fale com as adminstradoras do app",
-                icon: Image.asset(
-                  "assets/images/chat/penhasContact/penhasContact.png",
-                  width: 40,
-                  height: 40,
-                ),
-              )
-            ],
+                ChatAssistantCard(
+                  title: "Contato PenhaS",
+                  description: "Fale com as adminstradoras do app",
+                  icon: Image.asset(
+                    "assets/images/chat/penhasContact/penhasContact.png",
+                    width: 40,
+                    height: 40,
+                  ),
+                )
+              ],
+            ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 16.0),
+            padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             child: Text(
               "Suas conversas (4)",
               style: talksDividerTitleTextStyle,

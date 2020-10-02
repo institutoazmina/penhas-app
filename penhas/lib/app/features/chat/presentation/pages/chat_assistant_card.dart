@@ -18,7 +18,16 @@ class ChatAssistantCard extends StatelessWidget {
     return Container(
       height: 175,
       width: 155,
-      color: DesignSystemColors.white,
+      decoration: BoxDecoration(
+        color: DesignSystemColors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            offset: Offset(0.0, 1.0),
+            blurRadius: 8.0,
+          )
+        ],
+      ),
       child: Padding(
         padding: const EdgeInsets.only(left: 12, right: 12, top: 12.0),
         child: Column(

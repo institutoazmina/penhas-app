@@ -14,31 +14,34 @@ class ChatTalkCard extends StatelessWidget {
           bottom: BorderSide(color: Colors.grey[350]),
         ),
       ),
-      child: Row(
-        children: [
-          CircleAvatar(
-            backgroundColor: Color.fromRGBO(239, 239, 239, 1.0),
-            radius: 20,
-            child:
-                SvgPicture.asset("assets/images/svg/drawer/user_profile.svg"),
-          ),
-          Expanded(
-            child: Padding(
-              padding:
-                  const EdgeInsets.only(left: 16.0, top: 8.0, bottom: 16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(width: 16),
-                  Text("Quincy Renata", style: cardTitleTextStyle),
-                  Text("Online", style: cardStatusTextStyle),
-                ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Row(
+          children: [
+            CircleAvatar(
+              backgroundColor: Color.fromRGBO(239, 239, 239, 1.0),
+              radius: 20,
+              child:
+                  SvgPicture.asset("assets/images/svg/drawer/user_profile.svg"),
+            ),
+            Expanded(
+              child: Padding(
+                padding:
+                    const EdgeInsets.only(left: 16.0, top: 8.0, bottom: 16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(width: 16),
+                    Text("Quincy Renata", style: cardTitleTextStyle),
+                    Text("Online", style: cardStatusTextStyle),
+                  ],
+                ),
               ),
             ),
-          ),
-          Text("25/03/2020", style: cardStatusTextStyle),
-        ],
+            Text("25/03/2020", style: cardStatusTextStyle),
+          ],
+        ),
       ),
     );
   }
