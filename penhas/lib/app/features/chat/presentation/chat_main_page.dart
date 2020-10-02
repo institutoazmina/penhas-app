@@ -4,6 +4,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 import 'chat_main_controller.dart';
+import 'chat_main_people_page.dart';
 import 'chat_main_talks_page.dart';
 
 class ChatMainPage extends StatefulWidget {
@@ -31,9 +32,7 @@ class _ChatMainPageState
             body: TabBarView(
               children: [
                 ChatMainTalksPage(),
-                Center(
-                  child: Text("Pessoas"),
-                ),
+                ChatMainPeoplePage(),
               ],
             ),
           ),
@@ -47,12 +46,28 @@ extension _ChatMainPageStatePrivate on _ChatMainPageState {
   PreferredSizeWidget get chatTabBar => TabBar(
         indicatorColor: DesignSystemColors.pinky,
         labelColor: DesignSystemColors.pinky,
-        labelStyle: kTextStyleChatTabSelected,
+        labelStyle: chatTabSelectedTextStyle,
         unselectedLabelColor: DesignSystemColors.warnGrey,
-        unselectedLabelStyle: kTextStyleChatTabUnselected,
+        unselectedLabelStyle: chatTabUnselectedTextStyle,
         tabs: [
           Tab(text: "Conversas"),
           Tab(text: "Pessoas"),
         ],
       );
+}
+
+extension _ChatMainPageStateTextStyle on _ChatMainPageState {
+  TextStyle get chatTabSelectedTextStyle => TextStyle(
+      fontFamily: 'Lato',
+      fontSize: 14.0,
+      letterSpacing: 0.4,
+      color: DesignSystemColors.pinky,
+      fontWeight: FontWeight.bold);
+
+  TextStyle get chatTabUnselectedTextStyle => TextStyle(
+      fontFamily: 'Lato',
+      fontSize: 14.0,
+      letterSpacing: 0.4,
+      color: DesignSystemColors.pinky,
+      fontWeight: FontWeight.normal);
 }
