@@ -17,22 +17,26 @@ class _ChatMainPageState
     extends ModularState<ChatMainPage, ChatMainController> {
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          toolbarHeight: 55,
-          backgroundColor: DesignSystemColors.systemBackgroundColor,
-          bottom: chatTabBar,
-        ),
-        body: TabBarView(
-          children: [
-            ChatMainTalksPage(),
-            Center(
-              child: Text("Pessoas"),
+    return SafeArea(
+      child: SizedBox.expand(
+        child: DefaultTabController(
+          length: 2,
+          child: Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              toolbarHeight: 55,
+              backgroundColor: DesignSystemColors.systemBackgroundColor,
+              bottom: chatTabBar,
             ),
-          ],
+            body: TabBarView(
+              children: [
+                ChatMainTalksPage(),
+                Center(
+                  child: Text("Pessoas"),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

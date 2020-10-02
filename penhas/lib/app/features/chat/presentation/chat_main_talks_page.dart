@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:penhas/app/features/chat/presentation/pages/chat_assistant_card.dart';
 import 'package:penhas/app/features/chat/presentation/pages/chat_talk_card.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
@@ -17,7 +18,7 @@ class ChatMainTalksPage extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ChatTalkCard(
+              ChatAssistantCard(
                 title: "Assistente PenhaS",
                 description: "Entenda se você está em situação de violência",
                 icon: Image.asset(
@@ -26,7 +27,7 @@ class ChatMainTalksPage extends StatelessWidget {
                   height: 40,
                 ),
               ),
-              ChatTalkCard(
+              ChatAssistantCard(
                 title: "Contato PenhaS",
                 description: "Fale com as adminstradoras do app",
                 icon: Image.asset(
@@ -43,10 +44,25 @@ class ChatMainTalksPage extends StatelessWidget {
               "Suas conversas (4)",
               style: talksDividerTitleTextStyle,
             ),
+          ),
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: () async => print("Ola mundo!"),
+              child: ListView.builder(
+                itemCount: 4,
+                itemBuilder: (context, index) {
+                  return talkCard(index);
+                },
+              ),
+            ),
           )
         ],
       ),
     );
+  }
+
+  Widget talkCard(int index) {
+    return ChatTalkCard();
   }
 }
 
