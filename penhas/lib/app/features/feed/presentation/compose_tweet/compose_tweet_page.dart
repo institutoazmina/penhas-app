@@ -84,7 +84,7 @@ class _ComposeTweetPageState
                           right: 2.0,
                         ),
                         child: Text(
-                          'Publique algo para outras mulheres que usam o Penhas.',
+                          'Publique algo para outras mulheres que usam o PenhaS.',
                           style: kTextStyleDrawerListItem,
                         ),
                       ),

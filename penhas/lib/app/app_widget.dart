@@ -7,7 +7,7 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Penhas',
+      title: 'PenhaS',
       theme: ThemeData(
           textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Lato')),
       navigatorKey: Modular.navigatorKey,
