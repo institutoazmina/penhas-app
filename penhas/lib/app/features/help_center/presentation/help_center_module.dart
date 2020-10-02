@@ -36,8 +36,9 @@ class HelpCenterModule extends WidgetModule {
       ];
 
   @override
-  List<Router> get routers => [
-        Router(Modular.initialRoute, child: (_, args) => HelpCenterPage()),
+  List<ModularRouter> get routers => [
+        ModularRouter(Modular.initialRoute,
+            child: (_, args) => HelpCenterPage()),
       ];
 
   static Inject get to => Inject<HelpCenterModule>.of();

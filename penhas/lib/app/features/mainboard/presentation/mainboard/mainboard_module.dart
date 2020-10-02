@@ -73,58 +73,59 @@ class MainboardModule extends ChildModule {
       ];
 
   @override
-  List<Router> get routers => [
-        Router(Modular.initialRoute, child: (_, args) => MainboardPage()),
+  List<ModularRouter> get routers => [
+        ModularRouter(Modular.initialRoute,
+            child: (_, args) => MainboardPage()),
         ...tweetRoutes,
         ...helpCenter,
         ...audioRecord,
       ];
 
-  List<Router> get tweetRoutes => [
-        Router(
+  List<ModularRouter> get tweetRoutes => [
+        ModularRouter(
           '/reply',
           child: (_, args) => ReplyTweetPage(),
           transition: TransitionType.rightToLeft,
         ),
-        Router(
+        ModularRouter(
           '/detail',
           child: (context, args) => DetailTweetPage(
             tweetController: Modular.get<ITweetController>(),
           ),
           transition: TransitionType.rightToLeft,
         ),
-        Router(
+        ModularRouter(
           '/category',
           child: (context, args) => CategoryTweetPage(),
           transition: TransitionType.rightToLeft,
         ),
-        Router(
+        ModularRouter(
           '/tags',
           child: (context, args) => FilterTweetPage(),
           transition: TransitionType.rightToLeft,
         )
       ];
 
-  List<Router> get helpCenter => [
-        Router(
+  List<ModularRouter> get helpCenter => [
+        ModularRouter(
           '/helpcenter/newGuardian',
           child: (context, args) => NewGuardianPage(),
           transition: TransitionType.rightToLeft,
         ),
-        Router(
+        ModularRouter(
           '/helpcenter/guardians',
           child: (context, args) => GuardiansPage(),
           transition: TransitionType.rightToLeft,
         ),
-        Router(
+        ModularRouter(
           '/helpcenter/audios',
           child: (context, args) => AudiosPage(),
           transition: TransitionType.rightToLeft,
         ),
       ];
 
-  List<Router> get audioRecord => [
-        Router(
+  List<ModularRouter> get audioRecord => [
+        ModularRouter(
           '/helpcenter/audioRecord',
           child: (context, args) => AudioRecordPage(),
           transition: TransitionType.rightToLeft,

@@ -54,40 +54,40 @@ class SignInModule extends ChildModule {
       ];
 
   @override
-  List<Router> get routers => [
-        Router(Modular.initialRoute, child: (_, args) => SignInPage()),
-        Router('/signup',
+  List<ModularRouter> get routers => [
+        ModularRouter(Modular.initialRoute, child: (_, args) => SignInPage()),
+        ModularRouter('/signup',
             child: (_, args) => SignUpPage(),
             transition: TransitionType.rightToLeft),
-        Router(
+        ModularRouter(
           '/signup/step2',
           child: (_, args) => SignUpTwoPage(),
         ),
-        Router(
+        ModularRouter(
           '/signup/step3',
           child: (_, args) => SignUpThreePage(),
         ),
-        Router(
+        ModularRouter(
           '/reset_password',
           child: (_, args) => ResetPasswordPage(),
         ),
-        Router(
+        ModularRouter(
           '/reset_password/step2',
           child: (_, args) => ResetPasswordTwoPage(),
         ),
-        Router(
+        ModularRouter(
           '/reset_password/step3',
           child: (_, args) => ResetPasswordThreePage(),
         ),
-        Router(
+        ModularRouter(
           '/sign_in_anonymous',
           child: (_, args) => SignInAnonymousPage(),
         ),
-        Router(
+        ModularRouter(
           '/sign_in_stealth',
           child: (_, args) => SignInStealthPage(),
         ),
-        Router(
+        ModularRouter(
           '/stealth',
           child: (_, args) => ZodiacModule(),
         ),

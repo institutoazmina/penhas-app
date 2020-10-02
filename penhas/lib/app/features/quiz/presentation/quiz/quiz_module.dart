@@ -32,8 +32,8 @@ class QuizModule extends ChildModule {
       ];
 
   @override
-  List<Router> get routers => [
-        Router(Modular.initialRoute, child: (_, args) => QuizPage()),
+  List<ModularRouter> get routers => [
+        ModularRouter(Modular.initialRoute, child: (_, args) => QuizPage()),
       ];
 
   static Inject get to => Inject<QuizModule>.of();
