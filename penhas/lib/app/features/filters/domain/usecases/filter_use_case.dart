@@ -1,14 +1,11 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:penhas/app/features/filters/data/models/filter_skills_model.dart';
+import 'package:dartz/dartz.dart';
+import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/filters/data/models/filter_tag_model.dart';
+import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
 
-import '../../../../../utils/json_util.dart';
-
-void main() {
-  List<FilterTagModel> filterTags;
-
-  setUp(() {
-    filterTags = [
+class FilterUseCase {
+  Future<Either<Failure, List<FilterTagEntity>>> skills() async {
+    return right([
       FilterTagModel(id: "1", label: "Escuta acolhedora", isSelected: false),
       FilterTagModel(id: "2", label: "Psicologia", isSelected: false),
       FilterTagModel(id: "3", label: "Abrigo", isSelected: false),
@@ -17,19 +14,6 @@ void main() {
       FilterTagModel(id: "6", label: "Saúde e bem estar", isSelected: false),
       FilterTagModel(id: "8", label: "Segurança digital", isSelected: false),
       FilterTagModel(id: "9", label: "Segurança pessoal", isSelected: false),
-    ];
-  });
-
-  group('FilterSkillsModel', () {
-    test('should return a valid model with a valid JSON', () async {
-      // arrange
-      final jsonData =
-          await JsonUtil.getJson(from: 'filters/filter_skills.json');
-      final actual = FilterSkillsModel(skills: filterTags);
-      // act
-      final matcher = FilterSkillsModel.fromJson(jsonData);
-      // assert
-      expect(actual, matcher);
-    });
-  });
+    ]);
+  }
 }
