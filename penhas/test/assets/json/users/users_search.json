@@ -1,0 +1,48 @@
+{
+  "has_more": 1,
+  "next_page": "my_secret_pagination_token",
+  "rows": [
+    {
+      "activity": "há alguns dias",
+      "apelido": "Maria",
+      "avatar_url": "https:\/\/api.example.com\/avatar\/padrao.svg",
+      "cliente_id": 180,
+      "skills": "Escuta acolhedora"
+    },
+    {
+      "activity": "há alguns dias",
+      "apelido": "Julia",
+      "avatar_url": "https:\/\/api.example.com\/avatar\/padrao.svg",
+      "cliente_id": 3191,
+      "skills": "Psicologia"
+    },
+    {
+      "activity": "há alguns dias",
+      "apelido": "Li",
+      "avatar_url": "https:\/\/api.example.com\/avatar\/padrao.svg",
+      "cliente_id": 3286,
+      "skills": "Escuta acolhedora"
+    },
+    {
+      "activity": "há algumas semanas",
+      "apelido": "Lilo",
+      "avatar_url": "https:\/\/api.example.com\/avatar\/padrao.svg",
+      "cliente_id": 3264,
+      "skills": "Escuta acolhedora"
+    },
+    {
+      "activity": "há algumas semanas",
+      "apelido": "Patricia",
+      "avatar_url": "https:\/\/api.example.com\/avatar\/padrao.svg",
+      "cliente_id": 1196,
+      "skills": "Escuta acolhedora, Saúde e bem estar"
+    },
+    {
+      "activity": "há muito tempo",
+      "apelido": "Leticia",
+      "avatar_url": "https:\/\/api.example.com\/avatar\/padrao.svg",
+      "cliente_id": 1335,
+      "skills": ""
+    }
+  ]
+}

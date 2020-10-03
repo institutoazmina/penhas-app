@@ -5,9 +5,11 @@ import 'package:penhas/app/features/filters/data/models/filter_tag_model.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
+  String jsonFile;
   List<FilterTagModel> filterTags;
 
   setUp(() {
+    jsonFile = "filters/filter_skills.json";
     filterTags = [
       FilterTagModel(id: "1", label: "Escuta acolhedora", isSelected: false),
       FilterTagModel(id: "2", label: "Psicologia", isSelected: false),
@@ -23,8 +25,7 @@ void main() {
   group('FilterSkillsModel', () {
     test('should return a valid model with a valid JSON', () async {
       // arrange
-      final jsonData =
-          await JsonUtil.getJson(from: 'filters/filter_skills.json');
+      final jsonData = await JsonUtil.getJson(from: jsonFile);
       final actual = FilterSkillsModel(skills: filterTags);
       // act
       final matcher = FilterSkillsModel.fromJson(jsonData);
