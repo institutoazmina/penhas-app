@@ -18,10 +18,7 @@ void main() {
   setUpAll(
     () {
       apiProvider = MockApiProvider();
-
-      sut = AudiosRepository(
-        apiProvider: apiProvider,
-      );
+      sut = AudiosRepository(apiProvider: apiProvider);
     },
   );
 
@@ -29,6 +26,7 @@ void main() {
     test('should fetch available audio when available on server', () async {
       // arrange
       final jsonData = await JsonUtil.getJson(from: 'audios/audios_fetch.json');
+      final actual = AudioModel.fromJson(jsonData);
       when(
         apiProvider.get(
           path: anyNamed('path'),
@@ -37,7 +35,6 @@ void main() {
         ),
       ).thenAnswer((_) => JsonUtil.getString(from: 'audios/audios_fetch.json'));
 
-      final actual = AudioModel.fromJson(jsonData);
       // act
       // unwrap do Either pq ele não se dá bem com o Collection nativo,
       // eu teria que alterar para um List dele, mas me recurso a fazer isto
