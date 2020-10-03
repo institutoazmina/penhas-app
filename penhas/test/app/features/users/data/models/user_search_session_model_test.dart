@@ -87,5 +87,20 @@ void main() {
       // assert
       expect(actual, matcher);
     });
+
+    test('should return empty model with a empty JSON', () async {
+      // arrange
+      final jsonFileEmpty = "users/users_search_empty.json";
+      final jsonData = await JsonUtil.getJson(from: jsonFileEmpty);
+      final actual = UserSearchSessionModel(
+        hasMore: false,
+        nextPage: null,
+        users: [],
+      );
+      // act
+      final matcher = UserSearchSessionModel.fromJson(jsonData);
+      // assert
+      expect(actual, matcher);
+    });
   });
 }
