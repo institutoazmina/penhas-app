@@ -9,6 +9,7 @@ part of 'guardian_state.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$GuardianStateTearOff {
   const _$GuardianStateTearOff();
 
@@ -32,9 +33,11 @@ class _$GuardianStateTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $GuardianState = _$GuardianStateTearOff();
 
+/// @nodoc
 mixin _$GuardianState {
   @optionalTypeArgs
   Result when<Result extends Object>({
@@ -64,12 +67,14 @@ mixin _$GuardianState {
   });
 }
 
+/// @nodoc
 abstract class $GuardianStateCopyWith<$Res> {
   factory $GuardianStateCopyWith(
           GuardianState value, $Res Function(GuardianState) then) =
       _$GuardianStateCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$GuardianStateCopyWithImpl<$Res>
     implements $GuardianStateCopyWith<$Res> {
   _$GuardianStateCopyWithImpl(this._value, this._then);
@@ -79,11 +84,13 @@ class _$GuardianStateCopyWithImpl<$Res>
   final $Res Function(GuardianState) _then;
 }
 
+/// @nodoc
 abstract class _$InitialCopyWith<$Res> {
   factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
       __$InitialCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class __$InitialCopyWithImpl<$Res> extends _$GuardianStateCopyWithImpl<$Res>
     implements _$InitialCopyWith<$Res> {
   __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
@@ -93,6 +100,7 @@ class __$InitialCopyWithImpl<$Res> extends _$GuardianStateCopyWithImpl<$Res>
   _Initial get _value => super._value as _Initial;
 }
 
+/// @nodoc
 class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   const _$_Initial();
 
@@ -176,12 +184,14 @@ abstract class _Initial implements GuardianState {
   const factory _Initial() = _$_Initial;
 }
 
+/// @nodoc
 abstract class _$LoadedCopyWith<$Res> {
   factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
       __$LoadedCopyWithImpl<$Res>;
   $Res call({List<GuardianTileEntity> tiles});
 }
 
+/// @nodoc
 class __$LoadedCopyWithImpl<$Res> extends _$GuardianStateCopyWithImpl<$Res>
     implements _$LoadedCopyWith<$Res> {
   __$LoadedCopyWithImpl(_Loaded _value, $Res Function(_Loaded) _then)
@@ -200,6 +210,7 @@ class __$LoadedCopyWithImpl<$Res> extends _$GuardianStateCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   const _$_Loaded(this.tiles) : assert(tiles != null);
 
@@ -299,6 +310,7 @@ abstract class _Loaded implements GuardianState {
   _$LoadedCopyWith<_Loaded> get copyWith;
 }
 
+/// @nodoc
 abstract class _$ErrorDetailsCopyWith<$Res> {
   factory _$ErrorDetailsCopyWith(
           _ErrorDetails value, $Res Function(_ErrorDetails) then) =
@@ -306,6 +318,7 @@ abstract class _$ErrorDetailsCopyWith<$Res> {
   $Res call({String message});
 }
 
+/// @nodoc
 class __$ErrorDetailsCopyWithImpl<$Res>
     extends _$GuardianStateCopyWithImpl<$Res>
     implements _$ErrorDetailsCopyWith<$Res> {
@@ -326,6 +339,7 @@ class __$ErrorDetailsCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   const _$_ErrorDetails(this.message) : assert(message != null);
 

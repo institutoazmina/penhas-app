@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:geolocator/geolocator.dart' as geo;
 import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/states/location_permission_state.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
@@ -20,13 +20,14 @@ class LocationServices implements ILocationServices {
   @override
   Future<Either<LocationFailure, UserLocationEntity>> currentLocation() async {
     if (await Permission.location.isGranted) {
-      final position = await Geolocator()
-          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      final position = await geo.getCurrentPosition(
+          desiredAccuracy: geo.LocationAccuracy.high);
 
       return right(
         UserLocationEntity(
           latitude: position.latitude,
           longitude: position.longitude,
+          accuracy: position.accuracy,
         ),
       );
     } else {

@@ -9,6 +9,7 @@ part of 'new_guardian_state.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$NewGuardianStateTearOff {
   const _$NewGuardianStateTearOff();
 
@@ -37,9 +38,11 @@ class _$NewGuardianStateTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $NewGuardianState = _$NewGuardianStateTearOff();
 
+/// @nodoc
 mixin _$NewGuardianState {
   @optionalTypeArgs
   Result when<Result extends Object>({
@@ -73,12 +76,14 @@ mixin _$NewGuardianState {
   });
 }
 
+/// @nodoc
 abstract class $NewGuardianStateCopyWith<$Res> {
   factory $NewGuardianStateCopyWith(
           NewGuardianState value, $Res Function(NewGuardianState) then) =
       _$NewGuardianStateCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$NewGuardianStateCopyWithImpl<$Res>
     implements $NewGuardianStateCopyWith<$Res> {
   _$NewGuardianStateCopyWithImpl(this._value, this._then);
@@ -88,11 +93,13 @@ class _$NewGuardianStateCopyWithImpl<$Res>
   final $Res Function(NewGuardianState) _then;
 }
 
+/// @nodoc
 abstract class _$InitialCopyWith<$Res> {
   factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
       __$InitialCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class __$InitialCopyWithImpl<$Res> extends _$NewGuardianStateCopyWithImpl<$Res>
     implements _$InitialCopyWith<$Res> {
   __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
@@ -102,6 +109,7 @@ class __$InitialCopyWithImpl<$Res> extends _$NewGuardianStateCopyWithImpl<$Res>
   _Initial get _value => super._value as _Initial;
 }
 
+/// @nodoc
 class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   const _$_Initial();
 
@@ -191,11 +199,13 @@ abstract class _Initial implements NewGuardianState {
   const factory _Initial() = _$_Initial;
 }
 
+/// @nodoc
 abstract class _$LoadedCopyWith<$Res> {
   factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
       __$LoadedCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class __$LoadedCopyWithImpl<$Res> extends _$NewGuardianStateCopyWithImpl<$Res>
     implements _$LoadedCopyWith<$Res> {
   __$LoadedCopyWithImpl(_Loaded _value, $Res Function(_Loaded) _then)
@@ -205,6 +215,7 @@ class __$LoadedCopyWithImpl<$Res> extends _$NewGuardianStateCopyWithImpl<$Res>
   _Loaded get _value => super._value as _Loaded;
 }
 
+/// @nodoc
 class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   const _$_Loaded();
 
@@ -294,6 +305,7 @@ abstract class _Loaded implements NewGuardianState {
   const factory _Loaded() = _$_Loaded;
 }
 
+/// @nodoc
 abstract class _$ErrorDetailsCopyWith<$Res> {
   factory _$ErrorDetailsCopyWith(
           _ErrorDetails value, $Res Function(_ErrorDetails) then) =
@@ -301,6 +313,7 @@ abstract class _$ErrorDetailsCopyWith<$Res> {
   $Res call({String message});
 }
 
+/// @nodoc
 class __$ErrorDetailsCopyWithImpl<$Res>
     extends _$NewGuardianStateCopyWithImpl<$Res>
     implements _$ErrorDetailsCopyWith<$Res> {
@@ -321,6 +334,7 @@ class __$ErrorDetailsCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   const _$_ErrorDetails(this.message) : assert(message != null);
 
@@ -426,6 +440,7 @@ abstract class _ErrorDetails implements NewGuardianState {
   _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith;
 }
 
+/// @nodoc
 abstract class _$RateLimitCopyWith<$Res> {
   factory _$RateLimitCopyWith(
           _RateLimit value, $Res Function(_RateLimit) then) =
@@ -433,6 +448,7 @@ abstract class _$RateLimitCopyWith<$Res> {
   $Res call({int maxLimit});
 }
 
+/// @nodoc
 class __$RateLimitCopyWithImpl<$Res>
     extends _$NewGuardianStateCopyWithImpl<$Res>
     implements _$RateLimitCopyWith<$Res> {
@@ -452,6 +468,7 @@ class __$RateLimitCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_RateLimit with DiagnosticableTreeMixin implements _RateLimit {
   const _$_RateLimit(this.maxLimit) : assert(maxLimit != null);
 

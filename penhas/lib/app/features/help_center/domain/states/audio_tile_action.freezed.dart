@@ -9,6 +9,7 @@ part of 'audio_tile_action.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$AudioTileActionTearOff {
   const _$AudioTileActionTearOff();
 
@@ -32,9 +33,11 @@ class _$AudioTileActionTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $AudioTileAction = _$AudioTileActionTearOff();
 
+/// @nodoc
 mixin _$AudioTileAction {
   @optionalTypeArgs
   Result when<Result extends Object>({
@@ -64,12 +67,14 @@ mixin _$AudioTileAction {
   });
 }
 
+/// @nodoc
 abstract class $AudioTileActionCopyWith<$Res> {
   factory $AudioTileActionCopyWith(
           AudioTileAction value, $Res Function(AudioTileAction) then) =
       _$AudioTileActionCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$AudioTileActionCopyWithImpl<$Res>
     implements $AudioTileActionCopyWith<$Res> {
   _$AudioTileActionCopyWithImpl(this._value, this._then);
@@ -79,11 +84,13 @@ class _$AudioTileActionCopyWithImpl<$Res>
   final $Res Function(AudioTileAction) _then;
 }
 
+/// @nodoc
 abstract class _$InitialCopyWith<$Res> {
   factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
       __$InitialCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class __$InitialCopyWithImpl<$Res> extends _$AudioTileActionCopyWithImpl<$Res>
     implements _$InitialCopyWith<$Res> {
   __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
@@ -93,6 +100,7 @@ class __$InitialCopyWithImpl<$Res> extends _$AudioTileActionCopyWithImpl<$Res>
   _Initial get _value => super._value as _Initial;
 }
 
+/// @nodoc
 class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   const _$_Initial();
 
@@ -176,12 +184,14 @@ abstract class _Initial implements AudioTileAction {
   const factory _Initial() = _$_Initial;
 }
 
+/// @nodoc
 abstract class _$NoticeCopyWith<$Res> {
   factory _$NoticeCopyWith(_Notice value, $Res Function(_Notice) then) =
       __$NoticeCopyWithImpl<$Res>;
   $Res call({String message});
 }
 
+/// @nodoc
 class __$NoticeCopyWithImpl<$Res> extends _$AudioTileActionCopyWithImpl<$Res>
     implements _$NoticeCopyWith<$Res> {
   __$NoticeCopyWithImpl(_Notice _value, $Res Function(_Notice) _then)
@@ -200,6 +210,7 @@ class __$NoticeCopyWithImpl<$Res> extends _$AudioTileActionCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_Notice with DiagnosticableTreeMixin implements _Notice {
   const _$_Notice(this.message) : assert(message != null);
 
@@ -299,6 +310,7 @@ abstract class _Notice implements AudioTileAction {
   _$NoticeCopyWith<_Notice> get copyWith;
 }
 
+/// @nodoc
 abstract class _$ActionSheetCopyWith<$Res> {
   factory _$ActionSheetCopyWith(
           _ActionSheet value, $Res Function(_ActionSheet) then) =
@@ -306,6 +318,7 @@ abstract class _$ActionSheetCopyWith<$Res> {
   $Res call({AudioEntity audio});
 }
 
+/// @nodoc
 class __$ActionSheetCopyWithImpl<$Res>
     extends _$AudioTileActionCopyWithImpl<$Res>
     implements _$ActionSheetCopyWith<$Res> {
@@ -326,6 +339,7 @@ class __$ActionSheetCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_ActionSheet with DiagnosticableTreeMixin implements _ActionSheet {
   const _$_ActionSheet(this.audio) : assert(audio != null);
 

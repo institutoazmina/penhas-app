@@ -9,6 +9,7 @@ part of 'audio_permission_state.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$AudioPermissionStateTearOff {
   const _$AudioPermissionStateTearOff();
 
@@ -38,9 +39,11 @@ class _$AudioPermissionStateTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $AudioPermissionState = _$AudioPermissionStateTearOff();
 
+/// @nodoc
 mixin _$AudioPermissionState {
   @optionalTypeArgs
   Result when<Result extends Object>({
@@ -78,12 +81,14 @@ mixin _$AudioPermissionState {
   });
 }
 
+/// @nodoc
 abstract class $AudioPermissionStateCopyWith<$Res> {
   factory $AudioPermissionStateCopyWith(AudioPermissionState value,
           $Res Function(AudioPermissionState) then) =
       _$AudioPermissionStateCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$AudioPermissionStateCopyWithImpl<$Res>
     implements $AudioPermissionStateCopyWith<$Res> {
   _$AudioPermissionStateCopyWithImpl(this._value, this._then);
@@ -93,11 +98,13 @@ class _$AudioPermissionStateCopyWithImpl<$Res>
   final $Res Function(AudioPermissionState) _then;
 }
 
+/// @nodoc
 abstract class _$GrantedCopyWith<$Res> {
   factory _$GrantedCopyWith(_Granted value, $Res Function(_Granted) then) =
       __$GrantedCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class __$GrantedCopyWithImpl<$Res>
     extends _$AudioPermissionStateCopyWithImpl<$Res>
     implements _$GrantedCopyWith<$Res> {
@@ -108,6 +115,7 @@ class __$GrantedCopyWithImpl<$Res>
   _Granted get _value => super._value as _Granted;
 }
 
+/// @nodoc
 class _$_Granted with DiagnosticableTreeMixin implements _Granted {
   const _$_Granted();
 
@@ -204,11 +212,13 @@ abstract class _Granted implements AudioPermissionState {
   const factory _Granted() = _$_Granted;
 }
 
+/// @nodoc
 abstract class _$DeniedCopyWith<$Res> {
   factory _$DeniedCopyWith(_Denied value, $Res Function(_Denied) then) =
       __$DeniedCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class __$DeniedCopyWithImpl<$Res>
     extends _$AudioPermissionStateCopyWithImpl<$Res>
     implements _$DeniedCopyWith<$Res> {
@@ -219,6 +229,7 @@ class __$DeniedCopyWithImpl<$Res>
   _Denied get _value => super._value as _Denied;
 }
 
+/// @nodoc
 class _$_Denied with DiagnosticableTreeMixin implements _Denied {
   const _$_Denied();
 
@@ -314,12 +325,14 @@ abstract class _Denied implements AudioPermissionState {
   const factory _Denied() = _$_Denied;
 }
 
+/// @nodoc
 abstract class _$PermanentlyDeniedCopyWith<$Res> {
   factory _$PermanentlyDeniedCopyWith(
           _PermanentlyDenied value, $Res Function(_PermanentlyDenied) then) =
       __$PermanentlyDeniedCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class __$PermanentlyDeniedCopyWithImpl<$Res>
     extends _$AudioPermissionStateCopyWithImpl<$Res>
     implements _$PermanentlyDeniedCopyWith<$Res> {
@@ -331,6 +344,7 @@ class __$PermanentlyDeniedCopyWithImpl<$Res>
   _PermanentlyDenied get _value => super._value as _PermanentlyDenied;
 }
 
+/// @nodoc
 class _$_PermanentlyDenied
     with DiagnosticableTreeMixin
     implements _PermanentlyDenied {
@@ -430,12 +444,14 @@ abstract class _PermanentlyDenied implements AudioPermissionState {
   const factory _PermanentlyDenied() = _$_PermanentlyDenied;
 }
 
+/// @nodoc
 abstract class _$RestrictedCopyWith<$Res> {
   factory _$RestrictedCopyWith(
           _Restricted value, $Res Function(_Restricted) then) =
       __$RestrictedCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class __$RestrictedCopyWithImpl<$Res>
     extends _$AudioPermissionStateCopyWithImpl<$Res>
     implements _$RestrictedCopyWith<$Res> {
@@ -447,6 +463,7 @@ class __$RestrictedCopyWithImpl<$Res>
   _Restricted get _value => super._value as _Restricted;
 }
 
+/// @nodoc
 class _$_Restricted with DiagnosticableTreeMixin implements _Restricted {
   const _$_Restricted();
 
@@ -543,12 +560,14 @@ abstract class _Restricted implements AudioPermissionState {
   const factory _Restricted() = _$_Restricted;
 }
 
+/// @nodoc
 abstract class _$UndefinedCopyWith<$Res> {
   factory _$UndefinedCopyWith(
           _Undefined value, $Res Function(_Undefined) then) =
       __$UndefinedCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class __$UndefinedCopyWithImpl<$Res>
     extends _$AudioPermissionStateCopyWithImpl<$Res>
     implements _$UndefinedCopyWith<$Res> {
@@ -559,6 +578,7 @@ class __$UndefinedCopyWithImpl<$Res>
   _Undefined get _value => super._value as _Undefined;
 }
 
+/// @nodoc
 class _$_Undefined with DiagnosticableTreeMixin implements _Undefined {
   const _$_Undefined();
 

@@ -9,6 +9,7 @@ part of 'audios_state.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$AudiosStateTearOff {
   const _$AudiosStateTearOff();
 
@@ -32,9 +33,11 @@ class _$AudiosStateTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $AudiosState = _$AudiosStateTearOff();
 
+/// @nodoc
 mixin _$AudiosState {
   @optionalTypeArgs
   Result when<Result extends Object>({
@@ -64,12 +67,14 @@ mixin _$AudiosState {
   });
 }
 
+/// @nodoc
 abstract class $AudiosStateCopyWith<$Res> {
   factory $AudiosStateCopyWith(
           AudiosState value, $Res Function(AudiosState) then) =
       _$AudiosStateCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$AudiosStateCopyWithImpl<$Res> implements $AudiosStateCopyWith<$Res> {
   _$AudiosStateCopyWithImpl(this._value, this._then);
 
@@ -78,11 +83,13 @@ class _$AudiosStateCopyWithImpl<$Res> implements $AudiosStateCopyWith<$Res> {
   final $Res Function(AudiosState) _then;
 }
 
+/// @nodoc
 abstract class _$InitialCopyWith<$Res> {
   factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
       __$InitialCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class __$InitialCopyWithImpl<$Res> extends _$AudiosStateCopyWithImpl<$Res>
     implements _$InitialCopyWith<$Res> {
   __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
@@ -92,6 +99,7 @@ class __$InitialCopyWithImpl<$Res> extends _$AudiosStateCopyWithImpl<$Res>
   _Initial get _value => super._value as _Initial;
 }
 
+/// @nodoc
 class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   const _$_Initial();
 
@@ -175,12 +183,14 @@ abstract class _Initial implements AudiosState {
   const factory _Initial() = _$_Initial;
 }
 
+/// @nodoc
 abstract class _$LoadedCopyWith<$Res> {
   factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
       __$LoadedCopyWithImpl<$Res>;
   $Res call({List<AudioPlayTileEntity> audios});
 }
 
+/// @nodoc
 class __$LoadedCopyWithImpl<$Res> extends _$AudiosStateCopyWithImpl<$Res>
     implements _$LoadedCopyWith<$Res> {
   __$LoadedCopyWithImpl(_Loaded _value, $Res Function(_Loaded) _then)
@@ -199,6 +209,7 @@ class __$LoadedCopyWithImpl<$Res> extends _$AudiosStateCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   const _$_Loaded(this.audios) : assert(audios != null);
 
@@ -298,6 +309,7 @@ abstract class _Loaded implements AudiosState {
   _$LoadedCopyWith<_Loaded> get copyWith;
 }
 
+/// @nodoc
 abstract class _$ErrorDetailsCopyWith<$Res> {
   factory _$ErrorDetailsCopyWith(
           _ErrorDetails value, $Res Function(_ErrorDetails) then) =
@@ -305,6 +317,7 @@ abstract class _$ErrorDetailsCopyWith<$Res> {
   $Res call({String message});
 }
 
+/// @nodoc
 class __$ErrorDetailsCopyWithImpl<$Res> extends _$AudiosStateCopyWithImpl<$Res>
     implements _$ErrorDetailsCopyWith<$Res> {
   __$ErrorDetailsCopyWithImpl(
@@ -324,6 +337,7 @@ class __$ErrorDetailsCopyWithImpl<$Res> extends _$AudiosStateCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   const _$_ErrorDetails(this.message) : assert(message != null);
 

@@ -9,6 +9,7 @@ part of 'guardian_alert_state.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$GuardianAlertStateTearOff {
   const _$GuardianAlertStateTearOff();
 
@@ -25,9 +26,11 @@ class _$GuardianAlertStateTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $GuardianAlertState = _$GuardianAlertStateTearOff();
 
+/// @nodoc
 mixin _$GuardianAlertState {
   @optionalTypeArgs
   Result when<Result extends Object>({
@@ -53,12 +56,14 @@ mixin _$GuardianAlertState {
   });
 }
 
+/// @nodoc
 abstract class $GuardianAlertStateCopyWith<$Res> {
   factory $GuardianAlertStateCopyWith(
           GuardianAlertState value, $Res Function(GuardianAlertState) then) =
       _$GuardianAlertStateCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$GuardianAlertStateCopyWithImpl<$Res>
     implements $GuardianAlertStateCopyWith<$Res> {
   _$GuardianAlertStateCopyWithImpl(this._value, this._then);
@@ -68,11 +73,13 @@ class _$GuardianAlertStateCopyWithImpl<$Res>
   final $Res Function(GuardianAlertState) _then;
 }
 
+/// @nodoc
 abstract class _$InitialCopyWith<$Res> {
   factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
       __$InitialCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class __$InitialCopyWithImpl<$Res>
     extends _$GuardianAlertStateCopyWithImpl<$Res>
     implements _$InitialCopyWith<$Res> {
@@ -83,6 +90,7 @@ class __$InitialCopyWithImpl<$Res>
   _Initial get _value => super._value as _Initial;
 }
 
+/// @nodoc
 class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   const _$_Initial();
 
@@ -160,12 +168,14 @@ abstract class _Initial implements GuardianAlertState {
   const factory _Initial() = _$_Initial;
 }
 
+/// @nodoc
 abstract class _$AlertCopyWith<$Res> {
   factory _$AlertCopyWith(_Alert value, $Res Function(_Alert) then) =
       __$AlertCopyWithImpl<$Res>;
   $Res call({GuardianAlertMessageAction action});
 }
 
+/// @nodoc
 class __$AlertCopyWithImpl<$Res> extends _$GuardianAlertStateCopyWithImpl<$Res>
     implements _$AlertCopyWith<$Res> {
   __$AlertCopyWithImpl(_Alert _value, $Res Function(_Alert) _then)
@@ -184,6 +194,7 @@ class __$AlertCopyWithImpl<$Res> extends _$GuardianAlertStateCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_Alert with DiagnosticableTreeMixin implements _Alert {
   const _$_Alert(this.action) : assert(action != null);
 

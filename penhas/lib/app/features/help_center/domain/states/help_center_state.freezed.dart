@@ -9,6 +9,7 @@ part of 'help_center_state.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$HelpCenterStateTearOff {
   const _$HelpCenterStateTearOff();
 
@@ -32,9 +33,11 @@ class _$HelpCenterStateTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $HelpCenterState = _$HelpCenterStateTearOff();
 
+/// @nodoc
 mixin _$HelpCenterState {
   @optionalTypeArgs
   Result when<Result extends Object>({
@@ -64,12 +67,14 @@ mixin _$HelpCenterState {
   });
 }
 
+/// @nodoc
 abstract class $HelpCenterStateCopyWith<$Res> {
   factory $HelpCenterStateCopyWith(
           HelpCenterState value, $Res Function(HelpCenterState) then) =
       _$HelpCenterStateCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$HelpCenterStateCopyWithImpl<$Res>
     implements $HelpCenterStateCopyWith<$Res> {
   _$HelpCenterStateCopyWithImpl(this._value, this._then);
@@ -79,11 +84,13 @@ class _$HelpCenterStateCopyWithImpl<$Res>
   final $Res Function(HelpCenterState) _then;
 }
 
+/// @nodoc
 abstract class _$InitialCopyWith<$Res> {
   factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
       __$InitialCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class __$InitialCopyWithImpl<$Res> extends _$HelpCenterStateCopyWithImpl<$Res>
     implements _$InitialCopyWith<$Res> {
   __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
@@ -93,6 +100,7 @@ class __$InitialCopyWithImpl<$Res> extends _$HelpCenterStateCopyWithImpl<$Res>
   _Initial get _value => super._value as _Initial;
 }
 
+/// @nodoc
 class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   const _$_Initial();
 
@@ -176,6 +184,7 @@ abstract class _Initial implements HelpCenterState {
   const factory _Initial() = _$_Initial;
 }
 
+/// @nodoc
 abstract class _$GuardianTriggeredCopyWith<$Res> {
   factory _$GuardianTriggeredCopyWith(
           _GuardianTriggered value, $Res Function(_GuardianTriggered) then) =
@@ -183,6 +192,7 @@ abstract class _$GuardianTriggeredCopyWith<$Res> {
   $Res call({GuardianAlertMessageAction action});
 }
 
+/// @nodoc
 class __$GuardianTriggeredCopyWithImpl<$Res>
     extends _$HelpCenterStateCopyWithImpl<$Res>
     implements _$GuardianTriggeredCopyWith<$Res> {
@@ -203,6 +213,7 @@ class __$GuardianTriggeredCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_GuardianTriggered
     with DiagnosticableTreeMixin
     implements _GuardianTriggered {
@@ -305,6 +316,7 @@ abstract class _GuardianTriggered implements HelpCenterState {
   _$GuardianTriggeredCopyWith<_GuardianTriggered> get copyWith;
 }
 
+/// @nodoc
 abstract class _$CallingPoliceCopyWith<$Res> {
   factory _$CallingPoliceCopyWith(
           _CallingPolice value, $Res Function(_CallingPolice) then) =
@@ -312,6 +324,7 @@ abstract class _$CallingPoliceCopyWith<$Res> {
   $Res call({String callingNumber});
 }
 
+/// @nodoc
 class __$CallingPoliceCopyWithImpl<$Res>
     extends _$HelpCenterStateCopyWithImpl<$Res>
     implements _$CallingPoliceCopyWith<$Res> {
@@ -332,6 +345,7 @@ class __$CallingPoliceCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_CallingPolice with DiagnosticableTreeMixin implements _CallingPolice {
   const _$_CallingPolice(this.callingNumber) : assert(callingNumber != null);
 

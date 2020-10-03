@@ -9,6 +9,7 @@ part of 'mainboard_state.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$MainboardStateTearOff {
   const _$MainboardStateTearOff();
 
@@ -38,9 +39,11 @@ class _$MainboardStateTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $MainboardState = _$MainboardStateTearOff();
 
+/// @nodoc
 mixin _$MainboardState {
   @optionalTypeArgs
   Result when<Result extends Object>({
@@ -78,12 +81,14 @@ mixin _$MainboardState {
   });
 }
 
+/// @nodoc
 abstract class $MainboardStateCopyWith<$Res> {
   factory $MainboardStateCopyWith(
           MainboardState value, $Res Function(MainboardState) then) =
       _$MainboardStateCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$MainboardStateCopyWithImpl<$Res>
     implements $MainboardStateCopyWith<$Res> {
   _$MainboardStateCopyWithImpl(this._value, this._then);
@@ -93,11 +98,13 @@ class _$MainboardStateCopyWithImpl<$Res>
   final $Res Function(MainboardState) _then;
 }
 
+/// @nodoc
 abstract class _$ChatCopyWith<$Res> {
   factory _$ChatCopyWith(_Chat value, $Res Function(_Chat) then) =
       __$ChatCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class __$ChatCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
     implements _$ChatCopyWith<$Res> {
   __$ChatCopyWithImpl(_Chat _value, $Res Function(_Chat) _then)
@@ -107,6 +114,7 @@ class __$ChatCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
   _Chat get _value => super._value as _Chat;
 }
 
+/// @nodoc
 class _$_Chat with DiagnosticableTreeMixin implements _Chat {
   const _$_Chat();
 
@@ -202,11 +210,13 @@ abstract class _Chat implements MainboardState {
   const factory _Chat() = _$_Chat;
 }
 
+/// @nodoc
 abstract class _$FeedCopyWith<$Res> {
   factory _$FeedCopyWith(_Feed value, $Res Function(_Feed) then) =
       __$FeedCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class __$FeedCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
     implements _$FeedCopyWith<$Res> {
   __$FeedCopyWithImpl(_Feed _value, $Res Function(_Feed) _then)
@@ -216,6 +226,7 @@ class __$FeedCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
   _Feed get _value => super._value as _Feed;
 }
 
+/// @nodoc
 class _$_Feed with DiagnosticableTreeMixin implements _Feed {
   const _$_Feed();
 
@@ -311,11 +322,13 @@ abstract class _Feed implements MainboardState {
   const factory _Feed() = _$_Feed;
 }
 
+/// @nodoc
 abstract class _$ComposeCopyWith<$Res> {
   factory _$ComposeCopyWith(_Compose value, $Res Function(_Compose) then) =
       __$ComposeCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class __$ComposeCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
     implements _$ComposeCopyWith<$Res> {
   __$ComposeCopyWithImpl(_Compose _value, $Res Function(_Compose) _then)
@@ -325,6 +338,7 @@ class __$ComposeCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
   _Compose get _value => super._value as _Compose;
 }
 
+/// @nodoc
 class _$_Compose with DiagnosticableTreeMixin implements _Compose {
   const _$_Compose();
 
@@ -420,12 +434,14 @@ abstract class _Compose implements MainboardState {
   const factory _Compose() = _$_Compose;
 }
 
+/// @nodoc
 abstract class _$SupportPointCopyWith<$Res> {
   factory _$SupportPointCopyWith(
           _SupportPoint value, $Res Function(_SupportPoint) then) =
       __$SupportPointCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class __$SupportPointCopyWithImpl<$Res>
     extends _$MainboardStateCopyWithImpl<$Res>
     implements _$SupportPointCopyWith<$Res> {
@@ -437,6 +453,7 @@ class __$SupportPointCopyWithImpl<$Res>
   _SupportPoint get _value => super._value as _SupportPoint;
 }
 
+/// @nodoc
 class _$_SupportPoint with DiagnosticableTreeMixin implements _SupportPoint {
   const _$_SupportPoint();
 
@@ -532,12 +549,14 @@ abstract class _SupportPoint implements MainboardState {
   const factory _SupportPoint() = _$_SupportPoint;
 }
 
+/// @nodoc
 abstract class _$HelpCenterCopyWith<$Res> {
   factory _$HelpCenterCopyWith(
           _HelpCenter value, $Res Function(_HelpCenter) then) =
       __$HelpCenterCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class __$HelpCenterCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
     implements _$HelpCenterCopyWith<$Res> {
   __$HelpCenterCopyWithImpl(
@@ -548,6 +567,7 @@ class __$HelpCenterCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
   _HelpCenter get _value => super._value as _HelpCenter;
 }
 
+/// @nodoc
 class _$_HelpCenter with DiagnosticableTreeMixin implements _HelpCenter {
   const _$_HelpCenter();
 
