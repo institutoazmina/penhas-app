@@ -11,12 +11,13 @@
   "meta": {
     "can_send_message": 1,
     "did_blocked": 0,
-    "header_message": "",
-    "header_warning": "",
+    "header_message": "Minha mensagem",
+    "header_warning": "Meu alerta",
     "is_blockable": 1,
     "last_msg_etag": "4a295f"
   },
   "newer": "--my-pagination-token--",
+  "older": "--my-older-pagination-token--",
   "other": {
     "activity": "há pouco tempo",
     "apelido": "Julia",
