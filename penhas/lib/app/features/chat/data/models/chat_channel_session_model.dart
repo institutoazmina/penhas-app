@@ -1,10 +1,9 @@
-import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_channel_session_entity.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_message_entity.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
 
-import 'chat_message_entity.dart';
-import 'chat_user_entity.dart';
-
-class ChatChannelSessionEntity extends Equatable {
+class ChatChannelSessionModel extends ChatChannelSessionEntity {
   final bool hasMore;
   final String newer;
   final String older;
@@ -12,7 +11,7 @@ class ChatChannelSessionEntity extends Equatable {
   final ChatChannelSessionMetadataEntity metadata;
   final ChatUserEntity user;
 
-  ChatChannelSessionEntity({
+  ChatChannelSessionModel({
     @required this.hasMore,
     @required this.newer,
     @required this.older,
@@ -20,22 +19,9 @@ class ChatChannelSessionEntity extends Equatable {
     @required this.metadata,
     @required this.user,
   });
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object> get props => [
-        hasMore,
-        newer,
-        older,
-        messages,
-        metadata,
-        user,
-      ];
 }
 
-class ChatChannelSessionMetadataEntity extends Equatable {
+class ChatChannelSessionMetadataModel extends ChatChannelSessionMetadataEntity {
   final bool canSendMessage;
   final bool didBlocked;
   final String headerMessage;
@@ -43,7 +29,7 @@ class ChatChannelSessionMetadataEntity extends Equatable {
   final bool isBlockable;
   final String lastMessageEtag;
 
-  ChatChannelSessionMetadataEntity({
+  ChatChannelSessionMetadataModel({
     @required this.canSendMessage,
     @required this.didBlocked,
     @required this.headerMessage,
@@ -51,17 +37,4 @@ class ChatChannelSessionMetadataEntity extends Equatable {
     @required this.isBlockable,
     @required this.lastMessageEtag,
   });
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object> get props => [
-        canSendMessage,
-        didBlocked,
-        headerMessage,
-        headerWarning,
-        isBlockable,
-        lastMessageEtag,
-      ];
 }

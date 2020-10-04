@@ -19,12 +19,9 @@ class ChatUserModel extends ChatUserEntity {
           userId: userId,
         );
 
-  factory ChatUserModel.fromJson(Map<String, Object> jsonData) {
-    return ChatUserModel(
-      activity: jsonData["activity"] ?? jsonData["other_activity"] ?? "",
-      nickname: jsonData["apelido"] ?? jsonData["other_apelido"],
-      avatar: jsonData["avatar_url"] ?? jsonData["other_avatar_url"],
-      userId: jsonData["cliente_id"],
-    );
-  }
+  ChatUserModel.fromJson(Map<String, Object> jsonData)
+      : activity = jsonData["activity"] ?? jsonData["other_activity"] ?? "",
+        nickname = jsonData["apelido"] ?? jsonData["other_apelido"],
+        avatar = jsonData["avatar_url"] ?? jsonData["other_avatar_url"],
+        userId = jsonData["cliente_id"];
 }

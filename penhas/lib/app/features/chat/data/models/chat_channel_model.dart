@@ -21,23 +21,9 @@ class ChatChannelModel extends ChatChannelEntity {
           user: user,
         );
 
-  // ChatChannelModel.fromJson(Map<String, Object> jsonData)
-  //     : token = jsonData["chat_auth"],
-  //       lastMessageTime = DateTime.parse(jsonData["last_message_at"]),
-  //       lastMessageIsMime = jsonData["last_message_is_me"] == 1,
-  //       user = ChatUserModel.fromJson(jsonData);
-
-  factory ChatChannelModel.fromJson(Map<String, Object> jsonData) {
-    final token = jsonData["chat_auth"];
-    final lastMessageTime = DateTime.parse(jsonData["last_message_at"]);
-    final lastMessageIsMime = jsonData["last_message_is_me"] == 1;
-    final user = ChatUserModel.fromJson(jsonData);
-
-    return ChatChannelModel(
-      token: token,
-      lastMessageTime: lastMessageTime,
-      lastMessageIsMime: lastMessageIsMime,
-      user: user,
-    );
-  }
+  ChatChannelModel.fromJson(Map<String, Object> jsonData)
+      : token = jsonData["chat_auth"],
+        lastMessageTime = DateTime.parse(jsonData["last_message_at"]),
+        lastMessageIsMime = jsonData["last_message_is_me"] == 1,
+        user = ChatUserModel.fromJson(jsonData);
 }
