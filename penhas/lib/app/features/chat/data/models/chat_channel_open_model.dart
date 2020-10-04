@@ -1,22 +1,21 @@
-// import 'package:equatable/equatable.dart';
-// import 'package:meta/meta.dart';
+import 'package:meta/meta.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entity.dart';
 
-// import 'chat_channel_session_entity.dart';
+import 'chat_channel_session_model.dart';
 
-// class ChatChannelOpenEntity extends Equatable {
-//   final String token;
-//   final ChatChannelSessionEntity session;
+class ChatChannelOpenModel extends ChatChannelOpenEntity {
+  final String token;
+  final ChatChannelSessionModel session;
 
-//   ChatChannelOpenEntity({
-//     @required this.token,
-//     @required this.session,
-//   });
-//   @override
-//   bool get stringify => true;
+  ChatChannelOpenModel({
+    @required this.token,
+    @required this.session,
+  }) : super(
+          token: token,
+          session: session,
+        );
 
-//   @override
-//   List<Object> get props => [
-//         token,
-//         session,
-//       ];
-// }
+  ChatChannelOpenModel.fromJson(Map<String, Object> jsonData)
+      : token = jsonData["chat_auth"],
+        session = ChatChannelSessionModel.fromJson(jsonData["prefetch"]);
+}

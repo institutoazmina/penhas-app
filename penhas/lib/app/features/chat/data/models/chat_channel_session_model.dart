@@ -19,7 +19,14 @@ class ChatChannelSessionModel extends ChatChannelSessionEntity {
     @required this.messages,
     @required this.metadata,
     @required this.user,
-  });
+  }) : super(
+          hasMore: hasMore,
+          newer: newer,
+          older: older,
+          messages: messages,
+          metadata: metadata,
+          user: user,
+        );
 
   factory ChatChannelSessionModel.fromJson(Map<String, Object> jsonData) {
     final List<Object> jsonMessages = jsonData["messages"];

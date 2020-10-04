@@ -24,7 +24,7 @@ void main() {
       expect(model, isA<ChatChannelSessionEntity>());
     });
 
-    test('should return a valid model with a valid JSON with empty messages',
+    test('should return a valid model from valid JSON with empty messages',
         () async {
       // arrange
       final jsonFile = "chat/chat_read_channel_empty.json";
