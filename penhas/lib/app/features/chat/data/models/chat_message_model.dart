@@ -12,5 +12,16 @@ class ChatMessageModel extends ChatMessageEntity {
     @required this.isMe,
     @required this.message,
     @required this.time,
-  });
+  }) : super(
+          id: id,
+          isMe: isMe,
+          message: message,
+          time: time,
+        );
+
+  ChatMessageModel.fromJson(Map<String, Object> jsonData)
+      : id = jsonData["id"],
+        isMe = jsonData["is_me"] == 1,
+        message = jsonData["message"],
+        time = DateTime.parse(jsonData["time"]);
 }
