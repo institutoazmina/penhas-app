@@ -1,0 +1,26 @@
+{
+  "has_more": 0,
+  "messages": [
+    {
+      "id": 172,
+      "is_me": 1,
+      "message": "Ola mundo!",
+      "time": "2020-10-04T09:30:54Z"
+    }
+  ],
+  "meta": {
+    "can_send_message": 1,
+    "did_blocked": 0,
+    "header_message": "",
+    "header_warning": "",
+    "is_blockable": 1,
+    "last_msg_etag": "4a295f"
+  },
+  "newer": "--my-pagination-token--",
+  "other": {
+    "activity": "há pouco tempo",
+    "apelido": "Julia",
+    "avatar_url": "https:\/\/api.example.com\/avatar\/padrao.svg",
+    "cliente_id": 3191
+  }
+}

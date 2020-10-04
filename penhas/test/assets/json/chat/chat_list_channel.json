@@ -1,0 +1,30 @@
+{
+  "has_more": 0,
+  "next_page": null,
+  "rows": [
+    {
+      "chat_auth": "__my_very_secret_session__",
+      "last_message_at": "2020-10-04T09:20:37Z",
+      "last_message_is_me": 1,
+      "other_activity": "há pouco tempo",
+      "other_apelido": "Maria",
+      "other_avatar_url": "https:\/\/api.example.com\/avatar\/padrao.svg"
+    },
+    {
+      "chat_auth": "__my_very_secret_session__",
+      "last_message_at": "2020-10-04T09:15:27Z",
+      "last_message_is_me": 1,
+      "other_activity": "há alguns dias",
+      "other_apelido": "Julia",
+      "other_avatar_url": "https:\/\/api.example.com\/avatar\/padrao.svg"
+    }
+  ],
+  "support": {
+    "chat_auth": "Sda24",
+    "last_message_at": "2020-09-09T01:00:58Z",
+    "last_message_is_me": 1,
+    "other_activity": "",
+    "other_apelido": "Suporte PenhaS",
+    "other_avatar_url": "https:\/\/api.example.com\/avatar\/suporte-chat.png"
+  }
+}

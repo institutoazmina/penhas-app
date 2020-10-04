@@ -1,0 +1,22 @@
+{
+  "chat_auth": "__my_very_secret_session__",
+  "prefetch": {
+    "has_more": 0,
+    "messages": [],
+    "meta": {
+      "can_send_message": 1,
+      "did_blocked": 0,
+      "header_message": "",
+      "header_warning": "",
+      "is_blockable": 1,
+      "last_msg_etag": "482b55"
+    },
+    "newer": "__my_pagination__",
+    "other": {
+      "activity": "há poucos dias",
+      "apelido": "Maria",
+      "avatar_url": "https:\/\/api.example.com\/avatar\/padrao.svg",
+      "cliente_id": 180
+    }
+  }
+}
