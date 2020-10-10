@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_tab_item.dart';
 import 'package:penhas/app/features/chat/domain/usecases/chat_toggle_feature.dart';
 
 part 'chat_main_controller.g.dart';
@@ -19,9 +20,15 @@ abstract class _ChatMainControllerBase with Store {
   }
 
   Future<void> _init() async {
-    showPeopleScreen = await _chatToggleFeature.isEnabled;
+    List<ChatTabItem> items = [ChatTabItem(headerName: "Conversas")];
+    tabItems = items.asObservable();
+
+    if (await _chatToggleFeature.isEnabled) {
+      items.add(ChatTabItem(headerName: "Pessoas"));
+      tabItems = items.asObservable();
+    }
   }
 
   @observable
-  bool showPeopleScreen = false;
+  ObservableList<ChatTabItem> tabItems = ObservableList<ChatTabItem>();
 }

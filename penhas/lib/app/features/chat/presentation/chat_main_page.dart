@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_tab_item.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 import 'chat_main_controller.dart';
 import 'chat_main_people_page.dart';
@@ -22,20 +23,12 @@ class _ChatMainPageState
       child: SizedBox.expand(
         child: DefaultTabController(
           length: 2,
-          child: Scaffold(
-            appBar: AppBar(
-              elevation: 0,
-              toolbarHeight: 55,
-              backgroundColor: DesignSystemColors.systemBackgroundColor,
-              bottom: chatTabBar,
-            ),
-            body: TabBarView(
-              children: [
-                ChatMainTalksPage(),
-                ChatMainPeoplePage(),
-              ],
-            ),
-          ),
+          child: Observer(builder: (_) {
+            return Scaffold(
+              appBar: buildAppBar(controller.tabItems),
+              body: buildBody(controller.tabItems),
+            );
+          }),
         ),
       ),
     );
@@ -43,17 +36,40 @@ class _ChatMainPageState
 }
 
 extension _ChatMainPageStatePrivate on _ChatMainPageState {
-  PreferredSizeWidget get chatTabBar => TabBar(
-        indicatorColor: DesignSystemColors.pinky,
-        labelColor: DesignSystemColors.pinky,
-        labelStyle: chatTabSelectedTextStyle,
-        unselectedLabelColor: DesignSystemColors.warnGrey,
-        unselectedLabelStyle: chatTabUnselectedTextStyle,
-        tabs: [
-          Tab(text: "Conversas"),
-          Tab(text: "Pessoas"),
-        ],
+  PreferredSizeWidget buildAppBar(List<ChatTabItem> items) {
+    if (items.length > 1) {
+      return AppBar(
+        elevation: 0,
+        toolbarHeight: 55,
+        backgroundColor: DesignSystemColors.systemBackgroundColor,
+        bottom: chatTabBar(items),
       );
+    }
+
+    return null;
+  }
+
+  PreferredSizeWidget chatTabBar(List<ChatTabItem> items) {
+    return TabBar(
+      labelColor: DesignSystemColors.pinky,
+      labelStyle: chatTabSelectedTextStyle,
+      indicatorColor: DesignSystemColors.pinky,
+      unselectedLabelColor: DesignSystemColors.warnGrey,
+      unselectedLabelStyle: chatTabUnselectedTextStyle,
+      tabs: items.map((e) => Tab(text: e.headerName)).toList(),
+    );
+  }
+
+  Widget buildBody(List<ChatTabItem> items) {
+    if (items.length > 1) {
+      return TabBarView(children: [
+        ChatMainTalksPage(),
+        ChatMainPeoplePage(),
+      ]);
+    }
+
+    return ChatMainTalksPage();
+  }
 }
 
 extension _ChatMainPageStateTextStyle on _ChatMainPageState {
