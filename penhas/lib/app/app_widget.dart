@@ -18,7 +18,6 @@ class AppWidget extends StatelessWidget {
       ],
       supportedLocales: [
         const Locale('pt', "BR"),
-        const Locale('en', "US"),
       ],
       initialRoute: '/',
       onGenerateRoute: Modular.generateRoute,

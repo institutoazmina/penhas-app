@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/chat/presentation/pages/chat_assistant_card.dart';
 import 'package:penhas/app/features/chat/presentation/pages/chat_talk_card.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-class ChatMainTalksPage extends StatelessWidget {
+import 'chat_main_talks_controller.dart';
+
+class ChatMainTalksPage extends StatefulWidget {
   const ChatMainTalksPage({Key key}) : super(key: key);
 
+  @override
+  _ChatMainTalksPageState createState() => _ChatMainTalksPageState();
+}
+
+class _ChatMainTalksPageState
+    extends ModularState<ChatMainTalksPage, ChatMainTalksController> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -69,7 +78,7 @@ class ChatMainTalksPage extends StatelessWidget {
   }
 }
 
-extension _ChatMainTalksPageTextStyle on ChatMainTalksPage {
+extension _ChatMainTalksPageTextStyle on _ChatMainTalksPageState {
   TextStyle get talksDividerTitleTextStyle => TextStyle(
       fontFamily: 'Lato',
       fontSize: 16.0,

@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
+import 'chat_main_people_controller.dart';
 import 'pages/chat_people_filter_card.dart';
 import 'pages/chat_talk_card.dart';
 
-class ChatMainPeoplePage extends StatelessWidget {
+class ChatMainPeoplePage extends StatefulWidget {
   const ChatMainPeoplePage({Key key}) : super(key: key);
 
+  @override
+  _ChatMainPeoplePageState createState() => _ChatMainPeoplePageState();
+}
+
+class _ChatMainPeoplePageState
+    extends ModularState<ChatMainPeoplePage, ChatMainPeopleController> {
   @override
   Widget build(BuildContext context) {
     List<Widget> dataSource = [

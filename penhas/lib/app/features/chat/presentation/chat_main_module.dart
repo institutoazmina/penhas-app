@@ -5,6 +5,9 @@ import 'package:penhas/app/features/chat/domain/usecases/chat_toggle_feature.dar
 import 'package:penhas/app/features/chat/presentation/chat_main_controller.dart';
 import 'package:penhas/app/features/chat/presentation/chat_main_page.dart';
 
+import 'chat_main_people_controller.dart';
+import 'chat_main_talks_controller.dart';
+
 class ChatMainModule extends WidgetModule {
   @override
   List<Bind> get binds => [
@@ -18,6 +21,8 @@ class ChatMainModule extends WidgetModule {
             modulesServices: i.get<IAppModulesServices>(),
           ),
         ),
+        Bind((i) => ChatMainTalksController()),
+        Bind((i) => ChatMainPeopleController()),
       ];
 
   static Inject get to => Inject<ChatMainModule>.of();
