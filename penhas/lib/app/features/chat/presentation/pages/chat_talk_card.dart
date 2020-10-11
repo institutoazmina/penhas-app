@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_channel_entity.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatTalkCard extends StatelessWidget {
-  const ChatTalkCard({Key key}) : super(key: key);
+  final ChatChannelEntity channel;
+
+  const ChatTalkCard({
+    Key key,
+    @required this.channel,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +27,7 @@ class ChatTalkCard extends StatelessWidget {
             CircleAvatar(
               backgroundColor: Color.fromRGBO(239, 239, 239, 1.0),
               radius: 20,
-              child:
-                  SvgPicture.asset("assets/images/svg/drawer/user_profile.svg"),
+              child: SvgPicture.network(channel.user.avatar),
             ),
             Expanded(
               child: Padding(
@@ -33,18 +38,31 @@ class ChatTalkCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(width: 16),
-                    Text("Quincy Renata", style: cardTitleTextStyle),
-                    Text("Online", style: cardStatusTextStyle),
+                    Text(channel.user.nickname, style: cardTitleTextStyle),
+                    Text(channel.user.activity, style: cardStatusTextStyle),
                   ],
                 ),
               ),
             ),
-            Text("25/03/2020", style: cardStatusTextStyle),
+            Text(
+              transformDate(channel.lastMessageTime),
+              style: cardStatusTextStyle,
+            ),
           ],
         ),
       ),
     );
   }
+
+  String transformDate(DateTime time) {
+    return formatWithZero(time.day) +
+        "/" +
+        formatWithZero(time.month) +
+        "/" +
+        formatWithZero(time.year);
+  }
+
+  String formatWithZero(int value) => value > 9 ? "$value" : "0$value";
 }
 
 extension _ChatTalkCardPrivate on ChatTalkCard {

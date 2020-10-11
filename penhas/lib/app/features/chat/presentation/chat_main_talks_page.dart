@@ -31,10 +31,6 @@ class _ChatMainTalksPageState
       ),
     );
   }
-
-  Widget talkCard(int index) {
-    return ChatTalkCard();
-  }
 }
 
 extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
@@ -73,6 +69,14 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
       return buildAssistantCard(tile);
     }
 
+    if (tile is ChatMainChannelHeaderTile) {
+      return buildChannelHeader(tile);
+    }
+
+    if (tile is ChatMainChannelCardTile) {
+      return buildChannelCard(tile);
+    }
+
     return Container();
   }
 
@@ -106,6 +110,20 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
     );
   }
 
+  Widget buildChannelHeader(ChatMainChannelHeaderTile tile) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+      child: Text(
+        tile.title,
+        style: talksDividerTitleTextStyle,
+      ),
+    );
+  }
+
+  Widget buildChannelCard(ChatMainChannelCardTile tile) {
+    return ChatTalkCard(channel: tile.channel);
+  }
+
   /*
       return Container(
       padding: EdgeInsets.symmetric(vertical: 16.0),
@@ -115,13 +133,6 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
 ,
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-            child: Text(
-              "Suas conversas (4)",
-              style: talksDividerTitleTextStyle,
-            ),
-          ),
           Expanded(
             child: RefreshIndicator(
               onRefresh: () async => print("Ola mundo!"),

@@ -30,3 +30,25 @@ class ChatMainSupportTile extends ChatMainTileEntity {
   @override
   List<Object> get props => [title];
 }
+
+class ChatMainChannelHeaderTile extends ChatMainTileEntity {
+  final String title;
+
+  ChatMainChannelHeaderTile({
+    @required this.title,
+  });
+
+  @override
+  List<Object> get props => [title];
+}
+
+class ChatMainChannelCardTile extends ChatMainTileEntity {
+  final ChatChannelEntity channel;
+
+  ChatMainChannelCardTile({
+    @required this.channel,
+  });
+
+  @override
+  List<Object> get props => [channel];
+}

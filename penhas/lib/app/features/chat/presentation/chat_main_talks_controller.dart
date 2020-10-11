@@ -76,6 +76,16 @@ extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
       tiles.add(ChatMainAssistantCardTile(cards: cards));
     }
 
+    if (session.channels.isNotEmpty) {
+      final total = session.channels.length;
+      final title = total > 1 ? "Suas conversas ($total)" : "Sua conversa";
+      tiles.add(ChatMainChannelHeaderTile(title: title));
+      final channels = session.channels
+          .map((e) => ChatMainChannelCardTile(channel: e))
+          .toList();
+      tiles.addAll(channels);
+    }
+
     currentState = ChatMainTalksState.loaded(tiles);
   }
 
