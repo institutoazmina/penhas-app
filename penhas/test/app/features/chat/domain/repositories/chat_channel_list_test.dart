@@ -36,5 +36,22 @@ void main() {
       // assert
       expect(actual, matcher);
     });
+    test('should list open channel', () async {
+      // arrange
+      final jsonFile = "chat/chat_list_channel.json";
+      final jsonData = await JsonUtil.getJson(from: jsonFile);
+      final actual = right(ChatChannelAvailableModel.fromJson(jsonData));
+      when(
+        apiProvider.get(
+          path: anyNamed('path'),
+          headers: anyNamed('headers'),
+          parameters: anyNamed('parameters'),
+        ),
+      ).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
+      // act
+      final matcher = await sut.listChannel();
+      // assert
+      expect(actual, matcher);
+    });
   });
 }
