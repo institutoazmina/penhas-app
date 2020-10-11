@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_main_tile_entity.dart';
+import 'package:penhas/app/features/chat/domain/states/chat_main_talks_state.dart';
 import 'package:penhas/app/features/chat/presentation/pages/chat_assistant_card.dart';
 import 'package:penhas/app/features/chat/presentation/pages/chat_talk_card.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
@@ -20,36 +24,97 @@ class _ChatMainTalksPageState
     return Container(
       padding: EdgeInsets.symmetric(vertical: 16.0),
       color: DesignSystemColors.systemBackgroundColor,
+      child: Observer(
+        builder: (_) {
+          return bodyBuilder(controller.currentState);
+        },
+      ),
+    );
+  }
+
+  Widget talkCard(int index) {
+    return ChatTalkCard();
+  }
+}
+
+extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
+  Widget bodyBuilder(ChatMainTalksState state) {
+    return state.when(
+      initial: () => empty(),
+      loading: () => loading(),
+      loaded: (tiles) => loaded(tiles),
+      error: (message) => empty(),
+    );
+  }
+
+  Widget empty() => Container(color: DesignSystemColors.systemBackgroundColor);
+
+  Widget loading() {
+    return PageProgressIndicator(
+        progressMessage: 'Carregando...',
+        child: Container(color: DesignSystemColors.systemBackgroundColor),
+        progressState: PageProgressState.loading);
+  }
+
+  Widget loaded(List<ChatMainTileEntity> tiles) {
+    return RefreshIndicator(
+      onRefresh: () async => controller.reload(),
+      child: ListView.builder(
+        itemCount: tiles.length,
+        itemBuilder: (context, index) {
+          return buildCard(tiles[index]);
+        },
+      ),
+    );
+  }
+
+  Widget buildCard(ChatMainTileEntity tile) {
+    if (tile is ChatMainAssistantCardTile) {
+      return buildAssistantCard(tile);
+    }
+
+    return Container();
+  }
+
+  Widget buildAssistantCard(ChatMainAssistantCardTile tile) {
+    if (tile.cards.isEmpty) {
+      return Container();
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          ...tile.cards
+              .map(
+                (e) => ChatAssistantCard(
+                  title: e.title,
+                  description: e.content,
+                  icon: Image.network(
+                    e.channel.user.avatar,
+                    width: 40,
+                    height: 40,
+                  ),
+                  channel: e.channel,
+                  onPressed: controller.openChannel,
+                ),
+              )
+              .toList()
+        ],
+      ),
+    );
+  }
+
+  /*
+      return Container(
+      padding: EdgeInsets.symmetric(vertical: 16.0),
+      color: DesignSystemColors.systemBackgroundColor,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ChatAssistantCard(
-                  title: "Assistente PenhaS",
-                  description: "Entenda se você está em situação de violência",
-                  icon: Image.asset(
-                    "assets/images/chat/penhasAssistant/penhasAssistant.png",
-                    width: 40,
-                    height: 40,
-                  ),
-                ),
-                ChatAssistantCard(
-                  title: "Contato PenhaS",
-                  description: "Fale com as adminstradoras do app",
-                  icon: Image.asset(
-                    "assets/images/chat/penhasContact/penhasContact.png",
-                    width: 40,
-                    height: 40,
-                  ),
-                )
-              ],
-            ),
-          ),
+,
           Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             child: Text(
@@ -71,11 +136,7 @@ class _ChatMainTalksPageState
         ],
       ),
     );
-  }
-
-  Widget talkCard(int index) {
-    return ChatTalkCard();
-  }
+  */
 }
 
 extension _ChatMainTalksPageTextStyle on _ChatMainTalksPageState {
