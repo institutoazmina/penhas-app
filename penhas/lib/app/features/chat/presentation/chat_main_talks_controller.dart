@@ -94,24 +94,3 @@ extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
     currentState = ChatMainTalksState.error(message);
   }
 }
-
-/*
-                ChatAssistantCard(
-                  title: "Assistente PenhaS",
-                  description: "Entenda se você está em situação de violência",
-                  icon: Image.asset(
-                    "assets/images/chat/penhasAssistant/penhasAssistant.png",
-                    width: 40,
-                    height: 40,
-                  ),
-                ),
-                ChatAssistantCard(
-                  title: "Contato PenhaS",
-                  description: "Fale com as adminstradoras do app",
-                  icon: Image.asset(
-                    "assets/images/chat/penhasContact/penhasContact.png",
-                    width: 40,
-                    height: 40,
-                  ),
-                )
-*/

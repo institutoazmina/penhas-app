@@ -76,9 +76,8 @@ extension _FutureExtension<T extends String> on Future<T> {
   }
 
   Future<UserSearchSessionEntity> parseSearchSession() async {
-    return this.then((data) async {
-      final jsonData = jsonDecode(data) as Map<String, Object>;
-      return UserSearchSessionModel.fromJson(jsonData);
-    });
+    return this
+        .then((v) => jsonDecode(v) as Map<String, Object>)
+        .then((v) => UserSearchSessionModel.fromJson(v));
   }
 }

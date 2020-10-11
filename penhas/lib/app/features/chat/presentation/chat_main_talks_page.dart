@@ -123,31 +123,6 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
   Widget buildChannelCard(ChatMainChannelCardTile tile) {
     return ChatTalkCard(channel: tile.channel);
   }
-
-  /*
-      return Container(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      color: DesignSystemColors.systemBackgroundColor,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-,
-          Expanded(
-            child: RefreshIndicator(
-              onRefresh: () async => print("Ola mundo!"),
-              child: ListView.builder(
-                itemCount: 4,
-                itemBuilder: (context, index) {
-                  return talkCard(index);
-                },
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  */
 }
 
 extension _ChatMainTalksPageTextStyle on _ChatMainTalksPageState {
