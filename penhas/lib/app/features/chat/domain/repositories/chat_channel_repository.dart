@@ -1,0 +1,41 @@
+import 'dart:convert';
+
+import 'package:dartz/dartz.dart';
+import 'package:meta/meta.dart';
+import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/network/api_client.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/map_exception_to_failure.dart';
+import 'package:penhas/app/features/chat/data/models/chat_channel_available_model.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_channel_available_entity.dart';
+
+abstract class IChatChannelRepository {
+  Future<Either<Failure, ChatChannelAvailableEntity>> listChannel();
+}
+
+class ChatChannelRepository implements IChatChannelRepository {
+  final IApiProvider _apiProvider;
+
+  ChatChannelRepository({
+    @required IApiProvider apiProvider,
+  }) : this._apiProvider = apiProvider;
+
+  @override
+  Future<Either<Failure, ChatChannelAvailableEntity>> listChannel() async {
+    final endPoint = "/me/chats";
+
+    try {
+      final response = await _apiProvider.get(path: endPoint).parseSession();
+      return right(response);
+    } catch (error) {
+      return left(MapExceptionToFailure.map(error));
+    }
+  }
+}
+
+extension _ChatChannelRepository<T extends String> on Future<T> {
+  Future<ChatChannelAvailableEntity> parseSession() async {
+    return this
+        .then((v) => jsonDecode(v) as Map<String, Object>)
+        .then((v) => ChatChannelAvailableModel.fromJson(v));
+  }
+}
