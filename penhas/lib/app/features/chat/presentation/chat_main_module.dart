@@ -6,6 +6,7 @@ import 'package:penhas/app/features/chat/domain/repositories/chat_channel_reposi
 import 'package:penhas/app/features/chat/domain/usecases/chat_toggle_feature.dart';
 import 'package:penhas/app/features/chat/presentation/chat_main_controller.dart';
 import 'package:penhas/app/features/chat/presentation/chat_main_page.dart';
+import 'package:penhas/app/features/users/data/repositories/users_repository.dart';
 
 import 'chat_main_people_controller.dart';
 import 'chat_main_talks_controller.dart';
@@ -28,7 +29,11 @@ class ChatMainModule extends WidgetModule {
             chatChannelRepository: i.get<IChatChannelRepository>(),
           ),
         ),
-        Bind((i) => ChatMainPeopleController()),
+        Bind((i) => ChatMainPeopleController(
+            usersRepository: i.get<IUsersRepository>())),
+        Bind<IUsersRepository>((i) => UsersRepository(
+              apiProvider: i.get<IApiProvider>(),
+            )),
         Bind<IChatChannelRepository>(
           (i) => ChatChannelRepository(
             apiProvider: i.get<IApiProvider>(),

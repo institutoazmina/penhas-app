@@ -3,16 +3,20 @@ import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_entity.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-class ChatTalkCard extends StatelessWidget {
+class ChatChannelCard extends StatelessWidget {
   final ChatChannelEntity channel;
 
-  const ChatTalkCard({
+  const ChatChannelCard({
     Key key,
     @required this.channel,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (channel == null) {
+      return Container();
+    }
+
     return Container(
       height: 80,
       decoration: BoxDecoration(
@@ -65,7 +69,7 @@ class ChatTalkCard extends StatelessWidget {
   String formatWithZero(int value) => value > 9 ? "$value" : "0$value";
 }
 
-extension _ChatTalkCardPrivate on ChatTalkCard {
+extension _ChatTalkCardPrivate on ChatChannelCard {
   TextStyle get cardTitleTextStyle => TextStyle(
       fontFamily: 'Lato',
       fontSize: 14.0,

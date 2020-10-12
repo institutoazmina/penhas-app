@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
 
 import 'chat_channel_entity.dart';
 
@@ -51,4 +52,22 @@ class ChatMainChannelCardTile extends ChatMainTileEntity {
 
   @override
   List<Object> get props => [channel];
+}
+
+class ChatMainPeopleFilterCardTile extends ChatMainTileEntity {
+  ChatMainPeopleFilterCardTile();
+
+  @override
+  List<Object> get props => [];
+}
+
+class ChatMainPeopleCardTile extends ChatMainTileEntity {
+  final UserDetailProfileEntity person;
+
+  ChatMainPeopleCardTile({
+    @required this.person,
+  });
+
+  @override
+  List<Object> get props => [person];
 }

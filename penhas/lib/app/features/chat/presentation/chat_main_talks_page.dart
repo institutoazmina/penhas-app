@@ -5,7 +5,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/chat/domain/entities/chat_main_tile_entity.dart';
 import 'package:penhas/app/features/chat/domain/states/chat_main_talks_state.dart';
 import 'package:penhas/app/features/chat/presentation/pages/chat_assistant_card.dart';
-import 'package:penhas/app/features/chat/presentation/pages/chat_talk_card.dart';
+import 'package:penhas/app/features/chat/presentation/pages/chat_channel_card.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 import 'chat_main_talks_controller.dart';
@@ -121,7 +121,7 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
   }
 
   Widget buildChannelCard(ChatMainChannelCardTile tile) {
-    return ChatTalkCard(channel: tile.channel);
+    return ChatChannelCard(channel: tile.channel);
   }
 }
 
