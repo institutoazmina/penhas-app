@@ -10,7 +10,6 @@ import 'package:penhas/app/features/authentication/presentation/shared/password_
 import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';

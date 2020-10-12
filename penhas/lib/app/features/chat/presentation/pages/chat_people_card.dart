@@ -5,10 +5,12 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatPeopleCard extends StatelessWidget {
   final UserDetailProfileEntity person;
+  final void Function(UserDetailProfileEntity person) onPressed;
 
   const ChatPeopleCard({
     Key key,
     @required this.person,
+    @required this.onPressed,
   }) : super(key: key);
 
   @override
@@ -17,52 +19,45 @@ class ChatPeopleCard extends StatelessWidget {
       return Container();
     }
 
-    return Container(
-      height: 80,
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: Colors.grey[350]),
+    return GestureDetector(
+      onTap: () => onPressed(person),
+      child: Container(
+        height: 80,
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(color: Colors.grey[350]),
+          ),
         ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Row(
-          children: [
-            CircleAvatar(
-              backgroundColor: Color.fromRGBO(239, 239, 239, 1.0),
-              radius: 20,
-              child: SvgPicture.network(person.avatar),
-            ),
-            Expanded(
-              child: Padding(
-                padding:
-                    const EdgeInsets.only(left: 16.0, top: 8.0, bottom: 16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(width: 16),
-                    Text(person.nickname, style: cardTitleTextStyle),
-                    Text(person.activity, style: cardStatusTextStyle),
-                  ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Row(
+            children: [
+              CircleAvatar(
+                backgroundColor: Color.fromRGBO(239, 239, 239, 1.0),
+                radius: 20,
+                child: SvgPicture.network(person.avatar),
+              ),
+              Expanded(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(left: 16.0, top: 8.0, bottom: 16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(width: 16),
+                      Text(person.nickname, style: cardTitleTextStyle),
+                      Text(person.activity, style: cardStatusTextStyle),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
-
-  String transformDate(DateTime time) {
-    return formatWithZero(time.day) +
-        "/" +
-        formatWithZero(time.month) +
-        "/" +
-        formatWithZero(time.year);
-  }
-
-  String formatWithZero(int value) => value > 9 ? "$value" : "0$value";
 }
 
 extension _ChatTalkCardPrivate on ChatPeopleCard {

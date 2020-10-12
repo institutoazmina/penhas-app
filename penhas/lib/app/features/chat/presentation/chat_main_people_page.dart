@@ -9,7 +9,6 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 import 'chat_main_people_controller.dart';
 import 'pages/chat_people_filter_card.dart';
-import 'pages/chat_channel_card.dart';
 
 class ChatMainPeoplePage extends StatefulWidget {
   const ChatMainPeoplePage({Key key}) : super(key: key);
@@ -54,12 +53,6 @@ extension _ChatMainPeoplePageBodyBuilder on _ChatMainPeoplePageState {
   }
 
   Widget loaded(List<ChatMainTileEntity> tiles) {
-    // ListView.builder(
-    //     itemCount: dataSource.length,
-    //     itemBuilder: (context, index) {
-    //       return dataSource[index];
-    //     },
-    //   ),
     return RefreshIndicator(
       onRefresh: () async => controller.reload(),
       child: ListView.builder(
@@ -88,6 +81,9 @@ extension _ChatMainPeoplePageBodyBuilder on _ChatMainPeoplePageState {
   }
 
   Widget buildPeopleCard(ChatMainPeopleCardTile tile) {
-    return ChatPeopleCard(person: tile.person);
+    return ChatPeopleCard(
+      person: tile.person,
+      onPressed: controller.profile,
+    );
   }
 }

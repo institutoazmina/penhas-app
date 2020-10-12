@@ -47,6 +47,7 @@ import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_c
 import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_page.dart';
+import 'package:penhas/app/features/users/domain/presentation/user_profile_module.dart';
 
 class MainboardModule extends ChildModule {
   @override
@@ -66,7 +67,7 @@ class MainboardModule extends ChildModule {
           (i) => FeedUseCases(
             repository: i.get<ITweetRepository>(),
             filterPreference: i.get<TweetFilterPreference>(),
-            maxRows: 10,
+            maxRows: 100,
           ),
           singleton: true,
         ),
@@ -79,6 +80,7 @@ class MainboardModule extends ChildModule {
         ...tweetRoutes,
         ...helpCenter,
         ...audioRecord,
+        ...users,
       ];
 
   List<ModularRouter> get tweetRoutes => [
@@ -130,6 +132,10 @@ class MainboardModule extends ChildModule {
           child: (context, args) => AudioRecordPage(),
           transition: TransitionType.rightToLeft,
         )
+      ];
+
+  List<ModularRouter> get users => [
+        ModularRouter('/users', module: UserProfileModule()),
       ];
 
   List<Bind> get audioServicesBinds => [

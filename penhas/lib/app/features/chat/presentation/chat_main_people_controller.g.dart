@@ -58,11 +58,11 @@ mixin _$ChatMainPeopleController on _ChatMainPeopleControllerBase, Store {
   }
 
   @override
-  Future<void> openChannel(ChatChannelEntity channel) {
+  Future<void> profile(UserDetailProfileEntity profile) {
     final _$actionInfo = _$_ChatMainPeopleControllerBaseActionController
-        .startAction(name: '_ChatMainPeopleControllerBase.openChannel');
+        .startAction(name: '_ChatMainPeopleControllerBase.profile');
     try {
-      return super.openChannel(channel);
+      return super.profile(profile);
     } finally {
       _$_ChatMainPeopleControllerBaseActionController.endAction(_$actionInfo);
     }

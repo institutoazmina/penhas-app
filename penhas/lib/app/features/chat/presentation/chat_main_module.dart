@@ -7,6 +7,7 @@ import 'package:penhas/app/features/chat/domain/usecases/chat_toggle_feature.dar
 import 'package:penhas/app/features/chat/presentation/chat_main_controller.dart';
 import 'package:penhas/app/features/chat/presentation/chat_main_page.dart';
 import 'package:penhas/app/features/users/data/repositories/users_repository.dart';
+import 'package:penhas/app/features/users/domain/presentation/user_profile_module.dart';
 
 import 'chat_main_people_controller.dart';
 import 'chat_main_talks_controller.dart';
@@ -41,8 +42,13 @@ class ChatMainModule extends WidgetModule {
         ),
       ];
 
-  static Inject get to => Inject<ChatMainModule>.of();
-
   @override
   Widget get view => ChatMainPage();
+
+  @override
+  List<ModularRouter> get routers => [
+        ModularRouter('/users', module: UserProfileModule()),
+      ];
+
+  static Inject get to => Inject<ChatMainModule>.of();
 }

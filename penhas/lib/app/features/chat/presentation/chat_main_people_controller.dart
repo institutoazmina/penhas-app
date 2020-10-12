@@ -1,12 +1,13 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_main_tile_entity.dart';
 import 'package:penhas/app/features/chat/domain/states/chat_main_talks_state.dart';
 import 'package:penhas/app/features/users/data/repositories/users_repository.dart';
+import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
 import 'package:penhas/app/features/users/domain/entities/user_search_options.dart';
 import 'package:penhas/app/features/users/domain/entities/user_search_session_entity.dart';
 
@@ -40,8 +41,8 @@ abstract class _ChatMainPeopleControllerBase with Store, MapFailureMessage {
   Future<void> reload() {}
 
   @action
-  Future<void> openChannel(ChatChannelEntity channel) {
-    print(channel);
+  Future<void> profile(UserDetailProfileEntity profile) {
+    return Modular.to.pushNamed("/mainboard/users/profile", arguments: profile);
   }
 }
 
