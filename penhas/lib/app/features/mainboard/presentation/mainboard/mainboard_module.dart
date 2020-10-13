@@ -14,6 +14,7 @@ import 'package:penhas/app/features/appstate/data/datasources/app_state_data_sou
 import 'package:penhas/app/features/appstate/data/repositories/app_state_repository.dart';
 import 'package:penhas/app/features/appstate/domain/repositories/i_app_state_repository.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
+import 'package:penhas/app/features/chat/presentation/chat/chat_page.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_filter_preference_data_source.dart';
 import 'package:penhas/app/features/feed/data/repositories/tweet_filter_preference_repository.dart';
@@ -81,6 +82,7 @@ class MainboardModule extends ChildModule {
         ...helpCenter,
         ...audioRecord,
         ...users,
+        ...chat,
       ];
 
   List<ModularRouter> get tweetRoutes => [
@@ -135,7 +137,19 @@ class MainboardModule extends ChildModule {
       ];
 
   List<ModularRouter> get users => [
-        ModularRouter('/users', module: UserProfileModule()),
+        ModularRouter(
+          '/users',
+          module: UserProfileModule(),
+          transition: TransitionType.rightToLeft,
+        ),
+      ];
+
+  List<ModularRouter> get chat => [
+        ModularRouter(
+          '/chat',
+          child: (context, args) => ChatPage(),
+          transition: TransitionType.rightToLeft,
+        ),
       ];
 
   List<Bind> get audioServicesBinds => [

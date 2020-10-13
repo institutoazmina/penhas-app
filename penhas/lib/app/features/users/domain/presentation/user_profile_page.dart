@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_tags/flutter_tags.dart';
+import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
 import 'package:penhas/app/features/users/domain/presentation/user_profile_controller.dart';
+import 'package:penhas/app/features/users/domain/states/user_profile_state.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
@@ -23,38 +26,56 @@ class _UserProfilePageState
         elevation: 0,
         backgroundColor: DesignSystemColors.easterPurple,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          buildHeader(),
-          buildContent(),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 70.0,
-              vertical: 20.0,
-            ),
-            child: SizedBox(
-              height: 44,
-              child: RaisedButton(
-                onPressed: () => print("Ola mundo!"),
-                elevation: 0,
-                color: DesignSystemColors.ligthPurple,
-                shape: kButtonShapeFilled,
-                child: Text(
-                  "Conversar",
-                  style: buttomTitleStyle,
-                ),
-              ),
-            ),
-          ),
-        ],
+      body: Observer(
+        builder: (_) {
+          return bodyBuilder(controller.currentState);
+        },
       ),
     );
   }
 }
 
 extension _UserProfilePagePrivate on _UserProfilePageState {
-  Widget buildHeader() {
+  Widget bodyBuilder(UserProfileState state) {
+    return state.when(
+      initial: () => empty(),
+      loaded: (user) => loaded(user),
+      error: (message) => empty(),
+    );
+  }
+
+  Widget empty() => Container(color: DesignSystemColors.systemBackgroundColor);
+
+  Widget loaded(UserDetailProfileEntity user) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        buildHeader(user),
+        buildContent(user),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 70.0,
+            vertical: 20.0,
+          ),
+          child: SizedBox(
+            height: 44,
+            child: RaisedButton(
+              onPressed: () => controller.openChannel(),
+              elevation: 0,
+              color: DesignSystemColors.ligthPurple,
+              shape: kButtonShapeFilled,
+              child: Text(
+                "Conversar",
+                style: buttomTitleStyle,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildHeader(UserDetailProfileEntity user) {
     return Container(
       color: DesignSystemColors.easterPurple,
       height: 120,
@@ -62,13 +83,13 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
         children: [
           CircleAvatar(
             radius: 34,
-            child: SvgPicture.network(controller.person.avatar),
+            child: SvgPicture.network(user.avatar),
             backgroundColor: Colors.white38,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 12.0),
             child: Text(
-              controller.person.nickname,
+              user.nickname,
               style: nameStyle,
             ),
           )
@@ -77,8 +98,8 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
     );
   }
 
-  Widget buildContent() {
-    final List<String> skills = controller.person.skills.split(",");
+  Widget buildContent(UserDetailProfileEntity user) {
+    final List<String> skills = user.skills.split(",");
     return Container(
       color: DesignSystemColors.white,
       child: Padding(
@@ -91,7 +112,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
               child: Text("Minibio", style: headerStyle),
             ),
             Text(
-              controller.person.miniBio ?? "",
+              user.miniBio ?? "",
               style: bodyStyle,
             ),
             Padding(
