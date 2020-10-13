@@ -6,10 +6,15 @@ import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_exception_to_failure.dart';
 import 'package:penhas/app/features/chat/data/models/chat_channel_available_model.dart';
+import 'package:penhas/app/features/chat/data/models/chat_channel_open_model.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_available_entity.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entity.dart';
+import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
 
 abstract class IChatChannelRepository {
   Future<Either<Failure, ChatChannelAvailableEntity>> listChannel();
+  Future<Either<Failure, ChatChannelOpenEntity>> openChannel(
+      UserDetailProfileEntity user);
 }
 
 class ChatChannelRepository implements IChatChannelRepository {
@@ -30,6 +35,28 @@ class ChatChannelRepository implements IChatChannelRepository {
       return left(MapExceptionToFailure.map(error));
     }
   }
+
+  @override
+  Future<Either<Failure, ChatChannelOpenEntity>> openChannel(
+      UserDetailProfileEntity user) async {
+    final endPoint = "/me/chats-session";
+    final parameters = {
+      'prefetch': '1',
+      'cliente_id': "${user.clientId}",
+    };
+
+    try {
+      final response = await _apiProvider
+          .post(
+            path: endPoint,
+            parameters: parameters,
+          )
+          .parseOpenChannel();
+      return right(response);
+    } catch (error) {
+      return left(MapExceptionToFailure.map(error));
+    }
+  }
 }
 
 extension _ChatChannelRepository<T extends String> on Future<T> {
@@ -37,5 +64,11 @@ extension _ChatChannelRepository<T extends String> on Future<T> {
     return this
         .then((v) => jsonDecode(v) as Map<String, Object>)
         .then((v) => ChatChannelAvailableModel.fromJson(v));
+  }
+
+  Future<ChatChannelOpenEntity> parseOpenChannel() async {
+    return this
+        .then((v) => jsonDecode(v) as Map<String, Object>)
+        .then((v) => ChatChannelOpenModel.fromJson(v));
   }
 }
