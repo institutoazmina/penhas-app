@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -37,11 +38,11 @@ abstract class _ChatMainTalksControllerBase with Store, MapFailureMessage {
   ChatMainTalksState currentState = ChatMainTalksState.initial();
 
   @action
-  Future<void> reload() {}
+  Future<void> reload() async {}
 
   @action
   Future<void> openChannel(ChatChannelEntity channel) {
-    print(channel);
+    return Modular.to.pushNamed("/mainboard/chat", arguments: channel);
   }
 }
 

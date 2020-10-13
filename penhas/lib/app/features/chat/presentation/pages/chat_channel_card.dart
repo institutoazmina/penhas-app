@@ -5,10 +5,12 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatChannelCard extends StatelessWidget {
   final ChatChannelEntity channel;
+  final void Function(ChatChannelEntity channel) onPressed;
 
   const ChatChannelCard({
     Key key,
     @required this.channel,
+    @required this.onPressed,
   }) : super(key: key);
 
   @override
@@ -17,42 +19,45 @@ class ChatChannelCard extends StatelessWidget {
       return Container();
     }
 
-    return Container(
-      height: 80,
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: Colors.grey[350]),
+    return GestureDetector(
+      onTap: () => onPressed(channel),
+      child: Container(
+        height: 80,
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(color: Colors.grey[350]),
+          ),
         ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Row(
-          children: [
-            CircleAvatar(
-              backgroundColor: Color.fromRGBO(239, 239, 239, 1.0),
-              radius: 20,
-              child: SvgPicture.network(channel.user.avatar),
-            ),
-            Expanded(
-              child: Padding(
-                padding:
-                    const EdgeInsets.only(left: 16.0, top: 8.0, bottom: 16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(width: 16),
-                    Text(channel.user.nickname, style: cardTitleTextStyle),
-                    Text(channel.user.activity, style: cardStatusTextStyle),
-                  ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Row(
+            children: [
+              CircleAvatar(
+                backgroundColor: Color.fromRGBO(239, 239, 239, 1.0),
+                radius: 20,
+                child: SvgPicture.network(channel.user.avatar),
+              ),
+              Expanded(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(left: 16.0, top: 8.0, bottom: 16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(width: 16),
+                      Text(channel.user.nickname, style: cardTitleTextStyle),
+                      Text(channel.user.activity, style: cardStatusTextStyle),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Text(
-              transformDate(channel.lastMessageTime),
-              style: cardStatusTextStyle,
-            ),
-          ],
+              Text(
+                transformDate(channel.lastMessageTime),
+                style: cardStatusTextStyle,
+              ),
+            ],
+          ),
         ),
       ),
     );

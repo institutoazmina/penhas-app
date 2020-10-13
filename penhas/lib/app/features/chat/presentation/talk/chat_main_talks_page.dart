@@ -121,7 +121,10 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
   }
 
   Widget buildChannelCard(ChatMainChannelCardTile tile) {
-    return ChatChannelCard(channel: tile.channel);
+    return ChatChannelCard(
+      channel: tile.channel,
+      onPressed: controller.openChannel,
+    );
   }
 }
 

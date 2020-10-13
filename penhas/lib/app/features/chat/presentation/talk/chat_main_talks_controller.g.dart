@@ -43,19 +43,16 @@ mixin _$ChatMainTalksController on _ChatMainTalksControllerBase, Store {
     });
   }
 
-  final _$_ChatMainTalksControllerBaseActionController =
-      ActionController(name: '_ChatMainTalksControllerBase');
+  final _$reloadAsyncAction =
+      AsyncAction('_ChatMainTalksControllerBase.reload');
 
   @override
   Future<void> reload() {
-    final _$actionInfo = _$_ChatMainTalksControllerBaseActionController
-        .startAction(name: '_ChatMainTalksControllerBase.reload');
-    try {
-      return super.reload();
-    } finally {
-      _$_ChatMainTalksControllerBaseActionController.endAction(_$actionInfo);
-    }
+    return _$reloadAsyncAction.run(() => super.reload());
   }
+
+  final _$_ChatMainTalksControllerBaseActionController =
+      ActionController(name: '_ChatMainTalksControllerBase');
 
   @override
   Future<void> openChannel(ChatChannelEntity channel) {
