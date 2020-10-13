@@ -7,4 +7,10 @@ class ChatController extends _ChatControllerBase with _$ChatController {
   ChatController();
 }
 
-abstract class _ChatControllerBase with Store, MapFailureMessage {}
+abstract class _ChatControllerBase with Store, MapFailureMessage {
+  @action
+  void blockChat() {}
+
+  @action
+  void deleteSession() {}
+}
