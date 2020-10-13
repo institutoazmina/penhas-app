@@ -5,10 +5,10 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/chat/domain/entities/chat_main_tile_entity.dart';
 import 'package:penhas/app/features/chat/domain/states/chat_main_talks_state.dart';
 import 'package:penhas/app/features/chat/presentation/pages/chat_people_card.dart';
+import 'package:penhas/app/features/chat/presentation/pages/chat_people_filter_card.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 import 'chat_main_people_controller.dart';
-import 'pages/chat_people_filter_card.dart';
 
 class ChatMainPeoplePage extends StatefulWidget {
   const ChatMainPeoplePage({Key key}) : super(key: key);

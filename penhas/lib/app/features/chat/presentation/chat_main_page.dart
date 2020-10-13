@@ -5,8 +5,8 @@ import 'package:penhas/app/features/chat/domain/entities/chat_tab_item.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 import 'chat_main_controller.dart';
-import 'chat_main_people_page.dart';
-import 'chat_main_talks_page.dart';
+import 'people/chat_main_people_page.dart';
+import 'talk/chat_main_talks_page.dart';
 
 class ChatMainPage extends StatefulWidget {
   ChatMainPage({Key key}) : super(key: key);
