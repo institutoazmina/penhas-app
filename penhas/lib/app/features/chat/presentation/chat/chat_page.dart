@@ -19,6 +19,8 @@ class _ChatPageState extends ModularState<ChatPage, ChatController> {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: DesignSystemColors.easterPurple,
+        title: headerTitle(),
+        titleSpacing: 3.0,
         actions: [
           IconButton(
             icon: Icon(Icons.more_vert),
@@ -34,6 +36,31 @@ class _ChatPageState extends ModularState<ChatPage, ChatController> {
 }
 
 extension _ChatPageStateMethods on _ChatPageState {
+  Widget headerTitle() {
+    return Container(
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: CircleAvatar(
+              backgroundColor: Colors.white38,
+              radius: 16,
+              child: SvgPicture.asset(
+                  'assets/images/svg/tweet_action/tweet_action_block.svg'),
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Luíza Marisa", style: titleTextStyle),
+              Text("Online em algum momento", style: statusTextStyle),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
   void showChatAction(BuildContext context) async {
     await showModalBottomSheet(
       context: context,
@@ -91,4 +118,19 @@ extension _ChatPageStateMethods on _ChatPageState {
 
     return actions;
   }
+}
+
+extension _ChatPageStateStyle on _ChatPageState {
+  TextStyle get titleTextStyle => TextStyle(
+      fontFamily: 'Lato',
+      fontSize: 14.0,
+      letterSpacing: 0.5,
+      color: DesignSystemColors.white,
+      fontWeight: FontWeight.bold);
+  TextStyle get statusTextStyle => TextStyle(
+      fontFamily: 'Lato',
+      fontSize: 12.0,
+      letterSpacing: 0.4,
+      color: DesignSystemColors.white,
+      fontWeight: FontWeight.normal);
 }
