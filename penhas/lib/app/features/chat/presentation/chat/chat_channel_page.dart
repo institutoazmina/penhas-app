@@ -3,7 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-import 'chat_controller.dart';
+import 'chat_channel_controller.dart';
 
 class ChatPage extends StatefulWidget {
   ChatPage({Key key}) : super(key: key);
@@ -12,30 +12,45 @@ class ChatPage extends StatefulWidget {
   _ChatPageState createState() => _ChatPageState();
 }
 
-class _ChatPageState extends ModularState<ChatPage, ChatController> {
+class _ChatPageState extends ModularState<ChatPage, ChatChannelController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: DesignSystemColors.easterPurple,
-        title: headerTitle(),
-        titleSpacing: 3.0,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.more_vert),
-            onPressed: () => showChatAction(context),
+        appBar: AppBar(
+          elevation: 0.0,
+          backgroundColor: DesignSystemColors.easterPurple,
+          title: headerTitle(),
+          titleSpacing: 2.0,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.more_vert),
+              onPressed: () => showChatAction(context),
+            ),
+          ],
+        ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: Container(
+                  color: Colors.red,
+                ),
+              ),
+              messageComposer()
+            ],
           ),
-        ],
-      ),
-      body: Container(
-        color: Colors.amber[100],
-      ),
-    );
+        ));
   }
 }
 
 extension _ChatPageStateMethods on _ChatPageState {
+  Widget messageComposer() {
+    return Container(
+      color: Colors.green,
+      height: 60.0,
+    );
+  }
+
   Widget headerTitle() {
     return Container(
       child: Row(
