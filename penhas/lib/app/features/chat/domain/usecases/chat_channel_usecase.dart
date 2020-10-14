@@ -3,17 +3,19 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_request.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_session_entity.dart';
 import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
 import 'package:penhas/app/features/chat/domain/states/chat_channel_usecase_event.dart';
 
-class ChatChannelUseCase {
+class ChatChannelUseCase with MapFailureMessage {
   final IChatChannelRepository _channelRepository;
   String _channelToken;
   String _newestPagination;
   String _oldestPagination;
+  ChatChannelUseCaseEvent _currentEvent;
 
   final StreamController<ChatChannelUseCaseEvent> _streamController =
       StreamController.broadcast();
@@ -23,7 +25,8 @@ class ChatChannelUseCase {
     @required ChatChannelOpenEntity session,
     @required IChatChannelRepository channelRepository,
   }) : this._channelRepository = channelRepository {
-    _streamController.add(ChatChannelUseCaseEvent.initial());
+    _currentEvent = ChatChannelUseCaseEvent.initial();
+    _streamController.add(_currentEvent);
     initial(session);
   }
 
@@ -60,7 +63,12 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
     );
   }
 
-  void handleFailure(Failure failure) {
+  void handleFailure(Failure failure) async {
+    final message = mapFailureMessage(failure);
+    if (_currentEvent == ChatChannelUseCaseEvent.initial()) {
+      _currentEvent = ChatChannelUseCaseEvent.errorOnLoading(message);
+      _streamController.add(_currentEvent);
+    }
     print(failure);
   }
 

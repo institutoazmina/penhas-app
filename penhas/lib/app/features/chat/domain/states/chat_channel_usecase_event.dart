@@ -6,4 +6,6 @@ part 'chat_channel_usecase_event.freezed.dart';
 @freezed
 abstract class ChatChannelUseCaseEvent with _$ChatChannelUseCaseEvent {
   const factory ChatChannelUseCaseEvent.initial() = _Initial;
+  const factory ChatChannelUseCaseEvent.errorOnLoading(String message) =
+      _ErrorOnLoading;
 }

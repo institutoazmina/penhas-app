@@ -17,6 +17,13 @@ class _$ChatChannelUseCaseEventTearOff {
   _Initial initial() {
     return const _Initial();
   }
+
+// ignore: unused_element
+  _ErrorOnLoading errorOnLoading(String message) {
+    return _ErrorOnLoading(
+      message,
+    );
+  }
 }
 
 /// @nodoc
@@ -28,19 +35,23 @@ mixin _$ChatChannelUseCaseEvent {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
+    @required Result errorOnLoading(String message),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
+    Result errorOnLoading(String message),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
+    @required Result errorOnLoading(_ErrorOnLoading value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
+    Result errorOnLoading(_ErrorOnLoading value),
     @required Result orElse(),
   });
 }
@@ -107,8 +118,10 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
+    @required Result errorOnLoading(String message),
   }) {
     assert(initial != null);
+    assert(errorOnLoading != null);
     return initial();
   }
 
@@ -116,6 +129,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
+    Result errorOnLoading(String message),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -129,8 +143,10 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
+    @required Result errorOnLoading(_ErrorOnLoading value),
   }) {
     assert(initial != null);
+    assert(errorOnLoading != null);
     return initial(this);
   }
 
@@ -138,6 +154,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
+    Result errorOnLoading(_ErrorOnLoading value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -150,4 +167,130 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
 abstract class _Initial implements ChatChannelUseCaseEvent {
   const factory _Initial() = _$_Initial;
+}
+
+/// @nodoc
+abstract class _$ErrorOnLoadingCopyWith<$Res> {
+  factory _$ErrorOnLoadingCopyWith(
+          _ErrorOnLoading value, $Res Function(_ErrorOnLoading) then) =
+      __$ErrorOnLoadingCopyWithImpl<$Res>;
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$ErrorOnLoadingCopyWithImpl<$Res>
+    extends _$ChatChannelUseCaseEventCopyWithImpl<$Res>
+    implements _$ErrorOnLoadingCopyWith<$Res> {
+  __$ErrorOnLoadingCopyWithImpl(
+      _ErrorOnLoading _value, $Res Function(_ErrorOnLoading) _then)
+      : super(_value, (v) => _then(v as _ErrorOnLoading));
+
+  @override
+  _ErrorOnLoading get _value => super._value as _ErrorOnLoading;
+
+  @override
+  $Res call({
+    Object message = freezed,
+  }) {
+    return _then(_ErrorOnLoading(
+      message == freezed ? _value.message : message as String,
+    ));
+  }
+}
+
+/// @nodoc
+class _$_ErrorOnLoading
+    with DiagnosticableTreeMixin
+    implements _ErrorOnLoading {
+  const _$_ErrorOnLoading(this.message) : assert(message != null);
+
+  @override
+  final String message;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ChatChannelUseCaseEvent.errorOnLoading(message: $message)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(
+          DiagnosticsProperty('type', 'ChatChannelUseCaseEvent.errorOnLoading'))
+      ..add(DiagnosticsProperty('message', message));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _ErrorOnLoading &&
+            (identical(other.message, message) ||
+                const DeepCollectionEquality().equals(other.message, message)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
+
+  @override
+  _$ErrorOnLoadingCopyWith<_ErrorOnLoading> get copyWith =>
+      __$ErrorOnLoadingCopyWithImpl<_ErrorOnLoading>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initial(),
+    @required Result errorOnLoading(String message),
+  }) {
+    assert(initial != null);
+    assert(errorOnLoading != null);
+    return errorOnLoading(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initial(),
+    Result errorOnLoading(String message),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (errorOnLoading != null) {
+      return errorOnLoading(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initial(_Initial value),
+    @required Result errorOnLoading(_ErrorOnLoading value),
+  }) {
+    assert(initial != null);
+    assert(errorOnLoading != null);
+    return errorOnLoading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initial(_Initial value),
+    Result errorOnLoading(_ErrorOnLoading value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (errorOnLoading != null) {
+      return errorOnLoading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ErrorOnLoading implements ChatChannelUseCaseEvent {
+  const factory _ErrorOnLoading(String message) = _$_ErrorOnLoading;
+
+  String get message;
+  _$ErrorOnLoadingCopyWith<_ErrorOnLoading> get copyWith;
 }

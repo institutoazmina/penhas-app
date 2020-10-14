@@ -39,11 +39,14 @@ abstract class _ChatChannelControllerBase with Store, MapFailureMessage {
 
 extension _ChatChannelControllerBasePrivate on _ChatChannelControllerBase {
   void registerStreamSource() {
-    _streamDatasource = _useCase.dataSource.listen((event) {});
+    _streamDatasource = _useCase.dataSource.listen(parseStream);
   }
 
   void parseStream(ChatChannelUseCaseEvent event) {
-    print(event);
+    event.when(
+      initial: () => currentState = ChatChannelState.initial(),
+      errorOnLoading: (m) => currentState = ChatChannelState.error(m),
+    );
   }
 
   void cancelStreamSource() {
