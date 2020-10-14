@@ -62,6 +62,7 @@ extension _ChatPageStateMethods on _ChatPageState {
       body: SafeArea(
         child: Column(
           children: [
+            headerMessage(metadata.headerMessage),
             Expanded(
               child: Container(
                 color: Colors.red,
@@ -70,6 +71,21 @@ extension _ChatPageStateMethods on _ChatPageState {
             messageComposer()
           ],
         ),
+      ),
+    );
+  }
+
+  Widget headerMessage(String message) {
+    if (message == null || message.isEmpty) {
+      return Container();
+    }
+
+    return Container(
+      color: DesignSystemColors.white,
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+      child: Text(
+        message,
+        style: headerMessageTextStyle,
       ),
     );
   }
@@ -183,5 +199,13 @@ extension _ChatPageStateStyle on _ChatPageState {
       fontSize: 12.0,
       letterSpacing: 0.4,
       color: DesignSystemColors.white,
+      fontWeight: FontWeight.normal);
+
+  TextStyle get headerMessageTextStyle => TextStyle(
+      fontFamily: 'Lato',
+      fontSize: 14.0,
+      letterSpacing: 0.4,
+      height: 1.3,
+      color: DesignSystemColors.darkIndigoThree,
       fontWeight: FontWeight.normal);
 }
