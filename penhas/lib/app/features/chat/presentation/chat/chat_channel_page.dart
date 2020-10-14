@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
+import 'package:penhas/app/features/chat/domain/states/chat_channel_state.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 import 'chat_channel_controller.dart';
@@ -15,6 +18,44 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends ModularState<ChatPage, ChatChannelController> {
   @override
   Widget build(BuildContext context) {
+    return Observer(builder: (context) {
+      return pageBuilder(controller.currentState);
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+}
+
+extension _ChatPageStateMethods on _ChatPageState {
+  Widget pageBuilder(ChatChannelState state) {
+    return state.when(
+      initial: () => startingChannel(),
+      error: (message) => Container(
+        color: Colors.red,
+      ),
+    );
+  }
+
+  Widget startingChannel() {
+    return PageProgressIndicator(
+      progressMessage: 'Carregando...',
+      progressState: PageProgressState.loading,
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0.0,
+          backgroundColor: DesignSystemColors.easterPurple,
+          title: Text("Chat"),
+        ),
+        body: Container(),
+      ),
+    );
+  }
+/*
+
     return Scaffold(
         appBar: AppBar(
           elevation: 0.0,
@@ -40,10 +81,9 @@ class _ChatPageState extends ModularState<ChatPage, ChatChannelController> {
             ],
           ),
         ));
-  }
-}
 
-extension _ChatPageStateMethods on _ChatPageState {
+*/
+
   Widget messageComposer() {
     return Container(
       color: Colors.green,

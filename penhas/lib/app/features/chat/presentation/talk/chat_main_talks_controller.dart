@@ -6,6 +6,7 @@ import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_available_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_entity.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_main_tile_entity.dart';
 
 import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
@@ -42,7 +43,13 @@ abstract class _ChatMainTalksControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> openChannel(ChatChannelEntity channel) {
-    return Modular.to.pushNamed("/mainboard/chat", arguments: channel);
+    ChatChannelOpenEntity session =
+        ChatChannelOpenEntity(token: channel.token, session: null);
+
+    return Modular.to.pushNamed(
+      "/mainboard/chat",
+      arguments: session,
+    );
   }
 }
 

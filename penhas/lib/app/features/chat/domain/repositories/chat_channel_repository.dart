@@ -7,14 +7,19 @@ import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_exception_to_failure.dart';
 import 'package:penhas/app/features/chat/data/models/chat_channel_available_model.dart';
 import 'package:penhas/app/features/chat/data/models/chat_channel_open_model.dart';
+import 'package:penhas/app/features/chat/data/models/chat_channel_session_model.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_available_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entity.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_channel_request.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_channel_session_entity.dart';
 import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
 
 abstract class IChatChannelRepository {
   Future<Either<Failure, ChatChannelAvailableEntity>> listChannel();
   Future<Either<Failure, ChatChannelOpenEntity>> openChannel(
       UserDetailProfileEntity user);
+  Future<Either<Failure, ChatChannelSessionEntity>> getMessages(
+      ChatChannelRequest option);
 }
 
 class ChatChannelRepository implements IChatChannelRepository {
@@ -57,6 +62,29 @@ class ChatChannelRepository implements IChatChannelRepository {
       return left(MapExceptionToFailure.map(error));
     }
   }
+
+  @override
+  Future<Either<Failure, ChatChannelSessionEntity>> getMessages(
+      ChatChannelRequest option) async {
+    final endPoint = "/me/chats-messages";
+    final parameters = {
+      'chat_auth': option.token,
+      'pagination': option.pagination,
+      'rows': "${option.rows}"
+    };
+
+    try {
+      final response = await _apiProvider
+          .get(
+            path: endPoint,
+            parameters: parameters,
+          )
+          .parseSessionChannel();
+      return right(response);
+    } catch (error) {
+      return left(MapExceptionToFailure.map(error));
+    }
+  }
 }
 
 extension _ChatChannelRepository<T extends String> on Future<T> {
@@ -70,5 +98,11 @@ extension _ChatChannelRepository<T extends String> on Future<T> {
     return this
         .then((v) => jsonDecode(v) as Map<String, Object>)
         .then((v) => ChatChannelOpenModel.fromJson(v));
+  }
+
+  Future<ChatChannelSessionEntity> parseSessionChannel() async {
+    return this
+        .then((v) => jsonDecode(v) as Map<String, Object>)
+        .then((v) => ChatChannelSessionModel.fromJson(v));
   }
 }

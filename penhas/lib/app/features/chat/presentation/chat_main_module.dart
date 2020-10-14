@@ -3,8 +3,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
+import 'package:penhas/app/features/chat/domain/usecases/chat_channel_usecase.dart';
 import 'package:penhas/app/features/chat/domain/usecases/chat_toggle_feature.dart';
-import 'package:penhas/app/features/chat/presentation/chat/chat_controller.dart';
+import 'package:penhas/app/features/chat/presentation/chat/chat_channel_controller.dart';
 import 'package:penhas/app/features/users/data/repositories/users_repository.dart';
 import 'package:penhas/app/features/users/domain/presentation/user_profile_module.dart';
 
@@ -42,8 +43,18 @@ class ChatMainModule extends WidgetModule {
           ),
         ),
         Bind(
-          (i) => ChatController(),
+          (i) => ChatChannelController(
+            useCase: i.get<ChatChannelUseCase>(),
+          ),
+          singleton: false,
         ),
+        Bind<ChatChannelUseCase>(
+          (i) => ChatChannelUseCase(
+            session: i.args.data,
+            channelRepository: i.get<IChatChannelRepository>(),
+          ),
+          singleton: false,
+        )
       ];
 
   @override
