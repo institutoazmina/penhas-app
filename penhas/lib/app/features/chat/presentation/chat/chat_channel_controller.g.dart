@@ -55,6 +55,22 @@ mixin _$ChatChannelController on _ChatChannelControllerBase, Store {
     });
   }
 
+  final _$channelMessagesAtom =
+      Atom(name: '_ChatChannelControllerBase.channelMessages');
+
+  @override
+  ObservableList<ChatChannelMessage> get channelMessages {
+    _$channelMessagesAtom.reportRead();
+    return super.channelMessages;
+  }
+
+  @override
+  set channelMessages(ObservableList<ChatChannelMessage> value) {
+    _$channelMessagesAtom.reportWrite(value, super.channelMessages, () {
+      super.channelMessages = value;
+    });
+  }
+
   final _$_ChatChannelControllerBaseActionController =
       ActionController(name: '_ChatChannelControllerBase');
 
@@ -85,7 +101,8 @@ mixin _$ChatChannelController on _ChatChannelControllerBase, Store {
     return '''
 currentState: ${currentState},
 user: ${user},
-metadata: ${metadata}
+metadata: ${metadata},
+channelMessages: ${channelMessages}
     ''';
   }
 }

@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_channel_message.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_session_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
 
@@ -13,6 +14,8 @@ abstract class ChatChannelUseCaseEvent with _$ChatChannelUseCaseEvent {
       _UpdateUser;
   const factory ChatChannelUseCaseEvent.updateMetada(
       ChatChannelSessionMetadataEntity metadata) = _UpdateMetada;
+  const factory ChatChannelUseCaseEvent.updateMessage(
+      List<ChatChannelMessage> messages) = _UpdateMessage;
   const factory ChatChannelUseCaseEvent.errorOnLoading(String message) =
       _ErrorOnLoading;
 }

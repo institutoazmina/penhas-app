@@ -4,9 +4,11 @@ import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_channel_message.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_request.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_session_entity.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_message_entity.dart';
 import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
 import 'package:penhas/app/features/chat/domain/states/chat_channel_usecase_event.dart';
 
@@ -76,6 +78,8 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
   void handleSession(ChatChannelSessionEntity session) {
     _newestPagination = session.newer;
     _oldestPagination = session.older;
+    ChatChannelMessage warningMessage;
+    List<ChatChannelMessage> messages = List<ChatChannelMessage>();
 
     if (_currentSession?.user != session.user) {
       _streamController.add(
@@ -87,13 +91,41 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
       _streamController.add(
         ChatChannelUseCaseEvent.updateMetada(session.metadata),
       );
+      if (session.metadata.headerWarning != null ||
+          session.metadata.headerWarning.isNotEmpty) {
+        warningMessage = ChatChannelMessage(
+          type: ChatChannelMessageType.warrning,
+          content: ChatMessageEntity(
+            id: -1,
+            isMe: false,
+            message: session.metadata.headerWarning,
+            time: DateTime.now(),
+          ),
+        );
+      }
     }
 
     if (_currentSession == null) {
-      _currentSession = session;
-      _streamController.add(ChatChannelUseCaseEvent.loaded());
+      _currentEvent = ChatChannelUseCaseEvent.loaded();
+      _streamController.add(_currentEvent);
     }
 
-    // _currentSession ??= session;
+    _currentSession = session;
+    messages.addAll(
+      session.messages.map(
+        (e) => ChatChannelMessage(
+          content: e,
+          type: ChatChannelMessageType.text,
+        ),
+      ),
+    );
+
+    if (warningMessage != null) {
+      messages.add(warningMessage);
+    }
+
+    if (messages.isNotEmpty) {
+      _streamController.add(ChatChannelUseCaseEvent.updateMessage(messages));
+    }
   }
 }

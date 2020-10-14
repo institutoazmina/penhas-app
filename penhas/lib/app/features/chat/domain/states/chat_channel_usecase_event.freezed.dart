@@ -38,6 +38,13 @@ class _$ChatChannelUseCaseEventTearOff {
   }
 
 // ignore: unused_element
+  _UpdateMessage updateMessage(List<ChatChannelMessage> messages) {
+    return _UpdateMessage(
+      messages,
+    );
+  }
+
+// ignore: unused_element
   _ErrorOnLoading errorOnLoading(String message) {
     return _ErrorOnLoading(
       message,
@@ -57,6 +64,7 @@ mixin _$ChatChannelUseCaseEvent {
     @required Result loaded(),
     @required Result updateUser(ChatUserEntity user),
     @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
+    @required Result updateMessage(List<ChatChannelMessage> messages),
     @required Result errorOnLoading(String message),
   });
   @optionalTypeArgs
@@ -65,6 +73,7 @@ mixin _$ChatChannelUseCaseEvent {
     Result loaded(),
     Result updateUser(ChatUserEntity user),
     Result updateMetada(ChatChannelSessionMetadataEntity metadata),
+    Result updateMessage(List<ChatChannelMessage> messages),
     Result errorOnLoading(String message),
     @required Result orElse(),
   });
@@ -74,6 +83,7 @@ mixin _$ChatChannelUseCaseEvent {
     @required Result loaded(_Loaded value),
     @required Result updateUser(_UpdateUser value),
     @required Result updateMetada(_UpdateMetada value),
+    @required Result updateMessage(_UpdateMessage value),
     @required Result errorOnLoading(_ErrorOnLoading value),
   });
   @optionalTypeArgs
@@ -82,6 +92,7 @@ mixin _$ChatChannelUseCaseEvent {
     Result loaded(_Loaded value),
     Result updateUser(_UpdateUser value),
     Result updateMetada(_UpdateMetada value),
+    Result updateMessage(_UpdateMessage value),
     Result errorOnLoading(_ErrorOnLoading value),
     @required Result orElse(),
   });
@@ -152,12 +163,14 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
     @required Result loaded(),
     @required Result updateUser(ChatUserEntity user),
     @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
+    @required Result updateMessage(List<ChatChannelMessage> messages),
     @required Result errorOnLoading(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
     assert(updateUser != null);
     assert(updateMetada != null);
+    assert(updateMessage != null);
     assert(errorOnLoading != null);
     return initial();
   }
@@ -169,6 +182,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
     Result loaded(),
     Result updateUser(ChatUserEntity user),
     Result updateMetada(ChatChannelSessionMetadataEntity metadata),
+    Result updateMessage(List<ChatChannelMessage> messages),
     Result errorOnLoading(String message),
     @required Result orElse(),
   }) {
@@ -186,12 +200,14 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
     @required Result loaded(_Loaded value),
     @required Result updateUser(_UpdateUser value),
     @required Result updateMetada(_UpdateMetada value),
+    @required Result updateMessage(_UpdateMessage value),
     @required Result errorOnLoading(_ErrorOnLoading value),
   }) {
     assert(initial != null);
     assert(loaded != null);
     assert(updateUser != null);
     assert(updateMetada != null);
+    assert(updateMessage != null);
     assert(errorOnLoading != null);
     return initial(this);
   }
@@ -203,6 +219,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
     Result loaded(_Loaded value),
     Result updateUser(_UpdateUser value),
     Result updateMetada(_UpdateMetada value),
+    Result updateMessage(_UpdateMessage value),
     Result errorOnLoading(_ErrorOnLoading value),
     @required Result orElse(),
   }) {
@@ -266,12 +283,14 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
     @required Result loaded(),
     @required Result updateUser(ChatUserEntity user),
     @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
+    @required Result updateMessage(List<ChatChannelMessage> messages),
     @required Result errorOnLoading(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
     assert(updateUser != null);
     assert(updateMetada != null);
+    assert(updateMessage != null);
     assert(errorOnLoading != null);
     return loaded();
   }
@@ -283,6 +302,7 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
     Result loaded(),
     Result updateUser(ChatUserEntity user),
     Result updateMetada(ChatChannelSessionMetadataEntity metadata),
+    Result updateMessage(List<ChatChannelMessage> messages),
     Result errorOnLoading(String message),
     @required Result orElse(),
   }) {
@@ -300,12 +320,14 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
     @required Result loaded(_Loaded value),
     @required Result updateUser(_UpdateUser value),
     @required Result updateMetada(_UpdateMetada value),
+    @required Result updateMessage(_UpdateMessage value),
     @required Result errorOnLoading(_ErrorOnLoading value),
   }) {
     assert(initial != null);
     assert(loaded != null);
     assert(updateUser != null);
     assert(updateMetada != null);
+    assert(updateMessage != null);
     assert(errorOnLoading != null);
     return loaded(this);
   }
@@ -317,6 +339,7 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
     Result loaded(_Loaded value),
     Result updateUser(_UpdateUser value),
     Result updateMetada(_UpdateMetada value),
+    Result updateMessage(_UpdateMessage value),
     Result errorOnLoading(_ErrorOnLoading value),
     @required Result orElse(),
   }) {
@@ -404,12 +427,14 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
     @required Result loaded(),
     @required Result updateUser(ChatUserEntity user),
     @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
+    @required Result updateMessage(List<ChatChannelMessage> messages),
     @required Result errorOnLoading(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
     assert(updateUser != null);
     assert(updateMetada != null);
+    assert(updateMessage != null);
     assert(errorOnLoading != null);
     return updateUser(user);
   }
@@ -421,6 +446,7 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
     Result loaded(),
     Result updateUser(ChatUserEntity user),
     Result updateMetada(ChatChannelSessionMetadataEntity metadata),
+    Result updateMessage(List<ChatChannelMessage> messages),
     Result errorOnLoading(String message),
     @required Result orElse(),
   }) {
@@ -438,12 +464,14 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
     @required Result loaded(_Loaded value),
     @required Result updateUser(_UpdateUser value),
     @required Result updateMetada(_UpdateMetada value),
+    @required Result updateMessage(_UpdateMessage value),
     @required Result errorOnLoading(_ErrorOnLoading value),
   }) {
     assert(initial != null);
     assert(loaded != null);
     assert(updateUser != null);
     assert(updateMetada != null);
+    assert(updateMessage != null);
     assert(errorOnLoading != null);
     return updateUser(this);
   }
@@ -455,6 +483,7 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
     Result loaded(_Loaded value),
     Result updateUser(_UpdateUser value),
     Result updateMetada(_UpdateMetada value),
+    Result updateMessage(_UpdateMessage value),
     Result errorOnLoading(_ErrorOnLoading value),
     @required Result orElse(),
   }) {
@@ -548,12 +577,14 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
     @required Result loaded(),
     @required Result updateUser(ChatUserEntity user),
     @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
+    @required Result updateMessage(List<ChatChannelMessage> messages),
     @required Result errorOnLoading(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
     assert(updateUser != null);
     assert(updateMetada != null);
+    assert(updateMessage != null);
     assert(errorOnLoading != null);
     return updateMetada(metadata);
   }
@@ -565,6 +596,7 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
     Result loaded(),
     Result updateUser(ChatUserEntity user),
     Result updateMetada(ChatChannelSessionMetadataEntity metadata),
+    Result updateMessage(List<ChatChannelMessage> messages),
     Result errorOnLoading(String message),
     @required Result orElse(),
   }) {
@@ -582,12 +614,14 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
     @required Result loaded(_Loaded value),
     @required Result updateUser(_UpdateUser value),
     @required Result updateMetada(_UpdateMetada value),
+    @required Result updateMessage(_UpdateMessage value),
     @required Result errorOnLoading(_ErrorOnLoading value),
   }) {
     assert(initial != null);
     assert(loaded != null);
     assert(updateUser != null);
     assert(updateMetada != null);
+    assert(updateMessage != null);
     assert(errorOnLoading != null);
     return updateMetada(this);
   }
@@ -599,6 +633,7 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
     Result loaded(_Loaded value),
     Result updateUser(_UpdateUser value),
     Result updateMetada(_UpdateMetada value),
+    Result updateMessage(_UpdateMessage value),
     Result errorOnLoading(_ErrorOnLoading value),
     @required Result orElse(),
   }) {
@@ -616,6 +651,158 @@ abstract class _UpdateMetada implements ChatChannelUseCaseEvent {
 
   ChatChannelSessionMetadataEntity get metadata;
   _$UpdateMetadaCopyWith<_UpdateMetada> get copyWith;
+}
+
+/// @nodoc
+abstract class _$UpdateMessageCopyWith<$Res> {
+  factory _$UpdateMessageCopyWith(
+          _UpdateMessage value, $Res Function(_UpdateMessage) then) =
+      __$UpdateMessageCopyWithImpl<$Res>;
+  $Res call({List<ChatChannelMessage> messages});
+}
+
+/// @nodoc
+class __$UpdateMessageCopyWithImpl<$Res>
+    extends _$ChatChannelUseCaseEventCopyWithImpl<$Res>
+    implements _$UpdateMessageCopyWith<$Res> {
+  __$UpdateMessageCopyWithImpl(
+      _UpdateMessage _value, $Res Function(_UpdateMessage) _then)
+      : super(_value, (v) => _then(v as _UpdateMessage));
+
+  @override
+  _UpdateMessage get _value => super._value as _UpdateMessage;
+
+  @override
+  $Res call({
+    Object messages = freezed,
+  }) {
+    return _then(_UpdateMessage(
+      messages == freezed
+          ? _value.messages
+          : messages as List<ChatChannelMessage>,
+    ));
+  }
+}
+
+/// @nodoc
+class _$_UpdateMessage with DiagnosticableTreeMixin implements _UpdateMessage {
+  const _$_UpdateMessage(this.messages) : assert(messages != null);
+
+  @override
+  final List<ChatChannelMessage> messages;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ChatChannelUseCaseEvent.updateMessage(messages: $messages)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(
+          DiagnosticsProperty('type', 'ChatChannelUseCaseEvent.updateMessage'))
+      ..add(DiagnosticsProperty('messages', messages));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _UpdateMessage &&
+            (identical(other.messages, messages) ||
+                const DeepCollectionEquality()
+                    .equals(other.messages, messages)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(messages);
+
+  @override
+  _$UpdateMessageCopyWith<_UpdateMessage> get copyWith =>
+      __$UpdateMessageCopyWithImpl<_UpdateMessage>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initial(),
+    @required Result loaded(),
+    @required Result updateUser(ChatUserEntity user),
+    @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
+    @required Result updateMessage(List<ChatChannelMessage> messages),
+    @required Result errorOnLoading(String message),
+  }) {
+    assert(initial != null);
+    assert(loaded != null);
+    assert(updateUser != null);
+    assert(updateMetada != null);
+    assert(updateMessage != null);
+    assert(errorOnLoading != null);
+    return updateMessage(messages);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initial(),
+    Result loaded(),
+    Result updateUser(ChatUserEntity user),
+    Result updateMetada(ChatChannelSessionMetadataEntity metadata),
+    Result updateMessage(List<ChatChannelMessage> messages),
+    Result errorOnLoading(String message),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (updateMessage != null) {
+      return updateMessage(messages);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initial(_Initial value),
+    @required Result loaded(_Loaded value),
+    @required Result updateUser(_UpdateUser value),
+    @required Result updateMetada(_UpdateMetada value),
+    @required Result updateMessage(_UpdateMessage value),
+    @required Result errorOnLoading(_ErrorOnLoading value),
+  }) {
+    assert(initial != null);
+    assert(loaded != null);
+    assert(updateUser != null);
+    assert(updateMetada != null);
+    assert(updateMessage != null);
+    assert(errorOnLoading != null);
+    return updateMessage(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initial(_Initial value),
+    Result loaded(_Loaded value),
+    Result updateUser(_UpdateUser value),
+    Result updateMetada(_UpdateMetada value),
+    Result updateMessage(_UpdateMessage value),
+    Result errorOnLoading(_ErrorOnLoading value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (updateMessage != null) {
+      return updateMessage(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UpdateMessage implements ChatChannelUseCaseEvent {
+  const factory _UpdateMessage(List<ChatChannelMessage> messages) =
+      _$_UpdateMessage;
+
+  List<ChatChannelMessage> get messages;
+  _$UpdateMessageCopyWith<_UpdateMessage> get copyWith;
 }
 
 /// @nodoc
@@ -693,12 +880,14 @@ class _$_ErrorOnLoading
     @required Result loaded(),
     @required Result updateUser(ChatUserEntity user),
     @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
+    @required Result updateMessage(List<ChatChannelMessage> messages),
     @required Result errorOnLoading(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
     assert(updateUser != null);
     assert(updateMetada != null);
+    assert(updateMessage != null);
     assert(errorOnLoading != null);
     return errorOnLoading(message);
   }
@@ -710,6 +899,7 @@ class _$_ErrorOnLoading
     Result loaded(),
     Result updateUser(ChatUserEntity user),
     Result updateMetada(ChatChannelSessionMetadataEntity metadata),
+    Result updateMessage(List<ChatChannelMessage> messages),
     Result errorOnLoading(String message),
     @required Result orElse(),
   }) {
@@ -727,12 +917,14 @@ class _$_ErrorOnLoading
     @required Result loaded(_Loaded value),
     @required Result updateUser(_UpdateUser value),
     @required Result updateMetada(_UpdateMetada value),
+    @required Result updateMessage(_UpdateMessage value),
     @required Result errorOnLoading(_ErrorOnLoading value),
   }) {
     assert(initial != null);
     assert(loaded != null);
     assert(updateUser != null);
     assert(updateMetada != null);
+    assert(updateMessage != null);
     assert(errorOnLoading != null);
     return errorOnLoading(this);
   }
@@ -744,6 +936,7 @@ class _$_ErrorOnLoading
     Result loaded(_Loaded value),
     Result updateUser(_UpdateUser value),
     Result updateMetada(_UpdateMetada value),
+    Result updateMessage(_UpdateMessage value),
     Result errorOnLoading(_ErrorOnLoading value),
     @required Result orElse(),
   }) {

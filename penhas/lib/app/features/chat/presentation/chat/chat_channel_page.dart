@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_channel_message.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_session_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
 import 'package:penhas/app/features/chat/domain/states/chat_channel_state.dart';
@@ -63,17 +64,33 @@ extension _ChatPageStateMethods on _ChatPageState {
         child: Column(
           children: [
             headerMessage(metadata.headerMessage),
-            Expanded(
-              child: Container(
-                color: Colors.red,
-              ),
-            ),
+            Expanded(child: chatMessages(controller.channelMessages)),
             messageComposer()
           ],
         ),
       ),
     );
   }
+
+/*
+  RefreshIndicator _buildRefreshIndicator() {
+    return RefreshIndicator(
+      key: _refreshIndicatorKey,
+      onRefresh: _onRefresh,
+      notificationPredicate: _handleScrollNotification,
+      child: ListView.builder(
+        itemCount: controller.listTweets.length,
+        controller: _scrollController,
+        itemBuilder: (context, index) {
+          return _buildTweetItem(
+            controller.listTweets[index],
+            context,
+          );
+        },
+      ),
+    );
+  }
+*/
 
   Widget headerMessage(String message) {
     if (message == null || message.isEmpty) {
@@ -86,6 +103,24 @@ extension _ChatPageStateMethods on _ChatPageState {
       child: Text(
         message,
         style: headerMessageTextStyle,
+      ),
+    );
+  }
+
+  Widget chatMessages(List<ChatChannelMessage> messages) {
+    return Container(
+      color: DesignSystemColors.systemBackgroundColor,
+      child: ListView.builder(
+        reverse: true,
+        padding: EdgeInsets.only(top: 8.0),
+        itemCount: messages.length,
+        itemBuilder: (BuildContext context, int index) {
+          final message = messages[index];
+          final foo = message.content.message;
+          return Container(
+            child: Text(foo),
+          );
+        },
       ),
     );
   }
