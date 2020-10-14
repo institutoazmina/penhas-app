@@ -8,6 +8,7 @@ import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
 import 'package:penhas/app/features/chat/domain/states/chat_channel_state.dart';
 import 'package:penhas/app/features/chat/presentation/pages/channel/chat_channel_error_page.dart';
 import 'package:penhas/app/features/chat/presentation/pages/channel/chat_channel_initial_page.dart';
+import 'package:penhas/app/features/chat/presentation/pages/channel/chat_channel_message_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 import 'chat_channel_controller.dart';
@@ -116,9 +117,8 @@ extension _ChatPageStateMethods on _ChatPageState {
         itemCount: messages.length,
         itemBuilder: (BuildContext context, int index) {
           final message = messages[index];
-          final foo = message.content.message;
-          return Container(
-            child: Text(foo),
+          return ChatChannelMessagePage(
+            content: message,
           );
         },
       ),
