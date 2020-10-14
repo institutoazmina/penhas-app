@@ -19,6 +19,7 @@ abstract class IApiProvider {
     @required String path,
     Map<String, String> headers,
     Map<String, String> parameters,
+    String body,
   });
 
   Future<String> delete({
@@ -44,7 +45,6 @@ abstract class IApiProvider {
 class ApiProvider implements IApiProvider {
   final INetworkInfo _networkInfo;
   final IApiServerConfigure _serverConfiguration;
-  final foo = HttpClient();
 
   ApiProvider({
     @required IApiServerConfigure serverConfiguration,
@@ -74,6 +74,7 @@ class ApiProvider implements IApiProvider {
     @required String path,
     Map<String, String> headers,
     Map<String, String> parameters,
+    String body,
   }) async {
     final Uri uriRequest = setupHttpRequest(
       path: path,
@@ -81,7 +82,7 @@ class ApiProvider implements IApiProvider {
     );
     final header = await setupHttpHeader(headers);
     return Client()
-        .post(uriRequest, headers: header)
+        .post(uriRequest, headers: header, body: body)
         .parseError(_networkInfo)
         .then((response) => response.body);
   }
@@ -155,6 +156,11 @@ extension _ApiProvider on ApiProvider {
         'User-Agent': await _serverConfiguration.userAgent,
       },
     );
+
+    if (!headers.containsKey('Content-Type')) {
+      headers['Content-Type'] =
+          'application/x-www-form-urlencoded; charset=utf-8';
+    }
 
     return headers;
   }

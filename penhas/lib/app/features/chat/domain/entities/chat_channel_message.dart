@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 import 'chat_message_entity.dart';
 
-enum ChatChannelMessageType { warrning, text }
+enum ChatChannelMessageType { warning, text }
 
 class ChatChannelMessage {
   final ChatMessageEntity content;

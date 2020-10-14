@@ -5,7 +5,6 @@ import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_message.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_session_entity.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_message_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
 import 'package:penhas/app/features/chat/domain/states/chat_channel_state.dart';
 import 'package:penhas/app/features/chat/domain/states/chat_channel_usecase_event.dart';
@@ -46,6 +45,11 @@ abstract class _ChatChannelControllerBase with Store, MapFailureMessage {
 
   @action
   void deleteSession() {}
+
+  @action
+  Future<void> sentMessage(String message) async {
+    await _useCase.sentMessage(message);
+  }
 
   void dispose() {
     cancelStreamSource();

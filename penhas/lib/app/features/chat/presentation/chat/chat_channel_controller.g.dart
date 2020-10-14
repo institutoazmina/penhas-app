@@ -71,6 +71,14 @@ mixin _$ChatChannelController on _ChatChannelControllerBase, Store {
     });
   }
 
+  final _$sentMessageAsyncAction =
+      AsyncAction('_ChatChannelControllerBase.sentMessage');
+
+  @override
+  Future<void> sentMessage(String message) {
+    return _$sentMessageAsyncAction.run(() => super.sentMessage(message));
+  }
+
   final _$_ChatChannelControllerBaseActionController =
       ActionController(name: '_ChatChannelControllerBase');
 

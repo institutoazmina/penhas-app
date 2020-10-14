@@ -21,6 +21,8 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends ModularState<ChatPage, ChatChannelController> {
+  final TextEditingController _textController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (context) {
@@ -31,6 +33,7 @@ class _ChatPageState extends ModularState<ChatPage, ChatChannelController> {
   @override
   void dispose() {
     controller.dispose();
+    _textController.dispose();
     super.dispose();
   }
 }
@@ -66,7 +69,7 @@ extension _ChatPageStateMethods on _ChatPageState {
           children: [
             headerMessage(metadata.headerMessage),
             Expanded(child: chatMessages(controller.channelMessages)),
-            messageComposer()
+            messageComposer(_textController, controller.sentMessage)
           ],
         ),
       ),
@@ -125,10 +128,37 @@ extension _ChatPageStateMethods on _ChatPageState {
     );
   }
 
-  Widget messageComposer() {
+  Widget messageComposer(TextEditingController textController,
+      void Function(String) onSentMessage) {
     return Container(
-      color: Colors.green,
       height: 60.0,
+      color: Colors.white,
+      padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+              maxLines: null,
+              expands: true,
+              decoration:
+                  InputDecoration.collapsed(hintText: "Digite uma mensagem"),
+              textCapitalization: TextCapitalization.sentences,
+              controller: textController,
+            ),
+          ),
+          IconButton(
+              icon: Icon(Icons.send),
+              onPressed: () {
+                FocusScopeNode currentFocus = FocusScope.of(context);
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.unfocus();
+                }
+
+                onSentMessage(textController.text);
+                textController.clear();
+              }),
+        ],
+      ),
     );
   }
 

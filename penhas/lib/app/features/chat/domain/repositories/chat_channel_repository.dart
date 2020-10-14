@@ -12,6 +12,7 @@ import 'package:penhas/app/features/chat/domain/entities/chat_channel_available_
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_request.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_session_entity.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_sent_message_response_entity.dart';
 import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
 
 abstract class IChatChannelRepository {
@@ -19,6 +20,8 @@ abstract class IChatChannelRepository {
   Future<Either<Failure, ChatChannelOpenEntity>> openChannel(
       UserDetailProfileEntity user);
   Future<Either<Failure, ChatChannelSessionEntity>> getMessages(
+      ChatChannelRequest option);
+  Future<Either<Failure, ChatSentMessageResponseEntity>> sentMessage(
       ChatChannelRequest option);
 }
 
@@ -80,6 +83,31 @@ class ChatChannelRepository implements IChatChannelRepository {
             parameters: parameters,
           )
           .parseSessionChannel();
+      return right(response);
+    } catch (error) {
+      return left(MapExceptionToFailure.map(error));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ChatSentMessageResponseEntity>> sentMessage(
+      ChatChannelRequest option) async {
+    final endPoint = "/me/chats-messages";
+    final parameters = {
+      'chat_auth': option.token,
+    };
+
+    final bodyContent = Uri.encodeComponent(option.message);
+
+    try {
+      final response = await _apiProvider
+          .post(
+            path: endPoint,
+            parameters: parameters,
+            body: 'message=$bodyContent',
+          )
+          .then((v) => jsonDecode(v) as Map<String, Object>)
+          .then((v) => ChatSentMessageResponseEntity.fromJson(v));
       return right(response);
     } catch (error) {
       return left(MapExceptionToFailure.map(error));

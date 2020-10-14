@@ -6,12 +6,14 @@ class ChatUserEntity extends Equatable {
   final String nickname;
   final String avatar;
   final int userId;
+  final bool blockedMe;
 
   ChatUserEntity({
     @required this.activity,
     @required this.nickname,
     @required this.avatar,
     @required this.userId,
+    @required this.blockedMe,
   });
 
   @override
@@ -23,6 +25,7 @@ class ChatUserEntity extends Equatable {
         nickname,
         avatar,
         userId,
+        blockedMe,
       ];
 
   static ChatUserEntity get empty => ChatUserEntity(
@@ -30,5 +33,6 @@ class ChatUserEntity extends Equatable {
         activity: null,
         avatar: null,
         nickname: null,
+        blockedMe: false,
       );
 }

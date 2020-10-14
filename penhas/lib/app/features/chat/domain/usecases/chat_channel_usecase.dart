@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
@@ -9,6 +10,7 @@ import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entit
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_request.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_session_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_message_entity.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_sent_message_response_entity.dart';
 import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
 import 'package:penhas/app/features/chat/domain/states/chat_channel_usecase_event.dart';
 
@@ -17,8 +19,10 @@ class ChatChannelUseCase with MapFailureMessage {
   String _channelToken;
   String _newestPagination;
   String _oldestPagination;
+  String _lastMessageEtag;
   ChatChannelUseCaseEvent _currentEvent;
   ChatChannelSessionEntity _currentSession;
+  final _messageCache = Queue<ChatChannelMessage>();
 
   final StreamController<ChatChannelUseCaseEvent> _streamController =
       StreamController.broadcast();
@@ -42,7 +46,19 @@ class ChatChannelUseCase with MapFailureMessage {
 
   // Future<void> delete() {}
 
-  // Future<void> message() {}
+  Future<void> sentMessage(String message) async {
+    final response = await _channelRepository.sentMessage(
+      ChatChannelRequest(
+        token: _channelToken,
+        message: message,
+      ),
+    );
+
+    response.fold(
+      (failure) => handleFailure(failure),
+      (session) => rebuildMessagesFromSentMessage(message, session),
+    );
+  }
 }
 
 extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
@@ -72,6 +88,7 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
       _currentEvent = ChatChannelUseCaseEvent.errorOnLoading(message);
       _streamController.add(_currentEvent);
     }
+
     print(failure);
   }
 
@@ -94,7 +111,7 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
       if (session.metadata.headerWarning != null ||
           session.metadata.headerWarning.isNotEmpty) {
         warningMessage = ChatChannelMessage(
-          type: ChatChannelMessageType.warrning,
+          type: ChatChannelMessageType.warning,
           content: ChatMessageEntity(
             id: -1,
             isMe: false,
@@ -111,6 +128,8 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
     }
 
     _currentSession = session;
+    _lastMessageEtag = session.metadata.lastMessageEtag;
+
     messages.addAll(
       session.messages.map(
         (e) => ChatChannelMessage(
@@ -126,6 +145,39 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
 
     if (messages.isNotEmpty) {
       _streamController.add(ChatChannelUseCaseEvent.updateMessage(messages));
+    }
+
+    _messageCache.addAll(messages);
+  }
+
+  void rebuildMessagesFromSentMessage(
+    String message,
+    ChatSentMessageResponseEntity response,
+  ) {
+    _messageCache.removeWhere(
+      (e) => e.type == ChatChannelMessageType.warning,
+    );
+
+    _messageCache.addFirst(
+      ChatChannelMessage(
+        type: ChatChannelMessageType.text,
+        content: ChatMessageEntity(
+          id: response.id,
+          time: DateTime.now(),
+          isMe: true,
+          message: message,
+        ),
+      ),
+    );
+
+    _streamController.add(
+      ChatChannelUseCaseEvent.updateMessage(_messageCache.toList()),
+    );
+
+    if (_lastMessageEtag == response.lastMessageEtag) {
+      _lastMessageEtag = response.currentMessageEtag;
+    } else {
+      // rebuild a lista
     }
   }
 }
