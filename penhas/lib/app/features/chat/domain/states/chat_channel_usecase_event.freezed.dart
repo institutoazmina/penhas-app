@@ -19,6 +19,25 @@ class _$ChatChannelUseCaseEventTearOff {
   }
 
 // ignore: unused_element
+  _Loaded loaded() {
+    return const _Loaded();
+  }
+
+// ignore: unused_element
+  _UpdateUser updateUser(ChatUserEntity user) {
+    return _UpdateUser(
+      user,
+    );
+  }
+
+// ignore: unused_element
+  _UpdateMetada updateMetada(ChatChannelSessionMetadataEntity metadata) {
+    return _UpdateMetada(
+      metadata,
+    );
+  }
+
+// ignore: unused_element
   _ErrorOnLoading errorOnLoading(String message) {
     return _ErrorOnLoading(
       message,
@@ -35,22 +54,34 @@ mixin _$ChatChannelUseCaseEvent {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
+    @required Result loaded(),
+    @required Result updateUser(ChatUserEntity user),
+    @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
     @required Result errorOnLoading(String message),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
+    Result loaded(),
+    Result updateUser(ChatUserEntity user),
+    Result updateMetada(ChatChannelSessionMetadataEntity metadata),
     Result errorOnLoading(String message),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
+    @required Result loaded(_Loaded value),
+    @required Result updateUser(_UpdateUser value),
+    @required Result updateMetada(_UpdateMetada value),
     @required Result errorOnLoading(_ErrorOnLoading value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
+    Result loaded(_Loaded value),
+    Result updateUser(_UpdateUser value),
+    Result updateMetada(_UpdateMetada value),
     Result errorOnLoading(_ErrorOnLoading value),
     @required Result orElse(),
   });
@@ -118,9 +149,15 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
+    @required Result loaded(),
+    @required Result updateUser(ChatUserEntity user),
+    @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
     @required Result errorOnLoading(String message),
   }) {
     assert(initial != null);
+    assert(loaded != null);
+    assert(updateUser != null);
+    assert(updateMetada != null);
     assert(errorOnLoading != null);
     return initial();
   }
@@ -129,6 +166,9 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
+    Result loaded(),
+    Result updateUser(ChatUserEntity user),
+    Result updateMetada(ChatChannelSessionMetadataEntity metadata),
     Result errorOnLoading(String message),
     @required Result orElse(),
   }) {
@@ -143,9 +183,15 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
+    @required Result loaded(_Loaded value),
+    @required Result updateUser(_UpdateUser value),
+    @required Result updateMetada(_UpdateMetada value),
     @required Result errorOnLoading(_ErrorOnLoading value),
   }) {
     assert(initial != null);
+    assert(loaded != null);
+    assert(updateUser != null);
+    assert(updateMetada != null);
     assert(errorOnLoading != null);
     return initial(this);
   }
@@ -154,6 +200,9 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
+    Result loaded(_Loaded value),
+    Result updateUser(_UpdateUser value),
+    Result updateMetada(_UpdateMetada value),
     Result errorOnLoading(_ErrorOnLoading value),
     @required Result orElse(),
   }) {
@@ -167,6 +216,406 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
 abstract class _Initial implements ChatChannelUseCaseEvent {
   const factory _Initial() = _$_Initial;
+}
+
+/// @nodoc
+abstract class _$LoadedCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
+      __$LoadedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$LoadedCopyWithImpl<$Res>
+    extends _$ChatChannelUseCaseEventCopyWithImpl<$Res>
+    implements _$LoadedCopyWith<$Res> {
+  __$LoadedCopyWithImpl(_Loaded _value, $Res Function(_Loaded) _then)
+      : super(_value, (v) => _then(v as _Loaded));
+
+  @override
+  _Loaded get _value => super._value as _Loaded;
+}
+
+/// @nodoc
+class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
+  const _$_Loaded();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ChatChannelUseCaseEvent.loaded()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ChatChannelUseCaseEvent.loaded'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _Loaded);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initial(),
+    @required Result loaded(),
+    @required Result updateUser(ChatUserEntity user),
+    @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
+    @required Result errorOnLoading(String message),
+  }) {
+    assert(initial != null);
+    assert(loaded != null);
+    assert(updateUser != null);
+    assert(updateMetada != null);
+    assert(errorOnLoading != null);
+    return loaded();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initial(),
+    Result loaded(),
+    Result updateUser(ChatUserEntity user),
+    Result updateMetada(ChatChannelSessionMetadataEntity metadata),
+    Result errorOnLoading(String message),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (loaded != null) {
+      return loaded();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initial(_Initial value),
+    @required Result loaded(_Loaded value),
+    @required Result updateUser(_UpdateUser value),
+    @required Result updateMetada(_UpdateMetada value),
+    @required Result errorOnLoading(_ErrorOnLoading value),
+  }) {
+    assert(initial != null);
+    assert(loaded != null);
+    assert(updateUser != null);
+    assert(updateMetada != null);
+    assert(errorOnLoading != null);
+    return loaded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initial(_Initial value),
+    Result loaded(_Loaded value),
+    Result updateUser(_UpdateUser value),
+    Result updateMetada(_UpdateMetada value),
+    Result errorOnLoading(_ErrorOnLoading value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (loaded != null) {
+      return loaded(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Loaded implements ChatChannelUseCaseEvent {
+  const factory _Loaded() = _$_Loaded;
+}
+
+/// @nodoc
+abstract class _$UpdateUserCopyWith<$Res> {
+  factory _$UpdateUserCopyWith(
+          _UpdateUser value, $Res Function(_UpdateUser) then) =
+      __$UpdateUserCopyWithImpl<$Res>;
+  $Res call({ChatUserEntity user});
+}
+
+/// @nodoc
+class __$UpdateUserCopyWithImpl<$Res>
+    extends _$ChatChannelUseCaseEventCopyWithImpl<$Res>
+    implements _$UpdateUserCopyWith<$Res> {
+  __$UpdateUserCopyWithImpl(
+      _UpdateUser _value, $Res Function(_UpdateUser) _then)
+      : super(_value, (v) => _then(v as _UpdateUser));
+
+  @override
+  _UpdateUser get _value => super._value as _UpdateUser;
+
+  @override
+  $Res call({
+    Object user = freezed,
+  }) {
+    return _then(_UpdateUser(
+      user == freezed ? _value.user : user as ChatUserEntity,
+    ));
+  }
+}
+
+/// @nodoc
+class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
+  const _$_UpdateUser(this.user) : assert(user != null);
+
+  @override
+  final ChatUserEntity user;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ChatChannelUseCaseEvent.updateUser(user: $user)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ChatChannelUseCaseEvent.updateUser'))
+      ..add(DiagnosticsProperty('user', user));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _UpdateUser &&
+            (identical(other.user, user) ||
+                const DeepCollectionEquality().equals(other.user, user)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(user);
+
+  @override
+  _$UpdateUserCopyWith<_UpdateUser> get copyWith =>
+      __$UpdateUserCopyWithImpl<_UpdateUser>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initial(),
+    @required Result loaded(),
+    @required Result updateUser(ChatUserEntity user),
+    @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
+    @required Result errorOnLoading(String message),
+  }) {
+    assert(initial != null);
+    assert(loaded != null);
+    assert(updateUser != null);
+    assert(updateMetada != null);
+    assert(errorOnLoading != null);
+    return updateUser(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initial(),
+    Result loaded(),
+    Result updateUser(ChatUserEntity user),
+    Result updateMetada(ChatChannelSessionMetadataEntity metadata),
+    Result errorOnLoading(String message),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (updateUser != null) {
+      return updateUser(user);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initial(_Initial value),
+    @required Result loaded(_Loaded value),
+    @required Result updateUser(_UpdateUser value),
+    @required Result updateMetada(_UpdateMetada value),
+    @required Result errorOnLoading(_ErrorOnLoading value),
+  }) {
+    assert(initial != null);
+    assert(loaded != null);
+    assert(updateUser != null);
+    assert(updateMetada != null);
+    assert(errorOnLoading != null);
+    return updateUser(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initial(_Initial value),
+    Result loaded(_Loaded value),
+    Result updateUser(_UpdateUser value),
+    Result updateMetada(_UpdateMetada value),
+    Result errorOnLoading(_ErrorOnLoading value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (updateUser != null) {
+      return updateUser(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UpdateUser implements ChatChannelUseCaseEvent {
+  const factory _UpdateUser(ChatUserEntity user) = _$_UpdateUser;
+
+  ChatUserEntity get user;
+  _$UpdateUserCopyWith<_UpdateUser> get copyWith;
+}
+
+/// @nodoc
+abstract class _$UpdateMetadaCopyWith<$Res> {
+  factory _$UpdateMetadaCopyWith(
+          _UpdateMetada value, $Res Function(_UpdateMetada) then) =
+      __$UpdateMetadaCopyWithImpl<$Res>;
+  $Res call({ChatChannelSessionMetadataEntity metadata});
+}
+
+/// @nodoc
+class __$UpdateMetadaCopyWithImpl<$Res>
+    extends _$ChatChannelUseCaseEventCopyWithImpl<$Res>
+    implements _$UpdateMetadaCopyWith<$Res> {
+  __$UpdateMetadaCopyWithImpl(
+      _UpdateMetada _value, $Res Function(_UpdateMetada) _then)
+      : super(_value, (v) => _then(v as _UpdateMetada));
+
+  @override
+  _UpdateMetada get _value => super._value as _UpdateMetada;
+
+  @override
+  $Res call({
+    Object metadata = freezed,
+  }) {
+    return _then(_UpdateMetada(
+      metadata == freezed
+          ? _value.metadata
+          : metadata as ChatChannelSessionMetadataEntity,
+    ));
+  }
+}
+
+/// @nodoc
+class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
+  const _$_UpdateMetada(this.metadata) : assert(metadata != null);
+
+  @override
+  final ChatChannelSessionMetadataEntity metadata;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ChatChannelUseCaseEvent.updateMetada(metadata: $metadata)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ChatChannelUseCaseEvent.updateMetada'))
+      ..add(DiagnosticsProperty('metadata', metadata));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _UpdateMetada &&
+            (identical(other.metadata, metadata) ||
+                const DeepCollectionEquality()
+                    .equals(other.metadata, metadata)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(metadata);
+
+  @override
+  _$UpdateMetadaCopyWith<_UpdateMetada> get copyWith =>
+      __$UpdateMetadaCopyWithImpl<_UpdateMetada>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initial(),
+    @required Result loaded(),
+    @required Result updateUser(ChatUserEntity user),
+    @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
+    @required Result errorOnLoading(String message),
+  }) {
+    assert(initial != null);
+    assert(loaded != null);
+    assert(updateUser != null);
+    assert(updateMetada != null);
+    assert(errorOnLoading != null);
+    return updateMetada(metadata);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initial(),
+    Result loaded(),
+    Result updateUser(ChatUserEntity user),
+    Result updateMetada(ChatChannelSessionMetadataEntity metadata),
+    Result errorOnLoading(String message),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (updateMetada != null) {
+      return updateMetada(metadata);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initial(_Initial value),
+    @required Result loaded(_Loaded value),
+    @required Result updateUser(_UpdateUser value),
+    @required Result updateMetada(_UpdateMetada value),
+    @required Result errorOnLoading(_ErrorOnLoading value),
+  }) {
+    assert(initial != null);
+    assert(loaded != null);
+    assert(updateUser != null);
+    assert(updateMetada != null);
+    assert(errorOnLoading != null);
+    return updateMetada(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initial(_Initial value),
+    Result loaded(_Loaded value),
+    Result updateUser(_UpdateUser value),
+    Result updateMetada(_UpdateMetada value),
+    Result errorOnLoading(_ErrorOnLoading value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (updateMetada != null) {
+      return updateMetada(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UpdateMetada implements ChatChannelUseCaseEvent {
+  const factory _UpdateMetada(ChatChannelSessionMetadataEntity metadata) =
+      _$_UpdateMetada;
+
+  ChatChannelSessionMetadataEntity get metadata;
+  _$UpdateMetadaCopyWith<_UpdateMetada> get copyWith;
 }
 
 /// @nodoc
@@ -241,9 +690,15 @@ class _$_ErrorOnLoading
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
+    @required Result loaded(),
+    @required Result updateUser(ChatUserEntity user),
+    @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
     @required Result errorOnLoading(String message),
   }) {
     assert(initial != null);
+    assert(loaded != null);
+    assert(updateUser != null);
+    assert(updateMetada != null);
     assert(errorOnLoading != null);
     return errorOnLoading(message);
   }
@@ -252,6 +707,9 @@ class _$_ErrorOnLoading
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
+    Result loaded(),
+    Result updateUser(ChatUserEntity user),
+    Result updateMetada(ChatChannelSessionMetadataEntity metadata),
     Result errorOnLoading(String message),
     @required Result orElse(),
   }) {
@@ -266,9 +724,15 @@ class _$_ErrorOnLoading
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
+    @required Result loaded(_Loaded value),
+    @required Result updateUser(_UpdateUser value),
+    @required Result updateMetada(_UpdateMetada value),
     @required Result errorOnLoading(_ErrorOnLoading value),
   }) {
     assert(initial != null);
+    assert(loaded != null);
+    assert(updateUser != null);
+    assert(updateMetada != null);
     assert(errorOnLoading != null);
     return errorOnLoading(this);
   }
@@ -277,6 +741,9 @@ class _$_ErrorOnLoading
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
+    Result loaded(_Loaded value),
+    Result updateUser(_UpdateUser value),
+    Result updateMetada(_UpdateMetada value),
     Result errorOnLoading(_ErrorOnLoading value),
     @required Result orElse(),
   }) {

@@ -24,4 +24,11 @@ class ChatUserEntity extends Equatable {
         avatar,
         userId,
       ];
+
+  static ChatUserEntity get empty => ChatUserEntity(
+        userId: -1,
+        activity: null,
+        avatar: null,
+        nickname: null,
+      );
 }

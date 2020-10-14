@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_channel_session_entity.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
 import 'package:penhas/app/features/chat/domain/states/chat_channel_state.dart';
 import 'package:penhas/app/features/chat/presentation/pages/channel/chat_channel_error_page.dart';
 import 'package:penhas/app/features/chat/presentation/pages/channel/chat_channel_initial_page.dart';
@@ -36,39 +38,41 @@ extension _ChatPageStateMethods on _ChatPageState {
     return state.when(
       initial: () => ChatChannelInitialPage(),
       error: (error) => ChatChannelErrorPage(message: error),
+      loaded: () => startingChannel(controller.user, controller.metadata),
     );
   }
 
-  Widget startingChannel(String message) {}
-/*
-
+  Widget startingChannel(
+    ChatUserEntity user,
+    ChatChannelSessionMetadataEntity metadata,
+  ) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: DesignSystemColors.easterPurple,
-          title: headerTitle(),
-          titleSpacing: 2.0,
-          actions: [
-            IconButton(
-              icon: Icon(Icons.more_vert),
-              onPressed: () => showChatAction(context),
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: DesignSystemColors.easterPurple,
+        title: headerTitle(user),
+        titleSpacing: 2.0,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.more_vert),
+            onPressed: () => showChatAction(context),
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                color: Colors.red,
+              ),
             ),
+            messageComposer()
           ],
         ),
-        body: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: Container(
-                  color: Colors.red,
-                ),
-              ),
-              messageComposer()
-            ],
-          ),
-        ));
-
-*/
+      ),
+    );
+  }
 
   Widget messageComposer() {
     return Container(
@@ -77,7 +81,14 @@ extension _ChatPageStateMethods on _ChatPageState {
     );
   }
 
-  Widget headerTitle() {
+  Widget headerTitle(ChatUserEntity user) {
+    Widget avatar;
+    if (user.avatar.toLowerCase().endsWith('.svg')) {
+      avatar = SvgPicture.network(user.avatar, height: 22, width: 22);
+    } else {
+      avatar = Image.network(user.avatar);
+    }
+
     return Container(
       child: Row(
         children: [
@@ -86,15 +97,14 @@ extension _ChatPageStateMethods on _ChatPageState {
             child: CircleAvatar(
               backgroundColor: Colors.white38,
               radius: 16,
-              child: SvgPicture.asset(
-                  'assets/images/svg/tweet_action/tweet_action_block.svg'),
+              child: avatar,
             ),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Luíza Marisa", style: titleTextStyle),
-              Text("Online em algum momento", style: statusTextStyle),
+              Text(user.nickname, style: titleTextStyle),
+              Text(user.activity, style: statusTextStyle),
             ],
           )
         ],

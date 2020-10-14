@@ -19,6 +19,11 @@ class _$ChatChannelStateTearOff {
   }
 
 // ignore: unused_element
+  _Loaded loaded() {
+    return const _Loaded();
+  }
+
+// ignore: unused_element
   _ErrorDetails error(String message) {
     return _ErrorDetails(
       message,
@@ -35,22 +40,26 @@ mixin _$ChatChannelState {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
+    @required Result loaded(),
     @required Result error(String message),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
+    Result loaded(),
     Result error(String message),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
+    @required Result loaded(_Loaded value),
     @required Result error(_ErrorDetails value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
+    Result loaded(_Loaded value),
     Result error(_ErrorDetails value),
     @required Result orElse(),
   });
@@ -90,12 +99,18 @@ class __$InitialCopyWithImpl<$Res> extends _$ChatChannelStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-class _$_Initial implements _Initial {
+class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   const _$_Initial();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ChatChannelState.initial()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'ChatChannelState.initial'));
   }
 
   @override
@@ -110,9 +125,11 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
+    @required Result loaded(),
     @required Result error(String message),
   }) {
     assert(initial != null);
+    assert(loaded != null);
     assert(error != null);
     return initial();
   }
@@ -121,6 +138,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
+    Result loaded(),
     Result error(String message),
     @required Result orElse(),
   }) {
@@ -135,9 +153,11 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
+    @required Result loaded(_Loaded value),
     @required Result error(_ErrorDetails value),
   }) {
     assert(initial != null);
+    assert(loaded != null);
     assert(error != null);
     return initial(this);
   }
@@ -146,6 +166,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
+    Result loaded(_Loaded value),
     Result error(_ErrorDetails value),
     @required Result orElse(),
   }) {
@@ -159,6 +180,106 @@ class _$_Initial implements _Initial {
 
 abstract class _Initial implements ChatChannelState {
   const factory _Initial() = _$_Initial;
+}
+
+/// @nodoc
+abstract class _$LoadedCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
+      __$LoadedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$LoadedCopyWithImpl<$Res> extends _$ChatChannelStateCopyWithImpl<$Res>
+    implements _$LoadedCopyWith<$Res> {
+  __$LoadedCopyWithImpl(_Loaded _value, $Res Function(_Loaded) _then)
+      : super(_value, (v) => _then(v as _Loaded));
+
+  @override
+  _Loaded get _value => super._value as _Loaded;
+}
+
+/// @nodoc
+class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
+  const _$_Loaded();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ChatChannelState.loaded()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'ChatChannelState.loaded'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _Loaded);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initial(),
+    @required Result loaded(),
+    @required Result error(String message),
+  }) {
+    assert(initial != null);
+    assert(loaded != null);
+    assert(error != null);
+    return loaded();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initial(),
+    Result loaded(),
+    Result error(String message),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (loaded != null) {
+      return loaded();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initial(_Initial value),
+    @required Result loaded(_Loaded value),
+    @required Result error(_ErrorDetails value),
+  }) {
+    assert(initial != null);
+    assert(loaded != null);
+    assert(error != null);
+    return loaded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initial(_Initial value),
+    Result loaded(_Loaded value),
+    Result error(_ErrorDetails value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (loaded != null) {
+      return loaded(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Loaded implements ChatChannelState {
+  const factory _Loaded() = _$_Loaded;
 }
 
 /// @nodoc
@@ -191,15 +312,23 @@ class __$ErrorDetailsCopyWithImpl<$Res>
 }
 
 /// @nodoc
-class _$_ErrorDetails implements _ErrorDetails {
+class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   const _$_ErrorDetails(this.message) : assert(message != null);
 
   @override
   final String message;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ChatChannelState.error(message: $message)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ChatChannelState.error'))
+      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -222,9 +351,11 @@ class _$_ErrorDetails implements _ErrorDetails {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
+    @required Result loaded(),
     @required Result error(String message),
   }) {
     assert(initial != null);
+    assert(loaded != null);
     assert(error != null);
     return error(message);
   }
@@ -233,6 +364,7 @@ class _$_ErrorDetails implements _ErrorDetails {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
+    Result loaded(),
     Result error(String message),
     @required Result orElse(),
   }) {
@@ -247,9 +379,11 @@ class _$_ErrorDetails implements _ErrorDetails {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
+    @required Result loaded(_Loaded value),
     @required Result error(_ErrorDetails value),
   }) {
     assert(initial != null);
+    assert(loaded != null);
     assert(error != null);
     return error(this);
   }
@@ -258,6 +392,7 @@ class _$_ErrorDetails implements _ErrorDetails {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
+    Result loaded(_Loaded value),
     Result error(_ErrorDetails value),
     @required Result orElse(),
   }) {

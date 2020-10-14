@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_channel_session_entity.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
 import 'package:penhas/app/features/chat/domain/states/chat_channel_state.dart';
 import 'package:penhas/app/features/chat/domain/states/chat_channel_usecase_event.dart';
 import 'package:penhas/app/features/chat/domain/usecases/chat_channel_usecase.dart';
@@ -26,6 +28,13 @@ abstract class _ChatChannelControllerBase with Store, MapFailureMessage {
   @observable
   ChatChannelState currentState = ChatChannelState.initial();
 
+  @observable
+  ChatUserEntity user = ChatUserEntity.empty;
+
+  @observable
+  ChatChannelSessionMetadataEntity metadata =
+      ChatChannelSessionMetadataEntity.empty;
+
   @action
   void blockChat() {}
 
@@ -44,7 +53,10 @@ extension _ChatChannelControllerBasePrivate on _ChatChannelControllerBase {
 
   void parseStream(ChatChannelUseCaseEvent event) {
     event.when(
+      updateUser: (u) => user = u,
+      updateMetada: (m) => metadata = m,
       initial: () => currentState = ChatChannelState.initial(),
+      loaded: () => currentState = ChatChannelState.loaded(),
       errorOnLoading: (m) => currentState = ChatChannelState.error(m),
     );
   }

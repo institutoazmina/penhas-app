@@ -16,6 +16,7 @@ class ChatChannelUseCase with MapFailureMessage {
   String _newestPagination;
   String _oldestPagination;
   ChatChannelUseCaseEvent _currentEvent;
+  ChatChannelSessionEntity _currentSession;
 
   final StreamController<ChatChannelUseCaseEvent> _streamController =
       StreamController.broadcast();
@@ -73,6 +74,26 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
   }
 
   void handleSession(ChatChannelSessionEntity session) {
-    print(session);
+    _newestPagination = session.newer;
+    _oldestPagination = session.older;
+
+    if (_currentSession?.user != session.user) {
+      _streamController.add(
+        ChatChannelUseCaseEvent.updateUser(session.user),
+      );
+    }
+
+    if (_currentSession?.metadata != session.metadata) {
+      _streamController.add(
+        ChatChannelUseCaseEvent.updateMetada(session.metadata),
+      );
+    }
+
+    if (_currentSession == null) {
+      _currentSession = session;
+      _streamController.add(ChatChannelUseCaseEvent.loaded());
+    }
+
+    // _currentSession ??= session;
   }
 }

@@ -64,4 +64,14 @@ class ChatChannelSessionMetadataEntity extends Equatable {
         isBlockable,
         lastMessageEtag,
       ];
+
+  static ChatChannelSessionMetadataEntity get empty =>
+      ChatChannelSessionMetadataEntity(
+        didBlocked: false,
+        isBlockable: false,
+        canSendMessage: false,
+        headerMessage: null,
+        headerWarning: null,
+        lastMessageEtag: null,
+      );
 }

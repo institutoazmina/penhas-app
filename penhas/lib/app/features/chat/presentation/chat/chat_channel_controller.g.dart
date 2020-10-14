@@ -25,6 +25,36 @@ mixin _$ChatChannelController on _ChatChannelControllerBase, Store {
     });
   }
 
+  final _$userAtom = Atom(name: '_ChatChannelControllerBase.user');
+
+  @override
+  ChatUserEntity get user {
+    _$userAtom.reportRead();
+    return super.user;
+  }
+
+  @override
+  set user(ChatUserEntity value) {
+    _$userAtom.reportWrite(value, super.user, () {
+      super.user = value;
+    });
+  }
+
+  final _$metadataAtom = Atom(name: '_ChatChannelControllerBase.metadata');
+
+  @override
+  ChatChannelSessionMetadataEntity get metadata {
+    _$metadataAtom.reportRead();
+    return super.metadata;
+  }
+
+  @override
+  set metadata(ChatChannelSessionMetadataEntity value) {
+    _$metadataAtom.reportWrite(value, super.metadata, () {
+      super.metadata = value;
+    });
+  }
+
   final _$_ChatChannelControllerBaseActionController =
       ActionController(name: '_ChatChannelControllerBase');
 
@@ -53,7 +83,9 @@ mixin _$ChatChannelController on _ChatChannelControllerBase, Store {
   @override
   String toString() {
     return '''
-currentState: ${currentState}
+currentState: ${currentState},
+user: ${user},
+metadata: ${metadata}
     ''';
   }
 }
