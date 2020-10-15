@@ -37,12 +37,13 @@ class ChatChannelUseCase with MapFailureMessage {
     initial(session);
   }
 
-  void dispose() {
-    _streamController.close();
+  Future<void> block() async {
+    await blockChannel(true);
   }
-  // Future<void> block() {}
 
-  // Future<void> unblock() {}
+  Future<void> unblock() async {
+    await blockChannel(false);
+  }
 
   // Future<void> delete() {}
 
@@ -58,6 +59,10 @@ class ChatChannelUseCase with MapFailureMessage {
       (failure) => handleFailure(failure),
       (session) => rebuildMessagesFromSentMessage(message, session),
     );
+  }
+
+  void dispose() {
+    _streamController.close();
   }
 }
 
@@ -179,5 +184,35 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
     } else {
       // rebuild a lista
     }
+  }
+
+  Future<void> blockChannel(bool isToBlock) async {
+    final request = ChatChannelRequest(
+      token: _channelToken,
+      clientId: _currentSession.user.userId.toString(),
+      block: isToBlock,
+    );
+
+    final response = await _channelRepository.blockChannel(request);
+
+    response.fold(
+      (failure) => handleFailure(failure),
+      (session) => updateProfileAfterBlockAction(isToBlock),
+    );
+  }
+
+  void updateProfileAfterBlockAction(bool isToBlock) {
+    final metadata = ChatChannelSessionMetadataEntity(
+      canSendMessage: !isToBlock,
+      didBlocked: isToBlock,
+      headerMessage: _currentSession.metadata.headerMessage,
+      headerWarning: _currentSession.metadata.headerWarning,
+      isBlockable: _currentSession.metadata.isBlockable,
+      lastMessageEtag: _currentSession.metadata.lastMessageEtag,
+    );
+
+    _streamController.add(
+      ChatChannelUseCaseEvent.updateMetada(metadata),
+    );
   }
 }

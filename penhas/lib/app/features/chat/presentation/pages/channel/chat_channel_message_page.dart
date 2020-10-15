@@ -37,6 +37,10 @@ class ChatChannelMessagePage extends StatelessWidget {
     AlignmentGeometry alignment =
         content.content.isMe ? Alignment.centerRight : Alignment.centerLeft;
 
+    if (content.content.message == null || content.content.message.isEmpty) {
+      return Container();
+    }
+
     return Container(
       margin: margin,
       alignment: alignment,

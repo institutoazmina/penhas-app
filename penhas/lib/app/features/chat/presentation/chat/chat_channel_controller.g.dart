@@ -9,6 +9,14 @@ part of 'chat_channel_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ChatChannelController on _ChatChannelControllerBase, Store {
+  Computed<ChatChannelComposerType> _$composerTypeComputed;
+
+  @override
+  ChatChannelComposerType get composerType => (_$composerTypeComputed ??=
+          Computed<ChatChannelComposerType>(() => super.composerType,
+              name: '_ChatChannelControllerBase.composerType'))
+      .value;
+
   final _$currentStateAtom =
       Atom(name: '_ChatChannelControllerBase.currentState');
 
@@ -71,6 +79,22 @@ mixin _$ChatChannelController on _ChatChannelControllerBase, Store {
     });
   }
 
+  final _$blockChatAsyncAction =
+      AsyncAction('_ChatChannelControllerBase.blockChat');
+
+  @override
+  Future<void> blockChat() {
+    return _$blockChatAsyncAction.run(() => super.blockChat());
+  }
+
+  final _$unBlockChatAsyncAction =
+      AsyncAction('_ChatChannelControllerBase.unBlockChat');
+
+  @override
+  Future<void> unBlockChat() {
+    return _$unBlockChatAsyncAction.run(() => super.unBlockChat());
+  }
+
   final _$sentMessageAsyncAction =
       AsyncAction('_ChatChannelControllerBase.sentMessage');
 
@@ -81,17 +105,6 @@ mixin _$ChatChannelController on _ChatChannelControllerBase, Store {
 
   final _$_ChatChannelControllerBaseActionController =
       ActionController(name: '_ChatChannelControllerBase');
-
-  @override
-  void blockChat() {
-    final _$actionInfo = _$_ChatChannelControllerBaseActionController
-        .startAction(name: '_ChatChannelControllerBase.blockChat');
-    try {
-      return super.blockChat();
-    } finally {
-      _$_ChatChannelControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
 
   @override
   void deleteSession() {
@@ -110,7 +123,8 @@ mixin _$ChatChannelController on _ChatChannelControllerBase, Store {
 currentState: ${currentState},
 user: ${user},
 metadata: ${metadata},
-channelMessages: ${channelMessages}
+channelMessages: ${channelMessages},
+composerType: ${composerType}
     ''';
   }
 }

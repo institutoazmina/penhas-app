@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
@@ -9,6 +10,8 @@ import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
 import 'package:penhas/app/features/chat/domain/states/chat_channel_state.dart';
 import 'package:penhas/app/features/chat/domain/states/chat_channel_usecase_event.dart';
 import 'package:penhas/app/features/chat/domain/usecases/chat_channel_usecase.dart';
+
+import 'chat_channel_compose_type.dart';
 
 part 'chat_channel_controller.g.dart';
 
@@ -40,11 +43,33 @@ abstract class _ChatChannelControllerBase with Store, MapFailureMessage {
   ObservableList<ChatChannelMessage> channelMessages =
       ObservableList<ChatChannelMessage>();
 
-  @action
-  void blockChat() {}
+  @computed
+  ChatChannelComposerType get composerType {
+    if (user.blockedMe) {
+      return ChatChannelComposerType.blockedByOwner;
+    }
+
+    if (metadata.didBlocked) {
+      return ChatChannelComposerType.blockedByMe;
+    }
+
+    return ChatChannelComposerType.sentMessage;
+  }
 
   @action
-  void deleteSession() {}
+  Future<void> blockChat() async {
+    await _useCase.block();
+  }
+
+  @action
+  Future<void> unBlockChat() async {
+    await _useCase.unblock();
+  }
+
+  @action
+  void deleteSession() {
+    print("deleteSession");
+  }
 
   @action
   Future<void> sentMessage(String message) async {

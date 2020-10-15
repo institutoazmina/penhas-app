@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_exception_to_failure.dart';
@@ -23,6 +24,7 @@ abstract class IChatChannelRepository {
       ChatChannelRequest option);
   Future<Either<Failure, ChatSentMessageResponseEntity>> sentMessage(
       ChatChannelRequest option);
+  Future<Either<Failure, ValidField>> blockChannel(ChatChannelRequest option);
 }
 
 class ChatChannelRepository implements IChatChannelRepository {
@@ -109,6 +111,26 @@ class ChatChannelRepository implements IChatChannelRepository {
           .then((v) => jsonDecode(v) as Map<String, Object>)
           .then((v) => ChatSentMessageResponseEntity.fromJson(v));
       return right(response);
+    } catch (error) {
+      return left(MapExceptionToFailure.map(error));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ValidField>> blockChannel(
+      ChatChannelRequest option) async {
+    final endPoint = "/me/manage-blocks";
+    final parameters = {
+      'block': option.block ? "1" : "0",
+      'cliente_id': option.clientId,
+    };
+
+    try {
+      final response = await _apiProvider.post(
+        path: endPoint,
+        parameters: parameters,
+      );
+      return right(ValidField());
     } catch (error) {
       return left(MapExceptionToFailure.map(error));
     }

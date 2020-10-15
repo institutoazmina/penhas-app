@@ -8,6 +8,7 @@ import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
 import 'package:penhas/app/features/chat/domain/states/chat_channel_state.dart';
 import 'package:penhas/app/features/chat/presentation/pages/channel/chat_channel_error_page.dart';
 import 'package:penhas/app/features/chat/presentation/pages/channel/chat_channel_initial_page.dart';
+import 'package:penhas/app/features/chat/presentation/pages/channel/chat_channel_message_composer.dart';
 import 'package:penhas/app/features/chat/presentation/pages/channel/chat_channel_message_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
@@ -21,8 +22,6 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends ModularState<ChatPage, ChatChannelController> {
-  final TextEditingController _textController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (context) {
@@ -33,7 +32,6 @@ class _ChatPageState extends ModularState<ChatPage, ChatChannelController> {
   @override
   void dispose() {
     controller.dispose();
-    _textController.dispose();
     super.dispose();
   }
 }
@@ -69,7 +67,11 @@ extension _ChatPageStateMethods on _ChatPageState {
           children: [
             headerMessage(metadata.headerMessage),
             Expanded(child: chatMessages(controller.channelMessages)),
-            messageComposer(_textController, controller.sentMessage)
+            ChatChannelMessageComposer(
+              composerType: controller.composerType,
+              onSentMessage: controller.sentMessage,
+              onUnblockChannel: controller.unBlockChat,
+            ),
           ],
         ),
       ),
@@ -128,40 +130,6 @@ extension _ChatPageStateMethods on _ChatPageState {
     );
   }
 
-  Widget messageComposer(TextEditingController textController,
-      void Function(String) onSentMessage) {
-    return Container(
-      height: 60.0,
-      color: Colors.white,
-      padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              maxLines: null,
-              expands: true,
-              decoration:
-                  InputDecoration.collapsed(hintText: "Digite uma mensagem"),
-              textCapitalization: TextCapitalization.sentences,
-              controller: textController,
-            ),
-          ),
-          IconButton(
-              icon: Icon(Icons.send),
-              onPressed: () {
-                FocusScopeNode currentFocus = FocusScope.of(context);
-                if (!currentFocus.hasPrimaryFocus) {
-                  currentFocus.unfocus();
-                }
-
-                onSentMessage(textController.text);
-                textController.clear();
-              }),
-        ],
-      ),
-    );
-  }
-
   Widget headerTitle(ChatUserEntity user) {
     Widget avatar;
     if (user.avatar.toLowerCase().endsWith('.svg')) {
@@ -208,7 +176,7 @@ extension _ChatPageStateMethods on _ChatPageState {
           ),
           height: 150,
           child: Column(
-            children: <Widget>[divider(context), ...buildActions()],
+            children: <Widget>[divider(context), ...buildActions(context)],
           ),
         );
       },
@@ -232,19 +200,25 @@ extension _ChatPageStateMethods on _ChatPageState {
     return MediaQuery.of(context).size.width;
   }
 
-  List<Widget> buildActions() {
+  List<Widget> buildActions(BuildContext context) {
     List<Widget> actions = [
       ListTile(
         leading: SvgPicture.asset(
             'assets/images/svg/tweet_action/tweet_action_block.svg'),
         title: Text('Bloquear'),
-        onTap: () => controller.blockChat(),
+        onTap: () {
+          Navigator.of(context).pop();
+          controller.blockChat();
+        },
       ),
       ListTile(
         leading: SvgPicture.asset(
             'assets/images/svg/tweet_action/tweet_action_delete.svg'),
         title: Text('Apagar'),
-        onTap: () => controller.deleteSession(),
+        onTap: () {
+          Navigator.of(context).pop();
+          controller.deleteSession();
+        },
       ),
     ];
 
