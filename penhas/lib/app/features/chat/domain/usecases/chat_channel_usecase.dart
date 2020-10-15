@@ -45,7 +45,18 @@ class ChatChannelUseCase with MapFailureMessage {
     await blockChannel(false);
   }
 
-  // Future<void> delete() {}
+  Future<void> delete() async {
+    final response = await _channelRepository.deleteChannel(
+      ChatChannelRequest(
+        token: _channelToken,
+      ),
+    );
+
+    response.fold(
+      (failure) => handleFailure(failure),
+      (session) => _streamController.add(ChatChannelUseCaseEvent.deleted()),
+    );
+  }
 
   Future<void> sentMessage(String message) async {
     final response = await _channelRepository.sentMessage(

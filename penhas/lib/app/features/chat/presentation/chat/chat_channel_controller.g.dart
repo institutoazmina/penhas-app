@@ -95,26 +95,20 @@ mixin _$ChatChannelController on _ChatChannelControllerBase, Store {
     return _$unBlockChatAsyncAction.run(() => super.unBlockChat());
   }
 
+  final _$deleteSessionAsyncAction =
+      AsyncAction('_ChatChannelControllerBase.deleteSession');
+
+  @override
+  Future<void> deleteSession() {
+    return _$deleteSessionAsyncAction.run(() => super.deleteSession());
+  }
+
   final _$sentMessageAsyncAction =
       AsyncAction('_ChatChannelControllerBase.sentMessage');
 
   @override
   Future<void> sentMessage(String message) {
     return _$sentMessageAsyncAction.run(() => super.sentMessage(message));
-  }
-
-  final _$_ChatChannelControllerBaseActionController =
-      ActionController(name: '_ChatChannelControllerBase');
-
-  @override
-  void deleteSession() {
-    final _$actionInfo = _$_ChatChannelControllerBaseActionController
-        .startAction(name: '_ChatChannelControllerBase.deleteSession');
-    try {
-      return super.deleteSession();
-    } finally {
-      _$_ChatChannelControllerBaseActionController.endAction(_$actionInfo);
-    }
   }
 
   @override

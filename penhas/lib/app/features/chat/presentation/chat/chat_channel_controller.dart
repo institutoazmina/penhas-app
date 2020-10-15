@@ -67,8 +67,8 @@ abstract class _ChatChannelControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  void deleteSession() {
-    print("deleteSession");
+  Future<void> deleteSession() async {
+    await _useCase.delete();
   }
 
   @action
@@ -94,6 +94,7 @@ extension _ChatChannelControllerBasePrivate on _ChatChannelControllerBase {
       loaded: () => currentState = ChatChannelState.loaded(),
       errorOnLoading: (m) => currentState = ChatChannelState.error(m),
       updateMessage: (m) => channelMessages = m.asObservable(),
+      deleted: () => currentState = ChatChannelState.deleted(),
     );
   }
 

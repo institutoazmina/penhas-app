@@ -25,6 +25,7 @@ abstract class IChatChannelRepository {
   Future<Either<Failure, ChatSentMessageResponseEntity>> sentMessage(
       ChatChannelRequest option);
   Future<Either<Failure, ValidField>> blockChannel(ChatChannelRequest option);
+  Future<Either<Failure, ValidField>> deleteChannel(ChatChannelRequest option);
 }
 
 class ChatChannelRepository implements IChatChannelRepository {
@@ -126,7 +127,24 @@ class ChatChannelRepository implements IChatChannelRepository {
     };
 
     try {
-      final response = await _apiProvider.post(
+      await _apiProvider.post(
+        path: endPoint,
+        parameters: parameters,
+      );
+      return right(ValidField());
+    } catch (error) {
+      return left(MapExceptionToFailure.map(error));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ValidField>> deleteChannel(
+      ChatChannelRequest option) async {
+    final endPoint = "/me/chats-session";
+    final parameters = {'chat_auth': option.token};
+
+    try {
+      await _apiProvider.delete(
         path: endPoint,
         parameters: parameters,
       );

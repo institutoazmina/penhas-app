@@ -24,6 +24,11 @@ class _$ChatChannelStateTearOff {
   }
 
 // ignore: unused_element
+  _Deleted deleted() {
+    return const _Deleted();
+  }
+
+// ignore: unused_element
   _ErrorDetails error(String message) {
     return _ErrorDetails(
       message,
@@ -41,12 +46,14 @@ mixin _$ChatChannelState {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loaded(),
+    @required Result deleted(),
     @required Result error(String message),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loaded(),
+    Result deleted(),
     Result error(String message),
     @required Result orElse(),
   });
@@ -54,12 +61,14 @@ mixin _$ChatChannelState {
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
     @required Result loaded(_Loaded value),
+    @required Result deleted(_Deleted value),
     @required Result error(_ErrorDetails value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
     Result loaded(_Loaded value),
+    Result deleted(_Deleted value),
     Result error(_ErrorDetails value),
     @required Result orElse(),
   });
@@ -126,10 +135,12 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loaded(),
+    @required Result deleted(),
     @required Result error(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
+    assert(deleted != null);
     assert(error != null);
     return initial();
   }
@@ -139,6 +150,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loaded(),
+    Result deleted(),
     Result error(String message),
     @required Result orElse(),
   }) {
@@ -154,10 +166,12 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
     @required Result loaded(_Loaded value),
+    @required Result deleted(_Deleted value),
     @required Result error(_ErrorDetails value),
   }) {
     assert(initial != null);
     assert(loaded != null);
+    assert(deleted != null);
     assert(error != null);
     return initial(this);
   }
@@ -167,6 +181,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
     Result loaded(_Loaded value),
+    Result deleted(_Deleted value),
     Result error(_ErrorDetails value),
     @required Result orElse(),
   }) {
@@ -226,10 +241,12 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loaded(),
+    @required Result deleted(),
     @required Result error(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
+    assert(deleted != null);
     assert(error != null);
     return loaded();
   }
@@ -239,6 +256,7 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loaded(),
+    Result deleted(),
     Result error(String message),
     @required Result orElse(),
   }) {
@@ -254,10 +272,12 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
     @required Result loaded(_Loaded value),
+    @required Result deleted(_Deleted value),
     @required Result error(_ErrorDetails value),
   }) {
     assert(initial != null);
     assert(loaded != null);
+    assert(deleted != null);
     assert(error != null);
     return loaded(this);
   }
@@ -267,6 +287,7 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
     Result loaded(_Loaded value),
+    Result deleted(_Deleted value),
     Result error(_ErrorDetails value),
     @required Result orElse(),
   }) {
@@ -280,6 +301,112 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
 abstract class _Loaded implements ChatChannelState {
   const factory _Loaded() = _$_Loaded;
+}
+
+/// @nodoc
+abstract class _$DeletedCopyWith<$Res> {
+  factory _$DeletedCopyWith(_Deleted value, $Res Function(_Deleted) then) =
+      __$DeletedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$DeletedCopyWithImpl<$Res> extends _$ChatChannelStateCopyWithImpl<$Res>
+    implements _$DeletedCopyWith<$Res> {
+  __$DeletedCopyWithImpl(_Deleted _value, $Res Function(_Deleted) _then)
+      : super(_value, (v) => _then(v as _Deleted));
+
+  @override
+  _Deleted get _value => super._value as _Deleted;
+}
+
+/// @nodoc
+class _$_Deleted with DiagnosticableTreeMixin implements _Deleted {
+  const _$_Deleted();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ChatChannelState.deleted()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'ChatChannelState.deleted'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _Deleted);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initial(),
+    @required Result loaded(),
+    @required Result deleted(),
+    @required Result error(String message),
+  }) {
+    assert(initial != null);
+    assert(loaded != null);
+    assert(deleted != null);
+    assert(error != null);
+    return deleted();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initial(),
+    Result loaded(),
+    Result deleted(),
+    Result error(String message),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (deleted != null) {
+      return deleted();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initial(_Initial value),
+    @required Result loaded(_Loaded value),
+    @required Result deleted(_Deleted value),
+    @required Result error(_ErrorDetails value),
+  }) {
+    assert(initial != null);
+    assert(loaded != null);
+    assert(deleted != null);
+    assert(error != null);
+    return deleted(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initial(_Initial value),
+    Result loaded(_Loaded value),
+    Result deleted(_Deleted value),
+    Result error(_ErrorDetails value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (deleted != null) {
+      return deleted(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Deleted implements ChatChannelState {
+  const factory _Deleted() = _$_Deleted;
 }
 
 /// @nodoc
@@ -352,10 +479,12 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loaded(),
+    @required Result deleted(),
     @required Result error(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
+    assert(deleted != null);
     assert(error != null);
     return error(message);
   }
@@ -365,6 +494,7 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loaded(),
+    Result deleted(),
     Result error(String message),
     @required Result orElse(),
   }) {
@@ -380,10 +510,12 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
     @required Result loaded(_Loaded value),
+    @required Result deleted(_Deleted value),
     @required Result error(_ErrorDetails value),
   }) {
     assert(initial != null);
     assert(loaded != null);
+    assert(deleted != null);
     assert(error != null);
     return error(this);
   }
@@ -393,6 +525,7 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
     Result loaded(_Loaded value),
+    Result deleted(_Deleted value),
     Result error(_ErrorDetails value),
     @required Result orElse(),
   }) {

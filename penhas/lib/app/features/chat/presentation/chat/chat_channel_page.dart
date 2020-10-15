@@ -42,6 +42,7 @@ extension _ChatPageStateMethods on _ChatPageState {
       initial: () => ChatChannelInitialPage(),
       error: (error) => ChatChannelErrorPage(message: error),
       loaded: () => startingChannel(controller.user, controller.metadata),
+      deleted: () => Container(),
     );
   }
 
