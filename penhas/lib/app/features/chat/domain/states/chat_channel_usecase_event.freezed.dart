@@ -24,11 +24,6 @@ class _$ChatChannelUseCaseEventTearOff {
   }
 
 // ignore: unused_element
-  _Deleted deleted() {
-    return const _Deleted();
-  }
-
-// ignore: unused_element
   _UpdateUser updateUser(ChatUserEntity user) {
     return _UpdateUser(
       user,
@@ -67,7 +62,6 @@ mixin _$ChatChannelUseCaseEvent {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loaded(),
-    @required Result deleted(),
     @required Result updateUser(ChatUserEntity user),
     @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
     @required Result updateMessage(List<ChatChannelMessage> messages),
@@ -77,7 +71,6 @@ mixin _$ChatChannelUseCaseEvent {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loaded(),
-    Result deleted(),
     Result updateUser(ChatUserEntity user),
     Result updateMetada(ChatChannelSessionMetadataEntity metadata),
     Result updateMessage(List<ChatChannelMessage> messages),
@@ -88,7 +81,6 @@ mixin _$ChatChannelUseCaseEvent {
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
     @required Result loaded(_Loaded value),
-    @required Result deleted(_Deleted value),
     @required Result updateUser(_UpdateUser value),
     @required Result updateMetada(_UpdateMetada value),
     @required Result updateMessage(_UpdateMessage value),
@@ -98,7 +90,6 @@ mixin _$ChatChannelUseCaseEvent {
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
     Result loaded(_Loaded value),
-    Result deleted(_Deleted value),
     Result updateUser(_UpdateUser value),
     Result updateMetada(_UpdateMetada value),
     Result updateMessage(_UpdateMessage value),
@@ -170,7 +161,6 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loaded(),
-    @required Result deleted(),
     @required Result updateUser(ChatUserEntity user),
     @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
     @required Result updateMessage(List<ChatChannelMessage> messages),
@@ -178,7 +168,6 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   }) {
     assert(initial != null);
     assert(loaded != null);
-    assert(deleted != null);
     assert(updateUser != null);
     assert(updateMetada != null);
     assert(updateMessage != null);
@@ -191,7 +180,6 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loaded(),
-    Result deleted(),
     Result updateUser(ChatUserEntity user),
     Result updateMetada(ChatChannelSessionMetadataEntity metadata),
     Result updateMessage(List<ChatChannelMessage> messages),
@@ -210,7 +198,6 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
     @required Result loaded(_Loaded value),
-    @required Result deleted(_Deleted value),
     @required Result updateUser(_UpdateUser value),
     @required Result updateMetada(_UpdateMetada value),
     @required Result updateMessage(_UpdateMessage value),
@@ -218,7 +205,6 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   }) {
     assert(initial != null);
     assert(loaded != null);
-    assert(deleted != null);
     assert(updateUser != null);
     assert(updateMetada != null);
     assert(updateMessage != null);
@@ -231,7 +217,6 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
     Result loaded(_Loaded value),
-    Result deleted(_Deleted value),
     Result updateUser(_UpdateUser value),
     Result updateMetada(_UpdateMetada value),
     Result updateMessage(_UpdateMessage value),
@@ -296,7 +281,6 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loaded(),
-    @required Result deleted(),
     @required Result updateUser(ChatUserEntity user),
     @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
     @required Result updateMessage(List<ChatChannelMessage> messages),
@@ -304,7 +288,6 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   }) {
     assert(initial != null);
     assert(loaded != null);
-    assert(deleted != null);
     assert(updateUser != null);
     assert(updateMetada != null);
     assert(updateMessage != null);
@@ -317,7 +300,6 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loaded(),
-    Result deleted(),
     Result updateUser(ChatUserEntity user),
     Result updateMetada(ChatChannelSessionMetadataEntity metadata),
     Result updateMessage(List<ChatChannelMessage> messages),
@@ -336,7 +318,6 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
     @required Result loaded(_Loaded value),
-    @required Result deleted(_Deleted value),
     @required Result updateUser(_UpdateUser value),
     @required Result updateMetada(_UpdateMetada value),
     @required Result updateMessage(_UpdateMessage value),
@@ -344,7 +325,6 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   }) {
     assert(initial != null);
     assert(loaded != null);
-    assert(deleted != null);
     assert(updateUser != null);
     assert(updateMetada != null);
     assert(updateMessage != null);
@@ -357,7 +337,6 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
     Result loaded(_Loaded value),
-    Result deleted(_Deleted value),
     Result updateUser(_UpdateUser value),
     Result updateMetada(_UpdateMetada value),
     Result updateMessage(_UpdateMessage value),
@@ -374,132 +353,6 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
 abstract class _Loaded implements ChatChannelUseCaseEvent {
   const factory _Loaded() = _$_Loaded;
-}
-
-/// @nodoc
-abstract class _$DeletedCopyWith<$Res> {
-  factory _$DeletedCopyWith(_Deleted value, $Res Function(_Deleted) then) =
-      __$DeletedCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$DeletedCopyWithImpl<$Res>
-    extends _$ChatChannelUseCaseEventCopyWithImpl<$Res>
-    implements _$DeletedCopyWith<$Res> {
-  __$DeletedCopyWithImpl(_Deleted _value, $Res Function(_Deleted) _then)
-      : super(_value, (v) => _then(v as _Deleted));
-
-  @override
-  _Deleted get _value => super._value as _Deleted;
-}
-
-/// @nodoc
-class _$_Deleted with DiagnosticableTreeMixin implements _Deleted {
-  const _$_Deleted();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatChannelUseCaseEvent.deleted()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'ChatChannelUseCaseEvent.deleted'));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _Deleted);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(),
-    @required Result deleted(),
-    @required Result updateUser(ChatUserEntity user),
-    @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
-    @required Result updateMessage(List<ChatChannelMessage> messages),
-    @required Result errorOnLoading(String message),
-  }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(deleted != null);
-    assert(updateUser != null);
-    assert(updateMetada != null);
-    assert(updateMessage != null);
-    assert(errorOnLoading != null);
-    return deleted();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(),
-    Result deleted(),
-    Result updateUser(ChatUserEntity user),
-    Result updateMetada(ChatChannelSessionMetadataEntity metadata),
-    Result updateMessage(List<ChatChannelMessage> messages),
-    Result errorOnLoading(String message),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (deleted != null) {
-      return deleted();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result deleted(_Deleted value),
-    @required Result updateUser(_UpdateUser value),
-    @required Result updateMetada(_UpdateMetada value),
-    @required Result updateMessage(_UpdateMessage value),
-    @required Result errorOnLoading(_ErrorOnLoading value),
-  }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(deleted != null);
-    assert(updateUser != null);
-    assert(updateMetada != null);
-    assert(updateMessage != null);
-    assert(errorOnLoading != null);
-    return deleted(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result deleted(_Deleted value),
-    Result updateUser(_UpdateUser value),
-    Result updateMetada(_UpdateMetada value),
-    Result updateMessage(_UpdateMessage value),
-    Result errorOnLoading(_ErrorOnLoading value),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (deleted != null) {
-      return deleted(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Deleted implements ChatChannelUseCaseEvent {
-  const factory _Deleted() = _$_Deleted;
 }
 
 /// @nodoc
@@ -572,7 +425,6 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loaded(),
-    @required Result deleted(),
     @required Result updateUser(ChatUserEntity user),
     @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
     @required Result updateMessage(List<ChatChannelMessage> messages),
@@ -580,7 +432,6 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
   }) {
     assert(initial != null);
     assert(loaded != null);
-    assert(deleted != null);
     assert(updateUser != null);
     assert(updateMetada != null);
     assert(updateMessage != null);
@@ -593,7 +444,6 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loaded(),
-    Result deleted(),
     Result updateUser(ChatUserEntity user),
     Result updateMetada(ChatChannelSessionMetadataEntity metadata),
     Result updateMessage(List<ChatChannelMessage> messages),
@@ -612,7 +462,6 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
     @required Result loaded(_Loaded value),
-    @required Result deleted(_Deleted value),
     @required Result updateUser(_UpdateUser value),
     @required Result updateMetada(_UpdateMetada value),
     @required Result updateMessage(_UpdateMessage value),
@@ -620,7 +469,6 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
   }) {
     assert(initial != null);
     assert(loaded != null);
-    assert(deleted != null);
     assert(updateUser != null);
     assert(updateMetada != null);
     assert(updateMessage != null);
@@ -633,7 +481,6 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
     Result loaded(_Loaded value),
-    Result deleted(_Deleted value),
     Result updateUser(_UpdateUser value),
     Result updateMetada(_UpdateMetada value),
     Result updateMessage(_UpdateMessage value),
@@ -728,7 +575,6 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loaded(),
-    @required Result deleted(),
     @required Result updateUser(ChatUserEntity user),
     @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
     @required Result updateMessage(List<ChatChannelMessage> messages),
@@ -736,7 +582,6 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
   }) {
     assert(initial != null);
     assert(loaded != null);
-    assert(deleted != null);
     assert(updateUser != null);
     assert(updateMetada != null);
     assert(updateMessage != null);
@@ -749,7 +594,6 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loaded(),
-    Result deleted(),
     Result updateUser(ChatUserEntity user),
     Result updateMetada(ChatChannelSessionMetadataEntity metadata),
     Result updateMessage(List<ChatChannelMessage> messages),
@@ -768,7 +612,6 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
     @required Result loaded(_Loaded value),
-    @required Result deleted(_Deleted value),
     @required Result updateUser(_UpdateUser value),
     @required Result updateMetada(_UpdateMetada value),
     @required Result updateMessage(_UpdateMessage value),
@@ -776,7 +619,6 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
   }) {
     assert(initial != null);
     assert(loaded != null);
-    assert(deleted != null);
     assert(updateUser != null);
     assert(updateMetada != null);
     assert(updateMessage != null);
@@ -789,7 +631,6 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
     Result loaded(_Loaded value),
-    Result deleted(_Deleted value),
     Result updateUser(_UpdateUser value),
     Result updateMetada(_UpdateMetada value),
     Result updateMessage(_UpdateMessage value),
@@ -886,7 +727,6 @@ class _$_UpdateMessage with DiagnosticableTreeMixin implements _UpdateMessage {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loaded(),
-    @required Result deleted(),
     @required Result updateUser(ChatUserEntity user),
     @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
     @required Result updateMessage(List<ChatChannelMessage> messages),
@@ -894,7 +734,6 @@ class _$_UpdateMessage with DiagnosticableTreeMixin implements _UpdateMessage {
   }) {
     assert(initial != null);
     assert(loaded != null);
-    assert(deleted != null);
     assert(updateUser != null);
     assert(updateMetada != null);
     assert(updateMessage != null);
@@ -907,7 +746,6 @@ class _$_UpdateMessage with DiagnosticableTreeMixin implements _UpdateMessage {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loaded(),
-    Result deleted(),
     Result updateUser(ChatUserEntity user),
     Result updateMetada(ChatChannelSessionMetadataEntity metadata),
     Result updateMessage(List<ChatChannelMessage> messages),
@@ -926,7 +764,6 @@ class _$_UpdateMessage with DiagnosticableTreeMixin implements _UpdateMessage {
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
     @required Result loaded(_Loaded value),
-    @required Result deleted(_Deleted value),
     @required Result updateUser(_UpdateUser value),
     @required Result updateMetada(_UpdateMetada value),
     @required Result updateMessage(_UpdateMessage value),
@@ -934,7 +771,6 @@ class _$_UpdateMessage with DiagnosticableTreeMixin implements _UpdateMessage {
   }) {
     assert(initial != null);
     assert(loaded != null);
-    assert(deleted != null);
     assert(updateUser != null);
     assert(updateMetada != null);
     assert(updateMessage != null);
@@ -947,7 +783,6 @@ class _$_UpdateMessage with DiagnosticableTreeMixin implements _UpdateMessage {
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
     Result loaded(_Loaded value),
-    Result deleted(_Deleted value),
     Result updateUser(_UpdateUser value),
     Result updateMetada(_UpdateMetada value),
     Result updateMessage(_UpdateMessage value),
@@ -1043,7 +878,6 @@ class _$_ErrorOnLoading
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loaded(),
-    @required Result deleted(),
     @required Result updateUser(ChatUserEntity user),
     @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
     @required Result updateMessage(List<ChatChannelMessage> messages),
@@ -1051,7 +885,6 @@ class _$_ErrorOnLoading
   }) {
     assert(initial != null);
     assert(loaded != null);
-    assert(deleted != null);
     assert(updateUser != null);
     assert(updateMetada != null);
     assert(updateMessage != null);
@@ -1064,7 +897,6 @@ class _$_ErrorOnLoading
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loaded(),
-    Result deleted(),
     Result updateUser(ChatUserEntity user),
     Result updateMetada(ChatChannelSessionMetadataEntity metadata),
     Result updateMessage(List<ChatChannelMessage> messages),
@@ -1083,7 +915,6 @@ class _$_ErrorOnLoading
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
     @required Result loaded(_Loaded value),
-    @required Result deleted(_Deleted value),
     @required Result updateUser(_UpdateUser value),
     @required Result updateMetada(_UpdateMetada value),
     @required Result updateMessage(_UpdateMessage value),
@@ -1091,7 +922,6 @@ class _$_ErrorOnLoading
   }) {
     assert(initial != null);
     assert(loaded != null);
-    assert(deleted != null);
     assert(updateUser != null);
     assert(updateMetada != null);
     assert(updateMessage != null);
@@ -1104,7 +934,6 @@ class _$_ErrorOnLoading
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
     Result loaded(_Loaded value),
-    Result deleted(_Deleted value),
     Result updateUser(_UpdateUser value),
     Result updateMetada(_UpdateMetada value),
     Result updateMessage(_UpdateMessage value),

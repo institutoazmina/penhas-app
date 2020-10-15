@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
 
-import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
@@ -54,13 +53,24 @@ class ChatChannelUseCase with MapFailureMessage {
       ),
     );
 
-    response.fold(
-      (failure) => handleFailure(failure),
-      (session) => _streamController.add(ChatChannelUseCaseEvent.deleted()),
-    );
+    response.fold((failure) => handleFailure(failure),
+        (session) => updateFromDeletedAction());
+  }
+
+  Future<void> updateFromDeletedAction() async {
+    _messageCache.clear();
+    _streamController
+        .add(ChatChannelUseCaseEvent.updateMessage(_messageCache.toList()));
+
+    _currentSession = null;
+    final option = ChatChannelRequest(token: _channelToken);
+    syncChannelSession(parameters: option, insertWarrningMessage: true);
   }
 
   Future<void> sentMessage(String message) async {
+    _syncTimer?.cancel();
+    _syncTimer = null;
+
     final response = await _channelRepository.sentMessage(
       ChatChannelRequest(
         token: _channelToken,
@@ -72,6 +82,8 @@ class ChatChannelUseCase with MapFailureMessage {
       (failure) => handleFailure(failure),
       (session) => rebuildMessagesFromSentMessage(message, session),
     );
+
+    setupPollingSync();
   }
 
   void dispose() {
@@ -88,21 +100,21 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
     _channelToken = channel.token;
 
     if (channel.session == null) {
-      getMessage(ChatChannelRequest(token: channel.token, pagination: null));
+      final option = ChatChannelRequest(token: channel.token, pagination: null);
+      syncChannelSession(parameters: option, insertWarrningMessage: true);
     }
 
     setupPollingSync();
   }
 
-  Future<void> getMessage(ChatChannelRequest parameters) async {
-    final session = await _channelRepository.getMessages(parameters);
-    parseChannelSession(session);
-  }
-
-  void parseChannelSession(Either<Failure, ChatChannelSessionEntity> session) {
-    session.fold(
+  Future<void> syncChannelSession({
+    @required ChatChannelRequest parameters,
+    @required bool insertWarrningMessage,
+  }) async {
+    final result = await _channelRepository.getMessages(parameters);
+    result.fold(
       (failure) => handleFailure(failure),
-      (session) => handleSession(session),
+      (session) => handleSession(session, insertWarrningMessage),
     );
   }
 
@@ -116,23 +128,25 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
     print(failure);
   }
 
-  void handleSession(ChatChannelSessionEntity session) {
+  void handleSession(
+    ChatChannelSessionEntity session,
+    bool insertWarrningMessage,
+  ) {
     _newestPagination = session.newer;
     _oldestPagination = session.older;
     List<ChatChannelMessage> messages = List<ChatChannelMessage>();
 
     if (_currentSession?.user != session.user) {
-      _streamController.add(
-        ChatChannelUseCaseEvent.updateUser(session.user),
-      );
+      _streamController.add(ChatChannelUseCaseEvent.updateUser(session.user));
     }
 
     if (_currentSession?.metadata != session.metadata) {
-      _streamController.add(
-        ChatChannelUseCaseEvent.updateMetada(session.metadata),
-      );
-      if (session.metadata.headerWarning != null ||
-          session.metadata.headerWarning.isNotEmpty) {
+      _streamController
+          .add(ChatChannelUseCaseEvent.updateMetada(session.metadata));
+
+      if (insertWarrningMessage &&
+          (session.metadata.headerWarning != null ||
+              session.metadata.headerWarning.isNotEmpty)) {
         messages.add(
           ChatChannelMessage(
             type: ChatChannelMessageType.warning,
@@ -150,6 +164,10 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
     if (_currentSession == null) {
       _currentEvent = ChatChannelUseCaseEvent.loaded();
       _streamController.add(_currentEvent);
+    }
+
+    if (_lastMessageEtag == session.metadata.lastMessageEtag) {
+      return;
     }
 
     _currentSession = session;
@@ -240,8 +258,13 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
     _syncTimer = Timer.periodic(
       _pollingSyncInterval,
       (timer) async {
-        print('[DEBUG] $timer');
+        syncChannel();
       },
     );
+  }
+
+  Future<void> syncChannel() async {
+    final option = ChatChannelRequest(token: _channelToken, pagination: null);
+    await syncChannelSession(parameters: option, insertWarrningMessage: false);
   }
 }

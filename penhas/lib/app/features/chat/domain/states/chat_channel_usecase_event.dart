@@ -10,7 +10,6 @@ part 'chat_channel_usecase_event.freezed.dart';
 abstract class ChatChannelUseCaseEvent with _$ChatChannelUseCaseEvent {
   const factory ChatChannelUseCaseEvent.initial() = _Initial;
   const factory ChatChannelUseCaseEvent.loaded() = _Loaded;
-  const factory ChatChannelUseCaseEvent.deleted() = _Deleted;
   const factory ChatChannelUseCaseEvent.updateUser(ChatUserEntity user) =
       _UpdateUser;
   const factory ChatChannelUseCaseEvent.updateMetada(

@@ -94,7 +94,6 @@ extension _ChatChannelControllerBasePrivate on _ChatChannelControllerBase {
       loaded: () => currentState = ChatChannelState.loaded(),
       errorOnLoading: (m) => currentState = ChatChannelState.error(m),
       updateMessage: (m) => channelMessages = m.asObservable(),
-      deleted: () => currentState = ChatChannelState.deleted(),
     );
   }
 

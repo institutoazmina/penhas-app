@@ -7,6 +7,5 @@ part 'chat_channel_state.freezed.dart';
 abstract class ChatChannelState with _$ChatChannelState {
   const factory ChatChannelState.initial() = _Initial;
   const factory ChatChannelState.loaded() = _Loaded;
-  const factory ChatChannelState.deleted() = _Deleted;
   const factory ChatChannelState.error(String message) = _ErrorDetails;
 }
