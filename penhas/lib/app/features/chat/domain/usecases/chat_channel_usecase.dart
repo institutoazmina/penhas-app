@@ -16,6 +16,8 @@ import 'package:penhas/app/features/chat/domain/states/chat_channel_usecase_even
 
 class ChatChannelUseCase with MapFailureMessage {
   final IChatChannelRepository _channelRepository;
+  final Duration _pollingSyncInterval = Duration(seconds: 60);
+  Timer _syncTimer;
   String _channelToken;
   String _newestPagination;
   String _oldestPagination;
@@ -73,6 +75,10 @@ class ChatChannelUseCase with MapFailureMessage {
   }
 
   void dispose() {
+    if (_syncTimer != null) {
+      _syncTimer.cancel();
+      _syncTimer = null;
+    }
     _streamController.close();
   }
 }
@@ -84,6 +90,8 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
     if (channel.session == null) {
       getMessage(ChatChannelRequest(token: channel.token, pagination: null));
     }
+
+    setupPollingSync();
   }
 
   Future<void> getMessage(ChatChannelRequest parameters) async {
@@ -111,7 +119,6 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
   void handleSession(ChatChannelSessionEntity session) {
     _newestPagination = session.newer;
     _oldestPagination = session.older;
-    ChatChannelMessage warningMessage;
     List<ChatChannelMessage> messages = List<ChatChannelMessage>();
 
     if (_currentSession?.user != session.user) {
@@ -126,13 +133,15 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
       );
       if (session.metadata.headerWarning != null ||
           session.metadata.headerWarning.isNotEmpty) {
-        warningMessage = ChatChannelMessage(
-          type: ChatChannelMessageType.warning,
-          content: ChatMessageEntity(
-            id: -1,
-            isMe: false,
-            message: session.metadata.headerWarning,
-            time: DateTime.now(),
+        messages.add(
+          ChatChannelMessage(
+            type: ChatChannelMessageType.warning,
+            content: ChatMessageEntity(
+              id: -1,
+              isMe: false,
+              message: session.metadata.headerWarning,
+              time: DateTime.now(),
+            ),
           ),
         );
       }
@@ -154,10 +163,6 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
         ),
       ),
     );
-
-    if (warningMessage != null) {
-      messages.add(warningMessage);
-    }
 
     if (messages.isNotEmpty) {
       _streamController.add(ChatChannelUseCaseEvent.updateMessage(messages));
@@ -224,6 +229,19 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
 
     _streamController.add(
       ChatChannelUseCaseEvent.updateMetada(metadata),
+    );
+  }
+
+  void setupPollingSync() {
+    if (_syncTimer != null) {
+      return;
+    }
+
+    _syncTimer = Timer.periodic(
+      _pollingSyncInterval,
+      (timer) async {
+        print('[DEBUG] $timer');
+      },
     );
   }
 }
