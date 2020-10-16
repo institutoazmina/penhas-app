@@ -43,6 +43,7 @@ void main() {
             lastMessageEtag: "4df2ae",
           ),
           user: ChatUserModel(
+            blockedMe: false,
             activity: "há pouco tempo",
             nickname: "Julia",
             avatar: "https://api.example.com/avatar/padrao.svg",
@@ -78,6 +79,7 @@ void main() {
             lastMessageEtag: "4a295f",
           ),
           user: ChatUserModel(
+            blockedMe: false,
             activity: "há pouco tempo",
             nickname: "Julia",
             avatar: "https://api.example.com/avatar/padrao.svg",

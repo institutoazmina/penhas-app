@@ -35,6 +35,7 @@ void main() {
             lastMessageTime: DateTime.parse("2020-10-04T09:20:37Z"),
             lastMessageIsMime: true,
             user: ChatUserModel(
+              blockedMe: false,
               activity: "há pouco tempo",
               nickname: "Maria",
               avatar: "https://api.example.com/avatar/padrao.svg",
@@ -46,6 +47,7 @@ void main() {
             lastMessageTime: DateTime.parse("2020-10-04T09:15:27Z"),
             lastMessageIsMime: true,
             user: ChatUserModel(
+              blockedMe: false,
               activity: "há alguns dias",
               nickname: "Julia",
               avatar: "https://api.example.com/avatar/padrao.svg",
@@ -58,6 +60,7 @@ void main() {
           lastMessageTime: DateTime.parse("2020-09-09T01:00:58Z"),
           lastMessageIsMime: true,
           user: ChatUserModel(
+            blockedMe: false,
             activity: "",
             nickname: "Suporte PenhaS",
             avatar: "https://api.example.com/avatar/suporte-chat.png",
@@ -84,6 +87,7 @@ void main() {
           lastMessageTime: DateTime.parse("2020-09-09T01:00:58Z"),
           lastMessageIsMime: true,
           user: ChatUserModel(
+            blockedMe: false,
             activity: "",
             nickname: "Suporte PenhaS",
             avatar: "https://api.example.com/avatar/suporte-chat.png",

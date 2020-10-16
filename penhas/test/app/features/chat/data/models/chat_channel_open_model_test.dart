@@ -36,6 +36,7 @@ void main() {
             lastMessageEtag: "482b55",
           ),
           user: ChatUserModel(
+            blockedMe: false,
             activity: "há poucos dias",
             nickname: "Maria",
             avatar: "https://api.example.com/avatar/padrao.svg",
