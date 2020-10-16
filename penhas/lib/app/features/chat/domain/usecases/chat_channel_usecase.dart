@@ -182,11 +182,10 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
       ),
     );
 
-    if (messages.isNotEmpty) {
-      _streamController.add(ChatChannelUseCaseEvent.updateMessage(messages));
-    }
-
+    _messageCache.clear();
     _messageCache.addAll(messages);
+    _streamController
+        .add(ChatChannelUseCaseEvent.updateMessage(_messageCache.toList()));
   }
 
   void rebuildMessagesFromSentMessage(
