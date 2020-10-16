@@ -32,6 +32,7 @@ import 'package:penhas/app/features/feed/presentation/filter_tweet/filter_tweet_
 import 'package:penhas/app/features/feed/presentation/reply_tweet/reply_tweet_controller.dart';
 import 'package:penhas/app/features/feed/presentation/reply_tweet/reply_tweet_page.dart';
 import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
+import 'package:penhas/app/features/filters/domain/presentation/filter_module.dart';
 import 'package:penhas/app/features/help_center/data/datasources/guardian_data_source.dart';
 import 'package:penhas/app/features/help_center/data/repositories/audios_repository.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
@@ -82,6 +83,7 @@ class MainboardModule extends ChildModule {
         ...helpCenter,
         ...audioRecord,
         ...users,
+        ...filters,
         ...chat,
       ];
 
@@ -140,6 +142,14 @@ class MainboardModule extends ChildModule {
         ModularRouter(
           '/users',
           module: UserProfileModule(),
+          transition: TransitionType.rightToLeft,
+        ),
+      ];
+
+  List<ModularRouter> get filters => [
+        ModularRouter(
+          '/filters',
+          module: FilterModule(),
           transition: TransitionType.rightToLeft,
         ),
       ];

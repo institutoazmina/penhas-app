@@ -49,9 +49,12 @@ class UsersRepository implements IUsersRepository {
   Future<Either<Failure, UserSearchSessionEntity>> search(
       UserSearchOptions option) async {
     final endPoint = "/search-users";
+    final skills = (option.skills != null && option.skills.isNotEmpty)
+        ? option.skills.join(",")
+        : null;
     final parameters = {
-      "name": option?.name,
-      "skills": option?.skills?.join(","),
+      "name": option.name,
+      "skills": skills,
       "rows": option?.rows?.toString() ?? "100",
       "next_page": option.nextPage,
     };

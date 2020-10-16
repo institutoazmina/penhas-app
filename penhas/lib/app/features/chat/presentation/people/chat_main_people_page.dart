@@ -77,7 +77,10 @@ extension _ChatMainPeoplePageBodyBuilder on _ChatMainPeoplePageState {
   }
 
   Widget buildPeopleFilterCard(ChatMainPeopleFilterCardTile tile) {
-    return ChatPeopleFilterCard();
+    return ChatPeopleFilterCard(
+      onPressed: () async => controller.filter(),
+      totalOfFilter: tile.totalFiltersSeleted,
+    );
   }
 
   Widget buildPeopleCard(ChatMainPeopleCardTile tile) {

@@ -6,8 +6,8 @@ import 'package:penhas/app/features/chat/domain/repositories/chat_channel_reposi
 import 'package:penhas/app/features/chat/domain/usecases/chat_channel_usecase.dart';
 import 'package:penhas/app/features/chat/domain/usecases/chat_toggle_feature.dart';
 import 'package:penhas/app/features/chat/presentation/chat/chat_channel_controller.dart';
+import 'package:penhas/app/features/filters/domain/repositories/filter_skill_repository.dart';
 import 'package:penhas/app/features/users/data/repositories/users_repository.dart';
-import 'package:penhas/app/features/users/domain/presentation/user_profile_module.dart';
 
 import 'chat_main_controller.dart';
 import 'chat_main_page.dart';
@@ -32,13 +32,22 @@ class ChatMainModule extends WidgetModule {
             chatChannelRepository: i.get<IChatChannelRepository>(),
           ),
         ),
-        Bind((i) => ChatMainPeopleController(
-            usersRepository: i.get<IUsersRepository>())),
+        Bind(
+          (i) => ChatMainPeopleController(
+            usersRepository: i.get<IUsersRepository>(),
+            skillRepository: i.get<IFilterSkillRepository>(),
+          ),
+        ),
         Bind<IUsersRepository>((i) => UsersRepository(
               apiProvider: i.get<IApiProvider>(),
             )),
         Bind<IChatChannelRepository>(
           (i) => ChatChannelRepository(
+            apiProvider: i.get<IApiProvider>(),
+          ),
+        ),
+        Bind<IFilterSkillRepository>(
+          (i) => FilterSkillRepository(
             apiProvider: i.get<IApiProvider>(),
           ),
         ),
@@ -59,11 +68,6 @@ class ChatMainModule extends WidgetModule {
 
   @override
   Widget get view => ChatMainPage();
-
-  @override
-  List<ModularRouter> get routers => [
-        ModularRouter('/users', module: UserProfileModule()),
-      ];
 
   static Inject get to => Inject<ChatMainModule>.of();
 }

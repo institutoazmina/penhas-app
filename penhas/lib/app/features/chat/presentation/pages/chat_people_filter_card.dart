@@ -4,10 +4,18 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ChatPeopleFilterCard extends StatelessWidget {
-  const ChatPeopleFilterCard({Key key}) : super(key: key);
+  final int totalOfFilter;
+  final void Function() onPressed;
+  const ChatPeopleFilterCard({
+    Key key,
+    @required this.totalOfFilter,
+    @required this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final filterTitle =
+        (totalOfFilter > 0) ? "Filtros ($totalOfFilter)" : "Filtros";
     return Container(
       // height: 150,
       padding: EdgeInsets.all(16.0),
@@ -27,12 +35,12 @@ class ChatPeopleFilterCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               RaisedButton(
-                onPressed: () => print("Ola mundo!"),
+                onPressed: onPressed,
                 elevation: 0,
                 color: DesignSystemColors.ligthPurple,
                 shape: kButtonShapeFilled,
                 child: Text(
-                  "Filtros (10)",
+                  filterTitle,
                   style: kTextStyleDefaultFilledButtonLabel,
                 ),
               ),

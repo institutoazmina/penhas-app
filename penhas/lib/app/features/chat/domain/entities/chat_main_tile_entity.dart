@@ -55,10 +55,14 @@ class ChatMainChannelCardTile extends ChatMainTileEntity {
 }
 
 class ChatMainPeopleFilterCardTile extends ChatMainTileEntity {
-  ChatMainPeopleFilterCardTile();
+  final int totalFiltersSeleted;
+
+  ChatMainPeopleFilterCardTile(
+    this.totalFiltersSeleted,
+  );
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [totalFiltersSeleted];
 }
 
 class ChatMainPeopleCardTile extends ChatMainTileEntity {

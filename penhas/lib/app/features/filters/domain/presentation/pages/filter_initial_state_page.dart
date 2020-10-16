@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-class ChatChannelInitialPage extends StatelessWidget {
-  const ChatChannelInitialPage({
+class FilterInitialStatePage extends StatelessWidget {
+  const FilterInitialStatePage({
     Key key,
   }) : super(key: key);
 
@@ -12,8 +12,8 @@ class ChatChannelInitialPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: DesignSystemColors.easterPurple,
-        title: Text("Chat"),
+        backgroundColor: DesignSystemColors.ligthPurple,
+        title: Text("Filtros"),
       ),
       body: PageProgressIndicator(
         progressMessage: 'Carregando...',
