@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
@@ -69,6 +70,7 @@ abstract class _ChatChannelControllerBase with Store, MapFailureMessage {
   @action
   Future<void> deleteSession() async {
     await _useCase.delete();
+    Modular.to.pop(true);
   }
 
   @action

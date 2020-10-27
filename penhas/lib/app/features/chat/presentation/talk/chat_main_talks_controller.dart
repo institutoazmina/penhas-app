@@ -46,10 +46,13 @@ abstract class _ChatMainTalksControllerBase with Store, MapFailureMessage {
     ChatChannelOpenEntity session =
         ChatChannelOpenEntity(token: channel.token, session: null);
 
-    return Modular.to.pushNamed(
-      "/mainboard/chat",
-      arguments: session,
-    );
+    return Modular.to
+        .pushNamed("/mainboard/chat", arguments: session)
+        .then((value) async {
+      if (value is bool && value) {
+        await loadScreen();
+      }
+    });
   }
 }
 
