@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class QuizRequestEntity extends Equatable {
-  final int sessionId;
+  final String sessionId;
   final Map<String, String> options;
 
   QuizRequestEntity({

@@ -23,7 +23,7 @@ class QuizController extends _QuizControllerBase with _$QuizController {
 abstract class _QuizControllerBase with Store {
   final QuizSessionEntity _quizSession;
   final IQuizRepository _repository;
-  int _sessionId;
+  String _sessionId;
 
   _QuizControllerBase(this._quizSession, this._repository) {
     final reversedCurrent = _quizSession.currentMessage.reversed.toList();

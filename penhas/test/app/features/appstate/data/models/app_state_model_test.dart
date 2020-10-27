@@ -24,7 +24,7 @@ void main() {
       // arrange
       final session = QuizSessionEntity(
           currentMessage: [],
-          sessionId: 1,
+          sessionId: "1",
           endScreen: 'home',
           isFinished: false);
       final appMode = AppStateModeEntity(
@@ -163,7 +163,7 @@ void main() {
       final List<QuizMessageEntity> currentMessage = _currentMessage();
       final QuizSessionEntity quizSession = QuizSessionEntity(
         currentMessage: currentMessage,
-        sessionId: 200,
+        sessionId: "200",
         endScreen: null,
         isFinished: false,
       );
@@ -193,7 +193,7 @@ void main() {
           _currentMessageWithPrevious();
       final QuizSessionEntity quizSession = QuizSessionEntity(
         currentMessage: currentMessage,
-        sessionId: 247,
+        sessionId: "247",
         endScreen: null,
         isFinished: false,
       );
@@ -230,7 +230,7 @@ void main() {
           _currentMessageWithMultipleChoices();
       final QuizSessionEntity quizSession = QuizSessionEntity(
         currentMessage: currentMessage,
-        sessionId: 255,
+        sessionId: "255",
         endScreen: null,
         isFinished: false,
       );
@@ -266,7 +266,7 @@ void main() {
           _currentMessageWithTutorialStealth();
       final QuizSessionEntity quizSession = QuizSessionEntity(
         currentMessage: currentMessage,
-        sessionId: 200,
+        sessionId: "200",
         endScreen: null,
         isFinished: false,
       );
@@ -294,7 +294,7 @@ void main() {
           _currentMessageWithSingleButton();
       final QuizSessionEntity quizSession = QuizSessionEntity(
         currentMessage: currentMessage,
-        sessionId: 310,
+        sessionId: "310",
         endScreen: 'home',
         isFinished: true,
       );

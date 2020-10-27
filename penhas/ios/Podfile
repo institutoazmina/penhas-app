@@ -36,6 +36,7 @@ end
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
+    xcode_build_libraries_settings(target)
     flutter_additional_ios_build_settings(target)
     setup_app_permission(target)
   end
@@ -47,12 +48,11 @@ def xcode_build_libraries_settings(target)
     config.build_settings['ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES'] = '$(inherited)'
 
     # corrigindo a tonelada de warning criado pelo XCode 12
-    if config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_f < 9.0
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
+    if config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_f < 9.3
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.3'
     end
   end
 end
-
 
 def setup_app_permission(target)
   target.build_configurations.each do |config|

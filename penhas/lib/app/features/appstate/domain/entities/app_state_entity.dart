@@ -69,7 +69,7 @@ class AppStateEntity extends Equatable {
 @immutable
 class QuizSessionEntity extends Equatable {
   final List<QuizMessageEntity> currentMessage;
-  final int sessionId;
+  final String sessionId;
   final bool isFinished;
   final String endScreen;
 
@@ -85,7 +85,7 @@ class QuizSessionEntity extends Equatable {
 
   @override
   String toString() {
-    return "QuizSessionEntity{currentMessage: ${currentMessage.toString()}, sessionId: ${sessionId.toString()}, endScreen: ${endScreen.toString()}, isFinished: ${isFinished.toString()} }";
+    return "QuizSessionEntity{currentMessage: ${currentMessage.toString()}, sessionId: $sessionId, endScreen: ${endScreen.toString()}, isFinished: ${isFinished.toString()} }";
   }
 }
 

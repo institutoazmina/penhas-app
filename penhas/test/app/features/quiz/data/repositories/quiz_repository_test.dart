@@ -30,7 +30,7 @@ void main() {
       networkInfo: networkInfo,
     );
     quizRequest = QuizRequestEntity(
-      sessionId: 200,
+      sessionId: "200",
       options: {'YN1': 'Y'},
     );
     jsonData =

@@ -33,7 +33,7 @@ void main() {
     );
 
     quizRequest = QuizRequestEntity(
-      sessionId: 200,
+      sessionId: "200",
       options: {'YN1': 'Y'},
     );
     bodyContent =
