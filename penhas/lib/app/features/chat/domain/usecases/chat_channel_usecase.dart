@@ -99,10 +99,22 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
   Future<void> initial(ChatChannelOpenEntity channel) async {
     _channelToken = channel.token;
 
-    if (channel.session == null) {
-      final option = ChatChannelRequest(token: channel.token, pagination: null);
-      syncChannelSession(parameters: option, insertWarrningMessage: true);
-    }
+    Future.delayed(
+      Duration(milliseconds: 200),
+      () async {
+        if (channel.session == null) {
+          syncChannelSession(
+            parameters: ChatChannelRequest(
+              token: channel.token,
+              pagination: null,
+            ),
+            insertWarrningMessage: true,
+          );
+        } else {
+          handleSession(channel.session, true);
+        }
+      },
+    );
 
     setupPollingSync();
   }
@@ -112,6 +124,7 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
     @required bool insertWarrningMessage,
   }) async {
     final result = await _channelRepository.getMessages(parameters);
+
     result.fold(
       (failure) => handleFailure(failure),
       (session) => handleSession(session, insertWarrningMessage),
