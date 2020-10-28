@@ -1,4 +1,20 @@
 {
+  "assistant": {
+    "avatar_url": null,
+    "quiz_session": {
+      "current_msgs": [
+        {
+          "content": "Deseja responder o questionário novamente?",
+          "ref": "reset_questionnaire",
+          "type": "yesno"
+        }
+      ],
+      "prev_msgs": null,
+      "session_id": "Ada24"
+    },
+    "subtitle": "Entenda se você está em situação de violência",
+    "title": "Assistente PenhaS"
+  },
   "has_more": 0,
   "next_page": null,
   "rows": [

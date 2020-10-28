@@ -1,4 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
+import 'package:penhas/app/features/chat/data/models/chat_assistant_model.dart';
 import 'package:penhas/app/features/chat/data/models/chat_channel_available_model.dart';
 import 'package:penhas/app/features/chat/data/models/chat_channel_model.dart';
 import 'package:penhas/app/features/chat/data/models/chat_user_model.dart';
@@ -9,11 +11,11 @@ import '../../../../../utils/json_util.dart';
 
 void main() {
   setUp(() {});
-
   group('ChatChannelAvailableModel', () {
     test('should a subclass of ChatChannelAvailableEntity', () async {
       // act
       final model = ChatChannelAvailableModel(
+        assistant: null,
         hasMore: null,
         nextPage: null,
         channels: null,
@@ -67,6 +69,24 @@ void main() {
             userId: null,
           ),
         ),
+        assistant: ChatAssistantModel(
+          avatar: null,
+          title: "Assistente PenhaS",
+          subtitle: "Entenda se você está em situação de violência",
+          quizSession: QuizSessionEntity(
+            currentMessage: [
+              QuizMessageEntity(
+                  content: "Deseja responder o questionário novamente?",
+                  type: QuizMessageType.yesno,
+                  style: null,
+                  action: null,
+                  ref: "reset_questionnaire")
+            ],
+            sessionId: "Ada24",
+            isFinished: false,
+            endScreen: null,
+          ),
+        ),
       );
       // act
       final matcher = ChatChannelAvailableModel.fromJson(jsonData);
@@ -92,6 +112,24 @@ void main() {
             nickname: "Suporte PenhaS",
             avatar: "https://api.example.com/avatar/suporte-chat.png",
             userId: null,
+          ),
+        ),
+        assistant: ChatAssistantModel(
+          avatar: null,
+          title: "Assistente PenhaS",
+          subtitle: "Entenda se você está em situação de violência",
+          quizSession: QuizSessionEntity(
+            currentMessage: [
+              QuizMessageEntity(
+                  content: "Deseja responder o questionário novamente?",
+                  type: QuizMessageType.yesno,
+                  style: null,
+                  action: null,
+                  ref: "reset_questionnaire")
+            ],
+            sessionId: "Ada24",
+            isFinished: false,
+            endScreen: null,
           ),
         ),
       );
