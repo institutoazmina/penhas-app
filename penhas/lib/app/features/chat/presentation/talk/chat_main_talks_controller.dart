@@ -8,6 +8,7 @@ import 'package:penhas/app/features/chat/domain/entities/chat_channel_available_
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_main_tile_entity.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
 
 import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
 import 'package:penhas/app/features/chat/domain/states/chat_main_talks_state.dart';
@@ -42,21 +43,37 @@ abstract class _ChatMainTalksControllerBase with Store, MapFailureMessage {
   Future<void> reload() async {}
 
   @action
-  Future<void> openChannel(ChatChannelEntity channel) {
+  Future<void> openChannel(ChatChannelEntity channel) async {
     ChatChannelOpenEntity session =
         ChatChannelOpenEntity(token: channel.token, session: null);
 
-    return Modular.to
-        .pushNamed("/mainboard/chat", arguments: session)
-        .then((value) async {
-      if (value is bool && value) {
-        await loadScreen();
-      }
-    });
+    await forwardToChat(session);
+  }
+
+  @action
+  Future<void> openAssistantCard(ChatMainSupportTile data) async {
+    if (data.quizSession != null) {
+      return Modular.to.popAndPushNamed('/quiz', arguments: data.quizSession);
+    }
+
+    ChatChannelOpenEntity session =
+        ChatChannelOpenEntity(token: data.channel.token, session: null);
+
+    await forwardToChat(session);
   }
 }
 
 extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
+  Future<void> forwardToChat(ChatChannelOpenEntity session) async {
+    return Modular.to.pushNamed("/mainboard/chat", arguments: session).then(
+      (value) async {
+        if (value is bool && value) {
+          await loadScreen();
+        }
+      },
+    );
+  }
+
   Future<void> loadScreen() async {
     currentState = ChatMainTalksState.loading();
     _fetchProgress = ObservableFuture(_chatChannelRepository.listChannel());
@@ -72,6 +89,28 @@ extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
   void handleLoadSession(ChatChannelAvailableEntity session) {
     List<ChatMainTileEntity> tiles = List<ChatMainTileEntity>();
     List<ChatMainSupportTile> cards = List<ChatMainSupportTile>();
+
+    if (session.assistant != null) {
+      cards.add(
+        ChatMainSupportTile(
+          title: session.assistant.title,
+          content: session.assistant.subtitle,
+          channel: ChatChannelEntity(
+            token: null,
+            lastMessageTime: null,
+            lastMessageIsMime: null,
+            user: ChatUserEntity(
+              userId: null,
+              activity: null,
+              blockedMe: false,
+              avatar: session.assistant.avatar,
+              nickname: session.assistant.title,
+            ),
+          ),
+          quizSession: session.assistant.quizSession,
+        ),
+      );
+    }
 
     if (session.support != null) {
       cards.add(

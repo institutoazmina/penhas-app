@@ -51,18 +51,21 @@ mixin _$ChatMainTalksController on _ChatMainTalksControllerBase, Store {
     return _$reloadAsyncAction.run(() => super.reload());
   }
 
-  final _$_ChatMainTalksControllerBaseActionController =
-      ActionController(name: '_ChatMainTalksControllerBase');
+  final _$openChannelAsyncAction =
+      AsyncAction('_ChatMainTalksControllerBase.openChannel');
 
   @override
   Future<void> openChannel(ChatChannelEntity channel) {
-    final _$actionInfo = _$_ChatMainTalksControllerBaseActionController
-        .startAction(name: '_ChatMainTalksControllerBase.openChannel');
-    try {
-      return super.openChannel(channel);
-    } finally {
-      _$_ChatMainTalksControllerBaseActionController.endAction(_$actionInfo);
-    }
+    return _$openChannelAsyncAction.run(() => super.openChannel(channel));
+  }
+
+  final _$openAssistantCardAsyncAction =
+      AsyncAction('_ChatMainTalksControllerBase.openAssistantCard');
+
+  @override
+  Future<void> openAssistantCard(ChatMainSupportTile data) {
+    return _$openAssistantCardAsyncAction
+        .run(() => super.openAssistantCard(data));
   }
 
   @override

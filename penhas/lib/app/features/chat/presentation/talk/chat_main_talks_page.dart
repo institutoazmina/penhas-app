@@ -95,13 +95,9 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
                 (e) => ChatAssistantCard(
                   title: e.title,
                   description: e.content,
-                  icon: Image.network(
-                    e.channel.user.avatar,
-                    width: 40,
-                    height: 40,
-                  ),
-                  channel: e.channel,
-                  onPressed: controller.openChannel,
+                  icon: buildNetworkIcon(e),
+                  channel: e,
+                  onPressed: controller.openAssistantCard,
                 ),
               )
               .toList()
@@ -124,6 +120,20 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
     return ChatChannelCard(
       channel: tile.channel,
       onPressed: controller.openChannel,
+    );
+  }
+
+// The argument type 'Future<void> Function(ChatMainSupportTile)' can't be assigned to the parameter type 'void Function(ChatChannelEntity)'.
+
+  Widget buildNetworkIcon(ChatMainSupportTile data) {
+    if (data?.channel?.user?.avatar == null) {
+      return Container(width: 40, height: 40);
+    }
+
+    return Image.network(
+      data.channel.user.avatar,
+      width: 40,
+      height: 40,
     );
   }
 }

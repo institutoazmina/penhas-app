@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_entity.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_main_tile_entity.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatAssistantCard extends StatelessWidget {
   final String title;
   final Widget icon;
   final String description;
-  final ChatChannelEntity channel;
-  final void Function(ChatChannelEntity channel) onPressed;
+  final ChatMainSupportTile channel;
+  final void Function(ChatMainSupportTile channel) onPressed;
 
   const ChatAssistantCard({
     Key key,

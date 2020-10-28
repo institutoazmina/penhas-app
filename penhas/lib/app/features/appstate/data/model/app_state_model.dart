@@ -50,7 +50,7 @@ class AppStateModel extends AppStateEntity {
       currentMessage.insertAll(0, previousMessage);
     }
 
-    final String sessionId = session['session_id'];
+    final String sessionId = "${session['session_id']}";
     return QuizSessionEntity(
         currentMessage: currentMessage,
         sessionId: sessionId,

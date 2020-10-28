@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
 
 import 'chat_channel_entity.dart';
@@ -21,15 +22,17 @@ class ChatMainSupportTile extends ChatMainTileEntity {
   final String title;
   final String content;
   final ChatChannelEntity channel;
+  final QuizSessionEntity quizSession;
 
   ChatMainSupportTile({
     @required this.title,
     @required this.content,
-    @required this.channel,
+    this.channel,
+    this.quizSession,
   });
 
   @override
-  List<Object> get props => [title];
+  List<Object> get props => [title, content, channel, quizSession];
 }
 
 class ChatMainChannelHeaderTile extends ChatMainTileEntity {
