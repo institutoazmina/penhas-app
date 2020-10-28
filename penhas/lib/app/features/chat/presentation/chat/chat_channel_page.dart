@@ -58,7 +58,7 @@ extension _ChatPageStateMethods on _ChatPageState {
         actions: [
           IconButton(
             icon: Icon(Icons.more_vert),
-            onPressed: () => showChatAction(context),
+            onPressed: () => showChatAction(context, metadata),
           ),
         ],
       ),
@@ -77,26 +77,6 @@ extension _ChatPageStateMethods on _ChatPageState {
       ),
     );
   }
-
-/*
-  RefreshIndicator _buildRefreshIndicator() {
-    return RefreshIndicator(
-      key: _refreshIndicatorKey,
-      onRefresh: _onRefresh,
-      notificationPredicate: _handleScrollNotification,
-      child: ListView.builder(
-        itemCount: controller.listTweets.length,
-        controller: _scrollController,
-        itemBuilder: (context, index) {
-          return _buildTweetItem(
-            controller.listTweets[index],
-            context,
-          );
-        },
-      ),
-    );
-  }
-*/
 
   Widget headerMessage(String message) {
     if (message == null || message.isEmpty) {
@@ -161,7 +141,10 @@ extension _ChatPageStateMethods on _ChatPageState {
     );
   }
 
-  void showChatAction(BuildContext context) async {
+  void showChatAction(
+    BuildContext context,
+    ChatChannelSessionMetadataEntity metadata,
+  ) async {
     await showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -176,7 +159,10 @@ extension _ChatPageStateMethods on _ChatPageState {
           ),
           height: 150,
           child: Column(
-            children: <Widget>[divider(context), ...buildActions(context)],
+            children: <Widget>[
+              divider(context),
+              ...buildActions(context, metadata)
+            ],
           ),
         );
       },
@@ -200,17 +186,27 @@ extension _ChatPageStateMethods on _ChatPageState {
     return MediaQuery.of(context).size.width;
   }
 
-  List<Widget> buildActions(BuildContext context) {
-    List<Widget> actions = [
-      ListTile(
-        leading: SvgPicture.asset(
-            'assets/images/svg/tweet_action/tweet_action_block.svg'),
-        title: Text('Bloquear'),
-        onTap: () {
-          Navigator.of(context).pop();
-          controller.blockChat();
-        },
-      ),
+  List<Widget> buildActions(
+    BuildContext context,
+    ChatChannelSessionMetadataEntity metadata,
+  ) {
+    List<Widget> actions = List<Widget>();
+
+    if (metadata.canSendMessage) {
+      actions.add(
+        ListTile(
+          leading: SvgPicture.asset(
+              'assets/images/svg/tweet_action/tweet_action_block.svg'),
+          title: Text('Bloquear'),
+          onTap: () {
+            Navigator.of(context).pop();
+            controller.blockChat();
+          },
+        ),
+      );
+    }
+
+    actions.add(
       ListTile(
         leading: SvgPicture.asset(
             'assets/images/svg/tweet_action/tweet_action_delete.svg'),
@@ -220,7 +216,7 @@ extension _ChatPageStateMethods on _ChatPageState {
           controller.deleteSession();
         },
       ),
-    ];
+    );
 
     return actions;
   }

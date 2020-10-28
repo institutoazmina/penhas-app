@@ -46,11 +46,15 @@ abstract class _ChatChannelControllerBase with Store, MapFailureMessage {
 
   @computed
   ChatChannelComposerType get composerType {
-    if (user.blockedMe) {
+    if (metadata.canSendMessage == false &&
+        metadata.didBlocked == false &&
+        metadata.isBlockable) {
       return ChatChannelComposerType.blockedByOwner;
     }
 
-    if (metadata.didBlocked) {
+    if (metadata.canSendMessage == false &&
+        metadata.didBlocked &&
+        metadata.isBlockable) {
       return ChatChannelComposerType.blockedByMe;
     }
 
