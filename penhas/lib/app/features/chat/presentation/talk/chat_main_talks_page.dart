@@ -123,11 +123,13 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
     );
   }
 
-// The argument type 'Future<void> Function(ChatMainSupportTile)' can't be assigned to the parameter type 'void Function(ChatChannelEntity)'.
-
   Widget buildNetworkIcon(ChatMainSupportTile data) {
     if (data?.channel?.user?.avatar == null) {
-      return Container(width: 40, height: 40);
+      return Image.asset(
+        "assets/images/chat/penhasAssistant/penhasAssistant.png",
+        height: 40,
+        width: 40,
+      );
     }
 
     return Image.network(
