@@ -1,0 +1,119 @@
+{
+  "categorias": [
+    {
+      "id": 8,
+      "label": "Casa da Mulher Brasileira"
+    },
+    {
+      "id": 1,
+      "label": "Centros de Atendimento"
+    },
+    {
+      "id": 6,
+      "label": "Centros de atendimento à mulher"
+    }
+  ],
+  "dias_funcionamento": [
+    {
+      "label": "Dias úteis",
+      "value": "dias_uteis"
+    },
+    {
+      "label": "Fim de semana",
+      "value": "fds"
+    },
+    {
+      "label": "Dias úteis com plantão aos fins de semanas",
+      "value": "dias_uteis_fds_plantao"
+    },
+    {
+      "label": "Todos os dias",
+      "value": "todos_os_dias"
+    }
+  ],
+  "fields": [
+    {
+      "code": "endereco_ou_cep",
+      "max_length": 255,
+      "name": "Endereço ou CEP",
+      "required": 1,
+      "type": "Str"
+    },
+    {
+      "code": "nome",
+      "max_length": 255,
+      "name": "Nome",
+      "required": 1,
+      "type": "Str"
+    },
+    {
+      "code": "categoria",
+      "name": "Categoria",
+      "options": [
+        {
+          "name": "Casa da Mulher Brasileira",
+          "value": 8
+        },
+        {
+          "name": "Centros de Atendimento",
+          "value": 1
+        },
+        {
+          "name": "Centros de atendimento à mulher",
+          "value": 6
+        },
+        {
+          "name": "Defensoria Pública",
+          "value": 2
+        },
+        {
+          "name": "Delegacia Comum",
+          "value": 568
+        },
+        {
+          "name": "Delegacias",
+          "value": 3
+        },
+        {
+          "name": "Delegacias da mulher",
+          "value": 5
+        },
+        {
+          "name": "Hospitais e serviços de emergência",
+          "value": 4
+        },
+        {
+          "name": "Ministério Público",
+          "value": 7
+        },
+        {
+          "name": "Posto de Atendimento em delegacia comum",
+          "value": 9
+        }
+      ],
+      "required": 1,
+      "type": "Str"
+    },
+    {
+      "code": "descricao_servico",
+      "max_length": 9999,
+      "name": "Descrição do serviço",
+      "required": 1,
+      "type": "Str"
+    }
+  ],
+  "projetos": [
+    {
+      "id": 3,
+      "label": "MAMU"
+    },
+    {
+      "id": 2,
+      "label": "Mapa Delegacia"
+    },
+    {
+      "id": 1,
+      "label": "Penhas"
+    }
+  ]
+}
