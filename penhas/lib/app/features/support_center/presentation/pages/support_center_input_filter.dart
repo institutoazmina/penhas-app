@@ -82,6 +82,5 @@ class SupportCenterInputFilter extends StatelessWidget {
     }
 
     onKeywordsAction(_textController.text);
-    _textController.clear();
   }
 }
