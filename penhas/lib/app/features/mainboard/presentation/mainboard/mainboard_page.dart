@@ -8,6 +8,7 @@ import 'package:penhas/app/features/feed/presentation/compose_tweet/compose_twee
 import 'package:penhas/app/features/feed/presentation/feed_module.dart';
 import 'package:penhas/app/features/help_center/presentation/help_center_module.dart';
 import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_page.dart';
+import 'package:penhas/app/features/support_center/presentation/support_center_module.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
@@ -213,7 +214,7 @@ class _MainboardPageState
         FeedModule(),
         ComposeTweetPage(),
         ChatMainModule(),
-        Container(color: Colors.green),
+        SupportCenterModule(),
         HelpCenterModule(),
       ],
     );
