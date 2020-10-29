@@ -8,7 +8,7 @@ class ChatPeopleFilterCard extends StatelessWidget {
   final void Function() onPressed;
   const ChatPeopleFilterCard({
     Key key,
-    @required this.totalOfFilter,
+    this.totalOfFilter = 0,
     @required this.onPressed,
   }) : super(key: key);
 
