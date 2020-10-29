@@ -63,19 +63,13 @@ class _ChatChannelMessageComposerState
                   InputDecoration.collapsed(hintText: "Digite uma mensagem"),
               textCapitalization: TextCapitalization.sentences,
               controller: _textController,
+              onSubmitted: (t) => _submitMessageAction(context),
             ),
           ),
           IconButton(
-              icon: Icon(Icons.send),
-              onPressed: () {
-                FocusScopeNode currentFocus = FocusScope.of(context);
-                if (!currentFocus.hasPrimaryFocus) {
-                  currentFocus.unfocus();
-                }
-
-                widget.onSentMessage(_textController.text);
-                _textController.clear();
-              }),
+            icon: Icon(Icons.send),
+            onPressed: () => _submitMessageAction(context),
+          ),
         ],
       ),
     );
@@ -127,6 +121,16 @@ class _ChatChannelMessageComposerState
         ],
       ),
     );
+  }
+
+  void _submitMessageAction(BuildContext context) {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
+
+    widget.onSentMessage(_textController.text);
+    _textController.clear();
   }
 }
 
