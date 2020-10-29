@@ -32,6 +32,9 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   @observable
   int categoriesSelected = 0;
 
+  @observable
+  String errorMessage = "";
+
   @computed
   PageProgressState get progressState {
     if (_loadCategories == null ||
@@ -46,6 +49,7 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> onFilterAction() async {
+    setMessageErro("");
     _loadCategories = ObservableFuture(_supportCenterUseCase.metadata());
 
     final result = await _loadCategories;
@@ -63,6 +67,10 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
 }
 
 extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
+  void setMessageErro(String message) {
+    errorMessage = message;
+  }
+
   void handleCategoriesSuccess(List<FilterTagEntity> categories) {
     final tags = categories
         .map(
@@ -82,7 +90,7 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
 
   void handleCategoriesError(Failure failure) {
     final message = mapFailureMessage(failure);
-    // currentState = ChatMainTalksState.error(message);
+    setMessageErro(message);
   }
 
   bool isSeleted(String id) {

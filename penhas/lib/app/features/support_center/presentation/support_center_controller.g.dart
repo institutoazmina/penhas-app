@@ -51,6 +51,22 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
     });
   }
 
+  final _$errorMessageAtom =
+      Atom(name: '_SupportCenterControllerBase.errorMessage');
+
+  @override
+  String get errorMessage {
+    _$errorMessageAtom.reportRead();
+    return super.errorMessage;
+  }
+
+  @override
+  set errorMessage(String value) {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
+      super.errorMessage = value;
+    });
+  }
+
   final _$onFilterActionAsyncAction =
       AsyncAction('_SupportCenterControllerBase.onFilterAction');
 
@@ -72,6 +88,7 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
   String toString() {
     return '''
 categoriesSelected: ${categoriesSelected},
+errorMessage: ${errorMessage},
 progressState: ${progressState}
     ''';
   }
