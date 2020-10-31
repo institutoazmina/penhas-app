@@ -64,6 +64,26 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   Future<void> onKeywordsAction(String keywords) async {
     print(keywords);
   }
+
+  @action
+  Future<void> addPlace() async {
+    Modular.to.pushNamed("/mainboard/supportcenter/add");
+  }
+
+  @action
+  Future<void> listPlaces() async {
+    Modular.to.pushNamed("/mainboard/supportcenter/list");
+  }
+
+  @action
+  Future<void> location() async {
+    Modular.to.pushNamed("/mainboard/supportcenter/location");
+  }
+
+  @action
+  Future<void> placeDetail() async {
+    Modular.to.pushNamed("/mainboard/supportcenter/show");
+  }
 }
 
 extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
@@ -82,10 +102,10 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
         )
         .toList();
 
-    Modular.to
-        .pushNamed("/mainboard/filters", arguments: tags)
-        .then((v) => v as FilterActionObserver)
-        .then((v) => handleCategoriesUpdate(v));
+    // Modular.to
+    //     .pushNamed("/mainboard/filters", arguments: tags)
+    //     .then((v) => v as FilterActionObserver)
+    //     .then((v) => handleCategoriesUpdate(v));
   }
 
   void handleCategoriesError(Failure failure) {

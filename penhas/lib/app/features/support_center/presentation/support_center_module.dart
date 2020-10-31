@@ -4,6 +4,14 @@ import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/support_center/data/repositories/support_center_repository.dart';
 import 'package:penhas/app/features/support_center/domain/usecases/support_center_usecase.dart';
 
+import 'add/support_center_add_controller.dart';
+import 'add/support_center_add_page.dart';
+import 'list/support_center_list_controller.dart';
+import 'list/support_center_list_page.dart';
+import 'location/support_center_location_controller.dart';
+import 'location/support_center_location_page.dart';
+import 'show/support_center_show_controller.dart';
+import 'show/support_center_show_page.dart';
 import 'support_center_page.dart';
 import 'support_center_controller.dart';
 
@@ -25,6 +33,10 @@ class SupportCenterModule extends WidgetModule {
             apiProvider: i.get<IApiProvider>(),
           ),
         ),
+        Bind((i) => SupportCenterAddController()),
+        Bind((i) => SupportCenterListController()),
+        Bind((i) => SupportCenterLocationController()),
+        Bind((i) => SupportCenterShowController()),
       ];
 
   @override

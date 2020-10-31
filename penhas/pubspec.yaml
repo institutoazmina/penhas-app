@@ -144,6 +144,11 @@ flutter:
     # Chat
     - assets/images/chat/penhasAssistant/penhasAssistant.png
     - assets/images/chat/penhasContact/penhasContact.png
+    # Support Center
+    - assets/images/svg/support_center/list.svg
+    - assets/images/svg/support_center/location.svg
+    - assets/images/svg/support_center/suggest_place.svg
+    - assets/images/svg/support_center/trace_route.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

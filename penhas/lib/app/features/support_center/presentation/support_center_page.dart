@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/shared/design_system/colors.dart';
 
 import 'pages/support_center_input_filter.dart';
 import 'support_center_controller.dart';
@@ -62,12 +64,33 @@ class _SupportCenterPageState
                     child: Container(
                       child: Column(
                         children: [
-                          Container(color: Colors.amber, width: 44, height: 44),
-                          Container(color: Colors.blue, width: 44, height: 44),
-                          Container(
-                              color: Colors.cyanAccent, width: 44, height: 44),
-                          Container(
-                              color: Colors.deepPurple, width: 44, height: 44),
+                          FlatButton(
+                            onPressed: controller.location,
+                            child: CircleAvatar(
+                              radius: 12,
+                              child: SvgPicture.asset(
+                                  "assets/images/svg/support_center/location.svg"),
+                              backgroundColor: DesignSystemColors.pumpkinOrange,
+                            ),
+                          ),
+                          FlatButton(
+                            onPressed: controller.listPlaces,
+                            child: CircleAvatar(
+                              radius: 12,
+                              child: SvgPicture.asset(
+                                  "assets/images/svg/support_center/list.svg"),
+                              backgroundColor: DesignSystemColors.pumpkinOrange,
+                            ),
+                          ),
+                          FlatButton(
+                            onPressed: controller.addPlace,
+                            child: CircleAvatar(
+                              radius: 20,
+                              child: SvgPicture.asset(
+                                  "assets/images/svg/support_center/suggest_place.svg"),
+                              backgroundColor: DesignSystemColors.pumpkinOrange,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -80,6 +103,11 @@ class _SupportCenterPageState
       ),
     );
   }
+
+  // - assets/images/svg/support_center/
+  // - assets/images/svg/support_center/
+  // -
+  // - assets/images/svg/support_center/trace_route.svg
 
   void dispose() {
     _disposers.forEach((d) => d());

@@ -38,9 +38,11 @@ class ChatMainModule extends WidgetModule {
             skillRepository: i.get<IFilterSkillRepository>(),
           ),
         ),
-        Bind<IUsersRepository>((i) => UsersRepository(
-              apiProvider: i.get<IApiProvider>(),
-            )),
+        Bind<IUsersRepository>(
+          (i) => UsersRepository(
+            apiProvider: i.get<IApiProvider>(),
+          ),
+        ),
         Bind<IChatChannelRepository>(
           (i) => ChatChannelRepository(
             apiProvider: i.get<IApiProvider>(),

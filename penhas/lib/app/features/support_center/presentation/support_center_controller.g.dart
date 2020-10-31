@@ -84,6 +84,38 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
         .run(() => super.onKeywordsAction(keywords));
   }
 
+  final _$addPlaceAsyncAction =
+      AsyncAction('_SupportCenterControllerBase.addPlace');
+
+  @override
+  Future<void> addPlace() {
+    return _$addPlaceAsyncAction.run(() => super.addPlace());
+  }
+
+  final _$listPlacesAsyncAction =
+      AsyncAction('_SupportCenterControllerBase.listPlaces');
+
+  @override
+  Future<void> listPlaces() {
+    return _$listPlacesAsyncAction.run(() => super.listPlaces());
+  }
+
+  final _$locationAsyncAction =
+      AsyncAction('_SupportCenterControllerBase.location');
+
+  @override
+  Future<void> location() {
+    return _$locationAsyncAction.run(() => super.location());
+  }
+
+  final _$placeDetailAsyncAction =
+      AsyncAction('_SupportCenterControllerBase.placeDetail');
+
+  @override
+  Future<void> placeDetail() {
+    return _$placeDetailAsyncAction.run(() => super.placeDetail());
+  }
+
   @override
   String toString() {
     return '''
