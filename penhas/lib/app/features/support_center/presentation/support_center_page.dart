@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/features/support_center/domain/states/support_center_state.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 import 'pages/support_center_input_filter.dart';
@@ -37,77 +38,12 @@ class _SupportCenterPageState
         key: _scaffoldKey,
         body: Observer(
           builder: (_) {
-            return PageProgressIndicator(
-              progressState: controller.progressState,
-              child: Stack(
-                children: [
-                  GoogleMap(
-                    initialCameraPosition:
-                        CameraPosition(target: LatLng(0.0, 0.0)),
-                    myLocationEnabled: true,
-                    myLocationButtonEnabled: false,
-                    mapType: MapType.normal,
-                    zoomGesturesEnabled: true,
-                    zoomControlsEnabled: false,
-                    onMapCreated: (GoogleMapController controller) {
-                      mapController = controller;
-                    },
-                  ),
-                  SupportCenterInputFilter(
-                    totalOfFilter: controller.categoriesSelected,
-                    onFilterAction: controller.onFilterAction,
-                    onKeywordsAction: controller.onKeywordsAction,
-                  ),
-                  Positioned(
-                    bottom: 40,
-                    right: 12,
-                    child: Container(
-                      child: Column(
-                        children: [
-                          FlatButton(
-                            onPressed: controller.location,
-                            child: CircleAvatar(
-                              radius: 12,
-                              child: SvgPicture.asset(
-                                  "assets/images/svg/support_center/location.svg"),
-                              backgroundColor: DesignSystemColors.pumpkinOrange,
-                            ),
-                          ),
-                          FlatButton(
-                            onPressed: controller.listPlaces,
-                            child: CircleAvatar(
-                              radius: 12,
-                              child: SvgPicture.asset(
-                                  "assets/images/svg/support_center/list.svg"),
-                              backgroundColor: DesignSystemColors.pumpkinOrange,
-                            ),
-                          ),
-                          FlatButton(
-                            onPressed: controller.addPlace,
-                            child: CircleAvatar(
-                              radius: 20,
-                              child: SvgPicture.asset(
-                                  "assets/images/svg/support_center/suggest_place.svg"),
-                              backgroundColor: DesignSystemColors.pumpkinOrange,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            );
+            return bodyBuilder(controller.state);
           },
         ),
       ),
     );
   }
-
-  // - assets/images/svg/support_center/
-  // - assets/images/svg/support_center/
-  // -
-  // - assets/images/svg/support_center/trace_route.svg
 
   void dispose() {
     _disposers.forEach((d) => d());
@@ -122,5 +58,78 @@ class _SupportCenterPageState
         showSnackBar(scaffoldKey: _scaffoldKey, message: message);
       }),
     ];
+  }
+}
+
+extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
+  Widget bodyBuilder(SupportCenterState state) {
+    return state.when(
+        initial: () => Container(color: Colors.yellowAccent),
+        loaded: () => loadedSupportCenterPage(),
+        error: (message) => Container(color: Colors.redAccent),
+        gpsError: (message) => Container(color: Colors.purpleAccent));
+  }
+
+  Widget loadedSupportCenterPage() {
+    return PageProgressIndicator(
+      progressState: controller.progressState,
+      child: Stack(
+        children: [
+          GoogleMap(
+            initialCameraPosition: CameraPosition(target: LatLng(0.0, 0.0)),
+            myLocationEnabled: true,
+            myLocationButtonEnabled: false,
+            mapType: MapType.normal,
+            zoomGesturesEnabled: true,
+            zoomControlsEnabled: false,
+            onMapCreated: (GoogleMapController controller) {
+              mapController = controller;
+            },
+          ),
+          SupportCenterInputFilter(
+            totalOfFilter: controller.categoriesSelected,
+            onFilterAction: controller.onFilterAction,
+            onKeywordsAction: controller.onKeywordsAction,
+          ),
+          Positioned(
+            bottom: 40,
+            right: 0,
+            child: Container(
+              child: Column(
+                children: [
+                  FlatButton(
+                    onPressed: controller.location,
+                    child: CircleAvatar(
+                      radius: 12,
+                      child: SvgPicture.asset(
+                          "assets/images/svg/support_center/location.svg"),
+                      backgroundColor: DesignSystemColors.pumpkinOrange,
+                    ),
+                  ),
+                  FlatButton(
+                    onPressed: controller.listPlaces,
+                    child: CircleAvatar(
+                      radius: 12,
+                      child: SvgPicture.asset(
+                          "assets/images/svg/support_center/list.svg"),
+                      backgroundColor: DesignSystemColors.pumpkinOrange,
+                    ),
+                  ),
+                  FlatButton(
+                    onPressed: controller.addPlace,
+                    child: CircleAvatar(
+                      radius: 20,
+                      child: SvgPicture.asset(
+                          "assets/images/svg/support_center/suggest_place.svg"),
+                      backgroundColor: DesignSystemColors.pumpkinOrange,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

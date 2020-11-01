@@ -2,12 +2,14 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
 import 'package:penhas/app/features/filters/states/filter_action_observer.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_metadata_entity.dart';
+import 'package:penhas/app/features/support_center/domain/states/support_center_state.dart';
 import 'package:penhas/app/features/support_center/domain/usecases/support_center_usecase.dart';
 
 part 'support_center_controller.g.dart';
@@ -23,11 +25,16 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   List<FilterTagEntity> _tags = List<FilterTagEntity>();
   final SupportCenterUseCase _supportCenterUseCase;
 
-  _SupportCenterControllerBase(this._supportCenterUseCase);
+  _SupportCenterControllerBase(this._supportCenterUseCase) {
+    setup();
+  }
 
   @observable
   ObservableFuture<Either<Failure, SupportCenterMetadataEntity>>
       _loadCategories;
+
+  @observable
+  ObservableFuture<Either<Failure, ValidField>> _loadSupportCenter;
 
   @observable
   int categoriesSelected = 0;
@@ -35,16 +42,12 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   @observable
   String errorMessage = "";
 
+  @observable
+  SupportCenterState state = SupportCenterState.loaded();
+
   @computed
   PageProgressState get progressState {
-    if (_loadCategories == null ||
-        _loadCategories.status == FutureStatus.rejected) {
-      return PageProgressState.initial;
-    }
-
-    return _loadCategories.status == FutureStatus.pending
-        ? PageProgressState.loading
-        : PageProgressState.loaded;
+    return monitorProgress(_loadSupportCenter);
   }
 
   @action
@@ -87,6 +90,10 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
 }
 
 extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
+  Future<void> setup() async {
+    loadSupportCenter();
+  }
+
   void setMessageErro(String message) {
     errorMessage = message;
   }
@@ -102,10 +109,10 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
         )
         .toList();
 
-    // Modular.to
-    //     .pushNamed("/mainboard/filters", arguments: tags)
-    //     .then((v) => v as FilterActionObserver)
-    //     .then((v) => handleCategoriesUpdate(v));
+    Modular.to
+        .pushNamed("/mainboard/filters", arguments: tags)
+        .then((v) => v as FilterActionObserver)
+        .then((v) => handleCategoriesUpdate(v));
   }
 
   void handleCategoriesError(Failure failure) {
@@ -133,5 +140,38 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     );
 
     categoriesSelected = _tags.length;
+  }
+
+  PageProgressState monitorProgress(ObservableFuture<Object> observable) {
+    if (observable == null || observable.status == FutureStatus.rejected) {
+      return PageProgressState.initial;
+    }
+
+    return observable.status == FutureStatus.pending
+        ? PageProgressState.loading
+        : PageProgressState.loaded;
+  }
+
+  Future<void> loadSupportCenter() async {
+    _loadSupportCenter = ObservableFuture(_supportCenterUseCase.fetch());
+
+    final result = await _loadSupportCenter;
+
+    result.fold(
+      (failure) => handleStateError(failure),
+      (places) => handleLoadSupportCenterSuccess(),
+    );
+  }
+
+  void handleLoadSupportCenterSuccess() {
+    state = SupportCenterState.loaded();
+  }
+
+  void handleStateError(Failure f) {
+    if (f is GpsFailure) {
+      state = SupportCenterState.gpsError(f.message);
+    }
+
+    state = SupportCenterState.error(mapFailureMessage(f));
   }
 }

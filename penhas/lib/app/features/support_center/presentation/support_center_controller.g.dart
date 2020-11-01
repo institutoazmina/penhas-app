@@ -35,6 +35,22 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
     });
   }
 
+  final _$_loadSupportCenterAtom =
+      Atom(name: '_SupportCenterControllerBase._loadSupportCenter');
+
+  @override
+  ObservableFuture<Either<Failure, ValidField>> get _loadSupportCenter {
+    _$_loadSupportCenterAtom.reportRead();
+    return super._loadSupportCenter;
+  }
+
+  @override
+  set _loadSupportCenter(ObservableFuture<Either<Failure, ValidField>> value) {
+    _$_loadSupportCenterAtom.reportWrite(value, super._loadSupportCenter, () {
+      super._loadSupportCenter = value;
+    });
+  }
+
   final _$categoriesSelectedAtom =
       Atom(name: '_SupportCenterControllerBase.categoriesSelected');
 
@@ -64,6 +80,21 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
   set errorMessage(String value) {
     _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
       super.errorMessage = value;
+    });
+  }
+
+  final _$stateAtom = Atom(name: '_SupportCenterControllerBase.state');
+
+  @override
+  SupportCenterState get state {
+    _$stateAtom.reportRead();
+    return super.state;
+  }
+
+  @override
+  set state(SupportCenterState value) {
+    _$stateAtom.reportWrite(value, super.state, () {
+      super.state = value;
     });
   }
 
@@ -121,6 +152,7 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
     return '''
 categoriesSelected: ${categoriesSelected},
 errorMessage: ${errorMessage},
+state: ${state},
 progressState: ${progressState}
     ''';
   }
