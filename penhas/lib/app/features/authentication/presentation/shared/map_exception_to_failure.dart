@@ -18,7 +18,7 @@ class MapExceptionToFailure {
         return ServerSideSessionFailed();
       }
       if (error.bodyContent['error'] == 'no-gps') {
-        return GPSFailure(error.bodyContent['message']);
+        return GpsFailure(error.bodyContent['message']);
       }
 
       return ServerSideFormFieldValidationFailure(
