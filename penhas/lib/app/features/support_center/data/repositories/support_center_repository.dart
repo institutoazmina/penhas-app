@@ -34,8 +34,22 @@ class SupportCenterRepository implements ISupportCenterRepository {
   }
 
   @override
-  Future<Either<Failure, ValidField>> fetch() {
-    throw UnimplementedError();
+  Future<Either<Failure, ValidField>> fetch() async {
+    final endPoint = "me/pontos-de-apoio";
+
+    try {
+      final bodyResponse = await _apiProvider.get(path: endPoint);
+      return right(parseSupportCenter(bodyResponse));
+    } catch (error) {
+      return left(MapExceptionToFailure.map(error));
+    }
+  }
+}
+
+extension SupportCenterRepositoryPrivate on SupportCenterRepository {
+  ValidField parseSupportCenter(String body) {
+    final jsonData = jsonDecode(body) as Map<String, Object>;
+    return ValidField();
   }
 }
 
