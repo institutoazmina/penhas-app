@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/support_center/data/repositories/support_center_repository.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_metadata_entity.dart';
@@ -21,5 +22,9 @@ class SupportCenterUseCase {
     _cacheMetadata = metadata.getOrElse(() => null);
 
     return metadata;
+  }
+
+  Future<Either<Failure, ValidField>> fetch() async {
+    return _supportCenterRepository.fetch();
   }
 }

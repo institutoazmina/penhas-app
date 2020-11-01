@@ -43,6 +43,15 @@ class AudioDownloadFailure extends Failure {}
 
 class FileSystemFailure extends Failure {}
 
+class GpsFailure extends Failure {
+  final String message;
+
+  GpsFailure(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
 @immutable
 class ServerSideFormFieldValidationFailure extends Failure {
   final String error;

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_exception_to_failure.dart';
@@ -10,6 +11,7 @@ import 'package:penhas/app/features/support_center/domain/entities/support_cente
 
 abstract class ISupportCenterRepository {
   Future<Either<Failure, SupportCenterMetadataEntity>> metadata();
+  Future<Either<Failure, ValidField>> fetch();
 }
 
 class SupportCenterRepository implements ISupportCenterRepository {
@@ -29,6 +31,11 @@ class SupportCenterRepository implements ISupportCenterRepository {
     } catch (error) {
       return left(MapExceptionToFailure.map(error));
     }
+  }
+
+  @override
+  Future<Either<Failure, ValidField>> fetch() {
+    throw UnimplementedError();
   }
 }
 

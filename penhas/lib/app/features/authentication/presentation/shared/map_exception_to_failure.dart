@@ -17,6 +17,9 @@ class MapExceptionToFailure {
       if (error.bodyContent['error'] == 'expired_jwt') {
         return ServerSideSessionFailed();
       }
+      if (error.bodyContent['error'] == 'no-gps') {
+        return GPSFailure(error.bodyContent['message']);
+      }
 
       return ServerSideFormFieldValidationFailure(
           error: error.bodyContent['error'],
