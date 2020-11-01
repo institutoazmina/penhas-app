@@ -91,7 +91,7 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
 
 extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
   Future<void> setup() async {
-    loadSupportCenter();
+    await loadSupportCenter();
   }
 
   void setMessageErro(String message) {
@@ -170,6 +170,7 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
   void handleStateError(Failure f) {
     if (f is GpsFailure) {
       state = SupportCenterState.gpsError(f.message);
+      return;
     }
 
     state = SupportCenterState.error(mapFailureMessage(f));

@@ -9,6 +9,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/snack_bar
 import 'package:penhas/app/features/support_center/domain/states/support_center_state.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
+import 'pages/support_center_gps_error.dart';
 import 'pages/support_center_input_filter.dart';
 import 'support_center_controller.dart';
 
@@ -64,10 +65,14 @@ class _SupportCenterPageState
 extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
   Widget bodyBuilder(SupportCenterState state) {
     return state.when(
-        initial: () => Container(color: Colors.yellowAccent),
-        loaded: () => loadedSupportCenterPage(),
-        error: (message) => Container(color: Colors.redAccent),
-        gpsError: (message) => Container(color: Colors.purpleAccent));
+      initial: () => Container(color: Colors.yellowAccent),
+      loaded: () => loadedSupportCenterPage(),
+      error: (message) => Container(color: Colors.redAccent),
+      gpsError: (message) => SupportCenterGpsError(
+        message: message,
+        onPressed: controller.location,
+      ),
+    );
   }
 
   Widget loadedSupportCenterPage() {
