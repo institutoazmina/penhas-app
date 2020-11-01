@@ -26,8 +26,8 @@ class SupportCenterRepository implements ISupportCenterRepository {
     final endPoint = "/pontos-de-apoio-dados-auxiliares";
 
     try {
-      final response = await _apiProvider.get(path: endPoint).parseMetadata();
-      return right(response);
+      final bodyResponse = await _apiProvider.get(path: endPoint);
+      return right(parseMetadata(bodyResponse));
     } catch (error) {
       return left(MapExceptionToFailure.map(error));
     }
@@ -47,16 +47,13 @@ class SupportCenterRepository implements ISupportCenterRepository {
 }
 
 extension SupportCenterRepositoryPrivate on SupportCenterRepository {
+  SupportCenterMetadataEntity parseMetadata(String body) {
+    final jsonData = jsonDecode(body) as Map<String, Object>;
+    return SupportCenterMetadataModel.fromJson(jsonData);
+  }
+
   ValidField parseSupportCenter(String body) {
     final jsonData = jsonDecode(body) as Map<String, Object>;
     return ValidField();
-  }
-}
-
-extension _ChatChannelRepository<T extends String> on Future<T> {
-  Future<SupportCenterMetadataEntity> parseMetadata() async {
-    return this
-        .then((v) => jsonDecode(v) as Map<String, Object>)
-        .then((v) => SupportCenterMetadataModel.fromJson(v));
   }
 }
