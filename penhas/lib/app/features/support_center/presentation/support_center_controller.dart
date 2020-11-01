@@ -87,6 +87,11 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   Future<void> placeDetail() async {
     Modular.to.pushNamed("/mainboard/supportcenter/show");
   }
+
+  @action
+  Future<void> retry() async {
+    await loadSupportCenter();
+  }
 }
 
 extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {

@@ -147,6 +147,13 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
     return _$placeDetailAsyncAction.run(() => super.placeDetail());
   }
 
+  final _$retryAsyncAction = AsyncAction('_SupportCenterControllerBase.retry');
+
+  @override
+  Future<void> retry() {
+    return _$retryAsyncAction.run(() => super.retry());
+  }
+
   @override
   String toString() {
     return '''
