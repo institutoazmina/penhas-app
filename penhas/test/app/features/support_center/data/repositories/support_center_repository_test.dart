@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/api_client.dart';
+import 'package:penhas/app/features/support_center/data/models/geolocation_model.dart';
 import 'package:penhas/app/features/support_center/data/models/support_center_metadata_model.dart';
 import 'package:penhas/app/features/support_center/data/repositories/support_center_repository.dart';
 
@@ -75,6 +76,24 @@ void main() {
             parameters: anyNamed('parameters'),
           ),
         ).thenThrow(ApiProviderException(bodyContent: jsonData));
+        // act
+        final matcher = await sut.mapGeoFromCep("12345123");
+        // assert
+        expect(actual, matcher);
+      });
+      test('should get GeolocationEntity for valid information', () async {
+        // arrange
+        final jsonFile = "support_center/support_center_geocode.json";
+        final jsonData = await JsonUtil.getJson(from: jsonFile);
+        final actual = right(GeoLocationModel.fromJson(jsonData));
+
+        when(
+          apiProvider.get(
+            path: anyNamed('path'),
+            headers: anyNamed('headers'),
+            parameters: anyNamed('parameters'),
+          ),
+        ).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
         // act
         final matcher = await sut.mapGeoFromCep("12345123");
         // assert
