@@ -57,6 +57,15 @@ mixin _$SupportCenterLocationController
     return _$seletedAddressAsyncAction.run(() => super.seletedAddress());
   }
 
+  final _$askForLocationPermissionAsyncAction = AsyncAction(
+      '_SupportCenterLocationControllerBase.askForLocationPermission');
+
+  @override
+  Future<void> askForLocationPermission() {
+    return _$askForLocationPermissionAsyncAction
+        .run(() => super.askForLocationPermission());
+  }
+
   final _$_SupportCenterLocationControllerBaseActionController =
       ActionController(name: '_SupportCenterLocationControllerBase');
 

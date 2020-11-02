@@ -136,7 +136,7 @@ extension _WidgetPrivateBuilder on _SupportCenterLocationPageState {
             ],
           ),
         ),
-        onPressed: () => print('ola mundo'),
+        onPressed: controller.askForLocationPermission,
       ),
     );
   }

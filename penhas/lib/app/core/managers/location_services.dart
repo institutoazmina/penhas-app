@@ -12,7 +12,10 @@ class LocationFailure {}
 
 abstract class ILocationServices {
   Future<Either<LocationFailure, UserLocationEntity>> currentLocation();
-  Future<LocationPermissionState> requestPermission();
+  Future<LocationPermissionState> requestPermission({
+    @required String title,
+    @required Widget description,
+  });
   Future<LocationPermissionState> permissionStatus();
 }
 
@@ -41,19 +44,25 @@ class LocationServices implements ILocationServices {
   }
 
   @override
-  Future<LocationPermissionState> requestPermission() async {
+  Future<LocationPermissionState> requestPermission({
+    @required String title,
+    @required Widget description,
+  }) async {
     return permissionStatus().then(
       (p) => p.when(
         granted: () => LocationPermissionState.granted(),
         denied: () => _requestDeniedPermission(),
         permanentlyDenied: () => _requestDeniedPermission(),
         restricted: () => LocationPermissionState.restricted(),
-        undefined: () => _requestPermission(),
+        undefined: () => _requestPermission(title, description),
       ),
     );
   }
 
-  Future<LocationPermissionState> _requestPermission() {
+  Future<LocationPermissionState> _requestPermission(
+    String title,
+    Widget description,
+  ) {
     return Modular.to
         .showDialog(
           barrierDismissible: false,
@@ -68,36 +77,11 @@ class LocationServices implements ILocationServices {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 12.0),
-                    child: Text('O guardião precisa da tua localização',
-                        style: kTextStyleAlertDialogTitle),
+                    child: Text(title, style: kTextStyleAlertDialogTitle),
                   ),
                 ],
               ),
-              content: RichText(
-                text: TextSpan(
-                  text: 'Quando uma guadiã é cadastrada, recomendamos que a ',
-                  style: kTextStyleAlertDialogDescription,
-                  children: [
-                    TextSpan(
-                      text: 'PenhaS ',
-                      style: kTextStyleAlertDialogDescriptionBold,
-                    ),
-                    TextSpan(
-                      text:
-                          'seja autorizada a obter a tua localização. Esta informação será enviado para a guardiã quando o botão de ',
-                      style: kTextStyleAlertDialogDescription,
-                    ),
-                    TextSpan(
-                      text: 'Alerta Guardiões ',
-                      style: kTextStyleAlertDialogDescriptionBold,
-                    ),
-                    TextSpan(
-                      text: 'for acionado.',
-                      style: kTextStyleAlertDialogDescription,
-                    ),
-                  ],
-                ),
-              ),
+              content: description,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),

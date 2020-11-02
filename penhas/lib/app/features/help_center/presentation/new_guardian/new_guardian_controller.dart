@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
@@ -11,6 +12,7 @@ import 'package:penhas/app/features/help_center/data/repositories/guardian_repos
 import 'package:penhas/app/features/help_center/domain/entities/guardian_session_entity.dart';
 import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/help_center/domain/states/new_guardian_state.dart';
+import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 part 'new_guardian_controller.g.dart';
 
@@ -169,7 +171,39 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
 
   void _actionAfterNotice() async {
     await _locationService
-        .requestPermission()
+        .requestPermission(
+            title: 'O guardião precisa da tua localização',
+            description: buildRequestPermissionContent())
         .then((value) => Modular.to.pop(true));
+  }
+}
+
+extension _WidgetBuilderPrivate on _NewGuardianControllerBase {
+  Widget buildRequestPermissionContent() {
+    return RichText(
+      text: TextSpan(
+        text: 'Quando uma guadiã é cadastrada, recomendamos que a ',
+        style: kTextStyleAlertDialogDescription,
+        children: [
+          TextSpan(
+            text: 'PenhaS ',
+            style: kTextStyleAlertDialogDescriptionBold,
+          ),
+          TextSpan(
+            text:
+                'seja autorizada a obter a tua localização. Esta informação será enviado para a guardiã quando o botão de ',
+            style: kTextStyleAlertDialogDescription,
+          ),
+          TextSpan(
+            text: 'Alerta Guardiões ',
+            style: kTextStyleAlertDialogDescriptionBold,
+          ),
+          TextSpan(
+            text: 'for acionado.',
+            style: kTextStyleAlertDialogDescription,
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/support_center/data/repositories/support_center_repository.dart';
 import 'package:penhas/app/features/support_center/domain/usecases/support_center_usecase.dart';
@@ -34,6 +35,7 @@ class SupportCenterModule extends WidgetModule {
         Bind(
           (i) => SupportCenterLocationController(
             supportCenterUseCase: i.get<SupportCenterUseCase>(),
+            locationService: i.get<ILocationServices>(),
           ),
           singleton: false,
         ),
