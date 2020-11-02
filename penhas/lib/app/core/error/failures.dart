@@ -52,6 +52,15 @@ class GpsFailure extends Failure {
   List<Object> get props => [message];
 }
 
+class AddressFailure extends Failure {
+  final String message;
+
+  AddressFailure(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
 @immutable
 class ServerSideFormFieldValidationFailure extends Failure {
   final String error;

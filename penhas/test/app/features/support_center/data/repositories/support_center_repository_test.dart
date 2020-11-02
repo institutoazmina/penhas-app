@@ -60,5 +60,26 @@ void main() {
         expect(actual, matcher);
       });
     });
+    group('mapGeoFromCep', () {
+      test('should get AddressFailure for invalid address information',
+          () async {
+        // arrange
+        final jsonFile = "support_center/support_center_geocode_error.json";
+        final jsonData = await JsonUtil.getJson(from: jsonFile);
+        final actual = left(AddressFailure(jsonData["message"] as String));
+
+        when(
+          apiProvider.get(
+            path: anyNamed('path'),
+            headers: anyNamed('headers'),
+            parameters: anyNamed('parameters'),
+          ),
+        ).thenThrow(ApiProviderException(bodyContent: jsonData));
+        // act
+        final matcher = await sut.mapGeoFromCep("12345123");
+        // assert
+        expect(actual, matcher);
+      });
+    });
   });
 }

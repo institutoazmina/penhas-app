@@ -6,12 +6,15 @@ import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_exception_to_failure.dart';
+import 'package:penhas/app/features/support_center/data/models/geolocation_model.dart';
 import 'package:penhas/app/features/support_center/data/models/support_center_metadata_model.dart';
+import 'package:penhas/app/features/support_center/domain/entities/geolocation_entity.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_metadata_entity.dart';
 
 abstract class ISupportCenterRepository {
   Future<Either<Failure, SupportCenterMetadataEntity>> metadata();
   Future<Either<Failure, ValidField>> fetch();
+  Future<Either<Failure, GeolocationEntity>> mapGeoFromCep(String cep);
 }
 
 class SupportCenterRepository implements ISupportCenterRepository {
@@ -44,6 +47,22 @@ class SupportCenterRepository implements ISupportCenterRepository {
       return left(MapExceptionToFailure.map(error));
     }
   }
+
+  @override
+  Future<Either<Failure, GeolocationEntity>> mapGeoFromCep(String cep) async {
+    final endPoint = "me/geocode";
+    Map<String, String> parameters = {
+      'address': cep,
+    };
+
+    try {
+      final bodyResponse =
+          await _apiProvider.get(path: endPoint, parameters: parameters);
+      return right(parseGeoFromCep(bodyResponse));
+    } catch (error) {
+      return left(MapExceptionToFailure.map(error));
+    }
+  }
 }
 
 extension SupportCenterRepositoryPrivate on SupportCenterRepository {
@@ -55,5 +74,10 @@ extension SupportCenterRepositoryPrivate on SupportCenterRepository {
   ValidField parseSupportCenter(String body) {
     final jsonData = jsonDecode(body) as Map<String, Object>;
     return ValidField();
+  }
+
+  GeolocationEntity parseGeoFromCep(String body) {
+    final jsonData = jsonDecode(body) as Map<String, Object>;
+    return GeoLocationModel.fromJson(jsonData);
   }
 }

@@ -20,6 +20,9 @@ class MapExceptionToFailure {
       if (error.bodyContent['error'] == 'no-gps') {
         return GpsFailure(error.bodyContent['message']);
       }
+      if (error.bodyContent['error'] == 'location_not_found') {
+        return AddressFailure(error.bodyContent['message']);
+      }
 
       return ServerSideFormFieldValidationFailure(
           error: error.bodyContent['error'],
