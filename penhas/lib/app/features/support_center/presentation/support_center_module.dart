@@ -22,6 +22,7 @@ class SupportCenterModule extends WidgetModule {
         ),
         Bind<SupportCenterUseCase>(
           (i) => SupportCenterUseCase(
+            locationService: i.get<ILocationServices>(),
             supportCenterRepository: i.get<ISupportCenterRepository>(),
           ),
         ),
@@ -35,7 +36,6 @@ class SupportCenterModule extends WidgetModule {
         Bind(
           (i) => SupportCenterLocationController(
             supportCenterUseCase: i.get<SupportCenterUseCase>(),
-            locationService: i.get<ILocationServices>(),
           ),
           singleton: false,
         ),

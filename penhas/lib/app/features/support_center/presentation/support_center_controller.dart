@@ -8,6 +8,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/map_failu
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
 import 'package:penhas/app/features/filters/states/filter_action_observer.dart';
+import 'package:penhas/app/features/support_center/domain/entities/geolocation_entity.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_metadata_entity.dart';
 import 'package:penhas/app/features/support_center/domain/states/support_center_state.dart';
 import 'package:penhas/app/features/support_center/domain/usecases/support_center_usecase.dart';
@@ -25,7 +26,9 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   List<FilterTagEntity> _tags = List<FilterTagEntity>();
   final SupportCenterUseCase _supportCenterUseCase;
 
-  _SupportCenterControllerBase(this._supportCenterUseCase) {
+  _SupportCenterControllerBase(
+    this._supportCenterUseCase,
+  ) {
     setup();
   }
 
@@ -80,7 +83,9 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> location() async {
-    Modular.to.pushNamed("/mainboard/supportcenter/location");
+    Modular.to
+        .pushNamed("/mainboard/supportcenter/location")
+        .then((value) => handleLocationFeedback(value));
   }
 
   @action
@@ -101,6 +106,12 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
 
   void setMessageErro(String message) {
     errorMessage = message;
+  }
+
+  void handleLocationFeedback(Object value) {
+    if (value is bool && value == true) {
+      _supportCenterUseCase.dataSource();
+    }
   }
 
   void handleCategoriesSuccess(List<FilterTagEntity> categories) {

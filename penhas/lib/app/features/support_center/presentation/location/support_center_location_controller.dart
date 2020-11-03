@@ -4,7 +4,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
@@ -20,20 +19,15 @@ class SupportCenterLocationController
     with _$SupportCenterLocationController {
   SupportCenterLocationController({
     @required SupportCenterUseCase supportCenterUseCase,
-    @required ILocationServices locationService,
-  }) : super(supportCenterUseCase, locationService);
+  }) : super(supportCenterUseCase);
 }
 
 abstract class _SupportCenterLocationControllerBase
     with Store, MapFailureMessage {
   final SupportCenterUseCase _supportCenterUseCase;
-  final ILocationServices _locationService;
   GeolocationEntity _selectedGeoLocation;
 
-  _SupportCenterLocationControllerBase(
-    this._supportCenterUseCase,
-    this._locationService,
-  );
+  _SupportCenterLocationControllerBase(this._supportCenterUseCase);
 
   @observable
   ObservableFuture<Either<Failure, GeolocationEntity>> _getGeoToken;
@@ -57,33 +51,28 @@ abstract class _SupportCenterLocationControllerBase
 
   @action
   Future<void> seletedAddress() async {
-    Modular.to.pop(_selectedGeoLocation);
+    Modular.to.pop(
+      _supportCenterUseCase.updatedGeoLocation(_selectedGeoLocation),
+    );
   }
 
   @action
   Future<void> askForLocationPermission() async {
-    _locationService
-        .requestPermission(
-          title: "Localização",
-          description: Text(
-            "Permintindo que a PenhaS tenha acesso a tua localização, será possivel apresentar os pontos de apoio mais próximo da onde você está.",
-            style: TextStyle(
-              color: DesignSystemColors.darkIndigoThree,
-              fontFamily: 'Lato',
-              fontSize: 14.0,
-              letterSpacing: 0.45,
-              fontWeight: FontWeight.normal,
-            ),
-          ),
-        )
-        .then(
-          (value) => {
-            value.maybeWhen(
-              granted: () => Modular.to.pop(true),
-              orElse: () {},
-            )
-          },
-        );
+    final permission = await _supportCenterUseCase.askForLocationPermission(
+      "Localização",
+      Text(
+        "Permintindo que a PenhaS tenha acesso a tua localização, será possivel apresentar os pontos de apoio mais próximo da onde você está.",
+        style: TextStyle(
+          color: DesignSystemColors.darkIndigoThree,
+          fontFamily: 'Lato',
+          fontSize: 14.0,
+          letterSpacing: 0.45,
+          fontWeight: FontWeight.normal,
+        ),
+      ),
+    );
+
+    Modular.to.pop(permission);
   }
 }
 
