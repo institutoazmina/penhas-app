@@ -8,6 +8,7 @@ import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_exception_to_failure.dart';
 import 'package:penhas/app/features/support_center/data/models/geolocation_model.dart';
 import 'package:penhas/app/features/support_center/data/models/support_center_metadata_model.dart';
+import 'package:penhas/app/features/support_center/data/models/support_center_place_session_model.dart';
 import 'package:penhas/app/features/support_center/domain/entities/geolocation_entity.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_fetch_request.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_metadata_entity.dart';
@@ -92,7 +93,7 @@ extension SupportCenterRepositoryPrivate on SupportCenterRepository {
 
   SupportCenterPlaceSessionEntity parseSupportCenter(String body) {
     final jsonData = jsonDecode(body) as Map<String, Object>;
-    return SupportCenterPlaceSessionEntity();
+    return SupportCenterPlaceSessionModel.fromJson(jsonData);
   }
 
   GeolocationEntity parseGeoFromCep(String body) {
