@@ -8,8 +8,8 @@ import 'package:penhas/app/features/authentication/presentation/shared/map_failu
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
 import 'package:penhas/app/features/filters/states/filter_action_observer.dart';
-import 'package:penhas/app/features/support_center/domain/entities/geolocation_entity.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_metadata_entity.dart';
+import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
 import 'package:penhas/app/features/support_center/domain/states/support_center_state.dart';
 import 'package:penhas/app/features/support_center/domain/usecases/support_center_usecase.dart';
 
@@ -26,9 +26,7 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   List<FilterTagEntity> _tags = List<FilterTagEntity>();
   final SupportCenterUseCase _supportCenterUseCase;
 
-  _SupportCenterControllerBase(
-    this._supportCenterUseCase,
-  ) {
+  _SupportCenterControllerBase(this._supportCenterUseCase) {
     setup();
   }
 
@@ -37,7 +35,8 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
       _loadCategories;
 
   @observable
-  ObservableFuture<Either<Failure, ValidField>> _loadSupportCenter;
+  ObservableFuture<Either<Failure, SupportCenterPlaceSessionEntity>>
+      _loadSupportCenter;
 
   @observable
   int categoriesSelected = 0;

@@ -39,13 +39,16 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
       Atom(name: '_SupportCenterControllerBase._loadSupportCenter');
 
   @override
-  ObservableFuture<Either<Failure, ValidField>> get _loadSupportCenter {
+  ObservableFuture<Either<Failure, SupportCenterPlaceSessionEntity>>
+      get _loadSupportCenter {
     _$_loadSupportCenterAtom.reportRead();
     return super._loadSupportCenter;
   }
 
   @override
-  set _loadSupportCenter(ObservableFuture<Either<Failure, ValidField>> value) {
+  set _loadSupportCenter(
+      ObservableFuture<Either<Failure, SupportCenterPlaceSessionEntity>>
+          value) {
     _$_loadSupportCenterAtom.reportWrite(value, super._loadSupportCenter, () {
       super._loadSupportCenter = value;
     });

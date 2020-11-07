@@ -9,11 +9,14 @@ import 'package:penhas/app/features/authentication/presentation/shared/map_excep
 import 'package:penhas/app/features/support_center/data/models/geolocation_model.dart';
 import 'package:penhas/app/features/support_center/data/models/support_center_metadata_model.dart';
 import 'package:penhas/app/features/support_center/domain/entities/geolocation_entity.dart';
+import 'package:penhas/app/features/support_center/domain/entities/support_center_fetch_request.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_metadata_entity.dart';
+import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
 
 abstract class ISupportCenterRepository {
   Future<Either<Failure, SupportCenterMetadataEntity>> metadata();
-  Future<Either<Failure, ValidField>> fetch();
+  Future<Either<Failure, SupportCenterPlaceSessionEntity>> fetch(
+      SupportCenterFetchRequest options);
   Future<Either<Failure, GeolocationEntity>> mapGeoFromCep(String cep);
 }
 
@@ -37,11 +40,27 @@ class SupportCenterRepository implements ISupportCenterRepository {
   }
 
   @override
-  Future<Either<Failure, ValidField>> fetch() async {
+  Future<Either<Failure, SupportCenterPlaceSessionEntity>> fetch(
+      SupportCenterFetchRequest options) async {
     final endPoint = "me/pontos-de-apoio";
 
+    Map<String, String> parameters = Map<String, String>();
+    if (options.locationToken != null) {
+      parameters["location_token"] = options.locationToken;
+    } else if (options.userLocation != null &&
+        options.userLocation.latitude != null &&
+        options.userLocation.longitude != null) {
+      parameters["latitude"] = options.userLocation.latitude.toString();
+      parameters["longitude"] = options.userLocation.longitude.toString();
+    }
+
+    parameters["categorias"] = options.categories?.join(",");
+    parameters["keywords"] = options.keywords;
+    parameters["next_page"] = options.nextPage;
+
     try {
-      final bodyResponse = await _apiProvider.get(path: endPoint);
+      final bodyResponse =
+          await _apiProvider.get(path: endPoint, parameters: parameters);
       return right(parseSupportCenter(bodyResponse));
     } catch (error) {
       return left(MapExceptionToFailure.map(error));
@@ -71,9 +90,9 @@ extension SupportCenterRepositoryPrivate on SupportCenterRepository {
     return SupportCenterMetadataModel.fromJson(jsonData);
   }
 
-  ValidField parseSupportCenter(String body) {
+  SupportCenterPlaceSessionEntity parseSupportCenter(String body) {
     final jsonData = jsonDecode(body) as Map<String, Object>;
-    return ValidField();
+    return SupportCenterPlaceSessionEntity();
   }
 
   GeolocationEntity parseGeoFromCep(String body) {
