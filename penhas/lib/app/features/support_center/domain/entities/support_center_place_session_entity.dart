@@ -2,29 +2,32 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 class SupportCenterPlaceSessionEntity extends Equatable {
-  final int id;
-  final String maximumRate;
-  final String latitude;
-  final String longitude;
+  final bool hasMore;
+  final int maximumRate;
+  final double latitude;
+  final double longitude;
   final String nextPage;
   final List<SupportCenterPlaceEntity> places;
 
   SupportCenterPlaceSessionEntity({
-    this.id,
     this.maximumRate,
     this.latitude,
     this.longitude,
     this.nextPage,
+    this.hasMore,
     this.places,
   });
 
   @override
+  bool get stringify => true;
+
+  @override
   List<Object> get props => [
-        id,
         maximumRate,
         latitude,
         longitude,
         nextPage,
+        hasMore,
         places,
       ];
 }
@@ -34,8 +37,8 @@ class SupportCenterPlaceEntity extends Equatable {
   final String rate;
   final int ratedByClient;
   final String distance;
-  final String latitude;
-  final String longitude;
+  final double latitude;
+  final double longitude;
   final String name;
   final String uf;
   final SupportCenterPlaceCategoryEntity category;
@@ -51,6 +54,9 @@ class SupportCenterPlaceEntity extends Equatable {
     @required this.uf,
     @required this.category,
   });
+
+  @override
+  bool get stringify => true;
 
   @override
   List<Object> get props => [
@@ -75,6 +81,9 @@ class SupportCenterPlaceCategoryEntity extends Equatable {
     @required this.name,
     @required this.color,
   });
+
+  @override
+  bool get stringify => true;
 
   @override
   List<Object> get props => [
