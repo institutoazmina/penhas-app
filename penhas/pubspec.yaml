@@ -149,7 +149,7 @@ flutter:
     - assets/images/svg/support_center/location.svg
     - assets/images/svg/support_center/suggest_place.svg
     - assets/images/svg/support_center/trace_route.svg
-
+    - assets/images/support_center/map_marker/map_marker.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
@@ -21,9 +22,148 @@ class _SupportCenterListPageState
         elevation: 0.0,
         backgroundColor: DesignSystemColors.easterPurple,
       ),
-      body: Container(
-        color: Colors.deepOrangeAccent,
-      ),
+      body: Observer(builder: (_) {
+        return Container(
+          color: DesignSystemColors.systemBackgroundColor,
+          child: SafeArea(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 20.0, horizontal: 16.0),
+                  child: Text(
+                    "Pontos de apoio encontrados",
+                    style: TextStyle().listTitle,
+                  ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: controller.places.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final place = controller.places[index];
+                      final uf = place.uf;
+                      final rate = place.rate;
+                      final distance = place.distance;
+
+                      final placeColor =
+                          DesignSystemColors.hexColor(place.category.color);
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 8),
+                        child: Container(
+                          padding: EdgeInsets.all(12.0),
+                          decoration: BoxDecoration(
+                            color: DesignSystemColors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(8.0)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black12,
+                                offset: Offset(0.0, 1.0),
+                                blurRadius: 8.0,
+                              )
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Icon(
+                                      Icons.place,
+                                      size: 30,
+                                      color: placeColor,
+                                    ),
+                                  ),
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          place.name,
+                                          style: TextStyle(
+                                              color: placeColor,
+                                              fontFamily: 'Lato',
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                            top: 8.0,
+                                            bottom: 20.0,
+                                          ),
+                                          child: Text(
+                                            place.category.name.toUpperCase(),
+                                            style: TextStyle().categoryName,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("$uf - ${distance}KM DE DISTÂNCIA",
+                                        style: TextStyle().categoryName),
+                                    Text(
+                                      "$rate/5",
+                                      style: TextStyle().rate,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      }),
     );
   }
+}
+
+// decoration: BoxDecoration(
+//   color: DesignSystemColors.white,
+//   boxShadow: [
+//     BoxShadow(
+//       color: Colors.black12,
+//       offset: Offset(0.0, 1.0),
+//       blurRadius: 8.0,
+//     )
+//   ],
+
+extension _TextStyle on TextStyle {
+  TextStyle get listTitle => TextStyle(
+      color: DesignSystemColors.darkIndigoThree,
+      fontFamily: 'Lato',
+      fontSize: 20.0,
+      fontWeight: FontWeight.bold);
+
+  TextStyle get categoryName => TextStyle(
+      color: DesignSystemColors.brownishGrey,
+      fontFamily: 'Lato',
+      fontSize: 12.0,
+      fontWeight: FontWeight.normal);
+
+  TextStyle get rate => TextStyle(
+      color: DesignSystemColors.darkIndigoThree,
+      fontFamily: 'Lato',
+      fontSize: 12.0,
+      fontWeight: FontWeight.normal);
 }

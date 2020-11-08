@@ -26,6 +26,8 @@ class SupportCenterController extends _SupportCenterControllerBase
 
 abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   List<FilterTagEntity> _tags = List<FilterTagEntity>();
+  SupportCenterPlaceSessionEntity currentPlaceSession;
+
   final SupportCenterUseCase _supportCenterUseCase;
 
   _SupportCenterControllerBase(this._supportCenterUseCase) {
@@ -85,7 +87,10 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> listPlaces() async {
-    Modular.to.pushNamed("/mainboard/supportcenter/list");
+    Modular.to.pushNamed(
+      "/mainboard/supportcenter/list",
+      arguments: currentPlaceSession,
+    );
   }
 
   @action
@@ -189,6 +194,7 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
   void handleLoadSupportCenterSuccess(
       SupportCenterPlaceSessionEntity session) async {
     state = SupportCenterState.loaded();
+    currentPlaceSession = session;
     initialPosition = LatLng(session.latitude, session.longitude);
     final places = session.places.map((e) => buildMarker(e));
     placeMarkers.addAll(places);

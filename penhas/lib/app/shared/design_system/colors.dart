@@ -13,6 +13,7 @@ class DesignSystemColors {
   static const charcoalGrey2 = Color.fromRGBO(68, 74, 83, 1);
   static const blueyGrey = Color.fromRGBO(141, 146, 157, 1);
   static const warnGrey = Color.fromRGBO(129, 129, 129, 1);
+  static const brownishGrey = Color.fromRGBO(105, 105, 105, 1);
   static const white = Color.fromRGBO(252, 252, 252, 1);
   static const pinkishGrey = Color.fromRGBO(214, 210, 195, 1);
   static const pinky = Color.fromRGBO(249, 130, 180, 1);
