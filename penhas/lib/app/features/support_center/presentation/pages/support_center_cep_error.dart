@@ -57,27 +57,6 @@ class SupportCenterCepError extends StatelessWidget {
                 ),
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(top: 48.0),
-            //   child: FlatButton.icon(
-            //       onPressed: _onPressed,
-            //       icon: Icon(
-            //         Icons.location_on,
-            //         color: DesignSystemColors.easterPurple,
-            //         size: 60,
-            //       ),
-            //       label: Container()),
-            // ),
-            // Text(
-            //   'Nova localização',
-            //   style: TextStyle(
-            //     fontFamily: 'Lato',
-            //     fontSize: 16.0,
-            //     fontWeight: FontWeight.normal,
-            //     color: Colors.white,
-            //     letterSpacing: 0.15,
-            //   ),
-            // ),
           ],
         ),
       ),

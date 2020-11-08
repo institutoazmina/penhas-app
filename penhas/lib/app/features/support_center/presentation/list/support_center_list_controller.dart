@@ -1,5 +1,3 @@
-import 'package:dartz/dartz.dart';
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
 part 'support_center_list_controller.g.dart';

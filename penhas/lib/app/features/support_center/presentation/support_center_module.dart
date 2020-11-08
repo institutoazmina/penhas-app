@@ -32,7 +32,11 @@ class SupportCenterModule extends WidgetModule {
             apiProvider: i.get<IApiProvider>(),
           ),
         ),
-        Bind((i) => SupportCenterAddController()),
+        Bind(
+          (i) => SupportCenterAddController(
+            supportCenterUseCase: i.get<SupportCenterUseCase>(),
+          ),
+        ),
         Bind(
           (i) => SupportCenterListController(i.args.data),
           singleton: false,

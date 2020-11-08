@@ -92,6 +92,7 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
         ),
       );
     }
+
     return PageProgressIndicator(
       progressState: controller.progressState,
       child: Stack(
