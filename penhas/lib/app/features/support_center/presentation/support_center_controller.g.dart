@@ -86,6 +86,22 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
     });
   }
 
+  final _$initialPositionAtom =
+      Atom(name: '_SupportCenterControllerBase.initialPosition');
+
+  @override
+  LatLng get initialPosition {
+    _$initialPositionAtom.reportRead();
+    return super.initialPosition;
+  }
+
+  @override
+  set initialPosition(LatLng value) {
+    _$initialPositionAtom.reportWrite(value, super.initialPosition, () {
+      super.initialPosition = value;
+    });
+  }
+
   final _$stateAtom = Atom(name: '_SupportCenterControllerBase.state');
 
   @override
@@ -162,6 +178,7 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
     return '''
 categoriesSelected: ${categoriesSelected},
 errorMessage: ${errorMessage},
+initialPosition: ${initialPosition},
 state: ${state},
 progressState: ${progressState}
     ''';

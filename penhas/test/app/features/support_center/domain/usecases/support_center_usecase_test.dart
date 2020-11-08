@@ -1,23 +1,31 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/features/support_center/data/models/support_center_metadata_model.dart';
 import 'package:penhas/app/features/support_center/data/repositories/support_center_repository.dart';
 import 'package:penhas/app/features/support_center/domain/usecases/support_center_usecase.dart';
 
 import '../../../../../utils/json_util.dart';
 
+class MockLocationServices extends Mock implements ILocationServices {}
+
 class MockSupportCenterRepository extends Mock
     implements ISupportCenterRepository {}
 
 void main() {
   ISupportCenterRepository supportCenterRepository;
+  ILocationServices locationServices;
   SupportCenterUseCase sut;
 
   setUp(() {
     supportCenterRepository = MockSupportCenterRepository();
-    sut =
-        SupportCenterUseCase(supportCenterRepository: supportCenterRepository);
+    locationServices = MockLocationServices();
+
+    sut = SupportCenterUseCase(
+      locationService: locationServices,
+      supportCenterRepository: supportCenterRepository,
+    );
   });
 
   group('SupportCenterUsecase', () {

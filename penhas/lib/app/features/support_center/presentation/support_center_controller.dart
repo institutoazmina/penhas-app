@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -42,6 +43,9 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
 
   @observable
   String errorMessage = "";
+
+  @observable
+  LatLng initialPosition = LatLng(0, 0);
 
   @observable
   SupportCenterState state = SupportCenterState.loaded();
@@ -173,12 +177,13 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
 
     result.fold(
       (failure) => handleStateError(failure),
-      (places) => handleLoadSupportCenterSuccess(),
+      (places) => handleLoadSupportCenterSuccess(places),
     );
   }
 
-  void handleLoadSupportCenterSuccess() {
+  void handleLoadSupportCenterSuccess(SupportCenterPlaceSessionEntity places) {
     state = SupportCenterState.loaded();
+    initialPosition = LatLng(places.latitude, places.longitude);
   }
 
   void handleStateError(Failure f) {

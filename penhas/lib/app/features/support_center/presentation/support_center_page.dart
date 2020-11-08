@@ -80,12 +80,25 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
   }
 
   Widget loadedSupportCenterPage() {
+    if (mapController != null) {
+      mapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            tilt: 75.0,
+            zoom: 12.0,
+            bearing: 15.0,
+            target: controller.initialPosition,
+          ),
+        ),
+      );
+    }
     return PageProgressIndicator(
       progressState: controller.progressState,
       child: Stack(
         children: [
           GoogleMap(
-            initialCameraPosition: CameraPosition(target: LatLng(0.0, 0.0)),
+            initialCameraPosition:
+                CameraPosition(target: controller.initialPosition),
             myLocationEnabled: true,
             myLocationButtonEnabled: false,
             mapType: MapType.normal,
