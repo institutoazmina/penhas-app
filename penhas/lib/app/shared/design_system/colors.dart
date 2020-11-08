@@ -24,4 +24,13 @@ class DesignSystemColors {
   static const nigthBlue = Color.fromRGBO(5, 8, 70, 1);
   static const bluishPurple = Color.fromRGBO(129, 51, 255, 1);
   static const systemBackgroundColor = Color.fromRGBO(248, 248, 248, 1);
+  static Color hexColor(String value) {
+    value = value.toUpperCase().replaceAll("#", "");
+    if (value.length == 6) {
+      value = "FF" + value;
+    }
+
+    final foo = Color(int.parse(value, radix: 16));
+    return foo;
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meta/meta.dart';
@@ -12,6 +13,7 @@ import 'package:penhas/app/features/support_center/domain/entities/support_cente
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
 import 'package:penhas/app/features/support_center/domain/states/support_center_state.dart';
 import 'package:penhas/app/features/support_center/domain/usecases/support_center_usecase.dart';
+import 'package:penhas/app/shared/design_system/colors.dart';
 
 part 'support_center_controller.g.dart';
 
@@ -184,7 +186,8 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     );
   }
 
-  void handleLoadSupportCenterSuccess(SupportCenterPlaceSessionEntity session) {
+  void handleLoadSupportCenterSuccess(
+      SupportCenterPlaceSessionEntity session) async {
     state = SupportCenterState.loaded();
     initialPosition = LatLng(session.latitude, session.longitude);
     final places = session.places.map((e) => buildMarker(e));
@@ -202,9 +205,22 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
 
   Marker buildMarker(SupportCenterPlaceEntity place) {
     final LatLng makerPosition = LatLng(place.latitude, place.longitude);
+    final placeColor = HSLColor.fromColor(
+      DesignSystemColors.hexColor(
+        place.category.color,
+      ),
+    );
+
     return Marker(
-        position: makerPosition,
-        markerId: MarkerId(makerPosition.toString()),
-        infoWindow: InfoWindow(title: place.name));
+      position: makerPosition,
+      markerId: MarkerId(makerPosition.toString()),
+      infoWindow: InfoWindow(
+        title: place.name,
+        onTap: () {
+          print('ola muito feliz mundo!');
+        },
+      ),
+      icon: BitmapDescriptor.defaultMarkerWithHue(placeColor.hue),
+    );
   }
 }
