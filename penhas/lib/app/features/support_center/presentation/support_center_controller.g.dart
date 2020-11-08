@@ -86,6 +86,22 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
     });
   }
 
+  final _$placeMarkersAtom =
+      Atom(name: '_SupportCenterControllerBase.placeMarkers');
+
+  @override
+  ObservableSet<Marker> get placeMarkers {
+    _$placeMarkersAtom.reportRead();
+    return super.placeMarkers;
+  }
+
+  @override
+  set placeMarkers(ObservableSet<Marker> value) {
+    _$placeMarkersAtom.reportWrite(value, super.placeMarkers, () {
+      super.placeMarkers = value;
+    });
+  }
+
   final _$initialPositionAtom =
       Atom(name: '_SupportCenterControllerBase.initialPosition');
 
@@ -178,6 +194,7 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
     return '''
 categoriesSelected: ${categoriesSelected},
 errorMessage: ${errorMessage},
+placeMarkers: ${placeMarkers},
 initialPosition: ${initialPosition},
 state: ${state},
 progressState: ${progressState}

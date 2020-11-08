@@ -45,6 +45,9 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   String errorMessage = "";
 
   @observable
+  ObservableSet<Marker> placeMarkers = ObservableSet<Marker>();
+
+  @observable
   LatLng initialPosition = LatLng(0, 0);
 
   @observable
@@ -181,9 +184,11 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     );
   }
 
-  void handleLoadSupportCenterSuccess(SupportCenterPlaceSessionEntity places) {
+  void handleLoadSupportCenterSuccess(SupportCenterPlaceSessionEntity session) {
     state = SupportCenterState.loaded();
-    initialPosition = LatLng(places.latitude, places.longitude);
+    initialPosition = LatLng(session.latitude, session.longitude);
+    final places = session.places.map((e) => buildMarker(e));
+    placeMarkers.addAll(places);
   }
 
   void handleStateError(Failure f) {
@@ -193,5 +198,13 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     }
 
     state = SupportCenterState.error(mapFailureMessage(f));
+  }
+
+  Marker buildMarker(SupportCenterPlaceEntity place) {
+    final LatLng makerPosition = LatLng(place.latitude, place.longitude);
+    return Marker(
+        position: makerPosition,
+        markerId: MarkerId(makerPosition.toString()),
+        infoWindow: InfoWindow(title: place.name));
   }
 }

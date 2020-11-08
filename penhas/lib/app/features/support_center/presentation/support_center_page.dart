@@ -102,6 +102,7 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
             myLocationEnabled: true,
             myLocationButtonEnabled: false,
             mapType: MapType.normal,
+            markers: controller.placeMarkers,
             zoomGesturesEnabled: true,
             zoomControlsEnabled: false,
             onMapCreated: (GoogleMapController controller) {
