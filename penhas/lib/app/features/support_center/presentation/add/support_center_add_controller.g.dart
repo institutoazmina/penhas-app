@@ -115,19 +115,35 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$categorieNameAtom =
-      Atom(name: '_SupportCenterAddControllerBase.categorieName');
+  final _$categorySelectedAtom =
+      Atom(name: '_SupportCenterAddControllerBase.categorySelected');
 
   @override
-  String get categorieName {
-    _$categorieNameAtom.reportRead();
-    return super.categorieName;
+  String get categorySelected {
+    _$categorySelectedAtom.reportRead();
+    return super.categorySelected;
   }
 
   @override
-  set categorieName(String value) {
-    _$categorieNameAtom.reportWrite(value, super.categorieName, () {
-      super.categorieName = value;
+  set categorySelected(String value) {
+    _$categorySelectedAtom.reportWrite(value, super.categorySelected, () {
+      super.categorySelected = value;
+    });
+  }
+
+  final _$categoryErrorAtom =
+      Atom(name: '_SupportCenterAddControllerBase.categoryError');
+
+  @override
+  String get categoryError {
+    _$categoryErrorAtom.reportRead();
+    return super.categoryError;
+  }
+
+  @override
+  set categoryError(String value) {
+    _$categoryErrorAtom.reportWrite(value, super.categoryError, () {
+      super.categoryError = value;
     });
   }
 
@@ -213,7 +229,8 @@ placeNameError: ${placeNameError},
 placeDescriptionError: ${placeDescriptionError},
 errorMessage: ${errorMessage},
 places: ${places},
-categorieName: ${categorieName},
+categorySelected: ${categorySelected},
+categoryError: ${categoryError},
 state: ${state},
 progressState: ${progressState}
     ''';

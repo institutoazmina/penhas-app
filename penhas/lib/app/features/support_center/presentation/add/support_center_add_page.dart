@@ -34,15 +34,15 @@ class _SupportCenterAddPageState
         backgroundColor: DesignSystemColors.easterPurple,
       ),
       body: Observer(builder: (_) {
-        return buildBody(controller.state);
+        return buildBody(context, controller.state);
       }),
     );
   }
 
-  Widget buildBody(SupportCenterAddState state) {
+  Widget buildBody(BuildContext context, SupportCenterAddState state) {
     return state.when(
       initial: () => buildLodingCategories(),
-      loaded: () => buildLoaded(),
+      loaded: () => buildLoaded(context),
       error: (msg) => buildError(),
     );
   }
@@ -57,9 +57,21 @@ class _SupportCenterAddPageState
     );
   }
 
-  Widget buildLoaded() {
-    return Container(
-      color: Colors.blueAccent,
+  Widget buildLoaded(BuildContext context) {
+    return SafeArea(
+      child: PageProgressIndicator(
+        progressState: controller.progressState,
+        progressMessage: "Processando",
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildInputPlaceInformation(context, controller.places),
+              buildPlaceAction(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -112,9 +124,9 @@ extension _BuildWidget on _SupportCenterAddPageState {
           buildDropdownList(
             context: context,
             labelText: "Selecione o tipo de ponto de apoio",
-            errorMessage: "",
+            errorMessage: controller.categoryError,
+            currentValue: controller.categorySelected,
             dataSource: dataSource,
-            currentValue: "",
           ),
           SupportCenterInput(
             hintText: "Nome do ponto de apoio",
@@ -126,7 +138,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
             hintText:
                 "Explique brevemente os serviços oferecidos por este ponto de apoio",
             errorText: controller.placeDescriptionError,
-            onChanged: controller.setPlaceName,
+            onChanged: controller.setPlaceDescription,
           ),
         ],
       ),
@@ -179,7 +191,9 @@ extension _BuildWidget on _SupportCenterAddPageState {
     return list
         .map(
           (v) => DropdownMenuItem<String>(
-            child: Text(v.label),
+            child: Text(
+              v.label,
+            ),
             value: v.id,
           ),
         )
@@ -199,6 +213,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
         data: Theme.of(context)
             .copyWith(canvasColor: Color.fromRGBO(141, 146, 157, 1)),
         child: DropdownButtonFormField(
+          isExpanded: true,
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: DesignSystemColors.easterPurple),
@@ -206,18 +221,16 @@ extension _BuildWidget on _SupportCenterAddPageState {
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: DesignSystemColors.easterPurple),
             ),
-            errorText: (errorMessage?.isEmpty ?? true) ? "" : errorMessage,
+            errorText: (errorMessage?.isEmpty ?? true) ? null : errorMessage,
             border: OutlineInputBorder(
                 borderSide: BorderSide(color: DesignSystemColors.easterPurple)),
-            labelText: controller.categorieName,
-            // labelStyle: TextStyle(color: Colors.white),
             contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
             hintText: labelText,
+            hintStyle: TextStyle(color: Colors.black),
           ),
           items: dataSource,
           onChanged: controller.setCategorie,
-          // style: TextStyle(color: Colors.white),
-          value: controller.categorieName,
+          value: currentValue.isEmpty ? null : currentValue,
         ),
       ),
     );
@@ -230,13 +243,11 @@ extension _SupportCenterAddPageStateTextStyle on _SupportCenterAddPageState {
       fontFamily: 'Lato',
       fontSize: 14.0,
       fontWeight: FontWeight.normal);
-
   TextStyle get addressTitle => TextStyle(
       color: DesignSystemColors.darkIndigoThree,
       fontFamily: 'Lato',
       fontSize: 20.0,
       fontWeight: FontWeight.bold);
-
   TextStyle get buttonTitle => TextStyle(
       color: DesignSystemColors.white,
       fontFamily: 'Lato',

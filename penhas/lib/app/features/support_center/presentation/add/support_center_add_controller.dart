@@ -50,7 +50,10 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   ObservableList<FilterTagEntity> places = ObservableList<FilterTagEntity>();
 
   @observable
-  String categorieName = "";
+  String categorySelected = "";
+
+  @observable
+  String categoryError = "";
 
   @observable
   SupportCenterAddState state = SupportCenterAddState.initial();
@@ -84,18 +87,25 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @action
   void setPlaceDescription(String description) {
+    placeDescriptionError =
+        description.isNotEmpty ? "" : "Nome do ponto é campo obrigatório";
     _placeDescription = description;
   }
 
   @action
   void setCategorie(String value) {
+    categoryError = value.isNotEmpty ? "" : "Nome do ponto é campo obrigatório";
     _category = places.firstWhere((element) => element.id == value);
-    categorieName = _category.label;
+    categorySelected = _category.id;
   }
 
   @action
   void salvePlace() {
     resetErrors();
+
+    if (_category == null) {
+      categoryError = "O tipo é um campo obrigatório";
+    }
 
     if (_address == null || _address.isEmpty) {
       addressError = "Endereço é campo obrigatório";
