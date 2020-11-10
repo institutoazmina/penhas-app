@@ -1,10 +1,13 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
+import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_metadata_entity.dart';
 import 'package:penhas/app/features/support_center/domain/states/support_center_add_state.dart';
 import 'package:penhas/app/features/support_center/domain/usecases/support_center_usecase.dart';
@@ -31,8 +34,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   }
 
   @observable
-  ObservableFuture<Either<Failure, SupportCenterMetadataEntity>>
-      _loadCategories;
+  ObservableFuture<Either<Failure, ValidField>> _savingSuggestion;
 
   @observable
   String addressError = "";
@@ -60,18 +62,11 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @computed
   PageProgressState get progressState {
-    return monitorProgress(_loadCategories);
+    return monitorProgress(_savingSuggestion);
   }
 
-  PageProgressState monitorProgress(ObservableFuture<Object> observable) {
-    if (observable == null || observable.status == FutureStatus.rejected) {
-      return PageProgressState.initial;
-    }
-
-    return observable.status == FutureStatus.pending
-        ? PageProgressState.loading
-        : PageProgressState.loaded;
-  }
+  @observable
+  GuardianAlertState alertState = GuardianAlertState.initial();
 
   @action
   void setAddress(String address) {
@@ -100,8 +95,9 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  void salvePlace() {
+  Future<void> savePlace() async {
     resetErrors();
+    setMessageErro("");
 
     if (_category == null) {
       categoryError = "O tipo é um campo obrigatório";
@@ -118,6 +114,19 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     if (_placeDescription == null || _placeDescription.isEmpty) {
       placeDescriptionError = "Deixa uma descrição do ponto de apoio";
     }
+
+    _savingSuggestion = ObservableFuture(_supportCenterUseCase.saveSuggestion(
+      name: _placeName,
+      address: _address,
+      category: _category.id,
+      description: _placeDescription,
+    ));
+
+    final result = await _savingSuggestion;
+    result.fold(
+      (failure) => setMessageErro(mapFailureMessage(failure)),
+      (valid) => handleSuccessAddSupportCenter(valid),
+    );
   }
 
   void resetErrors() {
@@ -133,9 +142,7 @@ extension _Private on _SupportCenterAddControllerBase {
   }
 
   Future<void> loadCategorias() async {
-    _loadCategories = ObservableFuture(_supportCenterUseCase.metadata());
-
-    final result = await _loadCategories;
+    final result = await _supportCenterUseCase.metadata();
 
     result.fold(
       (failure) => handleCategoriesError(failure),
@@ -154,5 +161,28 @@ extension _Private on _SupportCenterAddControllerBase {
 
   void setMessageErro(String message) {
     errorMessage = message;
+  }
+
+  void handleSuccessAddSupportCenter(ValidField field) {
+    alertState = GuardianAlertState.alert(
+      GuardianAlertMessageAction(
+        message: field.message,
+        onPressed: () async => actionAfterNotice(),
+      ),
+    );
+  }
+
+  void actionAfterNotice() async {
+    Modular.to.pop(true);
+  }
+
+  PageProgressState monitorProgress(ObservableFuture<Object> observable) {
+    if (observable == null || observable.status == FutureStatus.rejected) {
+      return PageProgressState.initial;
+    }
+
+    return observable.status == FutureStatus.pending
+        ? PageProgressState.loading
+        : PageProgressState.loaded;
   }
 }

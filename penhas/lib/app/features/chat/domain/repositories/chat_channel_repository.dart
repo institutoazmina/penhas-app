@@ -100,14 +100,14 @@ class ChatChannelRepository implements IChatChannelRepository {
       'chat_auth': option.token,
     };
 
-    final bodyContent = Uri.encodeComponent(option.message);
+    final bodyContent = {'message': Uri.encodeComponent(option.message)};
 
     try {
       final response = await _apiProvider
           .post(
             path: endPoint,
             parameters: parameters,
-            body: 'message=$bodyContent',
+            body: bodyContent,
           )
           .then((v) => jsonDecode(v) as Map<String, Object>)
           .then((v) => ChatSentMessageResponseEntity.fromJson(v));

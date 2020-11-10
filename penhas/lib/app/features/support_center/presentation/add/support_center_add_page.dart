@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
+import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/support_center/domain/states/support_center_add_state.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_input.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
+import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 import 'support_center_add_controller.dart';
 
@@ -90,9 +93,8 @@ class _SupportCenterAddPageState
   void didChangeDependencies() {
     super.didChangeDependencies();
     _disposers ??= [
-      reaction((_) => controller.errorMessage, (String message) {
-        showSnackBar(scaffoldKey: _scaffoldKey, message: message);
-      }),
+      showErrorMessage(),
+      showAlert(),
     ];
   }
 }
@@ -171,7 +173,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
             child: SizedBox(
               height: 44,
               child: RaisedButton(
-                onPressed: controller.salvePlace,
+                onPressed: controller.savePlace,
                 elevation: 0,
                 color: DesignSystemColors.ligthPurple,
                 shape: kButtonShapeFilled,
@@ -233,6 +235,58 @@ extension _BuildWidget on _SupportCenterAddPageState {
           value: currentValue.isEmpty ? null : currentValue,
         ),
       ),
+    );
+  }
+
+  ReactionDisposer showErrorMessage() {
+    return reaction((_) => controller.errorMessage, (String message) {
+      showSnackBar(scaffoldKey: _scaffoldKey, message: message);
+    });
+  }
+
+  ReactionDisposer showAlert() {
+    return reaction((_) => controller.alertState, (GuardianAlertState status) {
+      status.when(
+        initial: () {},
+        alert: (action) => showSentInvite(action),
+      );
+    });
+  }
+
+  void showSentInvite(GuardianAlertMessageAction action) {
+    Modular.to.showDialog(
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: Column(
+            children: <Widget>[
+              SvgPicture.asset(
+                  'assets/images/svg/help_center/guardians/guardians_sent_invite.svg'),
+              Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child:
+                    Text('Sugestão enviada', style: kTextStyleAlertDialogTitle),
+              ),
+            ],
+          ),
+          content: Text(
+            action.message,
+            style: kTextStyleAlertDialogDescription,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Fechar'),
+              onPressed: () async {
+                Modular.to.pop();
+                action.onPressed();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

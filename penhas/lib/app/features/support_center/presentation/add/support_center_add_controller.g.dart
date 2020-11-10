@@ -17,21 +17,19 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
               name: '_SupportCenterAddControllerBase.progressState'))
       .value;
 
-  final _$_loadCategoriesAtom =
-      Atom(name: '_SupportCenterAddControllerBase._loadCategories');
+  final _$_savingSuggestionAtom =
+      Atom(name: '_SupportCenterAddControllerBase._savingSuggestion');
 
   @override
-  ObservableFuture<Either<Failure, SupportCenterMetadataEntity>>
-      get _loadCategories {
-    _$_loadCategoriesAtom.reportRead();
-    return super._loadCategories;
+  ObservableFuture<Either<Failure, ValidField>> get _savingSuggestion {
+    _$_savingSuggestionAtom.reportRead();
+    return super._savingSuggestion;
   }
 
   @override
-  set _loadCategories(
-      ObservableFuture<Either<Failure, SupportCenterMetadataEntity>> value) {
-    _$_loadCategoriesAtom.reportWrite(value, super._loadCategories, () {
-      super._loadCategories = value;
+  set _savingSuggestion(ObservableFuture<Either<Failure, ValidField>> value) {
+    _$_savingSuggestionAtom.reportWrite(value, super._savingSuggestion, () {
+      super._savingSuggestion = value;
     });
   }
 
@@ -162,6 +160,30 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
+  final _$alertStateAtom =
+      Atom(name: '_SupportCenterAddControllerBase.alertState');
+
+  @override
+  GuardianAlertState get alertState {
+    _$alertStateAtom.reportRead();
+    return super.alertState;
+  }
+
+  @override
+  set alertState(GuardianAlertState value) {
+    _$alertStateAtom.reportWrite(value, super.alertState, () {
+      super.alertState = value;
+    });
+  }
+
+  final _$savePlaceAsyncAction =
+      AsyncAction('_SupportCenterAddControllerBase.savePlace');
+
+  @override
+  Future<void> savePlace() {
+    return _$savePlaceAsyncAction.run(() => super.savePlace());
+  }
+
   final _$_SupportCenterAddControllerBaseActionController =
       ActionController(name: '_SupportCenterAddControllerBase');
 
@@ -211,17 +233,6 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
   }
 
   @override
-  void salvePlace() {
-    final _$actionInfo = _$_SupportCenterAddControllerBaseActionController
-        .startAction(name: '_SupportCenterAddControllerBase.salvePlace');
-    try {
-      return super.salvePlace();
-    } finally {
-      _$_SupportCenterAddControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 addressError: ${addressError},
@@ -232,6 +243,7 @@ places: ${places},
 categorySelected: ${categorySelected},
 categoryError: ${categoryError},
 state: ${state},
+alertState: ${alertState},
 progressState: ${progressState}
     ''';
   }

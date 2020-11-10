@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
@@ -58,6 +59,20 @@ class SupportCenterUseCase {
   bool updatedGeoLocation(GeolocationEntity selectedGeoLocation) {
     _cachedGeoLocation = selectedGeoLocation;
     return true;
+  }
+
+  Future<Either<Failure, ValidField>> saveSuggestion({
+    @required String name,
+    @required String address,
+    @required String category,
+    @required String description,
+  }) {
+    return _supportCenterRepository.suggestion(
+      name: name,
+      address: address,
+      category: category,
+      description: description,
+    );
   }
 
   Future<void> dataSource() {

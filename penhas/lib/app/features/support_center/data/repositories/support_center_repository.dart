@@ -19,6 +19,12 @@ abstract class ISupportCenterRepository {
   Future<Either<Failure, SupportCenterPlaceSessionEntity>> fetch(
       SupportCenterFetchRequest options);
   Future<Either<Failure, GeolocationEntity>> mapGeoFromCep(String cep);
+  Future<Either<Failure, ValidField>> suggestion({
+    @required String name,
+    @required String address,
+    @required String category,
+    @required String description,
+  });
 }
 
 class SupportCenterRepository implements ISupportCenterRepository {
@@ -83,6 +89,32 @@ class SupportCenterRepository implements ISupportCenterRepository {
       return left(MapExceptionToFailure.map(error));
     }
   }
+
+  @override
+  Future<Either<Failure, ValidField>> suggestion({
+    @required String name,
+    @required String address,
+    @required String category,
+    @required String description,
+  }) async {
+    final endPoint = "/me/sugerir-pontos-de-apoio";
+    final bodyContent = {
+      'nome': Uri.encodeComponent(name),
+      'categoria': Uri.encodeComponent(category),
+      'endereco_ou_cep': Uri.encodeComponent(address),
+      'descricao_servico': Uri.encodeComponent(description),
+    };
+
+    try {
+      final response = await _apiProvider.post(
+        path: endPoint,
+        body: bodyContent,
+      );
+      return right(parseAddSugestion(response));
+    } catch (error) {
+      return left(MapExceptionToFailure.map(error));
+    }
+  }
 }
 
 extension SupportCenterRepositoryPrivate on SupportCenterRepository {
@@ -99,5 +131,10 @@ extension SupportCenterRepositoryPrivate on SupportCenterRepository {
   GeolocationEntity parseGeoFromCep(String body) {
     final jsonData = jsonDecode(body) as Map<String, Object>;
     return GeoLocationModel.fromJson(jsonData);
+  }
+
+  ValidField parseAddSugestion(String body) {
+    final jsonData = jsonDecode(body) as Map<String, Object>;
+    return ValidField.fromJson(jsonData);
   }
 }

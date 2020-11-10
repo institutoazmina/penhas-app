@@ -19,7 +19,7 @@ abstract class IApiProvider {
     @required String path,
     Map<String, String> headers,
     Map<String, String> parameters,
-    String body,
+    Map<String, String> body,
   });
 
   Future<String> delete({
@@ -74,7 +74,7 @@ class ApiProvider implements IApiProvider {
     @required String path,
     Map<String, String> headers,
     Map<String, String> parameters,
-    String body,
+    Map<String, String> body,
   }) async {
     final Uri uriRequest = setupHttpRequest(
       path: path,
