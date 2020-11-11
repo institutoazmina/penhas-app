@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 import 'package:penhas/app/core/entities/user_location.dart';
 
 class SupportCenterFetchRequest extends Equatable {
@@ -30,4 +31,22 @@ class SupportCenterFetchRequest extends Equatable {
         this.nextPage,
         this.rows
       ];
+
+  SupportCenterFetchRequest copyWith({
+    UserLocationEntity userLocation,
+    String locationToken,
+    List<String> categories,
+    String keywords,
+    String nextPage,
+    int rows,
+  }) {
+    return SupportCenterFetchRequest(
+      userLocation: userLocation ?? this.userLocation,
+      locationToken: locationToken ?? this.locationToken,
+      categories: categories ?? this.categories,
+      keywords: keywords ?? this.keywords,
+      nextPage: nextPage ?? this.nextPage,
+      rows: rows ?? rows,
+    );
+  }
 }

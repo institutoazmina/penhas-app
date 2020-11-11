@@ -9,6 +9,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/map_failu
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
 import 'package:penhas/app/features/filters/states/filter_action_observer.dart';
+import 'package:penhas/app/features/support_center/domain/entities/support_center_fetch_request.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_metadata_entity.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
 import 'package:penhas/app/features/support_center/domain/states/support_center_state.dart';
@@ -27,6 +28,7 @@ class SupportCenterController extends _SupportCenterControllerBase
 abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   List<FilterTagEntity> _tags = List<FilterTagEntity>();
   SupportCenterPlaceSessionEntity currentPlaceSession;
+  var _fetchRequest = SupportCenterFetchRequest();
 
   final SupportCenterUseCase _supportCenterUseCase;
 
@@ -71,7 +73,7 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
 
     result.fold(
       (failure) => handleCategoriesError(failure),
-      (metadata) => handleCategoriesSuccess(metadata.categories),
+      (metadata) async => handleCategoriesSuccess(metadata.categories),
     );
   }
 
@@ -107,13 +109,13 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> retry() async {
-    await loadSupportCenter();
+    await loadSupportCenter(_fetchRequest);
   }
 }
 
 extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
   Future<void> setup() async {
-    await loadSupportCenter();
+    await loadSupportCenter(_fetchRequest);
   }
 
   void setMessageErro(String message) {
@@ -126,7 +128,7 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     }
   }
 
-  void handleCategoriesSuccess(List<FilterTagEntity> categories) {
+  Future<void> handleCategoriesSuccess(List<FilterTagEntity> categories) async {
     final tags = categories
         .map(
           (e) => FilterTagEntity(
@@ -140,7 +142,7 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     Modular.to
         .pushNamed("/mainboard/filters", arguments: tags)
         .then((v) => v as FilterActionObserver)
-        .then((v) => handleCategoriesUpdate(v));
+        .then((v) async => handleCategoriesUpdate(v));
   }
 
   void handleCategoriesError(Failure failure) {
@@ -157,7 +159,7 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     }
   }
 
-  void handleCategoriesUpdate(FilterActionObserver action) {
+  Future<void> handleCategoriesUpdate(FilterActionObserver action) async {
     if (action == null) {
       return;
     }
@@ -167,7 +169,11 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
       updated: (listTags) => listTags,
     );
 
+    final categories = _tags.map((e) => e.id).toList();
+    _fetchRequest = _fetchRequest.copyWith(categories: categories);
     categoriesSelected = _tags.length;
+
+    await loadSupportCenter(_fetchRequest);
   }
 
   PageProgressState monitorProgress(ObservableFuture<Object> observable) {
@@ -180,8 +186,9 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
         : PageProgressState.loaded;
   }
 
-  Future<void> loadSupportCenter() async {
-    _loadSupportCenter = ObservableFuture(_supportCenterUseCase.fetch());
+  Future<void> loadSupportCenter(SupportCenterFetchRequest fetchRequest) async {
+    _loadSupportCenter =
+        ObservableFuture(_supportCenterUseCase.fetch(fetchRequest));
 
     final result = await _loadSupportCenter;
 
@@ -197,7 +204,7 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     currentPlaceSession = session;
     initialPosition = LatLng(session.latitude, session.longitude);
     final places = session.places.map((e) => buildMarker(e));
-    placeMarkers.addAll(places);
+    placeMarkers = Set<Marker>.from(places).asObservable();
   }
 
   void handleStateError(Failure f) {

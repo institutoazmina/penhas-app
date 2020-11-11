@@ -34,9 +34,8 @@ class SupportCenterUseCase {
     return metadata;
   }
 
-  Future<Either<Failure, SupportCenterPlaceSessionEntity>> fetch() async {
-    final request = SupportCenterFetchRequest();
-
+  Future<Either<Failure, SupportCenterPlaceSessionEntity>> fetch(
+      SupportCenterFetchRequest request) async {
     return _supportCenterRepository.fetch(request);
   }
 
