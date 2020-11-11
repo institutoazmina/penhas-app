@@ -189,6 +189,7 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
   }
 
   Future<void> loadSupportCenter(SupportCenterFetchRequest fetchRequest) async {
+    setErrorMessage("");
     _loadSupportCenter =
         ObservableFuture(_supportCenterUseCase.fetch(fetchRequest));
 
@@ -206,6 +207,12 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     currentPlaceSession = session;
     initialPosition = LatLng(session.latitude, session.longitude);
     final places = session.places.map((e) => buildMarker(e));
+
+    if (places.isEmpty) {
+      setErrorMessage(
+          "Não encontramos Pontos de Apoio, verifique a localização e os filtros.");
+    }
+
     placeMarkers = Set<Marker>.from(places).asObservable();
   }
 
@@ -237,5 +244,9 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
       ),
       icon: BitmapDescriptor.defaultMarkerWithHue(placeColor.hue),
     );
+  }
+
+  void setErrorMessage(String msg) {
+    errorMessage = msg;
   }
 }
