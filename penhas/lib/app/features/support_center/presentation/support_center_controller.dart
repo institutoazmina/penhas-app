@@ -79,7 +79,9 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> onKeywordsAction(String keywords) async {
-    print(keywords);
+    _fetchRequest = _fetchRequest.copyWith(keywords: keywords);
+
+    await loadSupportCenter(_fetchRequest);
   }
 
   @action
