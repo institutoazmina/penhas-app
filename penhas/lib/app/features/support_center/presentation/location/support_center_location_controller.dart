@@ -58,7 +58,9 @@ abstract class _SupportCenterLocationControllerBase
 
   @action
   Future<void> askForLocationPermission() async {
-    final permission = await _supportCenterUseCase.askForLocationPermission(
+    _supportCenterUseCase.updatedGeoLocation(GeolocationEntity());
+
+    await _supportCenterUseCase.askForLocationPermission(
       "Localização",
       Text(
         "Permintindo que a PenhaS tenha acesso a tua localização, será possivel apresentar os pontos de apoio mais próximo da onde você está.",
@@ -72,7 +74,7 @@ abstract class _SupportCenterLocationControllerBase
       ),
     );
 
-    Modular.to.pop(permission);
+    Modular.to.pop(true);
   }
 }
 
