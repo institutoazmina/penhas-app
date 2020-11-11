@@ -41,8 +41,8 @@ class SupportCenterUseCase {
     final location = await currentLocation();
     if (location != null) {
       currentRequest = request.copyWith(
-        userLocation: request.userLocation,
-        locationToken: request.locationToken,
+        userLocation: location.userLocation,
+        locationToken: location.locationToken,
       );
     }
 
@@ -105,10 +105,11 @@ extension _PrivateMethods on SupportCenterUseCase {
           );
     }
 
-    if (geoLocation != null) {
-      return GeolocationEntity(userLocation: geoLocation);
-    } else if (_cachedGeoLocation != null) {
+    if (_cachedGeoLocation != null &&
+        _cachedGeoLocation.locationToken != null) {
       return GeolocationEntity(locationToken: _cachedGeoLocation.locationToken);
+    } else if (geoLocation != null) {
+      return GeolocationEntity(userLocation: geoLocation);
     }
 
     return null;
