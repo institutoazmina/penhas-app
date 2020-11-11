@@ -61,7 +61,10 @@ class SupportCenterRepository implements ISupportCenterRepository {
       parameters["longitude"] = options.userLocation.longitude.toString();
     }
 
-    parameters["categorias"] = options.categories?.join(",");
+    if (options.categories != null && options.categories.isNotEmpty) {
+      parameters["categorias"] = options.categories.join(",");
+    }
+
     parameters["keywords"] = options.keywords;
     parameters["next_page"] = options.nextPage;
 
