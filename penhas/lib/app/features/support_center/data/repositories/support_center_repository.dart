@@ -37,9 +37,13 @@ class SupportCenterRepository implements ISupportCenterRepository {
   @override
   Future<Either<Failure, SupportCenterMetadataEntity>> metadata() async {
     final endPoint = "/pontos-de-apoio-dados-auxiliares";
+    Map<String, String> parameters = {'projeto': 'Penhas'};
 
     try {
-      final bodyResponse = await _apiProvider.get(path: endPoint);
+      final bodyResponse = await _apiProvider.get(
+        path: endPoint,
+        parameters: parameters,
+      );
       return right(parseMetadata(bodyResponse));
     } catch (error) {
       return left(MapExceptionToFailure.map(error));
@@ -67,6 +71,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
 
     parameters["keywords"] = options.keywords;
     parameters["next_page"] = options.nextPage;
+    parameters["projeto"] = 'Penhas';
 
     try {
       final bodyResponse =
