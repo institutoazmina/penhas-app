@@ -11,7 +11,7 @@ class SupportCenterInputFilter extends StatelessWidget {
 
   SupportCenterInputFilter({
     Key key,
-    this.totalOfFilter = 99,
+    this.totalOfFilter = 0,
     @required this.onFilterAction,
     @required this.onKeywordsAction,
   }) : super(key: key);

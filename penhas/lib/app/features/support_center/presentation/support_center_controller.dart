@@ -101,7 +101,7 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   Future<void> location() async {
     Modular.to
         .pushNamed("/mainboard/supportcenter/location")
-        .then((value) => handleLocationFeedback(value));
+        .then((value) async => handleLocationFeedback(value));
   }
 
   @action
@@ -124,9 +124,9 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     errorMessage = message;
   }
 
-  void handleLocationFeedback(Object value) {
+  Future<void> handleLocationFeedback(Object value) async {
     if (value is bool && value == true) {
-      _supportCenterUseCase.dataSource();
+      await loadSupportCenter(_fetchRequest);
     }
   }
 
@@ -190,8 +190,11 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
 
   Future<void> loadSupportCenter(SupportCenterFetchRequest fetchRequest) async {
     setErrorMessage("");
-    _loadSupportCenter =
-        ObservableFuture(_supportCenterUseCase.fetch(fetchRequest));
+    _loadSupportCenter = ObservableFuture(
+      _supportCenterUseCase.fetch(
+        fetchRequest,
+      ),
+    );
 
     final result = await _loadSupportCenter;
 

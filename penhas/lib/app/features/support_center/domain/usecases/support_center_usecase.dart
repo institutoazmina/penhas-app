@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
+import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
@@ -36,7 +37,16 @@ class SupportCenterUseCase {
 
   Future<Either<Failure, SupportCenterPlaceSessionEntity>> fetch(
       SupportCenterFetchRequest request) async {
-    return _supportCenterRepository.fetch(request);
+    var currentRequest = request;
+    final location = await currentLocation();
+    if (location != null) {
+      currentRequest = request.copyWith(
+        userLocation: request.userLocation,
+        locationToken: request.locationToken,
+      );
+    }
+
+    return _supportCenterRepository.fetch(currentRequest);
   }
 
   Future<Either<Failure, GeolocationEntity>> mapGeoFromCep(Cep cep) async {
@@ -73,17 +83,27 @@ class SupportCenterUseCase {
       description: description,
     );
   }
-
-  Future<void> dataSource() {
-    print('Ola mundo!');
-  }
 }
 
 extension _PrivateMethods on SupportCenterUseCase {
-  Future<GeolocationEntity> geolocation() async {
-    final geoLocation = await _locationService.currentLocation().then(
-          (v) => v.getOrElse(() => null),
-        );
+  Future<bool> hasLocationPermission() async {
+    final permissionStatus = await _locationService.permissionStatus();
+    return permissionStatus.maybeWhen(
+      granted: () => true,
+      orElse: () => false,
+    );
+  }
+
+  Future<GeolocationEntity> currentLocation() async {
+    UserLocationEntity geoLocation;
+
+    if (await hasLocationPermission()) {
+      geoLocation = await _locationService.currentLocation().then(
+            (v) => v.getOrElse(
+              () => null,
+            ),
+          );
+    }
 
     if (geoLocation != null) {
       return GeolocationEntity(userLocation: geoLocation);
@@ -91,6 +111,6 @@ extension _PrivateMethods on SupportCenterUseCase {
       return GeolocationEntity(locationToken: _cachedGeoLocation.locationToken);
     }
 
-    return GeolocationEntity();
+    return null;
   }
 }
