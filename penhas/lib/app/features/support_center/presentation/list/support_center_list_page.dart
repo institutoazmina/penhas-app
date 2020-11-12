@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 import 'support_center_list_controller.dart';
+
+typedef ActionOnSelected = void Function(SupportCenterPlaceEntity place);
 
 class SupportCenterListPage extends StatefulWidget {
   SupportCenterListPage({Key key}) : super(key: key);
@@ -41,91 +44,8 @@ class _SupportCenterListPageState
                     itemCount: controller.places.length,
                     itemBuilder: (BuildContext context, int index) {
                       final place = controller.places[index];
-                      final uf = place.uf;
-                      final rate = place.rate;
-                      final distance = place.distance;
-
-                      final placeColor =
-                          DesignSystemColors.hexColor(place.category.color);
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16.0, vertical: 8),
-                        child: Container(
-                          padding: EdgeInsets.all(12.0),
-                          decoration: BoxDecoration(
-                            color: DesignSystemColors.white,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(8.0)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black12,
-                                offset: Offset(0.0, 1.0),
-                                blurRadius: 8.0,
-                              )
-                            ],
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: Icon(
-                                      Icons.place,
-                                      size: 30,
-                                      color: placeColor,
-                                    ),
-                                  ),
-                                  Flexible(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          place.name,
-                                          style: TextStyle(
-                                              color: placeColor,
-                                              fontFamily: 'Lato',
-                                              fontSize: 14.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            top: 8.0,
-                                            bottom: 20.0,
-                                          ),
-                                          child: Text(
-                                            place.category.name.toUpperCase(),
-                                            style: TextStyle().categoryName,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text("$uf - ${distance}KM DE DISTÂNCIA",
-                                        style: TextStyle().categoryName),
-                                    Text(
-                                      "$rate/5",
-                                      style: TextStyle().rate,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
+                      return Card(
+                          place: place, onSelected: controller.selected);
                     },
                   ),
                 ),
@@ -138,15 +58,98 @@ class _SupportCenterListPageState
   }
 }
 
-// decoration: BoxDecoration(
-//   color: DesignSystemColors.white,
-//   boxShadow: [
-//     BoxShadow(
-//       color: Colors.black12,
-//       offset: Offset(0.0, 1.0),
-//       blurRadius: 8.0,
-//     )
-//   ],
+class Card extends StatelessWidget {
+  final SupportCenterPlaceEntity place;
+  final ActionOnSelected onSelected;
+  const Card({Key key, @required this.place, @required this.onSelected})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final uf = place.uf;
+    final rate = place.rate;
+    final distance = place.distance;
+    final placeColor = DesignSystemColors.hexColor(place.category.color);
+
+    return GestureDetector(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+        child: Container(
+          padding: EdgeInsets.all(12.0),
+          decoration: BoxDecoration(
+            color: DesignSystemColors.white,
+            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                offset: Offset(0.0, 1.0),
+                blurRadius: 8.0,
+              )
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Icon(
+                      Icons.place,
+                      size: 30,
+                      color: placeColor,
+                    ),
+                  ),
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          place.name,
+                          style: TextStyle(
+                              color: placeColor,
+                              fontFamily: 'Lato',
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 8.0,
+                            bottom: 20.0,
+                          ),
+                          child: Text(
+                            place.category.name.toUpperCase(),
+                            style: TextStyle().categoryName,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("$uf - ${distance}KM DE DISTÂNCIA",
+                        style: TextStyle().categoryName),
+                    Text(
+                      "$rate/5",
+                      style: TextStyle().rate,
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      onTap: () => onSelected(place),
+    );
+  }
+}
 
 extension _TextStyle on TextStyle {
   TextStyle get listTitle => TextStyle(

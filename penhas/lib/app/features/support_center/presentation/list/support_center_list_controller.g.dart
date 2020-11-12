@@ -24,6 +24,21 @@ mixin _$SupportCenterListController on _SupportCenterListControllerBase, Store {
     });
   }
 
+  final _$_SupportCenterListControllerBaseActionController =
+      ActionController(name: '_SupportCenterListControllerBase');
+
+  @override
+  void selected(SupportCenterPlaceEntity place) {
+    final _$actionInfo = _$_SupportCenterListControllerBaseActionController
+        .startAction(name: '_SupportCenterListControllerBase.selected');
+    try {
+      return super.selected(place);
+    } finally {
+      _$_SupportCenterListControllerBaseActionController
+          .endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''

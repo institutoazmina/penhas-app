@@ -1,3 +1,4 @@
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
 part 'support_center_list_controller.g.dart';
@@ -18,4 +19,25 @@ abstract class _SupportCenterListControllerBase with Store {
   @observable
   ObservableList<SupportCenterPlaceEntity> places =
       ObservableList<SupportCenterPlaceEntity>();
+
+  @action
+  void selected(SupportCenterPlaceEntity place) {
+    Modular.to.pushNamed(
+      "/mainboard/supportcenter/show",
+      arguments: place,
+    );
+  }
 }
+
+// Future<void> onKeywordsAction(String keywords) async {
+//   _fetchRequest = _fetchRequest.copyWith(keywords: keywords);
+
+//   await loadSupportCenter(_fetchRequest);
+// }
+
+/*
+          Modular.to.pushNamed(
+            "/mainboard/supportcenter/show",
+            arguments: place,
+          );
+*/

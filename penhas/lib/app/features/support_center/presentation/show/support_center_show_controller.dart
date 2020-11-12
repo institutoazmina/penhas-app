@@ -8,3 +8,5 @@ class SupportCenterShowController = _SupportCenterShowControllerBase
     with _$SupportCenterShowController;
 
 abstract class _SupportCenterShowControllerBase with Store {}
+
+// SupportCenterPlaceEntity

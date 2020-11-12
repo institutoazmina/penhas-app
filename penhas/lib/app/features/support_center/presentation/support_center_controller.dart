@@ -242,7 +242,10 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
       infoWindow: InfoWindow(
         title: place.name,
         onTap: () {
-          print('ola muito feliz mundo!');
+          Modular.to.pushNamed(
+            "/mainboard/supportcenter/show",
+            arguments: place,
+          );
         },
       ),
       icon: BitmapDescriptor.defaultMarkerWithHue(placeColor.hue),
