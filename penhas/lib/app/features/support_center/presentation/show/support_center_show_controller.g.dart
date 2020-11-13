@@ -9,10 +9,25 @@ part of 'support_center_show_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$SupportCenterShowController on _SupportCenterShowControllerBase, Store {
+  final _$stateAtom = Atom(name: '_SupportCenterShowControllerBase.state');
+
+  @override
+  SupportCenterShowState get state {
+    _$stateAtom.reportRead();
+    return super.state;
+  }
+
+  @override
+  set state(SupportCenterShowState value) {
+    _$stateAtom.reportWrite(value, super.state, () {
+      super.state = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
-
+state: ${state}
     ''';
   }
 }
