@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_detail_entity.dart';
 import 'package:penhas/app/features/support_center/domain/states/support_center_show_state.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_detail_map.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 import 'support_center_show_controller.dart';
@@ -52,8 +54,17 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
   }
 
   Widget buildMainScreen(SupportCenterPlaceDetailEntity detail) {
-    return Container(
-      color: Colors.greenAccent,
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: 160,
+              child: SupportCenterDetailMap(detail: detail),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
