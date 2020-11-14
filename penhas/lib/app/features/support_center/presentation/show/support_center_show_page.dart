@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_detail_entity.dart';
@@ -109,6 +110,12 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
                 ],
               ),
             ),
+            Container(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                child: HtmlWidget(
+                  detail.place.htmlContent,
+                  webViewJs: false,
+                )),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
               child: Column(
