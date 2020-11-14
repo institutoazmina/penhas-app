@@ -38,6 +38,7 @@ dependencies:
   freezed_annotation: ^0.12.0
   geolocator: ^6.0.0+4
   google_maps_flutter: ^1.0.5
+  map_launcher: ^1.0.0
   mask_text_input_formatter: ^1.0.6
   mobx: ^1.1.1
   package_info: ">=0.4.0+16 <2.0.0"
