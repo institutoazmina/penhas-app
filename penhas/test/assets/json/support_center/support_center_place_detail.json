@@ -1,0 +1,41 @@
+{
+  "avaliacao_maxima": "5",
+  "cliente_avaliacao": null,
+  "ponto_apoio": {
+    "avaliacao": "n\/a",
+    "bairro": "Pirituba",
+    "categoria": {
+      "cor": "#F982B4",
+      "id": 5,
+      "nome": "Delegacias da mulher"
+    },
+    "cep": "02945000",
+    "complemento": "",
+    "content_html": "<p style=\"color: #0a115f\"><\/p><br\/><p style=\"color: #0a115f\"><b>Endereço<\/b><\/p><p style=\"color: #818181;\">Avenida Menotti Laudísio, 286 -Pirituba -São Paulo, SP, 02945000 <\/p>",
+    "ddd": 11,
+    "descricao": null,
+    "dias_funcionamento": "Dias úteis",
+    "eh_24h": 0,
+    "eh_online": null,
+    "eh_presencial": null,
+    "funcionamento_pandemia": null,
+    "horario_fim": "18:00",
+    "horario_inicio": "09:00",
+    "id": 2566,
+    "ja_passou_por_moderacao": 0,
+    "latitude": "-23.482957",
+    "longitude": "-46.730177",
+    "municipio": "São Paulo",
+    "natureza": "Público",
+    "nome": "9º Delegacia de Polícia de Defesa da Mulher - Oeste",
+    "nome_logradouro": "Menotti Laudísio",
+    "numero": 286,
+    "numero_sem_numero": 0,
+    "observacao": "",
+    "observacao_pandemia": "",
+    "telefone1": 39748890,
+    "telefone2": null,
+    "tipo_logradouro": "Avenida",
+    "uf": "SP"
+  }
+}
