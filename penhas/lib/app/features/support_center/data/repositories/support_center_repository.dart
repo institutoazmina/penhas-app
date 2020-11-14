@@ -8,10 +8,13 @@ import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_exception_to_failure.dart';
 import 'package:penhas/app/features/support_center/data/models/geolocation_model.dart';
 import 'package:penhas/app/features/support_center/data/models/support_center_metadata_model.dart';
+import 'package:penhas/app/features/support_center/data/models/support_center_place_detail_model.dart';
 import 'package:penhas/app/features/support_center/data/models/support_center_place_session_model.dart';
 import 'package:penhas/app/features/support_center/domain/entities/geolocation_entity.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_fetch_request.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_metadata_entity.dart';
+import 'package:penhas/app/features/support_center/domain/entities/support_center_place_detail_entity.dart';
+import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
 
 abstract class ISupportCenterRepository {
@@ -19,6 +22,8 @@ abstract class ISupportCenterRepository {
   Future<Either<Failure, SupportCenterPlaceSessionEntity>> fetch(
       SupportCenterFetchRequest options);
   Future<Either<Failure, GeolocationEntity>> mapGeoFromCep(String cep);
+  Future<Either<Failure, SupportCenterPlaceDetailEntity>> detail(
+      SupportCenterPlaceEntity placeEntity);
   Future<Either<Failure, ValidField>> suggestion({
     @required String name,
     @required String address,
@@ -123,6 +128,19 @@ class SupportCenterRepository implements ISupportCenterRepository {
       return left(MapExceptionToFailure.map(error));
     }
   }
+
+  @override
+  Future<Either<Failure, SupportCenterPlaceDetailEntity>> detail(
+      SupportCenterPlaceEntity placeEntity) async {
+    final endPoint = ['me', 'pontos-de-apoio', placeEntity.id].join("/");
+
+    try {
+      final response = await _apiProvider.get(path: endPoint);
+      return right(parseDetail(response));
+    } catch (error) {
+      return left(MapExceptionToFailure.map(error));
+    }
+  }
 }
 
 extension SupportCenterRepositoryPrivate on SupportCenterRepository {
@@ -144,5 +162,10 @@ extension SupportCenterRepositoryPrivate on SupportCenterRepository {
   ValidField parseAddSugestion(String body) {
     final jsonData = jsonDecode(body) as Map<String, Object>;
     return ValidField.fromJson(jsonData);
+  }
+
+  SupportCenterPlaceDetailEntity parseDetail(String body) {
+    final jsonData = jsonDecode(body) as Map<String, Object>;
+    return SupportCenterPlaceDetailModel.fromJson(jsonData);
   }
 }

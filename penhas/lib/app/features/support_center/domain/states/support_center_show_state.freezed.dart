@@ -19,8 +19,10 @@ class _$SupportCenterShowStateTearOff {
   }
 
 // ignore: unused_element
-  _Loaded loaded() {
-    return const _Loaded();
+  _Loaded loaded(SupportCenterPlaceDetailEntity detail) {
+    return _Loaded(
+      detail,
+    );
   }
 
 // ignore: unused_element
@@ -40,13 +42,13 @@ mixin _$SupportCenterShowState {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(),
+    @required Result loaded(SupportCenterPlaceDetailEntity detail),
     @required Result error(String message),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(),
+    Result loaded(SupportCenterPlaceDetailEntity detail),
     Result error(String message),
     @required Result orElse(),
   });
@@ -127,7 +129,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(),
+    @required Result loaded(SupportCenterPlaceDetailEntity detail),
     @required Result error(String message),
   }) {
     assert(initial != null);
@@ -140,7 +142,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(),
+    Result loaded(SupportCenterPlaceDetailEntity detail),
     Result error(String message),
     @required Result orElse(),
   }) {
@@ -188,6 +190,7 @@ abstract class _Initial implements SupportCenterShowState {
 abstract class _$LoadedCopyWith<$Res> {
   factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
       __$LoadedCopyWithImpl<$Res>;
+  $Res call({SupportCenterPlaceDetailEntity detail});
 }
 
 /// @nodoc
@@ -199,56 +202,79 @@ class __$LoadedCopyWithImpl<$Res>
 
   @override
   _Loaded get _value => super._value as _Loaded;
+
+  @override
+  $Res call({
+    Object detail = freezed,
+  }) {
+    return _then(_Loaded(
+      detail == freezed
+          ? _value.detail
+          : detail as SupportCenterPlaceDetailEntity,
+    ));
+  }
 }
 
 /// @nodoc
 class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
-  const _$_Loaded();
+  const _$_Loaded(this.detail) : assert(detail != null);
+
+  @override
+  final SupportCenterPlaceDetailEntity detail;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SupportCenterShowState.loaded()';
+    return 'SupportCenterShowState.loaded(detail: $detail)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'SupportCenterShowState.loaded'));
+      ..add(DiagnosticsProperty('type', 'SupportCenterShowState.loaded'))
+      ..add(DiagnosticsProperty('detail', detail));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _Loaded);
+    return identical(this, other) ||
+        (other is _Loaded &&
+            (identical(other.detail, detail) ||
+                const DeepCollectionEquality().equals(other.detail, detail)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(detail);
+
+  @override
+  _$LoadedCopyWith<_Loaded> get copyWith =>
+      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(),
+    @required Result loaded(SupportCenterPlaceDetailEntity detail),
     @required Result error(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
     assert(error != null);
-    return loaded();
+    return loaded(detail);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(),
+    Result loaded(SupportCenterPlaceDetailEntity detail),
     Result error(String message),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (loaded != null) {
-      return loaded();
+      return loaded(detail);
     }
     return orElse();
   }
@@ -283,7 +309,10 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 }
 
 abstract class _Loaded implements SupportCenterShowState {
-  const factory _Loaded() = _$_Loaded;
+  const factory _Loaded(SupportCenterPlaceDetailEntity detail) = _$_Loaded;
+
+  SupportCenterPlaceDetailEntity get detail;
+  _$LoadedCopyWith<_Loaded> get copyWith;
 }
 
 /// @nodoc
@@ -355,7 +384,7 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(),
+    @required Result loaded(SupportCenterPlaceDetailEntity detail),
     @required Result error(String message),
   }) {
     assert(initial != null);
@@ -368,7 +397,7 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(),
+    Result loaded(SupportCenterPlaceDetailEntity detail),
     Result error(String message),
     @required Result orElse(),
   }) {
