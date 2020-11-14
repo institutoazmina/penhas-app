@@ -47,7 +47,12 @@ class SupportCenterModule extends WidgetModule {
           ),
           singleton: false,
         ),
-        Bind((i) => SupportCenterShowController()),
+        Bind(
+          (i) => SupportCenterShowController(
+            supportCenterUseCase: i.get<SupportCenterUseCase>(),
+            place: i.args.data,
+          ),
+        ),
       ];
 
   @override
