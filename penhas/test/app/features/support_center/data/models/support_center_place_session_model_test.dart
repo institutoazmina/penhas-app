@@ -53,6 +53,9 @@ void main() {
               name: "Delegacias da mulher",
               color: "#F982B4",
             ),
+            fullStreet: null,
+            htmlContent: null,
+            typeOfPlace: null,
           )
         ],
       );
