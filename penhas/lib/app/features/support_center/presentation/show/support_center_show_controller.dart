@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
+import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
 import 'package:penhas/app/features/support_center/domain/states/support_center_show_state.dart';
 import 'package:penhas/app/features/support_center/domain/usecases/support_center_usecase.dart';
 

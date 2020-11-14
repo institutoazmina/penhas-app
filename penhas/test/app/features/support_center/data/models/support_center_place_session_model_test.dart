@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:penhas/app/features/support_center/data/models/support_center_place_session_model.dart';
+import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
 
 import '../../../../../utils/json_util.dart';

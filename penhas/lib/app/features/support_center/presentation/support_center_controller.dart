@@ -11,6 +11,7 @@ import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.da
 import 'package:penhas/app/features/filters/states/filter_action_observer.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_fetch_request.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_metadata_entity.dart';
+import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
 import 'package:penhas/app/features/support_center/domain/states/support_center_state.dart';
 import 'package:penhas/app/features/support_center/domain/usecases/support_center_usecase.dart';

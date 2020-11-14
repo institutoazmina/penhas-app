@@ -1,12 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-class SupportCenterPlaceDetail extends Equatable {
+class SupportCenterPlaceDetailEntity extends Equatable {
   final int maximumRate;
   final int ratedByClient;
+  // final SupportCenterPlaceEntity;
+  // final Support
   // final List<SupportCenterPlaceEntity> places;
 
-  SupportCenterPlaceDetail({
+  SupportCenterPlaceDetailEntity({
     this.maximumRate,
     this.ratedByClient,
   });

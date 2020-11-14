@@ -1,8 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
+import 'package:penhas/app/core/states/location_permission_state.dart';
 import 'package:penhas/app/features/support_center/data/repositories/support_center_repository.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_fetch_request.dart';
 import 'package:penhas/app/features/support_center/domain/usecases/support_center_usecase.dart';
@@ -42,6 +44,10 @@ void main() {
         when(supportCenterRepository.fetch(any)).thenAnswer((_) async => left(
               GpsFailure(gpsFailure),
             ));
+        when(locationServices.currentLocation()).thenAnswer((_) async => right(
+            UserLocationEntity(accuracy: 0, latitude: 0.0, longitude: 0.0)));
+        when(locationServices.permissionStatus())
+            .thenAnswer((_) async => LocationPermissionState.granted());
         // act
         final matcher = await sut.fetch(fetchRequest);
         // assert

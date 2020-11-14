@@ -1,5 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
 part 'support_center_list_controller.g.dart';
 
