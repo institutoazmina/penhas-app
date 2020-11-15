@@ -3,7 +3,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/support_center/data/repositories/support_center_repository.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
 import 'package:penhas/app/features/support_center/domain/usecases/support_center_usecase.dart';
 
 import 'add/support_center_add_controller.dart';

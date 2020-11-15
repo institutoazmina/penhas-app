@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/managers/audio_play_services.dart';
 import 'package:penhas/app/core/managers/audio_record_services.dart';
@@ -49,6 +50,9 @@ import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_c
 import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_page.dart';
+import 'package:penhas/app/features/notification/presentation/notification_controller.dart';
+import 'package:penhas/app/features/notification/presentation/notification_module.dart';
+import 'package:penhas/app/features/notification/presentation/notification_page.dart';
 import 'package:penhas/app/features/support_center/presentation/add/support_center_add_page.dart';
 import 'package:penhas/app/features/support_center/presentation/list/support_center_list_page.dart';
 import 'package:penhas/app/features/support_center/presentation/location/support_center_location_page.dart';
@@ -64,6 +68,7 @@ class MainboardModule extends ChildModule {
         ...tweetBinds,
         ...helpCenterBinds,
         ...audioServicesBinds,
+        ...notificationBinds,
         Bind<MainboardStore>((i) => MainboardStore()),
         Bind(
           (i) => MainboardController(
@@ -91,6 +96,7 @@ class MainboardModule extends ChildModule {
         ...users,
         ...filters,
         ...chat,
+        ...notificationCenter,
       ];
 
   List<ModularRouter> get tweetRoutes => [
@@ -157,6 +163,18 @@ class MainboardModule extends ChildModule {
           child: (context, args) => SupportCenterShowPage(),
           transition: TransitionType.rightToLeft,
         )
+      ];
+
+  List<ModularRouter> get notificationCenter => [
+        ModularRouter(
+          '/notification',
+          child: (context, args) => NotificationPage(),
+          transition: TransitionType.rightToLeft,
+        ),
+      ];
+
+  List<Bind> get notificationBinds => [
+        Bind((i) => NotificationController()),
       ];
 
   List<ModularRouter> get audioRecord => [

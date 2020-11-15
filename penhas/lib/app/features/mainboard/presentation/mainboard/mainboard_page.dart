@@ -196,15 +196,12 @@ class _MainboardPageState
               size: 30,
             ),
       actions: <Widget>[
-        _helpCenterEnabled
-            ? Container()
-            : IconButton(
-                icon: Icon(Icons.notifications_none),
-                onPressed: () => {},
-              )
+        _helpCenterEnabled ? Container() : _buildNotification()
       ],
     );
   }
+
+// NotificationModule
 
   PageView _pagesBodyBuilder() {
     return PageView(
@@ -217,6 +214,13 @@ class _MainboardPageState
         SupportCenterModule(),
         HelpCenterModule(),
       ],
+    );
+  }
+
+  Widget _buildNotification() {
+    return IconButton(
+      icon: Icon(Icons.notifications_none),
+      onPressed: () async => {Modular.to.pushNamed('/mainboard/notification')},
     );
   }
 
