@@ -256,7 +256,7 @@ extension _AudioRecordServices on AudioRecordServices {
                       style: kTextStyleAlertDialogDescriptionBold,
                     ),
                     TextSpan(
-                      text: 'deste apareclho?',
+                      text: 'deste aparelho?',
                       style: kTextStyleAlertDialogDescription,
                     ),
                   ],
