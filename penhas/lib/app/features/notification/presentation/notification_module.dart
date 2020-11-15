@@ -1,12 +1,14 @@
-// import 'package:flutter/src/widgets/framework.dart';
-// import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-// class SupportCenterModule extends WidgetModule {
-//   @override
-//   List<Bind> get binds => [];
+import 'notification_page.dart';
 
-//   @override
-//   Widget get view => SupportCenterPage();
+class NotificationModule extends WidgetModule {
+  @override
+  List<Bind> get binds => [];
 
-//   static Inject get to => Inject<SupportCenterModule>.of();
-// }
+  @override
+  Widget get view => NotificationPage();
+
+  static Inject get to => Inject<NotificationModule>.of();
+}

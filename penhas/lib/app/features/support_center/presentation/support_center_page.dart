@@ -66,7 +66,6 @@ class _SupportCenterPageState
 extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
   Widget bodyBuilder(SupportCenterState state) {
     return state.when(
-      initial: () => Container(color: Colors.yellowAccent),
       loaded: () => loadedSupportCenterPage(),
       error: (message) => SupportCenterGeneralError(
         message: message,
@@ -95,6 +94,7 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
 
     return PageProgressIndicator(
       progressState: controller.progressState,
+      progressMessage: "Carregando",
       child: Stack(
         children: [
           GoogleMap(

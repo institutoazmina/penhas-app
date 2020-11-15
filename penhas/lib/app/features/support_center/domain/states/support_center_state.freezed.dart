@@ -14,11 +14,6 @@ class _$SupportCenterStateTearOff {
   const _$SupportCenterStateTearOff();
 
 // ignore: unused_element
-  _Initial initial() {
-    return const _Initial();
-  }
-
-// ignore: unused_element
   _Loaded loaded() {
     return const _Loaded();
   }
@@ -46,14 +41,12 @@ const $SupportCenterState = _$SupportCenterStateTearOff();
 mixin _$SupportCenterState {
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result initial(),
     @required Result loaded(),
     @required Result error(String message),
     @required Result gpsError(String message),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result initial(),
     Result loaded(),
     Result error(String message),
     Result gpsError(String message),
@@ -61,14 +54,12 @@ mixin _$SupportCenterState {
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result initial(_Initial value),
     @required Result loaded(_Loaded value),
     @required Result error(_ErrorDetails value),
     @required Result gpsError(_GpsError value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
     Result loaded(_Loaded value),
     Result error(_ErrorDetails value),
     Result gpsError(_GpsError value),
@@ -91,113 +82,6 @@ class _$SupportCenterStateCopyWithImpl<$Res>
   final SupportCenterState _value;
   // ignore: unused_field
   final $Res Function(SupportCenterState) _then;
-}
-
-/// @nodoc
-abstract class _$InitialCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$InitialCopyWithImpl<$Res>
-    extends _$SupportCenterStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
-
-  @override
-  _Initial get _value => super._value as _Initial;
-}
-
-/// @nodoc
-class _$_Initial with DiagnosticableTreeMixin implements _Initial {
-  const _$_Initial();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SupportCenterState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'SupportCenterState.initial'));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _Initial);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(),
-    @required Result error(String message),
-    @required Result gpsError(String message),
-  }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(error != null);
-    assert(gpsError != null);
-    return initial();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(),
-    Result error(String message),
-    Result gpsError(String message),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (initial != null) {
-      return initial();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result error(_ErrorDetails value),
-    @required Result gpsError(_GpsError value),
-  }) {
-    assert(initial != null);
-    assert(loaded != null);
-    assert(error != null);
-    assert(gpsError != null);
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result error(_ErrorDetails value),
-    Result gpsError(_GpsError value),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Initial implements SupportCenterState {
-  const factory _Initial() = _$_Initial;
 }
 
 /// @nodoc
@@ -242,12 +126,10 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result initial(),
     @required Result loaded(),
     @required Result error(String message),
     @required Result gpsError(String message),
   }) {
-    assert(initial != null);
     assert(loaded != null);
     assert(error != null);
     assert(gpsError != null);
@@ -257,7 +139,6 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result initial(),
     Result loaded(),
     Result error(String message),
     Result gpsError(String message),
@@ -273,12 +154,10 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result initial(_Initial value),
     @required Result loaded(_Loaded value),
     @required Result error(_ErrorDetails value),
     @required Result gpsError(_GpsError value),
   }) {
-    assert(initial != null);
     assert(loaded != null);
     assert(error != null);
     assert(gpsError != null);
@@ -288,7 +167,6 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
     Result loaded(_Loaded value),
     Result error(_ErrorDetails value),
     Result gpsError(_GpsError value),
@@ -374,12 +252,10 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result initial(),
     @required Result loaded(),
     @required Result error(String message),
     @required Result gpsError(String message),
   }) {
-    assert(initial != null);
     assert(loaded != null);
     assert(error != null);
     assert(gpsError != null);
@@ -389,7 +265,6 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result initial(),
     Result loaded(),
     Result error(String message),
     Result gpsError(String message),
@@ -405,12 +280,10 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result initial(_Initial value),
     @required Result loaded(_Loaded value),
     @required Result error(_ErrorDetails value),
     @required Result gpsError(_GpsError value),
   }) {
-    assert(initial != null);
     assert(loaded != null);
     assert(error != null);
     assert(gpsError != null);
@@ -420,7 +293,6 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
     Result loaded(_Loaded value),
     Result error(_ErrorDetails value),
     Result gpsError(_GpsError value),
@@ -507,12 +379,10 @@ class _$_GpsError with DiagnosticableTreeMixin implements _GpsError {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result initial(),
     @required Result loaded(),
     @required Result error(String message),
     @required Result gpsError(String message),
   }) {
-    assert(initial != null);
     assert(loaded != null);
     assert(error != null);
     assert(gpsError != null);
@@ -522,7 +392,6 @@ class _$_GpsError with DiagnosticableTreeMixin implements _GpsError {
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result initial(),
     Result loaded(),
     Result error(String message),
     Result gpsError(String message),
@@ -538,12 +407,10 @@ class _$_GpsError with DiagnosticableTreeMixin implements _GpsError {
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result initial(_Initial value),
     @required Result loaded(_Loaded value),
     @required Result error(_ErrorDetails value),
     @required Result gpsError(_GpsError value),
   }) {
-    assert(initial != null);
     assert(loaded != null);
     assert(error != null);
     assert(gpsError != null);
@@ -553,7 +420,6 @@ class _$_GpsError with DiagnosticableTreeMixin implements _GpsError {
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
     Result loaded(_Loaded value),
     Result error(_ErrorDetails value),
     Result gpsError(_GpsError value),

@@ -58,7 +58,7 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   LatLng initialPosition = LatLng(0, 0);
 
   @observable
-  SupportCenterState state = SupportCenterState.initial();
+  SupportCenterState state = SupportCenterState.loaded();
 
   @computed
   PageProgressState get progressState {
@@ -80,9 +80,12 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> onKeywordsAction(String keywords) async {
-    _fetchRequest = _fetchRequest.copyWith(keywords: keywords);
+    String validKeyWords = keywords.replaceAll(RegExp(r"\s+"), "");
 
-    await loadSupportCenter(_fetchRequest);
+    if (validKeyWords.isNotEmpty) {
+      _fetchRequest = _fetchRequest.copyWith(keywords: keywords);
+      await loadSupportCenter(_fetchRequest);
+    }
   }
 
   @action
