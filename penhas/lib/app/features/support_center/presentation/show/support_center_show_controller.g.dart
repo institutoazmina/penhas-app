@@ -24,6 +24,22 @@ mixin _$SupportCenterShowController on _SupportCenterShowControllerBase, Store {
     });
   }
 
+  final _$onRateAsyncAction =
+      AsyncAction('_SupportCenterShowControllerBase.onRate');
+
+  @override
+  Future<void> onRate(double value) {
+    return _$onRateAsyncAction.run(() => super.onRate(value));
+  }
+
+  final _$retryAsyncAction =
+      AsyncAction('_SupportCenterShowControllerBase.retry');
+
+  @override
+  Future<void> retry() {
+    return _$retryAsyncAction.run(() => super.retry());
+  }
+
   @override
   String toString() {
     return '''

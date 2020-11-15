@@ -58,7 +58,7 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   LatLng initialPosition = LatLng(0, 0);
 
   @observable
-  SupportCenterState state = SupportCenterState.loaded();
+  SupportCenterState state = SupportCenterState.initial();
 
   @computed
   PageProgressState get progressState {
