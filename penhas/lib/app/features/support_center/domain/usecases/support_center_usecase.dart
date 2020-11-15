@@ -90,6 +90,13 @@ class SupportCenterUseCase {
       SupportCenterPlaceEntity placeEntity) async {
     return _supportCenterRepository.detail(placeEntity);
   }
+
+  Future<Either<Failure, ValidField>> rating({
+    @required SupportCenterPlaceEntity place,
+    @required double rate,
+  }) async {
+    return _supportCenterRepository.rate(place, rate);
+  }
 }
 
 extension _PrivateMethods on SupportCenterUseCase {

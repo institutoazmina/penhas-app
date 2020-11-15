@@ -8,6 +8,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_detail_entity.dart';
 import 'package:penhas/app/features/support_center/domain/states/support_center_show_state.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_detail_map.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_rate.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
@@ -91,7 +92,7 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
                     padding: const EdgeInsets.only(right: 12),
                     child: Icon(
                       Icons.place,
-                      size: 36,
+                      size: 32,
                       color: placeColor,
                     ),
                   ),
@@ -111,25 +112,11 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
               ),
             ),
             Container(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-                child: HtmlWidget(
-                  detail.place.htmlContent,
-                  webViewJs: false,
-                )),
-            Container(
               padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Endereço",
-                    style: addressTitleTextStyle,
-                  ),
-                  Text(
-                    detail.place.fullStreet,
-                    style: addressContentTextStyle,
-                  )
-                ],
+              child: HtmlWidget(
+                detail.place.htmlContent,
+                webViewJs: false,
+                textStyle: htmlContentTextStyle,
               ),
             ),
             Row(
@@ -159,10 +146,10 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
                 Expanded(flex: 1, child: Container()),
               ],
             ),
-            Container(
-              color: Colors.blueAccent,
-              height: 600,
-            )
+            SupportCenterRate(
+              detail: detail,
+              onRated: controller.onRate,
+            ),
           ],
         ),
       ),
@@ -229,7 +216,10 @@ extension _Maps on _SupportCenterShowPageState {
                                 coords: coords,
                                 title: title,
                               ),
-                              title: Text(map.mapName),
+                              title: Text(
+                                map.mapName,
+                                style: mapTitleTextStyle,
+                              ),
                               leading: SvgPicture.asset(
                                 map.icon,
                                 height: 30.0,
@@ -246,57 +236,6 @@ extension _Maps on _SupportCenterShowPageState {
           );
         },
       );
-
-      // await showModalBottomSheet(
-      //   context: context,
-      //   backgroundColor: Colors.redAccent,
-      //   shape: RoundedRectangleBorder(
-      //     borderRadius: BorderRadius.only(
-      //       topLeft: Radius.circular(20),
-      //       topRight: Radius.circular(20),
-      //     ),
-      //   ),
-      //   builder: (BuildContext context) {
-      //     return Container(color: Colors.black);
-      // return
-      //   child: Column(
-      //     children: [
-      //       Container(
-      //         width: fullWidth(context) * .2,
-      //         height: 5,
-      //         decoration: BoxDecoration(
-      //           color: Theme.of(context).dividerColor,
-      //           borderRadius: BorderRadius.all(
-      //             Radius.circular(10),
-      //           ),
-      //         ),
-      //       ),
-      //       SingleChildScrollView(
-      //         child: Container(
-      //           child: Wrap(
-      //             children: <Widget>[
-      //               for (var map in availableMaps)
-      //                 ListTile(
-      //                   onTap: () => map.showMarker(
-      //                     coords: coords,
-      //                     title: title,
-      //                   ),
-      //                   title: Text(map.mapName, style: mapTitleTextStyle),
-      //                   leading: SvgPicture.asset(
-      //                     map.icon,
-      //                     height: 30.0,
-      //                     width: 30.0,
-      //                   ),
-      //                 ),
-      //             ],
-      //           ),
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // );
-      // },
-      // );
     } catch (e) {
       print(e);
     }
@@ -309,11 +248,7 @@ extension _TextStyle on _SupportCenterShowPageState {
       fontFamily: 'Lato',
       fontSize: 12.0,
       fontWeight: FontWeight.normal);
-  TextStyle get addressTitleTextStyle => TextStyle(
-      color: DesignSystemColors.darkIndigoThree,
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      fontWeight: FontWeight.bold);
+
   TextStyle get addressContentTextStyle => TextStyle(
       color: DesignSystemColors.warnGrey,
       fontFamily: 'Lato',
@@ -328,5 +263,11 @@ extension _TextStyle on _SupportCenterShowPageState {
       color: Colors.black,
       fontFamily: 'Lato',
       fontSize: 16.0,
+      fontWeight: FontWeight.normal);
+  TextStyle get htmlContentTextStyle => TextStyle(
+      fontFamily: 'Lato',
+      fontSize: 14.0,
+      letterSpacing: 0.4,
+      color: DesignSystemColors.darkIndigoThree,
       fontWeight: FontWeight.normal);
 }

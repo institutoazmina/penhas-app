@@ -28,6 +28,11 @@ abstract class _SupportCenterShowControllerBase with Store, MapFailureMessage {
 
   @observable
   SupportCenterShowState state = SupportCenterShowState.initial();
+
+  @action
+  Future<void> onRate(double value) async {
+    await _useCase.rating(place: _place, rate: value);
+  }
 }
 
 extension _PrivateMethods on _SupportCenterShowControllerBase {

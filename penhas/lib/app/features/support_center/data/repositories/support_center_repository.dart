@@ -24,6 +24,8 @@ abstract class ISupportCenterRepository {
   Future<Either<Failure, GeolocationEntity>> mapGeoFromCep(String cep);
   Future<Either<Failure, SupportCenterPlaceDetailEntity>> detail(
       SupportCenterPlaceEntity placeEntity);
+  Future<Either<Failure, ValidField>> rate(
+      SupportCenterPlaceEntity place, double rate);
   Future<Either<Failure, ValidField>> suggestion({
     @required String name,
     @required String address,
@@ -137,6 +139,27 @@ class SupportCenterRepository implements ISupportCenterRepository {
     try {
       final response = await _apiProvider.get(path: endPoint);
       return right(parseDetail(response));
+    } catch (error) {
+      return left(MapExceptionToFailure.map(error));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ValidField>> rate(
+    SupportCenterPlaceEntity place,
+    double rate,
+  ) async {
+    final endPoint = ['me', 'avaliar-pontos-de-apoio'].join("/");
+    final parameters = Map<String, String>();
+    parameters["ponto_apoio_id"] = place.id.toString();
+    parameters["rating"] = rate.toInt().toString();
+
+    try {
+      await _apiProvider.post(
+        path: endPoint,
+        parameters: parameters,
+      );
+      return right(ValidField());
     } catch (error) {
       return left(MapExceptionToFailure.map(error));
     }
