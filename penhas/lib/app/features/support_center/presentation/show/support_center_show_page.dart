@@ -8,6 +8,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_detail_entity.dart';
 import 'package:penhas/app/features/support_center/domain/states/support_center_show_state.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_detail_map.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_rate.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
@@ -43,7 +44,8 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
     return state.when(
       initial: () => buildInitialState(),
       loaded: (detail) => buildMainScreen(context, detail),
-      error: (msg) => Container(color: Colors.pinkAccent),
+      error: (msg) =>
+          SupportCenterGeneralError(message: msg, onPressed: controller.retry),
     );
   }
 

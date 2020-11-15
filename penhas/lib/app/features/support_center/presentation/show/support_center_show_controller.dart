@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -32,6 +31,11 @@ abstract class _SupportCenterShowControllerBase with Store, MapFailureMessage {
   @action
   Future<void> onRate(double value) async {
     await _useCase.rating(place: _place, rate: value);
+  }
+
+  @action
+  Future<void> retry() async {
+    setup();
   }
 }
 
