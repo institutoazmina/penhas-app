@@ -1,7 +1,9 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/states/mainboard_state.dart';
 import 'package:penhas/app/features/chat/presentation/chat_main_module.dart';
 import 'package:penhas/app/features/feed/presentation/compose_tweet/compose_tweet_page.dart';
@@ -27,7 +29,9 @@ class _MainboardPageState
     with WidgetsBindingObserver {
   String userName;
   Widget userAvatar;
+  int notificationCounter = 0;
   bool _helpCenterEnabled = false;
+  List<ReactionDisposer> _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -39,6 +43,7 @@ class _MainboardPageState
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _disposers.forEach((d) => d());
     super.dispose();
   }
 
@@ -46,6 +51,18 @@ class _MainboardPageState
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
     controller.changeAppState(state);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _disposers ??= [
+      reaction((_) => controller.notificationCounter, (int counter) {
+        setState(() {
+          notificationCounter = counter;
+        });
+      })
+    ];
   }
 
   @override
@@ -201,8 +218,6 @@ class _MainboardPageState
     );
   }
 
-// NotificationModule
-
   PageView _pagesBodyBuilder() {
     return PageView(
       physics: NeverScrollableScrollPhysics(),
@@ -219,8 +234,23 @@ class _MainboardPageState
 
   Widget _buildNotification() {
     return IconButton(
-      icon: Icon(Icons.notifications_none),
-      onPressed: () async => {Modular.to.pushNamed('/mainboard/notification')},
+      icon: Badge(
+        child: Icon(Icons.notifications_none, size: 34),
+        elevation: 0.0,
+        showBadge: notificationCounter > 0,
+        toAnimate: false,
+        badgeContent: Text(
+          notificationCounter.toString(),
+          style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'Lato',
+              fontSize: 11.0,
+              fontWeight: FontWeight.normal),
+        ),
+      ),
+      onPressed: () async => {
+        Modular.to.pushNamed('/mainboard/notification'),
+      },
     );
   }
 

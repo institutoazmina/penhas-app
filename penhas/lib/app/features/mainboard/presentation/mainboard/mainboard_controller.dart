@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:meta/meta.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/managers/user_profile_store.dart';
 import 'package:penhas/app/core/states/mainboard_store.dart';
+import 'package:penhas/app/features/notification/data/repositories/notification_repository.dart';
 
 part 'mainboard_controller.g.dart';
 
@@ -12,20 +16,30 @@ class MainboardController extends _MainboardControllerBase
   MainboardController({
     @required MainboardStore mainboardStore,
     @required IUserProfileStore userProfileStore,
-  }) : super(mainboardStore, userProfileStore);
+    @required INotificationRepository notification,
+  }) : super(mainboardStore, userProfileStore, notification);
 }
 
 abstract class _MainboardControllerBase with Store {
+  Timer _syncTimer;
+  final int notificationInterval = 60;
   final MainboardStore mainboardStore;
   final IUserProfileStore _userProfileStore;
+  final INotificationRepository _notification;
 
   _MainboardControllerBase(
     this.mainboardStore,
     this._userProfileStore,
-  );
+    this._notification,
+  ) {
+    setup();
+  }
 
   @observable
   int selectedIndex = 0;
+
+  @observable
+  int notificationCounter = 0;
 
   @action
   changeAppState(AppLifecycleState state) async {
@@ -46,5 +60,34 @@ abstract class _MainboardControllerBase with Store {
       case AppLifecycleState.detached:
         break;
     }
+  }
+}
+
+extension _PrivateMethod on _MainboardControllerBase {
+  void setupUploadTimer() {
+    if (_syncTimer != null) {
+      return;
+    }
+
+    _syncTimer = Timer.periodic(
+      Duration(seconds: notificationInterval),
+      (timer) async {
+        final time = DateTime.now().toString();
+        print(
+            "[$time] Executando o monitoramento do notification [$notificationCounter]");
+        checkUnRead();
+      },
+    );
+  }
+
+  Future<void> setup() async {
+    setupUploadTimer();
+  }
+
+  Future<void> checkUnRead() async {
+    final result = await _notification.unread();
+    final validField = result.getOrElse(() => ValidField(message: "0"));
+    // notificationCounter = int.tryParse(validField.message) ?? 0;
+    notificationCounter += 1;
   }
 }

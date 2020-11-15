@@ -1,22 +1,32 @@
+import 'dart:async';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
+import 'package:penhas/app/features/notification/data/repositories/notification_repository.dart';
 import 'package:penhas/app/features/notification/domain/states/notification_state.dart';
 
 part 'notification_controller.g.dart';
 
 class NotificationController extends _NotificationControllerBase
     with _$NotificationController {
-  NotificationController() : super();
+  NotificationController(
+      {@required INotificationRepository notificationRepository})
+      : super(notificationRepository);
 }
 
 abstract class _NotificationControllerBase with Store, MapFailureMessage {
-  _NotificationControllerBase() {
+  Timer _syncTimer;
+  final int notificationInterval = 300;
+  final INotificationRepository _repository;
+
+  _NotificationControllerBase(this._repository) {
     setup();
   }
 
@@ -25,7 +35,7 @@ abstract class _NotificationControllerBase with Store, MapFailureMessage {
   //     _loadNotifications;
 
   @observable
-  int categoriesSelected = 0;
+  int notificationCounter = 0;
 
   @observable
   String errorMessage = "";
@@ -37,8 +47,31 @@ abstract class _NotificationControllerBase with Store, MapFailureMessage {
   Future<void> retry() async {}
 }
 
-extension _SupportCenterControllerBasePrivate on _NotificationControllerBase {
-  Future<void> setup() async {}
+extension _PrivateMethod on _NotificationControllerBase {
+  void setupUploadTimer() {
+    if (_syncTimer != null) {
+      return;
+    }
+
+    _syncTimer = Timer.periodic(
+      Duration(seconds: notificationInterval),
+      (timer) async {
+        final time = DateTime.now().toString();
+        print("[$time] Executando o monitoramento do notification");
+        checkUnRead();
+      },
+    );
+  }
+
+  Future<void> setup() async {
+    setupUploadTimer();
+  }
+
+  Future<void> checkUnRead() async {
+    final result = await _repository.unread();
+    final validField = result.getOrElse(() => ValidField(message: "0"));
+    notificationCounter = int.tryParse(validField.message) ?? 0;
+  }
 
   void setMessageErro(String message) {
     errorMessage = message;

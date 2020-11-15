@@ -9,19 +9,19 @@ part of 'notification_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$NotificationController on _NotificationControllerBase, Store {
-  final _$categoriesSelectedAtom =
-      Atom(name: '_NotificationControllerBase.categoriesSelected');
+  final _$notificationCounterAtom =
+      Atom(name: '_NotificationControllerBase.notificationCounter');
 
   @override
-  int get categoriesSelected {
-    _$categoriesSelectedAtom.reportRead();
-    return super.categoriesSelected;
+  int get notificationCounter {
+    _$notificationCounterAtom.reportRead();
+    return super.notificationCounter;
   }
 
   @override
-  set categoriesSelected(int value) {
-    _$categoriesSelectedAtom.reportWrite(value, super.categoriesSelected, () {
-      super.categoriesSelected = value;
+  set notificationCounter(int value) {
+    _$notificationCounterAtom.reportWrite(value, super.notificationCounter, () {
+      super.notificationCounter = value;
     });
   }
 
@@ -66,7 +66,7 @@ mixin _$NotificationController on _NotificationControllerBase, Store {
   @override
   String toString() {
     return '''
-categoriesSelected: ${categoriesSelected},
+notificationCounter: ${notificationCounter},
 errorMessage: ${errorMessage},
 state: ${state}
     ''';

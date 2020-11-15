@@ -50,14 +50,13 @@ import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_c
 import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_page.dart';
+import 'package:penhas/app/features/notification/data/repositories/notification_repository.dart';
 import 'package:penhas/app/features/notification/presentation/notification_controller.dart';
-import 'package:penhas/app/features/notification/presentation/notification_module.dart';
 import 'package:penhas/app/features/notification/presentation/notification_page.dart';
 import 'package:penhas/app/features/support_center/presentation/add/support_center_add_page.dart';
 import 'package:penhas/app/features/support_center/presentation/list/support_center_list_page.dart';
 import 'package:penhas/app/features/support_center/presentation/location/support_center_location_page.dart';
 import 'package:penhas/app/features/support_center/presentation/show/support_center_show_page.dart';
-import 'package:penhas/app/features/support_center/presentation/support_center_module.dart';
 import 'package:penhas/app/features/users/domain/presentation/user_profile_module.dart';
 
 class MainboardModule extends ChildModule {
@@ -72,8 +71,10 @@ class MainboardModule extends ChildModule {
         Bind<MainboardStore>((i) => MainboardStore()),
         Bind(
           (i) => MainboardController(
-              mainboardStore: i.get<MainboardStore>(),
-              userProfileStore: i.get<IUserProfileStore>()),
+            mainboardStore: i.get<MainboardStore>(),
+            userProfileStore: i.get<IUserProfileStore>(),
+            notification: i.get<INotificationRepository>(),
+          ),
         ),
         Bind(
           (i) => FeedUseCases(
@@ -174,7 +175,16 @@ class MainboardModule extends ChildModule {
       ];
 
   List<Bind> get notificationBinds => [
-        Bind((i) => NotificationController()),
+        Bind<INotificationRepository>(
+          (i) => NotificationRepository(
+            apiProvider: i.get<IApiProvider>(),
+          ),
+        ),
+        Bind(
+          (i) => NotificationController(
+            notificationRepository: i.get<INotificationRepository>(),
+          ),
+        ),
       ];
 
   List<ModularRouter> get audioRecord => [

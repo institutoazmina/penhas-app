@@ -25,6 +25,22 @@ mixin _$MainboardController on _MainboardControllerBase, Store {
     });
   }
 
+  final _$notificationCounterAtom =
+      Atom(name: '_MainboardControllerBase.notificationCounter');
+
+  @override
+  int get notificationCounter {
+    _$notificationCounterAtom.reportRead();
+    return super.notificationCounter;
+  }
+
+  @override
+  set notificationCounter(int value) {
+    _$notificationCounterAtom.reportWrite(value, super.notificationCounter, () {
+      super.notificationCounter = value;
+    });
+  }
+
   final _$changeAppStateAsyncAction =
       AsyncAction('_MainboardControllerBase.changeAppState');
 
@@ -36,7 +52,8 @@ mixin _$MainboardController on _MainboardControllerBase, Store {
   @override
   String toString() {
     return '''
-selectedIndex: ${selectedIndex}
+selectedIndex: ${selectedIndex},
+notificationCounter: ${notificationCounter}
     ''';
   }
 }
