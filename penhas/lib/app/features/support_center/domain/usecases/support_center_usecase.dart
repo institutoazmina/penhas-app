@@ -101,17 +101,14 @@ class SupportCenterUseCase {
 
 extension _PrivateMethods on SupportCenterUseCase {
   Future<bool> hasLocationPermission() async {
-    final permissionStatus = await _locationService.permissionStatus();
-    return permissionStatus.maybeWhen(
-      granted: () => true,
-      orElse: () => false,
-    );
+    return await _locationService.isPermissionGranted();
   }
 
   Future<GeolocationEntity> currentLocation() async {
     UserLocationEntity geoLocation;
+    final hasPermission = await hasLocationPermission();
 
-    if (await hasLocationPermission()) {
+    if (hasPermission) {
       geoLocation = await _locationService.currentLocation().then(
             (v) => v.getOrElse(
               () => null,

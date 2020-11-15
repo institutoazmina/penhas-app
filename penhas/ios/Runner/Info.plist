@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -41,13 +43,14 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>A PenhaS precisa da tua autorização para enviar a tua localização as guardiãs quando o botão de Alerta for acionado.</string>
+	<string>A PenhaS precisa da tua autorização para enviar a tua localização as guardiãs quando o botão de Alerta for acionado, ou encontrar o Ponto de Apoio mais próximo.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>A PenhaS precisa da tua autorização para enviar a tua localização as guardiãs quando o botão de Alerta for acionado.</string>
+	<string>A PenhaS precisa da tua autorização para enviar a tua localização as guardiãs quando o botão de Alerta for acionado, ou encontrar o Ponto de Apoio mais próximo.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>A PenhaS precisa da tua autorização para gravar os áudios</string>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>location</string>
 		<string>audio</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

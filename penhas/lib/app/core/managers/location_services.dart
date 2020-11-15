@@ -17,6 +17,7 @@ abstract class ILocationServices {
     @required Widget description,
   });
   Future<LocationPermissionState> permissionStatus();
+  Future<bool> isPermissionGranted();
 }
 
 class LocationServices implements ILocationServices {
@@ -40,7 +41,9 @@ class LocationServices implements ILocationServices {
 
   @override
   Future<LocationPermissionState> permissionStatus() async {
-    return Permission.location.status.then((value) => value.mapFrom());
+    final status = await Permission.locationWhenInUse.status;
+    final mapper = status.mapFrom();
+    return mapper;
   }
 
   @override
@@ -57,6 +60,11 @@ class LocationServices implements ILocationServices {
         undefined: () => _requestPermission(title, description),
       ),
     );
+  }
+
+  @override
+  Future<bool> isPermissionGranted() async {
+    return await Permission.locationWhenInUse.isGranted;
   }
 
   Future<LocationPermissionState> _requestPermission(
