@@ -1,5 +1,9 @@
-* Versão : 1.0.16
+* Versão : 1.0.17
 * Novidades
-  - Tela de chat
-  - Correção de erros de grafia
-  - Correção do comportamento do toggle para habilitar modo camuflado e modo de violência
+  - Tela de Ponto de apoio
+    - Permite enviar sugestão de ponto de apaio
+    - Habilitar a geo-localização
+    - Traçar rota utilizando algum sistema de map existente no device do usuário
+    - Avaliação de um ponto de apoio
+    - Pesquisa do ponto de apoio por filtros e/ou palavra
+
