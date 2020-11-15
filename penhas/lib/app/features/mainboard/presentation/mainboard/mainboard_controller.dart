@@ -22,7 +22,7 @@ class MainboardController extends _MainboardControllerBase
 
 abstract class _MainboardControllerBase with Store {
   Timer _syncTimer;
-  final int notificationInterval = 60;
+  final int notificationInterval = 300;
   final MainboardStore mainboardStore;
   final IUserProfileStore _userProfileStore;
   final INotificationRepository _notification;
@@ -87,7 +87,6 @@ extension _PrivateMethod on _MainboardControllerBase {
   Future<void> checkUnRead() async {
     final result = await _notification.unread();
     final validField = result.getOrElse(() => ValidField(message: "0"));
-    // notificationCounter = int.tryParse(validField.message) ?? 0;
-    notificationCounter += 1;
+    notificationCounter = int.tryParse(validField.message) ?? 0;
   }
 }
