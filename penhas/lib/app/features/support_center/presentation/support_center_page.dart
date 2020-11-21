@@ -111,6 +111,7 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
             },
           ),
           SupportCenterInputFilter(
+            initialValue: controller.currentKeywords,
             totalOfFilter: controller.categoriesSelected,
             onFilterAction: controller.onFilterAction,
             onKeywordsAction: controller.onKeywordsAction,

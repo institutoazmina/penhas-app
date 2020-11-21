@@ -5,6 +5,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class SupportCenterInputFilter extends StatelessWidget {
   final int totalOfFilter;
+  final String initialValue;
   final void Function() onFilterAction;
   final void Function(String) onKeywordsAction;
   final TextEditingController _textController = TextEditingController();
@@ -12,12 +13,14 @@ class SupportCenterInputFilter extends StatelessWidget {
   SupportCenterInputFilter({
     Key key,
     this.totalOfFilter = 0,
+    this.initialValue,
     @required this.onFilterAction,
     @required this.onKeywordsAction,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    _textController.value = TextEditingValue(text: initialValue ?? "");
     final filterTitle =
         (totalOfFilter > 0) ? "Filtros ($totalOfFilter)" : "Filtros";
 

@@ -60,6 +60,9 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   @observable
   SupportCenterState state = SupportCenterState.loaded();
 
+  @observable
+  String currentKeywords = "";
+
   @computed
   PageProgressState get progressState {
     return monitorProgress(_loadSupportCenter);
@@ -80,12 +83,12 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> onKeywordsAction(String keywords) async {
-    String validKeyWords = keywords.replaceAll(RegExp(r"\s+"), "");
+    String validKeyWords = keywords.replaceAll(RegExp(r"^\s+"), "");
+    currentKeywords = validKeyWords;
 
-    if (validKeyWords.isNotEmpty) {
-      _fetchRequest = _fetchRequest.copyWith(keywords: keywords);
-      await loadSupportCenter(_fetchRequest);
-    }
+    _fetchRequest = _fetchRequest.copyWith(
+        keywords: validKeyWords.isEmpty ? "" : validKeyWords);
+    await loadSupportCenter(_fetchRequest);
   }
 
   @action

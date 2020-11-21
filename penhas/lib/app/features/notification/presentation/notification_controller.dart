@@ -6,7 +6,6 @@ import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/notification/data/repositories/notification_repository.dart';
 import 'package:penhas/app/features/notification/domain/entities/notification_session_entity.dart';
 import 'package:penhas/app/features/notification/domain/states/notification_state.dart';

@@ -1,9 +1,7 @@
-* Versão : 1.0.17
+* Versão : 1.0.18
 * Novidades
-  - Tela de Ponto de apoio
-    - Permite enviar sugestão de ponto de apaio
-    - Habilitar a geo-localização
-    - Traçar rota utilizando algum sistema de map existente no device do usuário
-    - Avaliação de um ponto de apoio
-    - Pesquisa do ponto de apoio por filtros e/ou palavra
-
+  - Notificações
+    - alerta de que existe notificações
+    - lista de notificações
+  - Ponto de apoio
+    - Corrigindo comportamento no filtro do 'Pesquise aqui'
