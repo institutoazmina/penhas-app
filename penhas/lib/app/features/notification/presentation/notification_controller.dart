@@ -2,10 +2,8 @@ import 'dart:async';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
@@ -22,8 +20,6 @@ class NotificationController extends _NotificationControllerBase
 }
 
 abstract class _NotificationControllerBase with Store, MapFailureMessage {
-  Timer _syncTimer;
-  final int notificationInterval = 300;
   final INotificationRepository _repository;
 
   _NotificationControllerBase(this._repository) {
@@ -33,9 +29,6 @@ abstract class _NotificationControllerBase with Store, MapFailureMessage {
   // @observable
   // ObservableFuture<Either<Failure, SupportCenterMetadataEntity>>
   //     _loadNotifications;
-
-  @observable
-  int notificationCounter = 0;
 
   @observable
   String errorMessage = "";
@@ -48,30 +41,7 @@ abstract class _NotificationControllerBase with Store, MapFailureMessage {
 }
 
 extension _PrivateMethod on _NotificationControllerBase {
-  void setupUploadTimer() {
-    if (_syncTimer != null) {
-      return;
-    }
-
-    _syncTimer = Timer.periodic(
-      Duration(seconds: notificationInterval),
-      (timer) async {
-        final time = DateTime.now().toString();
-        print("[$time] Executando o monitoramento do notification");
-        checkUnRead();
-      },
-    );
-  }
-
-  Future<void> setup() async {
-    setupUploadTimer();
-  }
-
-  Future<void> checkUnRead() async {
-    final result = await _repository.unread();
-    final validField = result.getOrElse(() => ValidField(message: "0"));
-    notificationCounter = int.tryParse(validField.message) ?? 0;
-  }
+  Future<void> setup() async {}
 
   void setMessageErro(String message) {
     errorMessage = message;

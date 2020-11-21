@@ -57,4 +57,8 @@ extension _PageStateBuilder on _NotificationState {
       ),
     );
   }
+
+  Widget buildLoaded() {
+    
+  }
 }
