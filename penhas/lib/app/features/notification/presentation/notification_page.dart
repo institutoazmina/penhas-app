@@ -62,16 +62,14 @@ extension _PageStateBuilder on _NotificationState {
 
   Widget buildLoaded(List<NotificationEntity> notifications) {
     return SafeArea(
-      child: Expanded(
-        child: ListView.builder(
-          itemCount: notifications.length,
-          itemBuilder: (BuildContext context, int index) {
-            final notification = notifications[index];
-            return NotificationCardPage(
-              notification: notification,
-            );
-          },
-        ),
+      child: ListView.builder(
+        itemCount: notifications.length,
+        itemBuilder: (BuildContext context, int index) {
+          final notification = notifications[index];
+          return NotificationCardPage(
+            notification: notification,
+          );
+        },
       ),
     );
   }
