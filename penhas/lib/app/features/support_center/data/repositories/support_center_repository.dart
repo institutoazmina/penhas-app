@@ -76,7 +76,10 @@ class SupportCenterRepository implements ISupportCenterRepository {
       parameters["categorias"] = options.categories.join(",");
     }
 
-    parameters["keywords"] = options.keywords;
+    parameters["keywords"] =
+        (options.keywords == null || options.keywords.isEmpty)
+            ? null
+            : options.keywords;
     parameters["next_page"] = options.nextPage;
     parameters["projeto"] = 'Penhas';
 
