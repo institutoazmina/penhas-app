@@ -45,6 +45,7 @@ import 'package:penhas/app/features/help_center/presentation/new_guardian/new_gu
 import 'package:penhas/app/features/help_center/presentation/pages/audio/audio_record_page.dart';
 import 'package:penhas/app/features/main_menu/domain/repositories/user_profile_repository.dart';
 import 'package:penhas/app/features/main_menu/domain/usecases/user_profile.dart';
+import 'package:penhas/app/features/main_menu/presentation/pages/about_penhas_page.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_controller.dart';
 import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -97,6 +98,7 @@ class MainboardModule extends ChildModule {
         ...filters,
         ...chat,
         ...notificationCenter,
+        ...menuRouters,
       ];
 
   List<ModularRouter> get tweetRoutes => [
@@ -184,6 +186,14 @@ class MainboardModule extends ChildModule {
             notificationRepository: i.get<INotificationRepository>(),
           ),
         ),
+      ];
+
+  List<ModularRouter> get menuRouters => [
+        ModularRouter(
+          '/menu/about',
+          child: (context, args) => AboutPenhasPage(),
+          transition: TransitionType.rightToLeft,
+        )
       ];
 
   List<ModularRouter> get audioRecord => [

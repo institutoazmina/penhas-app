@@ -101,6 +101,9 @@ class _PenhasDrawerPageState
                     "assets/images/svg/drawer/trash.svg",
                     color: DesignSystemColors.darkIndigoThree,
                   ),
+                  onPressed: () {
+                    Modular.to.pushNamed('/mainboard/menu/about');
+                  },
                 ),
                 Container(
                   constraints: BoxConstraints(minHeight: 126.0),
@@ -144,23 +147,27 @@ class _PenhasDrawerPageState
   Widget _buildItemList({
     @required String title,
     Widget icon,
+    GestureTapCallback onPressed,
   }) {
-    return Container(
-      padding: EdgeInsets.only(left: 16.0),
-      height: listHeight,
-      decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          border: Border(
-              bottom: BorderSide(color: DesignSystemColors.pinkishGrey))),
-      child: Row(
-        children: <Widget>[
-          SizedBox(height: 26.0, width: 26.0, child: icon),
-          SizedBox(width: 9.0),
-          Text(
-            title,
-            style: kTextStyleDrawerListItem,
-          ),
-        ],
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        padding: EdgeInsets.only(left: 16.0),
+        height: listHeight,
+        decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            border: Border(
+                bottom: BorderSide(color: DesignSystemColors.pinkishGrey))),
+        child: Row(
+          children: <Widget>[
+            SizedBox(height: 26.0, width: 26.0, child: icon),
+            SizedBox(width: 9.0),
+            Text(
+              title,
+              style: kTextStyleDrawerListItem,
+            ),
+          ],
+        ),
       ),
     );
   }

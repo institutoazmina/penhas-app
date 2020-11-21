@@ -55,6 +55,7 @@ dependencies:
   timeago: ^2.0.26
   url_launcher: ^5.4.7
   uuid: ^2.2.0
+  webview_flutter: ^1.0.7
 
 dev_dependencies:
   flutter_test:
