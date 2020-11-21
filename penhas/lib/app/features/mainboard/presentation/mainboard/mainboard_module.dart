@@ -1,5 +1,4 @@
 import 'package:http/http.dart' as http;
-import 'package:path/path.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/managers/audio_play_services.dart';
 import 'package:penhas/app/core/managers/audio_record_services.dart';
