@@ -72,9 +72,6 @@ extension _PrivateMethod on _MainboardControllerBase {
     _syncTimer = Timer.periodic(
       Duration(seconds: notificationInterval),
       (timer) async {
-        final time = DateTime.now().toString();
-        print(
-            "[$time] Executando o monitoramento do notification [$notificationCounter]");
         checkUnRead();
       },
     );
