@@ -1,7 +1,6 @@
-* Versão : 1.0.18
+* Versão : 1.0.19
 * Novidades
-  - Notificações
-    - alerta de que existe notificações
-    - lista de notificações
-  - Ponto de apoio
-    - Corrigindo comportamento no filtro do 'Pesquise aqui'
+  - Menu lateral
+    . texto explicativo sobre o modo camuflado
+    . ação de visualizar o tutorial
+    . revisar o tutorial de modo camuflado
