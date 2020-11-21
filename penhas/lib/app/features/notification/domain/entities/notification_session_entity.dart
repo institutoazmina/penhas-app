@@ -13,12 +13,19 @@ class NotificationSessionEntity extends Equatable {
   });
 
   @override
-  List<Object> get props => throw UnimplementedError();
+  List<Object> get props => [
+        this.hasMore,
+        this.nextPage,
+        this.notifications,
+      ];
+
+  @override
+  bool get stringify => true;
 }
 
 class NotificationEntity extends Equatable {
   final String name;
-  final String time;
+  final DateTime time;
   final String icon;
   final String title;
   final String content;
@@ -39,4 +46,7 @@ class NotificationEntity extends Equatable {
         this.time,
         this.title,
       ];
+
+  @override
+  bool get stringify => true;
 }
