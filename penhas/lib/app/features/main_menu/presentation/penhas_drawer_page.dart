@@ -95,6 +95,13 @@ class _PenhasDrawerPageState
                     color: DesignSystemColors.darkIndigoThree,
                   ),
                 ),
+                _buildItemList(
+                  title: 'Sobre o PenhaS',
+                  icon: SvgPicture.asset(
+                    "assets/images/svg/drawer/trash.svg",
+                    color: DesignSystemColors.darkIndigoThree,
+                  ),
+                ),
                 Container(
                   constraints: BoxConstraints(minHeight: 126.0),
                   alignment: Alignment.bottomCenter,
@@ -134,7 +141,10 @@ class _PenhasDrawerPageState
     );
   }
 
-  Widget _buildItemList({@required String title, Widget icon}) {
+  Widget _buildItemList({
+    @required String title,
+    Widget icon,
+  }) {
     return Container(
       padding: EdgeInsets.only(left: 16.0),
       height: listHeight,
