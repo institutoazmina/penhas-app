@@ -82,6 +82,7 @@ extension _PrivateMethod on _MainboardControllerBase {
 
   Future<void> setup() async {
     setupUploadTimer();
+    checkUnRead();
   }
 
   Future<void> checkUnRead() async {
