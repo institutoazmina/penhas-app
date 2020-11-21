@@ -14,6 +14,7 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'PenhaS',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
           textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Lato')),
       navigatorKey: Modular.navigatorKey,
