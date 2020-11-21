@@ -8,6 +8,7 @@ import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/notification/data/repositories/notification_repository.dart';
+import 'package:penhas/app/features/notification/domain/entities/notification_session_entity.dart';
 import 'package:penhas/app/features/notification/domain/states/notification_state.dart';
 
 part 'notification_controller.g.dart';
@@ -26,9 +27,9 @@ abstract class _NotificationControllerBase with Store, MapFailureMessage {
     setup();
   }
 
-  // @observable
-  // ObservableFuture<Either<Failure, SupportCenterMetadataEntity>>
-  //     _loadNotifications;
+  @observable
+  ObservableFuture<Either<Failure, NotificationSessionEntity>>
+      _loadNotifications;
 
   @observable
   String errorMessage = "";
@@ -37,52 +38,30 @@ abstract class _NotificationControllerBase with Store, MapFailureMessage {
   NotificationState state = NotificationState.initial();
 
   @action
-  Future<void> retry() async {}
+  Future<void> retry() async {
+    loadNotification();
+  }
 }
 
 extension _PrivateMethod on _NotificationControllerBase {
-  Future<void> setup() async {}
-
-  void setMessageErro(String message) {
-    errorMessage = message;
+  Future<void> setup() async {
+    loadNotification();
   }
 
-  // Future<void> handleLocationFeedback(Object value) async {
-  //   if (value is bool && value == true) {
-  //     await loadSupportCenter(_fetchRequest);
-  //   }
-  // }
+  Future<void> loadNotification() async {
+    setErrorMessage('');
+    _loadNotifications = ObservableFuture(_repository.notifications());
 
-  // Future<void> handleCategoriesSuccess(List<FilterTagEntity> categories) async {
-  //   final tags = categories
-  //       .map(
-  //         (e) => FilterTagEntity(
-  //           id: e.id,
-  //           isSelected: isSeleted(e.id),
-  //           label: e.label,
-  //         ),
-  //       )
-  //       .toList();
+    final response = await _loadNotifications;
 
-  //   Modular.to
-  //       .pushNamed("/mainboard/filters", arguments: tags)
-  //       .then((v) => v as FilterActionObserver)
-  //       .then((v) async => handleCategoriesUpdate(v));
-  // }
-
-  void handleCategoriesError(Failure failure) {
-    final message = mapFailureMessage(failure);
-    setMessageErro(message);
+    response.fold(
+      (failure) => handleStateError(failure),
+      (session) => handleSession(session),
+    );
   }
 
-  PageProgressState monitorProgress(ObservableFuture<Object> observable) {
-    if (observable == null || observable.status == FutureStatus.rejected) {
-      return PageProgressState.initial;
-    }
-
-    return observable.status == FutureStatus.pending
-        ? PageProgressState.loading
-        : PageProgressState.loaded;
+  void handleSession(NotificationSessionEntity session) {
+    state = NotificationState.loaded(session.notifications);
   }
 
   void handleStateError(Failure f) {

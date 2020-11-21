@@ -39,10 +39,14 @@ class NotificationRepository implements INotificationRepository {
   @override
   Future<Either<Failure, NotificationSessionModel>> notifications() async {
     final endPoint = "/me/notifications";
+    final Map<String, String> parameters = {
+      'rows': '1000',
+    };
 
     try {
       final bodyResponse = await _apiProvider.get(
         path: endPoint,
+        parameters: parameters,
       );
       return right(parseNotifications(bodyResponse));
     } catch (error) {

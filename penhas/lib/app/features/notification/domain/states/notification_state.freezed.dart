@@ -19,8 +19,10 @@ class _$NotificationStateTearOff {
   }
 
 // ignore: unused_element
-  _Loaded loaded() {
-    return const _Loaded();
+  _Loaded loaded(List<NotificationEntity> notifications) {
+    return _Loaded(
+      notifications,
+    );
   }
 
 // ignore: unused_element
@@ -40,13 +42,13 @@ mixin _$NotificationState {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(),
+    @required Result loaded(List<NotificationEntity> notifications),
     @required Result error(String message),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(),
+    Result loaded(List<NotificationEntity> notifications),
     Result error(String message),
     @required Result orElse(),
   });
@@ -125,7 +127,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(),
+    @required Result loaded(List<NotificationEntity> notifications),
     @required Result error(String message),
   }) {
     assert(initial != null);
@@ -138,7 +140,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(),
+    Result loaded(List<NotificationEntity> notifications),
     Result error(String message),
     @required Result orElse(),
   }) {
@@ -186,6 +188,7 @@ abstract class _Initial implements NotificationState {
 abstract class _$LoadedCopyWith<$Res> {
   factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
       __$LoadedCopyWithImpl<$Res>;
+  $Res call({List<NotificationEntity> notifications});
 }
 
 /// @nodoc
@@ -196,55 +199,80 @@ class __$LoadedCopyWithImpl<$Res> extends _$NotificationStateCopyWithImpl<$Res>
 
   @override
   _Loaded get _value => super._value as _Loaded;
+
+  @override
+  $Res call({
+    Object notifications = freezed,
+  }) {
+    return _then(_Loaded(
+      notifications == freezed
+          ? _value.notifications
+          : notifications as List<NotificationEntity>,
+    ));
+  }
 }
 
 /// @nodoc
 class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
-  const _$_Loaded();
+  const _$_Loaded(this.notifications) : assert(notifications != null);
+
+  @override
+  final List<NotificationEntity> notifications;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'NotificationState.loaded()';
+    return 'NotificationState.loaded(notifications: $notifications)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'NotificationState.loaded'));
+    properties
+      ..add(DiagnosticsProperty('type', 'NotificationState.loaded'))
+      ..add(DiagnosticsProperty('notifications', notifications));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _Loaded);
+    return identical(this, other) ||
+        (other is _Loaded &&
+            (identical(other.notifications, notifications) ||
+                const DeepCollectionEquality()
+                    .equals(other.notifications, notifications)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(notifications);
+
+  @override
+  _$LoadedCopyWith<_Loaded> get copyWith =>
+      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(),
+    @required Result loaded(List<NotificationEntity> notifications),
     @required Result error(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
     assert(error != null);
-    return loaded();
+    return loaded(notifications);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(),
+    Result loaded(List<NotificationEntity> notifications),
     Result error(String message),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (loaded != null) {
-      return loaded();
+      return loaded(notifications);
     }
     return orElse();
   }
@@ -279,7 +307,10 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 }
 
 abstract class _Loaded implements NotificationState {
-  const factory _Loaded() = _$_Loaded;
+  const factory _Loaded(List<NotificationEntity> notifications) = _$_Loaded;
+
+  List<NotificationEntity> get notifications;
+  _$LoadedCopyWith<_Loaded> get copyWith;
 }
 
 /// @nodoc
@@ -351,7 +382,7 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(),
+    @required Result loaded(List<NotificationEntity> notifications),
     @required Result error(String message),
   }) {
     assert(initial != null);
@@ -364,7 +395,7 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(),
+    Result loaded(List<NotificationEntity> notifications),
     Result error(String message),
     @required Result orElse(),
   }) {

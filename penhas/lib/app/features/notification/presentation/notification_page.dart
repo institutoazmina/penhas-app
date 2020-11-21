@@ -3,11 +3,13 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/features/notification/domain/entities/notification_session_entity.dart';
 import 'package:penhas/app/features/notification/domain/states/notification_state.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 import 'notification_controller.dart';
+import 'pages/notification_card_page.dart';
 
 class NotificationPage extends StatefulWidget {
   NotificationPage({Key key}) : super(key: key);
@@ -40,7 +42,7 @@ extension _PageStateBuilder on _NotificationState {
   Widget bodyBuilder(NotificationState state) {
     return state.when(
       initial: () => buildInitialState(),
-      loaded: () => Container(color: Colors.redAccent),
+      loaded: (notifications) => buildLoaded(notifications),
       error: (message) => SupportCenterGeneralError(
         message: message,
         onPressed: controller.retry,
@@ -58,7 +60,19 @@ extension _PageStateBuilder on _NotificationState {
     );
   }
 
-  Widget buildLoaded() {
-    
+  Widget buildLoaded(List<NotificationEntity> notifications) {
+    return SafeArea(
+      child: Expanded(
+        child: ListView.builder(
+          itemCount: notifications.length,
+          itemBuilder: (BuildContext context, int index) {
+            final notification = notifications[index];
+            return NotificationCardPage(
+              notification: notification,
+            );
+          },
+        ),
+      ),
+    );
   }
 }

@@ -9,6 +9,24 @@ part of 'notification_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$NotificationController on _NotificationControllerBase, Store {
+  final _$_loadNotificationsAtom =
+      Atom(name: '_NotificationControllerBase._loadNotifications');
+
+  @override
+  ObservableFuture<Either<Failure, NotificationSessionEntity>>
+      get _loadNotifications {
+    _$_loadNotificationsAtom.reportRead();
+    return super._loadNotifications;
+  }
+
+  @override
+  set _loadNotifications(
+      ObservableFuture<Either<Failure, NotificationSessionEntity>> value) {
+    _$_loadNotificationsAtom.reportWrite(value, super._loadNotifications, () {
+      super._loadNotifications = value;
+    });
+  }
+
   final _$errorMessageAtom =
       Atom(name: '_NotificationControllerBase.errorMessage');
 

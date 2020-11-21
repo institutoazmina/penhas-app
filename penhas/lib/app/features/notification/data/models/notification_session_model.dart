@@ -10,7 +10,11 @@ class NotificationSessionModel extends NotificationSessionEntity {
     @required this.hasMore,
     @required this.nextPage,
     @required this.notifications,
-  });
+  }) : super(
+          hasMore: hasMore,
+          nextPage: nextPage,
+          notifications: notifications,
+        );
 
   factory NotificationSessionModel.fromJson(Map<String, Object> jsonData) {
     final hasMore = jsonData["has_more"] == 1 ?? false;

@@ -22,7 +22,7 @@ class MainboardController extends _MainboardControllerBase
 
 abstract class _MainboardControllerBase with Store {
   Timer _syncTimer;
-  final int notificationInterval = 300;
+  final int notificationInterval = 60;
   final MainboardStore mainboardStore;
   final IUserProfileStore _userProfileStore;
   final INotificationRepository _notification;
