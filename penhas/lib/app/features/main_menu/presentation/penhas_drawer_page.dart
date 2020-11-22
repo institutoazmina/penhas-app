@@ -51,35 +51,39 @@ class _PenhasDrawerPageState
                   controller.stealthModeState,
                 ),
                 Container(
-                    margin: EdgeInsets.only(
-                      top: 16,
-                      left: 16,
-                      right: 16,
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          "O modo camuflado reduz a possibilidade d aut corporis consequatur voluptatem. Placeat et explicabo porro veritatis. Eum dicta error commodi.",
-                          style: securityContextTextStyle,
-                        ),
-                        FlatButton(
-                          onPressed: () async {
-                            await Navigator.push(
-                              context,
-                              TutorialScaleRoute(page: QuizTutorialPage()),
-                            );
-                          },
-                          child: Text("Como funciona",
-                              style: securityTutorialButtonTextStyle),
-                        )
-                      ],
-                    )),
+                  margin: EdgeInsets.only(
+                    top: 16,
+                    left: 16,
+                    right: 16,
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        "O modo camuflado reduz a possibilidade d aut corporis consequatur voluptatem. Placeat et explicabo porro veritatis. Eum dicta error commodi.",
+                        style: securityContextTextStyle,
+                      ),
+                      FlatButton(
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            TutorialScaleRoute(page: QuizTutorialPage()),
+                          );
+                        },
+                        child: Text("Como funciona",
+                            style: securityTutorialButtonTextStyle),
+                      )
+                    ],
+                  ),
+                ),
                 _buildItemList(
                   title: 'Informações pessoais',
                   icon: SvgPicture.asset(
                     "assets/images/svg/drawer/user_profile.svg",
                     color: DesignSystemColors.darkIndigoThree,
                   ),
+                  onPressed: () {
+                    Modular.to.pushNamed('/mainboard/menu/profile_edit');
+                  },
                 ),
                 _buildItemList(
                   title: 'Preferência da conta',
@@ -87,6 +91,9 @@ class _PenhasDrawerPageState
                     "assets/images/svg/drawer/account_setting.svg",
                     color: DesignSystemColors.darkIndigoThree,
                   ),
+                  onPressed: () {
+                    Modular.to.pushNamed('/mainboard/menu/account_preference');
+                  },
                 ),
                 _buildItemList(
                   title: 'Exclusão da conta',
@@ -94,6 +101,9 @@ class _PenhasDrawerPageState
                     "assets/images/svg/drawer/trash.svg",
                     color: DesignSystemColors.darkIndigoThree,
                   ),
+                  onPressed: () {
+                    Modular.to.pushNamed('/mainboard/menu/account_delete');
+                  },
                 ),
                 _buildItemList(
                   title: 'Sobre o PenhaS',

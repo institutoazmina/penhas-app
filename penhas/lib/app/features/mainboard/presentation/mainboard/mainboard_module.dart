@@ -45,6 +45,9 @@ import 'package:penhas/app/features/help_center/presentation/new_guardian/new_gu
 import 'package:penhas/app/features/help_center/presentation/pages/audio/audio_record_page.dart';
 import 'package:penhas/app/features/main_menu/domain/repositories/user_profile_repository.dart';
 import 'package:penhas/app/features/main_menu/domain/usecases/user_profile.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/delete/account_delete_page.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/my_profile/profile_edit_page.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/preference/account_preference_page.dart';
 import 'package:penhas/app/features/main_menu/presentation/pages/about_penhas_page.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_controller.dart';
 import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_controller.dart';
@@ -193,7 +196,22 @@ class MainboardModule extends ChildModule {
           '/menu/about',
           child: (context, args) => AboutPenhasPage(),
           transition: TransitionType.rightToLeft,
-        )
+        ),
+        ModularRouter(
+          '/menu/profile_edit',
+          child: (context, args) => ProfileEditPage(),
+          transition: TransitionType.rightToLeft,
+        ),
+        ModularRouter(
+          '/menu/account_preference',
+          child: (context, args) => AccountPreference(),
+          transition: TransitionType.rightToLeft,
+        ),
+        ModularRouter(
+          '/menu/account_delete',
+          child: (context, args) => AccountDeletePage(),
+          transition: TransitionType.rightToLeft,
+        ),
       ];
 
   List<ModularRouter> get audioRecord => [
