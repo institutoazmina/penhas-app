@@ -23,11 +23,11 @@ class ChatPeopleFilterCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text("Rede de mulher que querem ajudar", style: cardTitleTextStyle),
+          Text("Rede de mulheres que querem ajudar", style: cardTitleTextStyle),
           Padding(
             padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
             child: Text(
-              "Escolha uma usuária para conversa, desabafar, pedir algum tipo de ajuda, etc. Sobre o que você quer conversar?",
+              "Escolha uma delas para conversar, desabafar ou tirar uma dúvida",
               style: describeTextStyle,
             ),
           ),

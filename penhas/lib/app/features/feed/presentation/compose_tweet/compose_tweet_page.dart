@@ -23,8 +23,7 @@ class ComposeTweetPage extends StatefulWidget {
 class _ComposeTweetPageState
     extends ModularState<ComposeTweetPage, ComposeTweetController>
     with SnackBarHandler {
-  final String inputHint =
-      'Gostaria de compartilhar alguma experiência ou história sua?';
+  final String inputHint = 'Deixe seu comentário';
   final String anonymousHint =
       'Sua publicação é anônima. As usuárias do app podem comentar sua publicação, mas só você pode iniciar uma conversa com elas.';
   List<ReactionDisposer> _disposers;
@@ -77,17 +76,6 @@ class _ComposeTweetPageState
                   padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 24.0),
                   child: Column(
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          bottom: 24.0,
-                          left: 2.0,
-                          right: 2.0,
-                        ),
-                        child: Text(
-                          'Publique algo para outras mulheres que usam o PenhaS.',
-                          style: kTextStyleDrawerListItem,
-                        ),
-                      ),
                       TextField(
                         controller: controller.editingController,
                         maxLength: 2200,
@@ -116,6 +104,7 @@ class _ComposeTweetPageState
                                 width: 2.0),
                           ),
                           alignLabelWithHint: true,
+                          counterText: "",
                           hintText: inputHint,
                         ),
                         toolbarOptions: ToolbarOptions(

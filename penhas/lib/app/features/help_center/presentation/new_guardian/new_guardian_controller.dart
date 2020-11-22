@@ -182,7 +182,7 @@ extension _WidgetBuilderPrivate on _NewGuardianControllerBase {
   Widget buildRequestPermissionContent() {
     return RichText(
       text: TextSpan(
-        text: 'Quando uma guadiã é cadastrada, recomendamos que a ',
+        text: 'Quando um guardião é cadastrado, recomendamos que o ',
         style: kTextStyleAlertDialogDescription,
         children: [
           TextSpan(
@@ -191,7 +191,7 @@ extension _WidgetBuilderPrivate on _NewGuardianControllerBase {
           ),
           TextSpan(
             text:
-                'seja autorizada a obter a tua localização. Esta informação será enviado para a guardiã quando o botão de ',
+                'seja autorizado a obter a sua localização. Esta informação será enviada para o Guardião quando o botão de ',
             style: kTextStyleAlertDialogDescription,
           ),
           TextSpan(
