@@ -91,7 +91,6 @@ extension _SecurityModeBuilder on _MainboardPageState {
       floatingActionButton: _buildFab(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: MainboardBottomNavigationPage(
-        securityState: MainboardSecurityState.enable(),
         currentPage: controller.mainboardStore.selectedPage,
         pages: controller.mainboardStore.pages,
         onSelect: (v) => controller.mainboardStore.changePage(to: v),
@@ -112,7 +111,6 @@ extension _SecurityModeBuilder on _MainboardPageState {
         pageController: controller.mainboardStore.pageController,
       ),
       bottomNavigationBar: MainboardBottomNavigationPage(
-        securityState: MainboardSecurityState.disable(),
         currentPage: controller.mainboardStore.selectedPage,
         pages: controller.mainboardStore.pages,
         onSelect: (v) => controller.mainboardStore.changePage(to: v),
