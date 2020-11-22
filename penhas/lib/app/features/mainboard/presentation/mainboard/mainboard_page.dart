@@ -29,11 +29,9 @@ class _MainboardPageState
     with WidgetsBindingObserver {
   String userName;
   Widget userAvatar;
-  int notificationCounter = 0;
   bool _helpCenterEnabled = false;
-  List<ReactionDisposer> _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
+// HelpCenterCallActionFeature  SecurityModeActionFeature
   @override
   void initState() {
     super.initState();
@@ -41,28 +39,9 @@ class _MainboardPageState
   }
 
   @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    _disposers.forEach((d) => d());
-    super.dispose();
-  }
-
-  @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
     controller.changeAppState(state);
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _disposers ??= [
-      reaction((_) => controller.notificationCounter, (int counter) {
-        setState(() {
-          notificationCounter = counter;
-        });
-      })
-    ];
   }
 
   @override
@@ -96,7 +75,7 @@ class _MainboardPageState
       actions: <Widget>[
         _helpCenterEnabled
             ? Container()
-            : MainboardNotificationPage(counter: notificationCounter)
+            : MainboardNotificationPage(counter: controller.notificationCounter)
       ],
     );
   }
