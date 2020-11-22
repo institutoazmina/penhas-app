@@ -8,13 +8,15 @@ class AboutPenhasPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0.0,
-          title: Text("Sobre o PenhaS"),
-          backgroundColor: DesignSystemColors.easterPurple,
-        ),
-        body: WebView(
-          initialUrl: 'https://elasv2-api.appcivico.com/web/faq',
-        ));
+      appBar: AppBar(
+        elevation: 0.0,
+        title: Text("Sobre o PenhaS"),
+        backgroundColor: DesignSystemColors.easterPurple,
+      ),
+      body: WebView(
+        initialUrl: 'https://elasv2-api.appcivico.com/web/faq',
+        javascriptMode: JavascriptMode.unrestricted,
+      ),
+    );
   }
 }
