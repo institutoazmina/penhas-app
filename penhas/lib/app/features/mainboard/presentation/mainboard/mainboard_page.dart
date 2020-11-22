@@ -2,20 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_security_state.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart';
-import 'package:penhas/app/features/chat/presentation/chat_main_module.dart';
-import 'package:penhas/app/features/feed/presentation/compose_tweet/compose_tweet_page.dart';
-import 'package:penhas/app/features/feed/presentation/feed_module.dart';
-import 'package:penhas/app/features/help_center/presentation/help_center_module.dart';
 import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_page.dart';
-import 'package:penhas/app/features/mainboard/presentation/mainboard/pages/mainboard_button_page.dart';
-import 'package:penhas/app/features/mainboard/presentation/mainboard/pages/mainboard_notification_page.dart';
-import 'package:penhas/app/features/support_center/presentation/support_center_module.dart';
+import 'package:penhas/app/features/mainboard/presentation/mainboard/pages/mainboard_body_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/logo.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'mainboard_controller.dart';
 import 'pages/mainboard_app_bar_page.dart';
 import 'pages/mainboard_bottom_navigation_page.dart';
@@ -58,20 +49,6 @@ class _MainboardPageState
     });
   }
 
-  PageView _pagesBodyBuilder() {
-    return PageView(
-      physics: NeverScrollableScrollPhysics(),
-      controller: controller.mainboardStore.pageController,
-      children: <Widget>[
-        FeedModule(),
-        ComposeTweetPage(),
-        ChatMainModule(),
-        SupportCenterModule(),
-        HelpCenterModule(),
-      ],
-    );
-  }
-
   Widget _buildFab() {
     bool keyboardIsOpened = MediaQuery.of(context).viewInsets.bottom != 0.0;
 
@@ -107,7 +84,10 @@ extension _SecurityModeBuilder on _MainboardPageState {
       ),
       drawer: PenhasDrawerPage(),
       backgroundColor: Colors.white,
-      body: _pagesBodyBuilder(),
+      body: MainboardBodyPage(
+        pages: controller.mainboardStore.pages,
+        pageController: controller.mainboardStore.pageController,
+      ),
       floatingActionButton: _buildFab(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: MainboardBottomNavigationPage(
@@ -127,7 +107,10 @@ extension _SecurityModeBuilder on _MainboardPageState {
       ),
       drawer: PenhasDrawerPage(),
       backgroundColor: Colors.white,
-      body: _pagesBodyBuilder(),
+      body: MainboardBodyPage(
+        pages: controller.mainboardStore.pages,
+        pageController: controller.mainboardStore.pageController,
+      ),
       bottomNavigationBar: MainboardBottomNavigationPage(
         securityState: MainboardSecurityState.disable(),
         currentPage: controller.mainboardStore.selectedPage,
@@ -136,67 +119,4 @@ extension _SecurityModeBuilder on _MainboardPageState {
       ),
     );
   }
-}
-
-extension _BottomNavigationBuilder on _MainboardPageState {
-  // BottomAppBar bottomNavigationBuilder(MainboardState currentPage) {
-  //   final bottomColor = currentPage.maybeWhen(
-  //     helpCenter: () => DesignSystemColors.helpCenterButtonBar,
-  //     orElse: () => DesignSystemColors.white,
-  //   );
-
-  //   return BottomAppBar(
-  //     elevation: 20.0,
-  //     color: bottomColor,
-  //     child: Container(
-  //       height: 56,
-  //       child: Row(
-  //         mainAxisSize: MainAxisSize.max,
-  //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //         children: <Widget>[
-  //           _buildFeedButton(),
-  //           _buildComposeButton(),
-  //           Container(width: 62),
-  //           _buildChatButton(),
-  //           _buildSupportButton(),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // Widget _buildSupportButton() {
-  //   return MainboarButtonPage(
-  //     currentPage: MainboardState.supportPoint(),
-  //     pageSelected: controller.mainboardStore.selectedPage,
-  //     onSeletec:  // onSeletec: controller.mainboardStore.selectedPage
-  //   );
-  // }
-
-  // Widget _buildChatButton() {
-  //   return MainboarButtonPage(
-  //     currentPage: MainboardState.chat(),
-  //     pageSelected: controller.mainboardStore.selectedPage,
-  //     onSeletec: (v) => controller.mainboardStore.changePage(
-  //         to: v), // onSeletec: controller.mainboardStore.selectedPage
-  //   );
-  // }
-
-  // Widget _buildComposeButton() {
-  //   return MainboarButtonPage(
-  //     currentPage: MainboardState.compose(),
-  //     pageSelected: controller.mainboardStore.selectedPage,
-  //     onSeletec: (v) => controller.mainboardStore.changePage(
-  //         to: v), // onSeletec: controller.mainboardStore.selectedPage
-  //   );
-  // }
-
-  // Widget _buildFeedButton() {
-  //   return MainboarButtonPage(
-  //     currentPage: MainboardState.feed(),
-  //     pageSelected: controller.mainboardStore.selectedPage,
-  //     onSeletec: (v) => controller.mainboardStore.changePage(
-  //         to: v), // onSeletec: controller.mainboardStore.selectedPage
-  //   );
-  // }
 }
