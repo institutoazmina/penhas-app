@@ -15,6 +15,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'mainboard_controller.dart';
+import 'pages/mainboard_app_bar_page.dart';
 
 class MainboardPage extends StatefulWidget {
   final String title;
@@ -51,32 +52,6 @@ class _MainboardPageState
         disable: () => disabledSecurityMode(),
       );
     });
-  }
-
-  AppBar _appBarBuilder() {
-    return AppBar(
-      titleSpacing: 0,
-      backgroundColor: _helpCenterEnabled
-          ? DesignSystemColors.helpCenterNavigationBar
-          : DesignSystemColors.ligthPurple,
-      elevation: 0.0,
-      centerTitle: false,
-      title: _helpCenterEnabled
-          ? Text(
-              'Precisa de ajuda?',
-              style: kTextStyleHelpCenterTitle,
-            )
-          : Icon(
-              DesignSystemLogo.penhasLogo,
-              color: Colors.white,
-              size: 30,
-            ),
-      actions: <Widget>[
-        _helpCenterEnabled
-            ? Container()
-            : MainboardNotificationPage(counter: controller.notificationCounter)
-      ],
-    );
   }
 
   PageView _pagesBodyBuilder() {
@@ -121,7 +96,10 @@ class _MainboardPageState
 extension _SecurityModeBuilder on _MainboardPageState {
   Widget enabledSecurityMode() {
     return Scaffold(
-      appBar: _appBarBuilder(),
+      appBar: MainBoardAppBarPage(
+        currentPage: controller.mainboardStore.selectedPage,
+        counter: controller.notificationCounter,
+      ),
       drawer: PenhasDrawerPage(),
       backgroundColor: Colors.white,
       body: _pagesBodyBuilder(),
@@ -133,7 +111,10 @@ extension _SecurityModeBuilder on _MainboardPageState {
 
   Widget disabledSecurityMode() {
     return Scaffold(
-      appBar: _appBarBuilder(),
+      appBar: MainBoardAppBarPage(
+        currentPage: controller.mainboardStore.selectedPage,
+        counter: controller.notificationCounter,
+      ),
       drawer: PenhasDrawerPage(),
       backgroundColor: Colors.white,
       body: _pagesBodyBuilder(),
