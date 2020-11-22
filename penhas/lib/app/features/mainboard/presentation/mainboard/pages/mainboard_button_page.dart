@@ -6,11 +6,11 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 class MainboarButtonPage extends StatelessWidget {
   final MainboardState currentPage;
   final MainboardState pageSelected;
-  final void Function(MainboardState) onSeletec;
+  final void Function(MainboardState) onSelect;
 
   const MainboarButtonPage({
     Key key,
-    @required this.onSeletec,
+    @required this.onSelect,
     @required this.currentPage,
     @required this.pageSelected,
   }) : super(key: key);
@@ -21,7 +21,7 @@ class MainboarButtonPage extends StatelessWidget {
       child: FlatButton(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
-        onPressed: () => this.onSeletec(this.currentPage),
+        onPressed: () => this.onSelect(this.currentPage),
         child: _buildBottomBarIcon(
           this.currentPage,
           this.pageSelected,

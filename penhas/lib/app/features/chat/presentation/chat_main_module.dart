@@ -19,11 +19,11 @@ class ChatMainModule extends WidgetModule {
   List<Bind> get binds => [
         Bind(
           (i) => ChatMainController(
-            chatToggleFeature: i.get<ChatToggleFeature>(),
+            chatToggleFeature: i.get<ChatPrivateToggleFeature>(),
           ),
         ),
-        Bind<ChatToggleFeature>(
-          (i) => ChatToggleFeature(
+        Bind<ChatPrivateToggleFeature>(
+          (i) => ChatPrivateToggleFeature(
             modulesServices: i.get<IAppModulesServices>(),
           ),
         ),

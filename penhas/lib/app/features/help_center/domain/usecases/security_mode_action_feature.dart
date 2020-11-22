@@ -8,6 +8,14 @@ class SecurityModeActionFeature {
   final IAppModulesServices _modulesServices;
   static String featureCode = 'modo_seguranca';
 
+  Future<bool> get isEnabled => _isEnabled();
+
+  Future<bool> _isEnabled() async {
+    final module = await _modulesServices.feature(
+        name: SecurityModeActionFeature.featureCode);
+    return module != null;
+  }
+
   Future<String> get callingNumber => _callingNumber();
   Future<AudioRecordDurationEntity> get audioDuration => _audioDuration();
 

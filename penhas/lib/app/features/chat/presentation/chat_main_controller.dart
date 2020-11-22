@@ -8,12 +8,12 @@ part 'chat_main_controller.g.dart';
 class ChatMainController extends _ChatMainControllerBase
     with _$ChatMainController {
   ChatMainController({
-    @required ChatToggleFeature chatToggleFeature,
+    @required ChatPrivateToggleFeature chatToggleFeature,
   }) : super(chatToggleFeature);
 }
 
 abstract class _ChatMainControllerBase with Store {
-  final ChatToggleFeature _chatToggleFeature;
+  final ChatPrivateToggleFeature _chatToggleFeature;
 
   _ChatMainControllerBase(this._chatToggleFeature) {
     _init();

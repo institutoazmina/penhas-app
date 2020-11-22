@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/features/mainboard/domain/states/mainboard_security_state.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart';
 import 'package:penhas/app/features/chat/presentation/chat_main_module.dart';
 import 'package:penhas/app/features/feed/presentation/compose_tweet/compose_tweet_page.dart';
@@ -17,6 +18,7 @@ import 'package:penhas/app/shared/design_system/logo.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'mainboard_controller.dart';
 import 'pages/mainboard_app_bar_page.dart';
+import 'pages/mainboard_bottom_navigation_page.dart';
 
 class MainboardPage extends StatefulWidget {
   final String title;
@@ -106,9 +108,14 @@ extension _SecurityModeBuilder on _MainboardPageState {
       drawer: PenhasDrawerPage(),
       backgroundColor: Colors.white,
       body: _pagesBodyBuilder(),
-      bottomNavigationBar: bottomNavigationBuilder(currentPage),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: _buildFab(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: MainboardBottomNavigationPage(
+        securityState: MainboardSecurityState.enable(),
+        currentPage: controller.mainboardStore.selectedPage,
+        pages: controller.mainboardStore.pages,
+        onSelect: (v) => controller.mainboardStore.changePage(to: v),
+      ),
     );
   }
 
@@ -121,71 +128,75 @@ extension _SecurityModeBuilder on _MainboardPageState {
       drawer: PenhasDrawerPage(),
       backgroundColor: Colors.white,
       body: _pagesBodyBuilder(),
-      bottomNavigationBar: bottomNavigationBuilder(currentPage),
+      bottomNavigationBar: MainboardBottomNavigationPage(
+        securityState: MainboardSecurityState.disable(),
+        currentPage: controller.mainboardStore.selectedPage,
+        pages: controller.mainboardStore.pages,
+        onSelect: (v) => controller.mainboardStore.changePage(to: v),
+      ),
     );
   }
 }
 
 extension _BottomNavigationBuilder on _MainboardPageState {
-  BottomAppBar bottomNavigationBuilder(MainboardState currentPage) {
-    final bottomColor = currentPage.maybeWhen(
-      helpCenter: () => DesignSystemColors.helpCenterButtonBar,
-      orElse: () => DesignSystemColors.white,
-    );
+  // BottomAppBar bottomNavigationBuilder(MainboardState currentPage) {
+  //   final bottomColor = currentPage.maybeWhen(
+  //     helpCenter: () => DesignSystemColors.helpCenterButtonBar,
+  //     orElse: () => DesignSystemColors.white,
+  //   );
 
-    return BottomAppBar(
-      elevation: 20.0,
-      color: bottomColor,
-      child: Container(
-        height: 56,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            _buildFeedButton(),
-            _buildComposeButton(),
-            Container(width: 62),
-            _buildChatButton(),
-            _buildSupportButton(),
-          ],
-        ),
-      ),
-    );
-  }
+  //   return BottomAppBar(
+  //     elevation: 20.0,
+  //     color: bottomColor,
+  //     child: Container(
+  //       height: 56,
+  //       child: Row(
+  //         mainAxisSize: MainAxisSize.max,
+  //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //         children: <Widget>[
+  //           _buildFeedButton(),
+  //           _buildComposeButton(),
+  //           Container(width: 62),
+  //           _buildChatButton(),
+  //           _buildSupportButton(),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  Widget _buildSupportButton() {
-    return MainboarButtonPage(
-      currentPage: MainboardState.supportPoint(),
-      pageSelected: controller.mainboardStore.selectedPage,
-      onSeletec: (v) => controller.mainboardStore.changePage(
-          to: v), // onSeletec: controller.mainboardStore.selectedPage
-    );
-  }
+  // Widget _buildSupportButton() {
+  //   return MainboarButtonPage(
+  //     currentPage: MainboardState.supportPoint(),
+  //     pageSelected: controller.mainboardStore.selectedPage,
+  //     onSeletec:  // onSeletec: controller.mainboardStore.selectedPage
+  //   );
+  // }
 
-  Widget _buildChatButton() {
-    return MainboarButtonPage(
-      currentPage: MainboardState.chat(),
-      pageSelected: controller.mainboardStore.selectedPage,
-      onSeletec: (v) => controller.mainboardStore.changePage(
-          to: v), // onSeletec: controller.mainboardStore.selectedPage
-    );
-  }
+  // Widget _buildChatButton() {
+  //   return MainboarButtonPage(
+  //     currentPage: MainboardState.chat(),
+  //     pageSelected: controller.mainboardStore.selectedPage,
+  //     onSeletec: (v) => controller.mainboardStore.changePage(
+  //         to: v), // onSeletec: controller.mainboardStore.selectedPage
+  //   );
+  // }
 
-  Widget _buildComposeButton() {
-    return MainboarButtonPage(
-      currentPage: MainboardState.compose(),
-      pageSelected: controller.mainboardStore.selectedPage,
-      onSeletec: (v) => controller.mainboardStore.changePage(
-          to: v), // onSeletec: controller.mainboardStore.selectedPage
-    );
-  }
+  // Widget _buildComposeButton() {
+  //   return MainboarButtonPage(
+  //     currentPage: MainboardState.compose(),
+  //     pageSelected: controller.mainboardStore.selectedPage,
+  //     onSeletec: (v) => controller.mainboardStore.changePage(
+  //         to: v), // onSeletec: controller.mainboardStore.selectedPage
+  //   );
+  // }
 
-  Widget _buildFeedButton() {
-    return MainboarButtonPage(
-      currentPage: MainboardState.feed(),
-      pageSelected: controller.mainboardStore.selectedPage,
-      onSeletec: (v) => controller.mainboardStore.changePage(
-          to: v), // onSeletec: controller.mainboardStore.selectedPage
-    );
-  }
+  // Widget _buildFeedButton() {
+  //   return MainboarButtonPage(
+  //     currentPage: MainboardState.feed(),
+  //     pageSelected: controller.mainboardStore.selectedPage,
+  //     onSeletec: (v) => controller.mainboardStore.changePage(
+  //         to: v), // onSeletec: controller.mainboardStore.selectedPage
+  //   );
+  // }
 }

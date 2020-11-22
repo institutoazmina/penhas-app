@@ -92,15 +92,12 @@ extension _PrivateMethod on _MainboardControllerBase {
   }
 
   Future<void> setup() async {
-    final securityMode = await _modulesServices
-        .feature(name: SecurityModeActionFeature.featureCode)
-        .then(
-          (value) => value == null
-              ? MainboardSecurityState.disable()
-              : MainboardSecurityState.enable(),
-        );
+    securityState =
+        await SecurityModeActionFeature(modulesServices: _modulesServices)
+                .isEnabled
+            ? MainboardSecurityState.enable()
+            : MainboardSecurityState.disable();
 
-    securityState = securityMode;
     setupUploadTimer();
     checkUnRead();
   }
