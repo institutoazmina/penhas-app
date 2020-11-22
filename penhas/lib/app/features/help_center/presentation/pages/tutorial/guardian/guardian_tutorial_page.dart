@@ -14,7 +14,7 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
   List<TutorialPageViewWidget> _contentPageView = [
     TutorialPageViewWidget(
       description:
-          'Guardiões são pessoas de sua confiança que você cadastra para te ajudar em situações de perigo.\nSeus guardiões não precisam ser usuários do PenhaS, pode ser qualquer pessoa desde que ela aceite o convite que será disparado para o número de telefone dela.',
+          'Guardiões são pessoas de sua confiança que você cadastra para te ajudar em situações de perigo.\n\nSeus guardiões não precisam ser usuários do PenhaS, pode ser qualquer pessoa desde que ela aceite o convite que será disparado para o número de telefone dela.',
       bodyWidget: SvgPicture.asset(
         'assets/images/svg/tutorial/tutorial_guardian_01.svg',
       ),

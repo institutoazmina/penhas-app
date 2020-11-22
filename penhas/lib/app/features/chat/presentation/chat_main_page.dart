@@ -35,7 +35,7 @@ extension _ChatMainBuilder on _ChatMainPageState {
     return SafeArea(
       child: SizedBox.expand(
         child: Scaffold(
-          body: buildBody(controller.tabItems),
+          body: ChatMainTalksPage(),
         ),
       ),
     );
@@ -73,14 +73,10 @@ extension _ChatMainPageStatePrivate on _ChatMainPageState {
   }
 
   Widget buildBody(List<ChatTabItem> items) {
-    if (items.length > 1) {
-      return TabBarView(children: [
-        ChatMainTalksPage(),
-        ChatMainPeoplePage(),
-      ]);
-    }
-
-    return ChatMainTalksPage();
+    return TabBarView(children: [
+      ChatMainTalksPage(),
+      ChatMainPeoplePage(),
+    ]);
   }
 }
 

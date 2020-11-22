@@ -25,6 +25,7 @@ abstract class _ChatMainControllerBase with Store {
     tabItems = items.asObservable();
 
     if (await _chatToggleFeature.isEnabled) {
+      securityState = ChatMainSecurityState.supportAndPrivate();
       items.add(ChatTabItem(headerName: "Pessoas"));
       tabItems = items.asObservable();
     }
