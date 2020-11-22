@@ -30,8 +30,7 @@ class _MainboardPageState
   String userName;
   Widget userAvatar;
   bool _helpCenterEnabled = false;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-// HelpCenterCallActionFeature  SecurityModeActionFeature
+
   @override
   void initState() {
     super.initState();
@@ -122,7 +121,6 @@ class _MainboardPageState
 extension _SecurityModeBuilder on _MainboardPageState {
   Widget enabledSecurityMode() {
     return Scaffold(
-      key: _scaffoldKey,
       appBar: _appBarBuilder(),
       drawer: PenhasDrawerPage(),
       backgroundColor: Colors.white,
@@ -135,7 +133,6 @@ extension _SecurityModeBuilder on _MainboardPageState {
 
   Widget disabledSecurityMode() {
     return Scaffold(
-      key: _scaffoldKey,
       appBar: _appBarBuilder(),
       drawer: PenhasDrawerPage(),
       backgroundColor: Colors.white,
