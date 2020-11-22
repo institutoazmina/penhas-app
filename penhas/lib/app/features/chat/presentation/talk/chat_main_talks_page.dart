@@ -6,6 +6,7 @@ import 'package:penhas/app/features/chat/domain/entities/chat_main_tile_entity.d
 import 'package:penhas/app/features/chat/domain/states/chat_main_talks_state.dart';
 import 'package:penhas/app/features/chat/presentation/pages/chat_assistant_card.dart';
 import 'package:penhas/app/features/chat/presentation/pages/chat_channel_card.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 import 'chat_main_talks_controller.dart';
@@ -22,7 +23,6 @@ class _ChatMainTalksPageState
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
       color: DesignSystemColors.systemBackgroundColor,
       child: Observer(
         builder: (_) {
@@ -39,7 +39,10 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
       initial: () => empty(),
       loading: () => loading(),
       loaded: (tiles) => loaded(tiles),
-      error: (message) => empty(),
+      error: (message) => SupportCenterGeneralError(
+        message: message,
+        onPressed: () => controller.reload(),
+      ),
     );
   }
 
@@ -53,13 +56,16 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
   }
 
   Widget loaded(List<ChatMainTileEntity> tiles) {
-    return RefreshIndicator(
-      onRefresh: () async => controller.reload(),
-      child: ListView.builder(
-        itemCount: tiles.length,
-        itemBuilder: (context, index) {
-          return buildCard(tiles[index]);
-        },
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0),
+      child: RefreshIndicator(
+        onRefresh: () async => controller.reload(),
+        child: ListView.builder(
+          itemCount: tiles.length,
+          itemBuilder: (context, index) {
+            return buildCard(tiles[index]);
+          },
+        ),
       ),
     );
   }

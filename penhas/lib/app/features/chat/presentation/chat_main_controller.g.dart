@@ -9,6 +9,22 @@ part of 'chat_main_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ChatMainController on _ChatMainControllerBase, Store {
+  final _$securityStateAtom =
+      Atom(name: '_ChatMainControllerBase.securityState');
+
+  @override
+  ChatMainSecurityState get securityState {
+    _$securityStateAtom.reportRead();
+    return super.securityState;
+  }
+
+  @override
+  set securityState(ChatMainSecurityState value) {
+    _$securityStateAtom.reportWrite(value, super.securityState, () {
+      super.securityState = value;
+    });
+  }
+
   final _$tabItemsAtom = Atom(name: '_ChatMainControllerBase.tabItems');
 
   @override
@@ -27,6 +43,7 @@ mixin _$ChatMainController on _ChatMainControllerBase, Store {
   @override
   String toString() {
     return '''
+securityState: ${securityState},
 tabItems: ${tabItems}
     ''';
   }

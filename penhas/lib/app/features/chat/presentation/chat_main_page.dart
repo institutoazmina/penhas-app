@@ -19,36 +19,48 @@ class _ChatMainPageState
     extends ModularState<ChatMainPage, ChatMainController> {
   @override
   Widget build(BuildContext context) {
+    return Observer(
+      builder: (_) {
+        return controller.securityState.when(
+          onlySupport: () => buildSupportChat(),
+          supportAndPrivate: () => buildSupportAndPrivateChat(),
+        );
+      },
+    );
+  }
+}
+
+extension _ChatMainBuilder on _ChatMainPageState {
+  Widget buildSupportChat() {
+    return SafeArea(
+      child: SizedBox.expand(
+        child: Scaffold(
+          body: buildBody(controller.tabItems),
+        ),
+      ),
+    );
+  }
+
+  Widget buildSupportAndPrivateChat() {
     return SafeArea(
       child: SizedBox.expand(
         child: DefaultTabController(
-          length: 2,
-          child: Observer(builder: (_) {
-            return Scaffold(
-              appBar: buildAppBar(controller.tabItems),
+            length: 2,
+            child: Scaffold(
+              appBar: AppBar(
+                elevation: 0,
+                toolbarHeight: 55,
+                backgroundColor: DesignSystemColors.systemBackgroundColor,
+                bottom: chatTabBar(controller.tabItems),
+              ),
               body: buildBody(controller.tabItems),
-            );
-          }),
-        ),
+            )),
       ),
     );
   }
 }
 
 extension _ChatMainPageStatePrivate on _ChatMainPageState {
-  PreferredSizeWidget buildAppBar(List<ChatTabItem> items) {
-    if (items.length > 1) {
-      return AppBar(
-        elevation: 0,
-        toolbarHeight: 55,
-        backgroundColor: DesignSystemColors.systemBackgroundColor,
-        bottom: chatTabBar(items),
-      );
-    }
-
-    return null;
-  }
-
   PreferredSizeWidget chatTabBar(List<ChatTabItem> items) {
     return TabBar(
       labelColor: DesignSystemColors.pinky,

@@ -40,7 +40,9 @@ abstract class _ChatMainTalksControllerBase with Store, MapFailureMessage {
   ChatMainTalksState currentState = ChatMainTalksState.initial();
 
   @action
-  Future<void> reload() async {}
+  Future<void> reload() async {
+    await loadScreen();
+  }
 
   @action
   Future<void> openChannel(ChatChannelEntity channel) async {

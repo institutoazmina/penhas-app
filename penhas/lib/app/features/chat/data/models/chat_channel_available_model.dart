@@ -23,7 +23,9 @@ class ChatChannelAvailableModel extends ChatChannelAvailableEntity {
     final hasMore = jsonData["has_more"] == 1;
     final nextPage = jsonData["next_page"];
     final support = ChatChannelModel.fromJson(jsonData["support"]);
-    final assistant = ChatAssistantModel.fromJson(jsonData["assistant"]);
+    final assistant = jsonData["assistant"] == null
+        ? null
+        : ChatAssistantModel.fromJson(jsonData["assistant"]);
     final List<Object> jsonChannels = jsonData["rows"];
     final List<ChatChannelModel> channels = jsonChannels
         .map((e) => e as Map<String, Object>)

@@ -43,7 +43,9 @@ abstract class _ChatMainPeopleControllerBase with Store, MapFailureMessage {
   ChatMainTalksState currentState = ChatMainTalksState.initial();
 
   @action
-  Future<void> reload() async {}
+  Future<void> reload() async {
+    await loadScreen(skills: _tags);
+  }
 
   @action
   Future<void> profile(UserDetailProfileEntity profile) {

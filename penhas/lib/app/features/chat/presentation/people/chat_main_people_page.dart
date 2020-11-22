@@ -6,6 +6,7 @@ import 'package:penhas/app/features/chat/domain/entities/chat_main_tile_entity.d
 import 'package:penhas/app/features/chat/domain/states/chat_main_talks_state.dart';
 import 'package:penhas/app/features/chat/presentation/pages/chat_people_card.dart';
 import 'package:penhas/app/features/chat/presentation/pages/chat_people_filter_card.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 import 'chat_main_people_controller.dart';
@@ -39,7 +40,10 @@ extension _ChatMainPeoplePageBodyBuilder on _ChatMainPeoplePageState {
       initial: () => empty(),
       loading: () => loading(),
       loaded: (tiles) => loaded(tiles),
-      error: (message) => empty(),
+      error: (message) => SupportCenterGeneralError(
+        message: message,
+        onPressed: () => controller.reload(),
+      ),
     );
   }
 
