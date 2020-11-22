@@ -106,7 +106,8 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
     _setErrorMessage('');
     _resetAlertState();
     _featureToogle.callingNumber
-        .then((number) => alertState = HelpCenterState.callingPolice(number));
+        .then((number) => alertState = HelpCenterState.callingPolice(number))
+        .then((v) => _guardianRepository.callPolice());
   }
 
   @action

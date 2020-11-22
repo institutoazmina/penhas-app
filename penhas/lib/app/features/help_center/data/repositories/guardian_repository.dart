@@ -14,6 +14,7 @@ abstract class IGuardianRepository {
   Future<Either<Failure, ValidField>> update(GuardianContactEntity guardian);
   Future<Either<Failure, ValidField>> delete(GuardianContactEntity guardian);
   Future<Either<Failure, ValidField>> alert(UserLocationEntity location);
+  Future<Either<Failure, ValidField>> callPolice();
 }
 
 @immutable
@@ -74,6 +75,16 @@ class GuardianRepository extends IGuardianRepository {
   Future<Either<Failure, ValidField>> alert(UserLocationEntity location) async {
     try {
       final result = await _dataSource.alert(location);
+      return right(result);
+    } catch (e) {
+      return left(await _handleError(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ValidField>> callPolice() async {
+    try {
+      final result = await _dataSource.callPolice();
       return right(result);
     } catch (e) {
       return left(await _handleError(e));

@@ -15,6 +15,7 @@ abstract class IGuardianDataSource {
   Future<ValidField> update(GuardianContactEntity guardian);
   Future<ValidField> delete(GuardianContactEntity guardian);
   Future<ValidField> alert(UserLocationEntity location);
+  Future<ValidField> callPolice();
 }
 
 class GuardianDataSource implements IGuardianDataSource {
@@ -144,6 +145,27 @@ class GuardianDataSource implements IGuardianDataSource {
       } else {
         throw ApiProviderException(bodyContent: json.decode(response.body));
       }
+    }
+  }
+
+  @override
+  Future<ValidField> callPolice() async {
+    final httpHeader = await _setupHttpHeader();
+    final httpRequest = await _setupHttpRequest(
+      path: '/me/call-police-pressed',
+      queryParameters: {},
+    );
+    final response = await _apiClient.post(
+      httpRequest,
+      headers: httpHeader,
+    );
+
+    if (_successfulResponse.contains(response.statusCode)) {
+      return ValidField();
+    } else if (_invalidSessionCode.contains(response.statusCode)) {
+      throw ApiProviderSessionExpection();
+    } else {
+      throw ApiProviderException(bodyContent: json.decode(response.body));
     }
   }
 
