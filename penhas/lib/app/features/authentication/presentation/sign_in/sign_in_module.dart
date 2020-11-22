@@ -37,7 +37,7 @@ import 'package:penhas/app/features/authentication/presentation/sign_in_stealth/
 import 'package:penhas/app/features/authentication/presentation/sign_in_stealth/sign_in_stealth_page.dart';
 import 'package:penhas/app/features/help_center/data/datasources/guardian_data_source.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
-import 'package:penhas/app/features/help_center/domain/usecases/help_center_call_action_feature.dart';
+import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
 import 'package:penhas/app/features/zodiac/domain/usecases/stealth_security_action.dart';
 import 'package:penhas/app/features/zodiac/presentation/zodiac_module.dart';
 
@@ -187,13 +187,13 @@ class SignInModule extends ChildModule {
         Bind(
           (i) => StealthSecurityAction(
               audioServices: i.get<IAudioRecordServices>(),
-              featureToogle: i.get<HelpCenterCallActionFeature>(),
+              featureToogle: i.get<SecurityModeActionFeature>(),
               locationService: i.get<ILocationServices>(),
               guardianRepository: i.get<IGuardianRepository>()),
           singleton: false,
         ),
-        Bind<HelpCenterCallActionFeature>(
-          (i) => HelpCenterCallActionFeature(
+        Bind<SecurityModeActionFeature>(
+          (i) => SecurityModeActionFeature(
             modulesServices: i.get<IAppModulesServices>(),
           ),
           singleton: false,

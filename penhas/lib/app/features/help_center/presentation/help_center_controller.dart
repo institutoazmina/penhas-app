@@ -13,7 +13,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
 import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/help_center/domain/states/help_center_state.dart';
-import 'package:penhas/app/features/help_center/domain/usecases/help_center_call_action_feature.dart';
+import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
 
 part 'help_center_controller.g.dart';
 
@@ -23,7 +23,7 @@ class HelpCenterController extends _HelpCenterControllerBase
     @required IGuardianRepository guardianRepository,
     @required ILocationServices locationService,
     @required IAppConfiguration appConfiguration,
-    @required HelpCenterCallActionFeature featureToogle,
+    @required SecurityModeActionFeature featureToogle,
     @required IAudioRecordServices audioServices,
   }) : super(
           guardianRepository,
@@ -38,7 +38,7 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   final IGuardianRepository _guardianRepository;
   final ILocationServices _locationService;
   final IAppConfiguration _appConfiguration;
-  final HelpCenterCallActionFeature _featureToogle;
+  final SecurityModeActionFeature _featureToogle;
   final IAudioRecordServices _audioServices;
 
   _HelpCenterControllerBase(

@@ -6,7 +6,7 @@ import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_record_duration_entity.dart';
-import 'package:penhas/app/features/help_center/domain/usecases/help_center_call_action_feature.dart';
+import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
 
 part 'audio_record_controller.g.dart';
 
@@ -14,13 +14,13 @@ class AudioRecordController extends _AudioRecordController
     with _$AudioRecordController {
   AudioRecordController({
     @required IAudioRecordServices audioServices,
-    @required HelpCenterCallActionFeature featureToogle,
+    @required SecurityModeActionFeature featureToogle,
   }) : super(audioServices, featureToogle);
 }
 
 abstract class _AudioRecordController with Store, MapFailureMessage {
   final IAudioRecordServices _audioServices;
-  final HelpCenterCallActionFeature _featureToogle;
+  final SecurityModeActionFeature _featureToogle;
 
   bool _recording = true;
   Timer _rotateAudioTimer;

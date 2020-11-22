@@ -4,7 +4,7 @@ import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
-import 'package:penhas/app/features/help_center/domain/usecases/help_center_call_action_feature.dart';
+import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
 import 'package:penhas/app/features/help_center/presentation/help_center_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/help_center/presentation/help_center_page.dart';
@@ -18,18 +18,18 @@ class HelpCenterModule extends WidgetModule {
             locationService: i.get<ILocationServices>(),
             appConfiguration: i.get<IAppConfiguration>(),
             guardianRepository: i.get<IGuardianRepository>(),
-            featureToogle: i.get<HelpCenterCallActionFeature>(),
+            featureToogle: i.get<SecurityModeActionFeature>(),
             audioServices: i.get<IAudioRecordServices>(),
           ),
         ),
-        Bind<HelpCenterCallActionFeature>(
-          (i) => HelpCenterCallActionFeature(
+        Bind<SecurityModeActionFeature>(
+          (i) => SecurityModeActionFeature(
             modulesServices: i.get<IAppModulesServices>(),
           ),
         ),
         Bind(
           (i) => AudioRecordController(
-            featureToogle: i.get<HelpCenterCallActionFeature>(),
+            featureToogle: i.get<SecurityModeActionFeature>(),
             audioServices: i.get<IAudioRecordServices>(),
           ),
         ),
