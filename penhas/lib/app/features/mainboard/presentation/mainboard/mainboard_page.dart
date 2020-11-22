@@ -30,7 +30,6 @@ class _MainboardPageState
     with WidgetsBindingObserver {
   String userName;
   Widget userAvatar;
-  bool _helpCenterEnabled = false;
 
   @override
   void initState() {
@@ -48,8 +47,10 @@ class _MainboardPageState
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
       return controller.securityState.when(
-        enable: () => enabledSecurityMode(),
-        disable: () => disabledSecurityMode(),
+        enable: () =>
+            enabledSecurityMode(controller.mainboardStore.selectedPage),
+        disable: () =>
+            disabledSecurityMode(controller.mainboardStore.selectedPage),
       );
     });
   }
@@ -94,7 +95,7 @@ class _MainboardPageState
 }
 
 extension _SecurityModeBuilder on _MainboardPageState {
-  Widget enabledSecurityMode() {
+  Widget enabledSecurityMode(MainboardState currentPage) {
     return Scaffold(
       appBar: MainBoardAppBarPage(
         currentPage: controller.mainboardStore.selectedPage,
@@ -103,13 +104,13 @@ extension _SecurityModeBuilder on _MainboardPageState {
       drawer: PenhasDrawerPage(),
       backgroundColor: Colors.white,
       body: _pagesBodyBuilder(),
-      bottomNavigationBar: bottomNavigationBuilder(),
+      bottomNavigationBar: bottomNavigationBuilder(currentPage),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: _buildFab(),
     );
   }
 
-  Widget disabledSecurityMode() {
+  Widget disabledSecurityMode(MainboardState currentPage) {
     return Scaffold(
       appBar: MainBoardAppBarPage(
         currentPage: controller.mainboardStore.selectedPage,
@@ -118,18 +119,21 @@ extension _SecurityModeBuilder on _MainboardPageState {
       drawer: PenhasDrawerPage(),
       backgroundColor: Colors.white,
       body: _pagesBodyBuilder(),
-      bottomNavigationBar: bottomNavigationBuilder(),
+      bottomNavigationBar: bottomNavigationBuilder(currentPage),
     );
   }
 }
 
 extension _BottomNavigationBuilder on _MainboardPageState {
-  BottomAppBar bottomNavigationBuilder() {
+  BottomAppBar bottomNavigationBuilder(MainboardState currentPage) {
+    final bottomColor = currentPage.maybeWhen(
+      helpCenter: () => DesignSystemColors.helpCenterButtonBar,
+      orElse: () => DesignSystemColors.white,
+    );
+
     return BottomAppBar(
       elevation: 20.0,
-      color: _helpCenterEnabled
-          ? DesignSystemColors.helpCenterButtonBar
-          : Colors.white,
+      color: bottomColor,
       child: Container(
         height: 56,
         child: Row(
@@ -204,10 +208,6 @@ extension _BottomNavigationBuilder on _MainboardPageState {
   }
 
   void _changePage(MainboardState page) {
-    setState(() {
-      _helpCenterEnabled = page == MainboardState.helpCenter();
-    });
-
     controller.mainboardStore.changePage(to: page);
   }
 
@@ -233,11 +233,10 @@ extension _BottomNavigationBuilder on _MainboardPageState {
       );
     }
 
-    return SvgPicture.asset(
-      asset,
-      color: _helpCenterEnabled
-          ? Colors.white
-          : DesignSystemColors.buttonBarIconColor,
-    );
+    final assetColor = selected.maybeWhen(
+        helpCenter: () => DesignSystemColors.white,
+        orElse: () => DesignSystemColors.buttonBarIconColor);
+
+    return SvgPicture.asset(asset, color: assetColor);
   }
 }
