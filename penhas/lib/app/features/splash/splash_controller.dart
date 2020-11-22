@@ -59,7 +59,7 @@ abstract class _SplashControllerBase with Store {
     }
 
     if (profile.anonymousModeEnabled) {
-      Modular.to.pushReplacementNamed('/authentication/sign_in_anonymous');
+      Modular.to.pushReplacementNamed('/authentication/sign_in_stealth');
       return;
     }
 
