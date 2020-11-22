@@ -14,7 +14,7 @@ class AboutPenhasPage extends StatelessWidget {
           backgroundColor: DesignSystemColors.easterPurple,
         ),
         body: WebView(
-          initialUrl: 'https://www.mdb.org.br/',
+          initialUrl: 'https://elasv2-api.appcivico.com/web/faq',
         ));
   }
 }
