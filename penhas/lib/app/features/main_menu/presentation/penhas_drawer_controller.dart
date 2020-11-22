@@ -4,7 +4,6 @@ import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
 import 'package:penhas/app/core/states/security_toggle_state.dart';
-import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/help_center/domain/usecases/help_center_call_action_feature.dart';
 import 'package:penhas/app/features/main_menu/domain/usecases/user_profile.dart';
 
