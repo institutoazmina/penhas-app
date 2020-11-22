@@ -1,4 +1,3 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -10,6 +9,7 @@ import 'package:penhas/app/features/feed/presentation/compose_tweet/compose_twee
 import 'package:penhas/app/features/feed/presentation/feed_module.dart';
 import 'package:penhas/app/features/help_center/presentation/help_center_module.dart';
 import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_page.dart';
+import 'package:penhas/app/features/mainboard/presentation/mainboard/pages/mainboard_notification_page.dart';
 import 'package:penhas/app/features/support_center/presentation/support_center_module.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
@@ -213,7 +213,9 @@ class _MainboardPageState
               size: 30,
             ),
       actions: <Widget>[
-        _helpCenterEnabled ? Container() : _buildNotification()
+        _helpCenterEnabled
+            ? Container()
+            : MainboardNotificationPage(counter: notificationCounter)
       ],
     );
   }
@@ -232,27 +234,7 @@ class _MainboardPageState
     );
   }
 
-  Widget _buildNotification() {
-    return IconButton(
-      icon: Badge(
-        child: Icon(Icons.notifications_none, size: 34),
-        elevation: 0.0,
-        showBadge: notificationCounter > 0,
-        toAnimate: false,
-        badgeContent: Text(
-          notificationCounter.toString(),
-          style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'Lato',
-              fontSize: 11.0,
-              fontWeight: FontWeight.normal),
-        ),
-      ),
-      onPressed: () async => {
-        Modular.to.pushNamed('/mainboard/notification'),
-      },
-    );
-  }
+  Widget _buildNotification() {}
 
   Widget _buildFab() {
     bool keyboardIsOpened = MediaQuery.of(context).viewInsets.bottom != 0.0;
