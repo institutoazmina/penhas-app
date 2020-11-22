@@ -76,6 +76,7 @@ class MainboardModule extends ChildModule {
           (i) => MainboardController(
             mainboardStore: i.get<MainboardStore>(),
             userProfileStore: i.get<IUserProfileStore>(),
+            modulesServices: i.get<IAppModulesServices>(),
             notification: i.get<INotificationRepository>(),
           ),
         ),
