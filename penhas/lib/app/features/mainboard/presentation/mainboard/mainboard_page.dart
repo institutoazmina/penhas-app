@@ -9,6 +9,7 @@ import 'package:penhas/app/features/feed/presentation/compose_tweet/compose_twee
 import 'package:penhas/app/features/feed/presentation/feed_module.dart';
 import 'package:penhas/app/features/help_center/presentation/help_center_module.dart';
 import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_page.dart';
+import 'package:penhas/app/features/mainboard/presentation/mainboard/pages/mainboard_button_page.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/pages/mainboard_notification_page.dart';
 import 'package:penhas/app/features/support_center/presentation/support_center_module.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
@@ -82,7 +83,8 @@ class _MainboardPageState
               child: FittedBox(
                 child: FloatingActionButton(
                   backgroundColor: DesignSystemColors.ligthPurple,
-                  onPressed: () => _changePage(MainboardState.helpCenter()),
+                  onPressed: () => controller.mainboardStore
+                      .changePage(to: MainboardState.helpCenter()),
                   child: SvgPicture.asset(
                     'assets/images/svg/bottom_bar/emergency_controll.svg',
                     color: Colors.white,
@@ -152,91 +154,38 @@ extension _BottomNavigationBuilder on _MainboardPageState {
   }
 
   Widget _buildSupportButton() {
-    return Expanded(
-      child: FlatButton(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        onPressed: () => _changePage(MainboardState.supportPoint()),
-        child: _buildBottomBarIcon(
-          MainboardState.supportPoint(),
-          controller.mainboardStore.selectedPage,
-        ),
-      ),
+    return MainboarButtonPage(
+      currentPage: MainboardState.supportPoint(),
+      pageSelected: controller.mainboardStore.selectedPage,
+      onSeletec: (v) => controller.mainboardStore.changePage(
+          to: v), // onSeletec: controller.mainboardStore.selectedPage
     );
   }
 
   Widget _buildChatButton() {
-    return Expanded(
-      child: FlatButton(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        onPressed: () => _changePage(MainboardState.chat()),
-        child: _buildBottomBarIcon(
-          MainboardState.chat(),
-          controller.mainboardStore.selectedPage,
-        ),
-      ),
+    return MainboarButtonPage(
+      currentPage: MainboardState.chat(),
+      pageSelected: controller.mainboardStore.selectedPage,
+      onSeletec: (v) => controller.mainboardStore.changePage(
+          to: v), // onSeletec: controller.mainboardStore.selectedPage
     );
   }
 
   Widget _buildComposeButton() {
-    return Expanded(
-      child: FlatButton(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        onPressed: () => _changePage(MainboardState.compose()),
-        child: _buildBottomBarIcon(
-          MainboardState.compose(),
-          controller.mainboardStore.selectedPage,
-        ),
-      ),
+    return MainboarButtonPage(
+      currentPage: MainboardState.compose(),
+      pageSelected: controller.mainboardStore.selectedPage,
+      onSeletec: (v) => controller.mainboardStore.changePage(
+          to: v), // onSeletec: controller.mainboardStore.selectedPage
     );
   }
 
   Widget _buildFeedButton() {
-    return Expanded(
-      child: FlatButton(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        onPressed: () => _changePage(MainboardState.feed()),
-        child: _buildBottomBarIcon(
-          MainboardState.feed(),
-          controller.mainboardStore.selectedPage,
-        ),
-      ),
+    return MainboarButtonPage(
+      currentPage: MainboardState.feed(),
+      pageSelected: controller.mainboardStore.selectedPage,
+      onSeletec: (v) => controller.mainboardStore.changePage(
+          to: v), // onSeletec: controller.mainboardStore.selectedPage
     );
-  }
-
-  void _changePage(MainboardState page) {
-    controller.mainboardStore.changePage(to: page);
-  }
-
-  Widget _buildBottomBarIcon(MainboardState current, MainboardState selected) {
-    String asset;
-    String rootPath = 'assets/images/svg/bottom_bar';
-
-    asset = current.when(
-      chat: () => '$rootPath/chat.svg',
-      feed: () => '$rootPath/feed.svg',
-      compose: () => '$rootPath/compose_tweet.svg',
-      supportPoint: () => '$rootPath/support_point.svg',
-      helpCenter: () => '$rootPath/emergency_controll.svg',
-    );
-
-    if (current == selected) {
-      asset = current.when(
-        chat: () => '$rootPath/chat_selected.svg',
-        feed: () => '$rootPath/feed_selected.svg',
-        compose: () => '$rootPath/compose_tweet_selected.svg',
-        supportPoint: () => '$rootPath/support_point_selected.svg',
-        helpCenter: () => '$rootPath/emergency_controll.svg',
-      );
-    }
-
-    final assetColor = selected.maybeWhen(
-        helpCenter: () => DesignSystemColors.white,
-        orElse: () => DesignSystemColors.buttonBarIconColor);
-
-    return SvgPicture.asset(asset, color: assetColor);
   }
 }

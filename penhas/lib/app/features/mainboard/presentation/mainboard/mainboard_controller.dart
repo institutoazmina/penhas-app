@@ -109,5 +109,6 @@ extension _PrivateMethod on _MainboardControllerBase {
     final result = await _notification.unread();
     final validField = result.getOrElse(() => ValidField(message: "0"));
     notificationCounter = int.tryParse(validField.message) ?? 0;
+    print("Executando o checkUnRead() : ${validField.message}");
   }
 }
