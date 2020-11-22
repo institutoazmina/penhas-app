@@ -4,19 +4,19 @@ import 'package:penhas/app/core/managers/modules_sevices.dart';
 import 'package:meta/meta.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_record_duration_entity.dart';
 
-class HelpCenterCallActionFeature {
+class SecurityModeActionFeature {
   final IAppModulesServices _modulesServices;
   static String featureCode = 'modo_seguranca';
 
   Future<String> get callingNumber => _callingNumber();
   Future<AudioRecordDurationEntity> get audioDuration => _audioDuration();
 
-  HelpCenterCallActionFeature({@required IAppModulesServices modulesServices})
+  SecurityModeActionFeature({@required IAppModulesServices modulesServices})
       : this._modulesServices = modulesServices;
 
   Future<String> _callingNumber() {
     return _modulesServices
-        .feature(name: HelpCenterCallActionFeature.featureCode)
+        .feature(name: SecurityModeActionFeature.featureCode)
         .then((module) => jsonDecode(module.meta))
         .then((json) => json as Map<String, Object>)
         .then((json) => json['numero']);
@@ -24,7 +24,7 @@ class HelpCenterCallActionFeature {
 
   Future<AudioRecordDurationEntity> _audioDuration() {
     return _modulesServices
-        .feature(name: HelpCenterCallActionFeature.featureCode)
+        .feature(name: SecurityModeActionFeature.featureCode)
         .then((module) => jsonDecode(module.meta))
         .then((json) => json as Map<String, Object>)
         .then((json) => _mapAudioDuration(json));

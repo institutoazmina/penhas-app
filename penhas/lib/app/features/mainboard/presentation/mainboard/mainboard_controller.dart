@@ -7,19 +7,21 @@ import 'package:meta/meta.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
 import 'package:penhas/app/core/managers/user_profile_store.dart';
-import 'package:penhas/app/core/states/mainboard_store.dart';
+import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
+import 'package:penhas/app/features/mainboard/domain/states/mainboard_security_state.dart';
+import 'package:penhas/app/features/mainboard/domain/states/mainboard_store.dart';
 import 'package:penhas/app/features/notification/data/repositories/notification_repository.dart';
 
 part 'mainboard_controller.g.dart';
 
 class MainboardController extends _MainboardControllerBase
     with _$MainboardController {
-  MainboardController(
-      {@required MainboardStore mainboardStore,
-      @required IUserProfileStore userProfileStore,
-      @required INotificationRepository notification,
-      @required IAppModulesServices modulesServices})
-      : super(
+  MainboardController({
+    @required MainboardStore mainboardStore,
+    @required IUserProfileStore userProfileStore,
+    @required INotificationRepository notification,
+    @required IAppModulesServices modulesServices,
+  }) : super(
           mainboardStore,
           userProfileStore,
           notification,
@@ -49,6 +51,9 @@ abstract class _MainboardControllerBase with Store {
 
   @observable
   int notificationCounter = 0;
+
+  @observable
+  MainboardSecurityState securityState = MainboardSecurityState.disable();
 
   @action
   changeAppState(AppLifecycleState state) async {
@@ -87,6 +92,15 @@ extension _PrivateMethod on _MainboardControllerBase {
   }
 
   Future<void> setup() async {
+    final securityMode = await _modulesServices
+        .feature(name: SecurityModeActionFeature.featureCode)
+        .then(
+          (value) => value == null
+              ? MainboardSecurityState.disable()
+              : MainboardSecurityState.enable(),
+        );
+
+    securityState = securityMode;
     setupUploadTimer();
     checkUnRead();
   }

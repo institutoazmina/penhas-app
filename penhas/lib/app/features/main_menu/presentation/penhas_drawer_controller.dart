@@ -4,7 +4,7 @@ import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
 import 'package:penhas/app/core/states/security_toggle_state.dart';
-import 'package:penhas/app/features/help_center/domain/usecases/help_center_call_action_feature.dart';
+import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
 import 'package:penhas/app/features/main_menu/domain/usecases/user_profile.dart';
 
 part 'penhas_drawer_controller.g.dart';
@@ -76,7 +76,7 @@ abstract class _PenhasDrawerControllerBase with Store {
 
   Future<bool> _showSecurityModeToggle() async {
     final data = await _modulesServices.feature(
-      name: HelpCenterCallActionFeature.featureCode,
+      name: SecurityModeActionFeature.featureCode,
     );
 
     return data != null;

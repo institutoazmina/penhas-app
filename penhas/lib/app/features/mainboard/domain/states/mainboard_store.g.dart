@@ -24,6 +24,21 @@ mixin _$MainboardStore on _MainboardStoreBase, Store {
     });
   }
 
+  final _$pagesAtom = Atom(name: '_MainboardStoreBase.pages');
+
+  @override
+  ObservableList<MainboardState> get pages {
+    _$pagesAtom.reportRead();
+    return super.pages;
+  }
+
+  @override
+  set pages(ObservableList<MainboardState> value) {
+    _$pagesAtom.reportWrite(value, super.pages, () {
+      super.pages = value;
+    });
+  }
+
   final _$_MainboardStoreBaseActionController =
       ActionController(name: '_MainboardStoreBase');
 
@@ -41,7 +56,8 @@ mixin _$MainboardStore on _MainboardStoreBase, Store {
   @override
   String toString() {
     return '''
-selectedPage: ${selectedPage}
+selectedPage: ${selectedPage},
+pages: ${pages}
     ''';
   }
 }

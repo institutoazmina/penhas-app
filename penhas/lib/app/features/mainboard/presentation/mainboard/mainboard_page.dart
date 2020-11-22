@@ -3,7 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/states/mainboard_state.dart';
+import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart';
 import 'package:penhas/app/features/chat/presentation/chat_main_module.dart';
 import 'package:penhas/app/features/feed/presentation/compose_tweet/compose_tweet_page.dart';
 import 'package:penhas/app/features/feed/presentation/feed_module.dart';
@@ -67,36 +67,126 @@ class _MainboardPageState
 
   @override
   Widget build(BuildContext context) {
+    return Observer(builder: (_) {
+      return controller.securityState.when(
+        enable: () => enabledSecurityMode(),
+        disable: () => disabledSecurityMode(),
+      );
+    });
+  }
+
+  AppBar _appBarBuilder() {
+    return AppBar(
+      titleSpacing: 0,
+      backgroundColor: _helpCenterEnabled
+          ? DesignSystemColors.helpCenterNavigationBar
+          : DesignSystemColors.ligthPurple,
+      elevation: 0.0,
+      centerTitle: false,
+      title: _helpCenterEnabled
+          ? Text(
+              'Precisa de ajuda?',
+              style: kTextStyleHelpCenterTitle,
+            )
+          : Icon(
+              DesignSystemLogo.penhasLogo,
+              color: Colors.white,
+              size: 30,
+            ),
+      actions: <Widget>[
+        _helpCenterEnabled
+            ? Container()
+            : MainboardNotificationPage(counter: notificationCounter)
+      ],
+    );
+  }
+
+  PageView _pagesBodyBuilder() {
+    return PageView(
+      physics: NeverScrollableScrollPhysics(),
+      controller: controller.mainboardStore.pageController,
+      children: <Widget>[
+        FeedModule(),
+        ComposeTweetPage(),
+        ChatMainModule(),
+        SupportCenterModule(),
+        HelpCenterModule(),
+      ],
+    );
+  }
+
+  Widget _buildFab() {
+    bool keyboardIsOpened = MediaQuery.of(context).viewInsets.bottom != 0.0;
+
+    return keyboardIsOpened
+        ? Container()
+        : Padding(
+            padding: EdgeInsets.only(top: 30.0),
+            child: Container(
+              width: 60.0,
+              height: 60.0,
+              child: FittedBox(
+                child: FloatingActionButton(
+                  backgroundColor: DesignSystemColors.ligthPurple,
+                  onPressed: () => _changePage(MainboardState.helpCenter()),
+                  child: SvgPicture.asset(
+                    'assets/images/svg/bottom_bar/emergency_controll.svg',
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          );
+  }
+}
+
+extension _SecurityModeBuilder on _MainboardPageState {
+  Widget enabledSecurityMode() {
     return Scaffold(
       key: _scaffoldKey,
       appBar: _appBarBuilder(),
       drawer: PenhasDrawerPage(),
       backgroundColor: Colors.white,
       body: _pagesBodyBuilder(),
-      bottomNavigationBar: Observer(builder: (_) {
-        return BottomAppBar(
-          elevation: 20.0,
-          color: _helpCenterEnabled
-              ? DesignSystemColors.helpCenterButtonBar
-              : Colors.white,
-          child: Container(
-            height: 56,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                _buildFeedButton(),
-                _buildComposeButton(),
-                Container(width: 62),
-                _buildChatButton(),
-                _buildSupportButton(),
-              ],
-            ),
-          ),
-        );
-      }),
+      bottomNavigationBar: bottomNavigationBuilder(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: _buildFab(),
+    );
+  }
+
+  Widget disabledSecurityMode() {
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: _appBarBuilder(),
+      drawer: PenhasDrawerPage(),
+      backgroundColor: Colors.white,
+      body: _pagesBodyBuilder(),
+      bottomNavigationBar: bottomNavigationBuilder(),
+    );
+  }
+}
+
+extension _BottomNavigationBuilder on _MainboardPageState {
+  BottomAppBar bottomNavigationBuilder() {
+    return BottomAppBar(
+      elevation: 20.0,
+      color: _helpCenterEnabled
+          ? DesignSystemColors.helpCenterButtonBar
+          : Colors.white,
+      child: Container(
+        height: 56,
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            _buildFeedButton(),
+            _buildComposeButton(),
+            Container(width: 62),
+            _buildChatButton(),
+            _buildSupportButton(),
+          ],
+        ),
+      ),
     );
   }
 
@@ -192,71 +282,5 @@ class _MainboardPageState
           ? Colors.white
           : DesignSystemColors.buttonBarIconColor,
     );
-  }
-
-  AppBar _appBarBuilder() {
-    return AppBar(
-      titleSpacing: 0,
-      backgroundColor: _helpCenterEnabled
-          ? DesignSystemColors.helpCenterNavigationBar
-          : DesignSystemColors.ligthPurple,
-      elevation: 0.0,
-      centerTitle: false,
-      title: _helpCenterEnabled
-          ? Text(
-              'Precisa de ajuda?',
-              style: kTextStyleHelpCenterTitle,
-            )
-          : Icon(
-              DesignSystemLogo.penhasLogo,
-              color: Colors.white,
-              size: 30,
-            ),
-      actions: <Widget>[
-        _helpCenterEnabled
-            ? Container()
-            : MainboardNotificationPage(counter: notificationCounter)
-      ],
-    );
-  }
-
-  PageView _pagesBodyBuilder() {
-    return PageView(
-      physics: NeverScrollableScrollPhysics(),
-      controller: controller.mainboardStore.pageController,
-      children: <Widget>[
-        FeedModule(),
-        ComposeTweetPage(),
-        ChatMainModule(),
-        SupportCenterModule(),
-        HelpCenterModule(),
-      ],
-    );
-  }
-
-  Widget _buildNotification() {}
-
-  Widget _buildFab() {
-    bool keyboardIsOpened = MediaQuery.of(context).viewInsets.bottom != 0.0;
-
-    return keyboardIsOpened
-        ? Container()
-        : Padding(
-            padding: EdgeInsets.only(top: 30.0),
-            child: Container(
-              width: 60.0,
-              height: 60.0,
-              child: FittedBox(
-                child: FloatingActionButton(
-                  backgroundColor: DesignSystemColors.ligthPurple,
-                  onPressed: () => _changePage(MainboardState.helpCenter()),
-                  child: SvgPicture.asset(
-                    'assets/images/svg/bottom_bar/emergency_controll.svg',
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          );
   }
 }

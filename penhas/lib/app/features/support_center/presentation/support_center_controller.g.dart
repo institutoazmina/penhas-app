@@ -133,6 +133,22 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
     });
   }
 
+  final _$currentKeywordsAtom =
+      Atom(name: '_SupportCenterControllerBase.currentKeywords');
+
+  @override
+  String get currentKeywords {
+    _$currentKeywordsAtom.reportRead();
+    return super.currentKeywords;
+  }
+
+  @override
+  set currentKeywords(String value) {
+    _$currentKeywordsAtom.reportWrite(value, super.currentKeywords, () {
+      super.currentKeywords = value;
+    });
+  }
+
   final _$onFilterActionAsyncAction =
       AsyncAction('_SupportCenterControllerBase.onFilterAction');
 
@@ -197,6 +213,7 @@ errorMessage: ${errorMessage},
 placeMarkers: ${placeMarkers},
 initialPosition: ${initialPosition},
 state: ${state},
+currentKeywords: ${currentKeywords},
 progressState: ${progressState}
     ''';
   }
