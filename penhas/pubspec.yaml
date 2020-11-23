@@ -11,7 +11,7 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.19+21
+version: 1.0.19+22
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
@@ -158,6 +158,8 @@ flutter:
     - assets/images/svg/support_center/suggest_place.svg
     - assets/images/svg/support_center/trace_route.svg
     - assets/images/support_center/map_marker/map_marker.png
+    # Account
+    - assets/images/svg/profile/edit.svg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
