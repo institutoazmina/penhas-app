@@ -116,12 +116,12 @@ class SupportCenterRepository implements ISupportCenterRepository {
     @required String description,
   }) async {
     final endPoint = "/me/sugerir-pontos-de-apoio";
-    final bodyContent = {
-      'nome': Uri.encodeComponent(name),
-      'categoria': Uri.encodeComponent(category),
-      'endereco_ou_cep': Uri.encodeComponent(address),
-      'descricao_servico': Uri.encodeComponent(description),
-    };
+    final bodyContent = [
+      'nome=' + Uri.encodeComponent(name),
+      'categoria=' + Uri.encodeComponent(category),
+      'endereco_ou_cep=' + Uri.encodeComponent(address),
+      'descricao_servico=' + Uri.encodeComponent(description),
+    ].join('&');
 
     try {
       final response = await _apiProvider.post(

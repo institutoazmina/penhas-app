@@ -100,7 +100,7 @@ class ChatChannelRepository implements IChatChannelRepository {
       'chat_auth': option.token,
     };
 
-    final bodyContent = {'message': Uri.encodeComponent(option.message)};
+    final bodyContent = 'message=' + Uri.encodeComponent(option.message);
 
     try {
       final response = await _apiProvider
