@@ -18,10 +18,11 @@ class MainboardNotificationPage extends StatelessWidget {
             ? Icon(Icons.notifications_none, size: 34)
             : Icon(Icons.notifications, size: 34),
         elevation: 0.0,
+        position: _badgePosition(counter),
         showBadge: counter > 0,
         toAnimate: false,
         badgeContent: Text(
-          counter.toString(),
+          counter > 99 ? "+99" : counter.toString(),
           style: TextStyle(
               color: Colors.white,
               fontFamily: 'Lato',
@@ -33,5 +34,15 @@ class MainboardNotificationPage extends StatelessWidget {
         Modular.to.pushNamed('/mainboard/notification'),
       },
     );
+  }
+
+  BadgePosition _badgePosition(int counter) {
+    if (counter < 10) {
+      return BadgePosition(end: -4, top: -8);
+    } else if (counter < 100) {
+      return BadgePosition(end: -8, top: -8);
+    }
+
+    return null;
   }
 }
