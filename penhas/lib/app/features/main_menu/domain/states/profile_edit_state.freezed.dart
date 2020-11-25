@@ -19,6 +19,13 @@ class _$ProfileEditStateTearOff {
   }
 
 // ignore: unused_element
+  _Loaded loaded(UserProfileEntity profile) {
+    return _Loaded(
+      profile,
+    );
+  }
+
+// ignore: unused_element
   _ErrorDetails error(String message) {
     return _ErrorDetails(
       message,
@@ -35,22 +42,26 @@ mixin _$ProfileEditState {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
+    @required Result loaded(UserProfileEntity profile),
     @required Result error(String message),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
+    Result loaded(UserProfileEntity profile),
     Result error(String message),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
+    @required Result loaded(_Loaded value),
     @required Result error(_ErrorDetails value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
+    Result loaded(_Loaded value),
     Result error(_ErrorDetails value),
     @required Result orElse(),
   });
@@ -110,9 +121,11 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
+    @required Result loaded(UserProfileEntity profile),
     @required Result error(String message),
   }) {
     assert(initial != null);
+    assert(loaded != null);
     assert(error != null);
     return initial();
   }
@@ -121,6 +134,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
+    Result loaded(UserProfileEntity profile),
     Result error(String message),
     @required Result orElse(),
   }) {
@@ -135,9 +149,11 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
+    @required Result loaded(_Loaded value),
     @required Result error(_ErrorDetails value),
   }) {
     assert(initial != null);
+    assert(loaded != null);
     assert(error != null);
     return initial(this);
   }
@@ -146,6 +162,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
+    Result loaded(_Loaded value),
     Result error(_ErrorDetails value),
     @required Result orElse(),
   }) {
@@ -159,6 +176,124 @@ class _$_Initial implements _Initial {
 
 abstract class _Initial implements ProfileEditState {
   const factory _Initial() = _$_Initial;
+}
+
+/// @nodoc
+abstract class _$LoadedCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
+      __$LoadedCopyWithImpl<$Res>;
+  $Res call({UserProfileEntity profile});
+}
+
+/// @nodoc
+class __$LoadedCopyWithImpl<$Res> extends _$ProfileEditStateCopyWithImpl<$Res>
+    implements _$LoadedCopyWith<$Res> {
+  __$LoadedCopyWithImpl(_Loaded _value, $Res Function(_Loaded) _then)
+      : super(_value, (v) => _then(v as _Loaded));
+
+  @override
+  _Loaded get _value => super._value as _Loaded;
+
+  @override
+  $Res call({
+    Object profile = freezed,
+  }) {
+    return _then(_Loaded(
+      profile == freezed ? _value.profile : profile as UserProfileEntity,
+    ));
+  }
+}
+
+/// @nodoc
+class _$_Loaded implements _Loaded {
+  const _$_Loaded(this.profile) : assert(profile != null);
+
+  @override
+  final UserProfileEntity profile;
+
+  @override
+  String toString() {
+    return 'ProfileEditState.loaded(profile: $profile)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _Loaded &&
+            (identical(other.profile, profile) ||
+                const DeepCollectionEquality().equals(other.profile, profile)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(profile);
+
+  @override
+  _$LoadedCopyWith<_Loaded> get copyWith =>
+      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initial(),
+    @required Result loaded(UserProfileEntity profile),
+    @required Result error(String message),
+  }) {
+    assert(initial != null);
+    assert(loaded != null);
+    assert(error != null);
+    return loaded(profile);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initial(),
+    Result loaded(UserProfileEntity profile),
+    Result error(String message),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (loaded != null) {
+      return loaded(profile);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initial(_Initial value),
+    @required Result loaded(_Loaded value),
+    @required Result error(_ErrorDetails value),
+  }) {
+    assert(initial != null);
+    assert(loaded != null);
+    assert(error != null);
+    return loaded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initial(_Initial value),
+    Result loaded(_Loaded value),
+    Result error(_ErrorDetails value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (loaded != null) {
+      return loaded(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Loaded implements ProfileEditState {
+  const factory _Loaded(UserProfileEntity profile) = _$_Loaded;
+
+  UserProfileEntity get profile;
+  _$LoadedCopyWith<_Loaded> get copyWith;
 }
 
 /// @nodoc
@@ -222,9 +357,11 @@ class _$_ErrorDetails implements _ErrorDetails {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
+    @required Result loaded(UserProfileEntity profile),
     @required Result error(String message),
   }) {
     assert(initial != null);
+    assert(loaded != null);
     assert(error != null);
     return error(message);
   }
@@ -233,6 +370,7 @@ class _$_ErrorDetails implements _ErrorDetails {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
+    Result loaded(UserProfileEntity profile),
     Result error(String message),
     @required Result orElse(),
   }) {
@@ -247,9 +385,11 @@ class _$_ErrorDetails implements _ErrorDetails {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
+    @required Result loaded(_Loaded value),
     @required Result error(_ErrorDetails value),
   }) {
     assert(initial != null);
+    assert(loaded != null);
     assert(error != null);
     return error(this);
   }
@@ -258,6 +398,7 @@ class _$_ErrorDetails implements _ErrorDetails {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
+    Result loaded(_Loaded value),
     Result error(_ErrorDetails value),
     @required Result orElse(),
   }) {
