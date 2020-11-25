@@ -24,24 +24,50 @@ mixin _$ProfileEditController on _ProfileEditControllerBase, Store {
     });
   }
 
-  final _$_ProfileEditControllerBaseActionController =
-      ActionController(name: '_ProfileEditControllerBase');
+  final _$progressStateAtom =
+      Atom(name: '_ProfileEditControllerBase.progressState');
+
+  @override
+  PageProgressState get progressState {
+    _$progressStateAtom.reportRead();
+    return super.progressState;
+  }
+
+  @override
+  set progressState(PageProgressState value) {
+    _$progressStateAtom.reportWrite(value, super.progressState, () {
+      super.progressState = value;
+    });
+  }
+
+  final _$retryAsyncAction = AsyncAction('_ProfileEditControllerBase.retry');
 
   @override
   Future<void> retry() {
-    final _$actionInfo = _$_ProfileEditControllerBaseActionController
-        .startAction(name: '_ProfileEditControllerBase.retry');
-    try {
-      return super.retry();
-    } finally {
-      _$_ProfileEditControllerBaseActionController.endAction(_$actionInfo);
-    }
+    return _$retryAsyncAction.run(() => super.retry());
+  }
+
+  final _$editNickNameAsyncAction =
+      AsyncAction('_ProfileEditControllerBase.editNickName');
+
+  @override
+  Future<void> editNickName(String name) {
+    return _$editNickNameAsyncAction.run(() => super.editNickName(name));
+  }
+
+  final _$editMinibioAsyncAction =
+      AsyncAction('_ProfileEditControllerBase.editMinibio');
+
+  @override
+  Future<void> editMinibio(String content) {
+    return _$editMinibioAsyncAction.run(() => super.editMinibio(content));
   }
 
   @override
   String toString() {
     return '''
-state: ${state}
+state: ${state},
+progressState: ${progressState}
     ''';
   }
 }
