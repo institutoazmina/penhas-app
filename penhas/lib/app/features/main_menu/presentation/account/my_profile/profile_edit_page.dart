@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/main_menu/domain/states/profile_edit_state.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/my_profile/profile_edit_controller.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_name_page.dart';
@@ -34,12 +35,20 @@ class _ProfileEditPageState
 extension _PageBuilder on _ProfileEditPageState {
   Widget bodyBuilder(ProfileEditState state) {
     return state.when(
-      initial: () => Container(
-        color: Colors.blue,
-      ),
+      initial: () => bodyLoading(),
       error: (msg) => SupportCenterGeneralError(
         message: msg,
         onPressed: controller.retry,
+      ),
+    );
+  }
+
+  Widget bodyLoading() {
+    return SafeArea(
+      child: PageProgressIndicator(
+        progressMessage: 'Carregando...',
+        progressState: PageProgressState.loading,
+        child: Container(color: DesignSystemColors.systemBackgroundColor),
       ),
     );
   }
