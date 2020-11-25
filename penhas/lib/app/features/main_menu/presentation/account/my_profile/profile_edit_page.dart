@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:penhas/app/features/main_menu/domain/states/profile_edit_state.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/my_profile/profile_edit_controller.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_name_page.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ProfileEditPage extends StatefulWidget {
@@ -21,17 +24,22 @@ class _ProfileEditPageState
         title: Text("Meu perfil"),
         backgroundColor: DesignSystemColors.easterPurple,
       ),
-      body: Column(
-        children: [
-          profileHeader(),
-          CardProfileNamePage(
-            name: "Luíza",
-            avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-            onEditAction: () {
-              print("Ola mundo cruel!");
-            },
-          )
-        ],
+      body: Observer(
+        builder: (context) => bodyBuilder(controller.state),
+      ),
+    );
+  }
+}
+
+extension _PageBuilder on _ProfileEditPageState {
+  Widget bodyBuilder(ProfileEditState state) {
+    return state.when(
+      initial: () => Container(
+        color: Colors.blue,
+      ),
+      error: (msg) => SupportCenterGeneralError(
+        message: msg,
+        onPressed: controller.retry,
       ),
     );
   }
