@@ -9,6 +9,7 @@ import 'package:penhas/app/core/managers/user_profile_store.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/my_profile/profile_edit_controller.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_store.dart';
 import 'package:penhas/app/features/appstate/data/datasources/app_state_data_source.dart';
 import 'package:penhas/app/features/appstate/data/repositories/app_state_repository.dart';
@@ -71,6 +72,7 @@ class MainboardModule extends ChildModule {
         ...helpCenterBinds,
         ...audioServicesBinds,
         ...notificationBinds,
+        ...menuBind,
         Bind<MainboardStore>((i) =>
             MainboardStore(modulesServices: i.get<IAppModulesServices>())),
         Bind(
@@ -213,6 +215,15 @@ class MainboardModule extends ChildModule {
           '/menu/account_delete',
           child: (context, args) => AccountDeletePage(),
           transition: TransitionType.rightToLeft,
+        ),
+      ];
+
+  List<Bind> get menuBind => [
+        Bind(
+          (i) => ProfileEditController(
+            appStateUseCase: i.get<AppStateUseCase>(),
+          ),
+          singleton: false,
         ),
       ];
 

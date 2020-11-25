@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/my_profile/profile_edit_controller.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_name_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-class ProfileEditPage extends StatelessWidget {
+class ProfileEditPage extends StatefulWidget {
   const ProfileEditPage({Key key}) : super(key: key);
 
+  @override
+  _ProfileEditPageState createState() => _ProfileEditPageState();
+}
+
+class _ProfileEditPageState
+    extends ModularState<ProfileEditPage, ProfileEditController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +37,7 @@ class ProfileEditPage extends StatelessWidget {
   }
 }
 
-extension _ProfileEditPage on ProfileEditPage {
+extension _ProfileEditPage on _ProfileEditPageState {
   Widget profileHeader() {
     return Container(
       child: Padding(
@@ -51,7 +58,7 @@ extension _ProfileEditPage on ProfileEditPage {
   }
 }
 
-extension _TextStyle on ProfileEditPage {
+extension _TextStyle on _ProfileEditPageState {
   TextStyle get profileHeaderTitleTextStyle => TextStyle(
         fontFamily: 'Lato',
         fontSize: 20.0,
