@@ -28,19 +28,30 @@ class UserProfileStore implements IUserProfileStore {
   Future<UserProfileEntity> _parseRetrieveError(Object error) {
     return Future.value(
       UserProfileEntity(
-        email: null,
-        nickname: null,
-        avatar: null,
-        stealthModeEnabled: null,
-        anonymousModeEnabled: null,
-        birthdate: DateTime.now(),
-      ),
+          email: null,
+          nickname: null,
+          avatar: null,
+          stealthModeEnabled: null,
+          anonymousModeEnabled: null,
+          birthdate: DateTime.now(),
+          fullName: null,
+          genre: null,
+          jaFoiVitimaDeViolencia: null,
+          minibio: null,
+          race: null,
+          skill: null),
     );
   }
 
   @override
   Future<void> save(UserProfileEntity userProfile) {
     final profileJson = UserProfileModel(
+      fullName: userProfile.fullName,
+      genre: userProfile.genre,
+      jaFoiVitimaDeViolencia: userProfile.jaFoiVitimaDeViolencia,
+      minibio: userProfile.genre,
+      race: userProfile.race,
+      skill: userProfile.skill,
       email: userProfile.email,
       nickname: userProfile.nickname,
       avatar: userProfile.avatar,
