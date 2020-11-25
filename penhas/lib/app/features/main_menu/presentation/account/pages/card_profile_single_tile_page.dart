@@ -20,7 +20,10 @@ class CardProfileSingleTilePage extends StatelessWidget {
       decoration: BoxDecoration(
         color: background ?? DesignSystemColors.white,
         border: Border(
-          bottom: BorderSide(color: DesignSystemColors.pinkishGrey),
+          bottom: BorderSide(
+              color: background == DesignSystemColors.white
+                  ? DesignSystemColors.pinkishGrey
+                  : background),
         ),
       ),
       child: Padding(

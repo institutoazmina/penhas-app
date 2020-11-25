@@ -90,7 +90,42 @@ extension _PageBuilder on _ProfileEditPageState {
               CardProfileSingleTilePage(
                 title: "Já foi vítima de violência contra a mulher?",
                 content: profile.jaFoiVitimaDeViolencia ? "Sim" : "Não",
-              )
+              ),
+              CardProfileSingleTilePage(
+                title: "Cadastro",
+                content:
+                    "Informações privadas que nenhuma outra usuária terá acesso.",
+                background: DesignSystemColors.systemBackgroundColor,
+              ),
+              CardProfileSingleTilePage(
+                title: "Data de Nascimento",
+                content: profile.birthdate.day.toString() +
+                    "/" +
+                    profile.birthdate.month.toString() +
+                    "/" +
+                    profile.birthdate.year.toString(),
+                background: DesignSystemColors.systemBackgroundColor,
+              ),
+              CardProfileSingleTilePage(
+                title: "Raça",
+                content: profile.race,
+                background: DesignSystemColors.systemBackgroundColor,
+              ),
+              CardProfileSingleTilePage(
+                title: "Sexo",
+                content: profile.genre,
+                background: DesignSystemColors.systemBackgroundColor,
+              ),
+              CardProfileSingleTilePage(
+                title: "E-mail",
+                content: profile.email,
+                background: DesignSystemColors.systemBackgroundColor,
+              ),
+              CardProfileSingleTilePage(
+                title: "Senha",
+                content: '************',
+                background: DesignSystemColors.systemBackgroundColor,
+              ),
             ],
           ),
         ),
