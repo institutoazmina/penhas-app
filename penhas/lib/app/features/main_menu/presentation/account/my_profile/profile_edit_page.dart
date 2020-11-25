@@ -7,6 +7,7 @@ import 'package:penhas/app/features/main_menu/domain/states/profile_edit_state.d
 import 'package:penhas/app/features/main_menu/presentation/account/my_profile/profile_edit_controller.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_bio_page.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_name_page.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_single_tile_page.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_skill_page.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
@@ -86,6 +87,10 @@ extension _PageBuilder on _ProfileEditPageState {
                 skills: ['1', '2', '3'],
                 onEditAction: controller.editSkill,
               ),
+              CardProfileSingleTilePage(
+                title: "Já foi vítima de violência contra a mulher?",
+                content: profile.jaFoiVitimaDeViolencia ? "Sim" : "Não",
+              )
             ],
           ),
         ),

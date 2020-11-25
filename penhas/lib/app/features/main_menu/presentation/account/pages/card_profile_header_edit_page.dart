@@ -18,13 +18,15 @@ class CardProfileHeaderEditPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(title, style: cardTitleTextStyle),
-          IconButton(
-            icon: SvgPicture.asset(
-              'assets/images/svg/profile/edit.svg',
-              color: DesignSystemColors.pumpkinOrange,
-            ),
-            onPressed: onEditAction,
-          ),
+          onEditAction == null
+              ? Container()
+              : IconButton(
+                  icon: SvgPicture.asset(
+                    'assets/images/svg/profile/edit.svg',
+                    color: DesignSystemColors.pumpkinOrange,
+                  ),
+                  onPressed: onEditAction,
+                ),
         ],
       ),
     );
