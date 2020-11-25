@@ -42,6 +42,11 @@ abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
   Future<void> editMinibio(String content) async {
     print("editMinibio => $content");
   }
+
+  @action
+  Future<void> editSkill() async {
+    print("editSkill");
+  }
 }
 
 extension _PrivateMethod on _ProfileEditControllerBase {

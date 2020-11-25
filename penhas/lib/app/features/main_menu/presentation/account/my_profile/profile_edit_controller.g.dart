@@ -63,6 +63,14 @@ mixin _$ProfileEditController on _ProfileEditControllerBase, Store {
     return _$editMinibioAsyncAction.run(() => super.editMinibio(content));
   }
 
+  final _$editSkillAsyncAction =
+      AsyncAction('_ProfileEditControllerBase.editSkill');
+
+  @override
+  Future<void> editSkill() {
+    return _$editSkillAsyncAction.run(() => super.editSkill());
+  }
+
   @override
   String toString() {
     return '''
