@@ -75,10 +75,7 @@ extension _PageBuilder on _ProfileEditPageState {
               ),
               CardProfileBioPage(
                 content: profile.minibio ?? "",
-                onEditAction: () => askMultilineInput(
-                    title: "Editar",
-                    hintText: "Informe uma minibio",
-                    onChange: controller.editMinibio),
+                onChange: controller.editMinibio,
               ),
               CardProfileSkillPage(
                 skills: controller.profileSkill,
@@ -127,43 +124,7 @@ extension _PageBuilder on _ProfileEditPageState {
   }
 }
 
-extension _Modal on _ProfileEditPageState {
-  void askMultilineInput({
-    @required String title,
-    @required String hintText,
-    @required void Function(String) onChange,
-  }) {
-    TextEditingController _controller = TextEditingController();
-
-    Modular.to.showDialog(
-      child: AlertDialog(
-        title: Text(title),
-        content: TextFormField(
-          controller: _controller,
-          maxLines: 5,
-          maxLength: 2200,
-          maxLengthEnforced: true,
-          decoration: InputDecoration(hintText: hintText, filled: true),
-        ),
-        actions: <Widget>[
-          FlatButton(
-            child: Text('Fechar'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          FlatButton(
-            child: Text('Enviar'),
-            onPressed: () async {
-              onChange(_controller.text);
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}
+extension _Modal on _ProfileEditPageState {}
 
 extension _ProfileEditPage on _ProfileEditPageState {
   Widget profileHeader() {
