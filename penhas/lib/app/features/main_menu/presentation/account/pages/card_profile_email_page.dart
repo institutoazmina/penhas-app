@@ -57,16 +57,18 @@ extension _Modal on CardProfileEmailPage {
         content: Column(
           children: [
             TextFormField(
-              controller: emailController,
               maxLines: 1,
+              controller: emailController,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                   hintText: 'Digite o novo email', filled: true),
             ),
             SizedBox(height: 20),
             TextFormField(
-              controller: passwordController,
               maxLines: 1,
+              autocorrect: false,
+              keyboardType: TextInputType.text,
+              controller: passwordController,
               decoration: InputDecoration(
                   hintText: 'Digite a senha atual', filled: true),
             ),

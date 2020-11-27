@@ -29,9 +29,9 @@ class _PassordInputFieldState extends State<PassordInputField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      keyboardType: TextInputType.text,
       style: widget.style,
       onChanged: widget.onChanged,
+      keyboardType: TextInputType.text,
       autocorrect: false,
       obscureText: !_isPasswordVisible,
       decoration: InputDecoration(

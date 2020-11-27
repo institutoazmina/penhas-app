@@ -19,6 +19,13 @@ class _$ProfileDeleteStateTearOff {
   }
 
 // ignore: unused_element
+  _Loaded loaded(String message) {
+    return _Loaded(
+      message,
+    );
+  }
+
+// ignore: unused_element
   _ErrorDetails error(String message) {
     return _ErrorDetails(
       message,
@@ -35,22 +42,26 @@ mixin _$ProfileDeleteState {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
+    @required Result loaded(String message),
     @required Result error(String message),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
+    Result loaded(String message),
     Result error(String message),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
+    @required Result loaded(_Loaded value),
     @required Result error(_ErrorDetails value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
+    Result loaded(_Loaded value),
     Result error(_ErrorDetails value),
     @required Result orElse(),
   });
@@ -111,9 +122,11 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
+    @required Result loaded(String message),
     @required Result error(String message),
   }) {
     assert(initial != null);
+    assert(loaded != null);
     assert(error != null);
     return initial();
   }
@@ -122,6 +135,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
+    Result loaded(String message),
     Result error(String message),
     @required Result orElse(),
   }) {
@@ -136,9 +150,11 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
+    @required Result loaded(_Loaded value),
     @required Result error(_ErrorDetails value),
   }) {
     assert(initial != null);
+    assert(loaded != null);
     assert(error != null);
     return initial(this);
   }
@@ -147,6 +163,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
+    Result loaded(_Loaded value),
     Result error(_ErrorDetails value),
     @required Result orElse(),
   }) {
@@ -160,6 +177,124 @@ class _$_Initial implements _Initial {
 
 abstract class _Initial implements ProfileDeleteState {
   const factory _Initial() = _$_Initial;
+}
+
+/// @nodoc
+abstract class _$LoadedCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
+      __$LoadedCopyWithImpl<$Res>;
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$LoadedCopyWithImpl<$Res> extends _$ProfileDeleteStateCopyWithImpl<$Res>
+    implements _$LoadedCopyWith<$Res> {
+  __$LoadedCopyWithImpl(_Loaded _value, $Res Function(_Loaded) _then)
+      : super(_value, (v) => _then(v as _Loaded));
+
+  @override
+  _Loaded get _value => super._value as _Loaded;
+
+  @override
+  $Res call({
+    Object message = freezed,
+  }) {
+    return _then(_Loaded(
+      message == freezed ? _value.message : message as String,
+    ));
+  }
+}
+
+/// @nodoc
+class _$_Loaded implements _Loaded {
+  const _$_Loaded(this.message) : assert(message != null);
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'ProfileDeleteState.loaded(message: $message)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _Loaded &&
+            (identical(other.message, message) ||
+                const DeepCollectionEquality().equals(other.message, message)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
+
+  @override
+  _$LoadedCopyWith<_Loaded> get copyWith =>
+      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initial(),
+    @required Result loaded(String message),
+    @required Result error(String message),
+  }) {
+    assert(initial != null);
+    assert(loaded != null);
+    assert(error != null);
+    return loaded(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initial(),
+    Result loaded(String message),
+    Result error(String message),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (loaded != null) {
+      return loaded(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initial(_Initial value),
+    @required Result loaded(_Loaded value),
+    @required Result error(_ErrorDetails value),
+  }) {
+    assert(initial != null);
+    assert(loaded != null);
+    assert(error != null);
+    return loaded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initial(_Initial value),
+    Result loaded(_Loaded value),
+    Result error(_ErrorDetails value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (loaded != null) {
+      return loaded(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Loaded implements ProfileDeleteState {
+  const factory _Loaded(String message) = _$_Loaded;
+
+  String get message;
+  _$LoadedCopyWith<_Loaded> get copyWith;
 }
 
 /// @nodoc
@@ -223,9 +358,11 @@ class _$_ErrorDetails implements _ErrorDetails {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
+    @required Result loaded(String message),
     @required Result error(String message),
   }) {
     assert(initial != null);
+    assert(loaded != null);
     assert(error != null);
     return error(message);
   }
@@ -234,6 +371,7 @@ class _$_ErrorDetails implements _ErrorDetails {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
+    Result loaded(String message),
     Result error(String message),
     @required Result orElse(),
   }) {
@@ -248,9 +386,11 @@ class _$_ErrorDetails implements _ErrorDetails {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initial(_Initial value),
+    @required Result loaded(_Loaded value),
     @required Result error(_ErrorDetails value),
   }) {
     assert(initial != null);
+    assert(loaded != null);
     assert(error != null);
     return error(this);
   }
@@ -259,6 +399,7 @@ class _$_ErrorDetails implements _ErrorDetails {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initial(_Initial value),
+    Result loaded(_Loaded value),
     Result error(_ErrorDetails value),
     @required Result orElse(),
   }) {

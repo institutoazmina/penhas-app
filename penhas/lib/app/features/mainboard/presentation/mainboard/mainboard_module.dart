@@ -239,7 +239,10 @@ class MainboardModule extends ChildModule {
           ),
           singleton: false,
         ),
-        Bind((i) => AccountDeleteController(), singleton: false),
+        Bind(
+            (i) => AccountDeleteController(
+                profileRepository: i.get<IUserProfileRepository>()),
+            singleton: false),
       ];
 
   List<ModularRouter> get audioRecord => [

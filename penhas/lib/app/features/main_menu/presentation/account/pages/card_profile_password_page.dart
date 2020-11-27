@@ -57,15 +57,19 @@ extension _Modal on CardProfilePasswordPage {
         content: Column(
           children: [
             TextFormField(
-              controller: newPasswordController,
               maxLines: 1,
+              autocorrect: false,
+              keyboardType: TextInputType.text,
+              controller: newPasswordController,
               decoration: InputDecoration(
                   hintText: 'Digite a nova senha', filled: true),
             ),
             SizedBox(height: 20),
             TextFormField(
-              controller: oldPasswordController,
               maxLines: 1,
+              autocorrect: false,
+              keyboardType: TextInputType.text,
+              controller: oldPasswordController,
               decoration: InputDecoration(
                   hintText: 'Digite a senha atual', filled: true),
             ),

@@ -13,7 +13,7 @@ class ValidField extends Equatable {
   bool get stringify => true;
 
   factory ValidField.fromJson(Map<String, Object> jsonData) {
-    final String message = jsonData['message'];
+    final String message = jsonData['message'] ?? jsonData['text'];
     return ValidField(message: message);
   }
 }
