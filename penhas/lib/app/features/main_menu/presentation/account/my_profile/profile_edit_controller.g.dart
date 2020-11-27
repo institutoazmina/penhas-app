@@ -9,6 +9,29 @@ part of 'profile_edit_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ProfileEditController on _ProfileEditControllerBase, Store {
+  Computed<PageProgressState> _$progressStateComputed;
+
+  @override
+  PageProgressState get progressState => (_$progressStateComputed ??=
+          Computed<PageProgressState>(() => super.progressState,
+              name: '_ProfileEditControllerBase.progressState'))
+      .value;
+
+  final _$_progressAtom = Atom(name: '_ProfileEditControllerBase._progress');
+
+  @override
+  ObservableFuture<Either<Failure, AppStateEntity>> get _progress {
+    _$_progressAtom.reportRead();
+    return super._progress;
+  }
+
+  @override
+  set _progress(ObservableFuture<Either<Failure, AppStateEntity>> value) {
+    _$_progressAtom.reportWrite(value, super._progress, () {
+      super._progress = value;
+    });
+  }
+
   final _$stateAtom = Atom(name: '_ProfileEditControllerBase.state');
 
   @override
@@ -21,22 +44,6 @@ mixin _$ProfileEditController on _ProfileEditControllerBase, Store {
   set state(ProfileEditState value) {
     _$stateAtom.reportWrite(value, super.state, () {
       super.state = value;
-    });
-  }
-
-  final _$progressStateAtom =
-      Atom(name: '_ProfileEditControllerBase.progressState');
-
-  @override
-  PageProgressState get progressState {
-    _$progressStateAtom.reportRead();
-    return super.progressState;
-  }
-
-  @override
-  set progressState(PageProgressState value) {
-    _$progressStateAtom.reportWrite(value, super.progressState, () {
-      super.progressState = value;
     });
   }
 

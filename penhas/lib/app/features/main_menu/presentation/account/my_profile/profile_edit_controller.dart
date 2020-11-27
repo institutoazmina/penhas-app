@@ -1,7 +1,9 @@
+import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
+import 'package:penhas/app/features/appstate/domain/entities/update_user_profile_entity.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
@@ -23,10 +25,15 @@ abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
   }
 
   @observable
-  ProfileEditState state = ProfileEditState.initial();
+  ObservableFuture<Either<Failure, AppStateEntity>> _progress;
 
   @observable
-  PageProgressState progressState = PageProgressState.initial;
+  ProfileEditState state = ProfileEditState.initial();
+
+  @computed
+  PageProgressState get progressState {
+    return monitorProgress(_progress);
+  }
 
   @action
   Future<void> retry() async {
@@ -35,7 +42,8 @@ abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> editNickName(String name) async {
-    print("editNickName => $name");
+    final update = UpdateUserProfileEntity(nickName: name);
+    updateProfile(update);
   }
 
   @action
@@ -58,6 +66,19 @@ extension _PrivateMethod on _ProfileEditControllerBase {
     );
   }
 
+  Future<void> updateProfile(UpdateUserProfileEntity update) async {
+    _progress = ObservableFuture(
+      _appStateUseCase.update(update),
+    );
+
+    final result = await _progress;
+
+    result.fold(
+      (failure) => handleLoadPageError(failure),
+      (session) => handleSession(session),
+    );
+  }
+
   void handleSession(AppStateEntity session) {
     state = ProfileEditState.loaded(session.userProfile);
   }
@@ -65,5 +86,15 @@ extension _PrivateMethod on _ProfileEditControllerBase {
   void handleLoadPageError(Failure failure) {
     final message = mapFailureMessage(failure);
     state = ProfileEditState.error(message);
+  }
+
+  PageProgressState monitorProgress(ObservableFuture<Object> observable) {
+    if (observable == null || observable.status == FutureStatus.rejected) {
+      return PageProgressState.initial;
+    }
+
+    return observable.status == FutureStatus.pending
+        ? PageProgressState.loading
+        : PageProgressState.loaded;
   }
 }
