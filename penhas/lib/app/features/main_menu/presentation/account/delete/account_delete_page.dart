@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/main_menu/domain/states/profile_delete_state.dart';
@@ -22,10 +23,23 @@ class _AccountDeletePageState
     extends ModularState<AccountDeletePage, AccountDeleteController>
     with SnackBarHandler {
   bool _isPasswordVisible = false;
+  List<ReactionDisposer> _disposers;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _disposers ??= [
+      reaction((_) => controller.errorMessage, (String message) {
+        showSnackBar(scaffoldKey: _scaffoldKey, message: message);
+      }),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0.0,
         title: Text("Exclusão de conta"),
@@ -35,6 +49,12 @@ class _AccountDeletePageState
         builder: (context) => bodyBuilder(controller.state),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _disposers.forEach((d) => d());
+    super.dispose();
   }
 
   void _togglePassword() {
@@ -67,16 +87,18 @@ extension _PageBuilder on _AccountDeletePageState {
   }
 
   Widget bodyLoaded(String bodyMessage) {
+    final textController = TextEditingController();
+
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16.0,
-          vertical: 20.0,
-        ),
-        child: PageProgressIndicator(
-          progressMessage: "Processando...",
-          progressState: controller.progressState,
-          child: SingleChildScrollView(
+      child: PageProgressIndicator(
+        progressMessage: "Processando...",
+        progressState: controller.progressState,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 20.0,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -95,6 +117,7 @@ extension _PageBuilder on _AccountDeletePageState {
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
                   child: TextField(
                     autocorrect: false,
+                    controller: textController,
                     keyboardType: TextInputType.text,
                     obscureText: !_isPasswordVisible,
                     decoration: InputDecoration(
@@ -129,7 +152,7 @@ extension _PageBuilder on _AccountDeletePageState {
                       height: 40,
                       width: 250,
                       child: RaisedButton(
-                        onPressed: () => print("Ola mundo!"),
+                        onPressed: () => controller.delete(textController.text),
                         elevation: 0,
                         color: DesignSystemColors.ligthPurple,
                         child: Text("Excluir conta", style: buttonTextStyle),
