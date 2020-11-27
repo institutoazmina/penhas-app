@@ -5,6 +5,7 @@ import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
 import 'package:penhas/app/core/managers/user_profile_store.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
+import 'package:penhas/app/features/appstate/domain/entities/update_user_profile_entity.dart';
 import 'package:penhas/app/features/appstate/domain/repositories/i_app_state_repository.dart';
 
 class AppStateUseCase {
@@ -25,6 +26,16 @@ class AppStateUseCase {
 
   Future<Either<Failure, AppStateEntity>> check() async {
     final currentState = await _appStateRepository.check();
+    return currentState.fold(
+      (failure) => left(failure),
+      (appState) => _processAppState(appState),
+    );
+  }
+
+  Future<Either<Failure, AppStateEntity>> update(
+      UpdateUserProfileEntity update) async {
+    final currentState = await _appStateRepository.update(update);
+
     return currentState.fold(
       (failure) => left(failure),
       (appState) => _processAppState(appState),

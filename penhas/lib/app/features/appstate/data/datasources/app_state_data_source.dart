@@ -4,9 +4,11 @@ import 'package:http/http.dart' as http;
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
+import 'package:penhas/app/features/appstate/domain/entities/update_user_profile_entity.dart';
 
 abstract class IAppStateDataSource {
   Future<AppStateModel> check();
+  Future<AppStateModel> update(UpdateUserProfileEntity update);
 }
 
 class AppStateDataSource implements IAppStateDataSource {
@@ -30,6 +32,53 @@ class AppStateDataSource implements IAppStateDataSource {
         path: '/me');
 
     final response = await _apiClient.get(httpRequest, headers: httpHeader);
+    if (_successfulResponse.contains(response.statusCode)) {
+      return AppStateModel.fromJson(json.decode(response.body));
+    } else if (_invalidSessionCode.contains(response.statusCode)) {
+      throw ApiProviderSessionExpection();
+    } else {
+      throw ApiProviderException(bodyContent: json.decode(response.body));
+    }
+  }
+
+  @override
+  Future<AppStateModel> update(UpdateUserProfileEntity update) async {
+    Map<String, String> httpHeader = await _setupHttpHeader();
+    httpHeader['Content-Type'] =
+        'application/x-www-form-urlencoded; charset=utf-8';
+
+    final httpRequest = Uri(
+        scheme: _serverConfiguration.baseUri.scheme,
+        host: _serverConfiguration.baseUri.host,
+        path: '/me');
+
+    List<String> parameters = [
+      update.nickName == null
+          ? null
+          : 'apelido=' + Uri.encodeComponent(update.nickName),
+      update.minibio == null
+          ? null
+          : 'minibio=' + Uri.encodeComponent(update.minibio),
+      update.race == null ? null : 'raca=' + Uri.encodeComponent(update.race),
+      update.skills == null
+          ? null
+          : 'skills=' + Uri.encodeComponent(update.skills.join(",")),
+      update.oldPassword == null
+          ? null
+          : 'senha_atual=' + Uri.encodeComponent(update.oldPassword),
+      update.newPassword == null
+          ? null
+          : 'senha=' + Uri.encodeComponent(update.newPassword),
+      update.email == null
+          ? null
+          : 'email=' + Uri.encodeComponent(update.email),
+    ];
+
+    parameters.removeWhere((e) => e == null);
+    final bodyContent = parameters.join('&');
+
+    final response = await _apiClient.put(httpRequest,
+        headers: httpHeader, body: bodyContent);
     if (_successfulResponse.contains(response.statusCode)) {
       return AppStateModel.fromJson(json.decode(response.body));
     } else if (_invalidSessionCode.contains(response.statusCode)) {

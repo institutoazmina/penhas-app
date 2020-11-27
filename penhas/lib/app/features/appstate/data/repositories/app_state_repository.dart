@@ -5,6 +5,7 @@ import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/appstate/data/datasources/app_state_data_source.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
+import 'package:penhas/app/features/appstate/domain/entities/update_user_profile_entity.dart';
 import 'package:penhas/app/features/appstate/domain/repositories/i_app_state_repository.dart';
 
 class AppStateRepository implements IAppStateRepository {
@@ -21,6 +22,17 @@ class AppStateRepository implements IAppStateRepository {
   Future<Either<Failure, AppStateEntity>> check() async {
     try {
       final appState = await _dataSource.check();
+      return right(appState);
+    } catch (e) {
+      return left(await _handleError(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AppStateEntity>> update(
+      UpdateUserProfileEntity update) async {
+    try {
+      final appState = await _dataSource.update(update);
       return right(appState);
     } catch (e) {
       return left(await _handleError(e));
