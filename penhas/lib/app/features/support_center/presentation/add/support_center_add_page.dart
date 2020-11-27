@@ -31,6 +31,7 @@ class _SupportCenterAddPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Adicionar Ponto"),
         elevation: 0.0,

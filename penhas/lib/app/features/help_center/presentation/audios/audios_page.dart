@@ -64,6 +64,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
+        elevation: 0.0,
         title: Text('Minhas gravações'),
         backgroundColor: DesignSystemColors.ligthPurple,
       ),

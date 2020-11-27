@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/main_menu/domain/states/profile_edit_state.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/my_profile/profile_edit_controller.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_bio_page.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_email_page.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_name_page.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_race_page.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_single_tile_page.dart';
@@ -21,10 +24,25 @@ class ProfileEditPage extends StatefulWidget {
 }
 
 class _ProfileEditPageState
-    extends ModularState<ProfileEditPage, ProfileEditController> {
+    extends ModularState<ProfileEditPage, ProfileEditController>
+    with SnackBarHandler {
+  List<ReactionDisposer> _disposers;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _disposers ??= [
+      reaction((_) => controller.updateError, (String message) {
+        showSnackBar(scaffoldKey: _scaffoldKey, message: message);
+      }),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0.0,
         title: Text("Meu perfil"),
@@ -34,6 +52,12 @@ class _ProfileEditPageState
         builder: (context) => bodyBuilder(controller.state),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _disposers.forEach((d) => d());
+    super.dispose();
   }
 }
 
@@ -109,10 +133,9 @@ extension _PageBuilder on _ProfileEditPageState {
                 content: profile.genre,
                 background: DesignSystemColors.systemBackgroundColor,
               ),
-              CardProfileSingleTilePage(
-                title: "E-mail",
+              CardProfileEmailPage(
                 content: profile.email,
-                background: DesignSystemColors.systemBackgroundColor,
+                onChange: controller.updatedEmail,
               ),
               CardProfileSingleTilePage(
                 title: "Senha",

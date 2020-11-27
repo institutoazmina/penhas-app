@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/human_race.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 import 'card_profile_header_edit_page.dart';
 
-class CardProfileRacePage extends StatelessWidget {
+class CardProfilePasswordPage extends StatelessWidget {
   final String content;
   final void Function(String) onChange;
-  const CardProfileRacePage({
+
+  const CardProfilePasswordPage({
     Key key,
     @required this.content,
     @required this.onChange,
@@ -28,13 +28,13 @@ class CardProfileRacePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CardProfileHeaderEditPage(
-              title: "Raça",
-              onEditAction: () => showModal(),
+              title: "Senha",
+              onEditAction: () => showModal(context: context),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 2.0, bottom: 20.0),
               child: Text(
-                EnumHumanRace.map(content).label,
+                content,
                 style: contentTextStyle,
               ),
             )
@@ -45,26 +45,51 @@ class CardProfileRacePage extends StatelessWidget {
   }
 }
 
-extension _Modal on CardProfileRacePage {
-  void showModal() {
+extension _Modal on CardProfilePasswordPage {
+  void showModal({@required BuildContext context}) {
+    TextEditingController _controller = TextEditingController();
+
     Modular.to.showDialog(
       child: AlertDialog(
-        title: Text('Raça'),
+        title: Text('Email'),
         scrollable: true,
-        content: Container(
-          height: 350,
-          child: ListView.builder(
-              itemCount: datasource().length,
-              itemBuilder: (BuildContext context, int index) {
-                return datasource()[index];
-              }),
+        content: Column(
+          children: [
+            TextFormField(
+              controller: _controller,
+              maxLines: 1,
+              decoration: InputDecoration(
+                  hintText: 'Digite a nova senha', filled: true),
+            ),
+            TextFormField(
+              controller: _controller,
+              maxLines: 1,
+              decoration: InputDecoration(
+                  hintText: 'Digite a senha atual', filled: true),
+            ),
+          ],
         ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Fechar'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          FlatButton(
+            child: Text('Enviar'),
+            onPressed: () async {
+              onChange(_controller.text);
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
       ),
     );
   }
 }
 
-extension _TextStyle on CardProfileRacePage {
+extension _TextStyle on CardProfilePasswordPage {
   TextStyle get contentTextStyle => TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,
@@ -72,24 +97,4 @@ extension _TextStyle on CardProfileRacePage {
         color: DesignSystemColors.darkIndigoThree,
         fontWeight: FontWeight.normal,
       );
-}
-
-extension _HumanMapper on CardProfileRacePage {
-  List<Widget> datasource() {
-    return HumanRace.values
-        .map(
-          (v) => ListTile(
-              title: Text(v.label),
-              leading: content == v.rawValue
-                  ? Icon(Icons.check_circle_outlined)
-                  : Container(width: 16),
-              onTap: () => updateRace(v.rawValue)),
-        )
-        .toList();
-  }
-
-  void updateRace(String id) {
-    onChange(id);
-    Modular.to.pop();
-  }
 }

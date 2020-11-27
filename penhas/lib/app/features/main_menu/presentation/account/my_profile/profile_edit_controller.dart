@@ -43,6 +43,9 @@ abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
   @observable
   ProfileEditState state = ProfileEditState.initial();
 
+  @observable
+  String updateError = "";
+
   @computed
   PageProgressState get progressState {
     return monitorProgress(_progress);
@@ -55,19 +58,29 @@ abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> editNickName(String name) async {
+    setMessageErro("");
     final update = UpdateUserProfileEntity(nickName: name);
     updateProfile(update);
   }
 
   @action
   Future<void> editMinibio(String content) async {
+    setMessageErro("");
     final update = UpdateUserProfileEntity(minibio: content);
     updateProfile(update);
   }
 
   @action
   Future<void> updateRace(String id) async {
+    setMessageErro("");
     final update = UpdateUserProfileEntity(race: id);
+    updateProfile(update);
+  }
+
+  @action
+  Future<void> updatedEmail(String email, String password) async {
+    setMessageErro("");
+    final update = UpdateUserProfileEntity(email: email, oldPassword: password);
     updateProfile(update);
   }
 
@@ -119,7 +132,7 @@ extension _PrivateMethod on _ProfileEditControllerBase {
     final result = await _progress;
 
     result.fold(
-      (failure) => handleLoadPageError(failure),
+      (failure) => handleUpdateError(failure),
       (session) => handleSession(session),
     );
   }
@@ -137,6 +150,15 @@ extension _PrivateMethod on _ProfileEditControllerBase {
   void handleLoadPageError(Failure failure) {
     final message = mapFailureMessage(failure);
     state = ProfileEditState.error(message);
+  }
+
+  void handleUpdateError(Failure failure) {
+    final msg = mapFailureMessage(failure);
+    setMessageErro(msg);
+  }
+
+  void setMessageErro(String message) {
+    updateError = message;
   }
 
   PageProgressState monitorProgress(ObservableFuture<Object> observable) {

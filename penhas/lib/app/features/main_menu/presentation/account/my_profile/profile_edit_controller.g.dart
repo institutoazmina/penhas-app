@@ -63,6 +63,22 @@ mixin _$ProfileEditController on _ProfileEditControllerBase, Store {
     });
   }
 
+  final _$updateErrorAtom =
+      Atom(name: '_ProfileEditControllerBase.updateError');
+
+  @override
+  String get updateError {
+    _$updateErrorAtom.reportRead();
+    return super.updateError;
+  }
+
+  @override
+  set updateError(String value) {
+    _$updateErrorAtom.reportWrite(value, super.updateError, () {
+      super.updateError = value;
+    });
+  }
+
   final _$retryAsyncAction = AsyncAction('_ProfileEditControllerBase.retry');
 
   @override
@@ -86,6 +102,23 @@ mixin _$ProfileEditController on _ProfileEditControllerBase, Store {
     return _$editMinibioAsyncAction.run(() => super.editMinibio(content));
   }
 
+  final _$updateRaceAsyncAction =
+      AsyncAction('_ProfileEditControllerBase.updateRace');
+
+  @override
+  Future<void> updateRace(String id) {
+    return _$updateRaceAsyncAction.run(() => super.updateRace(id));
+  }
+
+  final _$updatedEmailAsyncAction =
+      AsyncAction('_ProfileEditControllerBase.updatedEmail');
+
+  @override
+  Future<void> updatedEmail(String email, String password) {
+    return _$updatedEmailAsyncAction
+        .run(() => super.updatedEmail(email, password));
+  }
+
   final _$editSkillAsyncAction =
       AsyncAction('_ProfileEditControllerBase.editSkill');
 
@@ -99,6 +132,7 @@ mixin _$ProfileEditController on _ProfileEditControllerBase, Store {
     return '''
 profileSkill: ${profileSkill},
 state: ${state},
+updateError: ${updateError},
 progressState: ${progressState}
     ''';
   }
