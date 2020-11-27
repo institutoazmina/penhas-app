@@ -48,7 +48,8 @@ abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> editMinibio(String content) async {
-    print("editMinibio => $content");
+    final update = UpdateUserProfileEntity(minibio: content);
+    updateProfile(update);
   }
 
   @action
