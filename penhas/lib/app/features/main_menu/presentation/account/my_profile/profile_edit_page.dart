@@ -83,12 +83,10 @@ extension _PageBuilder on _ProfileEditPageState {
                     hintText: "Informe uma minibio",
                     onChange: controller.editMinibio),
               ),
-              controller.profileSkill.length > 0
-                  ? CardProfileSkillPage(
-                      skills: controller.profileSkill,
-                      onEditAction: controller.editSkill,
-                    )
-                  : Container(),
+              CardProfileSkillPage(
+                skills: controller.profileSkill,
+                onEditAction: controller.editSkill,
+              ),
               CardProfileSingleTilePage(
                 title: "Já foi vítima de violência contra a mulher?",
                 content: profile.jaFoiVitimaDeViolencia ? "Sim" : "Não",

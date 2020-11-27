@@ -32,6 +32,22 @@ mixin _$ProfileEditController on _ProfileEditControllerBase, Store {
     });
   }
 
+  final _$profileSkillAtom =
+      Atom(name: '_ProfileEditControllerBase.profileSkill');
+
+  @override
+  ObservableList<FilterTagEntity> get profileSkill {
+    _$profileSkillAtom.reportRead();
+    return super.profileSkill;
+  }
+
+  @override
+  set profileSkill(ObservableList<FilterTagEntity> value) {
+    _$profileSkillAtom.reportWrite(value, super.profileSkill, () {
+      super.profileSkill = value;
+    });
+  }
+
   final _$stateAtom = Atom(name: '_ProfileEditControllerBase.state');
 
   @override
@@ -81,6 +97,7 @@ mixin _$ProfileEditController on _ProfileEditControllerBase, Store {
   @override
   String toString() {
     return '''
+profileSkill: ${profileSkill},
 state: ${state},
 progressState: ${progressState}
     ''';

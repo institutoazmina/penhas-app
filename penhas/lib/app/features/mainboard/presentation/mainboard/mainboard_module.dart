@@ -11,6 +11,7 @@ import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/filters/domain/repositories/filter_skill_repository.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/my_profile/profile_edit_controller.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/my_profile/skill/profile_skill_module.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_store.dart';
 import 'package:penhas/app/features/appstate/data/datasources/app_state_data_source.dart';
 import 'package:penhas/app/features/appstate/data/repositories/app_state_repository.dart';
@@ -220,6 +221,11 @@ class MainboardModule extends ChildModule {
         ModularRouter(
           '/menu/account_delete',
           child: (context, args) => AccountDeletePage(),
+          transition: TransitionType.rightToLeft,
+        ),
+        ModularRouter(
+          '/menu/profile_edit/skills',
+          module: ProfileSkillModule(),
           transition: TransitionType.rightToLeft,
         ),
       ];

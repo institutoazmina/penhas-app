@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -10,6 +11,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/map_failu
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
 import 'package:penhas/app/features/filters/domain/repositories/filter_skill_repository.dart';
+import 'package:penhas/app/features/filters/states/filter_action_observer.dart';
 import 'package:penhas/app/features/main_menu/domain/states/profile_edit_state.dart';
 
 part 'profile_edit_controller.g.dart';
@@ -65,25 +67,33 @@ abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> editSkill() async {
-    //   final tags = skills
-    //       .map(
-    //         (e) => FilterTagEntity(
-    //           id: e.id,
-    //           isSelected: isSeleted(e.id),
-    //           label: e.label,
-    //         ),
-    //       )
-    //       .toList();
+    final tags = _tags
+        .map(
+          (e) => e.copyWith(
+            isSelected: isSeleted(e.id),
+          ),
+        )
+        .toList();
 
-    //   Modular.to
-    //       .pushNamed("/mainboard/filters", arguments: tags)
-    //       .then((v) => v as FilterActionObserver)
-    //       .then((v) => handleFilterUpdate(v));
-    // }
+    Modular.to
+        .pushNamed("/mainboard/menu/profile_edit/skills", arguments: tags)
+        .then((v) => v as FilterActionObserver)
+        .then((v) => handleFilterUpdate(v));
   }
 }
 
 extension _PrivateMethod on _ProfileEditControllerBase {
+  Future<void> handleFilterUpdate(FilterActionObserver v) async {
+    final updatedSkill = v.when(
+      reset: () => UpdateUserProfileEntity(skills: []),
+      updated: (s) => UpdateUserProfileEntity(
+        skills: s.map((e) => e.id).toList(),
+      ),
+    );
+
+    updateProfile(updatedSkill);
+  }
+
   Future<void> loadProfile() async {
     final resultSkill = await _skillRepository.skills();
     _tags = resultSkill.getOrElse(() => List<FilterTagEntity>());
@@ -135,7 +145,7 @@ extension _PrivateMethod on _ProfileEditControllerBase {
 
   bool isSeleted(String id) {
     try {
-      _tags.firstWhere((v) => v.id == id);
+      profileSkill.firstWhere((v) => v.id == id);
       return true;
     } catch (e) {
       return false;

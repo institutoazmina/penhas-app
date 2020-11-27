@@ -30,6 +30,7 @@ class CardProfileSkillPage extends StatelessWidget {
           top: 16.0,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CardProfileHeaderEditPage(
                 title: "Disponível para falar sobre",
