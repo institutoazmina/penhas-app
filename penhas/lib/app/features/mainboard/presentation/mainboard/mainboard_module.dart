@@ -10,6 +10,7 @@ import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/filters/domain/repositories/filter_skill_repository.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/delete/account_delete_controller.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/my_profile/profile_edit_controller.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/my_profile/skill/profile_skill_module.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_store.dart';
@@ -238,6 +239,7 @@ class MainboardModule extends ChildModule {
           ),
           singleton: false,
         ),
+        Bind((i) => AccountDeleteController(), singleton: false),
       ];
 
   List<ModularRouter> get audioRecord => [
