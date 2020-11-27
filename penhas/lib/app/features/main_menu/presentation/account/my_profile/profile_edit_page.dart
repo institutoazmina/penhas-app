@@ -7,6 +7,7 @@ import 'package:penhas/app/features/main_menu/domain/states/profile_edit_state.d
 import 'package:penhas/app/features/main_menu/presentation/account/my_profile/profile_edit_controller.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_bio_page.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_name_page.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_race_page.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_single_tile_page.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_skill_page.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
@@ -70,11 +71,7 @@ extension _PageBuilder on _ProfileEditPageState {
               CardProfileNamePage(
                 name: profile.nickname,
                 avatar: profile.avatar,
-                onEditAction: () async => askSingleInput(
-                  title: 'Editar',
-                  hintText: 'Digite o novo nome',
-                  onChange: controller.editNickName,
-                ),
+                onChange: controller.editNickName,
               ),
               CardProfileBioPage(
                 content: profile.minibio ?? "",
@@ -106,11 +103,7 @@ extension _PageBuilder on _ProfileEditPageState {
                     profile.birthdate.year.toString(),
                 background: DesignSystemColors.systemBackgroundColor,
               ),
-              CardProfileSingleTilePage(
-                title: "Raça",
-                content: profile.race,
-                background: DesignSystemColors.systemBackgroundColor,
-              ),
+              CardProfileRacePage(),
               CardProfileSingleTilePage(
                 title: "Sexo",
                 content: profile.genre,
@@ -135,40 +128,6 @@ extension _PageBuilder on _ProfileEditPageState {
 }
 
 extension _Modal on _ProfileEditPageState {
-  void askSingleInput({
-    @required String title,
-    @required String hintText,
-    @required void Function(String) onChange,
-  }) {
-    TextEditingController _controller = TextEditingController();
-
-    Modular.to.showDialog(
-      child: AlertDialog(
-        title: Text(title),
-        content: TextFormField(
-          controller: _controller,
-          maxLines: 1,
-          decoration: InputDecoration(hintText: hintText, filled: true),
-        ),
-        actions: <Widget>[
-          FlatButton(
-            child: Text('Fechar'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          FlatButton(
-            child: Text('Enviar'),
-            onPressed: () async {
-              onChange(_controller.text);
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
   void askMultilineInput({
     @required String title,
     @required String hintText,
@@ -226,6 +185,86 @@ extension _ProfileEditPage on _ProfileEditPageState {
     );
   }
 }
+
+/*
+
+  static List<MenuItemModel> raceDataSource() {
+    return HumanRace.values
+        .map(
+          (v) => MenuItemModel(_mapRaceToLabel(v), "${v.index}"),
+        )
+        .toList();
+  }
+
+                    Observer(builder: (_) {
+                      return _buildDropdownList(
+                        context: context,
+                        labelText: 'Raça',
+                        onError: controller.warningRace,
+                        onChange: controller.setRace,
+                        currentValue: controller.currentRace,
+                        dataSource: dataSourceRace,
+                      );
+
+
+Widget _buildDropdownList<T>({
+    @required BuildContext context,
+    @required String labelText,
+    @required String onError,
+    @required onChange,
+    @required T currentValue,
+    @required List dataSource,
+  }) {
+    return Theme(
+      data: Theme.of(context)
+          .copyWith(canvasColor: Color.fromRGBO(141, 146, 157, 1)),
+      child: DropdownButtonFormField(
+        decoration: InputDecoration(
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white70),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white70),
+          ),
+          errorText: (onError?.isEmpty ?? true) ? null : onError,
+          labelText: labelText,
+          labelStyle: TextStyle(color: Colors.white),
+          contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
+        ),
+        items: dataSource,
+        onChanged: onChange,
+        style: TextStyle(color: Colors.white),
+        value: currentValue == '' ? null : currentValue,
+      ),
+    );
+  }
+
+  static String _mapRaceToLabel(HumanRace race) {
+    String label;
+    switch (race) {
+      case HumanRace.white:
+        label = 'Branca';
+        break;
+      case HumanRace.brown:
+        label = 'Parda';
+        break;
+      case HumanRace.black:
+        label = 'Preta';
+        break;
+      case HumanRace.indigenous:
+        label = 'Índigena';
+        break;
+      case HumanRace.yellow:
+        label = 'Amarela';
+        break;
+      case HumanRace.notDeclared:
+        label = 'Não declarar';
+        break;
+    }
+
+    return label;
+  }
+*/
 
 extension _TextStyle on _ProfileEditPageState {
   TextStyle get profileHeaderTitleTextStyle => TextStyle(
