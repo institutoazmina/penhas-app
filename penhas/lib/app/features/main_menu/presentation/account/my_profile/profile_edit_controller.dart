@@ -85,6 +85,16 @@ abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
   }
 
   @action
+  Future<void> updatePassword(String newPassword, String oldPassword) async {
+    setMessageErro("");
+    final update = UpdateUserProfileEntity(
+      newPassword: newPassword,
+      oldPassword: oldPassword,
+    );
+    updateProfile(update);
+  }
+
+  @action
   Future<void> editSkill() async {
     final tags = _tags
         .map(

@@ -10,6 +10,7 @@ import 'package:penhas/app/features/main_menu/presentation/account/my_profile/pr
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_bio_page.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_email_page.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_name_page.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_password_page.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_race_page.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_single_tile_page.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_skill_page.dart';
@@ -137,11 +138,10 @@ extension _PageBuilder on _ProfileEditPageState {
                 content: profile.email,
                 onChange: controller.updatedEmail,
               ),
-              CardProfileSingleTilePage(
-                title: "Senha",
+              CardProfilePasswordPage(
                 content: '************',
-                background: DesignSystemColors.systemBackgroundColor,
-              ),
+                onChange: controller.updatePassword,
+              )
             ],
           ),
         ),

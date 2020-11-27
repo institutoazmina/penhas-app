@@ -6,7 +6,7 @@ import 'card_profile_header_edit_page.dart';
 
 class CardProfilePasswordPage extends StatelessWidget {
   final String content;
-  final void Function(String) onChange;
+  final void Function(String, String) onChange;
 
   const CardProfilePasswordPage({
     Key key,
@@ -47,7 +47,8 @@ class CardProfilePasswordPage extends StatelessWidget {
 
 extension _Modal on CardProfilePasswordPage {
   void showModal({@required BuildContext context}) {
-    TextEditingController _controller = TextEditingController();
+    TextEditingController newPasswordController = TextEditingController();
+    TextEditingController oldPasswordController = TextEditingController();
 
     Modular.to.showDialog(
       child: AlertDialog(
@@ -56,13 +57,14 @@ extension _Modal on CardProfilePasswordPage {
         content: Column(
           children: [
             TextFormField(
-              controller: _controller,
+              controller: newPasswordController,
               maxLines: 1,
               decoration: InputDecoration(
                   hintText: 'Digite a nova senha', filled: true),
             ),
+            SizedBox(height: 20),
             TextFormField(
-              controller: _controller,
+              controller: oldPasswordController,
               maxLines: 1,
               decoration: InputDecoration(
                   hintText: 'Digite a senha atual', filled: true),
@@ -79,7 +81,10 @@ extension _Modal on CardProfilePasswordPage {
           FlatButton(
             child: Text('Enviar'),
             onPressed: () async {
-              onChange(_controller.text);
+              onChange(
+                newPasswordController.text,
+                oldPasswordController.text,
+              );
               Navigator.of(context).pop();
             },
           ),

@@ -119,6 +119,15 @@ mixin _$ProfileEditController on _ProfileEditControllerBase, Store {
         .run(() => super.updatedEmail(email, password));
   }
 
+  final _$updatePasswordAsyncAction =
+      AsyncAction('_ProfileEditControllerBase.updatePassword');
+
+  @override
+  Future<void> updatePassword(String newPassword, String oldPassword) {
+    return _$updatePasswordAsyncAction
+        .run(() => super.updatePassword(newPassword, oldPassword));
+  }
+
   final _$editSkillAsyncAction =
       AsyncAction('_ProfileEditControllerBase.editSkill');
 
