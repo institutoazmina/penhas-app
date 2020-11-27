@@ -66,6 +66,12 @@ abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
   }
 
   @action
+  Future<void> updateRace(String id) async {
+    final update = UpdateUserProfileEntity(race: id);
+    updateProfile(update);
+  }
+
+  @action
   Future<void> editSkill() async {
     final tags = _tags
         .map(
@@ -164,25 +170,4 @@ extension _PrivateMethod on _ProfileEditControllerBase {
       return null;
     }
   }
-
-  // void handleFilterUpdate(FilterActionObserver action) {
-  //   if (action == null) {
-  //     return;
-  //   }
-
-  //   _tags = action.when(
-  //     reset: () => List<FilterTagEntity>(),
-  //     updated: (listTags) => listTags,
-  //   );
-
-  //   loadScreen(skills: _tags);
-  // }
-
-  // Future<void> skills() async {
-  //   final result = await _skillRepository.skills();
-  //   result.fold(
-  //     (failure) => handleFilterError(failure),
-  //     (skills) => handleFilterSuccess(skills),
-  //   );
-  // }
 }

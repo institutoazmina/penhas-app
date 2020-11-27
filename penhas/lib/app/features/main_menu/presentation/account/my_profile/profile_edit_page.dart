@@ -100,7 +100,10 @@ extension _PageBuilder on _ProfileEditPageState {
                     profile.birthdate.year.toString(),
                 background: DesignSystemColors.systemBackgroundColor,
               ),
-              CardProfileRacePage(),
+              CardProfileRacePage(
+                content: profile.race,
+                onChange: controller.updateRace,
+              ),
               CardProfileSingleTilePage(
                 title: "Sexo",
                 content: profile.genre,
@@ -147,86 +150,6 @@ extension _ProfileEditPage on _ProfileEditPageState {
   }
 }
 
-/*
-
-  static List<MenuItemModel> raceDataSource() {
-    return HumanRace.values
-        .map(
-          (v) => MenuItemModel(_mapRaceToLabel(v), "${v.index}"),
-        )
-        .toList();
-  }
-
-                    Observer(builder: (_) {
-                      return _buildDropdownList(
-                        context: context,
-                        labelText: 'Raça',
-                        onError: controller.warningRace,
-                        onChange: controller.setRace,
-                        currentValue: controller.currentRace,
-                        dataSource: dataSourceRace,
-                      );
-
-
-Widget _buildDropdownList<T>({
-    @required BuildContext context,
-    @required String labelText,
-    @required String onError,
-    @required onChange,
-    @required T currentValue,
-    @required List dataSource,
-  }) {
-    return Theme(
-      data: Theme.of(context)
-          .copyWith(canvasColor: Color.fromRGBO(141, 146, 157, 1)),
-      child: DropdownButtonFormField(
-        decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white70),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white70),
-          ),
-          errorText: (onError?.isEmpty ?? true) ? null : onError,
-          labelText: labelText,
-          labelStyle: TextStyle(color: Colors.white),
-          contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
-        ),
-        items: dataSource,
-        onChanged: onChange,
-        style: TextStyle(color: Colors.white),
-        value: currentValue == '' ? null : currentValue,
-      ),
-    );
-  }
-
-  static String _mapRaceToLabel(HumanRace race) {
-    String label;
-    switch (race) {
-      case HumanRace.white:
-        label = 'Branca';
-        break;
-      case HumanRace.brown:
-        label = 'Parda';
-        break;
-      case HumanRace.black:
-        label = 'Preta';
-        break;
-      case HumanRace.indigenous:
-        label = 'Índigena';
-        break;
-      case HumanRace.yellow:
-        label = 'Amarela';
-        break;
-      case HumanRace.notDeclared:
-        label = 'Não declarar';
-        break;
-    }
-
-    return label;
-  }
-*/
-
 extension _TextStyle on _ProfileEditPageState {
   TextStyle get profileHeaderTitleTextStyle => TextStyle(
         fontFamily: 'Lato',
@@ -235,6 +158,7 @@ extension _TextStyle on _ProfileEditPageState {
         color: DesignSystemColors.darkIndigoThree,
         fontWeight: FontWeight.bold,
       );
+
   TextStyle get profileHeaderContentTextStyle => TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,

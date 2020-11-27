@@ -38,7 +38,7 @@ class SignUpTwoController extends _SignUpTwoControllerBase
   static List<MenuItemModel> raceDataSource() {
     return HumanRace.values
         .map(
-          (v) => MenuItemModel(_mapRaceToLabel(v), "${v.index}"),
+          (v) => MenuItemModel(v.label, "${v.index}"),
         )
         .toList();
   }
@@ -60,32 +60,6 @@ class SignUpTwoController extends _SignUpTwoControllerBase
         break;
       case Genre.others:
         label = 'Outro';
-        break;
-    }
-
-    return label;
-  }
-
-  static String _mapRaceToLabel(HumanRace race) {
-    String label;
-    switch (race) {
-      case HumanRace.white:
-        label = 'Branca';
-        break;
-      case HumanRace.brown:
-        label = 'Parda';
-        break;
-      case HumanRace.black:
-        label = 'Preta';
-        break;
-      case HumanRace.indigenous:
-        label = 'Índigena';
-        break;
-      case HumanRace.yellow:
-        label = 'Amarela';
-        break;
-      case HumanRace.notDeclared:
-        label = 'Não declarar';
         break;
     }
 
