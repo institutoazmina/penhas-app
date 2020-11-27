@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -7,25 +8,35 @@ import 'package:penhas/app/features/appstate/domain/entities/update_user_profile
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
+import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
+import 'package:penhas/app/features/filters/domain/repositories/filter_skill_repository.dart';
 import 'package:penhas/app/features/main_menu/domain/states/profile_edit_state.dart';
 
 part 'profile_edit_controller.g.dart';
 
 class ProfileEditController extends _ProfileEditControllerBase
     with _$ProfileEditController {
-  ProfileEditController({@required AppStateUseCase appStateUseCase})
-      : super(appStateUseCase);
+  ProfileEditController({
+    @required AppStateUseCase appStateUseCase,
+    @required IFilterSkillRepository skillRepository,
+  }) : super(appStateUseCase, skillRepository);
 }
 
 abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
   final AppStateUseCase _appStateUseCase;
+  final IFilterSkillRepository _skillRepository;
+  List<FilterTagEntity> _tags = List<FilterTagEntity>();
 
-  _ProfileEditControllerBase(this._appStateUseCase) {
+  _ProfileEditControllerBase(this._appStateUseCase, this._skillRepository) {
     loadProfile();
   }
 
   @observable
   ObservableFuture<Either<Failure, AppStateEntity>> _progress;
+
+  @observable
+  ObservableList<FilterTagEntity> profileSkill =
+      ObservableList<FilterTagEntity>();
 
   @observable
   ProfileEditState state = ProfileEditState.initial();
@@ -54,12 +65,29 @@ abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> editSkill() async {
-    print("editSkill");
+    //   final tags = skills
+    //       .map(
+    //         (e) => FilterTagEntity(
+    //           id: e.id,
+    //           isSelected: isSeleted(e.id),
+    //           label: e.label,
+    //         ),
+    //       )
+    //       .toList();
+
+    //   Modular.to
+    //       .pushNamed("/mainboard/filters", arguments: tags)
+    //       .then((v) => v as FilterActionObserver)
+    //       .then((v) => handleFilterUpdate(v));
+    // }
   }
 }
 
 extension _PrivateMethod on _ProfileEditControllerBase {
   Future<void> loadProfile() async {
+    final resultSkill = await _skillRepository.skills();
+    _tags = resultSkill.getOrElse(() => List<FilterTagEntity>());
+
     final result = await _appStateUseCase.check();
     result.fold(
       (failure) => handleLoadPageError(failure),
@@ -81,6 +109,12 @@ extension _PrivateMethod on _ProfileEditControllerBase {
   }
 
   void handleSession(AppStateEntity session) {
+    _tags.map((e) => null);
+    List<FilterTagEntity> userSkills =
+        session.userProfile.skill.map((e) => selectSkill(e)).toList();
+    userSkills.removeWhere((e) => e == null);
+    profileSkill = userSkills.asObservable();
+
     state = ProfileEditState.loaded(session.userProfile);
   }
 
@@ -98,4 +132,47 @@ extension _PrivateMethod on _ProfileEditControllerBase {
         ? PageProgressState.loading
         : PageProgressState.loaded;
   }
+
+  bool isSeleted(String id) {
+    try {
+      _tags.firstWhere((v) => v.id == id);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  FilterTagEntity selectSkill(String id) {
+    try {
+      final tag = _tags.firstWhere((v) => v.id == id);
+      return FilterTagEntity(
+        id: tag.id,
+        isSelected: true,
+        label: tag.label,
+      );
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // void handleFilterUpdate(FilterActionObserver action) {
+  //   if (action == null) {
+  //     return;
+  //   }
+
+  //   _tags = action.when(
+  //     reset: () => List<FilterTagEntity>(),
+  //     updated: (listTags) => listTags,
+  //   );
+
+  //   loadScreen(skills: _tags);
+  // }
+
+  // Future<void> skills() async {
+  //   final result = await _skillRepository.skills();
+  //   result.fold(
+  //     (failure) => handleFilterError(failure),
+  //     (skills) => handleFilterSuccess(skills),
+  //   );
+  // }
 }

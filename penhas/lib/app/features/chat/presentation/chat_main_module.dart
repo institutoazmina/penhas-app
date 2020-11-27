@@ -48,11 +48,6 @@ class ChatMainModule extends WidgetModule {
             apiProvider: i.get<IApiProvider>(),
           ),
         ),
-        Bind<IFilterSkillRepository>(
-          (i) => FilterSkillRepository(
-            apiProvider: i.get<IApiProvider>(),
-          ),
-        ),
         Bind(
           (i) => ChatChannelController(
             useCase: i.get<ChatChannelUseCase>(),

@@ -9,6 +9,7 @@ import 'package:penhas/app/core/managers/user_profile_store.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
+import 'package:penhas/app/features/filters/domain/repositories/filter_skill_repository.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/my_profile/profile_edit_controller.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_store.dart';
 import 'package:penhas/app/features/appstate/data/datasources/app_state_data_source.dart';
@@ -90,6 +91,11 @@ class MainboardModule extends ChildModule {
             maxRows: 100,
           ),
           singleton: true,
+        ),
+        Bind<IFilterSkillRepository>(
+          (i) => FilterSkillRepository(
+            apiProvider: i.get<IApiProvider>(),
+          ),
         ),
       ];
 
@@ -222,6 +228,7 @@ class MainboardModule extends ChildModule {
         Bind(
           (i) => ProfileEditController(
             appStateUseCase: i.get<AppStateUseCase>(),
+            skillRepository: i.get<IFilterSkillRepository>(),
           ),
           singleton: false,
         ),
