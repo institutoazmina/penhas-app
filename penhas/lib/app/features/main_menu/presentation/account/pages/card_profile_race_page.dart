@@ -77,19 +77,23 @@ extension _TextStyle on CardProfileRacePage {
 extension _HumanMapper on CardProfileRacePage {
   List<Widget> datasource() {
     return HumanRace.values
-        .map(
-          (v) => ListTile(
-              title: Text(v.label),
-              leading: content == v.rawValue
-                  ? Icon(Icons.check_circle_outlined)
-                  : Container(width: 16),
-              onTap: () => updateRace(v.rawValue)),
-        )
+        .map((v) => RadioListTile(
+              value: v.rawValue,
+              groupValue: this.content,
+              selected: isSelected(v.rawValue),
+              onChanged: (v) => updateRace(v),
+              activeColor: DesignSystemColors.ligthPurple,
+              title: Text(v.label, style: contentTextStyle),
+            ))
         .toList();
   }
 
   void updateRace(String id) {
     onChange(id);
     Modular.to.pop();
+  }
+
+  bool isSelected(String id) {
+    return content == id;
   }
 }
