@@ -29,6 +29,7 @@ class CardProfileBioPage extends StatelessWidget {
           top: 16.0,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CardProfileHeaderEditPage(
               title: "Minibio",
@@ -50,6 +51,7 @@ extension _Modal on CardProfileBioPage {
     @required BuildContext context,
   }) {
     TextEditingController _controller = TextEditingController();
+    _controller.text = content;
 
     Modular.to.showDialog(
       child: AlertDialog(
