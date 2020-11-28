@@ -13,6 +13,7 @@ import 'package:penhas/app/features/filters/domain/repositories/filter_skill_rep
 import 'package:penhas/app/features/main_menu/presentation/account/delete/account_delete_controller.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/my_profile/profile_edit_controller.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/my_profile/skill/profile_skill_module.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/preference/account_preference_controller.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_store.dart';
 import 'package:penhas/app/features/appstate/data/datasources/app_state_data_source.dart';
 import 'package:penhas/app/features/appstate/data/repositories/app_state_repository.dart';
@@ -244,6 +245,11 @@ class MainboardModule extends ChildModule {
                 appConfiguration: i.get<IAppConfiguration>(),
                 profileRepository: i.get<IUserProfileRepository>()),
             singleton: false),
+        Bind(
+          (i) => AccountPreferenceController(
+            profileRepository: i.get<IUserProfileRepository>(),
+          ),
+        ),
       ];
 
   List<ModularRouter> get audioRecord => [
