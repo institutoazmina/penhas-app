@@ -4,9 +4,15 @@ import 'package:penhas/app/features/authentication/domain/entities/session_entit
 class SessionModel extends SessionEntity {
   SessionModel({
     @required String sessionToken,
-  }) : super(sessionToken: sessionToken);
+    @required bool deletedScheduled,
+  }) : super(
+          sessionToken: sessionToken,
+          deletedScheduled: deletedScheduled,
+        );
 
   factory SessionModel.fromJson(Map<String, dynamic> json) {
-    return SessionModel(sessionToken: json['session']);
+    return SessionModel(
+        sessionToken: json['session'],
+        deletedScheduled: json['deleted_scheduled'] == 1);
   }
 }

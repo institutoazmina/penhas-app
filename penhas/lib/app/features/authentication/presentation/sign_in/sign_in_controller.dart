@@ -79,7 +79,7 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
 
     response.fold(
       (failure) => _setErrorMessage(mapFailureMessage(failure)),
-      (session) => _forwardToLogged(),
+      (session) => _forwardToLogged(session),
     );
   }
 
@@ -93,8 +93,12 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
     Modular.to.pushNamed('/authentication/reset_password');
   }
 
-  Future<void> _forwardToLogged() async {
-    Modular.to.pushReplacementNamed('/');
+  Future<void> _forwardToLogged(SessionEntity session) async {
+    if (session.deletedScheduled) {
+      Modular.to.pushNamed('/accountDeleted');
+    } else {
+      Modular.to.pushReplacementNamed('/');
+    }
   }
 
   void _setErrorMessage(String msg) {

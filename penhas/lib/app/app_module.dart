@@ -2,6 +2,7 @@ import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:path/path.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
@@ -18,7 +19,10 @@ import 'core/managers/modules_sevices.dart';
 import 'core/managers/user_profile_store.dart';
 import 'core/network/api_client.dart';
 import 'core/storage/local_storage_shared_preferences.dart';
+import 'features/authentication/presentation/deleted_account/deleted_account_controller.dart';
+import 'features/authentication/presentation/deleted_account/deleted_account_page.dart';
 import 'features/help_center/data/repositories/audio_sync_repository.dart';
+import 'features/main_menu/domain/repositories/user_profile_repository.dart';
 
 class AppModule extends MainModule {
   @override
@@ -44,6 +48,14 @@ class AppModule extends MainModule {
           singleton: false,
         ),
         Bind((i) => DataConnectionChecker()),
+        Bind<IUserProfileRepository>(
+          (i) => UserProfileRepository(
+            apiProvider: i.get<IApiProvider>(),
+            serverConfiguration: i.get<IApiServerConfigure>(),
+          ),
+        ),
+        Bind((i) => DeletedAccountController(
+            profileRepository: i.get<IUserProfileRepository>())),
         Bind<IAppConfiguration>(
           (i) => AppConfiguration(
             storage: i.get<ILocalStorage>(),
@@ -81,6 +93,11 @@ class AppModule extends MainModule {
         ModularRouter('/authentication', module: SignInModule()),
         ModularRouter('/mainboard', module: MainboardModule()),
         ModularRouter('/quiz', module: QuizModule()),
+        ModularRouter(
+          '/accountDeleted',
+          child: (context, args) => DeletedAccountPage(),
+          transition: TransitionType.rightToLeft,
+        )
       ];
 
   @override

@@ -400,12 +400,6 @@ class MainboardModule extends ChildModule {
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
-        Bind<IUserProfileRepository>(
-          (i) => UserProfileRepository(
-            apiProvider: i.get<IApiProvider>(),
-            serverConfiguration: i.get<IApiServerConfigure>(),
-          ),
-        )
       ];
 
   List<Bind> get helpCenterBinds => [
