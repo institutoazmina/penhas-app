@@ -65,27 +65,28 @@ abstract class _MainboardControllerBase with Store {
     final profile = await _userProfileStore.retreive();
 
     switch (state) {
-      case AppLifecycleState.paused:
+      case AppLifecycleState.inactive:
         if (profile.stealthModeEnabled) {
-          final foo = Modular.initialRoute;
-          final bar = Modular.currentModule;
-          final zar = Modular.link;
-          final zzz = Modular.navigator;
-          final abc = Modular.to.modulePath;
-          final acb = Modular.to.path;
-          // Modular.to.popUntil(ModalRoute.withName('/login'));
-          // final cas = Modular.to.popUntil(() => false);
-          // Modular.to.pushNamedAndRemoveUntil('/home/10', ModalRoute.withName('/'));
-          // Modular.to.pushReplacementNamed('/authentication/stealth');
+          Modular.to.pushNamedAndRemoveUntil(
+            '/authentication/stealth',
+            ModalRoute.withName('/'),
+          );
+
           return;
         }
         if (profile.anonymousModeEnabled) {
-          // Modular.to.pushReplacementNamed('/authentication/sign_in_stealth');
+          Modular.to.pushNamedAndRemoveUntil(
+            '/authentication/sign_in_stealth',
+            ModalRoute.withName('/'),
+          );
+
+          return;
         }
         break;
-      case AppLifecycleState.inactive:
+
       case AppLifecycleState.resumed:
       case AppLifecycleState.detached:
+      case AppLifecycleState.paused:
         break;
     }
   }
