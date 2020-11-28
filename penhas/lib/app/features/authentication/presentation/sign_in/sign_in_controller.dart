@@ -95,7 +95,7 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
 
   Future<void> _forwardToLogged(SessionEntity session) async {
     if (session.deletedScheduled) {
-      Modular.to.pushNamed('/accountDeleted');
+      Modular.to.pushNamed('/accountDeleted', arguments: session.sessionToken);
     } else {
       Modular.to.pushReplacementNamed('/');
     }

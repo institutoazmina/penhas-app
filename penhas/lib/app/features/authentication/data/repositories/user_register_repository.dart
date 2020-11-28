@@ -90,7 +90,12 @@ class UserRegisterRepository implements IUserRegisterRepository {
 
       await _appConfiguration.saveApiToken(token: session.sessionToken);
 
-      return right(SessionEntity(sessionToken: session.sessionToken));
+      return right(
+        SessionEntity(
+          sessionToken: session.sessionToken,
+          deletedScheduled: session.deletedScheduled,
+        ),
+      );
     } catch (e) {
       return left(await _handleError(e));
     }

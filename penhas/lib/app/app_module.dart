@@ -2,7 +2,6 @@ import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:path/path.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
@@ -55,7 +54,10 @@ class AppModule extends MainModule {
           ),
         ),
         Bind((i) => DeletedAccountController(
-            profileRepository: i.get<IUserProfileRepository>())),
+              profileRepository: i.get<IUserProfileRepository>(),
+              appConfiguration: i.get<IAppConfiguration>(),
+              sessionToken: i.args.data,
+            )),
         Bind<IAppConfiguration>(
           (i) => AppConfiguration(
             storage: i.get<ILocalStorage>(),

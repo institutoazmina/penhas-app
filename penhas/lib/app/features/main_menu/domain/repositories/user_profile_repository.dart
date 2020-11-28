@@ -11,7 +11,7 @@ abstract class IUserProfileRepository {
   Future<Either<Failure, ValidField>> anonymousMode({@required bool toggle});
   Future<Either<Failure, ValidField>> deleteNotice();
   Future<Either<Failure, ValidField>> delete({@required String password});
-  Future<Either<Failure, ValidField>> reactivate();
+  Future<Either<Failure, ValidField>> reactivate({@required String token});
 }
 
 class UserProfileRepository implements IUserProfileRepository {
@@ -85,14 +85,18 @@ class UserProfileRepository implements IUserProfileRepository {
   }
 
   @override
-  Future<Either<Failure, ValidField>> reactivate() async {
+  Future<Either<Failure, ValidField>> reactivate(
+      {@required String token}) async {
     final endPoint = '/reactivate';
 
-    final parameters = {'app_version': await _serverConfiguration.userAgent};
+    final parameters = {
+      'app_version': await _serverConfiguration.userAgent,
+      'api_key': token,
+    };
 
     try {
       await _apiProvider.post(path: endPoint, parameters: parameters);
-      return right(ValidField());
+      return right(ValidField(message: token));
     } catch (error) {
       return left(MapExceptionToFailure.map(error));
     }
