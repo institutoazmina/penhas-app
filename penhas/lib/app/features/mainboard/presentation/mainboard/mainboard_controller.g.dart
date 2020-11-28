@@ -65,6 +65,20 @@ mixin _$MainboardController on _MainboardControllerBase, Store {
     return _$changeAppStateAsyncAction.run(() => super.changeAppState(state));
   }
 
+  final _$_MainboardControllerBaseActionController =
+      ActionController(name: '_MainboardControllerBase');
+
+  @override
+  void resetNotificatinCounter() {
+    final _$actionInfo = _$_MainboardControllerBaseActionController.startAction(
+        name: '_MainboardControllerBase.resetNotificatinCounter');
+    try {
+      return super.resetNotificatinCounter();
+    } finally {
+      _$_MainboardControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''

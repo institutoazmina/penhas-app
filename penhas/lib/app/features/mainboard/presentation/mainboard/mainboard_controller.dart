@@ -56,17 +56,31 @@ abstract class _MainboardControllerBase with Store {
   MainboardSecurityState securityState = MainboardSecurityState.disable();
 
   @action
+  void resetNotificatinCounter() {
+    notificationCounter = 0;
+  }
+
+  @action
   changeAppState(AppLifecycleState state) async {
     final profile = await _userProfileStore.retreive();
 
     switch (state) {
       case AppLifecycleState.paused:
         if (profile.stealthModeEnabled) {
-          Modular.to.pushReplacementNamed('/authentication/stealth');
+          final foo = Modular.initialRoute;
+          final bar = Modular.currentModule;
+          final zar = Modular.link;
+          final zzz = Modular.navigator;
+          final abc = Modular.to.modulePath;
+          final acb = Modular.to.path;
+          // Modular.to.popUntil(ModalRoute.withName('/login'));
+          // final cas = Modular.to.popUntil(() => false);
+          // Modular.to.pushNamedAndRemoveUntil('/home/10', ModalRoute.withName('/'));
+          // Modular.to.pushReplacementNamed('/authentication/stealth');
           return;
         }
         if (profile.anonymousModeEnabled) {
-          Modular.to.pushReplacementNamed('/authentication/sign_in_stealth');
+          // Modular.to.pushReplacementNamed('/authentication/sign_in_stealth');
         }
         break;
       case AppLifecycleState.inactive:

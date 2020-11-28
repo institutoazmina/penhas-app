@@ -78,8 +78,9 @@ extension _SecurityModeBuilder on _MainboardPageState {
   Widget enabledSecurityMode(MainboardState currentPage) {
     return Scaffold(
       appBar: MainBoardAppBarPage(
-        currentPage: controller.mainboardStore.selectedPage,
         counter: controller.notificationCounter,
+        resetCounter: controller.resetNotificatinCounter,
+        currentPage: controller.mainboardStore.selectedPage,
       ),
       drawer: PenhasDrawerPage(),
       backgroundColor: Colors.white,
@@ -100,8 +101,9 @@ extension _SecurityModeBuilder on _MainboardPageState {
   Widget disabledSecurityMode(MainboardState currentPage) {
     return Scaffold(
       appBar: MainBoardAppBarPage(
-        currentPage: controller.mainboardStore.selectedPage,
         counter: controller.notificationCounter,
+        resetCounter: controller.resetNotificatinCounter,
+        currentPage: controller.mainboardStore.selectedPage,
       ),
       drawer: PenhasDrawerPage(),
       backgroundColor: Colors.white,

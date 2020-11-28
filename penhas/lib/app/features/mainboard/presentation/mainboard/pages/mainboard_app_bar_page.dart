@@ -10,11 +10,13 @@ class MainBoardAppBarPage extends StatelessWidget
     implements PreferredSizeWidget {
   final int counter;
   final MainboardState currentPage;
+  final void Function() resetCounter;
 
   const MainBoardAppBarPage({
     Key key,
     @required this.counter,
     @required this.currentPage,
+    @required this.resetCounter,
   }) : super(key: key);
 
   @override
@@ -52,7 +54,12 @@ class MainBoardAppBarPage extends StatelessWidget
         color: Colors.white,
         size: 30,
       ),
-      actions: <Widget>[MainboardNotificationPage(counter: counter)],
+      actions: <Widget>[
+        MainboardNotificationPage(
+          counter: counter,
+          resetCounter: resetCounter,
+        )
+      ],
     );
   }
 }

@@ -4,10 +4,12 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class MainboardNotificationPage extends StatelessWidget {
   final int counter;
+  final void Function() resetCounter;
 
   const MainboardNotificationPage({
     Key key,
     @required this.counter,
+    @required this.resetCounter,
   }) : super(key: key);
 
   @override
@@ -30,9 +32,7 @@ class MainboardNotificationPage extends StatelessWidget {
               fontWeight: FontWeight.normal),
         ),
       ),
-      onPressed: () async => {
-        Modular.to.pushNamed('/mainboard/notification'),
-      },
+      onPressed: () async => _forwardNotification(),
     );
   }
 
@@ -44,5 +44,10 @@ class MainboardNotificationPage extends StatelessWidget {
     }
 
     return null;
+  }
+
+  void _forwardNotification() {
+    resetCounter();
+    Modular.to.pushNamed('/mainboard/notification');
   }
 }
