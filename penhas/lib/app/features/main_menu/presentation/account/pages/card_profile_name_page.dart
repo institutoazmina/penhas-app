@@ -33,7 +33,7 @@ class CardProfileNamePage extends StatelessWidget {
         child: Column(
           children: [
             CardProfileHeaderEditPage(
-              title: "Nome",
+              title: "Apelido",
               onEditAction: () => showModal(context: context),
             ),
             Padding(
