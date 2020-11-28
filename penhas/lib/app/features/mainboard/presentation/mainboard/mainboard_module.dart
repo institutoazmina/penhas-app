@@ -241,6 +241,7 @@ class MainboardModule extends ChildModule {
         ),
         Bind(
             (i) => AccountDeleteController(
+                appConfiguration: i.get<IAppConfiguration>(),
                 profileRepository: i.get<IUserProfileRepository>()),
             singleton: false),
       ];
@@ -402,6 +403,7 @@ class MainboardModule extends ChildModule {
         Bind<IUserProfileRepository>(
           (i) => UserProfileRepository(
             apiProvider: i.get<IApiProvider>(),
+            serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         )
       ];

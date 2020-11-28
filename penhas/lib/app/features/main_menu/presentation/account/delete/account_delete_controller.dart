@@ -1,8 +1,10 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/main_menu/domain/repositories/user_profile_repository.dart';
@@ -12,14 +14,18 @@ part 'account_delete_controller.g.dart';
 
 class AccountDeleteController extends _AccountDeleteControllerBase
     with _$AccountDeleteController {
-  AccountDeleteController({@required IUserProfileRepository profileRepository})
-      : super(profileRepository);
+  AccountDeleteController({
+    @required IAppConfiguration appConfiguration,
+    @required IUserProfileRepository profileRepository,
+  }) : super(profileRepository, appConfiguration);
 }
 
 abstract class _AccountDeleteControllerBase with Store, MapFailureMessage {
+  final IAppConfiguration _appConfiguration;
   final IUserProfileRepository _profileRepository;
 
-  _AccountDeleteControllerBase(this._profileRepository) {
+  _AccountDeleteControllerBase(
+      this._profileRepository, this._appConfiguration) {
     loadPage();
   }
 
@@ -86,8 +92,8 @@ extension _PrivateMethods on _AccountDeleteControllerBase {
   }
 
   void handleDeleteSession(ValidField session) {
-    // fazer um logout e redirecionar para o splash
-    print("Ola mundo!");
+    _appConfiguration.logout();
+    Modular.to.pushReplacementNamed('/');
   }
 
   PageProgressState monitorProgress(ObservableFuture<Object> observable) {
