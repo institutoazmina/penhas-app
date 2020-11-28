@@ -216,7 +216,7 @@ class MainboardModule extends ChildModule {
         ),
         ModularRouter(
           '/menu/account_preference',
-          child: (context, args) => AccountPreference(),
+          child: (context, args) => AccountPreferencePage(),
           transition: TransitionType.rightToLeft,
         ),
         ModularRouter(
