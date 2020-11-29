@@ -85,6 +85,21 @@ mixin _$FeedController on _FeedControllerBase, Store {
     });
   }
 
+  final _$securityStateAtom = Atom(name: '_FeedControllerBase.securityState');
+
+  @override
+  FeedSecurityState get securityState {
+    _$securityStateAtom.reportRead();
+    return super.securityState;
+  }
+
+  @override
+  set securityState(FeedSecurityState value) {
+    _$securityStateAtom.reportWrite(value, super.securityState, () {
+      super.securityState = value;
+    });
+  }
+
   final _$fetchNextPageAsyncAction =
       AsyncAction('_FeedControllerBase.fetchNextPage');
 
@@ -127,6 +142,7 @@ mixin _$FeedController on _FeedControllerBase, Store {
     return '''
 listTweets: ${listTweets},
 errorMessage: ${errorMessage},
+securityState: ${securityState},
 reloadState: ${reloadState},
 fetchState: ${fetchState}
     ''';

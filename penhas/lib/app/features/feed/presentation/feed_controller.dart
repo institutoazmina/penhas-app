@@ -5,25 +5,31 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/managers/modules_sevices.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
+import 'package:penhas/app/features/feed/domain/states/feed_security_state.dart';
 import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
+import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
 
 part 'feed_controller.g.dart';
 
 class FeedController extends _FeedControllerBase with _$FeedController {
   FeedController({
     @required FeedUseCases useCase,
-  }) : super(useCase);
+    @required IAppModulesServices modulesServices,
+  }) : super(useCase, modulesServices);
 }
 
 abstract class _FeedControllerBase with Store, MapFailureMessage {
   final FeedUseCases useCase;
   StreamSubscription _streamCache;
+  final IAppModulesServices _modulesServices;
 
-  _FeedControllerBase(this.useCase) {
+  _FeedControllerBase(this.useCase, this._modulesServices) {
     _registerDataSource();
+    _setupSecurityState();
   }
 
   @observable
@@ -37,6 +43,9 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
 
   @observable
   String errorMessage;
+
+  @observable
+  FeedSecurityState securityState = FeedSecurityState.disable();
 
   @computed
   PageProgressState get reloadState {
@@ -124,6 +133,14 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
   _registerDataSource() {
     _streamCache = useCase.dataSource
         .listen((cache) => listTweets = cache.tweets.asObservable());
+  }
+
+  Future<void> _setupSecurityState() async {
+    securityState =
+        await SecurityModeActionFeature(modulesServices: _modulesServices)
+                .isEnabled
+            ? FeedSecurityState.enable()
+            : FeedSecurityState.disable();
   }
 
   _cancelDataSource() {

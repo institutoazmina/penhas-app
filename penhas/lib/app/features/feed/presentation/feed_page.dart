@@ -5,14 +5,16 @@ import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/tweet.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_group_news.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_related_news.dart';
-import 'package:penhas/app/shared/design_system/button_shape.dart';
+import 'package:penhas/app/features/feed/domain/states/feed_security_state.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
 import 'feed_controller.dart';
+import 'pages/feed_category_filter.dart';
+import 'pages/feed_tags_filter.dart';
+import 'stores/tweet_controller.dart';
+import 'tweet/tweet.dart';
+import 'tweet/widgets/tweet_group_news.dart';
+import 'tweet/widgets/tweet_related_news.dart';
 
 class FeedPage extends StatefulWidget {
   final String title;
@@ -67,7 +69,13 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      body: PageProgressIndicator(
+      body: _bodyBuilder(),
+    );
+  }
+
+  Observer _bodyBuilder() {
+    return Observer(builder: (_) {
+      return PageProgressIndicator(
         progressState: _currentState,
         progressMessage: 'Aplicando os filtros',
         child: SizedBox.expand(
@@ -77,27 +85,19 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
               child: Column(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                    child: _buildFiltersButton(),
+                    padding: EdgeInsets.symmetric(vertical: 20.0),
+                    child: _buildFiltersButton(controller.securityState),
                   ),
                   Expanded(
-                    child: _buildFeedObserver(),
+                    child: _buildRefreshIndicator(),
                   ),
                 ],
               ),
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Observer _buildFeedObserver() {
-    return Observer(
-      builder: (_) {
-        return _buildRefreshIndicator();
-      },
-    );
+      );
+    });
   }
 
   RefreshIndicator _buildRefreshIndicator() {
@@ -162,66 +162,21 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
     return true;
   }
 
-  Row _buildFiltersButton() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        SizedBox(
-          height: 32.0,
-          width: 140.0,
-          child: RaisedButton(
-            elevation: 0.0,
-            onPressed: () async {
-              Modular.to.pushNamed('/mainboard/category').then((reloadFeed) {
-                if (reloadFeed ?? false) {
-                  controller.reloadFeed();
-                }
-              });
-            },
-            color: DesignSystemColors.white,
-            shape: kButtonShapeOutlinePurple,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Text('Categorias', style: kTextStyleFeedCategoryButtonLabel),
-                Icon(
-                  Icons.arrow_drop_down,
-                  color: DesignSystemColors.ligthPurple,
-                  size: 32.0,
-                ),
-              ],
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 32.0,
-          width: 160.0,
-          child: RaisedButton(
-            elevation: 0.0,
-            onPressed: () async {
-              Modular.to.pushNamed('/mainboard/tags').then((reloadFeed) {
-                if (reloadFeed ?? false) {
-                  controller.reloadFeed();
-                }
-              });
-            },
-            color: DesignSystemColors.white,
-            shape: kButtonShapeOutlinePurple,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Icon(
-                  Icons.filter_list,
-                  color: DesignSystemColors.ligthPurple,
-                  size: 22.0,
-                ),
-                Text('Filtros por temas',
-                    style: kTextStyleFeedCategoryButtonLabel),
-              ],
-            ),
-          ),
-        ),
-      ],
+  Widget _buildFiltersButton(FeedSecurityState securityState) {
+    return securityState.when(
+      enable: () => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          FeedCategoryFilter(reloadFeed: controller.reloadFeed),
+          FeedTagsFilter(reloadFeed: controller.reloadFeed),
+        ],
+      ),
+      disable: () => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          FeedTagsFilter(reloadFeed: controller.reloadFeed),
+        ],
+      ),
     );
   }
 
