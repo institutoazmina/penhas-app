@@ -79,7 +79,8 @@ abstract class _QuizControllerBase with Store {
     switch (messageRemoved.type) {
       case QuizMessageType.yesno:
         return _replyYesNoUserInteraction(reply, messageRemoved);
-      case QuizMessageType.showTutorial:
+      case QuizMessageType.showHelpTutorial:
+      case QuizMessageType.showStealthTutorial:
         return _replyButtonTutorialUserInteraction(reply, messageRemoved);
       case QuizMessageType.multipleChoices:
         return _replyMultiChoicesInteracton(reply, messageRemoved);

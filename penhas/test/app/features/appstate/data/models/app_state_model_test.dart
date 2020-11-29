@@ -126,7 +126,7 @@ void main() {
         QuizMessageEntity(
           content:
               "Também recomendamos que você utilize o PenhaS com o <b>Modo Camuflado ativado<\/b>. Isso criará um disfarce para o app. Veja como funciona",
-          type: QuizMessageType.showTutorial,
+          type: QuizMessageType.showStealthTutorial,
           action: 'botao_tela_modo_camuflado',
           buttonLabel: 'Ver',
           ref: 'BT6',

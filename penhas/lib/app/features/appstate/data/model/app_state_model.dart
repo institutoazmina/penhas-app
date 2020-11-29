@@ -118,7 +118,13 @@ class AppStateModel extends AppStateEntity {
   static QuizMessageType _mapMessageType(Map<String, Object> message) {
     QuizMessageType type = QuizMessageType.from[message['type']];
     if (message['action'] == 'botao_tela_modo_camuflado') {
-      type = QuizMessageType.showTutorial;
+      type = QuizMessageType.showStealthTutorial;
+    }
+    if (message['action'] == 'botao_tela_socorro') {
+      type = QuizMessageType.showHelpTutorial;
+    }
+    if (message['action'] == 'reload') {
+      type = QuizMessageType.forceReload;
     }
 
     return type;

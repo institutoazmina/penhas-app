@@ -6,7 +6,7 @@ import 'package:penhas/app/core/pages/tutorial_scale_route.dart';
 import 'package:penhas/app/core/states/security_toggle_state.dart';
 import 'package:penhas/app/features/main_menu/presentation/pages/penhas_drawer_header_page.dart';
 import 'package:penhas/app/features/main_menu/presentation/pages/penhas_drawer_toogle_page.dart';
-import 'package:penhas/app/features/quiz/presentation/tutorial/quiz_tutorial_page.dart';
+import 'package:penhas/app/features/quiz/presentation/tutorial/stealth_mode_tutorial_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_controller.dart';
@@ -66,7 +66,7 @@ class _PenhasDrawerPageState
                         onPressed: () async {
                           await Navigator.push(
                             context,
-                            TutorialScaleRoute(page: QuizTutorialPage()),
+                            TutorialScaleRoute(page: StealthModeTutorialPage()),
                           );
                         },
                         child: Text("Como funciona",

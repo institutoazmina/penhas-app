@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:penhas/app/core/pages/tutorial_page_view_widget.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-class QuizTutorialPage extends StatefulWidget {
-  QuizTutorialPage({Key key}) : super(key: key);
+class StealthModeTutorialPage extends StatefulWidget {
+  StealthModeTutorialPage({Key key}) : super(key: key);
 
   @override
-  _QuizTutorialPageState createState() => _QuizTutorialPageState();
+  _StealthModeTutorialPageState createState() =>
+      _StealthModeTutorialPageState();
 }
 
-class _QuizTutorialPageState extends State<QuizTutorialPage> {
+class _StealthModeTutorialPageState extends State<StealthModeTutorialPage> {
   List<TutorialPageViewWidget> _contentPageView = [
     TutorialPageViewWidget(
       title: 'Garanta sua privacidade',

@@ -7,7 +7,9 @@ enum QuizMessageType {
   button,
   yesno,
   displayText,
-  showTutorial,
+  showStealthTutorial,
+  showHelpTutorial,
+  forceReload,
   multipleChoices,
   displayTextResponse,
 }
@@ -20,7 +22,7 @@ extension QuizMessageTypeExtension on QuizMessageType {
         type = QuizMessageType.button;
         break;
       case 'show_tutorial':
-        type = QuizMessageType.showTutorial;
+        type = QuizMessageType.showStealthTutorial;
         break;
       case 'yesno':
         type = QuizMessageType.yesno;

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
-import 'package:penhas/app/features/quiz/presentation/quiz/quiz_button_yes_no_widget.dart';
-import 'package:penhas/app/features/quiz/presentation/quiz/quiz_multiple_choices_widget.dart';
-import 'package:penhas/app/features/quiz/presentation/quiz/quiz_show_tutorial_widget.dart';
-import 'package:penhas/app/features/quiz/presentation/quiz/quiz_single_button.dart';
-import 'package:penhas/app/features/quiz/presentation/quiz/quiz_typedef.dart';
+
+import 'quiz_button_yes_no_widget.dart';
+import 'quiz_multiple_choices_widget.dart';
+import 'quiz_show_help_tutorial_widget.dart';
+import 'quiz_show_stealth_tutorial_widget.dart';
+import 'quiz_single_button.dart';
+import 'quiz_typedef.dart';
 
 class QuizUserReplayWidget extends StatelessWidget {
   final QuizMessageEntity message;
@@ -24,8 +26,14 @@ class QuizUserReplayWidget extends StatelessWidget {
           reference: message.ref,
           onPressed: onActionReplay,
         );
-      case QuizMessageType.showTutorial:
-        return QuizShowTutorialWidget(
+      case QuizMessageType.showHelpTutorial:
+        return QuizShowHelpTutorialWidget(
+          reference: message.ref,
+          onPressed: onActionReplay,
+          buttonLabel: message.buttonLabel,
+        );
+      case QuizMessageType.showStealthTutorial:
+        return QuizShowStealthTutorialWidget(
           reference: message.ref,
           onPressed: onActionReplay,
           buttonLabel: message.buttonLabel,
@@ -43,6 +51,7 @@ class QuizUserReplayWidget extends StatelessWidget {
           onPressed: onActionReplay,
         );
       case QuizMessageType.from:
+      case QuizMessageType.forceReload:
       case QuizMessageType.displayText:
       case QuizMessageType.displayTextResponse:
         return Container();

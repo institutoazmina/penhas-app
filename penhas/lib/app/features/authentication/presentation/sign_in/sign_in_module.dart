@@ -173,6 +173,7 @@ class SignInModule extends ChildModule {
           (i) => SignInAnonymousController(
               repository: i.get<IAuthenticationRepository>(),
               userProfileStore: i.get<IUserProfileStore>()),
+          singleton: false,
         )
       ];
 
@@ -183,6 +184,7 @@ class SignInModule extends ChildModule {
             userProfileStore: i.get<IUserProfileStore>(),
             securityAction: i.get<StealthSecurityAction>(),
           ),
+          singleton: false,
         ),
         Bind(
           (i) => StealthSecurityAction(
