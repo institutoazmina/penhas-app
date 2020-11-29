@@ -23,21 +23,9 @@ class TweetTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Row(
-        children: <Widget>[
-          Expanded(
-              child: Text(tweet.userName, style: kTextStyleFeedTweetTitle),
-              flex: 2),
-          isDetail ? _buildDetailTime() : _buildTime(),
-          controller == null
-              ? Container()
-              : IconButton(
-                  icon: Icon(Icons.more_vert),
-                  onPressed: () => _showTweetAction()),
-        ],
-      ),
-    );
+    return tweet.anonymous
+        ? _showAnonymousHeader()
+        : _showAuthenticatedHeader();
   }
 
   Widget _buildTime() {
@@ -91,7 +79,7 @@ class TweetTitle extends StatelessWidget {
               topRight: Radius.circular(20),
             ),
           ),
-          height: tweet.meta.owner ? 250 : 200,
+          height: 150,
           child: Column(
             children: <Widget>[_buildDivider(context), ..._buildAction()],
           ),
@@ -114,29 +102,31 @@ class TweetTitle extends StatelessWidget {
   }
 
   List<Widget> _buildAction() {
-    List<Widget> actions = [
-      ListTile(
-        leading: SvgPicture.asset(
-            'assets/images/svg/tweet_action/tweet_action_chat.svg'),
-        title: Text('Conversar'),
-        onTap: () {},
-      ),
-      ListTile(
-        leading: SvgPicture.asset(
-            'assets/images/svg/tweet_action/tweet_action_block.svg'),
-        title: Text('Bloquear'),
-        onTap: () {},
-      ),
-      ListTile(
-        leading: SvgPicture.asset(
-            'assets/images/svg/tweet_action/tweet_action_report.svg'),
-        title: Text('Denunciar'),
-        onTap: () {
-          Navigator.of(_context).pop();
-          controller.report(tweet);
-        },
-      )
-    ];
+    List<Widget> actions = List<Widget>();
+    if (!tweet.anonymous) {
+      actions.add(
+        ListTile(
+          leading: SvgPicture.asset(
+              'assets/images/svg/tweet_action/tweet_action_chat.svg'),
+          title: Text('Conversar'),
+          onTap: () {},
+        ),
+      );
+    }
+
+    if (!tweet.meta.owner) {
+      actions.add(
+        ListTile(
+          leading: SvgPicture.asset(
+              'assets/images/svg/tweet_action/tweet_action_report.svg'),
+          title: Text('Denunciar'),
+          onTap: () {
+            Navigator.of(_context).pop();
+            controller.report(tweet);
+          },
+        ),
+      );
+    }
 
     if (tweet.meta.owner) {
       actions.insert(
@@ -155,5 +145,42 @@ class TweetTitle extends StatelessWidget {
     }
 
     return actions;
+  }
+
+  Widget _showAnonymousHeader() {
+    return SizedBox(
+      child: Row(
+        children: <Widget>[
+          Expanded(
+              child: Text(tweet.userName, style: kTextStyleFeedTweetTitle),
+              flex: 2),
+          isDetail ? _buildDetailTime() : _buildTime(),
+          controller == null
+              ? Container()
+              : IconButton(
+                  icon: Icon(Icons.more_vert),
+                  onPressed: () => _showTweetAction()),
+        ],
+      ),
+    );
+  }
+
+  Widget _showAuthenticatedHeader() {
+    return SizedBox(
+      child: Row(
+        children: <Widget>[
+          Expanded(
+              child: Text(tweet.userName + " AuthenticatedHeader",
+                  style: kTextStyleFeedTweetTitle),
+              flex: 2),
+          isDetail ? _buildDetailTime() : _buildTime(),
+          controller == null
+              ? Container()
+              : IconButton(
+                  icon: Icon(Icons.more_vert),
+                  onPressed: () => _showTweetAction()),
+        ],
+      ),
+    );
   }
 }
