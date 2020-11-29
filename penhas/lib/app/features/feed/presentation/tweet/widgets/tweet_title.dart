@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
+import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -173,6 +175,7 @@ class TweetTitle extends StatelessWidget {
             color: Colors.transparent,
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
+            padding: EdgeInsets.zero,
           ),
         ),
         controller == null
@@ -195,6 +198,17 @@ class TweetTitle extends StatelessWidget {
   }
 
   void _showUserProfile() {
-    print("Ola mundo legal!");
+    final profile = UserDetailProfileEntity(
+        nickname: null,
+        avatar: null,
+        clientId: tweet.clientId,
+        miniBio: null,
+        skills: null,
+        activity: null);
+
+    Modular.to.pushNamed(
+      "/mainboard/users/profile",
+      arguments: profile,
+    );
   }
 }
