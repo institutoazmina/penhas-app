@@ -34,7 +34,9 @@ abstract class _UserProfileControllerBase with Store {
 
   @action
   Future<void> openChannel() async {
-    final channel = await _channelRepository.openChannel(_person);
+    final channel = await _channelRepository.openChannel(
+      _person.clientId.toString(),
+    );
 
     channel.fold(
       (failure) => handleFailure(failure),
@@ -45,7 +47,10 @@ abstract class _UserProfileControllerBase with Store {
 
 extension _UserProfileControllerBasePrivate on _UserProfileControllerBase {
   void handleSession(ChatChannelOpenEntity session) {
-    Modular.to.pushReplacementNamed("/mainboard/chat", arguments: session);
+    Modular.to.pushReplacementNamed(
+      "/mainboard/chat",
+      arguments: session,
+    );
   }
 
   void handleFailure(Failure failure) {

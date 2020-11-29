@@ -111,7 +111,7 @@ class TweetTitle extends StatelessWidget {
           leading: SvgPicture.asset(
               'assets/images/svg/tweet_action/tweet_action_chat.svg'),
           title: Text('Conversar'),
-          onTap: () {},
+          onTap: () => _showUserChat(),
         ),
       );
     }
@@ -199,6 +199,15 @@ class TweetTitle extends StatelessWidget {
 
   void _showUserProfile() {
     final routeOption = FeedRouterType.profile(tweet.clientId);
+
+    Modular.to.pushNamed(
+      "/mainboard/tweet/perfil_chat",
+      arguments: routeOption,
+    );
+  }
+
+  void _showUserChat() {
+    final routeOption = FeedRouterType.chat(tweet.clientId);
 
     Modular.to.pushNamed(
       "/mainboard/tweet/perfil_chat",

@@ -18,8 +18,7 @@ import 'package:penhas/app/features/users/domain/entities/user_detail_profile_en
 
 abstract class IChatChannelRepository {
   Future<Either<Failure, ChatChannelAvailableEntity>> listChannel();
-  Future<Either<Failure, ChatChannelOpenEntity>> openChannel(
-      UserDetailProfileEntity user);
+  Future<Either<Failure, ChatChannelOpenEntity>> openChannel(String clientId);
   Future<Either<Failure, ChatChannelSessionEntity>> getMessages(
       ChatChannelRequest option);
   Future<Either<Failure, ChatSentMessageResponseEntity>> sentMessage(
@@ -49,11 +48,11 @@ class ChatChannelRepository implements IChatChannelRepository {
 
   @override
   Future<Either<Failure, ChatChannelOpenEntity>> openChannel(
-      UserDetailProfileEntity user) async {
+      String clientId) async {
     final endPoint = "/me/chats-session";
     final parameters = {
       'prefetch': '1',
-      'cliente_id': "${user.clientId}",
+      'cliente_id': clientId,
     };
 
     try {

@@ -10,6 +10,8 @@ import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
+import 'package:penhas/app/features/chat/domain/usecases/chat_channel_usecase.dart';
+import 'package:penhas/app/features/chat/presentation/chat/chat_channel_controller.dart';
 import 'package:penhas/app/features/feed/presentation/routing_perfil_chat/feed_routing_perfil_chat_controller.dart';
 import 'package:penhas/app/features/feed/presentation/routing_perfil_chat/feed_routing_perfil_chat_page.dart';
 import 'package:penhas/app/features/filters/domain/repositories/filter_skill_repository.dart';
@@ -81,6 +83,7 @@ class MainboardModule extends ChildModule {
         ...audioServicesBinds,
         ...notificationBinds,
         ...menuBind,
+        ...chatBinds,
         Bind<MainboardStore>((i) =>
             MainboardStore(modulesServices: i.get<IAppModulesServices>())),
         Bind(
@@ -291,6 +294,32 @@ class MainboardModule extends ChildModule {
           child: (context, args) => ChatPage(),
           transition: TransitionType.rightToLeft,
         ),
+        ModularRouter(
+          '/chat_from_feed',
+          child: (context, args) => ChatPage(),
+          transition: TransitionType.noTransition,
+        ),
+      ];
+
+  List<Bind> get chatBinds => [
+        Bind<IChatChannelRepository>(
+          (i) => ChatChannelRepository(
+            apiProvider: i.get<IApiProvider>(),
+          ),
+        ),
+        Bind(
+          (i) => ChatChannelController(
+            useCase: i.get<ChatChannelUseCase>(),
+          ),
+          singleton: false,
+        ),
+        Bind<ChatChannelUseCase>(
+          (i) => ChatChannelUseCase(
+            session: i.args.data,
+            channelRepository: i.get<IChatChannelRepository>(),
+          ),
+          singleton: false,
+        )
       ];
 
   List<Bind> get audioServicesBinds => [
@@ -342,11 +371,6 @@ class MainboardModule extends ChildModule {
         ),
         Bind<IUsersRepository>(
           (i) => UsersRepository(
-            apiProvider: i.get<IApiProvider>(),
-          ),
-        ),
-        Bind<IChatChannelRepository>(
-          (i) => ChatChannelRepository(
             apiProvider: i.get<IApiProvider>(),
           ),
         ),
