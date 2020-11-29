@@ -69,18 +69,18 @@ class TweetController implements ITweetController {
           ),
           actions: <Widget>[
             FlatButton(
+              child: Text('Fechar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
               child: Text('Enviar'),
               onPressed: () async {
                 await _useCase.report(tweet, _controller.text);
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
-              child: Text('Fechar'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            )
           ],
         );
       },
