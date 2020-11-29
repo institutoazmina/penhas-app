@@ -84,13 +84,7 @@ class _ReplyTweetPageState
                         children: <Widget>[
                           Expanded(
                             flex: 1,
-                            child: TweetAvatar(
-                              avatar: SvgPicture.network(
-                                controller.tweet.avatar,
-                                height: 36.0,
-                                color: DesignSystemColors.darkIndigo,
-                              ),
-                            ),
+                            child: TweetAvatar(tweet: controller.tweet),
                           ),
                           SizedBox(
                             width: 6.0,

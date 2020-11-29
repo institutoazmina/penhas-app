@@ -153,13 +153,7 @@ class _MainTweet extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Expanded(
-                  child: TweetAvatar(
-                    avatar: SvgPicture.network(
-                      tweet.avatar,
-                      color: DesignSystemColors.darkIndigo,
-                      height: 36,
-                    ),
-                  ),
+                  child: TweetAvatar(tweet: tweet),
                   flex: 1,
                 ),
                 SizedBox(width: 6.0),
