@@ -99,7 +99,9 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
   }
 
   Widget buildContent(UserDetailProfileEntity user) {
-    final List<String> skills = user.skills.split(",");
+    List<String> skills = user.skills.split(",");
+    skills.removeWhere((e) => e.isEmpty);
+
     return Container(
       color: DesignSystemColors.white,
       child: Padding(
