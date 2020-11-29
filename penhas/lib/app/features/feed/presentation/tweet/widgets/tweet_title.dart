@@ -167,15 +167,12 @@ class TweetTitle extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
-          child: GestureDetector(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(tweet.userName, style: kTextStyleFeedTweetTitle),
-                isDetail ? _buildDetailTime() : _buildTime(),
-              ],
-            ),
-            onTap: () => _showUserProfile(),
+          child: FlatButton(
+            child: _buttonTitle(),
+            onPressed: () => _showUserProfile(),
+            color: Colors.transparent,
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
           ),
         ),
         controller == null
@@ -183,6 +180,16 @@ class TweetTitle extends StatelessWidget {
             : IconButton(
                 icon: Icon(Icons.more_vert),
                 onPressed: () => _showTweetAction()),
+      ],
+    );
+  }
+
+  Widget _buttonTitle() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(tweet.userName, style: kTextStyleFeedTweetTitle),
+        isDetail ? _buildDetailTime() : _buildTime(),
       ],
     );
   }
