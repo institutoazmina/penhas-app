@@ -50,31 +50,7 @@ class _PenhasDrawerPageState
                   controller.showSecurityOptions,
                   controller.stealthModeState,
                 ),
-                Container(
-                  margin: EdgeInsets.only(
-                    top: 16,
-                    left: 16,
-                    right: 16,
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        "O modo camuflado reduz a possibilidade d aut corporis consequatur voluptatem. Placeat et explicabo porro veritatis. Eum dicta error commodi.",
-                        style: securityContextTextStyle,
-                      ),
-                      FlatButton(
-                        onPressed: () async {
-                          await Navigator.push(
-                            context,
-                            TutorialScaleRoute(page: StealthModeTutorialPage()),
-                          );
-                        },
-                        child: Text("Como funciona",
-                            style: securityTutorialButtonTextStyle),
-                      )
-                    ],
-                  ),
-                ),
+                _buildStealthModeNotice(controller.showSecurityOptions),
                 _buildItemList(
                   title: 'Informações pessoais',
                   icon: SvgPicture.asset(
@@ -140,6 +116,36 @@ class _PenhasDrawerPageState
         ),
       )),
     );
+  }
+
+  _buildStealthModeNotice(bool isVisible) {
+    return !isVisible
+        ? Container()
+        : Container(
+            margin: EdgeInsets.only(
+              top: 16,
+              left: 16,
+              right: 16,
+            ),
+            child: Column(
+              children: [
+                Text(
+                  "Indique que esta em situação de violência para ficar anônima, e utilize o Modo camuflado para aplicar um disfarce de app de signo para esconder o verdadeiro conteúdo do PenhaS.",
+                  style: securityContextTextStyle,
+                ),
+                FlatButton(
+                  onPressed: () async {
+                    Navigator.push(
+                      context,
+                      TutorialScaleRoute(page: StealthModeTutorialPage()),
+                    );
+                  },
+                  child: Text("Como funciona",
+                      style: securityTutorialButtonTextStyle),
+                )
+              ],
+            ),
+          );
   }
 
   Widget _buildAvatar(String avatarPath) {
