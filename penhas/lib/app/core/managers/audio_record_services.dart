@@ -155,7 +155,8 @@ extension _AudioRecordServices on AudioRecordServices {
   Future<void> _setupRecordEnviroment() async {
     await _releaseAudioSession();
     await _recorder.openAudioSession(
-      focus: AudioFocus.requestFocusAndDuckOthers,
+      focus: AudioFocus.requestFocusAndKeepOthers,
+      category: SessionCategory.record,
     );
 
     _currentDuration = Duration(
