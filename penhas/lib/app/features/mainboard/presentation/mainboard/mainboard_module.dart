@@ -9,6 +9,9 @@ import 'package:penhas/app/core/managers/user_profile_store.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
+import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
+import 'package:penhas/app/features/feed/presentation/routing_perfil_chat/feed_routing_perfil_chat_controller.dart';
+import 'package:penhas/app/features/feed/presentation/routing_perfil_chat/feed_routing_perfil_chat_page.dart';
 import 'package:penhas/app/features/filters/domain/repositories/filter_skill_repository.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/delete/account_delete_controller.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/my_profile/profile_edit_controller.dart';
@@ -65,6 +68,7 @@ import 'package:penhas/app/features/support_center/presentation/add/support_cent
 import 'package:penhas/app/features/support_center/presentation/list/support_center_list_page.dart';
 import 'package:penhas/app/features/support_center/presentation/location/support_center_location_page.dart';
 import 'package:penhas/app/features/support_center/presentation/show/support_center_show_page.dart';
+import 'package:penhas/app/features/users/data/repositories/users_repository.dart';
 import 'package:penhas/app/features/users/domain/presentation/user_profile_module.dart';
 
 class MainboardModule extends ChildModule {
@@ -139,7 +143,12 @@ class MainboardModule extends ChildModule {
           '/tags',
           child: (context, args) => FilterTweetPage(),
           transition: TransitionType.rightToLeft,
-        )
+        ),
+        ModularRouter(
+          '/tweet/perfil_chat',
+          child: (context, args) => FeedRoutingPerfilChatPage(),
+          transition: TransitionType.rightToLeft,
+        ),
       ];
 
   List<ModularRouter> get helpCenter => [
@@ -331,6 +340,24 @@ class MainboardModule extends ChildModule {
           ),
           singleton: true,
         ),
+        Bind<IUsersRepository>(
+          (i) => UsersRepository(
+            apiProvider: i.get<IApiProvider>(),
+          ),
+        ),
+        Bind<IChatChannelRepository>(
+          (i) => ChatChannelRepository(
+            apiProvider: i.get<IApiProvider>(),
+          ),
+        ),
+        Bind(
+          (i) => FeedRoutingPerfilChatController(
+            usersRepository: i.get<IUsersRepository>(),
+            channelRepository: i.get<IChatChannelRepository>(),
+            routerOption: i.args.data,
+          ),
+          singleton: true,
+        )
       ];
 
   List<Bind> get interfaceBinds => [
