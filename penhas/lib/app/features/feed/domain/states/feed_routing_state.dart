@@ -4,8 +4,7 @@ part 'feed_routing_state.freezed.dart';
 
 @freezed
 abstract class FeedRoutingState with _$FeedRoutingState {
-  const factory FeedRoutingState.initial() = _Initial;
-  // const factory FeedRoutingState.loaded(UserDetailProfileEntity person) =
-  //     _Loaded;
-  // const factory FeedRoutingState.error(String message) = _ErrorDetails;
+  const factory FeedRoutingState.initial(String title) = _Initial;
+  const factory FeedRoutingState.error(String title, String message) =
+      _ErrorDetails;
 }

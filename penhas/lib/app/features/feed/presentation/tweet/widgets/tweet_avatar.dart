@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 
 class TweetAvatar extends StatelessWidget {
-  final Widget avatar;
+  final TweetEntity tweet;
   const TweetAvatar({
     Key key,
-    @required this.avatar,
-  })  : assert(avatar != null),
+    @required this.tweet,
+  })  : assert(tweet != null),
         super(key: key);
 
   @override

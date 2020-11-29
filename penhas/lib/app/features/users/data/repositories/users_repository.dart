@@ -8,14 +8,11 @@ import 'package:penhas/app/features/authentication/presentation/shared/map_excep
 import 'package:penhas/app/features/users/data/models/user_detail_model.dart';
 import 'package:penhas/app/features/users/data/models/user_search_session_model.dart';
 import 'package:penhas/app/features/users/domain/entities/user_detail_entity.dart';
-import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
 import 'package:penhas/app/features/users/domain/entities/user_search_options.dart';
 import 'package:penhas/app/features/users/domain/entities/user_search_session_entity.dart';
 
 abstract class IUsersRepository {
-  Future<Either<Failure, UserDetailEntity>> profileDetail(
-    UserDetailProfileEntity profile,
-  );
+  Future<Either<Failure, UserDetailEntity>> profileDetail(String clientId);
   Future<Either<Failure, UserSearchSessionEntity>> search(
     UserSearchOptions option,
   );
@@ -30,10 +27,9 @@ class UsersRepository implements IUsersRepository {
 
   @override
   Future<Either<Failure, UserDetailEntity>> profileDetail(
-    UserDetailProfileEntity profile,
-  ) async {
+      String clientId) async {
     final endPoint = "/profile";
-    final parameters = {"cliente_id": profile.clientId?.toString()};
+    final parameters = {"cliente_id": clientId};
 
     try {
       final response = await _apiProvider

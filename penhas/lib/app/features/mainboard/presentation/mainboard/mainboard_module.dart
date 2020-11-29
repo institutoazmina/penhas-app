@@ -354,7 +354,7 @@ class MainboardModule extends ChildModule {
           (i) => FeedRoutingPerfilChatController(
             usersRepository: i.get<IUsersRepository>(),
             channelRepository: i.get<IChatChannelRepository>(),
-            routerOption: i.args.data,
+            routerType: i.args.data,
           ),
           singleton: true,
         )

@@ -10,10 +10,34 @@ part of 'feed_routing_perfil_chat_controller.dart';
 
 mixin _$FeedRoutingPerfilChatController
     on _FeedRoutingPerfilChatControllerBase, Store {
+  final _$routingStateAtom =
+      Atom(name: '_FeedRoutingPerfilChatControllerBase.routingState');
+
+  @override
+  FeedRoutingState get routingState {
+    _$routingStateAtom.reportRead();
+    return super.routingState;
+  }
+
+  @override
+  set routingState(FeedRoutingState value) {
+    _$routingStateAtom.reportWrite(value, super.routingState, () {
+      super.routingState = value;
+    });
+  }
+
+  final _$retryAsyncAction =
+      AsyncAction('_FeedRoutingPerfilChatControllerBase.retry');
+
+  @override
+  Future<void> retry() {
+    return _$retryAsyncAction.run(() => super.retry());
+  }
+
   @override
   String toString() {
     return '''
-
+routingState: ${routingState}
     ''';
   }
 }

@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_router_option.dart';
+import 'package:penhas/app/features/feed/domain/states/feed_router_type.dart';
 import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
-import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -199,9 +198,7 @@ class TweetTitle extends StatelessWidget {
   }
 
   void _showUserProfile() {
-    final routeOption = TweetRouterOption(
-        clientId: tweet.clientId.toString(),
-        routerOption: TweetRouterOptionEnum.profile);
+    final routeOption = FeedRouterType.profile(tweet.clientId);
 
     Modular.to.pushNamed(
       "/mainboard/tweet/perfil_chat",
