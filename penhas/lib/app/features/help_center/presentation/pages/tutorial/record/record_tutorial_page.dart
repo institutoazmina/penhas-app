@@ -39,18 +39,18 @@ class _RecordTutorialPageState extends State<RecordTutorialPage> {
         image:
             AssetImage('assets/images/tutorial_record_3/tutorial_record_3.png'),
         width: 270,
-        fit: BoxFit.fitWidth,
+        fit: BoxFit.fitHeight,
         alignment: FractionalOffset.topCenter,
       ),
     ),
     TutorialPageViewWidget(
       description:
-          'Os áudios gravados no acionamento do botão de pânico ficam disponíveis em "Minhas gravações". Quando estiver segura, decida entre salvar ou descartar essas gravações.',
+          'Os áudios gravados ficam disponíveis em “Minhas gravações”. Uma gravação pode ser descartada a qualquer momento através da opção “Apagar”.',
       bodyWidget: Image(
         image:
             AssetImage('assets/images/tutorial_record_4/tutorial_record_4.png'),
         width: 270,
-        fit: BoxFit.fitWidth,
+        fit: BoxFit.fitHeight,
         alignment: FractionalOffset.topCenter,
       ),
     )

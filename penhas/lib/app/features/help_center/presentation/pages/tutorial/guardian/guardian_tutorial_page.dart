@@ -21,7 +21,7 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
     ),
     TutorialPageViewWidget(
       description:
-          'Em situações de emergência, abra a app, clique e segure no símbolo do seu signo para acionar o botão de pânico. Isso enviará um alerta para seus guardiões e durante 15 minutos um áudio será gravado.',
+          'Em situações de emergência, abra o app, clique e segure no símbolo do seu signo para acionar o botão de pânico. Isso enviará um alerta para seus guardiões e durante 15 minutos um áudio será gravado.',
       bodyWidget: Image(
         image: AssetImage(
             'assets/images/tutorial_guardian_2/tutorial_guardian_2.png'),
