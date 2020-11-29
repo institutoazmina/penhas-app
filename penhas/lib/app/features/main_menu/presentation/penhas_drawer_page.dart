@@ -108,7 +108,7 @@ class _PenhasDrawerPageState
                 _buildItemList(
                   title: 'Sobre o PenhaS',
                   icon: SvgPicture.asset(
-                    "assets/images/svg/drawer/trash.svg",
+                    "assets/images/svg/drawer/menu_penhas_icone.svg",
                     color: DesignSystemColors.darkIndigoThree,
                   ),
                   onPressed: () {

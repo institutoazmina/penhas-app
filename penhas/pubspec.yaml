@@ -160,6 +160,8 @@ flutter:
     - assets/images/support_center/map_marker/map_marker.png
     # Account
     - assets/images/svg/profile/edit.svg
+    # Menu
+    - assets/images/svg/drawer/menu_penhas_icone.svg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
