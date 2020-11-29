@@ -170,10 +170,17 @@ class TweetTitle extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Expanded(
-              child: Text(tweet.userName + " AuthenticatedHeader",
-                  style: kTextStyleFeedTweetTitle),
-              flex: 2),
-          isDetail ? _buildDetailTime() : _buildTime(),
+            child: GestureDetector(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(tweet.userName, style: kTextStyleFeedTweetTitle),
+                  isDetail ? _buildDetailTime() : _buildTime(),
+                ],
+              ),
+              onTap: () => _showUserProfile(),
+            ),
+          ),
           controller == null
               ? Container()
               : IconButton(
@@ -182,5 +189,9 @@ class TweetTitle extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _showUserProfile() {
+    print("Ola mundo legal!");
   }
 }
