@@ -23,6 +23,11 @@ class UserProfileModule extends ChildModule {
   @override
   List<ModularRouter> get routers => [
         ModularRouter('/profile', child: (_, args) => UserProfilePage()),
+        ModularRouter(
+          '/profile_from_feed',
+          child: (_, args) => UserProfilePage(),
+          transition: TransitionType.noTransition,
+        ),
       ];
 
   static Inject get to => Inject<UserProfileModule>.of();
