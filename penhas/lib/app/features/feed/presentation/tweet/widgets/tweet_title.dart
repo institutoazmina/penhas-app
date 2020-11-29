@@ -148,46 +148,42 @@ class TweetTitle extends StatelessWidget {
   }
 
   Widget _showAnonymousHeader() {
-    return SizedBox(
-      child: Row(
-        children: <Widget>[
-          Expanded(
-              child: Text(tweet.userName, style: kTextStyleFeedTweetTitle),
-              flex: 2),
-          isDetail ? _buildDetailTime() : _buildTime(),
-          controller == null
-              ? Container()
-              : IconButton(
-                  icon: Icon(Icons.more_vert),
-                  onPressed: () => _showTweetAction()),
-        ],
-      ),
+    return Row(
+      children: <Widget>[
+        Expanded(
+            child: Text(tweet.userName, style: kTextStyleFeedTweetTitle),
+            flex: 2),
+        isDetail ? _buildDetailTime() : _buildTime(),
+        controller == null
+            ? Container()
+            : IconButton(
+                icon: Icon(Icons.more_vert),
+                onPressed: () => _showTweetAction()),
+      ],
     );
   }
 
   Widget _showAuthenticatedHeader() {
-    return SizedBox(
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: GestureDetector(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(tweet.userName, style: kTextStyleFeedTweetTitle),
-                  isDetail ? _buildDetailTime() : _buildTime(),
-                ],
-              ),
-              onTap: () => _showUserProfile(),
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: GestureDetector(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(tweet.userName, style: kTextStyleFeedTweetTitle),
+                isDetail ? _buildDetailTime() : _buildTime(),
+              ],
             ),
+            onTap: () => _showUserProfile(),
           ),
-          controller == null
-              ? Container()
-              : IconButton(
-                  icon: Icon(Icons.more_vert),
-                  onPressed: () => _showTweetAction()),
-        ],
-      ),
+        ),
+        controller == null
+            ? Container()
+            : IconButton(
+                icon: Icon(Icons.more_vert),
+                onPressed: () => _showTweetAction()),
+      ],
     );
   }
 
