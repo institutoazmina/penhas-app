@@ -8,7 +8,7 @@ import 'map_validator_failure.dart';
 @immutable
 class Password extends Equatable with MapValidatorFailure {
   final Either<Failure, String> value;
-  static const _minLength = 6;
+  static const _minLength = 8;
   static const _maxLength = 200;
 
   String get rawValue => value.getOrElse(() => null);
@@ -39,7 +39,7 @@ class Password extends Equatable with MapValidatorFailure {
 
   @override
   String get mapFailure => value.fold(
-        (failure) => 'Senha precisa ter no mínimo 6 caracteres',
+        (failure) => 'Senha precisa ter no mínimo 8 caracteres',
         (r) => '',
       );
 }
