@@ -43,9 +43,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>A PenhaS precisa da tua autorização para enviar a tua localização as guardiãs quando o botão Alerta for acionado, ou encontrar o Ponto de Apoio mais próximo.</string>
+	<string>A PenhaS precisa da tua autorização para enviar a sua localização as guardiãs quando o botão Alerta for acionado, ou encontrar o Ponto de Apoio mais próximo.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>A PenhaS precisa da tua autorização para enviar a tua localização as guardiãs quando o botão Alerta for acionado, ou encontrar o Ponto de Apoio mais próximo.</string>
+	<string>A PenhaS precisa da tua autorização para enviar a sua localização as guardiãs quando o botão Alerta for acionado, ou encontrar o Ponto de Apoio mais próximo.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>A PenhaS precisa da tua autorização para gravar os áudios</string>
 	<key>UIBackgroundModes</key>

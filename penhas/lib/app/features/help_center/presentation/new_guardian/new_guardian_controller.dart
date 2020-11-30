@@ -172,7 +172,7 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
   void _actionAfterNotice() async {
     await _locationService
         .requestPermission(
-            title: 'O guardião precisa da tua localização',
+            title: 'O guardião precisa da sua localização',
             description: buildRequestPermissionContent())
         .then((value) => Modular.to.pop(true));
   }

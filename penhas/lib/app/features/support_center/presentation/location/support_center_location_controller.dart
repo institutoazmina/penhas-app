@@ -63,7 +63,7 @@ abstract class _SupportCenterLocationControllerBase
     await _supportCenterUseCase.askForLocationPermission(
       "Localização",
       Text(
-        "Permintindo que a PenhaS tenha acesso a tua localização, será possivel apresentar os pontos de apoio mais próximo da onde você está.",
+        "Permintindo que a PenhaS tenha acesso a sua localização, será possivel apresentar os pontos de apoio mais próximo da onde você está.",
         style: TextStyle(
           color: DesignSystemColors.darkIndigoThree,
           fontFamily: 'Lato',
