@@ -191,7 +191,7 @@ extension _WidgetBuilderPrivate on _NewGuardianControllerBase {
           ),
           TextSpan(
             text:
-                'seja autorizado a obter a sua localização. Esta informação será enviada para o Guardião quando o botão de ',
+                'seja autorizado a obter a sua localização. Esta informação será enviada para o Guardião quando o botão ',
             style: kTextStyleAlertDialogDescription,
           ),
           TextSpan(
