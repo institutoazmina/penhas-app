@@ -25,7 +25,7 @@ class ReplyTweetPage extends StatefulWidget {
 class _ReplyTweetPageState
     extends ModularState<ReplyTweetPage, ReplyTweetController>
     with SnackBarHandler {
-  final String inputHint = 'Comente sua experiência sobre a postagem acima...';
+  final String inputHint = 'Deixe seu comentário';
   final String anonymousHint =
       'Sua publicação é anônima. As usuárias do app podem comentar sua publicação, mas só você pode iniciar uma conversa com elas.';
   List<ReactionDisposer> _disposers;
@@ -106,12 +106,6 @@ class _ReplyTweetPageState
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(8.0, 24.0, 8.0, 8.0),
-                        child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text('contribua comentando na postagem')),
-                      ),
                       SizedBox(
                         height: 160,
                         child: TextField(
@@ -121,29 +115,29 @@ class _ReplyTweetPageState
                           maxLengthEnforced: true,
                           onChanged: controller.setTweetContent,
                           decoration: InputDecoration(
-                            filled: true,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(12),
-                                topRight: Radius.circular(12),
-                                bottomRight: Radius.circular(12),
+                              filled: true,
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(12),
+                                  topRight: Radius.circular(12),
+                                  bottomRight: Radius.circular(12),
+                                ),
+                                borderSide: BorderSide(
+                                    color: DesignSystemColors.ligthPurple),
                               ),
-                              borderSide: BorderSide(
-                                  color: DesignSystemColors.ligthPurple),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(12),
-                                topRight: Radius.circular(12),
-                                bottomRight: Radius.circular(12),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(12),
+                                  topRight: Radius.circular(12),
+                                  bottomRight: Radius.circular(12),
+                                ),
+                                borderSide: BorderSide(
+                                    color: DesignSystemColors.ligthPurple,
+                                    width: 2.0),
                               ),
-                              borderSide: BorderSide(
-                                  color: DesignSystemColors.ligthPurple,
-                                  width: 2.0),
-                            ),
-                            alignLabelWithHint: true,
-                            hintText: inputHint,
-                          ),
+                              alignLabelWithHint: true,
+                              hintText: inputHint,
+                              counterText: ""),
                           toolbarOptions: ToolbarOptions(
                             copy: true,
                             cut: true,
