@@ -9,6 +9,7 @@ import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.da
 import 'package:penhas/app/features/filters/domain/repositories/filter_skill_repository.dart';
 import 'package:penhas/app/features/filters/states/filter_action_observer.dart';
 import 'package:penhas/app/features/users/data/repositories/users_repository.dart';
+import 'package:penhas/app/features/users/domain/entities/user_detail_entity.dart';
 import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
 import 'package:penhas/app/features/users/domain/entities/user_search_options.dart';
 import 'package:penhas/app/features/users/domain/entities/user_search_session_entity.dart';
@@ -49,9 +50,10 @@ abstract class _ChatMainPeopleControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> profile(UserDetailProfileEntity profile) {
+    final userDetail = UserDetailEntity(isMyself: false, profile: profile);
     return Modular.to.pushNamed(
       "/mainboard/users/profile",
-      arguments: profile,
+      arguments: userDetail,
     );
   }
 
