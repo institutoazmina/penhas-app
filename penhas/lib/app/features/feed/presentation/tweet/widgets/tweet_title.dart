@@ -105,7 +105,7 @@ class TweetTitle extends StatelessWidget {
 
   List<Widget> _buildAction() {
     List<Widget> actions = List<Widget>();
-    if (!tweet.anonymous) {
+    if (!tweet.anonymous && !tweet.meta.owner) {
       actions.add(
         ListTile(
           leading: SvgPicture.asset(
