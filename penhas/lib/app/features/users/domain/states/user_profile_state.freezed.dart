@@ -19,7 +19,7 @@ class _$UserProfileStateTearOff {
   }
 
 // ignore: unused_element
-  _Loaded loaded(UserDetailProfileEntity person) {
+  _Loaded loaded(UserDetailEntity person) {
     return _Loaded(
       person,
     );
@@ -42,13 +42,13 @@ mixin _$UserProfileState {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(UserDetailProfileEntity person),
+    @required Result loaded(UserDetailEntity person),
     @required Result error(String message),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(UserDetailProfileEntity person),
+    Result loaded(UserDetailEntity person),
     Result error(String message),
     @required Result orElse(),
   });
@@ -121,7 +121,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(UserDetailProfileEntity person),
+    @required Result loaded(UserDetailEntity person),
     @required Result error(String message),
   }) {
     assert(initial != null);
@@ -134,7 +134,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(UserDetailProfileEntity person),
+    Result loaded(UserDetailEntity person),
     Result error(String message),
     @required Result orElse(),
   }) {
@@ -182,7 +182,7 @@ abstract class _Initial implements UserProfileState {
 abstract class _$LoadedCopyWith<$Res> {
   factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
       __$LoadedCopyWithImpl<$Res>;
-  $Res call({UserDetailProfileEntity person});
+  $Res call({UserDetailEntity person});
 }
 
 /// @nodoc
@@ -199,7 +199,7 @@ class __$LoadedCopyWithImpl<$Res> extends _$UserProfileStateCopyWithImpl<$Res>
     Object person = freezed,
   }) {
     return _then(_Loaded(
-      person == freezed ? _value.person : person as UserDetailProfileEntity,
+      person == freezed ? _value.person : person as UserDetailEntity,
     ));
   }
 }
@@ -209,7 +209,7 @@ class _$_Loaded implements _Loaded {
   const _$_Loaded(this.person) : assert(person != null);
 
   @override
-  final UserDetailProfileEntity person;
+  final UserDetailEntity person;
 
   @override
   String toString() {
@@ -236,7 +236,7 @@ class _$_Loaded implements _Loaded {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(UserDetailProfileEntity person),
+    @required Result loaded(UserDetailEntity person),
     @required Result error(String message),
   }) {
     assert(initial != null);
@@ -249,7 +249,7 @@ class _$_Loaded implements _Loaded {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(UserDetailProfileEntity person),
+    Result loaded(UserDetailEntity person),
     Result error(String message),
     @required Result orElse(),
   }) {
@@ -290,9 +290,9 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements UserProfileState {
-  const factory _Loaded(UserDetailProfileEntity person) = _$_Loaded;
+  const factory _Loaded(UserDetailEntity person) = _$_Loaded;
 
-  UserDetailProfileEntity get person;
+  UserDetailEntity get person;
   _$LoadedCopyWith<_Loaded> get copyWith;
 }
 
@@ -357,7 +357,7 @@ class _$_ErrorDetails implements _ErrorDetails {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
-    @required Result loaded(UserDetailProfileEntity person),
+    @required Result loaded(UserDetailEntity person),
     @required Result error(String message),
   }) {
     assert(initial != null);
@@ -370,7 +370,7 @@ class _$_ErrorDetails implements _ErrorDetails {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
-    Result loaded(UserDetailProfileEntity person),
+    Result loaded(UserDetailEntity person),
     Result error(String message),
     @required Result orElse(),
   }) {

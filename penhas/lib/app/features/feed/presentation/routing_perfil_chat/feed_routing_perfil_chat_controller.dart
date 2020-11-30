@@ -82,7 +82,7 @@ extension _PrivateMethod on _FeedRoutingPerfilChatControllerBase {
   void handleProfileDetail(UserDetailEntity userProfile) {
     Modular.to.pushReplacementNamed(
       "/mainboard/users/profile_from_feed",
-      arguments: userProfile.profile,
+      arguments: userProfile,
     );
   }
 

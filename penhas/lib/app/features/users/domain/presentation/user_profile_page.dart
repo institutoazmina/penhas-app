@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_tags/flutter_tags.dart';
+import 'package:penhas/app/features/users/domain/entities/user_detail_entity.dart';
 import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
 import 'package:penhas/app/features/users/domain/presentation/user_profile_controller.dart';
 import 'package:penhas/app/features/users/domain/states/user_profile_state.dart';
@@ -46,31 +47,33 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
 
   Widget empty() => Container(color: DesignSystemColors.systemBackgroundColor);
 
-  Widget loaded(UserDetailProfileEntity user) {
+  Widget loaded(UserDetailEntity user) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        buildHeader(user),
-        buildContent(user),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 70.0,
-            vertical: 20.0,
-          ),
-          child: SizedBox(
-            height: 44,
-            child: RaisedButton(
-              onPressed: () => controller.openChannel(),
-              elevation: 0,
-              color: DesignSystemColors.ligthPurple,
-              shape: kButtonShapeFilled,
-              child: Text(
-                "Conversar",
-                style: buttomTitleStyle,
+        buildHeader(user.profile),
+        buildContent(user.profile),
+        user.isMyself
+            ? Container()
+            : Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 70.0,
+                  vertical: 20.0,
+                ),
+                child: SizedBox(
+                  height: 44,
+                  child: RaisedButton(
+                    onPressed: () => controller.openChannel(),
+                    elevation: 0,
+                    color: DesignSystemColors.ligthPurple,
+                    shape: kButtonShapeFilled,
+                    child: Text(
+                      "Conversar",
+                      style: buttomTitleStyle,
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
       ],
     );
   }
