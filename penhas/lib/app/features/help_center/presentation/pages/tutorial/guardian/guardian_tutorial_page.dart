@@ -21,17 +21,6 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
     ),
     TutorialPageViewWidget(
       description:
-          'Em situações de emergência, abra o app, clique e segure no símbolo do seu signo para acionar o botão de pânico. Isso enviará um alerta para seus guardiões e durante 15 minutos um áudio será gravado.',
-      bodyWidget: Image(
-        image: AssetImage(
-            'assets/images/tutorial_guardian_2/tutorial_guardian_2.png'),
-        width: 270,
-        fit: BoxFit.fitWidth,
-        alignment: FractionalOffset.topCenter,
-      ),
-    ),
-    TutorialPageViewWidget(
-      description:
           'Use o alerta de guardiões quando estiver em situação de violência. Eles receberão um aviso de que você está com risco com informações da sua localização.',
       bodyWidget: Image(
         image: AssetImage(
@@ -40,7 +29,18 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
         fit: BoxFit.fitWidth,
         alignment: FractionalOffset.topCenter,
       ),
-    )
+    ),
+    TutorialPageViewWidget(
+      description:
+          'Em situações de emergência, abra o app, clique e segure no símbolo do seu signo para acionar o botão de pânico. Isso enviará um alerta para seus guardiões e durante 15 minutos um áudio será gravado.',
+      bodyWidget: Image(
+        image: AssetImage(
+            'assets/images/tutorial_guardian_2/tutorial_guardian_2.png'),
+        width: 250,
+        fit: BoxFit.fitWidth,
+        alignment: FractionalOffset.topCenter,
+      ),
+    ),
   ];
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;

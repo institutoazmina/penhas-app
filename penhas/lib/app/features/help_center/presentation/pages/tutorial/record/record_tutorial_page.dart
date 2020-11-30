@@ -13,7 +13,7 @@ class _RecordTutorialPageState extends State<RecordTutorialPage> {
   List<TutorialPageViewWidget> _contentPageView = [
     TutorialPageViewWidget(
       description:
-          'Coleta de provas é um passo essencial para sair de uma situação de violência. Por isso, com o PenhaS você pode gravar áudios que sirvam de provas contra o agressor.',
+          'Para iniciar uma gravação, basta pressionar o botão "Gravar Áudio” e o app já estará gravando o som ambiente. Para encerrar a gravação basta clicar no contador.',
       bodyWidget: Image(
         image:
             AssetImage('assets/images/tutorial_record_1/tutorial_record_1.png'),
@@ -34,7 +34,7 @@ class _RecordTutorialPageState extends State<RecordTutorialPage> {
     ),
     TutorialPageViewWidget(
       description:
-          'Use o alerta de guardiões quando estiver em situação de violência. Eles receberão um aviso de que você está em risco com informações da sua localização.',
+          'Se estiver com modo camuflado ativo e se encontrar em situação de emergência, abra app, clique e seguro no símbolo roxo de signo em destaque, até que ele troque de cor. Isso enviará um alerta para seus guardiões e durante 15 minutos um áudio será gravado.',
       bodyWidget: Image(
         image:
             AssetImage('assets/images/tutorial_record_3/tutorial_record_3.png'),
