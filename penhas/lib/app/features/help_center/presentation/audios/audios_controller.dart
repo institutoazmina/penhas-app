@@ -124,7 +124,7 @@ extension _AudiosControllerBasePrivate on _AudiosControllerBase {
     }
 
     final response = await _updateProgress;
-    response.fold(
+    response?.fold(
       (failure) => setErrorMessage(mapFailureMessage(failure)),
       (session) => actionSheetState = AudioTileAction.notice(session.message),
     );
