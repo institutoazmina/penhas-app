@@ -195,7 +195,7 @@ extension _WidgetBuilderPrivate on _NewGuardianControllerBase {
             style: kTextStyleAlertDialogDescription,
           ),
           TextSpan(
-            text: 'Alerta Guardiões ',
+            text: 'Alertar Guardiões ',
             style: kTextStyleAlertDialogDescriptionBold,
           ),
           TextSpan(
