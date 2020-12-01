@@ -128,7 +128,7 @@ class _RecordTutorialPageState extends State<RecordTutorialPage> {
           isLastPage ? _dispose() : _nextPage();
         },
         child: Text(
-          isLastPage ? "Obrigado" : "Próximo",
+          isLastPage ? "Entendi" : "Próximo",
           style: TextStyle(
             fontFamily: 'Lato',
             fontSize: 16.0,
