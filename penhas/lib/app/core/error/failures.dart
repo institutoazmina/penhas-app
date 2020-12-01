@@ -15,8 +15,6 @@ class ServerSideSessionFailed extends Failure {}
 
 class InternetConnectionFailure extends Failure {}
 
-class UserAuthenticationFailure extends Failure {}
-
 class UserAndPasswordInvalidFailure extends Failure {}
 
 class EmailAddressInvalidFailure extends Failure {}

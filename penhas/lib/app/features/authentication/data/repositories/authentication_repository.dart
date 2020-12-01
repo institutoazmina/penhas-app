@@ -50,18 +50,14 @@ class AuthenticationRepository implements IAuthenticationRepository {
     }
 
     if (error is ApiProviderException) {
-      if (error.bodyContent['error'] == 'wrongpassword') {
-        return left(UserAuthenticationFailure());
-      } else {
-        return left(
-          ServerSideFormFieldValidationFailure(
-            error: error.bodyContent['error'],
-            field: error.bodyContent['field'],
-            message: error.bodyContent['message'],
-            reason: error.bodyContent['reason'],
-          ),
-        );
-      }
+      return left(
+        ServerSideFormFieldValidationFailure(
+          error: error.bodyContent['error'],
+          field: error.bodyContent['field'],
+          message: error.bodyContent['message'],
+          reason: error.bodyContent['reason'],
+        ),
+      );
     }
 
     return left(ServerFailure());
