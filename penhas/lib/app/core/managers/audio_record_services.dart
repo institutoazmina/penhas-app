@@ -148,7 +148,7 @@ extension _AudioRecordServices on AudioRecordServices {
       await _recorder.stopRecorder();
       await _recorder.closeAudioSession();
     } catch (e) {
-      print(e);
+      print('error on release _recorder');
     }
   }
 
