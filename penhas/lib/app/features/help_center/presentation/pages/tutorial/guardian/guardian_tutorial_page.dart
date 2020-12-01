@@ -21,7 +21,7 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
     ),
     TutorialPageViewWidget(
       description:
-          'Use o alerta de guardiões quando estiver em situação de violência. Eles receberão um aviso de que você está com risco com informações da sua localização.',
+          'Use o alerta de guardiões quando estiver em situação de violência. Eles receberão um aviso de que você está em risco com informações da sua localização.',
       bodyWidget: Image(
         image: AssetImage(
             'assets/images/tutorial_guardian_3/tutorial_guardian_3.png'),
@@ -115,7 +115,7 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
           isLastPage ? _dispose() : _nextPage();
         },
         child: Text(
-          isLastPage ? "Obrigado" : "Próximo",
+          isLastPage ? "Entendi" : "Próximo",
           style: TextStyle(
             fontFamily: 'Lato',
             fontSize: 16.0,
