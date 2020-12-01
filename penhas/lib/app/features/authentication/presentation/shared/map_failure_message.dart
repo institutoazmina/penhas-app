@@ -5,6 +5,8 @@ mixin MapFailureMessage {
       'O servidor está inacessível, o PenhaS está com acesso à Internet?';
   final String serverFailure =
       "O servidor está com problema neste momento, tente novamente.";
+  final String userAuthenticationFailure =
+      "E-mail ou senha inválida.";
 
   String mapFailureMessage(Failure failure) {
     String message;
@@ -17,7 +19,7 @@ mixin MapFailureMessage {
         message = serverFailure;
         break;
       case UserAuthenticationFailure:
-        message = mapServerSideValidationFailure(failure);
+        message = userAuthenticationFailure;
         break;
       case ServerSideFormFieldValidationFailure:
         message = mapServerSideValidationFailure(failure);
