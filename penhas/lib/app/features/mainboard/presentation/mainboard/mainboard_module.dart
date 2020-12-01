@@ -116,7 +116,6 @@ class MainboardModule extends ChildModule {
         ...tweetRoutes,
         ...helpCenter,
         ...supportCenter,
-        ...audioRecord,
         ...users,
         ...filters,
         ...chat,
@@ -170,6 +169,11 @@ class MainboardModule extends ChildModule {
           child: (context, args) => AudiosPage(),
           transition: TransitionType.rightToLeft,
         ),
+        ModularRouter(
+          '/helpcenter/audioRecord',
+          child: (context, args) => AudioRecordPage(),
+          transition: TransitionType.rightToLeft,
+        )
       ];
 
   List<ModularRouter> get supportCenter => [
@@ -262,14 +266,6 @@ class MainboardModule extends ChildModule {
             profileRepository: i.get<IUserProfileRepository>(),
           ),
         ),
-      ];
-
-  List<ModularRouter> get audioRecord => [
-        ModularRouter(
-          '/helpcenter/audioRecord',
-          child: (context, args) => AudioRecordPage(),
-          transition: TransitionType.rightToLeft,
-        )
       ];
 
   List<ModularRouter> get users => [
