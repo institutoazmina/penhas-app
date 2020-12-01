@@ -54,11 +54,9 @@ class _AudioRecordState
       appBar: AppBar(
         backgroundColor: DesignSystemColors.ligthPurple,
       ),
-      body: SafeArea(
-        child: SoundRecordWidget(
-          audioActivity: _audioActivity,
-          onPressed: () async => controller.stopAudioRecord(),
-        ),
+      body: SoundRecordWidget(
+        audioActivity: _audioActivity,
+        onPressed: () async => controller.stopAudioRecord(),
       ),
     );
   }
