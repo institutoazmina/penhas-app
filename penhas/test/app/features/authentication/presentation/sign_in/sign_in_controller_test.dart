@@ -23,13 +23,13 @@ void main() {
 
   group('SignInController', () {
     final warningEmail = 'Endereço de email inválido';
-    final warningPassword = 'Senha precisa ter no mínimo 6 caracteres';
+    final warningPassword = 'Senha precisa ter no mínimo 8 caracteres';
     final String internetConnectionFailure =
         'O servidor está inacessível, o PenhaS está com acesso à Internet?';
     final String serverFailure =
         "O servidor está com problema neste momento, tente novamente.";
     final String userAuthenticationFailure =
-        "Usuário ou senha inválida, favor verificar!";
+        "E-mail ou senha inválida.";
 
     test('should warning messages be empty on start', () {
       // assert
