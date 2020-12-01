@@ -108,25 +108,27 @@ extension _AudioSyncManager on AudioSyncManager {
   }
 
   void setupUploadTimer() {
-    if (_syncTimer != null) {
-      return;
-    }
+    // if (_syncTimer != null) {
+    //   return;
+    // }
 
-    _syncTimer = Timer.periodic(
-      Duration(seconds: 10),
-      (timer) async {
-        await loadAudioQueue();
+    // _syncTimer = Timer.periodic(
+    //   Duration(seconds: 10),
+    //   (timer) async {
+    //     await loadAudioQueue();
 
-        if (_pendingUploadAudio?.isEmpty ?? true) {
-          timer.cancel();
-          _syncTimer.cancel();
-          _syncTimer = null;
-        }
+    //     if (_pendingUploadAudio?.isEmpty ?? true) {
+    //       timer.cancel();
+    //       if (_syncTimer != null) {
+    //         _syncTimer.cancel();
+    //         _syncTimer = null;
+    //       }
+    //     }
 
-        cleanCache();
-        syncAudios();
-      },
-    );
+    //     cleanCache();
+    //     syncAudios();
+    //   },
+    // );
   }
 
   void cleanCache() async {
@@ -227,8 +229,6 @@ extension _AudioSyncManager on AudioSyncManager {
         _pendingUploadAudio.add(file);
       }
     });
-
-    return Future.value();
   }
 }
 
