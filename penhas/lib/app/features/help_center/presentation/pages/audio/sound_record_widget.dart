@@ -15,15 +15,16 @@ class SoundRecordWidget extends StatefulWidget {
 class _SoundRecordWidgetState extends State<SoundRecordWidget>
     with SingleTickerProviderStateMixin {
   AnimationController _animationController;
+  Animation _animation;
 
   @override
   void initState() {
-    _animationController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 200),
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(seconds: 2));
+    _animation = Tween(begin: 0.0, end: 12.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
     _animationController.repeat(reverse: true);
-
     super.initState();
   }
 
@@ -36,21 +37,22 @@ class _SoundRecordWidgetState extends State<SoundRecordWidget>
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: GestureDetector(
+      child: InkWell(
         onTap: () => widget.onPressed?.call(),
-        child: Container(
+        child: Ink(
           width: 200,
           height: 200,
           decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: DesignSystemColors.easterPurple,
-              boxShadow: [
+            shape: BoxShape.circle,
+            color: DesignSystemColors.easterPurple,
+            boxShadow: [
+              for (int i = 1; i <= 5; i++)
                 BoxShadow(
-                  color: DesignSystemColors.easterPurple,
-                  blurRadius: widget?.audioActivity?.decibels?.abs() ?? 2.0,
-                  spreadRadius: widget?.audioActivity?.decibels?.abs() ?? 2.0,
-                )
-              ]),
+                    color: DesignSystemColors.easterPurple
+                        .withOpacity(_animationController.value / 2),
+                    spreadRadius: i * _animation.value)
+            ],
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
