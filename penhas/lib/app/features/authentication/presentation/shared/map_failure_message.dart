@@ -17,7 +17,7 @@ mixin MapFailureMessage {
         message = serverFailure;
         break;
       case UserAuthenticationFailure:
-        message = failure.message;
+        message = mapServerSideValidationFailure(failure);
         break;
       case ServerSideFormFieldValidationFailure:
         message = mapServerSideValidationFailure(failure);
