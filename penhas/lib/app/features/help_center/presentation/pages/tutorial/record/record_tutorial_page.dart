@@ -37,9 +37,9 @@ class _RecordTutorialPageState extends State<RecordTutorialPage> {
           'Se estiver com modo camuflado ativo e se encontrar em situação de emergência, abra app, clique e seguro no símbolo roxo de signo em destaque, até que ele troque de cor. Isso enviará um alerta para seus guardiões e durante 15 minutos um áudio será gravado.',
       bodyWidget: Image(
         image:
-            AssetImage('assets/images/tutorial_record_3/tutorial_record_3.png'),
+            AssetImage('assets/images/tutorial_guardian_2/tutorial_guardian_2.png'),
         width: 270,
-        fit: BoxFit.fitHeight,
+        fit: BoxFit.fitWidth,
         alignment: FractionalOffset.topCenter,
       ),
     ),
