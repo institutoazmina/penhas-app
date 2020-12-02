@@ -89,7 +89,7 @@ class _StealthModeTutorialPageState extends State<StealthModeTutorialPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Container(
-                  height: 520,
+                  height: 470,
                   child: PageView(
                     physics: ClampingScrollPhysics(),
                     children: _contentPageView,
@@ -103,7 +103,7 @@ class _StealthModeTutorialPageState extends State<StealthModeTutorialPage> {
                 ),
                 SizedBox(height: 30),
                 Padding(
-                  padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                  padding: const EdgeInsets.only(left: 12.0, right: 12.0, bottom: 12.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -135,7 +135,7 @@ class _StealthModeTutorialPageState extends State<StealthModeTutorialPage> {
           isLastPage ? _dispose() : _nextPage();
         },
         child: Text(
-          isLastPage ? "Habilitar" : "Próximo",
+          isLastPage ? "Entendi" : "Próximo",
           style: TextStyle(
             fontFamily: 'Lato',
             fontSize: 16.0,
