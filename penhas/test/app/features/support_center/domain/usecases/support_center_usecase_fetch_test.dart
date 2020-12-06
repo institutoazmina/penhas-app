@@ -9,8 +9,6 @@ import 'package:penhas/app/features/support_center/data/repositories/support_cen
 import 'package:penhas/app/features/support_center/domain/entities/support_center_fetch_request.dart';
 import 'package:penhas/app/features/support_center/domain/usecases/support_center_usecase.dart';
 
-import '../../../../../utils/json_util.dart';
-
 class MockLocationServices extends Mock implements ILocationServices {}
 
 class MockSupportCenterRepository extends Mock
@@ -46,8 +44,8 @@ void main() {
             ));
         when(locationServices.currentLocation()).thenAnswer((_) async => right(
             UserLocationEntity(accuracy: 0, latitude: 0.0, longitude: 0.0)));
-        when(locationServices.permissionStatus())
-            .thenAnswer((_) async => LocationPermissionState.granted());
+        when(locationServices.isPermissionGranted())
+            .thenAnswer((_) async => true);
         // act
         final matcher = await sut.fetch(fetchRequest);
         // assert
