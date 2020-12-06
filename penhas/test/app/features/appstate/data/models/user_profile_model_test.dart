@@ -15,6 +15,12 @@ void main() {
         stealthModeEnabled: null,
         anonymousModeEnabled: null,
         birthdate: DateTime(1980, 3, 3),
+        fullName: 'Fulana da Silva',
+        race: "pardo",
+        genre: "Feminino",
+        jaFoiVitimaDeViolencia: false,
+        minibio: null,
+        skill: null,
       );
       // assert
       expect(profileModel, isA<UserProfileEntity>());
@@ -32,6 +38,13 @@ void main() {
         anonymousModeEnabled: userProfileData['modo_anonimo_ativo'] == 1,
         stealthModeEnabled: userProfileData['modo_camuflado_ativo'] == 1,
         birthdate: DateTime(1980, 3, 3),
+        fullName: userProfileData['nome_completo'],
+        race: userProfileData['raca'],
+        genre: userProfileData['genero'],
+        jaFoiVitimaDeViolencia:
+            userProfileData['ja_foi_vitima_de_violencia'] == 1,
+        minibio: userProfileData['minibio'],
+        skill: null,
       );
       // act
       final received = UserProfileModel.fromJson(userProfileData);
@@ -51,6 +64,12 @@ void main() {
         'modo_anonimo_ativo': userProfileData['modo_anonimo_ativo'],
         'modo_camuflado_ativo': userProfileData['modo_camuflado_ativo'],
         'dt_nasc': '1980-03-03T00:00:00.000',
+        'nome_completo': "Fulana da Silva",
+        "minibio": null,
+        "raca": "pardo",
+        "genero": "Feminino",
+        "ja_foi_vitima_de_violencia": 0,
+        "skills": null
       };
       final userModel = UserProfileModel(
         email: userProfileData['email'],
@@ -59,6 +78,13 @@ void main() {
         anonymousModeEnabled: userProfileData['modo_anonimo_ativo'] == 1,
         stealthModeEnabled: userProfileData['modo_camuflado_ativo'] == 1,
         birthdate: DateTime(1980, 3, 3),
+        fullName: userProfileData['nome_completo'],
+        race: userProfileData['raca'],
+        genre: userProfileData['genero'],
+        jaFoiVitimaDeViolencia:
+            userProfileData['ja_foi_vitima_de_violencia'] == 1,
+        minibio: userProfileData['minibio'],
+        skill: null,
       );
       // act
       final received = userModel.toJson();

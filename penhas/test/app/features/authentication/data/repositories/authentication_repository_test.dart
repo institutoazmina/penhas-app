@@ -111,7 +111,13 @@ void main() {
           emailAddress: email,
           password: password,
         ));
-        expect(result, left(UserAuthenticationFailure()));
+        expect(
+            result,
+            left(ServerSideFormFieldValidationFailure(
+                error: "wrongpassword",
+                field: "password",
+                reason: "invalid",
+                message: "E-mail ou senha inválida.")));
       });
     });
 

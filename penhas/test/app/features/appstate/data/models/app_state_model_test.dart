@@ -16,6 +16,12 @@ void main() {
       anonymousModeEnabled: false,
       stealthModeEnabled: false,
       birthdate: DateTime(1980, 3, 3),
+      fullName: 'Fulana da Silva',
+      race: "pardo",
+      genre: "Feminino",
+      jaFoiVitimaDeViolencia: false,
+      minibio: null,
+      skill: null,
     );
   });
 
@@ -208,6 +214,12 @@ void main() {
         anonymousModeEnabled: true,
         stealthModeEnabled: false,
         birthdate: DateTime(1980, 3, 3),
+        fullName: 'Fulana da Silva',
+        race: "pardo",
+        genre: "Feminino",
+        jaFoiVitimaDeViolencia: false,
+        minibio: null,
+        skill: null,
       );
       final AppStateEntity expected = AppStateModel(
         quizSession,
@@ -245,6 +257,12 @@ void main() {
         anonymousModeEnabled: false,
         stealthModeEnabled: true,
         birthdate: DateTime(1980, 3, 3),
+        fullName: 'Fulana da Silva',
+        race: "pardo",
+        genre: "Feminino",
+        jaFoiVitimaDeViolencia: false,
+        minibio: null,
+        skill: null,
       );
       final AppStateEntity expected = AppStateModel(
         quizSession,

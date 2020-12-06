@@ -9,7 +9,6 @@ class MockAuthenticatonRepository extends Mock
     implements AuthenticationRepository {}
 
 void main() {
-  // initModule(SignInModule());
   MockAuthenticatonRepository mock;
   SignInController sut;
 
@@ -17,8 +16,6 @@ void main() {
   setUp(() {
     mock = MockAuthenticatonRepository();
     sut = SignInController(mock);
-
-    // signin = SignInModule.to.get<SignInController>();
   });
 
   group('SignInController', () {
@@ -29,7 +26,7 @@ void main() {
     final String serverFailure =
         "O servidor está com problema neste momento, tente novamente.";
     final String userAuthenticationFailure =
-        "E-mail ou senha inválida.";
+        "E-mail e senha precisam estarem corretos para continuar.";
 
     test('should warning messages be empty on start', () {
       // assert
@@ -65,13 +62,13 @@ void main() {
       // act
       sut.setPassword(invalidPassword);
       // assert
-      expect(sut.warningPassword, warningPassword);
+      expect(sut.warningPassword, (warningPassword));
     });
 
     test('should reset warning message after user input a valid password', () {
       // arrange
       var invalidPassword = '';
-      var validPassword = 'sTr0ng';
+      var validPassword = 'sTr0ngMy';
       // act
       sut.setPassword(invalidPassword);
       sut.setPassword(validPassword);
@@ -98,7 +95,7 @@ void main() {
     void testServerError(Failure failure, String errorMessage) async {
       // arrange
       mockAuthenticationFailure(failure);
-      var validPassword = 'sTr0ng';
+      var validPassword = 'sTr0ngMy';
       var validEmailAddress = 'my_email@app.com';
       // act
       sut.setPassword(validPassword);
@@ -122,7 +119,7 @@ void main() {
         'should show ERROR_USER_AUTHENTICATION_FAILURE message when got UserAuthenticationFailure',
         () async {
       // arrange
-      mockAuthenticationFailure(UserAuthenticationFailure());
+      // mockAuthenticationFailure(UserAuthenticationFailure());
       var validPassword = 'sTr0ng';
       var validEmailAddress = 'my_email@app.com';
       // act

@@ -56,8 +56,8 @@ class UserProfileModel extends UserProfileEntity {
         genre = jsonData["genero"],
         jaFoiVitimaDeViolencia = jsonData["ja_foi_vitima_de_violencia"] == 1,
         skill = (jsonData["skills"] as List<Object>)
-            .map((e) => e.toString())
-            .toList();
+            ?.map((e) => e.toString())
+            ?.toList();
 
   Map<String, Object> toJson() => {
         'email': email,
