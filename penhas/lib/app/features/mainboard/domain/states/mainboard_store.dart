@@ -13,23 +13,25 @@ part 'mainboard_store.g.dart';
 class MainboardStore extends _MainboardStoreBase with _$MainboardStore {
   MainboardStore({
     @required IAppModulesServices modulesServices,
-  }) : super(modulesServices);
+    @required MainboardState initialPage,
+  }) : super(modulesServices, initialPage);
 }
 
 abstract class _MainboardStoreBase with Store {
   final IAppModulesServices _modulesServices;
+  final MainboardState _initialPage;
 
-  _MainboardStoreBase(this._modulesServices) {
+  _MainboardStoreBase(this._modulesServices, this._initialPage) {
     setup();
   }
 
-  final PageController pageController = PageController(initialPage: 0);
+  PageController pageController;
 
   @observable
-  MainboardState selectedPage = MainboardState.feed();
+  MainboardState selectedPage;
 
   @observable
-  ObservableList<MainboardState> pages = [MainboardState.feed()].asObservable();
+  ObservableList<MainboardState> pages;
 
   @action
   void changePage({@required MainboardState to}) {
@@ -72,5 +74,7 @@ extension _Methods on _MainboardStoreBase {
     }
 
     pages = autorizedPages.asObservable();
+    selectedPage = _initialPage;
+    pageController = PageController(initialPage: pages.indexOf(_initialPage));
   }
 }

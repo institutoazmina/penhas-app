@@ -10,4 +10,21 @@ abstract class MainboardState with _$MainboardState {
   const factory MainboardState.compose() = _Compose;
   const factory MainboardState.supportPoint() = _SupportPoint;
   const factory MainboardState.helpCenter() = _HelpCenter;
+
+  static fromString(String state) {
+    switch (state) {
+      case 'feed':
+        return MainboardState.feed();
+      case 'chat':
+        return MainboardState.chat();
+      case 'compose':
+        return MainboardState.compose();
+      case 'supportpoint':
+        return MainboardState.supportPoint();
+      case 'helpcenter':
+        return MainboardState.helpCenter();
+    }
+
+    return MainboardState.feed();
+  }
 }

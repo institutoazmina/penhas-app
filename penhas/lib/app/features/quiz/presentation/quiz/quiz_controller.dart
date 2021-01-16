@@ -1,10 +1,12 @@
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
+import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
 import 'package:penhas/app/features/quiz/domain/entities/quiz_request_entity.dart';
 import 'package:penhas/app/features/quiz/domain/repositories/i_quiz_repository.dart';
+import 'package:penhas/app/shared/navigation/navigator.dart';
+import 'package:penhas/app/shared/navigation/route.dart';
 
 part 'quiz_controller.g.dart';
 
@@ -16,16 +18,19 @@ const String ERROR_INTERNET_CONNECTION_FAILURE =
 class QuizController extends _QuizControllerBase with _$QuizController {
   QuizController({
     @required QuizSessionEntity quizSession,
+    @required AppStateUseCase appStateUseCase,
     @required IQuizRepository repository,
-  }) : super(quizSession, repository);
+  }) : super(quizSession, appStateUseCase, repository);
 }
 
 abstract class _QuizControllerBase with Store {
   final QuizSessionEntity _quizSession;
   final IQuizRepository _repository;
+  final AppStateUseCase _appStateUseCase;
   String _sessionId;
 
-  _QuizControllerBase(this._quizSession, this._repository) {
+  _QuizControllerBase(
+      this._quizSession, this._appStateUseCase, this._repository) {
     final reversedCurrent = _quizSession.currentMessage.reversed.toList();
     _sessionId = _quizSession.sessionId;
 
@@ -164,7 +169,10 @@ abstract class _QuizControllerBase with Store {
 
   void _parseState(AppStateEntity state) {
     if (state.quizSession?.isFinished ?? true) {
-      Modular.to.popAndPushNamed('/');
+      _updateAppStates(
+        state,
+        (_) => Navigator.popAndPushNamed(Route(state.quizSession.endScreen)),
+      );
       return;
     }
 
@@ -175,6 +183,15 @@ abstract class _QuizControllerBase with Store {
     }
 
     _parseUserReply(messages);
+  }
+
+  Future<void> _updateAppStates(AppStateEntity appStateEntity,
+      void onUpdate(AppStateEntity appState)) async {
+    final appState = await _appStateUseCase.check();
+    appState.fold(
+      (_) => {},
+      (state) => onUpdate(state),
+    );
   }
 
   void _mapFailureToMessage(Failure failure) {

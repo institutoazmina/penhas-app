@@ -7,6 +7,8 @@ import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/managers/user_profile_store.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
+import 'package:penhas/app/shared/navigation/navigator.dart';
+import 'package:penhas/app/shared/navigation/route.dart';
 
 part 'splash_controller.g.dart';
 
@@ -63,7 +65,7 @@ abstract class _SplashControllerBase with Store {
       return;
     }
 
-    Modular.to.popAndPushNamed('/mainboard');
+    Navigator.popAndPushNamed(Route('/mainboard?page=feed'));
   }
 
   void _forwardToAuthentication() {

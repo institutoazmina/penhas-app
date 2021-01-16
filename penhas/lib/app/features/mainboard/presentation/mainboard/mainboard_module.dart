@@ -19,6 +19,7 @@ import 'package:penhas/app/features/main_menu/presentation/account/delete/accoun
 import 'package:penhas/app/features/main_menu/presentation/account/my_profile/profile_edit_controller.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/my_profile/skill/profile_skill_module.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/preference/account_preference_controller.dart';
+import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_store.dart';
 import 'package:penhas/app/features/appstate/data/datasources/app_state_data_source.dart';
 import 'package:penhas/app/features/appstate/data/repositories/app_state_repository.dart';
@@ -84,8 +85,13 @@ class MainboardModule extends ChildModule {
         ...notificationBinds,
         ...menuBind,
         ...chatBinds,
-        Bind<MainboardStore>((i) =>
-            MainboardStore(modulesServices: i.get<IAppModulesServices>())),
+        Bind<MainboardStore>(
+          (i) => MainboardStore(
+              modulesServices: i.get<IAppModulesServices>(),
+              initialPage: i.args?.data == null
+                  ? MainboardState.feed()
+                  : MainboardState.fromString(i.args.data["page"])),
+        ),
         Bind(
           (i) => MainboardController(
             mainboardStore: i.get<MainboardStore>(),

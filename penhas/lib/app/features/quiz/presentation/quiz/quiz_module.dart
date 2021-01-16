@@ -1,6 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
+import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
 import 'package:penhas/app/features/quiz/data/datasources/quiz_data_source.dart';
 import 'package:penhas/app/features/quiz/data/repositories/quiz_repository.dart';
 import 'package:penhas/app/features/quiz/domain/repositories/i_quiz_repository.dart';
@@ -14,6 +15,7 @@ class QuizModule extends ChildModule {
         Bind(
           (i) => QuizController(
             quizSession: i.args.data,
+            appStateUseCase:  i.get<AppStateUseCase>(),
             repository: i.get<IQuizRepository>(),
           ),
         ),
