@@ -5,8 +5,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:meta/meta.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
+import 'package:penhas/app/core/managers/local_store.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
-import 'package:penhas/app/core/managers/user_profile_store.dart';
+import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_security_state.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_store.dart';
@@ -18,7 +19,8 @@ class MainboardController extends _MainboardControllerBase
     with _$MainboardController {
   MainboardController({
     @required MainboardStore mainboardStore,
-    @required IUserProfileStore userProfileStore,
+    @required LocalStore<UserProfileEntity> userProfileStore,
+    @required LocalStore<UserProfileEntity> userProfileStore,
     @required INotificationRepository notification,
     @required IAppModulesServices modulesServices,
   }) : super(
@@ -33,7 +35,7 @@ abstract class _MainboardControllerBase with Store {
   Timer _syncTimer;
   final int notificationInterval = 60;
   final MainboardStore mainboardStore;
-  final IUserProfileStore _userProfileStore;
+  final LocalStore<UserProfileEntity> _userProfileStore;
   final INotificationRepository _notification;
   final IAppModulesServices _modulesServices;
 

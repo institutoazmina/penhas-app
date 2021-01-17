@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/managers/user_profile_store.dart';
+import 'package:penhas/app/core/managers/local_store.dart';
+import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/zodiac/domain/entities/izodiac.dart';
 import 'package:penhas/app/features/zodiac/domain/entities/zodiac_sign_aquarius.dart';
 import 'package:penhas/app/features/zodiac/domain/usecases/stealth_security_action.dart';
@@ -13,13 +14,13 @@ part 'zodiac_controller.g.dart';
 
 class ZodiacController extends _ZodiacControllerBase with _$ZodiacController {
   ZodiacController({
-    @required IUserProfileStore userProfileStore,
+    @required LocalStore<UserProfileEntity> userProfileStore,
     @required StealthSecurityAction securityAction,
   }) : super(userProfileStore, securityAction);
 }
 
 abstract class _ZodiacControllerBase with Store {
-  final IUserProfileStore _userProfileStore;
+  final LocalStore<UserProfileEntity> _userProfileStore;
   final StealthSecurityAction _securityAction;
 
   bool _isSecurityRunning = false;

@@ -3,12 +3,13 @@ import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/managers/audio_play_services.dart';
 import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/core/managers/audio_sync_manager.dart';
+import 'package:penhas/app/core/managers/local_store.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
-import 'package:penhas/app/core/managers/user_profile_store.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
+import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
 import 'package:penhas/app/features/chat/domain/usecases/chat_channel_usecase.dart';
 import 'package:penhas/app/features/chat/presentation/chat/chat_channel_controller.dart';
@@ -95,7 +96,7 @@ class MainboardModule extends ChildModule {
         Bind(
           (i) => MainboardController(
             mainboardStore: i.get<MainboardStore>(),
-            userProfileStore: i.get<IUserProfileStore>(),
+            userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
             modulesServices: i.get<IAppModulesServices>(),
             notification: i.get<INotificationRepository>(),
           ),
@@ -436,14 +437,14 @@ class MainboardModule extends ChildModule {
         Bind<UserProfile>(
           (i) => UserProfile(
             repository: i.get<IUserProfileRepository>(),
-            userProfileStore: i.get<IUserProfileStore>(),
+            userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
             appStateUseCase: i.get<AppStateUseCase>(),
           ),
         ),
         Bind<AppStateUseCase>(
           (i) => AppStateUseCase(
               appStateRepository: i.get<IAppStateRepository>(),
-              userProfileStore: i.get<IUserProfileStore>(),
+              userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
               appConfiguration: i.get<IAppConfiguration>(),
               appModulesServices: i.get<IAppModulesServices>()),
         ),

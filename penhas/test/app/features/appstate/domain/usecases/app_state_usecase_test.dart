@@ -3,10 +3,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
+import 'package:penhas/app/core/managers/local_store.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
-import 'package:penhas/app/core/managers/user_profile_store.dart';
 import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
+import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/appstate/domain/repositories/i_app_state_repository.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
 
@@ -14,7 +15,7 @@ import '../../../../../utils/json_util.dart';
 
 class MockAppStateRepository extends Mock implements IAppStateRepository {}
 
-class MockUserProfileStore extends Mock implements IUserProfileStore {}
+class MockUserProfileStore extends Mock implements LocalStore<UserProfileEntity> {}
 
 class MockAppConfiguration extends Mock implements IAppConfiguration {}
 
@@ -24,7 +25,7 @@ void main() {
   AppStateUseCase sut;
   IAppStateRepository appStateRepository;
   IAppConfiguration appConfiguration;
-  IUserProfileStore profileStore;
+  LocalStore<UserProfileEntity> profileStore;
   IAppModulesServices appModulesServices;
 
   setUp(() {

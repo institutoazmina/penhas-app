@@ -5,7 +5,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/managers/user_profile_store.dart';
+import 'package:penhas/app/core/managers/local_store.dart';
+import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
@@ -23,7 +24,7 @@ class SignInStealthController extends _SignInStealthController
     with _$SignInStealthController {
   SignInStealthController({
     @required IAuthenticationRepository repository,
-    @required IUserProfileStore userProfileStore,
+    @required LocalStore<UserProfileEntity> userProfileStore,
     @required StealthSecurityAction securityAction,
   }) : super(repository, userProfileStore, securityAction);
 }
@@ -31,7 +32,7 @@ class SignInStealthController extends _SignInStealthController
 abstract class _SignInStealthController with Store, MapFailureMessage {
   final String _invalidFieldsToProceedLogin =
       'E-mail e senha precisam estarem corretos para continuar.';
-  final IUserProfileStore _userProfileStore;
+  final LocalStore<UserProfileEntity> _userProfileStore;
   final IAuthenticationRepository _repository;
   final StealthSecurityAction _securityAction;
 

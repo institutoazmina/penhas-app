@@ -2,11 +2,12 @@ import 'package:http/http.dart' as http;
 import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/core/managers/audio_sync_manager.dart';
+import 'package:penhas/app/core/managers/local_store.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
-import 'package:penhas/app/core/managers/user_profile_store.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
+import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/authentication/data/datasources/authentication_data_source.dart';
 import 'package:penhas/app/features/authentication/data/datasources/change_password_data_source.dart';
 import 'package:penhas/app/features/authentication/data/datasources/user_register_data_source.dart';
@@ -172,7 +173,7 @@ class SignInModule extends ChildModule {
         Bind(
           (i) => SignInAnonymousController(
               repository: i.get<IAuthenticationRepository>(),
-              userProfileStore: i.get<IUserProfileStore>()),
+              userProfileStore: i.get<LocalStore<UserProfileEntity>>()),
           singleton: false,
         )
       ];
@@ -180,8 +181,9 @@ class SignInModule extends ChildModule {
   List<Bind> get _signInStealth => [
         Bind(
           (i) => SignInStealthController(
+          (i) => SignInStealthController(
             repository: i.get<IAuthenticationRepository>(),
-            userProfileStore: i.get<IUserProfileStore>(),
+            userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
             securityAction: i.get<StealthSecurityAction>(),
           ),
           singleton: false,
