@@ -181,7 +181,6 @@ class SignInModule extends ChildModule {
   List<Bind> get _signInStealth => [
         Bind(
           (i) => SignInStealthController(
-          (i) => SignInStealthController(
             repository: i.get<IAuthenticationRepository>(),
             userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
             securityAction: i.get<StealthSecurityAction>(),

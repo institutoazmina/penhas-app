@@ -1,17 +1,16 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter/material.dart' as material;
 import 'package:mobx/mobx.dart';
 import 'package:meta/meta.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/managers/local_store.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
-import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
+import 'package:penhas/app/features/appstate/domain/usecases/app_preferences_use_case.dart';
 import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_security_state.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_store.dart';
 import 'package:penhas/app/features/notification/data/repositories/notification_repository.dart';
+import 'package:penhas/app/shared/navigation/navigator.dart';
 
 part 'mainboard_controller.g.dart';
 
@@ -19,13 +18,12 @@ class MainboardController extends _MainboardControllerBase
     with _$MainboardController {
   MainboardController({
     @required MainboardStore mainboardStore,
-    @required LocalStore<UserProfileEntity> userProfileStore,
-    @required LocalStore<UserProfileEntity> userProfileStore,
+    @required InactivityLogoutUseCase inactivityLogoutUseCase,
     @required INotificationRepository notification,
     @required IAppModulesServices modulesServices,
   }) : super(
           mainboardStore,
-          userProfileStore,
+          inactivityLogoutUseCase,
           notification,
           modulesServices,
         );
@@ -35,13 +33,13 @@ abstract class _MainboardControllerBase with Store {
   Timer _syncTimer;
   final int notificationInterval = 60;
   final MainboardStore mainboardStore;
-  final LocalStore<UserProfileEntity> _userProfileStore;
+  final InactivityLogoutUseCase _inactivityLogoutUseCase;
   final INotificationRepository _notification;
   final IAppModulesServices _modulesServices;
 
   _MainboardControllerBase(
     this.mainboardStore,
-    this._userProfileStore,
+    this._inactivityLogoutUseCase,
     this._notification,
     this._modulesServices,
   ) {
@@ -63,32 +61,23 @@ abstract class _MainboardControllerBase with Store {
   }
 
   @action
-  changeAppState(AppLifecycleState state) async {
-    final profile = await _userProfileStore.retrieve();
-
+  changeAppState(material.AppLifecycleState state) async {
     switch (state) {
-      case AppLifecycleState.inactive:
-        if (profile.stealthModeEnabled) {
-          Modular.to.pushNamedAndRemoveUntil(
-            '/authentication/stealth',
-            ModalRoute.withName('/'),
-          );
-
-          return;
-        }
-        if (profile.anonymousModeEnabled) {
-          Modular.to.pushNamedAndRemoveUntil(
-            '/authentication/sign_in_stealth',
-            ModalRoute.withName('/'),
-          );
-
-          return;
-        }
+      case material.AppLifecycleState.inactive:
+        _inactivityLogoutUseCase.setInactive(DateTime.now());
         break;
-
-      case AppLifecycleState.resumed:
-      case AppLifecycleState.detached:
-      case AppLifecycleState.paused:
+      case material.AppLifecycleState.resumed:
+        final route = await _inactivityLogoutUseCase.inactivityRoute(
+          DateTime.now(),
+        );
+        _inactivityLogoutUseCase.setActive();
+        route.fold(
+          (l) => {},
+          (r) => Navigator.pushNamedAndRemoveUntil(r),
+        );
+        break;
+      case material.AppLifecycleState.detached:
+      case material.AppLifecycleState.paused:
         break;
     }
   }

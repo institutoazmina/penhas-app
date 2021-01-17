@@ -9,7 +9,9 @@ import 'package:penhas/app/core/managers/modules_sevices.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
+import 'package:penhas/app/features/appstate/domain/entities/app_preferences_entity.dart';
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
+import 'package:penhas/app/features/appstate/domain/usecases/app_preferences_use_case.dart';
 import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
 import 'package:penhas/app/features/chat/domain/usecases/chat_channel_usecase.dart';
 import 'package:penhas/app/features/chat/presentation/chat/chat_channel_controller.dart';
@@ -96,7 +98,7 @@ class MainboardModule extends ChildModule {
         Bind(
           (i) => MainboardController(
             mainboardStore: i.get<MainboardStore>(),
-            userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
+            inactivityLogoutUseCase: i.get<InactivityLogoutUseCase>(),
             modulesServices: i.get<IAppModulesServices>(),
             notification: i.get<INotificationRepository>(),
           ),
@@ -447,6 +449,12 @@ class MainboardModule extends ChildModule {
               userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
               appConfiguration: i.get<IAppConfiguration>(),
               appModulesServices: i.get<IAppModulesServices>()),
+        ),
+        Bind<InactivityLogoutUseCase>(
+          (i) => InactivityLogoutUseCase(
+            appPreferencesStore: i.get<LocalStore<AppPreferencesEntity>>(),
+            userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
+          ),
         ),
         Bind<IAppStateRepository>(
           (i) => AppStateRepository(

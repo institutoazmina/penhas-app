@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
+import 'package:penhas/app/core/managers/app_preferences_store.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/core/storage/i_local_storage.dart';
@@ -20,6 +21,7 @@ import 'core/managers/modules_sevices.dart';
 import 'core/managers/user_profile_store.dart';
 import 'core/network/api_client.dart';
 import 'core/storage/local_storage_shared_preferences.dart';
+import 'features/appstate/domain/entities/app_preferences_entity.dart';
 import 'features/authentication/presentation/deleted_account/deleted_account_controller.dart';
 import 'features/authentication/presentation/deleted_account/deleted_account_page.dart';
 import 'features/help_center/data/repositories/audio_sync_repository.dart';
@@ -67,6 +69,11 @@ class AppModule extends MainModule {
         ),
         Bind<LocalStore<UserProfileEntity>>(
           (i) => UserProfileStore(
+            storage: i.get<ILocalStorage>(),
+          ),
+        ),
+        Bind<LocalStore<AppPreferencesEntity>>(
+          (i) => AppPreferencesStore(
             storage: i.get<ILocalStorage>(),
           ),
         ),
