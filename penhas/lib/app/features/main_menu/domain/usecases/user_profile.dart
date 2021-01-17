@@ -39,7 +39,7 @@ class UserProfile {
   }
 
   Future<UserProfileEntity> currentProfile() async {
-    return _userProfileStore.retreive();
+    return _userProfileStore.retrieve();
   }
 
   Future<void> logout() {

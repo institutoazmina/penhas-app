@@ -49,13 +49,13 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
   }
 
   void _init() async {
-    final profile = await _userProfileStore.retreive();
+    final profile = await _userProfileStore.retrieve();
     _emailAddress = EmailAddress(profile.email);
     userEmail = profile.email;
     userGreetings = "Bem-vinda, ${profile.nickname}";
 
     final zodiac = Zodiac();
-    final _userProfile = await _userProfileStore.retreive();
+    final _userProfile = await _userProfileStore.retrieve();
     sign = zodiac.sign(_userProfile.birthdate);
     signList =
         zodiac.pickEigthRandonSign(_userProfile.birthdate).asObservable();

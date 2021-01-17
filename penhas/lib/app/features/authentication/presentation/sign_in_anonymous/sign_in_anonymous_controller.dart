@@ -35,7 +35,7 @@ abstract class _SignInAnonymousController with Store, MapFailureMessage {
   }
 
   void _init() async {
-    final profile = await _userProfileStore.retreive();
+    final profile = await _userProfileStore.retrieve();
     _emailAddress = EmailAddress(profile.email);
     userEmail = profile.email;
     userGreetings = "Bem-vinda, ${profile.nickname}";

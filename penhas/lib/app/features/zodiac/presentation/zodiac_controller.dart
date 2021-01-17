@@ -34,7 +34,7 @@ abstract class _ZodiacControllerBase with Store {
 
   void _init() async {
     final zodiac = Zodiac();
-    final _userProfile = await _userProfileStore.retreive();
+    final _userProfile = await _userProfileStore.retrieve();
     sign = zodiac.sign(_userProfile.birthdate);
     signList =
         zodiac.pickEigthRandonSign(_userProfile.birthdate).asObservable();

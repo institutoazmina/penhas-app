@@ -62,7 +62,7 @@ abstract class _MainboardControllerBase with Store {
 
   @action
   changeAppState(AppLifecycleState state) async {
-    final profile = await _userProfileStore.retreive();
+    final profile = await _userProfileStore.retrieve();
 
     switch (state) {
       case AppLifecycleState.inactive:

@@ -53,7 +53,7 @@ abstract class _SplashControllerBase with Store {
   }
 
   void _forwardToAuthenticated() async {
-    final profile = await _userProfileStore.retreive();
+    final profile = await _userProfileStore.retrieve();
 
     if (profile.stealthModeEnabled) {
       Modular.to.pushReplacementNamed('/authentication/stealth');

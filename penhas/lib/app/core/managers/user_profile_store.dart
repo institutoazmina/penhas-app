@@ -5,7 +5,7 @@ import 'package:penhas/app/features/appstate/data/model/user_profile_model.dart'
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 
 abstract class IUserProfileStore {
-  Future<UserProfileEntity> retreive();
+  Future<UserProfileEntity> retrieve();
   Future<void> save(UserProfileEntity userProfile);
   Future<void> delete();
 }
@@ -17,7 +17,7 @@ class UserProfileStore implements IUserProfileStore {
   UserProfileStore({@required ILocalStorage storage}) : this._storage = storage;
 
   @override
-  Future<UserProfileEntity> retreive() async {
+  Future<UserProfileEntity> retrieve() async {
     return _storage
         .get(_profileKey)
         .then((data) => json.decode(data) as Map<String, Object>)
