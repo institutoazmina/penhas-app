@@ -4,8 +4,9 @@ import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/data/authorization_status.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
-import 'package:penhas/app/core/managers/user_profile_store.dart';
+import 'package:penhas/app/core/managers/local_store.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
+import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
 import 'package:penhas/app/shared/navigation/navigator.dart';
 import 'package:penhas/app/shared/navigation/route.dart';
@@ -16,14 +17,14 @@ class SplashController extends _SplashControllerBase with _$SplashController {
   SplashController({
     @required IAppConfiguration appConfiguration,
     @required AppStateUseCase appStateUseCase,
-    @required IUserProfileStore userProfileStore,
+    @required LocalStore<UserProfileEntity> userProfileStore,
   }) : super(appConfiguration, appStateUseCase, userProfileStore);
 }
 
 abstract class _SplashControllerBase with Store {
   final AppStateUseCase _appStateUseCase;
   final IAppConfiguration _appConfiguration;
-  final IUserProfileStore _userProfileStore;
+  final LocalStore<UserProfileEntity> _userProfileStore;
 
   _SplashControllerBase(
     this._appConfiguration,
@@ -53,7 +54,7 @@ abstract class _SplashControllerBase with Store {
   }
 
   void _forwardToAuthenticated() async {
-    final profile = await _userProfileStore.retreive();
+    final profile = await _userProfileStore.retrieve();
 
     if (profile.stealthModeEnabled) {
       Modular.to.pushReplacementNamed('/authentication/stealth');

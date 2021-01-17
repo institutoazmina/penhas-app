@@ -61,7 +61,7 @@ mixin _$MainboardController on _MainboardControllerBase, Store {
       AsyncAction('_MainboardControllerBase.changeAppState');
 
   @override
-  Future changeAppState(AppLifecycleState state) {
+  Future changeAppState(material.AppLifecycleState state) {
     return _$changeAppStateAsyncAction.run(() => super.changeAppState(state));
   }
 

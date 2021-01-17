@@ -3,11 +3,12 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:http/http.dart' as http;
 import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/core/managers/audio_sync_manager.dart';
+import 'package:penhas/app/core/managers/local_store.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
-import 'package:penhas/app/core/managers/user_profile_store.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
+import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/help_center/data/datasources/guardian_data_source.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
 import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
@@ -20,7 +21,7 @@ class ZodiacModule extends WidgetModule {
   List<Bind> get binds => [
         Bind(
           (i) => ZodiacController(
-            userProfileStore: i.get<IUserProfileStore>(),
+            userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
             securityAction: i.get<StealthSecurityAction>(),
           ),
           singleton: false,

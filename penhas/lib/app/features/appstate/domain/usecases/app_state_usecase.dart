@@ -2,21 +2,22 @@ import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
+import 'package:penhas/app/core/managers/local_store.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
-import 'package:penhas/app/core/managers/user_profile_store.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/appstate/domain/entities/update_user_profile_entity.dart';
+import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/appstate/domain/repositories/i_app_state_repository.dart';
 
 class AppStateUseCase {
   final IAppStateRepository _appStateRepository;
-  final IUserProfileStore _userProfileStore;
+  final LocalStore<UserProfileEntity> _userProfileStore;
   final IAppConfiguration _appConfiguration;
   final IAppModulesServices _appModulesServices;
 
   AppStateUseCase({
     @required IAppStateRepository appStateRepository,
-    @required IUserProfileStore userProfileStore,
+    @required LocalStore<UserProfileEntity> userProfileStore,
     @required IAppConfiguration appConfiguration,
     @required IAppModulesServices appModulesServices,
   })  : this._appStateRepository = appStateRepository,

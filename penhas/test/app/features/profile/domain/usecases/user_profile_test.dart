@@ -2,14 +2,15 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/managers/user_profile_store.dart';
+import 'package:penhas/app/core/managers/local_store.dart';
+import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
 import 'package:penhas/app/features/main_menu/domain/repositories/user_profile_repository.dart';
 import 'package:penhas/app/features/main_menu/domain/usecases/user_profile.dart';
 
 class MockAppStateUseCase extends Mock implements AppStateUseCase {}
 
-class MockUserProfileStore extends Mock implements IUserProfileStore {}
+class MockUserProfileStore extends Mock implements LocalStore<UserProfileEntity> {}
 
 class MockUserProfileRepository extends Mock implements IUserProfileRepository {
 }
@@ -18,7 +19,7 @@ void main() {
   UserProfile sut;
   AppStateUseCase appStateUseCase;
   IUserProfileRepository repository;
-  IUserProfileStore profileStore;
+  LocalStore<UserProfileEntity> profileStore;
 
   setUp(() {
     repository = MockUserProfileRepository();
