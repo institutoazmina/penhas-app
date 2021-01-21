@@ -40,7 +40,7 @@ class _StealthModeTutorialPageState extends State<StealthModeTutorialPage> {
     TutorialPageViewWidget(
       title: 'Login disfarçado',
       description:
-          'Em situação de emergência clique e seguro no símbolo do signo em destaque, até que ele troque de cor. Isso enviará um alerta para seus guardiões e durante 15 minutos um áudio será gravado.',
+          'Em situação de emergência clique e segure no símbolo do signo em destaque, até que ele troque de cor. Isso enviará um alerta para seus guardiões e durante 15 minutos um áudio será gravado.',
       bodyWidget: Image(
         image: AssetImage(
             'assets/images/stealth_mode_tutorial_image_3/stealth_mode_tutorial_image_3.png'),
