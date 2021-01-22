@@ -23,7 +23,6 @@ class TutorialPageViewWidget extends StatelessWidget {
           right: 12.0,
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             _titleBuilder(),
             _title == null ? Container() : SizedBox(height: 28.0),
