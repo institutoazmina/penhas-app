@@ -84,36 +84,35 @@ class _StealthModeTutorialPageState extends State<StealthModeTutorialPage> {
             left: 12.0,
             right: 12.0,
           ),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Container(
-                  height: 470,
-                  child: PageView(
-                    physics: ClampingScrollPhysics(),
-                    children: _contentPageView,
-                    controller: _pageController,
-                    onPageChanged: (int page) {
-                      setState(() {
-                        _currentPage = page;
-                      });
-                    },
-                  ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: PageView(
+                  physics: ClampingScrollPhysics(),
+                  children: _contentPageView,
+                  controller: _pageController,
+                  onPageChanged: (int page) {
+                    setState(() {
+                      _currentPage = page;
+                    });
+                  },
                 ),
-                SizedBox(height: 30),
-                Padding(
-                  padding: const EdgeInsets.only(left: 12.0, right: 12.0, bottom: 12.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(children: _buildPageIndicator()),
-                      Row(children: <Widget>[_buildActionButton()]),
-                    ],
-                  ),
+              ),
+              SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 12.0, right: 12.0, bottom: 12.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(children: _buildPageIndicator()),
+                    Row(children: <Widget>[_buildActionButton()]),
+                  ],
                 ),
-              ],
-            ),
+              )
+            ],
           ),
         ),
       ),
