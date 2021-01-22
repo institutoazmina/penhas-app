@@ -1,7 +1,17 @@
-class ChatTabItem {
-  final String headerName;
+enum ChatTabItem {
+  people,
+  talks
+}
 
-  ChatTabItem({
-    this.headerName,
-  });
+extension ChatTabTitle on ChatTabItem {
+  String get title {
+    switch (this) {
+      case ChatTabItem.people:
+        return 'Pessoas';
+      case ChatTabItem.talks:
+        return 'Conversas';
+      default:
+        return null;
+    }
+  }
 }
