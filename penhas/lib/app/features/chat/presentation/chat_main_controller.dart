@@ -21,14 +21,15 @@ abstract class _ChatMainControllerBase with Store {
   }
 
   Future<void> _init() async {
-    List<ChatTabItem> items = [ChatTabItem(headerName: "Conversas")];
-    tabItems = items.asObservable();
+    List<ChatTabItem> items = [];
 
     if (await _chatToggleFeature.isEnabled) {
       securityState = ChatMainSecurityState.supportAndPrivate();
-      items.add(ChatTabItem(headerName: "Pessoas"));
-      tabItems = items.asObservable();
+      items.add(ChatTabItem.people);
     }
+
+    items.add(ChatTabItem.talks);
+    tabItems = items.asObservable();
   }
 
   @observable

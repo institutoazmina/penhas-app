@@ -68,15 +68,16 @@ extension _ChatMainPageStatePrivate on _ChatMainPageState {
       indicatorColor: DesignSystemColors.pinky,
       unselectedLabelColor: DesignSystemColors.warnGrey,
       unselectedLabelStyle: chatTabUnselectedTextStyle,
-      tabs: items.map((e) => Tab(text: e.headerName)).toList(),
+      tabs: items.map((e) => Tab(text: e.title)).toList(),
     );
   }
 
   Widget buildBody(List<ChatTabItem> items) {
-    return TabBarView(children: [
-      ChatMainTalksPage(),
-      ChatMainPeoplePage(),
-    ]);
+    final widgets = items
+        .map((e) => e == ChatTabItem.people
+        ? ChatMainPeoplePage()
+        : ChatMainTalksPage());
+    return TabBarView(children: widgets.toList());
   }
 }
 
