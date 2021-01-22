@@ -16,20 +16,22 @@ class TutorialPageViewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: 12.0,
-        right: 12.0,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _titleBuilder(),
-          _title == null ? Container() : SizedBox(height: 28.0),
-          _bodyWidgetBuilder(),
-          SizedBox(height: 28.0),
-          _descriptionBuilder(),
-        ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: 12.0,
+          right: 12.0,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            _titleBuilder(),
+            _title == null ? Container() : SizedBox(height: 28.0),
+            _bodyWidgetBuilder(),
+            SizedBox(height: 28.0),
+            _descriptionBuilder(),
+          ],
+        ),
       ),
     );
   }
