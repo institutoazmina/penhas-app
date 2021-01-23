@@ -110,11 +110,16 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
               mapController = controller;
             },
           ),
-          SupportCenterInputFilter(
-            initialValue: controller.currentKeywords,
-            totalOfFilter: controller.categoriesSelected,
-            onFilterAction: controller.onFilterAction,
-            onKeywordsAction: controller.onKeywordsAction,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SupportCenterInputFilter(
+                initialValue: controller.currentKeywords,
+                totalOfFilter: controller.categoriesSelected,
+                onFilterAction: controller.onFilterAction,
+                onKeywordsAction: controller.onKeywordsAction,
+              ),
+            ],
           ),
           Positioned(
             bottom: 40,
