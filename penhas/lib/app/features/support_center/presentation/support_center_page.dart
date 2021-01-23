@@ -57,7 +57,10 @@ class _SupportCenterPageState
     super.didChangeDependencies();
     _disposers ??= [
       reaction((_) => controller.errorMessage, (String message) {
-        showSnackBar(scaffoldKey: _scaffoldKey, message: message);
+        showSnackBar(
+            scaffoldKey: _scaffoldKey,
+            message: message,
+            duration: Duration(seconds: 2));
       }),
     ];
   }
@@ -116,8 +119,8 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
               SupportCenterInputFilter(
                 initialValue: controller.currentKeywords,
                 totalOfFilter: controller.categoriesSelected,
-                onFilterAction: controller.onFilterAction,
-                onKeywordsAction: controller.onKeywordsAction,
+                onFilterAction: () => _dismissSnackBarForAction(controller.onFilterAction),
+                onKeywordsAction: (keywords) => _dismissSnackBarForAction(controller.onKeywordsAction, argument: keywords),
               ),
             ],
           ),
@@ -128,7 +131,7 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
               child: Column(
                 children: [
                   FlatButton(
-                    onPressed: controller.location,
+                    onPressed: () => _dismissSnackBarForAction(controller.location),
                     child: CircleAvatar(
                       radius: 12,
                       child: SvgPicture.asset(
@@ -137,7 +140,7 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
                     ),
                   ),
                   FlatButton(
-                    onPressed: controller.listPlaces,
+                    onPressed: () => _dismissSnackBarForAction(controller.listPlaces),
                     child: CircleAvatar(
                       radius: 12,
                       child: SvgPicture.asset(
@@ -146,7 +149,7 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
                     ),
                   ),
                   FlatButton(
-                    onPressed: controller.addPlace,
+                    onPressed: () => _dismissSnackBarForAction(controller.addPlace),
                     child: CircleAvatar(
                       radius: 20,
                       child: SvgPicture.asset(
@@ -161,5 +164,15 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
         ],
       ),
     );
+  }
+
+  void _dismissSnackBarForAction(Function action, {dynamic argument}){
+    _scaffoldKey.currentState.hideCurrentSnackBar();
+
+    if (argument == null) {
+      action();
+    } else{
+      action(argument);
+    }
   }
 }
