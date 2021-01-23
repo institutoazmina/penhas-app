@@ -90,7 +90,8 @@ class SupportCenterInputFilter extends StatelessWidget {
                           padding: EdgeInsets.only(left: 6),
                           child: TextField(
                             decoration: InputDecoration.collapsed(
-                                hintText: "Pesquise aqui"),
+                                hintText: "Busque por cidade, UF ou nome do ponto de apoio",
+                            hintStyle: TextStyle(fontSize: 11)),
                             textCapitalization: TextCapitalization.none,
                             controller: _textController,
                             onSubmitted: (t) => _submitKeywordFilter(context),
