@@ -117,8 +117,13 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
     await _audioServices.requestPermission().then(
           (value) => {
             value.maybeWhen(
-              granted: () =>
-                  Modular.to.pushNamed('/mainboard/helpcenter/audioRecord'),
+              granted: () => Modular.to
+                  .pushNamed('/mainboard/helpcenter/audioRecord')
+                  .then((value) {
+                if (value) {
+                  _setErrorMessage("Gravação finalizada.");
+                }
+              }),
               orElse: () {},
             )
           },

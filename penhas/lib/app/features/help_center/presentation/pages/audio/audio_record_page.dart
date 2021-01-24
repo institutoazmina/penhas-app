@@ -39,24 +39,30 @@ class _AudioRecordState
 
   @override
   void dispose() {
-    controller.dispose();
     if (_streamSubscription != null) {
       _streamSubscription.cancel();
       _streamSubscription = null;
     }
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: DesignSystemColors.ligthPurple,
-      ),
-      body: SoundRecordWidget(
-        audioActivity: _audioActivity,
-        onPressed: () async => controller.stopAudioRecord(),
+    return WillPopScope(
+      onWillPop: () async {
+        controller.stopAudioRecord();
+        return false;
+      },
+      child: Scaffold(
+        key: _scaffoldKey,
+        appBar: AppBar(
+          backgroundColor: DesignSystemColors.ligthPurple,
+        ),
+        body: SoundRecordWidget(
+          audioActivity: _audioActivity,
+          onPressed: () async => controller.stopAudioRecord(),
+        ),
       ),
     );
   }
