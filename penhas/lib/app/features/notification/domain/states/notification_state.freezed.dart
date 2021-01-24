@@ -26,6 +26,11 @@ class _$NotificationStateTearOff {
   }
 
 // ignore: unused_element
+  _Empty empty() {
+    return const _Empty();
+  }
+
+// ignore: unused_element
   _ErrorDetails error(String message) {
     return _ErrorDetails(
       message,
@@ -40,30 +45,34 @@ const $NotificationState = _$NotificationStateTearOff();
 /// @nodoc
 mixin _$NotificationState {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(List<NotificationEntity> notifications),
-    @required Result error(String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(List<NotificationEntity> notifications),
+    @required TResult empty(),
+    @required TResult error(String message),
   });
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(List<NotificationEntity> notifications),
-    Result error(String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(List<NotificationEntity> notifications),
+    TResult empty(),
+    TResult error(String message),
+    @required TResult orElse(),
   });
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result error(_ErrorDetails value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
+    @required TResult empty(_Empty value),
+    @required TResult error(_ErrorDetails value),
   });
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result error(_ErrorDetails value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    TResult empty(_Empty value),
+    TResult error(_ErrorDetails value),
+    @required TResult orElse(),
   });
 }
 
@@ -125,24 +134,27 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(List<NotificationEntity> notifications),
-    @required Result error(String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(List<NotificationEntity> notifications),
+    @required TResult empty(),
+    @required TResult error(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
+    assert(empty != null);
     assert(error != null);
     return initial();
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(List<NotificationEntity> notifications),
-    Result error(String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(List<NotificationEntity> notifications),
+    TResult empty(),
+    TResult error(String message),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (initial != null) {
@@ -153,24 +165,27 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result error(_ErrorDetails value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
+    @required TResult empty(_Empty value),
+    @required TResult error(_ErrorDetails value),
   }) {
     assert(initial != null);
     assert(loaded != null);
+    assert(empty != null);
     assert(error != null);
     return initial(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result error(_ErrorDetails value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    TResult empty(_Empty value),
+    TResult error(_ErrorDetails value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (initial != null) {
@@ -251,24 +266,27 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(List<NotificationEntity> notifications),
-    @required Result error(String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(List<NotificationEntity> notifications),
+    @required TResult empty(),
+    @required TResult error(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
+    assert(empty != null);
     assert(error != null);
     return loaded(notifications);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(List<NotificationEntity> notifications),
-    Result error(String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(List<NotificationEntity> notifications),
+    TResult empty(),
+    TResult error(String message),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (loaded != null) {
@@ -279,24 +297,27 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result error(_ErrorDetails value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
+    @required TResult empty(_Empty value),
+    @required TResult error(_ErrorDetails value),
   }) {
     assert(initial != null);
     assert(loaded != null);
+    assert(empty != null);
     assert(error != null);
     return loaded(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result error(_ErrorDetails value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    TResult empty(_Empty value),
+    TResult error(_ErrorDetails value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (loaded != null) {
@@ -311,6 +332,112 @@ abstract class _Loaded implements NotificationState {
 
   List<NotificationEntity> get notifications;
   _$LoadedCopyWith<_Loaded> get copyWith;
+}
+
+/// @nodoc
+abstract class _$EmptyCopyWith<$Res> {
+  factory _$EmptyCopyWith(_Empty value, $Res Function(_Empty) then) =
+      __$EmptyCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$EmptyCopyWithImpl<$Res> extends _$NotificationStateCopyWithImpl<$Res>
+    implements _$EmptyCopyWith<$Res> {
+  __$EmptyCopyWithImpl(_Empty _value, $Res Function(_Empty) _then)
+      : super(_value, (v) => _then(v as _Empty));
+
+  @override
+  _Empty get _value => super._value as _Empty;
+}
+
+/// @nodoc
+class _$_Empty with DiagnosticableTreeMixin implements _Empty {
+  const _$_Empty();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'NotificationState.empty()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'NotificationState.empty'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _Empty);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(List<NotificationEntity> notifications),
+    @required TResult empty(),
+    @required TResult error(String message),
+  }) {
+    assert(initial != null);
+    assert(loaded != null);
+    assert(empty != null);
+    assert(error != null);
+    return empty();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(List<NotificationEntity> notifications),
+    TResult empty(),
+    TResult error(String message),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (empty != null) {
+      return empty();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
+    @required TResult empty(_Empty value),
+    @required TResult error(_ErrorDetails value),
+  }) {
+    assert(initial != null);
+    assert(loaded != null);
+    assert(empty != null);
+    assert(error != null);
+    return empty(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    TResult empty(_Empty value),
+    TResult error(_ErrorDetails value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (empty != null) {
+      return empty(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Empty implements NotificationState {
+  const factory _Empty() = _$_Empty;
 }
 
 /// @nodoc
@@ -380,24 +507,27 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(List<NotificationEntity> notifications),
-    @required Result error(String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(List<NotificationEntity> notifications),
+    @required TResult empty(),
+    @required TResult error(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
+    assert(empty != null);
     assert(error != null);
     return error(message);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(List<NotificationEntity> notifications),
-    Result error(String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(List<NotificationEntity> notifications),
+    TResult empty(),
+    TResult error(String message),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (error != null) {
@@ -408,24 +538,27 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result error(_ErrorDetails value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
+    @required TResult empty(_Empty value),
+    @required TResult error(_ErrorDetails value),
   }) {
     assert(initial != null);
     assert(loaded != null);
+    assert(empty != null);
     assert(error != null);
     return error(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result error(_ErrorDetails value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    TResult empty(_Empty value),
+    TResult error(_ErrorDetails value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (error != null) {

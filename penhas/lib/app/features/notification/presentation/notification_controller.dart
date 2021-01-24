@@ -60,7 +60,11 @@ extension _PrivateMethod on _NotificationControllerBase {
   }
 
   void handleSession(NotificationSessionEntity session) {
-    state = NotificationState.loaded(session.notifications);
+    if (session.notifications.isEmpty) {
+      state = NotificationState.empty();
+    } else {
+      state = NotificationState.loaded(session.notifications);
+    }
   }
 
   void handleStateError(Failure f) {

@@ -59,42 +59,42 @@ const $ChatChannelUseCaseEvent = _$ChatChannelUseCaseEventTearOff();
 /// @nodoc
 mixin _$ChatChannelUseCaseEvent {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(),
-    @required Result updateUser(ChatUserEntity user),
-    @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
-    @required Result updateMessage(List<ChatChannelMessage> messages),
-    @required Result errorOnLoading(String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(),
+    @required TResult updateUser(ChatUserEntity user),
+    @required TResult updateMetada(ChatChannelSessionMetadataEntity metadata),
+    @required TResult updateMessage(List<ChatChannelMessage> messages),
+    @required TResult errorOnLoading(String message),
   });
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(),
-    Result updateUser(ChatUserEntity user),
-    Result updateMetada(ChatChannelSessionMetadataEntity metadata),
-    Result updateMessage(List<ChatChannelMessage> messages),
-    Result errorOnLoading(String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(),
+    TResult updateUser(ChatUserEntity user),
+    TResult updateMetada(ChatChannelSessionMetadataEntity metadata),
+    TResult updateMessage(List<ChatChannelMessage> messages),
+    TResult errorOnLoading(String message),
+    @required TResult orElse(),
   });
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result updateUser(_UpdateUser value),
-    @required Result updateMetada(_UpdateMetada value),
-    @required Result updateMessage(_UpdateMessage value),
-    @required Result errorOnLoading(_ErrorOnLoading value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
+    @required TResult updateUser(_UpdateUser value),
+    @required TResult updateMetada(_UpdateMetada value),
+    @required TResult updateMessage(_UpdateMessage value),
+    @required TResult errorOnLoading(_ErrorOnLoading value),
   });
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result updateUser(_UpdateUser value),
-    Result updateMetada(_UpdateMetada value),
-    Result updateMessage(_UpdateMessage value),
-    Result errorOnLoading(_ErrorOnLoading value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    TResult updateUser(_UpdateUser value),
+    TResult updateMetada(_UpdateMetada value),
+    TResult updateMessage(_UpdateMessage value),
+    TResult errorOnLoading(_ErrorOnLoading value),
+    @required TResult orElse(),
   });
 }
 
@@ -158,13 +158,13 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(),
-    @required Result updateUser(ChatUserEntity user),
-    @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
-    @required Result updateMessage(List<ChatChannelMessage> messages),
-    @required Result errorOnLoading(String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(),
+    @required TResult updateUser(ChatUserEntity user),
+    @required TResult updateMetada(ChatChannelSessionMetadataEntity metadata),
+    @required TResult updateMessage(List<ChatChannelMessage> messages),
+    @required TResult errorOnLoading(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -177,14 +177,14 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(),
-    Result updateUser(ChatUserEntity user),
-    Result updateMetada(ChatChannelSessionMetadataEntity metadata),
-    Result updateMessage(List<ChatChannelMessage> messages),
-    Result errorOnLoading(String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(),
+    TResult updateUser(ChatUserEntity user),
+    TResult updateMetada(ChatChannelSessionMetadataEntity metadata),
+    TResult updateMessage(List<ChatChannelMessage> messages),
+    TResult errorOnLoading(String message),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (initial != null) {
@@ -195,13 +195,13 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result updateUser(_UpdateUser value),
-    @required Result updateMetada(_UpdateMetada value),
-    @required Result updateMessage(_UpdateMessage value),
-    @required Result errorOnLoading(_ErrorOnLoading value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
+    @required TResult updateUser(_UpdateUser value),
+    @required TResult updateMetada(_UpdateMetada value),
+    @required TResult updateMessage(_UpdateMessage value),
+    @required TResult errorOnLoading(_ErrorOnLoading value),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -214,14 +214,14 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result updateUser(_UpdateUser value),
-    Result updateMetada(_UpdateMetada value),
-    Result updateMessage(_UpdateMessage value),
-    Result errorOnLoading(_ErrorOnLoading value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    TResult updateUser(_UpdateUser value),
+    TResult updateMetada(_UpdateMetada value),
+    TResult updateMessage(_UpdateMessage value),
+    TResult errorOnLoading(_ErrorOnLoading value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (initial != null) {
@@ -278,13 +278,13 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(),
-    @required Result updateUser(ChatUserEntity user),
-    @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
-    @required Result updateMessage(List<ChatChannelMessage> messages),
-    @required Result errorOnLoading(String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(),
+    @required TResult updateUser(ChatUserEntity user),
+    @required TResult updateMetada(ChatChannelSessionMetadataEntity metadata),
+    @required TResult updateMessage(List<ChatChannelMessage> messages),
+    @required TResult errorOnLoading(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -297,14 +297,14 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(),
-    Result updateUser(ChatUserEntity user),
-    Result updateMetada(ChatChannelSessionMetadataEntity metadata),
-    Result updateMessage(List<ChatChannelMessage> messages),
-    Result errorOnLoading(String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(),
+    TResult updateUser(ChatUserEntity user),
+    TResult updateMetada(ChatChannelSessionMetadataEntity metadata),
+    TResult updateMessage(List<ChatChannelMessage> messages),
+    TResult errorOnLoading(String message),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (loaded != null) {
@@ -315,13 +315,13 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result updateUser(_UpdateUser value),
-    @required Result updateMetada(_UpdateMetada value),
-    @required Result updateMessage(_UpdateMessage value),
-    @required Result errorOnLoading(_ErrorOnLoading value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
+    @required TResult updateUser(_UpdateUser value),
+    @required TResult updateMetada(_UpdateMetada value),
+    @required TResult updateMessage(_UpdateMessage value),
+    @required TResult errorOnLoading(_ErrorOnLoading value),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -334,14 +334,14 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result updateUser(_UpdateUser value),
-    Result updateMetada(_UpdateMetada value),
-    Result updateMessage(_UpdateMessage value),
-    Result errorOnLoading(_ErrorOnLoading value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    TResult updateUser(_UpdateUser value),
+    TResult updateMetada(_UpdateMetada value),
+    TResult updateMessage(_UpdateMessage value),
+    TResult errorOnLoading(_ErrorOnLoading value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (loaded != null) {
@@ -422,13 +422,13 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(),
-    @required Result updateUser(ChatUserEntity user),
-    @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
-    @required Result updateMessage(List<ChatChannelMessage> messages),
-    @required Result errorOnLoading(String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(),
+    @required TResult updateUser(ChatUserEntity user),
+    @required TResult updateMetada(ChatChannelSessionMetadataEntity metadata),
+    @required TResult updateMessage(List<ChatChannelMessage> messages),
+    @required TResult errorOnLoading(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -441,14 +441,14 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(),
-    Result updateUser(ChatUserEntity user),
-    Result updateMetada(ChatChannelSessionMetadataEntity metadata),
-    Result updateMessage(List<ChatChannelMessage> messages),
-    Result errorOnLoading(String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(),
+    TResult updateUser(ChatUserEntity user),
+    TResult updateMetada(ChatChannelSessionMetadataEntity metadata),
+    TResult updateMessage(List<ChatChannelMessage> messages),
+    TResult errorOnLoading(String message),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (updateUser != null) {
@@ -459,13 +459,13 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result updateUser(_UpdateUser value),
-    @required Result updateMetada(_UpdateMetada value),
-    @required Result updateMessage(_UpdateMessage value),
-    @required Result errorOnLoading(_ErrorOnLoading value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
+    @required TResult updateUser(_UpdateUser value),
+    @required TResult updateMetada(_UpdateMetada value),
+    @required TResult updateMessage(_UpdateMessage value),
+    @required TResult errorOnLoading(_ErrorOnLoading value),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -478,14 +478,14 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result updateUser(_UpdateUser value),
-    Result updateMetada(_UpdateMetada value),
-    Result updateMessage(_UpdateMessage value),
-    Result errorOnLoading(_ErrorOnLoading value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    TResult updateUser(_UpdateUser value),
+    TResult updateMetada(_UpdateMetada value),
+    TResult updateMessage(_UpdateMessage value),
+    TResult errorOnLoading(_ErrorOnLoading value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (updateUser != null) {
@@ -572,13 +572,13 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(),
-    @required Result updateUser(ChatUserEntity user),
-    @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
-    @required Result updateMessage(List<ChatChannelMessage> messages),
-    @required Result errorOnLoading(String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(),
+    @required TResult updateUser(ChatUserEntity user),
+    @required TResult updateMetada(ChatChannelSessionMetadataEntity metadata),
+    @required TResult updateMessage(List<ChatChannelMessage> messages),
+    @required TResult errorOnLoading(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -591,14 +591,14 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(),
-    Result updateUser(ChatUserEntity user),
-    Result updateMetada(ChatChannelSessionMetadataEntity metadata),
-    Result updateMessage(List<ChatChannelMessage> messages),
-    Result errorOnLoading(String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(),
+    TResult updateUser(ChatUserEntity user),
+    TResult updateMetada(ChatChannelSessionMetadataEntity metadata),
+    TResult updateMessage(List<ChatChannelMessage> messages),
+    TResult errorOnLoading(String message),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (updateMetada != null) {
@@ -609,13 +609,13 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result updateUser(_UpdateUser value),
-    @required Result updateMetada(_UpdateMetada value),
-    @required Result updateMessage(_UpdateMessage value),
-    @required Result errorOnLoading(_ErrorOnLoading value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
+    @required TResult updateUser(_UpdateUser value),
+    @required TResult updateMetada(_UpdateMetada value),
+    @required TResult updateMessage(_UpdateMessage value),
+    @required TResult errorOnLoading(_ErrorOnLoading value),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -628,14 +628,14 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result updateUser(_UpdateUser value),
-    Result updateMetada(_UpdateMetada value),
-    Result updateMessage(_UpdateMessage value),
-    Result errorOnLoading(_ErrorOnLoading value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    TResult updateUser(_UpdateUser value),
+    TResult updateMetada(_UpdateMetada value),
+    TResult updateMessage(_UpdateMessage value),
+    TResult errorOnLoading(_ErrorOnLoading value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (updateMetada != null) {
@@ -724,13 +724,13 @@ class _$_UpdateMessage with DiagnosticableTreeMixin implements _UpdateMessage {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(),
-    @required Result updateUser(ChatUserEntity user),
-    @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
-    @required Result updateMessage(List<ChatChannelMessage> messages),
-    @required Result errorOnLoading(String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(),
+    @required TResult updateUser(ChatUserEntity user),
+    @required TResult updateMetada(ChatChannelSessionMetadataEntity metadata),
+    @required TResult updateMessage(List<ChatChannelMessage> messages),
+    @required TResult errorOnLoading(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -743,14 +743,14 @@ class _$_UpdateMessage with DiagnosticableTreeMixin implements _UpdateMessage {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(),
-    Result updateUser(ChatUserEntity user),
-    Result updateMetada(ChatChannelSessionMetadataEntity metadata),
-    Result updateMessage(List<ChatChannelMessage> messages),
-    Result errorOnLoading(String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(),
+    TResult updateUser(ChatUserEntity user),
+    TResult updateMetada(ChatChannelSessionMetadataEntity metadata),
+    TResult updateMessage(List<ChatChannelMessage> messages),
+    TResult errorOnLoading(String message),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (updateMessage != null) {
@@ -761,13 +761,13 @@ class _$_UpdateMessage with DiagnosticableTreeMixin implements _UpdateMessage {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result updateUser(_UpdateUser value),
-    @required Result updateMetada(_UpdateMetada value),
-    @required Result updateMessage(_UpdateMessage value),
-    @required Result errorOnLoading(_ErrorOnLoading value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
+    @required TResult updateUser(_UpdateUser value),
+    @required TResult updateMetada(_UpdateMetada value),
+    @required TResult updateMessage(_UpdateMessage value),
+    @required TResult errorOnLoading(_ErrorOnLoading value),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -780,14 +780,14 @@ class _$_UpdateMessage with DiagnosticableTreeMixin implements _UpdateMessage {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result updateUser(_UpdateUser value),
-    Result updateMetada(_UpdateMetada value),
-    Result updateMessage(_UpdateMessage value),
-    Result errorOnLoading(_ErrorOnLoading value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    TResult updateUser(_UpdateUser value),
+    TResult updateMetada(_UpdateMetada value),
+    TResult updateMessage(_UpdateMessage value),
+    TResult errorOnLoading(_ErrorOnLoading value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (updateMessage != null) {
@@ -875,13 +875,13 @@ class _$_ErrorOnLoading
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(),
-    @required Result updateUser(ChatUserEntity user),
-    @required Result updateMetada(ChatChannelSessionMetadataEntity metadata),
-    @required Result updateMessage(List<ChatChannelMessage> messages),
-    @required Result errorOnLoading(String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(),
+    @required TResult updateUser(ChatUserEntity user),
+    @required TResult updateMetada(ChatChannelSessionMetadataEntity metadata),
+    @required TResult updateMessage(List<ChatChannelMessage> messages),
+    @required TResult errorOnLoading(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -894,14 +894,14 @@ class _$_ErrorOnLoading
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(),
-    Result updateUser(ChatUserEntity user),
-    Result updateMetada(ChatChannelSessionMetadataEntity metadata),
-    Result updateMessage(List<ChatChannelMessage> messages),
-    Result errorOnLoading(String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(),
+    TResult updateUser(ChatUserEntity user),
+    TResult updateMetada(ChatChannelSessionMetadataEntity metadata),
+    TResult updateMessage(List<ChatChannelMessage> messages),
+    TResult errorOnLoading(String message),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (errorOnLoading != null) {
@@ -912,13 +912,13 @@ class _$_ErrorOnLoading
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result updateUser(_UpdateUser value),
-    @required Result updateMetada(_UpdateMetada value),
-    @required Result updateMessage(_UpdateMessage value),
-    @required Result errorOnLoading(_ErrorOnLoading value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
+    @required TResult updateUser(_UpdateUser value),
+    @required TResult updateMetada(_UpdateMetada value),
+    @required TResult updateMessage(_UpdateMessage value),
+    @required TResult errorOnLoading(_ErrorOnLoading value),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -931,14 +931,14 @@ class _$_ErrorOnLoading
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result updateUser(_UpdateUser value),
-    Result updateMetada(_UpdateMetada value),
-    Result updateMessage(_UpdateMessage value),
-    Result errorOnLoading(_ErrorOnLoading value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    TResult updateUser(_UpdateUser value),
+    TResult updateMetada(_UpdateMetada value),
+    TResult updateMessage(_UpdateMessage value),
+    TResult errorOnLoading(_ErrorOnLoading value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (errorOnLoading != null) {

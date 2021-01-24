@@ -47,34 +47,34 @@ const $SupportCenterLocationState = _$SupportCenterLocationStateTearOff();
 /// @nodoc
 mixin _$SupportCenterLocationState {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(String message),
-    @required Result error(String message),
-    @required Result addressNotFound(String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(String message),
+    @required TResult error(String message),
+    @required TResult addressNotFound(String message),
   });
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(String message),
-    Result error(String message),
-    Result addressNotFound(String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(String message),
+    TResult error(String message),
+    TResult addressNotFound(String message),
+    @required TResult orElse(),
   });
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result error(_ErrorDetails value),
-    @required Result addressNotFound(_AddressNotFound value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
+    @required TResult error(_ErrorDetails value),
+    @required TResult addressNotFound(_AddressNotFound value),
   });
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result error(_ErrorDetails value),
-    Result addressNotFound(_AddressNotFound value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    TResult error(_ErrorDetails value),
+    TResult addressNotFound(_AddressNotFound value),
+    @required TResult orElse(),
   });
 }
 
@@ -138,11 +138,11 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(String message),
-    @required Result error(String message),
-    @required Result addressNotFound(String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(String message),
+    @required TResult error(String message),
+    @required TResult addressNotFound(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -153,12 +153,12 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(String message),
-    Result error(String message),
-    Result addressNotFound(String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(String message),
+    TResult error(String message),
+    TResult addressNotFound(String message),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (initial != null) {
@@ -169,11 +169,11 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result error(_ErrorDetails value),
-    @required Result addressNotFound(_AddressNotFound value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
+    @required TResult error(_ErrorDetails value),
+    @required TResult addressNotFound(_AddressNotFound value),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -184,12 +184,12 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result error(_ErrorDetails value),
-    Result addressNotFound(_AddressNotFound value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    TResult error(_ErrorDetails value),
+    TResult addressNotFound(_AddressNotFound value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (initial != null) {
@@ -268,11 +268,11 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(String message),
-    @required Result error(String message),
-    @required Result addressNotFound(String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(String message),
+    @required TResult error(String message),
+    @required TResult addressNotFound(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -283,12 +283,12 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(String message),
-    Result error(String message),
-    Result addressNotFound(String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(String message),
+    TResult error(String message),
+    TResult addressNotFound(String message),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (loaded != null) {
@@ -299,11 +299,11 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result error(_ErrorDetails value),
-    @required Result addressNotFound(_AddressNotFound value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
+    @required TResult error(_ErrorDetails value),
+    @required TResult addressNotFound(_AddressNotFound value),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -314,12 +314,12 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result error(_ErrorDetails value),
-    Result addressNotFound(_AddressNotFound value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    TResult error(_ErrorDetails value),
+    TResult addressNotFound(_AddressNotFound value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (loaded != null) {
@@ -403,11 +403,11 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(String message),
-    @required Result error(String message),
-    @required Result addressNotFound(String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(String message),
+    @required TResult error(String message),
+    @required TResult addressNotFound(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -418,12 +418,12 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(String message),
-    Result error(String message),
-    Result addressNotFound(String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(String message),
+    TResult error(String message),
+    TResult addressNotFound(String message),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (error != null) {
@@ -434,11 +434,11 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result error(_ErrorDetails value),
-    @required Result addressNotFound(_AddressNotFound value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
+    @required TResult error(_ErrorDetails value),
+    @required TResult addressNotFound(_AddressNotFound value),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -449,12 +449,12 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result error(_ErrorDetails value),
-    Result addressNotFound(_AddressNotFound value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    TResult error(_ErrorDetails value),
+    TResult addressNotFound(_AddressNotFound value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (error != null) {
@@ -541,11 +541,11 @@ class _$_AddressNotFound
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(String message),
-    @required Result error(String message),
-    @required Result addressNotFound(String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(String message),
+    @required TResult error(String message),
+    @required TResult addressNotFound(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -556,12 +556,12 @@ class _$_AddressNotFound
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(String message),
-    Result error(String message),
-    Result addressNotFound(String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(String message),
+    TResult error(String message),
+    TResult addressNotFound(String message),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (addressNotFound != null) {
@@ -572,11 +572,11 @@ class _$_AddressNotFound
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result error(_ErrorDetails value),
-    @required Result addressNotFound(_AddressNotFound value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
+    @required TResult error(_ErrorDetails value),
+    @required TResult addressNotFound(_AddressNotFound value),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -587,12 +587,12 @@ class _$_AddressNotFound
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result error(_ErrorDetails value),
-    Result addressNotFound(_AddressNotFound value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    TResult error(_ErrorDetails value),
+    TResult addressNotFound(_AddressNotFound value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (addressNotFound != null) {

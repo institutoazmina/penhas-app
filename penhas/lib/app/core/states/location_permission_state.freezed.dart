@@ -46,38 +46,38 @@ const $LocationPermissionState = _$LocationPermissionStateTearOff();
 /// @nodoc
 mixin _$LocationPermissionState {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result granted(),
-    @required Result denied(),
-    @required Result permanentlyDenied(),
-    @required Result restricted(),
-    @required Result undefined(),
+  TResult when<TResult extends Object>({
+    @required TResult granted(),
+    @required TResult denied(),
+    @required TResult permanentlyDenied(),
+    @required TResult restricted(),
+    @required TResult undefined(),
   });
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result granted(),
-    Result denied(),
-    Result permanentlyDenied(),
-    Result restricted(),
-    Result undefined(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult granted(),
+    TResult denied(),
+    TResult permanentlyDenied(),
+    TResult restricted(),
+    TResult undefined(),
+    @required TResult orElse(),
   });
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result granted(_Granted value),
-    @required Result denied(_Denied value),
-    @required Result permanentlyDenied(_PermanentlyDenied value),
-    @required Result restricted(_Restricted value),
-    @required Result undefined(_Undefined value),
+  TResult map<TResult extends Object>({
+    @required TResult granted(_Granted value),
+    @required TResult denied(_Denied value),
+    @required TResult permanentlyDenied(_PermanentlyDenied value),
+    @required TResult restricted(_Restricted value),
+    @required TResult undefined(_Undefined value),
   });
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result granted(_Granted value),
-    Result denied(_Denied value),
-    Result permanentlyDenied(_PermanentlyDenied value),
-    Result restricted(_Restricted value),
-    Result undefined(_Undefined value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult granted(_Granted value),
+    TResult denied(_Denied value),
+    TResult permanentlyDenied(_PermanentlyDenied value),
+    TResult restricted(_Restricted value),
+    TResult undefined(_Undefined value),
+    @required TResult orElse(),
   });
 }
 
@@ -141,12 +141,12 @@ class _$_Granted with DiagnosticableTreeMixin implements _Granted {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result granted(),
-    @required Result denied(),
-    @required Result permanentlyDenied(),
-    @required Result restricted(),
-    @required Result undefined(),
+  TResult when<TResult extends Object>({
+    @required TResult granted(),
+    @required TResult denied(),
+    @required TResult permanentlyDenied(),
+    @required TResult restricted(),
+    @required TResult undefined(),
   }) {
     assert(granted != null);
     assert(denied != null);
@@ -158,13 +158,13 @@ class _$_Granted with DiagnosticableTreeMixin implements _Granted {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result granted(),
-    Result denied(),
-    Result permanentlyDenied(),
-    Result restricted(),
-    Result undefined(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult granted(),
+    TResult denied(),
+    TResult permanentlyDenied(),
+    TResult restricted(),
+    TResult undefined(),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (granted != null) {
@@ -175,12 +175,12 @@ class _$_Granted with DiagnosticableTreeMixin implements _Granted {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result granted(_Granted value),
-    @required Result denied(_Denied value),
-    @required Result permanentlyDenied(_PermanentlyDenied value),
-    @required Result restricted(_Restricted value),
-    @required Result undefined(_Undefined value),
+  TResult map<TResult extends Object>({
+    @required TResult granted(_Granted value),
+    @required TResult denied(_Denied value),
+    @required TResult permanentlyDenied(_PermanentlyDenied value),
+    @required TResult restricted(_Restricted value),
+    @required TResult undefined(_Undefined value),
   }) {
     assert(granted != null);
     assert(denied != null);
@@ -192,13 +192,13 @@ class _$_Granted with DiagnosticableTreeMixin implements _Granted {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result granted(_Granted value),
-    Result denied(_Denied value),
-    Result permanentlyDenied(_PermanentlyDenied value),
-    Result restricted(_Restricted value),
-    Result undefined(_Undefined value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult granted(_Granted value),
+    TResult denied(_Denied value),
+    TResult permanentlyDenied(_PermanentlyDenied value),
+    TResult restricted(_Restricted value),
+    TResult undefined(_Undefined value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (granted != null) {
@@ -255,12 +255,12 @@ class _$_Denied with DiagnosticableTreeMixin implements _Denied {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result granted(),
-    @required Result denied(),
-    @required Result permanentlyDenied(),
-    @required Result restricted(),
-    @required Result undefined(),
+  TResult when<TResult extends Object>({
+    @required TResult granted(),
+    @required TResult denied(),
+    @required TResult permanentlyDenied(),
+    @required TResult restricted(),
+    @required TResult undefined(),
   }) {
     assert(granted != null);
     assert(denied != null);
@@ -272,13 +272,13 @@ class _$_Denied with DiagnosticableTreeMixin implements _Denied {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result granted(),
-    Result denied(),
-    Result permanentlyDenied(),
-    Result restricted(),
-    Result undefined(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult granted(),
+    TResult denied(),
+    TResult permanentlyDenied(),
+    TResult restricted(),
+    TResult undefined(),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (denied != null) {
@@ -289,12 +289,12 @@ class _$_Denied with DiagnosticableTreeMixin implements _Denied {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result granted(_Granted value),
-    @required Result denied(_Denied value),
-    @required Result permanentlyDenied(_PermanentlyDenied value),
-    @required Result restricted(_Restricted value),
-    @required Result undefined(_Undefined value),
+  TResult map<TResult extends Object>({
+    @required TResult granted(_Granted value),
+    @required TResult denied(_Denied value),
+    @required TResult permanentlyDenied(_PermanentlyDenied value),
+    @required TResult restricted(_Restricted value),
+    @required TResult undefined(_Undefined value),
   }) {
     assert(granted != null);
     assert(denied != null);
@@ -306,13 +306,13 @@ class _$_Denied with DiagnosticableTreeMixin implements _Denied {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result granted(_Granted value),
-    Result denied(_Denied value),
-    Result permanentlyDenied(_PermanentlyDenied value),
-    Result restricted(_Restricted value),
-    Result undefined(_Undefined value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult granted(_Granted value),
+    TResult denied(_Denied value),
+    TResult permanentlyDenied(_PermanentlyDenied value),
+    TResult restricted(_Restricted value),
+    TResult undefined(_Undefined value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (denied != null) {
@@ -374,12 +374,12 @@ class _$_PermanentlyDenied
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result granted(),
-    @required Result denied(),
-    @required Result permanentlyDenied(),
-    @required Result restricted(),
-    @required Result undefined(),
+  TResult when<TResult extends Object>({
+    @required TResult granted(),
+    @required TResult denied(),
+    @required TResult permanentlyDenied(),
+    @required TResult restricted(),
+    @required TResult undefined(),
   }) {
     assert(granted != null);
     assert(denied != null);
@@ -391,13 +391,13 @@ class _$_PermanentlyDenied
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result granted(),
-    Result denied(),
-    Result permanentlyDenied(),
-    Result restricted(),
-    Result undefined(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult granted(),
+    TResult denied(),
+    TResult permanentlyDenied(),
+    TResult restricted(),
+    TResult undefined(),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (permanentlyDenied != null) {
@@ -408,12 +408,12 @@ class _$_PermanentlyDenied
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result granted(_Granted value),
-    @required Result denied(_Denied value),
-    @required Result permanentlyDenied(_PermanentlyDenied value),
-    @required Result restricted(_Restricted value),
-    @required Result undefined(_Undefined value),
+  TResult map<TResult extends Object>({
+    @required TResult granted(_Granted value),
+    @required TResult denied(_Denied value),
+    @required TResult permanentlyDenied(_PermanentlyDenied value),
+    @required TResult restricted(_Restricted value),
+    @required TResult undefined(_Undefined value),
   }) {
     assert(granted != null);
     assert(denied != null);
@@ -425,13 +425,13 @@ class _$_PermanentlyDenied
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result granted(_Granted value),
-    Result denied(_Denied value),
-    Result permanentlyDenied(_PermanentlyDenied value),
-    Result restricted(_Restricted value),
-    Result undefined(_Undefined value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult granted(_Granted value),
+    TResult denied(_Denied value),
+    TResult permanentlyDenied(_PermanentlyDenied value),
+    TResult restricted(_Restricted value),
+    TResult undefined(_Undefined value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (permanentlyDenied != null) {
@@ -490,12 +490,12 @@ class _$_Restricted with DiagnosticableTreeMixin implements _Restricted {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result granted(),
-    @required Result denied(),
-    @required Result permanentlyDenied(),
-    @required Result restricted(),
-    @required Result undefined(),
+  TResult when<TResult extends Object>({
+    @required TResult granted(),
+    @required TResult denied(),
+    @required TResult permanentlyDenied(),
+    @required TResult restricted(),
+    @required TResult undefined(),
   }) {
     assert(granted != null);
     assert(denied != null);
@@ -507,13 +507,13 @@ class _$_Restricted with DiagnosticableTreeMixin implements _Restricted {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result granted(),
-    Result denied(),
-    Result permanentlyDenied(),
-    Result restricted(),
-    Result undefined(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult granted(),
+    TResult denied(),
+    TResult permanentlyDenied(),
+    TResult restricted(),
+    TResult undefined(),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (restricted != null) {
@@ -524,12 +524,12 @@ class _$_Restricted with DiagnosticableTreeMixin implements _Restricted {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result granted(_Granted value),
-    @required Result denied(_Denied value),
-    @required Result permanentlyDenied(_PermanentlyDenied value),
-    @required Result restricted(_Restricted value),
-    @required Result undefined(_Undefined value),
+  TResult map<TResult extends Object>({
+    @required TResult granted(_Granted value),
+    @required TResult denied(_Denied value),
+    @required TResult permanentlyDenied(_PermanentlyDenied value),
+    @required TResult restricted(_Restricted value),
+    @required TResult undefined(_Undefined value),
   }) {
     assert(granted != null);
     assert(denied != null);
@@ -541,13 +541,13 @@ class _$_Restricted with DiagnosticableTreeMixin implements _Restricted {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result granted(_Granted value),
-    Result denied(_Denied value),
-    Result permanentlyDenied(_PermanentlyDenied value),
-    Result restricted(_Restricted value),
-    Result undefined(_Undefined value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult granted(_Granted value),
+    TResult denied(_Denied value),
+    TResult permanentlyDenied(_PermanentlyDenied value),
+    TResult restricted(_Restricted value),
+    TResult undefined(_Undefined value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (restricted != null) {
@@ -605,12 +605,12 @@ class _$_Undefined with DiagnosticableTreeMixin implements _Undefined {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result granted(),
-    @required Result denied(),
-    @required Result permanentlyDenied(),
-    @required Result restricted(),
-    @required Result undefined(),
+  TResult when<TResult extends Object>({
+    @required TResult granted(),
+    @required TResult denied(),
+    @required TResult permanentlyDenied(),
+    @required TResult restricted(),
+    @required TResult undefined(),
   }) {
     assert(granted != null);
     assert(denied != null);
@@ -622,13 +622,13 @@ class _$_Undefined with DiagnosticableTreeMixin implements _Undefined {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result granted(),
-    Result denied(),
-    Result permanentlyDenied(),
-    Result restricted(),
-    Result undefined(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult granted(),
+    TResult denied(),
+    TResult permanentlyDenied(),
+    TResult restricted(),
+    TResult undefined(),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (undefined != null) {
@@ -639,12 +639,12 @@ class _$_Undefined with DiagnosticableTreeMixin implements _Undefined {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result granted(_Granted value),
-    @required Result denied(_Denied value),
-    @required Result permanentlyDenied(_PermanentlyDenied value),
-    @required Result restricted(_Restricted value),
-    @required Result undefined(_Undefined value),
+  TResult map<TResult extends Object>({
+    @required TResult granted(_Granted value),
+    @required TResult denied(_Denied value),
+    @required TResult permanentlyDenied(_PermanentlyDenied value),
+    @required TResult restricted(_Restricted value),
+    @required TResult undefined(_Undefined value),
   }) {
     assert(granted != null);
     assert(denied != null);
@@ -656,13 +656,13 @@ class _$_Undefined with DiagnosticableTreeMixin implements _Undefined {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result granted(_Granted value),
-    Result denied(_Denied value),
-    Result permanentlyDenied(_PermanentlyDenied value),
-    Result restricted(_Restricted value),
-    Result undefined(_Undefined value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult granted(_Granted value),
+    TResult denied(_Denied value),
+    TResult permanentlyDenied(_PermanentlyDenied value),
+    TResult restricted(_Restricted value),
+    TResult undefined(_Undefined value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (undefined != null) {

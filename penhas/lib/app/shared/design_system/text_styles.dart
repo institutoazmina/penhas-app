@@ -126,6 +126,12 @@ const kTextStyleTitleTag = TextStyle(
     color: DesignSystemColors.ligthPurple,
     fontWeight: FontWeight.normal);
 
+const kTextEmptyList = TextStyle(
+    color: DesignSystemColors.charcoalGrey,
+    fontFamily: 'Lato',
+    fontSize: 18.0,
+    letterSpacing: 0.63);
+
 const kTextStyleHelpCenterTitle = TextStyle(
     color: Colors.white,
     fontFamily: 'Lato',

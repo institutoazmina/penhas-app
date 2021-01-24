@@ -45,34 +45,34 @@ const $NewGuardianState = _$NewGuardianStateTearOff();
 /// @nodoc
 mixin _$NewGuardianState {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(),
-    @required Result error(String message),
-    @required Result rateLimit(int maxLimit),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(),
+    @required TResult error(String message),
+    @required TResult rateLimit(int maxLimit),
   });
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(),
-    Result error(String message),
-    Result rateLimit(int maxLimit),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(),
+    TResult error(String message),
+    TResult rateLimit(int maxLimit),
+    @required TResult orElse(),
   });
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result error(_ErrorDetails value),
-    @required Result rateLimit(_RateLimit value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
+    @required TResult error(_ErrorDetails value),
+    @required TResult rateLimit(_RateLimit value),
   });
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result error(_ErrorDetails value),
-    Result rateLimit(_RateLimit value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    TResult error(_ErrorDetails value),
+    TResult rateLimit(_RateLimit value),
+    @required TResult orElse(),
   });
 }
 
@@ -134,11 +134,11 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(),
-    @required Result error(String message),
-    @required Result rateLimit(int maxLimit),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(),
+    @required TResult error(String message),
+    @required TResult rateLimit(int maxLimit),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -149,12 +149,12 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(),
-    Result error(String message),
-    Result rateLimit(int maxLimit),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(),
+    TResult error(String message),
+    TResult rateLimit(int maxLimit),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (initial != null) {
@@ -165,11 +165,11 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result error(_ErrorDetails value),
-    @required Result rateLimit(_RateLimit value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
+    @required TResult error(_ErrorDetails value),
+    @required TResult rateLimit(_RateLimit value),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -180,12 +180,12 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result error(_ErrorDetails value),
-    Result rateLimit(_RateLimit value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    TResult error(_ErrorDetails value),
+    TResult rateLimit(_RateLimit value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (initial != null) {
@@ -240,11 +240,11 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(),
-    @required Result error(String message),
-    @required Result rateLimit(int maxLimit),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(),
+    @required TResult error(String message),
+    @required TResult rateLimit(int maxLimit),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -255,12 +255,12 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(),
-    Result error(String message),
-    Result rateLimit(int maxLimit),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(),
+    TResult error(String message),
+    TResult rateLimit(int maxLimit),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (loaded != null) {
@@ -271,11 +271,11 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result error(_ErrorDetails value),
-    @required Result rateLimit(_RateLimit value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
+    @required TResult error(_ErrorDetails value),
+    @required TResult rateLimit(_RateLimit value),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -286,12 +286,12 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result error(_ErrorDetails value),
-    Result rateLimit(_RateLimit value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    TResult error(_ErrorDetails value),
+    TResult rateLimit(_RateLimit value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (loaded != null) {
@@ -372,11 +372,11 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(),
-    @required Result error(String message),
-    @required Result rateLimit(int maxLimit),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(),
+    @required TResult error(String message),
+    @required TResult rateLimit(int maxLimit),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -387,12 +387,12 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(),
-    Result error(String message),
-    Result rateLimit(int maxLimit),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(),
+    TResult error(String message),
+    TResult rateLimit(int maxLimit),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (error != null) {
@@ -403,11 +403,11 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result error(_ErrorDetails value),
-    @required Result rateLimit(_RateLimit value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
+    @required TResult error(_ErrorDetails value),
+    @required TResult rateLimit(_RateLimit value),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -418,12 +418,12 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result error(_ErrorDetails value),
-    Result rateLimit(_RateLimit value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    TResult error(_ErrorDetails value),
+    TResult rateLimit(_RateLimit value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (error != null) {
@@ -507,11 +507,11 @@ class _$_RateLimit with DiagnosticableTreeMixin implements _RateLimit {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(),
-    @required Result error(String message),
-    @required Result rateLimit(int maxLimit),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(),
+    @required TResult error(String message),
+    @required TResult rateLimit(int maxLimit),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -522,12 +522,12 @@ class _$_RateLimit with DiagnosticableTreeMixin implements _RateLimit {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(),
-    Result error(String message),
-    Result rateLimit(int maxLimit),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(),
+    TResult error(String message),
+    TResult rateLimit(int maxLimit),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (rateLimit != null) {
@@ -538,11 +538,11 @@ class _$_RateLimit with DiagnosticableTreeMixin implements _RateLimit {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
-    @required Result error(_ErrorDetails value),
-    @required Result rateLimit(_RateLimit value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
+    @required TResult error(_ErrorDetails value),
+    @required TResult rateLimit(_RateLimit value),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -553,12 +553,12 @@ class _$_RateLimit with DiagnosticableTreeMixin implements _RateLimit {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    Result error(_ErrorDetails value),
-    Result rateLimit(_RateLimit value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    TResult error(_ErrorDetails value),
+    TResult rateLimit(_RateLimit value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (rateLimit != null) {

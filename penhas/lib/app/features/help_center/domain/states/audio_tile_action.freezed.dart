@@ -40,30 +40,30 @@ const $AudioTileAction = _$AudioTileActionTearOff();
 /// @nodoc
 mixin _$AudioTileAction {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result notice(String message),
-    @required Result actionSheet(AudioEntity audio),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult notice(String message),
+    @required TResult actionSheet(AudioEntity audio),
   });
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result notice(String message),
-    Result actionSheet(AudioEntity audio),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult notice(String message),
+    TResult actionSheet(AudioEntity audio),
+    @required TResult orElse(),
   });
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result notice(_Notice value),
-    @required Result actionSheet(_ActionSheet value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult notice(_Notice value),
+    @required TResult actionSheet(_ActionSheet value),
   });
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result notice(_Notice value),
-    Result actionSheet(_ActionSheet value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult notice(_Notice value),
+    TResult actionSheet(_ActionSheet value),
+    @required TResult orElse(),
   });
 }
 
@@ -125,10 +125,10 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result notice(String message),
-    @required Result actionSheet(AudioEntity audio),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult notice(String message),
+    @required TResult actionSheet(AudioEntity audio),
   }) {
     assert(initial != null);
     assert(notice != null);
@@ -138,11 +138,11 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result notice(String message),
-    Result actionSheet(AudioEntity audio),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult notice(String message),
+    TResult actionSheet(AudioEntity audio),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (initial != null) {
@@ -153,10 +153,10 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result notice(_Notice value),
-    @required Result actionSheet(_ActionSheet value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult notice(_Notice value),
+    @required TResult actionSheet(_ActionSheet value),
   }) {
     assert(initial != null);
     assert(notice != null);
@@ -166,11 +166,11 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result notice(_Notice value),
-    Result actionSheet(_ActionSheet value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult notice(_Notice value),
+    TResult actionSheet(_ActionSheet value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (initial != null) {
@@ -248,10 +248,10 @@ class _$_Notice with DiagnosticableTreeMixin implements _Notice {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result notice(String message),
-    @required Result actionSheet(AudioEntity audio),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult notice(String message),
+    @required TResult actionSheet(AudioEntity audio),
   }) {
     assert(initial != null);
     assert(notice != null);
@@ -261,11 +261,11 @@ class _$_Notice with DiagnosticableTreeMixin implements _Notice {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result notice(String message),
-    Result actionSheet(AudioEntity audio),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult notice(String message),
+    TResult actionSheet(AudioEntity audio),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (notice != null) {
@@ -276,10 +276,10 @@ class _$_Notice with DiagnosticableTreeMixin implements _Notice {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result notice(_Notice value),
-    @required Result actionSheet(_ActionSheet value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult notice(_Notice value),
+    @required TResult actionSheet(_ActionSheet value),
   }) {
     assert(initial != null);
     assert(notice != null);
@@ -289,11 +289,11 @@ class _$_Notice with DiagnosticableTreeMixin implements _Notice {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result notice(_Notice value),
-    Result actionSheet(_ActionSheet value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult notice(_Notice value),
+    TResult actionSheet(_ActionSheet value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (notice != null) {
@@ -377,10 +377,10 @@ class _$_ActionSheet with DiagnosticableTreeMixin implements _ActionSheet {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result notice(String message),
-    @required Result actionSheet(AudioEntity audio),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult notice(String message),
+    @required TResult actionSheet(AudioEntity audio),
   }) {
     assert(initial != null);
     assert(notice != null);
@@ -390,11 +390,11 @@ class _$_ActionSheet with DiagnosticableTreeMixin implements _ActionSheet {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result notice(String message),
-    Result actionSheet(AudioEntity audio),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult notice(String message),
+    TResult actionSheet(AudioEntity audio),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (actionSheet != null) {
@@ -405,10 +405,10 @@ class _$_ActionSheet with DiagnosticableTreeMixin implements _ActionSheet {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result notice(_Notice value),
-    @required Result actionSheet(_ActionSheet value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult notice(_Notice value),
+    @required TResult actionSheet(_ActionSheet value),
   }) {
     assert(initial != null);
     assert(notice != null);
@@ -418,11 +418,11 @@ class _$_ActionSheet with DiagnosticableTreeMixin implements _ActionSheet {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result notice(_Notice value),
-    Result actionSheet(_ActionSheet value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult notice(_Notice value),
+    TResult actionSheet(_ActionSheet value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (actionSheet != null) {

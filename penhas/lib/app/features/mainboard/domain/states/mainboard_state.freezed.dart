@@ -46,38 +46,38 @@ const $MainboardState = _$MainboardStateTearOff();
 /// @nodoc
 mixin _$MainboardState {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result chat(),
-    @required Result feed(),
-    @required Result compose(),
-    @required Result supportPoint(),
-    @required Result helpCenter(),
+  TResult when<TResult extends Object>({
+    @required TResult chat(),
+    @required TResult feed(),
+    @required TResult compose(),
+    @required TResult supportPoint(),
+    @required TResult helpCenter(),
   });
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result chat(),
-    Result feed(),
-    Result compose(),
-    Result supportPoint(),
-    Result helpCenter(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult chat(),
+    TResult feed(),
+    TResult compose(),
+    TResult supportPoint(),
+    TResult helpCenter(),
+    @required TResult orElse(),
   });
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result chat(_Chat value),
-    @required Result feed(_Feed value),
-    @required Result compose(_Compose value),
-    @required Result supportPoint(_SupportPoint value),
-    @required Result helpCenter(_HelpCenter value),
+  TResult map<TResult extends Object>({
+    @required TResult chat(_Chat value),
+    @required TResult feed(_Feed value),
+    @required TResult compose(_Compose value),
+    @required TResult supportPoint(_SupportPoint value),
+    @required TResult helpCenter(_HelpCenter value),
   });
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result chat(_Chat value),
-    Result feed(_Feed value),
-    Result compose(_Compose value),
-    Result supportPoint(_SupportPoint value),
-    Result helpCenter(_HelpCenter value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult chat(_Chat value),
+    TResult feed(_Feed value),
+    TResult compose(_Compose value),
+    TResult supportPoint(_SupportPoint value),
+    TResult helpCenter(_HelpCenter value),
+    @required TResult orElse(),
   });
 }
 
@@ -139,12 +139,12 @@ class _$_Chat with DiagnosticableTreeMixin implements _Chat {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result chat(),
-    @required Result feed(),
-    @required Result compose(),
-    @required Result supportPoint(),
-    @required Result helpCenter(),
+  TResult when<TResult extends Object>({
+    @required TResult chat(),
+    @required TResult feed(),
+    @required TResult compose(),
+    @required TResult supportPoint(),
+    @required TResult helpCenter(),
   }) {
     assert(chat != null);
     assert(feed != null);
@@ -156,13 +156,13 @@ class _$_Chat with DiagnosticableTreeMixin implements _Chat {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result chat(),
-    Result feed(),
-    Result compose(),
-    Result supportPoint(),
-    Result helpCenter(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult chat(),
+    TResult feed(),
+    TResult compose(),
+    TResult supportPoint(),
+    TResult helpCenter(),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (chat != null) {
@@ -173,12 +173,12 @@ class _$_Chat with DiagnosticableTreeMixin implements _Chat {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result chat(_Chat value),
-    @required Result feed(_Feed value),
-    @required Result compose(_Compose value),
-    @required Result supportPoint(_SupportPoint value),
-    @required Result helpCenter(_HelpCenter value),
+  TResult map<TResult extends Object>({
+    @required TResult chat(_Chat value),
+    @required TResult feed(_Feed value),
+    @required TResult compose(_Compose value),
+    @required TResult supportPoint(_SupportPoint value),
+    @required TResult helpCenter(_HelpCenter value),
   }) {
     assert(chat != null);
     assert(feed != null);
@@ -190,13 +190,13 @@ class _$_Chat with DiagnosticableTreeMixin implements _Chat {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result chat(_Chat value),
-    Result feed(_Feed value),
-    Result compose(_Compose value),
-    Result supportPoint(_SupportPoint value),
-    Result helpCenter(_HelpCenter value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult chat(_Chat value),
+    TResult feed(_Feed value),
+    TResult compose(_Compose value),
+    TResult supportPoint(_SupportPoint value),
+    TResult helpCenter(_HelpCenter value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (chat != null) {
@@ -251,12 +251,12 @@ class _$_Feed with DiagnosticableTreeMixin implements _Feed {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result chat(),
-    @required Result feed(),
-    @required Result compose(),
-    @required Result supportPoint(),
-    @required Result helpCenter(),
+  TResult when<TResult extends Object>({
+    @required TResult chat(),
+    @required TResult feed(),
+    @required TResult compose(),
+    @required TResult supportPoint(),
+    @required TResult helpCenter(),
   }) {
     assert(chat != null);
     assert(feed != null);
@@ -268,13 +268,13 @@ class _$_Feed with DiagnosticableTreeMixin implements _Feed {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result chat(),
-    Result feed(),
-    Result compose(),
-    Result supportPoint(),
-    Result helpCenter(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult chat(),
+    TResult feed(),
+    TResult compose(),
+    TResult supportPoint(),
+    TResult helpCenter(),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (feed != null) {
@@ -285,12 +285,12 @@ class _$_Feed with DiagnosticableTreeMixin implements _Feed {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result chat(_Chat value),
-    @required Result feed(_Feed value),
-    @required Result compose(_Compose value),
-    @required Result supportPoint(_SupportPoint value),
-    @required Result helpCenter(_HelpCenter value),
+  TResult map<TResult extends Object>({
+    @required TResult chat(_Chat value),
+    @required TResult feed(_Feed value),
+    @required TResult compose(_Compose value),
+    @required TResult supportPoint(_SupportPoint value),
+    @required TResult helpCenter(_HelpCenter value),
   }) {
     assert(chat != null);
     assert(feed != null);
@@ -302,13 +302,13 @@ class _$_Feed with DiagnosticableTreeMixin implements _Feed {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result chat(_Chat value),
-    Result feed(_Feed value),
-    Result compose(_Compose value),
-    Result supportPoint(_SupportPoint value),
-    Result helpCenter(_HelpCenter value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult chat(_Chat value),
+    TResult feed(_Feed value),
+    TResult compose(_Compose value),
+    TResult supportPoint(_SupportPoint value),
+    TResult helpCenter(_HelpCenter value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (feed != null) {
@@ -363,12 +363,12 @@ class _$_Compose with DiagnosticableTreeMixin implements _Compose {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result chat(),
-    @required Result feed(),
-    @required Result compose(),
-    @required Result supportPoint(),
-    @required Result helpCenter(),
+  TResult when<TResult extends Object>({
+    @required TResult chat(),
+    @required TResult feed(),
+    @required TResult compose(),
+    @required TResult supportPoint(),
+    @required TResult helpCenter(),
   }) {
     assert(chat != null);
     assert(feed != null);
@@ -380,13 +380,13 @@ class _$_Compose with DiagnosticableTreeMixin implements _Compose {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result chat(),
-    Result feed(),
-    Result compose(),
-    Result supportPoint(),
-    Result helpCenter(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult chat(),
+    TResult feed(),
+    TResult compose(),
+    TResult supportPoint(),
+    TResult helpCenter(),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (compose != null) {
@@ -397,12 +397,12 @@ class _$_Compose with DiagnosticableTreeMixin implements _Compose {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result chat(_Chat value),
-    @required Result feed(_Feed value),
-    @required Result compose(_Compose value),
-    @required Result supportPoint(_SupportPoint value),
-    @required Result helpCenter(_HelpCenter value),
+  TResult map<TResult extends Object>({
+    @required TResult chat(_Chat value),
+    @required TResult feed(_Feed value),
+    @required TResult compose(_Compose value),
+    @required TResult supportPoint(_SupportPoint value),
+    @required TResult helpCenter(_HelpCenter value),
   }) {
     assert(chat != null);
     assert(feed != null);
@@ -414,13 +414,13 @@ class _$_Compose with DiagnosticableTreeMixin implements _Compose {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result chat(_Chat value),
-    Result feed(_Feed value),
-    Result compose(_Compose value),
-    Result supportPoint(_SupportPoint value),
-    Result helpCenter(_HelpCenter value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult chat(_Chat value),
+    TResult feed(_Feed value),
+    TResult compose(_Compose value),
+    TResult supportPoint(_SupportPoint value),
+    TResult helpCenter(_HelpCenter value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (compose != null) {
@@ -478,12 +478,12 @@ class _$_SupportPoint with DiagnosticableTreeMixin implements _SupportPoint {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result chat(),
-    @required Result feed(),
-    @required Result compose(),
-    @required Result supportPoint(),
-    @required Result helpCenter(),
+  TResult when<TResult extends Object>({
+    @required TResult chat(),
+    @required TResult feed(),
+    @required TResult compose(),
+    @required TResult supportPoint(),
+    @required TResult helpCenter(),
   }) {
     assert(chat != null);
     assert(feed != null);
@@ -495,13 +495,13 @@ class _$_SupportPoint with DiagnosticableTreeMixin implements _SupportPoint {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result chat(),
-    Result feed(),
-    Result compose(),
-    Result supportPoint(),
-    Result helpCenter(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult chat(),
+    TResult feed(),
+    TResult compose(),
+    TResult supportPoint(),
+    TResult helpCenter(),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (supportPoint != null) {
@@ -512,12 +512,12 @@ class _$_SupportPoint with DiagnosticableTreeMixin implements _SupportPoint {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result chat(_Chat value),
-    @required Result feed(_Feed value),
-    @required Result compose(_Compose value),
-    @required Result supportPoint(_SupportPoint value),
-    @required Result helpCenter(_HelpCenter value),
+  TResult map<TResult extends Object>({
+    @required TResult chat(_Chat value),
+    @required TResult feed(_Feed value),
+    @required TResult compose(_Compose value),
+    @required TResult supportPoint(_SupportPoint value),
+    @required TResult helpCenter(_HelpCenter value),
   }) {
     assert(chat != null);
     assert(feed != null);
@@ -529,13 +529,13 @@ class _$_SupportPoint with DiagnosticableTreeMixin implements _SupportPoint {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result chat(_Chat value),
-    Result feed(_Feed value),
-    Result compose(_Compose value),
-    Result supportPoint(_SupportPoint value),
-    Result helpCenter(_HelpCenter value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult chat(_Chat value),
+    TResult feed(_Feed value),
+    TResult compose(_Compose value),
+    TResult supportPoint(_SupportPoint value),
+    TResult helpCenter(_HelpCenter value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (supportPoint != null) {
@@ -592,12 +592,12 @@ class _$_HelpCenter with DiagnosticableTreeMixin implements _HelpCenter {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result chat(),
-    @required Result feed(),
-    @required Result compose(),
-    @required Result supportPoint(),
-    @required Result helpCenter(),
+  TResult when<TResult extends Object>({
+    @required TResult chat(),
+    @required TResult feed(),
+    @required TResult compose(),
+    @required TResult supportPoint(),
+    @required TResult helpCenter(),
   }) {
     assert(chat != null);
     assert(feed != null);
@@ -609,13 +609,13 @@ class _$_HelpCenter with DiagnosticableTreeMixin implements _HelpCenter {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result chat(),
-    Result feed(),
-    Result compose(),
-    Result supportPoint(),
-    Result helpCenter(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult chat(),
+    TResult feed(),
+    TResult compose(),
+    TResult supportPoint(),
+    TResult helpCenter(),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (helpCenter != null) {
@@ -626,12 +626,12 @@ class _$_HelpCenter with DiagnosticableTreeMixin implements _HelpCenter {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result chat(_Chat value),
-    @required Result feed(_Feed value),
-    @required Result compose(_Compose value),
-    @required Result supportPoint(_SupportPoint value),
-    @required Result helpCenter(_HelpCenter value),
+  TResult map<TResult extends Object>({
+    @required TResult chat(_Chat value),
+    @required TResult feed(_Feed value),
+    @required TResult compose(_Compose value),
+    @required TResult supportPoint(_SupportPoint value),
+    @required TResult helpCenter(_HelpCenter value),
   }) {
     assert(chat != null);
     assert(feed != null);
@@ -643,13 +643,13 @@ class _$_HelpCenter with DiagnosticableTreeMixin implements _HelpCenter {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result chat(_Chat value),
-    Result feed(_Feed value),
-    Result compose(_Compose value),
-    Result supportPoint(_SupportPoint value),
-    Result helpCenter(_HelpCenter value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult chat(_Chat value),
+    TResult feed(_Feed value),
+    TResult compose(_Compose value),
+    TResult supportPoint(_SupportPoint value),
+    TResult helpCenter(_HelpCenter value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (helpCenter != null) {

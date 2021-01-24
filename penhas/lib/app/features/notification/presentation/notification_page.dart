@@ -7,6 +7,7 @@ import 'package:penhas/app/features/notification/domain/entities/notification_se
 import 'package:penhas/app/features/notification/domain/states/notification_state.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
+import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 import 'notification_controller.dart';
 import 'pages/notification_card_page.dart';
@@ -43,10 +44,17 @@ extension _PageStateBuilder on _NotificationState {
     return state.when(
       initial: () => buildInitialState(),
       loaded: (notifications) => buildLoaded(notifications),
+      empty: () => buildEmptyState(),
       error: (message) => SupportCenterGeneralError(
         message: message,
         onPressed: controller.retry,
       ),
+    );
+  }
+
+  Widget buildEmptyState() {
+    return SafeArea(
+      child: Center(child: Text('Você não tem notificações', style: kTextEmptyList,),),
     );
   }
 

@@ -31,26 +31,26 @@ const $MainboardSecurityState = _$MainboardSecurityStateTearOff();
 /// @nodoc
 mixin _$MainboardSecurityState {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result enable(),
-    @required Result disable(),
+  TResult when<TResult extends Object>({
+    @required TResult enable(),
+    @required TResult disable(),
   });
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result enable(),
-    Result disable(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult enable(),
+    TResult disable(),
+    @required TResult orElse(),
   });
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result enable(_Enable value),
-    @required Result disable(_Disable value),
+  TResult map<TResult extends Object>({
+    @required TResult enable(_Enable value),
+    @required TResult disable(_Disable value),
   });
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result enable(_Enable value),
-    Result disable(_Disable value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult enable(_Enable value),
+    TResult disable(_Disable value),
+    @required TResult orElse(),
   });
 }
 
@@ -114,9 +114,9 @@ class _$_Enable with DiagnosticableTreeMixin implements _Enable {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result enable(),
-    @required Result disable(),
+  TResult when<TResult extends Object>({
+    @required TResult enable(),
+    @required TResult disable(),
   }) {
     assert(enable != null);
     assert(disable != null);
@@ -125,10 +125,10 @@ class _$_Enable with DiagnosticableTreeMixin implements _Enable {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result enable(),
-    Result disable(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult enable(),
+    TResult disable(),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (enable != null) {
@@ -139,9 +139,9 @@ class _$_Enable with DiagnosticableTreeMixin implements _Enable {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result enable(_Enable value),
-    @required Result disable(_Disable value),
+  TResult map<TResult extends Object>({
+    @required TResult enable(_Enable value),
+    @required TResult disable(_Disable value),
   }) {
     assert(enable != null);
     assert(disable != null);
@@ -150,10 +150,10 @@ class _$_Enable with DiagnosticableTreeMixin implements _Enable {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result enable(_Enable value),
-    Result disable(_Disable value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult enable(_Enable value),
+    TResult disable(_Disable value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (enable != null) {
@@ -210,9 +210,9 @@ class _$_Disable with DiagnosticableTreeMixin implements _Disable {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result enable(),
-    @required Result disable(),
+  TResult when<TResult extends Object>({
+    @required TResult enable(),
+    @required TResult disable(),
   }) {
     assert(enable != null);
     assert(disable != null);
@@ -221,10 +221,10 @@ class _$_Disable with DiagnosticableTreeMixin implements _Disable {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result enable(),
-    Result disable(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult enable(),
+    TResult disable(),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (disable != null) {
@@ -235,9 +235,9 @@ class _$_Disable with DiagnosticableTreeMixin implements _Disable {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result enable(_Enable value),
-    @required Result disable(_Disable value),
+  TResult map<TResult extends Object>({
+    @required TResult enable(_Enable value),
+    @required TResult disable(_Disable value),
   }) {
     assert(enable != null);
     assert(disable != null);
@@ -246,10 +246,10 @@ class _$_Disable with DiagnosticableTreeMixin implements _Disable {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result enable(_Enable value),
-    Result disable(_Disable value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult enable(_Enable value),
+    TResult disable(_Disable value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (disable != null) {
