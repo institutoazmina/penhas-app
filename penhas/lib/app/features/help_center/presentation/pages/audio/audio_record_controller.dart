@@ -42,7 +42,7 @@ abstract class _AudioRecordController with Store, MapFailureMessage {
   @action
   Future<void> stopAudioRecord() async {
     dispose();
-    Modular.to.pop();
+    Modular.to.pop(true);
   }
 
   Stream<AudioActivity> get audioActivity => _audioServices.onProgress;
