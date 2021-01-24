@@ -31,26 +31,26 @@ const $ChatMainSecurityState = _$ChatMainSecurityStateTearOff();
 /// @nodoc
 mixin _$ChatMainSecurityState {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result onlySupport(),
-    @required Result supportAndPrivate(),
+  TResult when<TResult extends Object>({
+    @required TResult onlySupport(),
+    @required TResult supportAndPrivate(),
   });
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result onlySupport(),
-    Result supportAndPrivate(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult onlySupport(),
+    TResult supportAndPrivate(),
+    @required TResult orElse(),
   });
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result onlySupport(_OnlySupport value),
-    @required Result supportAndPrivate(_SupportAndPrivate value),
+  TResult map<TResult extends Object>({
+    @required TResult onlySupport(_OnlySupport value),
+    @required TResult supportAndPrivate(_SupportAndPrivate value),
   });
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result onlySupport(_OnlySupport value),
-    Result supportAndPrivate(_SupportAndPrivate value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult onlySupport(_OnlySupport value),
+    TResult supportAndPrivate(_SupportAndPrivate value),
+    @required TResult orElse(),
   });
 }
 
@@ -116,9 +116,9 @@ class _$_OnlySupport with DiagnosticableTreeMixin implements _OnlySupport {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result onlySupport(),
-    @required Result supportAndPrivate(),
+  TResult when<TResult extends Object>({
+    @required TResult onlySupport(),
+    @required TResult supportAndPrivate(),
   }) {
     assert(onlySupport != null);
     assert(supportAndPrivate != null);
@@ -127,10 +127,10 @@ class _$_OnlySupport with DiagnosticableTreeMixin implements _OnlySupport {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result onlySupport(),
-    Result supportAndPrivate(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult onlySupport(),
+    TResult supportAndPrivate(),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (onlySupport != null) {
@@ -141,9 +141,9 @@ class _$_OnlySupport with DiagnosticableTreeMixin implements _OnlySupport {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result onlySupport(_OnlySupport value),
-    @required Result supportAndPrivate(_SupportAndPrivate value),
+  TResult map<TResult extends Object>({
+    @required TResult onlySupport(_OnlySupport value),
+    @required TResult supportAndPrivate(_SupportAndPrivate value),
   }) {
     assert(onlySupport != null);
     assert(supportAndPrivate != null);
@@ -152,10 +152,10 @@ class _$_OnlySupport with DiagnosticableTreeMixin implements _OnlySupport {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result onlySupport(_OnlySupport value),
-    Result supportAndPrivate(_SupportAndPrivate value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult onlySupport(_OnlySupport value),
+    TResult supportAndPrivate(_SupportAndPrivate value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (onlySupport != null) {
@@ -217,9 +217,9 @@ class _$_SupportAndPrivate
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result onlySupport(),
-    @required Result supportAndPrivate(),
+  TResult when<TResult extends Object>({
+    @required TResult onlySupport(),
+    @required TResult supportAndPrivate(),
   }) {
     assert(onlySupport != null);
     assert(supportAndPrivate != null);
@@ -228,10 +228,10 @@ class _$_SupportAndPrivate
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result onlySupport(),
-    Result supportAndPrivate(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult onlySupport(),
+    TResult supportAndPrivate(),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (supportAndPrivate != null) {
@@ -242,9 +242,9 @@ class _$_SupportAndPrivate
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result onlySupport(_OnlySupport value),
-    @required Result supportAndPrivate(_SupportAndPrivate value),
+  TResult map<TResult extends Object>({
+    @required TResult onlySupport(_OnlySupport value),
+    @required TResult supportAndPrivate(_SupportAndPrivate value),
   }) {
     assert(onlySupport != null);
     assert(supportAndPrivate != null);
@@ -253,10 +253,10 @@ class _$_SupportAndPrivate
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result onlySupport(_OnlySupport value),
-    Result supportAndPrivate(_SupportAndPrivate value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult onlySupport(_OnlySupport value),
+    TResult supportAndPrivate(_SupportAndPrivate value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (supportAndPrivate != null) {

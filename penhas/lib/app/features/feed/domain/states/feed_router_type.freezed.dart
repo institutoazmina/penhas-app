@@ -37,26 +37,26 @@ mixin _$FeedRouterType {
   int get clientId;
 
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result chat(int clientId),
-    @required Result profile(int clientId),
+  TResult when<TResult extends Object>({
+    @required TResult chat(int clientId),
+    @required TResult profile(int clientId),
   });
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result chat(int clientId),
-    Result profile(int clientId),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult chat(int clientId),
+    TResult profile(int clientId),
+    @required TResult orElse(),
   });
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result chat(_Chat value),
-    @required Result profile(_Profile value),
+  TResult map<TResult extends Object>({
+    @required TResult chat(_Chat value),
+    @required TResult profile(_Profile value),
   });
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result chat(_Chat value),
-    Result profile(_Profile value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult chat(_Chat value),
+    TResult profile(_Profile value),
+    @required TResult orElse(),
   });
 
   $FeedRouterTypeCopyWith<FeedRouterType> get copyWith;
@@ -147,9 +147,9 @@ class _$_Chat implements _Chat {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result chat(int clientId),
-    @required Result profile(int clientId),
+  TResult when<TResult extends Object>({
+    @required TResult chat(int clientId),
+    @required TResult profile(int clientId),
   }) {
     assert(chat != null);
     assert(profile != null);
@@ -158,10 +158,10 @@ class _$_Chat implements _Chat {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result chat(int clientId),
-    Result profile(int clientId),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult chat(int clientId),
+    TResult profile(int clientId),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (chat != null) {
@@ -172,9 +172,9 @@ class _$_Chat implements _Chat {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result chat(_Chat value),
-    @required Result profile(_Profile value),
+  TResult map<TResult extends Object>({
+    @required TResult chat(_Chat value),
+    @required TResult profile(_Profile value),
   }) {
     assert(chat != null);
     assert(profile != null);
@@ -183,10 +183,10 @@ class _$_Chat implements _Chat {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result chat(_Chat value),
-    Result profile(_Profile value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult chat(_Chat value),
+    TResult profile(_Profile value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (chat != null) {
@@ -264,9 +264,9 @@ class _$_Profile implements _Profile {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result chat(int clientId),
-    @required Result profile(int clientId),
+  TResult when<TResult extends Object>({
+    @required TResult chat(int clientId),
+    @required TResult profile(int clientId),
   }) {
     assert(chat != null);
     assert(profile != null);
@@ -275,10 +275,10 @@ class _$_Profile implements _Profile {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result chat(int clientId),
-    Result profile(int clientId),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult chat(int clientId),
+    TResult profile(int clientId),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (profile != null) {
@@ -289,9 +289,9 @@ class _$_Profile implements _Profile {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result chat(_Chat value),
-    @required Result profile(_Profile value),
+  TResult map<TResult extends Object>({
+    @required TResult chat(_Chat value),
+    @required TResult profile(_Profile value),
   }) {
     assert(chat != null);
     assert(profile != null);
@@ -300,10 +300,10 @@ class _$_Profile implements _Profile {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result chat(_Chat value),
-    Result profile(_Profile value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult chat(_Chat value),
+    TResult profile(_Profile value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (profile != null) {

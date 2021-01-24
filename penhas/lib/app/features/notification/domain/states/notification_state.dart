@@ -9,5 +9,6 @@ abstract class NotificationState with _$NotificationState {
   const factory NotificationState.initial() = _Initial;
   const factory NotificationState.loaded(
       List<NotificationEntity> notifications) = _Loaded;
+  const factory NotificationState.empty() = _Empty;
   const factory NotificationState.error(String message) = _ErrorDetails;
 }

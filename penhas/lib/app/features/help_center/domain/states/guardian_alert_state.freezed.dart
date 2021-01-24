@@ -33,26 +33,26 @@ const $GuardianAlertState = _$GuardianAlertStateTearOff();
 /// @nodoc
 mixin _$GuardianAlertState {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result alert(GuardianAlertMessageAction action),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult alert(GuardianAlertMessageAction action),
   });
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result alert(GuardianAlertMessageAction action),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult alert(GuardianAlertMessageAction action),
+    @required TResult orElse(),
   });
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result alert(_Alert value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult alert(_Alert value),
   });
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result alert(_Alert value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult alert(_Alert value),
+    @required TResult orElse(),
   });
 }
 
@@ -115,9 +115,9 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result alert(GuardianAlertMessageAction action),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult alert(GuardianAlertMessageAction action),
   }) {
     assert(initial != null);
     assert(alert != null);
@@ -126,10 +126,10 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result alert(GuardianAlertMessageAction action),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult alert(GuardianAlertMessageAction action),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (initial != null) {
@@ -140,9 +140,9 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result alert(_Alert value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult alert(_Alert value),
   }) {
     assert(initial != null);
     assert(alert != null);
@@ -151,10 +151,10 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result alert(_Alert value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult alert(_Alert value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (initial != null) {
@@ -232,9 +232,9 @@ class _$_Alert with DiagnosticableTreeMixin implements _Alert {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result alert(GuardianAlertMessageAction action),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult alert(GuardianAlertMessageAction action),
   }) {
     assert(initial != null);
     assert(alert != null);
@@ -243,10 +243,10 @@ class _$_Alert with DiagnosticableTreeMixin implements _Alert {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result alert(GuardianAlertMessageAction action),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult alert(GuardianAlertMessageAction action),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (alert != null) {
@@ -257,9 +257,9 @@ class _$_Alert with DiagnosticableTreeMixin implements _Alert {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result alert(_Alert value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult alert(_Alert value),
   }) {
     assert(initial != null);
     assert(alert != null);
@@ -268,10 +268,10 @@ class _$_Alert with DiagnosticableTreeMixin implements _Alert {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result alert(_Alert value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult alert(_Alert value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (alert != null) {

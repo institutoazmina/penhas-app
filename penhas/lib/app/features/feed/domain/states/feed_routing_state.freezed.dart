@@ -38,26 +38,26 @@ mixin _$FeedRoutingState {
   String get title;
 
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(String title),
-    @required Result error(String title, String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(String title),
+    @required TResult error(String title, String message),
   });
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(String title),
-    Result error(String title, String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(String title),
+    TResult error(String title, String message),
+    @required TResult orElse(),
   });
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result error(_ErrorDetails value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult error(_ErrorDetails value),
   });
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result error(_ErrorDetails value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult error(_ErrorDetails value),
+    @required TResult orElse(),
   });
 
   $FeedRoutingStateCopyWith<FeedRoutingState> get copyWith;
@@ -148,9 +148,9 @@ class _$_Initial implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(String title),
-    @required Result error(String title, String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(String title),
+    @required TResult error(String title, String message),
   }) {
     assert(initial != null);
     assert(error != null);
@@ -159,10 +159,10 @@ class _$_Initial implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(String title),
-    Result error(String title, String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(String title),
+    TResult error(String title, String message),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (initial != null) {
@@ -173,9 +173,9 @@ class _$_Initial implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result error(_ErrorDetails value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult error(_ErrorDetails value),
   }) {
     assert(initial != null);
     assert(error != null);
@@ -184,10 +184,10 @@ class _$_Initial implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result error(_ErrorDetails value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult error(_ErrorDetails value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (initial != null) {
@@ -277,9 +277,9 @@ class _$_ErrorDetails implements _ErrorDetails {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(String title),
-    @required Result error(String title, String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(String title),
+    @required TResult error(String title, String message),
   }) {
     assert(initial != null);
     assert(error != null);
@@ -288,10 +288,10 @@ class _$_ErrorDetails implements _ErrorDetails {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(String title),
-    Result error(String title, String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(String title),
+    TResult error(String title, String message),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (error != null) {
@@ -302,9 +302,9 @@ class _$_ErrorDetails implements _ErrorDetails {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result error(_ErrorDetails value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult error(_ErrorDetails value),
   }) {
     assert(initial != null);
     assert(error != null);
@@ -313,10 +313,10 @@ class _$_ErrorDetails implements _ErrorDetails {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result error(_ErrorDetails value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult error(_ErrorDetails value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (error != null) {

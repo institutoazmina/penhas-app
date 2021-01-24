@@ -33,26 +33,26 @@ const $FilterActionObserver = _$FilterActionObserverTearOff();
 /// @nodoc
 mixin _$FilterActionObserver {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result reset(),
-    @required Result updated(List<FilterTagEntity> tags),
+  TResult when<TResult extends Object>({
+    @required TResult reset(),
+    @required TResult updated(List<FilterTagEntity> tags),
   });
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result reset(),
-    Result updated(List<FilterTagEntity> tags),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult reset(),
+    TResult updated(List<FilterTagEntity> tags),
+    @required TResult orElse(),
   });
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result reset(_Reset value),
-    @required Result updated(_Updated value),
+  TResult map<TResult extends Object>({
+    @required TResult reset(_Reset value),
+    @required TResult updated(_Updated value),
   });
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result reset(_Reset value),
-    Result updated(_Updated value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult reset(_Reset value),
+    TResult updated(_Updated value),
+    @required TResult orElse(),
   });
 }
 
@@ -115,9 +115,9 @@ class _$_Reset with DiagnosticableTreeMixin implements _Reset {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result reset(),
-    @required Result updated(List<FilterTagEntity> tags),
+  TResult when<TResult extends Object>({
+    @required TResult reset(),
+    @required TResult updated(List<FilterTagEntity> tags),
   }) {
     assert(reset != null);
     assert(updated != null);
@@ -126,10 +126,10 @@ class _$_Reset with DiagnosticableTreeMixin implements _Reset {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result reset(),
-    Result updated(List<FilterTagEntity> tags),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult reset(),
+    TResult updated(List<FilterTagEntity> tags),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (reset != null) {
@@ -140,9 +140,9 @@ class _$_Reset with DiagnosticableTreeMixin implements _Reset {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result reset(_Reset value),
-    @required Result updated(_Updated value),
+  TResult map<TResult extends Object>({
+    @required TResult reset(_Reset value),
+    @required TResult updated(_Updated value),
   }) {
     assert(reset != null);
     assert(updated != null);
@@ -151,10 +151,10 @@ class _$_Reset with DiagnosticableTreeMixin implements _Reset {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result reset(_Reset value),
-    Result updated(_Updated value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult reset(_Reset value),
+    TResult updated(_Updated value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (reset != null) {
@@ -233,9 +233,9 @@ class _$_Updated with DiagnosticableTreeMixin implements _Updated {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result reset(),
-    @required Result updated(List<FilterTagEntity> tags),
+  TResult when<TResult extends Object>({
+    @required TResult reset(),
+    @required TResult updated(List<FilterTagEntity> tags),
   }) {
     assert(reset != null);
     assert(updated != null);
@@ -244,10 +244,10 @@ class _$_Updated with DiagnosticableTreeMixin implements _Updated {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result reset(),
-    Result updated(List<FilterTagEntity> tags),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult reset(),
+    TResult updated(List<FilterTagEntity> tags),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (updated != null) {
@@ -258,9 +258,9 @@ class _$_Updated with DiagnosticableTreeMixin implements _Updated {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result reset(_Reset value),
-    @required Result updated(_Updated value),
+  TResult map<TResult extends Object>({
+    @required TResult reset(_Reset value),
+    @required TResult updated(_Updated value),
   }) {
     assert(reset != null);
     assert(updated != null);
@@ -269,10 +269,10 @@ class _$_Updated with DiagnosticableTreeMixin implements _Updated {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result reset(_Reset value),
-    Result updated(_Updated value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult reset(_Reset value),
+    TResult updated(_Updated value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (updated != null) {

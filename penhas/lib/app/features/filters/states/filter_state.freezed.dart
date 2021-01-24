@@ -33,26 +33,26 @@ const $FilterState = _$FilterStateTearOff();
 /// @nodoc
 mixin _$FilterState {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(List<FilterTagEntity> tags),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(List<FilterTagEntity> tags),
   });
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(List<FilterTagEntity> tags),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(List<FilterTagEntity> tags),
+    @required TResult orElse(),
   });
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
   });
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    @required TResult orElse(),
   });
 }
 
@@ -113,9 +113,9 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(List<FilterTagEntity> tags),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(List<FilterTagEntity> tags),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -124,10 +124,10 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(List<FilterTagEntity> tags),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(List<FilterTagEntity> tags),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (initial != null) {
@@ -138,9 +138,9 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -149,10 +149,10 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (initial != null) {
@@ -230,9 +230,9 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loaded(List<FilterTagEntity> tags),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loaded(List<FilterTagEntity> tags),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -241,10 +241,10 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loaded(List<FilterTagEntity> tags),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loaded(List<FilterTagEntity> tags),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (loaded != null) {
@@ -255,9 +255,9 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loaded(_Loaded value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loaded(_Loaded value),
   }) {
     assert(initial != null);
     assert(loaded != null);
@@ -266,10 +266,10 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loaded(_Loaded value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loaded(_Loaded value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (loaded != null) {

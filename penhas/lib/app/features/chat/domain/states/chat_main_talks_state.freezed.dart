@@ -45,34 +45,34 @@ const $ChatMainTalksState = _$ChatMainTalksStateTearOff();
 /// @nodoc
 mixin _$ChatMainTalksState {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result loaded(List<ChatMainTileEntity> tiles),
-    @required Result error(String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loading(),
+    @required TResult loaded(List<ChatMainTileEntity> tiles),
+    @required TResult error(String message),
   });
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result loaded(List<ChatMainTileEntity> tiles),
-    Result error(String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loading(),
+    TResult loaded(List<ChatMainTileEntity> tiles),
+    TResult error(String message),
+    @required TResult orElse(),
   });
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loading(_Loading value),
-    @required Result loaded(_Loaded value),
-    @required Result error(_ErrorDetails value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loading(_Loading value),
+    @required TResult loaded(_Loaded value),
+    @required TResult error(_ErrorDetails value),
   });
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loading(_Loading value),
-    Result loaded(_Loaded value),
-    Result error(_ErrorDetails value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loading(_Loading value),
+    TResult loaded(_Loaded value),
+    TResult error(_ErrorDetails value),
+    @required TResult orElse(),
   });
 }
 
@@ -135,11 +135,11 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result loaded(List<ChatMainTileEntity> tiles),
-    @required Result error(String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loading(),
+    @required TResult loaded(List<ChatMainTileEntity> tiles),
+    @required TResult error(String message),
   }) {
     assert(initial != null);
     assert(loading != null);
@@ -150,12 +150,12 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result loaded(List<ChatMainTileEntity> tiles),
-    Result error(String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loading(),
+    TResult loaded(List<ChatMainTileEntity> tiles),
+    TResult error(String message),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (initial != null) {
@@ -166,11 +166,11 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loading(_Loading value),
-    @required Result loaded(_Loaded value),
-    @required Result error(_ErrorDetails value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loading(_Loading value),
+    @required TResult loaded(_Loaded value),
+    @required TResult error(_ErrorDetails value),
   }) {
     assert(initial != null);
     assert(loading != null);
@@ -181,12 +181,12 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loading(_Loading value),
-    Result loaded(_Loaded value),
-    Result error(_ErrorDetails value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loading(_Loading value),
+    TResult loaded(_Loaded value),
+    TResult error(_ErrorDetails value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (initial != null) {
@@ -242,11 +242,11 @@ class _$_Loading with DiagnosticableTreeMixin implements _Loading {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result loaded(List<ChatMainTileEntity> tiles),
-    @required Result error(String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loading(),
+    @required TResult loaded(List<ChatMainTileEntity> tiles),
+    @required TResult error(String message),
   }) {
     assert(initial != null);
     assert(loading != null);
@@ -257,12 +257,12 @@ class _$_Loading with DiagnosticableTreeMixin implements _Loading {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result loaded(List<ChatMainTileEntity> tiles),
-    Result error(String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loading(),
+    TResult loaded(List<ChatMainTileEntity> tiles),
+    TResult error(String message),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (loading != null) {
@@ -273,11 +273,11 @@ class _$_Loading with DiagnosticableTreeMixin implements _Loading {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loading(_Loading value),
-    @required Result loaded(_Loaded value),
-    @required Result error(_ErrorDetails value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loading(_Loading value),
+    @required TResult loaded(_Loaded value),
+    @required TResult error(_ErrorDetails value),
   }) {
     assert(initial != null);
     assert(loading != null);
@@ -288,12 +288,12 @@ class _$_Loading with DiagnosticableTreeMixin implements _Loading {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loading(_Loading value),
-    Result loaded(_Loaded value),
-    Result error(_ErrorDetails value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loading(_Loading value),
+    TResult loaded(_Loaded value),
+    TResult error(_ErrorDetails value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (loading != null) {
@@ -371,11 +371,11 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result loaded(List<ChatMainTileEntity> tiles),
-    @required Result error(String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loading(),
+    @required TResult loaded(List<ChatMainTileEntity> tiles),
+    @required TResult error(String message),
   }) {
     assert(initial != null);
     assert(loading != null);
@@ -386,12 +386,12 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result loaded(List<ChatMainTileEntity> tiles),
-    Result error(String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loading(),
+    TResult loaded(List<ChatMainTileEntity> tiles),
+    TResult error(String message),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (loaded != null) {
@@ -402,11 +402,11 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loading(_Loading value),
-    @required Result loaded(_Loaded value),
-    @required Result error(_ErrorDetails value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loading(_Loading value),
+    @required TResult loaded(_Loaded value),
+    @required TResult error(_ErrorDetails value),
   }) {
     assert(initial != null);
     assert(loading != null);
@@ -417,12 +417,12 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loading(_Loading value),
-    Result loaded(_Loaded value),
-    Result error(_ErrorDetails value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loading(_Loading value),
+    TResult loaded(_Loaded value),
+    TResult error(_ErrorDetails value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (loaded != null) {
@@ -506,11 +506,11 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result loaded(List<ChatMainTileEntity> tiles),
-    @required Result error(String message),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loading(),
+    @required TResult loaded(List<ChatMainTileEntity> tiles),
+    @required TResult error(String message),
   }) {
     assert(initial != null);
     assert(loading != null);
@@ -521,12 +521,12 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result loaded(List<ChatMainTileEntity> tiles),
-    Result error(String message),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loading(),
+    TResult loaded(List<ChatMainTileEntity> tiles),
+    TResult error(String message),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (error != null) {
@@ -537,11 +537,11 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loading(_Loading value),
-    @required Result loaded(_Loaded value),
-    @required Result error(_ErrorDetails value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult loading(_Loading value),
+    @required TResult loaded(_Loaded value),
+    @required TResult error(_ErrorDetails value),
   }) {
     assert(initial != null);
     assert(loading != null);
@@ -552,12 +552,12 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loading(_Loading value),
-    Result loaded(_Loaded value),
-    Result error(_ErrorDetails value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult loading(_Loading value),
+    TResult loaded(_Loaded value),
+    TResult error(_ErrorDetails value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (error != null) {
