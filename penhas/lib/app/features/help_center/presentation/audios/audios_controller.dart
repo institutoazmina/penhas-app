@@ -146,7 +146,7 @@ extension _AudiosControllerBasePrivate on _AudiosControllerBase {
     } else if (waitingAutorization) {
       description = 'Aguardando autorização para realizar o download do audio';
     } else if (audio.canPlay) {
-      description = 'Toque no botão de play para inicar o audio';
+      description = 'Toque no botão de play para iniciar o audio';
     }
 
     return AudioPlayTileEntity(
