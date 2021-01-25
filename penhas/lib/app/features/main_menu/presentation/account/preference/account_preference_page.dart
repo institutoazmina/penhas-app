@@ -8,6 +8,7 @@ import 'package:penhas/app/features/main_menu/domain/entities/account_preference
 import 'package:penhas/app/features/main_menu/domain/states/account_preference_state.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
+import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 import 'account_preference_controller.dart';
 
@@ -40,7 +41,7 @@ class _AccountPreferencePageState
       key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0.0,
-        title: Text("Preferência da conta"),
+        title: Text("Configurações"),
         backgroundColor: DesignSystemColors.easterPurple,
       ),
       body: Observer(
@@ -91,6 +92,9 @@ extension _PageBuilder on _AccountPreferencePageState {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text("Marque abaixo quais notificações deseja receber",
+                  style: kTextStyleAlertDialogTitle),
+              SizedBox(height: 16),
               Expanded(
                 child: ListView.builder(
                     itemCount: preferences.length,
@@ -126,6 +130,7 @@ extension _TextStyle on _AccountPreferencePageState {
         color: DesignSystemColors.darkIndigoThree,
         fontWeight: FontWeight.bold,
       );
+
   TextStyle get itemTitleTextStyle => TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,
