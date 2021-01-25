@@ -12,7 +12,7 @@ void main() {
         () {
           var result = Password(null).value;
 
-          expect(result, left(PasswordInvalidFailure()));
+          expect(result, left(EmptyRule()));
         },
       );
       test(
@@ -20,7 +20,48 @@ void main() {
         () {
           var result = Password("");
 
-          expect(result.value, left(PasswordInvalidFailure()));
+          expect(result.value, left(EmptyRule()));
+          expect(result.isValid, false);
+          expect(result.rawValue, null);
+        },
+      );
+      test(
+        'should get PasswordInvalidFailure for password without min length require',
+            () {
+          var result = Password("1Ba@2cD");
+
+          expect(result.value, left(MinLengthRule()));
+          expect(result.mapFailure, 'Senha precisa ter no mínimo 8 caracteres');
+          expect(result.isValid, false);
+          expect(result.rawValue, null);
+        },
+      );
+      test(
+        'should get PasswordInvalidFailure for password without letters',
+            () {
+          var result = Password("12345678@");
+
+          expect(result.value, left(LettersRule()));
+          expect(result.isValid, false);
+          expect(result.rawValue, null);
+        },
+      );
+      test(
+        'should get PasswordInvalidFailure for password without numbers',
+            () {
+          var result = Password("@bcdefgh");
+
+          expect(result.value, left(NumbersRule()));
+          expect(result.isValid, false);
+          expect(result.rawValue, null);
+        },
+      );
+      test(
+        'should get PasswordInvalidFailure for password without special characters',
+            () {
+          var result = Password("1bcdefgh");
+
+          expect(result.value, left(SpecialCharactersRule()));
           expect(result.isValid, false);
           expect(result.rawValue, null);
         },
@@ -29,6 +70,29 @@ void main() {
         'should get value from a valid password',
         () {
           var validPassword = "_myStrongP4ss@rd";
+          var result = Password(validPassword);
+
+          expect(result.value, right(validPassword));
+          expect(result.mapFailure, '');
+          expect(result.isValid, true);
+          expect(result.rawValue, validPassword);
+        },
+      );
+      test(
+        'should get value from a valid password with only lower case letters',
+            () {
+          var validPassword = "_mystrongp4ss@rd";
+          var result = Password(validPassword);
+
+          expect(result.value, right(validPassword));
+          expect(result.isValid, true);
+          expect(result.rawValue, validPassword);
+        },
+      );
+      test(
+        'should get value from a valid password with only upper case letters',
+            () {
+          var validPassword = "_MYSTRONGP4SS@RD";
           var result = Password(validPassword);
 
           expect(result.value, right(validPassword));

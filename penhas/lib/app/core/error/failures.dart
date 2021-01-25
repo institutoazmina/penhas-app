@@ -19,8 +19,6 @@ class UserAndPasswordInvalidFailure extends Failure {}
 
 class EmailAddressInvalidFailure extends Failure {}
 
-class PasswordInvalidFailure extends Failure {}
-
 class NicknameInvalidFailure extends Failure {}
 
 class CepInvalidFailure extends Failure {}
