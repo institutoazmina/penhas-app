@@ -28,11 +28,8 @@ class AudioPlayServices implements IAudioPlayServices {
   @override
   Future<Either<Failure, ValidField>> start(AudioEntity audio, {Function onFinished}) async {
     final file = await _audioSyncManager.cache(audio);
-    if (file.isRight()) {
-      final file = foo.getOrElse(() => null);
-    }
-    foo.fold((l) {}, (file) => play(file, onFinished: onFinished));
-    return foo;
+    file.fold((l) {}, (file) => play(file, onFinished: onFinished));
+    return file.map((e) => ValidField(message: 'Executando áudio'));
   }
 
   @override
