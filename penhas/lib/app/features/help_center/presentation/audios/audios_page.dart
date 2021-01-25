@@ -189,6 +189,11 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
           child: Column(
             children: <Widget>[
               _buildDivider(),
+              Container(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                      "Para solicitar o download do arquivo de áudio entrar em contato com PenhaS pelo chat ou email penhas@azmina.com.br",
+                      style: TextStyle(fontSize: 16.0))),
               ListTile(
                 leading: SvgPicture.asset(
                     'assets/images/svg/tweet_action/tweet_action_delete.svg'),
