@@ -11,7 +11,7 @@ import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dar
 import 'audio_sync_manager.dart';
 
 abstract class IAudioPlayServices {
-  Future<Either<Failure, ValidField>> start(AudioEntity audio);
+  Future<Either<Failure, AudioEntity>> start(AudioEntity audio, {Function onFinished});
   void dispose();
 }
 
@@ -26,9 +26,10 @@ class AudioPlayServices implements IAudioPlayServices {
       : this._audioSyncManager = audioSyncManager;
 
   @override
-  Future<Either<Failure, ValidField>> start(AudioEntity audio) async {
-    final foo = await _audioSyncManager.cache(audio);
-    foo.fold((l) {}, (file) => play(file));
+  Future<Either<Failure, AudioEntity>> start(AudioEntity audio, {Function onFinished}) async {
+    final file = await _audioSyncManager.cache(audio);
+    file.fold((l) {}, (file) => play(file, onFinished: onFinished));
+    return file.map((e) => audio);
   }
 
   @override
@@ -39,14 +40,14 @@ class AudioPlayServices implements IAudioPlayServices {
 }
 
 extension _AudioPlayServicesPrivate on AudioPlayServices {
-  void play(File file) async {
+  void play(File file, {Function onFinished}) async {
     await setupPlayEnviroment();
     await _playerModule.setSubscriptionDuration(Duration(milliseconds: 100));
 
     await _playerModule.startPlayer(
       fromURI: file.path,
       codec: _audioCodec,
-      whenFinished: () => print('Ola mundo cruel!'),
+      whenFinished: onFinished ?? {},
     );
   }
 
