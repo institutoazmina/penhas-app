@@ -43,6 +43,9 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
   @observable
   AudioTileAction actionSheetState = AudioTileAction.initial();
 
+  @observable
+  AudioEntity playingAudio;
+
   @computed
   PageProgressState get loadState {
     if (_fetchProgress == null ||
@@ -110,7 +113,7 @@ extension _AudiosControllerBasePrivate on _AudiosControllerBase {
     currentState = AudiosState.error(message);
   }
 
-  Future<void> requestAudio(AudioEntity audio) async {
+  Future<Either<Failure, ValidField>> requestAudio(AudioEntity audio, Function onFinished) async {
     setErrorMessage('');
 
     bool isRequestRequired = !audio.canPlay && !audio.isRequested;
@@ -120,7 +123,7 @@ extension _AudiosControllerBasePrivate on _AudiosControllerBase {
     }
 
     if (audio.canPlay) {
-      _updateProgress = ObservableFuture(_audioPlayer.start(audio));
+      _updateProgress = ObservableFuture(_audioPlayer.start(audio, onFinished: onFinished));
     }
 
     final response = await _updateProgress;
@@ -128,6 +131,7 @@ extension _AudiosControllerBasePrivate on _AudiosControllerBase {
       (failure) => setErrorMessage(mapFailureMessage(failure)),
       (session) => actionSheetState = AudioTileAction.notice(session.message),
     );
+    return response;
   }
 
   AudioPlayTileEntity buildTile(AudioEntity audio) {
@@ -152,7 +156,12 @@ extension _AudiosControllerBasePrivate on _AudiosControllerBase {
     return AudioPlayTileEntity(
       audio: audio,
       description: description,
-      onPlayAudio: (audio) async => requestAudio(audio),
+      onPlayAudio: (audio) async {
+        final response = await requestAudio(audio, () => playingAudio = null);
+        if (response.isRight()) {
+          playingAudio = audio;
+        }
+      },
       onActionSheet: (audio) async =>
           actionSheetState = AudioTileAction.actionSheet(audio),
     );

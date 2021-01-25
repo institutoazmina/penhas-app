@@ -102,7 +102,9 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
           child: ListView.builder(
               itemCount: tiles.length,
               itemBuilder: (context, index) {
-                return AudioPlayWidget(audioPlay: tiles[index]);
+                final audio = tiles[index];
+                final isPlaying = audio.audio == controller.playingAudio;
+                return AudioPlayWidget(audioPlay: tiles[index], isPlaying: isPlaying);
               }),
         ),
       ),
