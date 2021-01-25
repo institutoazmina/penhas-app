@@ -10,7 +10,8 @@ import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/zodiac/domain/entities/izodiac.dart';
@@ -26,7 +27,8 @@ class SignInStealthController extends _SignInStealthController
     @required IAuthenticationRepository repository,
     @required LocalStore<UserProfileEntity> userProfileStore,
     @required StealthSecurityAction securityAction,
-  }) : super(repository, userProfileStore, securityAction);
+    @required PasswordValidator passwordValidator,
+  }) : super(repository, userProfileStore, securityAction, passwordValidator);
 }
 
 abstract class _SignInStealthController with Store, MapFailureMessage {
@@ -35,9 +37,10 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
   final LocalStore<UserProfileEntity> _userProfileStore;
   final IAuthenticationRepository _repository;
   final StealthSecurityAction _securityAction;
+  final PasswordValidator _passwordValidator;
 
   EmailAddress _emailAddress = EmailAddress("");
-  Password _password = Password("");
+  SignInPassword _password;
   bool _isSecurityRunning = false;
   StreamSubscription _streamCache;
 
@@ -45,8 +48,10 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
     this._repository,
     this._userProfileStore,
     this._securityAction,
+    this._passwordValidator,
   ) {
     _init();
+    _password = SignInPassword('', _passwordValidator);
   }
 
   void _init() async {
@@ -101,9 +106,8 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
 
   @action
   void setPassword(String password) {
-    _password = Password(password);
-
-    warningPassword = password.length == 0 ? '' : _password.mapFailure;
+    _password = SignInPassword(password, _passwordValidator);
+    warningPassword = _password.mapFailure;
   }
 
   @action

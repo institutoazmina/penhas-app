@@ -6,23 +6,30 @@ import 'package:penhas/app/features/authentication/domain/entities/session_entit
 import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 
 part 'sign_in_controller.g.dart';
 
 class SignInController extends _SignInControllerBase with _$SignInController {
-  SignInController(IAuthenticationRepository repository) : super(repository);
+  SignInController(
+      IAuthenticationRepository repository, PasswordValidator passwordValidator)
+      : super(repository, passwordValidator);
 }
 
 abstract class _SignInControllerBase with Store, MapFailureMessage {
   final String _invalidFieldsToProceedLogin =
       'E-mail e senha precisam estarem corretos para continuar.';
   final IAuthenticationRepository repository;
+  final PasswordValidator _passwordValidator;
   EmailAddress _emailAddress = EmailAddress("");
-  Password _password = Password("");
+  SignInPassword _password;
 
-  _SignInControllerBase(this.repository);
+  _SignInControllerBase(this.repository, this._passwordValidator) {
+    _password = SignInPassword("", _passwordValidator);
+  }
 
   @observable
   ObservableFuture<Either<Failure, SessionEntity>> _progress;
@@ -56,9 +63,8 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
 
   @action
   void setPassword(String password) {
-    _password = Password(password);
-
-    warningPassword = password.length == 0 ? '' : _password.mapFailure;
+    _password = SignInPassword(password, _passwordValidator);
+    warningPassword = _password.mapFailure;
   }
 
   @action

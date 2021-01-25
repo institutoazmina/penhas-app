@@ -7,7 +7,7 @@ import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/authentication/data/models/session_model.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
 
 abstract class IAuthenticationDataSource {
   /// Calls the http://server.api/login? endpoint
@@ -15,7 +15,7 @@ abstract class IAuthenticationDataSource {
   /// Throws a [ServerException] for all error codes
   Future<SessionModel> signInWithEmailAndPassword({
     @required EmailAddress emailAddress,
-    @required Password password,
+    @required SignInPassword password,
   });
 }
 
@@ -31,7 +31,7 @@ class AuthenticationDataSource implements IAuthenticationDataSource {
   @override
   Future<SessionModel> signInWithEmailAndPassword({
     EmailAddress emailAddress,
-    Password password,
+    SignInPassword password,
   }) async {
     final baseUri = serverConfiguration.baseUri;
     final userAgent = await serverConfiguration.userAgent;

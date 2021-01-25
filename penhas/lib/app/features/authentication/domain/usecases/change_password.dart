@@ -4,7 +4,7 @@ import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
 @immutable
 class ChangePassword {
@@ -19,7 +19,7 @@ class ChangePassword {
 
   Future<Either<Failure, ValidField>> call({
     @required EmailAddress emailAddress,
-    @required Password password,
+    @required SignUpPassword password,
     @required String resetToken,
   }) async {
     return _repository.reset(

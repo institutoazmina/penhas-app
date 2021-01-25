@@ -6,6 +6,8 @@ import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
@@ -17,14 +19,20 @@ class ResetPasswordThreeController extends _ResetPasswordThreeControllerBase
   ResetPasswordThreeController(
     IChangePasswordRepository repository,
     UserRegisterFormFieldModel userRegisterModel,
-  ) : super(repository, userRegisterModel);
+    PasswordValidator passwordValidator,
+  ) : super(repository, userRegisterModel, passwordValidator);
 }
 
 abstract class _ResetPasswordThreeControllerBase with Store, MapFailureMessage {
   final IChangePasswordRepository _repository;
   final UserRegisterFormFieldModel _userRegisterModel;
+  final PasswordValidator _passwordValidator;
 
-  _ResetPasswordThreeControllerBase(this._repository, this._userRegisterModel);
+  _ResetPasswordThreeControllerBase(
+    this._repository,
+    this._userRegisterModel,
+    this._passwordValidator,
+  );
 
   @observable
   ObservableFuture<Either<Failure, ValidField>> _progress;
@@ -48,10 +56,8 @@ abstract class _ResetPasswordThreeControllerBase with Store, MapFailureMessage {
 
   @action
   void setPassword(String password) {
-    _userRegisterModel.password = Password(password);
-
-    warningPassword =
-        password.length == 0 ? '' : _userRegisterModel.validatePassword;
+    _userRegisterModel.password = SignUpPassword(password, _passwordValidator);
+    warningPassword = _userRegisterModel.password.mapFailure;
   }
 
   @action
@@ -81,11 +87,10 @@ abstract class _ResetPasswordThreeControllerBase with Store, MapFailureMessage {
   }
 
   bool _isValidToProceed() {
-    bool isValid = true;
+    bool isValid = _userRegisterModel.password.isValid;
 
-    if (_userRegisterModel.validatePassword.isNotEmpty) {
-      isValid = false;
-      warningPassword = _userRegisterModel.validatePassword;
+    if (!isValid) {
+      warningPassword = _userRegisterModel.password.mapFailure;
     }
 
     return isValid;

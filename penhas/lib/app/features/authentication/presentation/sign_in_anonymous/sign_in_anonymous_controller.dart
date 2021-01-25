@@ -8,7 +8,8 @@ import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 
@@ -19,7 +20,8 @@ class SignInAnonymousController extends _SignInAnonymousController
   SignInAnonymousController({
     @required IAuthenticationRepository repository,
     @required LocalStore<UserProfileEntity> userProfileStore,
-  }) : super(repository, userProfileStore);
+    @required PasswordValidator passwordValidator,
+  }) : super(repository, userProfileStore, passwordValidator);
 }
 
 abstract class _SignInAnonymousController with Store, MapFailureMessage {
@@ -27,12 +29,15 @@ abstract class _SignInAnonymousController with Store, MapFailureMessage {
       'E-mail e senha precisam estarem corretos para continuar.';
   final LocalStore<UserProfileEntity> _userProfileStore;
   final IAuthenticationRepository _repository;
+  final PasswordValidator _passwordValidator;
 
   EmailAddress _emailAddress = EmailAddress("");
-  Password _password = Password("");
+  SignInPassword _password;
 
-  _SignInAnonymousController(this._repository, this._userProfileStore) {
+  _SignInAnonymousController(
+      this._repository, this._userProfileStore, this._passwordValidator) {
     _init();
+    _password = SignInPassword('', _passwordValidator);
   }
 
   void _init() async {
@@ -70,9 +75,8 @@ abstract class _SignInAnonymousController with Store, MapFailureMessage {
 
   @action
   void setPassword(String password) {
-    _password = Password(password);
-
-    warningPassword = password.length == 0 ? '' : _password.mapFailure;
+    _password = SignInPassword(password, _passwordValidator);
+    warningPassword = _password.mapFailure;
   }
 
   @action

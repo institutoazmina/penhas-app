@@ -5,7 +5,7 @@ import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
 
 class AuthenticationWithEmailAndPassword {
   final IAuthenticationRepository _repository;
@@ -19,7 +19,7 @@ class AuthenticationWithEmailAndPassword {
 
   Future<Either<Failure, SessionEntity>> call({
     @required EmailAddress email,
-    @required Password password,
+    @required SignInPassword password,
   }) async {
     final response = await _repository.signInWithEmailAndPassword(
       emailAddress: email,

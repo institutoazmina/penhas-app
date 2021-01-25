@@ -8,7 +8,7 @@ import 'package:penhas/app/features/authentication/data/datasources/authenticati
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
 
 class AuthenticationRepository implements IAuthenticationRepository {
   final IAuthenticationDataSource _dataSource;
@@ -26,7 +26,7 @@ class AuthenticationRepository implements IAuthenticationRepository {
   @override
   Future<Either<Failure, SessionEntity>> signInWithEmailAndPassword({
     EmailAddress emailAddress,
-    Password password,
+    SignInPassword password,
   }) async {
     try {
       final result = await _dataSource.signInWithEmailAndPassword(

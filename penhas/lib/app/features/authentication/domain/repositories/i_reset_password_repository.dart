@@ -4,7 +4,7 @@ import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/domain/entities/reset_password_response_entity.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
 abstract class IResetPasswordRepository {
   Future<Either<Failure, ResetPasswordResponseEntity>> request({
@@ -20,7 +20,7 @@ abstract class IChangePasswordRepository {
 
   Future<Either<Failure, ValidField>> reset({
     @required EmailAddress emailAddress,
-    @required Password password,
+    @required SignUpPassword password,
     @required String resetToken,
   });
 }
