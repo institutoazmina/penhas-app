@@ -8,7 +8,7 @@ import 'package:penhas/app/features/authentication/data/datasources/change_passw
 import 'package:penhas/app/features/authentication/domain/entities/reset_password_response_entity.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
 class ChangePasswordRepository
     implements IResetPasswordRepository, IChangePasswordRepository {
@@ -37,7 +37,7 @@ class ChangePasswordRepository
   @override
   Future<Either<Failure, ValidField>> reset({
     EmailAddress emailAddress,
-    Password password,
+    SignUpPassword password,
     String resetToken,
   }) async {
     try {

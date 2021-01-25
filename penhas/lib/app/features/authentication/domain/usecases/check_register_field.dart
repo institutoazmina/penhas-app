@@ -10,7 +10,7 @@ import 'package:penhas/app/features/authentication/domain/usecases/full_name.dar
 import 'package:penhas/app/features/authentication/domain/usecases/genre.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/human_race.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
 class CheckRegisterField {
   final IUserRegisterRepository repository;
@@ -19,7 +19,7 @@ class CheckRegisterField {
 
   Future<Either<Failure, ValidField>> call({
     EmailAddress emailAddress,
-    Password password,
+    SignUpPassword password,
     Cep cep,
     Cpf cpf,
     Fullname fullname,

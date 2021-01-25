@@ -93,7 +93,7 @@ class _ResetPasswordThreePageState
                       SizedBox(
                         height: 40,
                         child: Text(
-                          'Crie uma senha diferente da anteriors',
+                          'Crie uma senha diferente das anteriores',
                           style: kTextStyleRegisterSubtitleLabelStyle,
                           textAlign: TextAlign.center,
                         ),

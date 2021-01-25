@@ -18,7 +18,8 @@ import 'package:penhas/app/features/authentication/domain/usecases/full_name.dar
 import 'package:penhas/app/features/authentication/domain/usecases/genre.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/human_race.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
 import '../../../../../utils/json_util.dart';
 
@@ -39,7 +40,7 @@ void main() {
   Cep cep;
   Cpf cpf;
   EmailAddress emailAddress;
-  Password password;
+  SignUpPassword password;
   Fullname fullname;
   Nickname nickName;
   Birthday birthday;
@@ -48,7 +49,7 @@ void main() {
 
   setUp(() {
     emailAddress = EmailAddress("valid@email.com");
-    password = Password('_myStr0ngP@ssw0rd');
+    password = SignUpPassword('_myStr0ngP@ssw0rd', PasswordValidator());
     cep = Cep('63024-370');
     cpf = Cpf('23693281343');
     fullname = Fullname('Maria da Penha Maia Fernandes');

@@ -7,20 +7,22 @@ import 'package:penhas/app/features/authentication/domain/repositories/i_reset_p
 import 'package:penhas/app/features/authentication/domain/usecases/change_password.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
 class MockChangePasswordRepository extends Mock
     implements IChangePasswordRepository {}
 
 void main() {
   EmailAddress emailAddress;
-  Password password;
+  SignUpPassword password;
   String resetToken;
   IChangePasswordRepository repository;
   ChangePassword sut;
 
   setUp(() {
     emailAddress = EmailAddress('valid_email@exemple.com');
-    password = Password('my_very_strong_P4ssw@rd');
+    password = SignUpPassword('my_very_strong_P4ssw@rd', PasswordValidator());
     repository = MockChangePasswordRepository();
     resetToken = '666422';
     sut = ChangePassword(changePasswordRepository: repository);

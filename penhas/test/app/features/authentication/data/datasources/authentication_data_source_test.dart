@@ -6,7 +6,8 @@ import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/authentication/data/datasources/authentication_data_source.dart';
 import 'package:penhas/app/features/authentication/data/models/session_model.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
 
 import '../../../../../utils/json_util.dart';
 
@@ -19,7 +20,7 @@ void main() {
   MockHttpClient mockHttpClient;
   MockApiServerConfigure mockApiServerConfigure;
   EmailAddress emailAddress;
-  Password password;
+  SignInPassword password;
   Uri serverEndpoint;
 
   setUp(() {
@@ -30,7 +31,7 @@ void main() {
       serverConfiguration: mockApiServerConfigure,
     );
     emailAddress = EmailAddress('valid@email.com');
-    password = Password('_veryStr0ngP4ssw@rd');
+    password = SignInPassword('_veryStr0ngP4ssw@rd', PasswordValidator());
     serverEndpoint = Uri.https('api.anyserver.io', '/');
 
     // MockApiServerConfigure configuration

@@ -9,7 +9,8 @@ import 'package:penhas/app/features/authentication/data/datasources/change_passw
 import 'package:penhas/app/features/authentication/data/models/password_reset_response_model.dart';
 import 'package:penhas/app/features/authentication/data/repositories/change_password_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
 import '../../../../../utils/json_util.dart';
 
@@ -23,7 +24,7 @@ void main() {
   INetworkInfo networkInfo;
   ChangePasswordRepository sut;
   EmailAddress emailAddress;
-  Password password;
+  SignUpPassword password;
   String resetToken;
 
   setUp(() {
@@ -32,7 +33,7 @@ void main() {
     sut = ChangePasswordRepository(
         changePasswordDataSource: dataSource, networkInfo: networkInfo);
     emailAddress = EmailAddress('valid@email.com');
-    password = Password('my_new_str0ng_P4ssw0rd');
+    password = SignUpPassword('my_new_str0ng_P4ssw0rd', PasswordValidator());
     resetToken = '666242';
   });
 

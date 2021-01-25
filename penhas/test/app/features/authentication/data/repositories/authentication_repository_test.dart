@@ -10,7 +10,8 @@ import 'package:penhas/app/features/authentication/data/models/session_model.dar
 import 'package:penhas/app/features/authentication/data/repositories/authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
 
 import '../../../../../utils/json_util.dart';
 
@@ -43,7 +44,7 @@ void main() {
     SessionModel sessionModel;
     SessionEntity sessionEntity;
     EmailAddress email;
-    Password password;
+    SignInPassword password;
 
     setUp(() async {
       loginSuccessJson =
@@ -51,7 +52,7 @@ void main() {
       sessionModel = SessionModel.fromJson(loginSuccessJson);
       sessionEntity = sessionModel;
       email = EmailAddress('test@g.com');
-      password = Password('_myStrongP4ss@rd');
+      password = SignInPassword('_myStrongP4ss@rd', PasswordValidator());
     });
 
     group('device is online', () {

@@ -6,7 +6,8 @@ import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
@@ -15,16 +16,20 @@ part 'sign_up_three_controller.g.dart';
 
 class SignUpThreeController extends _SignUpThreeControllerBase
     with _$SignUpThreeController {
-  SignUpThreeController(IUserRegisterRepository repository,
-      UserRegisterFormFieldModel userFormFielModel)
-      : super(repository, userFormFielModel);
+  SignUpThreeController(
+    IUserRegisterRepository repository,
+    UserRegisterFormFieldModel userFormFielModel,
+    PasswordValidator passwordValidator,
+  ) : super(repository, userFormFielModel, passwordValidator);
 }
 
 abstract class _SignUpThreeControllerBase with Store, MapFailureMessage {
   final IUserRegisterRepository repository;
   final UserRegisterFormFieldModel _userRegisterModel;
+  final PasswordValidator _passwordValidator;
 
-  _SignUpThreeControllerBase(this.repository, this._userRegisterModel);
+  _SignUpThreeControllerBase(
+      this.repository, this._userRegisterModel, this._passwordValidator);
 
   @observable
   ObservableFuture<Either<Failure, SessionEntity>> _progress;
@@ -59,10 +64,8 @@ abstract class _SignUpThreeControllerBase with Store, MapFailureMessage {
 
   @action
   void setPassword(String password) {
-    _userRegisterModel.password = Password(password);
-
-    warningPassword =
-        password.length == 0 ? '' : _userRegisterModel.validatePassword;
+    _userRegisterModel.password = SignUpPassword(password, _passwordValidator);
+    warningPassword = _userRegisterModel.password.mapFailure;
   }
 
   @action
@@ -106,9 +109,10 @@ abstract class _SignUpThreeControllerBase with Store, MapFailureMessage {
       warningEmail = _userRegisterModel.validateEmailAddress;
     }
 
-    if (_userRegisterModel.validatePassword.isNotEmpty) {
-      isValid = false;
-      warningPassword = _userRegisterModel.validatePassword;
+    isValid = _userRegisterModel.password.isValid;
+
+    if (!isValid) {
+      warningPassword = _userRegisterModel.password.mapFailure;
     }
 
     return isValid;

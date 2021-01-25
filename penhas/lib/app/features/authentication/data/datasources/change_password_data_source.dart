@@ -7,12 +7,12 @@ import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/authentication/data/models/password_reset_response_model.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
 abstract class IChangePasswordDataSource {
   Future<ValidField> reset({
     EmailAddress emailAddress,
-    Password password,
+    SignUpPassword password,
     String resetToken,
   });
 
@@ -60,7 +60,7 @@ class ChangePasswordDataSource implements IChangePasswordDataSource {
 
   @override
   Future<ValidField> reset(
-      {EmailAddress emailAddress, Password password, String resetToken}) async {
+      {EmailAddress emailAddress, SignUpPassword password, String resetToken}) async {
     final userAgent = await serverConfiguration.userAgent;
     final Map<String, String> queryParameters = {
       'dry': '0',

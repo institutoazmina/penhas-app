@@ -14,12 +14,12 @@ import 'package:penhas/app/features/authentication/domain/usecases/full_name.dar
 import 'package:penhas/app/features/authentication/domain/usecases/genre.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/human_race.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
 abstract class IUserRegisterDataSource {
   Future<SessionModel> register({
     @required EmailAddress emailAddress,
-    @required Password password,
+    @required SignUpPassword password,
     @required Cep cep,
     @required Cpf cpf,
     @required Fullname fullname,
@@ -32,7 +32,7 @@ abstract class IUserRegisterDataSource {
 
   Future<ValidField> checkField({
     EmailAddress emailAddress,
-    Password password,
+    SignUpPassword password,
     Cep cep,
     Cpf cpf,
     Fullname fullname,
@@ -56,7 +56,7 @@ class UserRegisterDataSource implements IUserRegisterDataSource {
   @override
   Future<SessionModel> register({
     @required EmailAddress emailAddress,
-    @required Password password,
+    @required SignUpPassword password,
     @required Cep cep,
     @required Cpf cpf,
     @required Fullname fullname,
@@ -97,7 +97,7 @@ class UserRegisterDataSource implements IUserRegisterDataSource {
   @override
   Future<ValidField> checkField({
     EmailAddress emailAddress,
-    Password password,
+    SignUpPassword password,
     Cep cep,
     Cpf cpf,
     Fullname fullname,

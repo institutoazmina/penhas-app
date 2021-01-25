@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/data/repositories/authentication_repository.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_controller.dart';
 
 class MockAuthenticatonRepository extends Mock
@@ -15,7 +16,7 @@ void main() {
   //
   setUp(() {
     mock = MockAuthenticatonRepository();
-    sut = SignInController(mock);
+    sut = SignInController(mock, PasswordValidator());
   });
 
   group('SignInController', () {

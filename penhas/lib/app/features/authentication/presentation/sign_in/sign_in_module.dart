@@ -17,6 +17,7 @@ import 'package:penhas/app/features/authentication/data/repositories/user_regist
 import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/presentation/reset_password/pages/reset_password_three/reset_password_three_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/reset_password/pages/reset_password_three/reset_password_three_page.dart';
 import 'package:penhas/app/features/authentication/presentation/reset_password/pages/reset_password_two/reset_password_two_controller.dart';
@@ -47,7 +48,10 @@ class SignInModule extends ChildModule {
   List<Bind> get binds => [
         ..._interfaces,
         // Sign-In
-        Bind((i) => SignInController(i.get<IAuthenticationRepository>())),
+        Bind((i) => SignInController(
+              i.get<IAuthenticationRepository>(),
+              i.get<PasswordValidator>(),
+            )),
         ..._signUp,
         ..._resetPassword,
         ..._signInAnonymous,
@@ -133,6 +137,7 @@ class SignInModule extends ChildModule {
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
+        Bind<PasswordValidator>((_) => PasswordValidator())
       ];
 
   List<Bind> get _signUp => [
@@ -149,6 +154,7 @@ class SignInModule extends ChildModule {
           (i) => SignUpThreeController(
             i.get<IUserRegisterRepository>(),
             i.args.data,
+            i.get<PasswordValidator>(),
           ),
         ),
       ];
@@ -165,6 +171,7 @@ class SignInModule extends ChildModule {
           (i) => ResetPasswordThreeController(
             i.get<IChangePasswordRepository>(),
             i.args.data,
+            i.get<PasswordValidator>(),
           ),
         ),
       ];
@@ -172,8 +179,10 @@ class SignInModule extends ChildModule {
   List<Bind> get _signInAnonymous => [
         Bind(
           (i) => SignInAnonymousController(
-              repository: i.get<IAuthenticationRepository>(),
-              userProfileStore: i.get<LocalStore<UserProfileEntity>>()),
+            repository: i.get<IAuthenticationRepository>(),
+            userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
+            passwordValidator: i.get<PasswordValidator>(),
+          ),
           singleton: false,
         )
       ];
@@ -184,6 +193,7 @@ class SignInModule extends ChildModule {
             repository: i.get<IAuthenticationRepository>(),
             userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
             securityAction: i.get<StealthSecurityAction>(),
+            passwordValidator: i.get<PasswordValidator>(),
           ),
           singleton: false,
         ),

@@ -7,7 +7,8 @@ import 'package:penhas/app/features/authentication/domain/entities/session_entit
 import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/authentication_with_email_password.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
 
 class MockAuthenticatonRepository extends Mock
     implements IAuthenticationRepository {}
@@ -32,7 +33,7 @@ void main() {
     final successSession =
         SessionEntity(sessionToken: 'my_strong_session_token');
     final emailAddress = EmailAddress("valid@email.com");
-    final password = Password('_myStr0ngP@ssw0rd');
+    final password = SignInPassword('_myStr0ngP@ssw0rd', PasswordValidator());
 
     test('should get success response', () async {
       // arrange

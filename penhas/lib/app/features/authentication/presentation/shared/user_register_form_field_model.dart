@@ -7,6 +7,7 @@ import 'package:penhas/app/features/authentication/domain/usecases/genre.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/human_race.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
 class UserRegisterFormFieldModel {
   Fullname fullname;
@@ -18,22 +19,26 @@ class UserRegisterFormFieldModel {
   EmailAddress emailAddress;
   Genre genre;
   HumanRace race;
-  Password password;
+  SignUpPassword password;
   String token;
 
   String get validateFullName =>
       fullname == null ? Fullname('').mapFailure : fullname.mapFailure;
+
   String get validateBirthday =>
       birthday == null ? Birthday('').mapFailure : birthday.mapFailure;
+
   String get validateCpf => cpf == null ? Cpf('').mapFailure : cpf.mapFailure;
+
   String get validateCep => cep == null ? Cep('').mapFailure : cep.mapFailure;
+
   String get validateEmailAddress => emailAddress == null
       ? EmailAddress('').mapFailure
       : emailAddress.mapFailure;
-  String get validatePassword =>
-      password == null ? Password('').mapFailure : password.mapFailure;
+
   String get validateNickname =>
       nickname == null ? Nickname('').mapFailure : nickname.mapFailure;
+
   String get validateSocialName {
     if (genre == null || genre == Genre.female || genre == Genre.male) {
       return '';
