@@ -7,6 +7,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_play_tile_entity.dart';
+import 'package:penhas/app/features/help_center/domain/states/audio_playing.dart';
 import 'package:penhas/app/features/help_center/domain/states/audio_tile_action.dart';
 import 'package:penhas/app/features/help_center/domain/states/audios_state.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/audio/audio_play_widget.dart';
@@ -32,6 +33,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
       GlobalKey<RefreshIndicatorState>();
 
   PageProgressState _loadState = PageProgressState.initial;
+  AudioEntity _playingAudio;
 
   @override
   void initState() {
@@ -49,6 +51,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
       _showLoadProgress(),
       _showUpdateProgress(),
       _showActionSheet(),
+      _showAudioPlayStatus()
     ];
   }
 
@@ -102,7 +105,9 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
           child: ListView.builder(
               itemCount: tiles.length,
               itemBuilder: (context, index) {
-                return AudioPlayWidget(audioPlay: tiles[index]);
+                final audio = tiles[index];
+                final isPlaying = audio.audio == _playingAudio;
+                return AudioPlayWidget(audioPlay: tiles[index], isPlaying: isPlaying);
               }),
         ),
       ),
@@ -142,6 +147,20 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
         actionSheet: (action) => _actionSheet(action),
       );
     });
+  }
+
+  ReactionDisposer _showAudioPlayStatus() {
+    return reaction((_) => controller.playingAudioState,
+            (AudioPlaying actionSheetState) {
+          actionSheetState.when(
+            none: () => setState(() {
+              _playingAudio = null;
+            }),
+            playing: (audio) => setState(() {
+              _playingAudio = audio;
+            }),
+          );
+        });
   }
 
   void _showActionNotice(String message) {

@@ -10,6 +10,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/help_center/data/repositories/audios_repository.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_play_tile_entity.dart';
+import 'package:penhas/app/features/help_center/domain/states/audio_playing.dart';
 import 'package:penhas/app/features/help_center/domain/states/audio_tile_action.dart';
 import 'package:penhas/app/features/help_center/domain/states/audios_state.dart';
 
@@ -42,6 +43,9 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
 
   @observable
   AudioTileAction actionSheetState = AudioTileAction.initial();
+
+  @observable
+  AudioPlaying playingAudioState;
 
   @computed
   PageProgressState get loadState {
@@ -110,24 +114,26 @@ extension _AudiosControllerBasePrivate on _AudiosControllerBase {
     currentState = AudiosState.error(message);
   }
 
-  Future<void> requestAudio(AudioEntity audio) async {
+  void requestAudio(AudioEntity audio) async {
     setErrorMessage('');
 
     bool isRequestRequired = !audio.canPlay && !audio.isRequested;
     if (isRequestRequired) {
-      _updateProgress =
-          ObservableFuture(_audiosRepository.requestAccess(audio));
+      final request = await _audiosRepository.requestAccess(audio);
+      request?.fold(
+        (failure) => setErrorMessage(mapFailureMessage(failure)),
+        (session) => actionSheetState = AudioTileAction.notice(session.message),
+      );
+    } else if (audio.canPlay) {
+      final playingAudio = await _audioPlayer.start(
+        audio,
+        onFinished: () => playingAudioState = AudioPlaying.none(),
+      );
+      playingAudio.fold(
+        (failure) => setErrorMessage(mapFailureMessage(failure)),
+        (r) => playingAudioState = AudioPlaying.playing(r),
+      );
     }
-
-    if (audio.canPlay) {
-      _updateProgress = ObservableFuture(_audioPlayer.start(audio));
-    }
-
-    final response = await _updateProgress;
-    response?.fold(
-      (failure) => setErrorMessage(mapFailureMessage(failure)),
-      (session) => actionSheetState = AudioTileAction.notice(session.message),
-    );
   }
 
   AudioPlayTileEntity buildTile(AudioEntity audio) {
