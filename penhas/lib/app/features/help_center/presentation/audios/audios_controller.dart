@@ -114,25 +114,26 @@ extension _AudiosControllerBasePrivate on _AudiosControllerBase {
     currentState = AudiosState.error(message);
   }
 
-  Future<Either<Failure, ValidField>> requestAudio(AudioEntity audio, Function onFinished) async {
+  void requestAudio(AudioEntity audio) async {
     setErrorMessage('');
 
     bool isRequestRequired = !audio.canPlay && !audio.isRequested;
     if (isRequestRequired) {
-      _updateProgress =
-          ObservableFuture(_audiosRepository.requestAccess(audio));
+      final request = await _audiosRepository.requestAccess(audio);
+      request?.fold(
+        (failure) => setErrorMessage(mapFailureMessage(failure)),
+        (session) => actionSheetState = AudioTileAction.notice(session.message),
+      );
+    } else if (audio.canPlay) {
+      final playingAudio = await _audioPlayer.start(
+        audio,
+        onFinished: () => playingAudioState = AudioPlaying.none(),
+      );
+      playingAudio.fold(
+        (failure) => setErrorMessage(mapFailureMessage(failure)),
+        (r) => playingAudioState = AudioPlaying.playing(r),
+      );
     }
-
-    if (audio.canPlay) {
-      _updateProgress = ObservableFuture(_audioPlayer.start(audio, onFinished: onFinished));
-    }
-
-    final response = await _updateProgress;
-    response?.fold(
-      (failure) => setErrorMessage(mapFailureMessage(failure)),
-      (session) => actionSheetState = AudioTileAction.notice(session.message),
-    );
-    return response;
   }
 
   AudioPlayTileEntity buildTile(AudioEntity audio) {
@@ -157,12 +158,7 @@ extension _AudiosControllerBasePrivate on _AudiosControllerBase {
     return AudioPlayTileEntity(
       audio: audio,
       description: description,
-      onPlayAudio: (audio) async {
-        final response = await requestAudio(audio, () => playingAudioState = AudioPlaying.none());
-        response.fold((_) => null, (_) {
-          playingAudioState = AudioPlaying.playing(audio);
-        });
-      },
+      onPlayAudio: (audio) async => requestAudio(audio),
       onActionSheet: (audio) async =>
           actionSheetState = AudioTileAction.actionSheet(audio),
     );

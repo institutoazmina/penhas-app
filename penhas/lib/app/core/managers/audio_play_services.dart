@@ -11,7 +11,7 @@ import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dar
 import 'audio_sync_manager.dart';
 
 abstract class IAudioPlayServices {
-  Future<Either<Failure, ValidField>> start(AudioEntity audio, {Function onFinished});
+  Future<Either<Failure, AudioEntity>> start(AudioEntity audio, {Function onFinished});
   void dispose();
 }
 
@@ -26,10 +26,10 @@ class AudioPlayServices implements IAudioPlayServices {
       : this._audioSyncManager = audioSyncManager;
 
   @override
-  Future<Either<Failure, ValidField>> start(AudioEntity audio, {Function onFinished}) async {
+  Future<Either<Failure, AudioEntity>> start(AudioEntity audio, {Function onFinished}) async {
     final file = await _audioSyncManager.cache(audio);
     file.fold((l) {}, (file) => play(file, onFinished: onFinished));
-    return file.map((e) => ValidField(message: 'Executando áudio'));
+    return file.map((e) => audio);
   }
 
   @override
