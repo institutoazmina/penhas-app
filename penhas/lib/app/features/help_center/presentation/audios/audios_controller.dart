@@ -10,6 +10,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/help_center/data/repositories/audios_repository.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_play_tile_entity.dart';
+import 'package:penhas/app/features/help_center/domain/states/audio_playing.dart';
 import 'package:penhas/app/features/help_center/domain/states/audio_tile_action.dart';
 import 'package:penhas/app/features/help_center/domain/states/audios_state.dart';
 
@@ -44,7 +45,7 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
   AudioTileAction actionSheetState = AudioTileAction.initial();
 
   @observable
-  AudioEntity playingAudio;
+  AudioPlaying playingAudioState;
 
   @computed
   PageProgressState get loadState {
@@ -157,10 +158,10 @@ extension _AudiosControllerBasePrivate on _AudiosControllerBase {
       audio: audio,
       description: description,
       onPlayAudio: (audio) async {
-        final response = await requestAudio(audio, () => playingAudio = null);
-        if (response.isRight()) {
-          playingAudio = audio;
-        }
+        final response = await requestAudio(audio, () => playingAudioState = AudioPlaying.none());
+        response.fold((_) => null, (_) {
+          playingAudioState = AudioPlaying.playing(audio);
+        });
       },
       onActionSheet: (audio) async =>
           actionSheetState = AudioTileAction.actionSheet(audio),

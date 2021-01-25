@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_play_tile_entity.dart';
+import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class AudioPlayWidget extends StatelessWidget {
@@ -28,7 +29,7 @@ class AudioPlayWidget extends StatelessWidget {
                 children: [
                   IconButton(
                       icon: _buildPlayIcone,
-                      color: isPlaying? Colors.green : Colors.black,
+                      color: isPlaying? DesignSystemColors.ligthPurple : DesignSystemColors.charcoalGrey2,
                       onPressed: () => audioPlay.onPlayAudio(audioPlay.audio)),
                   Padding(
                     padding: const EdgeInsets.only(top: 2.0),

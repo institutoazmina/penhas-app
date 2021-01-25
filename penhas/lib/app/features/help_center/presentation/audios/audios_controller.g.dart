@@ -103,6 +103,21 @@ mixin _$AudiosController on _AudiosControllerBase, Store {
     });
   }
 
+  final _$playingAudioAtom = Atom(name: '_AudiosControllerBase.playingAudio');
+
+  @override
+  AudioPlaying get playingAudioState {
+    _$playingAudioAtom.reportRead();
+    return super.playingAudioState;
+  }
+
+  @override
+  set playingAudioState(AudioPlaying value) {
+    _$playingAudioAtom.reportWrite(value, super.playingAudioState, () {
+      super.playingAudioState = value;
+    });
+  }
+
   final _$loadPageAsyncAction = AsyncAction('_AudiosControllerBase.loadPage');
 
   @override
@@ -123,6 +138,7 @@ mixin _$AudiosController on _AudiosControllerBase, Store {
 errorMessage: ${errorMessage},
 currentState: ${currentState},
 actionSheetState: ${actionSheetState},
+playingAudio: ${playingAudioState},
 loadState: ${loadState},
 updateState: ${updateState}
     ''';
