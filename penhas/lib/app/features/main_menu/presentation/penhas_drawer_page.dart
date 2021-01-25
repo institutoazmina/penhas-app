@@ -62,7 +62,7 @@ class _PenhasDrawerPageState
                   },
                 ),
                 _buildItemList(
-                  title: 'Preferência da conta',
+                  title: 'Configurações',
                   icon: SvgPicture.asset(
                     "assets/images/svg/drawer/account_setting.svg",
                     color: DesignSystemColors.darkIndigoThree,
