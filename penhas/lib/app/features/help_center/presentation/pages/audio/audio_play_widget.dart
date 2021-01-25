@@ -7,13 +7,15 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 class AudioPlayWidget extends StatelessWidget {
   final AudioPlayTileEntity audioPlay;  
   final bool isPlaying;
-  const AudioPlayWidget({Key key, @required this.audioPlay, @required this.isPlaying}) : super(key: key);
+  final Color backgroundColor;
+  const AudioPlayWidget({Key key, @required this.audioPlay, @required this.isPlaying, @required this.backgroundColor}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 80,
       decoration: BoxDecoration(
+        color: backgroundColor,
         border: Border(
           bottom: BorderSide(color: Colors.grey[350]),
         ),

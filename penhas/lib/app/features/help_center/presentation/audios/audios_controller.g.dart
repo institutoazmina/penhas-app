@@ -103,17 +103,18 @@ mixin _$AudiosController on _AudiosControllerBase, Store {
     });
   }
 
-  final _$playingAudioAtom = Atom(name: '_AudiosControllerBase.playingAudio');
+  final _$playingAudioStateAtom =
+      Atom(name: '_AudiosControllerBase.playingAudioState');
 
   @override
   AudioPlaying get playingAudioState {
-    _$playingAudioAtom.reportRead();
+    _$playingAudioStateAtom.reportRead();
     return super.playingAudioState;
   }
 
   @override
   set playingAudioState(AudioPlaying value) {
-    _$playingAudioAtom.reportWrite(value, super.playingAudioState, () {
+    _$playingAudioStateAtom.reportWrite(value, super.playingAudioState, () {
       super.playingAudioState = value;
     });
   }
@@ -138,7 +139,7 @@ mixin _$AudiosController on _AudiosControllerBase, Store {
 errorMessage: ${errorMessage},
 currentState: ${currentState},
 actionSheetState: ${actionSheetState},
-playingAudio: ${playingAudioState},
+playingAudioState: ${playingAudioState},
 loadState: ${loadState},
 updateState: ${updateState}
     ''';
