@@ -34,6 +34,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
 
   PageProgressState _loadState = PageProgressState.initial;
   AudioEntity _playingAudio;
+  AudioEntity _selectingAudioMenu;
 
   @override
   void initState() {
@@ -107,7 +108,9 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
               itemBuilder: (context, index) {
                 final audio = tiles[index];
                 final isPlaying = audio.audio == _playingAudio;
-                return AudioPlayWidget(audioPlay: tiles[index], isPlaying: isPlaying);
+                final backgroundColor = _selectingAudioMenu == audio.audio ? DesignSystemColors.blueyGrey : Colors.transparent;
+
+                return AudioPlayWidget(audioPlay: tiles[index], isPlaying: isPlaying, backgroundColor: backgroundColor);
               }),
         ),
       ),
@@ -144,7 +147,11 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
       actionSheetState.when(
         initial: () {},
         notice: (message) => _showActionNotice(message),
-        actionSheet: (action) => _actionSheet(action),
+        actionSheet: (audio) {
+          setState(() {
+            _selectingAudioMenu = audio;
+          });
+          _actionSheet(audio); },
       );
     });
   }
@@ -226,7 +233,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
           ),
         );
       },
-    );
+    ).whenComplete(() => setState(() => _selectingAudioMenu = null));
   }
 
   double _fullWidth() {
