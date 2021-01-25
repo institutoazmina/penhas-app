@@ -103,7 +103,7 @@ class _SignUpThreePageState
     return SizedBox(
       height: 60.0,
       child: Text(
-        'Informe um email e defina uma senha segura de pelo menos 8 caracteres. Recomendamos que sua senha tenha letras, números e caracteres especiais.',
+        'Informe um email e defina uma senha segura. A senha precisa ter no mínimo 8 caracteres, com ao menos 1 letra, 1 número e 1 caractere especial.',
         style: kTextStyleRegisterSubHeaderLabelStyle,
         textAlign: TextAlign.center,
       ),
