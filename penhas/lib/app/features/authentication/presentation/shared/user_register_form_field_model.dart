@@ -6,7 +6,6 @@ import 'package:penhas/app/features/authentication/domain/usecases/full_name.dar
 import 'package:penhas/app/features/authentication/domain/usecases/genre.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/human_race.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
 class UserRegisterFormFieldModel {
@@ -20,6 +19,7 @@ class UserRegisterFormFieldModel {
   Genre genre;
   HumanRace race;
   SignUpPassword password;
+  String passwordConfirmation;
   String token;
 
   String get validateFullName =>
@@ -46,4 +46,7 @@ class UserRegisterFormFieldModel {
 
     return socialName == null ? Fullname('').mapFailure : fullname.mapFailure;
   }
+
+  String get validatePasswordConfirmation =>
+      password.rawValue == passwordConfirmation ? '' : 'As senhas não são iguais';
 }

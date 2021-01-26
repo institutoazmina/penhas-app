@@ -64,6 +64,23 @@ mixin _$SignUpThreeController on _SignUpThreeControllerBase, Store {
     });
   }
 
+  final _$warningConfirmationPasswordAtom =
+      Atom(name: '_SignUpThreeControllerBase.warningConfirmationPassword');
+
+  @override
+  String get warningConfirmationPassword {
+    _$warningConfirmationPasswordAtom.reportRead();
+    return super.warningConfirmationPassword;
+  }
+
+  @override
+  set warningConfirmationPassword(String value) {
+    _$warningConfirmationPasswordAtom
+        .reportWrite(value, super.warningConfirmationPassword, () {
+      super.warningConfirmationPassword = value;
+    });
+  }
+
   final _$errorMessageAtom =
       Atom(name: '_SignUpThreeControllerBase.errorMessage');
 
@@ -114,10 +131,23 @@ mixin _$SignUpThreeController on _SignUpThreeControllerBase, Store {
   }
 
   @override
+  void setConfirmationPassword(String password) {
+    final _$actionInfo =
+        _$_SignUpThreeControllerBaseActionController.startAction(
+            name: '_SignUpThreeControllerBase.setConfirmationPassword');
+    try {
+      return super.setConfirmationPassword(password);
+    } finally {
+      _$_SignUpThreeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 warningEmail: ${warningEmail},
 warningPassword: ${warningPassword},
+warningConfirmationPassword: ${warningConfirmationPassword},
 errorMessage: ${errorMessage},
 currentState: ${currentState}
     ''';

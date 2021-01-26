@@ -76,6 +76,8 @@ class _SignUpThreePageState
                     Observer(builder: (_) => _buildEmailField()),
                     SizedBox(height: 22.0),
                     Observer(builder: (_) => _buildPasswordField()),
+                    SizedBox(height: 22.0),
+                    Observer(builder: (_) => _buildConfirmationPasswordField()),
                     SizedBox(height: 62.0),
                     SizedBox(height: 40.0, child: _buildNextButton()),
                   ],
@@ -124,6 +126,15 @@ class _SignUpThreePageState
       hintText: 'Digite sua senha',
       errorText: controller.warningPassword,
       onChanged: controller.setPassword,
+    );
+  }
+
+  PassordInputField _buildConfirmationPasswordField() {
+    return PassordInputField(
+      labelText: 'Confirmação de senha',
+      hintText: 'Digite sua senha novamente',
+      errorText: controller.warningConfirmationPassword,
+      onChanged: controller.setConfirmationPassword,
     );
   }
 
