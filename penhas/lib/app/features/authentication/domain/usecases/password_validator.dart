@@ -55,7 +55,7 @@ class LettersRule extends PasswordRule {
 
   @override
   bool apply(String input) {
-    return input.contains(new RegExp(r'[aA-zZ]'));
+    return input.contains(new RegExp(r'[A-Z]', caseSensitive: false));
   }
 }
 
