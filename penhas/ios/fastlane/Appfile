@@ -1,4 +1,4 @@
-app_identifier("br.com.azmina.penhas") # The bundle identifier of your app
+app_identifier("penhas.alphacode.com.br") # The bundle identifier of your app
 apple_id("***REMOVED***") # Your Apple email address
 
 itc_team_id("***REMOVED***") # App Store Connect Team ID
