@@ -75,6 +75,6 @@ class SpecialCharactersRule extends PasswordRule {
 
   @override
   bool apply(String input) {
-    return input.contains(new RegExp(r'[^0-9A-Z]', , caseSensitive: false));
+    return input.contains(new RegExp(r'[^0-9A-Z]', caseSensitive: false));
   }
 }
