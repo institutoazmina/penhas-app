@@ -66,6 +66,23 @@ mixin _$ResetPasswordThreeController
     });
   }
 
+  final _$warningConfirmationPasswordAtom = Atom(
+      name: '_ResetPasswordThreeControllerBase.warningConfirmationPassword');
+
+  @override
+  String get warningConfirmationPassword {
+    _$warningConfirmationPasswordAtom.reportRead();
+    return super.warningConfirmationPassword;
+  }
+
+  @override
+  set warningConfirmationPassword(String value) {
+    _$warningConfirmationPasswordAtom
+        .reportWrite(value, super.warningConfirmationPassword, () {
+      super.warningConfirmationPassword = value;
+    });
+  }
+
   final _$nextStepPressedAsyncAction =
       AsyncAction('_ResetPasswordThreeControllerBase.nextStepPressed');
 
@@ -90,10 +107,24 @@ mixin _$ResetPasswordThreeController
   }
 
   @override
+  void setConfirmationPassword(String password) {
+    final _$actionInfo =
+        _$_ResetPasswordThreeControllerBaseActionController.startAction(
+            name: '_ResetPasswordThreeControllerBase.setConfirmationPassword');
+    try {
+      return super.setConfirmationPassword(password);
+    } finally {
+      _$_ResetPasswordThreeControllerBaseActionController
+          .endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 errorMessage: ${errorMessage},
 warningPassword: ${warningPassword},
+warningConfirmationPassword: ${warningConfirmationPassword},
 currentState: ${currentState}
     ''';
   }

@@ -104,6 +104,8 @@ class _ResetPasswordThreePageState
                           return _buildPasswordField();
                         },
                       ),
+                      SizedBox(height: 24.0),
+                      Observer(builder: (_) => _buildConfirmationPasswordField()),
                       SizedBox(height: 24),
                       SizedBox(height: 40.0, child: _buildNextButton()),
                     ],
@@ -123,6 +125,15 @@ class _ResetPasswordThreePageState
       hintText: 'Digite sua nova senha',
       errorText: controller.warningPassword,
       onChanged: controller.setPassword,
+    );
+  }
+
+  PassordInputField _buildConfirmationPasswordField() {
+    return PassordInputField(
+      labelText: 'Confirmação de senha',
+      hintText: 'Digite sua senha novamente',
+      errorText: controller.warningConfirmationPassword,
+      onChanged: controller.setConfirmationPassword,
     );
   }
 
