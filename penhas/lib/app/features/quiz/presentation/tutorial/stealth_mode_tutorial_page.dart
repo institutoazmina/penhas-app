@@ -50,12 +50,24 @@ class _StealthModeTutorialPageState extends State<StealthModeTutorialPage> {
       ),
     ),
     TutorialPageViewWidget(
+      title: 'Habilitar permissões',
+      description:
+      'Para usar todas as funções do PenhaS, você precisará habilitar permissões de acesso ao microfone e ao GPS nas configurações do seu celular.',
+      bodyWidget: Image(
+        image: AssetImage(
+            'assets/images/stealth_mode_tutorial_image_4/stealth_mode_tutorial_image_4.jpg'),
+        width: 270,
+        fit: BoxFit.fitHeight,
+        alignment: FractionalOffset.topCenter,
+      ),
+    ),
+    TutorialPageViewWidget(
       title: 'Feed Anônimo',
       description:
           'Ao habilitar o modo camuflado o seu feed ficará anônimo para manter o seu perfil sigiloso',
       bodyWidget: Image(
         image: AssetImage(
-            'assets/images/stealth_mode_tutorial_image_4/stealth_mode_tutorial_image_4.png'),
+            'assets/images/stealth_mode_tutorial_image_5/stealth_mode_tutorial_image_5.png'),
         width: 270,
         fit: BoxFit.fitWidth,
         alignment: FractionalOffset.topCenter,

@@ -87,7 +87,8 @@ flutter:
     - assets/images/stealth_mode_tutorial_image_1/stealth_mode_tutorial_image_1.png
     - assets/images/stealth_mode_tutorial_image_2/stealth_mode_tutorial_image_2.png
     - assets/images/stealth_mode_tutorial_image_3/stealth_mode_tutorial_image_3.png
-    - assets/images/stealth_mode_tutorial_image_4/stealth_mode_tutorial_image_4.png
+    - assets/images/stealth_mode_tutorial_image_4/stealth_mode_tutorial_image_4.jpg
+    - assets/images/stealth_mode_tutorial_image_5/stealth_mode_tutorial_image_5.png
     - assets/images/svg/drawer/account_setting.svg
     - assets/images/svg/drawer/trash.svg
     - assets/images/svg/drawer/user_profile.svg
