@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_help_alert.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
@@ -32,8 +33,9 @@ class SupportCenterInputFilter extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 2.0),
-            child: Expanded(
-              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
                 Text(
                   'Encontre um ponto de apoio próximo de você',
                   style: TextStyle(color: Colors.black, fontSize: 15),
@@ -46,30 +48,11 @@ class SupportCenterInputFilter extends StatelessWidget {
                   onPressed: () async {
                     Modular.to.showDialog(
                       barrierDismissible: true,
-                      builder: (context) {
-                        return AlertDialog(
-                          content: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Text(
-                                  'Pontos de apoio são serviços que integram toda a rede de acolhimento a mulheres vítimas de violência, como por exemplo delegacia da mulher, hospital, centro de atendimento à mulher em situação de violência, entre outros.',
-                                  style: kTextStyleAlertDialogDescription)),
-                          actions: [
-                            SizedBox(
-                              width: 120,
-                              child: FlatButton(
-                                color: DesignSystemColors.easterPurple,
-                                child: Text('Entendi',
-                                    style: TextStyle(color: Colors.white)),
-                                onPressed: () => Modular.to.pop(),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
+                      builder: (_) => SupportCenterHelpAlert(),
                     );
                   },
                 )
-              ]),
+              ],
             ),
           ),
           Row(
@@ -90,8 +73,9 @@ class SupportCenterInputFilter extends StatelessWidget {
                           padding: EdgeInsets.only(left: 6),
                           child: TextField(
                             decoration: InputDecoration.collapsed(
-                                hintText: "Busque por cidade, UF ou nome do ponto de apoio",
-                            hintStyle: TextStyle(fontSize: 11)),
+                                hintText:
+                                    "Busque por cidade, UF ou nome do ponto de apoio",
+                                hintStyle: TextStyle(fontSize: 11)),
                             textCapitalization: TextCapitalization.none,
                             controller: _textController,
                             onSubmitted: (t) => _submitKeywordFilter(context),
