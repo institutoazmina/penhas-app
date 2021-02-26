@@ -130,7 +130,7 @@ class _PenhasDrawerPageState
             child: Column(
               children: [
                 Text(
-                  "Indique que esta em situação de violência para ficar anônima, e utilize o Modo camuflado para aplicar um disfarce de app de signo para esconder o verdadeiro conteúdo do PenhaS.",
+                  "Indique que está em situação de violência para ficar anônima, e utilize o Modo camuflado para aplicar um disfarce de app de signo para esconder o verdadeiro conteúdo do PenhaS.",
                   style: securityContextTextStyle,
                 ),
                 FlatButton(
