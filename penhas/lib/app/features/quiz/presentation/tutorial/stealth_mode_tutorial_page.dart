@@ -38,7 +38,7 @@ class _StealthModeTutorialPageState extends State<StealthModeTutorialPage> {
       ),
     ),
     TutorialPageViewWidget(
-      title: 'Login disfarçado',
+      title: 'Botão de Pânico disfarçado',
       description:
           'Em situação de emergência clique e segure no símbolo do signo em destaque, até que ele troque de cor. Isso enviará um alerta para seus guardiões e durante 15 minutos um áudio será gravado.',
       bodyWidget: Image(
