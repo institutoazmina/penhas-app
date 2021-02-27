@@ -73,7 +73,10 @@ abstract class _MainboardControllerBase with Store {
         _inactivityLogoutUseCase.setActive();
         route.fold(
           (l) => {},
-          (r) => Navigator.pushNamedAndRemoveUntil(r),
+          (r) => AppNavigator.pushNamedAndRemoveUntil(
+            r,
+            removeUntil: '/',
+          ),
         );
         break;
       case material.AppLifecycleState.detached:

@@ -1,10 +1,10 @@
 import 'dart:collection';
 
-class Route {
+class AppRoute {
   String path;
   Map<String, String> args;
 
-  Route(String uri) {
+  AppRoute(String uri) {
     assert(uri.trim().isNotEmpty);
     assert(uri.startsWith('/'));
 
@@ -23,7 +23,7 @@ class Route {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Route &&
+      other is AppRoute &&
           runtimeType == other.runtimeType &&
           path == other.path &&
           args == other.args;
