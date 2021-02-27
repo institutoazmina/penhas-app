@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/core/pages/tutorial_page_view_widget.dart';
+import 'package:penhas/app/features/quiz/presentation/tutorial/stealth_mode_tutorial_page_controller.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class StealthModeTutorialPage extends StatefulWidget {
@@ -10,70 +13,8 @@ class StealthModeTutorialPage extends StatefulWidget {
       _StealthModeTutorialPageState();
 }
 
-class _StealthModeTutorialPageState extends State<StealthModeTutorialPage> {
-  List<TutorialPageViewWidget> _contentPageView = [
-    TutorialPageViewWidget(
-      title: 'Garanta sua privacidade',
-      description:
-          'Aplique um disfarce de app de signo para esconder o verdadeiro conteúdo do PenhaS.\n\nPara fazer entrar no app com o modo modo camuflado ativo, clique no botão "Diário astrológico" para ser direcionada para a tela de login.',
-      bodyWidget: Image(
-        image: AssetImage(
-            'assets/images/stealth_mode_tutorial_image_1/stealth_mode_tutorial_image_1.png'),
-        width: 270,
-        fit: BoxFit.fitWidth,
-        alignment: FractionalOffset.topCenter,
-      ),
-    ),
-    TutorialPageViewWidget(
-      title:
-          'Aplique um disfarce de app de signo para esconder o verdadeiro conteúdo do PenhaS',
-      description:
-          'Para fazer entrar no app com o modo camuflado ativo, clique no botão "Diário astrológico" para ser direcionada para a tela de login.',
-      bodyWidget: Image(
-        image: AssetImage(
-            'assets/images/stealth_mode_tutorial_image_2/stealth_mode_tutorial_image_2.png'),
-        width: 270,
-        fit: BoxFit.fitHeight,
-        alignment: FractionalOffset.topCenter,
-      ),
-    ),
-    TutorialPageViewWidget(
-      title: 'Botão de Pânico disfarçado',
-      description:
-          'Em situação de emergência clique e segure no símbolo do signo em destaque, até que ele troque de cor. Isso enviará um alerta para seus guardiões e durante 15 minutos um áudio será gravado.',
-      bodyWidget: Image(
-        image: AssetImage(
-            'assets/images/stealth_mode_tutorial_image_3/stealth_mode_tutorial_image_3.png'),
-        width: 270,
-        fit: BoxFit.fitWidth,
-        alignment: FractionalOffset.topCenter,
-      ),
-    ),
-    TutorialPageViewWidget(
-      title: 'Habilitar permissões',
-      description:
-      'Para usar todas as funções do PenhaS, você precisará habilitar permissões de acesso ao microfone e ao GPS nas configurações do seu celular.',
-      bodyWidget: Image(
-        image: AssetImage(
-            'assets/images/stealth_mode_tutorial_image_4/stealth_mode_tutorial_image_4.jpg'),
-        width: 270,
-        fit: BoxFit.fitHeight,
-        alignment: FractionalOffset.topCenter,
-      ),
-    ),
-    TutorialPageViewWidget(
-      title: 'Feed Anônimo',
-      description:
-          'Ao habilitar o modo camuflado o seu feed ficará anônimo para manter o seu perfil sigiloso',
-      bodyWidget: Image(
-        image: AssetImage(
-            'assets/images/stealth_mode_tutorial_image_5/stealth_mode_tutorial_image_5.png'),
-        width: 270,
-        fit: BoxFit.fitWidth,
-        alignment: FractionalOffset.topCenter,
-      ),
-    )
-  ];
+class _StealthModeTutorialPageState extends ModularState<StealthModeTutorialPage, StealthModeTutorialPageController> {
+  List<TutorialPageViewWidget> _contentPageView;
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
 
@@ -96,35 +37,37 @@ class _StealthModeTutorialPageState extends State<StealthModeTutorialPage> {
             left: 12.0,
             right: 12.0,
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: PageView(
-                  physics: ClampingScrollPhysics(),
-                  children: _contentPageView,
-                  controller: _pageController,
-                  onPageChanged: (int page) {
-                    setState(() {
-                      _currentPage = page;
-                    });
-                  },
+          child: Observer(
+            builder: (_) => Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: PageView(
+                    physics: ClampingScrollPhysics(),
+                    children: pages(controller.state.locationPermissionGranted),
+                    controller: _pageController,
+                    onPageChanged: (int page) {
+                      setState(() {
+                        _currentPage = page;
+                      });
+                    },
+                  ),
                 ),
-              ),
-              SizedBox(height: 30),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 12.0, right: 12.0, bottom: 12.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(children: _buildPageIndicator()),
-                    Row(children: <Widget>[_buildActionButton()]),
-                  ],
-                ),
-              )
-            ],
+                SizedBox(height: 30),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 12.0, right: 12.0, bottom: 12.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(children: _buildPageIndicator()),
+                      Row(children: <Widget>[_buildActionButton()]),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -159,6 +102,86 @@ class _StealthModeTutorialPageState extends State<StealthModeTutorialPage> {
     );
   }
 
+  List<Widget> pages(bool isPermissionGranted) {
+    _contentPageView = [TutorialPageViewWidget(
+      title: 'Garanta sua privacidade',
+      description:
+      'Aplique um disfarce de app de signo para esconder o verdadeiro conteúdo do PenhaS.\n\nPara fazer entrar no app com o modo modo camuflado ativo, clique no botão "Diário astrológico" para ser direcionada para a tela de login.',
+      bodyWidget: Image(
+        image: AssetImage(
+            'assets/images/stealth_mode_tutorial_image_1/stealth_mode_tutorial_image_1.png'),
+        height: 300,
+        fit: BoxFit.fitWidth,
+        alignment: FractionalOffset.topCenter,
+      ),
+    ),
+      TutorialPageViewWidget(
+        title:
+        'Aplique um disfarce de app de signo para esconder o verdadeiro conteúdo do PenhaS',
+        description:
+        'Para fazer entrar no app com o modo camuflado ativo, clique no botão "Diário astrológico" para ser direcionada para a tela de login.',
+        bodyWidget: Image(
+          image: AssetImage(
+              'assets/images/stealth_mode_tutorial_image_2/stealth_mode_tutorial_image_2.png'),
+          height: 300,
+          fit: BoxFit.fitHeight,
+          alignment: FractionalOffset.topCenter,
+        ),
+      ),
+      TutorialPageViewWidget(
+        title: 'Botão de Pânico disfarçado',
+        description:
+        'Em situação de emergência clique e segure no símbolo do signo em destaque, até que ele troque de cor. Isso enviará um alerta para seus guardiões e durante 15 minutos um áudio será gravado.',
+        bodyWidget: Image(
+          image: AssetImage(
+              'assets/images/stealth_mode_tutorial_image_3/stealth_mode_tutorial_image_3.png'),
+          width: 270,
+          height: 270,
+          fit: BoxFit.fitWidth,
+          alignment: FractionalOffset.topCenter,
+        ),
+      ),
+      TutorialPageViewWidget(
+        title: 'Habilitar permissões',
+        description:
+        'Para usar todas as funções do PenhaS, você precisará habilitar permissões de acesso ao microfone e ao GPS nas configurações do seu celular.',
+        bodyWidget: Column(
+          children: [
+            Image(
+              image: AssetImage(
+                  'assets/images/stealth_mode_tutorial_image_4/stealth_mode_tutorial_image_4.jpg'),
+              width: 270,
+              height: 270,
+              fit: BoxFit.fitWidth,
+              alignment: FractionalOffset.center,
+            ),
+            if (!isPermissionGranted) FlatButton(
+                onPressed: controller.requestLocationPermission,
+                child: Text("AUTORIZAR LOCALIZAÇÃO",
+                    style: TextStyle(
+                        color: DesignSystemColors.pinky,
+                        fontFamily: 'Lato',
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold)),
+              ),
+          ],
+        ),
+      ),
+      TutorialPageViewWidget(
+        title: 'Feed Anônimo',
+        description:
+        'Ao habilitar o modo camuflado o seu feed ficará anônimo para manter o seu perfil sigiloso',
+        bodyWidget: Image(
+          image: AssetImage(
+              'assets/images/stealth_mode_tutorial_image_5/stealth_mode_tutorial_image_5.png'),
+          width: 270,
+          height: 270,
+          fit: BoxFit.fitWidth,
+          alignment: FractionalOffset.topCenter,
+        ),
+      )];
+    return _contentPageView;
+  }
   void _nextPage() {
     _pageController.nextPage(
       duration: Duration(milliseconds: 500),

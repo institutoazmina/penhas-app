@@ -49,10 +49,7 @@ class TutorialPageViewWidget extends StatelessWidget {
   }
 
   Widget _bodyWidgetBuilder() {
-    return SizedBox(
-      child: Center(child: _bodyWidget),
-      height: 280.0,
-    );
+    return Center(child: _bodyWidget);
   }
 
   Widget _titleBuilder() {

@@ -416,6 +416,7 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(user);
 
+  @JsonKey(ignore: true)
   @override
   _$UpdateUserCopyWith<_UpdateUser> get copyWith =>
       __$UpdateUserCopyWithImpl<_UpdateUser>(this, _$identity);
@@ -499,6 +500,7 @@ abstract class _UpdateUser implements ChatChannelUseCaseEvent {
   const factory _UpdateUser(ChatUserEntity user) = _$_UpdateUser;
 
   ChatUserEntity get user;
+  @JsonKey(ignore: true)
   _$UpdateUserCopyWith<_UpdateUser> get copyWith;
 }
 
@@ -566,6 +568,7 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(metadata);
 
+  @JsonKey(ignore: true)
   @override
   _$UpdateMetadaCopyWith<_UpdateMetada> get copyWith =>
       __$UpdateMetadaCopyWithImpl<_UpdateMetada>(this, _$identity);
@@ -650,6 +653,7 @@ abstract class _UpdateMetada implements ChatChannelUseCaseEvent {
       _$_UpdateMetada;
 
   ChatChannelSessionMetadataEntity get metadata;
+  @JsonKey(ignore: true)
   _$UpdateMetadaCopyWith<_UpdateMetada> get copyWith;
 }
 
@@ -718,6 +722,7 @@ class _$_UpdateMessage with DiagnosticableTreeMixin implements _UpdateMessage {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(messages);
 
+  @JsonKey(ignore: true)
   @override
   _$UpdateMessageCopyWith<_UpdateMessage> get copyWith =>
       __$UpdateMessageCopyWithImpl<_UpdateMessage>(this, _$identity);
@@ -802,6 +807,7 @@ abstract class _UpdateMessage implements ChatChannelUseCaseEvent {
       _$_UpdateMessage;
 
   List<ChatChannelMessage> get messages;
+  @JsonKey(ignore: true)
   _$UpdateMessageCopyWith<_UpdateMessage> get copyWith;
 }
 
@@ -869,6 +875,7 @@ class _$_ErrorOnLoading
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
 
+  @JsonKey(ignore: true)
   @override
   _$ErrorOnLoadingCopyWith<_ErrorOnLoading> get copyWith =>
       __$ErrorOnLoadingCopyWithImpl<_ErrorOnLoading>(this, _$identity);
@@ -952,5 +959,6 @@ abstract class _ErrorOnLoading implements ChatChannelUseCaseEvent {
   const factory _ErrorOnLoading(String message) = _$_ErrorOnLoading;
 
   String get message;
+  @JsonKey(ignore: true)
   _$ErrorOnLoadingCopyWith<_ErrorOnLoading> get copyWith;
 }

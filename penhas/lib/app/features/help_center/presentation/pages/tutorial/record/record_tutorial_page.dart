@@ -18,6 +18,7 @@ class _RecordTutorialPageState extends State<RecordTutorialPage> {
         image:
             AssetImage('assets/images/tutorial_record_1/tutorial_record_1.png'),
         width: 270,
+        height: 300,
         fit: BoxFit.fitWidth,
         alignment: FractionalOffset.topCenter,
       ),
@@ -29,6 +30,7 @@ class _RecordTutorialPageState extends State<RecordTutorialPage> {
           image: AssetImage(
               'assets/images/tutorial_record_2/tutorial_record_2.png'),
           width: 270,
+          height: 300,
           fit: BoxFit.fitWidth,
           alignment: FractionalOffset.bottomCenter),
     ),
@@ -39,6 +41,7 @@ class _RecordTutorialPageState extends State<RecordTutorialPage> {
         image:
             AssetImage('assets/images/tutorial_guardian_2/tutorial_guardian_2.png'),
         width: 270,
+        height: 300,
         fit: BoxFit.fitWidth,
         alignment: FractionalOffset.topCenter,
       ),
@@ -50,6 +53,7 @@ class _RecordTutorialPageState extends State<RecordTutorialPage> {
         image:
             AssetImage('assets/images/tutorial_record_4/tutorial_record_4.png'),
         width: 270,
+        height: 300,
         fit: BoxFit.fitHeight,
         alignment: FractionalOffset.topCenter,
       ),

@@ -59,6 +59,7 @@ mixin _$FeedRouterType {
     @required TResult orElse(),
   });
 
+  @JsonKey(ignore: true)
   $FeedRouterTypeCopyWith<FeedRouterType> get copyWith;
 }
 
@@ -141,6 +142,7 @@ class _$_Chat implements _Chat {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(clientId);
 
+  @JsonKey(ignore: true)
   @override
   _$ChatCopyWith<_Chat> get copyWith =>
       __$ChatCopyWithImpl<_Chat>(this, _$identity);
@@ -202,6 +204,7 @@ abstract class _Chat implements FeedRouterType {
   @override
   int get clientId;
   @override
+  @JsonKey(ignore: true)
   _$ChatCopyWith<_Chat> get copyWith;
 }
 
@@ -258,6 +261,7 @@ class _$_Profile implements _Profile {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(clientId);
 
+  @JsonKey(ignore: true)
   @override
   _$ProfileCopyWith<_Profile> get copyWith =>
       __$ProfileCopyWithImpl<_Profile>(this, _$identity);
@@ -319,5 +323,6 @@ abstract class _Profile implements FeedRouterType {
   @override
   int get clientId;
   @override
+  @JsonKey(ignore: true)
   _$ProfileCopyWith<_Profile> get copyWith;
 }

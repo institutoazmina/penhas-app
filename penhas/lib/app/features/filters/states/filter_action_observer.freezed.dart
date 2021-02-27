@@ -227,6 +227,7 @@ class _$_Updated with DiagnosticableTreeMixin implements _Updated {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(tags);
 
+  @JsonKey(ignore: true)
   @override
   _$UpdatedCopyWith<_Updated> get copyWith =>
       __$UpdatedCopyWithImpl<_Updated>(this, _$identity);
@@ -286,5 +287,6 @@ abstract class _Updated implements FilterActionObserver {
   const factory _Updated(List<FilterTagEntity> tags) = _$_Updated;
 
   List<FilterTagEntity> get tags;
+  @JsonKey(ignore: true)
   _$UpdatedCopyWith<_Updated> get copyWith;
 }

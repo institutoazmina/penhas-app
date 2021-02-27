@@ -366,6 +366,7 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
 
+  @JsonKey(ignore: true)
   @override
   _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith =>
       __$ErrorDetailsCopyWithImpl<_ErrorDetails>(this, _$identity);
@@ -437,6 +438,7 @@ abstract class _ErrorDetails implements NewGuardianState {
   const factory _ErrorDetails(String message) = _$_ErrorDetails;
 
   String get message;
+  @JsonKey(ignore: true)
   _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith;
 }
 
@@ -501,6 +503,7 @@ class _$_RateLimit with DiagnosticableTreeMixin implements _RateLimit {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(maxLimit);
 
+  @JsonKey(ignore: true)
   @override
   _$RateLimitCopyWith<_RateLimit> get copyWith =>
       __$RateLimitCopyWithImpl<_RateLimit>(this, _$identity);
@@ -572,5 +575,6 @@ abstract class _RateLimit implements NewGuardianState {
   const factory _RateLimit(int maxLimit) = _$_RateLimit;
 
   int get maxLimit;
+  @JsonKey(ignore: true)
   _$RateLimitCopyWith<_RateLimit> get copyWith;
 }

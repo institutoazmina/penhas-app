@@ -60,6 +60,7 @@ mixin _$FeedRoutingState {
     @required TResult orElse(),
   });
 
+  @JsonKey(ignore: true)
   $FeedRoutingStateCopyWith<FeedRoutingState> get copyWith;
 }
 
@@ -142,6 +143,7 @@ class _$_Initial implements _Initial {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(title);
 
+  @JsonKey(ignore: true)
   @override
   _$InitialCopyWith<_Initial> get copyWith =>
       __$InitialCopyWithImpl<_Initial>(this, _$identity);
@@ -203,6 +205,7 @@ abstract class _Initial implements FeedRoutingState {
   @override
   String get title;
   @override
+  @JsonKey(ignore: true)
   _$InitialCopyWith<_Initial> get copyWith;
 }
 
@@ -271,6 +274,7 @@ class _$_ErrorDetails implements _ErrorDetails {
       const DeepCollectionEquality().hash(title) ^
       const DeepCollectionEquality().hash(message);
 
+  @JsonKey(ignore: true)
   @override
   _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith =>
       __$ErrorDetailsCopyWithImpl<_ErrorDetails>(this, _$identity);
@@ -333,5 +337,6 @@ abstract class _ErrorDetails implements FeedRoutingState {
   String get title;
   String get message;
   @override
+  @JsonKey(ignore: true)
   _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith;
 }
