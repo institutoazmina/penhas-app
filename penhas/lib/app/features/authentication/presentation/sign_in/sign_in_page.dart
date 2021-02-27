@@ -10,13 +10,17 @@ import 'package:penhas/app/features/authentication/presentation/shared/password_
 import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
+import 'package:penhas/app/shared/design_system/link_button.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
+import 'package:penhas/app/shared/navigation/navigator.dart';
+import 'package:penhas/app/shared/navigation/route.dart';
 import 'sign_in_controller.dart';
 
 class SignInPage extends StatefulWidget {
   final String title;
+
   const SignInPage({Key key, this.title = "Authentication"}) : super(key: key);
 
   @override
@@ -70,7 +74,21 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
                       Observer(builder: (_) => _buildPasswordField()),
                       _buildLoginButton(),
                       _buildRegisterButton(),
-                      _buildResetPasswordButton(),
+                      SizedBox(height: 16.0),
+                      LinkButton(
+                        onPressed: controller.resetPasswordPressed,
+                        text: "Esqueci minha senha",
+                      ),
+                      LinkButton(
+                        onPressed: () => AppNavigator.push(
+                            AppRoute('/authentication/terms_of_use')),
+                        text: "Termos de uso",
+                      ),
+                      LinkButton(
+                        onPressed: () => AppNavigator.push(
+                            AppRoute('/authentication/privacy_policy')),
+                        text: "Política de privacidade",
+                      ),
                     ],
                   ),
                 ),
@@ -138,24 +156,6 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
             style: kTextStyleDefaultFilledButtonLabel,
           ),
           shape: kButtonShapeOutlineWhite,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildResetPasswordButton() {
-    return Padding(
-      padding: EdgeInsets.only(top: 16),
-      child: SizedBox(
-        height: 44.0,
-        child: RaisedButton(
-          onPressed: () => controller.resetPasswordPressed(),
-          elevation: 0,
-          color: Colors.transparent,
-          child: Text(
-            "Esqueci minha senha",
-            style: kTextStyleFeedTweetShowReply,
-          ),
         ),
       ),
     );

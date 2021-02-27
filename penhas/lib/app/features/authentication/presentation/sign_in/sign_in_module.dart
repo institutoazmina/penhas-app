@@ -24,6 +24,7 @@ import 'package:penhas/app/features/authentication/presentation/reset_password/p
 import 'package:penhas/app/features/authentication/presentation/reset_password/pages/reset_password_two/reset_password_two_page.dart';
 import 'package:penhas/app/features/authentication/presentation/reset_password/reset_password_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/reset_password/reset_password_page.dart';
+import 'package:penhas/app/features/authentication/presentation/sign_in/privacy_policy/privacy_policy_page.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_page.dart';
@@ -33,6 +34,7 @@ import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/pages/sign_up_two/sign_up_two_page.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/sign_up_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/sign_up_page.dart';
+import 'package:penhas/app/features/authentication/presentation/sign_in/terms_of_use/terms_of_use_page.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in_anonymous/sign_in_anonymous_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in_anonymous/sign_in_anonymous_page.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in_stealth/sign_in_stealth_controller.dart';
@@ -91,6 +93,14 @@ class SignInModule extends ChildModule {
         ModularRouter(
           '/sign_in_stealth',
           child: (_, args) => SignInStealthPage(),
+        ),
+        ModularRouter(
+          '/terms_of_use',
+          child: (_, args) => TermsOfUsePage(),
+        ),
+        ModularRouter(
+          '/privacy_policy',
+          child: (_, args) => PrivacyPolicyPage(),
         ),
         ModularRouter(
           '/stealth',
