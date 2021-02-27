@@ -10,10 +10,26 @@ part of 'stealth_mode_tutorial_page_controller.dart';
 
 mixin _$StealthModeTutorialPageController
     on _StealthModeTutorialPageControllerBase, Store {
+  final _$stateAtom =
+      Atom(name: '_StealthModeTutorialPageControllerBase.state');
+
+  @override
+  StealthModeTutorialState get state {
+    _$stateAtom.reportRead();
+    return super.state;
+  }
+
+  @override
+  set state(StealthModeTutorialState value) {
+    _$stateAtom.reportWrite(value, super.state, () {
+      super.state = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
-
+state: ${state}
     ''';
   }
 }
