@@ -226,6 +226,7 @@ class _$_Alert with DiagnosticableTreeMixin implements _Alert {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(action);
 
+  @JsonKey(ignore: true)
   @override
   _$AlertCopyWith<_Alert> get copyWith =>
       __$AlertCopyWithImpl<_Alert>(this, _$identity);
@@ -285,5 +286,6 @@ abstract class _Alert implements GuardianAlertState {
   const factory _Alert(GuardianAlertMessageAction action) = _$_Alert;
 
   GuardianAlertMessageAction get action;
+  @JsonKey(ignore: true)
   _$AlertCopyWith<_Alert> get copyWith;
 }

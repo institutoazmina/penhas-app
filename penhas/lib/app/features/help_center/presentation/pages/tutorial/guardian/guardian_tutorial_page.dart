@@ -15,8 +15,11 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
     TutorialPageViewWidget(
       description:
           'Guardiões são pessoas de sua confiança que você cadastra para te ajudar em situações de perigo.\n\nSeus guardiões não precisam ser usuários do PenhaS, pode ser qualquer pessoa desde que ela aceite o convite que será disparado para o número de telefone dela.',
-      bodyWidget: SvgPicture.asset(
-        'assets/images/svg/tutorial/tutorial_guardian_01.svg',
+      bodyWidget: SizedBox(
+        child: SvgPicture.asset(
+          'assets/images/svg/tutorial/tutorial_guardian_01.svg',
+        ),
+        height: 270,
       ),
     ),
     TutorialPageViewWidget(
@@ -26,6 +29,7 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
         image: AssetImage(
             'assets/images/tutorial_guardian_3/tutorial_guardian_3.png'),
         width: 270,
+        height: 270,
         fit: BoxFit.fitWidth,
         alignment: FractionalOffset.topCenter,
       ),
@@ -37,6 +41,7 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
         image: AssetImage(
             'assets/images/tutorial_guardian_2/tutorial_guardian_2.png'),
         width: 250,
+        height: 270,
         fit: BoxFit.fitWidth,
         alignment: FractionalOffset.topCenter,
       ),

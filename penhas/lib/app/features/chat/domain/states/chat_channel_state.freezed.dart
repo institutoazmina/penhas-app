@@ -343,6 +343,7 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
 
+  @JsonKey(ignore: true)
   @override
   _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith =>
       __$ErrorDetailsCopyWithImpl<_ErrorDetails>(this, _$identity);
@@ -408,5 +409,6 @@ abstract class _ErrorDetails implements ChatChannelState {
   const factory _ErrorDetails(String message) = _$_ErrorDetails;
 
   String get message;
+  @JsonKey(ignore: true)
   _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith;
 }

@@ -77,6 +77,7 @@ import 'package:penhas/app/features/support_center/presentation/location/support
 import 'package:penhas/app/features/support_center/presentation/show/support_center_show_page.dart';
 import 'package:penhas/app/features/users/data/repositories/users_repository.dart';
 import 'package:penhas/app/features/users/domain/presentation/user_profile_module.dart';
+import 'package:penhas/app/features/quiz/presentation/tutorial/stealth_mode_tutorial_page_controller.dart';
 
 class MainboardModule extends ChildModule {
   @override
@@ -475,6 +476,10 @@ class MainboardModule extends ChildModule {
             apliClient: i.get<http.Client>(),
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
+        ),
+        Bind<StealthModeTutorialPageController>(
+          (i) => StealthModeTutorialPageController(
+              locationService: i.get<ILocationServices>()),
         ),
       ];
 

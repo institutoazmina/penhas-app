@@ -247,6 +247,7 @@ class _$_GuardianTriggered
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(action);
 
+  @JsonKey(ignore: true)
   @override
   _$GuardianTriggeredCopyWith<_GuardianTriggered> get copyWith =>
       __$GuardianTriggeredCopyWithImpl<_GuardianTriggered>(this, _$identity);
@@ -313,6 +314,7 @@ abstract class _GuardianTriggered implements HelpCenterState {
       _$_GuardianTriggered;
 
   GuardianAlertMessageAction get action;
+  @JsonKey(ignore: true)
   _$GuardianTriggeredCopyWith<_GuardianTriggered> get copyWith;
 }
 
@@ -378,6 +380,7 @@ class _$_CallingPolice with DiagnosticableTreeMixin implements _CallingPolice {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(callingNumber);
 
+  @JsonKey(ignore: true)
   @override
   _$CallingPoliceCopyWith<_CallingPolice> get copyWith =>
       __$CallingPoliceCopyWithImpl<_CallingPolice>(this, _$identity);
@@ -443,5 +446,6 @@ abstract class _CallingPolice implements HelpCenterState {
   const factory _CallingPolice(String callingNumber) = _$_CallingPolice;
 
   String get callingNumber;
+  @JsonKey(ignore: true)
   _$CallingPoliceCopyWith<_CallingPolice> get copyWith;
 }

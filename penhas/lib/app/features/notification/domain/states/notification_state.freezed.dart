@@ -260,6 +260,7 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(notifications);
 
+  @JsonKey(ignore: true)
   @override
   _$LoadedCopyWith<_Loaded> get copyWith =>
       __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
@@ -331,6 +332,7 @@ abstract class _Loaded implements NotificationState {
   const factory _Loaded(List<NotificationEntity> notifications) = _$_Loaded;
 
   List<NotificationEntity> get notifications;
+  @JsonKey(ignore: true)
   _$LoadedCopyWith<_Loaded> get copyWith;
 }
 
@@ -501,6 +503,7 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
 
+  @JsonKey(ignore: true)
   @override
   _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith =>
       __$ErrorDetailsCopyWithImpl<_ErrorDetails>(this, _$identity);
@@ -572,5 +575,6 @@ abstract class _ErrorDetails implements NotificationState {
   const factory _ErrorDetails(String message) = _$_ErrorDetails;
 
   String get message;
+  @JsonKey(ignore: true)
   _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith;
 }

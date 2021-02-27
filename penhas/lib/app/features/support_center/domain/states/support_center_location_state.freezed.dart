@@ -262,6 +262,7 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
 
+  @JsonKey(ignore: true)
   @override
   _$LoadedCopyWith<_Loaded> get copyWith =>
       __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
@@ -333,6 +334,7 @@ abstract class _Loaded implements SupportCenterLocationState {
   const factory _Loaded(String message) = _$_Loaded;
 
   String get message;
+  @JsonKey(ignore: true)
   _$LoadedCopyWith<_Loaded> get copyWith;
 }
 
@@ -397,6 +399,7 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
 
+  @JsonKey(ignore: true)
   @override
   _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith =>
       __$ErrorDetailsCopyWithImpl<_ErrorDetails>(this, _$identity);
@@ -468,6 +471,7 @@ abstract class _ErrorDetails implements SupportCenterLocationState {
   const factory _ErrorDetails(String message) = _$_ErrorDetails;
 
   String get message;
+  @JsonKey(ignore: true)
   _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith;
 }
 
@@ -535,6 +539,7 @@ class _$_AddressNotFound
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
 
+  @JsonKey(ignore: true)
   @override
   _$AddressNotFoundCopyWith<_AddressNotFound> get copyWith =>
       __$AddressNotFoundCopyWithImpl<_AddressNotFound>(this, _$identity);
@@ -606,5 +611,6 @@ abstract class _AddressNotFound implements SupportCenterLocationState {
   const factory _AddressNotFound(String message) = _$_AddressNotFound;
 
   String get message;
+  @JsonKey(ignore: true)
   _$AddressNotFoundCopyWith<_AddressNotFound> get copyWith;
 }

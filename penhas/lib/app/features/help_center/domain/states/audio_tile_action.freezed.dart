@@ -242,6 +242,7 @@ class _$_Notice with DiagnosticableTreeMixin implements _Notice {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
 
+  @JsonKey(ignore: true)
   @override
   _$NoticeCopyWith<_Notice> get copyWith =>
       __$NoticeCopyWithImpl<_Notice>(this, _$identity);
@@ -307,6 +308,7 @@ abstract class _Notice implements AudioTileAction {
   const factory _Notice(String message) = _$_Notice;
 
   String get message;
+  @JsonKey(ignore: true)
   _$NoticeCopyWith<_Notice> get copyWith;
 }
 
@@ -371,6 +373,7 @@ class _$_ActionSheet with DiagnosticableTreeMixin implements _ActionSheet {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(audio);
 
+  @JsonKey(ignore: true)
   @override
   _$ActionSheetCopyWith<_ActionSheet> get copyWith =>
       __$ActionSheetCopyWithImpl<_ActionSheet>(this, _$identity);
@@ -436,5 +439,6 @@ abstract class _ActionSheet implements AudioTileAction {
   const factory _ActionSheet(AudioEntity audio) = _$_ActionSheet;
 
   AudioEntity get audio;
+  @JsonKey(ignore: true)
   _$ActionSheetCopyWith<_ActionSheet> get copyWith;
 }

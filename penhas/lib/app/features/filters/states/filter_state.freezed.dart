@@ -224,6 +224,7 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(tags);
 
+  @JsonKey(ignore: true)
   @override
   _$LoadedCopyWith<_Loaded> get copyWith =>
       __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
@@ -283,5 +284,6 @@ abstract class _Loaded implements FilterState {
   const factory _Loaded(List<FilterTagEntity> tags) = _$_Loaded;
 
   List<FilterTagEntity> get tags;
+  @JsonKey(ignore: true)
   _$LoadedCopyWith<_Loaded> get copyWith;
 }

@@ -8,6 +8,8 @@ import 'package:penhas/app/features/quiz/domain/repositories/i_quiz_repository.d
 import 'package:penhas/app/features/quiz/presentation/quiz/quiz_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz/quiz_page.dart';
+import 'package:penhas/app/features/quiz/presentation/tutorial/stealth_mode_tutorial_page_controller.dart';
+import 'package:penhas/app/core/managers/location_services.dart';
 
 class QuizModule extends ChildModule {
   @override
@@ -15,7 +17,7 @@ class QuizModule extends ChildModule {
         Bind(
           (i) => QuizController(
             quizSession: i.args.data,
-            appStateUseCase:  i.get<AppStateUseCase>(),
+            appStateUseCase: i.get<AppStateUseCase>(),
             repository: i.get<IQuizRepository>(),
           ),
         ),
@@ -30,7 +32,15 @@ class QuizModule extends ChildModule {
             apiClient: i.get<http.Client>(),
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
-        )
+        ),
+        Bind<ILocationServices>(
+          (i) => LocationServices(),
+          singleton: false,
+        ),
+        Bind<StealthModeTutorialPageController>(
+          (i) => StealthModeTutorialPageController(
+              locationService: i.get<ILocationServices>()),
+        ),
       ];
 
   @override
