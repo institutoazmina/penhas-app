@@ -5,7 +5,7 @@ import 'package:flutter/material.dart' as material;
 import 'route.dart';
 
 class AppNavigator {
-  static void popAndPushNamed(AppRoute route) {
+  static void popAndPush(AppRoute route) {
     if (route.args == null) {
       Modular.to.popAndPushNamed(route.path);
     } else {
@@ -13,7 +13,15 @@ class AppNavigator {
     }
   }
 
-  static void pushNamedAndRemoveUntil(AppRoute route,
+  static void push(AppRoute route) {
+    if (route.args == null) {
+      Modular.to.pushNamed(route.path);
+    } else {
+      Modular.to.pushNamed(route.path, arguments: route.args);
+    }
+  }
+
+  static void pushAndRemoveUntil(AppRoute route,
       {@required String removeUntil}) {
     if (route.args == null) {
       Modular.to.pushNamedAndRemoveUntil(
