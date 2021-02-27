@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
@@ -10,6 +11,7 @@ import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
+import 'package:penhas/app/features/help_center/presentation/widget/RequestLocationPermissionContentWidget.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
 import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/help_center/domain/states/help_center_state.dart';
@@ -94,11 +96,17 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> triggerGuardian() async {
-    _setErrorMessage('');
-    _resetAlertState();
-    _getCurrentLocatin()
-        .then((location) => _triggerGuardian(location))
-        .then((value) => alertState = value);
+    _locationService
+        .requestPermission(
+            title: 'O guardião precisa da sua localização',
+            description: RequestLocationPermissionContentWidget())
+        .then((value) {
+      _setErrorMessage('');
+      _resetAlertState();
+      _getCurrentLocatin()
+          .then((location) => _triggerGuardian(location))
+          .then((value) => alertState = value);
+    });
   }
 
   @action
