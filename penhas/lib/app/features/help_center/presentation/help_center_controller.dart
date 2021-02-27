@@ -11,11 +11,11 @@ import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
+import 'package:penhas/app/features/help_center/presentation/widget/RequestLocationPermissionContentWidget.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
 import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/help_center/domain/states/help_center_state.dart';
 import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 part 'help_center_controller.g.dart';
 
@@ -192,30 +192,6 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
 
 extension _WidgetBuilderPrivate on _HelpCenterControllerBase {
   Widget buildRequestPermissionContent() {
-    return RichText(
-      text: TextSpan(
-        text: 'Quando um guardião é cadastrado, recomendamos que o ',
-        style: kTextStyleAlertDialogDescription,
-        children: [
-          TextSpan(
-            text: 'PenhaS ',
-            style: kTextStyleAlertDialogDescriptionBold,
-          ),
-          TextSpan(
-            text:
-            'seja autorizado a obter a sua localização. Esta informação será enviada para o Guardião quando o botão ',
-            style: kTextStyleAlertDialogDescription,
-          ),
-          TextSpan(
-            text: 'Alertar Guardiões ',
-            style: kTextStyleAlertDialogDescriptionBold,
-          ),
-          TextSpan(
-            text: 'for acionado.',
-            style: kTextStyleAlertDialogDescription,
-          ),
-        ],
-      ),
-    );
+    return RequestLocationPermissionContentWidget();
   }
 }

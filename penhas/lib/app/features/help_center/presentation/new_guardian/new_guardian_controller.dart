@@ -12,7 +12,7 @@ import 'package:penhas/app/features/help_center/data/repositories/guardian_repos
 import 'package:penhas/app/features/help_center/domain/entities/guardian_session_entity.dart';
 import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/help_center/domain/states/new_guardian_state.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+import 'package:penhas/app/features/help_center/presentation/widget/RequestLocationPermissionContentWidget.dart';
 
 part 'new_guardian_controller.g.dart';
 
@@ -180,30 +180,6 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
 
 extension _WidgetBuilderPrivate on _NewGuardianControllerBase {
   Widget buildRequestPermissionContent() {
-    return RichText(
-      text: TextSpan(
-        text: 'Quando um guardião é cadastrado, recomendamos que o ',
-        style: kTextStyleAlertDialogDescription,
-        children: [
-          TextSpan(
-            text: 'PenhaS ',
-            style: kTextStyleAlertDialogDescriptionBold,
-          ),
-          TextSpan(
-            text:
-                'seja autorizado a obter a sua localização. Esta informação será enviada para o Guardião quando o botão ',
-            style: kTextStyleAlertDialogDescription,
-          ),
-          TextSpan(
-            text: 'Alertar Guardiões ',
-            style: kTextStyleAlertDialogDescriptionBold,
-          ),
-          TextSpan(
-            text: 'for acionado.',
-            style: kTextStyleAlertDialogDescription,
-          ),
-        ],
-      ),
-    );
+    return RequestLocationPermissionContentWidget();
   }
 }
