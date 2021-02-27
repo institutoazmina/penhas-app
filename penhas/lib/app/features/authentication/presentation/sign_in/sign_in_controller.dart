@@ -2,21 +2,25 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
+import 'package:penhas/app/shared/navigation/navigator.dart';
+import 'package:penhas/app/shared/navigation/route.dart';
 
 part 'sign_in_controller.g.dart';
 
 class SignInController extends _SignInControllerBase with _$SignInController {
   SignInController(
-      IAuthenticationRepository repository, PasswordValidator passwordValidator)
-      : super(repository, passwordValidator);
+    IAuthenticationRepository repository,
+    PasswordValidator passwordValidator,
+    AppStateUseCase appStateUseCase,
+  ) : super(repository, passwordValidator, appStateUseCase);
 }
 
 abstract class _SignInControllerBase with Store, MapFailureMessage {
@@ -24,10 +28,15 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
       'E-mail e senha precisam estarem corretos para continuar.';
   final IAuthenticationRepository repository;
   final PasswordValidator _passwordValidator;
+  final AppStateUseCase _appStateUseCase;
   EmailAddress _emailAddress = EmailAddress("");
   SignInPassword _password;
 
-  _SignInControllerBase(this.repository, this._passwordValidator) {
+  _SignInControllerBase(
+    this.repository,
+    this._passwordValidator,
+    this._appStateUseCase,
+  ) {
     _password = SignInPassword("", _passwordValidator);
   }
 
@@ -103,7 +112,11 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
     if (session.deletedScheduled) {
       Modular.to.pushNamed('/accountDeleted', arguments: session.sessionToken);
     } else {
-      Modular.to.pushReplacementNamed('/');
+      final appState = await _appStateUseCase.check();
+      appState.fold(
+        (failure) => _setErrorMessage(mapFailureMessage(failure)),
+        (_) => AppNavigator.popAndPush(AppRoute('/mainboard?page=feed')),
+      );
     }
   }
 
