@@ -6,6 +6,6 @@ part 'profile_edit_state.freezed.dart';
 @freezed
 abstract class ProfileEditState with _$ProfileEditState {
   const factory ProfileEditState.initial() = _Initial;
-  const factory ProfileEditState.loaded(UserProfileEntity profile) = _Loaded;
+  const factory ProfileEditState.loaded(UserProfileEntity profile, bool securityModeFeatureEnabled) = _Loaded;
   const factory ProfileEditState.error(String message) = _ErrorDetails;
 }
