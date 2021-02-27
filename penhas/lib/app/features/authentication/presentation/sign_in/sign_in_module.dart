@@ -8,6 +8,7 @@ import 'package:penhas/app/core/managers/modules_sevices.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
+import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
 import 'package:penhas/app/features/authentication/data/datasources/authentication_data_source.dart';
 import 'package:penhas/app/features/authentication/data/datasources/change_password_data_source.dart';
 import 'package:penhas/app/features/authentication/data/datasources/user_register_data_source.dart';
@@ -53,6 +54,7 @@ class SignInModule extends ChildModule {
         Bind((i) => SignInController(
               i.get<IAuthenticationRepository>(),
               i.get<PasswordValidator>(),
+              i.get<AppStateUseCase>(),
             )),
         ..._signUp,
         ..._resetPassword,
