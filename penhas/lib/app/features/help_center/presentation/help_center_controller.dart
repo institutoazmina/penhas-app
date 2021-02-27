@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
@@ -14,6 +15,7 @@ import 'package:penhas/app/features/help_center/data/repositories/guardian_repos
 import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/help_center/domain/states/help_center_state.dart';
 import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
+import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 part 'help_center_controller.g.dart';
 
@@ -94,11 +96,17 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> triggerGuardian() async {
-    _setErrorMessage('');
-    _resetAlertState();
-    _getCurrentLocatin()
-        .then((location) => _triggerGuardian(location))
-        .then((value) => alertState = value);
+    _locationService
+        .requestPermission(
+            title: 'O guardião precisa da sua localização',
+            description: buildRequestPermissionContent())
+        .then((value) {
+      _setErrorMessage('');
+      _resetAlertState();
+      _getCurrentLocatin()
+          .then((location) => _triggerGuardian(location))
+          .then((value) => alertState = value);
+    });
   }
 
   @action
@@ -180,4 +188,34 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   void _setErrorMessage(String message) => errorMessage = message;
 
   void _resetAlertState() => alertState = HelpCenterState.initial();
+}
+
+extension _WidgetBuilderPrivate on _HelpCenterControllerBase {
+  Widget buildRequestPermissionContent() {
+    return RichText(
+      text: TextSpan(
+        text: 'Quando um guardião é cadastrado, recomendamos que o ',
+        style: kTextStyleAlertDialogDescription,
+        children: [
+          TextSpan(
+            text: 'PenhaS ',
+            style: kTextStyleAlertDialogDescriptionBold,
+          ),
+          TextSpan(
+            text:
+            'seja autorizado a obter a sua localização. Esta informação será enviada para o Guardião quando o botão ',
+            style: kTextStyleAlertDialogDescription,
+          ),
+          TextSpan(
+            text: 'Alertar Guardiões ',
+            style: kTextStyleAlertDialogDescriptionBold,
+          ),
+          TextSpan(
+            text: 'for acionado.',
+            style: kTextStyleAlertDialogDescription,
+          ),
+        ],
+      ),
+    );
+  }
 }
