@@ -18,6 +18,7 @@ import 'package:penhas/app/features/chat/presentation/chat/chat_channel_controll
 import 'package:penhas/app/features/feed/presentation/routing_perfil_chat/feed_routing_perfil_chat_controller.dart';
 import 'package:penhas/app/features/feed/presentation/routing_perfil_chat/feed_routing_perfil_chat_page.dart';
 import 'package:penhas/app/features/filters/domain/repositories/filter_skill_repository.dart';
+import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/delete/account_delete_controller.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/my_profile/profile_edit_controller.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/my_profile/skill/profile_skill_module.dart';
@@ -258,10 +259,17 @@ class MainboardModule extends ChildModule {
       ];
 
   List<Bind> get menuBind => [
+        Bind<SecurityModeActionFeature>(
+              (i) => SecurityModeActionFeature(
+            modulesServices: i.get<IAppModulesServices>(),
+          ),
+          singleton: false,
+        ),
         Bind(
           (i) => ProfileEditController(
             appStateUseCase: i.get<AppStateUseCase>(),
             skillRepository: i.get<IFilterSkillRepository>(),
+            securityModeActionFeature: i.get<SecurityModeActionFeature>()
           ),
           singleton: false,
         ),

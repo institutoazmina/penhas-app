@@ -66,7 +66,8 @@ extension _PageBuilder on _ProfileEditPageState {
   Widget bodyBuilder(ProfileEditState state) {
     return state.when(
       initial: () => bodyLoading(),
-      loaded: (profile) => bodyLoaded(profile),
+      loaded: (profile, securityModeFeatureEnabled) =>
+          bodyLoaded(profile, securityModeFeatureEnabled),
       error: (msg) => SupportCenterGeneralError(
         message: msg,
         onPressed: controller.retry,
@@ -84,7 +85,8 @@ extension _PageBuilder on _ProfileEditPageState {
     );
   }
 
-  Widget bodyLoaded(UserProfileEntity profile) {
+  Widget bodyLoaded(
+      UserProfileEntity profile, bool securityModeFeatureEnabled) {
     return SafeArea(
       child: PageProgressIndicator(
         progressMessage: 'Atualizando...',
@@ -98,18 +100,21 @@ extension _PageBuilder on _ProfileEditPageState {
                 avatar: profile.avatar,
                 onChange: controller.editNickName,
               ),
-              CardProfileBioPage(
-                content: profile.minibio ?? "",
-                onChange: controller.editMinibio,
-              ),
-              CardProfileSkillPage(
-                skills: controller.profileSkill,
-                onEditAction: controller.editSkill,
-              ),
-              CardProfileSingleTilePage(
-                title: "Já foi vítima de violência contra a mulher?",
-                content: profile.jaFoiVitimaDeViolencia ? "Sim" : "Não",
-              ),
+              if (securityModeFeatureEnabled)
+                CardProfileBioPage(
+                  content: profile.minibio ?? "",
+                  onChange: controller.editMinibio,
+                ),
+              if (securityModeFeatureEnabled)
+                CardProfileSkillPage(
+                  skills: controller.profileSkill,
+                  onEditAction: controller.editSkill,
+                ),
+              if (securityModeFeatureEnabled)
+                CardProfileSingleTilePage(
+                  title: "Já foi vítima de violência contra a mulher?",
+                  content: profile.jaFoiVitimaDeViolencia ? "Sim" : "Não",
+                ),
               CardProfileSingleTilePage(
                 title: "Cadastro",
                 content:

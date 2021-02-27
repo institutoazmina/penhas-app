@@ -12,6 +12,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
 import 'package:penhas/app/features/filters/domain/repositories/filter_skill_repository.dart';
 import 'package:penhas/app/features/filters/states/filter_action_observer.dart';
+import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
 import 'package:penhas/app/features/main_menu/domain/states/profile_edit_state.dart';
 
 part 'profile_edit_controller.g.dart';
@@ -21,15 +22,21 @@ class ProfileEditController extends _ProfileEditControllerBase
   ProfileEditController({
     @required AppStateUseCase appStateUseCase,
     @required IFilterSkillRepository skillRepository,
-  }) : super(appStateUseCase, skillRepository);
+    @required SecurityModeActionFeature securityModeActionFeature,
+  }) : super(appStateUseCase, skillRepository, securityModeActionFeature);
 }
 
 abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
   final AppStateUseCase _appStateUseCase;
   final IFilterSkillRepository _skillRepository;
+  final SecurityModeActionFeature _securityModeActionFeature;
   List<FilterTagEntity> _tags = List<FilterTagEntity>();
 
-  _ProfileEditControllerBase(this._appStateUseCase, this._skillRepository) {
+  _ProfileEditControllerBase(
+    this._appStateUseCase,
+    this._skillRepository,
+    this._securityModeActionFeature,
+  ) {
     loadProfile();
   }
 
@@ -147,14 +154,16 @@ extension _PrivateMethod on _ProfileEditControllerBase {
     );
   }
 
-  void handleSession(AppStateEntity session) {
+  void handleSession(AppStateEntity session) async {
     _tags.map((e) => null);
     List<FilterTagEntity> userSkills =
         session.userProfile.skill.map((e) => selectSkill(e)).toList();
     userSkills.removeWhere((e) => e == null);
     profileSkill = userSkills.asObservable();
 
-    state = ProfileEditState.loaded(session.userProfile);
+    final securityModeFeatureEnabled = await _securityModeActionFeature.isEnabled;
+
+    state = ProfileEditState.loaded(session.userProfile, securityModeFeatureEnabled);
   }
 
   void handleLoadPageError(Failure failure) {

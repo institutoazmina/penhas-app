@@ -19,9 +19,10 @@ class _$ProfileEditStateTearOff {
   }
 
 // ignore: unused_element
-  _Loaded loaded(UserProfileEntity profile) {
+  _Loaded loaded(UserProfileEntity profile, bool securityModeFeatureEnabled) {
     return _Loaded(
       profile,
+      securityModeFeatureEnabled,
     );
   }
 
@@ -42,13 +43,15 @@ mixin _$ProfileEditState {
   @optionalTypeArgs
   TResult when<TResult extends Object>({
     @required TResult initial(),
-    @required TResult loaded(UserProfileEntity profile),
+    @required
+        TResult loaded(
+            UserProfileEntity profile, bool securityModeFeatureEnabled),
     @required TResult error(String message),
   });
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
     TResult initial(),
-    TResult loaded(UserProfileEntity profile),
+    TResult loaded(UserProfileEntity profile, bool securityModeFeatureEnabled),
     TResult error(String message),
     @required TResult orElse(),
   });
@@ -121,7 +124,9 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object>({
     @required TResult initial(),
-    @required TResult loaded(UserProfileEntity profile),
+    @required
+        TResult loaded(
+            UserProfileEntity profile, bool securityModeFeatureEnabled),
     @required TResult error(String message),
   }) {
     assert(initial != null);
@@ -134,7 +139,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
     TResult initial(),
-    TResult loaded(UserProfileEntity profile),
+    TResult loaded(UserProfileEntity profile, bool securityModeFeatureEnabled),
     TResult error(String message),
     @required TResult orElse(),
   }) {
@@ -182,7 +187,7 @@ abstract class _Initial implements ProfileEditState {
 abstract class _$LoadedCopyWith<$Res> {
   factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
       __$LoadedCopyWithImpl<$Res>;
-  $Res call({UserProfileEntity profile});
+  $Res call({UserProfileEntity profile, bool securityModeFeatureEnabled});
 }
 
 /// @nodoc
@@ -197,23 +202,31 @@ class __$LoadedCopyWithImpl<$Res> extends _$ProfileEditStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object profile = freezed,
+    Object securityModeFeatureEnabled = freezed,
   }) {
     return _then(_Loaded(
       profile == freezed ? _value.profile : profile as UserProfileEntity,
+      securityModeFeatureEnabled == freezed
+          ? _value.securityModeFeatureEnabled
+          : securityModeFeatureEnabled as bool,
     ));
   }
 }
 
 /// @nodoc
 class _$_Loaded implements _Loaded {
-  const _$_Loaded(this.profile) : assert(profile != null);
+  const _$_Loaded(this.profile, this.securityModeFeatureEnabled)
+      : assert(profile != null),
+        assert(securityModeFeatureEnabled != null);
 
   @override
   final UserProfileEntity profile;
+  @override
+  final bool securityModeFeatureEnabled;
 
   @override
   String toString() {
-    return 'ProfileEditState.loaded(profile: $profile)';
+    return 'ProfileEditState.loaded(profile: $profile, securityModeFeatureEnabled: $securityModeFeatureEnabled)';
   }
 
   @override
@@ -221,12 +234,20 @@ class _$_Loaded implements _Loaded {
     return identical(this, other) ||
         (other is _Loaded &&
             (identical(other.profile, profile) ||
-                const DeepCollectionEquality().equals(other.profile, profile)));
+                const DeepCollectionEquality()
+                    .equals(other.profile, profile)) &&
+            (identical(other.securityModeFeatureEnabled,
+                    securityModeFeatureEnabled) ||
+                const DeepCollectionEquality().equals(
+                    other.securityModeFeatureEnabled,
+                    securityModeFeatureEnabled)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(profile);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(profile) ^
+      const DeepCollectionEquality().hash(securityModeFeatureEnabled);
 
   @override
   _$LoadedCopyWith<_Loaded> get copyWith =>
@@ -236,26 +257,28 @@ class _$_Loaded implements _Loaded {
   @optionalTypeArgs
   TResult when<TResult extends Object>({
     @required TResult initial(),
-    @required TResult loaded(UserProfileEntity profile),
+    @required
+        TResult loaded(
+            UserProfileEntity profile, bool securityModeFeatureEnabled),
     @required TResult error(String message),
   }) {
     assert(initial != null);
     assert(loaded != null);
     assert(error != null);
-    return loaded(profile);
+    return loaded(profile, securityModeFeatureEnabled);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
     TResult initial(),
-    TResult loaded(UserProfileEntity profile),
+    TResult loaded(UserProfileEntity profile, bool securityModeFeatureEnabled),
     TResult error(String message),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (loaded != null) {
-      return loaded(profile);
+      return loaded(profile, securityModeFeatureEnabled);
     }
     return orElse();
   }
@@ -290,9 +313,11 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements ProfileEditState {
-  const factory _Loaded(UserProfileEntity profile) = _$_Loaded;
+  const factory _Loaded(
+      UserProfileEntity profile, bool securityModeFeatureEnabled) = _$_Loaded;
 
   UserProfileEntity get profile;
+  bool get securityModeFeatureEnabled;
   _$LoadedCopyWith<_Loaded> get copyWith;
 }
 
@@ -357,7 +382,9 @@ class _$_ErrorDetails implements _ErrorDetails {
   @optionalTypeArgs
   TResult when<TResult extends Object>({
     @required TResult initial(),
-    @required TResult loaded(UserProfileEntity profile),
+    @required
+        TResult loaded(
+            UserProfileEntity profile, bool securityModeFeatureEnabled),
     @required TResult error(String message),
   }) {
     assert(initial != null);
@@ -370,7 +397,7 @@ class _$_ErrorDetails implements _ErrorDetails {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
     TResult initial(),
-    TResult loaded(UserProfileEntity profile),
+    TResult loaded(UserProfileEntity profile, bool securityModeFeatureEnabled),
     TResult error(String message),
     @required TResult orElse(),
   }) {
