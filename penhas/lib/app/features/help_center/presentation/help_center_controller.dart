@@ -99,7 +99,7 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
     _locationService
         .requestPermission(
             title: 'O guardião precisa da sua localização',
-            description: buildRequestPermissionContent())
+            description: RequestLocationPermissionContentWidget())
         .then((value) {
       _setErrorMessage('');
       _resetAlertState();
@@ -188,10 +188,4 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   void _setErrorMessage(String message) => errorMessage = message;
 
   void _resetAlertState() => alertState = HelpCenterState.initial();
-}
-
-extension _WidgetBuilderPrivate on _HelpCenterControllerBase {
-  Widget buildRequestPermissionContent() {
-    return RequestLocationPermissionContentWidget();
-  }
 }

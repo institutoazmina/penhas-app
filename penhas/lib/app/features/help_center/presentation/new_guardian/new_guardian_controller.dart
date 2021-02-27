@@ -173,13 +173,7 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
     await _locationService
         .requestPermission(
             title: 'O guardião precisa da sua localização',
-            description: buildRequestPermissionContent())
+            description: RequestLocationPermissionContentWidget())
         .then((value) => Modular.to.pop(true));
-  }
-}
-
-extension _WidgetBuilderPrivate on _NewGuardianControllerBase {
-  Widget buildRequestPermissionContent() {
-    return RequestLocationPermissionContentWidget();
   }
 }
