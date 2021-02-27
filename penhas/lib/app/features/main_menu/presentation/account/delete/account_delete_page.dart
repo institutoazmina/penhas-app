@@ -23,6 +23,7 @@ class _AccountDeletePageState
     extends ModularState<AccountDeletePage, AccountDeleteController>
     with SnackBarHandler {
   bool _isPasswordVisible = false;
+  final textController = TextEditingController();
   List<ReactionDisposer> _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -87,7 +88,6 @@ extension _PageBuilder on _AccountDeletePageState {
   }
 
   Widget bodyLoaded(String bodyMessage) {
-    final textController = TextEditingController();
 
     return SafeArea(
       child: PageProgressIndicator(

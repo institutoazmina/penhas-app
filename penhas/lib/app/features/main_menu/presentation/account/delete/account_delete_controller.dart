@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
@@ -93,7 +94,10 @@ extension _PrivateMethods on _AccountDeleteControllerBase {
 
   void handleDeleteSession(ValidField session) {
     _appConfiguration.logout();
-    Modular.to.pushReplacementNamed('/');
+    Modular.to.pushNamedAndRemoveUntil(
+      '/',
+      ModalRoute.withName('/'),
+    );
   }
 
   PageProgressState monitorProgress(ObservableFuture<Object> observable) {
