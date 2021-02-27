@@ -17,9 +17,12 @@ class AboutPenhasPage extends StatelessWidget {
       body: WebView(
         initialUrl: 'https://***REMOVED***/web/faq',
         javascriptMode: JavascriptMode.unrestricted,
-        navigationDelegate: (NavigationRequest nav) {
+        navigationDelegate: (NavigationRequest nav) async {
           if (nav.url.startsWith('mailto')) {
-            launch('mailto:pedroabinajm@gmail.com');
+            if (await canLaunch(nav.url)) {
+              launch(nav.url);
+            }
+
             return NavigationDecision.prevent;
           }
           return NavigationDecision.navigate;
