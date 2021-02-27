@@ -15,7 +15,7 @@ class InactivityLogoutUseCase {
   })  : this._appPreferencesStore = appPreferencesStore,
         this._userProfileStore = userProfileStore;
 
-  Future<Either<InactivityError, Route>> inactivityRoute(DateTime now) {
+  Future<Either<InactivityError, AppRoute>> inactivityRoute(DateTime now) {
     return _appPreferencesStore
         .retrieve()
         .then((preferences) => _inactiveForTooLong(
@@ -25,16 +25,16 @@ class InactivityLogoutUseCase {
         .then((isInactive) => _routeForInactiveCustomer(isInactive));
   }
 
-  Future<Either<InactivityError, Route>> _routeForInactiveCustomer(bool isInactive) async {
+  Future<Either<InactivityError, AppRoute>> _routeForInactiveCustomer(bool isInactive) async {
     if (!isInactive) return left(InactivityError.CUSTOMER_ACTIVE);
 
     final profile = await _userProfileStore.retrieve();
 
     if (profile.stealthModeEnabled) {
-      return right(Route('/authentication/stealth'));
+      return right(AppRoute('/authentication/stealth'));
     }
     if (profile.anonymousModeEnabled) {
-      return right(Route('/authentication/sign_in_stealth'));
+      return right(AppRoute('/authentication/sign_in_stealth'));
     }
 
     return left(InactivityError.CUSTOMER_NOT_STEALTH);

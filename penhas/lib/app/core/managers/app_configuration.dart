@@ -36,7 +36,7 @@ class AppConfiguration implements IAppConfiguration {
   }
 
   @override
-  Uri get penhasServer => Uri.https('elasv2-api.appcivico.com', '/');
+  Uri get penhasServer => Uri.https('***REMOVED***', '/');
 
   @override
   Future<void> saveApiToken({@required String token}) async {

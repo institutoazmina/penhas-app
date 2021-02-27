@@ -98,7 +98,7 @@ void main() {
   });
 
   group('AppPreferencesUseCase#inactivityRoute', () {
-    Future<Either<InactivityError, Route>> _inactivityRoute({
+    Future<Either<InactivityError, AppRoute>> _inactivityRoute({
       @required DateTime inactiveSince,
       @required DateTime now,
       @required bool stealthModeEnabled,
@@ -133,7 +133,7 @@ void main() {
       );
 
       expect(value.isRight(), true);
-      expect(value.getOrElse(() => null), Route('/authentication/stealth'));
+      expect(value.getOrElse(() => null), AppRoute('/authentication/stealth'));
     });
 
     test(
@@ -149,7 +149,7 @@ void main() {
       );
 
       expect(value.isRight(), true);
-      expect(value.getOrElse(() => null), Route('/authentication/stealth'));
+      expect(value.getOrElse(() => null), AppRoute('/authentication/stealth'));
     });
 
     test(
@@ -165,7 +165,7 @@ void main() {
       );
 
       expect(value.isRight(), true);
-      expect(value.getOrElse(() => null), Route('/authentication/stealth'));
+      expect(value.getOrElse(() => null), AppRoute('/authentication/stealth'));
     });
 
     test(
@@ -183,7 +183,7 @@ void main() {
       expect(value.isRight(), true);
       expect(
         value.getOrElse(() => null),
-        Route('/authentication/sign_in_stealth'),
+        AppRoute('/authentication/sign_in_stealth'),
       );
     });
 
@@ -202,7 +202,7 @@ void main() {
       expect(value.isRight(), true);
       expect(
         value.getOrElse(() => null),
-        Route('/authentication/sign_in_stealth'),
+        AppRoute('/authentication/sign_in_stealth'),
       );
     });
 

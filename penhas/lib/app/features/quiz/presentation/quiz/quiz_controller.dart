@@ -171,7 +171,7 @@ abstract class _QuizControllerBase with Store {
     if (state.quizSession?.isFinished ?? true) {
       _updateAppStates(
         state,
-        (_) => Navigator.popAndPushNamed(Route(state.quizSession.endScreen)),
+        (_) => AppNavigator.popAndPushNamed(AppRoute(state.quizSession.endScreen)),
       );
       return;
     }

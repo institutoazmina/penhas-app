@@ -66,7 +66,7 @@ abstract class _SplashControllerBase with Store {
       return;
     }
 
-    Navigator.popAndPushNamed(Route('/mainboard?page=feed'));
+    AppNavigator.popAndPushNamed(AppRoute('/mainboard?page=feed'));
   }
 
   void _forwardToAuthentication() {
