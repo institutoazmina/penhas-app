@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
-import 'package:penhas/app/features/help_center/presentation/widget/RequestLocationPermissionContentWidget.dart';
+import 'package:penhas/app/features/help_center/presentation/widget/request_location_permission_content_widget.dart';
 import 'package:penhas/app/features/quiz/presentation/tutorial/stealth_mode_tutorial_state.dart';
 part 'stealth_mode_tutorial_page_controller.g.dart';
 

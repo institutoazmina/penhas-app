@@ -11,11 +11,11 @@ import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/help_center/presentation/widget/RequestLocationPermissionContentWidget.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
 import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/help_center/domain/states/help_center_state.dart';
 import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
+import 'package:penhas/app/features/help_center/presentation/widget/request_location_permission_content_widget.dart';
 
 part 'help_center_controller.g.dart';
 

@@ -12,7 +12,7 @@ import 'package:penhas/app/features/help_center/data/repositories/guardian_repos
 import 'package:penhas/app/features/help_center/domain/entities/guardian_session_entity.dart';
 import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/help_center/domain/states/new_guardian_state.dart';
-import 'package:penhas/app/features/help_center/presentation/widget/RequestLocationPermissionContentWidget.dart';
+import 'package:penhas/app/features/help_center/presentation/widget/request_location_permission_content_widget.dart';
 
 part 'new_guardian_controller.g.dart';
 
