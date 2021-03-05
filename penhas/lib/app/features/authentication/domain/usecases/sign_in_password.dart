@@ -13,6 +13,6 @@ class SignInPassword extends Password {
   @override
   Either<PasswordRule, String> get value => _passwordValidator.validate(
         _input,
-        [EmptyRule(), MinLengthRule()],
+        [EmptyRule()],
       );
 }
