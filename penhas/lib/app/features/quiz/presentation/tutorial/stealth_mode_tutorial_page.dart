@@ -119,7 +119,7 @@ class _StealthModeTutorialPageState extends ModularState<StealthModeTutorialPage
         title:
         'Aplique um disfarce de app de signo para esconder o verdadeiro conteúdo do PenhaS',
         description:
-        'Para fazer entrar no app com o modo camuflado ativo, clique no botão "Diário astrológico" para ser direcionada para a tela de login.',
+        'Para entrar no app com o modo camuflado ativo, clique no botão "Diário astrológico" para ser direcionada para a tela de login.',
         bodyWidget: Image(
           image: AssetImage(
               'assets/images/stealth_mode_tutorial_image_2/stealth_mode_tutorial_image_2.png'),
