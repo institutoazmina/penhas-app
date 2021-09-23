@@ -208,9 +208,7 @@ class TweetDataSource implements ITweetDataSource {
     @required Map<String, String> queryParameters,
   }) async {
     queryParameters.removeWhere((k, v) => v == null);
-    return Uri(
-      scheme: _serverConfiguration.baseUri.scheme,
-      host: _serverConfiguration.baseUri.host,
+    return _serverConfiguration.baseUri.replace(
       path: path,
       queryParameters: queryParameters.isEmpty ? null : queryParameters,
     );

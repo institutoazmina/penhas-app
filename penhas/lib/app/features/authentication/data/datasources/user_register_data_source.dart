@@ -145,9 +145,7 @@ class UserRegisterDataSource implements IUserRegisterDataSource {
   Future<Uri> _setupHttpRequest(
       {@required Map<String, String> queryParameters}) async {
     queryParameters.removeWhere((k, v) => v == null);
-    return Uri(
-      scheme: serverConfiguration.baseUri.scheme,
-      host: serverConfiguration.baseUri.host,
+    return serverConfiguration.baseUri.replace(
       path: '/signup',
       queryParameters: queryParameters,
     );

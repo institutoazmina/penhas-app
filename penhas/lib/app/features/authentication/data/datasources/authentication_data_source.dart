@@ -33,7 +33,6 @@ class AuthenticationDataSource implements IAuthenticationDataSource {
     EmailAddress emailAddress,
     SignInPassword password,
   }) async {
-    final baseUri = serverConfiguration.baseUri;
     final userAgent = await serverConfiguration.userAgent;
     final queryParameters = {
       'app_version': userAgent,
@@ -46,9 +45,7 @@ class AuthenticationDataSource implements IAuthenticationDataSource {
       'Content-Type': 'application/x-www-form-urlencoded'
     };
 
-    final loginUri = Uri(
-      scheme: baseUri.scheme,
-      host: baseUri.host,
+    final loginUri = serverConfiguration.baseUri.replace(
       path: '/login',
       queryParameters: queryParameters,
     );
