@@ -26,10 +26,7 @@ class AppStateDataSource implements IAppStateDataSource {
   @override
   Future<AppStateModel> check() async {
     final httpHeader = await _setupHttpHeader();
-    final httpRequest = Uri(
-        scheme: _serverConfiguration.baseUri.scheme,
-        host: _serverConfiguration.baseUri.host,
-        path: '/me');
+    final httpRequest = _serverConfiguration.baseUri.replace(path: '/me');
 
     final response = await _apiClient.get(httpRequest, headers: httpHeader);
     if (_successfulResponse.contains(response.statusCode)) {
@@ -47,10 +44,7 @@ class AppStateDataSource implements IAppStateDataSource {
     httpHeader['Content-Type'] =
         'application/x-www-form-urlencoded; charset=utf-8';
 
-    final httpRequest = Uri(
-        scheme: _serverConfiguration.baseUri.scheme,
-        host: _serverConfiguration.baseUri.host,
-        path: '/me');
+    final httpRequest = _serverConfiguration.baseUri.replace(path: '/me');
 
     List<String> parameters = [
       update.nickName == null

@@ -43,9 +43,7 @@ class ChangePasswordDataSource implements IChangePasswordDataSource {
     };
 
     final httpHeader = await _setupHttpHeader();
-    final httpRequest = Uri(
-      scheme: serverConfiguration.baseUri.scheme,
-      host: serverConfiguration.baseUri.host,
+    final httpRequest = serverConfiguration.baseUri.replace(
       path: '/reset-password/request-new',
       queryParameters: queryParameters,
     );
@@ -71,9 +69,7 @@ class ChangePasswordDataSource implements IChangePasswordDataSource {
     };
 
     final httpHeader = await _setupHttpHeader();
-    final httpRequest = Uri(
-      scheme: serverConfiguration.baseUri.scheme,
-      host: serverConfiguration.baseUri.host,
+    final httpRequest = serverConfiguration.baseUri.replace(
       path: '/reset-password/write-new',
       queryParameters: queryParameters,
     );
@@ -106,9 +102,7 @@ class ChangePasswordDataSource implements IChangePasswordDataSource {
     };
 
     final httpHeader = await _setupHttpHeader();
-    final httpRequest = Uri(
-      scheme: serverConfiguration.baseUri.scheme,
-      host: serverConfiguration.baseUri.host,
+    final httpRequest = serverConfiguration.baseUri.replace(
       path: '/reset-password/write-new',
       queryParameters: queryParameters,
     );
