@@ -2,21 +2,29 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
 import 'package:penhas/app/features/authentication/data/repositories/authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_controller.dart';
 
-class MockAuthenticatonRepository extends Mock
+class MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {}
 
+class MockAppStateUseCase extends Mock implements AppStateUseCase {}
+
 void main() {
-  MockAuthenticatonRepository mock;
+  MockAuthenticationRepository authenticationRepositoryMock;
+  MockAppStateUseCase appStateUseCaseMock;
   SignInController sut;
 
   //
   setUp(() {
-    mock = MockAuthenticatonRepository();
-    sut = SignInController(mock, PasswordValidator());
+    authenticationRepositoryMock = MockAuthenticationRepository();
+    sut = SignInController(
+      authenticationRepositoryMock,
+      PasswordValidator(),
+      appStateUseCaseMock,
+    );
   });
 
   group('SignInController', () {
@@ -57,15 +65,6 @@ void main() {
       expect(sut.warningEmail, '');
     });
 
-    test('should show warning message for a invalid password', () {
-      // arrange
-      var invalidPassword = '1';
-      // act
-      sut.setPassword(invalidPassword);
-      // assert
-      expect(sut.warningPassword, (warningPassword));
-    });
-
     test('should reset warning message after user input a valid password', () {
       // arrange
       var invalidPassword = '';
@@ -78,7 +77,7 @@ void main() {
     });
 
     void mockAuthenticationFailure(Failure failure) {
-      when(mock.signInWithEmailAndPassword(
+      when(authenticationRepositoryMock.signInWithEmailAndPassword(
         emailAddress: anyNamed('emailAddress'),
         password: anyNamed('password'),
       )).thenAnswer((_) async => left(failure));
@@ -90,7 +89,7 @@ void main() {
       // act
       await sut.signInWithEmailAndPasswordPressed();
       // assert
-      verifyZeroInteractions(mock);
+      verifyZeroInteractions(authenticationRepositoryMock);
     });
 
     void testServerError(Failure failure, String errorMessage) async {
@@ -114,21 +113,6 @@ void main() {
         "should show ERROR_INTERNET_CONNECTION_FAILURE message when got ServerFailure",
         () async {
       testServerError(InternetConnectionFailure(), internetConnectionFailure);
-    });
-
-    test(
-        'should show ERROR_USER_AUTHENTICATION_FAILURE message when got UserAuthenticationFailure',
-        () async {
-      // arrange
-      // mockAuthenticationFailure(UserAuthenticationFailure());
-      var validPassword = 'sTr0ng';
-      var validEmailAddress = 'my_email@app.com';
-      // act
-      sut.setPassword(validPassword);
-      sut.setEmail(validEmailAddress);
-      await sut.signInWithEmailAndPasswordPressed();
-      // assert
-      expect(sut.errorMessage, userAuthenticationFailure);
     });
   });
 }

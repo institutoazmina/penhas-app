@@ -38,17 +38,6 @@ void main() {
         },
       );
       test(
-        'should get PasswordInvalidFailure for password without min length require',
-        () {
-          final result = SignInPassword("1Ba@2cD", validator);
-
-          expect(result.value, left(MinLengthRule()));
-          expect(result.mapFailure, 'Senha precisa ter no mínimo 8 caracteres');
-          expect(result.isValid, false);
-          expect(result.rawValue, null);
-        },
-      );
-      test(
         'should get value from a valid password',
         () {
           final validPassword = "_myStrongP4ss@rd";
