@@ -210,6 +210,7 @@ class _$_Playing implements _Playing {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(audio);
 
+  @JsonKey(ignore: true)
   @override
   _$PlayingCopyWith<_Playing> get copyWith =>
       __$PlayingCopyWithImpl<_Playing>(this, _$identity);
@@ -269,5 +270,6 @@ abstract class _Playing implements AudioPlaying {
   const factory _Playing(AudioEntity audio) = _$_Playing;
 
   AudioEntity get audio;
+  @JsonKey(ignore: true)
   _$PlayingCopyWith<_Playing> get copyWith;
 }
