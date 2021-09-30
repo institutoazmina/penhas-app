@@ -13,10 +13,13 @@ abstract class GuardianAlertState with _$GuardianAlertState {
 abstract class GuardianAlertAction {}
 
 class GuardianAlertMessageAction extends GuardianAlertAction {
+  final String title;
   final String message;
+
   final void Function() onPressed;
 
   GuardianAlertMessageAction({
+    @required this.title,
     @required this.message,
     @required this.onPressed,
   });

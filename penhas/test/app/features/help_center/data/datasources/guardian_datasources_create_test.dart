@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/help_center/data/datasources/guardian_data_source.dart';
+import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
 import 'package:penhas/app/features/help_center/domain/entities/guardian_session_entity.dart';
 
 import '../../../../../utils/json_util.dart';
@@ -114,11 +114,11 @@ void main() {
             _setUpMockPostHttpClientSuccess200(bodyContent);
             final jsonData = await JsonUtil.getJson(
                 from: 'help_center/guardian_create_successful.json');
-            final expected = ValidField.fromJson(jsonData);
+            final expected = AlertModel.fromJson(jsonData);
             // act
             final received = await dataSource.create(guardian);
             // assert
-            expect(expected, received);
+            expect(received, expected);
           },
         );
       });

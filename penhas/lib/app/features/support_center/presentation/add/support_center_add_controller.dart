@@ -2,11 +2,11 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
+import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
 import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/support_center/domain/states/support_center_add_state.dart';
 import 'package:penhas/app/features/support_center/domain/usecases/support_center_usecase.dart';
@@ -33,7 +33,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   }
 
   @observable
-  ObservableFuture<Either<Failure, ValidField>> _savingSuggestion;
+  ObservableFuture<Either<Failure, AlertModel>> _savingSuggestion;
 
   @observable
   String addressError = "";
@@ -162,9 +162,10 @@ extension _Private on _SupportCenterAddControllerBase {
     errorMessage = message;
   }
 
-  void handleSuccessAddSupportCenter(ValidField field) {
+  void handleSuccessAddSupportCenter(AlertModel field) {
     alertState = GuardianAlertState.alert(
       GuardianAlertMessageAction(
+        title: field.title ?? 'Sugestão enviada',
         message: field.message,
         onPressed: () async => actionAfterNotice(),
       ),

@@ -6,6 +6,7 @@ import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/help_center/data/datasources/guardian_data_source.dart';
+import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
 
 import '../../../../../utils/json_util.dart';
 
@@ -122,13 +123,14 @@ void main() {
           () async {
             // arrange
             _setUpMockPostHttpClientSuccess200(bodyContent);
-            final expected = ValidField(
+            final expected = AlertModel(
+              title: 'Alerta enviado!',
                 message:
                     "Não há guardiões cadastrado! Nenhum alerta foi enviado.");
             // act
             final received = await dataSource.alert(userLocation);
             // assert
-            expect(expected, received);
+            expect(received, expected);
           },
         );
 

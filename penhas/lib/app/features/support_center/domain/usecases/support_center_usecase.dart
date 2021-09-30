@@ -6,6 +6,7 @@ import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
+import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
 import 'package:penhas/app/features/support_center/data/repositories/support_center_repository.dart';
 import 'package:penhas/app/features/support_center/domain/entities/geolocation_entity.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_fetch_request.dart';
@@ -72,7 +73,7 @@ class SupportCenterUseCase {
     return true;
   }
 
-  Future<Either<Failure, ValidField>> saveSuggestion({
+  Future<Either<Failure, AlertModel>> saveSuggestion({
     @required String name,
     @required String address,
     @required String category,

@@ -45,13 +45,13 @@ mixin _$NewGuardianController on _NewGuardianControllerBase, Store {
       Atom(name: '_NewGuardianControllerBase._createProgress');
 
   @override
-  ObservableFuture<Either<Failure, ValidField>> get _createProgress {
+  ObservableFuture<Either<Failure, AlertModel>> get _createProgress {
     _$_createProgressAtom.reportRead();
     return super._createProgress;
   }
 
   @override
-  set _createProgress(ObservableFuture<Either<Failure, ValidField>> value) {
+  set _createProgress(ObservableFuture<Either<Failure, AlertModel>> value) {
     _$_createProgressAtom.reportWrite(value, super._createProgress, () {
       super._createProgress = value;
     });

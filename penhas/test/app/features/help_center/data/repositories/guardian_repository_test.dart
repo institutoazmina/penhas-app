@@ -7,6 +7,7 @@ import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/help_center/data/datasources/guardian_data_source.dart';
+import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
 import 'package:penhas/app/features/help_center/data/models/guardian_session_model.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
 import 'package:penhas/app/features/help_center/domain/entities/guardian_session_entity.dart';
@@ -102,7 +103,7 @@ void main() {
             name: 'Maria',
             mobile: '1191910101',
           );
-          final response = ValidField.fromJson(jsonSession);
+          final response = AlertModel.fromJson(jsonSession);
           final expected = right(response);
           when(dataSource.create(any)).thenAnswer((_) async => response);
           // act
@@ -184,10 +185,13 @@ void main() {
           () async {
             // arrange
             final location = UserLocationEntity(latitude: 1.0, longitude: -1.0);
-            final expected = right(ValidField(
+            final expected = right(AlertModel(
+                title: "Alerta enviado!",
                 message: "Alerta disparado com sucesso para 1 guardião."));
-            when(dataSource.alert(any)).thenAnswer((_) async => ValidField(
-                message: "Alerta disparado com sucesso para 1 guardião."));
+            when(dataSource.alert(any)).thenAnswer((_) async => AlertModel(
+                  title: "Alerta enviado!",
+                  message: "Alerta disparado com sucesso para 1 guardião.",
+                ));
             // act
             final received = await sut.alert(location);
             // assert

@@ -29,7 +29,7 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
   ObservableFuture<Either<Failure, GuardianSessioEntity>> _fetchProgress;
 
   @observable
-  ObservableFuture<Either<Failure, ValidField>> _updateProgress;
+  ObservableFuture<Either<Failure, dynamic>> _updateProgress;
 
   @observable
   String errorMessage = '';

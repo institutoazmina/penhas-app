@@ -6,6 +6,7 @@ import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_exception_to_failure.dart';
+import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
 import 'package:penhas/app/features/support_center/data/models/geolocation_model.dart';
 import 'package:penhas/app/features/support_center/data/models/support_center_metadata_model.dart';
 import 'package:penhas/app/features/support_center/data/models/support_center_place_detail_model.dart';
@@ -26,7 +27,7 @@ abstract class ISupportCenterRepository {
       SupportCenterPlaceEntity placeEntity);
   Future<Either<Failure, ValidField>> rate(
       SupportCenterPlaceEntity place, double rate);
-  Future<Either<Failure, ValidField>> suggestion({
+  Future<Either<Failure, AlertModel>> suggestion({
     @required String name,
     @required String address,
     @required String category,
@@ -109,7 +110,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
   }
 
   @override
-  Future<Either<Failure, ValidField>> suggestion({
+  Future<Either<Failure, AlertModel>> suggestion({
     @required String name,
     @required String address,
     @required String category,
@@ -128,7 +129,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
         path: endPoint,
         body: bodyContent,
       );
-      return right(parseAddSugestion(response));
+      return right(parseAddSuggestion(response));
     } catch (error) {
       return left(MapExceptionToFailure.map(error));
     }
@@ -185,9 +186,9 @@ extension SupportCenterRepositoryPrivate on SupportCenterRepository {
     return GeoLocationModel.fromJson(jsonData);
   }
 
-  ValidField parseAddSugestion(String body) {
+  AlertModel parseAddSuggestion(String body) {
     final jsonData = jsonDecode(body) as Map<String, Object>;
-    return ValidField.fromJson(jsonData);
+    return AlertModel.fromJson(jsonData);
   }
 
   SupportCenterPlaceDetailEntity parseDetail(String body) {

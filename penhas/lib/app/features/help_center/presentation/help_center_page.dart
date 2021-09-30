@@ -217,7 +217,7 @@ class _HelpCenterPageState
               Padding(
                 padding: const EdgeInsets.only(top: 12.0),
                 child:
-                    Text('Alerta enviado!', style: kTextStyleAlertDialogTitle),
+                    Text(action.title, style: kTextStyleAlertDialogTitle),
               ),
             ],
           ),

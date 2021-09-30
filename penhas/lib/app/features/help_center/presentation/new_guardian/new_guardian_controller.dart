@@ -8,6 +8,7 @@ import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
+import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
 import 'package:penhas/app/features/help_center/domain/entities/guardian_session_entity.dart';
 import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
@@ -39,7 +40,7 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
   ObservableFuture<Either<Failure, GuardianSessioEntity>> _fetchProgress;
 
   @observable
-  ObservableFuture<Either<Failure, ValidField>> _createProgress;
+  ObservableFuture<Either<Failure, AlertModel>> _createProgress;
 
   @observable
   String errorMessage = '';
@@ -160,9 +161,10 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
 
   void _setErrorMessage(String message) => errorMessage = message;
 
-  void _handleCreatedGuardian(ValidField field) {
+  void _handleCreatedGuardian(AlertModel field) {
     alertState = GuardianAlertState.alert(
       GuardianAlertMessageAction(
+        title: field.title ?? 'Convite enviado',
         message: field.message,
         onPressed: () async => _actionAfterNotice(),
       ),

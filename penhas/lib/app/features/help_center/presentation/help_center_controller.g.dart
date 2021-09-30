@@ -21,13 +21,13 @@ mixin _$HelpCenterController on _HelpCenterControllerBase, Store {
       Atom(name: '_HelpCenterControllerBase._alertProgress');
 
   @override
-  ObservableFuture<Either<Failure, ValidField>> get _alertProgress {
+  ObservableFuture<Either<Failure, AlertModel>> get _alertProgress {
     _$_alertProgressAtom.reportRead();
     return super._alertProgress;
   }
 
   @override
-  set _alertProgress(ObservableFuture<Either<Failure, ValidField>> value) {
+  set _alertProgress(ObservableFuture<Either<Failure, AlertModel>> value) {
     _$_alertProgressAtom.reportWrite(value, super._alertProgress, () {
       super._alertProgress = value;
     });

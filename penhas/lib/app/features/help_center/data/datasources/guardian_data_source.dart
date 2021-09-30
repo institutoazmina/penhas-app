@@ -6,15 +6,16 @@ import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
+import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
 import 'package:penhas/app/features/help_center/data/models/guardian_session_model.dart';
 import 'package:penhas/app/features/help_center/domain/entities/guardian_session_entity.dart';
 
 abstract class IGuardianDataSource {
   Future<GuardianSessionModel> fetch();
-  Future<ValidField> create(GuardianContactEntity guardian);
+  Future<AlertModel> create(GuardianContactEntity guardian);
   Future<ValidField> update(GuardianContactEntity guardian);
   Future<ValidField> delete(GuardianContactEntity guardian);
-  Future<ValidField> alert(UserLocationEntity location);
+  Future<AlertModel> alert(UserLocationEntity location);
   Future<ValidField> callPolice();
 }
 
@@ -49,7 +50,7 @@ class GuardianDataSource implements IGuardianDataSource {
   }
 
   @override
-  Future<ValidField> create(GuardianContactEntity guardian) async {
+  Future<AlertModel> create(GuardianContactEntity guardian) async {
     final httpHeader = await _setupHttpHeader();
     final httpRequest = await _setupHttpRequest(
       path: '/me/guardioes',
@@ -64,7 +65,7 @@ class GuardianDataSource implements IGuardianDataSource {
     );
 
     if (_successfulResponse.contains(response.statusCode)) {
-      return ValidField.fromJson(json.decode(response.body));
+      return AlertModel.fromJson(json.decode(response.body));
     } else if (_invalidSessionCode.contains(response.statusCode)) {
       throw ApiProviderSessionExpection();
     } else {
@@ -117,7 +118,7 @@ class GuardianDataSource implements IGuardianDataSource {
   }
 
   @override
-  Future<ValidField> alert(UserLocationEntity location) async {
+  Future<AlertModel> alert(UserLocationEntity location) async {
     final httpHeader = await _setupHttpHeader();
     final httpRequest = await _setupHttpRequest(
       path: '/me/guardioes/alert',
@@ -135,7 +136,7 @@ class GuardianDataSource implements IGuardianDataSource {
     );
 
     if (_successfulResponse.contains(response.statusCode)) {
-      return ValidField.fromJson(json.decode(response.body));
+      return AlertModel.fromJson(json.decode(response.body));
     } else if (_invalidSessionCode.contains(response.statusCode)) {
       throw ApiProviderSessionExpection();
     } else {

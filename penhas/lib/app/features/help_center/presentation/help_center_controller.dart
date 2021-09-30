@@ -4,13 +4,13 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/entities/user_location.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
+import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
 import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/help_center/domain/states/help_center_state.dart';
@@ -52,7 +52,7 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   );
 
   @observable
-  ObservableFuture<Either<Failure, ValidField>> _alertProgress;
+  ObservableFuture<Either<Failure, AlertModel>> _alertProgress;
 
   @observable
   HelpCenterState alertState = HelpCenterState.initial();
@@ -165,7 +165,11 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
     return result.fold(
       (failure) => _parseFailure(failure),
       (message) => HelpCenterState.guardianTriggered(
-        GuardianAlertMessageAction(message: message.message, onPressed: () {}),
+        GuardianAlertMessageAction(
+          title: message.title ?? 'Alerta enviado!',
+          message: message.message,
+          onPressed: () {},
+        ),
       ),
     );
   }

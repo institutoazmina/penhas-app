@@ -21,13 +21,13 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
       Atom(name: '_SupportCenterAddControllerBase._savingSuggestion');
 
   @override
-  ObservableFuture<Either<Failure, ValidField>> get _savingSuggestion {
+  ObservableFuture<Either<Failure, AlertModel>> get _savingSuggestion {
     _$_savingSuggestionAtom.reportRead();
     return super._savingSuggestion;
   }
 
   @override
-  set _savingSuggestion(ObservableFuture<Either<Failure, ValidField>> value) {
+  set _savingSuggestion(ObservableFuture<Either<Failure, AlertModel>> value) {
     _$_savingSuggestionAtom.reportWrite(value, super._savingSuggestion, () {
       super._savingSuggestion = value;
     });

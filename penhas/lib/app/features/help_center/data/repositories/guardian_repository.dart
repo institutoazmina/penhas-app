@@ -6,14 +6,15 @@ import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/help_center/data/datasources/guardian_data_source.dart';
+import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
 import 'package:penhas/app/features/help_center/domain/entities/guardian_session_entity.dart';
 
 abstract class IGuardianRepository {
   Future<Either<Failure, GuardianSessioEntity>> fetch();
-  Future<Either<Failure, ValidField>> create(GuardianContactEntity guardian);
+  Future<Either<Failure, AlertModel>> create(GuardianContactEntity guardian);
   Future<Either<Failure, ValidField>> update(GuardianContactEntity guardian);
   Future<Either<Failure, ValidField>> delete(GuardianContactEntity guardian);
-  Future<Either<Failure, ValidField>> alert(UserLocationEntity location);
+  Future<Either<Failure, AlertModel>> alert(UserLocationEntity location);
   Future<Either<Failure, ValidField>> callPolice();
 }
 
@@ -39,7 +40,7 @@ class GuardianRepository extends IGuardianRepository {
   }
 
   @override
-  Future<Either<Failure, ValidField>> create(
+  Future<Either<Failure, AlertModel>> create(
       GuardianContactEntity guardian) async {
     try {
       final result = await _dataSource.create(guardian);
@@ -72,7 +73,7 @@ class GuardianRepository extends IGuardianRepository {
   }
 
   @override
-  Future<Either<Failure, ValidField>> alert(UserLocationEntity location) async {
+  Future<Either<Failure, AlertModel>> alert(UserLocationEntity location) async {
     try {
       final result = await _dataSource.alert(location);
       return right(result);

@@ -266,7 +266,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
               Padding(
                 padding: const EdgeInsets.only(top: 12.0),
                 child:
-                    Text('Sugestão enviada', style: kTextStyleAlertDialogTitle),
+                    Text(action.title, style: kTextStyleAlertDialogTitle),
               ),
             ],
           ),
