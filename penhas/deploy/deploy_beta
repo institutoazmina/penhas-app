@@ -1,9 +1,10 @@
 #!/bin/bash
 
-#cd ../android
-#  flutter build apk --release
-#  fastlane distribute_android_beta --verbose
+set -e
 
-cd ../ios
-  flutter build ios --release --no-codesign
-  fastlane distribute_iOS_beta --verbose
+PROJECT_DIR=$(dirname $(dirname `realpath ${BASH_SOURCE[0]}`))
+
+cd $PROJECT_DIR
+
+fastlane android distribute_android_beta --verbose
+#fastlane ios distribute_iOS_beta --verbose
