@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
@@ -374,8 +375,7 @@ class FeedUseCases {
 
   TweetRequestOption _buildTweetDetailRequest(String tweetId) {
     String afterTweetId = tweetId;
-    if (_tweetReplyMap[tweetId] != null &&
-        _tweetReplyMap[tweetId].isNotEmpty) {
+    if (_tweetReplyMap[tweetId] != null && _tweetReplyMap[tweetId].isNotEmpty) {
       afterTweetId = _tweetReplyMap[tweetId].last.id;
     }
 
@@ -404,7 +404,10 @@ class FeedUseCases {
       }
     }
 
-    return FeedCache(tweets: [session.parent, ..._tweetReplyMap[tweetId]]);
+    return FeedCache(tweets: [
+      if (session.parent != null) session.parent,
+      ..._tweetReplyMap[tweetId]
+    ]);
   }
 
   void dispose() {

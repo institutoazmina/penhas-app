@@ -185,6 +185,7 @@ void main() {
         final expected = right(TweetSessionModel(
           false,
           TweetSessionOrder.latestFirst,
+          null,
           [
             TweetModel(
               id: '200608T1545460001',

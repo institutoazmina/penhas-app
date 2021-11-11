@@ -16,6 +16,7 @@ void main() {
       tweetSessionMondel = TweetSessionModel(
         false,
         TweetSessionOrder.latestFirst,
+        null,
         [],
         null,
       );
@@ -30,6 +31,7 @@ void main() {
       final TweetSessionModel expectedSession = TweetSessionModel(
           true,
           TweetSessionOrder.latestFirst,
+          null,
           [
             TweetModel(
               id: '200528T2055380001',
@@ -106,6 +108,7 @@ void main() {
       final TweetSessionEntity expectedSession = TweetSessionModel(
           true,
           TweetSessionOrder.latestFirst,
+          null,
           [
             TweetModel(
               id: '200528T2055370004',

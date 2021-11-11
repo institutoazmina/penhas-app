@@ -52,6 +52,7 @@ void main() {
           nextPage: null,
           hasMore: false,
           orderBy: TweetSessionOrder.oldestFirst,
+          parent: null,
           tweets: [],
         );
 
@@ -59,6 +60,7 @@ void main() {
             nextPage: null,
             hasMore: false,
             orderBy: TweetSessionOrder.oldestFirst,
+            parent: null,
             tweets: [
               tweetRequest.copyWith(
                   id: 'id_5',
@@ -77,7 +79,7 @@ void main() {
           filterPreference: filterPreference,
           maxRows: maxRowsPerRequest,
         );
-        await sut.fetchTweetDetail(tweetRequest);
+        await sut.fetchTweetDetail(tweetRequest.id);
         // assert
         verify(
           repository.fetch(
@@ -99,9 +101,9 @@ void main() {
         );
         final expected = right(FeedCache(tweets: []));
         // act
-        final received = await sut.fetchTweetDetail(tweetRequest);
+        final received = await sut.fetchTweetDetail(tweetRequest.id);
         // assert
-        expect(expected, received);
+        expect(received, expected);
       });
       test('should get a list of tweet from detail', () async {
         // arrange
@@ -124,7 +126,7 @@ void main() {
           ),
         );
         // act
-        final received = await sut.fetchTweetDetail(tweetRequest);
+        final received = await sut.fetchTweetDetail(tweetRequest.id);
         // assert
         expect(expected, received);
       });
@@ -138,6 +140,7 @@ void main() {
             nextPage: null,
             hasMore: true,
             orderBy: TweetSessionOrder.oldestFirst,
+            parent: null,
             tweets: [
               tweetRequest.copyWith(
                   id: 'id_5',
@@ -157,6 +160,7 @@ void main() {
             nextPage: null,
             hasMore: true,
             orderBy: TweetSessionOrder.oldestFirst,
+            parent: null,
             tweets: [
               tweetRequest.copyWith(
                   id: 'id_7',
@@ -187,9 +191,9 @@ void main() {
           filterPreference: filterPreference,
           maxRows: maxRowsPerRequest,
         );
-        await sut.fetchTweetDetail(tweetRequest);
+        await sut.fetchTweetDetail(tweetRequest.id);
         // act
-        await sut.fetchNewestTweetDetail(tweetRequest);
+        await sut.fetchNewestTweetDetail(tweetRequest.id);
         // assert
         verify(
           repository.fetch(
@@ -210,7 +214,7 @@ void main() {
         );
         when(repository.fetch(option: anyNamed('option')))
             .thenAnswer((_) async => right(firstSession));
-        await sut.fetchTweetDetail(tweetRequest);
+        await sut.fetchTweetDetail(tweetRequest.id);
         when(repository.fetch(option: anyNamed('option')))
             .thenAnswer((_) async => right(secondSession));
         final expected = right(FeedCache(tweets: [
@@ -240,7 +244,7 @@ void main() {
               content: 'reply 4'),
         ]));
         // act
-        final received = await sut.fetchNewestTweetDetail(tweetRequest);
+        final received = await sut.fetchNewestTweetDetail(tweetRequest.id);
         // assert
         expect(expected, received);
       });
@@ -253,13 +257,14 @@ void main() {
         );
         when(repository.fetch(option: anyNamed('option')))
             .thenAnswer((_) async => right(firstSession));
-        await sut.fetchTweetDetail(tweetRequest);
+        await sut.fetchTweetDetail(tweetRequest.id);
         when(repository.fetch(option: anyNamed('option'))).thenAnswer(
           (_) async => right(
             TweetSessionEntity(
                 nextPage: null,
                 hasMore: false,
                 orderBy: TweetSessionOrder.oldestFirst,
+                parent: null,
                 tweets: []),
           ),
         );
@@ -278,7 +283,7 @@ void main() {
               content: 'reply 2'),
         ]));
         // act
-        final received = await sut.fetchNewestTweetDetail(tweetRequest);
+        final received = await sut.fetchNewestTweetDetail(tweetRequest.id);
         // assert
         expect(expected, received);
       });
