@@ -48,7 +48,7 @@ abstract class _UserProfileControllerBase with Store {
 extension _UserProfileControllerBasePrivate on _UserProfileControllerBase {
   void handleSession(ChatChannelOpenEntity session) {
     Modular.to.pushReplacementNamed(
-      "/mainboard/chat",
+      "/mainboard/chat/${session.token}",
       arguments: session,
     );
   }

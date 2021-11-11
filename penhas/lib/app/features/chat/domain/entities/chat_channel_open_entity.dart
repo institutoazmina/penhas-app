@@ -9,7 +9,7 @@ class ChatChannelOpenEntity extends Equatable {
 
   ChatChannelOpenEntity({
     @required this.token,
-    @required this.session,
+    this.session,
   });
   @override
   bool get stringify => true;

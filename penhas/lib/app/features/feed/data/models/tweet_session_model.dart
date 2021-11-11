@@ -3,19 +3,16 @@ import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
 
 class TweetSessionModel extends TweetSessionEntity {
-  final bool hasMore;
-  final String nextPage;
-  final TweetSessionOrder orderBy;
-  final List<TweetTiles> tweets;
-
   TweetSessionModel(
-    this.hasMore,
-    this.orderBy,
-    this.tweets,
-    this.nextPage,
+    bool hasMore,
+    TweetSessionOrder orderBy,
+    TweetTiles parent,
+    List<TweetTiles> tweets,
+    String nextPage,
   ) : super(
           hasMore: hasMore,
           orderBy: orderBy,
+          parent: parent,
           tweets: tweets,
           nextPage: nextPage,
         );
@@ -27,8 +24,10 @@ class TweetSessionModel extends TweetSessionEntity {
         ? TweetSessionOrder.latestFirst
         : TweetSessionOrder.oldestFirst;
     final tweets = _parseTweet(jsonData['tweets']);
+    final parent =
+        jsonData['parent'] != null ? _parseJson(jsonData['parent']) : null;
 
-    return TweetSessionModel(hasMore, orderBy, tweets, nextPage);
+    return TweetSessionModel(hasMore, orderBy, parent, tweets, nextPage);
   }
 
   static List<TweetTiles> _parseTweet(List<Object> tweets) {
@@ -43,7 +42,7 @@ class TweetSessionModel extends TweetSessionEntity {
         .toList();
   }
 
-  static TweetTiles _parseJson(Map<String, Object> json) {
+  static TweetTiles _parseJson(Map<String, dynamic> json) {
     if (json['type'] == 'tweet') {
       return TweetModel.fromJson(json);
     }

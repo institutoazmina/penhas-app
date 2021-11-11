@@ -67,7 +67,7 @@ abstract class _ChatMainTalksControllerBase with Store, MapFailureMessage {
 
 extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
   Future<void> forwardToChat(ChatChannelOpenEntity session) async {
-    return Modular.to.pushNamed("/mainboard/chat", arguments: session).then(
+    return Modular.to.pushNamed("/mainboard/chat/${session.token}", arguments: session).then(
       (value) async {
         if (value is bool && value) {
           await loadScreen();

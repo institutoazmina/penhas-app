@@ -73,24 +73,24 @@ class FeedUseCases {
     return this.fetchNewestTweet();
   }
 
-  Future<Either<Failure, FeedCache>> fetchTweetDetail(TweetEntity tweet) async {
-    final option = _buildTweetDetailRequest(tweet);
+  Future<Either<Failure, FeedCache>> fetchTweetDetail(String tweetId) async {
+    final option = _buildTweetDetailRequest(tweetId);
     final result = await _repository.fetch(option: option);
 
     return result.fold<Either<Failure, FeedCache>>(
       (failure) => left(failure),
-      (session) => right(_buildTweetDetail(session, tweet)),
+      (session) => right(_buildTweetDetail(session, tweetId)),
     );
   }
 
   Future<Either<Failure, FeedCache>> fetchNewestTweetDetail(
-      TweetEntity tweet) async {
-    final option = _buildTweetDetailRequest(tweet);
+      String tweetId) async {
+    final option = _buildTweetDetailRequest(tweetId);
     final result = await _repository.fetch(option: option);
 
     return result.fold<Either<Failure, FeedCache>>(
       (failure) => left(failure),
-      (session) => right(_buildTweetDetail(session, tweet)),
+      (session) => right(_buildTweetDetail(session, tweetId)),
     );
   }
 
@@ -372,23 +372,23 @@ class FeedUseCases {
     _streamController.add(FeedCache(tweets: _tweetCacheFetch));
   }
 
-  TweetRequestOption _buildTweetDetailRequest(TweetEntity tweet) {
-    String afterTweetId = tweet.id;
-    if (_tweetReplyMap[tweet.id] != null &&
-        _tweetReplyMap[tweet.id].isNotEmpty) {
-      afterTweetId = _tweetReplyMap[tweet.id].last.id;
+  TweetRequestOption _buildTweetDetailRequest(String tweetId) {
+    String afterTweetId = tweetId;
+    if (_tweetReplyMap[tweetId] != null &&
+        _tweetReplyMap[tweetId].isNotEmpty) {
+      afterTweetId = _tweetReplyMap[tweetId].last.id;
     }
 
     return TweetRequestOption(
       after: afterTweetId,
-      parent: tweet.id,
+      parent: tweetId,
       rows: _maxRowsPerRequest,
     );
   }
 
-  FeedCache _buildTweetDetail(TweetSessionEntity session, TweetEntity tweet) {
-    if (_tweetReplyMap[tweet.id] == null) {
-      _tweetReplyMap[tweet.id] = [];
+  FeedCache _buildTweetDetail(TweetSessionEntity session, String tweetId) {
+    if (_tweetReplyMap[tweetId] == null) {
+      _tweetReplyMap[tweetId] = [];
     }
 
     final List<TweetEntity> filteredResponse = session.tweets
@@ -398,13 +398,13 @@ class FeedUseCases {
 
     if (filteredResponse != null && filteredResponse.length > 0) {
       if (session.orderBy == TweetSessionOrder.latestFirst) {
-        _tweetReplyMap[tweet.id].addAll(filteredResponse.reversed);
+        _tweetReplyMap[tweetId].addAll(filteredResponse.reversed);
       } else {
-        _tweetReplyMap[tweet.id].addAll(filteredResponse);
+        _tweetReplyMap[tweetId].addAll(filteredResponse);
       }
     }
 
-    return FeedCache(tweets: _tweetReplyMap[tweet.id]);
+    return FeedCache(tweets: [session.parent, ..._tweetReplyMap[tweetId]]);
   }
 
   void dispose() {

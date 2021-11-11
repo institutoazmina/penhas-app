@@ -1,3 +1,4 @@
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:http/http.dart' as http;
 import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/managers/audio_play_services.dart';
@@ -9,26 +10,17 @@ import 'package:penhas/app/core/managers/modules_sevices.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
+import 'package:penhas/app/features/appstate/data/datasources/app_state_data_source.dart';
+import 'package:penhas/app/features/appstate/data/repositories/app_state_repository.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_preferences_entity.dart';
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
+import 'package:penhas/app/features/appstate/domain/repositories/i_app_state_repository.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_preferences_use_case.dart';
+import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entity.dart';
 import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
 import 'package:penhas/app/features/chat/domain/usecases/chat_channel_usecase.dart';
 import 'package:penhas/app/features/chat/presentation/chat/chat_channel_controller.dart';
-import 'package:penhas/app/features/feed/presentation/routing_perfil_chat/feed_routing_perfil_chat_controller.dart';
-import 'package:penhas/app/features/feed/presentation/routing_perfil_chat/feed_routing_perfil_chat_page.dart';
-import 'package:penhas/app/features/filters/domain/repositories/filter_skill_repository.dart';
-import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/delete/account_delete_controller.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/my_profile/profile_edit_controller.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/my_profile/skill/profile_skill_module.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/preference/account_preference_controller.dart';
-import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart';
-import 'package:penhas/app/features/mainboard/domain/states/mainboard_store.dart';
-import 'package:penhas/app/features/appstate/data/datasources/app_state_data_source.dart';
-import 'package:penhas/app/features/appstate/data/repositories/app_state_repository.dart';
-import 'package:penhas/app/features/appstate/domain/repositories/i_app_state_repository.dart';
-import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
 import 'package:penhas/app/features/chat/presentation/chat/chat_channel_page.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_filter_preference_data_source.dart';
@@ -46,11 +38,15 @@ import 'package:penhas/app/features/feed/presentation/filter_tweet/filter_tweet_
 import 'package:penhas/app/features/feed/presentation/filter_tweet/filter_tweet_page.dart';
 import 'package:penhas/app/features/feed/presentation/reply_tweet/reply_tweet_controller.dart';
 import 'package:penhas/app/features/feed/presentation/reply_tweet/reply_tweet_page.dart';
+import 'package:penhas/app/features/feed/presentation/routing_perfil_chat/feed_routing_perfil_chat_controller.dart';
+import 'package:penhas/app/features/feed/presentation/routing_perfil_chat/feed_routing_perfil_chat_page.dart';
 import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
 import 'package:penhas/app/features/filters/domain/presentation/filter_module.dart';
+import 'package:penhas/app/features/filters/domain/repositories/filter_skill_repository.dart';
 import 'package:penhas/app/features/help_center/data/datasources/guardian_data_source.dart';
 import 'package:penhas/app/features/help_center/data/repositories/audios_repository.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
+import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
 import 'package:penhas/app/features/help_center/presentation/audios/audios_controller.dart';
 import 'package:penhas/app/features/help_center/presentation/audios/audios_page.dart';
 import 'package:penhas/app/features/help_center/presentation/guardians/guardians_controller.dart';
@@ -60,24 +56,29 @@ import 'package:penhas/app/features/help_center/presentation/new_guardian/new_gu
 import 'package:penhas/app/features/help_center/presentation/pages/audio/audio_record_page.dart';
 import 'package:penhas/app/features/main_menu/domain/repositories/user_profile_repository.dart';
 import 'package:penhas/app/features/main_menu/domain/usecases/user_profile.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/delete/account_delete_controller.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/delete/account_delete_page.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/my_profile/profile_edit_controller.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/my_profile/profile_edit_page.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/my_profile/skill/profile_skill_module.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/preference/account_preference_controller.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/preference/account_preference_page.dart';
 import 'package:penhas/app/features/main_menu/presentation/pages/about_penhas_page.dart';
-import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_controller.dart';
 import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_controller.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart';
+import 'package:penhas/app/features/mainboard/domain/states/mainboard_store.dart';
+import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_controller.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_page.dart';
 import 'package:penhas/app/features/notification/data/repositories/notification_repository.dart';
 import 'package:penhas/app/features/notification/presentation/notification_controller.dart';
 import 'package:penhas/app/features/notification/presentation/notification_page.dart';
+import 'package:penhas/app/features/quiz/presentation/tutorial/stealth_mode_tutorial_page_controller.dart';
 import 'package:penhas/app/features/support_center/presentation/add/support_center_add_page.dart';
 import 'package:penhas/app/features/support_center/presentation/list/support_center_list_page.dart';
 import 'package:penhas/app/features/support_center/presentation/location/support_center_location_page.dart';
 import 'package:penhas/app/features/support_center/presentation/show/support_center_show_page.dart';
 import 'package:penhas/app/features/users/data/repositories/users_repository.dart';
 import 'package:penhas/app/features/users/domain/presentation/user_profile_module.dart';
-import 'package:penhas/app/features/quiz/presentation/tutorial/stealth_mode_tutorial_page_controller.dart';
 
 class MainboardModule extends ChildModule {
   @override
@@ -141,7 +142,7 @@ class MainboardModule extends ChildModule {
           transition: TransitionType.rightToLeft,
         ),
         ModularRouter(
-          '/detail',
+          '/tweet/:id',
           child: (context, args) => DetailTweetPage(
             tweetController: Modular.get<ITweetController>(),
           ),
@@ -261,17 +262,16 @@ class MainboardModule extends ChildModule {
 
   List<Bind> get menuBind => [
         Bind<SecurityModeActionFeature>(
-              (i) => SecurityModeActionFeature(
+          (i) => SecurityModeActionFeature(
             modulesServices: i.get<IAppModulesServices>(),
           ),
           singleton: false,
         ),
         Bind(
           (i) => ProfileEditController(
-            appStateUseCase: i.get<AppStateUseCase>(),
-            skillRepository: i.get<IFilterSkillRepository>(),
-            securityModeActionFeature: i.get<SecurityModeActionFeature>()
-          ),
+              appStateUseCase: i.get<AppStateUseCase>(),
+              skillRepository: i.get<IFilterSkillRepository>(),
+              securityModeActionFeature: i.get<SecurityModeActionFeature>()),
           singleton: false,
         ),
         Bind(
@@ -304,7 +304,7 @@ class MainboardModule extends ChildModule {
 
   List<ModularRouter> get chat => [
         ModularRouter(
-          '/chat',
+          '/chat/:token',
           child: (context, args) => ChatPage(),
           transition: TransitionType.rightToLeft,
         ),
@@ -329,7 +329,8 @@ class MainboardModule extends ChildModule {
         ),
         Bind<ChatChannelUseCase>(
           (i) => ChatChannelUseCase(
-            session: i.args.data,
+            session: i.args.data ??
+                ChatChannelOpenEntity(token: i.args.params['token']),
             channelRepository: i.get<IChatChannelRepository>(),
           ),
           singleton: false,
@@ -368,6 +369,7 @@ class MainboardModule extends ChildModule {
         Bind(
           (i) => DetailTweetController(
             useCase: i.get<FeedUseCases>(),
+            tweetId: i.args.params['id'],
             tweet: i.args.data,
           ),
           singleton: false,

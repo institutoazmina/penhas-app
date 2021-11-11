@@ -29,6 +29,7 @@ class NotificationEntity extends Equatable {
   final String icon;
   final String title;
   final String content;
+  final String route;
 
   NotificationEntity({
     @required this.content,
@@ -36,6 +37,7 @@ class NotificationEntity extends Equatable {
     @required this.name,
     @required this.time,
     @required this.title,
+    @required this.route,
   });
 
   @override
@@ -45,6 +47,7 @@ class NotificationEntity extends Equatable {
         this.name,
         this.time,
         this.title,
+        this.route,
       ];
 
   @override

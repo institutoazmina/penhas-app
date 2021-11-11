@@ -89,6 +89,6 @@ class TweetController implements ITweetController {
 
   @override
   Future<void> detail(TweetEntity tweet) async {
-    Modular.to.pushNamed('/mainboard/detail', arguments: tweet);
+    Modular.to.pushNamed('/mainboard/tweet/${tweet.id}', arguments: tweet);
   }
 }

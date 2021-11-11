@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:penhas/app/features/notification/domain/entities/notification_session_entity.dart';
@@ -22,34 +23,39 @@ class NotificationCardPage extends StatelessWidget {
           ),
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SvgPicture.network(
-                  notification.icon,
-                  height: 24,
-                  width: 24,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Column(
-                    children: [
-                      Text(notification.name, style: titleTextStyle),
-                      Text(timeago.format(notification.time, locale: 'pt_br'),
-                          style: timeTextStyle),
-                    ],
+      child: InkWell(
+        onTap: () {
+          Modular.to.pushNamed(notification.route);
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SvgPicture.network(
+                    notification.icon,
+                    height: 24,
+                    width: 24,
                   ),
-                ),
-                Text(notification.title, style: titleTextStyle),
-              ],
-            ),
-            _notificationContent(notification.content),
-          ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Column(
+                      children: [
+                        Text(notification.name, style: titleTextStyle),
+                        Text(timeago.format(notification.time, locale: 'pt_br'),
+                            style: timeTextStyle),
+                      ],
+                    ),
+                  ),
+                  Text(notification.title, style: titleTextStyle),
+                ],
+              ),
+              _notificationContent(notification.content),
+            ],
+          ),
         ),
       ),
     );

@@ -14,17 +14,19 @@ class DetailTweetController extends _DetailTweetControllerBase
     with _$DetailTweetController {
   DetailTweetController({
     @required FeedUseCases useCase,
-    @required TweetEntity tweet,
-  }) : super(useCase, tweet);
+    String tweetId,
+    TweetEntity tweet,
+  }) : super(useCase, tweetId ?? tweet.id, tweet);
 }
 
 abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
   final TweetEntity tweet;
   final FeedUseCases useCase;
   String tweetContent;
+  String tweetId;
 
-  _DetailTweetControllerBase(this.useCase, this.tweet) {
-    listTweets = ObservableList.of([tweet]);
+  _DetailTweetControllerBase(this.useCase, this.tweetId, this.tweet) {
+    listTweets = ObservableList.of([if (tweet != null) tweet]);
   }
 
   @observable
@@ -58,7 +60,7 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> getDetail() async {
-    _progress = ObservableFuture(useCase.fetchTweetDetail(tweet));
+    _progress = ObservableFuture(useCase.fetchTweetDetail(tweetId));
 
     final response = await _progress;
     response.fold(
@@ -69,7 +71,7 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> fetchNextPage() async {
-    _progress = ObservableFuture(useCase.fetchNewestTweetDetail(tweet));
+    _progress = ObservableFuture(useCase.fetchNewestTweetDetail(tweetId));
 
     final response = await _progress;
     response.fold(
@@ -83,9 +85,7 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
   }
 
   void _updateListOfTweets(FeedCache cache) {
-    List<TweetEntity> tweets =
-        cache.tweets.where((e) => e is TweetEntity).toList();
-    tweets.insert(0, tweet);
+    final tweets = cache.tweets.whereType<TweetEntity>().toList();
     listTweets = tweets.asObservable();
   }
 }

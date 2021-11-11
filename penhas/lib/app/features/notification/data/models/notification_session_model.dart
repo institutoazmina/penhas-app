@@ -40,6 +40,7 @@ extension _Parse on NotificationEntity {
     final title = jsonData["title"];
     final time = DateTime.tryParse(jsonData["time"]);
     final name = jsonData["name"];
+    final route = jsonData["expand_screen"];
 
     return NotificationEntity(
       name: name,
@@ -47,6 +48,7 @@ extension _Parse on NotificationEntity {
       icon: icon,
       title: title,
       time: time,
+      route: route,
     );
   }
 }
