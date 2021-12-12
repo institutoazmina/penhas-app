@@ -15,7 +15,7 @@ version: 3.0.0-dev14+49
 publish_to: none
 
 environment:
-  sdk: '>=2.15.0 <3.0.0'
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
@@ -36,22 +36,15 @@ dependencies:
   device_info: ^2.0.3
   email_validator: ^2.0.1
   equatable: ^2.0.3
-  firebase_analytics: ^8.3.2
+  firebase_analytics: ^9.0.3
   firebase_core: ^1.10.5
   firebase_crashlytics: ^2.4.3
   flutter_mobx: ^2.0.2
-  flutter_modular:
-    git:
-      url: https://github.com/pedrox-hs/modular.git
-      path: flutter_modular
-      ref: improvements
+  flutter_modular: ^4.3.0
   flutter_phone_direct_caller: ^2.1.0
-  flutter_sound_lite: ^8.5.0
-  flutter_svg: ^1.0.3
-  flutter_tags:
-    git:
-      url: https://github.com/pedrox-hs/flutter_tags.git
-      ref: null-safety
+  flutter_sound_lite: ^8.4.2
+  flutter_svg: ^1.0.0
+  flutter_tags: ^1.0.0-nullsafety.1
   flutter_widget_from_html: ^0.8.3+1
   freezed_annotation: ^1.1.0
   geolocator: ^8.0.0
@@ -67,39 +60,18 @@ dependencies:
   shared_preferences: ^2.0.11
   smooth_star_rating:
     git:
-      url: https://github.com/bhavin-concetto/smoothratingbar.git
-      ref: "eb02312f9adc6a40e2488050fb2e58852a163bb8"
+      url: https://github.com/educup/smoothratingbar.git
+      ref: "4c5c5d3800c9b81a4015f030ff11a1b6b6384191"
   timeago: ^3.1.0
   url_launcher: ^6.0.17
   uuid: ^3.0.5
   webview_flutter: ^3.0.0
   collection: ^1.15.0
-  asuka: ^2.0.0
-  stack_trace: ^1.10.0
-  logging: ^1.0.2
-  http: ^0.13.4
-  intl: ^0.17.0
-  meta: ^1.7.0
-  crypto: ^3.0.1
-  http_parser: ^4.0.0
-  logger: ^1.1.0
-
-dependency_overrides:
-  flutter_modular:
-    git:
-      url: https://github.com/pedrox-hs/modular.git
-      path: flutter_modular
-      ref: improvements
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^2.1.5
-  flutter_modular_test:
-    git:
-      url: https://github.com/pedrox-hs/modular.git
-      path: flutter_modular_test
-      ref: improvements
   flutter_launcher_icons: ^0.9.2
   flutter_launcher_name:
     git:
@@ -108,7 +80,6 @@ dev_dependencies:
   freezed: ^1.1.0
   mobx_codegen: ^2.0.4
   mockito: ^5.0.16
-  lint: ^1.8.1
 
 flutter_icons:
   ios: true
