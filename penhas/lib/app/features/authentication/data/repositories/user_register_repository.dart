@@ -56,9 +56,9 @@ class UserRegisterRepository implements IUserRegisterRepository {
           genre: genre,
           race: race);
 
-      return right(const ValidField());
-    } catch (e, stack) {
-      logError(e, stack);
+      return right(ValidField());
+    } catch (e) {
+      logError(e);
       return left(await _handleError(e));
     }
   }
@@ -97,8 +97,8 @@ class UserRegisterRepository implements IUserRegisterRepository {
           deletedScheduled: session.deletedScheduled,
         ),
       );
-    } catch (e, stack) {
-      logError(e, stack);
+    } catch (e) {
+      logError(e);
       return left(await _handleError(e));
     }
   }

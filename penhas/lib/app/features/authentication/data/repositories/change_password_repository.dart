@@ -28,8 +28,8 @@ class ChangePasswordRepository
       final ResetPasswordResponseEntity result =
           await _dataSource!.request(emailAddress: emailAddress);
       return right(result);
-    } catch (e, stack) {
-      logError(e, stack);
+    } catch (e) {
+      logError(e);
       final fail = await _handleError(e);
       return left(fail);
     }
@@ -47,9 +47,9 @@ class ChangePasswordRepository
         password: password,
         resetToken: resetToken,
       );
-      return right(const ValidField());
-    } catch (e, stack) {
-      logError(e, stack);
+      return right(ValidField());
+    } catch (e) {
+      logError(e);
       final fail = await _handleError(e);
       return left(fail);
     }
@@ -80,9 +80,9 @@ class ChangePasswordRepository
         emailAddress: emailAddress,
         resetToken: resetToken,
       );
-      return right(const ValidField());
-    } catch (e, stack) {
-      logError(e, stack);
+      return right(ValidField());
+    } catch (e) {
+      logError(e);
       final fail = await _handleError(e);
       return left(fail);
     }

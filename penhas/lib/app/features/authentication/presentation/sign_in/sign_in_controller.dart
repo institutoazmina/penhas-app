@@ -30,7 +30,7 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
   final PasswordValidator _passwordValidator;
   final AppStateUseCase? _appStateUseCase;
   EmailAddress _emailAddress = EmailAddress("");
-  SignInPassword? _password;
+  late SignInPassword _password;
 
   _SignInControllerBase(
     this.repository,
@@ -81,14 +81,14 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
   @action
   void setPassword(String password) {
     _password = SignInPassword(password, _passwordValidator);
-    warningPassword = _password!.mapFailure;
+    warningPassword = _password.mapFailure;
   }
 
   @action
   Future<void> signInWithEmailAndPasswordPressed() async {
     _setErrorMessage('');
 
-    if (!_emailAddress.isValid || !_password!.isValid) {
+    if (!_emailAddress.isValid || !_password.isValid) {
       _setErrorMessage(_invalidFieldsToProceedLogin);
       return;
     }

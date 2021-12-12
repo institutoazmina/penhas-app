@@ -68,8 +68,8 @@ class AudioSyncRepository implements IAudioSyncRepository {
           .upload(path: '/me/audios', file: fileData, fields: fields)
           .parseAPI();
       return right(result);
-    } catch (error, stack) {
-      logError(error, stack);
+    } catch (error) {
+      logError(error);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -87,9 +87,9 @@ class AudioSyncRepository implements IAudioSyncRepository {
         file: file,
         fields: fields,
       );
-      return right(const ValidField());
-    } catch (error, stack) {
-      logError(error, stack);
+      return right(ValidField());
+    } catch (error) {
+      logError(error);
       return left(MapExceptionToFailure.map(error));
     }
   }

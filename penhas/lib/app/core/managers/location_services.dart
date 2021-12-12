@@ -126,11 +126,11 @@ class LocationServices implements ILocationServices {
         )
         .then((value) => value as LocationPermissionState)
         .catchError(
-      (e, stack) {
-        logError(e, stack);
-        return const LocationPermissionState.undefined();
-      },
-    );
+          (e) {
+            logError(e);
+            return LocationPermissionState.undefined();
+          },
+        );
   }
 
   Future<LocationPermissionState> _requestDeniedPermissionIfNeeded(
@@ -229,11 +229,11 @@ class LocationServices implements ILocationServices {
         )
         .then((value) => value as LocationPermissionState)
         .catchError(
-      (e, stack) {
-        logError(e, stack);
-        return const LocationPermissionState.undefined();
-      },
-    );
+          (e) {
+            logError(e);
+            return LocationPermissionState.undefined();
+          },
+        );
   }
 }
 

@@ -67,8 +67,9 @@ class StealthSecurityAction {
         _streamController!.close();
         _streamController = null;
       }
-    } catch (e, stack) {
-      logError(e, stack);
+    } catch (e) {
+      logError(e);
+      print(e);
     }
   }
 

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:penhas/app/core/storage/i_local_storage.dart';
+import 'package:penhas/app/shared/logger/log.dart';
 
 abstract class LocalStore<T> {
   LocalStore(this._key, this._storage);
@@ -21,7 +21,10 @@ abstract class LocalStore<T> {
         .get(_key)
         .then((data) => json.decode(data!) as Map<String, dynamic>)
         .then((json) => fromJson(json))
-        .catchError((_) => defaultEntity());
+        .catchError((e) {
+          logError(e);
+          return defaultEntity();
+        });
   }
 
   Future<void> save(T entity) {

@@ -14,8 +14,8 @@ abstract class IAuthenticationDataSource {
   ///
   /// Throws a [ServerException] for all error codes
   Future<SessionModel> signInWithEmailAndPassword({
-    required EmailAddress? emailAddress,
-    required SignInPassword? password,
+    required EmailAddress emailAddress,
+    required SignInPassword password,
   });
 }
 
@@ -33,14 +33,14 @@ class AuthenticationDataSource implements IAuthenticationDataSource {
 
   @override
   Future<SessionModel> signInWithEmailAndPassword({
-    EmailAddress? emailAddress,
-    SignInPassword? password,
+    required EmailAddress emailAddress,
+    required SignInPassword password,
   }) async {
     final userAgent = await serverConfiguration!.userAgent;
     final queryParameters = {
       'app_version': userAgent,
-      'email': emailAddress!.rawValue,
-      'senha': password!.rawValue,
+      'email': emailAddress.rawValue,
+      'senha': password.rawValue,
     };
 
     final headers = {

@@ -2,8 +2,9 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/map_validator_failure.dart';
 import 'package:penhas/app/shared/logger/log.dart';
+
+import 'map_validator_failure.dart';
 
 @immutable
 class Birthday extends Equatable with MapValidatorFailure {
@@ -92,8 +93,8 @@ class Birthday extends Equatable with MapValidatorFailure {
   static int _parseIntSafety(String value) {
     try {
       return int.parse(value);
-    } catch (e, stack) {
-      logError(e, stack);
+    } catch (e) {
+      logError(e);
       return 99;
     }
   }

@@ -11,42 +11,42 @@ import 'package:penhas/app/features/authentication/domain/usecases/sign_in_passw
 import 'package:penhas/app/shared/logger/log.dart';
 
 class AuthenticationRepository implements IAuthenticationRepository {
-  final IAuthenticationDataSource? _dataSource;
-  final INetworkInfo? _networkInfo;
-  final IAppConfiguration? _appConfiguration;
+  final IAuthenticationDataSource _dataSource;
+  final INetworkInfo _networkInfo;
+  final IAppConfiguration _appConfiguration;
 
   AuthenticationRepository({
-    required INetworkInfo? networkInfo,
-    required IAppConfiguration? appConfiguration,
-    required IAuthenticationDataSource? dataSource,
+    required INetworkInfo networkInfo,
+    required IAppConfiguration appConfiguration,
+    required IAuthenticationDataSource dataSource,
   })  : this._dataSource = dataSource,
         this._networkInfo = networkInfo,
         this._appConfiguration = appConfiguration;
 
   @override
   Future<Either<Failure, SessionEntity>> signInWithEmailAndPassword({
-    EmailAddress? emailAddress,
-    SignInPassword? password,
+    required EmailAddress emailAddress,
+    required SignInPassword password,
   }) async {
     try {
-      final result = await _dataSource!.signInWithEmailAndPassword(
+      final result = await _dataSource.signInWithEmailAndPassword(
         emailAddress: emailAddress,
         password: password,
       );
 
       if (!result.deletedScheduled) {
-        await _appConfiguration!.saveApiToken(token: result.sessionToken);
+        await _appConfiguration.saveApiToken(token: result.sessionToken);
       }
 
       return right(result);
-    } catch (error, stack) {
-      logError(error, stack);
+    } catch (error) {
+      logError(error);
       return _handleError(error);
     }
   }
 
   Future<Either<Failure, SessionEntity>> _handleError(Object error) async {
-    if (await _networkInfo!.isConnected == false) {
+    if (await _networkInfo.isConnected == false) {
       return (left(InternetConnectionFailure()));
     }
 

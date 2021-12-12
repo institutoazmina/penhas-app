@@ -29,8 +29,8 @@ class AudiosRepository implements IAudiosRepository {
     try {
       final response = await _apiProvider!.get(path: endPoint).parseAudios();
       return right(response);
-    } catch (error, stack) {
-      logError(error, stack);
+    } catch (error) {
+      logError(error);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -43,8 +43,8 @@ class AudiosRepository implements IAudiosRepository {
       final response =
           await _apiProvider!.delete(path: endPoint).parseValidField();
       return right(response);
-    } catch (error, stack) {
-      logError(error, stack);
+    } catch (error) {
+      logError(error);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -57,8 +57,8 @@ class AudiosRepository implements IAudiosRepository {
       final response =
           await _apiProvider!.post(path: endPoint).parseValidField();
       return right(response);
-    } catch (error, stack) {
-      logError(error, stack);
+    } catch (error) {
+      logError(error);
       return left(MapExceptionToFailure.map(error));
     }
   }

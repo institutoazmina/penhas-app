@@ -1,3 +1,5 @@
+import 'package:penhas/app/shared/logger/log.dart';
+
 extension SafetlyParser on Object? {
   double? safeParseDouble() {
     final value = this;
@@ -28,6 +30,7 @@ extension SafetlyParser on Object? {
     try {
       return value == 1;
     } catch (e) {
+      logError(e);
       return false;
     }
   }

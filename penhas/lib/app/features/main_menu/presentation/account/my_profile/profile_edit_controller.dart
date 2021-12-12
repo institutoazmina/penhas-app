@@ -200,8 +200,8 @@ extension _PrivateMethod on _ProfileEditControllerBase {
     try {
       profileSkill.firstWhere((v) => v!.id == id);
       return true;
-    } catch (e, stack) {
-      logError(e, stack);
+    } catch (e) {
+      logError(e);
       return false;
     }
   }
@@ -214,8 +214,8 @@ extension _PrivateMethod on _ProfileEditControllerBase {
         isSelected: true,
         label: tag.label,
       );
-    } catch (e, stack) {
-      logError(e, stack);
+    } catch (e) {
+      logError(e);
       return null;
     }
   }

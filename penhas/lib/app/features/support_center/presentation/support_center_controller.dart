@@ -169,8 +169,8 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     try {
       _tags.firstWhere((v) => v.id == id);
       return true;
-    } catch (e, stack) {
-      logError(e, stack);
+    } catch (e) {
+      logError(e);
       return false;
     }
   }

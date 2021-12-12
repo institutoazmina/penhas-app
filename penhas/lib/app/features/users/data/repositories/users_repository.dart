@@ -37,8 +37,8 @@ class UsersRepository implements IUsersRepository {
           .get(path: endPoint, parameters: parameters)
           .parseDetail();
       return right(response);
-    } catch (error, stack) {
-      logError(error, stack);
+    } catch (error) {
+      logError(error);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -62,8 +62,8 @@ class UsersRepository implements IUsersRepository {
           .get(path: endPoint, parameters: parameters)
           .parseSearchSession();
       return right(response);
-    } catch (error, stack) {
-      logError(error, stack);
+    } catch (error) {
+      logError(error);
       return left(MapExceptionToFailure.map(error));
     }
   }

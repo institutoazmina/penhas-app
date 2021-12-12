@@ -49,9 +49,9 @@ class SecurityModeActionFeature {
       final int audioFullDuration =
           int.parse(json['audio_full_duration'] as String);
       return AudioRecordDurationEntity(audioEachDuration, audioFullDuration);
-    } catch (e, stack) {
-      logError(e, stack);
-      return const AudioRecordDurationEntity(30, 900);
+    } catch (e) {
+      logError(e);
+      return AudioRecordDurationEntity(30, 900);
     }
   }
 }

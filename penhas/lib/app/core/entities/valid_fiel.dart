@@ -32,9 +32,9 @@ extension ValidFieldFutureExtension<T extends String> on Future<T> {
       try {
         final jsonData = jsonDecode(data) as Map<String, dynamic>;
         return ValidField.fromJson(jsonData);
-      } catch (e, stack) {
-        logError(e, stack);
-        return const ValidField();
+      } catch (e) {
+        logError(e);
+        return ValidField();
       }
     });
   }

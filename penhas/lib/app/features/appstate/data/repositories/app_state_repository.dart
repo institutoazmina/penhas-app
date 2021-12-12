@@ -29,8 +29,8 @@ class AppStateRepository implements IAppStateRepository {
     try {
       final appState = await _dataSource!.check();
       return right(appState);
-    } catch (e, stack) {
-      logError(e, stack);
+    } catch (e) {
+      logError(e);
       return left(await _handleError(e));
     }
   }
@@ -42,8 +42,8 @@ class AppStateRepository implements IAppStateRepository {
     try {
       final appState = await _dataSource!.update(update);
       return right(appState);
-    } catch (e, stack) {
-      logError(e, stack);
+    } catch (e) {
+      logError(e);
       return left(await _handleError(e));
     }
   }

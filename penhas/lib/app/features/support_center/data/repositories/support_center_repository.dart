@@ -53,8 +53,8 @@ class SupportCenterRepository implements ISupportCenterRepository {
         parameters: parameters,
       );
       return right(parseMetadata(bodyResponse));
-    } catch (error, stack) {
-      logError(error, stack);
+    } catch (error) {
+      logError(error);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -89,8 +89,8 @@ class SupportCenterRepository implements ISupportCenterRepository {
       final bodyResponse =
           await _apiProvider!.get(path: endPoint, parameters: parameters);
       return right(parseSupportCenter(bodyResponse));
-    } catch (error, stack) {
-      logError(error, stack);
+    } catch (error) {
+      logError(error);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -106,8 +106,8 @@ class SupportCenterRepository implements ISupportCenterRepository {
       final bodyResponse =
           await _apiProvider!.get(path: endPoint, parameters: parameters);
       return right(parseGeoFromCep(bodyResponse));
-    } catch (error, stack) {
-      logError(error, stack);
+    } catch (error) {
+      logError(error);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -133,8 +133,8 @@ class SupportCenterRepository implements ISupportCenterRepository {
         body: bodyContent,
       );
       return right(parseAddSuggestion(response));
-    } catch (error, stack) {
-      logError(error, stack);
+    } catch (error) {
+      logError(error);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -147,8 +147,8 @@ class SupportCenterRepository implements ISupportCenterRepository {
     try {
       final response = await _apiProvider!.get(path: endPoint);
       return right(parseDetail(response));
-    } catch (error, stack) {
-      logError(error, stack);
+    } catch (error) {
+      logError(error);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -168,9 +168,9 @@ class SupportCenterRepository implements ISupportCenterRepository {
         path: endPoint,
         parameters: parameters,
       );
-      return right(const ValidField());
-    } catch (error, stack) {
-      logError(error, stack);
+      return right(ValidField());
+    } catch (error) {
+      logError(error);
       return left(MapExceptionToFailure.map(error));
     }
   }

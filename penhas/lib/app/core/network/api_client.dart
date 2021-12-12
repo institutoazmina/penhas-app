@@ -3,9 +3,10 @@ import 'dart:io';
 
 import 'package:http/http.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
-import 'package:penhas/app/core/network/api_server_configure.dart';
-import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/shared/logger/log.dart';
+
+import 'api_server_configure.dart';
+import 'network_info.dart';
 
 abstract class IApiProvider {
   Future<String> get({
@@ -214,8 +215,8 @@ extension _FutureExtension<T extends BaseResponse> on Future<T> {
           Map<String, dynamic>? bodyContent = Map<String, dynamic>();
           try {
             bodyContent = jsonDecode(jsonData);
-          } catch (e, stack) {
-            logError(e, stack);
+          } catch (e) {
+            logError(e);
             bodyContent = {'parserError': e.toString()};
           }
 

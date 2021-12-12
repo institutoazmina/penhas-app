@@ -25,8 +25,8 @@ class FilterSkillRepository implements IFilterSkillRepository {
     try {
       final response = await _apiProvider!.get(path: endPoint).parseSkills();
       return right(response);
-    } catch (error, stack) {
-      logError(error, stack);
+    } catch (error) {
+      logError(error);
       return left(MapExceptionToFailure.map(error));
     }
   }

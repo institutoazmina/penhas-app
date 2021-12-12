@@ -45,9 +45,9 @@ class _AudioModelParseData {
       date = "${date}Z";
     }
     try {
-      return DateTime.parse(utcDate).toLocal();
-    } catch (e, stack) {
-      logError(e, stack);
+      return DateTime.parse(date).toLocal();
+    } catch (e) {
+      logError(e);
       return null;
     }
   }

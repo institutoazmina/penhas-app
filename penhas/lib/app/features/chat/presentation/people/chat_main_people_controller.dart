@@ -12,6 +12,7 @@ import 'package:penhas/app/features/users/domain/entities/user_detail_entity.dar
 import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
 import 'package:penhas/app/features/users/domain/entities/user_search_options.dart';
 import 'package:penhas/app/features/users/domain/entities/user_search_session_entity.dart';
+import 'package:penhas/app/shared/logger/log.dart';
 
 part 'chat_main_people_controller.g.dart';
 
@@ -131,7 +132,15 @@ extension _ChatMainPeopleControllerBasePrivate
         .then((v) => handleFilterUpdate(v));
   }
 
-  bool isSeleted(String id) => _tags.map((e) => e.id).contains(id);
+  bool isSeleted(String id) {
+    try {
+      _tags.firstWhere((v) => v.id == id);
+      return true;
+    } catch (e) {
+      logError(e);
+      return false;
+    }
+  }
 
   void handleFilterUpdate(FilterActionObserver? action) {
     if (action == null) {

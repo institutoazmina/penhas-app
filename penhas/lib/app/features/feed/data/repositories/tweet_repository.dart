@@ -28,8 +28,8 @@ class TweetRepository implements ITweetRepository {
     try {
       final result = await _dataSource!.fetch(option: option);
       return right(result);
-    } catch (e, stack) {
-      logError(e, stack);
+    } catch (e) {
+      logError(e);
       return left(await _handleError(e));
     }
   }
@@ -41,8 +41,8 @@ class TweetRepository implements ITweetRepository {
     try {
       final result = await _dataSource!.current(option: option);
       return right(result);
-    } catch (e, stack) {
-      logError(e, stack);
+    } catch (e) {
+      logError(e);
       return left(await _handleError(e));
     }
   }
@@ -53,8 +53,8 @@ class TweetRepository implements ITweetRepository {
     try {
       final result = await _dataSource!.create(option: option);
       return right(result);
-    } catch (e, stack) {
-      logError(e, stack);
+    } catch (e) {
+      logError(e);
       return left(await _handleError(e));
     }
   }
@@ -65,8 +65,8 @@ class TweetRepository implements ITweetRepository {
     try {
       final result = await _dataSource!.reply(option: option);
       return right(result);
-    } catch (e, stack) {
-      logError(e, stack);
+    } catch (e) {
+      logError(e);
       return left(await _handleError(e));
     }
   }
@@ -77,8 +77,8 @@ class TweetRepository implements ITweetRepository {
     try {
       final result = await _dataSource!.like(option: option);
       return right(result);
-    } catch (e, stack) {
-      logError(e, stack);
+    } catch (e) {
+      logError(e);
       return left(await _handleError(e));
     }
   }
@@ -89,8 +89,8 @@ class TweetRepository implements ITweetRepository {
     try {
       final result = await _dataSource!.delete(option: option);
       return right(result);
-    } catch (e, stack) {
-      logError(e, stack);
+    } catch (e) {
+      logError(e);
       return left(await _handleError(e));
     }
   }
@@ -101,8 +101,8 @@ class TweetRepository implements ITweetRepository {
     try {
       final result = await _dataSource!.report(option: option);
       return right(result);
-    } catch (e, stack) {
-      logError(e, stack);
+    } catch (e) {
+      logError(e);
       return left(await _handleError(e));
     }
   }

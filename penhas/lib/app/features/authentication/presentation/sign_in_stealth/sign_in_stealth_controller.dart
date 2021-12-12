@@ -131,12 +131,10 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
     }
     errorMessage = '';
 
-    _progress = ObservableFuture(
-      _repository.signInWithEmailAndPassword(
-        emailAddress: _emailAddress,
-        password: _password!,
-      ),
-    );
+    _progress = ObservableFuture(_repository.signInWithEmailAndPassword(
+      emailAddress: _emailAddress,
+      password: _password!,
+    ));
 
     final Either<Failure, SessionEntity> response = await _progress!;
 

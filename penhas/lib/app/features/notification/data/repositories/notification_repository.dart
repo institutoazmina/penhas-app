@@ -31,8 +31,8 @@ class NotificationRepository implements INotificationRepository {
         path: endPoint,
       );
       return right(parseUnread(bodyResponse));
-    } catch (error, stack) {
-      logError(error, stack);
+    } catch (error) {
+      logError(error);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -51,6 +51,7 @@ class NotificationRepository implements INotificationRepository {
       );
       return right(parseNotifications(bodyResponse) as NotificationSessionModel);
     } catch (error) {
+      logError(error);
       return left(MapExceptionToFailure.map(error));
     }
   }

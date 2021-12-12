@@ -40,7 +40,7 @@ abstract class _SignInAnonymousController with Store, MapFailureMessage {
   final PasswordValidator _passwordValidator;
 
   EmailAddress _emailAddress = EmailAddress("");
-  SignInPassword? _password;
+  late SignInPassword _password;
 
   _SignInAnonymousController(
       this._repository, this._userProfileStore, this._passwordValidator) {
@@ -84,14 +84,14 @@ abstract class _SignInAnonymousController with Store, MapFailureMessage {
   @action
   void setPassword(String password) {
     _password = SignInPassword(password, _passwordValidator);
-    warningPassword = _password!.mapFailure;
+    warningPassword = _password.mapFailure;
   }
 
   @action
   Future<void> signInWithEmailAndPasswordPressed() async {
     _setErrorMessage('');
 
-    if (!_emailAddress.isValid || !_password!.isValid) {
+    if (!_emailAddress.isValid || !_password.isValid) {
       _setErrorMessage(_invalidFieldsToProceedLogin);
       return;
     }

@@ -26,8 +26,8 @@ class TweetFilterPreferenceRepository
     try {
       final result = await _dataSource!.fetch();
       return right(result);
-    } catch (e, stack) {
-      logError(e, stack);
+    } catch (e) {
+      logError(e);
       return left(await _handleError(e));
     }
   }

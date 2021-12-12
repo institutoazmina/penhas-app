@@ -15,6 +15,8 @@ import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/logger/log.dart';
 
+import 'support_center_show_controller.dart';
+
 class SupportCenterShowPage extends StatefulWidget {
   const SupportCenterShowPage({Key? key}) : super(key: key);
 
@@ -253,8 +255,9 @@ extension _Maps on _SupportCenterShowPageState {
           );
         },
       );
-    } catch (e, stack) {
-      logError(e, stack);
+    } catch (e) {
+      logError(e);
+      print(e);
     }
   }
 }

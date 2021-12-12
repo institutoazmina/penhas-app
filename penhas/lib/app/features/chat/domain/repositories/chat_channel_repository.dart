@@ -13,6 +13,7 @@ import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entit
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_request.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_session_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_sent_message_response_entity.dart';
+import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
 import 'package:penhas/app/shared/logger/log.dart';
 
 abstract class IChatChannelRepository {
@@ -42,8 +43,8 @@ class ChatChannelRepository implements IChatChannelRepository {
     try {
       final response = await _apiProvider!.get(path: endPoint).parseSession();
       return right(response);
-    } catch (error, stack) {
-      logError(error, stack);
+    } catch (error) {
+      logError(error);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -66,8 +67,8 @@ class ChatChannelRepository implements IChatChannelRepository {
           )
           .parseOpenChannel();
       return right(response);
-    } catch (error, stack) {
-      logError(error, stack);
+    } catch (error) {
+      logError(error);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -91,8 +92,8 @@ class ChatChannelRepository implements IChatChannelRepository {
           )
           .parseSessionChannel();
       return right(response);
-    } catch (error, stack) {
-      logError(error, stack);
+    } catch (error) {
+      logError(error);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -118,8 +119,8 @@ class ChatChannelRepository implements IChatChannelRepository {
           .then((v) => jsonDecode(v) as Map<String, dynamic>)
           .then((v) => ChatSentMessageResponseEntity.fromJson(v));
       return right(response);
-    } catch (error, stack) {
-      logError(error, stack);
+    } catch (error) {
+      logError(error);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -157,9 +158,9 @@ class ChatChannelRepository implements IChatChannelRepository {
         path: endPoint,
         parameters: parameters,
       );
-      return right(const ValidField());
-    } catch (error, stack) {
-      logError(error, stack);
+      return right(ValidField());
+    } catch (error) {
+      logError(error);
       return left(MapExceptionToFailure.map(error));
     }
   }
