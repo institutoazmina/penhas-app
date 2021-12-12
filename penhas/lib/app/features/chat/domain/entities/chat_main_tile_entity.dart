@@ -17,8 +17,8 @@ class ChatMainAssistantCardTile extends ChatMainTileEntity {
 }
 
 class ChatMainSupportTile extends ChatMainTileEntity {
-  final String? title;
-  final String? content;
+  final String title;
+  final String content;
   final ChatChannelEntity? channel;
   final QuizSessionEntity? quizSession;
 
@@ -35,7 +35,7 @@ class ChatMainSupportTile extends ChatMainTileEntity {
   final QuizSessionEntity? quizSession;
 
   @override
-  List<Object> get props => [title!, content!, channel!, quizSession!];
+  List<dynamic> get props => [title, content, channel, quizSession];
 }
 
 class ChatMainChannelHeaderTile extends ChatMainTileEntity {

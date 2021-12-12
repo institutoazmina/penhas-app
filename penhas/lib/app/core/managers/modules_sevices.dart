@@ -1,40 +1,41 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart' show IterableExtension;
-import 'package:meta/meta.dart';
 import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 
 abstract class IAppModulesServices {
   Future<void> save(List<AppStateModuleEntity?>? modules);
+
   Future<AppStateModuleEntity> feature({required String name});
 }
 
 class AppModulesServices implements IAppModulesServices {
-  final ILocalStorage? _storage;
+  final ILocalStorage _storage;
   final _appModuleKey = 'br.com.penhas.appModules';
 
-  AppModulesServices({required ILocalStorage? storage})
+  AppModulesServices({required ILocalStorage storage})
       : this._storage = storage;
 
   @override
   Future<void> save(List<AppStateModuleEntity?>? modules) {
     final data = modules!.map((e) => e!.toJson()).toList();
     final jsonString = jsonEncode(data);
-    return _storage!.put(_appModuleKey, jsonString);
+    return _storage.put(_appModuleKey, jsonString);
   }
 
   @override
   Future<AppStateModuleEntity> feature({required String name}) {
-    return _storage!
+    return _storage
         .get(_appModuleKey)
-        .then((source) => jsonDecode(source) as List<Object>)
+        .then((source) => jsonDecode(source ?? "[]") as List<dynamic>)
         .then((value) => _filterFeature(name: name, objects: value)!);
   }
 
-  AppStateModuleEntity? _filterFeature({String? name, required List<Object> objects}) {
+  AppStateModuleEntity? _filterFeature(
+      {String? name, required List<dynamic> objects}) {
     final object = objects
-        .map((e) => e as Map<String, Object>)
+        .map((e) => e as Map<String, dynamic>)
         .firstWhereOrNull((e) => e['code'] == name);
 
     if (object == null || object.isEmpty) {
@@ -50,7 +51,7 @@ extension AppStateModuleEntityJson on AppStateModuleEntity {
 
   static AppStateModuleEntity fromJson(Map<String, dynamic> object) =>
       AppStateModuleEntity(
-        code: object['code'] as String?,
-        meta: object['meta'] as String?,
+        code: object['code'],
+        meta: object['meta'],
       );
 }

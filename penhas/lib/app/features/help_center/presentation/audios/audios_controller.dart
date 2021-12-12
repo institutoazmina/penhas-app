@@ -1,4 +1,8 @@
 import 'package:dartz/dartz.dart';
+<<<<<<< HEAD
+=======
+import 'package:flutter/material.dart';
+>>>>>>> Fix code syntax
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -118,7 +122,7 @@ extension _AudiosControllerBasePrivate on _AudiosControllerBase {
     final bool isRequestRequired = !audio.canPlay && !audio.isRequested;
     if (isRequestRequired) {
       final request = await _audiosRepository.requestAccess(audio);
-      request?.fold(
+      request.fold(
         (failure) => setErrorMessage(mapFailureMessage(failure)),
         (session) => actionSheetState = AudioTileAction.notice(session.message!),
       );

@@ -1,20 +1,19 @@
 import 'package:collection/collection.dart';
+<<<<<<< HEAD
 import 'package:penhas/app/features/users/data/models/user_detail_profile_model.dart';
+=======
+>>>>>>> Fix code syntax
 import 'package:penhas/app/features/users/domain/entities/user_search_session_entity.dart';
 
 class UserSearchSessionModel extends UserSearchSessionEntity {
-  final bool hasMore;
-  final String? nextPage;
-  final List<UserDetailProfileModel>? users;
-
   UserSearchSessionModel({
-    required this.hasMore,
-    required this.nextPage,
-    required this.users,
-  });
+    required bool hasMore,
+    required String? nextPage,
+    required List<UserDetailProfileModel>? users,
+  }) : super(hasMore: hasMore, nextPage: nextPage, users: users);
 
-  factory UserSearchSessionModel.fromJson(Map<String, Object> jsonData) {
-    final List<Object> jsonProfiles = jsonData["rows"] as List<Object>;
+  factory UserSearchSessionModel.fromJson(Map<String, dynamic> jsonData) {
+    final List jsonProfiles = jsonData["rows"];
     final List<UserDetailProfileModel> users = jsonProfiles
         .map((e) => UserDetailProfileModel.fromJson(e))
         .whereNotNull()
@@ -22,7 +21,7 @@ class UserSearchSessionModel extends UserSearchSessionEntity {
 
     return UserSearchSessionModel(
       hasMore: jsonData["has_more"] == 1,
-      nextPage: jsonData["next_page"] as String?,
+      nextPage: jsonData["next_page"],
       users: users,
     );
   }

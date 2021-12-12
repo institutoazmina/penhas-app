@@ -16,7 +16,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class SignUpThreePage extends StatefulWidget {
   final String title;
-  const SignUpThreePage({required Key key, this.title = "SignUpThree"})
+  const SignUpThreePage({Key? key, this.title = "SignUpThree"})
       : super(key: key);
 
   final String title;
@@ -159,7 +159,10 @@ class _SignUpThreePageState
   void _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
+<<<<<<< HEAD
     }
+=======
+>>>>>>> Fix code syntax
     WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 

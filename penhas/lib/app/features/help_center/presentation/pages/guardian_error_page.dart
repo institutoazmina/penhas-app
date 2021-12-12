@@ -3,7 +3,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class GuardianErrorPage extends StatelessWidget {
   const GuardianErrorPage({
-    required Key key,
+    Key? key,
     required String message,
     required VoidCallback onPressed,
   })  : this._message = message,

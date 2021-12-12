@@ -12,8 +12,8 @@ class FilterSkillsModel extends Equatable {
     required this.skills,
   });
 
-  factory FilterSkillsModel.fromJson(Map<String, Object> jsonData) {
-    final List<Object> jsonSkills = jsonData["skills"] as List<Object>;
+  factory FilterSkillsModel.fromJson(Map<String, dynamic> jsonData) {
+    final List<dynamic> jsonSkills = jsonData["skills"];
     final List<FilterTagEntity> skills = jsonSkills
         .map((e) => FilterTagModel.fromJson(e))
         .whereNotNull()
@@ -25,7 +25,7 @@ class FilterSkillsModel extends Equatable {
   final List<FilterTagEntity>? skills;
 
   @override
-  List<Object> get props => [skills!];
+  List<dynamic> get props => [skills];
 
   @override
   bool get stringify => true;

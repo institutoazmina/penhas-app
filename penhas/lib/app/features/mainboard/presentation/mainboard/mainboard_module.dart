@@ -93,12 +93,19 @@ class MainboardModule extends Module {
         ...chatBinds,
         Bind.factory<MainboardStore>(
           (i) => MainboardStore(
+<<<<<<< HEAD
             modulesServices: i.get<IAppModulesServices>(),
             initialPage: i.args?.data is Map
                 // ignore: avoid_dynamic_calls
                 ? MainboardState.fromString(i.args?.data['page'])
                 : const MainboardState.feed(),
           ),
+=======
+              modulesServices: i.get<IAppModulesServices>(),
+              initialPage: i.args.data == null
+                  ? MainboardState.feed()
+                  : MainboardState.fromString(i.args.data["page"])),
+>>>>>>> Fix code syntax
         ),
         Bind.factory(
           (i) => MainboardController(
@@ -113,6 +120,10 @@ class MainboardModule extends Module {
             repository: i.get<ITweetRepository>(),
             filterPreference: i.get<TweetFilterPreference>(),
           ),
+<<<<<<< HEAD
+=======
+          isSingleton: true,
+>>>>>>> Fix code syntax
         ),
         Bind.factory<IFilterSkillRepository>(
           (i) => FilterSkillRepository(
@@ -123,10 +134,14 @@ class MainboardModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
+<<<<<<< HEAD
         ChildRoute(
           Modular.initialRoute,
           child: (_, args) => const MainboardPage(),
         ),
+=======
+        ChildRoute(Modular.initialRoute, child: (_, args) => MainboardPage()),
+>>>>>>> Fix code syntax
         ...tweetRoutes,
         ...helpCenter,
         ...supportCenter,
@@ -270,6 +285,7 @@ class MainboardModule extends Module {
         ),
         Bind.factory(
           (i) => ProfileEditController(
+<<<<<<< HEAD
             appStateUseCase: i.get<AppStateUseCase>(),
             skillRepository: i.get<IFilterSkillRepository>(),
             securityModeActionFeature: i.get<SecurityModeActionFeature>(),
@@ -282,6 +298,18 @@ class MainboardModule extends Module {
           ),
         ),
         Bind.factory(
+=======
+              appStateUseCase: i.get<AppStateUseCase>(),
+              skillRepository: i.get<IFilterSkillRepository>(),
+              securityModeActionFeature: i.get<SecurityModeActionFeature>()),
+        ),
+        Bind(
+          (i) => AccountDeleteController(
+              appConfiguration: i.get<IAppConfiguration>(),
+              profileRepository: i.get<IUserProfileRepository>()),
+        ),
+        Bind(
+>>>>>>> Fix code syntax
           (i) => AccountPreferenceController(
             profileRepository: i.get<IUserProfileRepository>(),
           ),
@@ -334,7 +362,11 @@ class MainboardModule extends Module {
                 ChatChannelOpenEntity(token: i.args?.params['token']),
             channelRepository: i.get<IChatChannelRepository>(),
           ),
+<<<<<<< HEAD
         ),
+=======
+        )
+>>>>>>> Fix code syntax
       ];
 
   List<Bind> get audioServicesBinds => [
@@ -379,6 +411,10 @@ class MainboardModule extends Module {
           (i) => FilterTweetController(
             useCase: i.get<TweetFilterPreference>(),
           ),
+<<<<<<< HEAD
+=======
+          isSingleton: true,
+>>>>>>> Fix code syntax
         ),
         Bind.factory<IUsersRepository>(
           (i) => UsersRepository(
@@ -391,6 +427,10 @@ class MainboardModule extends Module {
             channelRepository: i.get<IChatChannelRepository>(),
             routerType: i.args?.data,
           ),
+<<<<<<< HEAD
+=======
+          isSingleton: true,
+>>>>>>> Fix code syntax
         )
       ];
 
@@ -450,7 +490,7 @@ class MainboardModule extends Module {
         Bind.factory<AppStateUseCase>(
           (i) => AppStateUseCase(
               appStateRepository: i.get<IAppStateRepository>(),
-              userProfileStore: i.get<LocalStore<UserProfileEntity?>>(),
+              userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
               appConfiguration: i.get<IAppConfiguration>(),
               appModulesServices: i.get<IAppModulesServices>()),
         ),

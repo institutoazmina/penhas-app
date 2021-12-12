@@ -16,7 +16,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   final String title;
-  const ResetPasswordPage({required Key key, this.title = "ResetPassword"})
+  const ResetPasswordPage({Key? key, this.title = "ResetPassword"})
       : super(key: key);
 
   final String title;
@@ -162,7 +162,10 @@ class _ResetPasswordPageState
   void _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
+<<<<<<< HEAD
     }
+=======
+>>>>>>> Fix code syntax
     WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 }

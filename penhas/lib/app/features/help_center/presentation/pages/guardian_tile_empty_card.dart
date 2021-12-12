@@ -8,7 +8,7 @@ class GuardianTileEmptyCard extends StatelessWidget {
   const GuardianTileEmptyCard({Key? key, required this.card}) : super(key: key);
 
   final GuardianTileEmptyCardEntity card;
-  const GuardianTileEmptyCard({required Key key, required this.card}) : super(key: key);
+  const GuardianTileEmptyCard({Key? key, required this.card}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

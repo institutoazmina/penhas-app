@@ -6,7 +6,7 @@ import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class SupportCenterRate extends StatelessWidget {
   const SupportCenterRate({
-    required Key key,
+    Key? key,
     required this.detail,
     required this.onRated,
   }) : super(key: key);
@@ -32,11 +32,11 @@ class SupportCenterRate extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             child: SmoothStarRating(
                 allowHalfRating: false,
-                onRated: onRated,
+                onRatingChanged: onRated,
                 starCount: 5,
                 rating: detail.ratedByClient!.toDouble(),
                 size: 40.0,
-                isReadOnly: false,
+                // isReadOnly: false,
                 color: DesignSystemColors.pumpkinOrange,
                 borderColor: DesignSystemColors.pumpkinOrange,
                 spacing: 0.0),

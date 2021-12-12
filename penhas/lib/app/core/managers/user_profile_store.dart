@@ -8,6 +8,7 @@ class UserProfileStore extends LocalStore<UserProfileEntity> {
       : super('br.com.penhas.userProfile', storage);
 
   @override
+<<<<<<< HEAD
   UserProfileEntity defaultEntity() => UserProfileEntity(
         email: null,
         nickname: null,
@@ -22,6 +23,26 @@ class UserProfileStore extends LocalStore<UserProfileEntity> {
         race: null,
         skill: const [],
       );
+=======
+  Future<UserProfileEntity> defaultEntity() {
+    return Future.value(
+      UserProfileEntity(
+        email: null,
+        nickname: null,
+        avatar: null,
+        stealthModeEnabled: null,
+        anonymousModeEnabled: null,
+        birthdate: DateTime.now(),
+        fullName: null,
+        genre: null,
+        jaFoiVitimaDeViolencia: null,
+        minibio: null,
+        race: null,
+        skill: null,
+      ),
+    );
+  }
+>>>>>>> Fix code syntax
 
   @override
   UserProfileEntity fromJson(Map<String, dynamic> json) {
@@ -33,15 +54,15 @@ class UserProfileStore extends LocalStore<UserProfileEntity> {
     final model = UserProfileModel(
       fullName: userProfile.fullName,
       genre: userProfile.genre,
-      jaFoiVitimaDeViolencia: userProfile.jaFoiVitimaDeViolencia,
+      jaFoiVitimaDeViolencia: userProfile.jaFoiVitimaDeViolencia ?? false,
       minibio: userProfile.genre,
       race: userProfile.race,
       skill: userProfile.skill,
       email: userProfile.email,
       nickname: userProfile.nickname,
       avatar: userProfile.avatar,
-      stealthModeEnabled: userProfile.stealthModeEnabled,
-      anonymousModeEnabled: userProfile.anonymousModeEnabled,
+      stealthModeEnabled: userProfile.stealthModeEnabled ?? false,
+      anonymousModeEnabled: userProfile.anonymousModeEnabled ?? false,
       birthdate: userProfile.birthdate,
     );
     return model.toJson();

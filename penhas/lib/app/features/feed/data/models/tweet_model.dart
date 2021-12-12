@@ -1,30 +1,18 @@
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 
 class TweetModel extends TweetEntity {
-  final String? id;
-  final String? userName;
-  final int clientId;
-  final String? createdAt;
-  final int totalReply;
-  final int totalLikes;
-  final bool anonymous;
-  final String? content;
-  final String? avatar;
-  final TweetMeta meta;
-  final List<TweetEntity> lastReply;
-
   TweetModel({
-    required this.id,
-    required this.userName,
-    required this.clientId,
-    required this.createdAt,
-    required this.totalReply,
-    required this.totalLikes,
-    required this.anonymous,
-    required this.content,
-    required this.avatar,
-    required this.meta,
-    required this.lastReply,
+    required String? id,
+    required String? userName,
+    required int clientId,
+    required String? createdAt,
+    required int totalReply,
+    required int totalLikes,
+    required bool anonymous,
+    required String? content,
+    required String avatar,
+    required TweetMeta meta,
+    required List<TweetEntity> lastReply,
   }) : super(
           id: id,
           userName: userName,
@@ -46,21 +34,27 @@ class TweetModel extends TweetEntity {
       owner: meta['owner'] == 1,
     );
 
+<<<<<<< HEAD
     List<TweetModel> lastReply = [];
+=======
+    List<TweetModel> lastReply = List.empty();
+>>>>>>> Fix code syntax
     if (jsonData['last_reply'] != null) {
-      lastReply = [TweetModel.fromJson(jsonData['last_reply'] as Map<String, Object>)];
+      lastReply = [
+        TweetModel.fromJson(jsonData['last_reply'])
+      ];
     }
 
     return TweetModel(
-      id: jsonData['id'] as String?,
-      userName: jsonData['name'] as String?,
-      clientId: (jsonData['cliente_id'] as num).toInt(),
-      createdAt: jsonData['created_at'] as String?,
-      totalReply: (jsonData['qtde_comentarios'] as num).toInt(),
-      totalLikes: (jsonData['qtde_likes'] as num).toInt(),
+      id: jsonData['id'],
+      userName: jsonData['name'],
+      clientId: jsonData['cliente_id'],
+      createdAt: jsonData['created_at'],
+      totalReply: jsonData['qtde_comentarios'],
+      totalLikes: jsonData['qtde_likes'],
       anonymous: jsonData['anonimo'] != 0,
-      content: jsonData['content'] as String?,
-      avatar: jsonData['icon'] as String?,
+      content: jsonData['content'],
+      avatar: jsonData['icon'],
       meta: tweetMeta,
       lastReply: lastReply,
     );
@@ -68,23 +62,40 @@ class TweetModel extends TweetEntity {
 }
 
 class TweetRelatedNewsModel extends TweetRelatedNewsEntity {
-  static TweetRelatedNewsEntity fromJson(Map<String, Object> jsonData) {
-    final List<TweetNewsEntity> news = _parseNews(jsonData['news'] as List<Object>);
+  TweetRelatedNewsModel({
+    required String header,
+    required List<TweetNewsEntity> news,
+  }) : super(header: header, news: news);
+
+  static TweetRelatedNewsEntity fromJson(Map<String, dynamic> jsonData) {
+    final List<TweetNewsEntity> news = _parseNews(jsonData['news']);
 
     return TweetRelatedNewsEntity(
-      header: jsonData['header'] as String? ?? '',
+      header: jsonData['header'] ?? '',
       news: news,
     );
   }
 
+<<<<<<< HEAD
   static List<TweetNewsModel> _parseNews(List<dynamic> news) {
     return news.map((e) => TweetNewsModel.fromJson(e)).toList();
+=======
+  static List<TweetNewsEntity> _parseNews(List<dynamic> news) {
+    return news
+        .map((e) => TweetNewsModel.fromJson(e))
+        .toList();
+>>>>>>> Fix code syntax
   }
 }
 
 class TweetNewsGroupModel extends TweetNewsGroupEntity {
-  static TweetNewsGroupEntity fromJson(Map<String, Object> jsonData) {
-    final List<TweetNewsEntity> news = _parseNews(jsonData['news'] as List<Object>);
+  TweetNewsGroupModel({
+    required String header,
+    required List<TweetNewsEntity> news,
+  }) : super(header: header, news: news);
+
+  static TweetNewsGroupEntity fromJson(Map<String, dynamic> jsonData) {
+    final List<TweetNewsEntity> news = _parseNews(jsonData['news']);
 
     return TweetNewsGroupEntity(
       header: jsonData['header'] as String? ?? '',
@@ -92,18 +103,35 @@ class TweetNewsGroupModel extends TweetNewsGroupEntity {
     );
   }
 
+<<<<<<< HEAD
   static List<TweetNewsModel> _parseNews(List<dynamic> news) =>
+=======
+  static List<TweetNewsEntity> _parseNews(List<dynamic> news) =>
+>>>>>>> Fix code syntax
       news.map((e) => TweetNewsModel.fromJson(e)).toList();
 }
 
 class TweetNewsModel extends TweetNewsEntity {
-  static TweetNewsEntity fromJson(Map<String, Object> jsonData) {
-    return TweetNewsEntity(
-      date: jsonData['date_str'] as String?,
-      title: jsonData['title'] as String?,
-      source: jsonData['source'] as String?,
-      imageUri: jsonData['image'] as String?,
-      newsUri: jsonData['href'] as String?,
-    );
-  }
+  TweetNewsModel({
+    String? date,
+    String? newsUri,
+    String? imageUri,
+    String? source,
+    String? title,
+  }) : super(
+          date: date,
+          newsUri: newsUri,
+          imageUri: imageUri,
+          source: source,
+          title: title,
+        );
+
+  factory TweetNewsModel.fromJson(Map<String, dynamic> jsonData) =>
+      TweetNewsModel(
+        date: jsonData['date_str'],
+        title: jsonData['title'],
+        source: jsonData['source'],
+        imageUri: jsonData['image'],
+        newsUri: jsonData['href'],
+      );
 }

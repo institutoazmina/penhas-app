@@ -9,7 +9,7 @@ class MainboardBottomNavigationPage extends StatelessWidget {
   final void Function(MainboardState) onSelect;
 
   const MainboardBottomNavigationPage({
-    required Key key,
+    Key? key,
     required this.currentPage,
     required this.pages,
     required this.onSelect,

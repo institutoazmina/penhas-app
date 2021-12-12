@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> Fix code syntax
 class SecurityToggleState {
   final String title;
   final bool? isEnabled;

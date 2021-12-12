@@ -13,7 +13,7 @@ String? _normalizeHitText(String? text) {
 class WhiteBoxDecorationStyle extends InputDecoration {
   WhiteBoxDecorationStyle({
     required String labelText,
-    required String hintText,
+    String? hintText,
     String? errorText,
   }) : super(
           border: const OutlineInputBorder(),
@@ -35,7 +35,7 @@ class WhiteBoxDecorationStyle extends InputDecoration {
 class PurpleBoxDecorationStyle extends InputDecoration {
   PurpleBoxDecorationStyle({
     required String labelText,
-    required String hintText,
+    String? hintText,
     String? errorText,
   }) : super(
           border: const OutlineInputBorder(),

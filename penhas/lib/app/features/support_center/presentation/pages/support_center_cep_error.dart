@@ -3,7 +3,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class SupportCenterCepError extends StatelessWidget {
   const SupportCenterCepError({
-    required Key key,
+    Key? key,
     required String message,
   })  : this._message = message,
         super(key: key);

@@ -3,7 +3,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatChannelErrorPage extends StatelessWidget {
   const ChatChannelErrorPage({
-    required Key key,
+    Key? key,
     required this.message,
   }) : super(key: key);
 

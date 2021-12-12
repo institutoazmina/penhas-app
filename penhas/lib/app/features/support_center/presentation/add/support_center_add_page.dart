@@ -16,7 +16,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class SupportCenterAddPage extends StatefulWidget {
-  SupportCenterAddPage({required Key key}) : super(key: key);
+  SupportCenterAddPage({Key? key}) : super(key: key);
 
   @override
   _SupportCenterAddPageState createState() => _SupportCenterAddPageState();
@@ -211,7 +211,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
   Widget buildDropdownList({
     required BuildContext context,
     required String labelText,
-    required String errorMessage,
+    String? errorMessage,
     required String currentValue,
     required List dataSource,
   }) {
@@ -219,7 +219,11 @@ extension _BuildWidget on _SupportCenterAddPageState {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Theme(
         data: Theme.of(context)
+<<<<<<< HEAD
             .copyWith(canvasColor: const Color.fromRGBO(141, 146, 157, 1)),
+=======
+            .copyWith(canvasColor: Color.fromRGBO(141, 146, 157, 1)),
+>>>>>>> Fix code syntax
         child: DropdownButtonFormField<dynamic>(
           isExpanded: true,
           decoration: InputDecoration(
@@ -238,8 +242,10 @@ extension _BuildWidget on _SupportCenterAddPageState {
             hintText: labelText,
             hintStyle: const TextStyle(color: Colors.black),
           ),
-          items: dataSource as List<DropdownMenuItem<_>>,
-          onChanged: controller.setCategorie,
+          items: dataSource as List<DropdownMenuItem>,
+          onChanged: (category) {
+            controller.setCategorie(category as String);
+          },
           value: currentValue.isEmpty ? null : currentValue,
         ),
       ),

@@ -14,7 +14,7 @@ import 'package:penhas/app/features/chat/presentation/pages/channel/chat_channel
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatPage extends StatefulWidget {
-  ChatPage({required Key key}) : super(key: key);
+  ChatPage({Key? key}) : super(key: key);
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -189,7 +189,11 @@ extension _ChatPageStateMethods on _ChatPageState {
     BuildContext context,
     ChatChannelSessionMetadataEntity metadata,
   ) {
+<<<<<<< HEAD
     final List<Widget> actions = [];
+=======
+    List<Widget> actions = List.empty();
+>>>>>>> Fix code syntax
 
     if (metadata.canSendMessage) {
       actions.add(

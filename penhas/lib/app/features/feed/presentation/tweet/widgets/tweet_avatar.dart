@@ -7,7 +7,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class TweetAvatar extends StatelessWidget {
   const TweetAvatar({
-    required Key key,
+    Key? key,
     required this.tweet,
   })  : assert(tweet != null),
         super(key: key);

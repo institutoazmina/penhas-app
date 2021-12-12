@@ -11,7 +11,7 @@ import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class UserProfilePage extends StatefulWidget {
-  const UserProfilePage({required Key key}) : super(key: key);
+  const UserProfilePage({Key? key}) : super(key: key);
 
   @override
   _UserProfilePageState createState() => _UserProfilePageState();

@@ -35,6 +35,7 @@ class SupportCenterModule extends WidgetModule {
             supportCenterUseCase: i.get<SupportCenterUseCase>(),
           ),
         ),
+<<<<<<< HEAD
         Bind.factory(
           (i) => SupportCenterListController(i.args?.data),
         ),
@@ -44,6 +45,17 @@ class SupportCenterModule extends WidgetModule {
           ),
         ),
         Bind.factory(
+=======
+        Bind(
+          (i) => SupportCenterListController(i.args.data),
+                  ),
+        Bind(
+          (i) => SupportCenterLocationController(
+            supportCenterUseCase: i.get<SupportCenterUseCase>(),
+          ),
+                  ),
+        Bind(
+>>>>>>> Fix code syntax
           (i) => SupportCenterShowController(
             supportCenterUseCase: i.get<SupportCenterUseCase>(),
             place: i.args?.data,
@@ -52,5 +64,9 @@ class SupportCenterModule extends WidgetModule {
       ];
 
   @override
+<<<<<<< HEAD
   Widget get view => const SupportCenterPage();
+=======
+  Widget get view => SupportCenterPage();
+>>>>>>> Fix code syntax
 }

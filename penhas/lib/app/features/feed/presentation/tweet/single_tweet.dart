@@ -20,7 +20,7 @@ class SingleTweet extends StatelessWidget {
   final ITweetController controller;
 
   const SingleTweet({
-    required Key key,
+    Key? key,
     required this.tweet,
     required BuildContext context,
     required this.controller,

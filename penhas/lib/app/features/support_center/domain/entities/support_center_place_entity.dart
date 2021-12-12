@@ -135,11 +135,13 @@ extension _SupportCenterPlaceCategoryEntityParse
 }
 
 extension _Parse on SupportCenterPlaceEntity {
-  static String? getFullAddress(Map<String, Object> jsonData) {
+  static String? getFullAddress(Map<String, dynamic> jsonData) {
     final String neighborhood = jsonData["bairro"] as String? ?? "";
     final String cep = jsonData["cep"] as String? ?? "";
     final String city = jsonData["municipio"] as String? ?? "";
-    String number = jsonData["numero"].toString() ?? "";
+    String number = jsonData.containsKey("numero") && jsonData["numero"] != null
+        ? "${jsonData["numero"]}"
+        : "";
     final String streetName = jsonData["nome_logradouro"] as String? ?? "";
     final String streetType = jsonData["tipo_logradouro"] as String? ?? "";
     final String uf = jsonData["uf"] as String? ?? "";

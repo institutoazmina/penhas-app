@@ -17,7 +17,11 @@ class TweetSessionModel extends TweetSessionEntity {
           nextPage: nextPage,
         );
 
+<<<<<<< HEAD
   factory TweetSessionModel.fromJson(Map<String, dynamic> jsonData) {
+=======
+  factory TweetSessionModel.fromJson(Map<String, Object> jsonData) {
+>>>>>>> Fix code syntax
     final hasMore = jsonData['has_more'] == 1;
     final nextPage = jsonData['next_page'];
     final orderBy = jsonData['order_by'] == 'latest_first'

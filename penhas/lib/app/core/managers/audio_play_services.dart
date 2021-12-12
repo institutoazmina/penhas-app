@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
-import 'package:meta/meta.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/audio_sync_manager.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
@@ -63,8 +62,13 @@ extension _AudioPlayServicesPrivate on AudioPlayServices {
     await releaseAudioSession();
     await _playerModule.openAudioSession();
 
+<<<<<<< HEAD
     _playerSubscription = _playerModule.onProgress?.listen((e) {
       // what to do in onProgress?
+=======
+    _playerModule.onProgress?.listen((e) {
+      print(e);
+>>>>>>> Fix code syntax
     });
   }
 

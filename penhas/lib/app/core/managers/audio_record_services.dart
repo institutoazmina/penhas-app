@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:intl/intl.dart' show DateFormat;
+<<<<<<< HEAD
 import 'package:logger/logger.dart' show Level;
 import 'package:penhas/app/core/extension/asuka.dart';
 import 'package:penhas/app/core/managers/audio_sync_manager.dart';
+=======
+import 'package:penhas/app/core/extension/asuka.dart';
+>>>>>>> Fix code syntax
 import 'package:penhas/app/core/states/audio_permission_state.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
@@ -138,9 +142,15 @@ extension _PermissionStatusMap on PermissionStatus {
       case PermissionStatus.restricted:
         return const AudioPermissionState.restricted();
       case PermissionStatus.permanentlyDenied:
+<<<<<<< HEAD
         return const AudioPermissionState.permanentlyDenied();
       case PermissionStatus.limited:
         return const AudioPermissionState.undefined();
+=======
+        return AudioPermissionState.permanentlyDenied();
+      case PermissionStatus.limited:
+        return AudioPermissionState.undefined();
+>>>>>>> Fix code syntax
     }
   }
 }
@@ -197,7 +207,11 @@ extension _AudioRecordServices on AudioRecordServices {
         sampleRate: 32000,
       );
 
+<<<<<<< HEAD
       _recorderSubscription = _recorder.onProgress?.listen(
+=======
+      _recorderSubscription = _recorder.onProgress!.listen(
+>>>>>>> Fix code syntax
         (e) {
           if (e != null && e.duration != null) {
             _runningDuration = e.duration;
@@ -207,7 +221,7 @@ extension _AudioRecordServices on AudioRecordServices {
                 isUtc: true);
             String recordTime =
                 DateFormat('mm:ss:SS', 'en_GB').format(date).substring(0, 8);
-            _streamController!.add(AudioActivity(recordTime, e.decibels));
+            _streamController!.add(AudioActivity(recordTime, e.decibels ?? 0));
           }
         },
         onError: catchErrorLogger,

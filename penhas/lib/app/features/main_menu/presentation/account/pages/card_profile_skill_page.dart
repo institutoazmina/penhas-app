@@ -9,7 +9,7 @@ class CardProfileSkillPage extends StatelessWidget {
   final void Function() onEditAction;
 
   const CardProfileSkillPage({
-    required Key key,
+    Key? key,
     required this.skills,
     required this.onEditAction,
   }) : super(key: key);

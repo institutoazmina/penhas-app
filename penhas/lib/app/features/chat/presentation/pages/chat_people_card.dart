@@ -5,7 +5,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatPeopleCard extends StatelessWidget {
   const ChatPeopleCard({
-    required Key key,
+    Key? key,
     required this.person,
     required this.onPressed,
   }) : super(key: key);

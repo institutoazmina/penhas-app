@@ -45,8 +45,26 @@ class ChatMainModule extends WidgetModule {
             apiProvider: i.get<IApiProvider>(),
           ),
         ),
+<<<<<<< HEAD
       ];
 
   @override
   Widget get view => const ChatMainPage();
+=======
+        Bind(
+          (i) => ChatChannelController(
+            useCase: i.get<ChatChannelUseCase>(),
+          ),
+                  ),
+        Bind<ChatChannelUseCase>(
+          (i) => ChatChannelUseCase(
+            session: i.args.data,
+            channelRepository: i.get<IChatChannelRepository>(),
+          ),
+                  )
+      ];
+
+  @override
+  Widget get view => ChatMainPage();
+>>>>>>> Fix code syntax
 }

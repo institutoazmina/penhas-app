@@ -184,7 +184,12 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   }
 
   Future<bool> _hasActivedGuardian() {
+<<<<<<< HEAD
     return _appConfiguration.appMode.then((mode) => mode.hasActivedGuardian);
+=======
+    return _appConfiguration.appMode
+        .then((mode) => mode.hasActivedGuardian);
+>>>>>>> Fix code syntax
   }
 
   void _setErrorMessage(String? message) => errorMessage = message;

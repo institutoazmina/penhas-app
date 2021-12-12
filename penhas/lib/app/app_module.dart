@@ -24,9 +24,9 @@ import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_
 import 'package:penhas/app/features/help_center/data/repositories/audio_sync_repository.dart';
 import 'package:penhas/app/features/main_menu/domain/repositories/user_profile_repository.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_module.dart';
-import 'package:penhas/app/features/quiz/presentation/quiz/quiz_module.dart';
 import 'package:penhas/app/features/splash/splash_module.dart';
 
+<<<<<<< HEAD
 class AppModule extends Module {
   @override
   List<Bind> get binds => [
@@ -51,6 +51,26 @@ class AppModule extends Module {
           ),
         ),
         Bind.factory<IApiServerConfigure>(
+=======
+import 'app_controller.dart';
+import 'core/managers/audio_sync_manager.dart';
+import 'core/managers/local_store.dart';
+import 'core/managers/modules_sevices.dart';
+import 'core/managers/user_profile_store.dart';
+import 'core/network/api_client.dart';
+import 'core/storage/local_storage_shared_preferences.dart';
+import 'features/appstate/domain/entities/app_preferences_entity.dart';
+import 'features/authentication/presentation/deleted_account/deleted_account_controller.dart';
+import 'features/authentication/presentation/deleted_account/deleted_account_page.dart';
+import 'features/help_center/data/repositories/audio_sync_repository.dart';
+import 'features/main_menu/domain/repositories/user_profile_repository.dart';
+
+class AppModule extends Module {
+  @override
+  List<Bind> get binds => [
+        Bind((i) => AppController()),
+        Bind<IApiServerConfigure>(
+>>>>>>> Fix code syntax
           (i) => ApiServerConfigure(
             appConfiguration: i.get<IAppConfiguration>(),
           ),
@@ -101,8 +121,13 @@ class AppModule extends Module {
             storage: i.get<ILocalStorage>(),
           ),
         ),
+<<<<<<< HEAD
         Bind.factory<ILocalStorage>((i) => LocalStorageSharedPreferences()),
         Bind.lazySingleton<IAudioSyncManager>(
+=======
+        Bind<ILocalStorage>((i) => LocalStorageSharedPreferences()),
+        Bind.singleton<IAudioSyncManager>(
+>>>>>>> Fix code syntax
           (i) => AudioSyncManager(
             audioRepository: i.get<IAudioSyncRepository>(),
           ),
@@ -119,7 +144,11 @@ class AppModule extends Module {
         ModuleRoute('/', module: SplashModule()),
         ModuleRoute('/authentication', module: SignInModule()),
         ModuleRoute('/mainboard', module: MainboardModule()),
+<<<<<<< HEAD
         ModuleRoute('/quiz', module: QuizModule()),
+=======
+        ModuleRoute('/quiz', module: Module()),
+>>>>>>> Fix code syntax
         ChildRoute(
           '/accountDeleted',
           child: (context, args) => const DeletedAccountPage(),

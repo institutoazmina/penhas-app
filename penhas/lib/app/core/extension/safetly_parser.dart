@@ -26,7 +26,7 @@ extension SafetlyParser on Object? {
   bool safeParseBool() {
     final value = this;
     try {
-      return (value as num?) == 1 ?? false;
+      return value == 1;
     } catch (e) {
       return false;
     }

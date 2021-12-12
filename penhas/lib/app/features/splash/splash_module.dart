@@ -19,7 +19,7 @@ class SplashModule extends Module {
         Bind<AppStateUseCase>(
           (i) => AppStateUseCase(
               appStateRepository: i.get<IAppStateRepository>(),
-              userProfileStore: i.get<LocalStore<UserProfileEntity?>>(),
+              userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
               appConfiguration: i.get<IAppConfiguration>(),
               appModulesServices: i.get<IAppModulesServices>()),
         ),
@@ -39,6 +39,10 @@ class SplashModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
+<<<<<<< HEAD
         ChildRoute(Modular.initialRoute, child: (_, args) => const SplashPage()),
+=======
+        ChildRoute(Modular.initialRoute, child: (_, args) => SplashPage()),
+>>>>>>> Fix code syntax
       ];
 }

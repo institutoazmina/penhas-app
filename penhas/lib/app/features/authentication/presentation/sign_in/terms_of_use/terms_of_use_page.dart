@@ -3,7 +3,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class TermsOfUsePage extends StatelessWidget {
-  const TermsOfUsePage({required Key key}) : super(key: key);
+  const TermsOfUsePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

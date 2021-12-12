@@ -14,7 +14,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class SignInAnonymousPage extends StatefulWidget {
   final String title;
-  const SignInAnonymousPage({required Key key, this.title = "Authentication"})
+  const SignInAnonymousPage({Key? key, this.title = "Authentication"})
       : super(key: key);
 
   final String title;
@@ -174,7 +174,10 @@ class _SignInAnonymousPage
   void _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
+<<<<<<< HEAD
     }
+=======
+>>>>>>> Fix code syntax
     WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 }

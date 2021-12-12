@@ -17,7 +17,7 @@ class SignUpTwoPage extends StatefulWidget {
   const SignUpTwoPage({Key? key, this.title = 'SignUpTwo'}) : super(key: key);
 
   final String title;
-  const SignUpTwoPage({required Key key, this.title = "SignUpTwo"}) : super(key: key);
+  const SignUpTwoPage({Key? key, this.title = "SignUpTwo"}) : super(key: key);
 
   @override
   _SignUpTwoPageState createState() => _SignUpTwoPageState();
@@ -149,7 +149,7 @@ class _SignUpTwoPageState
   Widget _buildDropdownList<T>({
     required BuildContext context,
     required String labelText,
-    required String onError,
+    required String? onError,
     required onChange,
     required T currentValue,
     required List dataSource,
@@ -171,7 +171,7 @@ class _SignUpTwoPageState
           contentPadding:
               const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
         ),
-        items: dataSource as List<DropdownMenuItem<_>>,
+        items: dataSource as List<DropdownMenuItem<T>>,
         onChanged: onChange,
         style: const TextStyle(color: Colors.white),
         value: currentValue == '' ? null : currentValue,
@@ -242,7 +242,10 @@ class _SignUpTwoPageState
   void _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
+<<<<<<< HEAD
     }
+=======
+>>>>>>> Fix code syntax
     WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 }

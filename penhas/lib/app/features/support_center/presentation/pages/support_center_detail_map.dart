@@ -5,7 +5,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class SupportCenterDetailMap extends StatelessWidget {
   const SupportCenterDetailMap({
-    required Key key,
+    Key? key,
     required this.detail,
   }) : super(key: key);
 

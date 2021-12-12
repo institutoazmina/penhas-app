@@ -9,23 +9,23 @@ import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity
 import 'package:penhas/app/features/appstate/domain/repositories/i_app_state_repository.dart';
 
 class AppStateUseCase {
-  final IAppStateRepository? _appStateRepository;
-  final LocalStore<UserProfileEntity?>? _userProfileStore;
-  final IAppConfiguration? _appConfiguration;
-  final IAppModulesServices? _appModulesServices;
+  final IAppStateRepository _appStateRepository;
+  final LocalStore<UserProfileEntity> _userProfileStore;
+  final IAppConfiguration _appConfiguration;
+  final IAppModulesServices _appModulesServices;
 
   AppStateUseCase({
-    required IAppStateRepository? appStateRepository,
-    required LocalStore<UserProfileEntity?>? userProfileStore,
-    required IAppConfiguration? appConfiguration,
-    required IAppModulesServices? appModulesServices,
+    required IAppStateRepository appStateRepository,
+    required LocalStore<UserProfileEntity> userProfileStore,
+    required IAppConfiguration appConfiguration,
+    required IAppModulesServices appModulesServices,
   })  : this._appStateRepository = appStateRepository,
         this._appConfiguration = appConfiguration,
         this._userProfileStore = userProfileStore,
         this._appModulesServices = appModulesServices;
 
   Future<Either<Failure, AppStateEntity>> check() async {
-    final currentState = await _appStateRepository!.check();
+    final currentState = await _appStateRepository.check();
     return currentState.fold(
       (failure) => left(failure),
       (appState) => _processAppState(appState),
@@ -34,7 +34,7 @@ class AppStateUseCase {
 
   Future<Either<Failure, AppStateEntity>> update(
       UpdateUserProfileEntity update) async {
-    final currentState = await _appStateRepository!.update(update);
+    final currentState = await _appStateRepository.update(update);
 
     return currentState.fold(
       (failure) => left(failure),
@@ -44,9 +44,11 @@ class AppStateUseCase {
 
   Future<Either<Failure, AppStateEntity>> _processAppState(
       AppStateEntity appStateEntity) async {
-    await _userProfileStore!.save(appStateEntity.userProfile);
-    await _appConfiguration!.saveAppModes(appStateEntity.appMode);
-    await _appModulesServices!.save(appStateEntity.modules);
+    var userProfile = appStateEntity.userProfile;
+    if (userProfile != null)
+      await _userProfileStore.save(userProfile);
+    await _appConfiguration.saveAppModes(appStateEntity.appMode);
+    await _appModulesServices.save(appStateEntity.modules);
     return right(appStateEntity);
   }
 }

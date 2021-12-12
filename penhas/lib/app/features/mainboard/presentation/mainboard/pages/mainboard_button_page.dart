@@ -9,7 +9,7 @@ class MainboarButtonPage extends StatelessWidget {
   final void Function(MainboardState) onSelect;
 
   const MainboarButtonPage({
-    required Key key,
+    Key? key,
     required this.onSelect,
     required this.currentPage,
     required this.pageSelected,

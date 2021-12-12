@@ -20,7 +20,7 @@ class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key, this.title = 'SignUp'}) : super(key: key);
 
   final String title;
-  const SignUpPage({required Key key, this.title = "SignUp"}) : super(key: key);
+  const SignUpPage({Key? key, this.title = "SignUp"}) : super(key: key);
 
   @override
   _SignUpPageState createState() => _SignUpPageState();
@@ -209,7 +209,10 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
   void _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
+<<<<<<< HEAD
     }
+=======
+>>>>>>> Fix code syntax
     WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 

@@ -27,7 +27,7 @@ class GuardianRateLimitPage extends StatelessWidget {
   );
 
   GuardianRateLimitPage({
-    required Key key,
+    Key? key,
     required int maxLimit,
   })  : this._maxLimit = maxLimit,
         super(key: key);

@@ -16,7 +16,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/logger/log.dart';
 
 class SupportCenterShowPage extends StatefulWidget {
-  const SupportCenterShowPage({required Key key}) : super(key: key);
+  const SupportCenterShowPage({Key? key}) : super(key: key);
 
   @override
   _SupportCenterShowPageState createState() => _SupportCenterShowPageState();

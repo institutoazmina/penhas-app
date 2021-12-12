@@ -13,7 +13,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class DetailTweetPage extends StatefulWidget {
   const DetailTweetPage({
-    required Key key,
+    Key? key,
     this.title = "DetailTweet",
     required this.tweetController,
   }) : super(key: key);
@@ -135,7 +135,7 @@ class _MainTweet extends StatelessWidget {
   final TweetEntity? tweet;
   final ITweetController? controller;
   const _MainTweet({
-    required Key key,
+    Key? key,
     this.tweet,
     this.controller,
   }) : super(key: key);
@@ -182,7 +182,7 @@ class _MainTweet extends StatelessWidget {
             child: Container(),
             decoration: BoxDecoration(
               border: Border(
-                bottom: BorderSide(color: Colors.grey[350]),
+                bottom: BorderSide(color: Colors.grey[350]!),
               ),
             ),
           ),
@@ -196,7 +196,7 @@ class _ReplyTweet extends StatelessWidget {
   final TweetEntity? tweet;
   final ITweetController? controller;
   const _ReplyTweet({
-    required Key key,
+    Key? key,
     this.tweet,
     this.controller,
   }) : super(key: key);

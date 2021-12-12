@@ -15,7 +15,7 @@ class TweetBottom extends StatefulWidget {
   final ITweetController controller;
 
   TweetBottom({
-    required Key key,
+    Key? key,
     required this.tweet,
     required this.controller,
   })  : assert(tweet != null),

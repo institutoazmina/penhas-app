@@ -157,7 +157,7 @@ extension _ApiProvider on ApiProvider {
     headers ??= {};
     headers.addAll(
       {
-        'X-Api-Key': await _serverConfiguration.apiToken,
+        'X-Api-Key': await _serverConfiguration.apiToken ?? "",
         'User-Agent': await _serverConfiguration.userAgent,
       },
     );

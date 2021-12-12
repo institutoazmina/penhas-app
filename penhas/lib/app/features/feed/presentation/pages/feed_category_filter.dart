@@ -6,7 +6,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class FeedCategoryFilter extends StatelessWidget {
   const FeedCategoryFilter({
-    required Key key,
+    Key? key,
     required this.reloadFeed,
   }) : super(key: key);
 

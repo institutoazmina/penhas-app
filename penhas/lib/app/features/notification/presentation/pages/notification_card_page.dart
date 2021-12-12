@@ -9,7 +9,7 @@ import 'package:timeago/timeago.dart' as timeago;
 class NotificationCardPage extends StatelessWidget {
   final NotificationEntity notification;
 
-  const NotificationCardPage({required Key key, required this.notification})
+  const NotificationCardPage({Key? key, required this.notification})
       : super(key: key);
 
   final NotificationEntity notification;

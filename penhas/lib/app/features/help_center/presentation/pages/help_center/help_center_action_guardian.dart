@@ -5,7 +5,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class HelpCenterActionGuardian extends StatelessWidget {
   const HelpCenterActionGuardian({
-    required Key key,
+    Key? key,
     required this.onPressed,
   }) : super(key: key);
 

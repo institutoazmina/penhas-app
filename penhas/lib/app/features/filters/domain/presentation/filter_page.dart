@@ -8,7 +8,7 @@ import 'package:penhas/app/features/filters/domain/presentation/pages/filter_loa
 import 'package:penhas/app/features/filters/states/filter_state.dart';
 
 class FilterPage extends StatefulWidget {
-  FilterPage({required Key key}) : super(key: key);
+  FilterPage({Key? key}) : super(key: key);
 
   @override
   _FilterPageState createState() => _FilterPageState();

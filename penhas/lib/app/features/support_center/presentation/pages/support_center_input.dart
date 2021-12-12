@@ -16,7 +16,7 @@ class SupportCenterInput extends StatelessWidget {
   final ValueChanged<String> onChanged;
 
   const SupportCenterInput({
-    required Key key,
+    Key? key,
     this.maxLines = 1,
     required this.hintText,
     required this.errorText,

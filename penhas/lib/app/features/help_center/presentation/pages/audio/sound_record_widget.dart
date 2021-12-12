@@ -5,7 +5,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 class SoundRecordWidget extends StatefulWidget {
   final AudioActivity? audioActivity;
   final VoidCallback? onPressed;
-  SoundRecordWidget({required Key key, this.audioActivity, this.onPressed})
+  SoundRecordWidget({Key? key, this.audioActivity, this.onPressed})
       : super(key: key);
 
   final AudioActivity? audioActivity;

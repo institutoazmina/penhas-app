@@ -9,7 +9,7 @@ import 'package:penhas/app/features/help_center/presentation/pages/audio/sound_r
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class AudioRecordPage extends StatefulWidget {
-  const AudioRecordPage({required Key key}) : super(key: key);
+  const AudioRecordPage({Key? key}) : super(key: key);
 
   @override
   _AudioRecordState createState() => _AudioRecordState();

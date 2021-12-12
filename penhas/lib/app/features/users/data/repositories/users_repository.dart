@@ -51,10 +51,17 @@ class UsersRepository implements IUsersRepository {
         ? option.skills!.join(",")
         : null;
     final parameters = {
+<<<<<<< HEAD
       'name': option.name,
       'skills': skills,
       'rows': option.rows?.toString() ?? '100',
       'next_page': option.nextPage,
+=======
+      "name": option.name,
+      "skills": skills,
+      "rows": option.rows?.toString() ?? "100",
+      "next_page": option.nextPage,
+>>>>>>> Fix code syntax
     };
 
     try {

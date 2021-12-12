@@ -22,7 +22,11 @@ class UserProfileModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
+<<<<<<< HEAD:penhas/lib/app/features/users/presentation/user_profile_module.dart
         ChildRoute('/profile', child: (_, args) => const UserProfilePage()),
+=======
+        ChildRoute('/profile', child: (_, args) => UserProfilePage()),
+>>>>>>> Fix code syntax:penhas/lib/app/features/users/domain/presentation/user_profile_module.dart
         ChildRoute(
           '/profile_from_feed',
           child: (_, args) => const UserProfilePage(),

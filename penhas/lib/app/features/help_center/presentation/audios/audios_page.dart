@@ -21,7 +21,8 @@ class AudiosPage extends StatefulWidget {
   const AudiosPage({Key? key, this.title = 'Audios'}) : super(key: key);
 
   final String title;
-  const AudiosPage({required Key key, this.title = "Audios"}) : super(key: key);
+
+  const AudiosPage({Key? key, this.title = "Audios"}) : super(key: key);
 
   @override
   _AudiosPageState createState() => _AudiosPageState();
@@ -107,6 +108,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
           key: _refreshIndicatorKey,
           onRefresh: () async => controller.loadPage(),
           child: ListView.builder(
+<<<<<<< HEAD
             itemCount: tiles.length,
             itemBuilder: (context, index) {
               final audio = tiles[index];
@@ -122,6 +124,21 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
               );
             },
           ),
+=======
+              itemCount: tiles.length,
+              itemBuilder: (context, index) {
+                final audio = tiles[index];
+                final isPlaying = audio.audio == _playingAudio;
+                final backgroundColor = _selectingAudioMenu == audio.audio
+                    ? DesignSystemColors.blueyGrey
+                    : Colors.transparent;
+
+                return AudioPlayWidget(
+                    audioPlay: tiles[index],
+                    isPlaying: isPlaying,
+                    backgroundColor: backgroundColor);
+              }),
+>>>>>>> Fix code syntax
         ),
       ),
     );
@@ -169,24 +186,29 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
 
   ReactionDisposer _showAudioPlayStatus() {
     return reaction((_) => controller.playingAudioState,
-            (AudioPlaying? actionSheetState) {
-          actionSheetState!.when(
-            none: () => setState(() {
-              _playingAudio = null;
-            }),
-            playing: (audio) => setState(() {
-              _playingAudio = audio;
-            }),
-          );
-        });
+        (AudioPlaying? actionSheetState) {
+      actionSheetState!.when(
+        none: () => setState(() {
+          _playingAudio = null;
+        }),
+        playing: (audio) => setState(() {
+          _playingAudio = audio;
+        }),
+      );
+    });
   }
 
   void _showActionNotice(String? message) {
     if (message == null || message.isEmpty) return;
 
     Modular.to.showDialog(
+<<<<<<< HEAD
       builder: (context) => AlertDialog(
         title: const Text('Informação', style: kTextStyleAlertDialogTitle),
+=======
+      builder: (_) => AlertDialog(
+        title: Text('Informação', style: kTextStyleAlertDialogTitle),
+>>>>>>> Fix code syntax
         content: Text(
           message,
           style: kTextStyleAlertDialogDescription,
@@ -206,7 +228,11 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
     );
   }
 
+<<<<<<< HEAD
   Future<void> _actionSheet(AudioEntity audio) async {
+=======
+  void _actionSheet(AudioEntity audio) async {
+>>>>>>> Fix code syntax
     final BuildContext _context = _scaffoldKey.currentContext!;
     await showModalBottomSheet(
       context: _context,

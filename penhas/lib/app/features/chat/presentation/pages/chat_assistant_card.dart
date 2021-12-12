@@ -10,7 +10,7 @@ class ChatAssistantCard extends StatelessWidget {
   final void Function(ChatMainSupportTile channel) onPressed;
 
   const ChatAssistantCard({
-    required Key key,
+    Key? key,
     required this.title,
     required this.description,
     required this.icon,

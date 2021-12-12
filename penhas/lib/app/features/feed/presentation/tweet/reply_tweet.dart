@@ -23,7 +23,7 @@ class ReplyTweet extends StatelessWidget {
   final ITweetController controller;
 
   const ReplyTweet({
-    required Key key,
+    Key? key,
     required this.tweet,
     required this.controller,
     required BuildContext context,
@@ -148,7 +148,7 @@ class ReplyTweet extends StatelessWidget {
 
 class _RepliedTweet extends StatelessWidget {
   const _RepliedTweet({
-    required Key key,
+    Key? key,
     required TweetEntity repliedTweet,
     required this.controller,
   })  : assert(repliedTweet != null),

@@ -15,7 +15,7 @@ class AudioPlayWidget extends StatelessWidget {
   final AudioPlayTileEntity audioPlay;
   final bool isPlaying;
   final Color backgroundColor;
-  const AudioPlayWidget({required Key key, required this.audioPlay, required this.isPlaying, required this.backgroundColor}) : super(key: key);
+  const AudioPlayWidget({Key? key, required this.audioPlay, required this.isPlaying, required this.backgroundColor}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

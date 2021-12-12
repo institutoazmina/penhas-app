@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class TweetGroupNews extends StatefulWidget {
   final TweetNewsGroupEntity _group;
-  const TweetGroupNews({required Key key, required TweetNewsGroupEntity group})
+  const TweetGroupNews({Key? key, required TweetNewsGroupEntity group})
       : _group = group,
         super(key: key);
 
@@ -106,7 +106,7 @@ class _TweetGroupNewsState extends State<TweetGroupNews> {
 
 class _NewsItem extends StatelessWidget {
   const _NewsItem({
-    required Key key,
+    Key? key,
     required this.news,
   }) : super(key: key);
 

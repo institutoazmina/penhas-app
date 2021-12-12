@@ -12,7 +12,7 @@ class LoginButton extends StatefulWidget {
   // final void Function() _onChanged;
 
   LoginButton({
-    required Key key,
+    Key? key,
     required this.onChanged,
   }) : super(key: key);
 

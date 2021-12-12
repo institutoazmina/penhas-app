@@ -23,7 +23,11 @@ class LocalStorageSharedPreferences implements ILocalStorage {
   }
 
   @override
+<<<<<<< HEAD
   Future<Either<dynamic, String>> get(String key) async {
+=======
+  Future<String?> get(String key) async {
+>>>>>>> Fix code syntax
     final shared = await _instance.future;
     return catching(() {
       final value = shared.getString(key);
@@ -33,9 +37,13 @@ class LocalStorageSharedPreferences implements ILocalStorage {
   }
 
   @override
-  Future<void> put(String? key, String? value) async {
+  Future<void> put(String key, String? value) async {
     final shared = await _instance.future;
-    shared.setString(key!, value!);
+    if (value != null) {
+      shared.setString(key, value);
+    } else {
+      shared.remove(key);
+    }
   }
 }
 

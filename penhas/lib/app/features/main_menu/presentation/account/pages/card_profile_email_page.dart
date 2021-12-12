@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/core/extension/asuka.dart';
+<<<<<<< HEAD
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_header_edit_page.dart';
+=======
+>>>>>>> Fix code syntax
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class CardProfileEmailPage extends StatelessWidget {
@@ -9,7 +12,7 @@ class CardProfileEmailPage extends StatelessWidget {
   final void Function(String, String) onChange;
 
   const CardProfileEmailPage({
-    required Key key,
+    Key? key,
     required this.content,
     required this.onChange,
   }) : super(key: key);
@@ -53,8 +56,13 @@ extension _Modal on CardProfileEmailPage {
     TextEditingController passwordController = TextEditingController();
 
     Modular.to.showDialog(
+<<<<<<< HEAD
       builder: (context) => AlertDialog(
         title: const Text('Email'),
+=======
+      builder: (_) => AlertDialog(
+        title: Text('Email'),
+>>>>>>> Fix code syntax
         scrollable: true,
         content: Column(
           children: [

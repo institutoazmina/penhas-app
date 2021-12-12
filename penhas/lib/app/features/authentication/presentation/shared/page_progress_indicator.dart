@@ -15,7 +15,7 @@ class PageProgressIndicator extends StatefulWidget {
   final String progressMessage;
 
   PageProgressIndicator({
-    required Key key,
+    Key? key,
     required this.child,
     required this.progressState,
     this.progressMessage = 'Processando',

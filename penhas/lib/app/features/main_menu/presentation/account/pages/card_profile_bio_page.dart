@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/core/extension/asuka.dart';
+<<<<<<< HEAD
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_header_edit_page.dart';
+=======
+>>>>>>> Fix code syntax
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class CardProfileBioPage extends StatelessWidget {
   const CardProfileBioPage({
-    required Key key,
+    Key? key,
     required this.content,
     required this.onChange,
   }) : super(key: key);
@@ -55,8 +58,13 @@ extension _Modal on CardProfileBioPage {
     _controller.text = content;
 
     Modular.to.showDialog(
+<<<<<<< HEAD
       builder: (context) => AlertDialog(
         title: const Text('Editar'),
+=======
+      builder: (_) => AlertDialog(
+        title: Text("Editar"),
+>>>>>>> Fix code syntax
         content: TextFormField(
           maxLengthEnforcement: MaxLengthEnforcement.enforced,
           controller: _controller,

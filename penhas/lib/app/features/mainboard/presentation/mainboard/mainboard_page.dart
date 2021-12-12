@@ -14,7 +14,7 @@ class MainboardPage extends StatefulWidget {
   const MainboardPage({Key? key, this.title = 'Mainboard'}) : super(key: key);
 
   final String title;
-  const MainboardPage({required Key key, this.title = "Mainboard"}) : super(key: key);
+  const MainboardPage({Key? key, this.title = "Mainboard"}) : super(key: key);
 
   @override
   _MainboardPageState createState() => _MainboardPageState();

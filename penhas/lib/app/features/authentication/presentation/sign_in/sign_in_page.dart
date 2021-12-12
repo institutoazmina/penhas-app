@@ -21,7 +21,7 @@ import 'package:penhas/app/shared/navigation/route.dart';
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key, this.title = 'Authentication'}) : super(key: key);
 
-  const SignInPage({required Key key, this.title = "Authentication"}) : super(key: key);
+  const SignInPage({Key? key, this.title = "Authentication"}) : super(key: key);
 
   @override
   _SignInPageState createState() => _SignInPageState();
@@ -173,7 +173,10 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
   void _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
+<<<<<<< HEAD
     }
+=======
+>>>>>>> Fix code syntax
     WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 }

@@ -14,7 +14,7 @@ class SupportCenterInputFilter extends StatelessWidget {
   final TextEditingController _textController = TextEditingController();
 
   SupportCenterInputFilter({
-    required Key key,
+    Key? key,
     this.totalOfFilter = 0,
     this.initialValue,
     required this.onFilterAction,

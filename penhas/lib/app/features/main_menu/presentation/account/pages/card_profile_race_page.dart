@@ -7,9 +7,9 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class CardProfileRacePage extends StatelessWidget {
   final String? content;
-  final void Function(String?) onChange;
+  final void Function(String) onChange;
   const CardProfileRacePage({
-    required Key key,
+    Key? key,
     required this.content,
     required this.onChange,
   }) : super(key: key);
@@ -50,8 +50,13 @@ class CardProfileRacePage extends StatelessWidget {
 extension _Modal on CardProfileRacePage {
   void showModal() {
     Modular.to.showDialog(
+<<<<<<< HEAD
       builder: (context) => AlertDialog(
         title: const Text('Raça'),
+=======
+      builder: (_) => AlertDialog(
+        title: Text('Raça'),
+>>>>>>> Fix code syntax
         scrollable: true,
         content: SizedBox(
           height: 350,
@@ -89,7 +94,7 @@ extension _HumanMapper on CardProfileRacePage {
   }
 
   void updateRace(String? id) {
-    onChange(id);
+    onChange(id ?? "");
     Modular.to.pop();
   }
 

@@ -11,7 +11,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class CategoryTweetPage extends StatefulWidget {
   const CategoryTweetPage({
-    required Key key,
+    Key? key,
     this.title = "CategoryTweet",
   }) : super(key: key);
 

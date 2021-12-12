@@ -7,12 +7,12 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class QuizShowStealthTutorialWidget extends StatelessWidget {
-  final String? reference;
+  final String reference;
   final String? buttonLabel;
   final UserReaction onPressed;
 
   const QuizShowStealthTutorialWidget({
-    required Key key,
+    Key? key,
     required this.reference,
     required this.onPressed,
     required this.buttonLabel,

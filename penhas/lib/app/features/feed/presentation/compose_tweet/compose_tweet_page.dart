@@ -13,7 +13,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ComposeTweetPage extends StatefulWidget {
   final String title;
-  const ComposeTweetPage({required Key key, this.title = "ComposeTweet"})
+  const ComposeTweetPage({Key? key, this.title = "ComposeTweet"})
       : super(key: key);
 
   final String title;
@@ -212,7 +212,10 @@ class _ComposeTweetPageState
   void _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
+<<<<<<< HEAD
     }
+=======
+>>>>>>> Fix code syntax
     WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 

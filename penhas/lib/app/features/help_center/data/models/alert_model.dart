@@ -20,5 +20,5 @@ class AlertModel extends Equatable {
   final String? message;
 
   @override
-  List<Object> get props => [title!, message!];
+  List<dynamic> get props => [title, message];
 }

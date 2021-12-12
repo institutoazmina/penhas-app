@@ -41,7 +41,7 @@ class FeedUseCases {
       StreamController.broadcast();
 
   Stream<FeedCache> get dataSource => _streamController.stream;
-  List<TweetTiles?> _tweetCacheFetch = List<TweetTiles?>();
+  List<TweetTiles?> _tweetCacheFetch = List.empty();
   Map<String?, List<TweetEntity?>> _tweetReplyMap = {};
   String? _nextPage;
 
@@ -49,9 +49,7 @@ class FeedUseCases {
     required ITweetRepository repository,
     required TweetFilterPreference filterPreference,
     int? maxRows = 100,
-  })  : assert(repository != null),
-        assert(filterPreference != null),
-        _repository = repository,
+  })  : _repository = repository,
         _filterPreference = filterPreference,
         _maxRowsPerRequest = maxRows;
 

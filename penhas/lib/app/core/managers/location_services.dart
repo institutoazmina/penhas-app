@@ -27,8 +27,12 @@ class LocationServices implements ILocationServices {
   Future<Either<LocationFailure, UserLocationEntity?>> currentLocation() async {
     if (await Permission.location.isGranted) {
       final position = await Geolocator.getCurrentPosition(
+<<<<<<< HEAD
         desiredAccuracy: LocationAccuracy.high,
       );
+=======
+          desiredAccuracy: LocationAccuracy.high);
+>>>>>>> Fix code syntax
 
       return right(
         UserLocationEntity(
@@ -248,9 +252,15 @@ extension PermissionStatusMap on PermissionStatus {
       case PermissionStatus.restricted:
         return const LocationPermissionState.restricted();
       case PermissionStatus.permanentlyDenied:
+<<<<<<< HEAD
         return const LocationPermissionState.permanentlyDenied();
       case PermissionStatus.limited:
         return const LocationPermissionState.undefined();
+=======
+        return LocationPermissionState.permanentlyDenied();
+      case PermissionStatus.limited:
+        return LocationPermissionState.undefined();
+>>>>>>> Fix code syntax
     }
   }
 }

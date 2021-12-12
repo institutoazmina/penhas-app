@@ -5,7 +5,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ChatPeopleFilterCard extends StatelessWidget {
   const ChatPeopleFilterCard({
-    required Key key,
+    Key? key,
     this.totalOfFilter = 0,
     required this.onPressed,
   }) : super(key: key);

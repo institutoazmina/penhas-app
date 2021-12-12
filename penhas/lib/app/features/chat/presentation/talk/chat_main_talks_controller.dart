@@ -54,7 +54,8 @@ abstract class _ChatMainTalksControllerBase with Store, MapFailureMessage {
   @action
   Future<void> openAssistantCard(ChatMainSupportTile data) async {
     if (data.quizSession != null) {
-      return Modular.to.popAndPushNamed('/quiz', arguments: data.quizSession!);
+      await Modular.to.popAndPushNamed('/quiz', arguments: data.quizSession!);
+      return;
     }
 
     ChatChannelOpenEntity session =
@@ -90,14 +91,19 @@ extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
   }
 
   void handleLoadSession(ChatChannelAvailableEntity session) {
+<<<<<<< HEAD
     final List<ChatMainTileEntity> tiles = [];
     final List<ChatMainSupportTile> cards = [];
+=======
+    List<ChatMainTileEntity> tiles = List.empty();
+    List<ChatMainSupportTile> cards = List.empty();
+>>>>>>> Fix code syntax
 
     if (session.assistant != null) {
       cards.add(
         ChatMainSupportTile(
-          title: session.assistant!.title,
-          content: session.assistant!.subtitle,
+          title: session.assistant!.title!,
+          content: session.assistant!.subtitle!,
           channel: ChatChannelEntity(
             token: null,
             lastMessageTime: null,
@@ -118,7 +124,7 @@ extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
     if (session.support != null) {
       cards.add(
         ChatMainSupportTile(
-          title: session.support!.user.nickname,
+          title: session.support!.user.nickname!,
           content: "Fale com as adminstradoras do app",
           channel: session.support,
         ),

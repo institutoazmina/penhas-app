@@ -1,5 +1,10 @@
 import 'package:equatable/equatable.dart';
+<<<<<<< HEAD
 import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
+=======
+
+import 'chat_user_entity.dart';
+>>>>>>> Fix code syntax
 
 class ChatChannelEntity extends Equatable {
   final String? token;

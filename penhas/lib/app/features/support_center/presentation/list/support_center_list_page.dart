@@ -8,7 +8,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 typedef ActionOnSelected = void Function(SupportCenterPlaceEntity place);
 
 class SupportCenterListPage extends StatefulWidget {
-  SupportCenterListPage({required Key key}) : super(key: key);
+  SupportCenterListPage({Key? key}) : super(key: key);
 
   @override
   _SupportCenterListPageState createState() => _SupportCenterListPageState();
@@ -69,7 +69,7 @@ class Card extends StatelessWidget {
 
   final SupportCenterPlaceEntity place;
   final ActionOnSelected onSelected;
-  const Card({required Key key, required this.place, required this.onSelected})
+  const Card({Key? key, required this.place, required this.onSelected})
       : super(key: key);
 
   @override

@@ -5,7 +5,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatChannelCard extends StatelessWidget {
   const ChatChannelCard({
-    required Key key,
+    Key? key,
     required this.channel,
     required this.onPressed,
   }) : super(key: key);

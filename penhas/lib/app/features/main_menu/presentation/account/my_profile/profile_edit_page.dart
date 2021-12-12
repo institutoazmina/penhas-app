@@ -18,7 +18,7 @@ import 'package:penhas/app/features/support_center/presentation/pages/support_ce
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ProfileEditPage extends StatefulWidget {
-  const ProfileEditPage({required Key key}) : super(key: key);
+  const ProfileEditPage({Key? key}) : super(key: key);
 
   @override
   _ProfileEditPageState createState() => _ProfileEditPageState();

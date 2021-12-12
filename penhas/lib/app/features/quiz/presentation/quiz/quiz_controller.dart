@@ -138,7 +138,11 @@ abstract class _QuizControllerBase with Store {
       newMessageContent = 'Não';
     }
 
+<<<<<<< HEAD
     final QuizMessageEntity newMessage = QuizMessageEntity(
+=======
+    QuizMessageEntity newMessage = QuizMessageEntity(
+>>>>>>> Fix code syntax
       ref: messageRemoved.ref,
       content: newMessageContent,
       type: QuizMessageType.displayTextResponse,

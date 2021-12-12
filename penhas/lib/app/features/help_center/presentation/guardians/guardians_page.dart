@@ -18,7 +18,7 @@ class GuardiansPage extends StatefulWidget {
   const GuardiansPage({Key? key, this.title = 'Guardians'}) : super(key: key);
 
   final String title;
-  const GuardiansPage({required Key key, this.title = "Guardians"}) : super(key: key);
+  const GuardiansPage({Key? key, this.title = "Guardians"}) : super(key: key);
 
   @override
   _GuardiansPageState createState() => _GuardiansPageState();

@@ -62,12 +62,12 @@ class ExpandChild extends StatefulWidget {
   /// Ability to hide arrow from display when content is expanded.
   final bool hideArrowOnExpanded;
 
-  final double? trimSize;
+  final double trimSize;
 
   final Alignment alignment;
 
   const ExpandChild({
-    required Key key,
+    Key? key,
     this.collapsedHint,
     this.expandedHint,
     this.arrowPadding,
@@ -80,9 +80,8 @@ class ExpandChild extends StatefulWidget {
     required this.child,
     this.hideArrowOnExpanded = false,
     this.alignment = Alignment.topCenter,
-    this.trimSize,
-  })  : assert(hideArrowOnExpanded != null),
-        super(key: key);
+    this.trimSize = 0,
+  }) : super(key: key);
 
   @override
   _ExpandChildState createState() => _ExpandChildState();
@@ -131,11 +130,12 @@ class _ExpandChildState extends State<ExpandChild>
       if (context == null) return;
 
       setState(() {
-        _foo = widget.trimSize! > context.size.height
+        final height = context.size?.height ?? 0;
+        _foo = widget.trimSize > height
             ? 1.0
-            : widget.trimSize! / context.size.height;
+            : widget.trimSize / height;
 
-        _showExpand = context.size.height > widget.trimSize!;
+        _showExpand = height > widget.trimSize;
       });
     });
   }
@@ -276,7 +276,7 @@ class ExpandArrow extends StatelessWidget {
   final ExpandArrowStyle? expandArrowStyle;
 
   const ExpandArrow({
-    required Key key,
+    Key? key,
     this.collapsedHint,
     this.expandedHint,
     required this.animation,
@@ -317,8 +317,8 @@ class ExpandArrow extends StatelessWidget {
                   turns: animation,
                   child: Icon(
                     icon ?? Icons.expand_more,
-                    color:
-                        arrowColor ?? Theme.of(context).textTheme.caption.color!,
+                    color: arrowColor ??
+                        Theme.of(context).textTheme.caption?.color,
                     size: arrowSize ?? 30,
                   ),
                 ),
@@ -326,9 +326,14 @@ class ExpandArrow extends StatelessWidget {
                 const SizedBox(width: 2.0),
                 DefaultTextStyle(
                   style: Theme.of(context).textTheme.subtitle2?.copyWith(
+<<<<<<< HEAD
                             color: Theme.of(context).textTheme.caption?.color,
                           ) ??
                       const TextStyle(),
+=======
+                        color: Theme.of(context).textTheme.caption?.color,
+                      ) ?? TextStyle(),
+>>>>>>> Fix code syntax
                   child: Text(
                     tooltipMessage,
                     style: hintTextStyle!,

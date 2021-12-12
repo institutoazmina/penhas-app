@@ -15,7 +15,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class SignInStealthPage extends StatefulWidget {
   final String title;
-  const SignInStealthPage({required Key key, this.title = "Authentication"})
+  const SignInStealthPage({Key? key, this.title = "Authentication"})
       : super(key: key);
 
   final String title;
@@ -187,7 +187,10 @@ class _SignInStealthPage
   void _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
+<<<<<<< HEAD
     }
+=======
+>>>>>>> Fix code syntax
     WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 }

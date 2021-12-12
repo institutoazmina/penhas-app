@@ -14,7 +14,7 @@ import 'package:penhas/app/features/support_center/presentation/support_center_c
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class SupportCenterPage extends StatefulWidget {
-  SupportCenterPage({required Key key}) : super(key: key);
+  SupportCenterPage({Key? key}) : super(key: key);
 
   @override
   _SupportCenterPageState createState() => _SupportCenterPageState();
@@ -173,7 +173,11 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
     );
   }
 
+<<<<<<< HEAD
   void _dismissSnackBarForAction(Function action, {dynamic argument}) {
+=======
+  void _dismissSnackBarForAction(Function action, {dynamic argument}){
+>>>>>>> Fix code syntax
     _scaffoldKey.currentState?.hideCurrentSnackBar();
 
     if (argument == null) {

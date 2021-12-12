@@ -10,7 +10,7 @@ class SingleTextInput extends StatelessWidget {
   final InputDecoration _boxDecoration;
 
   const SingleTextInput({
-    required Key key,
+    Key? key,
     TextInputFormatter? inputFormatter,
     TextInputType keyboardType = TextInputType.text,
     TextStyle style = kTextStyleDefaultTextFieldLabelStyle,

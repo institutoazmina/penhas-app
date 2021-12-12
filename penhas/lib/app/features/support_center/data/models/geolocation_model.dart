@@ -2,27 +2,19 @@ import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/features/support_center/domain/entities/geolocation_entity.dart';
 
 class GeoLocationModel extends GeolocationEntity {
-  final String? label;
-  final String? locationToken;
-  final UserLocationEntity? userLocation;
-
   GeoLocationModel({
-    this.label,
-    this.locationToken,
-    this.userLocation,
+    String? label,
+    String? locationToken,
+    UserLocationEntity? userLocation,
   }) : super(
           label: label,
           locationToken: locationToken,
           userLocation: userLocation,
         );
 
-  factory GeoLocationModel.fromJson(Map<String, Object> jsonData) {
-    final label = jsonData["label"];
-    final locationToken = jsonData["location_token"];
-
-    return GeoLocationModel(
-      label: label as String?,
-      locationToken: locationToken as String?,
-    );
-  }
+  factory GeoLocationModel.fromJson(Map<String, dynamic> jsonData) =>
+      GeoLocationModel(
+        label: jsonData["label"],
+        locationToken: jsonData["location_token"],
+      );
 }

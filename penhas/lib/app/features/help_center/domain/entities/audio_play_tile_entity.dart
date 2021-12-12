@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
+=======
+
+import 'audio_entity.dart';
+>>>>>>> Fix code syntax
 
 class AudioPlayTileEntity {
   AudioPlayTileEntity({

@@ -13,7 +13,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SupportCenterLocationPage extends StatefulWidget {
-  SupportCenterLocationPage({required Key key}) : super(key: key);
+  SupportCenterLocationPage({Key? key}) : super(key: key);
 
   @override
   _SupportCenterLocationPageState createState() =>

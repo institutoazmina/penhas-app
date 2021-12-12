@@ -6,7 +6,7 @@ import 'package:penhas/app/features/quiz/presentation/tutorial/stealth_mode_tuto
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class StealthModeTutorialPage extends StatefulWidget {
-  StealthModeTutorialPage({required Key key}) : super(key: key);
+  StealthModeTutorialPage({Key? key}) : super(key: key);
 
   @override
   _StealthModeTutorialPageState createState() =>

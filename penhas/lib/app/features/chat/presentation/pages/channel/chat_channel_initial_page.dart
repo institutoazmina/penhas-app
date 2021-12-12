@@ -4,7 +4,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatChannelInitialPage extends StatelessWidget {
   const ChatChannelInitialPage({
-    required Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

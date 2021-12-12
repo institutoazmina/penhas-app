@@ -29,15 +29,15 @@ class SecurityModeActionFeature {
   Future<String> _callingNumber() {
     return _modulesServices
         .feature(name: SecurityModeActionFeature.featureCode)
-        .then((module) => jsonDecode(module.meta!))
-        .then((json) => json as Map<String, Object>)
-        .then((json) => json['numero'] as FutureOr<String>);
+        .then((module) => jsonDecode(module.meta))
+        .then((json) => json as Map<String, dynamic>)
+        .then((json) => json['numero']);
   }
 
   Future<AudioRecordDurationEntity> _audioDuration() {
     return _modulesServices
         .feature(name: SecurityModeActionFeature.featureCode)
-        .then((module) => jsonDecode(module.meta!))
+        .then((module) => jsonDecode(module.meta))
         .then((json) => json as Map<String, Object>)
         .then((json) => _mapAudioDuration(json));
   }

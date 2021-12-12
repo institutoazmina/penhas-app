@@ -12,7 +12,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class AccountPreferencePage extends StatefulWidget {
-  const AccountPreferencePage({required Key key}) : super(key: key);
+  const AccountPreferencePage({Key? key}) : super(key: key);
 
   @override
   _AccountPreferencePageState createState() => _AccountPreferencePageState();
@@ -108,7 +108,7 @@ extension _PageBuilder on _AccountPreferencePageState {
                         activeColor: DesignSystemColors.easterPurple,
                         onChanged: (status) => controller.update(
                           preference.key,
-                          status,
+                          status == true,
                         ),
                         controlAffinity: ListTileControlAffinity.leading,
                         contentPadding: EdgeInsets.zero,

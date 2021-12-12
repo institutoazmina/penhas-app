@@ -5,7 +5,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class PenhasDrawerTooglePage extends StatelessWidget {
   const PenhasDrawerTooglePage({
-    required Key key,
+    Key? key,
     required this.state,
   }) : super(key: key);
 

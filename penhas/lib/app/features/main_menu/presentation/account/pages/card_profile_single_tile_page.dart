@@ -7,7 +7,7 @@ class CardProfileSingleTilePage extends StatelessWidget {
   final String? content;
   final Color background;
   const CardProfileSingleTilePage({
-    required Key key,
+    Key? key,
     required this.title,
     required this.content,
     this.background = DesignSystemColors.white,

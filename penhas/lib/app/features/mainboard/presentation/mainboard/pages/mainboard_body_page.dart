@@ -11,7 +11,7 @@ class MainboardBodyPage extends StatelessWidget {
   final PageController? pageController;
 
   const MainboardBodyPage({
-    required Key key,
+    Key? key,
     required this.pages,
     required this.pageController,
   }) : super(key: key);

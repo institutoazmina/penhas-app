@@ -45,7 +45,11 @@ abstract class _MainboardStoreBase with Store {
 
 extension _Methods on _MainboardStoreBase {
   Future<void> setup() async {
+<<<<<<< HEAD
     final List<MainboardState> authorizedPages = [];
+=======
+    List<MainboardState> autorizedPages = List.empty();
+>>>>>>> Fix code syntax
 
     if (await FeedToggleFeature(modulesServices: _modulesServices).isEnabled) {
       authorizedPages.add(const MainboardState.feed());

@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_tags/flutter_tags.dart';
@@ -11,7 +12,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class FilterTweetPage extends StatefulWidget {
-  FilterTweetPage({required Key key}) : super(key: key);
+  FilterTweetPage({Key? key}) : super(key: key);
 
   @override
   _FilterTweetPageState createState() => _FilterTweetPageState();
@@ -193,11 +194,12 @@ class _FilterTweetPageState
       return Future.value(true);
     }
 
-    final seletedTags = _tagStateKey.currentState.getAllItem
-        .where((e) => e.active)
+    final List<String> seletedTags = _tagStateKey.currentState?.getAllItem
+        .where((e) => e.active == true)
         .map((e) => e.customData)
         .map((e) => e as String?)
-        .toList();
+        .whereNotNull()
+        .toList() ?? List.empty();
 
     return controller.setTags(seletedTags).then((value) => true);
   }

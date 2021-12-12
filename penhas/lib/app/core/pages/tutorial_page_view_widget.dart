@@ -5,7 +5,7 @@ class TutorialPageViewWidget extends StatelessWidget {
   final String _description;
   final Widget _bodyWidget;
   const TutorialPageViewWidget({
-    required Key key,
+    Key? key,
     String? title,
     required String description,
     required Widget bodyWidget,

@@ -21,7 +21,7 @@ class ZodiacActionButton extends StatelessWidget {
     required this.listOfSign,
     required this.isRunning,
     required this.onPressed,
-    required Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

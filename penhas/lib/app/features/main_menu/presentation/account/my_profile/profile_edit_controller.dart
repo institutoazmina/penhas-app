@@ -29,7 +29,7 @@ abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
   final AppStateUseCase _appStateUseCase;
   final IFilterSkillRepository _skillRepository;
   final SecurityModeActionFeature _securityModeActionFeature;
-  List<FilterTagEntity>? _tags = List<FilterTagEntity>();
+  List<FilterTagEntity>? _tags = List.empty();
 
   _ProfileEditControllerBase(
     this._appStateUseCase,

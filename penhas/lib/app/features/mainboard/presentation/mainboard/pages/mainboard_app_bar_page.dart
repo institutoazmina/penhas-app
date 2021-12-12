@@ -19,7 +19,7 @@ class MainBoardAppBarPage extends StatelessWidget
   final void Function() resetCounter;
 
   const MainBoardAppBarPage({
-    required Key key,
+    Key? key,
     required this.counter,
     required this.currentPage,
     required this.resetCounter,

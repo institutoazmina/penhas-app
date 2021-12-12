@@ -27,7 +27,7 @@ class SupportCenterController extends _SupportCenterControllerBase
 }
 
 abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
-  List<FilterTagEntity> _tags = List<FilterTagEntity>();
+  List<FilterTagEntity> _tags = List.empty();
   late SupportCenterPlaceSessionEntity currentPlaceSession;
   var _fetchRequest = SupportCenterFetchRequest();
 
@@ -138,8 +138,8 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     errorMessage = message;
   }
 
-  Future<void> handleLocationFeedback(Object value) async {
-    if (value is bool && value == true) {
+  Future<void> handleLocationFeedback(Object? value) async {
+    if (value == true) {
       await loadSupportCenter(_fetchRequest);
     }
   }

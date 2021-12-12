@@ -17,7 +17,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class FeedPage extends StatefulWidget {
   const FeedPage({
-    required Key key,
+    Key? key,
     this.title = "Feed",
     required this.tweetController,
   }) : super(key: key);

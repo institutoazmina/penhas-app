@@ -6,12 +6,12 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class QuizMultipleChoicesWidget extends StatefulWidget {
-  final String? reference;
+  final String reference;
   final UserReaction onPressed;
   final List<QuizMessageMultiplechoicesOptions>? options;
 
   QuizMultipleChoicesWidget({
-    required Key key,
+    Key? key,
     required this.reference,
     required this.onPressed,
     required this.options,
@@ -23,7 +23,7 @@ class QuizMultipleChoicesWidget extends StatefulWidget {
 }
 
 class _QuizMultipleChoicesWidgetState extends State<QuizMultipleChoicesWidget> {
-  final _selectedValues = List<String?>();
+  final _selectedValues = List.empty();
 
   @override
   void initState() {
@@ -105,7 +105,7 @@ class _QuizMultipleChoicesWidgetState extends State<QuizMultipleChoicesWidget> {
     return SizedBox(
       height: 44.0,
       child: CheckboxListTile(
-          onChanged: (v) => _onItemCheckedChange(option.index, v),
+          onChanged: (v) => _onItemCheckedChange(option.index, v == true),
           value: checked,
           title: Text(option.display!),
           controlAffinity: ListTileControlAffinity.leading),

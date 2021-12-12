@@ -18,7 +18,7 @@ class ReplyTweetPage extends StatefulWidget {
   const ReplyTweetPage({Key? key, this.title = 'ReplyTweet'}) : super(key: key);
 
   final String title;
-  const ReplyTweetPage({required Key key, this.title = "ReplyTweet"}) : super(key: key);
+  const ReplyTweetPage({Key? key, this.title = "ReplyTweet"}) : super(key: key);
 
   @override
   _ReplyTweetPageState createState() => _ReplyTweetPageState();
@@ -251,7 +251,10 @@ class _ReplyTweetPageState
   void _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
+<<<<<<< HEAD
     }
+=======
+>>>>>>> Fix code syntax
     WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 

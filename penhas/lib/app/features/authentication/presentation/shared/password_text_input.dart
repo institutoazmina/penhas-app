@@ -18,7 +18,7 @@ class PassordInputField extends StatefulWidget {
   final String hintText;
 
   PassordInputField({
-    required Key key,
+    Key? key,
     this.style = kTextStyleDefaultTextFieldLabelStyle,
     required this.onChanged,
     required this.labelText,

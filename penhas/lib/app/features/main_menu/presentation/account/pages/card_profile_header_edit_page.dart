@@ -6,7 +6,7 @@ class CardProfileHeaderEditPage extends StatelessWidget {
   final String title;
   final void Function()? onEditAction;
   const CardProfileHeaderEditPage({
-    required Key key,
+    Key? key,
     required this.title,
     required this.onEditAction,
   }) : super(key: key);

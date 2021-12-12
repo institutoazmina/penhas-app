@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
@@ -19,7 +20,7 @@ class ProfilSkillLoadedStatePage extends StatelessWidget {
   final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
 
   ProfilSkillLoadedStatePage({
-    required Key key,
+    Key? key,
     required this.tags,
     required this.onResetAction,
     required this.onAplyFilterAction,
@@ -153,12 +154,13 @@ extension _FilterLoadedStatePageMethods on ProfilSkillLoadedStatePage {
       onAplyFilterAction([]);
     }
 
-    final seletedTags = _tagStateKey.currentState.getAllItem
-        .where((e) => e.active)
+    final List<FilterTagEntity> seletedTags = _tagStateKey.currentState?.getAllItem
+        .where((e) => e.active == true)
         .map((e) => e.customData)
         .map((e) => e as String?)
+        .whereNotNull()
         .map((e) => tags.firstWhere((t) => t.id == e))
-        .toList();
+        .toList() ?? List.empty();
 
     onAplyFilterAction(seletedTags);
   }

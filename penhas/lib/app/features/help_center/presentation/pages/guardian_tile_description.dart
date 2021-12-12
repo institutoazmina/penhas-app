@@ -4,7 +4,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 class GuardianTileDescription extends StatelessWidget {
   final String? description;
   const GuardianTileDescription({
-    required Key key,
+    Key? key,
     required this.description,
   }) : super(key: key);
 

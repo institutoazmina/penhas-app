@@ -13,7 +13,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 class ZodiacPage extends StatefulWidget {
   final String title;
   ZodiacPage({
-    required Key key,
+    Key? key,
     this.title = "ZodiacPage",
   }) : super(key: key);
 

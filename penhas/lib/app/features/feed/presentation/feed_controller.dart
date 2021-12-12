@@ -1,6 +1,10 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
+<<<<<<< HEAD
+=======
+import 'package:flutter/material.dart';
+>>>>>>> Fix code syntax
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';

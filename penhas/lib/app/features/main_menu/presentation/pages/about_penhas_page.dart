@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class AboutPenhasPage extends StatelessWidget {
-  const AboutPenhasPage({required Key key}) : super(key: key);
+  const AboutPenhasPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

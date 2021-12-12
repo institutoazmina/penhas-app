@@ -8,7 +8,7 @@ import 'package:penhas/app/features/chat/presentation/talk/chat_main_talks_page.
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatMainPage extends StatefulWidget {
-  ChatMainPage({required Key key}) : super(key: key);
+  ChatMainPage({Key? key}) : super(key: key);
 
   @override
   _ChatMainPageState createState() => _ChatMainPageState();

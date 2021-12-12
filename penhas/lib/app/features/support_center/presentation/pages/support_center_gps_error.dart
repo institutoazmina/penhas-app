@@ -3,7 +3,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class SupportCenterGpsError extends StatelessWidget {
   const SupportCenterGpsError({
-    required Key key,
+    Key? key,
     required String message,
     required VoidCallback onPressed,
   })  : this._message = message,

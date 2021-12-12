@@ -15,7 +15,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ResetPasswordThreePage extends StatefulWidget {
   final String title;
-  const ResetPasswordThreePage({required Key key, this.title = "ResetPasswordThree"})
+  const ResetPasswordThreePage({Key? key, this.title = "ResetPasswordThree"})
       : super(key: key);
 
   final String title;
@@ -158,7 +158,10 @@ class _ResetPasswordThreePageState
   void _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
+<<<<<<< HEAD
     }
+=======
+>>>>>>> Fix code syntax
     WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 

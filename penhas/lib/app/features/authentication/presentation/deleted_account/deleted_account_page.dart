@@ -9,7 +9,7 @@ import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class DeletedAccountPage extends StatefulWidget {
-  DeletedAccountPage({required Key key}) : super(key: key);
+  DeletedAccountPage({Key? key}) : super(key: key);
 
   @override
   _DeletedAccountPageState createState() => _DeletedAccountPageState();
