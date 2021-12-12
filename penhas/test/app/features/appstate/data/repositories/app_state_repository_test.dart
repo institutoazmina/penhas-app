@@ -13,6 +13,7 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
+<<<<<<< HEAD
   late final INetworkInfo networkInfo = MockINetworkInfo();
   late final MockIAppStateDataSource dataSource = MockIAppStateDataSource();
   late Map<String, dynamic> jsonData;
@@ -21,6 +22,12 @@ void main() {
     dataSource: dataSource,
     networkInfo: networkInfo,
   );
+=======
+  late IAppStateRepository sut;
+  INetworkInfo networkInfo;
+  late Map<String, Object> jsonData;
+  IAppStateDataSource? dataSource;
+>>>>>>> Migrate code to nullsafety
 
   setUp(() async {
     when(networkInfo.isConnected).thenAnswer((_) => Future.value(true));
@@ -33,7 +40,7 @@ void main() {
       // arrange
       final expectedModel = AppStateModel.fromJson(jsonData);
       final AppStateEntity expectedEntity = expectedModel;
-      when(dataSource.check()).thenAnswer((_) => Future.value(expectedModel));
+      when(dataSource!.check()).thenAnswer((_) => Future.value(expectedModel));
       // act
       final received = await sut.check();
       // assert
@@ -43,7 +50,11 @@ void main() {
     test('should return ServerSideSessionFailed for a invalid session',
         () async {
       // arrange
+<<<<<<< HEAD
       when(dataSource.check()).thenThrow(ApiProviderSessionError());
+=======
+      when(dataSource!.check()).thenThrow(ApiProviderSessionExpection());
+>>>>>>> Migrate code to nullsafety
       final expected = left(ServerSideSessionFailed());
       // act
       final received = await sut.check();
@@ -53,6 +64,7 @@ void main() {
 
     test('should return ServerSideSessionFailed for a invalid JWT', () async {
       // arrange
+<<<<<<< HEAD
       when(dataSource.check()).thenThrow(
         const ApiProviderException(
           bodyContent: {
@@ -60,6 +72,13 @@ void main() {
             'nessage': 'Bad request - Invalid JWT'
           },
         ),
+=======
+      when(dataSource!.check()).thenThrow(
+        ApiProviderException(bodyContent: {
+          "error": "expired_jwt",
+          "nessage": "Bad request - Invalid JWT"
+        }),
+>>>>>>> Migrate code to nullsafety
       );
       final expected = left(ServerSideSessionFailed());
       // act

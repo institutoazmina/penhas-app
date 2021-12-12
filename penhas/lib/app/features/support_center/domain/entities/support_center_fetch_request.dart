@@ -2,7 +2,14 @@ import 'package:equatable/equatable.dart';
 import 'package:penhas/app/core/entities/user_location.dart';
 
 class SupportCenterFetchRequest extends Equatable {
-  const SupportCenterFetchRequest({
+  final UserLocationEntity? userLocation;
+  final String? locationToken;
+  final List<String>? categories;
+  final String? keywords;
+  final String? nextPage;
+  final int? rows;
+
+  SupportCenterFetchRequest({
     this.userLocation,
     this.locationToken,
     this.categories,
@@ -22,8 +29,14 @@ class SupportCenterFetchRequest extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object?> get props =>
-      [userLocation!, locationToken!, categories!, keywords!, nextPage!, rows!];
+  List<Object> get props => [
+        this.userLocation!,
+        this.locationToken!,
+        this.categories!,
+        this.keywords!,
+        this.nextPage!,
+        this.rows!
+      ];
 
   SupportCenterFetchRequest copyWith({
     UserLocationEntity? userLocation,

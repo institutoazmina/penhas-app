@@ -16,12 +16,18 @@ class AppStateRepository implements IAppStateRepository {
         _networkInfo = networkInfo;
 
   final INetworkInfo _networkInfo;
-  final IAppStateDataSource _dataSource;
+  final IAppStateDataSource? _dataSource;
+
+  AppStateRepository({
+    required INetworkInfo networkInfo,
+    required IAppStateDataSource? dataSource,
+  })  : this._dataSource = dataSource,
+        this._networkInfo = networkInfo;
 
   @override
   Future<Either<Failure, AppStateEntity>> check() async {
     try {
-      final appState = await _dataSource.check();
+      final appState = await _dataSource!.check();
       return right(appState);
     } catch (e, stack) {
       logError(e, stack);
@@ -34,7 +40,7 @@ class AppStateRepository implements IAppStateRepository {
     UpdateUserProfileEntity update,
   ) async {
     try {
-      final appState = await _dataSource.update(update);
+      final appState = await _dataSource!.update(update);
       return right(appState);
     } catch (e, stack) {
       logError(e, stack);
@@ -48,16 +54,15 @@ class AppStateRepository implements IAppStateRepository {
     }
 
     if (error is ApiProviderException) {
-      if (error.bodyContent['error'] == 'expired_jwt') {
+      if (error.bodyContent!['error'] == 'expired_jwt') {
         return ServerSideSessionFailed();
       }
 
       return ServerSideFormFieldValidationFailure(
-        error: error.bodyContent['error'],
-        field: error.bodyContent['field'],
-        reason: error.bodyContent['reason'],
-        message: error.bodyContent['message'],
-      );
+          error: error.bodyContent!['error'],
+          field: error.bodyContent!['field'],
+          reason: error.bodyContent!['reason'],
+          message: error.bodyContent!['message']);
     }
 
     if (error is ApiProviderSessionError) {

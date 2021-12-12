@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
-import 'package:logger/logger.dart' show Level;
+import 'package:meta/meta.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/audio_sync_manager.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
@@ -12,10 +12,8 @@ import 'package:penhas/app/shared/logger/log.dart';
 typedef OnFinished = void Function();
 
 abstract class IAudioPlayServices {
-  Future<Either<Failure, AudioEntity>> start(
-    AudioEntity audio, {
-    OnFinished? onFinished,
-  });
+  Future<Either<Failure, AudioEntity>> start(AudioEntity audio,
+      {Function? onFinished});
   void dispose();
 }
 
@@ -30,11 +28,12 @@ class AudioPlayServices implements IAudioPlayServices {
   final IAudioSyncManager _audioSyncManager;
   StreamSubscription? _playerSubscription;
 
+  AudioPlayServices({required IAudioSyncManager audioSyncManager})
+      : this._audioSyncManager = audioSyncManager;
+
   @override
-  Future<Either<Failure, AudioEntity>> start(
-    AudioEntity audio, {
-    OnFinished? onFinished,
-  }) async {
+  Future<Either<Failure, AudioEntity>> start(AudioEntity audio,
+      {Function? onFinished}) async {
     final file = await _audioSyncManager.cache(audio);
     file.fold((l) {}, (file) => play(file, onFinished));
     return file.map((e) => audio);
@@ -48,7 +47,7 @@ class AudioPlayServices implements IAudioPlayServices {
 }
 
 extension _AudioPlayServicesPrivate on AudioPlayServices {
-  Future<void> play(File file, OnFinished? onFinished) async {
+  void play(File file, {Function? onFinished}) async {
     await setupPlayEnviroment();
     await _playerModule
         .setSubscriptionDuration(const Duration(milliseconds: 100));
@@ -56,7 +55,7 @@ extension _AudioPlayServicesPrivate on AudioPlayServices {
     await _playerModule.startPlayer(
       fromURI: file.path,
       codec: _audioCodec,
-      whenFinished: onFinished,
+      whenFinished: (onFinished as void Function()? ?? {}) as void Function(),
     );
   }
 
@@ -81,7 +80,9 @@ extension _AudioPlayServicesPrivate on AudioPlayServices {
   }
 
   void cancelPlayerSubscriptions() {
-    _playerSubscription?.cancel();
-    _playerSubscription = null;
+    if (_playerSubscription != null) {
+      _playerSubscription!.cancel();
+      _playerSubscription = null;
+    }
   }
 }

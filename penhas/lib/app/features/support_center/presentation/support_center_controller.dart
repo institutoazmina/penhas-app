@@ -27,6 +27,12 @@ class SupportCenterController extends _SupportCenterControllerBase
 }
 
 abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
+  List<FilterTagEntity> _tags = List<FilterTagEntity>();
+  late SupportCenterPlaceSessionEntity currentPlaceSession;
+  var _fetchRequest = SupportCenterFetchRequest();
+
+  final SupportCenterUseCase _supportCenterUseCase;
+
   _SupportCenterControllerBase(this._supportCenterUseCase) {
     setup();
   }
@@ -49,7 +55,7 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   int categoriesSelected = 0;
 
   @observable
-  String? errorMessage = '';
+  String? errorMessage = "";
 
   @observable
   ObservableSet<Marker> placeMarkers = ObservableSet<Marker>();
@@ -73,8 +79,7 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
     errorMessage = '';
     _loadCategories = ObservableFuture(_supportCenterUseCase.metadata());
 
-    final Either<Failure, SupportCenterMetadataEntity?> result =
-        await _loadCategories!;
+    final Either<Failure, SupportCenterMetadataEntity?> result = await _loadCategories!;
 
     result.fold(
       (failure) => handleCategoriesError(failure),
@@ -129,8 +134,12 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     await loadSupportCenter(_fetchRequest);
   }
 
-  Future<void> handleLocationFeedback(Object? value) async {
-    if (value == true) {
+  void setMessageErro(String? message) {
+    errorMessage = message;
+  }
+
+  Future<void> handleLocationFeedback(Object value) async {
+    if (value is bool && value == true) {
       await loadSupportCenter(_fetchRequest);
     }
   }
@@ -201,8 +210,7 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
       ),
     );
 
-    final Either<Failure, SupportCenterPlaceSessionEntity> result =
-        await _loadSupportCenter!;
+    final Either<Failure, SupportCenterPlaceSessionEntity> result = await _loadSupportCenter!;
 
     result.fold(
       (failure) => handleStateError(failure),
@@ -216,7 +224,7 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     state = const SupportCenterState.loaded();
     currentPlaceSession = session;
     initialPosition = LatLng(session.latitude!, session.longitude!);
-    final places = session.places.map((e) => buildMarker(e));
+    final places = session.places!.map((e) => buildMarker(e));
 
     if (places.isEmpty) {
       errorMessage =
@@ -247,7 +255,7 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
       position: makerPosition,
       markerId: MarkerId(makerPosition.toString()),
       infoWindow: InfoWindow(
-        title: place.name,
+        title: place.name!,
         onTap: () {
           Modular.to.pushNamed(
             '/mainboard/supportcenter/show',

@@ -6,8 +6,10 @@ import 'package:penhas/app/features/main_menu/presentation/account/pages/card_pr
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class CardProfileRacePage extends StatelessWidget {
+  final String? content;
+  final void Function(String?) onChange;
   const CardProfileRacePage({
-    Key? key,
+    required Key key,
     required this.content,
     required this.onChange,
   }) : super(key: key);
@@ -34,7 +36,7 @@ class CardProfileRacePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 2.0, bottom: 20.0),
               child: Text(
-                EnumHumanRace.map(content).label,
+                EnumHumanRace.map(content).label!,
                 style: contentTextStyle,
               ),
             )
@@ -75,22 +77,20 @@ extension _TextStyle on CardProfileRacePage {
 extension _HumanMapper on CardProfileRacePage {
   List<Widget> datasource(BuildContext context) {
     return HumanRace.values
-        .map(
-          (v) => RadioListTile(
-            value: v.rawValue,
-            groupValue: content,
-            selected: isSelected(v.rawValue),
-            onChanged: (dynamic v) => updateRace(context, v),
-            activeColor: DesignSystemColors.ligthPurple,
-            title: Text(v.label, style: contentTextStyle),
-          ),
-        )
+        .map((v) => RadioListTile(
+              value: v.rawValue,
+              groupValue: this.content,
+              selected: isSelected(v.rawValue),
+              onChanged: (dynamic v) => updateRace(v),
+              activeColor: DesignSystemColors.ligthPurple,
+              title: Text(v.label!, style: contentTextStyle),
+            ))
         .toList();
   }
 
-  void updateRace(BuildContext context, String? id) {
-    onChange(id ?? '');
-    Navigator.of(context).pop();
+  void updateRace(String? id) {
+    onChange(id);
+    Modular.to.pop();
   }
 
   bool isSelected(String id) {

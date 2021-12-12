@@ -1,8 +1,8 @@
 import 'package:penhas/app/features/main_menu/domain/entities/account_preference_entity.dart';
 
 class AccountPreferenceModel extends AccountPreferenceEntity {
-  const AccountPreferenceModel({
-    required String key,
+  AccountPreferenceModel({
+    required String? key,
     required String? label,
     required bool value,
   }) : super(key: key, label: label, value: value);
@@ -12,15 +12,15 @@ class AccountPreferenceModel extends AccountPreferenceEntity {
     final parsed = (int.tryParse(string) ?? 0) == 1;
 
     return AccountPreferenceModel(
-      key: jsonData['key'],
-      label: jsonData['label'],
+      key: jsonData['key'] as String?,
+      label: jsonData['label'] as String?,
       value: parsed,
     );
   }
 }
 
 class AccountPreferenceSessionModel extends AccountPreferenceSessionEntity {
-  const AccountPreferenceSessionModel({
+  AccountPreferenceSessionModel({
     required List<AccountPreferenceModel> preferences,
   }) : super(preferences: preferences);
 

@@ -17,6 +17,9 @@ class CategoryTweetController extends _CategoryTweetControllerBase
 }
 
 abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
+  final TweetFilterPreference useCase;
+  String? _currentCategory;
+
   _CategoryTweetControllerBase(this.useCase);
 
   final TweetFilterPreference useCase;
@@ -71,6 +74,10 @@ abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
   @action
   Future<void> apply() async {
     Modular.to.pop(true);
+  }
+
+  void _setErrorMessage(String? message) {
+    errorMessage = message;
   }
 
   void _updateCategory(TweetFilterSessionEntity filters) {

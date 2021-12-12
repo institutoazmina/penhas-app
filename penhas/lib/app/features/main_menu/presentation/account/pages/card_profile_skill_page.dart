@@ -5,8 +5,11 @@ import 'package:penhas/app/features/main_menu/presentation/account/pages/card_pr
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class CardProfileSkillPage extends StatelessWidget {
+  final List<FilterTagEntity?> skills;
+  final void Function() onEditAction;
+
   const CardProfileSkillPage({
-    Key? key,
+    required Key key,
     required this.skills,
     required this.onEditAction,
   }) : super(key: key);
@@ -58,7 +61,7 @@ class CardProfileSkillPage extends StatelessWidget {
 extension _TextStyle on CardProfileSkillPage {
   Tooltip builtTagItem(FilterTagEntity item, int index) {
     return Tooltip(
-      message: item.label,
+      message: item.label!,
       child: ItemTags(
         activeColor: DesignSystemColors.easterPurple,
         title: item.label!,

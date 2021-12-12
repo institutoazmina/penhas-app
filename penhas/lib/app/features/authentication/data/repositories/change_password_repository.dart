@@ -12,19 +12,18 @@ import 'package:penhas/app/shared/logger/log.dart';
 
 class ChangePasswordRepository
     implements IResetPasswordRepository, IChangePasswordRepository {
-  ChangePasswordRepository({
-    required IChangePasswordDataSource? changePasswordDataSource,
-    required INetworkInfo? networkInfo,
-  })  : _networkInfo = networkInfo,
-        _dataSource = changePasswordDataSource;
-
   final IChangePasswordDataSource? _dataSource;
   final INetworkInfo? _networkInfo;
 
+  ChangePasswordRepository({
+    required IChangePasswordDataSource? changePasswordDataSource,
+    required INetworkInfo? networkInfo,
+  })  : this._networkInfo = networkInfo,
+        this._dataSource = changePasswordDataSource;
+
   @override
-  Future<Either<Failure, ResetPasswordResponseEntity>> request({
-    EmailAddress? emailAddress,
-  }) async {
+  Future<Either<Failure, ResetPasswordResponseEntity>> request(
+      {EmailAddress? emailAddress}) async {
     try {
       final ResetPasswordResponseEntity result =
           await _dataSource!.request(emailAddress: emailAddress);
@@ -63,10 +62,10 @@ class ChangePasswordRepository
 
     if (error is ApiProviderException) {
       return ServerSideFormFieldValidationFailure(
-        error: error.bodyContent['error'],
-        field: error.bodyContent['field'],
-        reason: error.bodyContent['reason'],
-        message: error.bodyContent['message'],
+        error: error.bodyContent!['error'],
+        field: error.bodyContent!['field'],
+        reason: error.bodyContent!['reason'],
+        message: error.bodyContent!['message'],
       );
     }
 
@@ -74,10 +73,8 @@ class ChangePasswordRepository
   }
 
   @override
-  Future<Either<Failure, ValidField>> validToken({
-    EmailAddress? emailAddress,
-    String? resetToken,
-  }) async {
+  Future<Either<Failure, ValidField>> validToken(
+      {EmailAddress? emailAddress, String? resetToken}) async {
     try {
       await _dataSource!.validToken(
         emailAddress: emailAddress,

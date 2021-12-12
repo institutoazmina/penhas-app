@@ -5,7 +5,8 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TweetGroupNews extends StatefulWidget {
-  const TweetGroupNews({Key? key, required TweetNewsGroupEntity group})
+  final TweetNewsGroupEntity _group;
+  const TweetGroupNews({required Key key, required TweetNewsGroupEntity group})
       : _group = group,
         super(key: key);
 
@@ -105,7 +106,7 @@ class _TweetGroupNewsState extends State<TweetGroupNews> {
 
 class _NewsItem extends StatelessWidget {
   const _NewsItem({
-    Key? key,
+    required Key key,
     required this.news,
   }) : super(key: key);
 
@@ -147,12 +148,11 @@ class _NewsItem extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  flex: 2,
-                  child: Text(
-                    news.date!,
-                    style: kTextStyleFeedTweetInput,
-                  ),
-                )
+                    flex: 2,
+                    child: Text(
+                      news.date!,
+                      style: kTextStyleFeedTweetInput,
+                    ))
               ],
             )
           ],

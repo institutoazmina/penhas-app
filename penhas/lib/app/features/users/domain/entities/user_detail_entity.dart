@@ -10,10 +10,15 @@ class UserDetailEntity extends Equatable {
   });
 
   final bool isMyself;
-  final UserDetailProfileEntity profile;
+  final UserDetailProfileEntity? profile;
+
+  UserDetailEntity({
+    required this.isMyself,
+    required this.profile,
+  });
 
   @override
-  List<Object?> get props => [isMyself, profile];
+  List<Object> get props => [isMyself, profile!];
 
   @override
   bool get stringify => true;

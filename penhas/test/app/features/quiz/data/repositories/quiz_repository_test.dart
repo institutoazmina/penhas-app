@@ -13,15 +13,12 @@ import '../../../../../utils/json_util.dart';
 Future<bool> isConnected() => Future.value(true);
 
 void main() {
-  late final MockINetworkInfo networkInfo = MockINetworkInfo();
-  late final MockIQuizDataSource dataSource = MockIQuizDataSource();
-  late final QuizRepository quizRepository = QuizRepository(
-    dataSource: dataSource,
-    networkInfo: networkInfo,
-  );
-  late QuizRequestEntity quizRequest;
-  late Map<String, dynamic> jsonData;
+  INetworkInfo networkInfo;
+  IQuizDataSource? dataSource;
+  QuizRequestEntity? quizRequest;
+  late QuizRepository quizRepository;
 
+  late Map<String, Object> jsonData;
   setUp(() async {
     quizRequest = const QuizRequestEntity(
       sessionId: '200',
@@ -37,7 +34,7 @@ void main() {
       // arrange
       final expectedSession = AppStateModel.fromJson(jsonData);
 
-      when(dataSource.update(quiz: anyNamed('quiz')))
+      when(dataSource!.update(quiz: anyNamed('quiz')))
           .thenAnswer((_) => Future.value(expectedSession));
       // act
       final receivedSession = await quizRepository.update(quiz: quizRequest);
@@ -48,8 +45,13 @@ void main() {
     test('should return ServerSideSessionFailed for a invalid session',
         () async {
       // arrange
+<<<<<<< HEAD
       when(dataSource.update(quiz: anyNamed('quiz')))
           .thenThrow(ApiProviderSessionError());
+=======
+      when(dataSource!.update(quiz: anyNamed('quiz')))
+          .thenThrow(ApiProviderSessionExpection());
+>>>>>>> Migrate code to nullsafety
       final expected = left(ServerSideSessionFailed());
       // act
       final received = await quizRepository.update(quiz: quizRequest);
@@ -59,6 +61,7 @@ void main() {
 
     test('should return ServerSideSessionFailed for a invalid JWT', () async {
       // arrange
+<<<<<<< HEAD
       when(dataSource.update(quiz: anyNamed('quiz'))).thenThrow(
         const ApiProviderException(
           bodyContent: {
@@ -66,6 +69,13 @@ void main() {
             'nessage': 'Bad request - Invalid JWT'
           },
         ),
+=======
+      when(dataSource!.update(quiz: anyNamed('quiz'))).thenThrow(
+        ApiProviderException(bodyContent: {
+          "error": "expired_jwt",
+          "nessage": "Bad request - Invalid JWT"
+        }),
+>>>>>>> Migrate code to nullsafety
       );
       final expected = left(ServerSideSessionFailed());
       // act

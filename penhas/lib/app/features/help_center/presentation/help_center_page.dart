@@ -22,6 +22,7 @@ class HelpCenterPage extends StatefulWidget {
   const HelpCenterPage({Key? key, this.title = 'HelpCenter'}) : super(key: key);
 
   final String title;
+  const HelpCenterPage({required Key key, this.title = "HelpCenter"}) : super(key: key);
 
   @override
   _HelpCenterPageState createState() => _HelpCenterPageState();

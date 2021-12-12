@@ -3,7 +3,10 @@ import 'package:meta/meta.dart';
 
 @immutable
 class AppPreferencesEntity extends Equatable {
-  const AppPreferencesEntity({
+  final int? inactiveAppSince;
+  final int inactiveAppLogoutTimeInSeconds;
+
+  AppPreferencesEntity({
     required this.inactiveAppSince,
     required this.inactiveAppLogoutTimeInSeconds,
   });
@@ -12,7 +15,7 @@ class AppPreferencesEntity extends Equatable {
   final int inactiveAppLogoutTimeInSeconds;
 
   @override
-  List<Object?> get props => [inactiveAppSince, inactiveAppLogoutTimeInSeconds];
+  List<Object> get props => [inactiveAppSince!, inactiveAppLogoutTimeInSeconds];
 
   @override
   bool get stringify => true;

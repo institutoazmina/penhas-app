@@ -7,9 +7,8 @@ import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late final MockITweetRepository repository = MockITweetRepository();
-  late final MockTweetFilterPreference filterPreference =
-      MockTweetFilterPreference();
+  ITweetRepository? repository;
+  late TweetFilterPreference filterPreference;
 
   setUp(() {
     when(filterPreference.categories).thenReturn([]);
@@ -19,7 +18,7 @@ void main() {
   group('FeedUseCases', () {
     test('should not hit datasource on instantiate', () async {
       // act
-      FeedUseCases(repository: repository, filterPreference: filterPreference);
+      FeedUseCases(repository: repository!, filterPreference: filterPreference);
       // assert
       verifyNoMoreInteractions(repository);
     });
@@ -33,12 +32,28 @@ void main() {
       test('should create tweet', () async {
         // arrange
         final sut = FeedUseCases(
-          repository: repository,
+          repository: repository!,
           filterPreference: filterPreference,
           maxRows: maxRowsPerRequet,
         );
-        when(repository.create(option: anyNamed('option'))).thenAnswer(
-          (_) async => right(
+        when(repository!.create(option: anyNamed('option')))
+            .thenAnswer((_) async => right(
+                  TweetEntity(
+                      id: '200608T1805540001',
+                      userName: 'maria',
+                      clientId: 424,
+                      createdAt: '2020-06-08 18:05:54',
+                      totalReply: 0,
+                      totalLikes: 0,
+                      anonymous: false,
+                      content: 'Mensagem 1',
+                      avatar:
+                          'https:\/\/elasv2-api.appcivico.com\/avatar\/padrao.svg',
+                      meta: TweetMeta(liked: false, owner: true),
+                      lastReply: []),
+                ));
+        final expected = right(FeedCache(
+          tweets: [
             TweetEntity(
               id: '200608T1805540001',
               userName: 'maria',

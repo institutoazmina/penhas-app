@@ -11,7 +11,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class FilterTweetPage extends StatefulWidget {
-  const FilterTweetPage({Key? key}) : super(key: key);
+  FilterTweetPage({required Key key}) : super(key: key);
 
   @override
   _FilterTweetPageState createState() => _FilterTweetPageState();
@@ -45,9 +45,7 @@ class _FilterTweetPageState
 
   @override
   void dispose() {
-    for (final d in _disposers!) {
-      d();
-    }
+    _disposers!.forEach((d) => d());
     super.dispose();
   }
 
@@ -110,24 +108,23 @@ class _FilterTweetPageState
 
   Tooltip _builtTagItem(TweetFilterEntity item, int index) {
     return Tooltip(
-      message: item.label,
-      child: ItemTags(
-        activeColor: DesignSystemColors.easterPurple,
-        title: item.label!,
-        index: index,
-        active: item.isSelected,
-        customData: item.id,
-        elevation: 0,
-        textStyle: kTextStyleTitleTag,
-        textColor: DesignSystemColors.easterPurple,
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(20.0),
-          bottomRight: Radius.circular(20.0),
-          topRight: Radius.circular(20.0),
-        ),
-        padding: const EdgeInsets.fromLTRB(16, 6, 16, 6),
-      ),
-    );
+        message: item.label!,
+        child: ItemTags(
+          activeColor: DesignSystemColors.easterPurple,
+          title: item.label!,
+          index: index,
+          active: item.isSelected,
+          customData: item.id,
+          elevation: 0,
+          textStyle: kTextStyleTitleTag,
+          textColor: DesignSystemColors.easterPurple,
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(20.0),
+            bottomRight: Radius.circular(20.0),
+            topRight: Radius.circular(20.0),
+          ),
+          padding: EdgeInsets.fromLTRB(16, 6, 16, 6),
+        ));
   }
 
   Widget _buildResetPasswordButton() {
@@ -196,12 +193,11 @@ class _FilterTweetPageState
       return Future.value(true);
     }
 
-    final List<String> seletedTags = _tagStateKey.currentState?.getAllItem
-            .where((e) => e.active)
-            .map((e) => e.customData)
-            .whereType<String>()
-            .toList() ??
-        List.empty();
+    final seletedTags = _tagStateKey.currentState.getAllItem
+        .where((e) => e.active)
+        .map((e) => e.customData)
+        .map((e) => e as String?)
+        .toList();
 
     return controller.setTags(seletedTags).then((value) => true);
   }

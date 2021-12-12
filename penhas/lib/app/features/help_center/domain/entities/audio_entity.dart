@@ -3,7 +3,14 @@ import 'package:meta/meta.dart';
 
 @immutable
 class AudioEntity extends Equatable {
-  const AudioEntity({
+  final String? id;
+  final String? audioDuration;
+  final DateTime? createdAt;
+  final bool canPlay;
+  final bool isRequested;
+  final bool isRequestGranted;
+
+  AudioEntity({
     required this.id,
     required this.audioDuration,
     required this.createdAt,
@@ -12,15 +19,8 @@ class AudioEntity extends Equatable {
     required this.isRequestGranted,
   });
 
-  final String? id;
-  final String? audioDuration;
-  final DateTime? createdAt;
-  final bool canPlay;
-  final bool isRequested;
-  final bool isRequestGranted;
-
   @override
-  List<Object?> get props => [
+  List<Object> get props => [
         id!,
         audioDuration!,
         createdAt!,

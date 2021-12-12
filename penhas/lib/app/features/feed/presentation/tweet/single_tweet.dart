@@ -19,6 +19,16 @@ class SingleTweet extends StatelessWidget {
   final BuildContext _context;
   final ITweetController controller;
 
+  const SingleTweet({
+    required Key key,
+    required this.tweet,
+    required BuildContext context,
+    required this.controller,
+  })  : assert(context != null),
+        assert(controller != null),
+        this._context = context,
+        super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

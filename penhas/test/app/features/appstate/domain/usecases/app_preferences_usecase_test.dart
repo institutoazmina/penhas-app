@@ -9,8 +9,14 @@ import 'package:penhas/app/shared/navigation/route.dart';
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
+<<<<<<< HEAD
   late final MockAppPreferencesStore appPreferencesStore = MockAppPreferencesStore();
   late final MockUserProfileStore userProfileStore = MockUserProfileStore();
+=======
+  late InactivityLogoutUseCase useCase;
+  LocalStore<AppPreferencesEntity>? appPreferencesStore;
+  LocalStore<UserProfileEntity>? userProfileStore;
+>>>>>>> Migrate code to nullsafety
 
   late final InactivityLogoutUseCase useCase = InactivityLogoutUseCase(
     appPreferencesStore: appPreferencesStore,
@@ -19,18 +25,31 @@ void main() {
 
   group('AppPreferencesUseCase#setActive', () {
     Future<void> _setActive({required DateTime? inactiveSince}) async {
+<<<<<<< HEAD
       when(appPreferencesStore.retrieve())
           .thenAnswer((_) => Future.value(AppPreferencesEntity(
                 inactiveAppSince: inactiveSince?.millisecondsSinceEpoch,
                 inactiveAppLogoutTimeInSeconds: 30,
               ),),);
       when(appPreferencesStore.save(any)).thenAnswer((_) => Future.value());
+=======
+      when(appPreferencesStore!.retrieve())
+          .thenAnswer((_) => Future.value(AppPreferencesEntity(
+                inactiveAppSince: inactiveSince?.millisecondsSinceEpoch,
+                inactiveAppLogoutTimeInSeconds: 30,
+              )));
+      when(appPreferencesStore!.save(any)).thenAnswer((_) => Future.value());
+>>>>>>> Migrate code to nullsafety
       return useCase.setActive();
     }
 
     test('clears inactive since to null when customer was inactive', () async {
       await _setActive(inactiveSince: DateTime.now());
+<<<<<<< HEAD
       verify(appPreferencesStore.save(const AppPreferencesEntity(
+=======
+      verify(appPreferencesStore!.save(AppPreferencesEntity(
+>>>>>>> Migrate code to nullsafety
         inactiveAppSince: null,
         inactiveAppLogoutTimeInSeconds: 30,
       ),),);
@@ -38,7 +57,11 @@ void main() {
 
     test('keeps inactive since null when customer was active', () async {
       await _setActive(inactiveSince: null);
+<<<<<<< HEAD
       verify(appPreferencesStore.save(const AppPreferencesEntity(
+=======
+      verify(appPreferencesStore!.save(AppPreferencesEntity(
+>>>>>>> Migrate code to nullsafety
         inactiveAppSince: null,
         inactiveAppLogoutTimeInSeconds: 30,
       ),),);
@@ -50,12 +73,17 @@ void main() {
       required DateTime now,
       required DateTime? previousInactivity,
     }) async {
-      when(appPreferencesStore.retrieve())
+      when(appPreferencesStore!.retrieve())
           .thenAnswer((_) => Future.value(AppPreferencesEntity(
                 inactiveAppSince: previousInactivity?.millisecondsSinceEpoch,
                 inactiveAppLogoutTimeInSeconds: 30,
+<<<<<<< HEAD
               ),),);
       when(appPreferencesStore.save(any)).thenAnswer((_) => Future.value());
+=======
+              )));
+      when(appPreferencesStore!.save(any)).thenAnswer((_) => Future.value());
+>>>>>>> Migrate code to nullsafety
       return useCase.setInactive(now);
     }
 
@@ -63,16 +91,21 @@ void main() {
 
     test('customer was not inactive then save inactivity time', () async {
       await _setInactivity(now: now, previousInactivity: null);
-      verify(appPreferencesStore.save(AppPreferencesEntity(
+      verify(appPreferencesStore!.save(AppPreferencesEntity(
         inactiveAppSince: now.millisecondsSinceEpoch,
         inactiveAppLogoutTimeInSeconds: 30,
       ),),);
     });
 
     test('customer was inactive then save new inactivity time', () async {
+<<<<<<< HEAD
       await _setInactivity(
           now: now, previousInactivity: now.subtract(const Duration(hours: 1)),);
       verify(appPreferencesStore.save(AppPreferencesEntity(
+=======
+      await _setInactivity(now: now, previousInactivity: now.subtract(Duration(hours: 1)));
+      verify(appPreferencesStore!.save(AppPreferencesEntity(
+>>>>>>> Migrate code to nullsafety
         inactiveAppSince: now.millisecondsSinceEpoch,
         inactiveAppLogoutTimeInSeconds: 30,
       ),),);
@@ -86,16 +119,24 @@ void main() {
       required bool stealthModeEnabled,
       required bool anonymousModeEnabled,
     }) async {
-      when(appPreferencesStore.retrieve())
+      when(appPreferencesStore!.retrieve())
           .thenAnswer((_) => Future.value(AppPreferencesEntity(
                 inactiveAppSince: inactiveSince?.millisecondsSinceEpoch,
                 inactiveAppLogoutTimeInSeconds: 30,
+<<<<<<< HEAD
               ),),);
       when(userProfileStore.retrieve()).thenAnswer((_) => Future.value(
             UserProfileModel(
               stealthModeEnabled: stealthModeEnabled,
               anonymousModeEnabled: anonymousModeEnabled,
               birthdate: DateTime.now(),
+=======
+              )));
+      when(userProfileStore!.retrieve()).thenAnswer((_) => Future.value(
+            MockUserProfileEntity(
+              stealthModeEnabled,
+              anonymousModeEnabled,
+>>>>>>> Migrate code to nullsafety
             ),
           ),);
       return useCase.inactivityRoute(now);

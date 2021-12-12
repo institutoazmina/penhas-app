@@ -5,24 +5,30 @@ import 'package:penhas/app/features/help_center/domain/entities/guardian_session
 abstract class GuardianTileEntity extends Equatable {}
 
 class GuardianTileHeaderEntity extends GuardianTileEntity {
-  GuardianTileHeaderEntity({required this.title});
-
   final String? title;
 
+  GuardianTileHeaderEntity({required this.title});
+
   @override
-  List<Object?> get props => [title!];
+  List<Object> get props => [title!];
 }
 
 class GuardianTileDescriptionEntity extends GuardianTileEntity {
-  GuardianTileDescriptionEntity({required this.description});
-
   final String? description;
 
+  GuardianTileDescriptionEntity({required this.description});
+
   @override
-  List<Object?> get props => [description!];
+  List<Object> get props => [description!];
 }
 
 class GuardianTileCardEntity extends GuardianTileEntity {
+  final GuardianContactEntity guardian;
+  final String? deleteWarning;
+  final void Function(String name)? onEditPressed;
+  final void Function()? onDeletePressed;
+  final void Function()? onResendPressed;
+
   GuardianTileCardEntity({
     required this.guardian,
     required this.deleteWarning,
@@ -38,7 +44,7 @@ class GuardianTileCardEntity extends GuardianTileEntity {
   final void Function()? onResendPressed;
 
   @override
-  List<Object?> get props => [guardian, deleteWarning!];
+  List<Object> get props => [guardian, deleteWarning!];
 }
 
 class GuardianTileEmptyCardEntity extends GuardianTileEntity {
@@ -46,6 +52,7 @@ class GuardianTileEmptyCardEntity extends GuardianTileEntity {
 
   final void Function() onPressed;
 
+  GuardianTileEmptyCardEntity({required this.onPressed});
   @override
   List<Object?> get props => [];
 }

@@ -17,6 +17,15 @@ class PassordInputField extends StatefulWidget {
   final String errorText;
   final String hintText;
 
+  PassordInputField({
+    required Key key,
+    this.style = kTextStyleDefaultTextFieldLabelStyle,
+    required this.onChanged,
+    required this.labelText,
+    required this.errorText,
+    required this.hintText,
+  }) : super(key: key);
+
   @override
   _PassordInputFieldState createState() => _PassordInputFieldState();
 }
@@ -44,8 +53,8 @@ class _PassordInputFieldState extends State<PassordInputField> {
         labelStyle: kTextStyleDefaultTextFieldLabelStyle,
         hintText: widget.hintText,
         hintStyle: kTextStyleDefaultTextFieldLabelStyle,
-        errorText: _normalizeHitText(widget.errorText),
-        contentPadding: const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
+        errorText: _normalizeHitText(widget.errorText)!,
+        contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
         suffixIcon: IconButton(
           icon: Icon(
               _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
@@ -62,7 +71,7 @@ class _PassordInputFieldState extends State<PassordInputField> {
     });
   }
 
-  String? _normalizeHitText(String? text) {
+  String? _normalizeHitText(String text) {
     if (text == null || text.isEmpty) {
       return null;
     }

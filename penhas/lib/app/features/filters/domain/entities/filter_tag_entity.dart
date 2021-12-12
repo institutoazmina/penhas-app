@@ -13,8 +13,14 @@ class FilterTagEntity extends Equatable {
   final String? label;
   final bool isSelected;
 
+  FilterTagEntity({
+    required this.id,
+    required this.label,
+    required this.isSelected,
+  });
+
   @override
-  List<Object?> get props => [id, label!, isSelected];
+  List<Object> get props => [id, label!, isSelected];
 
   @override
   bool get stringify => true;

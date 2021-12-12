@@ -7,14 +7,14 @@ import 'package:penhas/app/features/authentication/domain/usecases/email_address
 import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
 
 class AuthenticationWithEmailAndPassword {
+  final IAuthenticationRepository? _repository;
+  final IAppConfiguration? _appConfiguration;
+
   AuthenticationWithEmailAndPassword({
     required IAuthenticationRepository? authenticationRepository,
     required IAppConfiguration? appConfiguration,
-  })  : _repository = authenticationRepository,
-        _appConfiguration = appConfiguration;
-
-  final IAuthenticationRepository? _repository;
-  final IAppConfiguration? _appConfiguration;
+  })  : this._repository = authenticationRepository,
+        this._appConfiguration = appConfiguration;
 
   Future<Either<Failure, SessionEntity>> call({
     required EmailAddress email,
@@ -32,7 +32,7 @@ class AuthenticationWithEmailAndPassword {
   }
 
   Future<Either<Failure, SessionEntity>> _saveAthenticationToken(
-      SessionEntity session,) async {
+      SessionEntity session) async {
     await _appConfiguration!.saveApiToken(token: session.sessionToken);
     return Future.value(right(session));
   }

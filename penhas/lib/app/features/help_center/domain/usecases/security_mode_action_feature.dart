@@ -23,19 +23,22 @@ class SecurityModeActionFeature {
   Future<String> get callingNumber => _callingNumber();
   Future<AudioRecordDurationEntity> get audioDuration => _audioDuration();
 
+  SecurityModeActionFeature({required IAppModulesServices modulesServices})
+      : this._modulesServices = modulesServices;
+
   Future<String> _callingNumber() {
     return _modulesServices
         .feature(name: SecurityModeActionFeature.featureCode)
-        .then(
-          (module) => jsonDecode(module?.meta ?? '{}') as Map<String, dynamic>,
-        )
-        .then((json) => json['numero'] as String);
+        .then((module) => jsonDecode(module.meta!))
+        .then((json) => json as Map<String, Object>)
+        .then((json) => json['numero'] as FutureOr<String>);
   }
 
   Future<AudioRecordDurationEntity> _audioDuration() {
     return _modulesServices
         .feature(name: SecurityModeActionFeature.featureCode)
-        .then((module) => jsonDecode(module?.meta ?? '{}'))
+        .then((module) => jsonDecode(module.meta!))
+        .then((json) => json as Map<String, Object>)
         .then((json) => _mapAudioDuration(json));
   }
 

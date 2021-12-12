@@ -15,7 +15,8 @@ import 'package:penhas/app/shared/design_system/linear_gradient_design_system.da
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class SignUpThreePage extends StatefulWidget {
-  const SignUpThreePage({Key? key, this.title = 'SignUpThree'})
+  final String title;
+  const SignUpThreePage({required Key key, this.title = "SignUpThree"})
       : super(key: key);
 
   final String title;
@@ -42,9 +43,7 @@ class _SignUpThreePageState
 
   @override
   void dispose() {
-    for (final d in _disposers!) {
-      d();
-    }
+    _disposers!.forEach((d) => d());
     super.dispose();
   }
 

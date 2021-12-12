@@ -8,7 +8,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 typedef ActionOnSelected = void Function(SupportCenterPlaceEntity place);
 
 class SupportCenterListPage extends StatefulWidget {
-  const SupportCenterListPage({Key? key}) : super(key: key);
+  SupportCenterListPage({required Key key}) : super(key: key);
 
   @override
   _SupportCenterListPageState createState() => _SupportCenterListPageState();
@@ -69,6 +69,8 @@ class Card extends StatelessWidget {
 
   final SupportCenterPlaceEntity place;
   final ActionOnSelected onSelected;
+  const Card({required Key key, required this.place, required this.onSelected})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +129,7 @@ class Card extends StatelessWidget {
                           ),
                           child: Text(
                             place.category.name!.toUpperCase(),
-                            style: const TextStyle().categoryName,
+                            style: TextStyle().categoryName,
                           ),
                         )
                       ],

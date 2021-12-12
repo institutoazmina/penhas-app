@@ -8,9 +8,8 @@ import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late final MockITweetRepository repository = MockITweetRepository();
-  late final MockTweetFilterPreference filterPreference =
-      MockTweetFilterPreference();
+  ITweetRepository? repository;
+  late TweetFilterPreference filterPreference;
 
   setUp(() {
     when(filterPreference.categories).thenReturn([]);
@@ -20,16 +19,16 @@ void main() {
   group('FeedUseCases', () {
     test('should not hit datasource on instantiate', () async {
       // act
-      FeedUseCases(repository: repository, filterPreference: filterPreference);
+      FeedUseCases(repository: repository!, filterPreference: filterPreference);
       // assert
       verifyNoMoreInteractions(repository);
     });
     group('reply', () {
       int? maxRowsPerRequet;
-      late TweetSessionEntity firstSessionResponse;
-      late TweetEntity tweetEntity1;
-      late TweetEntity tweetEntity2;
-      late TweetEntity tweetEntity3;
+      TweetSessionEntity? firstSessionResponse;
+      TweetEntity? tweetEntity1;
+      TweetEntity? tweetEntity2;
+      TweetEntity tweetEntity3;
 
       setUp(() {
         maxRowsPerRequet = 5;
@@ -87,12 +86,12 @@ void main() {
       test('should create commented tweet and get updated cache', () async {
         // arrange
         final sut = FeedUseCases(
-          repository: repository,
+          repository: repository!,
           filterPreference: filterPreference,
           maxRows: maxRowsPerRequet,
         );
-        when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) => Future.value(right(firstSessionResponse)));
+        when(repository!.fetch(option: anyNamed('option')))
+            .thenAnswer(((_) async => right(firstSessionResponse!)) as Future<Either<Failure, TweetSessionEntity>> Function(Invocation));
         await sut.fetchOldestTweet();
         final newTweet = TweetEntity(
           id: 'id_5',
@@ -107,8 +106,8 @@ void main() {
           meta: const TweetMeta(liked: false, owner: true),
           lastReply: const [],
         );
-        final commentedTweet = tweetEntity1.copyWith(
-          totalReply: tweetEntity1.totalReply + 1,
+        final commentedTweet = tweetEntity1!.copyWith(
+          totalReply: tweetEntity1!.totalReply + 1,
           lastReply: [newTweet],
         );
         final expected = right(
@@ -120,11 +119,11 @@ void main() {
           ),
         );
 
-        when(repository.reply(option: anyNamed('option')))
+        when(repository!.reply(option: anyNamed('option')))
             .thenAnswer((_) async => right(newTweet));
         // act
         final received = await sut.reply(
-          mainTweet: tweetEntity1,
+          mainTweet: tweetEntity1!,
           comment: 'commented tweet',
         );
         // assert
@@ -133,12 +132,12 @@ void main() {
       test('should replaced current commented by new replied tweet', () async {
         // arrange
         final sut = FeedUseCases(
-          repository: repository,
+          repository: repository!,
           filterPreference: filterPreference,
           maxRows: maxRowsPerRequet,
         );
-        when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) => Future.value(right(firstSessionResponse)));
+        when(repository!.fetch(option: anyNamed('option')))
+            .thenAnswer(((_) async => right(firstSessionResponse!)) as Future<Either<Failure, TweetSessionEntity>> Function(Invocation));
         await sut.fetchOldestTweet();
         final newTweet = TweetEntity(
           id: 'id_5',
@@ -153,7 +152,7 @@ void main() {
           meta: const TweetMeta(liked: false, owner: true),
           lastReply: const [],
         );
-        final commentedTweet = tweetEntity2.copyWith(
+        final commentedTweet = tweetEntity2!.copyWith(
           totalReply: 2,
           lastReply: [newTweet],
         );
@@ -166,11 +165,11 @@ void main() {
           ),
         );
 
-        when(repository.reply(option: anyNamed('option')))
+        when(repository!.reply(option: anyNamed('option')))
             .thenAnswer((_) async => right(newTweet));
         // act
         final received = await sut.reply(
-          mainTweet: tweetEntity2,
+          mainTweet: tweetEntity2!,
           comment: 'commented tweet',
         );
         // assert

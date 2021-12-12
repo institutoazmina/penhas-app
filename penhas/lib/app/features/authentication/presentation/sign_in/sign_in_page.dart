@@ -21,7 +21,7 @@ import 'package:penhas/app/shared/navigation/route.dart';
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key, this.title = 'Authentication'}) : super(key: key);
 
-  final String title;
+  const SignInPage({required Key key, this.title = "Authentication"}) : super(key: key);
 
   @override
   _SignInPageState createState() => _SignInPageState();
@@ -30,7 +30,7 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends ModularState<SignInPage, SignInController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
 
   @override
@@ -111,9 +111,7 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
 
   @override
   void dispose() {
-    for (final d in _disposers!) {
-      d();
-    }
+    _disposers!.forEach((d) => d());
     super.dispose();
   }
 

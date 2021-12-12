@@ -2,7 +2,12 @@ import 'package:equatable/equatable.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 
 class ChatAssistantEntity extends Equatable {
-  const ChatAssistantEntity({
+  final String? title;
+  final String? subtitle;
+  final String? avatar;
+  final QuizSessionEntity? quizSession;
+
+  ChatAssistantEntity({
     required this.title,
     required this.subtitle,
     required this.avatar,
@@ -18,10 +23,10 @@ class ChatAssistantEntity extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object?> get props => [
-        title,
-        subtitle,
-        avatar,
-        quizSession,
+  List<Object> get props => [
+        title!,
+        subtitle!,
+        avatar!,
+        quizSession!,
       ];
 }

@@ -13,8 +13,8 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class DetailTweetPage extends StatefulWidget {
   const DetailTweetPage({
-    Key? key,
-    this.title = 'DetailTweet',
+    required Key key,
+    this.title = "DetailTweet",
     required this.tweetController,
   }) : super(key: key);
 
@@ -53,9 +53,7 @@ class _DetailTweetPageState
   @override
   void dispose() {
     super.dispose();
-    for (final d in _disposers!) {
-      d();
-    }
+    _disposers!.forEach((d) => d());
     _scrollController.dispose();
   }
 
@@ -133,9 +131,72 @@ class _DetailTweetPageState
   }
 }
 
+class _MainTweet extends StatelessWidget {
+  final TweetEntity? tweet;
+  final ITweetController? controller;
+  const _MainTweet({
+    required Key key,
+    this.tweet,
+    this.controller,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 6.0, top: 8.0, right: 6.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  child: TweetAvatar(tweet: tweet!),
+                  flex: 1,
+                ),
+                SizedBox(width: 6.0),
+                Expanded(
+                  flex: 5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      TweetTitle(
+                          tweet: tweet!,
+                          context: context,
+                          isDetail: true,
+                          controller: controller),
+                      TweetBody(content: tweet!.content),
+                      TweetBottom(tweet: tweet!, controller: controller!)
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            margin: EdgeInsets.only(top: 8, bottom: 8),
+            height: 28,
+            child: Container(),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(color: Colors.grey[350]),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _ReplyTweet extends StatelessWidget {
+  final TweetEntity? tweet;
+  final ITweetController? controller;
   const _ReplyTweet({
-    Key? key,
+    required Key key,
     this.tweet,
     this.controller,
   }) : super(key: key);
@@ -156,11 +217,10 @@ class _ReplyTweet extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 TweetTitle(
-                  tweet: tweet!,
-                  context: context,
-                  isDetail: true,
-                  controller: controller,
-                ),
+                    tweet: tweet!,
+                    context: context,
+                    isDetail: true,
+                    controller: controller),
                 TweetBody(content: tweet!.content),
                 TweetBottom(tweet: tweet!, controller: controller!)
               ],

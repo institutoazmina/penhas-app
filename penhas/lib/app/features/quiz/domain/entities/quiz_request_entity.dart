@@ -3,7 +3,10 @@ import 'package:meta/meta.dart';
 
 @immutable
 class QuizRequestEntity extends Equatable {
-  const QuizRequestEntity({
+  final String? sessionId;
+  final Map<String, String> options;
+
+  QuizRequestEntity({
     required this.sessionId,
     required this.options,
   });
@@ -12,7 +15,7 @@ class QuizRequestEntity extends Equatable {
   final Map<String, String> options;
 
   @override
-  List<Object?> get props => [sessionId!, options];
+  List<Object> get props => [sessionId!, options];
 
   @override
   bool get stringify => true;

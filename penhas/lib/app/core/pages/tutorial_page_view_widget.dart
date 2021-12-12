@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
 class TutorialPageViewWidget extends StatelessWidget {
+  final String? _title;
+  final String _description;
+  final Widget _bodyWidget;
   const TutorialPageViewWidget({
-    Key? key,
+    required Key key,
     String? title,
     required String description,
     required Widget bodyWidget,
-  })  : _title = title,
-        _description = description,
-        _bodyWidget = bodyWidget,
+  })  : this._title = title,
+        this._description = description,
+        this._bodyWidget = bodyWidget,
         super(key: key);
 
   final String? _title;
@@ -59,7 +62,7 @@ class TutorialPageViewWidget extends StatelessWidget {
         : Center(
             child: Text(
               _title!,
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: 'Lato',
                 fontSize: 22.0,
                 fontWeight: FontWeight.bold,

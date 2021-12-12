@@ -4,8 +4,12 @@ import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class MainboarButtonPage extends StatelessWidget {
+  final MainboardState currentPage;
+  final MainboardState? pageSelected;
+  final void Function(MainboardState) onSelect;
+
   const MainboarButtonPage({
-    Key? key,
+    required Key key,
     required this.onSelect,
     required this.currentPage,
     required this.pageSelected,
@@ -23,8 +27,8 @@ class MainboarButtonPage extends StatelessWidget {
         highlightColor: Colors.transparent,
         onPressed: () => onSelect(currentPage),
         child: _buildBottomBarIcon(
-          currentPage,
-          pageSelected!,
+          this.currentPage,
+          this.pageSelected!,
         ),
       ),
     );

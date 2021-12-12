@@ -23,6 +23,10 @@ class ResetPasswordThreeController extends _ResetPasswordThreeControllerBase
 }
 
 abstract class _ResetPasswordThreeControllerBase with Store, MapFailureMessage {
+  final IChangePasswordRepository _repository;
+  final UserRegisterFormFieldModel? _userRegisterModel;
+  final PasswordValidator _passwordValidator;
+
   _ResetPasswordThreeControllerBase(
     this._repository,
     this._userRegisterModel,
@@ -60,19 +64,13 @@ abstract class _ResetPasswordThreeControllerBase with Store, MapFailureMessage {
   void setPassword(String password) {
     _userRegisterModel!.password = SignUpPassword(password, _passwordValidator);
     warningPassword = _userRegisterModel!.password!.mapFailure;
-    warningConfirmationPassword =
-        _userRegisterModel!.passwordConfirmation!.isEmpty
-            ? ''
-            : _userRegisterModel!.validatePasswordConfirmation;
+    warningConfirmationPassword = _userRegisterModel!.passwordConfirmation!.isEmpty ? '' : _userRegisterModel!.validatePasswordConfirmation;
   }
 
   @action
   void setConfirmationPassword(String password) {
     _userRegisterModel!.passwordConfirmation = password;
-    warningConfirmationPassword =
-        _userRegisterModel!.passwordConfirmation!.isEmpty
-            ? ''
-            : _userRegisterModel!.validatePasswordConfirmation;
+    warningConfirmationPassword = _userRegisterModel!.passwordConfirmation!.isEmpty ? '' : _userRegisterModel!.validatePasswordConfirmation;
   }
 
   @action
@@ -97,6 +95,10 @@ abstract class _ResetPasswordThreeControllerBase with Store, MapFailureMessage {
     );
   }
 
+  void _setErrorMessage(String? message) {
+    errorMessage = message;
+  }
+
   bool _isValidToProceed() {
     bool isValid = _userRegisterModel!.password!.isValid;
 
@@ -106,8 +108,7 @@ abstract class _ResetPasswordThreeControllerBase with Store, MapFailureMessage {
 
     if (_userRegisterModel!.validatePasswordConfirmation.isNotEmpty) {
       isValid = false;
-      warningConfirmationPassword =
-          _userRegisterModel!.validatePasswordConfirmation;
+      warningConfirmationPassword = _userRegisterModel!.validatePasswordConfirmation;
     }
 
     return isValid;

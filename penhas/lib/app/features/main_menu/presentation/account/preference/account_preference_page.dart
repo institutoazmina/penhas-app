@@ -12,7 +12,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class AccountPreferencePage extends StatefulWidget {
-  const AccountPreferencePage({Key? key}) : super(key: key);
+  const AccountPreferencePage({required Key key}) : super(key: key);
 
   @override
   _AccountPreferencePageState createState() => _AccountPreferencePageState();
@@ -51,9 +51,7 @@ class _AccountPreferencePageState
 
   @override
   void dispose() {
-    for (final d in _disposers!) {
-      d();
-    }
+    _disposers!.forEach((d) => d());
     super.dispose();
   }
 }
@@ -100,22 +98,22 @@ extension _PageBuilder on _AccountPreferencePageState {
               const SizedBox(height: 16),
               Expanded(
                 child: ListView.builder(
-                  itemCount: preferences.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final preference = preferences[index];
-                    return CheckboxListTile(
-                      title: Text(preference.label!, style: itemTitleTextStyle),
-                      value: preference.value,
-                      activeColor: DesignSystemColors.easterPurple,
-                      onChanged: (status) => controller.update(
-                        preference.key,
-                        status: status == true,
-                      ),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      contentPadding: EdgeInsets.zero,
-                    );
-                  },
-                ),
+                    itemCount: preferences.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final preference = preferences[index];
+                      return CheckboxListTile(
+                        title:
+                            Text(preference.label!, style: itemTitleTextStyle),
+                        value: preference.value,
+                        activeColor: DesignSystemColors.easterPurple,
+                        onChanged: (status) => controller.update(
+                          preference.key,
+                          status,
+                        ),
+                        controlAffinity: ListTileControlAffinity.leading,
+                        contentPadding: EdgeInsets.zero,
+                      );
+                    }),
               ),
             ],
           ),

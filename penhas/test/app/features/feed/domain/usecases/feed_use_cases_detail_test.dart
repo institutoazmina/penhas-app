@@ -10,10 +10,10 @@ import '../../../../../utils/helper.mocks.dart';
 
 void main() {
   late TweetEntity tweetRequest;
-  late final MockITweetRepository repository = MockITweetRepository();
-  late final MockTweetFilterPreference filterPreference = MockTweetFilterPreference();
+  ITweetRepository? repository;
+  late TweetFilterPreference filterPreference;
 
-  late int maxRowsPerRequest;
+  int? maxRowsPerRequest;
 
   setUp(() {
     maxRowsPerRequest = 2;
@@ -33,7 +33,7 @@ void main() {
   group('FeedUseCases', () {
     test('should not hit datasource on instantiate', () async {
       // act
-      FeedUseCases(repository: repository, filterPreference: filterPreference);
+      FeedUseCases(repository: repository!, filterPreference: filterPreference);
       // assert
       verifyNoMoreInteractions(repository);
     });
@@ -63,32 +63,32 @@ void main() {
       });
       test('should request with parent_id and after', () async {
         // arrange
-        when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(emptySession!));
+        when(repository!.fetch(option: anyNamed('option')))
+            .thenAnswer(((_) async => right(emptySession!)) as Future<Either<Failure, TweetSessionEntity>> Function(Invocation));
         // act
         final sut = FeedUseCases(
-          repository: repository,
+          repository: repository!,
           filterPreference: filterPreference,
           maxRows: maxRowsPerRequest,
         );
         await sut.fetchTweetDetail(tweetRequest.id);
         // assert
         verify(
-          repository.fetch(
+          repository!.fetch(
             option: TweetRequestOption(
               after: tweetRequest.id,
               parent: tweetRequest.id,
-              rows: maxRowsPerRequest,
+              rows: maxRowsPerRequest!,
             ),
           ),
         );
       });
       test('should get empty response if tweet does not have detail', () async {
         // arrange
-        when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(emptySession!));
+        when(repository!.fetch(option: anyNamed('option')))
+            .thenAnswer(((_) async => right(emptySession!)) as Future<Either<Failure, TweetSessionEntity>> Function(Invocation));
         final sut = FeedUseCases(
-          repository: repository,
+          repository: repository!,
           filterPreference: filterPreference,
         );
         final expected = right(const FeedCache(tweets: []));
@@ -99,10 +99,10 @@ void main() {
       });
       test('should get a list of tweet from detail', () async {
         // arrange
-        when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(firstSession!));
+        when(repository!.fetch(option: anyNamed('option')))
+            .thenAnswer(((_) async => right(firstSession!)) as Future<Either<Failure, TweetSessionEntity>> Function(Invocation));
         final sut = FeedUseCases(
-          repository: repository,
+          repository: repository!,
           filterPreference: filterPreference,
         );
         final expected = right(
@@ -124,8 +124,8 @@ void main() {
       });
     });
     group('fetchNewestTweetDetail', () {
-      late TweetSessionEntity firstSession;
-      late TweetSessionEntity secondSession;
+      TweetSessionEntity? firstSession;
+      TweetSessionEntity? secondSession;
 
       setUp(() {
         firstSession = TweetSessionEntity(
@@ -168,8 +168,8 @@ void main() {
       });
       test('should request with parent_id and after of last tweet', () async {
         // arrange
-        when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(firstSession));
+        when(repository!.fetch(option: anyNamed('option')))
+            .thenAnswer(((_) async => right(firstSession!)) as Future<Either<Failure, TweetSessionEntity>> Function(Invocation));
         final afterTweet = tweetRequest.copyWith(
           id: 'id_6',
           userName: 'user_2',
@@ -177,7 +177,7 @@ void main() {
           content: 'reply 2',
         );
         final sut = FeedUseCases(
-          repository: repository,
+          repository: repository!,
           filterPreference: filterPreference,
           maxRows: maxRowsPerRequest,
         );
@@ -186,11 +186,11 @@ void main() {
         await sut.fetchNewestTweetDetail(tweetRequest.id);
         // assert
         verify(
-          repository.fetch(
+          repository!.fetch(
             option: TweetRequestOption(
               after: afterTweet.id,
               parent: tweetRequest.id,
-              rows: maxRowsPerRequest,
+              rows: maxRowsPerRequest!,
             ),
           ),
         );
@@ -198,15 +198,15 @@ void main() {
       test('should get the newest tweets', () async {
         // arrange
         final sut = FeedUseCases(
-          repository: repository,
+          repository: repository!,
           filterPreference: filterPreference,
           maxRows: maxRowsPerRequest,
         );
-        when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(firstSession));
+        when(repository!.fetch(option: anyNamed('option')))
+            .thenAnswer(((_) async => right(firstSession!)) as Future<Either<Failure, TweetSessionEntity>> Function(Invocation));
         await sut.fetchTweetDetail(tweetRequest.id);
-        when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(secondSession));
+        when(repository!.fetch(option: anyNamed('option')))
+            .thenAnswer(((_) async => right(secondSession!)) as Future<Either<Failure, TweetSessionEntity>> Function(Invocation));
         final expected = right(FeedCache(tweets: [
           tweetRequest.copyWith(
               id: 'id_5',
@@ -241,14 +241,14 @@ void main() {
       test('should keep tweets if get a empty response', () async {
         // arrange
         final sut = FeedUseCases(
-          repository: repository,
+          repository: repository!,
           filterPreference: filterPreference,
           maxRows: maxRowsPerRequest,
         );
-        when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(firstSession));
+        when(repository!.fetch(option: anyNamed('option')))
+            .thenAnswer(((_) async => right(firstSession!)) as Future<Either<Failure, TweetSessionEntity>> Function(Invocation));
         await sut.fetchTweetDetail(tweetRequest.id);
-        when(repository.fetch(option: anyNamed('option'))).thenAnswer(
+        when(repository!.fetch(option: anyNamed('option'))).thenAnswer(
           (_) async => right(
             const TweetSessionEntity(
                 nextPage: null,

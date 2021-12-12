@@ -5,7 +5,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 class ZodiacSignPage extends StatelessWidget {
   const ZodiacSignPage({
     required this.sign,
-    Key? key,
+    required Key key,
   }) : super(key: key);
 
   final IZodiac sign;

@@ -18,13 +18,19 @@ class GuardianRateLimitPage extends StatelessWidget {
         letterSpacing: 0.44,
       );
 
-  TextStyle get _bodyTextBoldStyle => const TextStyle(
-        fontFamily: 'Lato',
-        fontSize: 18.0,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
-        letterSpacing: 0.44,
-      );
+  final _bodyTextBoldStyle = TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 18.0,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+    letterSpacing: 0.44,
+  );
+
+  GuardianRateLimitPage({
+    required Key key,
+    required int maxLimit,
+  })  : this._maxLimit = maxLimit,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {

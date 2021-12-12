@@ -3,14 +3,21 @@ import 'package:penhas/app/features/support_center/domain/entities/support_cente
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
 
 class SupportCenterPlaceSessionModel extends SupportCenterPlaceSessionEntity {
-  const SupportCenterPlaceSessionModel({
-    int? maximumRate,
-    double? latitude,
-    double? longitude,
-    bool? hasMore,
-    String? nextPage,
-    List<SupportCenterPlaceEntity> places = const [],
-  }) : super(
+  final int? maximumRate;
+  final double? latitude;
+  final double? longitude;
+  final String? nextPage;
+  final bool? hasMore;
+  final List<SupportCenterPlaceEntity>? places;
+
+  SupportCenterPlaceSessionModel(
+    this.maximumRate,
+    this.latitude,
+    this.longitude,
+    this.hasMore,
+    this.nextPage,
+    this.places,
+  ) : super(
           maximumRate: maximumRate,
           latitude: latitude,
           longitude: longitude,
@@ -34,12 +41,12 @@ class SupportCenterPlaceSessionModel extends SupportCenterPlaceSessionEntity {
         .toList();
 
     return SupportCenterPlaceSessionModel(
-      maximumRate: maximumRate,
-      latitude: latitude,
-      longitude: longitude,
-      hasMore: hasMore,
-      nextPage: nextPage,
-      places: places,
+      maximumRate,
+      latitude,
+      longitude,
+      hasMore,
+      nextPage as String?,
+      places,
     );
   }
 }

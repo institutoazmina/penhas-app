@@ -15,7 +15,8 @@ import 'package:penhas/app/shared/design_system/linear_gradient_design_system.da
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ResetPasswordPage extends StatefulWidget {
-  const ResetPasswordPage({Key? key, this.title = 'ResetPassword'})
+  final String title;
+  const ResetPasswordPage({required Key key, this.title = "ResetPassword"})
       : super(key: key);
 
   final String title;
@@ -28,7 +29,7 @@ class _ResetPasswordPageState
     extends ModularState<ResetPasswordPage, ResetPasswordController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
 
   @override
@@ -42,9 +43,7 @@ class _ResetPasswordPageState
 
   @override
   void dispose() {
-    for (final d in _disposers!) {
-      d();
-    }
+    _disposers!.forEach((d) => d());
     super.dispose();
   }
 

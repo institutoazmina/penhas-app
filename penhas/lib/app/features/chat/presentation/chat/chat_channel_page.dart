@@ -14,7 +14,7 @@ import 'package:penhas/app/features/chat/presentation/pages/channel/chat_channel
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key}) : super(key: key);
+  ChatPage({required Key key}) : super(key: key);
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -128,15 +128,15 @@ extension _ChatPageStateMethods on _ChatPageState {
             radius: 16,
             child: avatar,
           ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(user.nickname!, style: titleTextStyle),
-            Text(user.activity!, style: statusTextStyle),
-          ],
-        )
-      ],
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(user.nickname!, style: titleTextStyle),
+              Text(user.activity!, style: statusTextStyle),
+            ],
+          )
+        ],
+      ),
     );
   }
 

@@ -31,6 +31,18 @@ class SignInStealthController extends _SignInStealthController
 }
 
 abstract class _SignInStealthController with Store, MapFailureMessage {
+  final String _invalidFieldsToProceedLogin =
+      'E-mail e senha precisam estarem corretos para continuar.';
+  final LocalStore<UserProfileEntity> _userProfileStore;
+  final IAuthenticationRepository _repository;
+  final StealthSecurityAction _securityAction;
+  final PasswordValidator _passwordValidator;
+
+  EmailAddress _emailAddress = EmailAddress("");
+  SignInPassword? _password;
+  bool _isSecurityRunning = false;
+  StreamSubscription? _streamCache;
+
   _SignInStealthController(
     this._repository,
     this._userProfileStore,
@@ -75,13 +87,13 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
   String userGreetings = '';
 
   @observable
-  String? userEmail = '';
+  String? userEmail = "";
 
   @observable
   String warningPassword = '';
 
   @observable
-  String? errorMessage = '';
+  String? errorMessage = "";
 
   @observable
   IZodiac sign = ZodiacSignAquarius();
@@ -111,8 +123,10 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
 
   @action
   Future<void> signInWithEmailAndPasswordPressed() async {
+    _setErrorMessage('');
+
     if (!_emailAddress.isValid || !_password!.isValid) {
-      errorMessage = _invalidFieldsToProceedLogin;
+      _setErrorMessage(_invalidFieldsToProceedLogin);
       return;
     }
     errorMessage = '';
@@ -164,14 +178,20 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
     Modular.to.pushReplacementNamed('/mainboard');
   }
 
-  void _registerDataSource() {
+  void _setErrorMessage(String? msg) {
+    errorMessage = msg;
+  }
+
+  _registerDataSource() {
     _streamCache = _securityAction.isRunning.listen((event) {
       isSecurityRunning = event;
     });
   }
 
-  void _cancelDataSource() {
-    _streamCache?.cancel();
-    _streamCache = null;
+  _cancelDataSource() {
+    if (_streamCache != null) {
+      _streamCache!.cancel();
+      _streamCache = null;
+    }
   }
 }

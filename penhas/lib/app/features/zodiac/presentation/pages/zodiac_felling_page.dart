@@ -7,7 +7,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 class ZodiacFellingPage extends StatelessWidget {
   const ZodiacFellingPage({
     required this.sign,
-    Key? key,
+    required Key key,
   }) : super(key: key);
 
   final IZodiac sign;

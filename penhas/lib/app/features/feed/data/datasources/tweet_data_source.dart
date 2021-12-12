@@ -21,23 +21,23 @@ abstract class ITweetDataSource {
 }
 
 class TweetDataSource implements ITweetDataSource {
-  TweetDataSource({
-    required http.Client? apiClient,
-    required serverConfiguration,
-  })  : _apiClient = apiClient,
-        _serverConfiguration = serverConfiguration;
-
   final http.Client? _apiClient;
   final IApiServerConfigure? _serverConfiguration;
   final Set<int> _successfulResponse = {200, 204};
   final Set<int> _invalidSessionCode = {401, 403};
+
+  TweetDataSource({
+    required http.Client? apiClient,
+    required serverConfiguration,
+  })  : this._apiClient = apiClient,
+        this._serverConfiguration = serverConfiguration;
 
   @override
   Future<TweetSessionModel> fetch({
     required TweetRequestOption? option,
   }) async {
     final httpHeader = await _setupHttpHeader();
-    final Map<String, String?> queryParameters = {
+    Map<String, String?> queryParameters = {
       'after': option!.after,
       'before': option.before,
       'parent_id': option.parent,
@@ -45,8 +45,7 @@ class TweetDataSource implements ITweetDataSource {
       'rows': '${option.rows}',
       'reply_to': option.replyTo,
       'category': option.category,
-      'tags':
-          (option.tags == null || option.tags!.isEmpty) ? null : option.tags,
+      'tags': (option.tags == null || option.tags!.isEmpty) ? null : option.tags,
     };
     final httpRequest = await _setupHttpRequest(
       path: '/timeline',
@@ -156,7 +155,7 @@ class TweetDataSource implements ITweetDataSource {
   @override
   Future<ValidField> delete({TweetEngageRequestOption? option}) async {
     final httpHeader = await _setupHttpHeader();
-    final Map<String, String> queryParameters = {'id': option!.tweetId};
+    Map<String, String> queryParameters = {'id': option!.tweetId};
     final httpRequest = await _setupHttpRequest(
       path: '/me/tweets',
       queryParameters: queryParameters,
@@ -175,7 +174,7 @@ class TweetDataSource implements ITweetDataSource {
   @override
   Future<TweetSessionModel> current({TweetEngageRequestOption? option}) async {
     final httpHeader = await _setupHttpHeader();
-    final Map<String, String> queryParameters = {
+    Map<String, String> queryParameters = {
       'id': option!.tweetId,
     };
     final httpRequest = await _setupHttpRequest(

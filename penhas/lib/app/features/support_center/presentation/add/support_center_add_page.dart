@@ -16,7 +16,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class SupportCenterAddPage extends StatefulWidget {
-  const SupportCenterAddPage({Key? key}) : super(key: key);
+  SupportCenterAddPage({required Key key}) : super(key: key);
 
   @override
   _SupportCenterAddPageState createState() => _SupportCenterAddPageState();
@@ -26,7 +26,7 @@ class _SupportCenterAddPageState
     extends ModularState<SupportCenterAddPage, SupportCenterAddController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -88,9 +88,7 @@ class _SupportCenterAddPageState
 
   @override
   void dispose() {
-    for (final d in _disposers!) {
-      d();
-    }
+    _disposers!.forEach((d) => d());
     super.dispose();
   }
 
@@ -213,7 +211,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
   Widget buildDropdownList({
     required BuildContext context,
     required String labelText,
-    String? errorMessage,
+    required String errorMessage,
     required String currentValue,
     required List dataSource,
   }) {
@@ -240,10 +238,8 @@ extension _BuildWidget on _SupportCenterAddPageState {
             hintText: labelText,
             hintStyle: const TextStyle(color: Colors.black),
           ),
-          items: dataSource as List<DropdownMenuItem>,
-          onChanged: (category) {
-            controller.setCategorie(category as String);
-          },
+          items: dataSource as List<DropdownMenuItem<_>>,
+          onChanged: controller.setCategorie,
           value: currentValue.isEmpty ? null : currentValue,
         ),
       ),

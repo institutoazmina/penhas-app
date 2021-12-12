@@ -7,8 +7,11 @@ import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart
 import 'package:penhas/app/features/support_center/presentation/support_center_module.dart';
 
 class MainboardBodyPage extends StatelessWidget {
+  final List<MainboardState>? pages;
+  final PageController? pageController;
+
   const MainboardBodyPage({
-    Key? key,
+    required Key key,
     required this.pages,
     required this.pageController,
   }) : super(key: key);
@@ -19,9 +22,9 @@ class MainboardBodyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageView(
-      physics: const NeverScrollableScrollPhysics(),
-      controller: pageController,
-      children: pages.map((e) => _buildPage(e)).toList(),
+      physics: NeverScrollableScrollPhysics(),
+      controller: pageController!,
+      children: pages!.map((e) => _buildPage(e)).toList(),
     );
   }
 

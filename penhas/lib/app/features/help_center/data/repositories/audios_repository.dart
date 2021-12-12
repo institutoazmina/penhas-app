@@ -16,11 +16,11 @@ abstract class IAudiosRepository {
 }
 
 class AudiosRepository implements IAudiosRepository {
+  final IApiProvider? _apiProvider;
+
   AudiosRepository({
     required IApiProvider? apiProvider,
-  }) : _apiProvider = apiProvider;
-
-  final IApiProvider? _apiProvider;
+  }) : this._apiProvider = apiProvider;
 
   @override
   Future<Either<Failure, List<AudioEntity>?>> fetch() async {
@@ -66,8 +66,8 @@ class AudiosRepository implements IAudiosRepository {
 
 extension _FutureExtension<T extends String> on Future<T> {
   Future<List<AudioEntity>> parseAudios() async {
-    return then((data) async {
-      final jsonData = jsonDecode(data) as Map<String, dynamic>?;
+    return this.then((data) async {
+      final jsonData = jsonDecode(data) as Map<String, Object>?;
       return AudioModel.fromJson(jsonData);
     });
   }

@@ -39,8 +39,14 @@ abstract class _SignInAnonymousController with Store, MapFailureMessage {
   final IAuthenticationRepository _repository;
   final PasswordValidator _passwordValidator;
 
-  EmailAddress _emailAddress = EmailAddress('');
-  late SignInPassword _password;
+  EmailAddress _emailAddress = EmailAddress("");
+  SignInPassword? _password;
+
+  _SignInAnonymousController(
+      this._repository, this._userProfileStore, this._passwordValidator) {
+    _init();
+    _password = SignInPassword('', _passwordValidator);
+  }
 
   Future<void> _init() async {
     final profile = await _userProfileStore.retrieve();
@@ -56,13 +62,13 @@ abstract class _SignInAnonymousController with Store, MapFailureMessage {
   String userGreetings = '';
 
   @observable
-  String? userEmail = '';
+  String? userEmail = "";
 
   @observable
   String warningPassword = '';
 
   @observable
-  String? errorMessage = '';
+  String? errorMessage = "";
 
   @computed
   PageProgressState get currentState {
@@ -78,13 +84,15 @@ abstract class _SignInAnonymousController with Store, MapFailureMessage {
   @action
   void setPassword(String password) {
     _password = SignInPassword(password, _passwordValidator);
-    warningPassword = _password.mapFailure;
+    warningPassword = _password!.mapFailure;
   }
 
   @action
   Future<void> signInWithEmailAndPasswordPressed() async {
-    if (!_emailAddress.isValid || !_password.isValid) {
-      errorMessage = _invalidFieldsToProceedLogin;
+    _setErrorMessage('');
+
+    if (!_emailAddress.isValid || !_password!.isValid) {
+      _setErrorMessage(_invalidFieldsToProceedLogin);
       return;
     }
     errorMessage = '';
@@ -116,5 +124,9 @@ abstract class _SignInAnonymousController with Store, MapFailureMessage {
 
   Future<void> _forwardToLogged() async {
     Modular.to.pushReplacementNamed('/mainboard');
+  }
+
+  void _setErrorMessage(String? msg) {
+    errorMessage = msg;
   }
 }

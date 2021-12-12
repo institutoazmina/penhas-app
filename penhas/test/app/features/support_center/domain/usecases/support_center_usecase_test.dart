@@ -8,9 +8,14 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
+<<<<<<< HEAD
   late final MockISupportCenterRepository supportCenterRepository =
       MockISupportCenterRepository();
   late final MockILocationServices locationServices = MockILocationServices();
+=======
+  ISupportCenterRepository? supportCenterRepository;
+  ILocationServices locationServices;
+>>>>>>> Migrate code to nullsafety
   late SupportCenterUseCase sut;
 
   setUp(() {
@@ -27,7 +32,7 @@ void main() {
         const jsonFile = 'support_center/support_center_meta_data.json';
         final jsonData = await JsonUtil.getJson(from: jsonFile);
 
-        when(supportCenterRepository.metadata()).thenAnswer(
+        when(supportCenterRepository!.metadata()).thenAnswer(
           (_) async => right(
             SupportCenterMetadataModel.fromJson(jsonData),
           ),
@@ -35,23 +40,23 @@ void main() {
         // act
         await sut.metadata();
         // assert
-        verify(supportCenterRepository.metadata());
+        verify(supportCenterRepository!.metadata());
       });
 
       test('should avoid hit repository twice', () async {
         const jsonFile = 'support_center/support_center_meta_data.json';
         final jsonData = await JsonUtil.getJson(from: jsonFile);
 
-        when(supportCenterRepository.metadata()).thenAnswer(
-          (_) => Future.value(
-            right(SupportCenterMetadataModel.fromJson(jsonData)),
+        when(supportCenterRepository!.metadata()).thenAnswer(
+          (_) async => right(
+            SupportCenterMetadataModel.fromJson(jsonData),
           ),
         );
         await sut.metadata();
         // act
         await sut.metadata();
         // assert
-        verify(supportCenterRepository.metadata()).called(1);
+        verify(supportCenterRepository!.metadata()).called(1);
       });
     });
   });

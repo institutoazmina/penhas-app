@@ -6,11 +6,16 @@ import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.da
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 
 class AppStateModel extends AppStateEntity {
-  const AppStateModel(
-    QuizSessionEntity? quizSession,
-    UserProfileEntity? userProfile,
-    AppStateModeEntity appMode,
-    List<AppStateModuleEntity> modules,
+  final QuizSessionEntity? quizSession;
+  final UserProfileEntity? userProfile;
+  final AppStateModeEntity appMode;
+  final List<AppStateModuleEntity?>? modules;
+
+  AppStateModel(
+    this.quizSession,
+    this.userProfile,
+    this.appMode,
+    this.modules,
   ) : super(
           quizSession: quizSession,
           userProfile: userProfile,
@@ -18,43 +23,43 @@ class AppStateModel extends AppStateEntity {
           modules: modules,
         );
 
-  factory AppStateModel.fromJson(Map<String, dynamic> jsonData) {
-    final int qtyActiveGuardians = jsonData['qtde_guardioes_ativos'] ?? 0;
+  factory AppStateModel.fromJson(Map<String, Object> jsonData) {
+    final hasActivedGuardian =
+        ((jsonData['qtde_guardioes_ativos'] as num?)?.toInt() ?? 0) > 0;
     final appMode = AppStateModeEntity(
       hasActivedGuardian: qtyActiveGuardians > 0,
     );
 
-    final quizSession = _parseQuizSession(jsonData['quiz_session']);
-    final userProfile = _parseUserProfile(jsonData['user_profile']);
-    final List<AppStateModuleEntity> modules = jsonData.containsKey('modules')
-        ? _parseAppModules(jsonData['modules'] as List<dynamic>)
-        : [];
+    final quizSession = _parseQuizSession(jsonData['quiz_session'] as Map<String, Object>?);
+    final userProfile = _parseUserProfile(jsonData['user_profile'] as Map<String, Object>?);
+    final modules = _parseAppModules(jsonData['modules'] as List<Object>?);
     return AppStateModel(quizSession, userProfile, appMode, modules);
   }
 
-  static QuizSessionEntity? _parseQuizSession(Map<String, dynamic>? session) {
+  static QuizSessionEntity? _parseQuizSession(Map<String, Object>? session) {
     if (session == null || session.isEmpty) {
       return null;
     }
 
-    final currentMessage = _parseQuizMessage(session['current_msgs']);
-    final previousMessage = _parseQuizMessage(session['prev_msgs']);
-    final isFinished = session['finished'] != null && session['finished'] == 1;
+    final currentMessage = _parseQuizMessage(session["current_msgs"] as List<Object>?);
+    final previousMessage = _parseQuizMessage(session['prev_msgs'] as List<Object>?);
+    final isFinished = (session['finished'] != null && session['finished'] == 1)
+        ? true
+        : false;
 
     if (previousMessage != null) {
-      currentMessage?.insertAll(0, previousMessage);
+      currentMessage!.insertAll(0, previousMessage);
     }
 
     final String sessionId = "${session['session_id']}";
     return QuizSessionEntity(
-      currentMessage: currentMessage,
-      sessionId: sessionId,
-      isFinished: isFinished,
-      endScreen: session['end_screen'],
-    );
+        currentMessage: currentMessage,
+        sessionId: sessionId,
+        isFinished: isFinished,
+        endScreen: session['end_screen'] as String?);
   }
 
-  static List<QuizMessageEntity>? _parseQuizMessage(List<dynamic>? data) {
+  static List<QuizMessageEntity>? _parseQuizMessage(List<Object>? data) {
     if (data == null || data.isEmpty) {
       return null;
     }
@@ -65,21 +70,27 @@ class AppStateModel extends AppStateEntity {
         .toList();
   }
 
-  static List<AppStateModuleEntity> _parseAppModules(List<dynamic>? data) {
+  static List<AppStateModuleEntity?>? _parseAppModules(List<Object>? data) {
     if (data == null || data.isEmpty) {
       return [];
     }
 
-    return data.map((e) => _buildModule(e)).whereNotNull().toList();
+    List<AppStateModuleEntity?> result = data
+        .map((e) => e as Map<String, Object>)
+        .map((e) => _buildModule(e))
+        .toList();
+
+    result.removeWhere((e) => e == null);
+    return result;
   }
 
-  static AppStateModuleEntity? _buildModule(Map<String, dynamic> module) {
-    if (module.isEmpty) {
+  static AppStateModuleEntity? _buildModule(Map<String, Object> message) {
+    if (message == null || message.isEmpty) {
       return null;
     }
 
-    final String? code = module['code'];
-    if (code == null || code.isEmpty) {
+    String? code = message['code'] as String?;
+    if (message['code'] == null || message['code'].toString().isEmpty) {
       return null;
     }
 
@@ -95,18 +106,18 @@ class AppStateModel extends AppStateEntity {
 
     return [
       QuizMessageEntity(
-        content: message['content'],
-        ref: message['ref'] ?? '',
-        style: message['style'],
-        action: message['action'],
-        buttonLabel: message['label'],
+        content: message['content'] as String?,
+        ref: message['ref'] as String?,
+        style: message['style'] as String?,
+        action: message['action'] as String?,
+        buttonLabel: message['label'] as String?,
         type: _mapMessageType(message),
-        options: _mapToOptions(message['options']),
+        options: _mapToOptions(message['options'] as List<Object>?),
       )
     ];
   }
 
-  static QuizMessageType _mapMessageType(Map<String, dynamic> message) {
+  static QuizMessageType _mapMessageType(Map<String, Object> message) {
     QuizMessageType type = QuizMessageType.from[message['type'] as String];
     if (message['action'] == 'botao_tela_modo_camuflado') {
       type = QuizMessageType.showStealthTutorial;
@@ -126,12 +137,12 @@ class AppStateModel extends AppStateEntity {
   ) {
     return [
       QuizMessageEntity(
-        content: message['content'],
+        content: message['content'] as String?,
         type: QuizMessageType.displayText,
         style: 'normal',
       ),
       QuizMessageEntity(
-        content: message['display_response'],
+        content: message['display_response'] as String?,
         type: QuizMessageType.displayTextResponse,
         style: 'normal',
       )
@@ -139,8 +150,7 @@ class AppStateModel extends AppStateEntity {
   }
 
   static List<QuizMessageMultiplechoicesOptions>? _mapToOptions(
-    List<dynamic>? options,
-  ) {
+      List<Object>? options) {
     if (options == null || options.isEmpty) {
       return null;
     }
@@ -149,14 +159,14 @@ class AppStateModel extends AppStateEntity {
         .map((e) => e as Map<String, dynamic>)
         .map(
           (e) => QuizMessageMultiplechoicesOptions(
-            index: e['index'],
-            display: e['display'],
+            index: e['index'] as String?,
+            display: e['display'] as String?,
           ),
         )
         .toList();
   }
 
-  static UserProfileEntity? _parseUserProfile(Map<String, dynamic>? jsonData) {
+  static UserProfileEntity? _parseUserProfile(Map<String, Object>? jsonData) {
     if (jsonData == null || jsonData.isEmpty) {
       return null;
     }

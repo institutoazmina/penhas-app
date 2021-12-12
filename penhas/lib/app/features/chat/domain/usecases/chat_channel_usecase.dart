@@ -23,18 +23,28 @@ class ChatChannelUseCase with MapFailureMessage {
   }
 
   final IChatChannelRepository _channelRepository;
-  final Duration _pollingSyncInterval = const Duration(seconds: 60);
+  final Duration _pollingSyncInterval = Duration(seconds: 60);
   Timer? _syncTimer;
   String? _channelToken;
+  String? _newestPagination;
+  String? _oldestPagination;
   String? _lastMessageEtag;
-  ChatChannelUseCaseEvent _currentEvent =
-      const ChatChannelUseCaseEvent.initial();
+  ChatChannelUseCaseEvent? _currentEvent;
   ChatChannelSessionEntity? _currentSession;
   final _messageCache = Queue<ChatChannelMessage>();
 
-  late final StreamController<ChatChannelUseCaseEvent> _streamController =
+  final StreamController<ChatChannelUseCaseEvent?> _streamController =
       StreamController.broadcast();
-  Stream<ChatChannelUseCaseEvent> get dataSource => _streamController.stream;
+  Stream<ChatChannelUseCaseEvent?> get dataSource => _streamController.stream;
+
+  ChatChannelUseCase({
+    required ChatChannelOpenEntity session,
+    required IChatChannelRepository channelRepository,
+  }) : this._channelRepository = channelRepository {
+    _currentEvent = ChatChannelUseCaseEvent.initial();
+    _streamController.add(_currentEvent);
+    initial(session);
+  }
 
   Future<void> block() async {
     await blockChannel(isToBlock: true);
@@ -110,7 +120,7 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
             insertWarrningMessage: true,
           );
         } else {
-          handleSession(channel.session!, insertWarrningMessage: true);
+          handleSession(channel.session!, true);
         }
       },
     );
@@ -133,7 +143,7 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
 
   Future<void> handleFailure(Failure failure) async {
     final message = mapFailureMessage(failure);
-    if (_currentEvent == const ChatChannelUseCaseEvent.initial()) {
+    if (_currentEvent == ChatChannelUseCaseEvent.initial()) {
       _currentEvent = ChatChannelUseCaseEvent.errorOnLoading(message!);
       _streamController.add(_currentEvent);
     }

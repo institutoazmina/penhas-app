@@ -9,13 +9,19 @@ import 'package:penhas/app/features/support_center/domain/usecases/support_cente
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late final MockISupportCenterRepository supportCenterRepository =
-      MockISupportCenterRepository();
-  late final MockILocationServices locationServices = MockILocationServices();
-  late final SupportCenterUseCase sut = SupportCenterUseCase(
-    locationService: locationServices,
-    supportCenterRepository: supportCenterRepository,
-  );
+  ISupportCenterRepository? supportCenterRepository;
+  ILocationServices? locationServices;
+  late SupportCenterUseCase sut;
+
+  setUp(() {
+    supportCenterRepository = MockSupportCenterRepository();
+    locationServices = MockLocationServices();
+
+    sut = SupportCenterUseCase(
+      locationService: locationServices,
+      supportCenterRepository: supportCenterRepository,
+    );
+  });
 
   group('SupportCenterUsecase', () {
     group('fetch', () {
@@ -27,12 +33,19 @@ void main() {
         final actual = left(
           GpsFailure(gpsFailure),
         );
-        when(supportCenterRepository.fetch(any)).thenAnswer((_) async => left(
+        when(supportCenterRepository!.fetch(any)).thenAnswer((_) async => left(
               GpsFailure(gpsFailure),
+<<<<<<< HEAD
             ),);
         when(locationServices.currentLocation()).thenAnswer((_) async => right(
             const UserLocationEntity(),),);
         when(locationServices.isPermissionGranted())
+=======
+            ));
+        when(locationServices!.currentLocation()).thenAnswer((_) async => right(
+            UserLocationEntity(accuracy: 0, latitude: 0.0, longitude: 0.0)));
+        when(locationServices!.isPermissionGranted())
+>>>>>>> Migrate code to nullsafety
             .thenAnswer((_) async => true);
         // act
         final matcher = await sut.fetch(fetchRequest);

@@ -12,7 +12,7 @@ import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class AccountDeletePage extends StatefulWidget {
-  const AccountDeletePage({Key? key}) : super(key: key);
+  const AccountDeletePage({required Key key}) : super(key: key);
 
   @override
   _AccountDeletePageState createState() => _AccountDeletePageState();
@@ -53,9 +53,7 @@ class _AccountDeletePageState
 
   @override
   void dispose() {
-    for (final d in _disposers!) {
-      d();
-    }
+    _disposers!.forEach((d) => d());
     super.dispose();
   }
 

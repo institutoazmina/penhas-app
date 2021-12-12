@@ -8,8 +8,13 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class TweetTitle extends StatelessWidget {
+  final TweetEntity tweet;
+  final BuildContext _context;
+  final ITweetController? controller;
+  final bool isDetail;
+
   const TweetTitle({
-    Key? key,
+    required Key key,
     required this.tweet,
     required BuildContext context,
     required this.controller,
@@ -59,7 +64,7 @@ class TweetTitle extends StatelessWidget {
   }
 
   DateTime _mapServerUtcToLocalDate(String? time) {
-    final utcEnabled = '${time}Z';
+    final utcEnabled = "${time}Z";
 
     return DateTime.parse(utcEnabled).toLocal();
   }
@@ -157,17 +162,14 @@ class TweetTitle extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
-          flex: 2,
-          child: Text(tweet.userName!, style: kTextStyleFeedTweetTitle),
-        ),
-        if (isDetail) _buildDetailTime() else _buildTime(),
-        if (controller == null)
-          Container()
-        else
-          IconButton(
-            icon: const Icon(Icons.more_vert),
-            onPressed: () => _showTweetAction(),
-          ),
+            child: Text(tweet.userName!, style: kTextStyleFeedTweetTitle),
+            flex: 2),
+        isDetail ? _buildDetailTime() : _buildTime(),
+        controller == null
+            ? Container()
+            : IconButton(
+                icon: Icon(Icons.more_vert),
+                onPressed: () => _showTweetAction()),
       ],
     );
   }
@@ -201,7 +203,7 @@ class TweetTitle extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(tweet.userName!, style: kTextStyleFeedTweetTitle),
-        if (isDetail) _buildDetailTime() else _buildTime(),
+        isDetail ? _buildDetailTime() : _buildTime(),
       ],
     );
   }

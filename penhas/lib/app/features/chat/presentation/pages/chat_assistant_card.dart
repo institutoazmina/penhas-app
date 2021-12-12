@@ -3,20 +3,20 @@ import 'package:penhas/app/features/chat/domain/entities/chat_main_tile_entity.d
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatAssistantCard extends StatelessWidget {
+  final String? title;
+  final Widget icon;
+  final String? description;
+  final ChatMainSupportTile channel;
+  final void Function(ChatMainSupportTile channel) onPressed;
+
   const ChatAssistantCard({
-    Key? key,
+    required Key key,
     required this.title,
     required this.description,
     required this.icon,
     required this.channel,
     required this.onPressed,
   }) : super(key: key);
-
-  final String? title;
-  final Widget icon;
-  final String? description;
-  final ChatMainSupportTile channel;
-  final void Function(ChatMainSupportTile channel) onPressed;
 
   @override
   Widget build(BuildContext context) {

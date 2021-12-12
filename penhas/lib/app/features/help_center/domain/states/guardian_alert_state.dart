@@ -23,4 +23,10 @@ class GuardianAlertMessageAction extends GuardianAlertAction {
   final String? message;
 
   final void Function() onPressed;
+
+  GuardianAlertMessageAction({
+    required this.title,
+    required this.message,
+    required this.onPressed,
+  });
 }

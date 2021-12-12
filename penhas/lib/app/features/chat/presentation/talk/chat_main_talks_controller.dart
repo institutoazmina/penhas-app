@@ -54,12 +54,11 @@ abstract class _ChatMainTalksControllerBase with Store, MapFailureMessage {
   @action
   Future<void> openAssistantCard(ChatMainSupportTile data) async {
     if (data.quizSession != null) {
-      await Modular.to.popAndPushNamed('/quiz', arguments: data.quizSession);
-      return;
+      return Modular.to.popAndPushNamed('/quiz', arguments: data.quizSession!);
     }
 
-    final ChatChannelOpenEntity session =
-        ChatChannelOpenEntity(token: data.channel!.token);
+    ChatChannelOpenEntity session =
+        ChatChannelOpenEntity(token: data.channel!.token, session: null);
 
     await forwardToChat(session);
   }
@@ -82,8 +81,7 @@ extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
     currentState = const ChatMainTalksState.loading();
     _fetchProgress = ObservableFuture(_chatChannelRepository.listChannel());
 
-    final Either<Failure, ChatChannelAvailableEntity> response =
-        await _fetchProgress!;
+    final Either<Failure, ChatChannelAvailableEntity> response = await _fetchProgress!;
 
     response.fold(
       (failure) => handleLoadPageError(failure),
@@ -98,8 +96,8 @@ extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
     if (session.assistant != null) {
       cards.add(
         ChatMainSupportTile(
-          title: session.assistant!.title!,
-          content: session.assistant!.subtitle!,
+          title: session.assistant!.title,
+          content: session.assistant!.subtitle,
           channel: ChatChannelEntity(
             token: null,
             lastMessageTime: null,
@@ -120,8 +118,8 @@ extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
     if (session.support != null) {
       cards.add(
         ChatMainSupportTile(
-          title: session.support!.user.nickname!,
-          content: 'Fale com as adminstradoras do app',
+          title: session.support!.user.nickname,
+          content: "Fale com as adminstradoras do app",
           channel: session.support,
         ),
       );
@@ -133,7 +131,7 @@ extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
 
     if (session.channels!.isNotEmpty) {
       final total = session.channels!.length;
-      final title = total > 1 ? 'Suas conversas ($total)' : 'Sua conversa';
+      final title = total > 1 ? "Suas conversas ($total)" : "Sua conversa";
       tiles.add(ChatMainChannelHeaderTile(title: title));
       final channels = session.channels!
           .map((e) => ChatMainChannelCardTile(channel: e))

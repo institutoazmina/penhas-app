@@ -7,7 +7,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class HelpCenterCardRecord extends StatelessWidget {
   const HelpCenterCardRecord({
-    Key? key,
+    required Key key,
     required this.onPressed,
   }) : super(key: key);
 

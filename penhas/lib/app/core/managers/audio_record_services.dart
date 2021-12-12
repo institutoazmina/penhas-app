@@ -47,12 +47,15 @@ class AudioRecordServices implements IAudioRecordServices {
   final _audioCodec = Codec.aacADTS;
   String? _currentAudionSession;
   late int _sessionSequence;
-  Duration _currentDuration = Duration.zero;
-  Duration _runningDuration = Duration.zero;
+  Duration _currentDuration = Duration(milliseconds: 0);
+  Duration _runningDuration = Duration(milliseconds: 0);
 
   StreamSubscription? _recorderSubscription;
   StreamController<AudioActivity>? _streamController =
       StreamController.broadcast();
+
+  AudioRecordServices({required IAudioSyncManager audioSyncManager})
+      : this._audioSyncManager = audioSyncManager;
 
   @override
   Stream<AudioActivity> get onProgress => _streamController!.stream;
@@ -97,10 +100,12 @@ class AudioRecordServices implements IAudioRecordServices {
     _audioSyncManager.syncAudio();
 
     try {
-      _streamController?.close();
-      _streamController = null;
-    } catch (e, stack) {
-      logError(e, stack);
+      if (_streamController != null) {
+        _streamController!.close();
+        _streamController = null;
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -142,8 +147,10 @@ extension _PermissionStatusMap on PermissionStatus {
 
 extension _AudioRecordServices on AudioRecordServices {
   void _cancelRecorderSubscriptions() {
-    _recorderSubscription?.cancel();
-    _recorderSubscription = null;
+    if (_recorderSubscription != null) {
+      _recorderSubscription!.cancel();
+      _recorderSubscription = null;
+    }
 
     _streamController?.close();
   }
@@ -192,14 +199,16 @@ extension _AudioRecordServices on AudioRecordServices {
 
       _recorderSubscription = _recorder.onProgress?.listen(
         (e) {
-          _runningDuration = e.duration;
-          final DateTime date = DateTime.fromMillisecondsSinceEpoch(
-            _runningDuration.inMilliseconds + _currentDuration.inMilliseconds,
-            isUtc: true,
-          );
-          final String recordTime =
-              DateFormat('mm:ss:SS', 'en_GB').format(date).substring(0, 8);
-          _streamController!.add(AudioActivity(recordTime, e.decibels ?? 0));
+          if (e != null && e.duration != null) {
+            _runningDuration = e.duration;
+            DateTime date = new DateTime.fromMillisecondsSinceEpoch(
+                _runningDuration.inMilliseconds +
+                    _currentDuration.inMilliseconds,
+                isUtc: true);
+            String recordTime =
+                DateFormat('mm:ss:SS', 'en_GB').format(date).substring(0, 8);
+            _streamController!.add(AudioActivity(recordTime, e.decibels));
+          }
         },
         onError: catchErrorLogger,
       );

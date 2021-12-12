@@ -12,7 +12,8 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class PenhasDrawerPage extends StatefulWidget {
-  const PenhasDrawerPage({Key? key, this.title = 'Penhas Drawer'})
+  final String title;
+  const PenhasDrawerPage({required Key key, this.title = "Penhas Drawer"})
       : super(key: key);
 
   final String title;

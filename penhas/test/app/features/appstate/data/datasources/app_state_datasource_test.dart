@@ -9,6 +9,7 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
+<<<<<<< HEAD
   late final MockHttpClient apiClient = MockHttpClient();
   late final MockIApiServerConfigure serverConfigure =
       MockIApiServerConfigure();
@@ -18,21 +19,33 @@ void main() {
     apiClient: apiClient,
     serverConfiguration: serverConfigure,
   );
+=======
+  MockHttpClient? apiClient;
+  late IAppStateDataSource dataSource;
+  MockApiServerConfigure? serverConfigure;
+  late String bodyContent;
+  Uri? serverEndpoint;
+>>>>>>> Migrate code to nullsafety
 
   setUp(() {
     bodyContent =
         JsonUtil.getStringSync(from: 'profile/about_with_quiz_session.json');
 
     // MockApiServerConfigure configuration
-    when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
-    when(serverConfigure.apiToken)
+    when(serverConfigure!.baseUri).thenAnswer(((_) => serverEndpoint!) as Uri Function(Invocation));
+    when(serverConfigure!.apiToken)
         .thenAnswer((_) => Future.value('my.very.strong'));
+<<<<<<< HEAD
     when(serverConfigure.userAgent)
         .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
+=======
+    when(serverConfigure!.userAgent)
+        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
+>>>>>>> Migrate code to nullsafety
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
-    final userAgent = await serverConfigure.userAgent;
+    final userAgent = await serverConfigure!.userAgent;
     return {
       'User-Agent': userAgent,
       'Content-Type': 'application/json; charset=utf-8',
@@ -42,19 +55,26 @@ void main() {
 
   Uri _setuHttpRequest() {
     return Uri(
-      scheme: serverEndpoint.scheme,
-      host: serverEndpoint.host,
+      scheme: serverEndpoint!.scheme,
+      host: serverEndpoint!.host,
       path: '/me',
     );
   }
 
   PostExpectation<Future<http.Response>> _mockRequest() {
+<<<<<<< HEAD
     return when(
       apiClient.get(
         any,
         headers: anyNamed('headers'),
       ),
     );
+=======
+    return when(apiClient!.get(
+      any,
+      headers: anyNamed('headers'),
+    ));
+>>>>>>> Migrate code to nullsafety
   }
 
   void _setUpMockHttpClientSuccess200() {
@@ -87,7 +107,7 @@ void main() {
       // act
       await dataSource.check();
       // assert
-      verify(apiClient.get(loginUri, headers: headers));
+      verify(apiClient!.get(loginUri, headers: headers));
     });
     test('should get AppStateModel for valid session', () async {
       // arrange

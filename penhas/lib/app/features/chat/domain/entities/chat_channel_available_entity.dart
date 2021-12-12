@@ -4,7 +4,13 @@ import 'package:penhas/app/features/chat/domain/entities/chat_assistant_entity.d
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_entity.dart';
 
 class ChatChannelAvailableEntity extends Equatable {
-  const ChatChannelAvailableEntity({
+  final bool? hasMore;
+  final String? nextPage;
+  final List<ChatChannelEntity>? channels;
+  final ChatChannelEntity? support;
+  final ChatAssistantEntity? assistant;
+
+  ChatChannelAvailableEntity({
     required this.hasMore,
     required this.nextPage,
     required this.channels,
@@ -22,11 +28,11 @@ class ChatChannelAvailableEntity extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object?> get props => [
-        hasMore,
-        nextPage,
-        channels,
-        support,
-        assistant,
+  List<Object> get props => [
+        hasMore!,
+        nextPage!,
+        channels!,
+        support!,
+        assistant!,
       ];
 }

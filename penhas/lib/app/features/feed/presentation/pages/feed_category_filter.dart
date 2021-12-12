@@ -6,7 +6,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class FeedCategoryFilter extends StatelessWidget {
   const FeedCategoryFilter({
-    Key? key,
+    required Key key,
     required this.reloadFeed,
   }) : super(key: key);
 
@@ -21,7 +21,7 @@ class FeedCategoryFilter extends StatelessWidget {
         elevation: 0.0,
         onPressed: () async {
           Modular.to.pushNamed('/mainboard/category').then((reload) {
-            if (reload == true) {
+            if (reload as bool? ?? false) {
               reloadFeed();
             }
           });

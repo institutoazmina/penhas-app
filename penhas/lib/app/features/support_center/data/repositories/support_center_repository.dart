@@ -21,16 +21,12 @@ import 'package:penhas/app/shared/logger/log.dart';
 abstract class ISupportCenterRepository {
   Future<Either<Failure, SupportCenterMetadataEntity?>> metadata();
   Future<Either<Failure, SupportCenterPlaceSessionEntity>> fetch(
-    SupportCenterFetchRequest? options,
-  );
+      SupportCenterFetchRequest? options);
   Future<Either<Failure, GeolocationEntity>> mapGeoFromCep(String? cep);
   Future<Either<Failure, SupportCenterPlaceDetailEntity>> detail(
-    SupportCenterPlaceEntity? placeEntity,
-  );
+      SupportCenterPlaceEntity? placeEntity);
   Future<Either<Failure, ValidField>> rate(
-    SupportCenterPlaceEntity? place,
-    double rate,
-  );
+      SupportCenterPlaceEntity? place, double rate);
   Future<Either<Failure, AlertModel>> suggestion({
     required String? name,
     required String? address,
@@ -40,16 +36,16 @@ abstract class ISupportCenterRepository {
 }
 
 class SupportCenterRepository implements ISupportCenterRepository {
+  final IApiProvider? _apiProvider;
+
   SupportCenterRepository({
     required IApiProvider? apiProvider,
-  }) : _apiProvider = apiProvider;
-
-  final IApiProvider? _apiProvider;
+  }) : this._apiProvider = apiProvider;
 
   @override
   Future<Either<Failure, SupportCenterMetadataEntity?>> metadata() async {
-    const endPoint = '/pontos-de-apoio-dados-auxiliares';
-    final Map<String, String> parameters = {'projeto': 'Penhas'};
+    final endPoint = "/pontos-de-apoio-dados-auxiliares";
+    Map<String, String> parameters = {'projeto': 'Penhas'};
 
     try {
       final bodyResponse = await _apiProvider!.get(
@@ -65,23 +61,24 @@ class SupportCenterRepository implements ISupportCenterRepository {
 
   @override
   Future<Either<Failure, SupportCenterPlaceSessionEntity>> fetch(
-    SupportCenterFetchRequest? options,
-  ) async {
-    const endPoint = 'me/pontos-de-apoio';
+      SupportCenterFetchRequest? options) async {
+    final endPoint = "me/pontos-de-apoio";
 
-    final Map<String, String?> parameters = <String, String?>{};
+    Map<String, String?> parameters = Map<String, String?>();
     if (options!.locationToken != null) {
-      parameters['location_token'] = options.locationToken;
-    } else if (options.userLocation != null) {
-      parameters['latitude'] = options.userLocation!.latitude.toString();
-      parameters['longitude'] = options.userLocation!.longitude.toString();
+      parameters["location_token"] = options.locationToken;
+    } else if (options.userLocation != null &&
+        options.userLocation!.latitude != null &&
+        options.userLocation!.longitude != null) {
+      parameters["latitude"] = options.userLocation!.latitude.toString();
+      parameters["longitude"] = options.userLocation!.longitude.toString();
     }
 
     if (options.categories != null && options.categories!.isNotEmpty) {
-      parameters['categorias'] = options.categories!.join(',');
+      parameters["categorias"] = options.categories!.join(",");
     }
 
-    parameters['keywords'] =
+    parameters["keywords"] =
         (options.keywords == null || options.keywords!.isEmpty)
             ? null
             : options.keywords;
@@ -100,8 +97,8 @@ class SupportCenterRepository implements ISupportCenterRepository {
 
   @override
   Future<Either<Failure, GeolocationEntity>> mapGeoFromCep(String? cep) async {
-    const endPoint = 'me/geocode';
-    final Map<String, String?> parameters = {
+    final endPoint = "me/geocode";
+    Map<String, String?> parameters = {
       'address': cep,
     };
 
@@ -124,10 +121,10 @@ class SupportCenterRepository implements ISupportCenterRepository {
   }) async {
     const endPoint = '/me/sugerir-pontos-de-apoio';
     final bodyContent = [
-      'nome=${Uri.encodeComponent(name!)}',
-      'categoria=${Uri.encodeComponent(category)}',
-      'endereco_ou_cep=${Uri.encodeComponent(address!)}',
-      'descricao_servico=${Uri.encodeComponent(description!)}',
+      'nome=' + Uri.encodeComponent(name!),
+      'categoria=' + Uri.encodeComponent(category),
+      'endereco_ou_cep=' + Uri.encodeComponent(address!),
+      'descricao_servico=' + Uri.encodeComponent(description!),
     ].join('&');
 
     try {
@@ -144,9 +141,8 @@ class SupportCenterRepository implements ISupportCenterRepository {
 
   @override
   Future<Either<Failure, SupportCenterPlaceDetailEntity>> detail(
-    SupportCenterPlaceEntity? placeEntity,
-  ) async {
-    final endPoint = ['me', 'pontos-de-apoio', placeEntity!.id].join('/');
+      SupportCenterPlaceEntity? placeEntity) async {
+    final endPoint = ['me', 'pontos-de-apoio', placeEntity!.id].join("/");
 
     try {
       final response = await _apiProvider!.get(path: endPoint);
@@ -162,10 +158,10 @@ class SupportCenterRepository implements ISupportCenterRepository {
     SupportCenterPlaceEntity? place,
     double rate,
   ) async {
-    final endPoint = ['me', 'avaliar-pontos-de-apoio'].join('/');
-    final parameters = <String, String>{};
-    parameters['ponto_apoio_id'] = place!.id;
-    parameters['rating'] = rate.toInt().toString();
+    final endPoint = ['me', 'avaliar-pontos-de-apoio'].join("/");
+    final parameters = Map<String, String>();
+    parameters["ponto_apoio_id"] = place!.id.toString();
+    parameters["rating"] = rate.toInt().toString();
 
     try {
       await _apiProvider!.post(

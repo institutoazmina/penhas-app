@@ -15,6 +15,14 @@ class SupportCenterInput extends StatelessWidget {
   final String errorText;
   final ValueChanged<String> onChanged;
 
+  const SupportCenterInput({
+    required Key key,
+    this.maxLines = 1,
+    required this.hintText,
+    required this.errorText,
+    required this.onChanged,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Padding(

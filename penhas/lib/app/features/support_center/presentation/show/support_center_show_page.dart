@@ -16,7 +16,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/logger/log.dart';
 
 class SupportCenterShowPage extends StatefulWidget {
-  const SupportCenterShowPage({Key? key}) : super(key: key);
+  const SupportCenterShowPage({required Key key}) : super(key: key);
 
   @override
   _SupportCenterShowPageState createState() => _SupportCenterShowPageState();
@@ -65,8 +65,7 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
     BuildContext context,
     SupportCenterPlaceDetailEntity detail,
   ) {
-    final placeColor =
-        DesignSystemColors.hexColor(detail.place!.category.color!);
+    final placeColor = DesignSystemColors.hexColor(detail.place!.category.color!);
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
@@ -107,7 +106,9 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
                     child: Column(
                       children: [
                         Text(
-                          '${detail.place!.category.name!.toUpperCase()} | ${detail.place!.typeOfPlace!.toUpperCase()}',
+                          detail.place!.category.name!.toUpperCase() +
+                              " | " +
+                              detail.place!.typeOfPlace!.toUpperCase(),
                           style: placeTypeTextStyle,
                         ),
                       ],
@@ -214,13 +215,24 @@ extension _Maps on _SupportCenterShowPageState {
                     ),
                   ),
                   SingleChildScrollView(
-                    child: Wrap(
-                      children: <Widget>[
-                        for (var map in availableMaps)
-                          ListTile(
-                            onTap: () => map.showMarker(
-                              coords: coords,
-                              title: title!,
+                    child: Container(
+                      child: Wrap(
+                        children: <Widget>[
+                          for (var map in availableMaps)
+                            ListTile(
+                              onTap: () => map.showMarker(
+                                coords: coords,
+                                title: title!,
+                              ),
+                              title: Text(
+                                map.mapName,
+                                style: mapTitleTextStyle,
+                              ),
+                              leading: SvgPicture.asset(
+                                map.icon,
+                                height: 30.0,
+                                width: 30.0,
+                              ),
                             ),
                             title: Text(
                               map.mapName,

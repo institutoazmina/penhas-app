@@ -5,8 +5,11 @@ import 'package:penhas/app/features/main_menu/presentation/account/pages/card_pr
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class CardProfileEmailPage extends StatelessWidget {
+  final String? content;
+  final void Function(String, String) onChange;
+
   const CardProfileEmailPage({
-    Key? key,
+    required Key key,
     required this.content,
     required this.onChange,
   }) : super(key: key);
@@ -46,8 +49,8 @@ class CardProfileEmailPage extends StatelessWidget {
 
 extension _Modal on CardProfileEmailPage {
   void showModal({required BuildContext context}) {
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
 
     Modular.to.showDialog(
       builder: (context) => AlertDialog(

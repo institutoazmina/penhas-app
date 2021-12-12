@@ -9,8 +9,11 @@ import 'package:penhas/app/features/quiz/presentation/quiz/quiz_single_button.da
 import 'package:penhas/app/features/quiz/presentation/quiz/quiz_typedef.dart';
 
 class QuizUserReplayWidget extends StatelessWidget {
+  final QuizMessageEntity? message;
+  final UserReaction onActionReplay;
+
   const QuizUserReplayWidget({
-    Key? key,
+    required Key key,
     required this.message,
     required this.onActionReplay,
   }) : super(key: key);
@@ -20,34 +23,34 @@ class QuizUserReplayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    switch (message.type) {
+    switch (message!.type) {
       case QuizMessageType.yesno:
         return QuiZButtonYesNoWidget(
-          reference: message.ref,
+          reference: message!.ref,
           onPressed: onActionReplay,
         );
       case QuizMessageType.showHelpTutorial:
         return QuizShowHelpTutorialWidget(
-          reference: message.ref,
+          reference: message!.ref,
           onPressed: onActionReplay,
-          buttonLabel: message.buttonLabel,
+          buttonLabel: message!.buttonLabel,
         );
       case QuizMessageType.showStealthTutorial:
         return QuizShowStealthTutorialWidget(
-          reference: message.ref,
+          reference: message!.ref,
           onPressed: onActionReplay,
-          buttonLabel: message.buttonLabel,
+          buttonLabel: message!.buttonLabel,
         );
       case QuizMessageType.button:
         return QuizSingleButtonWidget(
-          reference: message.ref,
+          reference: message!.ref,
           onPressed: onActionReplay,
-          buttonLabel: message.buttonLabel,
+          buttonLabel: message!.buttonLabel,
         );
       case QuizMessageType.multipleChoices:
         return QuizMultipleChoicesWidget(
-          reference: message.ref,
-          options: message.options,
+          reference: message!.ref,
+          options: message!.options,
           onPressed: onActionReplay,
         );
       case QuizMessageType.from:

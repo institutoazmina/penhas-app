@@ -43,7 +43,7 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
   AudioTileAction actionSheetState = const AudioTileAction.initial();
 
   @observable
-  AudioPlaying playingAudioState = const AudioPlaying.none();
+  AudioPlaying? playingAudioState;
 
   @computed
   PageProgressState get loadState {
@@ -100,6 +100,8 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
 }
 
 extension _AudiosControllerBasePrivate on _AudiosControllerBase {
+  void setErrorMessage(String? message) => errorMessage = message;
+
   void handleLoadSession(List<AudioEntity> session) {
     final audios = session.map((e) => buildTile(e)).toList();
     currentState = AudiosState.loaded(audios);
@@ -116,10 +118,9 @@ extension _AudiosControllerBasePrivate on _AudiosControllerBase {
     final bool isRequestRequired = !audio.canPlay && !audio.isRequested;
     if (isRequestRequired) {
       final request = await _audiosRepository.requestAccess(audio);
-      request.fold(
-        (failure) => errorMessage = mapFailureMessage(failure),
-        (session) =>
-            actionSheetState = AudioTileAction.notice(session.message!),
+      request?.fold(
+        (failure) => setErrorMessage(mapFailureMessage(failure)),
+        (session) => actionSheetState = AudioTileAction.notice(session.message!),
       );
     } else if (audio.canPlay) {
       final playingAudio = await _audioPlayer.start(

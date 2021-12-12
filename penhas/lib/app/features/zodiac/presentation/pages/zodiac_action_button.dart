@@ -16,6 +16,14 @@ class ZodiacActionButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool isRunning;
 
+  const ZodiacActionButton({
+    required this.sign,
+    required this.listOfSign,
+    required this.isRunning,
+    required this.onPressed,
+    required Key key,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     if (listOfSign.length < 7) {

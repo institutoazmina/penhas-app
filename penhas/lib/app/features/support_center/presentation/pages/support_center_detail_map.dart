@@ -5,7 +5,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class SupportCenterDetailMap extends StatelessWidget {
   const SupportCenterDetailMap({
-    Key? key,
+    required Key key,
     required this.detail,
   }) : super(key: key);
 
@@ -27,14 +27,16 @@ class SupportCenterDetailMap extends StatelessWidget {
       DesignSystemColors.hexColor(detail.place!.category.color!),
     );
 
-    final Set<Marker> markers = <Marker>{
-      Marker(
-        position: position,
-        markerId: MarkerId(position.toString()),
-        infoWindow: InfoWindow(title: detail.place!.name),
-        icon: BitmapDescriptor.defaultMarkerWithHue(placeColor.hue),
-      )
-    };
+    final Set<Marker> markers = Set<Marker>.from(
+      [
+        Marker(
+          position: position,
+          markerId: MarkerId(position.toString()),
+          infoWindow: InfoWindow(title: detail.place!.name!),
+          icon: BitmapDescriptor.defaultMarkerWithHue(placeColor.hue),
+        )
+      ],
+    );
 
     return SafeArea(
       child: Column(

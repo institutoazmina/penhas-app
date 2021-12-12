@@ -13,10 +13,15 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late final MockIApiProvider apiProvider = MockIApiProvider();
-  late final ISupportCenterRepository sut =
-      SupportCenterRepository(apiProvider: apiProvider);
-  const SupportCenterFetchRequest fetchRequest = SupportCenterFetchRequest();
+  IApiProvider? apiProvider;
+  late ISupportCenterRepository sut;
+  SupportCenterFetchRequest? fetchRequest;
+
+  setUp(() {
+    apiProvider = MockApiProvider();
+    fetchRequest = SupportCenterFetchRequest();
+    sut = SupportCenterRepository(apiProvider: apiProvider);
+  });
 
   group('SupportCenterRepository', () {
     test('metadata should return valid objects from server', () async {
@@ -25,7 +30,7 @@ void main() {
       final jsonData = await JsonUtil.getJson(from: jsonFile);
       final actual = right(SupportCenterMetadataModel.fromJson(jsonData));
       when(
-        apiProvider.get(
+        apiProvider!.get(
           path: anyNamed('path'),
           headers: anyNamed('headers'),
           parameters: anyNamed('parameters'),
@@ -41,10 +46,14 @@ void main() {
         // arrange
         const jsonFile = 'support_center/support_center_no_gps.json';
         final jsonData = await JsonUtil.getJson(from: jsonFile);
+<<<<<<< HEAD
         final actual = left(GpsFailure(jsonData['message'] as String?));
+=======
+        final actual = left(GpsFailure(jsonData["message"] as String?));
+>>>>>>> Migrate code to nullsafety
 
         when(
-          apiProvider.get(
+          apiProvider!.get(
             path: anyNamed('path'),
             headers: anyNamed('headers'),
             parameters: anyNamed('parameters'),
@@ -62,7 +71,7 @@ void main() {
         final jsonData = await JsonUtil.getJson(from: jsonFile);
         final actual = right(SupportCenterPlaceSessionModel.fromJson(jsonData));
         when(
-          apiProvider.get(
+          apiProvider!.get(
             path: anyNamed('path'),
             headers: anyNamed('headers'),
             parameters: anyNamed('parameters'),
@@ -80,10 +89,14 @@ void main() {
         // arrange
         const jsonFile = 'support_center/support_center_geocode_error.json';
         final jsonData = await JsonUtil.getJson(from: jsonFile);
+<<<<<<< HEAD
         final actual = left(AddressFailure(jsonData['message'] as String?));
+=======
+        final actual = left(AddressFailure(jsonData["message"] as String?));
+>>>>>>> Migrate code to nullsafety
 
         when(
-          apiProvider.get(
+          apiProvider!.get(
             path: anyNamed('path'),
             headers: anyNamed('headers'),
             parameters: anyNamed('parameters'),
@@ -101,7 +114,7 @@ void main() {
         final actual = right(GeoLocationModel.fromJson(jsonData));
 
         when(
-          apiProvider.get(
+          apiProvider!.get(
             path: anyNamed('path'),
             headers: anyNamed('headers'),
             parameters: anyNamed('parameters'),

@@ -11,7 +11,7 @@ import 'package:penhas/app/features/support_center/presentation/pages/support_ce
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatMainPeoplePage extends StatefulWidget {
-  const ChatMainPeoplePage({Key? key}) : super(key: key);
+  const ChatMainPeoplePage({required Key key}) : super(key: key);
 
   @override
   _ChatMainPeoplePageState createState() => _ChatMainPeoplePageState();

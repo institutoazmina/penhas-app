@@ -8,8 +8,7 @@ import '../../../../../utils/helper.mocks.dart';
 
 void main() {
   late TweetFilterPreference sut;
-  late final MockITweetFilterPreferenceRepository mockRepository =
-      MockITweetFilterPreferenceRepository();
+  ITweetFilterPreferenceRepository? mockRepository;
   TweetFilterSessionEntity? response;
 
   setUp(() {
@@ -32,7 +31,7 @@ void main() {
   group('TweetFilterPreference', () {
     test('should retrieve tag and categories list from server', () async {
       // arrange
-      when(mockRepository.retreive()).thenAnswer((_) async => right(response!));
+      when(mockRepository!.retreive()).thenAnswer(((_) async => right(response!)) as Future<Either<Failure, TweetFilterSessionEntity>> Function(Invocation));
 
       final expected = right(
         const TweetFilterSessionEntity(
@@ -56,20 +55,15 @@ void main() {
     test('should retrieve upgated tag and categories list from server',
         () async {
       // arrange
-      when(mockRepository.retreive()).thenAnswer((_) async => right(response!));
-      final expected = right(
-        const TweetFilterSessionEntity(
-          categories: [
-            TweetFilterEntity(id: '1', isSelected: false, label: 'C 1'),
-            TweetFilterEntity(id: '2', isSelected: true, label: 'C 2'),
-          ],
-          tags: [
-            TweetFilterEntity(id: '1', isSelected: false, label: 'Tag - 1'),
-            TweetFilterEntity(id: '2', isSelected: true, label: 'Tag - 2'),
-            TweetFilterEntity(id: '3', isSelected: true, label: 'Tag - 3')
-          ],
-        ),
-      );
+      when(mockRepository!.retreive()).thenAnswer(((_) async => right(response!)) as Future<Either<Failure, TweetFilterSessionEntity>> Function(Invocation));
+      final expected = right(TweetFilterSessionEntity(categories: [
+        TweetFilterEntity(id: '1', isSelected: false, label: 'C 1'),
+        TweetFilterEntity(id: '2', isSelected: true, label: 'C 2'),
+      ], tags: [
+        TweetFilterEntity(id: '1', isSelected: false, label: 'Tag - 1'),
+        TweetFilterEntity(id: '2', isSelected: true, label: 'Tag - 2'),
+        TweetFilterEntity(id: '3', isSelected: true, label: 'Tag - 3')
+      ]));
       // act
       sut.categories = ['2'];
       sut.saveTags(['2', '3']);

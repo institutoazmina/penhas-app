@@ -13,7 +13,7 @@ String? _normalizeHitText(String? text) {
 class WhiteBoxDecorationStyle extends InputDecoration {
   WhiteBoxDecorationStyle({
     required String labelText,
-    String? hintText,
+    required String hintText,
     String? errorText,
   }) : super(
           border: const OutlineInputBorder(),
@@ -21,10 +21,9 @@ class WhiteBoxDecorationStyle extends InputDecoration {
           labelStyle: kTextStyleDefaultTextFieldLabelStyle,
           hintText: hintText,
           hintStyle: kTextStyleDefaultTextFieldLabelStyle,
-          errorText: _normalizeHitText(errorText),
-          contentPadding:
-              const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
-          enabledBorder: const OutlineInputBorder(
+          errorText: _normalizeHitText(errorText)!,
+          contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
+          enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white70),
           ),
           focusedBorder: const OutlineInputBorder(
@@ -36,7 +35,7 @@ class WhiteBoxDecorationStyle extends InputDecoration {
 class PurpleBoxDecorationStyle extends InputDecoration {
   PurpleBoxDecorationStyle({
     required String labelText,
-    String? hintText,
+    required String hintText,
     String? errorText,
   }) : super(
           border: const OutlineInputBorder(),
@@ -44,10 +43,9 @@ class PurpleBoxDecorationStyle extends InputDecoration {
           labelStyle: kTextStyleGreyDefaultTextFieldLabelStyle,
           hintText: hintText,
           hintStyle: kTextStyleGreyDefaultTextFieldLabelStyle,
-          errorText: _normalizeHitText(errorText),
-          contentPadding:
-              const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
-          enabledBorder: const OutlineInputBorder(
+          errorText: _normalizeHitText(errorText)!,
+          contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
+          enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: DesignSystemColors.easterPurple),
           ),
           focusedBorder: const OutlineInputBorder(

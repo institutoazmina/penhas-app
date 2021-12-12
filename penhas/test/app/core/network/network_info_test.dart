@@ -6,8 +6,12 @@ import '../../../utils/helper.mocks.dart';
 
 void main() {
   late NetworkInfo networkInfo;
+<<<<<<< HEAD
   late final MockDataConnectionChecker mockDataConnectionChecker =
       MockDataConnectionChecker();
+=======
+  MockDataConnectionChecker? mockDataConnectionChecker;
+>>>>>>> Migrate code to nullsafety
 
   setUp(() {
     networkInfo = NetworkInfo(mockDataConnectionChecker);
@@ -17,12 +21,12 @@ void main() {
     test('should forward the call to DataConnectionChecker.hasConnection', () {
       // arrange
       final hasConnectionFuture = Future.value(true);
-      when(mockDataConnectionChecker.hasConnection)
+      when(mockDataConnectionChecker!.hasConnection)
           .thenAnswer((_) => hasConnectionFuture);
       // act
       final result = networkInfo.isConnected;
       // assert
-      verify(mockDataConnectionChecker.hasConnection);
+      verify(mockDataConnectionChecker!.hasConnection);
       expect(result, hasConnectionFuture);
     });
   });

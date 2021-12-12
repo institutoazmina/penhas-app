@@ -12,9 +12,7 @@ const String baseUrl = String.fromEnvironment(
 
 abstract class IAppConfiguration {
   Future<String> get apiToken;
-
   Future<void> saveApiToken({required String? token});
-
   Future<void> saveAppModes(AppStateModeEntity appMode);
 
   Future<void> logout();
@@ -32,6 +30,8 @@ class AppConfiguration implements IAppConfiguration {
   final _tokenKey = 'br.com.penhas.tokenServer';
   final _appModes = 'br.com.penhas.appConfigurationModes';
   final ILocalStorage _storage;
+
+  AppConfiguration({required ILocalStorage storage}) : this._storage = storage;
 
   @override
   Future<String> get apiToken {
@@ -79,7 +79,7 @@ class AppConfiguration implements IAppConfiguration {
 
   AppStateModeEntity _buildAppStateMode(Map<String, dynamic> data) {
     return AppStateModeEntity(
-      hasActivedGuardian: data['hasActivedGuardian'],
+      hasActivedGuardian: data['hasActivedGuardian'] as bool?,
     );
   }
 }

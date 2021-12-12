@@ -7,6 +7,6 @@ import 'package:penhas/app/features/authentication/domain/usecases/sign_in_passw
 abstract class IAuthenticationRepository {
   Future<Either<Failure, SessionEntity>> signInWithEmailAndPassword({
     required EmailAddress emailAddress,
-    required SignInPassword password,
+    required SignInPassword? password,
   });
 }

@@ -9,11 +9,34 @@ import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.d
 import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
+<<<<<<< HEAD
 void main() {
   late final MockIAppStateRepository appStateRepository = MockIAppStateRepository();
   late final MockIAppConfiguration appConfiguration = MockIAppConfiguration();
   late final MockUserProfileStore profileStore = MockUserProfileStore();
   late final MockIAppModulesServices appModulesServices = MockIAppModulesServices();
+=======
+class MockAppStateRepository extends Mock implements IAppStateRepository {}
+
+class MockUserProfileStore extends Mock implements LocalStore<UserProfileEntity?> {}
+
+class MockAppConfiguration extends Mock implements IAppConfiguration {}
+
+class MockAppModulesServices extends Mock implements IAppModulesServices {}
+
+void main() {
+  late AppStateUseCase sut;
+  IAppStateRepository? appStateRepository;
+  IAppConfiguration? appConfiguration;
+  LocalStore<UserProfileEntity?>? profileStore;
+  IAppModulesServices? appModulesServices;
+
+  setUp(() {
+    profileStore = MockUserProfileStore();
+    appConfiguration = MockAppConfiguration();
+    appStateRepository = MockAppStateRepository();
+    appModulesServices = MockAppModulesServices();
+>>>>>>> Migrate code to nullsafety
 
   late final AppStateUseCase sut = AppStateUseCase(
     userProfileStore: profileStore,
@@ -27,34 +50,34 @@ void main() {
       final jsonData =
           await JsonUtil.getJson(from: 'profile/about_with_quiz_session.json');
       final expectedModel = AppStateModel.fromJson(jsonData);
-      when(profileStore.save(any)).thenAnswer((_) => Future.value());
-      when(appConfiguration.saveAppModes(any))
+      when(profileStore!.save(any)).thenAnswer((_) => Future.value());
+      when(appConfiguration!.saveAppModes(any))
           .thenAnswer((_) => Future.value());
-      when(appStateRepository.check()).thenAnswer(
+      when(appStateRepository!.check()).thenAnswer(
         (_) async => right(expectedModel),
       );
       // act
       await sut.check();
       // assert
-      verify(profileStore.save(expectedModel.userProfile));
-      verify(appModulesServices.save(expectedModel.modules));
-      verify(appConfiguration.saveAppModes(expectedModel.appMode));
+      verify(profileStore!.save(expectedModel.userProfile));
+      verify(appModulesServices!.save(expectedModel.modules));
+      verify(appConfiguration!.saveAppModes(expectedModel.appMode));
     });
     test('should not hit store user profile when get failure', () async {
       final jsonData =
           await JsonUtil.getJson(from: 'profile/about_with_quiz_session.json');
       final expectedModel = AppStateModel.fromJson(jsonData);
-      when(profileStore.save(any)).thenAnswer((_) => Future.value());
-      when(appConfiguration.saveAppModes(any))
+      when(profileStore!.save(any)).thenAnswer((_) => Future.value());
+      when(appConfiguration!.saveAppModes(any))
           .thenAnswer((_) => Future.value());
-      when(appStateRepository.check()).thenAnswer(
+      when(appStateRepository!.check()).thenAnswer(
         (_) async => left(ServerSideSessionFailed()),
       );
       // act
       await sut.check();
       // assert
-      verifyNever(profileStore.save(expectedModel.userProfile));
-      verifyNever(appConfiguration.saveAppModes(expectedModel.appMode));
+      verifyNever(profileStore!.save(expectedModel.userProfile));
+      verifyNever(appConfiguration!.saveAppModes(expectedModel.appMode));
     });
     test('should return valid AppStateEntity for a valid session', () async {
       // arrange
@@ -62,7 +85,7 @@ void main() {
           await JsonUtil.getJson(from: 'profile/about_with_quiz_session.json');
       final expectedModel = AppStateModel.fromJson(jsonData);
       final AppStateEntity expectedEntity = expectedModel;
-      when(appStateRepository.check()).thenAnswer(
+      when(appStateRepository!.check()).thenAnswer(
         (_) async => right(expectedModel),
       );
       // act
@@ -73,7 +96,7 @@ void main() {
     test('should return ServerSideSessionFailed for a invalid session',
         () async {
       // arrange
-      when(appStateRepository.check()).thenAnswer(
+      when(appStateRepository!.check()).thenAnswer(
         (_) async => left(ServerSideSessionFailed()),
       );
       final expected = left(ServerSideSessionFailed());

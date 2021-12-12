@@ -7,7 +7,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class CardProfileBioPage extends StatelessWidget {
   const CardProfileBioPage({
-    Key? key,
+    required Key key,
     required this.content,
     required this.onChange,
   }) : super(key: key);

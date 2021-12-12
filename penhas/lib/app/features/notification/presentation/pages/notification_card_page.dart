@@ -7,7 +7,9 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class NotificationCardPage extends StatelessWidget {
-  const NotificationCardPage({Key? key, required this.notification})
+  final NotificationEntity notification;
+
+  const NotificationCardPage({required Key key, required this.notification})
       : super(key: key);
 
   final NotificationEntity notification;
@@ -45,10 +47,8 @@ class NotificationCardPage extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(notification.name!, style: titleTextStyle),
-                        Text(
-                          timeago.format(notification.time!, locale: 'pt_br'),
-                          style: timeTextStyle,
-                        ),
+                        Text(timeago.format(notification.time!, locale: 'pt_br'),
+                            style: timeTextStyle),
                       ],
                     ),
                   ),

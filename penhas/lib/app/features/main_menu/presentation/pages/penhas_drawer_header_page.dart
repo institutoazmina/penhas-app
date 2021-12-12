@@ -3,11 +3,11 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class PenhasDrawerHeaderPage extends StatelessWidget {
   const PenhasDrawerHeaderPage({
-    Key? key,
+    required Key key,
     required String userName,
     required Widget userAvatar,
-  })  : _userName = userName,
-        _userAvatar = userAvatar,
+  })  : this._userName = userName,
+        this._userAvatar = userAvatar,
         super(key: key);
 
   final String _userName;

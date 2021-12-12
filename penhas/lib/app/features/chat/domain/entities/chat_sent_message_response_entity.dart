@@ -1,7 +1,11 @@
 import 'package:equatable/equatable.dart';
 
 class ChatSentMessageResponseEntity extends Equatable {
-  const ChatSentMessageResponseEntity({
+  final int? id;
+  final String? lastMessageEtag;
+  final String? currentMessageEtag;
+
+  ChatSentMessageResponseEntity({
     required this.id,
     required this.lastMessageEtag,
     required this.currentMessageEtag,
@@ -25,9 +29,17 @@ class ChatSentMessageResponseEntity extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object?> get props => [
+  List<Object> get props => [
         id!,
         lastMessageEtag!,
         currentMessageEtag!,
       ];
+
+  factory ChatSentMessageResponseEntity.fromJson(Map<String, Object> jsonData) {
+    return ChatSentMessageResponseEntity(
+      id: jsonData['id'] as int?,
+      currentMessageEtag: jsonData['last_msg_etag'] as String?,
+      lastMessageEtag: jsonData['prev_last_msg_etag'] as String?,
+    );
+  }
 }

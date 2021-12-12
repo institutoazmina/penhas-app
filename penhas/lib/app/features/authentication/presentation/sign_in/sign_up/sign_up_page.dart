@@ -20,6 +20,7 @@ class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key, this.title = 'SignUp'}) : super(key: key);
 
   final String title;
+  const SignUpPage({required Key key, this.title = "SignUp"}) : super(key: key);
 
   @override
   _SignUpPageState createState() => _SignUpPageState();
@@ -28,7 +29,7 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
 
   final format = DateFormat('dd/MM/yyyy');
@@ -59,9 +60,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
 
   @override
   void dispose() {
-    for (final d in _disposers!) {
-      d();
-    }
+    _disposers!.forEach((d) => d());
     super.dispose();
   }
 

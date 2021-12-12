@@ -65,6 +65,10 @@ abstract class _FilterTweetControllerBase with Store, MapFailureMessage {
     Modular.to.pop(reset);
   }
 
+  void _setErrorMessage(String? message) {
+    errorMessage = message;
+  }
+
   void _updateTags(TweetFilterSessionEntity filter) {
     tags = filter.tags.asObservable();
   }

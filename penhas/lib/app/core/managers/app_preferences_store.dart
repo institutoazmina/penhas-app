@@ -15,7 +15,7 @@ class AppPreferencesStore extends LocalStore<AppPreferencesEntity> {
 
   @override
   AppPreferencesEntity fromJson(Map<String, dynamic> json) {
-    return AppPreferencesModel.fromJson(json);
+    return AppPreferencesModel.fromJson(json as Map<String, Object>);
   }
 
   @override

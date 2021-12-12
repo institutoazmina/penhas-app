@@ -8,7 +8,7 @@ import 'package:penhas/app/features/support_center/presentation/pages/support_ce
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class FeedRoutingPerfilChatPage extends StatefulWidget {
-  const FeedRoutingPerfilChatPage({Key? key}) : super(key: key);
+  FeedRoutingPerfilChatPage({required Key key}) : super(key: key);
 
   @override
   _FeedRoutingPerfilChatPageState createState() =>

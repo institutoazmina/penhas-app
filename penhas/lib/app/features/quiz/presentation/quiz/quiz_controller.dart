@@ -23,11 +23,13 @@ class QuizController extends _QuizControllerBase with _$QuizController {
 }
 
 abstract class _QuizControllerBase with Store {
+  final QuizSessionEntity _quizSession;
+  final IQuizRepository _repository;
+  final AppStateUseCase _appStateUseCase;
+  String? _sessionId;
+
   _QuizControllerBase(
-    this._quizSession,
-    this._appStateUseCase,
-    this._repository,
-  ) {
+      this._quizSession, this._appStateUseCase, this._repository) {
     final reversedCurrent = _quizSession.currentMessage!.reversed.toList();
     _sessionId = _quizSession.sessionId;
 
@@ -130,8 +132,8 @@ abstract class _QuizControllerBase with Store {
   ) {
     String newMessageContent;
 
-    if (reply[messageRemoved.ref] == 'Y') {
-      newMessageContent = 'Sim';
+    if (reply[messageRemoved.ref!] == 'Y') {
+      newMessageContent = "Sim";
     } else {
       newMessageContent = 'Não';
     }
@@ -149,7 +151,7 @@ abstract class _QuizControllerBase with Store {
     Map<String, String> reply,
     QuizMessageEntity messageRemoved,
   ) {
-    final String display = reply[messageRemoved.ref]!
+    String display = reply[messageRemoved.ref!]!
         .split(',')
         .map((e) => messageRemoved.options!.firstWhere((o) => o.index == e))
         .map((e) => e.display)
@@ -188,7 +190,7 @@ abstract class _QuizControllerBase with Store {
 
     _sessionId = state.quizSession!.sessionId;
 
-    if (state.quizSession?.currentMessage != null) {
+    if (state?.quizSession?.currentMessage != null) {
       messages.insertAll(0, state.quizSession!.currentMessage!.reversed);
     }
 
@@ -223,6 +225,10 @@ abstract class _QuizControllerBase with Store {
   }
 
   void _mapFailureToFields(ServerSideFormFieldValidationFailure failure) {
-    errorMessage = failure.message;
+    _setErrorMessage(failure.message);
+  }
+
+  void _setErrorMessage(String? message) {
+    errorMessage = message;
   }
 }

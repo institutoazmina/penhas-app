@@ -22,6 +22,7 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
+<<<<<<< HEAD
   late final MockINetworkInfo networkInfo = MockINetworkInfo();
   late final MockIUserRegisterDataSource dataSource =
       MockIUserRegisterDataSource();
@@ -32,6 +33,13 @@ void main() {
     appConfiguration: appConfiguration,
   );
   const String sessionToken = 'my_really.long.JWT';
+=======
+  INetworkInfo? networkInfo;
+  IUserRegisterDataSource? dataSource;
+  IAppConfiguration? appConfiguration;
+  late UserRegisterRepository sut;
+  const String SESSSION_TOKEN = 'my_really.long.JWT';
+>>>>>>> Migrate code to nullsafety
 
   Cep? cep;
   Cpf? cpf;
@@ -56,6 +64,7 @@ void main() {
   });
 
   PostExpectation<dynamic> mockDataSourceRegister() {
+<<<<<<< HEAD
     return when(
       dataSource.register(
         emailAddress: anyNamed('emailAddress'),
@@ -85,6 +94,33 @@ void main() {
         race: anyNamed('race'),
       ),
     );
+=======
+    return when(dataSource!.register(
+      emailAddress: anyNamed('emailAddress'),
+      password: anyNamed('password'),
+      cep: anyNamed('cep'),
+      cpf: anyNamed('cpf'),
+      fullname: anyNamed('fullname'),
+      nickName: anyNamed('nickName'),
+      birthday: anyNamed('birthday'),
+      genre: anyNamed('genre'),
+      race: anyNamed('race'),
+    ));
+  }
+
+  PostExpectation<dynamic> mockDataSourceCheckField() {
+    return when(dataSource!.checkField(
+      emailAddress: anyNamed('emailAddress'),
+      password: anyNamed('password'),
+      cep: anyNamed('cep'),
+      cpf: anyNamed('cpf'),
+      fullname: anyNamed('fullname'),
+      nickName: anyNamed('nickName'),
+      birthday: anyNamed('birthday'),
+      genre: anyNamed('genre'),
+      race: anyNamed('race'),
+    ));
+>>>>>>> Migrate code to nullsafety
   }
 
   Future<Either<Failure, SessionEntity>> executeRegister() {
@@ -119,6 +155,7 @@ void main() {
     Either<Failure, SessionEntity> result,
     Either<Failure, SessionEntity> expected,
   ) {
+<<<<<<< HEAD
     verify(
       dataSource.register(
         emailAddress: emailAddress,
@@ -132,6 +169,19 @@ void main() {
         race: race,
       ),
     );
+=======
+    verify(dataSource!.register(
+      emailAddress: emailAddress,
+      password: password,
+      cep: cep,
+      cpf: cpf,
+      fullname: fullname,
+      nickName: nickName,
+      birthday: birthday,
+      genre: genre,
+      race: race,
+    ));
+>>>>>>> Migrate code to nullsafety
     expect(result, expected);
     verifyNoMoreInteractions(dataSource);
   }
@@ -140,6 +190,7 @@ void main() {
     Either<Failure, ValidField> result,
     Either<Failure, ValidField> expected,
   ) {
+<<<<<<< HEAD
     verify(
       dataSource.checkField(
         emailAddress: emailAddress,
@@ -153,14 +204,32 @@ void main() {
         race: race,
       ),
     );
+=======
+    verify(dataSource!.checkField(
+      emailAddress: emailAddress,
+      password: password,
+      cep: cep,
+      cpf: cpf,
+      fullname: fullname,
+      nickName: nickName,
+      birthday: birthday,
+      genre: genre,
+      race: race,
+    ));
+>>>>>>> Migrate code to nullsafety
     expect(result, expected);
     verifyNoMoreInteractions(dataSource);
   }
 
   group('UserRegisterRepository', () {
     group('device is online', () {
+<<<<<<< HEAD
       setUp(() {
         when(networkInfo.isConnected).thenAnswer((_) async => true);
+=======
+      setUp(() async {
+        when(networkInfo!.isConnected).thenAnswer((_) async => true);
+>>>>>>> Migrate code to nullsafety
       });
       test('should return valid SessionEntity for valid fields', () async {
         // arrange
@@ -170,7 +239,11 @@ void main() {
         // act
         final result = await executeRegister();
         // assert
+<<<<<<< HEAD
         verify(appConfiguration.saveApiToken(token: sessionToken));
+=======
+        verify(appConfiguration!.saveApiToken(token: SESSSION_TOKEN));
+>>>>>>> Migrate code to nullsafety
         expectedRegisterResult(
           result,
           right(const SessionEntity(sessionToken: sessionToken)),
@@ -195,14 +268,19 @@ void main() {
         final result = await executeRegister();
         // assert
 
-        verify(networkInfo.isConnected);
+        verify(networkInfo!.isConnected);
         expectedRegisterResult(result, left(fieldFailure));
       });
     });
 
     group('device is offline', () {
+<<<<<<< HEAD
       setUp(() {
         when(networkInfo.isConnected).thenAnswer((_) async => false);
+=======
+      setUp(() async {
+        when(networkInfo!.isConnected).thenAnswer((_) async => false);
+>>>>>>> Migrate code to nullsafety
       });
 
       test('should return InternetConnectionFailure', () async {
@@ -211,7 +289,7 @@ void main() {
         // act
         final result = await executeRegister();
         // assert
-        verify(networkInfo.isConnected);
+        verify(networkInfo!.isConnected);
         expectedRegisterResult(result, left(InternetConnectionFailure()));
       });
     });
@@ -219,8 +297,13 @@ void main() {
 
   group('UserRegisterRepository validating field', () {
     group('device is online', () {
+<<<<<<< HEAD
       setUp(() {
         when(networkInfo.isConnected).thenAnswer((_) async => true);
+=======
+      setUp(() async {
+        when(networkInfo!.isConnected).thenAnswer((_) async => true);
+>>>>>>> Migrate code to nullsafety
       });
       test('should return ValidField for valid fields', () async {
         // arrange
@@ -248,13 +331,18 @@ void main() {
         // act
         final result = await executeCheck();
         // assert
-        verify(networkInfo.isConnected);
+        verify(networkInfo!.isConnected);
         expectedCheckResult(result, left(fieldFailure));
       });
     });
     group('device is offline', () {
+<<<<<<< HEAD
       setUp(() {
         when(networkInfo.isConnected).thenAnswer((_) async => false);
+=======
+      setUp(() async {
+        when(networkInfo!.isConnected).thenAnswer((_) async => false);
+>>>>>>> Migrate code to nullsafety
       });
       test('should return InternetConnectionFailure', () async {
         // arrange
@@ -262,7 +350,7 @@ void main() {
         // act
         final result = await executeCheck();
         // assert
-        verify(networkInfo.isConnected);
+        verify(networkInfo!.isConnected);
         expectedCheckResult(result, left(InternetConnectionFailure()));
       });
     });

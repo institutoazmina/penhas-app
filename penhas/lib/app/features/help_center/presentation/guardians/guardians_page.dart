@@ -18,6 +18,7 @@ class GuardiansPage extends StatefulWidget {
   const GuardiansPage({Key? key, this.title = 'Guardians'}) : super(key: key);
 
   final String title;
+  const GuardiansPage({required Key key, this.title = "Guardians"}) : super(key: key);
 
   @override
   _GuardiansPageState createState() => _GuardiansPageState();
@@ -53,9 +54,7 @@ class _GuardiansPageState
 
   @override
   void dispose() {
-    for (final d in _disposers!) {
-      d();
-    }
+    _disposers!.forEach((d) => d());
     super.dispose();
   }
 

@@ -19,6 +19,10 @@ class ReplyTweetController extends _ReplyTweetControllerBase
 }
 
 abstract class _ReplyTweetControllerBase with Store, MapFailureMessage {
+  final TweetEntity? tweet;
+  final FeedUseCases useCase;
+  String? tweetContent;
+
   _ReplyTweetControllerBase(this.useCase, this.tweet);
 
   final TweetEntity? tweet;
@@ -76,6 +80,10 @@ abstract class _ReplyTweetControllerBase with Store, MapFailureMessage {
       (failure) => errorMessage = mapFailureMessage(failure),
       (valid) => _updatedTweet(),
     );
+  }
+
+  void _setErrorMessage(String? message) {
+    errorMessage = message;
   }
 
   void _updatedTweet() {

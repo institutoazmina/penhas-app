@@ -5,7 +5,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class HelpCenterActionPolice extends StatelessWidget {
   const HelpCenterActionPolice({
-    Key? key,
+    required Key key,
     required this.onPressed,
   }) : super(key: key);
 

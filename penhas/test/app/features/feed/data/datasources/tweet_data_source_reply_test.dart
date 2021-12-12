@@ -10,12 +10,11 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late final MockHttpClient apiClient = MockHttpClient();
+  MockHttpClient? apiClient;
   late ITweetDataSource dataSource;
-  late final MockIApiServerConfigure serverConfigure =
-      MockIApiServerConfigure();
-  late final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
-  const String sessionToken = 'my_really.long.JWT';
+  MockApiServerConfigure? serverConfigure;
+  Uri? serverEndpoint;
+  const String SESSSION_TOKEN = 'my_really.long.JWT';
 
   setUp(() {
     dataSource = TweetDataSource(
@@ -24,15 +23,15 @@ void main() {
     );
 
     // MockApiServerConfigure configuration
-    when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
-    when(serverConfigure.apiToken)
-        .thenAnswer((_) => Future.value(sessionToken));
-    when(serverConfigure.userAgent)
-        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
+    when(serverConfigure!.baseUri).thenAnswer(((_) => serverEndpoint!) as Uri Function(Invocation));
+    when(serverConfigure!.apiToken)
+        .thenAnswer((_) => Future.value(SESSSION_TOKEN));
+    when(serverConfigure!.userAgent)
+        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
-    final userAgent = await serverConfigure.userAgent;
+    final userAgent = await serverConfigure!.userAgent;
     return {
       'X-Api-Key': sessionToken,
       'User-Agent': userAgent,
@@ -42,21 +41,19 @@ void main() {
 
   Uri _setuHttpRequest(String path, Map<String, String> queryParameters) {
     return Uri(
-      scheme: serverEndpoint.scheme,
-      host: serverEndpoint.host,
+      scheme: serverEndpoint!.scheme,
+      host: serverEndpoint!.host,
       path: path,
       queryParameters: queryParameters.isEmpty ? null : queryParameters,
     );
   }
 
   PostExpectation<Future<http.Response>> _mockPostRequest() {
-    return when(
-      apiClient.post(
-        any,
-        headers: anyNamed('headers'),
-        body: anyNamed('body'),
-      ),
-    );
+    return when(apiClient!.post(
+      any,
+      headers: anyNamed('headers'),
+      body: anyNamed('body'),
+    ));
   }
 
   void _setUpMockPostHttpClientSuccess200(String? bodyContent) {
@@ -95,7 +92,7 @@ void main() {
         await dataSource.reply(option: requestOption);
         // assert
         verify(
-          apiClient.post(
+          apiClient!.post(
             request,
             headers: headers,
             body: 'content=$bodyRequest',

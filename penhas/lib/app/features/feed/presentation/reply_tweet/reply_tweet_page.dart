@@ -18,6 +18,7 @@ class ReplyTweetPage extends StatefulWidget {
   const ReplyTweetPage({Key? key, this.title = 'ReplyTweet'}) : super(key: key);
 
   final String title;
+  const ReplyTweetPage({required Key key, this.title = "ReplyTweet"}) : super(key: key);
 
   @override
   _ReplyTweetPageState createState() => _ReplyTweetPageState();
@@ -61,9 +62,7 @@ class _ReplyTweetPageState
   @override
   void dispose() {
     super.dispose();
-    for (final d in _disposers!) {
-      d();
-    }
+    _disposers!.forEach((d) => d());
   }
 
   @override
@@ -89,6 +88,7 @@ class _ReplyTweetPageState
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Expanded(
+                            flex: 1,
                             child: TweetAvatar(tweet: controller.tweet!),
                           ),
                           const SizedBox(

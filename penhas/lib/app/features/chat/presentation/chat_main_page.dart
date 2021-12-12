@@ -8,7 +8,7 @@ import 'package:penhas/app/features/chat/presentation/talk/chat_main_talks_page.
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatMainPage extends StatefulWidget {
-  const ChatMainPage({Key? key}) : super(key: key);
+  ChatMainPage({required Key key}) : super(key: key);
 
   @override
   _ChatMainPageState createState() => _ChatMainPageState();
@@ -68,7 +68,7 @@ extension _ChatMainPageStatePrivate on _ChatMainPageState {
       indicatorColor: DesignSystemColors.pinky,
       unselectedLabelColor: DesignSystemColors.warnGrey,
       unselectedLabelStyle: chatTabUnselectedTextStyle,
-      tabs: items.map((e) => Tab(text: e.title)).toList(),
+      tabs: items.map((e) => Tab(text: e.title!)).toList(),
     );
   }
 

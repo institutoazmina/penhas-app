@@ -18,6 +18,9 @@ class UserProfileController extends _UserProfileControllerBase
 }
 
 abstract class _UserProfileControllerBase with Store {
+  final UserDetailEntity? _person;
+  final IChatChannelRepository _channelRepository;
+
   _UserProfileControllerBase(this._person, this._channelRepository) {
     _init();
   }
@@ -35,7 +38,7 @@ abstract class _UserProfileControllerBase with Store {
   @action
   Future<void> openChannel() async {
     final channel = await _channelRepository.openChannel(
-      _person!.profile.clientId.toString(),
+      _person!.profile!.clientId.toString(),
     );
 
     channel.fold(

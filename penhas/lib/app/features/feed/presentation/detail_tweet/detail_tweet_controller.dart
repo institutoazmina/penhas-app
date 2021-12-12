@@ -19,6 +19,11 @@ class DetailTweetController extends _DetailTweetControllerBase
 }
 
 abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
+  final TweetEntity? tweet;
+  final FeedUseCases useCase;
+  String? tweetContent;
+  String? tweetId;
+
   _DetailTweetControllerBase(this.useCase, this.tweetId, this.tweet) {
     listTweets = ObservableList.of([if (tweet != null) tweet!]);
   }
@@ -77,6 +82,10 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
       (failure) => errorMessage = mapFailureMessage(failure),
       (cache) => _updateListOfTweets(cache),
     );
+  }
+
+  void _setErrorMessage(String? message) {
+    errorMessage = message;
   }
 
   void _updateListOfTweets(FeedCache cache) {

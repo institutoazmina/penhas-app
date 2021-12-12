@@ -4,17 +4,18 @@ import 'package:penhas/app/features/users/domain/entities/user_detail_entity.dar
 
 @immutable
 class UserDetailModel extends UserDetailEntity {
-  const UserDetailModel({
-    required bool isMyself,
-    required UserDetailProfileModel profile,
+  final bool isMyself;
+  final UserDetailProfileModel? profile;
+
+  UserDetailModel({
+    required this.isMyself,
+    required this.profile,
   }) : super(isMyself: isMyself, profile: profile);
 
   factory UserDetailModel.fromJson(Map<String, dynamic> jsonData) {
     return UserDetailModel(
-      isMyself: jsonData['is_myself'] == 1,
-      profile: UserDetailProfileModel.fromJson(
-        jsonData['profile'] as Map<String, dynamic>,
-      ),
+      isMyself: jsonData["is_myself"] == 1,
+      profile: UserDetailProfileModel.fromJson(jsonData["profile"] as Map<String, Object>),
     );
   }
 }

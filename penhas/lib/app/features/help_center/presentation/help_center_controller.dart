@@ -127,8 +127,8 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
               granted: () => Modular.to
                   .pushNamed('/mainboard/helpcenter/audioRecord')
                   .then((value) {
-                if (value == true) {
-                  errorMessage = 'Gravação finalizada.';
+                if (value as bool) {
+                  _setErrorMessage("Gravação finalizada.");
                 }
               }),
               orElse: () {},
@@ -154,7 +154,7 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   Future<UserLocationEntity> _getCurrentLocatin() async {
     return _locationService
         .currentLocation()
-        .then((v) => v.getOrElse(() => const UserLocationEntity())!);
+        .then((v) => v.getOrElse(() => UserLocationEntity())!);
   }
 
   Future<HelpCenterState> _triggerGuardian(UserLocationEntity location) async {
@@ -187,5 +187,7 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
     return _appConfiguration.appMode.then((mode) => mode.hasActivedGuardian);
   }
 
-  void _resetAlertState() => alertState = const HelpCenterState.initial();
+  void _setErrorMessage(String? message) => errorMessage = message;
+
+  void _resetAlertState() => alertState = HelpCenterState.initial();
 }

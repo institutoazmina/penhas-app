@@ -8,12 +8,11 @@ import 'package:penhas/app/features/help_center/domain/entities/guardian_session
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late final MockHttpClient apiClient = MockHttpClient();
+  MockHttpClient? apiClient;
   late IGuardianDataSource dataSource;
-  late final MockIApiServerConfigure serverConfigure =
-      MockIApiServerConfigure();
-  final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
-  const String sessionToken = 'my_really.long.JWT';
+  MockApiServerConfigure? serverConfigure;
+  Uri? serverEndpoint;
+  const String SESSSION_TOKEN = 'my_really.long.JWT';
 
   setUp(() {
     dataSource = GuardianDataSource(
@@ -22,15 +21,15 @@ void main() {
     );
 
     // MockApiServerConfigure configuration
-    when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
-    when(serverConfigure.apiToken)
-        .thenAnswer((_) => Future.value(sessionToken));
-    when(serverConfigure.userAgent)
-        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
+    when(serverConfigure!.baseUri).thenAnswer(((_) => serverEndpoint!) as Uri Function(Invocation));
+    when(serverConfigure!.apiToken)
+        .thenAnswer((_) => Future.value(SESSSION_TOKEN));
+    when(serverConfigure!.userAgent)
+        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
-    final userAgent = await serverConfigure.userAgent;
+    final userAgent = await serverConfigure!.userAgent;
     return {
       'X-Api-Key': sessionToken,
       'User-Agent': userAgent,
@@ -40,8 +39,8 @@ void main() {
 
   Uri _setuHttpRequest(String path, Map<String, String> queryParameters) {
     return Uri(
-      scheme: serverEndpoint.scheme,
-      host: serverEndpoint.host,
+      scheme: serverEndpoint!.scheme,
+      host: serverEndpoint!.host,
       path: path,
       queryParameters: queryParameters.isEmpty ? null : queryParameters,
     );
@@ -49,7 +48,7 @@ void main() {
 
   void _setUpMockPostHttpClientSuccess204() {
     when(
-      apiClient.delete(
+      apiClient!.delete(
         any,
         headers: anyNamed('headers'),
       ),
@@ -90,7 +89,7 @@ void main() {
             // act
             await dataSource.delete(guardian);
             // assert
-            verify(apiClient.delete(request, headers: headers));
+            verify(apiClient!.delete(request, headers: headers));
           },
         );
         test(

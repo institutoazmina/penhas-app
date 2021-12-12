@@ -7,11 +7,10 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class TweetAvatar extends StatelessWidget {
   const TweetAvatar({
-    Key? key,
+    required Key key,
     required this.tweet,
-  })  : super(key: key);
-
-  final TweetEntity tweet;
+  })  : assert(tweet != null),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,7 @@ extension _PrivateMethod on TweetAvatar {
   Widget avatar() {
     return SvgPicture.network(
       tweet.avatar!,
-      //color: DesignSystemColors.darkIndigo,
+      color: DesignSystemColors.darkIndigo,
       height: 36,
     );
   }

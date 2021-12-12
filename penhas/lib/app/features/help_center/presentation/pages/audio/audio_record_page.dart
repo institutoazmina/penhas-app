@@ -9,7 +9,7 @@ import 'package:penhas/app/features/help_center/presentation/pages/audio/sound_r
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class AudioRecordPage extends StatefulWidget {
-  const AudioRecordPage({Key? key}) : super(key: key);
+  const AudioRecordPage({required Key key}) : super(key: key);
 
   @override
   _AudioRecordState createState() => _AudioRecordState();
@@ -38,8 +38,10 @@ class _AudioRecordState
 
   @override
   void dispose() {
-    _streamSubscription?.cancel();
-    _streamSubscription = null;
+    if (_streamSubscription != null) {
+      _streamSubscription!.cancel();
+      _streamSubscription = null;
+    }
 
     super.dispose();
   }

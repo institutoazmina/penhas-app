@@ -5,6 +5,10 @@ import 'package:penhas/app/features/feed/data/repositories/tweet_filter_preferen
 import 'package:penhas/app/features/feed/domain/entities/tweet_filter_session_entity.dart';
 
 class TweetFilterPreference {
+  final ITweetFilterPreferenceRepository? _repository;
+  List<String?> _currentTags = List<String>();
+  List<String> _currentCategory = List<String>();
+
   TweetFilterPreference({
     required ITweetFilterPreferenceRepository? repository,
   }) : _repository = repository;
@@ -29,9 +33,9 @@ class TweetFilterPreference {
       return right(response);
     }
 
-    List<TweetFilterEntity> rebuildedCategory = response.categories;
-    if (categories.isNotEmpty) {
-      final setCategory = Set<String>.from(categories);
+    List<TweetFilterEntity>? rebuildedCategory;
+    if (_currentCategory.isNotEmpty) {
+      final setCategory = Set<String>.from(_currentCategory);
       final indexCategory = response.categories.indexWhere(
         (e) => setCategory.contains(e.id),
       );
@@ -42,7 +46,7 @@ class TweetFilterPreference {
       }
     }
 
-    List<TweetFilterEntity> rebuildedTags = response.tags;
+    List<TweetFilterEntity>? rebuildedTags;
     if (_currentTags.isNotEmpty) {
       final setTags = Set<String>.from(_currentTags);
       rebuildedTags = rebuildedTags
@@ -50,19 +54,24 @@ class TweetFilterPreference {
           .toList();
     }
 
-    return right(
-      TweetFilterSessionEntity(
-        categories: rebuildedCategory,
-        tags: rebuildedTags,
-      ),
-    );
+    return right(TweetFilterSessionEntity(
+        categories: rebuildedCategory ?? response.categories,
+        tags: rebuildedTags ?? response.tags));
+  }
+
+  void saveCategory(List<String> categories) {
+    _currentCategory = categories;
+  }
+
+  void saveTags(List<String?> tags) {
+    _currentTags = tags;
   }
 
   void saveTags(List<String?> tags) {
     _currentTags = tags.whereNotNull().toList();
   }
 
-  List<String> getTags() {
+  List<String?> getTags() {
     return _currentTags;
   }
 }

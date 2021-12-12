@@ -16,9 +16,15 @@ import '../../../../../utils/json_util.dart';
 
 void main() {
   late ITweetRepository repository;
+<<<<<<< HEAD
   late final MockINetworkInfo networkInfo = MockINetworkInfo();
   late final MockITweetDataSource dataSource = MockITweetDataSource();
   Map<String, dynamic> jsonSession;
+=======
+  INetworkInfo networkInfo;
+  ITweetDataSource? dataSource;
+  Map<String, Object> jsonSession;
+>>>>>>> Migrate code to nullsafety
 
   setUp(() {
     repository =
@@ -31,7 +37,7 @@ void main() {
     setUp(() async {
       jsonSession = await JsonUtil.getJson(from: 'feed/retrieve_response.json');
       sessionModel = TweetSessionModel.fromJson(jsonSession);
-      when(dataSource.fetch(option: anyNamed('option')))
+      when(dataSource!.fetch(option: anyNamed('option')))
           .thenAnswer((_) => Future.value(sessionModel));
     });
     group('fetch()', () {
@@ -49,7 +55,7 @@ void main() {
       setUp(() async {
         final jsonData =
             await JsonUtil.getJson(from: 'feed/tweet_create_response.json');
-        when(dataSource.create(option: anyNamed('option')))
+        when(dataSource!.create(option: anyNamed('option')))
             .thenAnswer((_) => Future.value(TweetModel.fromJson(jsonData)));
       });
       test('should create tweet from a valid session', () async {
@@ -77,9 +83,15 @@ void main() {
       });
     });
     group('delete', () {
+<<<<<<< HEAD
       setUp(() {
         when(dataSource.delete(option: anyNamed('option')))
             .thenAnswer((_) => Future.value(const ValidField()));
+=======
+      setUp(() async {
+        when(dataSource!.delete(option: anyNamed('option')))
+            .thenAnswer((_) => Future.value(ValidField()));
+>>>>>>> Migrate code to nullsafety
       });
       test('should detete tweet from a valid session', () async {
         // arrange
@@ -98,9 +110,9 @@ void main() {
       setUp(() async {
         jsonData =
             await JsonUtil.getJson(from: 'feed/tweet_like_response.json');
-        final tweetModel = TweetModel.fromJson(jsonData['tweet']);
+        final tweetModel = TweetModel.fromJson(jsonData['tweet'] as Map<String, Object>);
 
-        when(dataSource.like(option: anyNamed('option')))
+        when(dataSource!.like(option: anyNamed('option')))
             .thenAnswer((_) => Future.value(tweetModel));
       });
       test('should favorite a valid tweet', () async {
@@ -132,7 +144,7 @@ void main() {
       setUp(() async {
         final jsonData =
             await JsonUtil.getJson(from: 'feed/tweet_reply_response.json');
-        when(dataSource.reply(option: anyNamed('option')))
+        when(dataSource!.reply(option: anyNamed('option')))
             .thenAnswer((_) => Future.value(TweetModel.fromJson(jsonData)));
       });
 
@@ -167,7 +179,7 @@ void main() {
       setUp(() async {
         final jsonData =
             await JsonUtil.getJson(from: 'feed/tweet_current_response.json');
-        when(dataSource.current(option: anyNamed('option'))).thenAnswer(
+        when(dataSource!.current(option: anyNamed('option'))).thenAnswer(
           (_) => Future.value(TweetSessionModel.fromJson(jsonData)),
         );
       });
@@ -208,9 +220,15 @@ void main() {
     });
 
     group('report()', () {
+<<<<<<< HEAD
       setUp(() {
         when(dataSource.report(option: anyNamed('option')))
             .thenAnswer((_) => Future.value(const ValidField()));
+=======
+      setUp(() async {
+        when(dataSource!.report(option: anyNamed('option')))
+            .thenAnswer((_) => Future.value(ValidField()));
+>>>>>>> Migrate code to nullsafety
       });
       test('should report a valid tweet', () async {
         // arrange

@@ -1,5 +1,3 @@
-import 'package:penhas/app/shared/logger/log.dart';
-
 extension SafetlyParser on Object? {
   double? safeParseDouble() {
     final value = this;
@@ -13,7 +11,7 @@ extension SafetlyParser on Object? {
     return null;
   }
 
-  int safeParseInt({int def = 0}) {
+  int? safeParseInt() {
     final value = this;
 
     if (value is String) {
@@ -28,9 +26,8 @@ extension SafetlyParser on Object? {
   bool safeParseBool() {
     final value = this;
     try {
-      return value == 1;
-    } catch (e, stack) {
-      logError(e, stack);
+      return (value as num?) == 1 ?? false;
+    } catch (e) {
       return false;
     }
   }

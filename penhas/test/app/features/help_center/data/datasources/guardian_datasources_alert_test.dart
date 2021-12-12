@@ -10,12 +10,11 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late final MockHttpClient apiClient = MockHttpClient();
-  late final MockIApiServerConfigure serverConfigure =
-      MockIApiServerConfigure();
+  MockHttpClient? apiClient;
   late IGuardianDataSource dataSource;
-  final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
-  const String sessionToken = 'my_really.long.JWT';
+  MockApiServerConfigure? serverConfigure;
+  Uri? serverEndpoint;
+  const String SESSSION_TOKEN = 'my_really.long.JWT';
 
   setUp(() {
     dataSource = GuardianDataSource(
@@ -24,15 +23,23 @@ void main() {
     );
 
     // MockApiServerConfigure configuration
+<<<<<<< HEAD
     when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
     when(serverConfigure.apiToken)
         .thenAnswer((_) => Future.value(sessionToken));
     when(serverConfigure.userAgent)
         .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
+=======
+    when(serverConfigure!.baseUri).thenAnswer(((_) => serverEndpoint!) as Uri Function(Invocation));
+    when(serverConfigure!.apiToken)
+        .thenAnswer((_) => Future.value(SESSSION_TOKEN));
+    when(serverConfigure!.userAgent)
+        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
+>>>>>>> Migrate code to nullsafety
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
-    final userAgent = await serverConfigure.userAgent;
+    final userAgent = await serverConfigure!.userAgent;
     return {
       'X-Api-Key': sessionToken,
       'User-Agent': userAgent,
@@ -42,14 +49,15 @@ void main() {
 
   Uri _setuHttpRequest(String path, Map<String, String> queryParameters) {
     return Uri(
-      scheme: serverEndpoint.scheme,
-      host: serverEndpoint.host,
+      scheme: serverEndpoint!.scheme,
+      host: serverEndpoint!.host,
       path: path,
       queryParameters: queryParameters.isEmpty ? null : queryParameters,
     );
   }
 
   PostExpectation<Future<http.Response>> _mockPostRequest() {
+<<<<<<< HEAD
     return when(
       apiClient.post(
         any,
@@ -57,6 +65,13 @@ void main() {
         body: anyNamed('body'),
       ),
     );
+=======
+    return when(apiClient!.post(
+      any,
+      headers: anyNamed('headers'),
+      body: anyNamed('body'),
+    ));
+>>>>>>> Migrate code to nullsafety
   }
 
   void _setUpMockPostHttpClientSuccess200(String? bodyContent) {
@@ -104,14 +119,19 @@ void main() {
             const endPointPath = '/me/guardioes/alert';
             final headers = await _setUpHttpHeader();
             final request = _setuHttpRequest(endPointPath, {
+<<<<<<< HEAD
               'gps_lat': '${userLocation!.latitude}',
               'gps_long': '${userLocation!.longitude}'
+=======
+              'gps_lat': "${userLocation!.latitude}",
+              'gps_long': "${userLocation!.longitude}"
+>>>>>>> Migrate code to nullsafety
             });
             _setUpMockPostHttpClientSuccess200(bodyContent);
             // act
             await dataSource.alert(userLocation);
             // assert
-            verify(apiClient.post(request, headers: headers));
+            verify(apiClient!.post(request, headers: headers));
           },
         );
         test(

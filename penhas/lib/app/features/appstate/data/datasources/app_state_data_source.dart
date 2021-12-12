@@ -11,23 +11,23 @@ abstract class IAppStateDataSource {
 }
 
 class AppStateDataSource implements IAppStateDataSource {
-  AppStateDataSource({
-    required http.Client apiClient,
-    required serverConfiguration,
-  })  : _apiClient = apiClient,
-        _serverConfiguration = serverConfiguration;
-
-  final http.Client _apiClient;
-  final IApiServerConfigure _serverConfiguration;
+  final http.Client? _apiClient;
+  final IApiServerConfigure? _serverConfiguration;
   final Set<int> _successfulResponse = {200};
   final Set<int> _invalidSessionCode = {401, 403};
+
+  AppStateDataSource({
+    required http.Client? apliClient,
+    required serverConfiguration,
+  })  : this._apiClient = apliClient,
+        this._serverConfiguration = serverConfiguration;
 
   @override
   Future<AppStateModel> check() async {
     final httpHeader = await _setupHttpHeader();
-    final httpRequest = _serverConfiguration.baseUri.replace(path: '/me');
+    final httpRequest = _serverConfiguration!.baseUri.replace(path: '/me');
 
-    final response = await _apiClient.get(httpRequest, headers: httpHeader);
+    final response = await _apiClient!.get(httpRequest, headers: httpHeader);
     if (_successfulResponse.contains(response.statusCode)) {
       return AppStateModel.fromJson(json.decode(response.body));
     } else if (_invalidSessionCode.contains(response.statusCode)) {
@@ -43,23 +43,35 @@ class AppStateDataSource implements IAppStateDataSource {
     httpHeader['Content-Type'] =
         'application/x-www-form-urlencoded; charset=utf-8';
 
-    final httpRequest = _serverConfiguration.baseUri.replace(path: '/me');
+    final httpRequest = _serverConfiguration!.baseUri.replace(path: '/me');
 
-    final List<String?> parameters = [
-      if (update.nickName == null) null else 'apelido=${Uri.encodeComponent(update.nickName!)}',
-      if (update.minibio == null) null else 'minibio=${Uri.encodeComponent(update.minibio!)}',
-      if (update.race == null) null else 'raca=${Uri.encodeComponent(update.race!)}',
-      if (update.skills == null) null else 'skills=${Uri.encodeComponent(update.skills!.join(","))}',
-      if (update.oldPassword == null) null else 'senha_atual=${Uri.encodeComponent(update.oldPassword!)}',
-      if (update.newPassword == null) null else 'senha=${Uri.encodeComponent(update.newPassword!)}',
-      if (update.email == null) null else 'email=${Uri.encodeComponent(update.email!)}',
+    List<String?> parameters = [
+      update.nickName == null
+          ? null
+          : 'apelido=' + Uri.encodeComponent(update.nickName!),
+      update.minibio == null
+          ? null
+          : 'minibio=' + Uri.encodeComponent(update.minibio!),
+      update.race == null ? null : 'raca=' + Uri.encodeComponent(update.race!),
+      update.skills == null
+          ? null
+          : 'skills=' + Uri.encodeComponent(update.skills!.join(",")),
+      update.oldPassword == null
+          ? null
+          : 'senha_atual=' + Uri.encodeComponent(update.oldPassword!),
+      update.newPassword == null
+          ? null
+          : 'senha=' + Uri.encodeComponent(update.newPassword!),
+      update.email == null
+          ? null
+          : 'email=' + Uri.encodeComponent(update.email!),
     ];
 
     parameters.removeWhere((e) => e == null);
     final bodyContent = parameters.join('&');
 
-    final response = await _apiClient.put(httpRequest,
-        headers: httpHeader, body: bodyContent,);
+    final response = await _apiClient!.put(httpRequest,
+        headers: httpHeader, body: bodyContent);
     if (_successfulResponse.contains(response.statusCode)) {
       return AppStateModel.fromJson(json.decode(response.body));
     } else if (_invalidSessionCode.contains(response.statusCode)) {
@@ -70,8 +82,8 @@ class AppStateDataSource implements IAppStateDataSource {
   }
 
   Future<Map<String, String>> _setupHttpHeader() async {
-    final userAgent = await _serverConfiguration.userAgent;
-    final apiToken = await _serverConfiguration.apiToken;
+    final userAgent = await _serverConfiguration!.userAgent;
+    final apiToken = await _serverConfiguration!.apiToken;
     return {
       'X-Api-Key': apiToken ?? '',
       'User-Agent': userAgent,

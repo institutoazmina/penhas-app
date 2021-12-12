@@ -6,6 +6,11 @@ import 'package:penhas/app/features/authentication/domain/usecases/map_validator
 
 @immutable
 class Nickname extends Equatable with MapValidatorFailure {
+  final Either<Failure, String?> value;
+
+  String? get rawValue => value.getOrElse(() => null);
+  bool get isValid => value.isRight();
+
   factory Nickname(String? input) {
     return Nickname._(_validate(input));
   }

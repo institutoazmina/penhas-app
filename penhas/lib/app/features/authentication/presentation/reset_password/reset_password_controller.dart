@@ -63,12 +63,15 @@ abstract class _ResetPasswordControllerBase with Store, MapFailureMessage {
       repository.request(emailAddress: _userRegisterModel.emailAddress),
     );
 
-    final Either<Failure, ResetPasswordResponseEntity> response =
-        await _progress!;
+    final Either<Failure, ResetPasswordResponseEntity> response = await _progress!;
     response.fold(
       (failure) => errorMessage = mapFailureMessage(failure),
       (session) => _forwardToStep2(session),
     );
+  }
+
+  void _setErrorMessage(String? s) {
+    errorMessage = s;
   }
 
   bool _isValidToProceed() {

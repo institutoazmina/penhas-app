@@ -17,8 +17,8 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class FeedPage extends StatefulWidget {
   const FeedPage({
-    Key? key,
-    this.title = 'Feed',
+    required Key key,
+    this.title = "Feed",
     required this.tweetController,
   }) : super(key: key);
 
@@ -59,9 +59,7 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
 
   @override
   void dispose() {
-    for (final d in _disposers!) {
-      d();
-    }
+    _disposers!.forEach((d) => d());
     _scrollController.dispose();
     controller.dispose();
     super.dispose();

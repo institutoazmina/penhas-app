@@ -14,7 +14,7 @@ import 'package:penhas/app/features/support_center/presentation/support_center_c
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class SupportCenterPage extends StatefulWidget {
-  const SupportCenterPage({Key? key}) : super(key: key);
+  SupportCenterPage({required Key key}) : super(key: key);
 
   @override
   _SupportCenterPageState createState() => _SupportCenterPageState();
@@ -24,7 +24,7 @@ class _SupportCenterPageState
     extends ModularState<SupportCenterPage, SupportCenterController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   GoogleMapController? mapController;
 
   @override
@@ -48,9 +48,7 @@ class _SupportCenterPageState
 
   @override
   void dispose() {
-    for (final d in _disposers!) {
-      d();
-    }
+    _disposers!.forEach((d) => d());
     super.dispose();
   }
 

@@ -11,7 +11,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class GuardianTileActionCard extends StatelessWidget {
   const GuardianTileActionCard({
-    Key? key,
+    required Key key,
     required this.card,
   }) : super(key: key);
 
@@ -53,18 +53,14 @@ class GuardianTileActionCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 2.0),
-                  child: Text(
-                    card.guardian.name!,
-                    style: kTextStyleGuardianCardTitle,
-                  ),
+                  padding: EdgeInsets.symmetric(vertical: 2.0),
+                  child: Text(card.guardian.name!,
+                      style: kTextStyleGuardianCardTitle),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 2.0),
-                  child: Text(
-                    card.guardian.mobile!,
-                    style: kTextStyleGuardianCardMobile,
-                  ),
+                  padding: EdgeInsets.symmetric(vertical: 2.0),
+                  child: Text(card.guardian.mobile!,
+                      style: kTextStyleGuardianCardMobile),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 2.0),
@@ -145,7 +141,7 @@ class GuardianTileActionCard extends StatelessWidget {
                   const Text('Enviar', style: TextStyle(color: Colors.white)),
               onPressed: () {
                 action!(_controller.text);
-                Navigator.of(context).pop();
+                Modular.to.pop();
               },
             )
           ],
@@ -176,7 +172,7 @@ class GuardianTileActionCard extends StatelessWidget {
             child: const Text('Sim'),
             onPressed: () {
               action!();
-              Navigator.of(context).pop();
+              Modular.to.pop();
             },
           )
         ],
@@ -206,7 +202,7 @@ class GuardianTileActionCard extends StatelessWidget {
             child: const Text('Sim'),
             onPressed: () {
               action!();
-              Navigator.of(context).pop();
+              Modular.to.pop();
             },
           )
         ],

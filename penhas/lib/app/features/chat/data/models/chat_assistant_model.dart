@@ -3,11 +3,16 @@ import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.da
 import 'package:penhas/app/features/chat/domain/entities/chat_assistant_entity.dart';
 
 class ChatAssistantModel extends ChatAssistantEntity {
-  const ChatAssistantModel({
-    required String? title,
-    required String? subtitle,
-    required String? avatar,
-    required QuizSessionEntity? quizSession,
+  final String? title;
+  final String? subtitle;
+  final String? avatar;
+  final QuizSessionEntity? quizSession;
+
+  ChatAssistantModel({
+    required this.title,
+    required this.subtitle,
+    required this.avatar,
+    required this.quizSession,
   }) : super(
           title: title,
           subtitle: subtitle,
@@ -19,9 +24,9 @@ class ChatAssistantModel extends ChatAssistantEntity {
     final appModel = AppStateModel.fromJson(jsonData);
 
     return ChatAssistantModel(
-      title: jsonData['title'],
-      subtitle: jsonData['subtitle'],
-      avatar: jsonData['avatar_url'],
+      title: title as String?,
+      subtitle: subtitle as String?,
+      avatar: avatar as String?,
       quizSession: appModel.quizSession,
     );
   }

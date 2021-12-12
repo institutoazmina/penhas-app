@@ -18,6 +18,13 @@ class ProfilSkillLoadedStatePage extends StatelessWidget {
 
   final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
 
+  ProfilSkillLoadedStatePage({
+    required Key key,
+    required this.tags,
+    required this.onResetAction,
+    required this.onAplyFilterAction,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +81,7 @@ class ProfilSkillLoadedStatePage extends StatelessWidget {
 extension _FilterLoadedStatePageMethods on ProfilSkillLoadedStatePage {
   Tooltip builtTagItem(FilterTagEntity item, int index) {
     return Tooltip(
-      message: item.label,
+      message: item.label!,
       child: ItemTags(
         activeColor: DesignSystemColors.easterPurple,
         title: item.label!,
@@ -146,14 +153,12 @@ extension _FilterLoadedStatePageMethods on ProfilSkillLoadedStatePage {
       onAplyFilterAction([]);
     }
 
-    final List<FilterTagEntity> seletedTags = _tagStateKey
-            .currentState?.getAllItem
-            .where((e) => e.active)
-            .map((e) => e.customData)
-            .whereType<String>()
-            .map((e) => tags.firstWhere((t) => t.id == e))
-            .toList() ??
-        List.empty();
+    final seletedTags = _tagStateKey.currentState.getAllItem
+        .where((e) => e.active)
+        .map((e) => e.customData)
+        .map((e) => e as String?)
+        .map((e) => tags.firstWhere((t) => t.id == e))
+        .toList();
 
     onAplyFilterAction(seletedTags);
   }

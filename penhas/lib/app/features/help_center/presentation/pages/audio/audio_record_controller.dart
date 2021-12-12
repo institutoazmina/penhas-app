@@ -28,6 +28,8 @@ abstract class _AudioRecordController with Store, MapFailureMessage {
   int _currentRecordDurantion = 0;
   AudioRecordDurationEntity? _audioDurationEntity;
 
+  _AudioRecordController(this._audioServices, this._featureToogle);
+
   @action
   Future<void> startAudioRecord() async {
     _audioDurationEntity ??= await _featureToogle.audioDuration;

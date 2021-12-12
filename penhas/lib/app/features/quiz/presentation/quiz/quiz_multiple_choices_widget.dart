@@ -6,16 +6,16 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class QuizMultipleChoicesWidget extends StatefulWidget {
-  const QuizMultipleChoicesWidget({
-    Key? key,
+  final String? reference;
+  final UserReaction onPressed;
+  final List<QuizMessageMultiplechoicesOptions>? options;
+
+  QuizMultipleChoicesWidget({
+    required Key key,
     required this.reference,
     required this.onPressed,
     required this.options,
   }) : super(key: key);
-
-  final String reference;
-  final UserReaction onPressed;
-  final List<QuizMessageMultiplechoicesOptions>? options;
 
   @override
   _QuizMultipleChoicesWidgetState createState() =>
@@ -23,7 +23,7 @@ class QuizMultipleChoicesWidget extends StatefulWidget {
 }
 
 class _QuizMultipleChoicesWidgetState extends State<QuizMultipleChoicesWidget> {
-  final _selectedValues = [];
+  final _selectedValues = List<String?>();
 
   @override
   void initState() {
@@ -52,11 +52,13 @@ class _QuizMultipleChoicesWidgetState extends State<QuizMultipleChoicesWidget> {
               child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    ListTileTheme(
-                      contentPadding: EdgeInsets.zero,
-                      child: ListBody(
-                        children:
-                            widget.options!.map((e) => _buildItem(e)).toList(),
+                    Container(
+                      child: ListTileTheme(
+                        contentPadding: EdgeInsets.zero,
+                        child: ListBody(
+                          children:
+                              widget.options!.map((e) => _buildItem(e)).toList(),
+                        ),
                       ),
                     ),
                   ],
@@ -103,11 +105,10 @@ class _QuizMultipleChoicesWidgetState extends State<QuizMultipleChoicesWidget> {
     return SizedBox(
       height: 44.0,
       child: CheckboxListTile(
-        onChanged: (v) => _onItemCheckedChange(option.index, v == true),
-        value: checked,
-        title: Text(option.display!),
-        controlAffinity: ListTileControlAffinity.leading,
-      ),
+          onChanged: (v) => _onItemCheckedChange(option.index, v),
+          value: checked,
+          title: Text(option.display!),
+          controlAffinity: ListTileControlAffinity.leading),
     );
   }
 

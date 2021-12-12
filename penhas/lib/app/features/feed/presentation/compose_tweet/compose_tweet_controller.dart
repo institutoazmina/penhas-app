@@ -26,6 +26,8 @@ abstract class _ComposeTweetControllerBase with Store, MapFailureMessage {
   final _tweetContentLimitSize = 2200;
   String? tweetContent;
 
+  _ComposeTweetControllerBase(this.useCase, this.mainboardStore);
+
   @observable
   ObservableFuture<Either<Failure, FeedCache>>? _progress;
 
@@ -78,6 +80,10 @@ abstract class _ComposeTweetControllerBase with Store, MapFailureMessage {
       (failure) => errorMessage = mapFailureMessage(failure),
       (valid) => _updatedTweet(),
     );
+  }
+
+  void _setErrorMessage(String? message) {
+    errorMessage = message;
   }
 
   void _updatedTweet() {

@@ -55,7 +55,7 @@ class LettersRule extends PasswordRule {
 
   @override
   bool apply(String? input) {
-    return input!.contains(RegExp('[A-Z]', caseSensitive: false));
+    return input!.contains(new RegExp(r'[A-Z]', caseSensitive: false));
   }
 }
 
@@ -65,7 +65,7 @@ class NumbersRule extends PasswordRule {
 
   @override
   bool apply(String? input) {
-    return input!.contains(RegExp('[0-9]'));
+    return input!.contains(new RegExp(r'[0-9]'));
   }
 }
 
@@ -75,6 +75,6 @@ class SpecialCharactersRule extends PasswordRule {
 
   @override
   bool apply(String? input) {
-    return input!.contains(RegExp('[^0-9A-Z]', caseSensitive: false));
+    return input!.contains(new RegExp(r'[^0-9A-Z]', caseSensitive: false));
   }
 }

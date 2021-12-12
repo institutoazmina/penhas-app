@@ -10,7 +10,11 @@ import '../../../utils/helper.mocks.dart';
 
 void main() {
   late AppModulesServices sut;
+<<<<<<< HEAD
   late final MockILocalStorage storage = MockILocalStorage();
+=======
+  ILocalStorage? storage;
+>>>>>>> Migrate code to nullsafety
   String? appModuleKey;
 
   String _convert(List<AppStateModuleEntity> modules) {
@@ -33,11 +37,11 @@ void main() {
         const AppStateModuleEntity(code: 'module_2', meta: '{"data":true}'),
       ];
       final jsonString = _convert(modules);
-      when(storage.put(any, any)).thenAnswer((_) => Future.value());
+      when(storage!.put(any, any)).thenAnswer((_) => Future.value());
       // act
       await sut.save(modules);
       // assert
-      verify(storage.put(appModuleKey, jsonString));
+      verify(storage!.put(appModuleKey, jsonString));
     });
 
     test('should get the module if exist on storage', () async {
@@ -51,7 +55,11 @@ void main() {
         const AppStateModuleEntity(code: 'module_2', meta: '{"data":true}'),
       ];
       final jsonString = _convert(modules);
+<<<<<<< HEAD
       when(storage.get(any)).thenAnswer((_) => Future.value(right(jsonString)));
+=======
+      when(storage!.get(any)).thenAnswer((_) => Future.value(jsonString));
+>>>>>>> Migrate code to nullsafety
       // act
       final received = await sut.feature(name: 'module_2');
       // assert
@@ -60,13 +68,21 @@ void main() {
 
     test('should received null if module do not existe on storage', () async {
       // arrange
+<<<<<<< HEAD
       const dynamic expected = null;
+=======
+      final dynamic expected = null;
+>>>>>>> Migrate code to nullsafety
       final modules = [
         const AppStateModuleEntity(code: 'module_1', meta: '{}'),
         const AppStateModuleEntity(code: 'module_2', meta: '{"data":true}'),
       ];
       final jsonString = _convert(modules);
+<<<<<<< HEAD
       when(storage.get(any)).thenAnswer((_) => Future.value(right(jsonString)));
+=======
+      when(storage!.get(any)).thenAnswer((_) => Future.value(jsonString));
+>>>>>>> Migrate code to nullsafety
       // act
       final received = await sut.feature(name: 'module_20');
       // assert

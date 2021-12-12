@@ -5,7 +5,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatChannelCard extends StatelessWidget {
   const ChatChannelCard({
-    Key? key,
+    required Key key,
     required this.channel,
     required this.onPressed,
   }) : super(key: key);
@@ -41,7 +41,7 @@ class ChatChannelCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(width: 16),
+                      SizedBox(width: 16),
                       Text(channel.user.nickname!, style: cardTitleTextStyle),
                       Text(channel.user.activity!, style: cardStatusTextStyle),
                     ],

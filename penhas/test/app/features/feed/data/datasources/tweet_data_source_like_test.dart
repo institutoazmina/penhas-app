@@ -9,27 +9,32 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late final MockHttpClient apiClient = MockHttpClient();
-  late final MockIApiServerConfigure serverConfigure =
-      MockIApiServerConfigure();
-  late final ITweetDataSource dataSource = TweetDataSource(
-    apiClient: apiClient,
-    serverConfiguration: serverConfigure,
-  );
-  final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
-  const String sessionToken = 'my_really.long.JWT';
+  MockHttpClient? apiClient;
+  late ITweetDataSource dataSource;
+  MockApiServerConfigure? serverConfigure;
+  Uri? serverEndpoint;
+  const String SESSSION_TOKEN = 'my_really.long.JWT';
+
+  setUp(() async {
+    apiClient = MockHttpClient();
+    serverConfigure = MockApiServerConfigure();
+    serverEndpoint = Uri.https('api.anyserver.io', '/');
+    dataSource = TweetDataSource(
+      apiClient: apiClient,
+      serverConfiguration: serverConfigure,
+    );
 
   setUp(() {
     // MockApiServerConfigure configuration
-    when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
-    when(serverConfigure.apiToken)
-        .thenAnswer((_) => Future.value(sessionToken));
-    when(serverConfigure.userAgent)
-        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
+    when(serverConfigure!.baseUri).thenAnswer(((_) => serverEndpoint!) as Uri Function(Invocation));
+    when(serverConfigure!.apiToken)
+        .thenAnswer((_) => Future.value(SESSSION_TOKEN));
+    when(serverConfigure!.userAgent)
+        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
-    final userAgent = await serverConfigure.userAgent;
+    final userAgent = await serverConfigure!.userAgent;
     return {
       'X-Api-Key': sessionToken,
       'User-Agent': userAgent,
@@ -39,21 +44,19 @@ void main() {
 
   Uri _setuHttpRequest(String path, Map<String, String> queryParameters) {
     return Uri(
-      scheme: serverEndpoint.scheme,
-      host: serverEndpoint.host,
+      scheme: serverEndpoint!.scheme,
+      host: serverEndpoint!.host,
       path: path,
       queryParameters: queryParameters.isEmpty ? null : queryParameters,
     );
   }
 
   PostExpectation<Future<http.Response>> _mockPostRequest() {
-    return when(
-      apiClient.post(
-        any,
-        headers: anyNamed('headers'),
-        body: anyNamed('body'),
-      ),
-    );
+    return when(apiClient!.post(
+      any,
+      headers: anyNamed('headers'),
+      body: anyNamed('body'),
+    ));
   }
 
   void _setUpMockPostHttpClientSuccess200(String? bodyContent) {
@@ -81,7 +84,7 @@ void main() {
       test('should perform a POST with X-API-Key', () async {
         // arrange
         final endPointPath = '/timeline/${requestOption!.tweetId}/like';
-        final queryParameters = <String, String>{};
+        final queryParameters = Map<String, String>();
 
         final headers = await _setUpHttpHeader();
         final request = _setuHttpRequest(endPointPath, queryParameters);
@@ -89,14 +92,14 @@ void main() {
         // act
         await dataSource.like(option: requestOption);
         // assert
-        verify(apiClient.post(request, headers: headers));
+        verify(apiClient!.post(request, headers: headers));
       });
       test('should get a valid ValidField for a successful request', () async {
         // arrange
         _setUpMockPostHttpClientSuccess200(bodyContent);
         final jsonData =
             await JsonUtil.getJson(from: 'feed/tweet_like_response.json');
-        final expected = TweetModel.fromJson(jsonData['tweet']);
+        final expected = TweetModel.fromJson(jsonData['tweet'] as Map<String, Object>);
         // act
         final received = await dataSource.like(option: requestOption);
         // assert

@@ -7,6 +7,11 @@ import 'package:penhas/app/features/authentication/domain/usecases/map_validator
 
 @immutable
 class EmailAddress extends Equatable with MapValidatorFailure {
+  final Either<Failure, String?> value;
+
+  String? get rawValue => value.getOrElse(() => null);
+  bool get isValid => value.isRight();
+
   factory EmailAddress(String? input) {
     return EmailAddress._(_validate(input));
   }

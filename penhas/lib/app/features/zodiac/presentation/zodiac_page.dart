@@ -11,9 +11,10 @@ import 'package:penhas/app/shared/design_system/logo.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ZodiacPage extends StatefulWidget {
-  const ZodiacPage({
-    Key? key,
-    this.title = 'ZodiacPage',
+  final String title;
+  ZodiacPage({
+    required Key key,
+    this.title = "ZodiacPage",
   }) : super(key: key);
 
   final String title;

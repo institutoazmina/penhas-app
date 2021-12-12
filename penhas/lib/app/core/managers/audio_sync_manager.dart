@@ -15,25 +15,26 @@ abstract class IAudioSyncManager {
   Future<String> audioFile({
     required String? session,
     required String sequence,
-    String suffix,
+    String? suffix,
   });
   Future<bool> syncAudio();
   Future<Either<Failure, File>> cache(AudioEntity audio);
 }
 
 class AudioSyncManager implements IAudioSyncManager {
-  AudioSyncManager({required IAudioSyncRepository audioRepository})
-      : _audioRepository = audioRepository {
-    _init();
-  }
-
+  Timer? _syncTimer;
   bool _syncAudioRunning = false;
   // ignore: unused_field
   late Timer _syncTimer;
   final _pendingUploadAudio = Queue<File>();
   final IAudioSyncRepository _audioRepository;
 
-  Future _init() async {
+  AudioSyncManager({required IAudioSyncRepository audioRepository})
+      : this._audioRepository = audioRepository {
+    _init();
+  }
+
+  _init() async {
     await loadAudioQueue();
     setupUploadTimer();
   }
@@ -42,7 +43,7 @@ class AudioSyncManager implements IAudioSyncManager {
   Future<String> audioFile({
     required String? session,
     required String sequence,
-    String suffix = '.aac',
+    String? suffix,
   }) async {
     String extension = suffix;
     if (!extension.startsWith('.')) {
@@ -232,8 +233,8 @@ extension _AudioSyncManager on AudioSyncManager {
 
   Future<void> loadAudioQueue() async {
     final dirs = await dirAudioUploadContent();
-    for (final file in dirs) {
-      final status = _pendingUploadAudio.firstWhereOrNull(
+    dirs.forEach((file) {
+      var status = _pendingUploadAudio.firstWhereOrNull(
         (e) => e.path == file.path,
       );
 

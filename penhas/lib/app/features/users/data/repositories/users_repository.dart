@@ -19,11 +19,11 @@ abstract class IUsersRepository {
 }
 
 class UsersRepository implements IUsersRepository {
+  final IApiProvider? _apiProvider;
+
   UsersRepository({
     required IApiProvider? apiProvider,
-  }) : _apiProvider = apiProvider;
-
-  final IApiProvider? _apiProvider;
+  }) : this._apiProvider = apiProvider;
 
   @override
   Future<Either<Failure, UserDetailEntity>> profileDetail(
@@ -45,11 +45,10 @@ class UsersRepository implements IUsersRepository {
 
   @override
   Future<Either<Failure, UserSearchSessionEntity>> search(
-    UserSearchOptions option,
-  ) async {
-    const endPoint = '/search-users';
+      UserSearchOptions option) async {
+    final endPoint = "/search-users";
     final skills = (option.skills != null && option.skills!.isNotEmpty)
-        ? option.skills!.join(',')
+        ? option.skills!.join(",")
         : null;
     final parameters = {
       'name': option.name,

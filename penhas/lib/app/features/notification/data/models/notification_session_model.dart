@@ -1,10 +1,14 @@
 import 'package:penhas/app/features/notification/domain/entities/notification_session_entity.dart';
 
 class NotificationSessionModel extends NotificationSessionEntity {
-  const NotificationSessionModel({
-    required bool hasMore,
-    required String? nextPage,
-    required List<NotificationEntity>? notifications,
+  final bool hasMore;
+  final String? nextPage;
+  final List<NotificationEntity>? notifications;
+
+  NotificationSessionModel({
+    required this.hasMore,
+    required this.nextPage,
+    required this.notifications,
   }) : super(
           hasMore: hasMore,
           nextPage: nextPage,
@@ -21,28 +25,28 @@ class NotificationSessionModel extends NotificationSessionEntity {
 
     return NotificationSessionModel(
       hasMore: hasMore,
-      nextPage: nextPage,
+      nextPage: nextPage as String?,
       notifications: notifications,
     );
   }
 }
 
 extension _Parse on NotificationEntity {
-  static NotificationEntity fromJson(Map<String, dynamic> jsonData) {
-    final content = jsonData['content'];
-    final icon = jsonData['icon'];
-    final title = jsonData['title'];
-    final time = DateTime.tryParse(jsonData['time'] as String);
-    final name = jsonData['name'];
-    final route = jsonData['expand_screen'];
+  static NotificationEntity fromJson(Map<String, Object> jsonData) {
+    final content = jsonData["content"];
+    final icon = jsonData["icon"];
+    final title = jsonData["title"];
+    final time = DateTime.tryParse(jsonData["time"] as String);
+    final name = jsonData["name"];
+    final route = jsonData["expand_screen"];
 
     return NotificationEntity(
-      name: name,
-      content: content,
-      icon: icon,
-      title: title,
+      name: name as String?,
+      content: content as String?,
+      icon: icon as String?,
+      title: title as String?,
       time: time,
-      route: route,
+      route: route as String?,
     );
   }
 }

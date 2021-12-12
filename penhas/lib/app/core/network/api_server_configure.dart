@@ -14,7 +14,8 @@ class ApiServerConfigure implements IApiServerConfigure {
   ApiServerConfigure({required IAppConfiguration appConfiguration})
       : _appConfiguration = appConfiguration;
 
-  final IAppConfiguration _appConfiguration;
+  ApiServerConfigure({required IAppConfiguration appConfiguration})
+      : this._appConfiguration = appConfiguration;
 
   @override
   Uri get baseUri => _appConfiguration.penhasServer;

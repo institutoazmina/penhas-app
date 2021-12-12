@@ -22,6 +22,17 @@ class ReplyTweet extends StatelessWidget {
 
   final ITweetController controller;
 
+  const ReplyTweet({
+    required Key key,
+    required this.tweet,
+    required this.controller,
+    required BuildContext context,
+  })  : assert(tweet != null),
+        assert(context != null),
+        assert(controller != null),
+        this._context = context,
+        super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -137,10 +148,11 @@ class ReplyTweet extends StatelessWidget {
 
 class _RepliedTweet extends StatelessWidget {
   const _RepliedTweet({
-    Key? key,
+    required Key key,
     required TweetEntity repliedTweet,
     required this.controller,
-  })  : tweet = repliedTweet,
+  })  : assert(repliedTweet != null),
+        tweet = repliedTweet,
         super(key: key);
 
   final TweetEntity tweet;

@@ -44,6 +44,9 @@ abstract class IUserRegisterDataSource {
 }
 
 class UserRegisterDataSource implements IUserRegisterDataSource {
+  final http.Client? apiClient;
+  final IApiServerConfigure? serverConfiguration;
+
   UserRegisterDataSource({
     required this.apiClient,
     required this.serverConfiguration,
@@ -59,7 +62,7 @@ class UserRegisterDataSource implements IUserRegisterDataSource {
     required Cep? cep,
     required Cpf? cpf,
     required Fullname? fullname,
-    Fullname? socialName,
+    required Fullname? socialName,
     required Nickname? nickName,
     required Birthday? birthday,
     required Genre? genre,
@@ -77,8 +80,8 @@ class UserRegisterDataSource implements IUserRegisterDataSource {
       'nome_social': socialName?.rawValue,
       'apelido': nickName!.rawValue,
       'dt_nasc': birthday!.rawValue,
-      'genero': genre?.rawValue,
-      'raca': race?.rawValue,
+      'genero': genre.rawValue,
+      'raca': race.rawValue,
     };
 
     final httpHeader = await _setupHttpHeader();
@@ -141,9 +144,8 @@ class UserRegisterDataSource implements IUserRegisterDataSource {
     };
   }
 
-  Future<Uri> _setupHttpRequest({
-    required Map<String, String?> queryParameters,
-  }) async {
+  Future<Uri> _setupHttpRequest(
+      {required Map<String, String?> queryParameters}) async {
     queryParameters.removeWhere((k, v) => v == null);
     return serverConfiguration!.baseUri.replace(
       path: '/signup',

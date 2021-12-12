@@ -10,12 +10,11 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late final MockHttpClient apiClient = MockHttpClient();
+  MockHttpClient? apiClient;
   late ITweetDataSource dataSource;
-  late final MockIApiServerConfigure serverConfigure =
-      MockIApiServerConfigure();
+  MockApiServerConfigure? serverConfigure;
   Uri? serverEndpoint;
-  const String sessionToken = 'my_really.long.JWT';
+  const String SESSSION_TOKEN = 'my_really.long.JWT';
 
   setUp(() {
     serverEndpoint = Uri.https('api.anyserver.io', '/');
@@ -25,15 +24,15 @@ void main() {
     );
 
     // MockApiServerConfigure configuration
-    when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint!);
-    when(serverConfigure.apiToken)
-        .thenAnswer((_) => Future.value(sessionToken));
-    when(serverConfigure.userAgent)
-        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
+    when(serverConfigure!.baseUri).thenAnswer(((_) => serverEndpoint!) as Uri Function(Invocation));
+    when(serverConfigure!.apiToken)
+        .thenAnswer((_) => Future.value(SESSSION_TOKEN));
+    when(serverConfigure!.userAgent)
+        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
-    final userAgent = await serverConfigure.userAgent;
+    final userAgent = await serverConfigure!.userAgent;
     return {
       'X-Api-Key': sessionToken,
       'User-Agent': userAgent,
@@ -51,13 +50,11 @@ void main() {
   }
 
   PostExpectation<Future<http.Response>> _mockPostRequest() {
-    return when(
-      apiClient.post(
-        any,
-        headers: anyNamed('headers'),
-        body: anyNamed('body'),
-      ),
-    );
+    return when(apiClient!.post(
+      any,
+      headers: anyNamed('headers'),
+      body: anyNamed('body'),
+    ));
   }
 
   void _setUpMockPostHttpClientSuccess200(String? bodyContent) {
@@ -86,7 +83,7 @@ void main() {
       });
       test('should perform a POST with X-API-Key', () async {
         // arrange
-        const endPointPath = '/me/tweets';
+        final endPointPath = '/me/tweets';
         final bodyRequest = Uri.encodeComponent(requestOption!.message!);
         final headers = await _setUpHttpHeader();
         final request = _setuHttpRequest(endPointPath, {});
@@ -95,7 +92,7 @@ void main() {
         await dataSource.create(option: requestOption);
         // assert
         verify(
-          apiClient.post(
+          apiClient!.post(
             request,
             headers: headers,
             body: 'content=$bodyRequest',

@@ -3,7 +3,12 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ResetPasswordResponseEntity extends Equatable {
-  const ResetPasswordResponseEntity({
+  final String? message;
+  final int? digits;
+  final int? ttl;
+  final int? ttlRetry;
+
+  ResetPasswordResponseEntity({
     required this.message,
     required this.digits,
     required this.ttl,
@@ -16,7 +21,7 @@ class ResetPasswordResponseEntity extends Equatable {
   final int? ttlRetry;
 
   @override
-  List<Object?> get props => [message!, digits!, ttl!, ttlRetry!];
+  List<Object> get props => [message!, digits!, ttl!, ttlRetry!];
 
   @override
   bool get stringify => true;

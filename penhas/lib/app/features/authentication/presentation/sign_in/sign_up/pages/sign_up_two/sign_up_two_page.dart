@@ -17,6 +17,7 @@ class SignUpTwoPage extends StatefulWidget {
   const SignUpTwoPage({Key? key, this.title = 'SignUpTwo'}) : super(key: key);
 
   final String title;
+  const SignUpTwoPage({required Key key, this.title = "SignUpTwo"}) : super(key: key);
 
   @override
   _SignUpTwoPageState createState() => _SignUpTwoPageState();
@@ -26,7 +27,7 @@ class _SignUpTwoPageState
     extends ModularState<SignUpTwoPage, SignUpTwoController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
 
   final dataSourceGenre =
@@ -44,9 +45,7 @@ class _SignUpTwoPageState
 
   @override
   void dispose() {
-    for (final d in _disposers!) {
-      d();
-    }
+    _disposers!.forEach((d) => d());
     super.dispose();
   }
 
@@ -150,7 +149,7 @@ class _SignUpTwoPageState
   Widget _buildDropdownList<T>({
     required BuildContext context,
     required String labelText,
-    required String? onError,
+    required String onError,
     required onChange,
     required T currentValue,
     required List dataSource,
@@ -172,7 +171,7 @@ class _SignUpTwoPageState
           contentPadding:
               const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
         ),
-        items: dataSource as List<DropdownMenuItem<T>>,
+        items: dataSource as List<DropdownMenuItem<_>>,
         onChanged: onChange,
         style: const TextStyle(color: Colors.white),
         value: currentValue == '' ? null : currentValue,
@@ -199,6 +198,7 @@ class _SignUpTwoPageState
     return list
         .map(
           (v) => DropdownMenuItem<String>(
+            child: Text(v.display!),
             value: v.value,
             child: Text(v.display!),
           ),

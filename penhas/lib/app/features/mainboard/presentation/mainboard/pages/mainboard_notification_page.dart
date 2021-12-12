@@ -4,7 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class MainboardNotificationPage extends StatelessWidget {
   const MainboardNotificationPage({
-    Key? key,
+    required Key key,
     required this.counter,
     required this.resetCounter,
   }) : super(key: key);
@@ -17,7 +17,7 @@ class MainboardNotificationPage extends StatelessWidget {
     return IconButton(
       icon: Badge(
         elevation: 0.0,
-        position: _badgePosition(counter),
+        position: _badgePosition(counter)!,
         showBadge: counter > 0,
         toAnimate: false,
         badgeContent: Text(

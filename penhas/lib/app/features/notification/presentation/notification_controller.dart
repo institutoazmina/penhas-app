@@ -12,9 +12,9 @@ part 'notification_controller.g.dart';
 
 class NotificationController extends _NotificationControllerBase
     with _$NotificationController {
-  NotificationController({
-    required INotificationRepository notificationRepository,
-  }) : super(notificationRepository);
+  NotificationController(
+      {required INotificationRepository notificationRepository})
+      : super(notificationRepository);
 }
 
 abstract class _NotificationControllerBase with Store, MapFailureMessage {
@@ -49,8 +49,7 @@ extension _PrivateMethod on _NotificationControllerBase {
     errorMessage = '';
     _loadNotifications = ObservableFuture(_repository.notifications());
 
-    final Either<Failure, NotificationSessionEntity> response =
-        await _loadNotifications!;
+    final Either<Failure, NotificationSessionEntity> response = await _loadNotifications!;
 
     response.fold(
       (failure) => handleStateError(failure),
@@ -60,7 +59,7 @@ extension _PrivateMethod on _NotificationControllerBase {
 
   void handleSession(NotificationSessionEntity session) {
     if (session.notifications!.isEmpty) {
-      state = const NotificationState.empty();
+      state = NotificationState.empty();
     } else {
       state = NotificationState.loaded(session.notifications!);
     }
@@ -68,5 +67,9 @@ extension _PrivateMethod on _NotificationControllerBase {
 
   void handleStateError(Failure f) {
     state = NotificationState.error(mapFailureMessage(f)!);
+  }
+
+  void setErrorMessage(String msg) {
+    errorMessage = msg;
   }
 }

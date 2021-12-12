@@ -63,8 +63,7 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
     _resetErrorMessage();
     _fetchProgress = ObservableFuture(_guardianRepository.fetch());
 
-    final Either<Failure, GuardianSessioEntity> response =
-        await _fetchProgress!;
+    final Either<Failure, GuardianSessioEntity> response = await _fetchProgress!;
 
     response.fold(
       (failure) => _handleLoadPageError(failure),
@@ -115,7 +114,7 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
     currentState = GuardianState.error(message);
   }
 
-  void _resetErrorMessage() => errorMessage = '';
+  void _setErrorMessage(String? message) => errorMessage = message;
 
   Future<void> _onEditPressed(
     GuardianContactEntity contact,

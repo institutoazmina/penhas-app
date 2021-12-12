@@ -18,7 +18,8 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class NewGuardianPage extends StatefulWidget {
-  const NewGuardianPage({Key? key, this.title = 'NewGuardian'})
+  final String title;
+  const NewGuardianPage({required Key key, this.title = "NewGuardian"})
       : super(key: key);
 
   final String title;
@@ -56,9 +57,7 @@ class _NewGuardianPageState
 
   @override
   void dispose() {
-    for (final d in _disposers!) {
-      d();
-    }
+    _disposers!.forEach((d) => d());
     super.dispose();
   }
 

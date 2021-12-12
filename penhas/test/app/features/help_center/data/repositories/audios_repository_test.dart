@@ -12,7 +12,7 @@ import '../../../../../utils/json_util.dart';
 
 void main() {
   late IAudiosRepository sut;
-  late final MockIApiProvider apiProvider = MockIApiProvider();
+  IApiProvider? apiProvider;
 
   setUpAll(
     () {
@@ -26,7 +26,7 @@ void main() {
       final jsonData = await JsonUtil.getJson(from: 'audios/audios_fetch.json');
       final expected = AudioModel.fromJson(jsonData);
       when(
-        apiProvider.get(
+        apiProvider!.get(
           path: anyNamed('path'),
           headers: anyNamed('headers'),
           parameters: anyNamed('parameters'),
@@ -37,7 +37,11 @@ void main() {
       // unwrap do Either pq ele não se dá bem com o Collection nativo,
       // eu teria que alterar para um List dele, mas me recurso a fazer isto
       // só para o teste, já que na códgio terá outras implicações.
+<<<<<<< HEAD
       final result = await sut.fetch().then((v) => v.getOrElse(() => null)!);
+=======
+      final matcher = await sut.fetch().then((v) => v.getOrElse(() => null)!);
+>>>>>>> Migrate code to nullsafety
       // assert
       expect(result, expected);
     });
@@ -53,7 +57,7 @@ void main() {
         isRequestGranted: false,
       );
       when(
-        apiProvider.delete(
+        apiProvider!.delete(
           path: anyNamed('path'),
           parameters: anyNamed('parameters'),
         ),
@@ -81,7 +85,7 @@ void main() {
         isRequestGranted: false,
       );
       when(
-        apiProvider.post(
+        apiProvider!.post(
           path: anyNamed('path'),
           headers: anyNamed('headers'),
           parameters: anyNamed('parameters'),

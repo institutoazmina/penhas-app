@@ -8,9 +8,10 @@ import 'package:penhas/app/features/authentication/domain/usecases/sign_up_passw
 
 @immutable
 class ChangePassword {
-  factory ChangePassword({
-    required IChangePasswordRepository? changePasswordRepository,
-  }) {
+  final IChangePasswordRepository? _repository;
+
+  factory ChangePassword(
+      {required IChangePasswordRepository? changePasswordRepository}) {
     return ChangePassword._(changePasswordRepository);
   }
 

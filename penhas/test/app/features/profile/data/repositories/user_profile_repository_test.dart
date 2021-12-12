@@ -7,21 +7,19 @@ import 'package:penhas/app/features/main_menu/domain/repositories/user_profile_r
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late final MockIApiProvider apiProvider = MockIApiProvider();
-  late final MockIApiServerConfigure serverConfiguration =
-      MockIApiServerConfigure();
-  late final IUserProfileRepository sut = UserProfileRepository(
-    apiProvider: apiProvider,
-    serverConfiguration: serverConfiguration,
-  );
+  late IUserProfileRepository sut;
+  IApiProvider? apiProvider;
+
+  setUp(() {
+    apiProvider = MockApiProvider();
+    sut = UserProfileRepository(apiProvider: apiProvider);
+  });
 
   void _setUpMockPost() {
-    when(
-      apiProvider.post(
-        path: anyNamed('path'),
-        parameters: anyNamed('parameters'),
-      ),
-    ).thenAnswer((_) async => Future.value(''));
+    when(apiProvider!.post(
+      path: anyNamed('path'),
+      parameters: anyNamed('parameters'),
+    )).thenAnswer((_) async => Future.value(""));
   }
 
   group('UserProfileRepository', () {
@@ -35,7 +33,7 @@ void main() {
         await sut.stealthMode(toggle: true);
         // assert
         verify(
-          apiProvider.post(
+          apiProvider!.post(
             path: endPoint,
             parameters: parameters,
           ),
@@ -63,7 +61,7 @@ void main() {
         await sut.anonymousMode(toggle: true);
         // assert
         verify(
-          apiProvider.post(
+          apiProvider!.post(
             path: endPoint,
             parameters: parameters,
           ),

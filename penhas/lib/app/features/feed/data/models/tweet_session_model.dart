@@ -7,10 +7,9 @@ class TweetSessionModel extends TweetSessionEntity {
   const TweetSessionModel(
     TweetSessionOrder orderBy,
     TweetTiles? parent,
-    List<TweetTiles> tweets,
-    String? nextPage, {
-    required bool hasMore,
-  }) : super(
+    List<TweetTiles?> tweets,
+    String? nextPage,
+  ) : super(
           hasMore: hasMore,
           orderBy: orderBy,
           parent: parent,
@@ -24,21 +23,14 @@ class TweetSessionModel extends TweetSessionEntity {
     final orderBy = jsonData['order_by'] == 'latest_first'
         ? TweetSessionOrder.latestFirst
         : TweetSessionOrder.oldestFirst;
-    final tweets = _parseTweet(jsonData['tweets']);
-    final parent = jsonData['parent'] != null
-        ? _parseJson(jsonData['parent'] as Map<String, dynamic>)
-        : null;
+    final tweets = _parseTweet(jsonData['tweets'] as List<Object>?);
+    final parent =
+        jsonData['parent'] != null ? _parseJson(jsonData['parent'] as Map<String, dynamic>) : null;
 
-    return TweetSessionModel(
-      orderBy,
-      parent,
-      tweets,
-      nextPage,
-      hasMore: hasMore,
-    );
+    return TweetSessionModel(hasMore, orderBy, parent, tweets, nextPage as String?);
   }
 
-  static List<TweetTiles> _parseTweet(List<dynamic>? tweets) {
+  static List<TweetTiles?> _parseTweet(List<Object>? tweets) {
     if (tweets == null || tweets.isEmpty) {
       return [];
     }
@@ -52,19 +44,19 @@ class TweetSessionModel extends TweetSessionEntity {
 
   static TweetTiles? _parseJson(Map<String, dynamic> json) {
     if (json['type'] == 'tweet') {
-      return TweetModel.fromJson(json);
+      return TweetModel.fromJson(json as Map<String, Object>);
     }
 
     if (json['type'] == 'related_news') {
-      return TweetRelatedNewsModel.fromJson(json);
+      return TweetRelatedNewsModel.fromJson(json as Map<String, Object>);
     }
 
     if (json['type'] == 'news') {
-      return TweetNewsModel.fromJson(json);
+      return TweetNewsModel.fromJson(json as Map<String, Object>);
     }
 
     if (json['type'] == 'news_group') {
-      return TweetNewsGroupModel.fromJson(json);
+      return TweetNewsGroupModel.fromJson(json as Map<String, Object>);
     }
 
     return null;

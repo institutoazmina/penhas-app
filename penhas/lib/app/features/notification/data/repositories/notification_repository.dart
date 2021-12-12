@@ -16,18 +16,18 @@ abstract class INotificationRepository {
 }
 
 class NotificationRepository implements INotificationRepository {
-  NotificationRepository({
-    required IApiProvider apiProvider,
-  }) : _apiProvider = apiProvider;
+  final IApiProvider? _apiProvider;
 
-  final IApiProvider _apiProvider;
+  NotificationRepository({
+    required IApiProvider? apiProvider,
+  }) : this._apiProvider = apiProvider;
 
   @override
   Future<Either<Failure, ValidField>> unread() async {
     const endPoint = '/me/unread-notif-count';
 
     try {
-      final bodyResponse = await _apiProvider.get(
+      final bodyResponse = await _apiProvider!.get(
         path: endPoint,
       );
       return right(parseUnread(bodyResponse));
@@ -45,14 +45,12 @@ class NotificationRepository implements INotificationRepository {
     };
 
     try {
-      final bodyResponse = await _apiProvider.get(
+      final bodyResponse = await _apiProvider!.get(
         path: endPoint,
         parameters: parameters,
       );
-      return right(
-          parseNotifications(bodyResponse) as NotificationSessionModel);
-    } catch (error, stack) {
-      logError(error, stack);
+      return right(parseNotifications(bodyResponse) as NotificationSessionModel);
+    } catch (error) {
       return left(MapExceptionToFailure.map(error));
     }
   }

@@ -12,6 +12,7 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
+<<<<<<< HEAD
   late final MockHttpClient mockHttpClient = MockHttpClient();
   late final MockIApiServerConfigure mockApiServerConfigure =
       MockIApiServerConfigure();
@@ -19,6 +20,14 @@ void main() {
   late final SignInPassword password =
       SignInPassword('_veryStr0ngP4ssw@rd', PasswordValidator());
   final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
+=======
+  late IAuthenticationDataSource dataSource;
+  MockHttpClient? mockHttpClient;
+  MockApiServerConfigure? mockApiServerConfigure;
+  EmailAddress? emailAddress;
+  SignInPassword? password;
+  Uri? serverEndpoint;
+>>>>>>> Migrate code to nullsafety
 
   late final IAuthenticationDataSource dataSource = AuthenticationDataSource(
     apiClient: mockHttpClient,
@@ -27,13 +36,19 @@ void main() {
 
   setUp(() {
     // MockApiServerConfigure configuration
+<<<<<<< HEAD
     when(mockApiServerConfigure.baseUri).thenAnswer((_) => serverEndpoint);
     when(mockApiServerConfigure.userAgent)
         .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
+=======
+    when(mockApiServerConfigure!.baseUri).thenAnswer(((_) => serverEndpoint!) as Uri Function(Invocation));
+    when(mockApiServerConfigure!.userAgent)
+        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
+>>>>>>> Migrate code to nullsafety
   });
 
   Future<Map<String, String>> setUpHttpHeader() async {
-    final userAgent = await mockApiServerConfigure.userAgent;
+    final userAgent = await mockApiServerConfigure!.userAgent;
     return {
       'User-Agent': userAgent,
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -41,19 +56,19 @@ void main() {
   }
 
   Future<Map<String, dynamic>> setUpQueryParameters() async {
-    final userAgent = await mockApiServerConfigure.userAgent;
+    final userAgent = await mockApiServerConfigure!.userAgent;
     return {
       'app_version': userAgent,
-      'email': emailAddress.rawValue,
-      'senha': password.rawValue,
+      'email': emailAddress!.rawValue,
+      'senha': password!.rawValue,
     };
   }
 
   Future<Uri> setuHttpRequest() async {
     final queryParameters = await setUpQueryParameters();
     return Uri(
-      scheme: serverEndpoint.scheme,
-      host: serverEndpoint.host,
+      scheme: serverEndpoint!.scheme,
+      host: serverEndpoint!.host,
       path: '/login',
       queryParameters: queryParameters,
     );
@@ -62,7 +77,7 @@ void main() {
   void setUpMockHttpClientSuccess200() {
     final bodyContent =
         JsonUtil.getStringSync(from: 'authentication/login_success.json');
-    when(mockHttpClient.post(any, headers: anyNamed('headers')))
+    when(mockHttpClient!.post(any, headers: anyNamed('headers')))
         .thenAnswer((_) async => http.Response(bodyContent, 200));
   }
 
@@ -70,7 +85,7 @@ void main() {
     final bodyContent =
         JsonUtil.getStringSync(from: 'authentication/login_failure.json');
     // arrange
-    when(mockHttpClient.post(any, headers: anyNamed('headers')))
+    when(mockHttpClient!.post(any, headers: anyNamed('headers')))
         .thenAnswer((_) async => http.Response(bodyContent, 400));
   }
 
@@ -88,7 +103,7 @@ void main() {
         password: password,
       );
       // assert
-      verify(mockHttpClient.post(loginUri, headers: headers));
+      verify(mockHttpClient!.post(loginUri, headers: headers));
     });
 
     test('should return SessionModel when the response code is 200 (success)',

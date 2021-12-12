@@ -6,8 +6,12 @@ import 'package:penhas/app/features/main_menu/presentation/account/pages/card_pr
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class CardProfileNamePage extends StatelessWidget {
+  final String? name;
+  final String? avatar;
+  final void Function(String) onChange;
+
   const CardProfileNamePage({
-    Key? key,
+    required Key key,
     required this.name,
     required this.avatar,
     required this.onChange,
@@ -76,7 +80,7 @@ extension _TextStyle on CardProfileNamePage {
 
 extension _Dialog on CardProfileNamePage {
   void showModal({required BuildContext context}) {
-    final TextEditingController _controller = TextEditingController();
+    TextEditingController _controller = TextEditingController();
     _controller.text = name!;
 
     Modular.to.showDialog(

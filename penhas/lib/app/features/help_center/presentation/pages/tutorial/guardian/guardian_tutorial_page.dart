@@ -4,7 +4,7 @@ import 'package:penhas/app/core/pages/tutorial_page_view_widget.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class GuardianTutorialPage extends StatefulWidget {
-  const GuardianTutorialPage({Key? key}) : super(key: key);
+  GuardianTutorialPage({required Key key}) : super(key: key);
 
   @override
   _GuardianTutorialPageState createState() => _GuardianTutorialPageState();

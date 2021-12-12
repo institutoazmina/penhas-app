@@ -4,8 +4,12 @@ import 'package:penhas/app/features/mainboard/presentation/mainboard/pages/mainb
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class MainboardBottomNavigationPage extends StatelessWidget {
+  final MainboardState? currentPage;
+  final List<MainboardState>? pages;
+  final void Function(MainboardState) onSelect;
+
   const MainboardBottomNavigationPage({
-    Key? key,
+    required Key key,
     required this.currentPage,
     required this.pages,
     required this.onSelect,

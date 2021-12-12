@@ -2,16 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 
 class JsonUtil {
-  static Future<Map<String, dynamic>> getJson({required String? from}) {
-    return JsonUtil.getString(from: from).then(
-      (fileContent) => jsonDecode(fileContent) as Map<String, dynamic>,
-    );
+  static Future<Map<String, Object>> getJson({required String? from}) {
+    return JsonUtil.getString(from: from)
+        .then((fileContent) => JsonDecoder().convert(fileContent));
   }
 
   static Future<String> getString({required String? from}) {
-    return File('test/assets/json/$from').readAsString();
+    return File("test/assets/json/$from").readAsString();
   }
 
   static String getStringSync({required String from}) =>
-      File('test/assets/json/$from').readAsStringSync();
+      File("test/assets/json/$from").readAsStringSync();
 }

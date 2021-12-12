@@ -8,16 +8,10 @@ import 'package:penhas/app/features/main_menu/domain/usecases/user_profile.dart'
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late final MockAppStateUseCase appStateUseCase = MockAppStateUseCase();
-  late final MockIUserProfileRepository repository =
-      MockIUserProfileRepository();
-  late final MockUserProfileStore profileStore = MockUserProfileStore();
-
-  late final UserProfile sut = UserProfile(
-    repository: repository,
-    userProfileStore: profileStore,
-    appStateUseCase: appStateUseCase,
-  );
+  late UserProfile sut;
+  AppStateUseCase? appStateUseCase;
+  IUserProfileRepository? repository;
+  LocalStore<UserProfileEntity> profileStore;
 
   setUp(() {
     when(appStateUseCase.check()).thenAnswer(
@@ -37,54 +31,80 @@ void main() {
   group('UserProfile', () {
     test('should enable stealth mode', () async {
       // arrange
+<<<<<<< HEAD
       final actual = right(const ValidField());
       when(repository.stealthMode(toggle: anyNamed('toggle')))
           .thenAnswer((_) async => right(const ValidField()));
 
+=======
+      final actual = right(ValidField());
+      when(repository!.stealthMode(toggle: anyNamed('toggle')))
+          .thenAnswer((_) async => right(ValidField()));
+      when(appStateUseCase!.check()).thenAnswer(((_) => null) as Future<Either<Failure, AppStateEntity>> Function(Invocation));
+>>>>>>> Migrate code to nullsafety
       // act
       final expected = await sut.stealthMode(toggle: true);
       // assert
       expect(actual, expected);
-      verify(repository.stealthMode(toggle: true));
-      verify(appStateUseCase.check());
+      verify(repository!.stealthMode(toggle: true));
+      verify(appStateUseCase!.check());
     });
 
     test('should disable stealth mode', () async {
       // arrange
+<<<<<<< HEAD
       final actual = right(const ValidField());
       when(repository.stealthMode(toggle: anyNamed('toggle')))
           .thenAnswer((_) async => right(const ValidField()));
+=======
+      final actual = right(ValidField());
+      when(repository!.stealthMode(toggle: anyNamed('toggle')))
+          .thenAnswer((_) async => right(ValidField()));
+>>>>>>> Migrate code to nullsafety
       // act
       final expected = await sut.stealthMode(toggle: false);
       // assert
       expect(actual, expected);
-      verify(repository.stealthMode(toggle: false));
+      verify(repository!.stealthMode(toggle: false));
     });
 
     test('should enable anonymous mode', () async {
       // arrange
+<<<<<<< HEAD
       final actual = right(const ValidField());
       when(repository.anonymousMode(toggle: anyNamed('toggle')))
           .thenAnswer((_) async => right(const ValidField()));
+=======
+      final actual = right(ValidField());
+      when(repository!.anonymousMode(toggle: anyNamed('toggle')))
+          .thenAnswer((_) async => right(ValidField()));
+>>>>>>> Migrate code to nullsafety
       // act
       final expected = await sut.anonymousMode(toggle: true);
       // assert
       expect(actual, expected);
-      verify(repository.anonymousMode(toggle: true));
+      verify(repository!.anonymousMode(toggle: true));
     });
 
     test('should disable anonymous mode', () async {
       // arrange
+<<<<<<< HEAD
       final actual = right(const ValidField());
       when(repository.anonymousMode(toggle: anyNamed('toggle')))
           .thenAnswer((_) async => right(const ValidField()));
 
+=======
+      final actual = right(ValidField());
+      when(repository!.anonymousMode(toggle: anyNamed('toggle')))
+          .thenAnswer((_) async => right(ValidField()));
+      when(appStateUseCase!.check()).thenAnswer(((_) => null) as Future<Either<Failure, AppStateEntity>> Function(Invocation));
+>>>>>>> Migrate code to nullsafety
       // act
       final expected = await sut.anonymousMode(toggle: false);
       // assert
       expect(actual, expected);
-      verify(repository.anonymousMode(toggle: false));
-      verify(appStateUseCase.check());
+      verify(repository!.anonymousMode(toggle: false));
+      verify(appStateUseCase!.check());
     });
   });
 }

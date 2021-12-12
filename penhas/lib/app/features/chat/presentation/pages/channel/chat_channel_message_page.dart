@@ -5,7 +5,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatChannelMessagePage extends StatelessWidget {
   const ChatChannelMessagePage({
-    Key? key,
+    required Key key,
     required this.content,
   }) : super(key: key);
 
@@ -59,10 +59,12 @@ class ChatChannelMessagePage extends StatelessWidget {
         padding: padding,
         decoration: BoxDecoration(color: color, borderRadius: borderRadius),
         child: Container(
-          constraints: const BoxConstraints(minWidth: 60.0),
-          child: HtmlWidget(
-            content.content.message!,
-            textStyle: TextStyle(fontSize: 15.0, color: textColor),
+          constraints: BoxConstraints(minWidth: 60.0),
+          child: Container(
+            child: HtmlWidget(
+              content.content.message!,
+              textStyle: TextStyle(fontSize: 15.0, color: textColor),
+            ),
           ),
         ),
       ),

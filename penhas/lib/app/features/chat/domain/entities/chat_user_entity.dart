@@ -1,7 +1,13 @@
 import 'package:equatable/equatable.dart';
 
 class ChatUserEntity extends Equatable {
-  const ChatUserEntity({
+  final String? activity;
+  final String? nickname;
+  final String? avatar;
+  final int? userId;
+  final bool blockedMe;
+
+  ChatUserEntity({
     required this.activity,
     required this.nickname,
     required this.avatar,
@@ -27,11 +33,11 @@ class ChatUserEntity extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object?> get props => [
-        activity,
-        nickname,
-        avatar,
-        userId,
+  List<Object> get props => [
+        activity!,
+        nickname!,
+        avatar!,
+        userId!,
         blockedMe,
       ];
 }

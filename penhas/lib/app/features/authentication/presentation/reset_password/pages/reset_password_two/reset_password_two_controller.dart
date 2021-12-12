@@ -14,13 +14,15 @@ const String _warningToken = 'Precisa digitar o código enviado';
 
 class ResetPasswordTwoController extends _ResetPasswordTwoControllerBase
     with _$ResetPasswordTwoController {
-  ResetPasswordTwoController(
-    IChangePasswordRepository repository,
-    UserRegisterFormFieldModel? userRegisterModel,
-  ) : super(repository, userRegisterModel);
+  ResetPasswordTwoController(IChangePasswordRepository repository,
+      UserRegisterFormFieldModel? userRegisterModel)
+      : super(repository, userRegisterModel);
 }
 
 abstract class _ResetPasswordTwoControllerBase with Store, MapFailureMessage {
+  final IChangePasswordRepository repository;
+  final UserRegisterFormFieldModel? _userRegisterModel;
+
   _ResetPasswordTwoControllerBase(this.repository, this._userRegisterModel);
 
   final IChangePasswordRepository repository;
@@ -53,10 +55,10 @@ abstract class _ResetPasswordTwoControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> nextStepPressed() async {
-    errorMessage = '';
+    _setErrorMessage('');
     if (_userRegisterModel!.token == null ||
         _userRegisterModel!.token!.length < 6) {
-      errorMessage = _warningToken;
+      _setErrorMessage(_WARNING_TOKEN);
       return;
     }
 
@@ -74,10 +76,12 @@ abstract class _ResetPasswordTwoControllerBase with Store, MapFailureMessage {
     );
   }
 
+  void _setErrorMessage(String? s) {
+    errorMessage = s;
+  }
+
   void _forwardToStep3() {
-    Modular.to.pushNamed(
-      '/authentication/reset_password/step3',
-      arguments: _userRegisterModel,
-    );
+    Modular.to.pushNamed('/authentication/reset_password/step3',
+        arguments: _userRegisterModel!);
   }
 }

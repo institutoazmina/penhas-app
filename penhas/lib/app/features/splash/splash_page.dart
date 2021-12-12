@@ -7,6 +7,7 @@ class SplashPage extends StatefulWidget {
   const SplashPage({Key? key, this.title = 'Splash'}) : super(key: key);
 
   final String title;
+  const SplashPage({required Key key, this.title = "Splash"}) : super(key: key);
 
   @override
   _SplashPageState createState() => _SplashPageState();

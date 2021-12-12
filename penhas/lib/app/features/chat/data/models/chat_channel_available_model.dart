@@ -4,28 +4,28 @@ import 'package:penhas/app/features/chat/data/models/chat_channel_model.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_available_entity.dart';
 
 class ChatChannelAvailableModel extends ChatChannelAvailableEntity {
-  const ChatChannelAvailableModel({
-    required bool? hasMore,
-    required String? nextPage,
-    required List<ChatChannelModel>? channels,
-    required ChatChannelModel? support,
-    required ChatAssistantModel? assistant,
-  }) : super(
-          hasMore: hasMore,
-          nextPage: nextPage,
-          channels: channels,
-          support: support,
-          assistant: assistant,
-        );
+  final bool? hasMore;
+  final String? nextPage;
+  final List<ChatChannelModel>? channels;
+  final ChatChannelModel? support;
+  final ChatAssistantModel? assistant;
 
-  factory ChatChannelAvailableModel.fromJson(Map<String, dynamic> jsonData) {
-    final hasMore = jsonData['has_more'] == 1;
-    final nextPage = jsonData['next_page'];
-    final support = ChatChannelModel.fromJson(jsonData['support']);
-    final assistant = jsonData['assistant'] == null
+  ChatChannelAvailableModel({
+    required this.hasMore,
+    required this.nextPage,
+    required this.channels,
+    required this.support,
+    required this.assistant,
+  });
+
+  factory ChatChannelAvailableModel.fromJson(Map<String, Object> jsonData) {
+    final hasMore = jsonData["has_more"] == 1;
+    final nextPage = jsonData["next_page"];
+    final support = ChatChannelModel.fromJson(jsonData["support"] as Map<String, Object>);
+    final assistant = jsonData["assistant"] == null
         ? null
-        : ChatAssistantModel.fromJson(jsonData['assistant']);
-    final List<dynamic> jsonChannels = jsonData['rows'];
+        : ChatAssistantModel.fromJson(jsonData["assistant"] as Map<String, Object>);
+    final List<Object> jsonChannels = jsonData["rows"] as List<Object>;
     final List<ChatChannelModel> channels = jsonChannels
         .map((e) => e as Map<String, dynamic>)
         .map((e) => ChatChannelModel.fromJson(e))
@@ -34,7 +34,7 @@ class ChatChannelAvailableModel extends ChatChannelAvailableEntity {
 
     return ChatChannelAvailableModel(
       hasMore: hasMore,
-      nextPage: nextPage,
+      nextPage: nextPage as String?,
       channels: channels,
       support: support,
       assistant: assistant,

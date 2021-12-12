@@ -10,16 +10,16 @@ abstract class ITweetFilterPreferenceDataSource {
 
 class TweetFilterPreferenceDataSource
     implements ITweetFilterPreferenceDataSource {
-  TweetFilterPreferenceDataSource({
-    required http.Client? apiClient,
-    required IApiServerConfigure? serverConfiguration,
-  })  : _apiClient = apiClient,
-        _serverConfiguration = serverConfiguration;
-
   final http.Client? _apiClient;
   final IApiServerConfigure? _serverConfiguration;
   final Set<int> _successfulResponse = {200, 204};
   final Set<int> _invalidSessionCode = {401, 403};
+
+  TweetFilterPreferenceDataSource({
+    required http.Client? apiClient,
+    required IApiServerConfigure? serverConfiguration,
+  })  : this._apiClient = apiClient,
+        this._serverConfiguration = serverConfiguration;
 
   @override
   Future<TweetFilterSessionModel> fetch() async {
@@ -53,6 +53,7 @@ class TweetFilterPreferenceDataSource
     required String path,
     required Map<String, String> queryParameters,
   }) async {
+    queryParameters.removeWhere((k, v) => v == null);
     return _serverConfiguration!.baseUri.replace(
       path: path,
       queryParameters: queryParameters.isEmpty ? null : queryParameters,

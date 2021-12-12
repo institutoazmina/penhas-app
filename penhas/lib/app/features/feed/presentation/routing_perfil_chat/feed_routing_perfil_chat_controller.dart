@@ -23,6 +23,10 @@ class FeedRoutingPerfilChatController
 
 abstract class _FeedRoutingPerfilChatControllerBase
     with Store, MapFailureMessage {
+  final FeedRouterType? _routerType;
+  final IUsersRepository _usersRepository;
+  final IChatChannelRepository _channelRepository;
+
   _FeedRoutingPerfilChatControllerBase(
     this._routerType,
     this._usersRepository,
@@ -58,8 +62,8 @@ extension _PrivateMethod on _FeedRoutingPerfilChatControllerBase {
 
   String pageTitle() {
     return _routerType!.when(
-      chat: (_) => 'Chat',
-      profile: (_) => 'Perfil',
+      chat: (_) => "Chat",
+      profile: (_) => "Perfil",
     );
   }
 

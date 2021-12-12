@@ -14,12 +14,9 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late final MockIGuardianDataSource dataSource = MockIGuardianDataSource();
-  late final MockINetworkInfo networkInfo = MockINetworkInfo();
-  late final IGuardianRepository sut = GuardianRepository(
-    dataSource: dataSource,
-    networkInfo: networkInfo,
-  );
+  late IGuardianRepository sut;
+  IGuardianDataSource? dataSource;
+  INetworkInfo networkInfo;
 
   setUp(() {
     when(networkInfo.isConnected).thenAnswer((_) => Future.value(true));
@@ -66,7 +63,7 @@ void main() {
               ),
             ],
           );
-          when(dataSource.fetch()).thenAnswer((_) async => sessionModel);
+          when(dataSource!.fetch()).thenAnswer((_) async => sessionModel);
           final expected = right(emptySession);
           // act
           final receceived = await sut.fetch();
@@ -81,7 +78,7 @@ void main() {
           final jsonSession =
               await JsonUtil.getJson(from: 'help_center/guardian_list.json');
           final sessionModel = GuardianSessionModel.fromJson(jsonSession);
-          when(dataSource.fetch()).thenAnswer((_) async => sessionModel);
+          when(dataSource!.fetch()).thenAnswer((_) async => sessionModel);
           final expected = right(sessionModel);
           // act
           final receceived = await sut.fetch();
@@ -102,7 +99,7 @@ void main() {
           );
           final response = AlertModel.fromJson(jsonSession);
           final expected = right(response);
-          when(dataSource.create(any)).thenAnswer((_) async => response);
+          when(dataSource!.create(any)).thenAnswer((_) async => response);
           // act
           final received = await sut.create(guardian);
           // assert
@@ -128,7 +125,7 @@ void main() {
               reason: bodyContent['reason'] as String?,
             ),
           );
-          when(dataSource.create(any))
+          when(dataSource!.create(any))
               .thenThrow(ApiProviderException(bodyContent: bodyContent));
           // act
           final received = await sut.create(guardian);
@@ -152,7 +149,7 @@ void main() {
 
           final response = ValidField.fromJson(jsonSession);
           final expected = right(response);
-          when(dataSource.update(any)).thenAnswer((_) async => response);
+          when(dataSource!.update(any)).thenAnswer((_) async => response);
           // act
           final received = await sut.update(guardian);
           // assert
@@ -169,9 +166,14 @@ void main() {
             name: 'Maria (PenhaS)',
             status: 'pending',
           );
+<<<<<<< HEAD
           final expected = right(const ValidField());
           when(dataSource.delete(any))
               .thenAnswer((_) async => const ValidField());
+=======
+          final expected = right(ValidField());
+          when(dataSource!.delete(any)).thenAnswer((_) async => ValidField());
+>>>>>>> Migrate code to nullsafety
           // act
           final received = await sut.delete(guardian);
           // assert
@@ -184,6 +186,7 @@ void main() {
           'should get a valid message for valid request',
           () async {
             // arrange
+<<<<<<< HEAD
             const location = UserLocationEntity(latitude: 1.0, longitude: -1.0);
             final expected = right(
               const AlertModel(
@@ -197,6 +200,16 @@ void main() {
                 message: 'Alerta disparado com sucesso para 1 guardião.',
               ),
             );
+=======
+            final location = UserLocationEntity(latitude: 1.0, longitude: -1.0);
+            final expected = right(AlertModel(
+                title: "Alerta enviado!",
+                message: "Alerta disparado com sucesso para 1 guardião."));
+            when(dataSource!.alert(any)).thenAnswer((_) async => AlertModel(
+                  title: "Alerta enviado!",
+                  message: "Alerta disparado com sucesso para 1 guardião.",
+                ));
+>>>>>>> Migrate code to nullsafety
             // act
             final received = await sut.alert(location);
             // assert

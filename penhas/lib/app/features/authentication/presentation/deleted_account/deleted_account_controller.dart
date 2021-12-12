@@ -20,6 +20,10 @@ class DeletedAccountController extends _DeletedAccountControllerBase
 }
 
 abstract class _DeletedAccountControllerBase with Store, MapFailureMessage {
+  final String? _sessionToken;
+  final IAppConfiguration _appConfiguration;
+  final IUserProfileRepository _profileRepository;
+
   _DeletedAccountControllerBase(
     this._profileRepository,
     this._appConfiguration,
@@ -34,7 +38,7 @@ abstract class _DeletedAccountControllerBase with Store, MapFailureMessage {
   ObservableFuture<Either<Failure, ValidField>>? _progress;
 
   @observable
-  String? errorMessage = '';
+  String? errorMessage = "";
 
   @computed
   PageProgressState get progressState {
@@ -59,6 +63,10 @@ abstract class _DeletedAccountControllerBase with Store, MapFailureMessage {
 }
 
 extension _PrivateMethods on _DeletedAccountControllerBase {
+  void setErrorMessage(String? message) {
+    errorMessage = message;
+  }
+
   PageProgressState monitorProgress(ObservableFuture<Object>? observable) {
     if (observable == null || observable.status == FutureStatus.rejected) {
       return PageProgressState.initial;

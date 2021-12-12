@@ -14,7 +14,8 @@ import 'package:penhas/app/shared/design_system/logo.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class SignInStealthPage extends StatefulWidget {
-  const SignInStealthPage({Key? key, this.title = 'Authentication'})
+  final String title;
+  const SignInStealthPage({required Key key, this.title = "Authentication"})
       : super(key: key);
 
   final String title;
@@ -27,7 +28,7 @@ class _SignInStealthPage
     extends ModularState<SignInStealthPage, SignInStealthController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
 
   @override
@@ -103,9 +104,7 @@ class _SignInStealthPage
 
   @override
   void dispose() {
-    for (final d in _disposers!) {
-      d();
-    }
+    _disposers!.forEach((d) => d());
     controller.dispose();
     super.dispose();
   }

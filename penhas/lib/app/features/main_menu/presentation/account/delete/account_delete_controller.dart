@@ -38,7 +38,7 @@ abstract class _AccountDeleteControllerBase with Store, MapFailureMessage {
   ProfileDeleteState state = const ProfileDeleteState.initial();
 
   @observable
-  String? errorMessage = '';
+  String? errorMessage = "";
 
   @computed
   PageProgressState get progressState {
@@ -83,6 +83,10 @@ extension _PrivateMethods on _AccountDeleteControllerBase {
 
   void handleSession(ValidField session) {
     state = ProfileDeleteState.loaded(session.message!);
+  }
+
+  void setErrorMessage(String? message) {
+    errorMessage = message;
   }
 
   void handleDeleteError(Failure failure) {

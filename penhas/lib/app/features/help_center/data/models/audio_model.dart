@@ -2,7 +2,7 @@ import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dar
 import 'package:penhas/app/shared/logger/log.dart';
 
 class AudioModel {
-  static List<AudioEntity> fromJson(Map<String, dynamic>? json) {
+  static List<AudioEntity> fromJson(Map<String, Object>? json) {
     if (json == null || json.isEmpty || json['rows'] == null) {
       return List.empty();
     }
@@ -27,9 +27,8 @@ class _AudioModelParseData {
     final isRequestGranted =
         (int.tryParse(meta['request_granted'].toString()) ?? 0) == 1;
     final id = data['event_id'];
-    final createdAt = _AudioModelParseData.parseDate(
-      data['last_cliente_created_at'] as String,
-    );
+    final createdAt =
+        _AudioModelParseData.parseDate(data['last_cliente_created_at'] as String);
 
     return AudioEntity(
       id: id as String?,
@@ -42,9 +41,8 @@ class _AudioModelParseData {
   }
 
   static DateTime? parseDate(String date) {
-    String utcDate = date;
-    if (!utcDate.endsWith('Z')) {
-      utcDate = '${utcDate}Z';
+    if (!date.endsWith('Z')) {
+      date = "${date}Z";
     }
     try {
       return DateTime.parse(utcDate).toLocal();

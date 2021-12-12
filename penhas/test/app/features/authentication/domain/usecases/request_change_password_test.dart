@@ -11,12 +11,19 @@ import 'package:penhas/app/features/authentication/domain/usecases/sign_up_passw
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
+<<<<<<< HEAD
   late EmailAddress emailAddress;
   late SignUpPassword password;
   late String resetToken;
 
   late final MockIChangePasswordRepository repository =
       MockIChangePasswordRepository();
+=======
+  EmailAddress? emailAddress;
+  SignUpPassword? password;
+  String? resetToken;
+  IChangePasswordRepository? repository;
+>>>>>>> Migrate code to nullsafety
   late ChangePassword sut;
 
   setUp(() {
@@ -28,8 +35,12 @@ void main() {
 
   group('Request change password', () {
     PostExpectation<Future<Either<Failure, ValidField>>> mockResquest() {
+<<<<<<< HEAD
       return when(
         repository.reset(
+=======
+      return when(repository!.reset(
+>>>>>>> Migrate code to nullsafety
           emailAddress: anyNamed('emailAddress'),
           password: anyNamed('password'),
           resetToken: anyNamed(
@@ -44,10 +55,17 @@ void main() {
       // arrange
       mockResquest().thenAnswer((_) async => right(const ValidField()));
       // act
+<<<<<<< HEAD
       final Either<Failure, ValidField> result = await sut(
         emailAddress: emailAddress,
         password: password,
         resetToken: resetToken,
+=======
+      final Either<Failure, ValidField>? result = await sut(
+        emailAddress: emailAddress!,
+        password: password!,
+        resetToken: resetToken!,
+>>>>>>> Migrate code to nullsafety
       );
       // assert
       expect(result, right(const ValidField()));
@@ -71,10 +89,17 @@ void main() {
         ),
       );
       // act
+<<<<<<< HEAD
       final Either<Failure, ValidField> result = await sut(
         emailAddress: emailAddress,
         resetToken: resetToken,
         password: password,
+=======
+      final Either<Failure, ValidField>? result = await sut(
+        emailAddress: emailAddress!,
+        resetToken: resetToken!,
+        password: password!,
+>>>>>>> Migrate code to nullsafety
       );
       // assert
       expect(

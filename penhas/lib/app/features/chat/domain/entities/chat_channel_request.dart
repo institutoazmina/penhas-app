@@ -1,7 +1,14 @@
 import 'package:equatable/equatable.dart';
 
 class ChatChannelRequest extends Equatable {
-  const ChatChannelRequest({
+  final int rows;
+  final String? token;
+  final String? pagination;
+  final String? message;
+  final String? clientId;
+  final bool? block;
+
+  ChatChannelRequest({
     required this.token,
     this.rows = 100,
     this.message,
@@ -21,11 +28,11 @@ class ChatChannelRequest extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object?> get props => [
-        token,
-        pagination,
+  List<Object> get props => [
+        token!,
+        pagination!,
         rows,
-        clientId,
-        block,
+        clientId!,
+        block!,
       ];
 }

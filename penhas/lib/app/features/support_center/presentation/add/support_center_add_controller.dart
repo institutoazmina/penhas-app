@@ -156,7 +156,11 @@ extension _Private on _SupportCenterAddControllerBase {
 
   void handleCategoriesSuccess(List<FilterTagEntity> categories) {
     places = categories.asObservable();
-    state = const SupportCenterAddState.loaded();
+    state = SupportCenterAddState.loaded();
+  }
+
+  void setMessageErro(String? message) {
+    errorMessage = message;
   }
 
   void handleSuccessAddSupportCenter(AlertModel field) {

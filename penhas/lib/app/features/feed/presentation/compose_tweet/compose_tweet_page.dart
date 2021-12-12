@@ -12,7 +12,8 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ComposeTweetPage extends StatefulWidget {
-  const ComposeTweetPage({Key? key, this.title = 'ComposeTweet'})
+  final String title;
+  const ComposeTweetPage({required Key key, this.title = "ComposeTweet"})
       : super(key: key);
 
   final String title;
@@ -59,9 +60,7 @@ class _ComposeTweetPageState
   @override
   void dispose() {
     super.dispose();
-    for (final d in _disposers!) {
-      d();
-    }
+    _disposers!.forEach((d) => d());
   }
 
   @override

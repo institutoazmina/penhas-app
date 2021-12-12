@@ -14,6 +14,7 @@ class MainboardPage extends StatefulWidget {
   const MainboardPage({Key? key, this.title = 'Mainboard'}) : super(key: key);
 
   final String title;
+  const MainboardPage({required Key key, this.title = "Mainboard"}) : super(key: key);
 
   @override
   _MainboardPageState createState() => _MainboardPageState();
@@ -77,7 +78,7 @@ class _MainboardPageState
 }
 
 extension _SecurityModeBuilder on _MainboardPageState {
-  Widget enabledSecurityMode() {
+  Widget enabledSecurityMode(MainboardState? currentPage) {
     return Scaffold(
       appBar: MainBoardAppBarPage(
         counter: controller.notificationCounter,
@@ -100,7 +101,7 @@ extension _SecurityModeBuilder on _MainboardPageState {
     );
   }
 
-  Widget disabledSecurityMode() {
+  Widget disabledSecurityMode(MainboardState? currentPage) {
     return Scaffold(
       appBar: MainBoardAppBarPage(
         counter: controller.notificationCounter,

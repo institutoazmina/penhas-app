@@ -5,7 +5,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatPeopleCard extends StatelessWidget {
   const ChatPeopleCard({
-    Key? key,
+    required Key key,
     required this.person,
     required this.onPressed,
   }) : super(key: key);
@@ -41,7 +41,7 @@ class ChatPeopleCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(width: 16),
+                      SizedBox(width: 16),
                       Text(person.nickname!, style: cardTitleTextStyle),
                       Text(person.activity!, style: cardStatusTextStyle),
                     ],

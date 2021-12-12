@@ -6,7 +6,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class FeedTagsFilter extends StatelessWidget {
   const FeedTagsFilter({
-    Key? key,
+    required Key key,
     required this.reloadFeed,
   }) : super(key: key);
 
@@ -22,7 +22,7 @@ class FeedTagsFilter extends StatelessWidget {
         onPressed: () async {
           Modular.to.pushNamed('/mainboard/tags').then(
             (reload) {
-              if (reload == true) {
+              if (reload as bool? ?? false) {
                 reloadFeed();
               }
             },

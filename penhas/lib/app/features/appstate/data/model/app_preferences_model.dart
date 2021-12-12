@@ -1,22 +1,22 @@
 import 'package:penhas/app/features/appstate/domain/entities/app_preferences_entity.dart';
 
 class AppPreferencesModel extends AppPreferencesEntity {
-  const AppPreferencesModel({
-    required int? inactiveAppSince,
-    required int inactiveAppLogoutTimeInSeconds,
+  final int? inactiveAppSince;
+  final int inactiveAppLogoutTimeInSeconds;
+
+  AppPreferencesModel({
+    required this.inactiveAppSince,
+    required this.inactiveAppLogoutTimeInSeconds,
   }) : super(
           inactiveAppSince: inactiveAppSince,
           inactiveAppLogoutTimeInSeconds: inactiveAppLogoutTimeInSeconds,
         );
 
-  factory AppPreferencesModel.fromJson(Map<String, dynamic> jsonData) =>
-      AppPreferencesModel(
-        inactiveAppSince: jsonData['inactive_app_since'],
-        inactiveAppLogoutTimeInSeconds:
-            jsonData['inactive_app_logout_time'] ?? 30,
-      );
+  AppPreferencesModel.fromJson(Map<String, Object> jsonData)
+      : inactiveAppSince = jsonData['inactive_app_since'] as int?,
+        inactiveAppLogoutTimeInSeconds = jsonData['inactive_app_logout_time'] as int? ?? 30;
 
-  Map<String, dynamic> toJson() => {
+  Map<String, Object?> toJson() => {
         'inactive_app_since': inactiveAppSince,
         'inactive_app_logout_time': inactiveAppLogoutTimeInSeconds
       };

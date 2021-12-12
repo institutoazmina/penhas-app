@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TutorialScaleRoute extends PageRouteBuilder {
+  final Widget? page;
   TutorialScaleRoute({this.page})
       : super(
           pageBuilder: (

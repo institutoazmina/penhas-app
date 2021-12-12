@@ -3,6 +3,18 @@ import 'package:equatable/equatable.dart';
 abstract class TweetTiles extends Equatable {}
 
 class TweetEntity extends TweetTiles {
+  final String? id;
+  final String? userName;
+  final int clientId;
+  final String? createdAt;
+  final int totalReply;
+  final int totalLikes;
+  final bool anonymous;
+  final String? content;
+  final String? avatar;
+  final TweetMeta meta;
+  final List<TweetEntity?>? lastReply;
+
   TweetEntity({
     required this.id,
     required this.userName,
@@ -17,31 +29,19 @@ class TweetEntity extends TweetTiles {
     this.lastReply,
   });
 
-  final String? id;
-  final String? userName;
-  final int clientId;
-  final String? createdAt;
-  final int totalReply;
-  final int totalLikes;
-  final bool anonymous;
-  final String? content;
-  final String? avatar;
-  final TweetMeta meta;
-  final List<TweetEntity?>? lastReply;
-
   @override
-  List<Object?> get props => [
-        id,
+  List<Object> get props => [
+        id!,
         meta,
-        avatar,
-        content,
-        userName,
+        avatar!,
+        content!,
+        userName!,
         clientId,
         anonymous,
-        createdAt,
+        createdAt!,
         totalReply,
         totalLikes,
-        lastReply,
+        lastReply!,
       ];
 
   @override
@@ -84,6 +84,8 @@ class TweetMeta extends Equatable {
   final bool liked;
   final bool owner;
 
+  TweetMeta({required this.liked, required this.owner});
+
   @override
   List<Object?> get props => [liked, owner];
 
@@ -99,6 +101,8 @@ class TweetNewsGroupEntity extends TweetTiles {
   final String header;
   final List<TweetNewsEntity> news;
 
+  TweetNewsGroupEntity({required this.header, required this.news});
+
   @override
   List<dynamic> get props => [header, news];
 
@@ -107,6 +111,12 @@ class TweetNewsGroupEntity extends TweetTiles {
 }
 
 class TweetNewsEntity extends TweetTiles {
+  final String? date;
+  final String? newsUri;
+  final String? imageUri;
+  final String? source;
+  final String? title;
+
   TweetNewsEntity({
     required this.date,
     required this.newsUri,
@@ -122,7 +132,7 @@ class TweetNewsEntity extends TweetTiles {
   final String? title;
 
   @override
-  List<Object?> get props => [date, newsUri, imageUri, source, title!];
+  List<Object> get props => [date!, newsUri!, imageUri!, source!, title!];
 
   @override
   bool get stringify => true;
@@ -133,6 +143,8 @@ class TweetRelatedNewsEntity extends TweetTiles {
 
   final String header;
   final List<TweetNewsEntity> news;
+
+  TweetRelatedNewsEntity({required this.header, required this.news});
 
   @override
   List<Object?> get props => [header, news];

@@ -4,7 +4,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class FilterInitialStatePage extends StatelessWidget {
   const FilterInitialStatePage({
-    Key? key,
+    required Key key,
   }) : super(key: key);
 
   @override

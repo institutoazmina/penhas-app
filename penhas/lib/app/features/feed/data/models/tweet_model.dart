@@ -1,18 +1,30 @@
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 
 class TweetModel extends TweetEntity {
+  final String? id;
+  final String? userName;
+  final int clientId;
+  final String? createdAt;
+  final int totalReply;
+  final int totalLikes;
+  final bool anonymous;
+  final String? content;
+  final String? avatar;
+  final TweetMeta meta;
+  final List<TweetEntity> lastReply;
+
   TweetModel({
-    required String? id,
-    required String? userName,
-    required int clientId,
-    required String? createdAt,
-    required int totalReply,
-    required int totalLikes,
-    required bool anonymous,
-    required String? content,
-    required String avatar,
-    required TweetMeta meta,
-    required List<TweetModel> lastReply,
+    required this.id,
+    required this.userName,
+    required this.clientId,
+    required this.createdAt,
+    required this.totalReply,
+    required this.totalLikes,
+    required this.anonymous,
+    required this.content,
+    required this.avatar,
+    required this.meta,
+    required this.lastReply,
   }) : super(
           id: id,
           userName: userName,
@@ -36,19 +48,19 @@ class TweetModel extends TweetEntity {
 
     List<TweetModel> lastReply = [];
     if (jsonData['last_reply'] != null) {
-      lastReply = [TweetModel.fromJson(jsonData['last_reply'])];
+      lastReply = [TweetModel.fromJson(jsonData['last_reply'] as Map<String, Object>)];
     }
 
     return TweetModel(
-      id: jsonData['id'],
-      userName: jsonData['name'],
-      clientId: jsonData['cliente_id'],
-      createdAt: jsonData['created_at'],
-      totalReply: jsonData['qtde_comentarios'],
-      totalLikes: jsonData['qtde_likes'],
+      id: jsonData['id'] as String?,
+      userName: jsonData['name'] as String?,
+      clientId: (jsonData['cliente_id'] as num).toInt(),
+      createdAt: jsonData['created_at'] as String?,
+      totalReply: (jsonData['qtde_comentarios'] as num).toInt(),
+      totalLikes: (jsonData['qtde_likes'] as num).toInt(),
       anonymous: jsonData['anonimo'] != 0,
-      content: jsonData['content'],
-      avatar: jsonData['icon'],
+      content: jsonData['content'] as String?,
+      avatar: jsonData['icon'] as String?,
       meta: tweetMeta,
       lastReply: lastReply,
     );
@@ -56,16 +68,11 @@ class TweetModel extends TweetEntity {
 }
 
 class TweetRelatedNewsModel extends TweetRelatedNewsEntity {
-  TweetRelatedNewsModel({
-    required String header,
-    required List<TweetNewsModel> news,
-  }) : super(header: header, news: news);
+  static TweetRelatedNewsEntity fromJson(Map<String, Object> jsonData) {
+    final List<TweetNewsEntity> news = _parseNews(jsonData['news'] as List<Object>);
 
-  factory TweetRelatedNewsModel.fromJson(Map<String, dynamic> jsonData) {
-    final List<TweetNewsModel> news = _parseNews(jsonData['news']);
-
-    return TweetRelatedNewsModel(
-      header: jsonData['header'] ?? '',
+    return TweetRelatedNewsEntity(
+      header: jsonData['header'] as String? ?? '',
       news: news,
     );
   }
@@ -76,15 +83,10 @@ class TweetRelatedNewsModel extends TweetRelatedNewsEntity {
 }
 
 class TweetNewsGroupModel extends TweetNewsGroupEntity {
-  TweetNewsGroupModel({
-    required String header,
-    required List<TweetNewsModel> news,
-  }) : super(header: header, news: news);
+  static TweetNewsGroupEntity fromJson(Map<String, Object> jsonData) {
+    final List<TweetNewsEntity> news = _parseNews(jsonData['news'] as List<Object>);
 
-  factory TweetNewsGroupModel.fromJson(Map<String, dynamic> jsonData) {
-    final List<TweetNewsModel> news = _parseNews(jsonData['news']);
-
-    return TweetNewsGroupModel(
+    return TweetNewsGroupEntity(
       header: jsonData['header'] as String? ?? '',
       news: news,
     );
@@ -95,26 +97,13 @@ class TweetNewsGroupModel extends TweetNewsGroupEntity {
 }
 
 class TweetNewsModel extends TweetNewsEntity {
-  TweetNewsModel({
-    String? date,
-    String? newsUri,
-    String? imageUri,
-    String? source,
-    String? title,
-  }) : super(
-          date: date,
-          newsUri: newsUri,
-          imageUri: imageUri,
-          source: source,
-          title: title,
-        );
-
-  factory TweetNewsModel.fromJson(Map<String, dynamic> jsonData) =>
-      TweetNewsModel(
-        date: jsonData['date_str'],
-        title: jsonData['title'],
-        source: jsonData['source'],
-        imageUri: jsonData['image'],
-        newsUri: jsonData['href'],
-      );
+  static TweetNewsEntity fromJson(Map<String, Object> jsonData) {
+    return TweetNewsEntity(
+      date: jsonData['date_str'] as String?,
+      title: jsonData['title'] as String?,
+      source: jsonData['source'] as String?,
+      imageUri: jsonData['image'] as String?,
+      newsUri: jsonData['href'] as String?,
+    );
+  }
 }

@@ -19,6 +19,12 @@ class ZodiacController extends _ZodiacControllerBase with _$ZodiacController {
 }
 
 abstract class _ZodiacControllerBase with Store {
+  final LocalStore<UserProfileEntity> _userProfileStore;
+  final StealthSecurityAction _securityAction;
+
+  bool _isSecurityRunning = false;
+  StreamSubscription? _streamCache;
+
   _ZodiacControllerBase(
     this._userProfileStore,
     this._securityAction,
@@ -80,8 +86,10 @@ abstract class _ZodiacControllerBase with Store {
     });
   }
 
-  void _cancelDataSource() {
-    _streamCache?.cancel();
-    _streamCache = null;
+  _cancelDataSource() {
+    if (_streamCache != null) {
+      _streamCache!.cancel();
+      _streamCache = null;
+    }
   }
 }

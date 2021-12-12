@@ -1,16 +1,19 @@
 import 'package:equatable/equatable.dart';
 
 class SessionEntity extends Equatable {
-  const SessionEntity({
+  final String? sessionToken;
+  final bool deletedScheduled;
+
+  SessionEntity({
     required this.sessionToken,
-    this.deletedScheduled = false,
+    required this.deletedScheduled,
   });
 
   final String? sessionToken;
   final bool deletedScheduled;
 
   @override
-  List<Object?> get props => [sessionToken, deletedScheduled];
+  List<Object> get props => [sessionToken!];
 
   @override
   bool get stringify => true;

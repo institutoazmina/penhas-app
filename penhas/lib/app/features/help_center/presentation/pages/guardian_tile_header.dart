@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class GuardianTileHeader extends StatelessWidget {
+  final String? title;
   const GuardianTileHeader({
-    Key? key,
+    required Key key,
     required this.title,
   }) : super(key: key);
 
@@ -16,7 +17,7 @@ class GuardianTileHeader extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Text(
         title!,
-        style: const TextStyle(
+        style: TextStyle(
           color: DesignSystemColors.darkIndigoThree,
           fontSize: 20.0,
           letterSpacing: 0.65,

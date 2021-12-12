@@ -7,8 +7,14 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class SupportCenterInputFilter extends StatelessWidget {
+  final int totalOfFilter;
+  final String? initialValue;
+  final void Function() onFilterAction;
+  final void Function(String) onKeywordsAction;
+  final TextEditingController _textController = TextEditingController();
+
   SupportCenterInputFilter({
-    Key? key,
+    required Key key,
     this.totalOfFilter = 0,
     this.initialValue,
     required this.onFilterAction,

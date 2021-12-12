@@ -12,7 +12,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class NotificationPage extends StatefulWidget {
-  const NotificationPage({Key? key}) : super(key: key);
+  NotificationPage({required Key key}) : super(key: key);
 
   @override
   _NotificationState createState() => _NotificationState();

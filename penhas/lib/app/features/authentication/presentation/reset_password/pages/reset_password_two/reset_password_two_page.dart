@@ -14,7 +14,8 @@ import 'package:penhas/app/shared/design_system/linear_gradient_design_system.da
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ResetPasswordTwoPage extends StatefulWidget {
-  const ResetPasswordTwoPage({Key? key, this.title = 'ResetPasswordTwo'})
+  final String title;
+  const ResetPasswordTwoPage({required Key key, this.title = "ResetPasswordTwo"})
       : super(key: key);
 
   final String title;
@@ -27,7 +28,7 @@ class _ResetPasswordTwoPageState
     extends ModularState<ResetPasswordTwoPage, ResetPasswordTwoController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
 
   final _maskToken = MaskTextInputFormatter(
@@ -46,9 +47,7 @@ class _ResetPasswordTwoPageState
 
   @override
   void dispose() {
-    for (final d in _disposers!) {
-      d();
-    }
+    _disposers!.forEach((d) => d());
     super.dispose();
   }
 
@@ -133,6 +132,7 @@ class _ResetPasswordTwoPageState
 
   Widget _buildInputField({
     String? labelText,
+    String? hintText,
     required TextInputType keyboardType,
     required Function(String) onChanged,
     String? onError,

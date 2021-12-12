@@ -5,9 +5,10 @@ import 'package:penhas/app/features/authentication/domain/repositories/i_reset_p
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 
 class RequestResetPassword {
-  factory RequestResetPassword({
-    required IResetPasswordRepository resetPasswordRepository,
-  }) {
+  final IResetPasswordRepository? _repository;
+
+  factory RequestResetPassword(
+      {required IResetPasswordRepository? resetPasswordRepository}) {
     return RequestResetPassword._(resetPasswordRepository);
   }
 
@@ -18,6 +19,6 @@ class RequestResetPassword {
   Future<Either<Failure, ResetPasswordResponseEntity>> call({
     required EmailAddress email,
   }) async {
-    return _repository.request(emailAddress: email);
+    return _repository!.request(emailAddress: email);
   }
 }

@@ -3,8 +3,11 @@ import 'package:penhas/app/features/quiz/presentation/quiz/quiz_typedef.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class QuiZButtonYesNoWidget extends StatelessWidget {
+  final String? reference;
+  final UserReaction onPressed;
+
   const QuiZButtonYesNoWidget({
-    Key? key,
+    required Key key,
     required this.reference,
     required this.onPressed,
   }) : super(key: key);
@@ -48,7 +51,7 @@ class QuiZButtonYesNoWidget extends StatelessWidget {
   SizedBox _buildActionButton({
     required double width,
     required String title,
-    required Map<String, String> actionResponse,
+    required Map<String?, String> actionResponse,
     required UserReaction onPressed,
   }) {
     return SizedBox(

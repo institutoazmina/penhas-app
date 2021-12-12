@@ -13,7 +13,8 @@ import 'package:penhas/app/shared/design_system/logo.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class SignInAnonymousPage extends StatefulWidget {
-  const SignInAnonymousPage({Key? key, this.title = 'Authentication'})
+  final String title;
+  const SignInAnonymousPage({required Key key, this.title = "Authentication"})
       : super(key: key);
 
   final String title;
@@ -26,7 +27,7 @@ class _SignInAnonymousPage
     extends ModularState<SignInAnonymousPage, SignInAnonymousController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
 
   @override
@@ -91,9 +92,7 @@ class _SignInAnonymousPage
 
   @override
   void dispose() {
-    for (final d in _disposers!) {
-      d();
-    }
+    _disposers!.forEach((d) => d());
     super.dispose();
   }
 

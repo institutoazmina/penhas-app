@@ -11,7 +11,7 @@ import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class UserProfilePage extends StatefulWidget {
-  const UserProfilePage({Key? key}) : super(key: key);
+  const UserProfilePage({required Key key}) : super(key: key);
 
   @override
   _UserProfilePageState createState() => _UserProfilePageState();
@@ -51,26 +51,27 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        buildHeader(user.profile),
-        buildContent(user.profile),
-        if (user.isMyself)
-          Container()
-        else
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 70.0,
-              vertical: 20.0,
-            ),
-            child: SizedBox(
-              height: 44,
-              child: RaisedButton(
-                onPressed: () => controller.openChannel(),
-                elevation: 0,
-                color: DesignSystemColors.ligthPurple,
-                shape: kButtonShapeFilled,
-                child: Text(
-                  'Conversar',
-                  style: buttomTitleStyle,
+        buildHeader(user.profile!),
+        buildContent(user.profile!),
+        user.isMyself
+            ? Container()
+            : Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 70.0,
+                  vertical: 20.0,
+                ),
+                child: SizedBox(
+                  height: 44,
+                  child: RaisedButton(
+                    onPressed: () => controller.openChannel(),
+                    elevation: 0,
+                    color: DesignSystemColors.ligthPurple,
+                    shape: kButtonShapeFilled,
+                    child: Text(
+                      "Conversar",
+                      style: buttomTitleStyle,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -87,6 +88,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
         children: [
           CircleAvatar(
             radius: 34,
+            child: SvgPicture.network(user.avatar!),
             backgroundColor: Colors.white38,
             child: SvgPicture.network(user.avatar!),
           ),
@@ -103,7 +105,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
   }
 
   Widget buildContent(UserDetailProfileEntity user) {
-    final List<String> skills = user.skills!.split(',');
+    List<String> skills = user.skills!.split(",");
     skills.removeWhere((e) => e.isEmpty);
 
     return Container(

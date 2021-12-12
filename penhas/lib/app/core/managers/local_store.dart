@@ -12,7 +12,9 @@ abstract class LocalStore<T> {
 
   T fromJson(Map<String, dynamic> json);
 
-  T defaultEntity();
+  Map<String, Object?> toJson(T entity);
+  T fromJson(Map<String, Object> json);
+  Future<T> defaultEntity();
 
   Future<T> retrieve() {
     return _storage

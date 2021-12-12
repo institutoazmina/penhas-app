@@ -3,10 +3,14 @@ import 'package:penhas/app/features/support_center/domain/entities/support_cente
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
 
 class SupportCenterPlaceDetailModel extends SupportCenterPlaceDetailEntity {
-  const SupportCenterPlaceDetailModel({
-    required int? maximumRate,
-    required int? ratedByClient,
-    required SupportCenterPlaceEntity? place,
+  final int? maximumRate;
+  final int? ratedByClient;
+  final SupportCenterPlaceEntity? place;
+
+  SupportCenterPlaceDetailModel({
+    required this.maximumRate,
+    required this.ratedByClient,
+    required this.place,
   }) : super(
           maximumRate: maximumRate,
           ratedByClient: ratedByClient,

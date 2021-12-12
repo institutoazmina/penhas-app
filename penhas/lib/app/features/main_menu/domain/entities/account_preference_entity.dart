@@ -3,24 +3,24 @@ import 'package:meta/meta.dart';
 
 @immutable
 class AccountPreferenceEntity extends Equatable {
-  const AccountPreferenceEntity({
+  final String? key;
+  final String? label;
+  final bool value;
+
+  AccountPreferenceEntity({
     required this.key,
     required this.label,
     required this.value,
   });
 
-  final String key;
-  final String? label;
-  final bool value;
-
   @override
   bool get stringify => true;
 
   @override
-  List<Object?> get props => [
-        key,
-        label,
-        value,
+  List<Object> get props => [
+        this.key!,
+        this.label!,
+        this.value,
       ];
 }
 
@@ -28,7 +28,7 @@ class AccountPreferenceEntity extends Equatable {
 class AccountPreferenceSessionEntity extends Equatable {
   const AccountPreferenceSessionEntity({required this.preferences});
 
-  final List<AccountPreferenceEntity> preferences;
+  AccountPreferenceSessionEntity({required this.preferences});
 
   @override
   bool get stringify => true;

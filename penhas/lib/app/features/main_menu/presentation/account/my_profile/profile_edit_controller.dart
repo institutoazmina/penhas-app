@@ -26,6 +26,11 @@ class ProfileEditController extends _ProfileEditControllerBase
 }
 
 abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
+  final AppStateUseCase _appStateUseCase;
+  final IFilterSkillRepository _skillRepository;
+  final SecurityModeActionFeature _securityModeActionFeature;
+  List<FilterTagEntity>? _tags = List<FilterTagEntity>();
+
   _ProfileEditControllerBase(
     this._appStateUseCase,
     this._skillRepository,
@@ -50,7 +55,7 @@ abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
   ProfileEditState state = const ProfileEditState.initial();
 
   @observable
-  String? updateError = '';
+  String? updateError = "";
 
   @computed
   PageProgressState get progressState {
@@ -154,20 +159,17 @@ extension _PrivateMethod on _ProfileEditControllerBase {
     );
   }
 
-  Future<void> handleSession(AppStateEntity session) async {
+  void handleSession(AppStateEntity session) async {
     _tags!.map((e) => null);
-    final List<FilterTagEntity?> userSkills =
-        session.userProfile!.skill.map((e) => selectSkill(e)).toList();
+    List<FilterTagEntity?> userSkills =
+        session.userProfile!.skill!.map((e) => selectSkill(e)).toList();
     userSkills.removeWhere((e) => e == null);
     profileSkill = userSkills.asObservable();
 
     final securityModeFeatureEnabled =
         await _securityModeActionFeature.isEnabled;
 
-    state = ProfileEditState.loaded(
-      session.userProfile!,
-      securityModeFeatureEnabled: securityModeFeatureEnabled,
-    );
+    state = ProfileEditState.loaded(session.userProfile!, securityModeFeatureEnabled);
   }
 
   void handleLoadPageError(Failure failure) {
@@ -176,7 +178,12 @@ extension _PrivateMethod on _ProfileEditControllerBase {
   }
 
   void handleUpdateError(Failure failure) {
-    updateError = mapFailureMessage(failure);
+    final msg = mapFailureMessage(failure);
+    setMessageErro(msg);
+  }
+
+  void setMessageErro(String? message) {
+    updateError = message;
   }
 
   PageProgressState monitorProgress(ObservableFuture<Object>? observable) {

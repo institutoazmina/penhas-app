@@ -21,14 +21,14 @@ abstract class IGuardianRepository {
 
 @immutable
 class GuardianRepository extends IGuardianRepository {
+  final IGuardianDataSource? _dataSource;
+  final INetworkInfo _networkInfo;
+
   GuardianRepository({
     required IGuardianDataSource? dataSource,
     required INetworkInfo networkInfo,
-  })  : _networkInfo = networkInfo,
-        _dataSource = dataSource;
-
-  final IGuardianDataSource? _dataSource;
-  final INetworkInfo _networkInfo;
+  })  : this._networkInfo = networkInfo,
+        this._dataSource = dataSource;
 
   @override
   Future<Either<Failure, GuardianSessioEntity>> fetch() async {
@@ -108,16 +108,15 @@ class GuardianRepository extends IGuardianRepository {
     }
 
     if (error is ApiProviderException) {
-      if (error.bodyContent['error'] == 'expired_jwt') {
+      if (error.bodyContent!['error'] == 'expired_jwt') {
         return ServerSideSessionFailed();
       }
 
       return ServerSideFormFieldValidationFailure(
-        error: error.bodyContent['error'],
-        field: error.bodyContent['field'],
-        reason: error.bodyContent['reason'],
-        message: error.bodyContent['message'],
-      );
+          error: error.bodyContent!['error'],
+          field: error.bodyContent!['field'],
+          reason: error.bodyContent!['reason'],
+          message: error.bodyContent!['message']);
     }
 
     if (error is ApiProviderSessionError) {

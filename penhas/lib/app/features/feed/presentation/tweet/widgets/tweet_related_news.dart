@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class TweetRelatedNews extends StatefulWidget {
   const TweetRelatedNews({
-    Key? key,
+    required Key key,
     required this.related,
   }) : super(key: key);
 

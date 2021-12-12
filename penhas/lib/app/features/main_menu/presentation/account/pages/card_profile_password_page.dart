@@ -6,7 +6,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class CardProfilePasswordPage extends StatelessWidget {
   const CardProfilePasswordPage({
-    Key? key,
+    required Key key,
     required this.content,
     required this.onChange,
   }) : super(key: key);
@@ -46,8 +46,8 @@ class CardProfilePasswordPage extends StatelessWidget {
 
 extension _Modal on CardProfilePasswordPage {
   void showModal({required BuildContext context}) {
-    final TextEditingController newPasswordController = TextEditingController();
-    final TextEditingController oldPasswordController = TextEditingController();
+    TextEditingController newPasswordController = TextEditingController();
+    TextEditingController oldPasswordController = TextEditingController();
 
     Modular.to.showDialog(
       builder: (context) => AlertDialog(

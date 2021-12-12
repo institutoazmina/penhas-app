@@ -18,7 +18,7 @@ import 'package:penhas/app/features/support_center/presentation/pages/support_ce
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ProfileEditPage extends StatefulWidget {
-  const ProfileEditPage({Key? key}) : super(key: key);
+  const ProfileEditPage({required Key key}) : super(key: key);
 
   @override
   _ProfileEditPageState createState() => _ProfileEditPageState();
@@ -57,9 +57,7 @@ class _ProfileEditPageState
 
   @override
   void dispose() {
-    for (final d in _disposers!) {
-      d();
-    }
+    _disposers!.forEach((d) => d());
     super.dispose();
   }
 }
@@ -116,8 +114,8 @@ extension _PageBuilder on _ProfileEditPageState {
                 ),
               if (securityModeFeatureEnabled)
                 CardProfileSingleTilePage(
-                  title: 'Já foi vítima de violência contra a mulher?',
-                  content: profile.jaFoiVitimaDeViolencia ? 'Sim' : 'Não',
+                  title: "Já foi vítima de violência contra a mulher?",
+                  content: profile.jaFoiVitimaDeViolencia! ? "Sim" : "Não",
                 ),
               const CardProfileSingleTilePage(
                 title: 'Cadastro',

@@ -9,12 +9,18 @@ import 'package:penhas/app/features/authentication/domain/usecases/request_reset
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
+<<<<<<< HEAD
   late final EmailAddress emailAddress =
       EmailAddress('valid_email@exemple.com');
   late final MockIResetPasswordRepository repository =
       MockIResetPasswordRepository();
   late final RequestResetPassword sut =
       RequestResetPassword(resetPasswordRepository: repository);
+=======
+  EmailAddress? emailAddress;
+  IResetPasswordRepository? repository;
+  late RequestResetPassword sut;
+>>>>>>> Migrate code to nullsafety
 
   const responseTtl = 3600;
   const responseDigits = 6;
@@ -25,6 +31,7 @@ void main() {
     test('should received a ResetPasswordResponseEntity for successful request',
         () async {
       // arrange
+<<<<<<< HEAD
       when(repository.request(emailAddress: anyNamed('emailAddress')))
           .thenAnswer(
         (_) async => right(
@@ -39,6 +46,17 @@ void main() {
       // act
       final Either<Failure, ResetPasswordResponseEntity> result =
           await sut(email: emailAddress);
+=======
+      when(repository!.request(emailAddress: anyNamed('emailAddress')))
+          .thenAnswer((_) async => right(ResetPasswordResponseEntity(
+                message: RESPONSE_MESSAGE,
+                digits: RESPONSE_DIGITS,
+                ttl: RESPONSE_TTL,
+                ttlRetry: RESPONSE_TTL_RETRY,
+              )));
+      // act
+      final Either<Failure, ResetPasswordResponseEntity>? result = await sut(email: emailAddress!);
+>>>>>>> Migrate code to nullsafety
       // assert
       expect(
         result,

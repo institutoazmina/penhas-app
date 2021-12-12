@@ -22,29 +22,23 @@ abstract class _MainboardStoreBase with Store {
     setupProgress = setup();
   }
 
-  final IAppModulesServices _modulesServices;
-  final MainboardState _initialPage;
-  late Future setupProgress;
-
-  PageController pageController = PageController();
+  PageController? pageController;
 
   @observable
-  ObservableList<MainboardState> pages =
-      List<MainboardState>.empty().asObservable();
+  MainboardState? selectedPage;
 
   @observable
-  MainboardState selectedPage = const MainboardState.feed();
+  ObservableList<MainboardState>? pages;
 
   @action
-  Future changePage({required MainboardState to}) async {
-    await setupProgress;
-    final int index = pages.indexOf(to);
+  void changePage({required MainboardState to}) {
+    final int index = pages!.indexOf(to);
 
     if (index < 0) {
       return;
     }
 
-    pageController.jumpToPage(index);
+    pageController!.jumpToPage(index);
     selectedPage = to;
   }
 }
@@ -78,6 +72,6 @@ extension _Methods on _MainboardStoreBase {
 
     pages = authorizedPages.asObservable();
     selectedPage = _initialPage;
-    pageController.jumpToPage(pages.indexOf(_initialPage));
+    pageController = PageController(initialPage: pages!.indexOf(_initialPage));
   }
 }

@@ -5,7 +5,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class PenhasDrawerTooglePage extends StatelessWidget {
   const PenhasDrawerTooglePage({
-    Key? key,
+    required Key key,
     required this.state,
   }) : super(key: key);
 
@@ -25,7 +25,7 @@ class PenhasDrawerTooglePage extends StatelessWidget {
       ),
       child: Center(
         child: SwitchListTile(
-          contentPadding: const EdgeInsets.only(right: 16.0),
+          contentPadding: EdgeInsets.only(left: 0.0, right: 16.0),
           value: state.isEnabled!,
           onChanged: state.onChanged,
           title: Text(

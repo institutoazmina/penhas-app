@@ -449,11 +449,10 @@ class MainboardModule extends Module {
         ),
         Bind.factory<AppStateUseCase>(
           (i) => AppStateUseCase(
-            appStateRepository: i.get<IAppStateRepository>(),
-            userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
-            appConfiguration: i.get<IAppConfiguration>(),
-            appModulesServices: i.get<IAppModulesServices>(),
-          ),
+              appStateRepository: i.get<IAppStateRepository>(),
+              userProfileStore: i.get<LocalStore<UserProfileEntity?>>(),
+              appConfiguration: i.get<IAppConfiguration>(),
+              appModulesServices: i.get<IAppModulesServices>()),
         ),
         Bind.factory<InactivityLogoutUseCase>(
           (i) => InactivityLogoutUseCase(

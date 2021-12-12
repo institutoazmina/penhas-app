@@ -3,8 +3,11 @@ import 'package:penhas/app/features/main_menu/presentation/account/pages/card_pr
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class CardProfileSingleTilePage extends StatelessWidget {
+  final String title;
+  final String? content;
+  final Color background;
   const CardProfileSingleTilePage({
-    Key? key,
+    required Key key,
     required this.title,
     required this.content,
     this.background = DesignSystemColors.white,

@@ -11,8 +11,8 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class CategoryTweetPage extends StatefulWidget {
   const CategoryTweetPage({
-    Key? key,
-    this.title = 'CategoryTweet',
+    required Key key,
+    this.title = "CategoryTweet",
   }) : super(key: key);
 
   final String title;
@@ -47,9 +47,7 @@ class _CategoryTweetPageState
 
   @override
   void dispose() {
-    for (final d in _disposers!) {
-      d();
-    }
+    _disposers!.forEach((d) => d());
     super.dispose();
   }
 

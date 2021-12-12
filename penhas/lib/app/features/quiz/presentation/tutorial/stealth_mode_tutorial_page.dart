@@ -6,17 +6,16 @@ import 'package:penhas/app/features/quiz/presentation/tutorial/stealth_mode_tuto
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class StealthModeTutorialPage extends StatefulWidget {
-  const StealthModeTutorialPage({Key? key}) : super(key: key);
+  StealthModeTutorialPage({required Key key}) : super(key: key);
 
   @override
   _StealthModeTutorialPageState createState() =>
       _StealthModeTutorialPageState();
 }
 
-class _StealthModeTutorialPageState extends ModularState<
-    StealthModeTutorialPage, StealthModeTutorialPageController> {
-  List<TutorialPageViewWidget> _contentPageView = [];
-  final PageController _pageController = PageController();
+class _StealthModeTutorialPageState extends ModularState<StealthModeTutorialPage, StealthModeTutorialPageController> {
+  List<TutorialPageViewWidget>? _contentPageView;
+  final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
 
   @override
@@ -46,7 +45,8 @@ class _StealthModeTutorialPageState extends ModularState<
               children: [
                 Expanded(
                   child: PageView(
-                    physics: const ClampingScrollPhysics(),
+                    physics: ClampingScrollPhysics(),
+                    children: pages(controller.state.locationPermissionGranted)!,
                     controller: _pageController,
                     onPageChanged: (int page) {
                       setState(() {
@@ -83,7 +83,7 @@ class _StealthModeTutorialPageState extends ModularState<
   }
 
   SizedBox _buildActionButton() {
-    final bool isLastPage = _currentPage == (_contentPageView.length - 1);
+    final bool isLastPage = _currentPage == (_contentPageView!.length - 1);
     return SizedBox(
       height: 40.0,
       width: 145.0,
@@ -110,20 +110,17 @@ class _StealthModeTutorialPageState extends ModularState<
     );
   }
 
-  List<Widget>? pages({required bool isPermissionGranted}) {
-    return _contentPageView = [
-      const TutorialPageViewWidget(
-        title: 'Garanta sua privacidade',
-        description:
-            'Aplique um disfarce de app de signo para esconder o verdadeiro conteúdo do PenhaS.\n\nPara fazer entrar no app com o modo modo camuflado ativo, clique no botão "Diário astrológico" para ser direcionada para a tela de login.',
-        bodyWidget: Image(
-          image: AssetImage(
-            'assets/images/stealth_mode_tutorial_image_1/stealth_mode_tutorial_image_1.png',
-          ),
-          height: 300,
-          fit: BoxFit.fitWidth,
-          alignment: FractionalOffset.topCenter,
-        ),
+  List<Widget>? pages(bool isPermissionGranted) {
+    _contentPageView = [TutorialPageViewWidget(
+      title: 'Garanta sua privacidade',
+      description:
+      'Aplique um disfarce de app de signo para esconder o verdadeiro conteúdo do PenhaS.\n\nPara fazer entrar no app com o modo modo camuflado ativo, clique no botão "Diário astrológico" para ser direcionada para a tela de login.',
+      bodyWidget: Image(
+        image: AssetImage(
+            'assets/images/stealth_mode_tutorial_image_1/stealth_mode_tutorial_image_1.png'),
+        height: 300,
+        fit: BoxFit.fitWidth,
+        alignment: FractionalOffset.topCenter,
       ),
       const TutorialPageViewWidget(
         title:
@@ -213,8 +210,8 @@ class _StealthModeTutorialPageState extends ModularState<
   }
 
   List<Widget> _buildPageIndicator() {
-    final List<Widget> list = [];
-    for (int i = 0; i < _contentPageView.length; i++) {
+    List<Widget> list = [];
+    for (int i = 0; i < _contentPageView!.length; i++) {
       list.add(i == _currentPage ? _indicator(true) : _indicator(false));
     }
 

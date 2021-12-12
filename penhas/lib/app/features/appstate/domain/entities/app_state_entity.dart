@@ -44,24 +44,24 @@ extension QuizMessageTypeExtension on QuizMessageType {
 
 @immutable
 class AppStateEntity extends Equatable {
-  const AppStateEntity({
+  final QuizSessionEntity? quizSession;
+  final UserProfileEntity? userProfile;
+  final AppStateModeEntity appMode;
+  final List<AppStateModuleEntity?>? modules;
+
+  AppStateEntity({
     required this.quizSession,
     required this.userProfile,
     required this.appMode,
     required this.modules,
   });
 
-  final QuizSessionEntity? quizSession;
-  final UserProfileEntity? userProfile;
-  final AppStateModeEntity appMode;
-  final List<AppStateModuleEntity> modules;
-
   @override
-  List<Object?> get props => [
-        quizSession,
-        userProfile,
+  List<Object> get props => [
+        quizSession!,
+        userProfile!,
         appMode,
-        modules,
+        modules!,
       ];
 
   @override
@@ -70,20 +70,20 @@ class AppStateEntity extends Equatable {
 
 @immutable
 class QuizSessionEntity extends Equatable {
-  const QuizSessionEntity({
+  final List<QuizMessageEntity>? currentMessage;
+  final String sessionId;
+  final bool isFinished;
+  final String? endScreen;
+
+  QuizSessionEntity({
     required this.currentMessage,
     required this.sessionId,
     required this.isFinished,
     required this.endScreen,
   });
 
-  final List<QuizMessageEntity>? currentMessage;
-  final String sessionId;
-  final bool isFinished;
-  final String? endScreen;
-
   @override
-  List<Object?> get props => [currentMessage, sessionId, isFinished, endScreen];
+  List<Object> get props => [currentMessage!, sessionId, isFinished, endScreen!];
 
   @override
   String toString() {
@@ -93,10 +93,18 @@ class QuizSessionEntity extends Equatable {
 
 @immutable
 class QuizMessageEntity extends Equatable {
-  const QuizMessageEntity({
+  final String? content;
+  final QuizMessageType type;
+  final String? ref;
+  final String? style;
+  final String? action;
+  final String? buttonLabel;
+  final List<QuizMessageMultiplechoicesOptions>? options;
+
+  QuizMessageEntity({
     required this.content,
     required this.type,
-    this.ref = '',
+    this.ref,
     this.style,
     this.action,
     this.options,
@@ -112,8 +120,8 @@ class QuizMessageEntity extends Equatable {
   final List<QuizMessageMultiplechoicesOptions>? options;
 
   @override
-  List<dynamic> get props =>
-      [content, style, action, type, ref, options, buttonLabel];
+  List<Object> get props =>
+      [content!, style!, action!, type, ref!, options!, buttonLabel!];
 
   @override
   String toString() {
@@ -122,7 +130,10 @@ class QuizMessageEntity extends Equatable {
 }
 
 class QuizMessageMultiplechoicesOptions extends Equatable {
-  const QuizMessageMultiplechoicesOptions({
+  final String? display;
+  final String? index;
+
+  QuizMessageMultiplechoicesOptions({
     required this.display,
     required this.index,
   });
@@ -131,7 +142,7 @@ class QuizMessageMultiplechoicesOptions extends Equatable {
   final String? index;
 
   @override
-  List<Object?> get props => [display, index!];
+  List<Object> get props => [display!, index!];
 
   @override
   String toString() {
@@ -141,8 +152,10 @@ class QuizMessageMultiplechoicesOptions extends Equatable {
 
 @immutable
 class AppStateModeEntity extends Equatable {
-  const AppStateModeEntity({
-    this.hasActivedGuardian = false,
+  final bool? hasActivedGuardian;
+
+  AppStateModeEntity({
+    required this.hasActivedGuardian,
   });
 
   final bool hasActivedGuardian;
@@ -151,8 +164,8 @@ class AppStateModeEntity extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object?> get props => [
-        hasActivedGuardian,
+  List<Object> get props => [
+        hasActivedGuardian!,
       ];
 
   Map<String, Object?> toJson() => {
@@ -162,17 +175,17 @@ class AppStateModeEntity extends Equatable {
 
 @immutable
 class AppStateModuleEntity extends Equatable {
-  const AppStateModuleEntity({
+  final String? code;
+  final String? meta;
+
+  AppStateModuleEntity({
     required this.code,
     required this.meta,
   });
-
-  final String code;
-  final String meta;
 
   @override
   bool get stringify => true;
 
   @override
-  List<Object?> get props => [code, meta];
+  List<Object> get props => [code!, meta!];
 }

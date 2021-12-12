@@ -6,12 +6,14 @@ import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.da
 
 @immutable
 class FilterSkillsModel extends Equatable {
-  const FilterSkillsModel({
+  final List<FilterTagEntity>? skills;
+
+  FilterSkillsModel({
     required this.skills,
   });
 
-  factory FilterSkillsModel.fromJson(Map<String, dynamic> jsonData) {
-    final List<dynamic> jsonSkills = jsonData['skills'];
+  factory FilterSkillsModel.fromJson(Map<String, Object> jsonData) {
+    final List<Object> jsonSkills = jsonData["skills"] as List<Object>;
     final List<FilterTagEntity> skills = jsonSkills
         .map((e) => FilterTagModel.fromJson(e))
         .whereNotNull()
@@ -23,7 +25,7 @@ class FilterSkillsModel extends Equatable {
   final List<FilterTagEntity>? skills;
 
   @override
-  List<dynamic> get props => [skills];
+  List<Object> get props => [skills!];
 
   @override
   bool get stringify => true;

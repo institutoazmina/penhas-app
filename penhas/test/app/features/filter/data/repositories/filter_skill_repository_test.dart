@@ -7,8 +7,8 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  const String jsonFile = 'filters/filter_skills.json';
-  late final MockIApiProvider apiProvider = MockIApiProvider();
+  String? jsonFile;
+  IApiProvider? apiProvider;
   late IFilterSkillRepository sut;
 
   setUp(() {
@@ -21,7 +21,7 @@ void main() {
       final jsonData = await JsonUtil.getJson(from: jsonFile);
       final actual = FilterSkillsModel.fromJson(jsonData).skills;
       when(
-        apiProvider.get(
+        apiProvider!.get(
           path: anyNamed('path'),
           headers: anyNamed('headers'),
           parameters: anyNamed('parameters'),

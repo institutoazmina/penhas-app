@@ -21,6 +21,7 @@ class AudiosPage extends StatefulWidget {
   const AudiosPage({Key? key, this.title = 'Audios'}) : super(key: key);
 
   final String title;
+  const AudiosPage({required Key key, this.title = "Audios"}) : super(key: key);
 
   @override
   _AudiosPageState createState() => _AudiosPageState();
@@ -59,9 +60,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
 
   @override
   void dispose() {
-    for (final d in _disposers!) {
-      d();
-    }
+    _disposers!.forEach((d) => d());
     controller.dispose();
     _playingAudio = null;
     super.dispose();
@@ -170,16 +169,16 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
 
   ReactionDisposer _showAudioPlayStatus() {
     return reaction((_) => controller.playingAudioState,
-        (AudioPlaying? actionSheetState) {
-      actionSheetState!.when(
-        none: () => setState(() {
-          _playingAudio = null;
-        }),
-        playing: (audio) => setState(() {
-          _playingAudio = audio;
-        }),
-      );
-    });
+            (AudioPlaying? actionSheetState) {
+          actionSheetState!.when(
+            none: () => setState(() {
+              _playingAudio = null;
+            }),
+            playing: (audio) => setState(() {
+              _playingAudio = audio;
+            }),
+          );
+        });
   }
 
   void _showActionNotice(String? message) {

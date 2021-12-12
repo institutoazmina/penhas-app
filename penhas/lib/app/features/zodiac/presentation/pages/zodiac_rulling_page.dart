@@ -4,7 +4,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ZodiacRullingPage extends StatelessWidget {
   const ZodiacRullingPage({
-    Key? key,
+    required Key key,
   }) : super(key: key);
 
   @override

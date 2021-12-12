@@ -9,9 +9,15 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  const String jsonFile = 'users/users_search.json';
-  late final MockIApiProvider apiProvider = MockIApiProvider();
-  late final IUsersRepository sut = UsersRepository(apiProvider: apiProvider);
+  String? jsonFile;
+  IApiProvider? apiProvider;
+  late IUsersRepository sut;
+
+  setUp(() {
+    jsonFile = 'users/users_search.json';
+    apiProvider = MockApiProvider();
+    sut = UsersRepository(apiProvider: apiProvider);
+  });
 
   group('UsersRepository', () {
     test(
@@ -19,7 +25,7 @@ void main() {
         () async {
       // arrange
       final options = UserSearchOptions();
-      when(apiProvider.get(
+      when(apiProvider!.get(
         path: anyNamed('path'),
         headers: anyNamed('headers'),
         parameters: anyNamed('parameters'),
@@ -27,8 +33,13 @@ void main() {
       // act
       await sut.search(options);
       // assert
+<<<<<<< HEAD
       verify(apiProvider.get(
         path: '/search-users',
+=======
+      verify(apiProvider!.get(
+        path: "/search-users",
+>>>>>>> Migrate code to nullsafety
         parameters: {
           'name': null,
           'skills': null,
@@ -40,8 +51,13 @@ void main() {
     test('should inform skill as appended by "," as parameter to server',
         () async {
       // arrange
+<<<<<<< HEAD
       final options = UserSearchOptions(skills: ['a', 'b', 'c']);
       when(apiProvider.get(
+=======
+      final options = UserSearchOptions(skills: ["a", "b", "c"]);
+      when(apiProvider!.get(
+>>>>>>> Migrate code to nullsafety
         path: anyNamed('path'),
         headers: anyNamed('headers'),
         parameters: anyNamed('parameters'),
@@ -49,8 +65,13 @@ void main() {
       // act
       await sut.search(options);
       // assert
+<<<<<<< HEAD
       verify(apiProvider.get(
         path: '/search-users',
+=======
+      verify(apiProvider!.get(
+        path: "/search-users",
+>>>>>>> Migrate code to nullsafety
         parameters: {
           'name': null,
           'skills': 'a,b,c',
@@ -64,8 +85,13 @@ void main() {
       const jsonEmptySession = 'users/users_search_empty.json';
       final jsonData = await JsonUtil.getJson(from: jsonEmptySession);
       final actual = right(UserSearchSessionModel.fromJson(jsonData));
+<<<<<<< HEAD
       final options = UserSearchOptions(skills: ['a', 'b', 'c']);
       when(apiProvider.get(
+=======
+      final options = UserSearchOptions(skills: ["a", "b", "c"]);
+      when(apiProvider!.get(
+>>>>>>> Migrate code to nullsafety
         path: anyNamed('path'),
         headers: anyNamed('headers'),
         parameters: anyNamed('parameters'),
@@ -79,8 +105,13 @@ void main() {
       // arrange
       final jsonData = await JsonUtil.getJson(from: jsonFile);
       final actual = right(UserSearchSessionModel.fromJson(jsonData));
+<<<<<<< HEAD
       final options = UserSearchOptions(skills: ['a', 'b', 'c']);
       when(apiProvider.get(
+=======
+      final options = UserSearchOptions(skills: ["a", "b", "c"]);
+      when(apiProvider!.get(
+>>>>>>> Migrate code to nullsafety
         path: anyNamed('path'),
         headers: anyNamed('headers'),
         parameters: anyNamed('parameters'),

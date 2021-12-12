@@ -4,7 +4,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ProfileSkillInitialStatePage extends StatelessWidget {
   const ProfileSkillInitialStatePage({
-    Key? key,
+    required Key key,
   }) : super(key: key);
 
   @override

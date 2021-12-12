@@ -24,6 +24,14 @@ class SignInController extends _SignInControllerBase with _$SignInController {
 }
 
 abstract class _SignInControllerBase with Store, MapFailureMessage {
+  final String _invalidFieldsToProceedLogin =
+      'E-mail e senha precisam estarem corretos para continuar.';
+  final IAuthenticationRepository? repository;
+  final PasswordValidator _passwordValidator;
+  final AppStateUseCase? _appStateUseCase;
+  EmailAddress _emailAddress = EmailAddress("");
+  SignInPassword? _password;
+
   _SignInControllerBase(
     this.repository,
     this._passwordValidator,
@@ -50,7 +58,7 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
   String warningPassword = '';
 
   @observable
-  String? errorMessage = '';
+  String? errorMessage = "";
 
   @computed
   PageProgressState get currentState {
@@ -73,23 +81,23 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
   @action
   void setPassword(String password) {
     _password = SignInPassword(password, _passwordValidator);
-    warningPassword = _password.mapFailure;
+    warningPassword = _password!.mapFailure;
   }
 
   @action
   Future<void> signInWithEmailAndPasswordPressed() async {
-    if (!_emailAddress.isValid || !_password.isValid) {
-      errorMessage = _invalidFieldsToProceedLogin;
+    _setErrorMessage('');
+
+    if (!_emailAddress.isValid || !_password!.isValid) {
+      _setErrorMessage(_invalidFieldsToProceedLogin);
       return;
     }
     errorMessage = '';
 
-    _progress = ObservableFuture(
-      repository!.signInWithEmailAndPassword(
-        emailAddress: _emailAddress,
-        password: _password,
-      ),
-    );
+    _progress = ObservableFuture(repository!.signInWithEmailAndPassword(
+      emailAddress: _emailAddress,
+      password: _password,
+    ));
 
     final Either<Failure, SessionEntity> response = await _progress!;
 
@@ -111,7 +119,7 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
 
   Future<void> _forwardToLogged(SessionEntity session) async {
     if (session.deletedScheduled) {
-      Modular.to.pushNamed('/accountDeleted', arguments: session.sessionToken);
+      Modular.to.pushNamed('/accountDeleted', arguments: session.sessionToken!);
     } else {
       final appState = await _appStateUseCase!.check();
       appState.fold(
@@ -119,5 +127,9 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
         (_) => AppNavigator.popAndPush(AppRoute('/mainboard?page=feed')),
       );
     }
+  }
+
+  void _setErrorMessage(String? msg) {
+    errorMessage = msg;
   }
 }

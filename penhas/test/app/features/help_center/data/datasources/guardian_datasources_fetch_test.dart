@@ -8,27 +8,40 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late final MockHttpClient apiClient = MockHttpClient();
-  late final MockIApiServerConfigure serverConfigure =
-      MockIApiServerConfigure();
-  final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
-  late final IGuardianDataSource dataSource = GuardianDataSource(
-    apiClient: apiClient,
-    serverConfiguration: serverConfigure,
-  );
-  const String sessionToken = 'my_really.long.JWT';
+  MockHttpClient? apiClient;
+  late IGuardianDataSource dataSource;
+  MockApiServerConfigure? serverConfigure;
+  Uri? serverEndpoint;
+  const String SESSSION_TOKEN = 'my_really.long.JWT';
+
+  setUp(() async {
+    apiClient = MockHttpClient();
+    serverConfigure = MockApiServerConfigure();
+    serverEndpoint = Uri.https('api.anyserver.io', '/');
+    dataSource = GuardianDataSource(
+      apiClient: apiClient,
+      serverConfiguration: serverConfigure,
+    );
 
   setUp(() {
     // MockApiServerConfigure configuration
+<<<<<<< HEAD
     when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
     when(serverConfigure.apiToken)
         .thenAnswer((_) => Future.value(sessionToken));
     when(serverConfigure.userAgent)
         .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
+=======
+    when(serverConfigure!.baseUri).thenAnswer(((_) => serverEndpoint!) as Uri Function(Invocation));
+    when(serverConfigure!.apiToken)
+        .thenAnswer((_) => Future.value(SESSSION_TOKEN));
+    when(serverConfigure!.userAgent)
+        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
+>>>>>>> Migrate code to nullsafety
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
-    final userAgent = await serverConfigure.userAgent;
+    final userAgent = await serverConfigure!.userAgent;
     return {
       'X-Api-Key': sessionToken,
       'User-Agent': userAgent,
@@ -38,20 +51,27 @@ void main() {
 
   Uri _setuHttpRequest(String path, Map<String, String> queryParameters) {
     return Uri(
-      scheme: serverEndpoint.scheme,
-      host: serverEndpoint.host,
+      scheme: serverEndpoint!.scheme,
+      host: serverEndpoint!.host,
       path: path,
       queryParameters: queryParameters.isEmpty ? null : queryParameters,
     );
   }
 
   PostExpectation<Future<http.Response>> _mockGetRequest() {
+<<<<<<< HEAD
     return when(
       apiClient.get(
         any,
         headers: anyNamed('headers'),
       ),
     );
+=======
+    return when(apiClient!.get(
+      any,
+      headers: anyNamed('headers'),
+    ));
+>>>>>>> Migrate code to nullsafety
   }
 
   void _setUpMockGetHttpClientSuccess200(String? bodyContent) {
@@ -88,7 +108,7 @@ void main() {
             // act
             await dataSource.fetch();
             // assert
-            verify(apiClient.get(request, headers: headers));
+            verify(apiClient!.get(request, headers: headers));
           },
         );
         test(

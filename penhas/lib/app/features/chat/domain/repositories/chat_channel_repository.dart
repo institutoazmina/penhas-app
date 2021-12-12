@@ -29,11 +29,11 @@ abstract class IChatChannelRepository {
 }
 
 class ChatChannelRepository implements IChatChannelRepository {
+  final IApiProvider? _apiProvider;
+
   ChatChannelRepository({
     required IApiProvider? apiProvider,
-  }) : _apiProvider = apiProvider;
-
-  final IApiProvider? _apiProvider;
+  }) : this._apiProvider = apiProvider;
 
   @override
   Future<Either<Failure, ChatChannelAvailableEntity>> listChannel() async {
@@ -106,7 +106,7 @@ class ChatChannelRepository implements IChatChannelRepository {
       'chat_auth': option.token,
     };
 
-    final bodyContent = 'message=${Uri.encodeComponent(option.message!)}';
+    final bodyContent = 'message=' + Uri.encodeComponent(option.message!);
 
     try {
       final response = await _apiProvider!
@@ -130,7 +130,7 @@ class ChatChannelRepository implements IChatChannelRepository {
   ) async {
     const endPoint = '/me/manage-blocks';
     final parameters = {
-      'block': option.block! ? '1' : '0',
+      'block': option.block! ? "1" : "0",
       'cliente_id': option.clientId,
     };
 

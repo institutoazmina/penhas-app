@@ -7,7 +7,7 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class HelpCenterCardGuardian extends StatelessWidget {
   const HelpCenterCardGuardian({
-    Key? key,
+    required Key key,
     required this.create,
     required this.manager,
   }) : super(key: key);

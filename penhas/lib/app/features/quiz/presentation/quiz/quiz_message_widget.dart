@@ -5,7 +5,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class QuizMessageWidget extends StatelessWidget {
   const QuizMessageWidget({
-    Key? key,
+    required Key key,
     required this.message,
   }) : super(key: key);
 

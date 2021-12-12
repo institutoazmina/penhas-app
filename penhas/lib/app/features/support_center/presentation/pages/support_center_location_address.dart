@@ -3,11 +3,11 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class SupportCenterLocationAddress extends StatelessWidget {
   const SupportCenterLocationAddress({
-    Key? key,
+    required Key key,
     required String message,
     required VoidCallback onPressed,
-  })  : _message = message,
-        _onPressed = onPressed,
+  })  : this._message = message,
+        this._onPressed = onPressed,
         super(key: key);
 
   final String _message;

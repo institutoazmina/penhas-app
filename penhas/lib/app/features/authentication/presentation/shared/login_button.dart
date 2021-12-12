@@ -11,6 +11,11 @@ class LoginButton extends StatefulWidget {
 
   // final void Function() _onChanged;
 
+  LoginButton({
+    required Key key,
+    required this.onChanged,
+  }) : super(key: key);
+
   @override
   _LoginButtonState createState() => _LoginButtonState();
 }

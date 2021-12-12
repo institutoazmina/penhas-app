@@ -7,7 +7,7 @@ enum HumanRace {
   notDeclared,
 }
 
-extension EnumHumanRace on HumanRace {
+extension EnumHumanRace on HumanRace? {
   String get rawValue {
     switch (this) {
       case HumanRace.white:
@@ -27,7 +27,7 @@ extension EnumHumanRace on HumanRace {
     }
   }
 
-  String get label {
+  String? get label {
     String? label;
     switch (this) {
       case HumanRace.white:

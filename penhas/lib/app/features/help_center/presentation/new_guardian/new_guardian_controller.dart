@@ -23,6 +23,11 @@ class NewGuardianController extends _NewGuardianControllerBase
 }
 
 abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
+  final IGuardianRepository _guardianRepository;
+  final ILocationServices _locationService;
+  String? guardianName;
+  String? guardianMobile;
+
   _NewGuardianControllerBase(
     this._guardianRepository,
     this._locationService,
@@ -83,8 +88,7 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
     errorMessage = '';
     _fetchProgress = ObservableFuture(_guardianRepository.fetch());
 
-    final Either<Failure, GuardianSessioEntity> response =
-        await _fetchProgress!;
+    final Either<Failure, GuardianSessioEntity> response = await _fetchProgress!;
 
     response.fold(
       (failure) => _handleLoadPageError(failure),
@@ -156,6 +160,8 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
     final message = mapFailureMessage(failure)!;
     currentState = NewGuardianState.error(message);
   }
+
+  void _setErrorMessage(String? message) => errorMessage = message;
 
   void _handleCreatedGuardian(AlertModel field) {
     alertState = GuardianAlertState.alert(

@@ -139,6 +139,10 @@ abstract class _SignUpControllerBase with Store, MapFailureMessage {
     return isValid;
   }
 
+  void _setErrorMessage(String? message) {
+    errorMessage = message;
+  }
+
   void _triggerMessageError(Failure failure) {
     if (failure is ServerSideFormFieldValidationFailure) {
       errorMessage = _mapFailureToFields(failure);
@@ -174,19 +178,19 @@ abstract class _SignUpControllerBase with Store, MapFailureMessage {
   }
 
   void _mapToCpfField(ServerSideFormFieldValidationFailure failure) {
-    final String? message = failure.message;
+    String? message = failure.message;
 
     warningCpf = message;
   }
 
   void _mapToCepField(ServerSideFormFieldValidationFailure failure) {
-    final String? message = failure.message;
+    String? message = failure.message;
 
     warningCep = message;
   }
 
   void _mapToBirthdayField(ServerSideFormFieldValidationFailure failure) {
-    final String? message = failure.message;
+    String? message = failure.message;
 
     warningBirthday = message;
   }

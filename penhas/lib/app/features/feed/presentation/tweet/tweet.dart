@@ -6,7 +6,7 @@ import 'package:penhas/app/features/feed/presentation/tweet/single_tweet.dart';
 
 class Tweet extends StatelessWidget {
   const Tweet({
-    Key? key,
+    required Key key,
     required this.model,
     required this.controller,
   }) : super(key: key);

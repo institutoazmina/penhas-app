@@ -7,6 +7,11 @@ import 'package:penhas/app/features/authentication/domain/usecases/map_validator
 
 @immutable
 class Cep extends Equatable with MapValidatorFailure {
+  final Either<Failure, String?> value;
+
+  String? get rawValue => value.getOrElse(() => null);
+  bool get isValid => value.isRight();
+
   factory Cep(String? input) {
     return Cep._(_validate(input));
   }

@@ -29,6 +29,13 @@ class MainboardController extends _MainboardControllerBase
 }
 
 abstract class _MainboardControllerBase with Store {
+  Timer? _syncTimer;
+  final int notificationInterval = 60;
+  final MainboardStore mainboardStore;
+  final InactivityLogoutUseCase _inactivityLogoutUseCase;
+  final INotificationRepository _notification;
+  final IAppModulesServices _modulesServices;
+
   _MainboardControllerBase(
     this.mainboardStore,
     this._inactivityLogoutUseCase,
@@ -112,7 +119,7 @@ extension _PrivateMethod on _MainboardControllerBase {
 
   Future<void> checkUnRead() async {
     final result = await _notification.unread();
-    final validField = result.getOrElse(() => const ValidField(message: '0'));
+    final validField = result.getOrElse(() => ValidField(message: "0"));
     notificationCounter = int.tryParse(validField.message!) ?? 0;
   }
 }
