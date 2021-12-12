@@ -35,17 +35,10 @@ void main() {
         );
         when(supportCenterRepository!.fetch(any)).thenAnswer((_) async => left(
               GpsFailure(gpsFailure),
-<<<<<<< HEAD
-            ),);
-        when(locationServices.currentLocation()).thenAnswer((_) async => right(
-            const UserLocationEntity(),),);
-        when(locationServices.isPermissionGranted())
-=======
             ));
         when(locationServices!.currentLocation()).thenAnswer((_) async => right(
             UserLocationEntity(accuracy: 0, latitude: 0.0, longitude: 0.0)));
         when(locationServices!.isPermissionGranted())
->>>>>>> Migrate code to nullsafety
             .thenAnswer((_) async => true);
         // act
         final matcher = await sut.fetch(fetchRequest);

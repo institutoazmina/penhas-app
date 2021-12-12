@@ -25,19 +25,11 @@ void main() {
 
   setUp(() {
     // MockApiServerConfigure configuration
-<<<<<<< HEAD
-    when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
-    when(serverConfigure.apiToken)
-        .thenAnswer((_) => Future.value(sessionToken));
-    when(serverConfigure.userAgent)
-        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
-=======
     when(serverConfigure!.baseUri).thenAnswer(((_) => serverEndpoint!) as Uri Function(Invocation));
     when(serverConfigure!.apiToken)
         .thenAnswer((_) => Future.value(SESSSION_TOKEN));
     when(serverConfigure!.userAgent)
         .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
->>>>>>> Migrate code to nullsafety
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
@@ -59,19 +51,10 @@ void main() {
   }
 
   PostExpectation<Future<http.Response>> _mockGetRequest() {
-<<<<<<< HEAD
-    return when(
-      apiClient.get(
-        any,
-        headers: anyNamed('headers'),
-      ),
-    );
-=======
     return when(apiClient!.get(
       any,
       headers: anyNamed('headers'),
     ));
->>>>>>> Migrate code to nullsafety
   }
 
   void _setUpMockGetHttpClientSuccess200(String? bodyContent) {

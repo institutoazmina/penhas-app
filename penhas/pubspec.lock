@@ -29,6 +29,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.3.0"
+  asuka:
+    dependency: "direct main"
+    description:
+      name: asuka
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0+1"
   async:
     dependency: transitive
     description:
@@ -299,27 +306,34 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.1.2"
+  firebase:
+    dependency: transitive
+    description:
+      name: firebase
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "9.0.2"
   firebase_analytics:
     dependency: "direct main"
     description:
       name: firebase_analytics
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "9.0.3"
+    version: "8.3.4"
   firebase_analytics_platform_interface:
     dependency: transitive
     description:
       name: firebase_analytics_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.0"
+    version: "2.0.1"
   firebase_analytics_web:
     dependency: transitive
     description:
       name: firebase_analytics_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.0+3"
+    version: "0.3.0+1"
   firebase_core:
     dependency: "direct main"
     description:
@@ -412,10 +426,12 @@ packages:
   flutter_modular:
     dependency: "direct main"
     description:
-      name: flutter_modular
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.5.0"
+      path: flutter_modular
+      ref: improvements
+      resolved-ref: e02039deeb6416583de075c5ac621ccfb1d8ff5b
+      url: "https://github.com/pedrox-hs/modular.git"
+    source: git
+    version: "3.4.1+1"
   flutter_modular_annotations:
     dependency: transitive
     description:
@@ -790,20 +806,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.16"
-  modular_core:
-    dependency: transitive
-    description:
-      name: modular_core
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.1"
-  modular_interfaces:
-    dependency: transitive
-    description:
-      name: modular_interfaces
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.4"
   nested:
     dependency: transitive
     description:

@@ -8,14 +8,8 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-<<<<<<< HEAD
-  late final MockISupportCenterRepository supportCenterRepository =
-      MockISupportCenterRepository();
-  late final MockILocationServices locationServices = MockILocationServices();
-=======
   ISupportCenterRepository? supportCenterRepository;
   ILocationServices locationServices;
->>>>>>> Migrate code to nullsafety
   late SupportCenterUseCase sut;
 
   setUp(() {

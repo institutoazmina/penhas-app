@@ -32,19 +32,11 @@ void main() {
         JsonUtil.getStringSync(from: 'profile/quiz_session_response.json');
 
     // MockApiServerConfigure configuration
-<<<<<<< HEAD
-    when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
-    when(serverConfigure.apiToken)
-        .thenAnswer((_) => Future.value(sessionToken));
-    when(serverConfigure.userAgent)
-        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
-=======
     when(serverConfigure!.baseUri).thenAnswer(((_) => serverEndpoint!) as Uri Function(Invocation));
     when(serverConfigure!.apiToken)
         .thenAnswer((_) => Future.value(SESSSION_TOKEN));
     when(serverConfigure!.userAgent)
         .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
->>>>>>> Migrate code to nullsafety
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
@@ -66,19 +58,10 @@ void main() {
   }
 
   PostExpectation<Future<http.Response>> _mockRequest() {
-<<<<<<< HEAD
-    return when(
-      apiClient.post(
-        any,
-        headers: anyNamed('headers'),
-      ),
-    );
-=======
     return when(apiClient!.post(
       any,
       headers: anyNamed('headers'),
     ));
->>>>>>> Migrate code to nullsafety
   }
 
   void _setUpMockHttpClientSuccess200() {

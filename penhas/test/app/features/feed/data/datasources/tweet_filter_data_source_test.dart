@@ -8,20 +8,11 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-<<<<<<< HEAD
-  late final MockHttpClient apiClient = MockHttpClient();
-  late ITweetFilterPreferenceDataSource dataSource;
-  late final MockIApiServerConfigure serverConfigure =
-      MockIApiServerConfigure();
-  Uri? serverEndpoint;
-  const String sessionToken = 'my_really.long.JWT';
-=======
   MockHttpClient? apiClient;
   late ITweetFilterPreferenceDataSource dataSource;
   MockApiServerConfigure? serverConfigure;
   Uri? serverEndpoint;
   const String SESSSION_TOKEN = 'my_really.long.JWT';
->>>>>>> Migrate code to nullsafety
 
   setUp(() {
     serverEndpoint = Uri.https('api.anyserver.io', '/');
@@ -31,19 +22,11 @@ void main() {
     );
 
     // MockApiServerConfigure configuration
-<<<<<<< HEAD
-    when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint!);
-    when(serverConfigure.apiToken)
-        .thenAnswer((_) => Future.value(sessionToken));
-    when(serverConfigure.userAgent)
-        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
-=======
     when(serverConfigure!.baseUri).thenAnswer(((_) => serverEndpoint!) as Uri Function(Invocation));
     when(serverConfigure!.apiToken)
         .thenAnswer((_) => Future.value(SESSSION_TOKEN));
     when(serverConfigure!.userAgent)
         .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
->>>>>>> Migrate code to nullsafety
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
@@ -65,19 +48,10 @@ void main() {
   }
 
   PostExpectation<Future<http.Response>> _mockGetRequest() {
-<<<<<<< HEAD
-    return when(
-      apiClient.get(
-        any,
-        headers: anyNamed('headers'),
-      ),
-    );
-=======
     return when(apiClient!.get(
       any,
       headers: anyNamed('headers'),
     ));
->>>>>>> Migrate code to nullsafety
   }
 
   void _setUpMockGetHttpClientSuccess200(String? bodyContent) {

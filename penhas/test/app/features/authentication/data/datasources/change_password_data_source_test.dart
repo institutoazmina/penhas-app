@@ -13,11 +13,6 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-<<<<<<< HEAD
-  late final MockHttpClient mockHttpClient = MockHttpClient();
-  late final MockIApiServerConfigure mockApiServerConfigure =
-      MockIApiServerConfigure();
-=======
   late IChangePasswordDataSource dataSource;
   MockHttpClient? mockHttpClient;
   MockApiServerConfigure mockApiServerConfigure;
@@ -27,7 +22,6 @@ void main() {
   Uri? serverEndpoint;
   String? userAgent;
   late Map<String, String?> httpHeader;
->>>>>>> Migrate code to nullsafety
 
   late IChangePasswordDataSource dataSource;
   EmailAddress? emailAddress;
@@ -79,14 +73,8 @@ void main() {
           () async {
         // arrange
         final bodyContent = JsonUtil.getStringSync(
-<<<<<<< HEAD
-          from: 'authentication/request_reset_password.json',
-        );
-        when(mockHttpClient.post(any, headers: anyNamed('headers')))
-=======
             from: 'authentication/request_reset_password.json');
         when(mockHttpClient!.post(any, headers: anyNamed('headers')))
->>>>>>> Migrate code to nullsafety
             .thenAnswer((_) async => http.Response(bodyContent, 200));
         // act
         await dataSource.request(emailAddress: emailAddress);
@@ -155,14 +143,8 @@ void main() {
           () async {
         // arrange
         final bodyContent = JsonUtil.getStringSync(
-<<<<<<< HEAD
-          from: 'authentication/request_reset_password.json',
-        );
-        when(mockHttpClient.post(any, headers: anyNamed('headers')))
-=======
             from: 'authentication/request_reset_password.json');
         when(mockHttpClient!.post(any, headers: anyNamed('headers')))
->>>>>>> Migrate code to nullsafety
             .thenAnswer((_) async => http.Response(bodyContent, 200));
         // act
         await dataSource.reset(
@@ -171,29 +153,14 @@ void main() {
           resetToken: validToken,
         );
         // assert
-<<<<<<< HEAD
-        verify(
-          mockHttpClient.post(
-            httpResquest,
-            headers: httpHeader,
-          ),
-        );
-=======
         verify(mockHttpClient!.post(httpResquest, headers: httpHeader as Map<String, String>));
->>>>>>> Migrate code to nullsafety
       });
       test('should return ValidField when the response code is 200 (success)',
           () async {
         // arrange
         final bodyContent = JsonUtil.getStringSync(
-<<<<<<< HEAD
-          from: 'authentication/request_reset_password.json',
-        );
-        when(mockHttpClient.post(any, headers: anyNamed('headers')))
-=======
             from: 'authentication/request_reset_password.json');
         when(mockHttpClient!.post(any, headers: anyNamed('headers')))
->>>>>>> Migrate code to nullsafety
             .thenAnswer((_) async => http.Response(bodyContent, 200));
         // act
         final result = await dataSource.reset(

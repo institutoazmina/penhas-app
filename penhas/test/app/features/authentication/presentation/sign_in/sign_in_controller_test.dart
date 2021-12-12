@@ -8,14 +8,8 @@ import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-<<<<<<< HEAD
-  late final MockAuthenticationRepository authenticationRepositoryMock =
-      MockAuthenticationRepository();
-  late final MockAppStateUseCase appStateUseCaseMock = MockAppStateUseCase();
-=======
   MockAuthenticationRepository? authenticationRepositoryMock;
   MockAppStateUseCase? appStateUseCaseMock;
->>>>>>> Migrate code to nullsafety
   late SignInController sut;
 
   //
@@ -74,19 +68,10 @@ void main() {
     });
 
     void mockAuthenticationFailure(Failure failure) {
-<<<<<<< HEAD
-      when(
-        authenticationRepositoryMock.signInWithEmailAndPassword(
-          emailAddress: anyNamed('emailAddress'),
-          password: anyNamed('password'),
-        ),
-      ).thenAnswer((_) async => left(failure));
-=======
       when(authenticationRepositoryMock!.signInWithEmailAndPassword(
         emailAddress: anyNamed('emailAddress'),
         password: anyNamed('password'),
       )).thenAnswer((_) async => left(failure));
->>>>>>> Migrate code to nullsafety
     }
 
     test('should validate inputs before hits repository', () async {

@@ -14,18 +14,10 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-<<<<<<< HEAD
-  late final MockAuthenticationDataSource dataSource =
-      MockAuthenticationDataSource();
-  late final MockIAppConfiguration appConfiguration = MockIAppConfiguration();
-  late final MockINetworkInfo networkInfo = MockINetworkInfo();
-  late AuthenticationRepository repository;
-=======
   late AuthenticationRepository repository;
   MockAuthenticationDataSource? dataSource;
   MockAppConfiguration? appConfiguration;
   MockNetworkInfo? networkInfo;
->>>>>>> Migrate code to nullsafety
 
   setUp(() {
     repository = AuthenticationRepository(
@@ -37,17 +29,10 @@ void main() {
 
   group('SigIn', () {
     Map<String, dynamic> loginSuccessJson;
-<<<<<<< HEAD
-    late SessionModel sessionModel;
-    late SessionEntity sessionEntity;
-    late EmailAddress email;
-    late SignInPassword password;
-=======
     SessionModel? sessionModel;
     SessionEntity? sessionEntity;
     EmailAddress? email;
     SignInPassword? password;
->>>>>>> Migrate code to nullsafety
 
     setUp(() async {
       loginSuccessJson =
@@ -59,13 +44,8 @@ void main() {
     });
 
     group('device is online', () {
-<<<<<<< HEAD
-      setUp(() {
-        when(networkInfo.isConnected).thenAnswer((_) async => true);
-=======
       setUp(() async {
         when(networkInfo!.isConnected).thenAnswer((_) async => true);
->>>>>>> Migrate code to nullsafety
       });
 
       test('should return valid SessionEntity for valid user/password',
@@ -79,19 +59,10 @@ void main() {
           password: password,
         );
         // assert
-<<<<<<< HEAD
-        verify(
-          dataSource.signInWithEmailAndPassword(
-            emailAddress: email,
-            password: password,
-          ),
-        );
-=======
         verify(dataSource!.signInWithEmailAndPassword(
           emailAddress: email,
           password: password,
         ));
->>>>>>> Migrate code to nullsafety
 
         verify(appConfiguration!.saveApiToken(token: sessionModel!.sessionToken));
 
@@ -125,19 +96,10 @@ void main() {
           password: password,
         );
         // assert
-<<<<<<< HEAD
-        verify(
-          dataSource.signInWithEmailAndPassword(
-            emailAddress: email,
-            password: password,
-          ),
-        );
-=======
         verify(dataSource!.signInWithEmailAndPassword(
           emailAddress: email,
           password: password,
         ));
->>>>>>> Migrate code to nullsafety
         expect(
           result,
           left(
@@ -153,13 +115,8 @@ void main() {
     });
 
     group('device is offline', () {
-<<<<<<< HEAD
-      setUp(() {
-        when(networkInfo.isConnected).thenAnswer((_) async => false);
-=======
       setUp(() async {
         when(networkInfo!.isConnected).thenAnswer((_) async => false);
->>>>>>> Migrate code to nullsafety
       });
 
       test('should return InternetConnectionFailure', () async {
@@ -172,21 +129,11 @@ void main() {
           password: password,
         );
         // assert
-<<<<<<< HEAD
-        verify(
-          dataSource.signInWithEmailAndPassword(
-            emailAddress: email,
-            password: password,
-          ),
-        );
-        verify(networkInfo.isConnected);
-=======
         verify(dataSource!.signInWithEmailAndPassword(
           emailAddress: email,
           password: password,
         ));
         verify(networkInfo!.isConnected);
->>>>>>> Migrate code to nullsafety
         expect(result, left(InternetConnectionFailure()));
       });
     });

@@ -6,12 +6,7 @@ import '../../../utils/helper.mocks.dart';
 
 void main() {
   late NetworkInfo networkInfo;
-<<<<<<< HEAD
-  late final MockDataConnectionChecker mockDataConnectionChecker =
-      MockDataConnectionChecker();
-=======
   MockDataConnectionChecker? mockDataConnectionChecker;
->>>>>>> Migrate code to nullsafety
 
   setUp(() {
     networkInfo = NetworkInfo(mockDataConnectionChecker);

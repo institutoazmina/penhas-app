@@ -37,11 +37,7 @@ void main() {
       // unwrap do Either pq ele não se dá bem com o Collection nativo,
       // eu teria que alterar para um List dele, mas me recurso a fazer isto
       // só para o teste, já que na códgio terá outras implicações.
-<<<<<<< HEAD
-      final result = await sut.fetch().then((v) => v.getOrElse(() => null)!);
-=======
       final matcher = await sut.fetch().then((v) => v.getOrElse(() => null)!);
->>>>>>> Migrate code to nullsafety
       // assert
       expect(result, expected);
     });

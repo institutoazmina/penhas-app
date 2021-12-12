@@ -12,22 +12,12 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-<<<<<<< HEAD
-  late final MockHttpClient mockHttpClient = MockHttpClient();
-  late final MockIApiServerConfigure mockApiServerConfigure =
-      MockIApiServerConfigure();
-  late final EmailAddress emailAddress = EmailAddress('valid@email.com');
-  late final SignInPassword password =
-      SignInPassword('_veryStr0ngP4ssw@rd', PasswordValidator());
-  final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
-=======
   late IAuthenticationDataSource dataSource;
   MockHttpClient? mockHttpClient;
   MockApiServerConfigure? mockApiServerConfigure;
   EmailAddress? emailAddress;
   SignInPassword? password;
   Uri? serverEndpoint;
->>>>>>> Migrate code to nullsafety
 
   late final IAuthenticationDataSource dataSource = AuthenticationDataSource(
     apiClient: mockHttpClient,
@@ -36,15 +26,9 @@ void main() {
 
   setUp(() {
     // MockApiServerConfigure configuration
-<<<<<<< HEAD
-    when(mockApiServerConfigure.baseUri).thenAnswer((_) => serverEndpoint);
-    when(mockApiServerConfigure.userAgent)
-        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
-=======
     when(mockApiServerConfigure!.baseUri).thenAnswer(((_) => serverEndpoint!) as Uri Function(Invocation));
     when(mockApiServerConfigure!.userAgent)
         .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
->>>>>>> Migrate code to nullsafety
   });
 
   Future<Map<String, String>> setUpHttpHeader() async {

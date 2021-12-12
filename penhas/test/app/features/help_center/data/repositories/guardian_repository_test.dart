@@ -166,14 +166,8 @@ void main() {
             name: 'Maria (PenhaS)',
             status: 'pending',
           );
-<<<<<<< HEAD
-          final expected = right(const ValidField());
-          when(dataSource.delete(any))
-              .thenAnswer((_) async => const ValidField());
-=======
           final expected = right(ValidField());
           when(dataSource!.delete(any)).thenAnswer((_) async => ValidField());
->>>>>>> Migrate code to nullsafety
           // act
           final received = await sut.delete(guardian);
           // assert
@@ -186,21 +180,6 @@ void main() {
           'should get a valid message for valid request',
           () async {
             // arrange
-<<<<<<< HEAD
-            const location = UserLocationEntity(latitude: 1.0, longitude: -1.0);
-            final expected = right(
-              const AlertModel(
-                title: 'Alerta enviado!',
-                message: 'Alerta disparado com sucesso para 1 guardião.',
-              ),
-            );
-            when(dataSource.alert(any)).thenAnswer(
-              (_) async => const AlertModel(
-                title: 'Alerta enviado!',
-                message: 'Alerta disparado com sucesso para 1 guardião.',
-              ),
-            );
-=======
             final location = UserLocationEntity(latitude: 1.0, longitude: -1.0);
             final expected = right(AlertModel(
                 title: "Alerta enviado!",
@@ -209,7 +188,6 @@ void main() {
                   title: "Alerta enviado!",
                   message: "Alerta disparado com sucesso para 1 guardião.",
                 ));
->>>>>>> Migrate code to nullsafety
             // act
             final received = await sut.alert(location);
             // assert

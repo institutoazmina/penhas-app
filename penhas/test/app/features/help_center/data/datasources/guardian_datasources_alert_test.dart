@@ -23,19 +23,11 @@ void main() {
     );
 
     // MockApiServerConfigure configuration
-<<<<<<< HEAD
-    when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
-    when(serverConfigure.apiToken)
-        .thenAnswer((_) => Future.value(sessionToken));
-    when(serverConfigure.userAgent)
-        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
-=======
     when(serverConfigure!.baseUri).thenAnswer(((_) => serverEndpoint!) as Uri Function(Invocation));
     when(serverConfigure!.apiToken)
         .thenAnswer((_) => Future.value(SESSSION_TOKEN));
     when(serverConfigure!.userAgent)
         .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
->>>>>>> Migrate code to nullsafety
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
@@ -57,21 +49,11 @@ void main() {
   }
 
   PostExpectation<Future<http.Response>> _mockPostRequest() {
-<<<<<<< HEAD
-    return when(
-      apiClient.post(
-        any,
-        headers: anyNamed('headers'),
-        body: anyNamed('body'),
-      ),
-    );
-=======
     return when(apiClient!.post(
       any,
       headers: anyNamed('headers'),
       body: anyNamed('body'),
     ));
->>>>>>> Migrate code to nullsafety
   }
 
   void _setUpMockPostHttpClientSuccess200(String? bodyContent) {
@@ -119,13 +101,8 @@ void main() {
             const endPointPath = '/me/guardioes/alert';
             final headers = await _setUpHttpHeader();
             final request = _setuHttpRequest(endPointPath, {
-<<<<<<< HEAD
-              'gps_lat': '${userLocation!.latitude}',
-              'gps_long': '${userLocation!.longitude}'
-=======
               'gps_lat': "${userLocation!.latitude}",
               'gps_long': "${userLocation!.longitude}"
->>>>>>> Migrate code to nullsafety
             });
             _setUpMockPostHttpClientSuccess200(bodyContent);
             // act

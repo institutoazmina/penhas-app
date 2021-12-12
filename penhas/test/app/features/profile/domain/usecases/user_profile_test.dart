@@ -31,17 +31,10 @@ void main() {
   group('UserProfile', () {
     test('should enable stealth mode', () async {
       // arrange
-<<<<<<< HEAD
-      final actual = right(const ValidField());
-      when(repository.stealthMode(toggle: anyNamed('toggle')))
-          .thenAnswer((_) async => right(const ValidField()));
-
-=======
       final actual = right(ValidField());
       when(repository!.stealthMode(toggle: anyNamed('toggle')))
           .thenAnswer((_) async => right(ValidField()));
       when(appStateUseCase!.check()).thenAnswer(((_) => null) as Future<Either<Failure, AppStateEntity>> Function(Invocation));
->>>>>>> Migrate code to nullsafety
       // act
       final expected = await sut.stealthMode(toggle: true);
       // assert
@@ -52,15 +45,9 @@ void main() {
 
     test('should disable stealth mode', () async {
       // arrange
-<<<<<<< HEAD
-      final actual = right(const ValidField());
-      when(repository.stealthMode(toggle: anyNamed('toggle')))
-          .thenAnswer((_) async => right(const ValidField()));
-=======
       final actual = right(ValidField());
       when(repository!.stealthMode(toggle: anyNamed('toggle')))
           .thenAnswer((_) async => right(ValidField()));
->>>>>>> Migrate code to nullsafety
       // act
       final expected = await sut.stealthMode(toggle: false);
       // assert
@@ -70,15 +57,9 @@ void main() {
 
     test('should enable anonymous mode', () async {
       // arrange
-<<<<<<< HEAD
-      final actual = right(const ValidField());
-      when(repository.anonymousMode(toggle: anyNamed('toggle')))
-          .thenAnswer((_) async => right(const ValidField()));
-=======
       final actual = right(ValidField());
       when(repository!.anonymousMode(toggle: anyNamed('toggle')))
           .thenAnswer((_) async => right(ValidField()));
->>>>>>> Migrate code to nullsafety
       // act
       final expected = await sut.anonymousMode(toggle: true);
       // assert
@@ -88,17 +69,10 @@ void main() {
 
     test('should disable anonymous mode', () async {
       // arrange
-<<<<<<< HEAD
-      final actual = right(const ValidField());
-      when(repository.anonymousMode(toggle: anyNamed('toggle')))
-          .thenAnswer((_) async => right(const ValidField()));
-
-=======
       final actual = right(ValidField());
       when(repository!.anonymousMode(toggle: anyNamed('toggle')))
           .thenAnswer((_) async => right(ValidField()));
       when(appStateUseCase!.check()).thenAnswer(((_) => null) as Future<Either<Failure, AppStateEntity>> Function(Invocation));
->>>>>>> Migrate code to nullsafety
       // act
       final expected = await sut.anonymousMode(toggle: false);
       // assert

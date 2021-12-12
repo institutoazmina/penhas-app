@@ -16,15 +16,9 @@ import '../../../../../utils/json_util.dart';
 
 void main() {
   late ITweetRepository repository;
-<<<<<<< HEAD
-  late final MockINetworkInfo networkInfo = MockINetworkInfo();
-  late final MockITweetDataSource dataSource = MockITweetDataSource();
-  Map<String, dynamic> jsonSession;
-=======
   INetworkInfo networkInfo;
   ITweetDataSource? dataSource;
   Map<String, Object> jsonSession;
->>>>>>> Migrate code to nullsafety
 
   setUp(() {
     repository =
@@ -83,15 +77,9 @@ void main() {
       });
     });
     group('delete', () {
-<<<<<<< HEAD
-      setUp(() {
-        when(dataSource.delete(option: anyNamed('option')))
-            .thenAnswer((_) => Future.value(const ValidField()));
-=======
       setUp(() async {
         when(dataSource!.delete(option: anyNamed('option')))
             .thenAnswer((_) => Future.value(ValidField()));
->>>>>>> Migrate code to nullsafety
       });
       test('should detete tweet from a valid session', () async {
         // arrange
@@ -220,15 +208,9 @@ void main() {
     });
 
     group('report()', () {
-<<<<<<< HEAD
-      setUp(() {
-        when(dataSource.report(option: anyNamed('option')))
-            .thenAnswer((_) => Future.value(const ValidField()));
-=======
       setUp(() async {
         when(dataSource!.report(option: anyNamed('option')))
             .thenAnswer((_) => Future.value(ValidField()));
->>>>>>> Migrate code to nullsafety
       });
       test('should report a valid tweet', () async {
         // arrange

@@ -14,24 +14,11 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-<<<<<<< HEAD
-  late final MockIChangePasswordDataSource dataSource =
-      MockIChangePasswordDataSource();
-  late final MockINetworkInfo networkInfo = MockINetworkInfo();
-
-  late final ChangePasswordRepository sut = ChangePasswordRepository(
-    changePasswordDataSource: dataSource,
-    networkInfo: networkInfo,
-  );
-  late EmailAddress emailAddress;
-  late SignUpPassword password;
-=======
   IChangePasswordDataSource? dataSource;
   INetworkInfo? networkInfo;
   late ChangePasswordRepository sut;
   EmailAddress? emailAddress;
   SignUpPassword? password;
->>>>>>> Migrate code to nullsafety
   String? resetToken;
 
   setUp(() {
@@ -41,12 +28,7 @@ void main() {
   });
 
   PostExpectation<dynamic> mockResetDataSource() {
-<<<<<<< HEAD
-    return when(
-      dataSource.reset(
-=======
     return when(dataSource!.reset(
->>>>>>> Migrate code to nullsafety
         emailAddress: anyNamed('emailAddress'),
         password: anyNamed('password'),
         resetToken: anyNamed('resetToken'),
@@ -94,23 +76,12 @@ void main() {
         // assert
         expect(
           result,
-<<<<<<< HEAD
-          left(
-            ServerSideFormFieldValidationFailure(
-              error: bodyContent['error'] as String?,
-              field: bodyContent['field'] as String?,
-              message: bodyContent['message'] as String?,
-              reason: bodyContent['reason'] as String?,
-            ),
-          ),
-=======
           left(ServerSideFormFieldValidationFailure(
             error: bodyContent['error'] as String?,
             field: bodyContent['field'] as String?,
             message: bodyContent['message'] as String?,
             reason: bodyContent['reason'] as String?,
           )),
->>>>>>> Migrate code to nullsafety
         );
       });
     });
@@ -129,23 +100,12 @@ void main() {
         // assert
         expect(
           result,
-<<<<<<< HEAD
-          right(
-            PasswordResetResponseModel(
-              message: bodyContent['message'] as String?,
-              digits: bodyContent['digits'] as int?,
-              ttl: bodyContent['ttl'] as int?,
-              ttlRetry: bodyContent['min_ttl_retry'] as int?,
-            ),
-          ),
-=======
           right(PasswordResetResponseModel(
             message: bodyContent['message'] as String?,
             digits: bodyContent['digits'] as int?,
             ttl: bodyContent['ttl'] as int?,
             ttlRetry: bodyContent['min_ttl_retry'] as int?,
           )),
->>>>>>> Migrate code to nullsafety
         );
       });
       test(
@@ -163,23 +123,12 @@ void main() {
         // assert
         expect(
           result,
-<<<<<<< HEAD
-          left(
-            ServerSideFormFieldValidationFailure(
-              error: bodyContent['error'] as String?,
-              field: bodyContent['field'] as String?,
-              message: bodyContent['message'] as String?,
-              reason: bodyContent['reason'] as String?,
-            ),
-          ),
-=======
           left(ServerSideFormFieldValidationFailure(
             error: bodyContent['error'] as String?,
             field: bodyContent['field'] as String?,
             message: bodyContent['message'] as String?,
             reason: bodyContent['reason'] as String?,
           )),
->>>>>>> Migrate code to nullsafety
         );
       });
     });

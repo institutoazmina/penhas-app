@@ -18,15 +18,8 @@ import 'package:penhas/app/features/authentication/domain/usecases/sign_up_passw
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-<<<<<<< HEAD
-  late final MockIUserRegisterRepository repository =
-      MockIUserRegisterRepository();
-  late CheckRegisterField sut = CheckRegisterField(repository);
-
-=======
   late CheckRegisterField sut;
   MockRegisterRepository? repository;
->>>>>>> Migrate code to nullsafety
   Cep? cep;
   Cpf? cpf;
   EmailAddress? emailAddress;
@@ -65,41 +58,6 @@ void main() {
   }
 
   void mockRepositoryRegister(Either<Failure, ValidField> answer) {
-<<<<<<< HEAD
-    when(
-      repository.checkField(
-        emailAddress: anyNamed('emailAddress'),
-        password: anyNamed('password'),
-        cep: anyNamed('cep'),
-        cpf: anyNamed('cpf'),
-        fullname: anyNamed('fullname'),
-        nickName: anyNamed('nickName'),
-        birthday: anyNamed('birthday'),
-        genre: anyNamed('genre'),
-        race: anyNamed('race'),
-      ),
-    ).thenAnswer((_) async => answer);
-  }
-
-  void expectResult(
-    Either<Failure, ValidField>? result,
-    Either<Failure, ValidField> expected,
-  ) {
-    expect(result, expected);
-    verify(
-      repository.checkField(
-        emailAddress: emailAddress,
-        password: password,
-        cep: cep,
-        cpf: cpf,
-        fullname: fullname,
-        nickName: nickName,
-        birthday: birthday,
-        genre: genre,
-        race: race,
-      ),
-    );
-=======
     when(repository!.checkField(
       emailAddress: anyNamed('emailAddress'),
       password: anyNamed('password'),
@@ -127,7 +85,6 @@ void main() {
       genre: genre,
       race: race,
     ));
->>>>>>> Migrate code to nullsafety
     verifyNoMoreInteractions(repository);
   }
 
@@ -136,11 +93,7 @@ void main() {
       // arrange
       mockRepositoryRegister(left(RequiredParameter()));
       // act
-<<<<<<< HEAD
-      final Either<Failure, ValidField> result = await sut();
-=======
       final Either<Failure, ValidField>? result = await sut();
->>>>>>> Migrate code to nullsafety
       // assert
       expect(result, left(RequiredParameter()));
       verifyZeroInteractions(repository);

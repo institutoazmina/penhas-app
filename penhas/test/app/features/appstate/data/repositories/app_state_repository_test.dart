@@ -13,21 +13,10 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-<<<<<<< HEAD
-  late final INetworkInfo networkInfo = MockINetworkInfo();
-  late final MockIAppStateDataSource dataSource = MockIAppStateDataSource();
-  late Map<String, dynamic> jsonData;
-
-  late final IAppStateRepository sut = AppStateRepository(
-    dataSource: dataSource,
-    networkInfo: networkInfo,
-  );
-=======
   late IAppStateRepository sut;
   INetworkInfo networkInfo;
   late Map<String, Object> jsonData;
   IAppStateDataSource? dataSource;
->>>>>>> Migrate code to nullsafety
 
   setUp(() async {
     when(networkInfo.isConnected).thenAnswer((_) => Future.value(true));
@@ -50,11 +39,7 @@ void main() {
     test('should return ServerSideSessionFailed for a invalid session',
         () async {
       // arrange
-<<<<<<< HEAD
-      when(dataSource.check()).thenThrow(ApiProviderSessionError());
-=======
       when(dataSource!.check()).thenThrow(ApiProviderSessionExpection());
->>>>>>> Migrate code to nullsafety
       final expected = left(ServerSideSessionFailed());
       // act
       final received = await sut.check();
@@ -64,21 +49,11 @@ void main() {
 
     test('should return ServerSideSessionFailed for a invalid JWT', () async {
       // arrange
-<<<<<<< HEAD
-      when(dataSource.check()).thenThrow(
-        const ApiProviderException(
-          bodyContent: {
-            'error': 'expired_jwt',
-            'nessage': 'Bad request - Invalid JWT'
-          },
-        ),
-=======
       when(dataSource!.check()).thenThrow(
         ApiProviderException(bodyContent: {
           "error": "expired_jwt",
           "nessage": "Bad request - Invalid JWT"
         }),
->>>>>>> Migrate code to nullsafety
       );
       final expected = left(ServerSideSessionFailed());
       // act

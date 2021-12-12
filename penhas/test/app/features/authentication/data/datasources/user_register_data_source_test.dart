@@ -20,17 +20,9 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-<<<<<<< HEAD
-  late final MockHttpClient apiclient = MockHttpClient();
-  late final MockIApiServerConfigure serverConfiguration =
-      MockIApiServerConfigure();
-
-  final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
-=======
   MockHttpClient? apiclient;
   MockApiServerConfigure? serverConfiguration;
   Uri? serverEndpoint;
->>>>>>> Migrate code to nullsafety
   Cep? cep;
   Cpf? cpf;
   EmailAddress? emailAddress;
@@ -59,15 +51,9 @@ void main() {
     );
 
     // MockApiServerConfigure configuration
-<<<<<<< HEAD
-    when(serverConfiguration.baseUri).thenAnswer((_) => serverEndpoint);
-    when(serverConfiguration.userAgent)
-        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
-=======
     when(serverConfiguration!.baseUri).thenAnswer(((_) => serverEndpoint!) as Uri Function(Invocation));
     when(serverConfiguration!.userAgent)
         .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
->>>>>>> Migrate code to nullsafety
   });
 
   Future<Map<String, String>> setupHttpHeader() async {
@@ -78,16 +64,9 @@ void main() {
     };
   }
 
-<<<<<<< HEAD
-  Future<Map<String, dynamic>> setupQueryParameters({
-    required bool justValidadeField,
-  }) async {
-    final userAgent = await serverConfiguration.userAgent;
-=======
   Future<Map<String, dynamic>> setupQueryParameters(
       {required bool justValidadeField}) async {
     final userAgent = await serverConfiguration!.userAgent;
->>>>>>> Migrate code to nullsafety
     final Map<String, String?> queryParameters = {
       'app_version': userAgent,
       'dry': justValidadeField ? '1' : '0',
@@ -98,13 +77,8 @@ void main() {
       'nome_completo': justValidadeField ? null : fullname!.rawValue,
       'apelido': justValidadeField ? null : nickName!.rawValue,
       'dt_nasc': justValidadeField ? null : birthday!.rawValue,
-<<<<<<< HEAD
-      'genero': justValidadeField ? null : genre?.rawValue,
-      'raca': justValidadeField ? null : race?.rawValue
-=======
       'genero': justValidadeField ? null : genre.rawValue,
       'raca': justValidadeField ? null : race.rawValue
->>>>>>> Migrate code to nullsafety
     };
     queryParameters.removeWhere((k, v) => v == null);
     return queryParameters;
@@ -128,14 +102,8 @@ void main() {
 
   void setupHttpClientError400() {
     final bodyContent = JsonUtil.getStringSync(
-<<<<<<< HEAD
-      from: 'authentication/registration_email_already_exists.json',
-    );
-    when(apiclient.post(any, headers: anyNamed('headers')))
-=======
         from: 'authentication/registration_email_already_exists.json');
     when(apiclient!.post(any, headers: anyNamed('headers')))
->>>>>>> Migrate code to nullsafety
         .thenAnswer((_) async => http.Response(bodyContent, 400));
   }
 
@@ -254,22 +222,7 @@ void main() {
         );
         setupHttpClientError400();
         // act
-<<<<<<< HEAD
-        final Future<ValidField> Function({
-          Birthday birthday,
-          Cep cep,
-          Cpf? cpf,
-          EmailAddress? emailAddress,
-          Fullname fullname,
-          Genre genre,
-          Nickname nickName,
-          SignUpPassword password,
-          HumanRace race,
-          Fullname socialName,
-        }) sut = dataSource.checkField;
-=======
         final Future<ValidField> Function({Birthday birthday, Cep cep, Cpf? cpf, EmailAddress? emailAddress, Fullname fullname, Genre genre, Nickname nickName, SignUpPassword password, HumanRace race, Fullname socialName}) sut = dataSource.checkField;
->>>>>>> Migrate code to nullsafety
         // assert
         expect(
           () => sut(emailAddress: emailAddress, cpf: cpf),

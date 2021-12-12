@@ -8,11 +8,6 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-<<<<<<< HEAD
-  late final MockIApiProvider apiProvider = MockIApiProvider();
-  late final IChatChannelRepository sut =
-      ChatChannelRepository(apiProvider: apiProvider);
-=======
   IApiProvider? apiProvider;
   late IChatChannelRepository sut;
 
@@ -20,7 +15,6 @@ void main() {
     apiProvider = MockApiProvider();
     sut = ChatChannelRepository(apiProvider: apiProvider);
   });
->>>>>>> Migrate code to nullsafety
 
   group('ChatChannel', () {
     test('should list empty open channel', () async {

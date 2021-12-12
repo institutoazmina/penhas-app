@@ -9,13 +9,6 @@ import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.d
 import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
-<<<<<<< HEAD
-void main() {
-  late final MockIAppStateRepository appStateRepository = MockIAppStateRepository();
-  late final MockIAppConfiguration appConfiguration = MockIAppConfiguration();
-  late final MockUserProfileStore profileStore = MockUserProfileStore();
-  late final MockIAppModulesServices appModulesServices = MockIAppModulesServices();
-=======
 class MockAppStateRepository extends Mock implements IAppStateRepository {}
 
 class MockUserProfileStore extends Mock implements LocalStore<UserProfileEntity?> {}
@@ -36,7 +29,6 @@ void main() {
     appConfiguration = MockAppConfiguration();
     appStateRepository = MockAppStateRepository();
     appModulesServices = MockAppModulesServices();
->>>>>>> Migrate code to nullsafety
 
   late final AppStateUseCase sut = AppStateUseCase(
     userProfileStore: profileStore,

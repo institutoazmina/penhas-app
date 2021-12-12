@@ -47,7 +47,9 @@ class AppConfiguration implements IAppConfiguration {
   }
 
   @override
-  Uri get penhasServer => Uri.parse('https://***REMOVED***/');
+  // Uri get penhasServer => Uri.parse('https://***REMOVED***/');
+  // Uri get penhasServer => Uri.parse('http://10.0.2.2:9000/');
+  Uri get penhasServer => Uri.parse('https://***REMOVED***');
 
   @override
   Future<void> saveApiToken({required String? token}) async {

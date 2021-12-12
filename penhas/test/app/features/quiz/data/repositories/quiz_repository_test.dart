@@ -45,13 +45,8 @@ void main() {
     test('should return ServerSideSessionFailed for a invalid session',
         () async {
       // arrange
-<<<<<<< HEAD
-      when(dataSource.update(quiz: anyNamed('quiz')))
-          .thenThrow(ApiProviderSessionError());
-=======
       when(dataSource!.update(quiz: anyNamed('quiz')))
           .thenThrow(ApiProviderSessionExpection());
->>>>>>> Migrate code to nullsafety
       final expected = left(ServerSideSessionFailed());
       // act
       final received = await quizRepository.update(quiz: quizRequest);
@@ -61,21 +56,11 @@ void main() {
 
     test('should return ServerSideSessionFailed for a invalid JWT', () async {
       // arrange
-<<<<<<< HEAD
-      when(dataSource.update(quiz: anyNamed('quiz'))).thenThrow(
-        const ApiProviderException(
-          bodyContent: {
-            'error': 'expired_jwt',
-            'nessage': 'Bad request - Invalid JWT'
-          },
-        ),
-=======
       when(dataSource!.update(quiz: anyNamed('quiz'))).thenThrow(
         ApiProviderException(bodyContent: {
           "error": "expired_jwt",
           "nessage": "Bad request - Invalid JWT"
         }),
->>>>>>> Migrate code to nullsafety
       );
       final expected = left(ServerSideSessionFailed());
       // act

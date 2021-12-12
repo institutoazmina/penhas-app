@@ -9,18 +9,10 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-<<<<<<< HEAD
-  late final MockINetworkInfo networkInfo = MockINetworkInfo();
-  late final MockITweetFilterPreferenceDataSource dataSource =
-      MockITweetFilterPreferenceDataSource();
-  late ITweetFilterPreferenceRepository sut;
-  Map<String, dynamic> jsonSession;
-=======
   INetworkInfo networkInfo;
   late ITweetFilterPreferenceRepository sut;
   ITweetFilterPreferenceDataSource? dataSource;
   Map<String, Object> jsonSession;
->>>>>>> Migrate code to nullsafety
 
   setUp(() {
     sut = TweetFilterPreferenceRepository(

@@ -22,11 +22,7 @@ void main() {
       // arrange
       final jsonData =
           await JsonUtil.getJson(from: 'profile/about_with_quiz_session.json');
-<<<<<<< HEAD
-      final Map<String, dynamic> userProfileData = jsonData['user_profile'];
-=======
       final Map<String, Object> userProfileData = jsonData['user_profile'] as Map<String, Object>;
->>>>>>> Migrate code to nullsafety
       final expected = UserProfileModel(
         email: userProfileData['email'] as String?,
         nickname: userProfileData['apelido'] as String?,
@@ -40,10 +36,7 @@ void main() {
         jaFoiVitimaDeViolencia:
             userProfileData['ja_foi_vitima_de_violencia'] == 1,
         minibio: userProfileData['minibio'] as String?,
-<<<<<<< HEAD
-=======
         skill: null,
->>>>>>> Migrate code to nullsafety
       );
       // act
       final received = UserProfileModel.fromJson(userProfileData);
@@ -55,11 +48,7 @@ void main() {
       // arrange
       final jsonData =
           await JsonUtil.getJson(from: 'profile/about_with_quiz_session.json');
-<<<<<<< HEAD
-      final Map<String, dynamic> userProfileData = jsonData['user_profile'];
-=======
       final Map<String, Object> userProfileData = jsonData['user_profile'] as Map<String, Object>;
->>>>>>> Migrate code to nullsafety
       final Map<String, Object?> expected = {
         'email': userProfileData['email'],
         'apelido': userProfileData['apelido'],
@@ -87,10 +76,7 @@ void main() {
         jaFoiVitimaDeViolencia:
             userProfileData['ja_foi_vitima_de_violencia'] == 1,
         minibio: userProfileData['minibio'] as String?,
-<<<<<<< HEAD
-=======
         skill: null,
->>>>>>> Migrate code to nullsafety
       );
       // act
       final received = userModel.toJson();
