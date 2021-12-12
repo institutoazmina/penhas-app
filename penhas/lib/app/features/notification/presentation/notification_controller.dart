@@ -1,10 +1,7 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
-<<<<<<< HEAD
-=======
 import 'package:flutter/material.dart';
->>>>>>> Fix code syntax
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';

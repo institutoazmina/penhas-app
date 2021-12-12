@@ -108,23 +108,6 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
           key: _refreshIndicatorKey,
           onRefresh: () async => controller.loadPage(),
           child: ListView.builder(
-<<<<<<< HEAD
-            itemCount: tiles.length,
-            itemBuilder: (context, index) {
-              final audio = tiles[index];
-              final isPlaying = audio.audio == _playingAudio;
-              final backgroundColor = _selectingAudioMenu == audio.audio
-                  ? DesignSystemColors.blueyGrey
-                  : Colors.transparent;
-
-              return AudioPlayWidget(
-                audioPlay: tiles[index],
-                isPlaying: isPlaying,
-                backgroundColor: backgroundColor,
-              );
-            },
-          ),
-=======
               itemCount: tiles.length,
               itemBuilder: (context, index) {
                 final audio = tiles[index];
@@ -138,7 +121,6 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
                     isPlaying: isPlaying,
                     backgroundColor: backgroundColor);
               }),
->>>>>>> Fix code syntax
         ),
       ),
     );
@@ -202,13 +184,8 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
     if (message == null || message.isEmpty) return;
 
     Modular.to.showDialog(
-<<<<<<< HEAD
-      builder: (context) => AlertDialog(
-        title: const Text('Informação', style: kTextStyleAlertDialogTitle),
-=======
       builder: (_) => AlertDialog(
         title: Text('Informação', style: kTextStyleAlertDialogTitle),
->>>>>>> Fix code syntax
         content: Text(
           message,
           style: kTextStyleAlertDialogDescription,
@@ -228,11 +205,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
     );
   }
 
-<<<<<<< HEAD
-  Future<void> _actionSheet(AudioEntity audio) async {
-=======
   void _actionSheet(AudioEntity audio) async {
->>>>>>> Fix code syntax
     final BuildContext _context = _scaffoldKey.currentContext!;
     await showModalBottomSheet(
       context: _context,

@@ -70,14 +70,8 @@ class _QuizPageState extends ModularState<QuizPage, QuizController> {
             Observer(
               builder: (_) {
                 return QuizUserReplayWidget(
-<<<<<<< HEAD
-                  message: controller.userReplyMessage!,
-                  onActionReplay: controller.onActionReply,
-                );
-=======
                     message: controller.userReplyMessage!,
                     onActionReplay: controller.onActionReply);
->>>>>>> Fix code syntax
               },
             )
           ],

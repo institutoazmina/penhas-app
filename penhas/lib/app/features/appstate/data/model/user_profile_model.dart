@@ -59,11 +59,7 @@ class UserProfileModel extends UserProfileEntity {
         'minibio': minibio,
         'raca': race,
         'genero': genre,
-<<<<<<< HEAD
-        'ja_foi_vitima_de_violencia': jaFoiVitimaDeViolencia ? 1 : 0,
-=======
         'ja_foi_vitima_de_violencia': jaFoiVitimaDeViolencia ?? false ? 1 : 0,
->>>>>>> Fix code syntax
         'skills': skill
       };
 }

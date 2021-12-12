@@ -152,19 +152,12 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
   }
 
   void handleSession(
-<<<<<<< HEAD
-    ChatChannelSessionEntity session, {
-    required bool insertWarrningMessage,
-  }) {
-    final List<ChatChannelMessage> messages = [];
-=======
     ChatChannelSessionEntity session,
     bool insertWarrningMessage,
   ) {
     _newestPagination = session.newer;
     _oldestPagination = session.older;
     List<ChatChannelMessage> messages = List.empty();
->>>>>>> Fix code syntax
 
     if (_currentSession?.user != session.user) {
       _streamController.add(ChatChannelUseCaseEvent.updateUser(session.user!));

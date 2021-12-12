@@ -64,17 +64,10 @@ class SignInModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-<<<<<<< HEAD
-        ChildRoute(Modular.initialRoute, child: (_, args) => const SignInPage()),
-        ChildRoute('/signup',
-            child: (_, args) => const SignUpPage(),
-            transition: TransitionType.rightToLeft,),
-=======
         ChildRoute(Modular.initialRoute, child: (_, args) => SignInPage()),
         ChildRoute('/signup',
             child: (_, args) => SignUpPage(),
             transition: TransitionType.rightToLeft),
->>>>>>> Fix code syntax
         ChildRoute(
           '/signup/step2',
           child: (_, args) => const SignUpTwoPage(),
@@ -161,13 +154,8 @@ class SignInModule extends Module {
 
   List<Bind> get _signUp => [
         // Sign-Up
-<<<<<<< HEAD
-        Bind.factory((i) => SignUpController(i.get<IUserRegisterRepository>())),
-        Bind.factory(
-=======
         Bind((i) => SignUpController(i.get<IUserRegisterRepository>())),
         Bind(
->>>>>>> Fix code syntax
           (i) => SignUpTwoController(
             i.get<IUserRegisterRepository>(),
             i.args?.data,
@@ -223,11 +211,7 @@ class SignInModule extends Module {
               audioServices: i.get<IAudioRecordServices>(),
               featureToogle: i.get<SecurityModeActionFeature>(),
               locationService: i.get<ILocationServices>(),
-<<<<<<< HEAD
-              guardianRepository: i.get<IGuardianRepository>(),),
-=======
               guardianRepository: i.get<IGuardianRepository>()),
->>>>>>> Fix code syntax
         ),
         Bind.factory<SecurityModeActionFeature>(
           (i) => SecurityModeActionFeature(

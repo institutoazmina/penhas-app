@@ -24,13 +24,10 @@ class ChatMainPeopleController extends _ChatMainPeopleControllerBase
 }
 
 abstract class _ChatMainPeopleControllerBase with Store, MapFailureMessage {
-<<<<<<< HEAD
-=======
   List<FilterTagEntity> _tags = List.empty();
   final IUsersRepository _usersRepository;
   final IFilterSkillRepository _skillRepository;
 
->>>>>>> Fix code syntax
   _ChatMainPeopleControllerBase(
     this._usersRepository,
     this._skillRepository,
@@ -94,11 +91,7 @@ extension _ChatMainPeopleControllerBasePrivate
   }
 
   void handleLoadSession(UserSearchSessionEntity session) {
-<<<<<<< HEAD
-    final List<ChatMainTileEntity> tiles = [];
-=======
     List<ChatMainTileEntity> tiles = List.empty();
->>>>>>> Fix code syntax
 
     tiles.add(ChatMainPeopleFilterCardTile(_tags.length));
 

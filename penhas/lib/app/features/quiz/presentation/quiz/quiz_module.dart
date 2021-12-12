@@ -36,11 +36,7 @@ class QuizModule extends Module {
         Bind.factory<ILocationServices>(
           (i) => LocationServices(),
                   ),
-<<<<<<< HEAD
-        Bind.factory<StealthModeTutorialPageController>(
-=======
         Bind<StealthModeTutorialPageController>(
->>>>>>> Fix code syntax
           (i) => StealthModeTutorialPageController(
               locationService: i.get<ILocationServices>(),),
         ),
@@ -48,10 +44,6 @@ class QuizModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-<<<<<<< HEAD
-        ChildRoute(Modular.initialRoute, child: (_, args) => const QuizPage()),
-=======
         ChildRoute(Modular.initialRoute, child: (_, args) => QuizPage()),
->>>>>>> Fix code syntax
       ];
 }

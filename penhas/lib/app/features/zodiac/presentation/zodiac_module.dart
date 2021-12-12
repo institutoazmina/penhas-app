@@ -25,59 +25,34 @@ class ZodiacModule extends WidgetModule {
             securityAction: i.get<StealthSecurityAction>(),
           ),
                   ),
-<<<<<<< HEAD
-        Bind.factory(
-=======
         Bind(
->>>>>>> Fix code syntax
           (i) => StealthSecurityAction(
               audioServices: i.get<IAudioRecordServices>(),
               featureToogle: i.get<SecurityModeActionFeature>(),
               locationService: i.get<ILocationServices>(),
-<<<<<<< HEAD
-              guardianRepository: i.get<IGuardianRepository>(),),
-                  ),
-        Bind.factory<SecurityModeActionFeature>(
-=======
               guardianRepository: i.get<IGuardianRepository>()),
                   ),
         Bind<SecurityModeActionFeature>(
->>>>>>> Fix code syntax
           (i) => SecurityModeActionFeature(
             modulesServices: i.get<IAppModulesServices>(),
           ),
                   ),
-<<<<<<< HEAD
-        Bind.factory<IGuardianRepository>(
-=======
         Bind<IGuardianRepository>(
->>>>>>> Fix code syntax
           (i) => GuardianRepository(
             dataSource: i.get<IGuardianDataSource>(),
             networkInfo: i.get<INetworkInfo>(),
           ),
                   ),
-<<<<<<< HEAD
-        Bind.factory<ILocationServices>(
-          (i) => LocationServices(),
-                  ),
-        Bind.factory<IGuardianDataSource>(
-=======
         Bind<ILocationServices>(
           (i) => LocationServices(),
                   ),
         Bind<IGuardianDataSource>(
->>>>>>> Fix code syntax
           (i) => GuardianDataSource(
             apiClient: i.get<http.Client>(),
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
                   ),
-<<<<<<< HEAD
-        Bind.factory<IAudioRecordServices>(
-=======
         Bind<IAudioRecordServices>(
->>>>>>> Fix code syntax
           (i) => AudioRecordServices(
             audioSyncManager: i.get<IAudioSyncManager>(),
           ),

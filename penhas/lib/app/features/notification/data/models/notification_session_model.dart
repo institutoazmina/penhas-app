@@ -12,15 +12,9 @@ class NotificationSessionModel extends NotificationSessionEntity {
         );
 
   factory NotificationSessionModel.fromJson(Map<String, dynamic> jsonData) {
-<<<<<<< HEAD
-    final hasMore = jsonData['has_more'] == 1;
-    final nextPage = jsonData['next_page'];
-    final List jsonRows = jsonData['rows'];
-=======
     final hasMore = jsonData["has_more"] == 1;
     final nextPage = jsonData["next_page"];
     final List jsonRows = jsonData["rows"];
->>>>>>> Fix code syntax
     final notifications = jsonRows
         .map((e) => _Parse.fromJson(e))
         .toList();

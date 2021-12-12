@@ -78,7 +78,7 @@ import 'package:penhas/app/features/support_center/presentation/list/support_cen
 import 'package:penhas/app/features/support_center/presentation/location/support_center_location_page.dart';
 import 'package:penhas/app/features/support_center/presentation/show/support_center_show_page.dart';
 import 'package:penhas/app/features/users/data/repositories/users_repository.dart';
-import 'package:penhas/app/features/users/presentation/user_profile_module.dart';
+import 'package:penhas/app/features/users/domain/presentation/user_profile_module.dart';
 
 class MainboardModule extends Module {
   @override
@@ -91,23 +91,14 @@ class MainboardModule extends Module {
         ...notificationBinds,
         ...menuBind,
         ...chatBinds,
-        Bind.factory<MainboardStore>(
+        Bind<MainboardStore>(
           (i) => MainboardStore(
-<<<<<<< HEAD
-            modulesServices: i.get<IAppModulesServices>(),
-            initialPage: i.args?.data is Map
-                // ignore: avoid_dynamic_calls
-                ? MainboardState.fromString(i.args?.data['page'])
-                : const MainboardState.feed(),
-          ),
-=======
               modulesServices: i.get<IAppModulesServices>(),
-              initialPage: i.args.data == null
+              initialPage: i.args?.data == null
                   ? MainboardState.feed()
-                  : MainboardState.fromString(i.args.data["page"])),
->>>>>>> Fix code syntax
+                  : MainboardState.fromString(i.args?.data["page"])),
         ),
-        Bind.factory(
+        Bind(
           (i) => MainboardController(
             mainboardStore: i.get<MainboardStore>(),
             inactivityLogoutUseCase: i.get<InactivityLogoutUseCase>(),
@@ -115,17 +106,15 @@ class MainboardModule extends Module {
             notification: i.get<INotificationRepository>(),
           ),
         ),
-        Bind.lazySingleton(
+        Bind(
           (i) => FeedUseCases(
             repository: i.get<ITweetRepository>(),
             filterPreference: i.get<TweetFilterPreference>(),
+            maxRows: 100,
           ),
-<<<<<<< HEAD
-=======
           isSingleton: true,
->>>>>>> Fix code syntax
         ),
-        Bind.factory<IFilterSkillRepository>(
+        Bind<IFilterSkillRepository>(
           (i) => FilterSkillRepository(
             apiProvider: i.get<IApiProvider>(),
           ),
@@ -134,14 +123,7 @@ class MainboardModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-<<<<<<< HEAD
-        ChildRoute(
-          Modular.initialRoute,
-          child: (_, args) => const MainboardPage(),
-        ),
-=======
         ChildRoute(Modular.initialRoute, child: (_, args) => MainboardPage()),
->>>>>>> Fix code syntax
         ...tweetRoutes,
         ...helpCenter,
         ...supportCenter,
@@ -155,7 +137,7 @@ class MainboardModule extends Module {
   List<ModularRoute> get tweetRoutes => [
         ChildRoute(
           '/reply',
-          child: (_, args) => const ReplyTweetPage(),
+          child: (_, args) => ReplyTweetPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
@@ -167,17 +149,17 @@ class MainboardModule extends Module {
         ),
         ChildRoute(
           '/category',
-          child: (context, args) => const CategoryTweetPage(),
+          child: (context, args) => CategoryTweetPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/tags',
-          child: (context, args) => const FilterTweetPage(),
+          child: (context, args) => FilterTweetPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/tweet/perfil_chat',
-          child: (context, args) => const FeedRoutingPerfilChatPage(),
+          child: (context, args) => FeedRoutingPerfilChatPage(),
           transition: TransitionType.rightToLeft,
         ),
       ];
@@ -185,22 +167,22 @@ class MainboardModule extends Module {
   List<ModularRoute> get helpCenter => [
         ChildRoute(
           '/helpcenter/newGuardian',
-          child: (context, args) => const NewGuardianPage(),
+          child: (context, args) => NewGuardianPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/helpcenter/guardians',
-          child: (context, args) => const GuardiansPage(),
+          child: (context, args) => GuardiansPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/helpcenter/audios',
-          child: (context, args) => const AudiosPage(),
+          child: (context, args) => AudiosPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/helpcenter/audioRecord',
-          child: (context, args) => const AudioRecordPage(),
+          child: (context, args) => AudioRecordPage(),
           transition: TransitionType.rightToLeft,
         )
       ];
@@ -208,22 +190,22 @@ class MainboardModule extends Module {
   List<ModularRoute> get supportCenter => [
         ChildRoute(
           '/supportcenter/add',
-          child: (context, args) => const SupportCenterAddPage(),
+          child: (context, args) => SupportCenterAddPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/supportcenter/list',
-          child: (context, args) => const SupportCenterListPage(),
+          child: (context, args) => SupportCenterListPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/supportcenter/location',
-          child: (context, args) => const SupportCenterLocationPage(),
+          child: (context, args) => SupportCenterLocationPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/supportcenter/show',
-          child: (context, args) => const SupportCenterShowPage(),
+          child: (context, args) => SupportCenterShowPage(),
           transition: TransitionType.rightToLeft,
         )
       ];
@@ -231,18 +213,18 @@ class MainboardModule extends Module {
   List<ModularRoute> get notificationCenter => [
         ChildRoute(
           '/notification',
-          child: (context, args) => const NotificationPage(),
+          child: (context, args) => NotificationPage(),
           transition: TransitionType.rightToLeft,
         ),
       ];
 
   List<Bind> get notificationBinds => [
-        Bind.factory<INotificationRepository>(
+        Bind<INotificationRepository>(
           (i) => NotificationRepository(
             apiProvider: i.get<IApiProvider>(),
           ),
         ),
-        Bind.factory(
+        Bind(
           (i) => NotificationController(
             notificationRepository: i.get<INotificationRepository>(),
           ),
@@ -252,22 +234,22 @@ class MainboardModule extends Module {
   List<ModularRoute> get menuRouters => [
         ChildRoute(
           '/menu/about',
-          child: (context, args) => const AboutPenhasPage(),
+          child: (context, args) => AboutPenhasPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/menu/profile_edit',
-          child: (context, args) => const ProfileEditPage(),
+          child: (context, args) => ProfileEditPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/menu/account_preference',
-          child: (context, args) => const AccountPreferencePage(),
+          child: (context, args) => AccountPreferencePage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/menu/account_delete',
-          child: (context, args) => const AccountDeletePage(),
+          child: (context, args) => AccountDeletePage(),
           transition: TransitionType.rightToLeft,
         ),
         ModuleRoute(
@@ -278,27 +260,13 @@ class MainboardModule extends Module {
       ];
 
   List<Bind> get menuBind => [
-        Bind.factory<SecurityModeActionFeature>(
+        Bind<SecurityModeActionFeature>(
           (i) => SecurityModeActionFeature(
             modulesServices: i.get<IAppModulesServices>(),
           ),
         ),
-        Bind.factory(
+        Bind(
           (i) => ProfileEditController(
-<<<<<<< HEAD
-            appStateUseCase: i.get<AppStateUseCase>(),
-            skillRepository: i.get<IFilterSkillRepository>(),
-            securityModeActionFeature: i.get<SecurityModeActionFeature>(),
-          ),
-        ),
-        Bind.factory(
-          (i) => AccountDeleteController(
-            appConfiguration: i.get<IAppConfiguration>(),
-            profileRepository: i.get<IUserProfileRepository>(),
-          ),
-        ),
-        Bind.factory(
-=======
               appStateUseCase: i.get<AppStateUseCase>(),
               skillRepository: i.get<IFilterSkillRepository>(),
               securityModeActionFeature: i.get<SecurityModeActionFeature>()),
@@ -309,7 +277,6 @@ class MainboardModule extends Module {
               profileRepository: i.get<IUserProfileRepository>()),
         ),
         Bind(
->>>>>>> Fix code syntax
           (i) => AccountPreferenceController(
             profileRepository: i.get<IUserProfileRepository>(),
           ),
@@ -335,47 +302,43 @@ class MainboardModule extends Module {
   List<ModularRoute> get chat => [
         ChildRoute(
           '/chat/:token',
-          child: (context, args) => const ChatPage(),
+          child: (context, args) => ChatPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/chat_from_feed',
-          child: (context, args) => const ChatPage(),
+          child: (context, args) => ChatPage(),
           transition: TransitionType.noTransition,
         ),
       ];
 
   List<Bind> get chatBinds => [
-        Bind.factory<IChatChannelRepository>(
+        Bind<IChatChannelRepository>(
           (i) => ChatChannelRepository(
             apiProvider: i.get<IApiProvider>(),
           ),
         ),
-        Bind.factory(
+        Bind(
           (i) => ChatChannelController(
             useCase: i.get<ChatChannelUseCase>(),
           ),
         ),
-        Bind.factory(
+        Bind<ChatChannelUseCase>(
           (i) => ChatChannelUseCase(
             session: i.args?.data ??
                 ChatChannelOpenEntity(token: i.args?.params['token']),
             channelRepository: i.get<IChatChannelRepository>(),
           ),
-<<<<<<< HEAD
-        ),
-=======
         )
->>>>>>> Fix code syntax
       ];
 
   List<Bind> get audioServicesBinds => [
-        Bind.factory<IAudioRecordServices>(
+        Bind<IAudioRecordServices>(
           (i) => AudioRecordServices(
             audioSyncManager: i.get<IAudioSyncManager>(),
           ),
         ),
-        Bind.factory<IAudioPlayServices>(
+        Bind<IAudioPlayServices>(
           (i) => AudioPlayServices(
             audioSyncManager: i.get<IAudioSyncManager>(),
           ),
@@ -383,172 +346,163 @@ class MainboardModule extends Module {
       ];
 
   List<Bind> get tweetBinds => [
-        Bind.factory(
+        Bind(
           (i) => ComposeTweetController(
             useCase: i.get<FeedUseCases>(),
             mainboardStore: i.get<MainboardStore>(),
           ),
         ),
-        Bind.factory(
+        Bind(
           (i) => ReplyTweetController(
             useCase: i.get<FeedUseCases>(),
             tweet: i.args?.data,
           ),
         ),
-        Bind.factory(
+        Bind(
           (i) => DetailTweetController(
             useCase: i.get<FeedUseCases>(),
             tweetId: i.args?.params['id'],
             tweet: i.args?.data,
           ),
         ),
-        Bind.factory(
+        Bind(
           (i) => CategoryTweetController(
             useCase: i.get<TweetFilterPreference>(),
           ),
         ),
-        Bind.factory(
+        Bind(
           (i) => FilterTweetController(
             useCase: i.get<TweetFilterPreference>(),
           ),
-<<<<<<< HEAD
-=======
           isSingleton: true,
->>>>>>> Fix code syntax
         ),
-        Bind.factory<IUsersRepository>(
+        Bind<IUsersRepository>(
           (i) => UsersRepository(
             apiProvider: i.get<IApiProvider>(),
           ),
         ),
-        Bind.factory(
+        Bind(
           (i) => FeedRoutingPerfilChatController(
             usersRepository: i.get<IUsersRepository>(),
             channelRepository: i.get<IChatChannelRepository>(),
             routerType: i.args?.data,
           ),
-<<<<<<< HEAD
-=======
           isSingleton: true,
->>>>>>> Fix code syntax
         )
       ];
 
   List<Bind> get interfaceBinds => [
-        Bind.factory<ITweetController>(
+        Bind<ITweetController>(
           (i) => TweetController(useCase: i.get<FeedUseCases>()),
         ),
-        Bind.factory<ITweetRepository>(
+        Bind<ITweetRepository>(
           (i) => TweetRepository(
             networkInfo: i.get<INetworkInfo>(),
             dataSource: i.get<ITweetDataSource>(),
           ),
         ),
-        Bind.factory<ITweetDataSource>(
+        Bind<ITweetDataSource>(
           (i) => TweetDataSource(
             apiClient: i.get<http.Client>(),
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
-        Bind.factory<ITweetFilterPreferenceDataSource>(
+        Bind<ITweetFilterPreferenceDataSource>(
           (i) => TweetFilterPreferenceDataSource(
             apiClient: i.get<http.Client>(),
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
-        Bind.factory<ITweetFilterPreferenceRepository>(
+        Bind<ITweetFilterPreferenceRepository>(
           (i) => TweetFilterPreferenceRepository(
             networkInfo: i.get<INetworkInfo>(),
             dataSource: i.get<ITweetFilterPreferenceDataSource>(),
           ),
         ),
-        Bind.lazySingleton(
+        Bind<TweetFilterPreference>(
           (i) => TweetFilterPreference(
             repository: i.get<ITweetFilterPreferenceRepository>(),
           ),
         ),
-        Bind.factory<ILocationServices>(
+        Bind<ILocationServices>(
           (i) => LocationServices(),
         ),
       ];
 
   List<Bind> get drawerBinds => [
-        Bind.factory(
+        Bind(
           (i) => PenhasDrawerController(
             appConfigure: i.get<IAppConfiguration>(),
             userProfile: i.get<UserProfile>(),
             modulesServices: i.get<IAppModulesServices>(),
           ),
         ),
-        Bind.factory<UserProfile>(
+        Bind<UserProfile>(
           (i) => UserProfile(
             repository: i.get<IUserProfileRepository>(),
             userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
             appStateUseCase: i.get<AppStateUseCase>(),
           ),
         ),
-        Bind.factory<AppStateUseCase>(
+        Bind<AppStateUseCase>(
           (i) => AppStateUseCase(
               appStateRepository: i.get<IAppStateRepository>(),
               userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
               appConfiguration: i.get<IAppConfiguration>(),
               appModulesServices: i.get<IAppModulesServices>()),
         ),
-        Bind.factory<InactivityLogoutUseCase>(
+        Bind<InactivityLogoutUseCase>(
           (i) => InactivityLogoutUseCase(
             appPreferencesStore: i.get<LocalStore<AppPreferencesEntity>>(),
             userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
           ),
         ),
-        Bind.factory<IAppStateRepository>(
+        Bind<IAppStateRepository>(
           (i) => AppStateRepository(
             networkInfo: i.get<INetworkInfo>(),
             dataSource: i.get<IAppStateDataSource>(),
           ),
         ),
-        Bind.factory<IAppStateDataSource>(
+        Bind<IAppStateDataSource>(
           (i) => AppStateDataSource(
-            apiClient: i.get<http.Client>(),
+            apliClient: i.get<http.Client>(),
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
-        Bind.factory<StealthModeTutorialPageController>(
+        Bind<StealthModeTutorialPageController>(
           (i) => StealthModeTutorialPageController(
-            locationService: i.get<ILocationServices>(),
-          ),
+              locationService: i.get<ILocationServices>()),
         ),
       ];
 
   List<Bind> get helpCenterBinds => [
-        Bind.factory(
+        Bind(
           (i) => NewGuardianController(
-            guardianRepository: i.get<IGuardianRepository>(),
-            locationService: i.get<ILocationServices>(),
-          ),
+              guardianRepository: i.get<IGuardianRepository>(),
+              locationService: i.get<ILocationServices>()),
         ),
-        Bind.factory(
+        Bind(
           (i) => GuardiansController(
             guardianRepository: i.get<IGuardianRepository>(),
           ),
         ),
-        Bind.factory(
+        Bind(
           (i) => AudiosController(
-            audiosRepository: i.get<IAudiosRepository>(),
-            audioPlayServices: i.get<IAudioPlayServices>(),
-          ),
+              audiosRepository: i.get<IAudiosRepository>(),
+              audioPlayServices: i.get<IAudioPlayServices>()),
         ),
-        Bind.factory(
+        Bind(
           (i) => AudiosRepository(
             apiProvider: i.get<IApiProvider>(),
           ),
         ),
-        Bind.factory<IGuardianRepository>(
+        Bind<IGuardianRepository>(
           (i) => GuardianRepository(
             dataSource: i.get<IGuardianDataSource>(),
             networkInfo: i.get<INetworkInfo>(),
           ),
         ),
-        Bind.factory<IGuardianDataSource>(
+        Bind<IGuardianDataSource>(
           (i) => GuardianDataSource(
             apiClient: i.get<http.Client>(),
             serverConfiguration: i.get<IApiServerConfigure>(),

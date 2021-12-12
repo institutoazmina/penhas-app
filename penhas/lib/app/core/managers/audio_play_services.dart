@@ -62,13 +62,8 @@ extension _AudioPlayServicesPrivate on AudioPlayServices {
     await releaseAudioSession();
     await _playerModule.openAudioSession();
 
-<<<<<<< HEAD
-    _playerSubscription = _playerModule.onProgress?.listen((e) {
-      // what to do in onProgress?
-=======
     _playerModule.onProgress?.listen((e) {
       print(e);
->>>>>>> Fix code syntax
     });
   }
 

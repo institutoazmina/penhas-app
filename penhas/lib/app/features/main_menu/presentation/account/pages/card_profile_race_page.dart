@@ -50,13 +50,8 @@ class CardProfileRacePage extends StatelessWidget {
 extension _Modal on CardProfileRacePage {
   void showModal() {
     Modular.to.showDialog(
-<<<<<<< HEAD
-      builder: (context) => AlertDialog(
-        title: const Text('Raça'),
-=======
       builder: (_) => AlertDialog(
         title: Text('Raça'),
->>>>>>> Fix code syntax
         scrollable: true,
         content: SizedBox(
           height: 350,

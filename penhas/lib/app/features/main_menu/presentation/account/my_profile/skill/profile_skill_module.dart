@@ -5,7 +5,7 @@ import 'package:penhas/app/features/main_menu/presentation/account/my_profile/sk
 class ProfileSkillModule extends Module {
   @override
   List<Bind> get binds => [
-        Bind.factory(
+        Bind(
           (i) => ProfileSkillController(tags: i.args?.data),
         ),
       ];
@@ -14,7 +14,7 @@ class ProfileSkillModule extends Module {
   List<ModularRoute> get routes => [
         ChildRoute(
           '/',
-          child: (context, args) => const ProfileSkillPage(),
+          child: (context, args) => ProfileSkillPage(),
         )
       ];
 }

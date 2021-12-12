@@ -173,11 +173,7 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
     );
   }
 
-<<<<<<< HEAD
-  void _dismissSnackBarForAction(Function action, {dynamic argument}) {
-=======
   void _dismissSnackBarForAction(Function action, {dynamic argument}){
->>>>>>> Fix code syntax
     _scaffoldKey.currentState?.hideCurrentSnackBar();
 
     if (argument == null) {

@@ -1,16 +1,9 @@
 import 'package:collection/collection.dart';
-<<<<<<< HEAD
-import 'package:penhas/app/features/chat/data/models/chat_assistant_model.dart';
-import 'package:penhas/app/features/chat/data/models/chat_channel_model.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_available_entity.dart';
-
-=======
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_available_entity.dart';
 
 import 'chat_assistant_model.dart';
 import 'chat_channel_model.dart';
 
->>>>>>> Fix code syntax
 class ChatChannelAvailableModel extends ChatChannelAvailableEntity {
   ChatChannelAvailableModel({
     required bool? hasMore,

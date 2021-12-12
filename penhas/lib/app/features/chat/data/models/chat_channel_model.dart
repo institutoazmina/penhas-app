@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-import 'package:penhas/app/features/chat/data/models/chat_user_model.dart';
-=======
->>>>>>> Fix code syntax
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_entity.dart';
 
 class ChatChannelModel extends ChatChannelEntity {

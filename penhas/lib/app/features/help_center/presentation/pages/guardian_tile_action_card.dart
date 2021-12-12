@@ -152,13 +152,8 @@ class GuardianTileActionCard extends StatelessWidget {
 
   void _onDeletePressed(void Function()? action) {
     Modular.to.showDialog(
-<<<<<<< HEAD
-      builder: (context) => AlertDialog(
-        title: const Text('Apagar', style: kTextStyleAlertDialogTitle),
-=======
       builder: (_) => AlertDialog(
         title: Text('Apagar', style: kTextStyleAlertDialogTitle),
->>>>>>> Fix code syntax
         content: Text(
           card.deleteWarning ?? 'Deseja excluir ${card.guardian.name}?',
           style: kTextStyleAlertDialogDescription,
@@ -187,13 +182,8 @@ class GuardianTileActionCard extends StatelessWidget {
 
   void _onResendPressed(void Function()? action) {
     Modular.to.showDialog(
-<<<<<<< HEAD
-      builder: (context) => AlertDialog(
-        title: const Text('Reenviar', style: kTextStyleAlertDialogTitle),
-=======
       builder: (_) => AlertDialog(
         title: Text('Reenviar', style: kTextStyleAlertDialogTitle),
->>>>>>> Fix code syntax
         content: Text(
           'Deseja reenviar o convite para ${card.guardian.name}?',
           style: kTextStyleAlertDialogDescription,

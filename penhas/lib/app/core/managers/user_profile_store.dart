@@ -8,22 +8,6 @@ class UserProfileStore extends LocalStore<UserProfileEntity> {
       : super('br.com.penhas.userProfile', storage);
 
   @override
-<<<<<<< HEAD
-  UserProfileEntity defaultEntity() => UserProfileEntity(
-        email: null,
-        nickname: null,
-        avatar: null,
-        stealthModeEnabled: false,
-        anonymousModeEnabled: false,
-        birthdate: DateTime.now(),
-        fullName: null,
-        genre: null,
-        jaFoiVitimaDeViolencia: false,
-        minibio: null,
-        race: null,
-        skill: const [],
-      );
-=======
   Future<UserProfileEntity> defaultEntity() {
     return Future.value(
       UserProfileEntity(
@@ -42,7 +26,6 @@ class UserProfileStore extends LocalStore<UserProfileEntity> {
       ),
     );
   }
->>>>>>> Fix code syntax
 
   @override
   UserProfileEntity fromJson(Map<String, dynamic> json) {

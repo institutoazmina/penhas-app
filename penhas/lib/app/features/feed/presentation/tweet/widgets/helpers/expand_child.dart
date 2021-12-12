@@ -326,14 +326,8 @@ class ExpandArrow extends StatelessWidget {
                 const SizedBox(width: 2.0),
                 DefaultTextStyle(
                   style: Theme.of(context).textTheme.subtitle2?.copyWith(
-<<<<<<< HEAD
-                            color: Theme.of(context).textTheme.caption?.color,
-                          ) ??
-                      const TextStyle(),
-=======
                         color: Theme.of(context).textTheme.caption?.color,
                       ) ?? TextStyle(),
->>>>>>> Fix code syntax
                   child: Text(
                     tooltipMessage,
                     style: hintTextStyle!,

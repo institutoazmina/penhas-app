@@ -19,15 +19,9 @@ abstract class LocalStore<T> {
   Future<T> retrieve() {
     return _storage
         .get(_key)
-<<<<<<< HEAD
-        .then((data) => data.map((r) => json.decode(r)))
-        .then((data) => data.map((r) => fromJson(r)))
-        .then((value) => value.getOrElse(() => defaultEntity()));
-=======
         .then((data) => json.decode(data!) as Map<String, dynamic>)
         .then((json) => fromJson(json))
         .catchError((_) => defaultEntity());
->>>>>>> Fix code syntax
   }
 
   Future<void> save(T entity) {

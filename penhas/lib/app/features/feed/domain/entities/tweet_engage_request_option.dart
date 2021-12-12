@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> Fix code syntax
 class TweetEngageRequestOption {
   final String tweetId;
   final String? message;

@@ -34,11 +34,7 @@ class TweetModel extends TweetEntity {
       owner: meta['owner'] == 1,
     );
 
-<<<<<<< HEAD
-    List<TweetModel> lastReply = [];
-=======
     List<TweetModel> lastReply = List.empty();
->>>>>>> Fix code syntax
     if (jsonData['last_reply'] != null) {
       lastReply = [
         TweetModel.fromJson(jsonData['last_reply'])
@@ -76,15 +72,10 @@ class TweetRelatedNewsModel extends TweetRelatedNewsEntity {
     );
   }
 
-<<<<<<< HEAD
-  static List<TweetNewsModel> _parseNews(List<dynamic> news) {
-    return news.map((e) => TweetNewsModel.fromJson(e)).toList();
-=======
   static List<TweetNewsEntity> _parseNews(List<dynamic> news) {
     return news
         .map((e) => TweetNewsModel.fromJson(e))
         .toList();
->>>>>>> Fix code syntax
   }
 }
 
@@ -103,11 +94,7 @@ class TweetNewsGroupModel extends TweetNewsGroupEntity {
     );
   }
 
-<<<<<<< HEAD
-  static List<TweetNewsModel> _parseNews(List<dynamic> news) =>
-=======
   static List<TweetNewsEntity> _parseNews(List<dynamic> news) =>
->>>>>>> Fix code syntax
       news.map((e) => TweetNewsModel.fromJson(e)).toList();
 }
 

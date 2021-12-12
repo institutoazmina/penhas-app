@@ -1,13 +1,7 @@
 import 'package:equatable/equatable.dart';
-<<<<<<< HEAD
-import 'package:flutter/material.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_message_entity.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
-=======
 
 import 'chat_message_entity.dart';
 import 'chat_user_entity.dart';
->>>>>>> Fix code syntax
 
 class ChatChannelSessionEntity extends Equatable {
   final bool? hasMore;

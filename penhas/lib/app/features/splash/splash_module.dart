@@ -16,33 +16,10 @@ class SplashModule extends Module {
             userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
           ),
         ),
-        Bind<AppStateUseCase>(
-          (i) => AppStateUseCase(
-              appStateRepository: i.get<IAppStateRepository>(),
-              userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
-              appConfiguration: i.get<IAppConfiguration>(),
-              appModulesServices: i.get<IAppModulesServices>()),
-        ),
-        Bind<IAppStateRepository>(
-          (i) => AppStateRepository(
-            networkInfo: i.get<INetworkInfo>(),
-            dataSource: i.get<IAppStateDataSource>(),
-          ),
-        ),
-        Bind<IAppStateDataSource>(
-          (i) => AppStateDataSource(
-            apliClient: i.get<http.Client>(),
-            serverConfiguration: i.get<IApiServerConfigure>(),
-          ),
-        ),
       ];
 
   @override
   List<ModularRoute> get routes => [
-<<<<<<< HEAD
-        ChildRoute(Modular.initialRoute, child: (_, args) => const SplashPage()),
-=======
         ChildRoute(Modular.initialRoute, child: (_, args) => SplashPage()),
->>>>>>> Fix code syntax
       ];
 }

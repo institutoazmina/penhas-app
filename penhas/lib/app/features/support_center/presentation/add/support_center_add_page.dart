@@ -219,11 +219,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Theme(
         data: Theme.of(context)
-<<<<<<< HEAD
-            .copyWith(canvasColor: const Color.fromRGBO(141, 146, 157, 1)),
-=======
             .copyWith(canvasColor: Color.fromRGBO(141, 146, 157, 1)),
->>>>>>> Fix code syntax
         child: DropdownButtonFormField<dynamic>(
           isExpanded: true,
           decoration: InputDecoration(

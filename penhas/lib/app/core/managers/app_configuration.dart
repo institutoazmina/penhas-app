@@ -34,13 +34,8 @@ class AppConfiguration implements IAppConfiguration {
   AppConfiguration({required ILocalStorage storage}) : this._storage = storage;
 
   @override
-<<<<<<< HEAD
-  Future<String> get apiToken {
-    return _storage.get(_tokenKey).then((value) => value.getOrElse(() => ''));
-=======
   Future<String?> get apiToken {
     return _storage.get(_tokenKey);
->>>>>>> Fix code syntax
   }
 
   @override
@@ -52,11 +47,7 @@ class AppConfiguration implements IAppConfiguration {
   }
 
   @override
-<<<<<<< HEAD
-  Uri get penhasServer => Uri.parse(baseUrl);
-=======
   Uri get penhasServer => Uri.parse('https://***REMOVED***/');
->>>>>>> Fix code syntax
 
   @override
   Future<void> saveApiToken({required String? token}) async {
@@ -81,16 +72,10 @@ class AppConfiguration implements IAppConfiguration {
   Future<AppStateModeEntity> get appMode async {
     return _storage
         .get(_appModes)
-<<<<<<< HEAD
-        .then((source) => source.map((r) => jsonDecode(r)))
-        .then((value) => value.map((r) => _buildAppStateMode(r)))
-        .then((value) => value.getOrElse(() => const AppStateModeEntity()));
-=======
         .then((source) => jsonDecode(source!))
         .then((v) => v as Map<String, dynamic>)
         .then((v) => _buildAppStateMode(v))
         .catchError((_) => AppStateModeEntity());
->>>>>>> Fix code syntax
   }
 
   AppStateModeEntity _buildAppStateMode(Map<String, dynamic> data) {

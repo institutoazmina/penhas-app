@@ -242,10 +242,6 @@ class _SignUpTwoPageState
   void _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
-<<<<<<< HEAD
-    }
-=======
->>>>>>> Fix code syntax
     WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 }

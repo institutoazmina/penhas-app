@@ -21,7 +21,7 @@ class WhiteBoxDecorationStyle extends InputDecoration {
           labelStyle: kTextStyleDefaultTextFieldLabelStyle,
           hintText: hintText,
           hintStyle: kTextStyleDefaultTextFieldLabelStyle,
-          errorText: _normalizeHitText(errorText)!,
+          errorText: _normalizeHitText(errorText),
           contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white70),

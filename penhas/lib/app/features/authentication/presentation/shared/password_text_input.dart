@@ -53,7 +53,7 @@ class _PassordInputFieldState extends State<PassordInputField> {
         labelStyle: kTextStyleDefaultTextFieldLabelStyle,
         hintText: widget.hintText,
         hintStyle: kTextStyleDefaultTextFieldLabelStyle,
-        errorText: _normalizeHitText(widget.errorText)!,
+        errorText: _normalizeHitText(widget.errorText),
         contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
         suffixIcon: IconButton(
           icon: Icon(
@@ -71,7 +71,7 @@ class _PassordInputFieldState extends State<PassordInputField> {
     });
   }
 
-  String? _normalizeHitText(String text) {
+  String? _normalizeHitText(String? text) {
     if (text == null || text.isEmpty) {
       return null;
     }

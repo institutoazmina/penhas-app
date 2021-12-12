@@ -173,11 +173,7 @@ class GuardianDataSource implements IGuardianDataSource {
     final userAgent = await _serverConfiguration!.userAgent;
     final apiToken = await _serverConfiguration!.apiToken;
     return {
-<<<<<<< HEAD
-      'X-Api-Key': apiToken ?? '',
-=======
       'X-Api-Key': apiToken ?? "",
->>>>>>> Fix code syntax
       'User-Agent': userAgent,
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
     };

@@ -132,17 +132,13 @@ abstract class _QuizControllerBase with Store {
   ) {
     String newMessageContent;
 
-    if (reply[messageRemoved.ref!] == 'Y') {
+    if (reply[messageRemoved.ref] == 'Y') {
       newMessageContent = "Sim";
     } else {
       newMessageContent = 'Não';
     }
 
-<<<<<<< HEAD
-    final QuizMessageEntity newMessage = QuizMessageEntity(
-=======
     QuizMessageEntity newMessage = QuizMessageEntity(
->>>>>>> Fix code syntax
       ref: messageRemoved.ref,
       content: newMessageContent,
       type: QuizMessageType.displayTextResponse,
@@ -155,7 +151,7 @@ abstract class _QuizControllerBase with Store {
     Map<String, String> reply,
     QuizMessageEntity messageRemoved,
   ) {
-    String display = reply[messageRemoved.ref!]!
+    String display = reply[messageRemoved.ref]!
         .split(',')
         .map((e) => messageRemoved.options!.firstWhere((o) => o.index == e))
         .map((e) => e.display)
@@ -194,7 +190,7 @@ abstract class _QuizControllerBase with Store {
 
     _sessionId = state.quizSession!.sessionId;
 
-    if (state?.quizSession?.currentMessage != null) {
+    if (state.quizSession?.currentMessage != null) {
       messages.insertAll(0, state.quizSession!.currentMessage!.reversed);
     }
 

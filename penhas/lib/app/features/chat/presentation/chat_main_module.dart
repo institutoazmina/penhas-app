@@ -45,12 +45,6 @@ class ChatMainModule extends WidgetModule {
             apiProvider: i.get<IApiProvider>(),
           ),
         ),
-<<<<<<< HEAD
-      ];
-
-  @override
-  Widget get view => const ChatMainPage();
-=======
         Bind(
           (i) => ChatChannelController(
             useCase: i.get<ChatChannelUseCase>(),
@@ -58,7 +52,7 @@ class ChatMainModule extends WidgetModule {
                   ),
         Bind<ChatChannelUseCase>(
           (i) => ChatChannelUseCase(
-            session: i.args.data,
+            session: i.args?.data,
             channelRepository: i.get<IChatChannelRepository>(),
           ),
                   )
@@ -66,5 +60,4 @@ class ChatMainModule extends WidgetModule {
 
   @override
   Widget get view => ChatMainPage();
->>>>>>> Fix code syntax
 }

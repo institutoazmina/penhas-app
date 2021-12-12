@@ -132,12 +132,7 @@ class AppStateModel extends AppStateEntity {
   }
 
   static List<QuizMessageEntity> _buildDisplayResponseMessage(
-<<<<<<< HEAD
-    Map<String, dynamic> message,
-  ) {
-=======
       Map<String, dynamic> message) {
->>>>>>> Fix code syntax
     return [
       QuizMessageEntity(
         ref: message['ref'] ?? "",
