@@ -100,8 +100,9 @@ platform :ios do
 
     gym(
       scheme: "Runner",
-      workspace: "./ios/Runner.xcworkspace",
+      project: "./ios/Runner.xcodeproj",
       configuration: "Release",
+      destination: "generic/platform=iOS",
       archive_path: "./build/ios/Runner.xcarchive",
       export_method: "ad-hoc",
       output_directory: "./build/Runner"
@@ -118,14 +119,14 @@ platform :ios do
   lane :firebase_distribute do
     generate_beta_ipa
 
-    firebase_app_distribution(
-      app: "1:51928851553:ios:f741dab1c05cf04e663620",
-      release_notes_file: "./deploy/beta/release_notes",
-      # testers_file: "./deploy/beta/testers.ios",
-      groups: "iostestersgroup",
-      ipa_path: "./build/Runner/Runner.ipa",
-      debug: true
-    )
+    # firebase_app_distribution(
+    #     app: "1:51928851553:ios:f741dab1c05cf04e663620",
+    #     release_notes_file: "./deploy/beta/release_notes",
+    #     testers_file: "./deploy/beta/testers.ios",
+    #     groups: "iostestersgroup",
+    #     ipa_path: "./build/Runner/Runner.ipa",
+    #   #   debug: true
+    # )
   end
 
   desc "Deploy a new version to the App Store"
