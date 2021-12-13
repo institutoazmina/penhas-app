@@ -10,9 +10,9 @@ class UserProfileEntity extends Equatable {
   final String? minibio;
   final String? race;
   final String? genre;
-  final bool? stealthModeEnabled;
-  final bool? anonymousModeEnabled;
-  final bool? jaFoiVitimaDeViolencia;
+  final bool stealthModeEnabled;
+  final bool anonymousModeEnabled;
+  final bool jaFoiVitimaDeViolencia;
   final DateTime birthdate;
   final List<String>? skill;
 
@@ -32,18 +32,18 @@ class UserProfileEntity extends Equatable {
   });
 
   @override
-  List<Object> get props => [
-        this.fullName!,
-        this.race!,
-        this.genre!,
-        this.jaFoiVitimaDeViolencia!,
-        this.skill!,
-        this.email!,
-        this.nickname!,
-        this.avatar!,
-        this.minibio!,
-        this.stealthModeEnabled!,
-        this.anonymousModeEnabled!,
+  List<Object?> get props => [
+        this.fullName,
+        this.race,
+        this.genre,
+        this.jaFoiVitimaDeViolencia,
+        this.skill,
+        this.email,
+        this.nickname,
+        this.avatar,
+        this.minibio,
+        this.stealthModeEnabled,
+        this.anonymousModeEnabled,
         this.birthdate,
       ];
 

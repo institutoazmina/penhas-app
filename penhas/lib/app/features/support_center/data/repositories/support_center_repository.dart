@@ -53,8 +53,8 @@ class SupportCenterRepository implements ISupportCenterRepository {
         parameters: parameters,
       );
       return right(parseMetadata(bodyResponse));
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -89,8 +89,8 @@ class SupportCenterRepository implements ISupportCenterRepository {
       final bodyResponse =
           await _apiProvider!.get(path: endPoint, parameters: parameters);
       return right(parseSupportCenter(bodyResponse));
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -106,8 +106,8 @@ class SupportCenterRepository implements ISupportCenterRepository {
       final bodyResponse =
           await _apiProvider!.get(path: endPoint, parameters: parameters);
       return right(parseGeoFromCep(bodyResponse));
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -133,8 +133,8 @@ class SupportCenterRepository implements ISupportCenterRepository {
         body: bodyContent,
       );
       return right(parseAddSuggestion(response));
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -147,8 +147,8 @@ class SupportCenterRepository implements ISupportCenterRepository {
     try {
       final response = await _apiProvider!.get(path: endPoint);
       return right(parseDetail(response));
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -169,8 +169,8 @@ class SupportCenterRepository implements ISupportCenterRepository {
         parameters: parameters,
       );
       return right(ValidField());
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }

@@ -29,16 +29,14 @@ class SecurityModeActionFeature {
   Future<String> _callingNumber() {
     return _modulesServices
         .feature(name: SecurityModeActionFeature.featureCode)
-        .then((module) => jsonDecode(module.meta))
-        .then((json) => json as Map<String, dynamic>)
-        .then((json) => json['numero']);
+        .then((module) => jsonDecode(module?.meta ?? "{}"))
+        .then((json) => json['numero'] as String);
   }
 
   Future<AudioRecordDurationEntity> _audioDuration() {
     return _modulesServices
         .feature(name: SecurityModeActionFeature.featureCode)
-        .then((module) => jsonDecode(module.meta))
-        .then((json) => json as Map<String, Object>)
+        .then((module) => jsonDecode(module?.meta ?? "{}"))
         .then((json) => _mapAudioDuration(json));
   }
 
@@ -49,8 +47,8 @@ class SecurityModeActionFeature {
       final int audioFullDuration =
           int.parse(json['audio_full_duration'] as String);
       return AudioRecordDurationEntity(audioEachDuration, audioFullDuration);
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       return AudioRecordDurationEntity(30, 900);
     }
   }

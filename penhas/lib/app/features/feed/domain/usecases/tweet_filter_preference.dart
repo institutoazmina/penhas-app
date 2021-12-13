@@ -6,8 +6,8 @@ import 'package:penhas/app/features/feed/domain/entities/tweet_filter_session_en
 
 class TweetFilterPreference {
   final ITweetFilterPreferenceRepository? _repository;
-  List<String?> _currentTags = List.empty();
-  List<String> _currentCategory = List.empty();
+  List<String?> _currentTags = [];
+  List<String> _currentCategory = [];
 
   TweetFilterPreference({
     required ITweetFilterPreferenceRepository? repository,

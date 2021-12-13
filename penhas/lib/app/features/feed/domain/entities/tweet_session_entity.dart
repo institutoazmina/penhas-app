@@ -27,7 +27,7 @@ class TweetSessionEntity extends Equatable {
   });
 
   @override
-  List<Object> get props => [hasMore, orderBy, parent!, tweets, nextPage!];
+  List<Object?> get props => [hasMore, orderBy, parent!, tweets, nextPage!];
 
   @override
   String toString() {

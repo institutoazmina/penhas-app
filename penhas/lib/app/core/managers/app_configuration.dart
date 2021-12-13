@@ -13,7 +13,9 @@ const String baseUrl = String.fromEnvironment(
 
 abstract class IAppConfiguration {
   Future<String?> get apiToken;
+
   Future<void> saveApiToken({required String? token});
+
   Future<void> saveAppModes(AppStateModeEntity appMode);
 
   Future<void> logout();
@@ -35,8 +37,8 @@ class AppConfiguration implements IAppConfiguration {
   AppConfiguration({required ILocalStorage storage}) : this._storage = storage;
 
   @override
-  Future<String?> get apiToken {
-    return _storage.get(_tokenKey);
+  Future<String> get apiToken {
+    return _storage.get(_tokenKey).then((value) => value.getOrElse(() => ""));
   }
 
   @override
@@ -75,18 +77,14 @@ class AppConfiguration implements IAppConfiguration {
   Future<AppStateModeEntity> get appMode async {
     return _storage
         .get(_appModes)
-        .then((source) => jsonDecode(source!))
-        .then((v) => v as Map<String, dynamic>)
-        .then((v) => _buildAppStateMode(v))
-        .catchError((e) {
-          logError(e);
-          return AppStateModeEntity();
-        });
+        .then((source) => source.map((r) => jsonDecode(r)))
+        .then((value) => value.map((r) => _buildAppStateMode(r)))
+        .then((value) => value.getOrElse(() => AppStateModeEntity()));
   }
 
   AppStateModeEntity _buildAppStateMode(Map<String, dynamic> data) {
     return AppStateModeEntity(
-      hasActivedGuardian: data['hasActivedGuardian'] as bool,
+      hasActivedGuardian: data['hasActivedGuardian'],
     );
   }
 }

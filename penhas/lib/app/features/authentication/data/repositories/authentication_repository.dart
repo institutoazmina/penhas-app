@@ -39,8 +39,8 @@ class AuthenticationRepository implements IAuthenticationRepository {
       }
 
       return right(result);
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return _handleError(error);
     }
   }

@@ -126,8 +126,8 @@ class LocationServices implements ILocationServices {
         )
         .then((value) => value as LocationPermissionState)
         .catchError(
-          (e) {
-            logError(e);
+          (e, stack) {
+            logError(e, stack);
             return LocationPermissionState.undefined();
           },
         );
@@ -229,8 +229,8 @@ class LocationServices implements ILocationServices {
         )
         .then((value) => value as LocationPermissionState)
         .catchError(
-          (e) {
-            logError(e);
+          (e, stack) {
+            logError(e, stack);
             return LocationPermissionState.undefined();
           },
         );

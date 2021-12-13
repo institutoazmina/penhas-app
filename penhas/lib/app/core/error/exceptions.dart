@@ -13,3 +13,9 @@ class NetworkServerException implements Exception {}
 class ApiProviderSessionError extends NonCriticalError {}
 
 class InternetConnectionException implements Exception {}
+
+class HandledException implements Exception {
+  String? message;
+
+  HandledException([this.message]);
+}

@@ -24,8 +24,8 @@ class QuizRepository implements IQuizRepository {
     try {
       final appState = await _dataSource!.update(quiz: quiz);
       return right(appState);
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       return left(await _handleError(e));
     }
   }

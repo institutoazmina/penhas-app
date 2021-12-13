@@ -13,7 +13,7 @@ extension SafetlyParser on Object? {
     return null;
   }
 
-  int? safeParseInt() {
+  int safeParseInt({int def = 0}) {
     final value = this;
 
     if (value is String) {
@@ -29,8 +29,8 @@ extension SafetlyParser on Object? {
     final value = this;
     try {
       return value == 1;
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       return false;
     }
   }

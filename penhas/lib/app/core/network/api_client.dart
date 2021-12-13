@@ -176,7 +176,7 @@ extension _ApiProvider on ApiProvider {
     required Map<String?, String?>? queryParameters,
   }) {
     queryParameters ??= {};
-    queryParameters.removeWhere(((k, v) => v == null) as bool Function(String?, String?));
+    queryParameters.removeWhere((k, v) => v == null);
     return _serverConfiguration.baseUri.replace(
       path: path,
       queryParameters: queryParameters.isEmpty ? null : queryParameters as Map<String, dynamic>?,
@@ -215,8 +215,8 @@ extension _FutureExtension<T extends BaseResponse> on Future<T> {
           Map<String, dynamic>? bodyContent = Map<String, dynamic>();
           try {
             bodyContent = jsonDecode(jsonData);
-          } catch (e) {
-            logError(e);
+          } catch (e, stack) {
+            logError(e, stack);
             bodyContent = {'parserError': e.toString()};
           }
 

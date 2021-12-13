@@ -68,8 +68,8 @@ class AudioSyncRepository implements IAudioSyncRepository {
           .upload(path: '/me/audios', file: fileData, fields: fields)
           .parseAPI();
       return right(result);
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -88,8 +88,8 @@ class AudioSyncRepository implements IAudioSyncRepository {
         fields: fields,
       );
       return right(ValidField());
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -103,7 +103,7 @@ extension _FileExtention on File {
 
 extension _FutureExtension<T extends String> on Future<T> {
   Future<ValidField> parseAPI() async {
-    return then((data) async {
+    return this.then((data) async {
       final jsonData = jsonDecode(data) as Map<String, dynamic>;
       return ValidField.fromJson(jsonData);
     });

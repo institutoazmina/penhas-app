@@ -20,7 +20,7 @@ class FilterTagEntity extends Equatable {
   });
 
   @override
-  List<Object> get props => [id, label!, isSelected];
+  List<Object?> get props => [id, label!, isSelected];
 
   @override
   bool get stringify => true;

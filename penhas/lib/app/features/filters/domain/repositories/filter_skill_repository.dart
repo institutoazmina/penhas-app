@@ -25,8 +25,8 @@ class FilterSkillRepository implements IFilterSkillRepository {
     try {
       final response = await _apiProvider!.get(path: endPoint).parseSkills();
       return right(response);
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -35,7 +35,7 @@ class FilterSkillRepository implements IFilterSkillRepository {
 extension _FutureExtension<T extends String> on Future<T> {
   Future<List<FilterTagEntity>?> parseSkills() async {
     return this.then((data) async {
-      final jsonData = jsonDecode(data) as Map<String, Object>;
+      final jsonData = jsonDecode(data) as Map<String, dynamic>;
       return FilterSkillsModel.fromJson(jsonData).skills;
     });
   }

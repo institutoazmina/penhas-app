@@ -23,7 +23,7 @@ class MainboardBodyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageView(
       physics: NeverScrollableScrollPhysics(),
-      controller: pageController!,
+      controller: pageController,
       children: pages!.map((e) => _buildPage(e)).toList(),
     );
   }

@@ -91,8 +91,8 @@ extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
   }
 
   void handleLoadSession(ChatChannelAvailableEntity session) {
-    List<ChatMainTileEntity> tiles = List.empty();
-    List<ChatMainSupportTile> cards = List.empty();
+    List<ChatMainTileEntity> tiles = [];
+    List<ChatMainSupportTile> cards = [];
 
     if (session.assistant != null) {
       cards.add(

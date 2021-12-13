@@ -79,8 +79,8 @@ class AudioRecordServices implements IAudioRecordServices {
       await _recorder
           .stopRecorder()
           .then((value) => _audioSyncManager.syncAudio());
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       print(e);
     }
   }
@@ -103,8 +103,8 @@ class AudioRecordServices implements IAudioRecordServices {
         _streamController!.close();
         _streamController = null;
       }
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       print(e);
     }
   }
@@ -161,8 +161,8 @@ extension _AudioRecordServices on AudioRecordServices {
         await _recorder.stopRecorder();
       }
       await _recorder.closeAudioSession();
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       print('error on release _recorder');
     }
   }
@@ -213,8 +213,8 @@ extension _AudioRecordServices on AudioRecordServices {
         },
         onError: catchErrorLogger,
       );
-    } catch (err) {
-      logError(err);
+    } catch (err, stack) {
+      logError(err, stack);
       print('startRecorder error: $err');
       _stopRecorder();
     }
@@ -224,8 +224,8 @@ extension _AudioRecordServices on AudioRecordServices {
     try {
       await _recorder.stopRecorder();
       _cancelRecorderSubscriptions();
-    } catch (err) {
-      logError(err);
+    } catch (err, stack) {
+      logError(err, stack);
       print('stopRecorder error: $err');
       _cancelRecorderSubscriptions();
     }
@@ -320,8 +320,8 @@ extension _AudioRecordServices on AudioRecordServices {
         )
         .then((value) => value as AudioPermissionState)
         .catchError(
-      (e) {
-        logError(e);
+      (e, stack) {
+        logError(e, stack);
         return AudioPermissionState.undefined();
       },
     );
@@ -414,8 +414,8 @@ extension _AudioRecordServices on AudioRecordServices {
         )
         .then((value) => value as AudioPermissionState)
         .catchError(
-          (e) {
-            logError(e);
+          (e, stack) {
+            logError(e, stack);
             return AudioPermissionState.undefined();
           },
         );

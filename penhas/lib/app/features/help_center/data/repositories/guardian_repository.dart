@@ -35,8 +35,8 @@ class GuardianRepository extends IGuardianRepository {
     try {
       final result = await _dataSource!.fetch();
       return right(result);
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       return left(await _handleError(e));
     }
   }
@@ -48,8 +48,8 @@ class GuardianRepository extends IGuardianRepository {
     try {
       final result = await _dataSource!.create(guardian);
       return right(result);
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       return left(await _handleError(e));
     }
   }
@@ -61,8 +61,8 @@ class GuardianRepository extends IGuardianRepository {
     try {
       final result = await _dataSource!.update(guardian);
       return right(result);
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       return left(await _handleError(e));
     }
   }
@@ -74,8 +74,8 @@ class GuardianRepository extends IGuardianRepository {
     try {
       final result = await _dataSource!.delete(guardian);
       return right(result);
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       return left(await _handleError(e));
     }
   }
@@ -85,8 +85,8 @@ class GuardianRepository extends IGuardianRepository {
     try {
       final result = await _dataSource!.alert(location);
       return right(result);
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       return left(await _handleError(e));
     }
   }
@@ -96,8 +96,8 @@ class GuardianRepository extends IGuardianRepository {
     try {
       final result = await _dataSource!.callPolice();
       return right(result);
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       return left(await _handleError(e));
     }
   }

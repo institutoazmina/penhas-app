@@ -31,8 +31,8 @@ class NotificationRepository implements INotificationRepository {
         path: endPoint,
       );
       return right(parseUnread(bodyResponse));
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -50,8 +50,8 @@ class NotificationRepository implements INotificationRepository {
         parameters: parameters,
       );
       return right(parseNotifications(bodyResponse) as NotificationSessionModel);
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -59,7 +59,7 @@ class NotificationRepository implements INotificationRepository {
 
 extension _ParsePrivate on NotificationRepository {
   ValidField parseUnread(String body) {
-    final Map<String, dynamic> jsonData = jsonDecode(body);
+    final jsonData = jsonDecode(body);
     final count = "${jsonData["count"]}".safeParseInt();
     return ValidField(message: count.toString());
   }

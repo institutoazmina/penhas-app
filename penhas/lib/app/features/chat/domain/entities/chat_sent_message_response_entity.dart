@@ -29,13 +29,13 @@ class ChatSentMessageResponseEntity extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         id!,
         lastMessageEtag!,
         currentMessageEtag!,
       ];
 
-  factory ChatSentMessageResponseEntity.fromJson(Map<String, Object> jsonData) {
+  factory ChatSentMessageResponseEntity.fromJson(Map<String, dynamic> jsonData) {
     return ChatSentMessageResponseEntity(
       id: jsonData['id'] as int?,
       currentMessageEtag: jsonData['last_msg_etag'] as String?,

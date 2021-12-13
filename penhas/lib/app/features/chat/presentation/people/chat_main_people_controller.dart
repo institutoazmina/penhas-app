@@ -25,7 +25,7 @@ class ChatMainPeopleController extends _ChatMainPeopleControllerBase
 }
 
 abstract class _ChatMainPeopleControllerBase with Store, MapFailureMessage {
-  List<FilterTagEntity> _tags = List.empty();
+  List<FilterTagEntity> _tags = [];
   final IUsersRepository _usersRepository;
   final IFilterSkillRepository _skillRepository;
 
@@ -92,7 +92,7 @@ extension _ChatMainPeopleControllerBasePrivate
   }
 
   void handleLoadSession(UserSearchSessionEntity session) {
-    List<ChatMainTileEntity> tiles = List.empty();
+    List<ChatMainTileEntity> tiles = [];
 
     tiles.add(ChatMainPeopleFilterCardTile(_tags.length));
 
@@ -136,8 +136,8 @@ extension _ChatMainPeopleControllerBasePrivate
     try {
       _tags.firstWhere((v) => v.id == id);
       return true;
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       return false;
     }
   }

@@ -27,7 +27,7 @@ class UserDetailProfileEntity extends Equatable {
   final String? activity;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         nickname!,
         avatar!,
         clientId!,

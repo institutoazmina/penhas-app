@@ -8,14 +8,14 @@ class AppPreferencesStore extends LocalStore<AppPreferencesEntity> {
       : super('br.com.penhas.app_preferences', storage);
 
   @override
-  AppPreferencesEntity defaultEntity() => const AppPreferencesEntity(
+  AppPreferencesEntity defaultEntity() => AppPreferencesEntity(
         inactiveAppSince: null,
         inactiveAppLogoutTimeInSeconds: 30,
       );
 
   @override
   AppPreferencesEntity fromJson(Map<String, dynamic> json) {
-    return AppPreferencesModel.fromJson(json as Map<String, Object>);
+    return AppPreferencesModel.fromJson(json as Map<String, dynamic>);
   }
 
   @override

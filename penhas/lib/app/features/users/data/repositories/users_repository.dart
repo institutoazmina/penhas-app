@@ -37,8 +37,8 @@ class UsersRepository implements IUsersRepository {
           .get(path: endPoint, parameters: parameters)
           .parseDetail();
       return right(response);
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -62,8 +62,8 @@ class UsersRepository implements IUsersRepository {
           .get(path: endPoint, parameters: parameters)
           .parseSearchSession();
       return right(response);
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -71,14 +71,15 @@ class UsersRepository implements IUsersRepository {
 
 extension _FutureExtension<T extends String> on Future<T> {
   Future<UserDetailEntity> parseDetail() async {
-    return then((data) async {
+    return this.then((data) async {
       final jsonData = jsonDecode(data) as Map<String, dynamic>;
       return UserDetailModel.fromJson(jsonData);
     });
   }
 
   Future<UserSearchSessionEntity> parseSearchSession() async {
-    return then((v) => jsonDecode(v) as Map<String, dynamic>)
+    return this
+        .then((v) => jsonDecode(v) as Map<String, dynamic>)
         .then((v) => UserSearchSessionModel.fromJson(v));
   }
 }

@@ -28,7 +28,7 @@ class ChatChannelAvailableEntity extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         hasMore!,
         nextPage!,
         channels!,

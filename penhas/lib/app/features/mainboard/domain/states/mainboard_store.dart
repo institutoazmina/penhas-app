@@ -18,60 +18,66 @@ class MainboardStore extends _MainboardStoreBase with _$MainboardStore {
 }
 
 abstract class _MainboardStoreBase with Store {
+  final IAppModulesServices _modulesServices;
+  final MainboardState _initialPage;
+  late Future setupProgress;
+
   _MainboardStoreBase(this._modulesServices, this._initialPage) {
     setupProgress = setup();
   }
 
-  PageController? pageController;
+  PageController pageController = PageController(initialPage: 0);
+
+  @observable
+  ObservableList<MainboardState> pages =
+      List<MainboardState>.empty().asObservable();
 
   @observable
   MainboardState? selectedPage;
 
-  @observable
-  ObservableList<MainboardState>? pages;
-
   @action
-  void changePage({required MainboardState to}) {
-    final int index = pages!.indexOf(to);
+  Future changePage({required MainboardState to}) async {
+    await setupProgress;
+    final int index = pages.indexOf(to);
 
     if (index < 0) {
       return;
     }
 
-    pageController!.jumpToPage(index);
+    pageController.jumpToPage(index);
     selectedPage = to;
   }
 }
 
 extension _Methods on _MainboardStoreBase {
   Future<void> setup() async {
-    List<MainboardState> autorizedPages = List.empty();
+    List<MainboardState> authorizedPages = [];
 
     if (await FeedToggleFeature(modulesServices: _modulesServices).isEnabled) {
-      authorizedPages.add(const MainboardState.feed());
+      authorizedPages.add(MainboardState.feed());
     }
 
     if (await TweetToggleFeature(modulesServices: _modulesServices).isEnabled) {
-      authorizedPages.add(const MainboardState.compose());
+      authorizedPages.add(MainboardState.compose());
     }
 
     if (await SecurityModeActionFeature(modulesServices: _modulesServices)
         .isEnabled) {
-      authorizedPages.add(const MainboardState.helpCenter());
+      authorizedPages.add(MainboardState.helpCenter());
     }
 
     if (await ChatSupportToggleFeature(modulesServices: _modulesServices)
         .isEnabled) {
-      authorizedPages.add(const MainboardState.chat());
+      authorizedPages.add(MainboardState.chat());
     }
 
     if (await SupportCenterToggleFeature(modulesServices: _modulesServices)
         .isEnabled) {
-      authorizedPages.add(const MainboardState.supportPoint());
+      authorizedPages.add(MainboardState.supportPoint());
     }
 
     pages = authorizedPages.asObservable();
     selectedPage = _initialPage;
-    pageController = PageController(initialPage: pages!.indexOf(_initialPage));
+    pageController = PageController(initialPage: pages.indexOf(_initialPage));
   }
 }

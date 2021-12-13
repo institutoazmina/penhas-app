@@ -10,7 +10,7 @@ class GuardianTileHeaderEntity extends GuardianTileEntity {
   GuardianTileHeaderEntity({required this.title});
 
   @override
-  List<Object> get props => [title!];
+  List<Object?> get props => [title!];
 }
 
 class GuardianTileDescriptionEntity extends GuardianTileEntity {
@@ -19,7 +19,7 @@ class GuardianTileDescriptionEntity extends GuardianTileEntity {
   GuardianTileDescriptionEntity({required this.description});
 
   @override
-  List<Object> get props => [description!];
+  List<Object?> get props => [description!];
 }
 
 class GuardianTileCardEntity extends GuardianTileEntity {
@@ -44,7 +44,7 @@ class GuardianTileCardEntity extends GuardianTileEntity {
   final void Function()? onResendPressed;
 
   @override
-  List<Object> get props => [guardian, deleteWarning!];
+  List<Object?> get props => [guardian, deleteWarning!];
 }
 
 class GuardianTileEmptyCardEntity extends GuardianTileEntity {

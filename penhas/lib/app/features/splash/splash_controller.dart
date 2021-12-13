@@ -53,12 +53,12 @@ abstract class _SplashControllerBase with Store {
   void _forwardToAuthenticated() async {
     final profile = await _userProfileStore.retrieve();
 
-    if (profile.stealthModeEnabled!) {
+    if (profile.stealthModeEnabled) {
       Modular.to.pushReplacementNamed('/authentication/stealth');
       return;
     }
 
-    if (profile.anonymousModeEnabled!) {
+    if (profile.anonymousModeEnabled) {
       Modular.to.pushReplacementNamed('/authentication/sign_in_stealth');
       return;
     }

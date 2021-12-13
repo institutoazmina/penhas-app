@@ -52,14 +52,14 @@ class UserProfileModel extends UserProfileEntity {
         'email': email,
         'apelido': nickname,
         'avatar_url': avatar,
-        'modo_camuflado_ativo': stealthModeEnabled ?? false ? 1 : 0,
-        'modo_anonimo_ativo': anonymousModeEnabled ?? false ? 1 : 0,
+        'modo_camuflado_ativo': stealthModeEnabled ? 1 : 0,
+        'modo_anonimo_ativo': anonymousModeEnabled ? 1 : 0,
         'dt_nasc': birthdate.toIso8601String(),
         'nome_completo': fullName,
         'minibio': minibio,
         'raca': race,
         'genero': genre,
-        'ja_foi_vitima_de_violencia': jaFoiVitimaDeViolencia ?? false ? 1 : 0,
+        'ja_foi_vitima_de_violencia': jaFoiVitimaDeViolencia ? 1 : 0,
         'skills': skill
       };
 }

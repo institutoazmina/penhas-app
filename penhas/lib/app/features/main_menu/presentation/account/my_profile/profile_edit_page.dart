@@ -115,7 +115,7 @@ extension _PageBuilder on _ProfileEditPageState {
               if (securityModeFeatureEnabled)
                 CardProfileSingleTilePage(
                   title: "Já foi vítima de violência contra a mulher?",
-                  content: profile.jaFoiVitimaDeViolencia! ? "Sim" : "Não",
+                  content: profile.jaFoiVitimaDeViolencia? "Sim" : "Não",
                 ),
               const CardProfileSingleTilePage(
                 title: 'Cadastro',

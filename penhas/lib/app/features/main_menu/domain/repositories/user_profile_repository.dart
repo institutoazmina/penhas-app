@@ -42,8 +42,8 @@ class UserProfileRepository implements IUserProfileRepository {
           .post(path: endPoint, parameters: parameters)
           .parseValidField();
       return right(response);
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -58,8 +58,8 @@ class UserProfileRepository implements IUserProfileRepository {
           .post(path: endPoint, parameters: parameters)
           .parseValidField();
       return right(response);
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -77,8 +77,8 @@ class UserProfileRepository implements IUserProfileRepository {
     try {
       await _apiProvider!.delete(path: endPoint, parameters: parameters);
       return right(ValidField());
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -90,8 +90,8 @@ class UserProfileRepository implements IUserProfileRepository {
     try {
       final response = await _apiProvider!.get(path: endPoint).parseValidField();
       return right(response);
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -109,8 +109,8 @@ class UserProfileRepository implements IUserProfileRepository {
     try {
       await _apiProvider!.post(path: endPoint, parameters: parameters);
       return right(ValidField(message: token));
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -121,11 +121,11 @@ class UserProfileRepository implements IUserProfileRepository {
 
     try {
       final data = await _apiProvider!.get(path: endPoint);
-      final jsonData = jsonDecode(data) as Map<String, Object>;
+      final jsonData = jsonDecode(data) as Map<String, dynamic>;
       final session = AccountPreferenceSessionModel.fromJson(jsonData);
       return right(session);
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -139,11 +139,11 @@ class UserProfileRepository implements IUserProfileRepository {
     try {
       final data =
           await _apiProvider!.post(path: endPoint, parameters: parameters);
-      final jsonData = jsonDecode(data) as Map<String, Object>;
+      final jsonData = jsonDecode(data) as Map<String, dynamic>;
       final session = AccountPreferenceSessionModel.fromJson(jsonData);
       return right(session);
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }

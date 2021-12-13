@@ -40,14 +40,12 @@ class _MainboardPageState
 
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) {
-        return controller.securityState.when(
-          enable: () => enabledSecurityMode(),
-          disable: () => disabledSecurityMode(),
-        );
-      },
-    );
+    return Observer(builder: (_) {
+      return controller.securityState.when(
+        enable: () => enabledSecurityMode(),
+        disable: () => disabledSecurityMode(),
+      );
+    });
   }
 
   Widget _buildFab() {
@@ -78,7 +76,7 @@ class _MainboardPageState
 }
 
 extension _SecurityModeBuilder on _MainboardPageState {
-  Widget enabledSecurityMode(MainboardState? currentPage) {
+  Widget enabledSecurityMode() {
     return Scaffold(
       appBar: MainBoardAppBarPage(
         counter: controller.notificationCounter,
@@ -101,7 +99,7 @@ extension _SecurityModeBuilder on _MainboardPageState {
     );
   }
 
-  Widget disabledSecurityMode(MainboardState? currentPage) {
+  Widget disabledSecurityMode() {
     return Scaffold(
       appBar: MainBoardAppBarPage(
         counter: controller.notificationCounter,

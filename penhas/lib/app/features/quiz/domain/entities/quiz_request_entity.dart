@@ -15,7 +15,7 @@ class QuizRequestEntity extends Equatable {
   final Map<String, String> options;
 
   @override
-  List<Object> get props => [sessionId!, options];
+  List<Object?> get props => [sessionId!, options];
 
   @override
   bool get stringify => true;

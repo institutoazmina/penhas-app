@@ -255,8 +255,8 @@ extension _Maps on _SupportCenterShowPageState {
           );
         },
       );
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       print(e);
     }
   }

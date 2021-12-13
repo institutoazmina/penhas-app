@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:penhas/app/core/extension/safetly_parser.dart';
 
 class SupportCenterPlaceEntity extends Equatable {
-  final int? id;
+  final String id;
   final String? rate;
   final int ratedByClient;
   final String? distance;
@@ -34,32 +34,32 @@ class SupportCenterPlaceEntity extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [
-        this.id!,
-        this.rate!,
+  List<Object?> get props => [
+        this.id,
+        this.rate,
         this.ratedByClient,
-        this.distance!,
-        this.latitude!,
-        this.longitude!,
-        this.name!,
-        this.uf!,
-        this.fullStreet!,
+        this.distance,
+        this.latitude,
+        this.longitude,
+        this.name,
+        this.uf,
+        this.fullStreet,
         this.category,
-        this.typeOfPlace!,
-        this.htmlContent!,
+        this.typeOfPlace,
+        this.htmlContent,
       ];
 
-  static SupportCenterPlaceEntity fromJson(Map<String, Object> jsonData) {
-    final id = jsonData["id"].safeParseInt();
+  static SupportCenterPlaceEntity fromJson(Map<String, dynamic> jsonData) {
+    final id = "${jsonData["id"]}";
     final rate = jsonData["avaliacao"];
-    final ratedByClient = jsonData["cliente_avaliacao"].safeParseInt() ?? 0;
+    final ratedByClient = "${jsonData["cliente_avaliacao"]}".safeParseInt();
     final distance = jsonData["distancia"];
-    final latitude = jsonData["latitude"].safeParseDouble();
-    final longitude = jsonData["longitude"].safeParseDouble();
+    final latitude = "${jsonData["latitude"]}".safeParseDouble();
+    final longitude = "${jsonData["longitude"]}".safeParseDouble();
     final name = jsonData["nome"];
     final uf = jsonData["uf"];
-    final category = _SupportCenterPlaceCategoryEntityParse.fromJson(
-        jsonData["categoria"] as Map<String, Object>);
+    final category =
+        _SupportCenterPlaceCategoryEntityParse.fromJson(jsonData["categoria"]);
 
     final String? fullStreet = _Parse.getFullAddress(jsonData);
     final typeOfPlace = jsonData["natureza"];
@@ -67,17 +67,17 @@ class SupportCenterPlaceEntity extends Equatable {
 
     return SupportCenterPlaceEntity(
       id: id,
-      rate: rate as String?,
+      rate: rate,
       ratedByClient: ratedByClient,
-      distance: distance as String?,
+      distance: distance,
       latitude: latitude,
       longitude: longitude,
-      name: name as String?,
-      uf: uf as String?,
+      name: name,
+      uf: uf,
       fullStreet: fullStreet,
       category: category,
-      typeOfPlace: typeOfPlace as String?,
-      htmlContent: htmlContent as String?,
+      typeOfPlace: typeOfPlace,
+      htmlContent: htmlContent,
     );
   }
 
@@ -96,11 +96,7 @@ class SupportCenterPlaceCategoryEntity extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [
-        id!,
-        name!,
-        color!,
-      ];
+  List<Object?> get props => [id, name, color];
 }
 
 class SupportCenterPlaceCategoryEntity extends Equatable {
@@ -124,8 +120,7 @@ class SupportCenterPlaceCategoryEntity extends Equatable {
 extension _SupportCenterPlaceCategoryEntityParse
     on SupportCenterPlaceCategoryEntity {
   static SupportCenterPlaceCategoryEntity fromJson(
-    Map<String, dynamic> jsonData,
-  ) {
+      Map<String, dynamic> jsonData) {
     return SupportCenterPlaceCategoryEntity(
       id: jsonData['id'] as int?,
       color: jsonData['cor'] as String?,

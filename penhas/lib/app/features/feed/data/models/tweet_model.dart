@@ -34,7 +34,7 @@ class TweetModel extends TweetEntity {
       owner: meta['owner'] == 1,
     );
 
-    List<TweetModel> lastReply = List.empty();
+    List<TweetModel> lastReply = [];
     if (jsonData['last_reply'] != null) {
       lastReply = [
         TweetModel.fromJson(jsonData['last_reply'])

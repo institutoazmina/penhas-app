@@ -17,5 +17,5 @@ class SupportCenterMetadataEntity extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [categories!, projects!];
+  List<Object?> get props => [categories, projects];
 }

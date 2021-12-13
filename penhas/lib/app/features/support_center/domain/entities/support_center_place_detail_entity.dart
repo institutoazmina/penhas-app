@@ -20,9 +20,5 @@ class SupportCenterPlaceDetailEntity extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [
-        maximumRate!,
-        ratedByClient!,
-        place!,
-      ];
+  List<Object?> get props => [maximumRate, ratedByClient, place];
 }

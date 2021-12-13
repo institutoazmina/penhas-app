@@ -68,8 +68,8 @@ class AudioSyncManager implements IAudioSyncManager {
       syncAudios();
 
       return true;
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       return true;
     }
   }
@@ -89,8 +89,8 @@ class AudioSyncManager implements IAudioSyncManager {
         (l) => left(l),
         (r) => right(file),
       );
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       file.deleteSync();
       return left(FileSystemFailure());
     }
@@ -166,8 +166,8 @@ extension _AudioSyncManager on AudioSyncManager {
         final file = _pendingUploadAudio.removeFirst();
         await _syncAudio(file);
       }
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
     }
 
     _pendingUploadAudio.retainWhere((e) => e.existsSync());
@@ -195,8 +195,8 @@ extension _AudioSyncManager on AudioSyncManager {
         (l) => handleUploadFailure(l, file),
         (r) => file.deleteSync(),
       );
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
     }
 
     return Future.value();
@@ -210,8 +210,8 @@ extension _AudioSyncManager on AudioSyncManager {
     int epoch;
     try {
       epoch = int.parse(time);
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       epoch = DateTime.now()
           .toUtc()
           .subtract(const Duration(minutes: 1))

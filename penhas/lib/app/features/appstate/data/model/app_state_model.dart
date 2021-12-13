@@ -9,7 +9,7 @@ class AppStateModel extends AppStateEntity {
   final QuizSessionEntity? quizSession;
   final UserProfileEntity? userProfile;
   final AppStateModeEntity appMode;
-  final List<AppStateModuleEntity?>? modules;
+  final List<AppStateModuleEntity> modules;
 
   AppStateModel(
     this.quizSession,
@@ -24,15 +24,16 @@ class AppStateModel extends AppStateEntity {
         );
 
   factory AppStateModel.fromJson(Map<String, dynamic> jsonData) {
-    final hasActivedGuardian =
-        ((jsonData['qtde_guardioes_ativos'] as num?)?.toInt() ?? 0) > 0;
+    final qtyActiveGuardians = jsonData['qtde_guardioes_ativos'] ?? 0;
     final appMode = AppStateModeEntity(
       hasActivedGuardian: qtyActiveGuardians > 0,
     );
 
     final quizSession = _parseQuizSession(jsonData['quiz_session']);
     final userProfile = _parseUserProfile(jsonData['user_profile']);
-    final modules = _parseAppModules(jsonData['modules'] as List<Object>?);
+    List<AppStateModuleEntity> modules = jsonData.containsKey('modules')
+        ? _parseAppModules(jsonData['modules'] as List<dynamic>)
+        : [];
     return AppStateModel(quizSession, userProfile, appMode, modules);
   }
 
@@ -58,7 +59,7 @@ class AppStateModel extends AppStateEntity {
     );
   }
 
-  static List<QuizMessageEntity>? _parseQuizMessage(List<Object>? data) {
+  static List<QuizMessageEntity>? _parseQuizMessage(List<dynamic>? data) {
     if (data == null || data.isEmpty) {
       return null;
     }
@@ -69,32 +70,28 @@ class AppStateModel extends AppStateEntity {
         .toList();
   }
 
-  static List<AppStateModuleEntity?>? _parseAppModules(List<Object>? data) {
+  static List<AppStateModuleEntity> _parseAppModules(List<dynamic>? data) {
     if (data == null || data.isEmpty) {
       return [];
     }
 
-    List<AppStateModuleEntity?> result = data
-        .map((e) => e as Map<String, dynamic>)
+    return data
         .map((e) => _buildModule(e))
+        .whereNotNull()
         .toList();
-
-    result.removeWhere((e) => e == null);
-    return result;
   }
 
-  static AppStateModuleEntity? _buildModule(Map<String, dynamic>? message) {
-    if (message == null || message.isEmpty) {
+  static AppStateModuleEntity? _buildModule(Map<String, dynamic> module) {
+    if (module.isEmpty) {
       return null;
     }
 
-    String? code = message['code'] as String?;
-    if (code == null || code.toString().isEmpty) {
+    String? code = module['code'];
+    if (code == null || code.isEmpty) {
       return null;
     }
 
-    final String meta =
-        module['meta'] == null ? '{}' : jsonEncode(module['meta']);
+    String meta = module['meta'] == null ? '{}' : jsonEncode(module['meta']);
     return AppStateModuleEntity(code: code, meta: meta);
   }
 
@@ -106,7 +103,7 @@ class AppStateModel extends AppStateEntity {
     return [
       QuizMessageEntity(
         content: message['content'],
-        ref: message['ref'],
+        ref: message['ref'] ?? "",
         style: message['style'],
         action: message['action'],
         buttonLabel: message['label'],
@@ -166,7 +163,7 @@ class AppStateModel extends AppStateEntity {
         .toList();
   }
 
-  static UserProfileEntity? _parseUserProfile(Map<String, Object>? jsonData) {
+  static UserProfileEntity? _parseUserProfile(Map<String, dynamic>? jsonData) {
     if (jsonData == null || jsonData.isEmpty) {
       return null;
     }

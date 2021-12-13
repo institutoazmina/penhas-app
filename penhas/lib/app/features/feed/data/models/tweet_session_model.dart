@@ -17,20 +17,20 @@ class TweetSessionModel extends TweetSessionEntity {
           nextPage: nextPage,
         );
 
-  factory TweetSessionModel.fromJson(Map<String, Object> jsonData) {
+  factory TweetSessionModel.fromJson(Map<String, dynamic> jsonData) {
     final hasMore = jsonData['has_more'] == 1;
     final nextPage = jsonData['next_page'];
     final orderBy = jsonData['order_by'] == 'latest_first'
         ? TweetSessionOrder.latestFirst
         : TweetSessionOrder.oldestFirst;
-    final tweets = _parseTweet(jsonData['tweets'] as List<Object>?);
+    final tweets = _parseTweet(jsonData['tweets']);
     final parent =
         jsonData['parent'] != null ? _parseJson(jsonData['parent'] as Map<String, dynamic>) : null;
 
     return TweetSessionModel(hasMore, orderBy, parent, tweets, nextPage as String?);
   }
 
-  static List<TweetTiles?> _parseTweet(List<Object>? tweets) {
+  static List<TweetTiles?> _parseTweet(List<dynamic>? tweets) {
     if (tweets == null || tweets.isEmpty) {
       return [];
     }
@@ -44,19 +44,19 @@ class TweetSessionModel extends TweetSessionEntity {
 
   static TweetTiles? _parseJson(Map<String, dynamic> json) {
     if (json['type'] == 'tweet') {
-      return TweetModel.fromJson(json as Map<String, Object>);
+      return TweetModel.fromJson(json);
     }
 
     if (json['type'] == 'related_news') {
-      return TweetRelatedNewsModel.fromJson(json as Map<String, Object>);
+      return TweetRelatedNewsModel.fromJson(json as Map<String, dynamic>);
     }
 
     if (json['type'] == 'news') {
-      return TweetNewsModel.fromJson(json as Map<String, Object>);
+      return TweetNewsModel.fromJson(json as Map<String, dynamic>);
     }
 
     if (json['type'] == 'news_group') {
-      return TweetNewsGroupModel.fromJson(json as Map<String, Object>);
+      return TweetNewsGroupModel.fromJson(json as Map<String, dynamic>);
     }
 
     return null;

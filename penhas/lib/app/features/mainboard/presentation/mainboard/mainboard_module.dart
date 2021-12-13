@@ -465,7 +465,7 @@ class MainboardModule extends Module {
         ),
         Bind<IAppStateDataSource>(
           (i) => AppStateDataSource(
-            apliClient: i.get<http.Client>(),
+            apiClient: i.get<http.Client>(),
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),

@@ -189,7 +189,7 @@ extension _ChatPageStateMethods on _ChatPageState {
     BuildContext context,
     ChatChannelSessionMetadataEntity metadata,
   ) {
-    List<Widget> actions = List.empty();
+    List<Widget> actions = [];
 
     if (metadata.canSendMessage) {
       actions.add(

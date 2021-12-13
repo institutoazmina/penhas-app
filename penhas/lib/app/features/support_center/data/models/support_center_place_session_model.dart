@@ -27,15 +27,14 @@ class SupportCenterPlaceSessionModel extends SupportCenterPlaceSessionEntity {
         );
 
   factory SupportCenterPlaceSessionModel.fromJson(
-    Map<String, dynamic> jsonData,
-  ) {
+      Map<String, dynamic> jsonData) {
     final maximumRate = "${jsonData["avaliacao_maxima"]}".safeParseInt();
     final latitude = "${jsonData["latitude"]}".safeParseDouble();
     final longitude = "${jsonData["longitude"]}".safeParseDouble();
     final hasMore = "${jsonData["has_more"]}".safeParseBool();
-    final nextPage = jsonData['label'];
+    final nextPage = jsonData["label"];
 
-    final places = (jsonData['rows'] as List<dynamic>)
+    final places = (jsonData["rows"] as List<dynamic>)
         .map((e) => e as Map<String, dynamic>)
         .map((e) => SupportCenterPlaceEntity.fromJson(e))
         .toList();
@@ -45,7 +44,7 @@ class SupportCenterPlaceSessionModel extends SupportCenterPlaceSessionEntity {
       latitude,
       longitude,
       hasMore,
-      nextPage as String?,
+      nextPage,
       places,
     );
   }

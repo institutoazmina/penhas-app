@@ -27,7 +27,7 @@ class SupportCenterController extends _SupportCenterControllerBase
 }
 
 abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
-  List<FilterTagEntity> _tags = List.empty();
+  List<FilterTagEntity> _tags = [];
   late SupportCenterPlaceSessionEntity currentPlaceSession;
   var _fetchRequest = SupportCenterFetchRequest();
 
@@ -169,8 +169,8 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     try {
       _tags.firstWhere((v) => v.id == id);
       return true;
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       return false;
     }
   }

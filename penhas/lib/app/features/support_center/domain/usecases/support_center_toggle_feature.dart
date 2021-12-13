@@ -7,14 +7,8 @@ class SupportCenterToggleFeature {
   final IAppModulesServices _modulesServices;
   static String featureCode = 'pontos_de_apoio';
 
-  Future<bool> get isEnabled => _isEnabled();
+  Future<bool> get isEnabled => _modulesServices.isEnabled(featureCode);
 
   SupportCenterToggleFeature({required IAppModulesServices modulesServices})
       : this._modulesServices = modulesServices;
-
-  Future<bool> _isEnabled() async {
-    final module = await _modulesServices.feature(
-        name: SupportCenterToggleFeature.featureCode);
-    return module != null;
-  }
 }

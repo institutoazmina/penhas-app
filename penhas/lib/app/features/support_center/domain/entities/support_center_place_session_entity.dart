@@ -29,12 +29,12 @@ class SupportCenterPlaceSessionEntity extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [
-        maximumRate!,
-        latitude!,
-        longitude!,
-        nextPage!,
-        hasMore!,
-        places!,
+  List<Object?> get props => [
+        maximumRate,
+        latitude,
+        longitude,
+        nextPage,
+        hasMore,
+        places,
       ];
 }

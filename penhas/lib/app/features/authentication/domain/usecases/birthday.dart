@@ -93,8 +93,8 @@ class Birthday extends Equatable with MapValidatorFailure {
   static int _parseIntSafety(String value) {
     try {
       return int.parse(value);
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       return 99;
     }
   }

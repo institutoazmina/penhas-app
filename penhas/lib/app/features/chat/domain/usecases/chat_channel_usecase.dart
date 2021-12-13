@@ -157,7 +157,7 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
   ) {
     _newestPagination = session.newer;
     _oldestPagination = session.older;
-    List<ChatChannelMessage> messages = List.empty();
+    List<ChatChannelMessage> messages = [];
 
     if (_currentSession?.user != session.user) {
       _streamController.add(ChatChannelUseCaseEvent.updateUser(session.user!));

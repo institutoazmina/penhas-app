@@ -110,7 +110,7 @@ class TweetTitle extends StatelessWidget {
   }
 
   List<Widget> _buildAction() {
-    List<Widget> actions = List.empty();
+    List<Widget> actions = [];
     if (!tweet.anonymous && !tweet.meta.owner) {
       actions.add(
         ListTile(

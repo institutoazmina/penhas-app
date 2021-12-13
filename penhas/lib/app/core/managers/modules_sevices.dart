@@ -5,9 +5,11 @@ import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 
 abstract class IAppModulesServices {
-  Future<void> save(List<AppStateModuleEntity?>? modules);
+  Future<void> save(List<AppStateModuleEntity> modules);
 
-  Future<AppStateModuleEntity> feature({required String name});
+  Future<bool> isEnabled(String name);
+
+  Future<AppStateModuleEntity?> feature({required String name});
 }
 
 class AppModulesServices implements IAppModulesServices {
@@ -18,18 +20,24 @@ class AppModulesServices implements IAppModulesServices {
       : this._storage = storage;
 
   @override
-  Future<void> save(List<AppStateModuleEntity?>? modules) {
-    final data = modules!.map((e) => e!.toJson()).toList();
+  Future<void> save(List<AppStateModuleEntity> modules) {
+    final data = modules.map((e) => e.toJson()).toList();
     final jsonString = jsonEncode(data);
     return _storage.put(_appModuleKey, jsonString);
   }
 
   @override
-  Future<AppStateModuleEntity> feature({required String name}) {
+  Future<bool> isEnabled(String name) async {
+    return await feature(name: name) != null;
+  }
+
+  @override
+  Future<AppStateModuleEntity?> feature({required String name}) {
     return _storage
         .get(_appModuleKey)
-        .then((source) => jsonDecode(source ?? "[]") as List<dynamic>)
-        .then((value) => _filterFeature(name: name, objects: value)!);
+        .then((value) => value.getOrElse(() => "[]"))
+        .then((source) => jsonDecode(source) as List<dynamic>)
+        .then((value) => _filterFeature(name: name, objects: value));
   }
 
   AppStateModuleEntity? _filterFeature(

@@ -41,7 +41,7 @@ class FeedUseCases {
       StreamController.broadcast();
 
   Stream<FeedCache> get dataSource => _streamController.stream;
-  List<TweetTiles?> _tweetCacheFetch = List.empty();
+  List<TweetTiles?> _tweetCacheFetch = [];
   Map<String?, List<TweetEntity?>> _tweetReplyMap = {};
   String? _nextPage;
 

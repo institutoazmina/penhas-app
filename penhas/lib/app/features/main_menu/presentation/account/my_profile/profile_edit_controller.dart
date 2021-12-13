@@ -29,7 +29,7 @@ abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
   final AppStateUseCase _appStateUseCase;
   final IFilterSkillRepository _skillRepository;
   final SecurityModeActionFeature _securityModeActionFeature;
-  List<FilterTagEntity>? _tags = List.empty();
+  List<FilterTagEntity>? _tags = [];
 
   _ProfileEditControllerBase(
     this._appStateUseCase,
@@ -200,8 +200,8 @@ extension _PrivateMethod on _ProfileEditControllerBase {
     try {
       profileSkill.firstWhere((v) => v!.id == id);
       return true;
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       return false;
     }
   }
@@ -214,8 +214,8 @@ extension _PrivateMethod on _ProfileEditControllerBase {
         isSelected: true,
         label: tag.label,
       );
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       return null;
     }
   }

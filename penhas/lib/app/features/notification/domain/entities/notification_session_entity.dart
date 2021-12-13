@@ -16,7 +16,7 @@ class NotificationSessionEntity extends Equatable {
   final List<NotificationEntity>? notifications;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         this.hasMore,
         this.nextPage!,
         this.notifications!,
@@ -51,7 +51,7 @@ class NotificationEntity extends Equatable {
   final String? route;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         this.content!,
         this.icon!,
         this.name!,

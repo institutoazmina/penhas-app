@@ -30,7 +30,7 @@ class TweetEntity extends TweetTiles {
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         id!,
         meta,
         avatar!,
@@ -132,7 +132,7 @@ class TweetNewsEntity extends TweetTiles {
   final String? title;
 
   @override
-  List<Object> get props => [date!, newsUri!, imageUri!, source!, title!];
+  List<Object?> get props => [date!, newsUri!, imageUri!, source!, title!];
 
   @override
   bool get stringify => true;

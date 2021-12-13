@@ -11,23 +11,23 @@ abstract class IAppStateDataSource {
 }
 
 class AppStateDataSource implements IAppStateDataSource {
-  final http.Client? _apiClient;
-  final IApiServerConfigure? _serverConfiguration;
+  final http.Client _apiClient;
+  final IApiServerConfigure _serverConfiguration;
   final Set<int> _successfulResponse = {200};
   final Set<int> _invalidSessionCode = {401, 403};
 
   AppStateDataSource({
-    required http.Client? apliClient,
+    required http.Client apiClient,
     required serverConfiguration,
-  })  : this._apiClient = apliClient,
+  })  : this._apiClient = apiClient,
         this._serverConfiguration = serverConfiguration;
 
   @override
   Future<AppStateModel> check() async {
     final httpHeader = await _setupHttpHeader();
-    final httpRequest = _serverConfiguration!.baseUri.replace(path: '/me');
+    final httpRequest = _serverConfiguration.baseUri.replace(path: '/me');
 
-    final response = await _apiClient!.get(httpRequest, headers: httpHeader);
+    final response = await _apiClient.get(httpRequest, headers: httpHeader);
     if (_successfulResponse.contains(response.statusCode)) {
       return AppStateModel.fromJson(json.decode(response.body));
     } else if (_invalidSessionCode.contains(response.statusCode)) {
@@ -43,7 +43,7 @@ class AppStateDataSource implements IAppStateDataSource {
     httpHeader['Content-Type'] =
         'application/x-www-form-urlencoded; charset=utf-8';
 
-    final httpRequest = _serverConfiguration!.baseUri.replace(path: '/me');
+    final httpRequest = _serverConfiguration.baseUri.replace(path: '/me');
 
     List<String?> parameters = [
       update.nickName == null
@@ -70,7 +70,7 @@ class AppStateDataSource implements IAppStateDataSource {
     parameters.removeWhere((e) => e == null);
     final bodyContent = parameters.join('&');
 
-    final response = await _apiClient!.put(httpRequest,
+    final response = await _apiClient.put(httpRequest,
         headers: httpHeader, body: bodyContent);
     if (_successfulResponse.contains(response.statusCode)) {
       return AppStateModel.fromJson(json.decode(response.body));
@@ -82,8 +82,8 @@ class AppStateDataSource implements IAppStateDataSource {
   }
 
   Future<Map<String, String>> _setupHttpHeader() async {
-    final userAgent = await _serverConfiguration!.userAgent;
-    final apiToken = await _serverConfiguration!.apiToken;
+    final userAgent = await _serverConfiguration.userAgent;
+    final apiToken = await _serverConfiguration.apiToken;
     return {
       'X-Api-Key': apiToken ?? "",
       'User-Agent': userAgent,

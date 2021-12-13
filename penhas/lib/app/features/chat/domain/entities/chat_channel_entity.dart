@@ -24,7 +24,7 @@ class ChatChannelEntity extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         token!,
         lastMessageTime!,
         lastMessageIsMime!,

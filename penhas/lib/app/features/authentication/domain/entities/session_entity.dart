@@ -13,7 +13,7 @@ class SessionEntity extends Equatable {
   final bool deletedScheduled;
 
   @override
-  List<Object> get props => [sessionToken!];
+  List<Object?> get props => [sessionToken!];
 
   @override
   bool get stringify => true;

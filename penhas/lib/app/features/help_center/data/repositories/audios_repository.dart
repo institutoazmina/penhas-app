@@ -29,8 +29,8 @@ class AudiosRepository implements IAudiosRepository {
     try {
       final response = await _apiProvider!.get(path: endPoint).parseAudios();
       return right(response);
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -43,8 +43,8 @@ class AudiosRepository implements IAudiosRepository {
       final response =
           await _apiProvider!.delete(path: endPoint).parseValidField();
       return right(response);
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -57,8 +57,8 @@ class AudiosRepository implements IAudiosRepository {
       final response =
           await _apiProvider!.post(path: endPoint).parseValidField();
       return right(response);
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -67,7 +67,7 @@ class AudiosRepository implements IAudiosRepository {
 extension _FutureExtension<T extends String> on Future<T> {
   Future<List<AudioEntity>> parseAudios() async {
     return this.then((data) async {
-      final jsonData = jsonDecode(data) as Map<String, Object>?;
+      final jsonData = jsonDecode(data) as Map<String, dynamic>?;
       return AudioModel.fromJson(jsonData);
     });
   }

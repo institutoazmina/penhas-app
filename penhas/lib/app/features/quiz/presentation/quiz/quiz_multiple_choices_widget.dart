@@ -23,7 +23,7 @@ class QuizMultipleChoicesWidget extends StatefulWidget {
 }
 
 class _QuizMultipleChoicesWidgetState extends State<QuizMultipleChoicesWidget> {
-  final _selectedValues = List.empty();
+  final _selectedValues = [];
 
   @override
   void initState() {

@@ -23,11 +23,11 @@ class LocalStorageSharedPreferences implements ILocalStorage {
   }
 
   @override
-  Future<String?> get(String key) async {
+  Future<Either<dynamic, String>> get(String key) async {
     final shared = await _instance.future;
     return catching(() {
       final value = shared.getString(key);
-      if (value == null) throw ValueNotFound('Value not found with key `$key`');
+      if (value == null) throw ValueNotFound("Value not found with key `$key`");
       return value;
     });
   }
@@ -43,6 +43,6 @@ class LocalStorageSharedPreferences implements ILocalStorage {
   }
 }
 
-class ValueNotFound extends NonCriticalError {
+class ValueNotFound extends HandledException {
   ValueNotFound(String message) : super(message);
 }

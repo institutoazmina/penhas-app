@@ -73,8 +73,8 @@ extension _AudioPlayServicesPrivate on AudioPlayServices {
         await _playerModule.stopPlayer();
       }
       await _playerModule.closeAudioSession();
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       print(e);
     }
   }

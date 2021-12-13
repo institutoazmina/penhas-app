@@ -31,10 +31,10 @@ class InactivityLogoutUseCase {
 
     final profile = await _userProfileStore!.retrieve();
 
-    if (profile.stealthModeEnabled!) {
+    if (profile.stealthModeEnabled) {
       return right(AppRoute('/authentication/stealth'));
     }
-    if (profile.anonymousModeEnabled!) {
+    if (profile.anonymousModeEnabled) {
       return right(AppRoute('/authentication/sign_in_stealth'));
     }
 

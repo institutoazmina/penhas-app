@@ -47,7 +47,7 @@ class AppStateEntity extends Equatable {
   final QuizSessionEntity? quizSession;
   final UserProfileEntity? userProfile;
   final AppStateModeEntity appMode;
-  final List<AppStateModuleEntity?>? modules;
+  final List<AppStateModuleEntity> modules;
 
   AppStateEntity({
     required this.quizSession,
@@ -57,11 +57,11 @@ class AppStateEntity extends Equatable {
   });
 
   @override
-  List<Object> get props => [
-        quizSession!,
-        userProfile!,
+  List<Object?> get props => [
+        quizSession,
+        userProfile,
         appMode,
-        modules!,
+        modules,
       ];
 
   @override
@@ -83,7 +83,7 @@ class QuizSessionEntity extends Equatable {
   });
 
   @override
-  List<Object> get props => [currentMessage!, sessionId, isFinished, endScreen!];
+  List<Object?> get props => [currentMessage!, sessionId, isFinished, endScreen!];
 
   @override
   String toString() {
@@ -142,7 +142,7 @@ class QuizMessageMultiplechoicesOptions extends Equatable {
   final String? index;
 
   @override
-  List<Object> get props => [display!, index!];
+  List<Object?> get props => [display!, index!];
 
   @override
   String toString() {
@@ -164,7 +164,7 @@ class AppStateModeEntity extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         hasActivedGuardian,
       ];
 
@@ -187,5 +187,5 @@ class AppStateModuleEntity extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [code, meta];
+  List<Object?> get props => [code, meta];
 }

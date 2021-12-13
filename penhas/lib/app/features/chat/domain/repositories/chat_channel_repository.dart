@@ -43,8 +43,8 @@ class ChatChannelRepository implements IChatChannelRepository {
     try {
       final response = await _apiProvider!.get(path: endPoint).parseSession();
       return right(response);
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -67,8 +67,8 @@ class ChatChannelRepository implements IChatChannelRepository {
           )
           .parseOpenChannel();
       return right(response);
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -92,8 +92,8 @@ class ChatChannelRepository implements IChatChannelRepository {
           )
           .parseSessionChannel();
       return right(response);
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -119,8 +119,8 @@ class ChatChannelRepository implements IChatChannelRepository {
           .then((v) => jsonDecode(v) as Map<String, dynamic>)
           .then((v) => ChatSentMessageResponseEntity.fromJson(v));
       return right(response);
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -159,8 +159,8 @@ class ChatChannelRepository implements IChatChannelRepository {
         parameters: parameters,
       );
       return right(ValidField());
-    } catch (error) {
-      logError(error);
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -168,17 +168,20 @@ class ChatChannelRepository implements IChatChannelRepository {
 
 extension _ChatChannelRepository<T extends String> on Future<T> {
   Future<ChatChannelAvailableEntity> parseSession() async {
-    return then((v) => jsonDecode(v) as Map<String, dynamic>)
+    return this
+        .then((v) => jsonDecode(v) as Map<String, dynamic>)
         .then((v) => ChatChannelAvailableModel.fromJson(v));
   }
 
   Future<ChatChannelOpenEntity> parseOpenChannel() async {
-    return then((v) => jsonDecode(v) as Map<String, dynamic>)
+    return this
+        .then((v) => jsonDecode(v) as Map<String, dynamic>)
         .then((v) => ChatChannelOpenModel.fromJson(v));
   }
 
   Future<ChatChannelSessionEntity> parseSessionChannel() async {
-    return then((v) => jsonDecode(v) as Map<String, dynamic>)
+    return this
+        .then((v) => jsonDecode(v) as Map<String, dynamic>)
         .then((v) => ChatChannelSessionModel.fromJson(v));
   }
 }

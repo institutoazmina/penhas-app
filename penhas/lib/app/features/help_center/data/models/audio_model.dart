@@ -2,7 +2,7 @@ import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dar
 import 'package:penhas/app/shared/logger/log.dart';
 
 class AudioModel {
-  static List<AudioEntity> fromJson(Map<String, Object>? json) {
+  static List<AudioEntity> fromJson(Map<String, dynamic>? json) {
     if (json == null || json.isEmpty || json['rows'] == null) {
       return List.empty();
     }
@@ -46,8 +46,8 @@ class _AudioModelParseData {
     }
     try {
       return DateTime.parse(date).toLocal();
-    } catch (e) {
-      logError(e);
+    } catch (e, stack) {
+      logError(e, stack);
       return null;
     }
   }
