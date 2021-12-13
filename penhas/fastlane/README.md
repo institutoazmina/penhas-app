@@ -42,10 +42,10 @@ Build release APK
 
 Build release Bundle
 
-### android distribute_android_beta
+### android firebase_distribute
 
 ```sh
-[bundle exec] fastlane android distribute_android_beta
+[bundle exec] fastlane android firebase_distribute
 ```
 
 Distribute to Android beta testers
@@ -71,21 +71,13 @@ Deploy a new version to the Play Store
 
 Build release IPA
 
-### ios beta
-
-```sh
-[bundle exec] fastlane ios beta
-```
-
-
-
 ### ios update_profile
 
 ```sh
 [bundle exec] fastlane ios update_profile
 ```
 
-
+Generates a provisioning profile, saving it in the current folder 
 
 ### ios sync_device_info
 
@@ -93,15 +85,39 @@ Build release IPA
 [bundle exec] fastlane ios sync_device_info
 ```
 
+Registers new devices to the Apple Dev Portal
 
-
-### ios distribute_iOS_beta
+### ios generate_ipa
 
 ```sh
-[bundle exec] fastlane ios distribute_iOS_beta
+[bundle exec] fastlane ios generate_ipa
 ```
 
-Distribute to iOS beta testers
+Generate IPA
+
+### ios testflight_distribute
+
+```sh
+[bundle exec] fastlane ios testflight_distribute
+```
+
+Distribute to iOS beta testers in TestFlight
+
+### ios firebase_distribute
+
+```sh
+[bundle exec] fastlane ios firebase_distribute
+```
+
+Distribute to iOS beta testers in Firebase
+
+### ios release
+
+```sh
+[bundle exec] fastlane ios release
+```
+
+Deploy a new version to the App Store
 
 ----
 
