@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 abstract class Failure extends Equatable {
   @override
-  List<dynamic> get props => [];
+  List<Object?> get props => [];
 
   @override
   bool get stringify => true;
@@ -47,7 +47,7 @@ class GpsFailure extends Failure {
   final String? message;
 
   @override
-  List<Object?> get props => [message!];
+  List<Object?> get props => [message];
 }
 
 class AddressFailure extends Failure {
@@ -58,7 +58,7 @@ class AddressFailure extends Failure {
   final String? message;
 
   @override
-  List<Object?> get props => [message!];
+  List<Object?> get props => [message];
 }
 
 @immutable
@@ -81,5 +81,5 @@ class ServerSideFormFieldValidationFailure extends Failure {
   final String? reason;
 
   @override
-  List<Object?> get props => [error!, message!, field!, reason!];
+  List<Object?> get props => [error, message, field, reason];
 }

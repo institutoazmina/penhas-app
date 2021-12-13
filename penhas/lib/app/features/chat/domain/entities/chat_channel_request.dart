@@ -29,10 +29,10 @@ class ChatChannelRequest extends Equatable {
 
   @override
   List<Object?> get props => [
-        token!,
-        pagination!,
+        token,
+        pagination,
         rows,
-        clientId!,
-        block!,
+        clientId,
+        block,
       ];
 }

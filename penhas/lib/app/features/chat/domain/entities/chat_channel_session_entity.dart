@@ -32,12 +32,12 @@ class ChatChannelSessionEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        hasMore!,
-        newer!,
-        older!,
-        messages!,
-        metadata!,
-        user!,
+        hasMore,
+        newer,
+        older,
+        messages,
+        metadata,
+        user,
       ];
 }
 

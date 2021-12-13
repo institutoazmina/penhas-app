@@ -1,13 +1,18 @@
 import 'package:equatable/equatable.dart';
 
 class UserLocationEntity extends Equatable {
-  final double? latitude;
-  final double? longitude;
-  final double? accuracy;
-  const UserLocationEntity({this.latitude, this.longitude, this.accuracy});
+  final double latitude;
+  final double longitude;
+  final double accuracy;
+
+  const UserLocationEntity({
+    this.latitude = 0,
+    this.longitude = 0,
+    this.accuracy = 0,
+  });
 
   @override
-  List<dynamic> get props => [latitude, longitude, accuracy];
+  List<Object?> get props => [latitude, longitude, accuracy];
 
   @override
   String toString() {

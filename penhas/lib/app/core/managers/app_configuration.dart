@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:penhas/app/core/data/authorization_status.dart';
 import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
-import 'package:penhas/app/shared/logger/log.dart';
 
 // https://***REMOVED*** || https://***REMOVED*** || http://10.0.2.2:9000
 const String baseUrl = String.fromEnvironment(

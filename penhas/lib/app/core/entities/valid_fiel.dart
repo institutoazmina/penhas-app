@@ -13,7 +13,7 @@ class ValidField extends Equatable {
   final String? message;
 
   @override
-  List<dynamic> get props => [this.message];
+  List<Object?> get props => [message];
 
   @override
   bool get stringify => true;

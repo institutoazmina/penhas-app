@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
-
-import 'chat_channel_session_entity.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_channel_session_entity.dart';
 
 class ChatChannelOpenEntity extends Equatable {
   final String? token;
@@ -19,7 +18,7 @@ class ChatChannelOpenEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        token!,
-        session!,
+        token,
+        session,
       ];
 }

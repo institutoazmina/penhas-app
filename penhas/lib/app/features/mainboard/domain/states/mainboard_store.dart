@@ -33,7 +33,7 @@ abstract class _MainboardStoreBase with Store {
       List<MainboardState>.empty().asObservable();
 
   @observable
-  MainboardState? selectedPage;
+  MainboardState selectedPage = MainboardState.feed();
 
   @action
   Future changePage({required MainboardState to}) async {
