@@ -36,7 +36,7 @@ class CardProfileRacePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 2.0, bottom: 20.0),
               child: Text(
-                EnumHumanRace.map(content).label!,
+                EnumHumanRace.map(content).label,
                 style: contentTextStyle,
               ),
             )
@@ -83,7 +83,7 @@ extension _HumanMapper on CardProfileRacePage {
               selected: isSelected(v.rawValue),
               onChanged: (dynamic v) => updateRace(v),
               activeColor: DesignSystemColors.ligthPurple,
-              title: Text(v.label!, style: contentTextStyle),
+              title: Text(v.label, style: contentTextStyle),
             ))
         .toList();
   }

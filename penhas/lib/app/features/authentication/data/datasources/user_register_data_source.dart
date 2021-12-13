@@ -80,8 +80,8 @@ class UserRegisterDataSource implements IUserRegisterDataSource {
       'nome_social': socialName?.rawValue,
       'apelido': nickName!.rawValue,
       'dt_nasc': birthday!.rawValue,
-      'genero': genre.rawValue,
-      'raca': race.rawValue,
+      'genero': genre?.rawValue,
+      'raca': race?.rawValue,
     };
 
     final httpHeader = await _setupHttpHeader();

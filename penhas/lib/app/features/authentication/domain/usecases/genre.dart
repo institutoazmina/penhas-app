@@ -1,8 +1,8 @@
 enum Genre { female, male, transGirl, transBoy, others }
 
-extension EnumGenre on Genre? {
-  String? get rawValue {
-    String? genre;
+extension EnumGenre on Genre {
+  String get rawValue {
+    String genre;
     switch (this) {
       case Genre.male:
         genre = 'Masculino';
