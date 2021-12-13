@@ -46,10 +46,10 @@ PODS:
     - FirebaseCoreDiagnostics (~> 8.0)
     - GoogleUtilities/Environment (~> 7.6)
     - GoogleUtilities/Logger (~> 7.6)
-  - FirebaseCoreDiagnostics (8.11.0):
+  - FirebaseCoreDiagnostics (8.10.0):
     - GoogleDataTransport (~> 9.1)
-    - GoogleUtilities/Environment (~> 7.7)
-    - GoogleUtilities/Logger (~> 7.7)
+    - GoogleUtilities/Environment (~> 7.6)
+    - GoogleUtilities/Logger (~> 7.6)
     - nanopb (~> 2.30908.0)
   - FirebaseCrashlytics (8.9.0):
     - FirebaseCore (~> 8.0)
@@ -58,18 +58,18 @@ PODS:
     - GoogleUtilities/Environment (~> 7.6)
     - nanopb (~> 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
-  - FirebaseInstallations (8.11.0):
+  - FirebaseInstallations (8.10.0):
     - FirebaseCore (~> 8.0)
-    - GoogleUtilities/Environment (~> 7.7)
-    - GoogleUtilities/UserDefaults (~> 7.7)
+    - GoogleUtilities/Environment (~> 7.6)
+    - GoogleUtilities/UserDefaults (~> 7.6)
     - PromisesObjC (< 3.0, >= 1.2)
   - Flutter (1.0.0)
   - flutter_phone_direct_caller (0.0.1):
     - Flutter
-  - flutter_sound_core (8.5.0)
-  - flutter_sound_lite (8.5.0):
+  - flutter_sound_core (8.4.2)
+  - flutter_sound_lite (8.4.2):
     - Flutter
-    - flutter_sound_core (= 8.5.0)
+    - flutter_sound_core (= 8.4.2)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -107,24 +107,24 @@ PODS:
   - GoogleMaps/Base (4.2.0)
   - GoogleMaps/Maps (4.2.0):
     - GoogleMaps/Base
-  - GoogleUtilities/AppDelegateSwizzler (7.7.0):
+  - GoogleUtilities/AppDelegateSwizzler (7.6.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (7.7.0):
+  - GoogleUtilities/Environment (7.6.0):
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.7.0):
+  - GoogleUtilities/Logger (7.6.0):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (7.7.0):
+  - GoogleUtilities/MethodSwizzler (7.6.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (7.7.0):
+  - GoogleUtilities/Network (7.6.0):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.7.0)"
-  - GoogleUtilities/Reachability (7.7.0):
+  - "GoogleUtilities/NSData+zlib (7.6.0)"
+  - GoogleUtilities/Reachability (7.6.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (7.7.0):
+  - GoogleUtilities/UserDefaults (7.6.0):
     - GoogleUtilities/Logger
   - just_audio (0.0.1):
     - Flutter
@@ -249,20 +249,20 @@ SPEC CHECKSUMS:
   firebase_crashlytics: 6713843d68feb3cefa1471e20dfaa72b934d6db8
   FirebaseAnalytics: 4ab446ce08a3fe52e8a4303dd997cf26276bf968
   FirebaseCore: 599ee609343eaf4941bd188f85e3aa077ffe325b
-  FirebaseCoreDiagnostics: 64d9709d804a6c25bd77841371c1fcfd909d5601
+  FirebaseCoreDiagnostics: 56fb7216d87e0e6ec2feddefa9d8a392fe8b2c18
   FirebaseCrashlytics: 40efbd81157dae307ec95612fa1328347284d2c2
-  FirebaseInstallations: 044eede8a049bce71c4541ee68d6e4364fcbe774
+  FirebaseInstallations: 830327b45345ffc859eaa9c17bcd5ae893fd5425
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   flutter_phone_direct_caller: bd2ffd297f371a8a6c7bfbba0196964ffe3c4358
-  flutter_sound_core: d9396f10752a0df9aa3197f4c431d62d934918cc
-  flutter_sound_lite: 175808b357d0b3eeee1345843545bb2fbde06e6c
+  flutter_sound_core: 55a1665e7ef8cdb95ab9dd06581c746dd9c96e48
+  flutter_sound_lite: dc418fa70c21fd9783ae93925b10041bca2df469
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   geolocator_apple: b741765c55dc21950e3e106e8b3584e55cf81ce5
   google_maps_flutter: abdb8dee6c52d4be36ad131ee6ebfacd14417c5a
   GoogleAppMeasurement: 837649ad3987936c232f6717c5680216f6243d24
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleMaps: eb03e327edfd70b06de1e6e321653f73712df7ad
-  GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
+  GoogleUtilities: 684ee790a24f73ebb2d1d966e9711c203f2a4237
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   map_launcher: e325db1261d029ff33e08e03baccffe09593ffea
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
@@ -277,6 +277,6 @@ SPEC CHECKSUMS:
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
   webview_flutter_wkwebview: 005fbd90c888a42c5690919a1527ecc6649e1162
 
-PODFILE CHECKSUM: 697ea116f8ac74089f12547e29ad90c873d7b2d1
+PODFILE CHECKSUM: 61302652e103bafc53ee8a473fc9afb5046ea084
 
 COCOAPODS: 1.11.2
