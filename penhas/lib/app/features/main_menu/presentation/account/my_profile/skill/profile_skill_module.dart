@@ -5,7 +5,7 @@ import 'package:penhas/app/features/main_menu/presentation/account/my_profile/sk
 class ProfileSkillModule extends Module {
   @override
   List<Bind> get binds => [
-        Bind(
+        Bind.factory(
           (i) => ProfileSkillController(tags: i.args?.data),
         ),
       ];

@@ -25,34 +25,34 @@ class ZodiacModule extends WidgetModule {
             securityAction: i.get<StealthSecurityAction>(),
           ),
                   ),
-        Bind(
+        Bind.factory(
           (i) => StealthSecurityAction(
               audioServices: i.get<IAudioRecordServices>(),
               featureToogle: i.get<SecurityModeActionFeature>(),
               locationService: i.get<ILocationServices>(),
               guardianRepository: i.get<IGuardianRepository>()),
                   ),
-        Bind<SecurityModeActionFeature>(
+        Bind.factory<SecurityModeActionFeature>(
           (i) => SecurityModeActionFeature(
             modulesServices: i.get<IAppModulesServices>(),
           ),
                   ),
-        Bind<IGuardianRepository>(
+        Bind.factory<IGuardianRepository>(
           (i) => GuardianRepository(
             dataSource: i.get<IGuardianDataSource>(),
             networkInfo: i.get<INetworkInfo>(),
           ),
                   ),
-        Bind<ILocationServices>(
+        Bind.factory<ILocationServices>(
           (i) => LocationServices(),
                   ),
-        Bind<IGuardianDataSource>(
+        Bind.factory<IGuardianDataSource>(
           (i) => GuardianDataSource(
             apiClient: i.get<http.Client>(),
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
                   ),
-        Bind<IAudioRecordServices>(
+        Bind.factory<IAudioRecordServices>(
           (i) => AudioRecordServices(
             audioSyncManager: i.get<IAudioSyncManager>(),
           ),

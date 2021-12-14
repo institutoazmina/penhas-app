@@ -5,7 +5,7 @@ import 'package:penhas/app/features/filters/domain/presentation/filter_page.dart
 class FilterModule extends Module {
   @override
   List<Bind> get binds => [
-        Bind(
+        Bind.factory(
           (i) => FilterController(tags: i.args?.data),
         ),
       ];

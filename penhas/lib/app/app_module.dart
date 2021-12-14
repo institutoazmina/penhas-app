@@ -32,82 +32,83 @@ import 'features/main_menu/domain/repositories/user_profile_repository.dart';
 class AppModule extends Module {
   @override
   List<Bind> get binds => [
-        Bind<AppStateUseCase>(
+        Bind.factory<AppStateUseCase>(
           (i) => AppStateUseCase(
-              appStateRepository: i.get<IAppStateRepository>(),
-              userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
-              appConfiguration: i.get<IAppConfiguration>(),
-              appModulesServices: i.get<IAppModulesServices>()),
+              appStateRepository: i(),
+              userProfileStore: i(),
+              appConfiguration: i(),
+              appModulesServices: i(),
+          ),
         ),
-        Bind<IAppStateRepository>(
+        Bind.factory<IAppStateRepository>(
           (i) => AppStateRepository(
             networkInfo: i.get<INetworkInfo>(),
             dataSource: i.get<IAppStateDataSource>(),
           ),
         ),
-        Bind<IAppStateDataSource>(
+        Bind.factory<IAppStateDataSource>(
           (i) => AppStateDataSource(
             apiClient: i.get<http.Client>(),
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
-        Bind((i) => AppController()),
-        Bind<IApiServerConfigure>(
+        Bind.factory((i) => AppController()),
+        Bind.factory<IApiServerConfigure>(
           (i) => ApiServerConfigure(
             appConfiguration: i.get<IAppConfiguration>(),
           ),
         ),
-        Bind<http.Client>((i) => http.Client()),
-        Bind<INetworkInfo>(
+        Bind.factory<http.Client>((i) => http.Client()),
+        Bind.factory<INetworkInfo>(
           (i) => NetworkInfo(
             i.get<DataConnectionChecker>(),
           ),
         ),
-        Bind<IApiProvider>(
+        Bind.factory<IApiProvider>(
           (i) => ApiProvider(
             serverConfiguration: i.get<IApiServerConfigure>(),
             networkInfo: i.get<INetworkInfo>(),
           ),
         ),
-        Bind((i) => DataConnectionChecker()),
-        Bind<IUserProfileRepository>(
+        Bind.factory((i) => DataConnectionChecker()),
+        Bind.factory<IUserProfileRepository>(
           (i) => UserProfileRepository(
             apiProvider: i.get<IApiProvider>(),
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
-        Bind((i) => DeletedAccountController(
+        Bind.factory((i) => DeletedAccountController(
               profileRepository: i.get<IUserProfileRepository>(),
               appConfiguration: i.get<IAppConfiguration>(),
               sessionToken: i.args?.data,
             )),
-        Bind<IAppConfiguration>(
+        Bind.factory<IAppConfiguration>(
           (i) => AppConfiguration(
             storage: i.get<ILocalStorage>(),
           ),
         ),
-        Bind<LocalStore<UserProfileEntity>>(
+        Bind.factory<LocalStore<UserProfileEntity>>(
           (i) => UserProfileStore(
             storage: i.get<ILocalStorage>(),
           ),
         ),
-        Bind<LocalStore<AppPreferencesEntity>>(
+        Bind.factory<LocalStore<AppPreferencesEntity>>(
           (i) => AppPreferencesStore(
             storage: i.get<ILocalStorage>(),
           ),
         ),
-        Bind<IAppModulesServices>(
+        Bind.factory<IAppModulesServices>(
           (i) => AppModulesServices(
             storage: i.get<ILocalStorage>(),
           ),
         ),
-        Bind<ILocalStorage>((i) => LocalStorageSharedPreferences()),
+        Bind.factory<ILocalStorage>((i) => LocalStorageSharedPreferences()),
         Bind.singleton<IAudioSyncManager>(
           (i) => AudioSyncManager(
             audioRepository: i.get<IAudioSyncRepository>(),
           ),
         ),
-        Bind<IAudioSyncRepository>(
+        Bind.factory<IAudioSyncRepository>(
           (i) => AudioSyncRepository(
             apiProvider: i.get<IApiProvider>(),
           ),

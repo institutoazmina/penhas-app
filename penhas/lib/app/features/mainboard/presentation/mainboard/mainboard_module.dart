@@ -91,14 +91,14 @@ class MainboardModule extends Module {
         ...notificationBinds,
         ...menuBind,
         ...chatBinds,
-        Bind<MainboardStore>(
+        Bind.factory<MainboardStore>(
           (i) => MainboardStore(
               modulesServices: i.get<IAppModulesServices>(),
               initialPage: i.args?.data == null
                   ? MainboardState.feed()
                   : MainboardState.fromString(i.args?.data["page"])),
         ),
-        Bind(
+        Bind.factory(
           (i) => MainboardController(
             mainboardStore: i.get<MainboardStore>(),
             inactivityLogoutUseCase: i.get<InactivityLogoutUseCase>(),
@@ -106,15 +106,14 @@ class MainboardModule extends Module {
             notification: i.get<INotificationRepository>(),
           ),
         ),
-        Bind(
+        Bind.singleton(
           (i) => FeedUseCases(
             repository: i.get<ITweetRepository>(),
             filterPreference: i.get<TweetFilterPreference>(),
             maxRows: 100,
           ),
-          isSingleton: true,
         ),
-        Bind<IFilterSkillRepository>(
+        Bind.factory<IFilterSkillRepository>(
           (i) => FilterSkillRepository(
             apiProvider: i.get<IApiProvider>(),
           ),
@@ -219,12 +218,12 @@ class MainboardModule extends Module {
       ];
 
   List<Bind> get notificationBinds => [
-        Bind<INotificationRepository>(
+        Bind.factory<INotificationRepository>(
           (i) => NotificationRepository(
             apiProvider: i.get<IApiProvider>(),
           ),
         ),
-        Bind(
+        Bind.factory(
           (i) => NotificationController(
             notificationRepository: i.get<INotificationRepository>(),
           ),
@@ -260,23 +259,23 @@ class MainboardModule extends Module {
       ];
 
   List<Bind> get menuBind => [
-        Bind<SecurityModeActionFeature>(
+        Bind.factory<SecurityModeActionFeature>(
           (i) => SecurityModeActionFeature(
             modulesServices: i.get<IAppModulesServices>(),
           ),
         ),
-        Bind(
+        Bind.factory(
           (i) => ProfileEditController(
               appStateUseCase: i.get<AppStateUseCase>(),
               skillRepository: i.get<IFilterSkillRepository>(),
               securityModeActionFeature: i.get<SecurityModeActionFeature>()),
         ),
-        Bind(
+        Bind.factory(
           (i) => AccountDeleteController(
               appConfiguration: i.get<IAppConfiguration>(),
               profileRepository: i.get<IUserProfileRepository>()),
         ),
-        Bind(
+        Bind.factory(
           (i) => AccountPreferenceController(
             profileRepository: i.get<IUserProfileRepository>(),
           ),
@@ -313,32 +312,25 @@ class MainboardModule extends Module {
       ];
 
   List<Bind> get chatBinds => [
-        Bind<IChatChannelRepository>(
+        Bind.factory<IChatChannelRepository>(
           (i) => ChatChannelRepository(
             apiProvider: i.get<IApiProvider>(),
           ),
         ),
-        Bind(
+        Bind.factory(
           (i) => ChatChannelController(
             useCase: i.get<ChatChannelUseCase>(),
           ),
         ),
-        Bind<ChatChannelUseCase>(
-          (i) => ChatChannelUseCase(
-            session: i.args?.data ??
-                ChatChannelOpenEntity(token: i.args?.params['token']),
-            channelRepository: i.get<IChatChannelRepository>(),
-          ),
-        )
       ];
 
   List<Bind> get audioServicesBinds => [
-        Bind<IAudioRecordServices>(
+        Bind.factory<IAudioRecordServices>(
           (i) => AudioRecordServices(
             audioSyncManager: i.get<IAudioSyncManager>(),
           ),
         ),
-        Bind<IAudioPlayServices>(
+        Bind.factory<IAudioPlayServices>(
           (i) => AudioPlayServices(
             audioSyncManager: i.get<IAudioSyncManager>(),
           ),
@@ -346,80 +338,78 @@ class MainboardModule extends Module {
       ];
 
   List<Bind> get tweetBinds => [
-        Bind(
+        Bind.factory(
           (i) => ComposeTweetController(
             useCase: i.get<FeedUseCases>(),
             mainboardStore: i.get<MainboardStore>(),
           ),
         ),
-        Bind(
+        Bind.factory(
           (i) => ReplyTweetController(
             useCase: i.get<FeedUseCases>(),
             tweet: i.args?.data,
           ),
         ),
-        Bind(
+        Bind.factory(
           (i) => DetailTweetController(
             useCase: i.get<FeedUseCases>(),
             tweetId: i.args?.params['id'],
             tweet: i.args?.data,
           ),
         ),
-        Bind(
+        Bind.factory(
           (i) => CategoryTweetController(
             useCase: i.get<TweetFilterPreference>(),
           ),
         ),
-        Bind(
+        Bind.singleton(
           (i) => FilterTweetController(
             useCase: i.get<TweetFilterPreference>(),
           ),
-          isSingleton: true,
         ),
-        Bind<IUsersRepository>(
+        Bind.factory<IUsersRepository>(
           (i) => UsersRepository(
             apiProvider: i.get<IApiProvider>(),
           ),
         ),
-        Bind(
+        Bind.singleton(
           (i) => FeedRoutingPerfilChatController(
             usersRepository: i.get<IUsersRepository>(),
             channelRepository: i.get<IChatChannelRepository>(),
             routerType: i.args?.data,
           ),
-          isSingleton: true,
         )
       ];
 
   List<Bind> get interfaceBinds => [
-        Bind<ITweetController>(
+        Bind.factory<ITweetController>(
           (i) => TweetController(useCase: i.get<FeedUseCases>()),
         ),
-        Bind<ITweetRepository>(
+        Bind.factory<ITweetRepository>(
           (i) => TweetRepository(
             networkInfo: i.get<INetworkInfo>(),
             dataSource: i.get<ITweetDataSource>(),
           ),
         ),
-        Bind<ITweetDataSource>(
+        Bind.factory<ITweetDataSource>(
           (i) => TweetDataSource(
             apiClient: i.get<http.Client>(),
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
-        Bind<ITweetFilterPreferenceDataSource>(
+        Bind.factory<ITweetFilterPreferenceDataSource>(
           (i) => TweetFilterPreferenceDataSource(
             apiClient: i.get<http.Client>(),
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
-        Bind<ITweetFilterPreferenceRepository>(
+        Bind.factory<ITweetFilterPreferenceRepository>(
           (i) => TweetFilterPreferenceRepository(
             networkInfo: i.get<INetworkInfo>(),
             dataSource: i.get<ITweetFilterPreferenceDataSource>(),
           ),
         ),
-        Bind<TweetFilterPreference>(
+        Bind.factory<TweetFilterPreference>(
           (i) => TweetFilterPreference(
             repository: i.get<ITweetFilterPreferenceRepository>(),
           ),

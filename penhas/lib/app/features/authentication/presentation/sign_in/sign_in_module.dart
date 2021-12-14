@@ -154,8 +154,8 @@ class SignInModule extends Module {
 
   List<Bind> get _signUp => [
         // Sign-Up
-        Bind((i) => SignUpController(i.get<IUserRegisterRepository>())),
-        Bind(
+        Bind.factory((i) => SignUpController(i.get<IUserRegisterRepository>())),
+        Bind.factory(
           (i) => SignUpTwoController(
             i.get<IUserRegisterRepository>(),
             i.args?.data,

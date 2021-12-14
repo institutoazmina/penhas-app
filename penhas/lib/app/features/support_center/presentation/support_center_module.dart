@@ -35,15 +35,15 @@ class SupportCenterModule extends WidgetModule {
             supportCenterUseCase: i.get<SupportCenterUseCase>(),
           ),
         ),
-        Bind(
+        Bind.factory(
           (i) => SupportCenterListController(i.args?.data),
                   ),
-        Bind(
+        Bind.factory(
           (i) => SupportCenterLocationController(
             supportCenterUseCase: i.get<SupportCenterUseCase>(),
           ),
                   ),
-        Bind(
+        Bind.factory(
           (i) => SupportCenterShowController(
             supportCenterUseCase: i.get<SupportCenterUseCase>(),
             place: i.args?.data,
