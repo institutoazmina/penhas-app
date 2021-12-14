@@ -1,3 +1,9 @@
+abstract class NonCriticalError extends Error {
+  String? message;
+
+  NonCriticalError([this.message]);
+}
+
 class ApiProviderException implements Exception {
   final Map<String, dynamic>? bodyContent;
 
@@ -13,9 +19,3 @@ class NetworkServerException implements Exception {}
 class ApiProviderSessionError extends NonCriticalError {}
 
 class InternetConnectionException implements Exception {}
-
-class HandledException implements Exception {
-  String? message;
-
-  HandledException([this.message]);
-}

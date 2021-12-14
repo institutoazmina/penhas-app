@@ -2,6 +2,7 @@ import 'dart:developer' as dev;
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:logging/logging.dart';
+import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 typedef T OnError<T>(Object exception, StackTrace? stack);
@@ -12,6 +13,7 @@ void logWarn(String message) {
 }
 
 void logError(Object exception, [StackTrace? stack]) {
+  if (exception is NonCriticalError) return;
   stack ??= StackTrace.current;
   dev.log(
     exception.toString(),

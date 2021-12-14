@@ -51,8 +51,8 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        buildHeader(user.profile!),
-        buildContent(user.profile!),
+        buildHeader(user.profile),
+        buildContent(user.profile),
         user.isMyself
             ? Container()
             : Padding(

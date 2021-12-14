@@ -7,7 +7,7 @@ class MapExceptionToFailure {
   static Failure map(Object error) {
     if (error is InternetConnectionException) {
       return InternetConnectionFailure();
-    } else if (error is ApiProviderSessionError) {
+    else if (error is ApiProviderSessionError)
       return ServerSideSessionFailed();
     } else if (error is NetworkServerException) {
       return ServerFailure();

@@ -104,7 +104,7 @@ void main() {
         final sut = dataSource.check;
         // assert
         expect(
-          () => sut(),
+          () async => await sut(),
           throwsA(isA<ApiProviderSessionError>()),
         );
       }

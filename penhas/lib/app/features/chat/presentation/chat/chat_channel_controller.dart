@@ -15,13 +15,12 @@ part 'chat_channel_controller.g.dart';
 
 class ChatChannelController extends _ChatChannelControllerBase
     with _$ChatChannelController {
-  ChatChannelController({required ChatChannelUseCase useCase})
-      : super(useCase);
+  ChatChannelController({required ChatChannelUseCase useCase}) : super(useCase);
 }
 
 abstract class _ChatChannelControllerBase with Store, MapFailureMessage {
   final ChatChannelUseCase _useCase;
-  StreamSubscription? _streamDatasource;
+  late StreamSubscription _streamDatasource;
 
   _ChatChannelControllerBase(this._useCase) {
     _streamDatasource = _useCase.dataSource.listen(parseStream);
@@ -88,12 +87,8 @@ abstract class _ChatChannelControllerBase with Store, MapFailureMessage {
 }
 
 extension _ChatChannelControllerBasePrivate on _ChatChannelControllerBase {
-  void registerStreamSource() {
-    _streamDatasource = _useCase.dataSource.listen(parseStream);
-  }
-
-  void parseStream(ChatChannelUseCaseEvent? event) {
-    event!.when(
+  void parseStream(ChatChannelUseCaseEvent event) {
+    event.when(
       updateUser: (u) => user = u,
       updateMetada: (m) => metadata = m,
       initial: () => currentState = const ChatChannelState.initial(),
@@ -104,10 +99,7 @@ extension _ChatChannelControllerBasePrivate on _ChatChannelControllerBase {
   }
 
   void cancelStreamSource() {
-    if (_streamDatasource != null) {
-      _streamDatasource!.cancel();
-      _streamDatasource = null;
-    }
+    _streamDatasource.cancel();
 
     _useCase.dispose();
   }

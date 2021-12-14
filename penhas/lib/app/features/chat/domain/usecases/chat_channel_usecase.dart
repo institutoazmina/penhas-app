@@ -29,19 +29,18 @@ class ChatChannelUseCase with MapFailureMessage {
   String? _newestPagination;
   String? _oldestPagination;
   String? _lastMessageEtag;
-  ChatChannelUseCaseEvent? _currentEvent;
+  ChatChannelUseCaseEvent _currentEvent = ChatChannelUseCaseEvent.initial();
   ChatChannelSessionEntity? _currentSession;
   final _messageCache = Queue<ChatChannelMessage>();
 
-  final StreamController<ChatChannelUseCaseEvent?> _streamController =
+  late StreamController<ChatChannelUseCaseEvent> _streamController =
       StreamController.broadcast();
-  Stream<ChatChannelUseCaseEvent?> get dataSource => _streamController.stream;
+  Stream<ChatChannelUseCaseEvent> get dataSource => _streamController.stream;
 
   ChatChannelUseCase({
     required ChatChannelOpenEntity session,
     required IChatChannelRepository channelRepository,
   }) : this._channelRepository = channelRepository {
-    _currentEvent = ChatChannelUseCaseEvent.initial();
     _streamController.add(_currentEvent);
     initial(session);
   }

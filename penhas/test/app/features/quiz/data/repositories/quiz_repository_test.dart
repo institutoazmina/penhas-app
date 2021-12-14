@@ -46,7 +46,7 @@ void main() {
         () async {
       // arrange
       when(dataSource!.update(quiz: anyNamed('quiz')))
-          .thenThrow(ApiProviderSessionExpection());
+          .thenThrow(ApiProviderSessionException());
       final expected = left(ServerSideSessionFailed());
       // act
       final received = await quizRepository.update(quiz: quizRequest);

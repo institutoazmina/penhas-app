@@ -43,6 +43,6 @@ class LocalStorageSharedPreferences implements ILocalStorage {
   }
 }
 
-class ValueNotFound extends HandledException {
+class ValueNotFound extends NonCriticalError {
   ValueNotFound(String message) : super(message);
 }

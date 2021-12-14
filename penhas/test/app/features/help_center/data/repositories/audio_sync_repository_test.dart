@@ -49,7 +49,7 @@ void main() {
       when(apiProvider!.upload(
               path: anyNamed('path'),
               file: anyNamed('file'),
-              fields: anyNamed('fields'),),)
+              fields: anyNamed('fields')))
           .thenThrow(ApiProviderSessionError());
       final audio = AudioData(
         createdAt: '1',

@@ -38,7 +38,7 @@ abstract class _UserProfileControllerBase with Store {
   @action
   Future<void> openChannel() async {
     final channel = await _channelRepository.openChannel(
-      _person!.profile!.clientId.toString(),
+      _person!.profile.clientId.toString(),
     );
 
     channel.fold(

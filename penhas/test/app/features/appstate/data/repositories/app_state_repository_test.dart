@@ -39,7 +39,7 @@ void main() {
     test('should return ServerSideSessionFailed for a invalid session',
         () async {
       // arrange
-      when(dataSource!.check()).thenThrow(ApiProviderSessionExpection());
+      when(dataSource!.check()).thenThrow(ApiProviderSessionError());
       final expected = left(ServerSideSessionFailed());
       // act
       final received = await sut.check();

@@ -28,12 +28,12 @@ class UserDetailProfileEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        nickname!,
-        avatar!,
-        clientId!,
-        miniBio!,
-        skills!,
-        activity!,
+        nickname,
+        avatar,
+        clientId,
+        miniBio,
+        skills,
+        activity,
       ];
 
   @override

@@ -119,7 +119,7 @@ void main() {
         final sut = dataSource.update;
         // assert
         expect(
-          () => sut(quiz: quizRequest),
+          () async => await sut(quiz: quizRequest),
           throwsA(isA<ApiProviderSessionError>()),
         );
       }
