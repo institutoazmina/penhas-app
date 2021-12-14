@@ -184,7 +184,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
     if (message == null || message.isEmpty) return;
 
     Modular.to.showDialog(
-      builder: (_) => AlertDialog(
+      builder: (context) => AlertDialog(
         title: Text('Informação', style: kTextStyleAlertDialogTitle),
         content: Text(
           message,

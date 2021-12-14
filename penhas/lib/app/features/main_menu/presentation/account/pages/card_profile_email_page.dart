@@ -52,7 +52,7 @@ extension _Modal on CardProfileEmailPage {
     TextEditingController passwordController = TextEditingController();
 
     Modular.to.showDialog(
-      builder: (_) => AlertDialog(
+      builder: (context) => AlertDialog(
         title: Text('Email'),
         scrollable: true,
         content: Column(

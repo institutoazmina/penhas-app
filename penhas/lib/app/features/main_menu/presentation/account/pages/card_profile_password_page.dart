@@ -49,7 +49,7 @@ extension _Modal on CardProfilePasswordPage {
     TextEditingController oldPasswordController = TextEditingController();
 
     Modular.to.showDialog(
-      builder: (_) => AlertDialog(
+      builder: (context) => AlertDialog(
         title: Text('Email'),
         scrollable: true,
         content: Column(

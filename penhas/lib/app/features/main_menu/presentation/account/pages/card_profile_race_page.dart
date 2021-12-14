@@ -50,7 +50,7 @@ class CardProfileRacePage extends StatelessWidget {
 extension _Modal on CardProfileRacePage {
   void showModal() {
     Modular.to.showDialog(
-      builder: (_) => AlertDialog(
+      builder: (context) => AlertDialog(
         title: Text('Raça'),
         scrollable: true,
         content: SizedBox(
@@ -81,16 +81,16 @@ extension _HumanMapper on CardProfileRacePage {
               value: v.rawValue,
               groupValue: this.content,
               selected: isSelected(v.rawValue),
-              onChanged: (dynamic v) => updateRace(v),
+              onChanged: (dynamic v) => updateRace(context, v),
               activeColor: DesignSystemColors.ligthPurple,
               title: Text(v.label, style: contentTextStyle),
             ))
         .toList();
   }
 
-  void updateRace(String? id) {
+  void updateRace(BuildContext context, String? id) {
     onChange(id ?? "");
-    Modular.to.pop();
+    Navigator.of(context).pop();
   }
 
   bool isSelected(String id) {

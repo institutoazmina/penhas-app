@@ -154,13 +154,14 @@ extension _FilterLoadedStatePageMethods on ProfilSkillLoadedStatePage {
       onAplyFilterAction([]);
     }
 
-    final List<FilterTagEntity> seletedTags = _tagStateKey.currentState?.getAllItem
-        .where((e) => e.active == true)
-        .map((e) => e.customData)
-        .map((e) => e as String?)
-        .whereNotNull()
-        .map((e) => tags.firstWhere((t) => t.id == e))
-        .toList() ?? List.empty();
+    final List<FilterTagEntity> seletedTags = _tagStateKey
+            .currentState?.getAllItem
+            .where((e) => e.active)
+            .map((e) => e.customData)
+            .whereType<String>()
+            .map((e) => tags.firstWhere((t) => t.id == e))
+            .toList() ??
+        List.empty();
 
     onAplyFilterAction(seletedTags);
   }

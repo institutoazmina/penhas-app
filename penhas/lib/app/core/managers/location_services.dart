@@ -97,8 +97,7 @@ class LocationServices implements ILocationServices {
                 FlatButton(
                   child: const Text('Agora não'),
                   onPressed: () async {
-                    Navigator.of(context)
-                        .pop(const LocationPermissionState.denied());
+                    Navigator.of(context).pop(LocationPermissionState.denied());
                   },
                 ),
                 SizedBox(
@@ -113,9 +112,8 @@ class LocationServices implements ILocationServices {
                       Permission.locationWhenInUse
                           .request()
                           .then((value) => value.mapFrom())
-                          .then(
-                            (value) => _requestDeniedPermissionIfNeeded(value),
-                          )
+                          .then((value) =>
+                              _requestDeniedPermissionIfNeeded(value))
                           .then((value) => Navigator.of(context).pop(value));
                     },
                   ),
@@ -126,11 +124,11 @@ class LocationServices implements ILocationServices {
         )
         .then((value) => value as LocationPermissionState)
         .catchError(
-          (e, stack) {
-            logError(e, stack);
-            return LocationPermissionState.undefined();
-          },
-        );
+      (e, stack) {
+        logError(e, stack);
+        return LocationPermissionState.undefined();
+      },
+    );
   }
 
   Future<LocationPermissionState> _requestDeniedPermissionIfNeeded(
@@ -203,8 +201,7 @@ class LocationServices implements ILocationServices {
                 FlatButton(
                   child: const Text('Não'),
                   onPressed: () async {
-                    Navigator.of(context)
-                        .pop(const LocationPermissionState.denied());
+                    Navigator.of(context).pop(LocationPermissionState.denied());
                   },
                 ),
                 SizedBox(
@@ -218,7 +215,7 @@ class LocationServices implements ILocationServices {
                     onPressed: () async {
                       openAppSettings().then(
                         (value) => Navigator.of(context)
-                            .pop(const LocationPermissionState.undefined()),
+                            .pop(LocationPermissionState.undefined()),
                       );
                     },
                   ),
@@ -229,11 +226,11 @@ class LocationServices implements ILocationServices {
         )
         .then((value) => value as LocationPermissionState)
         .catchError(
-          (e, stack) {
-            logError(e, stack);
-            return LocationPermissionState.undefined();
-          },
-        );
+      (e, stack) {
+        logError(e, stack);
+        return LocationPermissionState.undefined();
+      },
+    );
   }
 }
 

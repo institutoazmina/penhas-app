@@ -18,7 +18,7 @@ class SupportCenterHelpAlert extends StatelessWidget {
           width: 120,
           child: FlatButton(
             color: DesignSystemColors.easterPurple,
-            child: const Text('Entendi', style: TextStyle(color: Colors.white)),
+            child: Text('Entendi', style: TextStyle(color: Colors.white)),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),

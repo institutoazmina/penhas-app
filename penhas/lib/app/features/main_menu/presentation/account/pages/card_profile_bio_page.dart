@@ -54,7 +54,7 @@ extension _Modal on CardProfileBioPage {
     _controller.text = content;
 
     Modular.to.showDialog(
-      builder: (_) => AlertDialog(
+      builder: (context) => AlertDialog(
         title: Text("Editar"),
         content: TextFormField(
           maxLengthEnforcement: MaxLengthEnforcement.enforced,

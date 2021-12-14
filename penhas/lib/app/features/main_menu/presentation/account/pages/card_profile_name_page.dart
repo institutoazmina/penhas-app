@@ -84,7 +84,7 @@ extension _Dialog on CardProfileNamePage {
     _controller.text = name!;
 
     Modular.to.showDialog(
-      builder: (_) => AlertDialog(
+      builder: (context) => AlertDialog(
         title: Text('Editar'),
         content: TextFormField(
           controller: _controller,

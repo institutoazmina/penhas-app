@@ -195,11 +195,11 @@ class _FilterTweetPageState
     }
 
     final List<String> seletedTags = _tagStateKey.currentState?.getAllItem
-        .where((e) => e.active == true)
-        .map((e) => e.customData)
-        .map((e) => e as String?)
-        .whereNotNull()
-        .toList() ?? List.empty();
+            .where((e) => e.active)
+            .map((e) => e.customData)
+            .whereType<String>()
+            .toList() ??
+        List.empty();
 
     return controller.setTags(seletedTags).then((value) => true);
   }

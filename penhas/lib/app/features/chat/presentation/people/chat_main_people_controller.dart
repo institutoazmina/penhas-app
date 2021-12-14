@@ -127,20 +127,12 @@ extension _ChatMainPeopleControllerBasePrivate
         .toList();
 
     Modular.to
-        .pushNamed('/mainboard/filters', arguments: tags)
+        .pushNamed("/mainboard/filters", arguments: tags)
         .then((v) => v as FilterActionObserver?)
         .then((v) => handleFilterUpdate(v));
   }
 
-  bool isSeleted(String id) {
-    try {
-      _tags.firstWhere((v) => v.id == id);
-      return true;
-    } catch (e, stack) {
-      logError(e, stack);
-      return false;
-    }
-  }
+  bool isSeleted(String id) => _tags.map((e) => e.id).contains(id);
 
   void handleFilterUpdate(FilterActionObserver? action) {
     if (action == null) {

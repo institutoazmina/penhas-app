@@ -293,8 +293,7 @@ extension _AudioRecordServices on AudioRecordServices {
                 FlatButton(
                   child: const Text('Agora não'),
                   onPressed: () async {
-                    Navigator.of(context)
-                        .pop(const AudioPermissionState.denied());
+                    Navigator.of(context).pop(AudioPermissionState.denied());
                   },
                 ),
                 SizedBox(
@@ -388,8 +387,7 @@ extension _AudioRecordServices on AudioRecordServices {
                 FlatButton(
                   child: const Text('Não'),
                   onPressed: () async {
-                    Navigator.of(context)
-                        .pop(const AudioPermissionState.denied());
+                    Navigator.of(context).pop(AudioPermissionState.denied());
                   },
                 ),
                 SizedBox(
@@ -403,7 +401,7 @@ extension _AudioRecordServices on AudioRecordServices {
                     onPressed: () async {
                       openAppSettings().then(
                         (value) => Navigator.of(context)
-                            .pop(const AudioPermissionState.undefined()),
+                            .pop(AudioPermissionState.undefined()),
                       );
                     },
                   ),
@@ -414,10 +412,10 @@ extension _AudioRecordServices on AudioRecordServices {
         )
         .then((value) => value as AudioPermissionState)
         .catchError(
-          (e, stack) {
-            logError(e, stack);
-            return AudioPermissionState.undefined();
-          },
-        );
+      (e, stack) {
+        logError(e, stack);
+        return AudioPermissionState.undefined();
+      },
+    );
   }
 }

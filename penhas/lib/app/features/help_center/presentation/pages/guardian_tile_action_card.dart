@@ -141,7 +141,7 @@ class GuardianTileActionCard extends StatelessWidget {
                   const Text('Enviar', style: TextStyle(color: Colors.white)),
               onPressed: () {
                 action!(_controller.text);
-                Modular.to.pop();
+                Navigator.of(context).pop();
               },
             )
           ],
@@ -152,7 +152,7 @@ class GuardianTileActionCard extends StatelessWidget {
 
   void _onDeletePressed(void Function()? action) {
     Modular.to.showDialog(
-      builder: (_) => AlertDialog(
+      builder: (context) => AlertDialog(
         title: Text('Apagar', style: kTextStyleAlertDialogTitle),
         content: Text(
           card.deleteWarning ?? 'Deseja excluir ${card.guardian.name}?',
@@ -172,7 +172,7 @@ class GuardianTileActionCard extends StatelessWidget {
             child: const Text('Sim'),
             onPressed: () {
               action!();
-              Modular.to.pop();
+              Navigator.of(context).pop();
             },
           )
         ],
@@ -182,7 +182,7 @@ class GuardianTileActionCard extends StatelessWidget {
 
   void _onResendPressed(void Function()? action) {
     Modular.to.showDialog(
-      builder: (_) => AlertDialog(
+      builder: (context) => AlertDialog(
         title: Text('Reenviar', style: kTextStyleAlertDialogTitle),
         content: Text(
           'Deseja reenviar o convite para ${card.guardian.name}?',
@@ -202,7 +202,7 @@ class GuardianTileActionCard extends StatelessWidget {
             child: const Text('Sim'),
             onPressed: () {
               action!();
-              Modular.to.pop();
+              Navigator.of(context).pop();
             },
           )
         ],
