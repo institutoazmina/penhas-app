@@ -3,21 +3,25 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/features/authentication/data/datasources/authentication_data_source.dart';
 import 'package:penhas/app/features/authentication/data/models/session_model.dart';
 import 'package:penhas/app/features/authentication/data/repositories/authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
+import 'package:penhas/app/shared/logger/log.dart';
 
 import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
+  isCrashlitycsEnabled = false;
+
+  late MockAuthenticationDataSource dataSource = MockAuthenticationDataSource();
+  late MockIAppConfiguration appConfiguration = MockIAppConfiguration();
+  late MockINetworkInfo networkInfo = MockINetworkInfo();
   late AuthenticationRepository repository;
-  MockAuthenticationDataSource? dataSource;
-  MockAppConfiguration? appConfiguration;
-  MockNetworkInfo? networkInfo;
 
   setUp(() {
     repository = AuthenticationRepository(
@@ -29,10 +33,10 @@ void main() {
 
   group('SigIn', () {
     Map<String, dynamic> loginSuccessJson;
-    SessionModel? sessionModel;
-    SessionEntity? sessionEntity;
-    EmailAddress? email;
-    SignInPassword? password;
+    late SessionModel sessionModel;
+    late SessionEntity sessionEntity;
+    late EmailAddress email;
+    late SignInPassword password;
 
     setUp(() async {
       loginSuccessJson =
@@ -44,8 +48,8 @@ void main() {
     });
 
     group('device is online', () {
-      setUp(() async {
-        when(networkInfo!.isConnected).thenAnswer((_) async => true);
+      setUp(() {
+        when(networkInfo.isConnected).thenAnswer((_) async => true);
       });
 
       test('should return valid SessionEntity for valid user/password',
@@ -59,12 +63,12 @@ void main() {
           password: password,
         );
         // assert
-        verify(dataSource!.signInWithEmailAndPassword(
+        verify(dataSource.signInWithEmailAndPassword(
           emailAddress: email,
           password: password,
         ));
 
-        verify(appConfiguration!.saveApiToken(token: sessionModel!.sessionToken));
+        verify(appConfiguration.saveApiToken(token: sessionModel.sessionToken));
 
         expect(result, right(sessionEntity));
       });
@@ -96,7 +100,7 @@ void main() {
           password: password,
         );
         // assert
-        verify(dataSource!.signInWithEmailAndPassword(
+        verify(dataSource.signInWithEmailAndPassword(
           emailAddress: email,
           password: password,
         ));
@@ -115,8 +119,8 @@ void main() {
     });
 
     group('device is offline', () {
-      setUp(() async {
-        when(networkInfo!.isConnected).thenAnswer((_) async => false);
+      setUp(() {
+        when(networkInfo.isConnected).thenAnswer((_) async => false);
       });
 
       test('should return InternetConnectionFailure', () async {
@@ -129,11 +133,11 @@ void main() {
           password: password,
         );
         // assert
-        verify(dataSource!.signInWithEmailAndPassword(
+        verify(dataSource.signInWithEmailAndPassword(
           emailAddress: email,
           password: password,
         ));
-        verify(networkInfo!.isConnected);
+        verify(networkInfo.isConnected);
         expect(result, left(InternetConnectionFailure()));
       });
     });

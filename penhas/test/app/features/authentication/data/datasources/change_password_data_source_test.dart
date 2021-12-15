@@ -8,27 +8,24 @@ import 'package:penhas/app/features/authentication/data/models/password_reset_re
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
+import 'package:penhas/app/shared/logger/log.dart';
 
 import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late IChangePasswordDataSource dataSource;
-  MockHttpClient? mockHttpClient;
-  MockApiServerConfigure mockApiServerConfigure;
-  EmailAddress? emailAddress;
-  SignUpPassword? password;
-  String? validToken;
-  Uri? serverEndpoint;
-  String? userAgent;
-  late Map<String, String?> httpHeader;
+  isCrashlitycsEnabled = false;
+
+  late MockHttpClient mockHttpClient = MockHttpClient();
+  late MockIApiServerConfigure mockApiServerConfigure =
+      MockIApiServerConfigure();
 
   late IChangePasswordDataSource dataSource;
   EmailAddress? emailAddress;
   SignUpPassword? password;
   String? validToken;
   final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
-  const String userAgent = 'iOS 11.4/Simulator/1.0.0';
+  final String userAgent = "iOS 11.4/Simulator/1.0.0";
   late Map<String, String> httpHeader;
 
   setUp(() {
@@ -41,7 +38,7 @@ void main() {
     validToken = '666242';
 
     // MockApiServerConfigure configuration
-    when(mockApiServerConfigure.baseUri).thenAnswer(((_) => serverEndpoint!) as Uri Function(Invocation));
+    when(mockApiServerConfigure.baseUri).thenAnswer((_) => serverEndpoint);
     when(mockApiServerConfigure.userAgent)
         .thenAnswer((_) => Future.value(userAgent));
 
@@ -61,8 +58,8 @@ void main() {
           'email': emailAddress!.rawValue,
         };
         httpResquest = Uri(
-          scheme: serverEndpoint!.scheme,
-          host: serverEndpoint!.host,
+          scheme: serverEndpoint.scheme,
+          host: serverEndpoint.host,
           path: '/reset-password/request-new',
           queryParameters: queryParameters,
         );
@@ -74,12 +71,12 @@ void main() {
         // arrange
         final bodyContent = JsonUtil.getStringSync(
             from: 'authentication/request_reset_password.json');
-        when(mockHttpClient!.post(any, headers: anyNamed('headers')))
+        when(mockHttpClient.post(any, headers: anyNamed('headers')))
             .thenAnswer((_) async => http.Response(bodyContent, 200));
         // act
         await dataSource.request(emailAddress: emailAddress);
         // assert
-        verify(mockHttpClient!.post(httpResquest, headers: httpHeader as Map<String, String>));
+        verify(mockHttpClient.post(httpResquest, headers: httpHeader));
       });
       test('should return SessionModel when the response code is 200 (success)',
           () async {
@@ -91,7 +88,7 @@ void main() {
           from: 'authentication/request_reset_password.json',
         );
         final expectedModel = PasswordResetResponseModel.fromJson(jsonData);
-        when(mockHttpClient!.post(any, headers: anyNamed('headers')))
+        when(mockHttpClient.post(any, headers: anyNamed('headers')))
             .thenAnswer((_) async => http.Response(bodyContent, 200));
         // act
         final result = await dataSource.request(emailAddress: emailAddress);
@@ -106,7 +103,7 @@ void main() {
             JsonUtil.getStringSync(from: 'authentication/email_not_found.json');
         final bodyContent =
             await JsonUtil.getJson(from: 'authentication/email_not_found.json');
-        when(mockHttpClient!.post(any, headers: anyNamed('headers')))
+        when(mockHttpClient.post(any, headers: anyNamed('headers')))
             .thenAnswer((_) async => http.Response(jsonData, 400));
         // act
         final sut = dataSource.request;
@@ -131,8 +128,8 @@ void main() {
           'token': validToken,
         };
         httpResquest = Uri(
-          scheme: serverEndpoint!.scheme,
-          host: serverEndpoint!.host,
+          scheme: serverEndpoint.scheme,
+          host: serverEndpoint.host,
           path: '/reset-password/write-new',
           queryParameters: queryParameters,
         );
@@ -144,7 +141,7 @@ void main() {
         // arrange
         final bodyContent = JsonUtil.getStringSync(
             from: 'authentication/request_reset_password.json');
-        when(mockHttpClient!.post(any, headers: anyNamed('headers')))
+        when(mockHttpClient.post(any, headers: anyNamed('headers')))
             .thenAnswer((_) async => http.Response(bodyContent, 200));
         // act
         await dataSource.reset(
@@ -153,14 +150,15 @@ void main() {
           resetToken: validToken,
         );
         // assert
-        verify(mockHttpClient!.post(httpResquest, headers: httpHeader as Map<String, String>));
+        verify(mockHttpClient.post(httpResquest,
+            headers: httpHeader as Map<String, String>));
       });
       test('should return ValidField when the response code is 200 (success)',
           () async {
         // arrange
         final bodyContent = JsonUtil.getStringSync(
             from: 'authentication/request_reset_password.json');
-        when(mockHttpClient!.post(any, headers: anyNamed('headers')))
+        when(mockHttpClient.post(any, headers: anyNamed('headers')))
             .thenAnswer((_) async => http.Response(bodyContent, 200));
         // act
         final result = await dataSource.reset(
@@ -179,7 +177,7 @@ void main() {
             JsonUtil.getStringSync(from: 'authentication/email_not_found.json');
         final bodyContent =
             await JsonUtil.getJson(from: 'authentication/email_not_found.json');
-        when(mockHttpClient!.post(any, headers: anyNamed('headers')))
+        when(mockHttpClient.post(any, headers: anyNamed('headers')))
             .thenAnswer((_) async => http.Response(jsonData, 400));
         // act
         final sut = dataSource.reset;

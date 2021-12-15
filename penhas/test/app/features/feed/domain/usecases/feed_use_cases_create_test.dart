@@ -7,18 +7,18 @@ import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  ITweetRepository? repository;
-  late TweetFilterPreference filterPreference;
+  late MockITweetRepository repository = MockITweetRepository();
+  late MockTweetFilterPreference filterPreference = MockTweetFilterPreference();
 
   setUp(() {
-    when(filterPreference.categories).thenReturn([]);
+    when(filterPreference.getCategory()).thenReturn([]);
     when(filterPreference.getTags()).thenReturn([]);
   });
 
   group('FeedUseCases', () {
     test('should not hit datasource on instantiate', () async {
       // act
-      FeedUseCases(repository: repository!, filterPreference: filterPreference);
+      FeedUseCases(repository: repository, filterPreference: filterPreference);
       // assert
       verifyNoMoreInteractions(repository);
     });
@@ -32,11 +32,11 @@ void main() {
       test('should create tweet', () async {
         // arrange
         final sut = FeedUseCases(
-          repository: repository!,
+          repository: repository,
           filterPreference: filterPreference,
           maxRows: maxRowsPerRequet,
         );
-        when(repository!.create(option: anyNamed('option')))
+        when(repository.create(option: anyNamed('option')))
             .thenAnswer((_) async => right(
                   TweetEntity(
                       id: '200608T1805540001',

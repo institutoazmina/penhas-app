@@ -20,5 +20,5 @@ class GeolocationEntity extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object?> get props => [label!, locationToken!, userLocation!];
+  List<Object?> get props => [label, locationToken, userLocation];
 }

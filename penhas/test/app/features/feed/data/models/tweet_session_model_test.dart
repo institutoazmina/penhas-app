@@ -29,81 +29,72 @@ void main() {
       final jsonData =
           await JsonUtil.getJson(from: 'feed/retrieve_response.json');
       final TweetSessionModel expectedSession = TweetSessionModel(
-        TweetSessionOrder.latestFirst,
-        null,
-        [
-          TweetModel(
-            id: '200528T2055380001',
-            userName: 'penhas',
-            clientId: 551,
-            createdAt: '2020-05-28 20:55:38',
-            totalReply: 0,
-            totalLikes: 0,
-            anonymous: false,
-            content: 'sleep 7',
-            avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-            meta: const TweetMeta(liked: false, owner: true),
-            lastReply: const [],
-          ),
-          TweetRelatedNewsModel(
-            header: 'google',
-            news: [
+          true,
+          TweetSessionOrder.latestFirst,
+          null,
+          [
+            TweetModel(
+              id: '200528T2055380001',
+              userName: 'penhas',
+              clientId: 551,
+              createdAt: '2020-05-28 20:55:38',
+              totalReply: 0,
+              totalLikes: 0,
+              anonymous: false,
+              content: 'sleep 7',
+              avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
+              meta: TweetMeta(liked: false, owner: true),
+              lastReply: [],
+            ),
+            TweetRelatedNewsModel(header: 'google', news: [
               TweetNewsModel(
-                title: 'Titulo muito grande',
-                newsUri: 'https://site.com/news-redirect/?uid=551',
-              )
-            ],
-          ),
-          TweetModel(
-            id: '200528T2055370004',
-            userName: 'penhas',
-            clientId: 551,
-            createdAt: '2020-05-28 20:55:37',
-            totalReply: 0,
-            totalLikes: 0,
-            anonymous: false,
-            content: 'sleep 6',
-            avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-            meta: const TweetMeta(liked: false, owner: true),
-            lastReply: const [],
-          ),
-          TweetNewsModel(
-            date: '18/06/2020',
-            newsUri: 'https://site.com/news-redirect/?uid=552',
-            imageUri: 'https://s2.glbimg.com/n.jpg',
-            source: 'Google News',
-            title: 'Title News 1',
-          ),
-          TweetNewsGroupModel(
-            header: 'Relacionamento API Random',
-            news: [
-              TweetNewsModel(
+                  title: 'Titulo muito grande',
+                  newsUri: 'https://site.com/news-redirect/?uid=551',
+                  date: null,
+                  imageUri: null,
+                  source: null)
+            ]),
+            TweetModel(
+              id: '200528T2055370004',
+              userName: 'penhas',
+              clientId: 551,
+              createdAt: '2020-05-28 20:55:37',
+              totalReply: 0,
+              totalLikes: 0,
+              anonymous: false,
+              content: 'sleep 6',
+              avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
+              meta: TweetMeta(liked: false, owner: true),
+              lastReply: [],
+            ),
+            TweetNewsModel(
                 date: '18/06/2020',
-                newsUri: 'https://site.com/news-redirect/?uid=600',
-                imageUri: 'https://s2.glbimg.com/n.jpg',
-                source: 'Google News',
-                title: 'Title News Group - 0',
-              ),
+                newsUri: "https://site.com/news-redirect/?uid=552",
+                imageUri: "https://s2.glbimg.com/n.jpg",
+                source: "Google News",
+                title: "Title News 1"),
+            TweetNewsGroupModel(header: 'Relacionamento API Random', news: [
               TweetNewsModel(
-                date: '18/06/2020',
-                newsUri: 'https://site.com/news-redirect/?uid=601',
-                imageUri: 'https://s2.glbimg.com/n.jpg',
-                source: 'Google News',
-                title: 'Title News Group - 1',
-              ),
+                  date: "18/06/2020",
+                  newsUri: "https://site.com/news-redirect/?uid=600",
+                  imageUri: "https://s2.glbimg.com/n.jpg",
+                  source: "Google News",
+                  title: "Title News Group - 0"),
               TweetNewsModel(
-                date: '18/06/2020',
-                newsUri: 'https://site.com/news-redirect/?uid=602',
-                imageUri: 'https://s2.glbimg.com/n.jpg',
-                source: 'Google News',
-                title: 'Title News Group - 2',
-              ),
-            ],
-          )
-        ],
-        '_next_page_token_',
-        hasMore: true,
-      );
+                  date: "18/06/2020",
+                  newsUri: "https://site.com/news-redirect/?uid=601",
+                  imageUri: "https://s2.glbimg.com/n.jpg",
+                  source: "Google News",
+                  title: "Title News Group - 1"),
+              TweetNewsModel(
+                  date: "18/06/2020",
+                  newsUri: "https://site.com/news-redirect/?uid=602",
+                  imageUri: "https://s2.glbimg.com/n.jpg",
+                  source: "Google News",
+                  title: "Title News Group - 2"),
+            ])
+          ],
+          '_next_page_token_');
       // act
       final result = TweetSessionModel.fromJson(jsonData);
       // assert

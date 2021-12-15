@@ -11,10 +11,12 @@ import 'package:penhas/app/features/authentication/domain/usecases/sign_up_passw
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  EmailAddress? emailAddress;
-  SignUpPassword? password;
-  String? resetToken;
-  IChangePasswordRepository? repository;
+  late EmailAddress emailAddress;
+  late SignUpPassword password;
+  late String resetToken;
+
+  late MockIChangePasswordRepository repository =
+      MockIChangePasswordRepository();
   late ChangePassword sut;
 
   setUp(() {
@@ -26,7 +28,7 @@ void main() {
 
   group('Request change password', () {
     PostExpectation<Future<Either<Failure, ValidField>>> mockResquest() {
-      return when(repository!.reset(
+      return when(repository.reset(
           emailAddress: anyNamed('emailAddress'),
           password: anyNamed('password'),
           resetToken: anyNamed(
@@ -42,9 +44,9 @@ void main() {
       mockResquest().thenAnswer((_) async => right(const ValidField()));
       // act
       final Either<Failure, ValidField>? result = await sut(
-        emailAddress: emailAddress!,
-        password: password!,
-        resetToken: resetToken!,
+        emailAddress: emailAddress,
+        password: password,
+        resetToken: resetToken,
       );
       // assert
       expect(result, right(const ValidField()));
@@ -69,9 +71,9 @@ void main() {
       );
       // act
       final Either<Failure, ValidField>? result = await sut(
-        emailAddress: emailAddress!,
-        resetToken: resetToken!,
-        password: password!,
+        emailAddress: emailAddress,
+        resetToken: resetToken,
+        password: password,
       );
       // assert
       expect(

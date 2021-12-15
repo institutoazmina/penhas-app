@@ -8,10 +8,10 @@ import 'package:penhas/app/features/help_center/domain/entities/guardian_session
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  MockHttpClient? apiClient;
+  late MockHttpClient apiClient = MockHttpClient();
   late IGuardianDataSource dataSource;
-  MockApiServerConfigure? serverConfigure;
-  Uri? serverEndpoint;
+  late MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
+  Uri? serverEndpoint = Uri.https('api.anyserver.io', '/');
   const String SESSSION_TOKEN = 'my_really.long.JWT';
 
   setUp(() {
@@ -21,15 +21,15 @@ void main() {
     );
 
     // MockApiServerConfigure configuration
-    when(serverConfigure!.baseUri).thenAnswer(((_) => serverEndpoint!) as Uri Function(Invocation));
-    when(serverConfigure!.apiToken)
+    when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
+    when(serverConfigure.apiToken)
         .thenAnswer((_) => Future.value(SESSSION_TOKEN));
-    when(serverConfigure!.userAgent)
+    when(serverConfigure.userAgent)
         .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
-    final userAgent = await serverConfigure!.userAgent;
+    final userAgent = await serverConfigure.userAgent;
     return {
       'X-Api-Key': sessionToken,
       'User-Agent': userAgent,
@@ -39,8 +39,8 @@ void main() {
 
   Uri _setuHttpRequest(String path, Map<String, String> queryParameters) {
     return Uri(
-      scheme: serverEndpoint!.scheme,
-      host: serverEndpoint!.host,
+      scheme: serverEndpoint.scheme,
+      host: serverEndpoint.host,
       path: path,
       queryParameters: queryParameters.isEmpty ? null : queryParameters,
     );
@@ -48,7 +48,7 @@ void main() {
 
   void _setUpMockPostHttpClientSuccess204() {
     when(
-      apiClient!.delete(
+      apiClient.delete(
         any,
         headers: anyNamed('headers'),
       ),
@@ -69,7 +69,7 @@ void main() {
       GuardianContactEntity? guardian;
 
       setUp(() {
-        guardian = const GuardianContactEntity(
+        guardian = GuardianContactEntity(
           id: 1,
           name: 'Maria',
           mobile: '1191910101',
@@ -89,7 +89,7 @@ void main() {
             // act
             await dataSource.delete(guardian);
             // assert
-            verify(apiClient!.delete(request, headers: headers));
+            verify(apiClient.delete(request, headers: headers));
           },
         );
         test(

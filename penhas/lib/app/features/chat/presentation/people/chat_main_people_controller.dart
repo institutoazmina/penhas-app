@@ -12,7 +12,6 @@ import 'package:penhas/app/features/users/domain/entities/user_detail_entity.dar
 import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
 import 'package:penhas/app/features/users/domain/entities/user_search_options.dart';
 import 'package:penhas/app/features/users/domain/entities/user_search_session_entity.dart';
-import 'package:penhas/app/shared/logger/log.dart';
 
 part 'chat_main_people_controller.g.dart';
 

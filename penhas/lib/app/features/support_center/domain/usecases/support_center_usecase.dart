@@ -15,14 +15,14 @@ import 'package:penhas/app/features/support_center/domain/entities/support_cente
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
 
 class SupportCenterUseCase {
-  final ILocationServices? _locationService;
-  final ISupportCenterRepository? _supportCenterRepository;
+  final ILocationServices _locationService;
+  final ISupportCenterRepository _supportCenterRepository;
   GeolocationEntity? _cachedGeoLocation;
   SupportCenterMetadataEntity? _cacheMetadata;
 
   SupportCenterUseCase({
-    required ILocationServices? locationService,
-    required ISupportCenterRepository? supportCenterRepository,
+    required ILocationServices locationService,
+    required ISupportCenterRepository supportCenterRepository,
   })  : this._locationService = locationService,
         this._supportCenterRepository = supportCenterRepository;
 
@@ -31,7 +31,7 @@ class SupportCenterUseCase {
       return right(_cacheMetadata);
     }
 
-    final metadata = await _supportCenterRepository!.metadata();
+    final metadata = await _supportCenterRepository.metadata();
     _cacheMetadata = metadata.getOrElse(() => null);
 
     return metadata;
@@ -49,16 +49,16 @@ class SupportCenterUseCase {
       );
     }
 
-    return _supportCenterRepository!.fetch(currentRequest);
+    return _supportCenterRepository.fetch(currentRequest);
   }
 
   Future<Either<Failure, GeolocationEntity>> mapGeoFromCep(Cep cep) async {
-    return _supportCenterRepository!.mapGeoFromCep(cep.rawValue);
+    return _supportCenterRepository.mapGeoFromCep(cep.rawValue);
   }
 
   Future<bool> askForLocationPermission(
       String title, Widget description) async {
-    return _locationService!
+    return _locationService
         .requestPermission(title: title, description: description)
         .then(
           (value) => value.maybeWhen(
@@ -79,7 +79,7 @@ class SupportCenterUseCase {
     required String category,
     required String? description,
   }) {
-    return _supportCenterRepository!.suggestion(
+    return _supportCenterRepository.suggestion(
       name: name,
       address: address,
       category: category,
@@ -89,20 +89,20 @@ class SupportCenterUseCase {
 
   Future<Either<Failure, SupportCenterPlaceDetailEntity>> detail(
       SupportCenterPlaceEntity? placeEntity) async {
-    return _supportCenterRepository!.detail(placeEntity);
+    return _supportCenterRepository.detail(placeEntity);
   }
 
   Future<Either<Failure, ValidField>> rating({
     required SupportCenterPlaceEntity? place,
     required double rate,
   }) async {
-    return _supportCenterRepository!.rate(place, rate);
+    return _supportCenterRepository.rate(place, rate);
   }
 }
 
 extension _PrivateMethods on SupportCenterUseCase {
   Future<bool> hasLocationPermission() async {
-    return await _locationService!.isPermissionGranted();
+    return await _locationService.isPermissionGranted();
   }
 
   Future<GeolocationEntity?> currentLocation() async {
@@ -110,7 +110,7 @@ extension _PrivateMethods on SupportCenterUseCase {
     final hasPermission = await hasLocationPermission();
 
     if (hasPermission) {
-      geoLocation = await _locationService!.currentLocation().then(
+      geoLocation = await _locationService.currentLocation().then(
             (v) => v.getOrElse(
               () => null,
             ),
@@ -119,7 +119,8 @@ extension _PrivateMethods on SupportCenterUseCase {
 
     if (_cachedGeoLocation != null &&
         _cachedGeoLocation!.locationToken != null) {
-      return GeolocationEntity(locationToken: _cachedGeoLocation!.locationToken);
+      return GeolocationEntity(
+          locationToken: _cachedGeoLocation!.locationToken);
     } else if (geoLocation != null) {
       return GeolocationEntity(userLocation: geoLocation);
     }

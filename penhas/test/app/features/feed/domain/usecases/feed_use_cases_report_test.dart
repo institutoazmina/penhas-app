@@ -8,8 +8,8 @@ import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  ITweetRepository? repository;
-  late TweetFilterPreference filterPreference;
+  late MockITweetRepository repository;
+  late MockTweetFilterPreference filterPreference;
 
   setUp(() {
     repository = MockITweetRepository();
@@ -19,13 +19,13 @@ void main() {
   group('FeedUseCases', () {
     test('should not hit datasource on instantiate', () async {
       // act
-      FeedUseCases(repository: repository!, filterPreference: filterPreference);
+      FeedUseCases(repository: repository, filterPreference: filterPreference);
       // assert
       verifyNoMoreInteractions(repository);
     });
     group('report', () {
-      int? maxRowsPerRequet;
-      ValidField? validField;
+      late int maxRowsPerRequet;
+      late ValidField validField;
 
       setUp(() {
         maxRowsPerRequet = 5;
@@ -35,7 +35,7 @@ void main() {
       test('should get message from server', () async {
         // arrange
         final sut = FeedUseCases(
-          repository: repository!,
+          repository: repository,
           filterPreference: filterPreference,
           maxRows: maxRowsPerRequet,
         );
@@ -53,8 +53,8 @@ void main() {
             avatar: 'https://site.com/avatar.svg',
             meta: const TweetMeta(liked: false, owner: false),);
 
-        when(repository!.report(option: anyNamed('option')))
-            .thenAnswer(((_) async => right(validField!)) as Future<Either<Failure, ValidField>> Function(Invocation));
+        when(repository.report(option: anyNamed('option')))
+            .thenAnswer(((_) async => right(validField)));
         // act
         final received = await sut.report(tweet, 'reason');
         // assert

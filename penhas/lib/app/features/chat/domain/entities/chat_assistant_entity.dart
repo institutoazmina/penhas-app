@@ -24,9 +24,9 @@ class ChatAssistantEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        title!,
-        subtitle!,
-        avatar!,
-        quizSession!,
+        title,
+        subtitle,
+        avatar,
+        quizSession,
       ];
 }

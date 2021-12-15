@@ -8,16 +8,21 @@ import 'package:penhas/app/features/main_menu/domain/usecases/user_profile.dart'
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late UserProfile sut;
-  AppStateUseCase? appStateUseCase;
-  IUserProfileRepository? repository;
-  LocalStore<UserProfileEntity> profileStore;
+  late MockAppStateUseCase appStateUseCase = MockAppStateUseCase();
+  late MockIUserProfileRepository repository = MockIUserProfileRepository();
+  late MockUserProfileStore profileStore = MockUserProfileStore();
+
+  late UserProfile sut = UserProfile(
+    repository: repository,
+    userProfileStore: profileStore,
+    appStateUseCase: appStateUseCase,
+  );
 
   setUp(() {
     when(appStateUseCase.check()).thenAnswer(
       (_) => Future.value(
         right(
-          const AppStateEntity(
+          AppStateEntity(
             quizSession: null,
             userProfile: null,
             appMode: AppStateModeEntity(),
@@ -32,53 +37,53 @@ void main() {
     test('should enable stealth mode', () async {
       // arrange
       final actual = right(ValidField());
-      when(repository!.stealthMode(toggle: anyNamed('toggle')))
+      when(repository.stealthMode(toggle: anyNamed('toggle')))
           .thenAnswer((_) async => right(ValidField()));
-      when(appStateUseCase!.check()).thenAnswer(((_) => null) as Future<Either<Failure, AppStateEntity>> Function(Invocation));
+
       // act
       final expected = await sut.stealthMode(toggle: true);
       // assert
       expect(actual, expected);
-      verify(repository!.stealthMode(toggle: true));
-      verify(appStateUseCase!.check());
+      verify(repository.stealthMode(toggle: true));
+      verify(appStateUseCase.check());
     });
 
     test('should disable stealth mode', () async {
       // arrange
       final actual = right(ValidField());
-      when(repository!.stealthMode(toggle: anyNamed('toggle')))
+      when(repository.stealthMode(toggle: anyNamed('toggle')))
           .thenAnswer((_) async => right(ValidField()));
       // act
       final expected = await sut.stealthMode(toggle: false);
       // assert
       expect(actual, expected);
-      verify(repository!.stealthMode(toggle: false));
+      verify(repository.stealthMode(toggle: false));
     });
 
     test('should enable anonymous mode', () async {
       // arrange
       final actual = right(ValidField());
-      when(repository!.anonymousMode(toggle: anyNamed('toggle')))
+      when(repository.anonymousMode(toggle: anyNamed('toggle')))
           .thenAnswer((_) async => right(ValidField()));
       // act
       final expected = await sut.anonymousMode(toggle: true);
       // assert
       expect(actual, expected);
-      verify(repository!.anonymousMode(toggle: true));
+      verify(repository.anonymousMode(toggle: true));
     });
 
     test('should disable anonymous mode', () async {
       // arrange
       final actual = right(ValidField());
-      when(repository!.anonymousMode(toggle: anyNamed('toggle')))
+      when(repository.anonymousMode(toggle: anyNamed('toggle')))
           .thenAnswer((_) async => right(ValidField()));
-      when(appStateUseCase!.check()).thenAnswer(((_) => null) as Future<Either<Failure, AppStateEntity>> Function(Invocation));
+
       // act
       final expected = await sut.anonymousMode(toggle: false);
       // assert
       expect(actual, expected);
-      verify(repository!.anonymousMode(toggle: false));
-      verify(appStateUseCase!.check());
+      verify(repository.anonymousMode(toggle: false));
+      verify(appStateUseCase.check());
     });
   });
 }

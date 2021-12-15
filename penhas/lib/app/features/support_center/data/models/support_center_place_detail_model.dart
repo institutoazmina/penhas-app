@@ -13,9 +13,10 @@ class SupportCenterPlaceDetailModel extends SupportCenterPlaceDetailEntity {
           place: place,
         );
 
-  factory SupportCenterPlaceDetailModel.fromJson(Map<String, dynamic> jsonData) {
-    final maximumRate = jsonData["avaliacao_maxima"].safeParseInt();
-    final ratedByClient = jsonData["cliente_avaliacao"].safeParseInt();
+  factory SupportCenterPlaceDetailModel.fromJson(
+      Map<String, dynamic> jsonData) {
+    final maximumRate = "${jsonData["avaliacao_maxima"]}".safeParseInt();
+    final ratedByClient = "${jsonData["cliente_avaliacao"]}".safeParseInt();
     final placeJson = jsonData["ponto_apoio"] as Map<String, dynamic>;
     final place = SupportCenterPlaceEntity.fromJson(placeJson);
 

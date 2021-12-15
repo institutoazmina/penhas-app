@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
+import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_model.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
@@ -10,10 +11,10 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  MockHttpClient? apiClient;
+  late MockHttpClient apiClient = MockHttpClient();
   late ITweetDataSource dataSource;
-  MockApiServerConfigure? serverConfigure;
-  Uri? serverEndpoint;
+  late MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
+  late Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
   const String SESSSION_TOKEN = 'my_really.long.JWT';
 
   setUp(() {
@@ -23,15 +24,15 @@ void main() {
     );
 
     // MockApiServerConfigure configuration
-    when(serverConfigure!.baseUri).thenAnswer(((_) => serverEndpoint!) as Uri Function(Invocation));
-    when(serverConfigure!.apiToken)
+    when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
+    when(serverConfigure.apiToken)
         .thenAnswer((_) => Future.value(SESSSION_TOKEN));
-    when(serverConfigure!.userAgent)
+    when(serverConfigure.userAgent)
         .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
-    final userAgent = await serverConfigure!.userAgent;
+    final userAgent = await serverConfigure.userAgent;
     return {
       'X-Api-Key': sessionToken,
       'User-Agent': userAgent,
@@ -41,15 +42,15 @@ void main() {
 
   Uri _setuHttpRequest(String path, Map<String, String> queryParameters) {
     return Uri(
-      scheme: serverEndpoint!.scheme,
-      host: serverEndpoint!.host,
+      scheme: serverEndpoint.scheme,
+      host: serverEndpoint.host,
       path: path,
       queryParameters: queryParameters.isEmpty ? null : queryParameters,
     );
   }
 
   PostExpectation<Future<http.Response>> _mockPostRequest() {
-    return when(apiClient!.post(
+    return when(apiClient.post(
       any,
       headers: anyNamed('headers'),
       body: anyNamed('body'),
@@ -92,7 +93,7 @@ void main() {
         await dataSource.reply(option: requestOption);
         // assert
         verify(
-          apiClient!.post(
+          apiClient.post(
             request,
             headers: headers,
             body: 'content=$bodyRequest',

@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
@@ -9,26 +10,31 @@ import 'package:penhas/app/features/authentication/data/repositories/change_pass
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
+import 'package:penhas/app/shared/logger/log.dart';
 
 import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  IChangePasswordDataSource? dataSource;
-  INetworkInfo? networkInfo;
-  late ChangePasswordRepository sut;
-  EmailAddress? emailAddress;
-  SignUpPassword? password;
+  late MockIChangePasswordDataSource dataSource =
+      MockIChangePasswordDataSource();
+  late MockINetworkInfo networkInfo = MockINetworkInfo();
+
+  late ChangePasswordRepository sut = ChangePasswordRepository(
+      changePasswordDataSource: dataSource, networkInfo: networkInfo);
+  late EmailAddress emailAddress;
+  late SignUpPassword password;
   String? resetToken;
 
   setUp(() {
+    isCrashlitycsEnabled = false;
     emailAddress = EmailAddress('valid@email.com');
     password = SignUpPassword('my_new_str0ng_P4ssw0rd', PasswordValidator());
     resetToken = '666242';
   });
 
   PostExpectation<dynamic> mockResetDataSource() {
-    return when(dataSource!.reset(
+    return when(dataSource.reset(
         emailAddress: anyNamed('emailAddress'),
         password: anyNamed('password'),
         resetToken: anyNamed('resetToken'),
@@ -37,12 +43,12 @@ void main() {
   }
 
   PostExpectation<dynamic> mockRequestDataSource() {
-    return when(dataSource!.request(emailAddress: anyNamed('emailAddress')));
+    return when(dataSource.request(emailAddress: anyNamed('emailAddress')));
   }
 
   group('ChangePasswordRepository', () {
     setUp(() {
-      when(networkInfo!.isConnected).thenAnswer((_) async => true);
+      when(networkInfo.isConnected).thenAnswer((_) async => true);
     });
     group('reset', () {
       test('should return ValidField for successful password changed',

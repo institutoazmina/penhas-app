@@ -8,10 +8,11 @@ import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_op
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  MockHttpClient? apiClient;
+  late MockHttpClient apiClient = MockHttpClient();
+  late MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
+  final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
   late ITweetDataSource dataSource;
-  MockApiServerConfigure? serverConfigure;
-  Uri? serverEndpoint;
+
   const String SESSSION_TOKEN = 'my_really.long.JWT';
 
   setUp(() {
@@ -21,15 +22,15 @@ void main() {
     );
 
     // MockApiServerConfigure configuration
-    when(serverConfigure!.baseUri).thenAnswer(((_) => serverEndpoint!) as Uri Function(Invocation));
-    when(serverConfigure!.apiToken)
+    when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
+    when(serverConfigure.apiToken)
         .thenAnswer((_) => Future.value(SESSSION_TOKEN));
-    when(serverConfigure!.userAgent)
+    when(serverConfigure.userAgent)
         .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
-    final userAgent = await serverConfigure!.userAgent;
+    final userAgent = await serverConfigure.userAgent;
     return {
       'X-Api-Key': sessionToken,
       'User-Agent': userAgent,
@@ -39,8 +40,8 @@ void main() {
 
   Uri _setuHttpRequest(String path, Map<String, String> queryParameters) {
     return Uri(
-      scheme: serverEndpoint!.scheme,
-      host: serverEndpoint!.host,
+      scheme: serverEndpoint.scheme,
+      host: serverEndpoint.host,
       path: path,
       queryParameters: queryParameters.isEmpty ? null : queryParameters,
     );
@@ -48,7 +49,7 @@ void main() {
 
   void _setUpMockPostHttpClientSuccess204() {
     when(
-      apiClient!.delete(
+      apiClient.delete(
         any,
         headers: anyNamed('headers'),
       ),
@@ -81,7 +82,7 @@ void main() {
         // act
         await dataSource.delete(option: requestOption);
         // assert
-        verify(apiClient!.delete(request, headers: headers));
+        verify(apiClient.delete(request, headers: headers));
       });
 
       test('should get a valid ValidField for a successful delete', () async {

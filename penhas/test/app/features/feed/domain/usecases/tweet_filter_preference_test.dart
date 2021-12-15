@@ -8,7 +8,8 @@ import '../../../../../utils/helper.mocks.dart';
 
 void main() {
   late TweetFilterPreference sut;
-  ITweetFilterPreferenceRepository? mockRepository;
+  late MockITweetFilterPreferenceRepository mockRepository =
+      MockITweetFilterPreferenceRepository();
   TweetFilterSessionEntity? response;
 
   setUp(() {
@@ -31,7 +32,7 @@ void main() {
   group('TweetFilterPreference', () {
     test('should retrieve tag and categories list from server', () async {
       // arrange
-      when(mockRepository!.retreive()).thenAnswer(((_) async => right(response!)) as Future<Either<Failure, TweetFilterSessionEntity>> Function(Invocation));
+      when(mockRepository.retreive()).thenAnswer((_) async => right(response!));
 
       final expected = right(
         const TweetFilterSessionEntity(
@@ -55,7 +56,7 @@ void main() {
     test('should retrieve upgated tag and categories list from server',
         () async {
       // arrange
-      when(mockRepository!.retreive()).thenAnswer(((_) async => right(response!)) as Future<Either<Failure, TweetFilterSessionEntity>> Function(Invocation));
+      when(mockRepository.retreive()).thenAnswer((_) async => right(response!));
       final expected = right(TweetFilterSessionEntity(categories: [
         TweetFilterEntity(id: '1', isSelected: false, label: 'C 1'),
         TweetFilterEntity(id: '2', isSelected: true, label: 'C 2'),

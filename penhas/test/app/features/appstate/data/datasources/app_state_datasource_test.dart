@@ -9,26 +9,29 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  MockHttpClient? apiClient;
-  late IAppStateDataSource dataSource;
-  MockApiServerConfigure? serverConfigure;
+  late MockHttpClient apiClient = MockHttpClient();
+  late MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
   late String bodyContent;
-  Uri? serverEndpoint;
+  final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
+  late IAppStateDataSource dataSource = AppStateDataSource(
+    apiClient: apiClient,
+    serverConfiguration: serverConfigure,
+  );
 
   setUp(() {
     bodyContent =
         JsonUtil.getStringSync(from: 'profile/about_with_quiz_session.json');
 
     // MockApiServerConfigure configuration
-    when(serverConfigure!.baseUri).thenAnswer(((_) => serverEndpoint!) as Uri Function(Invocation));
-    when(serverConfigure!.apiToken)
+    when(serverConfigure.baseUri).thenAnswer(((_) => serverEndpoint));
+    when(serverConfigure.apiToken)
         .thenAnswer((_) => Future.value('my.very.strong'));
-    when(serverConfigure!.userAgent)
+    when(serverConfigure.userAgent)
         .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
-    final userAgent = await serverConfigure!.userAgent;
+    final userAgent = await serverConfigure.userAgent;
     return {
       'User-Agent': userAgent,
       'Content-Type': 'application/json; charset=utf-8',
@@ -38,14 +41,14 @@ void main() {
 
   Uri _setuHttpRequest() {
     return Uri(
-      scheme: serverEndpoint!.scheme,
-      host: serverEndpoint!.host,
+      scheme: serverEndpoint.scheme,
+      host: serverEndpoint.host,
       path: '/me',
     );
   }
 
   PostExpectation<Future<http.Response>> _mockRequest() {
-    return when(apiClient!.get(
+    return when(apiClient.get(
       any,
       headers: anyNamed('headers'),
     ));
@@ -81,7 +84,7 @@ void main() {
       // act
       await dataSource.check();
       // assert
-      verify(apiClient!.get(loginUri, headers: headers));
+      verify(apiClient.get(loginUri, headers: headers));
     });
     test('should get AppStateModel for valid session', () async {
       // arrange

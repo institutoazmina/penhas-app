@@ -12,7 +12,7 @@ void main() {
     QuizModule(),
     AditionalBindModule(binds: [
       Bind.singleton((i) => MockILocationServices()),
-    ],),
+    ]),
   ]);
   // QuizController quiz;
   //

@@ -168,7 +168,8 @@ class FeedUseCases {
     TweetEntity tweet,
     String reason,
   ) async {
-    final option = TweetEngageRequestOption(tweetId: tweet.id!, message: reason);
+    final option =
+        TweetEngageRequestOption(tweetId: tweet.id!, message: reason);
     final result = await _repository.report(option: option);
 
     return result.fold<Either<Failure, ValidField>>(
@@ -206,13 +207,13 @@ class FeedUseCases {
   }
 
   String? _getTags() {
-    List<String?> tags = _filterPreference.getTags();
-    return (tags == null || tags.isEmpty) ? null : tags.join(',');
+    List<String> tags = _filterPreference.getTags();
+    return tags.isEmpty ? null : tags.join(',');
   }
 
   String? _getCategory() {
     List<String> category = _filterPreference.getCategory();
-    return (category == null || category.isEmpty) ? null : category.join(',');
+    return category.isEmpty ? null : category.join(',');
   }
 
   TweetRequestOption _oldestRequestOption() {
@@ -249,7 +250,7 @@ class FeedUseCases {
       _nextPage = session.nextPage;
     }
 
-    if (session.tweets.isNotEmpty) {
+    if (session.tweets.length > 0) {
       if (session.orderBy == TweetSessionOrder.latestFirst) {
         _tweetCacheFetch.insertAll(0, session.tweets);
       } else {
@@ -263,7 +264,7 @@ class FeedUseCases {
 
   FeedCache _appendFetchCache(TweetSessionEntity session) {
     _nextPage = session.nextPage;
-    if (session.tweets.isNotEmpty) {
+    if (session.tweets.length > 0) {
       if (session.orderBy == TweetSessionOrder.latestFirst) {
         _tweetCacheFetch.addAll(session.tweets);
       } else {
@@ -317,7 +318,8 @@ class FeedUseCases {
       (e) {
         if (e is TweetEntity) {
           return (e.id == newTweet.id) ||
-              (e.lastReply!.isNotEmpty && e.lastReply!.first!.id == newTweet.id);
+              (e.lastReply!.isNotEmpty &&
+                  e.lastReply!.first!.id == newTweet.id);
         }
         return false;
       },
@@ -335,8 +337,8 @@ class FeedUseCases {
     } else if (currentTweet.lastReply!.isNotEmpty &&
         currentTweet.lastReply!.first!.id == newTweet.id) {
       // se a tweet for um reply, reconstrua o principal com o novo reply
-      final reply =
-          newTweet.copyWith(lastReply: currentTweet.lastReply!.first!.lastReply);
+      final reply = newTweet.copyWith(
+          lastReply: currentTweet.lastReply!.first!.lastReply);
       final princialTweet = currentTweet.copyWith(lastReply: [reply]);
       _tweetCacheFetch[index] = princialTweet;
     }
@@ -381,7 +383,8 @@ class FeedUseCases {
 
   TweetRequestOption _buildTweetDetailRequest(String? tweetId) {
     String? afterTweetId = tweetId;
-    if (_tweetReplyMap[tweetId] != null && _tweetReplyMap[tweetId]!.isNotEmpty) {
+    if (_tweetReplyMap[tweetId] != null &&
+        _tweetReplyMap[tweetId]!.isNotEmpty) {
       afterTweetId = _tweetReplyMap[tweetId]!.last!.id;
     }
 
@@ -402,7 +405,7 @@ class FeedUseCases {
         .where((e) => e != null)
         .toList();
 
-    if (filteredResponse.isNotEmpty) {
+    if (filteredResponse.length > 0) {
       if (session.orderBy == TweetSessionOrder.latestFirst) {
         _tweetReplyMap[tweetId]!.addAll(filteredResponse.reversed);
       } else {

@@ -10,7 +10,7 @@ import '../../../utils/helper.mocks.dart';
 
 void main() {
   late AppModulesServices sut;
-  ILocalStorage? storage;
+  late MockILocalStorage storage = MockILocalStorage();
   String? appModuleKey;
 
   String _convert(List<AppStateModuleEntity> modules) {
@@ -33,11 +33,11 @@ void main() {
         const AppStateModuleEntity(code: 'module_2', meta: '{"data":true}'),
       ];
       final jsonString = _convert(modules);
-      when(storage!.put(any, any)).thenAnswer((_) => Future.value());
+      when(storage.put(any, any)).thenAnswer((_) => Future.value());
       // act
       await sut.save(modules);
       // assert
-      verify(storage!.put(appModuleKey, jsonString));
+      verify(storage.put(appModuleKey, jsonString));
     });
 
     test('should get the module if exist on storage', () async {
@@ -51,7 +51,7 @@ void main() {
         const AppStateModuleEntity(code: 'module_2', meta: '{"data":true}'),
       ];
       final jsonString = _convert(modules);
-      when(storage!.get(any)).thenAnswer((_) => Future.value(jsonString));
+      when(storage.get(any)).thenAnswer((_) => Future.value(right(jsonString)));
       // act
       final received = await sut.feature(name: 'module_2');
       // assert
@@ -66,7 +66,7 @@ void main() {
         const AppStateModuleEntity(code: 'module_2', meta: '{"data":true}'),
       ];
       final jsonString = _convert(modules);
-      when(storage!.get(any)).thenAnswer((_) => Future.value(jsonString));
+      when(storage.get(any)).thenAnswer((_) => Future.value(right(jsonString)));
       // act
       final received = await sut.feature(name: 'module_20');
       // assert

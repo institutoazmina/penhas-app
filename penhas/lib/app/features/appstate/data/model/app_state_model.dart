@@ -75,10 +75,7 @@ class AppStateModel extends AppStateEntity {
       return [];
     }
 
-    return data
-        .map((e) => _buildModule(e))
-        .whereNotNull()
-        .toList();
+    return data.map((e) => _buildModule(e)).whereNotNull().toList();
   }
 
   static AppStateModuleEntity? _buildModule(Map<String, dynamic> module) {
@@ -132,13 +129,11 @@ class AppStateModel extends AppStateEntity {
       Map<String, dynamic> message) {
     return [
       QuizMessageEntity(
-        ref: message['ref'] ?? "",
         content: message['content'],
         type: QuizMessageType.displayText,
         style: 'normal',
       ),
       QuizMessageEntity(
-        ref: message['ref'] ?? "",
         content: message['display_response'],
         type: QuizMessageType.displayTextResponse,
         style: 'normal',

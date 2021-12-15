@@ -15,8 +15,11 @@ void main() {
       avatar: 'https://api.com/avatar/padrao.svg',
       birthdate: DateTime(1980, 3, 3),
       fullName: 'Fulana da Silva',
-      race: 'pardo',
-      genre: 'Feminino',
+      race: "pardo",
+      genre: "Feminino",
+      jaFoiVitimaDeViolencia: false,
+      minibio: null,
+      skill: [],
     );
   });
 
@@ -40,13 +43,15 @@ void main() {
 
     List<QuizMessageEntity> _currentMessage() {
       return [
-        const QuizMessageEntity(
+        QuizMessageEntity(
+          ref: '',
           content:
               'Olá, eu sou a Assistente PenhaS ☺️ e vou te ajudar a conhecer o aplicativo 🤳',
           type: QuizMessageType.displayText,
           style: 'normal',
         ),
-        const QuizMessageEntity(
+        QuizMessageEntity(
+          ref: '',
           content:
               'Vou começar com algumas perguntas, para saber melhor como te ajudar',
           type: QuizMessageType.displayText,
@@ -112,13 +117,15 @@ void main() {
 
     List<QuizMessageEntity> _currentMessageWithTutorialStealth() {
       return [
-        const QuizMessageEntity(
+        QuizMessageEntity(
+          ref: '',
           content:
               'Fulana da Silva, pelas suas respostas avalio que você está em situação de risco ⚠️',
           type: QuizMessageType.displayText,
           style: 'normal',
         ),
-        const QuizMessageEntity(
+        QuizMessageEntity(
+          ref: '',
           content:
               'Para garantir sua segurança, nenhuma outra usuária do PenhaS saberá sua identidade e você terá um perfil anônimo 👭',
           type: QuizMessageType.displayText,
@@ -209,8 +216,11 @@ void main() {
         anonymousModeEnabled: true,
         birthdate: DateTime(1980, 3, 3),
         fullName: 'Fulana da Silva',
-        race: 'pardo',
-        genre: 'Feminino',
+        race: "pardo",
+        genre: "Feminino",
+        jaFoiVitimaDeViolencia: false,
+        minibio: null,
+        skill: [],
       );
       final AppStateEntity expected = AppStateModel(
         quizSession,
@@ -248,8 +258,11 @@ void main() {
         stealthModeEnabled: true,
         birthdate: DateTime(1980, 3, 3),
         fullName: 'Fulana da Silva',
-        race: 'pardo',
-        genre: 'Feminino',
+        race: "pardo",
+        genre: "Feminino",
+        jaFoiVitimaDeViolencia: false,
+        minibio: null,
+        skill: [],
       );
       final AppStateEntity expected = AppStateModel(
         quizSession,

@@ -9,24 +9,24 @@ import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  ITweetRepository? repository;
-  late TweetFilterPreference filterPreference;
+  late MockITweetRepository repository = MockITweetRepository();
+  late MockTweetFilterPreference filterPreference = MockTweetFilterPreference();
 
   setUp(() {
-    when(filterPreference.categories).thenReturn([]);
+    when(filterPreference.getCategory()).thenReturn([]);
     when(filterPreference.getTags()).thenReturn([]);
   });
 
   group('FeedUseCases', () {
     test('should not hit datasource on instantiate', () async {
       // act
-      FeedUseCases(repository: repository!, filterPreference: filterPreference);
+      FeedUseCases(repository: repository, filterPreference: filterPreference);
       // assert
       verifyNoMoreInteractions(repository);
     });
     group('delete', () {
-      int? maxRowsPerRequet;
-      TweetSessionEntity? firstSessionResponse;
+      late int maxRowsPerRequet;
+      late TweetSessionEntity firstSessionResponse;
 
       setUp(() {
         maxRowsPerRequet = 5;
@@ -96,7 +96,7 @@ void main() {
         );
 
         final sut = FeedUseCases(
-          repository: repository!,
+          repository: repository,
           filterPreference: filterPreference,
           maxRows: maxRowsPerRequet,
         );
@@ -121,11 +121,11 @@ void main() {
           ),
         );
 
-        when(repository!.fetch(option: anyNamed('option')))
-            .thenAnswer(((_) async => right(firstSessionResponse!)) as Future<Either<Failure, TweetSessionEntity>> Function(Invocation));
+        when(repository.fetch(option: anyNamed('option')))
+            .thenAnswer((_) async => right(firstSessionResponse));
         await sut.fetchNewestTweet();
 
-        when(repository!.delete(option: anyNamed('option')))
+        when(repository.delete(option: anyNamed('option')))
             .thenAnswer((_) async => right(ValidField()));
         // act
         final received = await sut.delete(tweet);
@@ -150,7 +150,7 @@ void main() {
         );
 
         final sut = FeedUseCases(
-          repository: repository!,
+          repository: repository,
           filterPreference: filterPreference,
           maxRows: maxRowsPerRequet,
         );
@@ -188,11 +188,11 @@ void main() {
           ),
         );
 
-        when(repository!.fetch(option: anyNamed('option')))
-            .thenAnswer(((_) async => right(firstSessionResponse!)) as Future<Either<Failure, TweetSessionEntity>> Function(Invocation));
+        when(repository.fetch(option: anyNamed('option')))
+            .thenAnswer((_) async => right(firstSessionResponse));
         await sut.fetchNewestTweet();
 
-        when(repository!.delete(option: anyNamed('option')))
+        when(repository.delete(option: anyNamed('option')))
             .thenAnswer((_) async => right(ValidField()));
         // act
         final received = await sut.delete(tweet);

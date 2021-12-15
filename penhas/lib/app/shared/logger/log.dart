@@ -7,9 +7,11 @@ import 'package:stack_trace/stack_trace.dart';
 
 typedef T OnError<T>(Object exception, StackTrace? stack);
 
+bool isCrashlitycsEnabled = true;
+
 void logWarn(String message) {
   dev.log(message);
-  FirebaseCrashlytics.instance.log(message);
+  if (isCrashlitycsEnabled) FirebaseCrashlytics.instance.log(message);
 }
 
 void logError(Object exception, [StackTrace? stack]) {
@@ -21,7 +23,8 @@ void logError(Object exception, [StackTrace? stack]) {
     error: exception,
     stackTrace: stack,
   );
-  FirebaseCrashlytics.instance.recordError(exception, stack);
+  if (isCrashlitycsEnabled)
+    FirebaseCrashlytics.instance.recordError(exception, stack);
 }
 
 OnError get catchErrorLogger {

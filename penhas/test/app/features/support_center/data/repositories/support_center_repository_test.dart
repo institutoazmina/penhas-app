@@ -8,20 +8,17 @@ import 'package:penhas/app/features/support_center/data/models/support_center_me
 import 'package:penhas/app/features/support_center/data/models/support_center_place_session_model.dart';
 import 'package:penhas/app/features/support_center/data/repositories/support_center_repository.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_fetch_request.dart';
+import 'package:penhas/app/shared/logger/log.dart';
 
 import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  IApiProvider? apiProvider;
-  late ISupportCenterRepository sut;
-  SupportCenterFetchRequest? fetchRequest;
-
-  setUp(() {
-    apiProvider = MockApiProvider();
-    fetchRequest = SupportCenterFetchRequest();
-    sut = SupportCenterRepository(apiProvider: apiProvider);
-  });
+  isCrashlitycsEnabled = false;
+  late MockIApiProvider apiProvider = MockIApiProvider();
+  late ISupportCenterRepository sut =
+      SupportCenterRepository(apiProvider: apiProvider);
+  final SupportCenterFetchRequest fetchRequest = SupportCenterFetchRequest();
 
   group('SupportCenterRepository', () {
     test('metadata should return valid objects from server', () async {
@@ -30,7 +27,7 @@ void main() {
       final jsonData = await JsonUtil.getJson(from: jsonFile);
       final actual = right(SupportCenterMetadataModel.fromJson(jsonData));
       when(
-        apiProvider!.get(
+        apiProvider.get(
           path: anyNamed('path'),
           headers: anyNamed('headers'),
           parameters: anyNamed('parameters'),
@@ -49,7 +46,7 @@ void main() {
         final actual = left(GpsFailure(jsonData["message"] as String?));
 
         when(
-          apiProvider!.get(
+          apiProvider.get(
             path: anyNamed('path'),
             headers: anyNamed('headers'),
             parameters: anyNamed('parameters'),
@@ -67,7 +64,7 @@ void main() {
         final jsonData = await JsonUtil.getJson(from: jsonFile);
         final actual = right(SupportCenterPlaceSessionModel.fromJson(jsonData));
         when(
-          apiProvider!.get(
+          apiProvider.get(
             path: anyNamed('path'),
             headers: anyNamed('headers'),
             parameters: anyNamed('parameters'),
@@ -88,7 +85,7 @@ void main() {
         final actual = left(AddressFailure(jsonData["message"] as String?));
 
         when(
-          apiProvider!.get(
+          apiProvider.get(
             path: anyNamed('path'),
             headers: anyNamed('headers'),
             parameters: anyNamed('parameters'),
@@ -106,7 +103,7 @@ void main() {
         final actual = right(GeoLocationModel.fromJson(jsonData));
 
         when(
-          apiProvider!.get(
+          apiProvider.get(
             path: anyNamed('path'),
             headers: anyNamed('headers'),
             parameters: anyNamed('parameters'),

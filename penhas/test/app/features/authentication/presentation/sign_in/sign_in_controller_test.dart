@@ -8,8 +8,9 @@ import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  MockAuthenticationRepository? authenticationRepositoryMock;
-  MockAppStateUseCase? appStateUseCaseMock;
+  late MockAuthenticationRepository authenticationRepositoryMock =
+      MockAuthenticationRepository();
+  late MockAppStateUseCase appStateUseCaseMock = MockAppStateUseCase();
   late SignInController sut;
 
   //
@@ -22,11 +23,11 @@ void main() {
   });
 
   group('SignInController', () {
-    const warningEmail = 'Endereço de email inválido';
-    const String internetConnectionFailure =
+    final warningEmail = 'Endereço de email inválido';
+    final String internetConnectionFailure =
         'O servidor está inacessível, o PenhaS está com acesso à Internet?';
-    const String serverFailure =
-        'O servidor está com problema neste momento, tente novamente.';
+    final String serverFailure =
+        "O servidor está com problema neste momento, tente novamente.";
 
     test('should warning messages be empty on start', () {
       // assert
@@ -68,7 +69,7 @@ void main() {
     });
 
     void mockAuthenticationFailure(Failure failure) {
-      when(authenticationRepositoryMock!.signInWithEmailAndPassword(
+      when(authenticationRepositoryMock.signInWithEmailAndPassword(
         emailAddress: anyNamed('emailAddress'),
         password: anyNamed('password'),
       )).thenAnswer((_) async => left(failure));

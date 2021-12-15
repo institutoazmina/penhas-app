@@ -162,14 +162,15 @@ extension _PrivateMethod on _ProfileEditControllerBase {
   void handleSession(AppStateEntity session) async {
     _tags!.map((e) => null);
     List<FilterTagEntity?> userSkills =
-        session.userProfile!.skill!.map((e) => selectSkill(e)).toList();
+        session.userProfile!.skill.map((e) => selectSkill(e)).toList();
     userSkills.removeWhere((e) => e == null);
     profileSkill = userSkills.asObservable();
 
     final securityModeFeatureEnabled =
         await _securityModeActionFeature.isEnabled;
 
-    state = ProfileEditState.loaded(session.userProfile!, securityModeFeatureEnabled);
+    state = ProfileEditState.loaded(
+        session.userProfile!, securityModeFeatureEnabled);
   }
 
   void handleLoadPageError(Failure failure) {

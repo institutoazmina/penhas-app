@@ -34,10 +34,10 @@ class ChatUserEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        activity!,
-        nickname!,
-        avatar!,
-        userId!,
+        activity,
+        nickname,
+        avatar,
+        userId,
         blockedMe,
       ];
 }

@@ -21,8 +21,8 @@ class UserSearchSessionEntity extends Equatable {
   @override
   List<Object?> get props => [
         hasMore,
-        nextPage!,
-        users!,
+        nextPage,
+        users,
       ];
 
   @override

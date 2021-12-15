@@ -9,14 +9,20 @@ import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
 import 'package:penhas/app/features/help_center/data/models/guardian_session_model.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
 import 'package:penhas/app/features/help_center/domain/entities/guardian_session_entity.dart';
+import 'package:penhas/app/shared/logger/log.dart';
 
 import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late IGuardianRepository sut;
-  IGuardianDataSource? dataSource;
-  INetworkInfo networkInfo;
+  isCrashlitycsEnabled = false;
+
+  late MockIGuardianDataSource dataSource = MockIGuardianDataSource();
+  late MockINetworkInfo networkInfo = MockINetworkInfo();
+  late IGuardianRepository sut = GuardianRepository(
+    dataSource: dataSource,
+    networkInfo: networkInfo,
+  );
 
   setUp(() {
     when(networkInfo.isConnected).thenAnswer((_) => Future.value(true));
@@ -63,7 +69,7 @@ void main() {
               ),
             ],
           );
-          when(dataSource!.fetch()).thenAnswer((_) async => sessionModel);
+          when(dataSource.fetch()).thenAnswer((_) async => sessionModel);
           final expected = right(emptySession);
           // act
           final receceived = await sut.fetch();
@@ -78,7 +84,7 @@ void main() {
           final jsonSession =
               await JsonUtil.getJson(from: 'help_center/guardian_list.json');
           final sessionModel = GuardianSessionModel.fromJson(jsonSession);
-          when(dataSource!.fetch()).thenAnswer((_) async => sessionModel);
+          when(dataSource.fetch()).thenAnswer((_) async => sessionModel);
           final expected = right(sessionModel);
           // act
           final receceived = await sut.fetch();
@@ -99,7 +105,7 @@ void main() {
           );
           final response = AlertModel.fromJson(jsonSession);
           final expected = right(response);
-          when(dataSource!.create(any)).thenAnswer((_) async => response);
+          when(dataSource.create(any)).thenAnswer((_) async => response);
           // act
           final received = await sut.create(guardian);
           // assert
@@ -125,7 +131,7 @@ void main() {
               reason: bodyContent['reason'] as String?,
             ),
           );
-          when(dataSource!.create(any))
+          when(dataSource.create(any))
               .thenThrow(ApiProviderException(bodyContent: bodyContent));
           // act
           final received = await sut.create(guardian);
@@ -149,7 +155,7 @@ void main() {
 
           final response = ValidField.fromJson(jsonSession);
           final expected = right(response);
-          when(dataSource!.update(any)).thenAnswer((_) async => response);
+          when(dataSource.update(any)).thenAnswer((_) async => response);
           // act
           final received = await sut.update(guardian);
           // assert
@@ -167,7 +173,7 @@ void main() {
             status: 'pending',
           );
           final expected = right(ValidField());
-          when(dataSource!.delete(any)).thenAnswer((_) async => ValidField());
+          when(dataSource.delete(any)).thenAnswer((_) async => ValidField());
           // act
           final received = await sut.delete(guardian);
           // assert
@@ -184,7 +190,7 @@ void main() {
             final expected = right(AlertModel(
                 title: "Alerta enviado!",
                 message: "Alerta disparado com sucesso para 1 guardião."));
-            when(dataSource!.alert(any)).thenAnswer((_) async => AlertModel(
+            when(dataSource.alert(any)).thenAnswer((_) async => AlertModel(
                   title: "Alerta enviado!",
                   message: "Alerta disparado com sucesso para 1 guardião.",
                 ));

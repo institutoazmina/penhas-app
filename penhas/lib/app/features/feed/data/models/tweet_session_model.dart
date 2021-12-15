@@ -24,10 +24,12 @@ class TweetSessionModel extends TweetSessionEntity {
         ? TweetSessionOrder.latestFirst
         : TweetSessionOrder.oldestFirst;
     final tweets = _parseTweet(jsonData['tweets']);
-    final parent =
-        jsonData['parent'] != null ? _parseJson(jsonData['parent'] as Map<String, dynamic>) : null;
+    final parent = jsonData['parent'] != null
+        ? _parseJson(jsonData['parent'] as Map<String, dynamic>)
+        : null;
 
-    return TweetSessionModel(hasMore, orderBy, parent, tweets, nextPage as String?);
+    return TweetSessionModel(
+        hasMore, orderBy, parent, tweets, nextPage as String?);
   }
 
   static List<TweetTiles?> _parseTweet(List<dynamic>? tweets) {
@@ -48,15 +50,15 @@ class TweetSessionModel extends TweetSessionEntity {
     }
 
     if (json['type'] == 'related_news') {
-      return TweetRelatedNewsModel.fromJson(json as Map<String, dynamic>);
+      return TweetRelatedNewsModel.fromJson(json);
     }
 
     if (json['type'] == 'news') {
-      return TweetNewsModel.fromJson(json as Map<String, dynamic>);
+      return TweetNewsModel.fromJson(json);
     }
 
     if (json['type'] == 'news_group') {
-      return TweetNewsGroupModel.fromJson(json as Map<String, dynamic>);
+      return TweetNewsGroupModel.fromJson(json);
     }
 
     return null;

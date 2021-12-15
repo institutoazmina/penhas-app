@@ -20,7 +20,7 @@ class UserProfileStore extends LocalStore<UserProfileEntity> {
         jaFoiVitimaDeViolencia: false,
         minibio: null,
         race: null,
-        skill: null,
+        skill: [],
       );
 
   @override

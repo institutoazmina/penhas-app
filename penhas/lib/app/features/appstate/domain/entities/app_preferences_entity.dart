@@ -15,7 +15,7 @@ class AppPreferencesEntity extends Equatable {
   final int inactiveAppLogoutTimeInSeconds;
 
   @override
-  List<Object?> get props => [inactiveAppSince!, inactiveAppLogoutTimeInSeconds];
+  List<Object?> get props => [inactiveAppSince, inactiveAppLogoutTimeInSeconds];
 
   @override
   bool get stringify => true;

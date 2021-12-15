@@ -12,7 +12,7 @@ import '../../../../../utils/helper.mocks.dart';
 
 void main() {
   late IAudioSyncRepository sut;
-  IApiProvider? apiProvider;
+  late MockIApiProvider apiProvider = MockIApiProvider();
 
   setUp(() {
     sut = AudioSyncRepository(apiProvider: apiProvider);
@@ -34,7 +34,7 @@ void main() {
       );
       const bodyMessage =
           '{"message":"Áudio recebido com sucesso!","success":1,"data":{"id":1234}}';
-      when(apiProvider!.upload(
+      when(apiProvider.upload(
               path: anyNamed('path'),
               file: anyNamed('file'),
               fields: anyNamed('fields'),),)
@@ -46,7 +46,7 @@ void main() {
     });
     test('should return Failure when get Exception', () async {
       // arrange
-      when(apiProvider!.upload(
+      when(apiProvider.upload(
               path: anyNamed('path'),
               file: anyNamed('file'),
               fields: anyNamed('fields')))

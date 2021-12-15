@@ -27,8 +27,8 @@ class _AudioModelParseData {
     final isRequestGranted =
         (int.tryParse(meta['request_granted'].toString()) ?? 0) == 1;
     final id = data['event_id'];
-    final createdAt =
-        _AudioModelParseData.parseDate(data['last_cliente_created_at'] as String);
+    final createdAt = _AudioModelParseData.parseDate(
+        data['last_cliente_created_at'] as String);
 
     return AudioEntity(
       id: id as String?,

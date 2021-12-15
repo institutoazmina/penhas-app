@@ -3,7 +3,7 @@ import 'package:penhas/app/features/authentication/domain/entities/session_entit
 class SessionModel extends SessionEntity {
   SessionModel({
     required String? sessionToken,
-    required bool deletedScheduled,
+    bool deletedScheduled = false,
   }) : super(
           sessionToken: sessionToken,
           deletedScheduled: deletedScheduled,

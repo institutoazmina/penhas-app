@@ -83,7 +83,7 @@ class QuizSessionEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [currentMessage!, sessionId, isFinished, endScreen!];
+  List<Object?> get props => [currentMessage, sessionId, isFinished, endScreen];
 
   @override
   String toString() {
@@ -104,7 +104,7 @@ class QuizMessageEntity extends Equatable {
   QuizMessageEntity({
     required this.content,
     required this.type,
-    required this.ref,
+    this.ref = "",
     this.style,
     this.action,
     this.options,
@@ -121,7 +121,7 @@ class QuizMessageEntity extends Equatable {
 
   @override
   List<dynamic> get props =>
-      [content!, style!, action, type, ref, options, buttonLabel];
+      [content, style, action, type, ref, options, buttonLabel];
 
   @override
   String toString() {
@@ -142,7 +142,7 @@ class QuizMessageMultiplechoicesOptions extends Equatable {
   final String? index;
 
   @override
-  List<Object?> get props => [display!, index!];
+  List<Object?> get props => [display, index!];
 
   @override
   String toString() {

@@ -70,7 +70,7 @@ class UserRegisterRepository implements IUserRegisterRepository {
     required Cep? cep,
     required Cpf? cpf,
     required Fullname? fullname,
-    required Fullname? socialName,
+    Fullname? socialName,
     required Nickname? nickName,
     required Birthday? birthday,
     required Genre? genre,

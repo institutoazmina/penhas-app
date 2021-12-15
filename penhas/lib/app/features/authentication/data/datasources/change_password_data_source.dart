@@ -24,7 +24,7 @@ abstract class IChangePasswordDataSource {
 }
 
 class ChangePasswordDataSource implements IChangePasswordDataSource {
-  final http.Client? apiClient;
+  final http.Client apiClient;
   final IApiServerConfigure serverConfiguration;
 
   ChangePasswordDataSource({
@@ -50,7 +50,7 @@ class ChangePasswordDataSource implements IChangePasswordDataSource {
       queryParameters: queryParameters,
     );
 
-    final response = await apiClient!.post(httpRequest, headers: httpHeader);
+    final response = await apiClient.post(httpRequest, headers: httpHeader);
     if (response.statusCode == HttpStatus.ok) {
       return PasswordResetResponseModel.fromJson(json.decode(response.body));
     } else {
@@ -60,7 +60,9 @@ class ChangePasswordDataSource implements IChangePasswordDataSource {
 
   @override
   Future<ValidField> reset(
-      {EmailAddress? emailAddress, SignUpPassword? password, String? resetToken}) async {
+      {EmailAddress? emailAddress,
+      SignUpPassword? password,
+      String? resetToken}) async {
     final userAgent = await serverConfiguration.userAgent;
     final Map<String, String?> queryParameters = {
       'dry': '0',
@@ -76,7 +78,7 @@ class ChangePasswordDataSource implements IChangePasswordDataSource {
       queryParameters: queryParameters,
     );
 
-    final response = await apiClient!.post(httpRequest, headers: httpHeader);
+    final response = await apiClient.post(httpRequest, headers: httpHeader);
     if (response.statusCode == HttpStatus.ok) {
       return const ValidField();
     } else {
@@ -109,7 +111,7 @@ class ChangePasswordDataSource implements IChangePasswordDataSource {
       queryParameters: queryParameters,
     );
 
-    final response = await apiClient!.post(httpRequest, headers: httpHeader);
+    final response = await apiClient.post(httpRequest, headers: httpHeader);
     if (response.statusCode == HttpStatus.ok) {
       return const ValidField();
     } else {

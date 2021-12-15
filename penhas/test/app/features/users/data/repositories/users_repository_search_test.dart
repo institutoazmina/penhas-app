@@ -9,15 +9,9 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  String? jsonFile;
-  IApiProvider? apiProvider;
-  late IUsersRepository sut;
-
-  setUp(() {
-    jsonFile = 'users/users_search.json';
-    apiProvider = MockApiProvider();
-    sut = UsersRepository(apiProvider: apiProvider);
-  });
+  final String jsonFile = 'users/users_search.json';
+  late MockIApiProvider apiProvider = MockIApiProvider();
+  late IUsersRepository sut = UsersRepository(apiProvider: apiProvider);
 
   group('UsersRepository', () {
     test(
@@ -25,7 +19,7 @@ void main() {
         () async {
       // arrange
       final options = UserSearchOptions();
-      when(apiProvider!.get(
+      when(apiProvider.get(
         path: anyNamed('path'),
         headers: anyNamed('headers'),
         parameters: anyNamed('parameters'),
@@ -33,7 +27,7 @@ void main() {
       // act
       await sut.search(options);
       // assert
-      verify(apiProvider!.get(
+      verify(apiProvider.get(
         path: "/search-users",
         parameters: {
           'name': null,
@@ -47,7 +41,7 @@ void main() {
         () async {
       // arrange
       final options = UserSearchOptions(skills: ["a", "b", "c"]);
-      when(apiProvider!.get(
+      when(apiProvider.get(
         path: anyNamed('path'),
         headers: anyNamed('headers'),
         parameters: anyNamed('parameters'),
@@ -55,7 +49,7 @@ void main() {
       // act
       await sut.search(options);
       // assert
-      verify(apiProvider!.get(
+      verify(apiProvider.get(
         path: "/search-users",
         parameters: {
           'name': null,
@@ -71,7 +65,7 @@ void main() {
       final jsonData = await JsonUtil.getJson(from: jsonEmptySession);
       final actual = right(UserSearchSessionModel.fromJson(jsonData));
       final options = UserSearchOptions(skills: ["a", "b", "c"]);
-      when(apiProvider!.get(
+      when(apiProvider.get(
         path: anyNamed('path'),
         headers: anyNamed('headers'),
         parameters: anyNamed('parameters'),
@@ -86,7 +80,7 @@ void main() {
       final jsonData = await JsonUtil.getJson(from: jsonFile);
       final actual = right(UserSearchSessionModel.fromJson(jsonData));
       final options = UserSearchOptions(skills: ["a", "b", "c"]);
-      when(apiProvider!.get(
+      when(apiProvider.get(
         path: anyNamed('path'),
         headers: anyNamed('headers'),
         parameters: anyNamed('parameters'),

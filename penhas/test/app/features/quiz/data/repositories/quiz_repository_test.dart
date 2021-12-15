@@ -6,6 +6,7 @@ import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
 import 'package:penhas/app/features/quiz/data/repositories/quiz_repository.dart';
 import 'package:penhas/app/features/quiz/domain/entities/quiz_request_entity.dart';
+import 'package:penhas/app/shared/logger/log.dart';
 
 import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
@@ -13,15 +14,19 @@ import '../../../../../utils/json_util.dart';
 Future<bool> isConnected() => Future.value(true);
 
 void main() {
-  INetworkInfo networkInfo;
-  IQuizDataSource? dataSource;
-  QuizRequestEntity? quizRequest;
-  late QuizRepository quizRepository;
+  late MockINetworkInfo networkInfo = MockINetworkInfo();
+  late MockIQuizDataSource dataSource = MockIQuizDataSource();
+  late QuizRepository quizRepository = QuizRepository(
+    dataSource: dataSource,
+    networkInfo: networkInfo,
+  );
+  late QuizRequestEntity quizRequest;
+  late Map<String, dynamic> jsonData;
 
-  late Map<String, Object> jsonData;
   setUp(() async {
-    quizRequest = const QuizRequestEntity(
-      sessionId: '200',
+    isCrashlitycsEnabled = false;
+    quizRequest = QuizRequestEntity(
+      sessionId: "200",
       options: {'YN1': 'Y'},
     );
     jsonData =
@@ -34,7 +39,7 @@ void main() {
       // arrange
       final expectedSession = AppStateModel.fromJson(jsonData);
 
-      when(dataSource!.update(quiz: anyNamed('quiz')))
+      when(dataSource.update(quiz: anyNamed('quiz')))
           .thenAnswer((_) => Future.value(expectedSession));
       // act
       final receivedSession = await quizRepository.update(quiz: quizRequest);
@@ -45,8 +50,8 @@ void main() {
     test('should return ServerSideSessionFailed for a invalid session',
         () async {
       // arrange
-      when(dataSource!.update(quiz: anyNamed('quiz')))
-          .thenThrow(ApiProviderSessionException());
+      when(dataSource.update(quiz: anyNamed('quiz')))
+          .thenThrow(ApiProviderSessionError());
       final expected = left(ServerSideSessionFailed());
       // act
       final received = await quizRepository.update(quiz: quizRequest);
@@ -56,7 +61,7 @@ void main() {
 
     test('should return ServerSideSessionFailed for a invalid JWT', () async {
       // arrange
-      when(dataSource!.update(quiz: anyNamed('quiz'))).thenThrow(
+      when(dataSource.update(quiz: anyNamed('quiz'))).thenThrow(
         ApiProviderException(bodyContent: {
           "error": "expired_jwt",
           "nessage": "Bad request - Invalid JWT"

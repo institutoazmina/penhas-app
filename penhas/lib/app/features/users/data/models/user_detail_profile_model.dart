@@ -2,12 +2,12 @@ import 'package:penhas/app/features/users/domain/entities/user_detail_profile_en
 
 class UserDetailProfileModel extends UserDetailProfileEntity {
   UserDetailProfileModel({
-    required String? nickname,
-    required String? avatar,
-    required int? clientId,
-    required String? miniBio,
-    required String? skills,
-    required String? activity,
+    String? nickname,
+    String? avatar,
+    int? clientId,
+    String? miniBio,
+    String? skills,
+    String? activity,
   }) : super(
           nickname: nickname,
           avatar: avatar,

@@ -9,29 +9,28 @@ import 'package:penhas/app/shared/navigation/route.dart';
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late InactivityLogoutUseCase useCase;
-  LocalStore<AppPreferencesEntity>? appPreferencesStore;
-  LocalStore<UserProfileEntity>? userProfileStore;
+  late MockAppPreferencesStore appPreferencesStore = MockAppPreferencesStore();
+  late MockUserProfileStore userProfileStore = MockUserProfileStore();
 
-  late final InactivityLogoutUseCase useCase = InactivityLogoutUseCase(
+  late InactivityLogoutUseCase useCase = InactivityLogoutUseCase(
     appPreferencesStore: appPreferencesStore,
     userProfileStore: userProfileStore,
   );
 
   group('AppPreferencesUseCase#setActive', () {
     Future<void> _setActive({required DateTime? inactiveSince}) async {
-      when(appPreferencesStore!.retrieve())
+      when(appPreferencesStore.retrieve())
           .thenAnswer((_) => Future.value(AppPreferencesEntity(
                 inactiveAppSince: inactiveSince?.millisecondsSinceEpoch,
                 inactiveAppLogoutTimeInSeconds: 30,
               )));
-      when(appPreferencesStore!.save(any)).thenAnswer((_) => Future.value());
+      when(appPreferencesStore.save(any)).thenAnswer((_) => Future.value());
       return useCase.setActive();
     }
 
     test('clears inactive since to null when customer was inactive', () async {
       await _setActive(inactiveSince: DateTime.now());
-      verify(appPreferencesStore!.save(AppPreferencesEntity(
+      verify(appPreferencesStore.save(AppPreferencesEntity(
         inactiveAppSince: null,
         inactiveAppLogoutTimeInSeconds: 30,
       ),),);
@@ -39,7 +38,7 @@ void main() {
 
     test('keeps inactive since null when customer was active', () async {
       await _setActive(inactiveSince: null);
-      verify(appPreferencesStore!.save(AppPreferencesEntity(
+      verify(appPreferencesStore.save(AppPreferencesEntity(
         inactiveAppSince: null,
         inactiveAppLogoutTimeInSeconds: 30,
       ),),);
@@ -51,12 +50,12 @@ void main() {
       required DateTime now,
       required DateTime? previousInactivity,
     }) async {
-      when(appPreferencesStore!.retrieve())
+      when(appPreferencesStore.retrieve())
           .thenAnswer((_) => Future.value(AppPreferencesEntity(
                 inactiveAppSince: previousInactivity?.millisecondsSinceEpoch,
                 inactiveAppLogoutTimeInSeconds: 30,
               )));
-      when(appPreferencesStore!.save(any)).thenAnswer((_) => Future.value());
+      when(appPreferencesStore.save(any)).thenAnswer((_) => Future.value());
       return useCase.setInactive(now);
     }
 
@@ -64,15 +63,16 @@ void main() {
 
     test('customer was not inactive then save inactivity time', () async {
       await _setInactivity(now: now, previousInactivity: null);
-      verify(appPreferencesStore!.save(AppPreferencesEntity(
+      verify(appPreferencesStore.save(AppPreferencesEntity(
         inactiveAppSince: now.millisecondsSinceEpoch,
         inactiveAppLogoutTimeInSeconds: 30,
       ),),);
     });
 
     test('customer was inactive then save new inactivity time', () async {
-      await _setInactivity(now: now, previousInactivity: now.subtract(Duration(hours: 1)));
-      verify(appPreferencesStore!.save(AppPreferencesEntity(
+      await _setInactivity(
+          now: now, previousInactivity: now.subtract(Duration(hours: 1)));
+      verify(appPreferencesStore.save(AppPreferencesEntity(
         inactiveAppSince: now.millisecondsSinceEpoch,
         inactiveAppLogoutTimeInSeconds: 30,
       ),),);
@@ -86,15 +86,16 @@ void main() {
       required bool stealthModeEnabled,
       required bool anonymousModeEnabled,
     }) async {
-      when(appPreferencesStore!.retrieve())
+      when(appPreferencesStore.retrieve())
           .thenAnswer((_) => Future.value(AppPreferencesEntity(
                 inactiveAppSince: inactiveSince?.millisecondsSinceEpoch,
                 inactiveAppLogoutTimeInSeconds: 30,
               )));
-      when(userProfileStore!.retrieve()).thenAnswer((_) => Future.value(
-            MockUserProfileEntity(
-              stealthModeEnabled,
-              anonymousModeEnabled,
+      when(userProfileStore.retrieve()).thenAnswer((_) => Future.value(
+            UserProfileModel(
+              stealthModeEnabled: stealthModeEnabled,
+              anonymousModeEnabled: anonymousModeEnabled,
+              birthdate: DateTime.now(),
             ),
           ),);
       return useCase.inactivityRoute(now);

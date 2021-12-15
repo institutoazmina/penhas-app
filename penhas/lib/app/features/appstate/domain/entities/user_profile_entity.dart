@@ -14,7 +14,7 @@ class UserProfileEntity extends Equatable {
   final bool anonymousModeEnabled;
   final bool jaFoiVitimaDeViolencia;
   final DateTime birthdate;
-  final List<String>? skill;
+  final List<String> skill;
 
   UserProfileEntity({
     required this.fullName,

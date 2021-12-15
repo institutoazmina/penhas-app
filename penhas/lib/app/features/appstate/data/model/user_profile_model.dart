@@ -2,17 +2,17 @@ import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity
 
 class UserProfileModel extends UserProfileEntity {
   UserProfileModel({
-    required String? fullName,
-    required String? email,
-    required String? genre,
-    required String? race,
-    required bool jaFoiVitimaDeViolencia,
-    required List<String>? skill,
-    required String? nickname,
-    required String? avatar,
-    required String? minibio,
-    required bool stealthModeEnabled,
-    required bool anonymousModeEnabled,
+    String? fullName,
+    String? email,
+    String? genre,
+    String? race,
+    bool jaFoiVitimaDeViolencia = false,
+    List<String> skill = const [],
+    String? nickname,
+    String? avatar,
+    String? minibio,
+    bool stealthModeEnabled = false,
+    bool anonymousModeEnabled = false,
     required DateTime birthdate,
   }) : super(
           fullName: fullName,
@@ -42,7 +42,7 @@ class UserProfileModel extends UserProfileEntity {
       race: jsonData["raca"],
       genre: jsonData["genero"],
       jaFoiVitimaDeViolencia: jsonData["ja_foi_vitima_de_violencia"] == 1,
-      skill: (jsonData["skills"] as List<dynamic>)
+      skill: (jsonData["skills"] as List<dynamic>? ?? [])
           .map((e) => e.toString())
           .toList(),
     );

@@ -18,8 +18,9 @@ import 'package:penhas/app/features/authentication/domain/usecases/sign_up_passw
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late CheckRegisterField sut;
-  MockRegisterRepository? repository;
+  late MockIUserRegisterRepository repository = MockIUserRegisterRepository();
+  late CheckRegisterField sut = CheckRegisterField(repository);
+
   Cep? cep;
   Cpf? cpf;
   EmailAddress? emailAddress;
@@ -58,7 +59,7 @@ void main() {
   }
 
   void mockRepositoryRegister(Either<Failure, ValidField> answer) {
-    when(repository!.checkField(
+    when(repository.checkField(
       emailAddress: anyNamed('emailAddress'),
       password: anyNamed('password'),
       cep: anyNamed('cep'),
@@ -74,7 +75,7 @@ void main() {
   void expectResult(Either<Failure, ValidField>? result,
       Either<Failure, ValidField> expected) {
     expect(result, expected);
-    verify(repository!.checkField(
+    verify(repository.checkField(
       emailAddress: emailAddress,
       password: password,
       cep: cep,

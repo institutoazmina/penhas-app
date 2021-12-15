@@ -15,7 +15,7 @@ void main() {
   group('UserDetailModel', () {
     test('should be a subclass of UserDetailEntity', () async {
       // arrange
-      const model = UserDetailModel(
+      final model = UserDetailModel(
         isMyself: false,
         profile: UserDetailProfileModel(),
       );

@@ -1,12 +1,13 @@
 import 'package:collection/collection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:collection/collection.dart';
 import 'package:penhas/app/features/feed/data/repositories/tweet_filter_preference_repository.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_filter_session_entity.dart';
 
 class TweetFilterPreference {
   final ITweetFilterPreferenceRepository? _repository;
-  List<String?> _currentTags = [];
+  List<String> _currentTags = [];
   List<String> _currentCategory = [];
 
   TweetFilterPreference({
@@ -64,14 +65,14 @@ class TweetFilterPreference {
   }
 
   void saveTags(List<String?> tags) {
-    _currentTags = tags;
+    _currentTags = tags.whereNotNull().toList();
   }
 
   void saveTags(List<String?> tags) {
     _currentTags = tags.whereNotNull().toList();
   }
 
-  List<String?> getTags() {
+  List<String> getTags() {
     return _currentTags;
   }
 }

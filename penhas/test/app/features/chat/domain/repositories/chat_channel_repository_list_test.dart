@@ -8,13 +8,9 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  IApiProvider? apiProvider;
-  late IChatChannelRepository sut;
-
-  setUp(() {
-    apiProvider = MockApiProvider();
-    sut = ChatChannelRepository(apiProvider: apiProvider);
-  });
+  late MockIApiProvider apiProvider = MockIApiProvider();
+  late IChatChannelRepository sut =
+      ChatChannelRepository(apiProvider: apiProvider);
 
   group('ChatChannel', () {
     test('should list empty open channel', () async {
@@ -23,7 +19,7 @@ void main() {
       final jsonData = await JsonUtil.getJson(from: jsonFile);
       final actual = right(ChatChannelAvailableModel.fromJson(jsonData));
       when(
-        apiProvider!.get(
+        apiProvider.get(
           path: anyNamed('path'),
           headers: anyNamed('headers'),
           parameters: anyNamed('parameters'),
@@ -40,7 +36,7 @@ void main() {
       final jsonData = await JsonUtil.getJson(from: jsonFile);
       final actual = right(ChatChannelAvailableModel.fromJson(jsonData));
       when(
-        apiProvider!.get(
+        apiProvider.get(
           path: anyNamed('path'),
           headers: anyNamed('headers'),
           parameters: anyNamed('parameters'),

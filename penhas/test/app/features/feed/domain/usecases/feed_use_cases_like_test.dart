@@ -8,27 +8,27 @@ import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  ITweetRepository? repository;
-  late TweetFilterPreference filterPreference;
+  late MockITweetRepository repository = MockITweetRepository();
+  late MockTweetFilterPreference filterPreference = MockTweetFilterPreference();
 
   setUp(() {
-    when(filterPreference.categories).thenReturn([]);
+    when(filterPreference.getCategory()).thenReturn([]);
     when(filterPreference.getTags()).thenReturn([]);
   });
 
   group('FeedUseCases', () {
     test('should not hit datasource on instantiate', () async {
       // act
-      FeedUseCases(repository: repository!, filterPreference: filterPreference);
+      FeedUseCases(repository: repository, filterPreference: filterPreference);
       // assert
       verifyNoMoreInteractions(repository);
     });
     group('like', () {
-      int? maxRowsPerRequet;
-      TweetSessionEntity? firstSessionResponse;
-      TweetEntity? tweetEntity1;
-      TweetEntity? tweetEntity2;
-      TweetEntity? tweetEntity3;
+      late int maxRowsPerRequet;
+      late TweetSessionEntity firstSessionResponse;
+      late TweetEntity tweetEntity1;
+      late TweetEntity tweetEntity2;
+      late TweetEntity tweetEntity3;
 
       setUp(() {
         maxRowsPerRequet = 5;
@@ -86,16 +86,16 @@ void main() {
       test('main tweet should get updated cache', () async {
         // arrange
         final sut = FeedUseCases(
-          repository: repository!,
+          repository: repository,
           filterPreference: filterPreference,
           maxRows: maxRowsPerRequet,
         );
-        when(repository!.fetch(option: anyNamed('option')))
-            .thenAnswer(((_) async => right(firstSessionResponse!)) as Future<Either<Failure, TweetSessionEntity>> Function(Invocation));
+        when(repository.fetch(option: anyNamed('option')))
+            .thenAnswer((_) async => right(firstSessionResponse));
         await sut.fetchOldestTweet();
 
-        final likeResponse = tweetEntity1!.copyWith(
-            totalLikes: (tweetEntity1!.totalLikes + 1),
+        final likeResponse = tweetEntity1.copyWith(
+            totalLikes: (tweetEntity1.totalLikes + 1),
             meta: TweetMeta(liked: true, owner: true));
         final expected = right(
           FeedCache(
@@ -105,10 +105,10 @@ void main() {
             ],
           ),
         );
-        when(repository!.like(option: anyNamed('option')))
+        when(repository.like(option: anyNamed('option')))
             .thenAnswer((_) async => right(likeResponse));
         // act
-        final received = await sut.like(tweetEntity1!);
+        final received = await sut.like(tweetEntity1);
         // assert
         expect(received, expected);
       });
@@ -116,29 +116,29 @@ void main() {
       test('sub tweet should get updated cache', () async {
         // arrange
         final sut = FeedUseCases(
-          repository: repository!,
+          repository: repository,
           filterPreference: filterPreference,
           maxRows: maxRowsPerRequet,
         );
-        when(repository!.fetch(option: anyNamed('option')))
-            .thenAnswer(((_) async => right(firstSessionResponse!)) as Future<Either<Failure, TweetSessionEntity>> Function(Invocation));
+        when(repository.fetch(option: anyNamed('option')))
+            .thenAnswer((_) async => right(firstSessionResponse));
         await sut.fetchOldestTweet();
 
-        final likeResponse = tweetEntity3!.copyWith(
-            totalLikes: tweetEntity3!.totalLikes + 1,
+        final likeResponse = tweetEntity3.copyWith(
+            totalLikes: tweetEntity3.totalLikes + 1,
             meta: TweetMeta(liked: true, owner: true));
-        when(repository!.like(option: anyNamed('option')))
+        when(repository.like(option: anyNamed('option')))
             .thenAnswer((_) async => right(likeResponse));
         final expected = right(
           FeedCache(tweets: [
             tweetEntity1,
-            tweetEntity2!.copyWith(
+            tweetEntity2.copyWith(
               lastReply: [likeResponse],
             ),
           ]),
         );
         // act
-        final received = await sut.like(tweetEntity3!);
+        final received = await sut.like(tweetEntity3);
         // assert
         expect(expected, received);
       });
@@ -206,12 +206,12 @@ void main() {
       test('main tweet should get updated cache', () async {
         // arrange
         final sut = FeedUseCases(
-          repository: repository!,
+          repository: repository,
           filterPreference: filterPreference,
           maxRows: maxRowsPerRequet,
         );
-        when(repository!.fetch(option: anyNamed('option')))
-            .thenAnswer(((_) async => right(firstSessionResponse!)) as Future<Either<Failure, TweetSessionEntity>> Function(Invocation));
+        when(repository.fetch(option: anyNamed('option')))
+            .thenAnswer((_) async => right(firstSessionResponse!));
         await sut.fetchOldestTweet();
 
         final likeResponse = tweetEntity1!.copyWith(
@@ -225,7 +225,7 @@ void main() {
             ],
           ),
         );
-        when(repository!.like(option: anyNamed('option')))
+        when(repository.like(option: anyNamed('option')))
             .thenAnswer((_) async => right(likeResponse));
         // act
         final received = await sut.unlike(tweetEntity1!);
@@ -236,17 +236,17 @@ void main() {
       test('sub tweet should get updated cache', () async {
         // arrange
         final sut = FeedUseCases(
-          repository: repository!,
+          repository: repository,
           filterPreference: filterPreference,
           maxRows: maxRowsPerRequet,
         );
-        when(repository!.fetch(option: anyNamed('option')))
-            .thenAnswer(((_) async => right(firstSessionResponse!)) as Future<Either<Failure, TweetSessionEntity>> Function(Invocation));
+        when(repository.fetch(option: anyNamed('option')))
+            .thenAnswer((_) async => right(firstSessionResponse!));
         await sut.fetchOldestTweet();
 
         final likeResponse = tweetEntity3!.copyWith(
             totalLikes: 0, meta: TweetMeta(liked: false, owner: true));
-        when(repository!.like(option: anyNamed('option')))
+        when(repository.like(option: anyNamed('option')))
             .thenAnswer((_) async => right(likeResponse));
         final expected = right(
           FeedCache(tweets: [

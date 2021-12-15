@@ -29,10 +29,10 @@ class ChatChannelAvailableEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        hasMore!,
-        nextPage!,
-        channels!,
-        support!,
-        assistant!,
+        hasMore,
+        nextPage,
+        channels,
+        support,
+        assistant,
       ];
 }

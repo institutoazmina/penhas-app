@@ -12,7 +12,7 @@ class TweetModel extends TweetEntity {
     required String? content,
     required String avatar,
     required TweetMeta meta,
-    required List<TweetEntity> lastReply,
+    required List<TweetModel> lastReply,
   }) : super(
           id: id,
           userName: userName,
@@ -36,9 +36,7 @@ class TweetModel extends TweetEntity {
 
     List<TweetModel> lastReply = [];
     if (jsonData['last_reply'] != null) {
-      lastReply = [
-        TweetModel.fromJson(jsonData['last_reply'])
-      ];
+      lastReply = [TweetModel.fromJson(jsonData['last_reply'])];
     }
 
     return TweetModel(
@@ -60,41 +58,39 @@ class TweetModel extends TweetEntity {
 class TweetRelatedNewsModel extends TweetRelatedNewsEntity {
   TweetRelatedNewsModel({
     required String header,
-    required List<TweetNewsEntity> news,
+    required List<TweetNewsModel> news,
   }) : super(header: header, news: news);
 
-  static TweetRelatedNewsEntity fromJson(Map<String, dynamic> jsonData) {
-    final List<TweetNewsEntity> news = _parseNews(jsonData['news']);
+  static TweetRelatedNewsModel fromJson(Map<String, dynamic> jsonData) {
+    final List<TweetNewsModel> news = _parseNews(jsonData['news']);
 
-    return TweetRelatedNewsEntity(
+    return TweetRelatedNewsModel(
       header: jsonData['header'] ?? '',
       news: news,
     );
   }
 
-  static List<TweetNewsEntity> _parseNews(List<dynamic> news) {
-    return news
-        .map((e) => TweetNewsModel.fromJson(e))
-        .toList();
+  static List<TweetNewsModel> _parseNews(List<dynamic> news) {
+    return news.map((e) => TweetNewsModel.fromJson(e)).toList();
   }
 }
 
 class TweetNewsGroupModel extends TweetNewsGroupEntity {
   TweetNewsGroupModel({
     required String header,
-    required List<TweetNewsEntity> news,
+    required List<TweetNewsModel> news,
   }) : super(header: header, news: news);
 
-  static TweetNewsGroupEntity fromJson(Map<String, dynamic> jsonData) {
-    final List<TweetNewsEntity> news = _parseNews(jsonData['news']);
+  static TweetNewsGroupModel fromJson(Map<String, dynamic> jsonData) {
+    final List<TweetNewsModel> news = _parseNews(jsonData['news']);
 
-    return TweetNewsGroupEntity(
+    return TweetNewsGroupModel(
       header: jsonData['header'] as String? ?? '',
       news: news,
     );
   }
 
-  static List<TweetNewsEntity> _parseNews(List<dynamic> news) =>
+  static List<TweetNewsModel> _parseNews(List<dynamic> news) =>
       news.map((e) => TweetNewsModel.fromJson(e)).toList();
 }
 

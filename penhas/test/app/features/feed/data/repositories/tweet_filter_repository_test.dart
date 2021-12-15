@@ -9,10 +9,11 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  INetworkInfo networkInfo;
+  late MockINetworkInfo networkInfo = MockINetworkInfo();
+  late MockITweetFilterPreferenceDataSource dataSource =
+      MockITweetFilterPreferenceDataSource();
   late ITweetFilterPreferenceRepository sut;
-  ITweetFilterPreferenceDataSource? dataSource;
-  Map<String, Object> jsonSession;
+  Map<String, dynamic> jsonSession;
 
   setUp(() {
     sut = TweetFilterPreferenceRepository(
@@ -27,7 +28,7 @@ void main() {
       jsonSession =
           await JsonUtil.getJson(from: 'feed/retrieve_fiters_tags.json');
       sessionModel = TweetFilterSessionModel.fromJson(jsonSession);
-      when(dataSource!.fetch()).thenAnswer((_) => Future.value(sessionModel));
+      when(dataSource.fetch()).thenAnswer((_) => Future.value(sessionModel));
     });
     group('fetch()', () {
       test('should retrieve tweets from a valid session', () async {

@@ -10,7 +10,7 @@ void main() {
       test(
         'should get CpfInvalidFailure for null value',
         () {
-          final result = Cpf('').value;
+          var result = Cpf("").value;
 
           expect(result, left(CpfInvalidFailure()));
         },

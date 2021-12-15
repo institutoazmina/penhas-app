@@ -200,16 +200,13 @@ extension _AudioRecordServices on AudioRecordServices {
 
       _recorderSubscription = _recorder.onProgress!.listen(
         (e) {
-          if (e != null && e.duration != null) {
-            _runningDuration = e.duration;
-            DateTime date = new DateTime.fromMillisecondsSinceEpoch(
-                _runningDuration.inMilliseconds +
-                    _currentDuration.inMilliseconds,
-                isUtc: true);
-            String recordTime =
-                DateFormat('mm:ss:SS', 'en_GB').format(date).substring(0, 8);
-            _streamController!.add(AudioActivity(recordTime, e.decibels ?? 0));
-          }
+          _runningDuration = e.duration;
+          DateTime date = new DateTime.fromMillisecondsSinceEpoch(
+              _runningDuration.inMilliseconds + _currentDuration.inMilliseconds,
+              isUtc: true);
+          String recordTime =
+              DateFormat('mm:ss:SS', 'en_GB').format(date).substring(0, 8);
+          _streamController!.add(AudioActivity(recordTime, e.decibels ?? 0));
         },
         onError: catchErrorLogger,
       );

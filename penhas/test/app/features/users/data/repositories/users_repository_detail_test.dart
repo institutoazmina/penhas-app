@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/features/users/data/models/user_detail_model.dart';
 import 'package:penhas/app/features/users/data/repositories/users_repository.dart';
@@ -8,21 +9,15 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  String? jsonFile;
-  IApiProvider? apiProvider;
-  late IUsersRepository sut;
-
-  setUp(() {
-    jsonFile = 'users/users_detail.json';
-    apiProvider = MockApiProvider();
-    sut = UsersRepository(apiProvider: apiProvider);
-  });
+  final String jsonFile = 'users/users_detail.json';
+  late MockIApiProvider apiProvider = MockIApiProvider();
+  late IUsersRepository sut = UsersRepository(apiProvider: apiProvider);
 
   group('UsersRepository', () {
     test('should use client_id parameter to server', () async {
       // arrange
       final clientId = "1335";
-      when(apiProvider!.get(
+      when(apiProvider.get(
         path: anyNamed('path'),
         headers: anyNamed('headers'),
         parameters: anyNamed('parameters'),
@@ -30,7 +25,7 @@ void main() {
       // act
       await sut.profileDetail(clientId);
       // assert
-      verify(apiProvider!.get(
+      verify(apiProvider.get(
         path: "/profile",
         parameters: {"cliente_id": "1335"},
       ));
@@ -40,7 +35,7 @@ void main() {
       final jsonData = await JsonUtil.getJson(from: jsonFile);
       final actual = right(UserDetailModel.fromJson(jsonData));
       final clientId = "1335";
-      when(apiProvider!.get(
+      when(apiProvider.get(
         path: anyNamed('path'),
         headers: anyNamed('headers'),
         parameters: anyNamed('parameters'),

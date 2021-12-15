@@ -9,10 +9,10 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  MockHttpClient? apiClient;
+  late MockHttpClient apiClient = MockHttpClient();
+  late MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
   late ITweetDataSource dataSource;
-  MockApiServerConfigure? serverConfigure;
-  Uri? serverEndpoint;
+  final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
   const String SESSSION_TOKEN = 'my_really.long.JWT';
 
   setUp(() {
@@ -22,15 +22,15 @@ void main() {
     );
 
     // MockApiServerConfigure configuration
-    when(serverConfigure!.baseUri).thenAnswer(((_) => serverEndpoint!) as Uri Function(Invocation));
-    when(serverConfigure!.apiToken)
+    when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
+    when(serverConfigure.apiToken)
         .thenAnswer((_) => Future.value(SESSSION_TOKEN));
-    when(serverConfigure!.userAgent)
+    when(serverConfigure.userAgent)
         .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
-    final userAgent = await serverConfigure!.userAgent;
+    final userAgent = await serverConfigure.userAgent;
     return {
       'X-Api-Key': sessionToken,
       'User-Agent': userAgent,
@@ -40,15 +40,15 @@ void main() {
 
   Uri _setuHttpRequest(String path, Map<String, String> queryParameters) {
     return Uri(
-      scheme: serverEndpoint!.scheme,
-      host: serverEndpoint!.host,
+      scheme: serverEndpoint.scheme,
+      host: serverEndpoint.host,
       path: path,
       queryParameters: queryParameters.isEmpty ? null : queryParameters,
     );
   }
 
   PostExpectation<Future<http.Response>> _mockGetRequest() {
-    return when(apiClient!.get(
+    return when(apiClient.get(
       any,
       headers: anyNamed('headers'),
     ));
@@ -89,7 +89,7 @@ void main() {
         // act
         await dataSource.fetch(option: requestOption);
         // assert
-        verify(apiClient!.get(request, headers: headers));
+        verify(apiClient.get(request, headers: headers));
       });
       test('should get a valid TweetSession for a successful request',
           () async {

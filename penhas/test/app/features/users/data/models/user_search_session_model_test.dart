@@ -6,11 +6,7 @@ import 'package:penhas/app/features/users/domain/entities/user_search_session_en
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  String? jsonFile;
-
-  setUp(() {
-    jsonFile = "users/users_search.json";
-  });
+  final String jsonFile = "users/users_search.json";
 
   group('UserSearchSessionModel', () {
     test('should be a subclass of UserDetailEntity', () async {

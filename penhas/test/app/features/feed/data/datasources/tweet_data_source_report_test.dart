@@ -8,10 +8,10 @@ import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_op
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  MockHttpClient? apiClient;
-  late ITweetDataSource dataSource;
-  MockApiServerConfigure? serverConfigure;
-  Uri? serverEndpoint;
+  late MockHttpClient apiClient = MockHttpClient();
+  late MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
+
+  final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
   const String SESSSION_TOKEN = 'my_really.long.JWT';
 
   late ITweetDataSource dataSource;
@@ -23,15 +23,15 @@ void main() {
     );
 
     // MockApiServerConfigure configuration
-    when(serverConfigure!.baseUri).thenAnswer(((_) => serverEndpoint!) as Uri Function(Invocation));
-    when(serverConfigure!.apiToken)
+    when(serverConfigure.baseUri).thenAnswer(((_) => serverEndpoint));
+    when(serverConfigure.apiToken)
         .thenAnswer((_) => Future.value(SESSSION_TOKEN));
-    when(serverConfigure!.userAgent)
+    when(serverConfigure.userAgent)
         .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
-    final userAgent = await serverConfigure!.userAgent;
+    final userAgent = await serverConfigure.userAgent;
     return {
       'X-Api-Key': sessionToken,
       'User-Agent': userAgent,
@@ -41,22 +41,15 @@ void main() {
 
   Uri _setuHttpRequest(String path, Map<String, String> queryParameters) {
     return Uri(
-      scheme: serverEndpoint!.scheme,
-      host: serverEndpoint!.host,
+      scheme: serverEndpoint.scheme,
+      host: serverEndpoint.host,
       path: path,
       queryParameters: queryParameters.isEmpty ? null : queryParameters,
     );
   }
 
-  PostExpectation<Future<http.Response>> _mockGetRequest() {
-    return when(apiClient!.get(
-      any,
-      headers: anyNamed('headers'),
-    ));
-  }
-
   PostExpectation<Future<http.Response>> _mockPostRequest() {
-    return when(apiClient!.post(
+    return when(apiClient.post(
       any,
       headers: anyNamed('headers'),
       body: anyNamed('body'),
@@ -98,7 +91,7 @@ void main() {
         await dataSource.report(option: requestOption);
         // assert
         verify(
-          apiClient!.post(
+          apiClient.post(
             request,
             headers: headers,
             body: 'reason=esse%20tweet%20me%20ofende%20pq%20XPTO',
@@ -108,7 +101,7 @@ void main() {
       test('should get a valid ValidField for a successful request', () async {
         // arrange
         _setUpMockPostHttpClientSuccess200(bodyContent);
-        const expected = ValidField(message: 'Report enviado');
+        final expected = ValidField(message: "Report enviado");
         // act
         final received = await dataSource.report(option: requestOption);
         // assert

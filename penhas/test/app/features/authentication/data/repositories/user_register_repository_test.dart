@@ -17,15 +17,22 @@ import 'package:penhas/app/features/authentication/domain/usecases/human_race.da
 import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
+import 'package:penhas/app/shared/logger/log.dart';
 
 import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  INetworkInfo? networkInfo;
-  IUserRegisterDataSource? dataSource;
-  IAppConfiguration? appConfiguration;
-  late UserRegisterRepository sut;
+  isCrashlitycsEnabled = false;
+
+  late MockINetworkInfo networkInfo = MockINetworkInfo();
+  late MockIUserRegisterDataSource dataSource = MockIUserRegisterDataSource();
+  late MockIAppConfiguration appConfiguration = MockIAppConfiguration();
+  late UserRegisterRepository sut = UserRegisterRepository(
+    dataSource: dataSource,
+    networkInfo: networkInfo,
+    appConfiguration: appConfiguration,
+  );
   const String SESSSION_TOKEN = 'my_really.long.JWT';
 
   Cep? cep;
@@ -51,7 +58,7 @@ void main() {
   });
 
   PostExpectation<dynamic> mockDataSourceRegister() {
-    return when(dataSource!.register(
+    return when(dataSource.register(
       emailAddress: anyNamed('emailAddress'),
       password: anyNamed('password'),
       cep: anyNamed('cep'),
@@ -65,7 +72,7 @@ void main() {
   }
 
   PostExpectation<dynamic> mockDataSourceCheckField() {
-    return when(dataSource!.checkField(
+    return when(dataSource.checkField(
       emailAddress: anyNamed('emailAddress'),
       password: anyNamed('password'),
       cep: anyNamed('cep'),
@@ -110,7 +117,7 @@ void main() {
     Either<Failure, SessionEntity> result,
     Either<Failure, SessionEntity> expected,
   ) {
-    verify(dataSource!.register(
+    verify(dataSource.register(
       emailAddress: emailAddress,
       password: password,
       cep: cep,
@@ -129,7 +136,7 @@ void main() {
     Either<Failure, ValidField> result,
     Either<Failure, ValidField> expected,
   ) {
-    verify(dataSource!.checkField(
+    verify(dataSource.checkField(
       emailAddress: emailAddress,
       password: password,
       cep: cep,
@@ -146,8 +153,8 @@ void main() {
 
   group('UserRegisterRepository', () {
     group('device is online', () {
-      setUp(() async {
-        when(networkInfo!.isConnected).thenAnswer((_) async => true);
+      setUp(() {
+        when(networkInfo.isConnected).thenAnswer((_) async => true);
       });
       test('should return valid SessionEntity for valid fields', () async {
         // arrange
@@ -157,7 +164,7 @@ void main() {
         // act
         final result = await executeRegister();
         // assert
-        verify(appConfiguration!.saveApiToken(token: SESSSION_TOKEN));
+        verify(appConfiguration.saveApiToken(token: SESSSION_TOKEN));
         expectedRegisterResult(
           result,
           right(const SessionEntity(sessionToken: sessionToken)),
@@ -182,14 +189,14 @@ void main() {
         final result = await executeRegister();
         // assert
 
-        verify(networkInfo!.isConnected);
+        verify(networkInfo.isConnected);
         expectedRegisterResult(result, left(fieldFailure));
       });
     });
 
     group('device is offline', () {
-      setUp(() async {
-        when(networkInfo!.isConnected).thenAnswer((_) async => false);
+      setUp(() {
+        when(networkInfo.isConnected).thenAnswer((_) async => false);
       });
 
       test('should return InternetConnectionFailure', () async {
@@ -198,7 +205,7 @@ void main() {
         // act
         final result = await executeRegister();
         // assert
-        verify(networkInfo!.isConnected);
+        verify(networkInfo.isConnected);
         expectedRegisterResult(result, left(InternetConnectionFailure()));
       });
     });
@@ -206,8 +213,8 @@ void main() {
 
   group('UserRegisterRepository validating field', () {
     group('device is online', () {
-      setUp(() async {
-        when(networkInfo!.isConnected).thenAnswer((_) async => true);
+      setUp(() {
+        when(networkInfo.isConnected).thenAnswer((_) async => true);
       });
       test('should return ValidField for valid fields', () async {
         // arrange
@@ -235,13 +242,13 @@ void main() {
         // act
         final result = await executeCheck();
         // assert
-        verify(networkInfo!.isConnected);
+        verify(networkInfo.isConnected);
         expectedCheckResult(result, left(fieldFailure));
       });
     });
     group('device is offline', () {
-      setUp(() async {
-        when(networkInfo!.isConnected).thenAnswer((_) async => false);
+      setUp(() {
+        when(networkInfo.isConnected).thenAnswer((_) async => false);
       });
       test('should return InternetConnectionFailure', () async {
         // arrange
@@ -249,7 +256,7 @@ void main() {
         // act
         final result = await executeCheck();
         // assert
-        verify(networkInfo!.isConnected);
+        verify(networkInfo.isConnected);
         expectedCheckResult(result, left(InternetConnectionFailure()));
       });
     });

@@ -12,7 +12,7 @@ abstract class LocalStore<T> {
 
   T fromJson(Map<String, dynamic> json);
 
-  Map<String, Object?> toJson(T entity);
+  Map<String, dynamic> toJson(T entity);
 
   T fromJson(Map<String, dynamic> json);
 

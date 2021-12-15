@@ -9,20 +9,21 @@ import 'package:penhas/app/features/authentication/domain/usecases/request_reset
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  EmailAddress? emailAddress;
-  IResetPasswordRepository? repository;
-  late RequestResetPassword sut;
+  late EmailAddress emailAddress = EmailAddress('valid_email@exemple.com');
+  late MockIResetPasswordRepository repository = MockIResetPasswordRepository();
+  late RequestResetPassword sut =
+      RequestResetPassword(resetPasswordRepository: repository);
 
-  const responseTtl = 3600;
-  const responseDigits = 6;
-  const responseMessage = 'Enviamos um código com 6 números para o seu e-mail';
-  const responseTtlRetry = 216;
+  const RESPONSE_TTL = 3600;
+  const RESPONSE_DIGITS = 6;
+  const RESPONSE_MESSAGE = 'Enviamos um código com 6 números para o seu e-mail';
+  const RESPONSE_TTL_RETRY = 216;
 
   group('Request reset password', () {
     test('should received a ResetPasswordResponseEntity for successful request',
         () async {
       // arrange
-      when(repository!.request(emailAddress: anyNamed('emailAddress')))
+      when(repository.request(emailAddress: anyNamed('emailAddress')))
           .thenAnswer((_) async => right(ResetPasswordResponseEntity(
                 message: RESPONSE_MESSAGE,
                 digits: RESPONSE_DIGITS,
@@ -30,7 +31,8 @@ void main() {
                 ttlRetry: RESPONSE_TTL_RETRY,
               )));
       // act
-      final Either<Failure, ResetPasswordResponseEntity>? result = await sut(email: emailAddress!);
+      final Either<Failure, ResetPasswordResponseEntity>? result =
+          await sut(email: emailAddress);
       // assert
       expect(
         result,
