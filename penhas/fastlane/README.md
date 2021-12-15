@@ -87,10 +87,10 @@ Generates a provisioning profile, saving it in the current folder
 
 Registers new devices to the Apple Dev Portal
 
-### ios generate_ipa
+### ios generate_beta_ipa
 
 ```sh
-[bundle exec] fastlane ios generate_ipa
+[bundle exec] fastlane ios generate_beta_ipa
 ```
 
 Generate IPA

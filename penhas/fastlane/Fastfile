@@ -90,7 +90,7 @@ platform :ios do
   end
 
   desc "Generate IPA"
-  lane :generate_ipa do
+  lane :generate_beta_ipa do
     build
     sync_device_info
     update_profile
@@ -107,13 +107,13 @@ platform :ios do
 
   desc "Distribute to iOS beta testers in TestFlight"
   lane :testflight_distribute do
-    generate_ipa
+    generate_beta_ipa
     pilot
   end
 
   desc "Distribute to iOS beta testers in Firebase"
   lane :firebase_distribute do
-    generate_ipa
+    generate_beta_ipa
 
     firebase_app_distribution(
       app: "1:51928851553:ios:f741dab1c05cf04e663620",
@@ -136,7 +136,7 @@ platform :ios do
       archive_path: "./build/ios/Runner.xcarchive",
       export_method: "app-store",
       output_directory: "./build/Runner"
-    ) # Build your app - more options available
+    ) # Build your app
     deliver(force: true)
     # frameit
   end
