@@ -19,11 +19,9 @@ abstract class IChatChannelRepository {
   Future<Either<Failure, ChatChannelAvailableEntity>> listChannel();
   Future<Either<Failure, ChatChannelOpenEntity>> openChannel(String clientId);
   Future<Either<Failure, ChatChannelSessionEntity>> getMessages(
-    ChatChannelRequest option,
-  );
+      ChatChannelRequest option);
   Future<Either<Failure, ChatSentMessageResponseEntity>> sentMessage(
-    ChatChannelRequest option,
-  );
+      ChatChannelRequest option);
   Future<Either<Failure, ValidField>> blockChannel(ChatChannelRequest option);
   Future<Either<Failure, ValidField>> deleteChannel(ChatChannelRequest option);
 }
@@ -33,7 +31,7 @@ class ChatChannelRepository implements IChatChannelRepository {
 
   ChatChannelRepository({
     required IApiProvider? apiProvider,
-  }) : this._apiProvider = apiProvider;
+  }) : _apiProvider = apiProvider;
 
   @override
   Future<Either<Failure, ChatChannelAvailableEntity>> listChannel() async {
@@ -50,8 +48,7 @@ class ChatChannelRepository implements IChatChannelRepository {
 
   @override
   Future<Either<Failure, ChatChannelOpenEntity>> openChannel(
-    String clientId,
-  ) async {
+      String clientId) async {
     const endPoint = '/me/chats-session';
     final parameters = {
       'prefetch': '1',
@@ -74,8 +71,7 @@ class ChatChannelRepository implements IChatChannelRepository {
 
   @override
   Future<Either<Failure, ChatChannelSessionEntity>> getMessages(
-    ChatChannelRequest option,
-  ) async {
+      ChatChannelRequest option) async {
     const endPoint = '/me/chats-messages';
     final parameters = {
       'chat_auth': option.token,
@@ -99,14 +95,13 @@ class ChatChannelRepository implements IChatChannelRepository {
 
   @override
   Future<Either<Failure, ChatSentMessageResponseEntity>> sentMessage(
-    ChatChannelRequest option,
-  ) async {
+      ChatChannelRequest option) async {
     const endPoint = '/me/chats-messages';
     final parameters = {
       'chat_auth': option.token,
     };
 
-    final bodyContent = 'message=' + Uri.encodeComponent(option.message!);
+    final bodyContent = 'message=${Uri.encodeComponent(option.message!)}';
 
     try {
       final response = await _apiProvider!
@@ -126,11 +121,10 @@ class ChatChannelRepository implements IChatChannelRepository {
 
   @override
   Future<Either<Failure, ValidField>> blockChannel(
-    ChatChannelRequest option,
-  ) async {
+      ChatChannelRequest option) async {
     const endPoint = '/me/manage-blocks';
     final parameters = {
-      'block': option.block! ? "1" : "0",
+      'block': option.block! ? '1' : '0',
       'cliente_id': option.clientId,
     };
 
@@ -139,7 +133,7 @@ class ChatChannelRepository implements IChatChannelRepository {
         path: endPoint,
         parameters: parameters,
       );
-      return right(const ValidField());
+      return right(ValidField());
     } catch (error) {
       return left(MapExceptionToFailure.map(error));
     }
@@ -147,8 +141,7 @@ class ChatChannelRepository implements IChatChannelRepository {
 
   @override
   Future<Either<Failure, ValidField>> deleteChannel(
-    ChatChannelRequest option,
-  ) async {
+      ChatChannelRequest option) async {
     const endPoint = '/me/chats-session';
     final parameters = {'chat_auth': option.token};
 
@@ -167,20 +160,17 @@ class ChatChannelRepository implements IChatChannelRepository {
 
 extension _ChatChannelRepository<T extends String> on Future<T> {
   Future<ChatChannelAvailableEntity> parseSession() async {
-    return this
-        .then((v) => jsonDecode(v) as Map<String, dynamic>)
+    return then((v) => jsonDecode(v) as Map<String, dynamic>)
         .then((v) => ChatChannelAvailableModel.fromJson(v));
   }
 
   Future<ChatChannelOpenEntity> parseOpenChannel() async {
-    return this
-        .then((v) => jsonDecode(v) as Map<String, dynamic>)
+    return then((v) => jsonDecode(v) as Map<String, dynamic>)
         .then((v) => ChatChannelOpenModel.fromJson(v));
   }
 
   Future<ChatChannelSessionEntity> parseSessionChannel() async {
-    return this
-        .then((v) => jsonDecode(v) as Map<String, dynamic>)
+    return then((v) => jsonDecode(v) as Map<String, dynamic>)
         .then((v) => ChatChannelSessionModel.fromJson(v));
   }
 }

@@ -12,12 +12,10 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ZodiacPage extends StatefulWidget {
   final String title;
-  ZodiacPage({
+  const ZodiacPage({
     Key? key,
-    this.title = "ZodiacPage",
+    this.title = 'ZodiacPage',
   }) : super(key: key);
-
-  final String title;
 
   @override
   _ZodiacPageState createState() => _ZodiacPageState();
@@ -49,18 +47,16 @@ class _ZodiacPageState extends ModularState<ZodiacPage, ZodiacController> {
                   ),
                   _buildLoginButton(),
                   Observer(
-                    name: 'ZodiacPage.build.ZodiacSignPage',
-                    builder: (_) {
-                      return ZodiacSignPage(sign: controller.sign);
-                    },
-                  ),
+                      name: 'ZodiacPage.build.ZodiacSignPage',
+                      builder: (_) {
+                        return ZodiacSignPage(sign: controller.sign);
+                      },),
                   const ZodiacRullingPage(),
                   Observer(
-                    name: 'ZodiacPage.build.ZodiacFellingPage',
-                    builder: (_) {
-                      return ZodiacFellingPage(sign: controller.sign);
-                    },
-                  ),
+                      name: 'ZodiacPage.build.ZodiacFellingPage',
+                      builder: (_) {
+                        return ZodiacFellingPage(sign: controller.sign);
+                      },),
                 ],
               ),
             ),

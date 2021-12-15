@@ -10,7 +10,7 @@ class UserDetailProfileEntity extends Equatable {
   final String? skills;
   final String? activity;
 
-  UserDetailProfileEntity({
+  const UserDetailProfileEntity({
     required this.nickname,
     required this.avatar,
     required this.clientId,

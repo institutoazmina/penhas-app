@@ -27,7 +27,7 @@ void main() {
       test(
         'should get value from a valid cep',
         () {
-          const testValue = '63024-370';
+          final testValue = '63024-370';
           final result = Cep(testValue).value;
 
           expect(result, right('63024370'));

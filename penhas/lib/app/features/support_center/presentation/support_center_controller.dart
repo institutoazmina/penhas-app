@@ -37,12 +37,6 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
     setup();
   }
 
-  List<FilterTagEntity> _tags = [];
-  late SupportCenterPlaceSessionEntity currentPlaceSession;
-  var _fetchRequest = const SupportCenterFetchRequest();
-
-  final SupportCenterUseCase _supportCenterUseCase;
-
   @observable
   ObservableFuture<Either<Failure, SupportCenterMetadataEntity?>>?
       _loadCategories;
@@ -55,7 +49,7 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   int categoriesSelected = 0;
 
   @observable
-  String? errorMessage = "";
+  String? errorMessage = '';
 
   @observable
   ObservableSet<Marker> placeMarkers = ObservableSet<Marker>();
@@ -76,7 +70,7 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> onFilterAction() async {
-    errorMessage = '';
+    setMessageErro('');
     _loadCategories = ObservableFuture(_supportCenterUseCase.metadata());
 
     final Either<Failure, SupportCenterMetadataEntity?> result = await _loadCategories!;
@@ -93,8 +87,7 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
     currentKeywords = validKeyWords;
 
     _fetchRequest = _fetchRequest.copyWith(
-      keywords: validKeyWords.isEmpty ? '' : validKeyWords,
-    );
+        keywords: validKeyWords.isEmpty ? '' : validKeyWords,);
     await loadSupportCenter(_fetchRequest);
   }
 
@@ -157,12 +150,13 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
 
     Modular.to
         .pushNamed('/mainboard/filters', arguments: tags)
-        .then((v) => v as FilterActionObserver?)
-        .then((v) => handleCategoriesUpdate(v));
+        .then((v) => v as FilterActionObserver)
+        .then((v) async => handleCategoriesUpdate(v));
   }
 
   void handleCategoriesError(Failure failure) {
-    errorMessage = mapFailureMessage(failure);
+    final message = mapFailureMessage(failure);
+    setMessageErro(message);
   }
 
   bool isSeleted(String id) {
@@ -175,7 +169,7 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     }
   }
 
-  Future<void> handleCategoriesUpdate(FilterActionObserver? action) async {
+  Future<void> handleCategoriesUpdate(FilterActionObserver action) async {
     if (action == null) {
       return;
     }
@@ -203,7 +197,7 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
   }
 
   Future<void> loadSupportCenter(SupportCenterFetchRequest fetchRequest) async {
-    errorMessage = '';
+    setErrorMessage('');
     _loadSupportCenter = ObservableFuture(
       _supportCenterUseCase.fetch(
         fetchRequest,
@@ -218,17 +212,16 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     );
   }
 
-  Future<void> handleLoadSupportCenterSuccess(
-    SupportCenterPlaceSessionEntity session,
-  ) async {
+  void handleLoadSupportCenterSuccess(
+      SupportCenterPlaceSessionEntity session) async {
     state = const SupportCenterState.loaded();
     currentPlaceSession = session;
     initialPosition = LatLng(session.latitude!, session.longitude!);
     final places = session.places!.map((e) => buildMarker(e));
 
     if (places.isEmpty) {
-      errorMessage =
-          'Não encontramos Pontos de Apoio, verifique a localização e os filtros.';
+      setErrorMessage(
+          'Não encontramos Pontos de Apoio, verifique a localização e os filtros.',);
     }
 
     placeMarkers = Set<Marker>.from(places).asObservable();
@@ -265,5 +258,9 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
       ),
       icon: BitmapDescriptor.defaultMarkerWithHue(placeColor.hue),
     );
+  }
+
+  void setErrorMessage(String msg) {
+    errorMessage = msg;
   }
 }

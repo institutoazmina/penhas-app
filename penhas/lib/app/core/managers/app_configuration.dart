@@ -33,11 +33,11 @@ class AppConfiguration implements IAppConfiguration {
   final _appModes = 'br.com.penhas.appConfigurationModes';
   final ILocalStorage _storage;
 
-  AppConfiguration({required ILocalStorage storage}) : this._storage = storage;
+  AppConfiguration({required ILocalStorage storage}) : _storage = storage;
 
   @override
   Future<String> get apiToken {
-    return _storage.get(_tokenKey).then((value) => value.getOrElse(() => ""));
+    return _storage.get(_tokenKey).then((value) => value.getOrElse(() => ''));
   }
 
   @override

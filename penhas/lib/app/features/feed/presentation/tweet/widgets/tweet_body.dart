@@ -7,7 +7,7 @@ class TweetBody extends StatelessWidget {
   const TweetBody({
     Key? key,
     required String? content,
-  })  : this.bodyContent = content,
+  })  : bodyContent = content,
         super(key: key);
 
   final String? bodyContent;

@@ -21,8 +21,8 @@ class AppStateRepository implements IAppStateRepository {
   AppStateRepository({
     required INetworkInfo networkInfo,
     required IAppStateDataSource dataSource,
-  })  : this._dataSource = dataSource,
-        this._networkInfo = networkInfo;
+  })  : _dataSource = dataSource,
+        _networkInfo = networkInfo;
 
   @override
   Future<Either<Failure, AppStateEntity>> check() async {
@@ -54,15 +54,15 @@ class AppStateRepository implements IAppStateRepository {
     }
 
     if (error is ApiProviderException) {
-      if (error.bodyContent!['error'] == 'expired_jwt') {
+      if (error.bodyContent['error'] == 'expired_jwt') {
         return ServerSideSessionFailed();
       }
 
       return ServerSideFormFieldValidationFailure(
-          error: error.bodyContent!['error'],
-          field: error.bodyContent!['field'],
-          reason: error.bodyContent!['reason'],
-          message: error.bodyContent!['message']);
+          error: error.bodyContent['error'],
+          field: error.bodyContent['field'],
+          reason: error.bodyContent['reason'],
+          message: error.bodyContent['message'],);
     }
 
     if (error is ApiProviderSessionError) {

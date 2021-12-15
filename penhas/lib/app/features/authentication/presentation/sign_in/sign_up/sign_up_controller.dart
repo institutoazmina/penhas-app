@@ -19,11 +19,10 @@ class SignUpController extends _SignUpControllerBase with _$SignUpController {
 }
 
 abstract class _SignUpControllerBase with Store, MapFailureMessage {
-  _SignUpControllerBase(this.repository);
-
   final IUserRegisterRepository repository;
-  final UserRegisterFormFieldModel _userRegisterModel =
-      UserRegisterFormFieldModel();
+  final UserRegisterFormFieldModel _userRegisterModel = UserRegisterFormFieldModel();
+
+  _SignUpControllerBase(this.repository);
 
   @observable
   ObservableFuture<Either<Failure, ValidField>>? _progress;
@@ -66,7 +65,8 @@ abstract class _SignUpControllerBase with Store, MapFailureMessage {
   void setBirthday(String birthday) {
     _userRegisterModel.birthday = Birthday(birthday);
 
-    warningBirthday = _userRegisterModel.validateBirthday;
+    warningBirthday =
+        birthday == null ? '' : _userRegisterModel.validateBirthday;
   }
 
   @action
@@ -85,7 +85,7 @@ abstract class _SignUpControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> nextStepPressed() async {
-    errorMessage = '';
+    _setErrorMessage('');
     if (!_isValidToProceed()) {
       return;
     }
@@ -107,10 +107,8 @@ abstract class _SignUpControllerBase with Store, MapFailureMessage {
   }
 
   void _forwardToStep2() {
-    Modular.to.pushNamed(
-      '/authentication/signup/step2',
-      arguments: _userRegisterModel,
-    );
+    Modular.to.pushNamed('/authentication/signup/step2',
+        arguments: _userRegisterModel,);
   }
 
   bool _isValidToProceed() {
@@ -145,9 +143,9 @@ abstract class _SignUpControllerBase with Store, MapFailureMessage {
 
   void _triggerMessageError(Failure failure) {
     if (failure is ServerSideFormFieldValidationFailure) {
-      errorMessage = _mapFailureToFields(failure);
+      _setErrorMessage(_mapFailureToFields(failure));
     } else {
-      errorMessage = mapFailureMessage(failure);
+      _setErrorMessage(mapFailureMessage(failure));
     }
   }
 
@@ -178,19 +176,19 @@ abstract class _SignUpControllerBase with Store, MapFailureMessage {
   }
 
   void _mapToCpfField(ServerSideFormFieldValidationFailure failure) {
-    String? message = failure.message;
+    final String? message = failure.message;
 
     warningCpf = message;
   }
 
   void _mapToCepField(ServerSideFormFieldValidationFailure failure) {
-    String? message = failure.message;
+    final String? message = failure.message;
 
     warningCep = message;
   }
 
   void _mapToBirthdayField(ServerSideFormFieldValidationFailure failure) {
-    String? message = failure.message;
+    final String? message = failure.message;
 
     warningBirthday = message;
   }

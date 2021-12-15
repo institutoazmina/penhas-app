@@ -15,7 +15,7 @@ class ChatChannelMessageComposer extends StatefulWidget {
   final void Function(String) onSentMessage;
   final void Function() onUnblockChannel;
 
-  ChatChannelMessageComposer({
+  const ChatChannelMessageComposer({
     Key? key,
     required this.composerType,
     required this.onSentMessage,

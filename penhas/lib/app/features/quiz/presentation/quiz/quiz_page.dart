@@ -11,7 +11,7 @@ class QuizPage extends StatefulWidget {
   const QuizPage({Key? key, this.title = 'Quiz'}) : super(key: key);
 
   final String title;
-  const QuizPage({Key? key, this.title = "Quiz"}) : super(key: key);
+  const QuizPage({Key? key, this.title = 'Quiz'}) : super(key: key);
 
   @override
   _QuizPageState createState() => _QuizPageState();
@@ -19,7 +19,7 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends ModularState<QuizPage, QuizController> {
   List<ReactionDisposer>? _disposers;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void didChangeDependencies() {
@@ -71,7 +71,7 @@ class _QuizPageState extends ModularState<QuizPage, QuizController> {
               builder: (_) {
                 return QuizUserReplayWidget(
                     message: controller.userReplyMessage!,
-                    onActionReplay: controller.onActionReply);
+                    onActionReplay: controller.onActionReply,);
               },
             )
           ],
@@ -83,7 +83,9 @@ class _QuizPageState extends ModularState<QuizPage, QuizController> {
   @override
   void dispose() {
     super.dispose();
-    _disposers!.forEach((d) => d());
+    for (var d in _disposers!) {
+      d();
+    }
   }
 
   AppBar _buildAppBar() {

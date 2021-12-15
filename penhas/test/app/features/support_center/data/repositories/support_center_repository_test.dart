@@ -15,8 +15,8 @@ import '../../../../../utils/json_util.dart';
 
 void main() {
   isCrashlitycsEnabled = false;
-  late MockIApiProvider apiProvider = MockIApiProvider();
-  late ISupportCenterRepository sut =
+  late final MockIApiProvider apiProvider = MockIApiProvider();
+  late final ISupportCenterRepository sut =
       SupportCenterRepository(apiProvider: apiProvider);
   final SupportCenterFetchRequest fetchRequest = SupportCenterFetchRequest();
 
@@ -43,7 +43,7 @@ void main() {
         // arrange
         const jsonFile = 'support_center/support_center_no_gps.json';
         final jsonData = await JsonUtil.getJson(from: jsonFile);
-        final actual = left(GpsFailure(jsonData["message"] as String?));
+        final actual = left(GpsFailure(jsonData['message'] as String?));
 
         when(
           apiProvider.get(
@@ -82,7 +82,7 @@ void main() {
         // arrange
         const jsonFile = 'support_center/support_center_geocode_error.json';
         final jsonData = await JsonUtil.getJson(from: jsonFile);
-        final actual = left(AddressFailure(jsonData["message"] as String?));
+        final actual = left(AddressFailure(jsonData['message'] as String?));
 
         when(
           apiProvider.get(

@@ -4,22 +4,23 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/presentation/detail_tweet/detail_tweet_controller.dart';
 import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_avatar.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_body.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_bottom.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_title.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-class DetailTweetPage extends StatefulWidget {
-  const DetailTweetPage({
-    Key? key,
-    this.title = "DetailTweet",
-    required this.tweetController,
-  }) : super(key: key);
+import 'detail_tweet_controller.dart';
 
+class DetailTweetPage extends StatefulWidget {
   final String title;
   final ITweetController tweetController;
+  const DetailTweetPage({
+    Key? key,
+    this.title = 'DetailTweet',
+    required this.tweetController,
+  }) : super(key: key);
 
   @override
   _DetailTweetPageState createState() => _DetailTweetPageState();
@@ -53,7 +54,9 @@ class _DetailTweetPageState
   @override
   void dispose() {
     super.dispose();
-    _disposers!.forEach((d) => d());
+    for (var d in _disposers!) {
+      d();
+    }
     _scrollController.dispose();
   }
 
@@ -68,25 +71,23 @@ class _DetailTweetPageState
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
-              child: Observer(
-                builder: (_) {
-                  return RefreshIndicator(
-                    key: _refreshIndicatorKey,
-                    onRefresh: _onRefresh,
-                    notificationPredicate: _handleScrollNotification,
-                    child: ListView.builder(
-                      itemCount: controller.listTweets.length,
-                      controller: _scrollController,
-                      itemBuilder: (context, index) {
-                        return _buildTweetItem(
-                          controller.listTweets[index],
-                          context,
-                        );
-                      },
-                    ),
-                  );
-                },
-              ),
+              child: Observer(builder: (_) {
+                return RefreshIndicator(
+                  key: _refreshIndicatorKey,
+                  onRefresh: _onRefresh,
+                  notificationPredicate: _handleScrollNotification,
+                  child: ListView.builder(
+                    itemCount: controller.listTweets.length,
+                    controller: _scrollController,
+                    itemBuilder: (context, index) {
+                      return _buildTweetItem(
+                        controller.listTweets[index],
+                        context,
+                      );
+                    },
+                  ),
+                );
+              },),
             ),
           ),
         ),
@@ -153,10 +154,10 @@ class _MainTweet extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Expanded(
-                  child: TweetAvatar(tweet: tweet!),
                   flex: 1,
+                  child: TweetAvatar(tweet: tweet!),
                 ),
-                SizedBox(width: 6.0),
+                const SizedBox(width: 6.0),
                 Expanded(
                   flex: 5,
                   child: Column(
@@ -166,7 +167,7 @@ class _MainTweet extends StatelessWidget {
                           tweet: tweet!,
                           context: context,
                           isDetail: true,
-                          controller: controller),
+                          controller: controller,),
                       TweetBody(content: tweet!.content),
                       TweetBottom(tweet: tweet!, controller: controller!)
                     ],
@@ -177,14 +178,14 @@ class _MainTweet extends StatelessWidget {
           ),
           Container(
             alignment: Alignment.centerLeft,
-            margin: EdgeInsets.only(top: 8, bottom: 8),
+            margin: const EdgeInsets.only(top: 8, bottom: 8),
             height: 28,
-            child: Container(),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(color: Colors.grey[350]!),
               ),
             ),
+            child: Container(),
           ),
         ],
       ),
@@ -200,9 +201,6 @@ class _ReplyTweet extends StatelessWidget {
     this.tweet,
     this.controller,
   }) : super(key: key);
-
-  final TweetEntity? tweet;
-  final ITweetController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -220,7 +218,7 @@ class _ReplyTweet extends StatelessWidget {
                     tweet: tweet!,
                     context: context,
                     isDetail: true,
-                    controller: controller),
+                    controller: controller,),
                 TweetBody(content: tweet!.content),
                 TweetBottom(tweet: tweet!, controller: controller!)
               ],

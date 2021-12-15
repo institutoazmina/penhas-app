@@ -15,23 +15,21 @@ void main() {
       avatar: 'https://api.com/avatar/padrao.svg',
       birthdate: DateTime(1980, 3, 3),
       fullName: 'Fulana da Silva',
-      race: "pardo",
-      genre: "Feminino",
-      jaFoiVitimaDeViolencia: false,
-      minibio: null,
-      skill: [],
+      race: 'pardo',
+      genre: 'Feminino',
+      skill: const [],
     );
   });
 
   group('AppStateModel', () {
     test('should be a subclass of AppStateEntity', () async {
       // arrange
-      const session = QuizSessionEntity(
-          currentMessage: [],
+      final session = QuizSessionEntity(
+          currentMessage: const [],
           sessionId: '1',
           endScreen: 'home',
           isFinished: false,);
-      const appMode = AppStateModeEntity(
+      final appMode = AppStateModeEntity(
         
       );
       final List<AppStateModuleEntity> modes = [];
@@ -44,20 +42,18 @@ void main() {
     List<QuizMessageEntity> _currentMessage() {
       return [
         QuizMessageEntity(
-          ref: '',
           content:
               'Olá, eu sou a Assistente PenhaS ☺️ e vou te ajudar a conhecer o aplicativo 🤳',
           type: QuizMessageType.displayText,
           style: 'normal',
         ),
         QuizMessageEntity(
-          ref: '',
           content:
               'Vou começar com algumas perguntas, para saber melhor como te ajudar',
           type: QuizMessageType.displayText,
           style: 'normal',
         ),
-        const QuizMessageEntity(
+        QuizMessageEntity(
           content: 'Atualmente, você está em um relacionamento amoroso?',
           type: QuizMessageType.yesno,
           ref: 'YN1',
@@ -67,29 +63,29 @@ void main() {
 
     List<QuizMessageEntity> _currentMessageWithPrevious() {
       return [
-        const QuizMessageEntity(
+        QuizMessageEntity(
           content:
               'Olá, eu sou a Assistente PenhaS ☺️ e vou te ajudar a conhecer o aplicativo 🤳',
           type: QuizMessageType.displayText,
           style: 'normal',
         ),
-        const QuizMessageEntity(
+        QuizMessageEntity(
           content:
               'Vou começar com algumas perguntas, para saber melhor como te ajudar',
           type: QuizMessageType.displayText,
           style: 'normal',
         ),
-        const QuizMessageEntity(
+        QuizMessageEntity(
           content: 'Atualmente, você está em um relacionamento amoroso?',
           type: QuizMessageType.displayText,
           style: 'normal',
         ),
-        const QuizMessageEntity(
+        QuizMessageEntity(
           content: 'Sim',
           type: QuizMessageType.displayTextResponse,
           style: 'normal',
         ),
-        const QuizMessageEntity(
+        QuizMessageEntity(
           content:
               'Você acredita que tem uma relação saudável com o seu parceiro ou parceira?',
           type: QuizMessageType.yesno,
@@ -100,7 +96,7 @@ void main() {
 
     List<QuizMessageEntity> _currentMessageWithMultipleChoices() {
       return [
-        const QuizMessageEntity(
+        QuizMessageEntity(
             content:
                 'Que tal nos contar um pouco como você acha que pode ajudar outras mulheres? Suas opções ficarão visíveis para as outras usuárias',
             type: QuizMessageType.multipleChoices,
@@ -118,20 +114,18 @@ void main() {
     List<QuizMessageEntity> _currentMessageWithTutorialStealth() {
       return [
         QuizMessageEntity(
-          ref: '',
           content:
               'Fulana da Silva, pelas suas respostas avalio que você está em situação de risco ⚠️',
           type: QuizMessageType.displayText,
           style: 'normal',
         ),
         QuizMessageEntity(
-          ref: '',
           content:
               'Para garantir sua segurança, nenhuma outra usuária do PenhaS saberá sua identidade e você terá um perfil anônimo 👭',
           type: QuizMessageType.displayText,
           style: 'normal',
         ),
-        const QuizMessageEntity(
+        QuizMessageEntity(
           content:
               'Também recomendamos que você utilize o PenhaS com o <b>Modo Camuflado ativado</b>. Isso criará um disfarce para o app. Veja como funciona',
           type: QuizMessageType.showStealthTutorial,
@@ -144,7 +138,7 @@ void main() {
 
     List<QuizMessageEntity> _currentMessageWithSingleButton() {
       return [
-        const QuizMessageEntity(
+        QuizMessageEntity(
           content:
               'Lindo 💜 Obrigada! Assim você nos ajuda a construir um ambiente em que mais mulheres se sintam mais seguras 🤗',
           type: QuizMessageType.button,
@@ -157,9 +151,9 @@ void main() {
 
     List<AppStateModuleEntity> _currentModules() {
       return [
-        const AppStateModuleEntity(code: 'modo_anonimo', meta: '{}'),
-        const AppStateModuleEntity(code: 'modo_seguranca', meta: '{"numero":"000"}'),
-        const AppStateModuleEntity(code: 'modo_camuflado', meta: '{}'),
+        AppStateModuleEntity(code: 'modo_anonimo', meta: '{}'),
+        AppStateModuleEntity(code: 'modo_seguranca', meta: '{"numero":"000"}'),
+        AppStateModuleEntity(code: 'modo_camuflado', meta: '{}'),
       ];
     }
 
@@ -175,7 +169,7 @@ void main() {
         endScreen: null,
         isFinished: false,
       );
-      const appMode = AppStateModeEntity(
+      final appMode = AppStateModeEntity(
         hasActivedGuardian: true,
       );
       final modules = _currentModules();
@@ -205,7 +199,7 @@ void main() {
         endScreen: null,
         isFinished: false,
       );
-      const appMode = AppStateModeEntity(
+      final appMode = AppStateModeEntity(
         
       );
       final modules = _currentModules();
@@ -216,11 +210,9 @@ void main() {
         anonymousModeEnabled: true,
         birthdate: DateTime(1980, 3, 3),
         fullName: 'Fulana da Silva',
-        race: "pardo",
-        genre: "Feminino",
-        jaFoiVitimaDeViolencia: false,
-        minibio: null,
-        skill: [],
+        race: 'pardo',
+        genre: 'Feminino',
+        skill: const [],
       );
       final AppStateEntity expected = AppStateModel(
         quizSession,
@@ -247,7 +239,7 @@ void main() {
         endScreen: null,
         isFinished: false,
       );
-      const appMode = AppStateModeEntity(
+      final appMode = AppStateModeEntity(
         
       );
       final modules = _currentModules();
@@ -258,11 +250,9 @@ void main() {
         stealthModeEnabled: true,
         birthdate: DateTime(1980, 3, 3),
         fullName: 'Fulana da Silva',
-        race: "pardo",
-        genre: "Feminino",
-        jaFoiVitimaDeViolencia: false,
-        minibio: null,
-        skill: [],
+        race: 'pardo',
+        genre: 'Feminino',
+        skill: const [],
       );
       final AppStateEntity expected = AppStateModel(
         quizSession,
@@ -288,7 +278,7 @@ void main() {
         endScreen: null,
         isFinished: false,
       );
-      const appMode = AppStateModeEntity(
+      final appMode = AppStateModeEntity(
         hasActivedGuardian: true,
       );
       final modules = _currentModules();
@@ -316,7 +306,7 @@ void main() {
         endScreen: 'home',
         isFinished: true,
       );
-      const appMode = AppStateModeEntity(
+      final appMode = AppStateModeEntity(
         
       );
       final modules = _currentModules();

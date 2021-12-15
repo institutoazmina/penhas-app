@@ -19,9 +19,9 @@ class AuthenticationRepository implements IAuthenticationRepository {
     required INetworkInfo networkInfo,
     required IAppConfiguration appConfiguration,
     required IAuthenticationDataSource dataSource,
-  })  : this._dataSource = dataSource,
-        this._networkInfo = networkInfo,
-        this._appConfiguration = appConfiguration;
+  })  : _dataSource = dataSource,
+        _networkInfo = networkInfo,
+        _appConfiguration = appConfiguration;
 
   @override
   Future<Either<Failure, SessionEntity>> signInWithEmailAndPassword({
@@ -47,16 +47,16 @@ class AuthenticationRepository implements IAuthenticationRepository {
 
   Future<Either<Failure, SessionEntity>> _handleError(Object error) async {
     if (await _networkInfo.isConnected == false) {
-      return (left(InternetConnectionFailure()));
+      return left(InternetConnectionFailure());
     }
 
     if (error is ApiProviderException) {
       return left(
         ServerSideFormFieldValidationFailure(
-          error: error.bodyContent!['error'],
-          field: error.bodyContent!['field'],
-          message: error.bodyContent!['message'],
-          reason: error.bodyContent!['reason'],
+          error: error.bodyContent['error'],
+          field: error.bodyContent['field'],
+          message: error.bodyContent['message'],
+          reason: error.bodyContent['reason'],
         ),
       );
     }

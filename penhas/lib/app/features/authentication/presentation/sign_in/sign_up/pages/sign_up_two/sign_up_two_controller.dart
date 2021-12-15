@@ -122,7 +122,7 @@ abstract class _SignUpTwoControllerBase with Store, MapFailureMessage {
     _userRegisterModel!.nickname = Nickname(name);
 
     warningNickname =
-        name.length == 0 ? '' : _userRegisterModel!.validateNickname;
+        name.isEmpty ? '' : _userRegisterModel!.validateNickname;
   }
 
   @action
@@ -130,7 +130,7 @@ abstract class _SignUpTwoControllerBase with Store, MapFailureMessage {
     _userRegisterModel!.socialName = Fullname(name);
 
     warningSocialName =
-        name.length == 0 ? '' : _userRegisterModel!.validateSocialName;
+        name.isEmpty ? '' : _userRegisterModel!.validateSocialName;
   }
 
   @action
@@ -183,7 +183,7 @@ abstract class _SignUpTwoControllerBase with Store, MapFailureMessage {
 
   void _forwardToStep3() {
     Modular.to.pushNamed('/authentication/signup/step3',
-        arguments: _userRegisterModel!);
+        arguments: _userRegisterModel!,);
   }
 
   bool _isValidToProceed() {

@@ -5,6 +5,8 @@ import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/network/network_info.dart';
+import 'package:penhas/app/features/authentication/data/datasources/change_password_data_source.dart';
 import 'package:penhas/app/features/authentication/data/models/password_reset_response_model.dart';
 import 'package:penhas/app/features/authentication/data/repositories/change_password_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
@@ -16,12 +18,12 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late MockIChangePasswordDataSource dataSource =
+  late final MockIChangePasswordDataSource dataSource =
       MockIChangePasswordDataSource();
-  late MockINetworkInfo networkInfo = MockINetworkInfo();
+  late final MockINetworkInfo networkInfo = MockINetworkInfo();
 
-  late ChangePasswordRepository sut = ChangePasswordRepository(
-      changePasswordDataSource: dataSource, networkInfo: networkInfo);
+  late final ChangePasswordRepository sut = ChangePasswordRepository(
+      changePasswordDataSource: dataSource, networkInfo: networkInfo,);
   late EmailAddress emailAddress;
   late SignUpPassword password;
   String? resetToken;
@@ -37,9 +39,7 @@ void main() {
     return when(dataSource.reset(
         emailAddress: anyNamed('emailAddress'),
         password: anyNamed('password'),
-        resetToken: anyNamed('resetToken'),
-      ),
-    );
+        resetToken: anyNamed('resetToken'),),);
   }
 
   PostExpectation<dynamic> mockRequestDataSource() {
@@ -54,7 +54,7 @@ void main() {
       test('should return ValidField for successful password changed',
           () async {
         // arrange
-        mockResetDataSource().thenAnswer((_) async => const ValidField());
+        mockResetDataSource().thenAnswer((_) async => ValidField());
         // act
         final result = await sut.reset(
           emailAddress: emailAddress,
@@ -62,15 +62,14 @@ void main() {
           resetToken: resetToken,
         );
         // assert
-        expect(result, right(const ValidField()));
+        expect(result, right(ValidField()));
       });
       test(
           'should return ServerSideFormFieldValidationFailure for non successful change password request',
           () async {
         // arrange
         final bodyContent = await JsonUtil.getJson(
-          from: 'authentication/invalid_token_error.json',
-        );
+            from: 'authentication/invalid_token_error.json',);
         mockResetDataSource()
             .thenThrow(ApiProviderException(bodyContent: bodyContent));
         // act
@@ -87,7 +86,7 @@ void main() {
             field: bodyContent['field'] as String?,
             message: bodyContent['message'] as String?,
             reason: bodyContent['reason'] as String?,
-          )),
+          ),),
         );
       });
     });
@@ -97,8 +96,7 @@ void main() {
           () async {
         // arrange
         final bodyContent = await JsonUtil.getJson(
-          from: 'authentication/request_reset_password.json',
-        );
+            from: 'authentication/request_reset_password.json',);
         final modelResponse = PasswordResetResponseModel.fromJson(bodyContent);
         mockRequestDataSource().thenAnswer((_) async => modelResponse);
         // act
@@ -111,7 +109,7 @@ void main() {
             digits: bodyContent['digits'] as int?,
             ttl: bodyContent['ttl'] as int?,
             ttlRetry: bodyContent['min_ttl_retry'] as int?,
-          )),
+          ),),
         );
       });
       test(
@@ -134,7 +132,7 @@ void main() {
             field: bodyContent['field'] as String?,
             message: bodyContent['message'] as String?,
             reason: bodyContent['reason'] as String?,
-          )),
+          ),),
         );
       });
     });

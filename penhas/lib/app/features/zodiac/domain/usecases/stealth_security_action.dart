@@ -35,10 +35,10 @@ class StealthSecurityAction {
     required IAudioRecordServices audioServices,
     required IGuardianRepository guardianRepository,
     required SecurityModeActionFeature featureToogle,
-  })  : this._audioServices = audioServices,
-        this._featureToogle = featureToogle,
-        this._locationService = locationService,
-        this._guardianRepository = guardianRepository;
+  })  : _audioServices = audioServices,
+        _featureToogle = featureToogle,
+        _locationService = locationService,
+        _guardianRepository = guardianRepository;
 
   Stream<bool> get isRunning => _streamController!.stream;
 
@@ -76,7 +76,7 @@ class StealthSecurityAction {
   Future<UserLocationEntity> _getCurrentLocatin() async {
     return _locationService
         .currentLocation()
-        .then((v) => v.getOrElse(() => UserLocationEntity())!);
+        .then((v) => v.getOrElse(() => const UserLocationEntity())!);
   }
 
   Future<void> _triggerGuardian(UserLocationEntity location) async {

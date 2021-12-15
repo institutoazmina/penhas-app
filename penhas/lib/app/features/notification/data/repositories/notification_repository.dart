@@ -20,7 +20,7 @@ class NotificationRepository implements INotificationRepository {
 
   NotificationRepository({
     required IApiProvider? apiProvider,
-  }) : this._apiProvider = apiProvider;
+  }) : _apiProvider = apiProvider;
 
   @override
   Future<Either<Failure, ValidField>> unread() async {

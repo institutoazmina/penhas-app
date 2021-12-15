@@ -11,10 +11,10 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late MockHttpClient apiClient = MockHttpClient();
+  late final MockHttpClient apiClient = MockHttpClient();
   late ITweetDataSource dataSource;
-  late MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
-  late Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
+  late final MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
+  late final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
   const String SESSSION_TOKEN = 'my_really.long.JWT';
 
   setUp(() {
@@ -28,13 +28,13 @@ void main() {
     when(serverConfigure.apiToken)
         .thenAnswer((_) => Future.value(SESSSION_TOKEN));
     when(serverConfigure.userAgent)
-        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
+        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
     final userAgent = await serverConfigure.userAgent;
     return {
-      'X-Api-Key': sessionToken,
+      'X-Api-Key': SESSSION_TOKEN,
       'User-Agent': userAgent,
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
     };
@@ -54,7 +54,7 @@ void main() {
       any,
       headers: anyNamed('headers'),
       body: anyNamed('body'),
-    ));
+    ),);
   }
 
   void _setUpMockPostHttpClientSuccess200(String? bodyContent) {
@@ -113,7 +113,7 @@ void main() {
           anonymous: false,
           content: 'um breve comentario',
           avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-          meta: const TweetMeta(liked: false, owner: true),
+          meta: TweetMeta(liked: false, owner: true),
           lastReply: const [],
         );
         // act

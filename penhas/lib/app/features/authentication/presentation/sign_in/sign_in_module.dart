@@ -64,10 +64,10 @@ class SignInModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-        ChildRoute(Modular.initialRoute, child: (_, args) => SignInPage()),
+        ChildRoute(Modular.initialRoute, child: (_, args) => const SignInPage()),
         ChildRoute('/signup',
-            child: (_, args) => SignUpPage(),
-            transition: TransitionType.rightToLeft),
+            child: (_, args) => const SignUpPage(),
+            transition: TransitionType.rightToLeft,),
         ChildRoute(
           '/signup/step2',
           child: (_, args) => const SignUpTwoPage(),
@@ -211,7 +211,7 @@ class SignInModule extends Module {
               audioServices: i.get<IAudioRecordServices>(),
               featureToogle: i.get<SecurityModeActionFeature>(),
               locationService: i.get<ILocationServices>(),
-              guardianRepository: i.get<IGuardianRepository>()),
+              guardianRepository: i.get<IGuardianRepository>(),),
         ),
         Bind.factory<SecurityModeActionFeature>(
           (i) => SecurityModeActionFeature(

@@ -29,15 +29,15 @@ class TweetDataSource implements ITweetDataSource {
   TweetDataSource({
     required http.Client? apiClient,
     required serverConfiguration,
-  })  : this._apiClient = apiClient,
-        this._serverConfiguration = serverConfiguration;
+  })  : _apiClient = apiClient,
+        _serverConfiguration = serverConfiguration;
 
   @override
   Future<TweetSessionModel> fetch({
     required TweetRequestOption? option,
   }) async {
     final httpHeader = await _setupHttpHeader();
-    Map<String, String?> queryParameters = {
+    final Map<String, String?> queryParameters = {
       'after': option!.after,
       'before': option.before,
       'parent_id': option.parent,
@@ -155,7 +155,7 @@ class TweetDataSource implements ITweetDataSource {
   @override
   Future<ValidField> delete({TweetEngageRequestOption? option}) async {
     final httpHeader = await _setupHttpHeader();
-    Map<String, String> queryParameters = {'id': option!.tweetId};
+    final Map<String, String> queryParameters = {'id': option!.tweetId};
     final httpRequest = await _setupHttpRequest(
       path: '/me/tweets',
       queryParameters: queryParameters,
@@ -174,7 +174,7 @@ class TweetDataSource implements ITweetDataSource {
   @override
   Future<TweetSessionModel> current({TweetEngageRequestOption? option}) async {
     final httpHeader = await _setupHttpHeader();
-    Map<String, String> queryParameters = {
+    final Map<String, String> queryParameters = {
       'id': option!.tweetId,
     };
     final httpRequest = await _setupHttpRequest(
@@ -196,7 +196,7 @@ class TweetDataSource implements ITweetDataSource {
     final userAgent = await _serverConfiguration!.userAgent;
     final apiToken = await _serverConfiguration!.apiToken;
     return {
-      'X-Api-Key': apiToken ?? "",
+      'X-Api-Key': apiToken ?? '',
       'User-Agent': userAgent,
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
     };

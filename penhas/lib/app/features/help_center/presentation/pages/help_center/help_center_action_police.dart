@@ -4,12 +4,11 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class HelpCenterActionPolice extends StatelessWidget {
+  final VoidCallback onPressed;
   const HelpCenterActionPolice({
     Key? key,
     required this.onPressed,
   }) : super(key: key);
-
-  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +29,7 @@ class HelpCenterActionPolice extends StatelessWidget {
                 height: 41,
                 width: 49,
                 child: SvgPicture.asset(
-                  'assets/images/svg/help_center/help_center_call_police.svg',
-                ),
+                    'assets/images/svg/help_center/help_center_call_police.svg',),
               ),
             ),
             const Padding(

@@ -22,11 +22,11 @@ class ChatMainTalksController extends _ChatMainTalksControllerBase
 }
 
 abstract class _ChatMainTalksControllerBase with Store, MapFailureMessage {
+  final IChatChannelRepository _chatChannelRepository;
+
   _ChatMainTalksControllerBase(this._chatChannelRepository) {
     _init();
   }
-
-  final IChatChannelRepository _chatChannelRepository;
 
   Future<void> _init() async {
     await loadScreen();
@@ -58,8 +58,8 @@ abstract class _ChatMainTalksControllerBase with Store, MapFailureMessage {
       return;
     }
 
-    ChatChannelOpenEntity session =
-        ChatChannelOpenEntity(token: data.channel!.token, session: null);
+    final ChatChannelOpenEntity session =
+        ChatChannelOpenEntity(token: data.channel!.token);
 
     await forwardToChat(session);
   }
@@ -67,9 +67,7 @@ abstract class _ChatMainTalksControllerBase with Store, MapFailureMessage {
 
 extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
   Future<void> forwardToChat(ChatChannelOpenEntity session) async {
-    return Modular.to
-        .pushNamed('/mainboard/chat/${session.token}', arguments: session)
-        .then(
+    return Modular.to.pushNamed('/mainboard/chat/${session.token}', arguments: session).then(
       (value) async {
         if (value is bool && value) {
           await loadScreen();
@@ -91,8 +89,8 @@ extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
   }
 
   void handleLoadSession(ChatChannelAvailableEntity session) {
-    List<ChatMainTileEntity> tiles = [];
-    List<ChatMainSupportTile> cards = [];
+    final List<ChatMainTileEntity> tiles = [];
+    final List<ChatMainSupportTile> cards = [];
 
     if (session.assistant != null) {
       cards.add(
@@ -120,7 +118,7 @@ extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
       cards.add(
         ChatMainSupportTile(
           title: session.support!.user.nickname!,
-          content: "Fale com as adminstradoras do app",
+          content: 'Fale com as adminstradoras do app',
           channel: session.support,
         ),
       );
@@ -132,7 +130,7 @@ extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
 
     if (session.channels!.isNotEmpty) {
       final total = session.channels!.length;
-      final title = total > 1 ? "Suas conversas ($total)" : "Sua conversa";
+      final title = total > 1 ? 'Suas conversas ($total)' : 'Sua conversa';
       tiles.add(ChatMainChannelHeaderTile(title: title));
       final channels = session.channels!
           .map((e) => ChatMainChannelCardTile(channel: e))

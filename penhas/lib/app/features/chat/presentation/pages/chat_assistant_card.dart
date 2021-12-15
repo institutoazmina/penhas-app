@@ -63,18 +63,16 @@ class ChatAssistantCard extends StatelessWidget {
 
 extension _ChatTalkCardPrivate on ChatAssistantCard {
   TextStyle get titleStyle => const TextStyle(
-        fontFamily: 'Lato',
-        fontSize: 14.0,
-        letterSpacing: 0.45,
-        color: DesignSystemColors.darkIndigoThree,
-        fontWeight: FontWeight.bold,
-      );
+      fontFamily: 'Lato',
+      fontSize: 14.0,
+      letterSpacing: 0.45,
+      color: DesignSystemColors.darkIndigoThree,
+      fontWeight: FontWeight.bold,);
   TextStyle get descriptionStyle => const TextStyle(
-        fontFamily: 'Lato',
-        fontSize: 14.0,
-        height: 1.3,
-        letterSpacing: 0.45,
-        color: DesignSystemColors.darkIndigoThree,
-        fontWeight: FontWeight.normal,
-      );
+      fontFamily: 'Lato',
+      fontSize: 14.0,
+      height: 1.3,
+      letterSpacing: 0.45,
+      color: DesignSystemColors.darkIndigoThree,
+      fontWeight: FontWeight.normal,);
 }

@@ -65,7 +65,7 @@ abstract class _SignUpThreeControllerBase with Store, MapFailureMessage {
     _userRegisterModel!.emailAddress = EmailAddress(email);
 
     warningEmail =
-        email.length == 0 ? '' : _userRegisterModel!.validateEmailAddress;
+        email.isEmpty ? '' : _userRegisterModel!.validateEmailAddress;
   }
 
   @action

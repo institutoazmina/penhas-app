@@ -8,7 +8,7 @@ class ChatChannelRequest extends Equatable {
   final String? clientId;
   final bool? block;
 
-  ChatChannelRequest({
+  const ChatChannelRequest({
     required this.token,
     this.rows = 100,
     this.message,

@@ -15,10 +15,8 @@ import 'package:penhas/app/features/help_center/presentation/pages/guardian_tile
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class GuardiansPage extends StatefulWidget {
-  const GuardiansPage({Key? key, this.title = 'Guardians'}) : super(key: key);
-
   final String title;
-  const GuardiansPage({Key? key, this.title = "Guardians"}) : super(key: key);
+  const GuardiansPage({Key? key, this.title = 'Guardians'}) : super(key: key);
 
   @override
   _GuardiansPageState createState() => _GuardiansPageState();
@@ -54,7 +52,9 @@ class _GuardiansPageState
 
   @override
   void dispose() {
-    _disposers!.forEach((d) => d());
+    for (var d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 
@@ -98,31 +98,30 @@ class _GuardiansPageState
           key: _refreshIndicatorKey,
           onRefresh: () async => controller.loadPage(),
           child: ListView.builder(
-            itemCount: tiles.length,
-            itemBuilder: (context, index) {
-              final tile = tiles[index];
-              if (tile is GuardianTileHeaderEntity) {
-                return GuardianTileHeader(title: tile.title);
-              }
-              if (tile is GuardianTileDescriptionEntity) {
-                return GuardianTileDescription(description: tile.description);
-              }
-              if (tile is GuardianTileCardEntity) {
-                return GuardianTileActionCard(
-                  card: tile,
+              itemCount: tiles.length,
+              itemBuilder: (context, index) {
+                final tile = tiles[index];
+                if (tile is GuardianTileHeaderEntity) {
+                  return GuardianTileHeader(title: tile.title);
+                }
+                if (tile is GuardianTileDescriptionEntity) {
+                  return GuardianTileDescription(description: tile.description);
+                }
+                if (tile is GuardianTileCardEntity) {
+                  return GuardianTileActionCard(
+                    card: tile,
+                  );
+                }
+                if (tile is GuardianTileEmptyCardEntity) {
+                  return GuardianTileEmptyCard(
+                    card: tile,
+                  );
+                }
+                return Container(
+                  height: 60,
+                  color: Colors.black,
                 );
-              }
-              if (tile is GuardianTileEmptyCardEntity) {
-                return GuardianTileEmptyCard(
-                  card: tile,
-                );
-              }
-              return Container(
-                height: 60,
-                color: Colors.black,
-              );
-            },
-          ),
+              },),
         ),
       ),
     );

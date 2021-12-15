@@ -10,8 +10,8 @@ import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late MockITweetRepository repository = MockITweetRepository();
-  late MockTweetFilterPreference filterPreference = MockTweetFilterPreference();
+  late final MockITweetRepository repository = MockITweetRepository();
+  late final MockTweetFilterPreference filterPreference = MockTweetFilterPreference();
 
   setUp(() {
     when(filterPreference.getCategory()).thenReturn([]);
@@ -34,7 +34,6 @@ void main() {
       setUp(() {
         maxRowsPerRequet = 5;
         firstSessionResponse = TweetSessionEntity(
-            parent: null,
             nextPage: '_next_page_request_1_',
             hasMore: true,
             orderBy: TweetSessionOrder.latestFirst,
@@ -50,7 +49,7 @@ void main() {
                 content: 'content 2',
                 avatar: 'http://site.com/avatar_2.png',
                 meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
+                lastReply: const [],
               ),
               TweetEntity(
                 id: 'id_1',
@@ -63,11 +62,10 @@ void main() {
                 content: 'content 1',
                 avatar: 'http://site.com/avatar_1.png',
                 meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
+                lastReply: const [],
               ),
-            ]);
+            ],);
         secondSessionResponse = TweetSessionEntity(
-            parent: null,
             nextPage: '_next_page_request_1_',
             hasMore: false,
             orderBy: TweetSessionOrder.oldestFirst,
@@ -83,7 +81,7 @@ void main() {
                 content: 'content 1',
                 avatar: 'http://site.com/avatar_1.png',
                 meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
+                lastReply: const [],
               ),
               TweetEntity(
                 id: 'id_4',
@@ -96,15 +94,14 @@ void main() {
                 content: 'content 4',
                 avatar: 'http://site.com/avatar_2.png',
                 meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
+                lastReply: const [],
               ),
-            ]);
+            ],);
         thirdSessionResponse = TweetSessionEntity(
-          parent: null,
           nextPage: '_next_page_request_1_',
           hasMore: false,
           orderBy: TweetSessionOrder.oldestFirst,
-          tweets: [],
+          tweets: const [],
         );
       });
       test('should get the newest tweets', () async {
@@ -115,7 +112,7 @@ void main() {
         final Either<Failure, FeedCache> expected =
             right(FeedCache(tweets: firstSessionResponse.tweets));
         final sut = FeedUseCases(
-            repository: repository, filterPreference: filterPreference);
+            repository: repository, filterPreference: filterPreference,);
         // act
         final received = await sut.fetchNewestTweet();
         // assert
@@ -150,7 +147,7 @@ void main() {
               option: TweetRequestOption(
             rows: maxRowsPerRequet,
             after: (firstSessionResponse.tweets.first as TweetEntity).id,
-          )),
+          ),),
         );
         expect(expected, received);
       });
@@ -186,7 +183,6 @@ void main() {
       setUp(() {
         maxRowsPerRequet = 5;
         firstSessionResponse = TweetSessionEntity(
-            parent: null,
             nextPage: '_next_page_request_1_',
             hasMore: true,
             orderBy: TweetSessionOrder.latestFirst,
@@ -202,7 +198,7 @@ void main() {
                 content: 'content 4',
                 avatar: 'http://site.com/avatar_2.png',
                 meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
+                lastReply: const [],
               ),
               TweetEntity(
                 id: 'id_3',
@@ -215,11 +211,10 @@ void main() {
                 content: 'content 3',
                 avatar: 'http://site.com/avatar_1.png',
                 meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
+                lastReply: const [],
               ),
-            ]);
+            ],);
         secondSessionResponse = TweetSessionEntity(
-            parent: null,
             nextPage: '_next_page_request_2_',
             hasMore: true,
             orderBy: TweetSessionOrder.latestFirst,
@@ -235,7 +230,7 @@ void main() {
                 content: 'content 2',
                 avatar: 'http://site.com/avatar_1.png',
                 meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
+                lastReply: const [],
               ),
               TweetEntity(
                 id: 'id_1',
@@ -248,11 +243,10 @@ void main() {
                 content: 'content 1',
                 avatar: 'http://site.com/avatar_2.png',
                 meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
+                lastReply: const [],
               ),
-            ]);
+            ],);
         thirdSessionResponse = TweetSessionEntity(
-            parent: null,
             nextPage: '_next_page_request_3_',
             hasMore: true,
             orderBy: TweetSessionOrder.oldestFirst,
@@ -268,7 +262,7 @@ void main() {
                 content: 'content 1',
                 avatar: 'http://site.com/avatar_2.png',
                 meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
+                lastReply: const [],
               ),
               TweetEntity(
                 id: 'id_2',
@@ -281,9 +275,9 @@ void main() {
                 content: 'content 2',
                 avatar: 'http://site.com/avatar_1.png',
                 meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
+                lastReply: const [],
               ),
-            ]);
+            ],);
       });
       test('should get the newest tweets for first time', () async {
         // arrange
@@ -293,7 +287,7 @@ void main() {
         final Either<Failure, FeedCache> expected =
             right(FeedCache(tweets: firstSessionResponse.tweets));
         final sut = FeedUseCases(
-            repository: repository, filterPreference: filterPreference);
+            repository: repository, filterPreference: filterPreference,);
         // act
         final received = await sut.fetchOldestTweet();
         // assert
@@ -358,11 +352,11 @@ void main() {
           ),
         );
 
-        when(repository.fetch(option: anyNamed("option")))
+        when(repository.fetch(option: anyNamed('option')))
             .thenAnswer((_) => Future.value(right(firstSessionResponse)));
         await sut.fetchOldestTweet();
 
-        when(repository.fetch(option: anyNamed("option")))
+        when(repository.fetch(option: anyNamed('option')))
             .thenAnswer((_) => Future.value(right(thirdSessionResponse)));
         // act
         final received = await sut.fetchOldestTweet();

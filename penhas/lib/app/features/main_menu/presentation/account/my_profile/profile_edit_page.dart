@@ -57,7 +57,9 @@ class _ProfileEditPageState
 
   @override
   void dispose() {
-    _disposers!.forEach((d) => d());
+    for (var d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 }
@@ -66,8 +68,8 @@ extension _PageBuilder on _ProfileEditPageState {
   Widget bodyBuilder(ProfileEditState state) {
     return state.when(
       initial: () => bodyLoading(),
-      loaded: (profile, securityModeFeatureEnabled) => bodyLoaded(profile,
-          securityModeFeatureEnabled: securityModeFeatureEnabled,),
+      loaded: (profile, securityModeFeatureEnabled) =>
+          bodyLoaded(profile, securityModeFeatureEnabled),
       error: (msg) => SupportCenterGeneralError(
         message: msg,
         onPressed: controller.retry,
@@ -86,9 +88,7 @@ extension _PageBuilder on _ProfileEditPageState {
   }
 
   Widget bodyLoaded(
-    UserProfileEntity profile, {
-    required bool securityModeFeatureEnabled,
-  }) {
+      UserProfileEntity profile, bool securityModeFeatureEnabled) {
     return SafeArea(
       child: PageProgressIndicator(
         progressMessage: 'Atualizando...',
@@ -114,8 +114,8 @@ extension _PageBuilder on _ProfileEditPageState {
                 ),
               if (securityModeFeatureEnabled)
                 CardProfileSingleTilePage(
-                  title: "Já foi vítima de violência contra a mulher?",
-                  content: profile.jaFoiVitimaDeViolencia? "Sim" : "Não",
+                  title: 'Já foi vítima de violência contra a mulher?',
+                  content: profile.jaFoiVitimaDeViolencia? 'Sim' : 'Não',
                 ),
               const CardProfileSingleTilePage(
                 title: 'Cadastro',
@@ -125,8 +125,7 @@ extension _PageBuilder on _ProfileEditPageState {
               ),
               CardProfileSingleTilePage(
                 title: 'Data de Nascimento',
-                content:
-                    '${profile.birthdate.day}/${profile.birthdate.month}/${profile.birthdate.year}',
+                content: "${profile.birthdate.day}/${profile.birthdate.month}/${profile.birthdate.year}",
                 background: DesignSystemColors.systemBackgroundColor,
               ),
               CardProfileRacePage(
@@ -158,20 +157,20 @@ extension _Modal on _ProfileEditPageState {}
 
 extension _ProfileEditPage on _ProfileEditPageState {
   Widget profileHeader() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Dados do Perfil', style: profileHeaderTitleTextStyle),
-          Padding(
-            padding: const EdgeInsets.only(top: 16.0),
-            child: Text(
-              'Informações exibidas para as usuários do PenhaS.',
-              style: profileHeaderContentTextStyle,
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Dados do Perfil', style: profileHeaderTitleTextStyle),
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: Text('Informações exibidas para as usuários do PenhaS.',
+                  style: profileHeaderContentTextStyle,),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

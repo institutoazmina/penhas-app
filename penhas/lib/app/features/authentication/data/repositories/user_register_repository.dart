@@ -27,9 +27,9 @@ class UserRegisterRepository implements IUserRegisterRepository {
     required INetworkInfo? networkInfo,
     required IAppConfiguration? appConfiguration,
     required IUserRegisterDataSource? dataSource,
-  })  : this._dataSource = dataSource,
-        this._networkInfo = networkInfo,
-        this._appConfiguration = appConfiguration;
+  })  : _dataSource = dataSource,
+        _networkInfo = networkInfo,
+        _appConfiguration = appConfiguration;
 
   @override
   Future<Either<Failure, ValidField>> checkField({
@@ -54,7 +54,7 @@ class UserRegisterRepository implements IUserRegisterRepository {
           nickName: nickName,
           birthday: birthday,
           genre: genre,
-          race: race);
+          race: race,);
 
       return right(ValidField());
     } catch (e, stack) {
@@ -87,7 +87,7 @@ class UserRegisterRepository implements IUserRegisterRepository {
           birthday: birthday,
           genre: genre,
           race: race,
-          socialName: socialName);
+          socialName: socialName,);
 
       await _appConfiguration!.saveApiToken(token: session.sessionToken);
 
@@ -110,10 +110,10 @@ class UserRegisterRepository implements IUserRegisterRepository {
 
     if (error is ApiProviderException) {
       return ServerSideFormFieldValidationFailure(
-          error: error.bodyContent!['error'],
-          field: error.bodyContent!['field'],
-          reason: error.bodyContent!['reason'],
-          message: error.bodyContent!['message']);
+          error: error.bodyContent['error'],
+          field: error.bodyContent['field'],
+          reason: error.bodyContent['reason'],
+          message: error.bodyContent['message'],);
     }
 
     return ServerFailure();

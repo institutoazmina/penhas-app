@@ -11,10 +11,10 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 3.0.0-dev02+37
+version: 3.0.0-dev04+39
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=2.15.0 <3.0.0'
 
 dependencies:
   flutter:
@@ -47,7 +47,10 @@ dependencies:
   flutter_phone_direct_caller: ^2.1.0
   flutter_sound_lite: ^8.4.2
   flutter_svg: ^1.0.0
-  flutter_tags: ^1.0.0-nullsafety.1
+  flutter_tags:
+    git:
+      url: https://github.com/pedrox-hs/flutter_tags.git
+      ref: null-safety
   flutter_widget_from_html: ^0.8.3+1
   freezed_annotation: ^1.1.0
   geolocator: ^8.0.0
@@ -72,10 +75,22 @@ dependencies:
   collection: ^1.15.0
   asuka: ^2.0.0
 
+dependency_overrides:
+  flutter_modular:
+    git:
+      url: https://github.com/pedrox-hs/modular.git
+      path: flutter_modular
+      ref: improvements
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^2.1.5
+  flutter_modular_test:
+    git:
+      url: https://github.com/pedrox-hs/modular.git
+      path: flutter_modular_test
+      ref: improvements
   flutter_launcher_icons: ^0.9.2
   flutter_launcher_name:
     git:
@@ -84,6 +99,7 @@ dev_dependencies:
   freezed: ^1.1.0
   mobx_codegen: ^2.0.4
   mockito: ^5.0.16
+  lint: ^1.8.1
 
 flutter_icons:
   ios: true

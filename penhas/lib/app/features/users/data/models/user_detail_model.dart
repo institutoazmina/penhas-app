@@ -11,8 +11,8 @@ class UserDetailModel extends UserDetailEntity {
 
   factory UserDetailModel.fromJson(Map<String, dynamic> jsonData) {
     return UserDetailModel(
-      isMyself: jsonData["is_myself"] == 1,
-      profile: UserDetailProfileModel.fromJson(jsonData["profile"] as Map<String, dynamic>),
+      isMyself: jsonData['is_myself'] == 1,
+      profile: UserDetailProfileModel.fromJson(jsonData['profile'] as Map<String, dynamic>),
     );
   }
 }

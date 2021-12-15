@@ -24,22 +24,13 @@ class SignInAnonymousController extends _SignInAnonymousController
 }
 
 abstract class _SignInAnonymousController with Store, MapFailureMessage {
-  _SignInAnonymousController(
-    this._repository,
-    this._userProfileStore,
-    this._passwordValidator,
-  ) {
-    _init();
-    _password = SignInPassword('', _passwordValidator);
-  }
-
   final String _invalidFieldsToProceedLogin =
       'E-mail e senha precisam estarem corretos para continuar.';
   final LocalStore<UserProfileEntity> _userProfileStore;
   final IAuthenticationRepository _repository;
   final PasswordValidator _passwordValidator;
 
-  EmailAddress _emailAddress = EmailAddress("");
+  EmailAddress _emailAddress = EmailAddress('');
   late SignInPassword _password;
 
   _SignInAnonymousController(
@@ -48,7 +39,7 @@ abstract class _SignInAnonymousController with Store, MapFailureMessage {
     _password = SignInPassword('', _passwordValidator);
   }
 
-  Future<void> _init() async {
+  void _init() async {
     final profile = await _userProfileStore.retrieve();
     _emailAddress = EmailAddress(profile.email);
     userEmail = profile.email;
@@ -62,13 +53,13 @@ abstract class _SignInAnonymousController with Store, MapFailureMessage {
   String userGreetings = '';
 
   @observable
-  String? userEmail = "";
+  String? userEmail = '';
 
   @observable
   String warningPassword = '';
 
   @observable
-  String? errorMessage = "";
+  String? errorMessage = '';
 
   @computed
   PageProgressState get currentState {
@@ -95,19 +86,16 @@ abstract class _SignInAnonymousController with Store, MapFailureMessage {
       _setErrorMessage(_invalidFieldsToProceedLogin);
       return;
     }
-    errorMessage = '';
 
-    _progress = ObservableFuture(
-      _repository.signInWithEmailAndPassword(
-        emailAddress: _emailAddress,
-        password: _password,
-      ),
-    );
+    _progress = ObservableFuture(_repository.signInWithEmailAndPassword(
+      emailAddress: _emailAddress,
+      password: _password,
+    ),);
 
     final Either<Failure, SessionEntity> response = await _progress!;
 
     response.fold(
-      (failure) => errorMessage = mapFailureMessage(failure),
+      (failure) => _setErrorMessage(mapFailureMessage(failure)),
       (session) => _forwardToLogged(),
     );
   }

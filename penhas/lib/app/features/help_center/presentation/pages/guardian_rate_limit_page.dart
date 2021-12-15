@@ -2,23 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class GuardianRateLimitPage extends StatelessWidget {
-  const GuardianRateLimitPage({
-    Key? key,
-    required int maxLimit,
-  })  : _maxLimit = maxLimit,
-        super(key: key);
-
   final int _maxLimit;
 
-  TextStyle get _bodyTextStyle => const TextStyle(
-        fontFamily: 'Lato',
-        fontSize: 16.0,
-        fontWeight: FontWeight.normal,
-        color: Colors.white,
-        letterSpacing: 0.44,
-      );
+  final _bodyTextStyle = const TextStyle(
+    fontFamily: 'Lato',
+    fontSize: 16.0,
+    fontWeight: FontWeight.normal,
+    color: Colors.white,
+    letterSpacing: 0.44,
+  );
 
-  final _bodyTextBoldStyle = TextStyle(
+  final _bodyTextBoldStyle = const TextStyle(
     fontFamily: 'Lato',
     fontSize: 18.0,
     fontWeight: FontWeight.bold,
@@ -29,7 +23,7 @@ class GuardianRateLimitPage extends StatelessWidget {
   GuardianRateLimitPage({
     Key? key,
     required int maxLimit,
-  })  : this._maxLimit = maxLimit,
+  })  : _maxLimit = maxLimit,
         super(key: key);
 
   @override
@@ -71,13 +65,12 @@ class GuardianRateLimitPage extends StatelessWidget {
                   style: _bodyTextStyle,
                   children: <TextSpan>[
                     TextSpan(
-                      text: 'máximo de $_maxLimit guardiões',
-                      style: _bodyTextBoldStyle,
-                    ),
+                        text: 'máximo de $_maxLimit guardiões',
+                        style: _bodyTextBoldStyle,),
                     TextSpan(
-                      text: ', não sendo possível cadastrar um novo guardião.',
-                      style: _bodyTextStyle,
-                    )
+                        text:
+                            ', não sendo possível cadastrar um novo guardião.',
+                        style: _bodyTextStyle,)
                   ],
                 ),
               ),

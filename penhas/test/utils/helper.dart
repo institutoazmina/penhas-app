@@ -1,6 +1,6 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
-import 'package:mockito/annotations.dart';
 import 'package:http/http.dart' as http;
+import 'package:mockito/annotations.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/managers/local_store.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
@@ -32,21 +32,21 @@ import 'package:penhas/app/features/quiz/data/datasources/quiz_data_source.dart'
 import 'package:penhas/app/features/support_center/data/repositories/support_center_repository.dart';
 
 Map<String, dynamic> userProfileEntityToJson(UserProfileEntity? entity) =>
-    throw "not implemented";
+    throw 'not implemented';
 
 UserProfileEntity userProfileEntityFromJson(Map<String, dynamic>? json) =>
-    throw "not implemented";
+    throw 'not implemented';
 
-UserProfileEntity userProfileEntityDefaultEntity() => throw "not implemented";
+UserProfileEntity userProfileEntityDefaultEntity() => throw 'not implemented';
 
 Map<String, dynamic> appPreferencesEntityToJson(AppPreferencesEntity? entity) =>
-    throw "not implemented";
+    throw 'not implemented';
 
 AppPreferencesEntity appPreferencesEntityFromJson(Map<String, dynamic>? json) =>
-    throw "not implemented";
+    throw 'not implemented';
 
 AppPreferencesEntity appPreferencesEntityDefaultEntity() =>
-    throw "not implemented";
+    throw 'not implemented';
 
 @GenerateMocks([
   IApiServerConfigure,
@@ -95,7 +95,7 @@ AppPreferencesEntity appPreferencesEntityDefaultEntity() =>
       #defaultEntity: appPreferencesEntityDefaultEntity,
     },
   ),
-])
+],)
 void main() {
   // just for mocks
 }

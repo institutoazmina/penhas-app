@@ -17,7 +17,7 @@ class GuardianTileHeader extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Text(
         title!,
-        style: TextStyle(
+        style: const TextStyle(
           color: DesignSystemColors.darkIndigoThree,
           fontSize: 20.0,
           letterSpacing: 0.65,

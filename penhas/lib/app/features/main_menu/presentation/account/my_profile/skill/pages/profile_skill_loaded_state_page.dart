@@ -6,13 +6,6 @@ import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ProfilSkillLoadedStatePage extends StatelessWidget {
-  ProfilSkillLoadedStatePage({
-    Key? key,
-    required this.tags,
-    required this.onResetAction,
-    required this.onAplyFilterAction,
-  }) : super(key: key);
-
   final void Function() onResetAction;
   final void Function(List<FilterTagEntity>) onAplyFilterAction;
   final List<FilterTagEntity> tags;
@@ -135,16 +128,14 @@ extension _FilterLoadedStatePageMethods on ProfilSkillLoadedStatePage {
         elevation: 0,
         color: DesignSystemColors.ligthPurple,
         shape: kButtonShapeOutlinePurple,
-        child: const Text(
-          'Atualizar',
-          style: TextStyle(
-            fontFamily: 'Lato',
-            fontWeight: FontWeight.bold,
-            fontSize: 14.0,
-            color: Colors.white,
-            letterSpacing: 0.45,
-          ),
-        ),
+        child: Text("Atualizar",
+            style: TextStyle(
+              fontFamily: 'Lato',
+              fontWeight: FontWeight.bold,
+              fontSize: 14.0,
+              color: Colors.white,
+              letterSpacing: 0.45,
+            )),
       ),
     );
   }

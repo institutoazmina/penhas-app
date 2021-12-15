@@ -10,7 +10,7 @@ import '../../../utils/helper.mocks.dart';
 
 void main() {
   late AppModulesServices sut;
-  late MockILocalStorage storage = MockILocalStorage();
+  late final MockILocalStorage storage = MockILocalStorage();
   String? appModuleKey;
 
   String _convert(List<AppStateModuleEntity> modules) {
@@ -60,7 +60,7 @@ void main() {
 
     test('should received null if module do not existe on storage', () async {
       // arrange
-      final dynamic expected = null;
+      const dynamic expected = null;
       final modules = [
         const AppStateModuleEntity(code: 'module_1', meta: '{}'),
         const AppStateModuleEntity(code: 'module_2', meta: '{"data":true}'),

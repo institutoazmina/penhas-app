@@ -3,14 +3,6 @@ import 'package:penhas/app/features/zodiac/domain/entities/izodiac.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ZodiacActionButton extends StatelessWidget {
-  const ZodiacActionButton({
-    required this.sign,
-    required this.listOfSign,
-    required this.isRunning,
-    required this.onPressed,
-    Key? key,
-  }) : super(key: key);
-
   final IZodiac sign;
   final List<IZodiac> listOfSign;
   final VoidCallback onPressed;
@@ -41,7 +33,7 @@ class ZodiacActionButton extends StatelessWidget {
           listOfSign[2].icone,
           listOfSign[3].icone,
           FlatButton(
-            onPressed: () {},
+            onPressed: () => null,
             onLongPress: onPressed,
             color: isRunning
                 ? DesignSystemColors.pinky

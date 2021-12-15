@@ -8,7 +8,7 @@ class ChatChannelEntity extends Equatable {
   final bool? lastMessageIsMime;
   final ChatUserEntity user;
 
-  ChatChannelEntity({
+  const ChatChannelEntity({
     required this.token,
     required this.lastMessageTime,
     required this.lastMessageIsMime,

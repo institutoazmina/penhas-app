@@ -9,8 +9,8 @@ import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late MockITweetRepository repository = MockITweetRepository();
-  late MockTweetFilterPreference filterPreference = MockTweetFilterPreference();
+  late final MockITweetRepository repository = MockITweetRepository();
+  late final MockTweetFilterPreference filterPreference = MockTweetFilterPreference();
 
   setUp(() {
     when(filterPreference.getCategory()).thenReturn([]);
@@ -45,7 +45,7 @@ void main() {
               anonymous: false,
               content: 'content 2',
               avatar: 'http://site.com/avatar_2.png',
-              meta: const TweetMeta(liked: false, owner: true),
+              meta: TweetMeta(liked: false, owner: true),
               lastReply: const [],
             ),
             TweetEntity(
@@ -58,7 +58,7 @@ void main() {
               anonymous: false,
               content: 'content 1',
               avatar: 'http://site.com/avatar_1.png',
-              meta: const TweetMeta(liked: false, owner: true),
+              meta: TweetMeta(liked: false, owner: true),
               lastReply: [
                 TweetEntity(
                   id: 'id_3',
@@ -70,7 +70,7 @@ void main() {
                   anonymous: false,
                   content: 'just replied',
                   avatar: 'http://site.com/2.svg',
-                  meta: const TweetMeta(liked: false, owner: false),
+                  meta: TweetMeta(liked: false, owner: false),
                   lastReply: const [],
                 ),
               ],
@@ -91,7 +91,7 @@ void main() {
           anonymous: true,
           content: 'content 1',
           avatar: 'http://site.com/1.svg',
-          meta: const TweetMeta(liked: false, owner: true),
+          meta: TweetMeta(liked: false, owner: true),
           lastReply: const [],
         );
 
@@ -114,7 +114,7 @@ void main() {
                 anonymous: false,
                 content: 'content 2',
                 avatar: 'http://site.com/avatar_2.png',
-                meta: const TweetMeta(liked: false, owner: true),
+                meta: TweetMeta(liked: false, owner: true),
                 lastReply: const [],
               ),
             ],
@@ -145,7 +145,7 @@ void main() {
           anonymous: false,
           content: 'just replied',
           avatar: 'http://site.com/2.svg',
-          meta: const TweetMeta(liked: false, owner: false),
+          meta: TweetMeta(liked: false, owner: false),
           lastReply: const [],
         );
 
@@ -168,7 +168,7 @@ void main() {
                 anonymous: false,
                 content: 'content 2',
                 avatar: 'http://site.com/avatar_2.png',
-                meta: const TweetMeta(liked: false, owner: true),
+                meta: TweetMeta(liked: false, owner: true),
                 lastReply: const [],
               ),
               TweetEntity(
@@ -181,7 +181,7 @@ void main() {
                 anonymous: false,
                 content: 'content 1',
                 avatar: 'http://site.com/avatar_1.png',
-                meta: const TweetMeta(liked: false, owner: true),
+                meta: TweetMeta(liked: false, owner: true),
                 lastReply: const [],
               ),
             ],

@@ -17,7 +17,7 @@ class PassordInputField extends StatefulWidget {
   final String errorText;
   final String hintText;
 
-  PassordInputField({
+  const PassordInputField({
     Key? key,
     this.style = kTextStyleDefaultTextFieldLabelStyle,
     required this.onChanged,
@@ -54,7 +54,7 @@ class _PassordInputFieldState extends State<PassordInputField> {
         hintText: widget.hintText,
         hintStyle: kTextStyleDefaultTextFieldLabelStyle,
         errorText: _normalizeHitText(widget.errorText),
-        contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
+        contentPadding: const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
         suffixIcon: IconButton(
           icon: Icon(
               _isPasswordVisible ? Icons.visibility : Icons.visibility_off,

@@ -8,8 +8,8 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late MockIApiProvider apiProvider = MockIApiProvider();
-  late INotificationRepository sut =
+  late final MockIApiProvider apiProvider = MockIApiProvider();
+  late final INotificationRepository sut =
       NotificationRepository(apiProvider: apiProvider);
 
   group('NotificationRepository', () {

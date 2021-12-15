@@ -6,9 +6,13 @@ import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.da
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 
 class AppStateModel extends AppStateEntity {
+  @override
   final QuizSessionEntity? quizSession;
+  @override
   final UserProfileEntity? userProfile;
+  @override
   final AppStateModeEntity appMode;
+  @override
   final List<AppStateModuleEntity> modules;
 
   AppStateModel(
@@ -31,7 +35,7 @@ class AppStateModel extends AppStateEntity {
 
     final quizSession = _parseQuizSession(jsonData['quiz_session']);
     final userProfile = _parseUserProfile(jsonData['user_profile']);
-    List<AppStateModuleEntity> modules = jsonData.containsKey('modules')
+    final List<AppStateModuleEntity> modules = jsonData.containsKey('modules')
         ? _parseAppModules(jsonData['modules'] as List<dynamic>)
         : [];
     return AppStateModel(quizSession, userProfile, appMode, modules);
@@ -42,7 +46,7 @@ class AppStateModel extends AppStateEntity {
       return null;
     }
 
-    final currentMessage = _parseQuizMessage(session["current_msgs"]);
+    final currentMessage = _parseQuizMessage(session['current_msgs']);
     final previousMessage = _parseQuizMessage(session['prev_msgs']);
     final isFinished = session['finished'] != null && session['finished'] == 1;
 
@@ -83,12 +87,12 @@ class AppStateModel extends AppStateEntity {
       return null;
     }
 
-    String? code = module['code'];
+    final String? code = module['code'];
     if (code == null || code.isEmpty) {
       return null;
     }
 
-    String meta = module['meta'] == null ? '{}' : jsonEncode(module['meta']);
+    final String meta = module['meta'] == null ? '{}' : jsonEncode(module['meta']);
     return AppStateModuleEntity(code: code, meta: meta);
   }
 
@@ -100,7 +104,7 @@ class AppStateModel extends AppStateEntity {
     return [
       QuizMessageEntity(
         content: message['content'],
-        ref: message['ref'] ?? "",
+        ref: message['ref'] ?? '',
         style: message['style'],
         action: message['action'],
         buttonLabel: message['label'],

@@ -9,14 +9,6 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ReplyTweet extends StatelessWidget {
-  const ReplyTweet({
-    Key? key,
-    required this.tweet,
-    required this.controller,
-    required BuildContext context,
-  })  : _context = context,
-        super(key: key);
-
   final TweetEntity tweet;
   final BuildContext _context;
 
@@ -27,10 +19,7 @@ class ReplyTweet extends StatelessWidget {
     required this.tweet,
     required this.controller,
     required BuildContext context,
-  })  : assert(tweet != null),
-        assert(context != null),
-        assert(controller != null),
-        this._context = context,
+  })  : _context = context,
         super(key: key);
 
   @override
@@ -81,6 +70,7 @@ class ReplyTweet extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Expanded(
+              flex: 1,
               child: TweetAvatar(tweet: tweet),
             ),
             const SizedBox(width: 6.0),
@@ -147,16 +137,15 @@ class ReplyTweet extends StatelessWidget {
 }
 
 class _RepliedTweet extends StatelessWidget {
+  final TweetEntity tweet;
+  final ITweetController controller;
+
   const _RepliedTweet({
     Key? key,
     required TweetEntity repliedTweet,
     required this.controller,
-  })  : assert(repliedTweet != null),
-        tweet = repliedTweet,
+  })  : tweet = repliedTweet,
         super(key: key);
-
-  final TweetEntity tweet;
-  final ITweetController controller;
 
   @override
   Widget build(BuildContext context) {

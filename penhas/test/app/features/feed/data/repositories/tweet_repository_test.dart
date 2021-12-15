@@ -16,8 +16,8 @@ import '../../../../../utils/json_util.dart';
 
 void main() {
   late ITweetRepository repository;
-  late MockINetworkInfo networkInfo = MockINetworkInfo();
-  late MockITweetDataSource dataSource = MockITweetDataSource();
+  late final MockINetworkInfo networkInfo = MockINetworkInfo();
+  late final MockITweetDataSource dataSource = MockITweetDataSource();
   Map<String, dynamic> jsonSession;
 
   setUp(() {
@@ -40,7 +40,7 @@ void main() {
         final TweetSessionEntity? expectedSession = sessionModel;
         // act
         final receivedSession =
-            await repository.fetch(option: const TweetRequestOption());
+            await repository.fetch(option: TweetRequestOption());
         // assert
         expect(receivedSession, right(expectedSession));
       });
@@ -66,7 +66,7 @@ void main() {
             anonymous: false,
             content: 'Mensagem 1',
             avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-            meta: const TweetMeta(liked: false, owner: true),
+            meta: TweetMeta(liked: false, owner: true),
             lastReply: const [],
           ),
         );
@@ -86,7 +86,7 @@ void main() {
         final requestOption = TweetEngageRequestOption(
           tweetId: '200528T2055370004',
         );
-        final expected = right(const ValidField());
+        final expected = right(ValidField());
         // act
         final received = await repository.delete(option: requestOption);
         // assert
@@ -107,21 +107,19 @@ void main() {
         // arrange
         final requestOption =
             TweetEngageRequestOption(tweetId: '200520T0032210001');
-        final expected = right(
-          TweetModel(
-            id: '200528T2055370004',
-            userName: 'penhas',
-            clientId: 551,
-            createdAt: '2020-05-28 20:55:37',
-            totalReply: 0,
-            totalLikes: 1,
-            anonymous: false,
-            content: 'sleep 6',
-            avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-            meta: const TweetMeta(liked: true, owner: true),
-            lastReply: const [],
-          ),
-        );
+        final expected = right(TweetModel(
+          id: '200528T2055370004',
+          userName: 'penhas',
+          clientId: 551,
+          createdAt: '2020-05-28 20:55:37',
+          totalReply: 0,
+          totalLikes: 1,
+          anonymous: false,
+          content: 'sleep 6',
+          avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
+          meta: TweetMeta(liked: true, owner: true),
+          lastReply: const [],
+        ),);
         // act
         final received = await repository.like(option: requestOption);
         // assert
@@ -153,7 +151,7 @@ void main() {
             anonymous: false,
             content: 'um breve comentario',
             avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-            meta: const TweetMeta(liked: false, owner: true),
+            meta: TweetMeta(liked: false, owner: true),
             lastReply: const [],
           ),
         );
@@ -177,29 +175,27 @@ void main() {
         final requestOption = TweetEngageRequestOption(
           tweetId: '200528T2055370004',
         );
-        final expected = right(
-          TweetSessionModel(
-            TweetSessionOrder.latestFirst,
-            null,
-            [
-              TweetModel(
-                id: '200608T1545460001',
-                userName: 'maria',
-                clientId: 551,
-                createdAt: '2020-06-08 15:45:46',
-                totalReply: 0,
-                totalLikes: 0,
-                anonymous: false,
-                content: 'Comentário 7',
-                avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-                meta: const TweetMeta(liked: false, owner: true),
-                lastReply: const [],
-              )
-            ],
-            null,
-            hasMore: false,
-          ),
-        );
+        final expected = right(TweetSessionModel(
+          false,
+          TweetSessionOrder.latestFirst,
+          null,
+          [
+            TweetModel(
+              id: '200608T1545460001',
+              userName: 'maria',
+              clientId: 551,
+              createdAt: '2020-06-08 15:45:46',
+              totalReply: 0,
+              totalLikes: 0,
+              anonymous: false,
+              content: 'Comentário 7',
+              avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
+              meta: TweetMeta(liked: false, owner: true),
+              lastReply: const [],
+            )
+          ],
+          null,
+        ),);
         // act
         final received = await repository.current(option: requestOption);
         // assert
@@ -218,7 +214,7 @@ void main() {
           tweetId: '200528T2055370004',
           message: 'esse tweet me ofende pq XPTO',
         );
-        final expected = right(const ValidField());
+        final expected = right(ValidField());
         // act
         final received = await repository.report(option: requestOption);
         // assert

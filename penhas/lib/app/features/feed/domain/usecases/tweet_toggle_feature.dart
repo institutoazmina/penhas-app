@@ -10,7 +10,7 @@ class TweetToggleFeature {
   Future<bool> get isEnabled => _isEnabled();
 
   TweetToggleFeature({required IAppModulesServices modulesServices})
-      : this._modulesServices = modulesServices;
+      : _modulesServices = modulesServices;
 
   Future<bool> _isEnabled() async {
     final module =

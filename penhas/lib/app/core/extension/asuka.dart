@@ -5,7 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 extension Dialog on IModularNavigator {
   Future showDialog({
     required WidgetBuilder builder,
-    bool barrierDismissible: true,
+    bool barrierDismissible = true,
   }) async {
     asuka.showDialog(builder: builder, barrierDismissible: barrierDismissible);
   }

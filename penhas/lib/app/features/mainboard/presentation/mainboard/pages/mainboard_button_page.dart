@@ -15,10 +15,6 @@ class MainboarButtonPage extends StatelessWidget {
     required this.pageSelected,
   }) : super(key: key);
 
-  final MainboardState currentPage;
-  final MainboardState? pageSelected;
-  final void Function(MainboardState) onSelect;
-
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -27,8 +23,8 @@ class MainboarButtonPage extends StatelessWidget {
         highlightColor: Colors.transparent,
         onPressed: () => onSelect(currentPage),
         child: _buildBottomBarIcon(
-          this.currentPage,
-          this.pageSelected!,
+          currentPage,
+          pageSelected!,
         ),
       ),
     );
@@ -36,7 +32,7 @@ class MainboarButtonPage extends StatelessWidget {
 
   Widget _buildBottomBarIcon(MainboardState current, MainboardState selected) {
     String asset;
-    const String rootPath = 'assets/images/svg/bottom_bar';
+    final String rootPath = 'assets/images/svg/bottom_bar';
 
     asset = current.when(
       chat: () => '$rootPath/chat.svg',

@@ -9,9 +9,9 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  final String jsonFile = 'users/users_search.json';
-  late MockIApiProvider apiProvider = MockIApiProvider();
-  late IUsersRepository sut = UsersRepository(apiProvider: apiProvider);
+  const String jsonFile = 'users/users_search.json';
+  late final MockIApiProvider apiProvider = MockIApiProvider();
+  late final IUsersRepository sut = UsersRepository(apiProvider: apiProvider);
 
   group('UsersRepository', () {
     test(
@@ -28,7 +28,7 @@ void main() {
       await sut.search(options);
       // assert
       verify(apiProvider.get(
-        path: "/search-users",
+        path: '/search-users',
         parameters: {
           'name': null,
           'skills': null,
@@ -40,7 +40,7 @@ void main() {
     test('should inform skill as appended by "," as parameter to server',
         () async {
       // arrange
-      final options = UserSearchOptions(skills: ["a", "b", "c"]);
+      final options = UserSearchOptions(skills: ['a', 'b', 'c']);
       when(apiProvider.get(
         path: anyNamed('path'),
         headers: anyNamed('headers'),
@@ -50,7 +50,7 @@ void main() {
       await sut.search(options);
       // assert
       verify(apiProvider.get(
-        path: "/search-users",
+        path: '/search-users',
         parameters: {
           'name': null,
           'skills': 'a,b,c',
@@ -64,7 +64,7 @@ void main() {
       const jsonEmptySession = 'users/users_search_empty.json';
       final jsonData = await JsonUtil.getJson(from: jsonEmptySession);
       final actual = right(UserSearchSessionModel.fromJson(jsonData));
-      final options = UserSearchOptions(skills: ["a", "b", "c"]);
+      final options = UserSearchOptions(skills: ['a', 'b', 'c']);
       when(apiProvider.get(
         path: anyNamed('path'),
         headers: anyNamed('headers'),
@@ -79,7 +79,7 @@ void main() {
       // arrange
       final jsonData = await JsonUtil.getJson(from: jsonFile);
       final actual = right(UserSearchSessionModel.fromJson(jsonData));
-      final options = UserSearchOptions(skills: ["a", "b", "c"]);
+      final options = UserSearchOptions(skills: ['a', 'b', 'c']);
       when(apiProvider.get(
         path: anyNamed('path'),
         headers: anyNamed('headers'),

@@ -18,15 +18,15 @@ class QuizDataSource implements IQuizDataSource {
   QuizDataSource({
     required http.Client? apiClient,
     required serverConfiguration,
-  })  : this._apiClient = apiClient,
-        this._serverConfiguration = serverConfiguration;
+  })  : _apiClient = apiClient,
+        _serverConfiguration = serverConfiguration;
 
   @override
   Future<AppStateModel> update({required QuizRequestEntity? quiz}) async {
     final httpHeader = await _setupHttpHeader();
 
-    Map<String, String> queryParameters = {
-      'session_id': "${quiz!.sessionId}",
+    final Map<String, String> queryParameters = {
+      'session_id': '${quiz!.sessionId}',
     };
     queryParameters.addAll(quiz.options);
 
@@ -47,7 +47,7 @@ class QuizDataSource implements IQuizDataSource {
     final userAgent = await _serverConfiguration!.userAgent;
     final apiToken = await _serverConfiguration!.apiToken;
     return {
-      'X-Api-Key': apiToken ?? "",
+      'X-Api-Key': apiToken ?? '',
       'User-Agent': userAgent,
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
     };

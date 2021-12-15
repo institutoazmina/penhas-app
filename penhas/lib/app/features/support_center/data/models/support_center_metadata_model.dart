@@ -12,8 +12,8 @@ class SupportCenterMetadataModel extends SupportCenterMetadataEntity {
         );
 
   factory SupportCenterMetadataModel.fromJson(Map<String, dynamic> jsonData) {
-    final List jsonCategories = jsonData["categorias"];
-    final List jsonProjects = jsonData["projetos"];
+    final List jsonCategories = jsonData['categorias'];
+    final List jsonProjects = jsonData['projetos'];
 
     final List<FilterTagModel> categories = jsonCategories
         .map((e) => FilterTagModel.fromJson(e))

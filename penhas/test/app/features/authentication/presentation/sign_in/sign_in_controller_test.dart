@@ -2,15 +2,17 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
+import 'package:penhas/app/features/authentication/data/repositories/authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_controller.dart';
 
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late MockAuthenticationRepository authenticationRepositoryMock =
+  late final MockAuthenticationRepository authenticationRepositoryMock =
       MockAuthenticationRepository();
-  late MockAppStateUseCase appStateUseCaseMock = MockAppStateUseCase();
+  late final MockAppStateUseCase appStateUseCaseMock = MockAppStateUseCase();
   late SignInController sut;
 
   //
@@ -23,11 +25,11 @@ void main() {
   });
 
   group('SignInController', () {
-    final warningEmail = 'Endereço de email inválido';
-    final String internetConnectionFailure =
+    const warningEmail = 'Endereço de email inválido';
+    const String internetConnectionFailure =
         'O servidor está inacessível, o PenhaS está com acesso à Internet?';
-    final String serverFailure =
-        "O servidor está com problema neste momento, tente novamente.";
+    const String serverFailure =
+        'O servidor está com problema neste momento, tente novamente.';
 
     test('should warning messages be empty on start', () {
       // assert
@@ -38,7 +40,7 @@ void main() {
     test('should show warning message for invalid email address', () {
       expect(sut.warningEmail, '');
       // arrange
-      const invalidEmailAddress = 'myaddress';
+      final invalidEmailAddress = 'myaddress';
       // act
       sut.setEmail(invalidEmailAddress);
       // assert
@@ -48,8 +50,8 @@ void main() {
     test('should reset warning message after user input valid email address',
         () {
       // arrange
-      const invalidEmailAddress = 'myaddress';
-      const validEmailAddress = 'my_email@app.com';
+      final invalidEmailAddress = 'myaddress';
+      final validEmailAddress = 'my_email@app.com';
       // act
       sut.setEmail(invalidEmailAddress);
       sut.setEmail(validEmailAddress);
@@ -59,8 +61,8 @@ void main() {
 
     test('should reset warning message after user input a valid password', () {
       // arrange
-      const invalidPassword = '';
-      const validPassword = 'sTr0ngMy';
+      final invalidPassword = '';
+      final validPassword = 'sTr0ngMy';
       // act
       sut.setPassword(invalidPassword);
       sut.setPassword(validPassword);
@@ -72,7 +74,7 @@ void main() {
       when(authenticationRepositoryMock.signInWithEmailAndPassword(
         emailAddress: anyNamed('emailAddress'),
         password: anyNamed('password'),
-      )).thenAnswer((_) async => left(failure));
+      ),).thenAnswer((_) async => left(failure));
     }
 
     test('should validate inputs before hits repository', () async {
@@ -84,11 +86,11 @@ void main() {
       verifyZeroInteractions(authenticationRepositoryMock);
     });
 
-    Future<void> testServerError(Failure failure, String errorMessage) async {
+    void testServerError(Failure failure, String errorMessage) async {
       // arrange
       mockAuthenticationFailure(failure);
-      const validPassword = 'sTr0ngMy';
-      const validEmailAddress = 'my_email@app.com';
+      final validPassword = 'sTr0ngMy';
+      final validEmailAddress = 'my_email@app.com';
       // act
       sut.setPassword(validPassword);
       sut.setEmail(validEmailAddress);

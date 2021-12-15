@@ -80,12 +80,12 @@ extension _TextStyle on CardProfileNamePage {
 
 extension _Dialog on CardProfileNamePage {
   void showModal({required BuildContext context}) {
-    TextEditingController _controller = TextEditingController();
+    final TextEditingController _controller = TextEditingController();
     _controller.text = name!;
 
     Modular.to.showDialog(
       builder: (context) => AlertDialog(
-        title: Text('Editar'),
+        title: const Text('Editar'),
         content: TextFormField(
           controller: _controller,
           decoration:

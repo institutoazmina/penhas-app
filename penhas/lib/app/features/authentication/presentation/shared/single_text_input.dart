@@ -16,11 +16,11 @@ class SingleTextInput extends StatelessWidget {
     TextStyle style = kTextStyleDefaultTextFieldLabelStyle,
     required onChanged,
     required InputDecoration boxDecoration,
-  })  : this._keyboardType = keyboardType,
-        this._style = style,
-        this._onChanged = onChanged,
-        this._inputFormatter = inputFormatter,
-        this._boxDecoration = boxDecoration,
+  })  : _keyboardType = keyboardType,
+        _style = style,
+        _onChanged = onChanged,
+        _inputFormatter = inputFormatter,
+        _boxDecoration = boxDecoration,
         super(key: key);
 
   final TextInputType _keyboardType;

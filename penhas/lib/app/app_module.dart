@@ -81,7 +81,7 @@ class AppModule extends Module {
               profileRepository: i.get<IUserProfileRepository>(),
               appConfiguration: i.get<IAppConfiguration>(),
               sessionToken: i.args?.data,
-            )),
+            ),),
         Bind.factory<IAppConfiguration>(
           (i) => AppConfiguration(
             storage: i.get<ILocalStorage>(),

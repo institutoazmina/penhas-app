@@ -18,7 +18,7 @@ class UpdateUserProfileEntity {
   }) {
     if ((email != null || newPassword != null) &&
         (oldPassword == null || oldPassword!.isEmpty)) {
-      throw ('Precisa da senha atual para alterar a senha ou email');
+      throw 'Precisa da senha atual para alterar a senha ou email';
     }
   }
 

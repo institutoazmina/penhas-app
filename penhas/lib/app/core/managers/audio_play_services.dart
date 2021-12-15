@@ -4,11 +4,10 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/managers/audio_sync_manager.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
 import 'package:penhas/app/shared/logger/log.dart';
 
-typedef OnFinished = void Function();
+import 'audio_sync_manager.dart';
 
 abstract class IAudioPlayServices {
   Future<Either<Failure, AudioEntity>> start(AudioEntity audio,
@@ -17,24 +16,20 @@ abstract class IAudioPlayServices {
 }
 
 class AudioPlayServices implements IAudioPlayServices {
-  AudioPlayServices({required IAudioSyncManager audioSyncManager})
-      : _audioSyncManager = audioSyncManager;
-
   final _audioCodec = Codec.aacADTS;
-  late final FlutterSoundPlayer _playerModule =
-      FlutterSoundPlayer(logLevel: Level.warning);
+  final FlutterSoundPlayer _playerModule = FlutterSoundPlayer();
 
   final IAudioSyncManager _audioSyncManager;
   StreamSubscription? _playerSubscription;
 
   AudioPlayServices({required IAudioSyncManager audioSyncManager})
-      : this._audioSyncManager = audioSyncManager;
+      : _audioSyncManager = audioSyncManager;
 
   @override
   Future<Either<Failure, AudioEntity>> start(AudioEntity audio,
       {Function? onFinished}) async {
     final file = await _audioSyncManager.cache(audio);
-    file.fold((l) {}, (file) => play(file, onFinished));
+    file.fold((l) {}, (file) => play(file, onFinished: onFinished));
     return file.map((e) => audio);
   }
 
@@ -48,8 +43,7 @@ class AudioPlayServices implements IAudioPlayServices {
 extension _AudioPlayServicesPrivate on AudioPlayServices {
   void play(File file, {Function? onFinished}) async {
     await setupPlayEnviroment();
-    await _playerModule
-        .setSubscriptionDuration(const Duration(milliseconds: 100));
+    await _playerModule.setSubscriptionDuration(const Duration(milliseconds: 100));
 
     await _playerModule.startPlayer(
       fromURI: file.path,
@@ -69,9 +63,7 @@ extension _AudioPlayServicesPrivate on AudioPlayServices {
 
   Future<void> releaseAudioSession() async {
     try {
-      if (!_playerModule.isStopped) {
-        await _playerModule.stopPlayer();
-      }
+      await _playerModule.stopPlayer();
       await _playerModule.closeAudioSession();
     } catch (e, stack) {
       logError(e, stack);

@@ -17,9 +17,9 @@ import '../../../../../utils/json_util.dart';
 void main() {
   isCrashlitycsEnabled = false;
 
-  late MockIGuardianDataSource dataSource = MockIGuardianDataSource();
-  late MockINetworkInfo networkInfo = MockINetworkInfo();
-  late IGuardianRepository sut = GuardianRepository(
+  late final MockIGuardianDataSource dataSource = MockIGuardianDataSource();
+  late final MockINetworkInfo networkInfo = MockINetworkInfo();
+  late final IGuardianRepository sut = GuardianRepository(
     dataSource: dataSource,
     networkInfo: networkInfo,
   );
@@ -36,37 +36,34 @@ void main() {
         () async {
           // arrange
           final jsonSession = await JsonUtil.getJson(
-            from: 'help_center/guardian_empty_list.json',
-          );
+              from: 'help_center/guardian_empty_list.json',);
           final sessionModel = GuardianSessionModel.fromJson(jsonSession);
-          const emptySession = GuardianSessionModel(
+          final emptySession = GuardianSessionModel(
             remainingInvites: 5,
             maximumInvites: 5,
             guards: [
               GuardianEntity(
-                meta: GuardianSessionMeta(
-                  canEdit: true,
-                  canDelete: true,
-                  canResend: false,
-                  deleteWarning: '',
-                  description: 'Guardiões que recebem seus pedidos de socorro.',
-                  header: 'Guardiões',
-                  status: GuardianStatus.accepted,
-                ),
-                contacts: [],
-              ),
+                  meta: GuardianSessionMeta(
+                      canEdit: true,
+                      canDelete: true,
+                      canResend: false,
+                      deleteWarning: '',
+                      description:
+                          'Guardiões que recebem seus pedidos de socorro.',
+                      header: 'Guardiões',
+                      status: GuardianStatus.accepted,),
+                  contacts: const [],),
               GuardianEntity(
-                meta: GuardianSessionMeta(
-                  canEdit: true,
-                  canDelete: true,
-                  canResend: false,
-                  deleteWarning: '',
-                  description: 'Guardiões que ainda não aceitaram seu convite.',
-                  header: 'Pendentes',
-                  status: GuardianStatus.pending,
-                ),
-                contacts: [],
-              ),
+                  meta: GuardianSessionMeta(
+                      canEdit: true,
+                      canDelete: true,
+                      canResend: false,
+                      deleteWarning: '',
+                      description:
+                          'Guardiões que ainda não aceitaram seu convite.',
+                      header: 'Pendentes',
+                      status: GuardianStatus.pending,),
+                  contacts: const [],),
             ],
           );
           when(dataSource.fetch()).thenAnswer((_) async => sessionModel);
@@ -97,8 +94,7 @@ void main() {
         () async {
           // arrange
           final jsonSession = await JsonUtil.getJson(
-            from: 'help_center/guardian_create_successful.json',
-          );
+              from: 'help_center/guardian_create_successful.json',);
           final guardian = GuardianContactEntity.createRequest(
             name: 'Maria',
             mobile: '1191910101',
@@ -117,8 +113,7 @@ void main() {
         () async {
           // arrange
           final bodyContent = await JsonUtil.getJson(
-            from: 'help_center/guardian_bad_celular_number.json',
-          );
+              from: 'help_center/guardian_bad_celular_number.json',);
           final guardian = GuardianContactEntity.createRequest(
             name: 'Maria',
             mobile: '91910101',
@@ -144,9 +139,8 @@ void main() {
         () async {
           // arrange
           final jsonSession = await JsonUtil.getJson(
-            from: 'help_center/guardian_update_name.json',
-          );
-          const guardian = GuardianContactEntity(
+              from: 'help_center/guardian_update_name.json',);
+          final guardian = GuardianContactEntity(
             id: 1,
             mobile: '(11) 91910101',
             name: 'Renato Lindão',
@@ -166,7 +160,7 @@ void main() {
         'should remove one of my guardian',
         () async {
           // arrange
-          const guardian = GuardianContactEntity(
+          final guardian = GuardianContactEntity(
             id: 1,
             mobile: '(11) 91910101',
             name: 'Maria (PenhaS)',
@@ -186,14 +180,14 @@ void main() {
           'should get a valid message for valid request',
           () async {
             // arrange
-            final location = UserLocationEntity(latitude: 1.0, longitude: -1.0);
+            final location = const UserLocationEntity(latitude: 1.0, longitude: -1.0);
             final expected = right(AlertModel(
-                title: "Alerta enviado!",
-                message: "Alerta disparado com sucesso para 1 guardião."));
+                title: 'Alerta enviado!',
+                message: 'Alerta disparado com sucesso para 1 guardião.',),);
             when(dataSource.alert(any)).thenAnswer((_) async => AlertModel(
-                  title: "Alerta enviado!",
-                  message: "Alerta disparado com sucesso para 1 guardião.",
-                ));
+                  title: 'Alerta enviado!',
+                  message: 'Alerta disparado com sucesso para 1 guardião.',
+                ),);
             // act
             final received = await sut.alert(location);
             // assert

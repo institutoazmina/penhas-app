@@ -6,12 +6,12 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class HelpCenterCardRecord extends StatelessWidget {
+  final VoidCallback onPressed;
+
   const HelpCenterCardRecord({
     Key? key,
     required this.onPressed,
   }) : super(key: key);
-
-  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +32,9 @@ class HelpCenterCardRecord extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.5),
-              offset: const Offset(0.0, 2.0),
-              blurRadius: 4.0,
-            )
+                color: Colors.black.withOpacity(0.5),
+                offset: const Offset(0.0, 2.0),
+                blurRadius: 4.0,)
           ],
         ),
         child: Padding(
@@ -57,7 +56,7 @@ class HelpCenterCardRecord extends StatelessWidget {
                     onPressed: () async {
                       await Navigator.push(
                         context,
-                        TutorialScaleRoute(page: const RecordTutorialPage()),
+                        TutorialScaleRoute(page: RecordTutorialPage()),
                       );
                     },
                   )
@@ -66,22 +65,18 @@ class HelpCenterCardRecord extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(top: 6, bottom: 12),
                 child: Text(
-                  'Captura de áudio para coleta de provas contra atos violentos.',
-                  style: kTextStyleRegisterSubtitleLabelStyle,
-                ),
+                    'Captura de áudio para coleta de provas contra atos violentos.',
+                    style: kTextStyleRegisterSubtitleLabelStyle,),
               ),
               SizedBox(
                 height: 40,
                 child: FloatingActionButton(
-                  heroTag: 'recordCard_1',
-                  backgroundColor: DesignSystemColors.easterPurple,
-                  onPressed: onPressed,
-                  shape: kButtonShapeOutlinePurple,
-                  child: const Text(
-                    'Minhas gravações',
-                    style: kTextStyleHelpCenterButtonLabel,
-                  ),
-                ),
+                    heroTag: 'recordCard_1',
+                    backgroundColor: DesignSystemColors.easterPurple,
+                    onPressed: onPressed,
+                    shape: kButtonShapeOutlinePurple,
+                    child: Text('Minhas gravações',
+                        style: kTextStyleHelpCenterButtonLabel),),
               ),
             ],
           ),

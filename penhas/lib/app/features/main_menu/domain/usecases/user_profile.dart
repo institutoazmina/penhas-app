@@ -15,9 +15,9 @@ class UserProfile {
     required AppStateUseCase? appStateUseCase,
     required IUserProfileRepository? repository,
     required LocalStore<UserProfileEntity> userProfileStore,
-  })  : this._repository = repository,
-        this._appStateUseCase = appStateUseCase,
-        this._userProfileStore = userProfileStore;
+  })  : _repository = repository,
+        _appStateUseCase = appStateUseCase,
+        _userProfileStore = userProfileStore;
 
   Future<Either<Failure, ValidField>> anonymousMode(bool toggle) async {
     final securityMode = await _repository!.anonymousMode(toggle: toggle);

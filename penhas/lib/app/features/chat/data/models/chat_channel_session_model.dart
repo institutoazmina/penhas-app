@@ -21,18 +21,18 @@ class ChatChannelSessionModel extends ChatChannelSessionEntity {
         );
 
   factory ChatChannelSessionModel.fromJson(Map<String, dynamic> jsonData) {
-    final List jsonMessages = jsonData["messages"];
+    final List jsonMessages = jsonData['messages'];
     final List<ChatMessageModel> messages = jsonMessages
         .map((e) => ChatMessageModel.fromJson(e))
         .toList();
 
     return ChatChannelSessionModel(
-      hasMore: jsonData["has_more"] == 1,
-      newer: jsonData["newer"],
-      older: jsonData["older"],
+      hasMore: jsonData['has_more'] == 1,
+      newer: jsonData['newer'],
+      older: jsonData['older'],
       messages: messages,
-      metadata: ChatChannelSessionMetadataModel.fromJson(jsonData["meta"]),
-      user: ChatUserModel.fromJson(jsonData["other"]),
+      metadata: ChatChannelSessionMetadataModel.fromJson(jsonData['meta']),
+      user: ChatUserModel.fromJson(jsonData['other']),
     );
   }
 }
@@ -58,11 +58,11 @@ class ChatChannelSessionMetadataModel extends ChatChannelSessionMetadataEntity {
     Map<String, dynamic> jsonData,
   ) =>
       ChatChannelSessionMetadataModel(
-        canSendMessage: jsonData["can_send_message"] == 1,
-        didBlocked: jsonData["did_blocked"] == 1,
-        headerMessage: jsonData["header_message"],
-        headerWarning: jsonData["header_warning"],
-        isBlockable: jsonData["is_blockable"] == 1,
-        lastMessageEtag: jsonData["last_msg_etag"],
+        canSendMessage: jsonData['can_send_message'] == 1,
+        didBlocked: jsonData['did_blocked'] == 1,
+        headerMessage: jsonData['header_message'],
+        headerWarning: jsonData['header_warning'],
+        isBlockable: jsonData['is_blockable'] == 1,
+        lastMessageEtag: jsonData['last_msg_etag'],
       );
 }

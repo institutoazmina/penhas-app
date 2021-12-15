@@ -21,9 +21,7 @@ class CardProfileHeaderEditPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(title, style: cardTitleTextStyle),
-          onEditAction == null
-              ? Container()
-              : IconButton(
+          if (onEditAction == null) Container() else IconButton(
                   icon: SvgPicture.asset(
                     'assets/images/svg/profile/edit.svg',
                     color: DesignSystemColors.pumpkinOrange,

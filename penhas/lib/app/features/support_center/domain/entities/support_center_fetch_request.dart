@@ -9,7 +9,7 @@ class SupportCenterFetchRequest extends Equatable {
   final String? nextPage;
   final int? rows;
 
-  SupportCenterFetchRequest({
+  const SupportCenterFetchRequest({
     this.userLocation,
     this.locationToken,
     this.categories,
@@ -30,12 +30,12 @@ class SupportCenterFetchRequest extends Equatable {
 
   @override
   List<Object?> get props => [
-        this.userLocation!,
-        this.locationToken!,
-        this.categories!,
-        this.keywords!,
-        this.nextPage!,
-        this.rows!
+        userLocation!,
+        locationToken!,
+        categories!,
+        keywords!,
+        nextPage!,
+        rows!
       ];
 
   SupportCenterFetchRequest copyWith({

@@ -8,7 +8,7 @@ class ResetPasswordResponseEntity extends Equatable {
   final int? ttl;
   final int? ttlRetry;
 
-  ResetPasswordResponseEntity({
+  const ResetPasswordResponseEntity({
     required this.message,
     required this.digits,
     required this.ttl,

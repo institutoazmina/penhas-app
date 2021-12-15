@@ -8,18 +8,16 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/authentication/presentation/shared/password_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/pages/sign_up_three/sign_up_three_controller.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
+import 'sign_up_three_controller.dart';
 
 class SignUpThreePage extends StatefulWidget {
   final String title;
-  const SignUpThreePage({Key? key, this.title = "SignUpThree"})
+  const SignUpThreePage({Key? key, this.title = 'SignUpThree'})
       : super(key: key);
-
-  final String title;
 
   @override
   _SignUpThreePageState createState() => _SignUpThreePageState();
@@ -43,7 +41,9 @@ class _SignUpThreePageState
 
   @override
   void dispose() {
-    _disposers!.forEach((d) => d());
+    for (var d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 
@@ -66,28 +66,25 @@ class _SignUpThreePageState
               onTap: () => _handleTap(context),
               onPanDown: (_) => _handleTap(context),
               child: SafeArea(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      _buildHeader(),
-                      const SizedBox(height: 18.0),
-                      _buildSubHeader(),
-                      const SizedBox(height: 22.0),
-                      Observer(builder: (_) => _buildEmailField()),
-                      const SizedBox(height: 22.0),
-                      Observer(builder: (_) => _buildPasswordField()),
-                      const SizedBox(height: 22.0),
-                      Observer(
-                        builder: (_) => _buildConfirmationPasswordField(),
-                      ),
-                      const SizedBox(height: 62.0),
-                      SizedBox(height: 40.0, child: _buildNextButton()),
-                    ],
-                  ),
+                  child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    _buildHeader(),
+                    const SizedBox(height: 18.0),
+                    _buildSubHeader(),
+                    const SizedBox(height: 22.0),
+                    Observer(builder: (_) => _buildEmailField()),
+                    const SizedBox(height: 22.0),
+                    Observer(builder: (_) => _buildPasswordField()),
+                    const SizedBox(height: 22.0),
+                    Observer(builder: (_) => _buildConfirmationPasswordField()),
+                    const SizedBox(height: 62.0),
+                    SizedBox(height: 40.0, child: _buildNextButton()),
+                  ],
                 ),
-              ),
+              ),),
             ),
           ),
         ),
@@ -143,22 +140,23 @@ class _SignUpThreePageState
     );
   }
 
-  Widget _buildNextButton() {
+  RaisedButton _buildNextButton() {
     return RaisedButton(
       onPressed: () => controller.registerUserPress(),
       elevation: 0,
       color: DesignSystemColors.ligthPurple,
       shape: kButtonShapeFilled,
-      child: const Text(
-        'Cadastrar',
+      child: Text(
+        "Cadastrar",
         style: kTextStyleDefaultFilledButtonLabel,
       ),
     );
   }
 
-  void _handleTap(BuildContext context) {
+  _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
+    }
     WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 

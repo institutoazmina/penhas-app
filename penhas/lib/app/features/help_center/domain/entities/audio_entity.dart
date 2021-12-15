@@ -10,7 +10,7 @@ class AudioEntity extends Equatable {
   final bool isRequested;
   final bool isRequestGranted;
 
-  AudioEntity({
+  const AudioEntity({
     required this.id,
     required this.audioDuration,
     required this.createdAt,

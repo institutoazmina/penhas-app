@@ -7,17 +7,15 @@ import 'package:penhas/app/features/authentication/presentation/shared/login_but
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/password_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/features/authentication/presentation/sign_in_anonymous/sign_in_anonymous_controller.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
+import 'sign_in_anonymous_controller.dart';
 
 class SignInAnonymousPage extends StatefulWidget {
   final String title;
-  const SignInAnonymousPage({Key? key, this.title = "Authentication"})
+  const SignInAnonymousPage({Key? key, this.title = 'Authentication'})
       : super(key: key);
-
-  final String title;
 
   @override
   _SignInAnonymousPage createState() => _SignInAnonymousPage();
@@ -27,7 +25,7 @@ class _SignInAnonymousPage
     extends ModularState<SignInAnonymousPage, SignInAnonymousController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
 
   @override
@@ -60,20 +58,13 @@ class _SignInAnonymousPage
               onPanDown: (_) => _handleTap(context),
               child: SafeArea(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                    16.0,
-                    80.0,
-                    16.0,
-                    8.0,
-                  ),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(16.0, 80.0, 16.0, 8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      const Icon(
-                        DesignSystemLogo.penhasLogo,
-                        color: Colors.white,
-                        size: 60,
-                      ),
+                      const Icon(DesignSystemLogo.penhasLogo,
+                          color: Colors.white, size: 60,),
                       Observer(builder: (_) => _buildUserField()),
                       Observer(builder: (_) => _buildPasswordField()),
                       _buildLoginButton(),
@@ -92,7 +83,9 @@ class _SignInAnonymousPage
 
   @override
   void dispose() {
-    _disposers!.forEach((d) => d());
+    for (var d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 
@@ -171,9 +164,10 @@ class _SignInAnonymousPage
     );
   }
 
-  void _handleTap(BuildContext context) {
+  _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
+    }
     WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 }

@@ -6,7 +6,7 @@ class AppPreferencesEntity extends Equatable {
   final int? inactiveAppSince;
   final int inactiveAppLogoutTimeInSeconds;
 
-  AppPreferencesEntity({
+  const AppPreferencesEntity({
     required this.inactiveAppSince,
     required this.inactiveAppLogoutTimeInSeconds,
   });

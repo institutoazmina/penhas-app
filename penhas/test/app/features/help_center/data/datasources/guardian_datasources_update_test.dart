@@ -9,11 +9,10 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late MockHttpClient apiClient = MockHttpClient();
-  late MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
+  late final MockHttpClient apiClient = MockHttpClient();
+  late final MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
   late IGuardianDataSource dataSource;
   final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
-  ;
   const String SESSSION_TOKEN = 'my_really.long.JWT';
 
   setUp(() {
@@ -27,13 +26,13 @@ void main() {
     when(serverConfigure.apiToken)
         .thenAnswer((_) => Future.value(SESSSION_TOKEN));
     when(serverConfigure.userAgent)
-        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
+        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
     final userAgent = await serverConfigure.userAgent;
     return {
-      'X-Api-Key': sessionToken,
+      'X-Api-Key': SESSSION_TOKEN,
       'User-Agent': userAgent,
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
     };
@@ -52,7 +51,7 @@ void main() {
     return when(apiClient.put(
       any,
       headers: anyNamed('headers'),
-    ));
+    ),);
   }
 
   void _setUpMockPutHttpClientSuccess200(String? bodyContent) {
@@ -75,9 +74,8 @@ void main() {
 
       setUp(() {
         bodyContent = JsonUtil.getStringSync(
-          from: 'help_center/guardian_update_name.json',
-        );
-        guardian = const GuardianContactEntity(
+            from: 'help_center/guardian_update_name.json',);
+        guardian = GuardianContactEntity(
           id: 1,
           name: 'Maria',
           mobile: '1191910101',
@@ -107,8 +105,7 @@ void main() {
             // arrange
             _setUpMockPutHttpClientSuccess200(bodyContent);
             final jsonData = await JsonUtil.getJson(
-              from: 'help_center/guardian_update_name.json',
-            );
+                from: 'help_center/guardian_update_name.json',);
             final expected = ValidField.fromJson(jsonData);
             // act
             final received = await dataSource.update(guardian);

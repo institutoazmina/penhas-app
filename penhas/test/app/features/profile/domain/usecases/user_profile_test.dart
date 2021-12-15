@@ -8,11 +8,11 @@ import 'package:penhas/app/features/main_menu/domain/usecases/user_profile.dart'
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late MockAppStateUseCase appStateUseCase = MockAppStateUseCase();
-  late MockIUserProfileRepository repository = MockIUserProfileRepository();
-  late MockUserProfileStore profileStore = MockUserProfileStore();
+  late final MockAppStateUseCase appStateUseCase = MockAppStateUseCase();
+  late final MockIUserProfileRepository repository = MockIUserProfileRepository();
+  late final MockUserProfileStore profileStore = MockUserProfileStore();
 
-  late UserProfile sut = UserProfile(
+  late final UserProfile sut = UserProfile(
     repository: repository,
     userProfileStore: profileStore,
     appStateUseCase: appStateUseCase,
@@ -26,7 +26,7 @@ void main() {
             quizSession: null,
             userProfile: null,
             appMode: AppStateModeEntity(),
-            modules: [],
+            modules: const [],
           ),
         ),
       ),

@@ -19,16 +19,16 @@ abstract class IGuardianDataSource {
 }
 
 class GuardianDataSource implements IGuardianDataSource {
-  final http.Client? _apiClient;
-  final IApiServerConfigure? _serverConfiguration;
+  GuardianDataSource({
+    required http.Client apiClient,
+    required IApiServerConfigure serverConfiguration,
+  })  : _apiClient = apiClient,
+        _serverConfiguration = serverConfiguration;
+
+  final http.Client _apiClient;
+  final IApiServerConfigure _serverConfiguration;
   final Set<int> _successfulResponse = {200, 204};
   final Set<int> _invalidSessionCode = {401, 403};
-
-  GuardianDataSource({
-    required http.Client? apiClient,
-    required serverConfiguration,
-  })  : this._apiClient = apiClient,
-        this._serverConfiguration = serverConfiguration;
 
   @override
   Future<GuardianSessionModel> fetch() async {
@@ -37,7 +37,7 @@ class GuardianDataSource implements IGuardianDataSource {
       path: '/me/guardioes',
       queryParameters: {},
     );
-    final response = await _apiClient!.get(httpRequest, headers: httpHeader);
+    final response = await _apiClient.get(httpRequest, headers: httpHeader);
 
     if (_successfulResponse.contains(response.statusCode)) {
       return GuardianSessionModel.fromJson(jsonDecode(response.body));
@@ -58,7 +58,7 @@ class GuardianDataSource implements IGuardianDataSource {
         'celular': guardian.mobile,
       },
     );
-    final response = await _apiClient!.post(
+    final response = await _apiClient.post(
       httpRequest,
       headers: httpHeader,
     );
@@ -81,7 +81,7 @@ class GuardianDataSource implements IGuardianDataSource {
         'nome': guardian.name,
       },
     );
-    final response = await _apiClient!.put(
+    final response = await _apiClient.put(
       httpRequest,
       headers: httpHeader,
     );
@@ -102,13 +102,13 @@ class GuardianDataSource implements IGuardianDataSource {
       path: '/me/guardioes/${guardian!.id}',
       queryParameters: {},
     );
-    final response = await _apiClient!.delete(
+    final response = await _apiClient.delete(
       httpRequest,
       headers: httpHeader,
     );
 
     if (_successfulResponse.contains(response.statusCode)) {
-      return const ValidField();
+      return ValidField();
     } else if (_invalidSessionCode.contains(response.statusCode)) {
       throw ApiProviderSessionError();
     } else {
@@ -122,14 +122,12 @@ class GuardianDataSource implements IGuardianDataSource {
     final httpRequest = await _setupHttpRequest(
       path: '/me/guardioes/alert',
       queryParameters: {
-        'gps_lat':
-            location!.latitude == null ? null : location.latitude.toString(),
-        'gps_long':
-            location.longitude == null ? null : location.longitude.toString()
+        'gps_lat': location?.latitude.toString(),
+        'gps_long': location?.longitude.toString()
       },
     );
 
-    final response = await _apiClient!.post(
+    final response = await _apiClient.post(
       httpRequest,
       headers: httpHeader,
     );
@@ -139,7 +137,7 @@ class GuardianDataSource implements IGuardianDataSource {
     } else if (_invalidSessionCode.contains(response.statusCode)) {
       throw ApiProviderSessionError();
     } else {
-      final Map<String, dynamic> jsonData = jsonDecode(response.body);
+      final jsonData = jsonDecode(response.body);
       if (jsonData['error'] == 'gps_position_invalid') {
         throw GuardianAlertGpsFailure();
       } else {
@@ -155,7 +153,7 @@ class GuardianDataSource implements IGuardianDataSource {
       path: '/me/call-police-pressed',
       queryParameters: {},
     );
-    final response = await _apiClient!.post(
+    final response = await _apiClient.post(
       httpRequest,
       headers: httpHeader,
     );
@@ -170,10 +168,10 @@ class GuardianDataSource implements IGuardianDataSource {
   }
 
   Future<Map<String, String>> _setupHttpHeader() async {
-    final userAgent = await _serverConfiguration!.userAgent;
-    final apiToken = await _serverConfiguration!.apiToken;
+    final userAgent = await _serverConfiguration.userAgent;
+    final apiToken = await _serverConfiguration.apiToken;
     return {
-      'X-Api-Key': apiToken ?? "",
+      'X-Api-Key': apiToken ?? '',
       'User-Agent': userAgent,
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
     };
@@ -184,7 +182,7 @@ class GuardianDataSource implements IGuardianDataSource {
     required Map<String, String?> queryParameters,
   }) async {
     queryParameters.removeWhere((k, v) => v == null);
-    return _serverConfiguration!.baseUri.replace(
+    return _serverConfiguration.baseUri.replace(
       path: path,
       queryParameters: queryParameters.isEmpty ? null : queryParameters,
     );

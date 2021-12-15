@@ -17,10 +17,11 @@ class FilterSkillRepository implements IFilterSkillRepository {
 
   FilterSkillRepository({
     required IApiProvider? apiProvider,
-  }) : this._apiProvider = apiProvider;
+  }) : _apiProvider = apiProvider;
 
+  @override
   Future<Either<Failure, List<FilterTagEntity>?>> skills() async {
-    final endPoint = "/filter-skills";
+    const endPoint = '/filter-skills';
 
     try {
       final response = await _apiProvider!.get(path: endPoint).parseSkills();
@@ -34,7 +35,7 @@ class FilterSkillRepository implements IFilterSkillRepository {
 
 extension _FutureExtension<T extends String> on Future<T> {
   Future<List<FilterTagEntity>?> parseSkills() async {
-    return this.then((data) async {
+    return then((data) async {
       final jsonData = jsonDecode(data) as Map<String, dynamic>;
       return FilterSkillsModel.fromJson(jsonData).skills;
     });

@@ -29,7 +29,7 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
   final IAuthenticationRepository? repository;
   final PasswordValidator _passwordValidator;
   final AppStateUseCase? _appStateUseCase;
-  EmailAddress _emailAddress = EmailAddress("");
+  EmailAddress _emailAddress = EmailAddress('');
   late SignInPassword _password;
 
   _SignInControllerBase(
@@ -58,7 +58,7 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
   String warningPassword = '';
 
   @observable
-  String? errorMessage = "";
+  String? errorMessage = '';
 
   @computed
   PageProgressState get currentState {
@@ -97,7 +97,7 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
     _progress = ObservableFuture(repository!.signInWithEmailAndPassword(
       emailAddress: _emailAddress,
       password: _password,
-    ));
+    ),);
 
     final Either<Failure, SessionEntity> response = await _progress!;
 

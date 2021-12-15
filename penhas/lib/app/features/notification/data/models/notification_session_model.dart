@@ -12,9 +12,9 @@ class NotificationSessionModel extends NotificationSessionEntity {
         );
 
   factory NotificationSessionModel.fromJson(Map<String, dynamic> jsonData) {
-    final hasMore = jsonData["has_more"] == 1;
-    final nextPage = jsonData["next_page"];
-    final List jsonRows = jsonData["rows"];
+    final hasMore = jsonData['has_more'] == 1;
+    final nextPage = jsonData['next_page'];
+    final List jsonRows = jsonData['rows'];
     final notifications = jsonRows
         .map((e) => _Parse.fromJson(e))
         .toList();
@@ -29,12 +29,12 @@ class NotificationSessionModel extends NotificationSessionEntity {
 
 extension _Parse on NotificationEntity {
   static NotificationEntity fromJson(Map<String, dynamic> jsonData) {
-    final content = jsonData["content"];
-    final icon = jsonData["icon"];
-    final title = jsonData["title"];
-    final time = DateTime.tryParse(jsonData["time"] as String);
-    final name = jsonData["name"];
-    final route = jsonData["expand_screen"];
+    final content = jsonData['content'];
+    final icon = jsonData['icon'];
+    final title = jsonData['title'];
+    final time = DateTime.tryParse(jsonData['time'] as String);
+    final name = jsonData['name'];
+    final route = jsonData['expand_screen'];
 
     return NotificationEntity(
       name: name,

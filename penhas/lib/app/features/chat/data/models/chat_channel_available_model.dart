@@ -20,13 +20,13 @@ class ChatChannelAvailableModel extends ChatChannelAvailableEntity {
         );
 
   factory ChatChannelAvailableModel.fromJson(Map<String, dynamic> jsonData) {
-    final hasMore = jsonData["has_more"] == 1;
-    final nextPage = jsonData["next_page"];
-    final support = ChatChannelModel.fromJson(jsonData["support"]);
-    final assistant = jsonData["assistant"] == null
+    final hasMore = jsonData['has_more'] == 1;
+    final nextPage = jsonData['next_page'];
+    final support = ChatChannelModel.fromJson(jsonData['support']);
+    final assistant = jsonData['assistant'] == null
         ? null
-        : ChatAssistantModel.fromJson(jsonData["assistant"]);
-    final List<dynamic> jsonChannels = jsonData["rows"];
+        : ChatAssistantModel.fromJson(jsonData['assistant']);
+    final List<dynamic> jsonChannels = jsonData['rows'];
     final List<ChatChannelModel> channels = jsonChannels
         .map((e) => e as Map<String, dynamic>)
         .map((e) => ChatChannelModel.fromJson(e))

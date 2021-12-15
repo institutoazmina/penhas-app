@@ -5,14 +5,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class AudioPlayWidget extends StatelessWidget {
-  const AudioPlayWidget(
-      {Key? key,
-      required this.audioPlay,
-      required this.isPlaying,
-      required this.backgroundColor,})
-      : super(key: key);
-
-  final AudioPlayTileEntity audioPlay;
+  final AudioPlayTileEntity audioPlay;  
   final bool isPlaying;
   final Color backgroundColor;
   const AudioPlayWidget({Key? key, required this.audioPlay, required this.isPlaying, required this.backgroundColor}) : super(key: key);
@@ -32,17 +25,14 @@ class AudioPlayWidget extends StatelessWidget {
         children: [
           Expanded(
             child: Padding(
-              padding: EdgeInsets.zero,
+              padding: const EdgeInsets.all(0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   IconButton(
-                    icon: _buildPlayIcone,
-                    color: isPlaying
-                        ? DesignSystemColors.ligthPurple
-                        : DesignSystemColors.charcoalGrey2,
-                    onPressed: () => audioPlay.onPlayAudio(audioPlay.audio),
-                  ),
+                      icon: _buildPlayIcone,
+                      color: isPlaying? DesignSystemColors.ligthPurple : DesignSystemColors.charcoalGrey2,
+                      onPressed: () => audioPlay.onPlayAudio(audioPlay.audio),),
                   Padding(
                     padding: const EdgeInsets.only(top: 2.0),
                     child: Text(
@@ -73,10 +63,8 @@ class AudioPlayWidget extends StatelessWidget {
                       )
                     ],
                   ),
-                  Text(
-                    audioPlay.description,
-                    style: kTextStyleAudioDescription,
-                  ),
+                  Text(audioPlay.description,
+                      style: kTextStyleAudioDescription,),
                 ],
               ),
             ),

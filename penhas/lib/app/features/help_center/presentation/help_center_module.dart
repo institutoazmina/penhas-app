@@ -36,5 +36,5 @@ class HelpCenterModule extends WidgetModule {
       ];
 
   @override
-  Widget get view => HelpCenterPage();
+  Widget get view => const HelpCenterPage();
 }

@@ -8,10 +8,11 @@ import 'package:penhas/app/features/help_center/domain/entities/guardian_session
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late MockHttpClient apiClient = MockHttpClient();
+  late final MockHttpClient apiClient = MockHttpClient();
   late IGuardianDataSource dataSource;
-  late MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
-  Uri? serverEndpoint = Uri.https('api.anyserver.io', '/');
+  late final MockIApiServerConfigure serverConfigure =
+      MockIApiServerConfigure();
+  final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
   const String SESSSION_TOKEN = 'my_really.long.JWT';
 
   setUp(() {
@@ -25,7 +26,7 @@ void main() {
     when(serverConfigure.apiToken)
         .thenAnswer((_) => Future.value(SESSSION_TOKEN));
     when(serverConfigure.userAgent)
-        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
+        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {

@@ -4,17 +4,21 @@ import 'package:penhas/app/features/chat/domain/entities/chat_channel_entity.dar
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatChannelCard extends StatelessWidget {
+  final ChatChannelEntity channel;
+  final void Function(ChatChannelEntity channel) onPressed;
+
   const ChatChannelCard({
     Key? key,
     required this.channel,
     required this.onPressed,
   }) : super(key: key);
 
-  final ChatChannelEntity channel;
-  final void Function(ChatChannelEntity channel) onPressed;
-
   @override
   Widget build(BuildContext context) {
+    if (channel == null) {
+      return Container();
+    }
+
     return GestureDetector(
       onTap: () => onPressed(channel),
       child: Container(
@@ -41,7 +45,7 @@ class ChatChannelCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
                       Text(channel.user.nickname!, style: cardTitleTextStyle),
                       Text(channel.user.activity!, style: cardStatusTextStyle),
                     ],
@@ -60,7 +64,7 @@ class ChatChannelCard extends StatelessWidget {
   }
 
   String transformDate(DateTime time) {
-    return '${formatWithZero(time.day)}/${formatWithZero(time.month)}/${formatWithZero(time.year)}';
+    return "${formatWithZero(time.day)}/${formatWithZero(time.month)}/${formatWithZero(time.year)}";
   }
 
   String formatWithZero(int value) => value > 9 ? '$value' : '0$value';
@@ -68,17 +72,15 @@ class ChatChannelCard extends StatelessWidget {
 
 extension _ChatTalkCardPrivate on ChatChannelCard {
   TextStyle get cardTitleTextStyle => const TextStyle(
-        fontFamily: 'Lato',
-        fontSize: 14.0,
-        letterSpacing: 0.5,
-        color: DesignSystemColors.darkIndigoThree,
-        fontWeight: FontWeight.bold,
-      );
+      fontFamily: 'Lato',
+      fontSize: 14.0,
+      letterSpacing: 0.5,
+      color: DesignSystemColors.darkIndigoThree,
+      fontWeight: FontWeight.bold,);
   TextStyle get cardStatusTextStyle => const TextStyle(
-        fontFamily: 'Lato',
-        fontSize: 12.0,
-        letterSpacing: 0.4,
-        color: DesignSystemColors.warnGrey,
-        fontWeight: FontWeight.normal,
-      );
+      fontFamily: 'Lato',
+      fontSize: 12.0,
+      letterSpacing: 0.4,
+      color: DesignSystemColors.warnGrey,
+      fontWeight: FontWeight.normal,);
 }

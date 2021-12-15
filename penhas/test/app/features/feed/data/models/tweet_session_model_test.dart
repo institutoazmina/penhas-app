@@ -13,12 +13,12 @@ void main() {
   group('TweetSessionModel', () {
     test('tweets should be a subclass of TweetSessionEntity', () async {
       // arrange
-      tweetSessionMondel = const TweetSessionModel(
+      tweetSessionMondel = TweetSessionModel(
+        false,
         TweetSessionOrder.latestFirst,
         null,
-        [],
+        const [],
         null,
-        hasMore: false,
       );
       // assert
       expect(tweetSessionMondel, isA<TweetSessionEntity>());
@@ -44,16 +44,13 @@ void main() {
               content: 'sleep 7',
               avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
               meta: TweetMeta(liked: false, owner: true),
-              lastReply: [],
+              lastReply: const [],
             ),
             TweetRelatedNewsModel(header: 'google', news: [
               TweetNewsModel(
                   title: 'Titulo muito grande',
-                  newsUri: 'https://site.com/news-redirect/?uid=551',
-                  date: null,
-                  imageUri: null,
-                  source: null)
-            ]),
+                  newsUri: 'https://site.com/news-redirect/?uid=551',)
+            ],),
             TweetModel(
               id: '200528T2055370004',
               userName: 'penhas',
@@ -65,36 +62,36 @@ void main() {
               content: 'sleep 6',
               avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
               meta: TweetMeta(liked: false, owner: true),
-              lastReply: [],
+              lastReply: const [],
             ),
             TweetNewsModel(
                 date: '18/06/2020',
-                newsUri: "https://site.com/news-redirect/?uid=552",
-                imageUri: "https://s2.glbimg.com/n.jpg",
-                source: "Google News",
-                title: "Title News 1"),
+                newsUri: 'https://site.com/news-redirect/?uid=552',
+                imageUri: 'https://s2.glbimg.com/n.jpg',
+                source: 'Google News',
+                title: 'Title News 1',),
             TweetNewsGroupModel(header: 'Relacionamento API Random', news: [
               TweetNewsModel(
-                  date: "18/06/2020",
-                  newsUri: "https://site.com/news-redirect/?uid=600",
-                  imageUri: "https://s2.glbimg.com/n.jpg",
-                  source: "Google News",
-                  title: "Title News Group - 0"),
+                  date: '18/06/2020',
+                  newsUri: 'https://site.com/news-redirect/?uid=600',
+                  imageUri: 'https://s2.glbimg.com/n.jpg',
+                  source: 'Google News',
+                  title: 'Title News Group - 0',),
               TweetNewsModel(
-                  date: "18/06/2020",
-                  newsUri: "https://site.com/news-redirect/?uid=601",
-                  imageUri: "https://s2.glbimg.com/n.jpg",
-                  source: "Google News",
-                  title: "Title News Group - 1"),
+                  date: '18/06/2020',
+                  newsUri: 'https://site.com/news-redirect/?uid=601',
+                  imageUri: 'https://s2.glbimg.com/n.jpg',
+                  source: 'Google News',
+                  title: 'Title News Group - 1',),
               TweetNewsModel(
-                  date: "18/06/2020",
-                  newsUri: "https://site.com/news-redirect/?uid=602",
-                  imageUri: "https://s2.glbimg.com/n.jpg",
-                  source: "Google News",
-                  title: "Title News Group - 2"),
-            ])
+                  date: '18/06/2020',
+                  newsUri: 'https://site.com/news-redirect/?uid=602',
+                  imageUri: 'https://s2.glbimg.com/n.jpg',
+                  source: 'Google News',
+                  title: 'Title News Group - 2',),
+            ],)
           ],
-          '_next_page_token_');
+          '_next_page_token_',);
       // act
       final result = TweetSessionModel.fromJson(jsonData);
       // assert
@@ -104,43 +101,42 @@ void main() {
     test('should get lastReplay when it exists', () async {
       // arrange
       final jsonData = await JsonUtil.getJson(
-        from: 'feed/retrieve_with_last_replay_response.json',
-      );
+          from: 'feed/retrieve_with_last_replay_response.json',);
       final TweetSessionEntity expectedSession = TweetSessionModel(
-        TweetSessionOrder.latestFirst,
-        null,
-        [
-          TweetModel(
-            id: '200528T2055370004',
-            userName: 'penhas',
-            clientId: 551,
-            createdAt: '2020-05-28 20:55:37',
-            totalReply: 1,
-            totalLikes: 1,
-            anonymous: false,
-            content: 'sleep 6',
-            avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-            meta: const TweetMeta(liked: true, owner: true),
-            lastReply: [
-              TweetModel(
-                id: '200603T1121340001',
-                userName: 'penhas',
-                clientId: 551,
-                createdAt: '2020-06-03 11:21:34',
-                totalReply: 0,
-                totalLikes: 0,
-                anonymous: false,
-                content: 'um breve comentario',
-                avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-                meta: const TweetMeta(liked: false, owner: true),
-                lastReply: const [],
-              )
-            ],
-          ),
-        ],
-        null,
-            hasMore: true,
-      );
+          true,
+          TweetSessionOrder.latestFirst,
+          null,
+          [
+            TweetModel(
+              id: '200528T2055370004',
+              userName: 'penhas',
+              clientId: 551,
+              createdAt: '2020-05-28 20:55:37',
+              totalReply: 1,
+              totalLikes: 1,
+              anonymous: false,
+              content: 'sleep 6',
+              avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
+              meta: TweetMeta(liked: true, owner: true),
+              lastReply: [
+                TweetModel(
+                  id: '200603T1121340001',
+                  userName: 'penhas',
+                  clientId: 551,
+                  createdAt: '2020-06-03 11:21:34',
+                  totalReply: 0,
+                  totalLikes: 0,
+                  anonymous: false,
+                  content: 'um breve comentario',
+                  avatar:
+                      'https://elasv2-api.appcivico.com/avatar/padrao.svg',
+                  meta: TweetMeta(liked: false, owner: true),
+                  lastReply: const [],
+                )
+              ],
+            ),
+          ],
+          null,);
       // act
       final result = TweetSessionModel.fromJson(jsonData);
       // assert

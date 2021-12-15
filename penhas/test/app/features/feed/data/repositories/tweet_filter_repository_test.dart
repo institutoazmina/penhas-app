@@ -9,8 +9,8 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late MockINetworkInfo networkInfo = MockINetworkInfo();
-  late MockITweetFilterPreferenceDataSource dataSource =
+  late final MockINetworkInfo networkInfo = MockINetworkInfo();
+  late final MockITweetFilterPreferenceDataSource dataSource =
       MockITweetFilterPreferenceDataSource();
   late ITweetFilterPreferenceRepository sut;
   Map<String, dynamic> jsonSession;

@@ -36,7 +36,7 @@ void main() {
       test(
         'should get value from a valid email address',
         () {
-          const validEmailAddress = 'test@g.com';
+          final validEmailAddress = 'test@g.com';
           final result = EmailAddress(validEmailAddress);
 
           expect(result.value, right(validEmailAddress));

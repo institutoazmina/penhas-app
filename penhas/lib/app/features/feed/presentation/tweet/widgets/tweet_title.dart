@@ -22,11 +22,6 @@ class TweetTitle extends StatelessWidget {
   })  : _context = context,
         super(key: key);
 
-  final TweetEntity tweet;
-  final BuildContext _context;
-  final ITweetController? controller;
-  final bool isDetail;
-
   @override
   Widget build(BuildContext context) {
     return tweet.anonymous
@@ -37,10 +32,8 @@ class TweetTitle extends StatelessWidget {
   Widget _buildTime() {
     timeago.setLocaleMessages('pt_br', timeago.PtBrMessages());
     final parsedTime = _mapServerUtcToLocalDate(tweet.createdAt);
-    return Text(
-      timeago.format(parsedTime, locale: 'pt_br'),
-      style: kTextStyleFeedTweetTime,
-    );
+    return Text(timeago.format(parsedTime, locale: 'pt_br'),
+        style: kTextStyleFeedTweetTime,);
   }
 
   Widget _buildDetailTime() {
@@ -64,7 +57,7 @@ class TweetTitle extends StatelessWidget {
   }
 
   DateTime _mapServerUtcToLocalDate(String? time) {
-    final utcEnabled = "${time}Z";
+    final utcEnabled = '${time}Z';
 
     return DateTime.parse(utcEnabled).toLocal();
   }
@@ -73,7 +66,7 @@ class TweetTitle extends StatelessWidget {
     return MediaQuery.of(context).size.width;
   }
 
-  Future<void> _showTweetAction() async {
+  void _showTweetAction() async {
     await showModalBottomSheet(
       context: _context,
       backgroundColor: Colors.transparent,
@@ -110,13 +103,12 @@ class TweetTitle extends StatelessWidget {
   }
 
   List<Widget> _buildAction() {
-    List<Widget> actions = [];
+    final List<Widget> actions = [];
     if (!tweet.anonymous && !tweet.meta.owner) {
       actions.add(
         ListTile(
           leading: SvgPicture.asset(
-            'assets/images/svg/tweet_action/tweet_action_chat.svg',
-          ),
+              'assets/images/svg/tweet_action/tweet_action_chat.svg',),
           title: const Text('Conversar'),
           onTap: () => _showUserChat(),
         ),
@@ -127,8 +119,7 @@ class TweetTitle extends StatelessWidget {
       actions.add(
         ListTile(
           leading: SvgPicture.asset(
-            'assets/images/svg/tweet_action/tweet_action_report.svg',
-          ),
+              'assets/images/svg/tweet_action/tweet_action_report.svg',),
           title: const Text('Denunciar'),
           onTap: () {
             Navigator.of(_context).pop();
@@ -143,8 +134,7 @@ class TweetTitle extends StatelessWidget {
         0,
         ListTile(
           leading: SvgPicture.asset(
-            'assets/images/svg/tweet_action/tweet_action_delete.svg',
-          ),
+              'assets/images/svg/tweet_action/tweet_action_delete.svg',),
           title: const Text('Apagar'),
           onTap: () {
             controller!
@@ -162,12 +152,10 @@ class TweetTitle extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
-            child: Text(tweet.userName!, style: kTextStyleFeedTweetTitle),
-            flex: 2),
-        isDetail ? _buildDetailTime() : _buildTime(),
-        controller == null
-            ? Container()
-            : IconButton(
+            flex: 2,
+            child: Text(tweet.userName!, style: kTextStyleFeedTweetTitle),),
+        if (isDetail) _buildDetailTime() else _buildTime(),
+        if (controller == null) Container() else IconButton(
                 icon: Icon(Icons.more_vert),
                 onPressed: () => _showTweetAction()),
       ],
@@ -187,13 +175,9 @@ class TweetTitle extends StatelessWidget {
             child: _buttonTitle(),
           ),
         ),
-        if (controller == null)
-          Container()
-        else
-          IconButton(
-            icon: const Icon(Icons.more_vert),
-            onPressed: () => _showTweetAction(),
-          ),
+        if (controller == null) Container() else IconButton(
+                icon: Icon(Icons.more_vert),
+                onPressed: () => _showTweetAction()),
       ],
     );
   }
@@ -203,7 +187,7 @@ class TweetTitle extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(tweet.userName!, style: kTextStyleFeedTweetTitle),
-        isDetail ? _buildDetailTime() : _buildTime(),
+        if (isDetail) _buildDetailTime() else _buildTime(),
       ],
     );
   }

@@ -15,7 +15,7 @@ class SupportCenterPlaceEntity extends Equatable {
   final String? htmlContent;
   final SupportCenterPlaceCategoryEntity category;
 
-  SupportCenterPlaceEntity({
+  const SupportCenterPlaceEntity({
     required this.id,
     required this.rate,
     required this.ratedByClient,
@@ -35,35 +35,35 @@ class SupportCenterPlaceEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        this.id,
-        this.rate,
-        this.ratedByClient,
-        this.distance,
-        this.latitude,
-        this.longitude,
-        this.name,
-        this.uf,
-        this.fullStreet,
-        this.category,
-        this.typeOfPlace,
-        this.htmlContent,
+        id,
+        rate,
+        ratedByClient,
+        distance,
+        latitude,
+        longitude,
+        name,
+        uf,
+        fullStreet,
+        category,
+        typeOfPlace,
+        htmlContent,
       ];
 
   static SupportCenterPlaceEntity fromJson(Map<String, dynamic> jsonData) {
     final id = "${jsonData["id"]}";
-    final rate = jsonData["avaliacao"];
+    final rate = jsonData['avaliacao'];
     final ratedByClient = "${jsonData["cliente_avaliacao"]}".safeParseInt();
-    final distance = jsonData["distancia"];
+    final distance = jsonData['distancia'];
     final latitude = "${jsonData["latitude"]}".safeParseDouble();
     final longitude = "${jsonData["longitude"]}".safeParseDouble();
-    final name = jsonData["nome"];
-    final uf = jsonData["uf"];
+    final name = jsonData['nome'];
+    final uf = jsonData['uf'];
     final category =
-        _SupportCenterPlaceCategoryEntityParse.fromJson(jsonData["categoria"]);
+        _SupportCenterPlaceCategoryEntityParse.fromJson(jsonData['categoria']);
 
     final String? fullStreet = _Parse.getFullAddress(jsonData);
-    final typeOfPlace = jsonData["natureza"];
-    final htmlContent = jsonData["content_html"];
+    final typeOfPlace = jsonData['natureza'];
+    final htmlContent = jsonData['content_html'];
 
     return SupportCenterPlaceEntity(
       id: id,
@@ -86,7 +86,7 @@ class SupportCenterPlaceCategoryEntity extends Equatable {
   final String? name;
   final String? color;
 
-  SupportCenterPlaceCategoryEntity({
+  const SupportCenterPlaceCategoryEntity({
     required this.id,
     required this.name,
     required this.color,
@@ -131,17 +131,17 @@ extension _SupportCenterPlaceCategoryEntityParse
 
 extension _Parse on SupportCenterPlaceEntity {
   static String? getFullAddress(Map<String, dynamic> jsonData) {
-    final String neighborhood = jsonData["bairro"] as String? ?? "";
-    final String cep = jsonData["cep"] as String? ?? "";
-    final String city = jsonData["municipio"] as String? ?? "";
-    String number = jsonData.containsKey("numero") && jsonData["numero"] != null
+    final String neighborhood = jsonData['bairro'] as String? ?? '';
+    final String cep = jsonData['cep'] as String? ?? '';
+    final String city = jsonData['municipio'] as String? ?? '';
+    String number = jsonData.containsKey('numero') && jsonData['numero'] != null
         ? "${jsonData["numero"]}"
-        : "";
-    final String streetName = jsonData["nome_logradouro"] as String? ?? "";
-    final String streetType = jsonData["tipo_logradouro"] as String? ?? "";
-    final String uf = jsonData["uf"] as String? ?? "";
+        : '';
+    final String streetName = jsonData['nome_logradouro'] as String? ?? '';
+    final String streetType = jsonData['tipo_logradouro'] as String? ?? '';
+    final String uf = jsonData['uf'] as String? ?? '';
 
-    final bool withoutStreetNumber = jsonData["numero_sem_numero"] == 1;
+    final bool withoutStreetNumber = jsonData['numero_sem_numero'] == 1;
     if (withoutStreetNumber || number.isEmpty) {
       number = 's/n';
     }

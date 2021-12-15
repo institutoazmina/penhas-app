@@ -9,37 +9,37 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  final String jsonFile = 'users/users_detail.json';
-  late MockIApiProvider apiProvider = MockIApiProvider();
-  late IUsersRepository sut = UsersRepository(apiProvider: apiProvider);
+  const String jsonFile = 'users/users_detail.json';
+  late final MockIApiProvider apiProvider = MockIApiProvider();
+  late final IUsersRepository sut = UsersRepository(apiProvider: apiProvider);
 
   group('UsersRepository', () {
     test('should use client_id parameter to server', () async {
       // arrange
-      final clientId = "1335";
+      const clientId = '1335';
       when(apiProvider.get(
         path: anyNamed('path'),
         headers: anyNamed('headers'),
         parameters: anyNamed('parameters'),
-      )).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
+      ),).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
       // act
       await sut.profileDetail(clientId);
       // assert
       verify(apiProvider.get(
-        path: "/profile",
-        parameters: {"cliente_id": "1335"},
-      ));
+        path: '/profile',
+        parameters: {'cliente_id': '1335'},
+      ),);
     });
     test('should retrieve user profile detail from server', () async {
       // arrange
       final jsonData = await JsonUtil.getJson(from: jsonFile);
       final actual = right(UserDetailModel.fromJson(jsonData));
-      final clientId = "1335";
+      const clientId = '1335';
       when(apiProvider.get(
         path: anyNamed('path'),
         headers: anyNamed('headers'),
         parameters: anyNamed('parameters'),
-      )).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
+      ),).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
       // act
       final matcher = await sut.profileDetail(clientId);
       // assert

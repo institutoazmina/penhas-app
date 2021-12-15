@@ -37,12 +37,12 @@ class UserProfileModel extends UserProfileEntity {
       stealthModeEnabled: jsonData['modo_camuflado_ativo'] == 1,
       anonymousModeEnabled: jsonData['modo_anonimo_ativo'] == 1,
       birthdate: DateTime.parse(jsonData['dt_nasc'] as String),
-      fullName: jsonData["nome_completo"],
-      minibio: jsonData["minibio"],
-      race: jsonData["raca"],
-      genre: jsonData["genero"],
-      jaFoiVitimaDeViolencia: jsonData["ja_foi_vitima_de_violencia"] == 1,
-      skill: (jsonData["skills"] as List<dynamic>? ?? [])
+      fullName: jsonData['nome_completo'],
+      minibio: jsonData['minibio'],
+      race: jsonData['raca'],
+      genre: jsonData['genero'],
+      jaFoiVitimaDeViolencia: jsonData['ja_foi_vitima_de_violencia'] == 1,
+      skill: (jsonData['skills'] as List<dynamic>? ?? [])
           .map((e) => e.toString())
           .toList(),
     );

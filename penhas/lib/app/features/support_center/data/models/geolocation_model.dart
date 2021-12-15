@@ -14,7 +14,7 @@ class GeoLocationModel extends GeolocationEntity {
 
   factory GeoLocationModel.fromJson(Map<String, dynamic> jsonData) =>
       GeoLocationModel(
-        label: jsonData["label"],
-        locationToken: jsonData["location_token"],
+        label: jsonData['label'],
+        locationToken: jsonData['location_token'],
       );
 }

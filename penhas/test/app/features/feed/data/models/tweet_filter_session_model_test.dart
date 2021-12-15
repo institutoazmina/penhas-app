@@ -12,7 +12,7 @@ void main() {
   group('TweetFilterSessionModel', () {
     test('should be a subclass of TweetFilterSessionEntity', () async {
       // arrange
-      sessionModel = const TweetFilterSessionModel(categories: [], tags: []);
+      sessionModel = TweetFilterSessionModel(categories: const [], tags: const []);
       // assert
       expect(sessionModel, isA<TweetFilterSessionEntity>());
     });
@@ -21,7 +21,7 @@ void main() {
       // arrange
       final jsonData =
           await JsonUtil.getJson(from: 'feed/retrieve_fiters_tags.json');
-      const expected = TweetFilterSessionModel(categories: [
+      final expected = TweetFilterSessionModel(categories: [
         TweetFilterEntity(id: 'all', isSelected: true, label: 'Tudo'),
         TweetFilterEntity(
             id: 'only_news', isSelected: false, label: 'Apenas notícias',),

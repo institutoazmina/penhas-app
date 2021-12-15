@@ -8,8 +8,8 @@ import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_op
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late MockHttpClient apiClient = MockHttpClient();
-  late MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
+  late final MockHttpClient apiClient = MockHttpClient();
+  late final MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
   final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
   late ITweetDataSource dataSource;
 
@@ -26,7 +26,7 @@ void main() {
     when(serverConfigure.apiToken)
         .thenAnswer((_) => Future.value(SESSSION_TOKEN));
     when(serverConfigure.userAgent)
-        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
+        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
@@ -74,7 +74,7 @@ void main() {
 
       test('should perform a DELETE with X-API-Key', () async {
         // arrange
-        final endPointPath = '/me/tweets';
+        const endPointPath = '/me/tweets';
         final queryParameters = {'id': requestOption!.tweetId};
         final headers = await _setUpHttpHeader();
         final request = _setuHttpRequest(endPointPath, queryParameters);

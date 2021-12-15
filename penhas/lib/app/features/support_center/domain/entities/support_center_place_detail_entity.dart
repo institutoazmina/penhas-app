@@ -6,7 +6,7 @@ class SupportCenterPlaceDetailEntity extends Equatable {
   final int? ratedByClient;
   final SupportCenterPlaceEntity? place;
 
-  SupportCenterPlaceDetailEntity({
+  const SupportCenterPlaceDetailEntity({
     required this.maximumRate,
     required this.ratedByClient,
     required this.place,

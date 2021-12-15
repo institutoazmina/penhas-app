@@ -10,7 +10,7 @@ class QuizMultipleChoicesWidget extends StatefulWidget {
   final UserReaction onPressed;
   final List<QuizMessageMultiplechoicesOptions>? options;
 
-  QuizMultipleChoicesWidget({
+  const QuizMultipleChoicesWidget({
     Key? key,
     required this.reference,
     required this.onPressed,
@@ -75,8 +75,9 @@ class _QuizMultipleChoicesWidgetState extends State<QuizMultipleChoicesWidget> {
                     elevation: 0.0,
                     shape: kButtonShapeFilled,
                     color: DesignSystemColors.ligthPurple,
-                    onPressed:
-                        _selectedValues.isEmpty ? null : () => _onSavePressed(),
+                    onPressed: _selectedValues.isEmpty
+                        ? null
+                        : () => _onSavePressed(),
                     child: const Text(
                       'Enviar',
                       style: kTextStyleDefaultFilledButtonLabel,
@@ -108,7 +109,7 @@ class _QuizMultipleChoicesWidgetState extends State<QuizMultipleChoicesWidget> {
           onChanged: (v) => _onItemCheckedChange(option.index, v == true),
           value: checked,
           title: Text(option.display!),
-          controlAffinity: ListTileControlAffinity.leading),
+          controlAffinity: ListTileControlAffinity.leading,),
     );
   }
 

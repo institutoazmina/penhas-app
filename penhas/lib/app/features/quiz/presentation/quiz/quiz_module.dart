@@ -44,6 +44,6 @@ class QuizModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-        ChildRoute(Modular.initialRoute, child: (_, args) => QuizPage()),
+        ChildRoute(Modular.initialRoute, child: (_, args) => const QuizPage()),
       ];
 }

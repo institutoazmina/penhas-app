@@ -9,14 +9,15 @@ import 'package:penhas/app/features/authentication/presentation/shared/snack_bar
 import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
 import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/support_center/domain/states/support_center_add_state.dart';
-import 'package:penhas/app/features/support_center/presentation/add/support_center_add_controller.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_input.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
+import 'support_center_add_controller.dart';
+
 class SupportCenterAddPage extends StatefulWidget {
-  SupportCenterAddPage({Key? key}) : super(key: key);
+  const SupportCenterAddPage({Key? key}) : super(key: key);
 
   @override
   _SupportCenterAddPageState createState() => _SupportCenterAddPageState();
@@ -26,7 +27,7 @@ class _SupportCenterAddPageState
     extends ModularState<SupportCenterAddPage, SupportCenterAddController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +38,9 @@ class _SupportCenterAddPageState
         elevation: 0.0,
         backgroundColor: DesignSystemColors.easterPurple,
       ),
-      body: Observer(
-        builder: (_) {
-          return buildBody(context, controller.state);
-        },
-      ),
+      body: Observer(builder: (_) {
+        return buildBody(context, controller.state);
+      },),
     );
   }
 
@@ -67,6 +66,7 @@ class _SupportCenterAddPageState
     return SafeArea(
       child: PageProgressIndicator(
         progressState: controller.progressState,
+        progressMessage: 'Processando',
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +88,9 @@ class _SupportCenterAddPageState
 
   @override
   void dispose() {
-    _disposers!.forEach((d) => d());
+    for (var d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 
@@ -104,9 +106,7 @@ class _SupportCenterAddPageState
 
 extension _BuildWidget on _SupportCenterAddPageState {
   Widget buildInputPlaceInformation(
-    BuildContext context,
-    List<FilterTagEntity> categories,
-  ) {
+      BuildContext context, List<FilterTagEntity> categories) {
     final dataSource = buildDataSource(categories);
 
     return Container(
@@ -170,8 +170,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
                 ),
               ),
               child: const Text(
-                'Essa informação ajuda usuárias do PenhaS que estão em situação de violência a entender se o ponto de apoio oferece o que ela precisa.',
-              ),
+                  'Essa informação ajuda usuárias do PenhaS que estão em situação de violência a entender se o ponto de apoio oferece o que ela precisa.',),
             ),
           ),
           Padding(
@@ -219,7 +218,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Theme(
         data: Theme.of(context)
-            .copyWith(canvasColor: Color.fromRGBO(141, 146, 157, 1)),
+            .copyWith(canvasColor: const Color.fromRGBO(141, 146, 157, 1)),
         child: DropdownButtonFormField<dynamic>(
           isExpanded: true,
           decoration: InputDecoration(
@@ -231,10 +230,8 @@ extension _BuildWidget on _SupportCenterAddPageState {
             ),
             errorText: (errorMessage?.isEmpty ?? true) ? null : errorMessage,
             border: const OutlineInputBorder(
-              borderSide: BorderSide(color: DesignSystemColors.easterPurple),
-            ),
-            contentPadding:
-                const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
+                borderSide: BorderSide(color: DesignSystemColors.easterPurple),),
+            contentPadding: const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
             hintText: labelText,
             hintStyle: const TextStyle(color: Colors.black),
           ),
@@ -271,8 +268,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
           title: Column(
             children: <Widget>[
               SvgPicture.asset(
-                'assets/images/svg/help_center/guardians/guardians_sent_invite.svg',
-              ),
+                  'assets/images/svg/help_center/guardians/guardians_sent_invite.svg',),
               Padding(
                 padding: const EdgeInsets.only(top: 12.0),
                 child: Text(action.title, style: kTextStyleAlertDialogTitle),
@@ -303,21 +299,18 @@ extension _BuildWidget on _SupportCenterAddPageState {
 
 extension _SupportCenterAddPageStateTextStyle on _SupportCenterAddPageState {
   TextStyle get introdutionText => const TextStyle(
-        color: DesignSystemColors.darkIndigoThree,
-        fontFamily: 'Lato',
-        fontSize: 14.0,
-        fontWeight: FontWeight.normal,
-      );
+      color: DesignSystemColors.darkIndigoThree,
+      fontFamily: 'Lato',
+      fontSize: 14.0,
+      fontWeight: FontWeight.normal,);
   TextStyle get addressTitle => const TextStyle(
-        color: DesignSystemColors.darkIndigoThree,
-        fontFamily: 'Lato',
-        fontSize: 20.0,
-        fontWeight: FontWeight.bold,
-      );
+      color: DesignSystemColors.darkIndigoThree,
+      fontFamily: 'Lato',
+      fontSize: 20.0,
+      fontWeight: FontWeight.bold,);
   TextStyle get buttonTitle => const TextStyle(
-        color: DesignSystemColors.white,
-        fontFamily: 'Lato',
-        fontSize: 12.0,
-        fontWeight: FontWeight.bold,
-      );
+      color: DesignSystemColors.white,
+      fontFamily: 'Lato',
+      fontSize: 12.0,
+      fontWeight: FontWeight.bold,);
 }

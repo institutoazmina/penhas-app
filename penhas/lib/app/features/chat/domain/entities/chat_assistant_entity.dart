@@ -7,7 +7,7 @@ class ChatAssistantEntity extends Equatable {
   final String? avatar;
   final QuizSessionEntity? quizSession;
 
-  ChatAssistantEntity({
+  const ChatAssistantEntity({
     required this.title,
     required this.subtitle,
     required this.avatar,

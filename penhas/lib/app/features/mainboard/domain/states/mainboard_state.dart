@@ -11,7 +11,7 @@ class MainboardState with _$MainboardState {
   const factory MainboardState.supportPoint() = _SupportPoint;
   const factory MainboardState.helpCenter() = _HelpCenter;
 
-  static fromString(String? state) {
+  static MainboardState fromString(String? state) {
     switch (state) {
       case 'feed':
         return const MainboardState.feed();

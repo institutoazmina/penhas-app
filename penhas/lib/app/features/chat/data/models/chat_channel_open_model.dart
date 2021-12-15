@@ -12,7 +12,7 @@ class ChatChannelOpenModel extends ChatChannelOpenEntity {
 
   factory ChatChannelOpenModel.fromJson(Map<String, dynamic> jsonData) =>
       ChatChannelOpenModel(
-        token: jsonData["chat_auth"],
-        session: ChatChannelSessionModel.fromJson(jsonData["prefetch"]),
+        token: jsonData['chat_auth'],
+        session: ChatChannelSessionModel.fromJson(jsonData['prefetch']),
       );
 }

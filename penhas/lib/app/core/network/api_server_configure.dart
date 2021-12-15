@@ -11,11 +11,10 @@ abstract class IApiServerConfigure {
 }
 
 class ApiServerConfigure implements IApiServerConfigure {
-  ApiServerConfigure({required IAppConfiguration appConfiguration})
-      : _appConfiguration = appConfiguration;
+  final IAppConfiguration _appConfiguration;
 
   ApiServerConfigure({required IAppConfiguration appConfiguration})
-      : this._appConfiguration = appConfiguration;
+      : _appConfiguration = appConfiguration;
 
   @override
   Uri get baseUri => _appConfiguration.penhasServer;
@@ -57,10 +56,7 @@ class ApiServerConfigure implements IApiServerConfigure {
 
   _DeviceInfo _readAndroidBuildData(AndroidDeviceInfo build) {
     return _DeviceInfo(
-      'Android',
-      build.version.release,
-      '${build.brand} ${build.model}',
-    );
+        'Android', build.version.release, '${build.brand} ${build.model}',);
   }
 
   _DeviceInfo _readIosDeviceInfo(IosDeviceInfo data) {
@@ -69,9 +65,9 @@ class ApiServerConfigure implements IApiServerConfigure {
 }
 
 class _DeviceInfo {
-  _DeviceInfo(this.plataform, this.version, this.model);
-
   final String plataform;
   final String version;
   final String model;
+
+  _DeviceInfo(this.plataform, this.version, this.model);
 }

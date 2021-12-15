@@ -11,11 +11,11 @@ import 'package:penhas/app/features/authentication/domain/usecases/sign_in_passw
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late MockIAppConfiguration mockAppConfiguration = MockIAppConfiguration();
-  late MockIAuthenticationRepository mockAuthenticatonRepository =
+  late final MockIAppConfiguration mockAppConfiguration = MockIAppConfiguration();
+  late final MockIAuthenticationRepository mockAuthenticatonRepository =
       MockIAuthenticationRepository();
 
-  late AuthenticationWithEmailAndPassword useCase =
+  late final AuthenticationWithEmailAndPassword useCase =
       AuthenticationWithEmailAndPassword(
     authenticationRepository: mockAuthenticatonRepository,
     appConfiguration: mockAppConfiguration,
@@ -23,8 +23,8 @@ void main() {
 
   group('authentication with email and password', () {
     final successSession = SessionEntity(
-        sessionToken: 'my_strong_session_token', deletedScheduled: false);
-    final emailAddress = EmailAddress("valid@email.com");
+        sessionToken: 'my_strong_session_token',);
+    final emailAddress = EmailAddress('valid@email.com');
     final password = SignInPassword('_myStr0ngP@ssw0rd', PasswordValidator());
 
     test('should get success response', () async {
@@ -32,16 +32,16 @@ void main() {
       when(mockAuthenticatonRepository.signInWithEmailAndPassword(
         emailAddress: anyNamed('emailAddress'),
         password: anyNamed('password'),
-      )).thenAnswer((_) async => right(successSession));
+      ),).thenAnswer((_) async => right(successSession));
       when(mockAppConfiguration.saveApiToken(token: anyNamed('token')))
           .thenAnswer((_) async => Future.value());
       // act
-      final Either<Failure, SessionEntity>? result =
+      final Either<Failure, SessionEntity> result =
           await useCase(email: emailAddress, password: password);
       // assert
       expect(result, right(successSession));
       verify(mockAuthenticatonRepository.signInWithEmailAndPassword(
-          emailAddress: emailAddress, password: password));
+          emailAddress: emailAddress, password: password,),);
       verifyNoMoreInteractions(mockAuthenticatonRepository);
     });
 
@@ -53,12 +53,12 @@ void main() {
               password: anyNamed('password'),),)
           .thenAnswer((_) async => left(UserAndPasswordInvalidFailure()));
 
-      final Either<Failure, SessionEntity>? result =
+      final Either<Failure, SessionEntity> result =
           await useCase(email: emailAddress, password: password);
 
       expect(result, left(UserAndPasswordInvalidFailure()));
       verify(mockAuthenticatonRepository.signInWithEmailAndPassword(
-          emailAddress: emailAddress, password: password));
+          emailAddress: emailAddress, password: password,),);
       verifyNoMoreInteractions(mockAuthenticatonRepository);
     });
   });

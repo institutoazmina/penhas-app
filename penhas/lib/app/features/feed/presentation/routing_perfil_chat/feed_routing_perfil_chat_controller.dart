@@ -28,23 +28,17 @@ abstract class _FeedRoutingPerfilChatControllerBase
   final IChatChannelRepository _channelRepository;
 
   _FeedRoutingPerfilChatControllerBase(
-    this._routerType,
-    this._usersRepository,
-    this._channelRepository,
-  ) {
+      this._routerType, this._usersRepository, this._channelRepository) {
     getRouterData();
+    //
   }
-
-  final FeedRouterType? _routerType;
-  final IUsersRepository _usersRepository;
-  final IChatChannelRepository _channelRepository;
 
   @observable
   FeedRoutingState routingState = const FeedRoutingState.initial('');
 
   @action
   Future<void> retry() async {
-    // TODO: implement retry
+    print('Ola mundo!');
   }
 }
 
@@ -62,8 +56,8 @@ extension _PrivateMethod on _FeedRoutingPerfilChatControllerBase {
 
   String pageTitle() {
     return _routerType!.when(
-      chat: (_) => "Chat",
-      profile: (_) => "Perfil",
+      chat: (_) => 'Chat',
+      profile: (_) => 'Perfil',
     );
   }
 

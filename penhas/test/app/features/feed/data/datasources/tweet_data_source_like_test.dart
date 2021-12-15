@@ -10,9 +10,9 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late MockHttpClient apiClient = MockHttpClient();
-  late MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
-  late ITweetDataSource dataSource = TweetDataSource(
+  late final MockHttpClient apiClient = MockHttpClient();
+  late final MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
+  late final ITweetDataSource dataSource = TweetDataSource(
     apiClient: apiClient,
     serverConfiguration: serverConfigure,
   );
@@ -21,11 +21,11 @@ void main() {
 
   setUp(() {
     // MockApiServerConfigure configuration
-    when(serverConfigure.baseUri).thenAnswer(((_) => serverEndpoint));
+    when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
     when(serverConfigure.apiToken)
         .thenAnswer((_) => Future.value(SESSSION_TOKEN));
     when(serverConfigure.userAgent)
-        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
+        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
@@ -51,7 +51,7 @@ void main() {
       any,
       headers: anyNamed('headers'),
       body: anyNamed('body'),
-    ));
+    ),);
   }
 
   void _setUpMockPostHttpClientSuccess200(String? bodyContent) {
@@ -79,7 +79,7 @@ void main() {
       test('should perform a POST with X-API-Key', () async {
         // arrange
         final endPointPath = '/timeline/${requestOption!.tweetId}/like';
-        final queryParameters = Map<String, String>();
+        final queryParameters = <String, String>{};
 
         final headers = await _setUpHttpHeader();
         final request = _setuHttpRequest(endPointPath, queryParameters);

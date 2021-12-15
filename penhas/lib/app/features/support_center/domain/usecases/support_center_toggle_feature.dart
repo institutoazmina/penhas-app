@@ -10,5 +10,5 @@ class SupportCenterToggleFeature {
   Future<bool> get isEnabled => _modulesServices.isEnabled(featureCode);
 
   SupportCenterToggleFeature({required IAppModulesServices modulesServices})
-      : this._modulesServices = modulesServices;
+      : _modulesServices = modulesServices;
 }

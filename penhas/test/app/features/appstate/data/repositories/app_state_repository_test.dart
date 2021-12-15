@@ -16,11 +16,11 @@ import '../../../../../utils/json_util.dart';
 void main() {
   isCrashlitycsEnabled = false;
 
-  late INetworkInfo networkInfo = MockINetworkInfo();
-  late MockIAppStateDataSource dataSource = MockIAppStateDataSource();
+  late final INetworkInfo networkInfo = MockINetworkInfo();
+  late final MockIAppStateDataSource dataSource = MockIAppStateDataSource();
   late Map<String, dynamic> jsonData;
 
-  late IAppStateRepository sut = AppStateRepository(
+  late final IAppStateRepository sut = AppStateRepository(
     dataSource: dataSource,
     networkInfo: networkInfo,
   );
@@ -58,9 +58,9 @@ void main() {
       // arrange
       when(dataSource.check()).thenThrow(
         ApiProviderException(bodyContent: {
-          "error": "expired_jwt",
-          "nessage": "Bad request - Invalid JWT"
-        }),
+          'error': 'expired_jwt',
+          'nessage': 'Bad request - Invalid JWT'
+        },),
       );
       final expected = left(ServerSideSessionFailed());
       // act

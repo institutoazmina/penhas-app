@@ -22,9 +22,6 @@ abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
 
   _CategoryTweetControllerBase(this.useCase);
 
-  final TweetFilterPreference useCase;
-  String? _currentCategory;
-
   @observable
   ObservableFuture<Either<Failure, TweetFilterSessionEntity>>? _progress;
 
@@ -36,7 +33,7 @@ abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
   String? errorMessage = '';
 
   @observable
-  String? selectedRadio;
+  String selectedRadio = '';
 
   @computed
   PageProgressState get currentState {
@@ -60,7 +57,7 @@ abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
 
     final Either<Failure, TweetFilterSessionEntity> response = await _progress!;
     response.fold(
-      (failure) => errorMessage = mapFailureMessage(failure),
+      (failure) => _setErrorMessage(mapFailureMessage(failure)),
       (filters) => _updateCategory(filters),
     );
   }
@@ -68,11 +65,11 @@ abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
   @action
   Future<void> setCategory(String id) async {
     selectedRadio = id;
-    useCase.categories = [id];
   }
 
   @action
   Future<void> apply() async {
+    useCase.saveCategory([selectedRadio]);
     Modular.to.pop(true);
   }
 
@@ -82,8 +79,8 @@ abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
 
   void _updateCategory(TweetFilterSessionEntity filters) {
     final seleted = filters.categories.firstWhere((e) => e.isSelected);
-    selectedRadio = seleted.id;
-    _currentCategory = seleted.id;
+    this.selectedRadio = seleted.id;
+    this._currentCategory = seleted.id;
 
     categories = filters.categories.asObservable();
   }

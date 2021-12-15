@@ -14,9 +14,9 @@ import '../../../../../utils/json_util.dart';
 Future<bool> isConnected() => Future.value(true);
 
 void main() {
-  late MockINetworkInfo networkInfo = MockINetworkInfo();
-  late MockIQuizDataSource dataSource = MockIQuizDataSource();
-  late QuizRepository quizRepository = QuizRepository(
+  late final MockINetworkInfo networkInfo = MockINetworkInfo();
+  late final MockIQuizDataSource dataSource = MockIQuizDataSource();
+  late final QuizRepository quizRepository = QuizRepository(
     dataSource: dataSource,
     networkInfo: networkInfo,
   );
@@ -26,8 +26,8 @@ void main() {
   setUp(() async {
     isCrashlitycsEnabled = false;
     quizRequest = QuizRequestEntity(
-      sessionId: "200",
-      options: {'YN1': 'Y'},
+      sessionId: '200',
+      options: const {'YN1': 'Y'},
     );
     jsonData =
         await JsonUtil.getJson(from: 'profile/quiz_session_response.json');
@@ -63,9 +63,9 @@ void main() {
       // arrange
       when(dataSource.update(quiz: anyNamed('quiz'))).thenThrow(
         ApiProviderException(bodyContent: {
-          "error": "expired_jwt",
-          "nessage": "Bad request - Invalid JWT"
-        }),
+          'error': 'expired_jwt',
+          'nessage': 'Bad request - Invalid JWT'
+        },),
       );
       final expected = left(ServerSideSessionFailed());
       // act

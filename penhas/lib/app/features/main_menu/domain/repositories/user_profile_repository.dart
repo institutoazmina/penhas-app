@@ -29,8 +29,8 @@ class UserProfileRepository implements IUserProfileRepository {
   UserProfileRepository({
     required IApiProvider? apiProvider,
     required IApiServerConfigure serverConfiguration,
-  })  : this._apiProvider = apiProvider,
-        this._serverConfiguration = serverConfiguration;
+  })  : _apiProvider = apiProvider,
+        _serverConfiguration = serverConfiguration;
 
   @override
   Future<Either<Failure, ValidField>> stealthMode({required bool toggle}) async {
@@ -67,7 +67,7 @@ class UserProfileRepository implements IUserProfileRepository {
   @override
   Future<Either<Failure, ValidField>> delete(
       {required String password}) async {
-    final endPoint = '/me';
+    const endPoint = '/me';
 
     final parameters = {
       'senha_atual': password,
@@ -99,7 +99,7 @@ class UserProfileRepository implements IUserProfileRepository {
   @override
   Future<Either<Failure, ValidField>> reactivate(
       {required String? token}) async {
-    final endPoint = '/reactivate';
+    const endPoint = '/reactivate';
 
     final parameters = {
       'app_version': await _serverConfiguration.userAgent,
@@ -133,8 +133,8 @@ class UserProfileRepository implements IUserProfileRepository {
   @override
   Future<Either<Failure, AccountPreferenceSessionModel>> updatePreferences(
       {String? key, required bool status}) async {
-    final endPoint = '/me/preferences';
-    final parameters = {key: status ? "1" : "0"};
+    const endPoint = '/me/preferences';
+    final parameters = {key: status ? '1' : '0'};
 
     try {
       final data =

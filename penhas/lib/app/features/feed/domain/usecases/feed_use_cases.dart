@@ -16,7 +16,7 @@ import 'package:penhas/app/features/feed/domain/usecases/tweet_filter_preference
 class FeedCache extends Equatable {
   final List<TweetTiles?> tweets;
 
-  FeedCache({required this.tweets});
+  const FeedCache({required this.tweets});
 
   @override
   List<Object?> get props => [tweets];
@@ -42,7 +42,7 @@ class FeedUseCases {
 
   Stream<FeedCache> get dataSource => _streamController.stream;
   List<TweetTiles?> _tweetCacheFetch = [];
-  Map<String?, List<TweetEntity?>> _tweetReplyMap = {};
+  final Map<String?, List<TweetEntity?>> _tweetReplyMap = {};
   String? _nextPage;
 
   FeedUseCases({
@@ -179,7 +179,7 @@ class FeedUseCases {
   }
 
   TweetRequestOption _newestRequestOption() {
-    final TweetEntity? firstValid = _tweetCacheFetch.length > 0
+    final TweetEntity? firstValid = _tweetCacheFetch.isNotEmpty
         ? _tweetCacheFetch.firstWhere(
             (e) => e is TweetEntity,
             orElse: () => null,
@@ -207,17 +207,17 @@ class FeedUseCases {
   }
 
   String? _getTags() {
-    List<String> tags = _filterPreference.getTags();
+    final List<String> tags = _filterPreference.getTags();
     return tags.isEmpty ? null : tags.join(',');
   }
 
   String? _getCategory() {
-    List<String> category = _filterPreference.getCategory();
+    final List<String> category = _filterPreference.getCategory();
     return category.isEmpty ? null : category.join(',');
   }
 
   TweetRequestOption _oldestRequestOption() {
-    final TweetEntity? lastValid = _tweetCacheFetch.length > 0
+    final TweetEntity? lastValid = _tweetCacheFetch.isNotEmpty
         ? _tweetCacheFetch.lastWhere(
             (e) => e is TweetEntity,
             orElse: () => null,
@@ -250,7 +250,7 @@ class FeedUseCases {
       _nextPage = session.nextPage;
     }
 
-    if (session.tweets.length > 0) {
+    if (session.tweets.isNotEmpty) {
       if (session.orderBy == TweetSessionOrder.latestFirst) {
         _tweetCacheFetch.insertAll(0, session.tweets);
       } else {
@@ -264,7 +264,7 @@ class FeedUseCases {
 
   FeedCache _appendFetchCache(TweetSessionEntity session) {
     _nextPage = session.nextPage;
-    if (session.tweets.length > 0) {
+    if (session.tweets.isNotEmpty) {
       if (session.orderBy == TweetSessionOrder.latestFirst) {
         _tweetCacheFetch.addAll(session.tweets);
       } else {
@@ -338,7 +338,7 @@ class FeedUseCases {
         currentTweet.lastReply!.first!.id == newTweet.id) {
       // se a tweet for um reply, reconstrua o principal com o novo reply
       final reply = newTweet.copyWith(
-          lastReply: currentTweet.lastReply!.first!.lastReply);
+          lastReply: currentTweet.lastReply!.first!.lastReply,);
       final princialTweet = currentTweet.copyWith(lastReply: [reply]);
       _tweetCacheFetch[index] = princialTweet;
     }
@@ -405,7 +405,7 @@ class FeedUseCases {
         .where((e) => e != null)
         .toList();
 
-    if (filteredResponse.length > 0) {
+    if (filteredResponse.isNotEmpty) {
       if (session.orderBy == TweetSessionOrder.latestFirst) {
         _tweetReplyMap[tweetId]!.addAll(filteredResponse.reversed);
       } else {
@@ -416,7 +416,7 @@ class FeedUseCases {
     return FeedCache(tweets: [
       if (session.parent != null) session.parent,
       ..._tweetReplyMap[tweetId]!
-    ]);
+    ],);
   }
 
   void dispose() {

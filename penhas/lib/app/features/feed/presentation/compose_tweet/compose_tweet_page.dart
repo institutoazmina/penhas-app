@@ -13,10 +13,8 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ComposeTweetPage extends StatefulWidget {
   final String title;
-  const ComposeTweetPage({Key? key, this.title = "ComposeTweet"})
+  const ComposeTweetPage({Key? key, this.title = 'ComposeTweet'})
       : super(key: key);
-
-  final String title;
 
   @override
   _ComposeTweetPageState createState() => _ComposeTweetPageState();
@@ -60,7 +58,9 @@ class _ComposeTweetPageState
   @override
   void dispose() {
     super.dispose();
-    _disposers!.forEach((d) => d());
+    for (var d in _disposers!) {
+      d();
+    }
   }
 
   @override
@@ -209,9 +209,10 @@ class _ComposeTweetPageState
     );
   }
 
-  void _handleTap(BuildContext context) {
+  _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
+    }
     WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 

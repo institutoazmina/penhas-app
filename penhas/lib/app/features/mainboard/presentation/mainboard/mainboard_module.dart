@@ -95,8 +95,8 @@ class MainboardModule extends Module {
           (i) => MainboardStore(
               modulesServices: i.get<IAppModulesServices>(),
               initialPage: i.args?.data == null
-                  ? MainboardState.feed()
-                  : MainboardState.fromString(i.args?.data["page"])),
+                  ? const MainboardState.feed()
+                  : MainboardState.fromString(i.args?.data['page']),),
         ),
         Bind.factory(
           (i) => MainboardController(
@@ -110,7 +110,6 @@ class MainboardModule extends Module {
           (i) => FeedUseCases(
             repository: i.get<ITweetRepository>(),
             filterPreference: i.get<TweetFilterPreference>(),
-            maxRows: 100,
           ),
         ),
         Bind.factory<IFilterSkillRepository>(
@@ -122,7 +121,7 @@ class MainboardModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-        ChildRoute(Modular.initialRoute, child: (_, args) => MainboardPage()),
+        ChildRoute(Modular.initialRoute, child: (_, args) => const MainboardPage()),
         ...tweetRoutes,
         ...helpCenter,
         ...supportCenter,
@@ -136,7 +135,7 @@ class MainboardModule extends Module {
   List<ModularRoute> get tweetRoutes => [
         ChildRoute(
           '/reply',
-          child: (_, args) => ReplyTweetPage(),
+          child: (_, args) => const ReplyTweetPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
@@ -148,7 +147,7 @@ class MainboardModule extends Module {
         ),
         ChildRoute(
           '/category',
-          child: (context, args) => CategoryTweetPage(),
+          child: (context, args) => const CategoryTweetPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
@@ -166,22 +165,22 @@ class MainboardModule extends Module {
   List<ModularRoute> get helpCenter => [
         ChildRoute(
           '/helpcenter/newGuardian',
-          child: (context, args) => NewGuardianPage(),
+          child: (context, args) => const NewGuardianPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/helpcenter/guardians',
-          child: (context, args) => GuardiansPage(),
+          child: (context, args) => const GuardiansPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/helpcenter/audios',
-          child: (context, args) => AudiosPage(),
+          child: (context, args) => const AudiosPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/helpcenter/audioRecord',
-          child: (context, args) => AudioRecordPage(),
+          child: (context, args) => const AudioRecordPage(),
           transition: TransitionType.rightToLeft,
         )
       ];
@@ -204,7 +203,7 @@ class MainboardModule extends Module {
         ),
         ChildRoute(
           '/supportcenter/show',
-          child: (context, args) => SupportCenterShowPage(),
+          child: (context, args) => const SupportCenterShowPage(),
           transition: TransitionType.rightToLeft,
         )
       ];
@@ -233,22 +232,22 @@ class MainboardModule extends Module {
   List<ModularRoute> get menuRouters => [
         ChildRoute(
           '/menu/about',
-          child: (context, args) => AboutPenhasPage(),
+          child: (context, args) => const AboutPenhasPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/menu/profile_edit',
-          child: (context, args) => ProfileEditPage(),
+          child: (context, args) => const ProfileEditPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/menu/account_preference',
-          child: (context, args) => AccountPreferencePage(),
+          child: (context, args) => const AccountPreferencePage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/menu/account_delete',
-          child: (context, args) => AccountDeletePage(),
+          child: (context, args) => const AccountDeletePage(),
           transition: TransitionType.rightToLeft,
         ),
         ModuleRoute(
@@ -268,12 +267,12 @@ class MainboardModule extends Module {
           (i) => ProfileEditController(
               appStateUseCase: i.get<AppStateUseCase>(),
               skillRepository: i.get<IFilterSkillRepository>(),
-              securityModeActionFeature: i.get<SecurityModeActionFeature>()),
+              securityModeActionFeature: i.get<SecurityModeActionFeature>(),),
         ),
         Bind.factory(
           (i) => AccountDeleteController(
               appConfiguration: i.get<IAppConfiguration>(),
-              profileRepository: i.get<IUserProfileRepository>()),
+              profileRepository: i.get<IUserProfileRepository>(),),
         ),
         Bind.factory(
           (i) => AccountPreferenceController(
@@ -439,7 +438,7 @@ class MainboardModule extends Module {
               appStateRepository: i.get<IAppStateRepository>(),
               userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
               appConfiguration: i.get<IAppConfiguration>(),
-              appModulesServices: i.get<IAppModulesServices>()),
+              appModulesServices: i.get<IAppModulesServices>(),),
         ),
         Bind<InactivityLogoutUseCase>(
           (i) => InactivityLogoutUseCase(
@@ -461,7 +460,7 @@ class MainboardModule extends Module {
         ),
         Bind<StealthModeTutorialPageController>(
           (i) => StealthModeTutorialPageController(
-              locationService: i.get<ILocationServices>()),
+              locationService: i.get<ILocationServices>(),),
         ),
       ];
 
@@ -469,7 +468,7 @@ class MainboardModule extends Module {
         Bind(
           (i) => NewGuardianController(
               guardianRepository: i.get<IGuardianRepository>(),
-              locationService: i.get<ILocationServices>()),
+              locationService: i.get<ILocationServices>(),),
         ),
         Bind(
           (i) => GuardiansController(
@@ -479,7 +478,7 @@ class MainboardModule extends Module {
         Bind(
           (i) => AudiosController(
               audiosRepository: i.get<IAudiosRepository>(),
-              audioPlayServices: i.get<IAudioPlayServices>()),
+              audioPlayServices: i.get<IAudioPlayServices>(),),
         ),
         Bind(
           (i) => AudiosRepository(

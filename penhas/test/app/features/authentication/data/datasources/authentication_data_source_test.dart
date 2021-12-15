@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/features/authentication/data/datasources/authentication_data_source.dart';
@@ -8,29 +7,32 @@ import 'package:penhas/app/features/authentication/data/models/session_model.dar
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
+import 'package:penhas/app/shared/logger/log.dart';
 
 import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late MockHttpClient mockHttpClient = MockHttpClient();
-  late MockIApiServerConfigure mockApiServerConfigure =
+  isCrashlitycsEnabled = false;
+
+  late final MockHttpClient mockHttpClient = MockHttpClient();
+  late final MockIApiServerConfigure mockApiServerConfigure =
       MockIApiServerConfigure();
-  late EmailAddress emailAddress = EmailAddress('valid@email.com');
-  late SignInPassword password =
+  late final EmailAddress emailAddress = EmailAddress('valid@email.com');
+  late final SignInPassword password =
       SignInPassword('_veryStr0ngP4ssw@rd', PasswordValidator());
   final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
 
-  late IAuthenticationDataSource dataSource = AuthenticationDataSource(
+  late final IAuthenticationDataSource dataSource = AuthenticationDataSource(
     apiClient: mockHttpClient,
     serverConfiguration: mockApiServerConfigure,
   );
 
   setUp(() {
     // MockApiServerConfigure configuration
-    when(mockApiServerConfigure.baseUri).thenAnswer(((_) => serverEndpoint));
+    when(mockApiServerConfigure.baseUri).thenAnswer((_) => serverEndpoint);
     when(mockApiServerConfigure.userAgent)
-        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
+        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
   });
 
   Future<Map<String, String>> setUpHttpHeader() async {
@@ -119,7 +121,7 @@ void main() {
       final sut = dataSource.signInWithEmailAndPassword;
       // assert
       expect(
-        () => sut(emailAddress: emailAddress, password: password),
+        () async => await sut(emailAddress: emailAddress, password: password),
         throwsA(
           isA<ApiProviderException>()
               .having((e) => e.bodyContent, 'Got bodyContent', bodyContent),

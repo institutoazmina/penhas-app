@@ -8,8 +8,8 @@ import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_op
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late MockHttpClient apiClient = MockHttpClient();
-  late MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
+  late final MockHttpClient apiClient = MockHttpClient();
+  late final MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
 
   final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
   const String SESSSION_TOKEN = 'my_really.long.JWT';
@@ -23,11 +23,11 @@ void main() {
     );
 
     // MockApiServerConfigure configuration
-    when(serverConfigure.baseUri).thenAnswer(((_) => serverEndpoint));
+    when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
     when(serverConfigure.apiToken)
         .thenAnswer((_) => Future.value(SESSSION_TOKEN));
     when(serverConfigure.userAgent)
-        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
+        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
@@ -53,7 +53,7 @@ void main() {
       any,
       headers: anyNamed('headers'),
       body: anyNamed('body'),
-    ));
+    ),);
   }
 
   void _setUpMockPostHttpClientSuccess200(String? bodyContent) {
@@ -101,7 +101,7 @@ void main() {
       test('should get a valid ValidField for a successful request', () async {
         // arrange
         _setUpMockPostHttpClientSuccess200(bodyContent);
-        final expected = ValidField(message: "Report enviado");
+        final expected = ValidField(message: 'Report enviado');
         // act
         final received = await dataSource.report(option: requestOption);
         // assert

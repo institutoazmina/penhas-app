@@ -18,8 +18,8 @@ class TweetFilterPreferenceRepository
   TweetFilterPreferenceRepository({
     required INetworkInfo networkInfo,
     required ITweetFilterPreferenceDataSource? dataSource,
-  })  : this._dataSource = dataSource,
-        this._networkInfo = networkInfo;
+  })  : _dataSource = dataSource,
+        _networkInfo = networkInfo;
 
   @override
   Future<Either<Failure, TweetFilterSessionEntity>> retreive() async {
@@ -38,15 +38,15 @@ class TweetFilterPreferenceRepository
     }
 
     if (error is ApiProviderException) {
-      if (error.bodyContent!['error'] == 'expired_jwt') {
+      if (error.bodyContent['error'] == 'expired_jwt') {
         return ServerSideSessionFailed();
       }
 
       return ServerSideFormFieldValidationFailure(
-          error: error.bodyContent!['error'],
-          field: error.bodyContent!['field'],
-          reason: error.bodyContent!['reason'],
-          message: error.bodyContent!['message']);
+          error: error.bodyContent['error'],
+          field: error.bodyContent['field'],
+          reason: error.bodyContent['reason'],
+          message: error.bodyContent['message'],);
     }
 
     if (error is ApiProviderSessionError) {

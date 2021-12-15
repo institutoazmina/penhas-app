@@ -5,7 +5,7 @@ class SupportCenterMetadataEntity extends Equatable {
   final List<FilterTagEntity>? categories;
   final List<FilterTagEntity>? projects;
 
-  SupportCenterMetadataEntity({
+  const SupportCenterMetadataEntity({
     required this.categories,
     required this.projects,
   });

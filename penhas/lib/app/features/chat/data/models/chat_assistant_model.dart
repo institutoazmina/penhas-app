@@ -19,9 +19,9 @@ class ChatAssistantModel extends ChatAssistantEntity {
     final appModel = AppStateModel.fromJson(jsonData);
 
     return ChatAssistantModel(
-      title: jsonData["title"],
-      subtitle: jsonData["subtitle"],
-      avatar: jsonData["avatar_url"],
+      title: jsonData['title'],
+      subtitle: jsonData['subtitle'],
+      avatar: jsonData['avatar_url'],
       quizSession: appModel.quizSession,
     );
   }

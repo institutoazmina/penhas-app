@@ -25,7 +25,7 @@ class AccountPreferenceSessionModel extends AccountPreferenceSessionEntity {
   }) : super(preferences: preferences);
 
   factory AccountPreferenceSessionModel.fromJson(Map<String, dynamic> jsonData) {
-    final preferences = (jsonData["preferences"] as List<dynamic>)
+    final preferences = (jsonData['preferences'] as List<dynamic>)
         .map((e) => AccountPreferenceModel.fromJson(e))
         .toList();
 

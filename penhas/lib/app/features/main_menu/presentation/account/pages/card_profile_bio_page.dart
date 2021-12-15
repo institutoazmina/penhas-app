@@ -4,15 +4,17 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/core/extension/asuka.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
+import 'card_profile_header_edit_page.dart';
+
 class CardProfileBioPage extends StatelessWidget {
+  final String content;
+  final void Function(String) onChange;
+
   const CardProfileBioPage({
     Key? key,
     required this.content,
     required this.onChange,
   }) : super(key: key);
-
-  final String content;
-  final void Function(String) onChange;
 
   @override
   Widget build(BuildContext context) {
@@ -55,16 +57,14 @@ extension _Modal on CardProfileBioPage {
 
     Modular.to.showDialog(
       builder: (context) => AlertDialog(
-        title: Text("Editar"),
+        title: const Text('Editar'),
         content: TextFormField(
           maxLengthEnforcement: MaxLengthEnforcement.enforced,
           controller: _controller,
           maxLines: 5,
           maxLength: 2200,
           decoration: const InputDecoration(
-            hintText: 'Informe uma minibio',
-            filled: true,
-          ),
+              hintText: 'Informe uma minibio', filled: true),
         ),
         actions: <Widget>[
           FlatButton(

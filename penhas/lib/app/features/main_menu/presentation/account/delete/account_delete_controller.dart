@@ -21,15 +21,13 @@ class AccountDeleteController extends _AccountDeleteControllerBase
 }
 
 abstract class _AccountDeleteControllerBase with Store, MapFailureMessage {
-  _AccountDeleteControllerBase(
-    this._profileRepository,
-    this._appConfiguration,
-  ) {
-    loadPage();
-  }
-
   final IAppConfiguration _appConfiguration;
   final IUserProfileRepository _profileRepository;
+
+  _AccountDeleteControllerBase(
+      this._profileRepository, this._appConfiguration) {
+    loadPage();
+  }
 
   @observable
   ObservableFuture<Either<Failure, ValidField>>? _progress;
@@ -38,7 +36,7 @@ abstract class _AccountDeleteControllerBase with Store, MapFailureMessage {
   ProfileDeleteState state = const ProfileDeleteState.initial();
 
   @observable
-  String? errorMessage = "";
+  String? errorMessage = '';
 
   @computed
   PageProgressState get progressState {
@@ -47,7 +45,7 @@ abstract class _AccountDeleteControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> delete(String password) async {
-    errorMessage = '';
+    setErrorMessage('');
     _progress = ObservableFuture(
       _profileRepository.delete(password: password),
     );
@@ -90,7 +88,7 @@ extension _PrivateMethods on _AccountDeleteControllerBase {
   }
 
   void handleDeleteError(Failure failure) {
-    errorMessage = mapFailureMessage(failure);
+    setErrorMessage(mapFailureMessage(failure));
   }
 
   void handleDeleteSession(ValidField session) {

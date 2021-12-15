@@ -18,7 +18,7 @@ class TweetSessionEntity extends Equatable {
   final TweetTiles? parent;
   final List<TweetTiles?> tweets;
 
-  TweetSessionEntity({
+  const TweetSessionEntity({
     required this.hasMore,
     required this.orderBy,
     this.parent,

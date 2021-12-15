@@ -18,9 +18,9 @@ import '../../../../../utils/json_util.dart';
 void main() {
   isCrashlitycsEnabled = false;
 
-  late MockAuthenticationDataSource dataSource = MockAuthenticationDataSource();
-  late MockIAppConfiguration appConfiguration = MockIAppConfiguration();
-  late MockINetworkInfo networkInfo = MockINetworkInfo();
+  late final MockAuthenticationDataSource dataSource = MockAuthenticationDataSource();
+  late final MockIAppConfiguration appConfiguration = MockIAppConfiguration();
+  late final MockINetworkInfo networkInfo = MockINetworkInfo();
   late AuthenticationRepository repository;
 
   setUp(() {
@@ -66,7 +66,7 @@ void main() {
         verify(dataSource.signInWithEmailAndPassword(
           emailAddress: email,
           password: password,
-        ));
+        ),);
 
         verify(appConfiguration.saveApiToken(token: sessionModel.sessionToken));
 
@@ -77,7 +77,7 @@ void main() {
           () async {
         // arrange
         mockSignInResponse(dataSource: dataSource)
-            .thenThrow(const ApiProviderException());
+            .thenThrow(ApiProviderException());
         // act
         final result = await repository.signInWithEmailAndPassword(
           emailAddress: email,
@@ -103,18 +103,14 @@ void main() {
         verify(dataSource.signInWithEmailAndPassword(
           emailAddress: email,
           password: password,
-        ));
+        ),);
         expect(
-          result,
-          left(
-            ServerSideFormFieldValidationFailure(
-              error: 'wrongpassword',
-              field: 'password',
-              reason: 'invalid',
-              message: 'E-mail ou senha inválida.',
-            ),
-          ),
-        );
+            result,
+            left(ServerSideFormFieldValidationFailure(
+                error: 'wrongpassword',
+                field: 'password',
+                reason: 'invalid',
+                message: 'E-mail ou senha inválida.',),),);
       });
     });
 
@@ -126,7 +122,7 @@ void main() {
       test('should return InternetConnectionFailure', () async {
         // arrange
         mockSignInResponse(dataSource: dataSource)
-            .thenThrow(const ApiProviderException());
+            .thenThrow(ApiProviderException());
         // act
         final result = await repository.signInWithEmailAndPassword(
           emailAddress: email,
@@ -136,7 +132,7 @@ void main() {
         verify(dataSource.signInWithEmailAndPassword(
           emailAddress: email,
           password: password,
-        ));
+        ),);
         verify(networkInfo.isConnected);
         expect(result, left(InternetConnectionFailure()));
       });
@@ -145,7 +141,7 @@ void main() {
 }
 
 PostExpectation<dynamic> mockSignInResponse(
-    {required MockAuthenticationDataSource dataSource,}) {
+    {dataSource = AuthenticationDataSource}) {
   return when(
     dataSource.signInWithEmailAndPassword(
       emailAddress: anyNamed('emailAddress'),

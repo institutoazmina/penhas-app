@@ -17,10 +17,10 @@ class ChatUserModel extends ChatUserEntity {
 
   factory ChatUserModel.fromJson(Map<String, dynamic> jsonData) =>
       ChatUserModel(
-        activity: jsonData["activity"] ?? jsonData["other_activity"] ?? "",
-        nickname: jsonData["apelido"] ?? jsonData["other_apelido"],
-        avatar: jsonData["avatar_url"] ?? jsonData["other_avatar_url"],
-        userId: jsonData["cliente_id"],
-        blockedMe: jsonData["blocked_me"] == 1,
+        activity: jsonData['activity'] ?? jsonData['other_activity'] ?? '',
+        nickname: jsonData['apelido'] ?? jsonData['other_apelido'],
+        avatar: jsonData['avatar_url'] ?? jsonData['other_avatar_url'],
+        userId: jsonData['cliente_id'],
+        blockedMe: jsonData['blocked_me'] == 1,
       );
 }

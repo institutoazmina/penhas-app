@@ -9,10 +9,10 @@ import 'package:penhas/app/shared/navigation/route.dart';
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late MockAppPreferencesStore appPreferencesStore = MockAppPreferencesStore();
-  late MockUserProfileStore userProfileStore = MockUserProfileStore();
+  late final MockAppPreferencesStore appPreferencesStore = MockAppPreferencesStore();
+  late final MockUserProfileStore userProfileStore = MockUserProfileStore();
 
-  late InactivityLogoutUseCase useCase = InactivityLogoutUseCase(
+  late final InactivityLogoutUseCase useCase = InactivityLogoutUseCase(
     appPreferencesStore: appPreferencesStore,
     userProfileStore: userProfileStore,
   );
@@ -23,7 +23,7 @@ void main() {
           .thenAnswer((_) => Future.value(AppPreferencesEntity(
                 inactiveAppSince: inactiveSince?.millisecondsSinceEpoch,
                 inactiveAppLogoutTimeInSeconds: 30,
-              )));
+              ),),);
       when(appPreferencesStore.save(any)).thenAnswer((_) => Future.value());
       return useCase.setActive();
     }
@@ -54,7 +54,7 @@ void main() {
           .thenAnswer((_) => Future.value(AppPreferencesEntity(
                 inactiveAppSince: previousInactivity?.millisecondsSinceEpoch,
                 inactiveAppLogoutTimeInSeconds: 30,
-              )));
+              ),),);
       when(appPreferencesStore.save(any)).thenAnswer((_) => Future.value());
       return useCase.setInactive(now);
     }
@@ -71,7 +71,7 @@ void main() {
 
     test('customer was inactive then save new inactivity time', () async {
       await _setInactivity(
-          now: now, previousInactivity: now.subtract(Duration(hours: 1)));
+          now: now, previousInactivity: now.subtract(const Duration(hours: 1)),);
       verify(appPreferencesStore.save(AppPreferencesEntity(
         inactiveAppSince: now.millisecondsSinceEpoch,
         inactiveAppLogoutTimeInSeconds: 30,
@@ -90,7 +90,7 @@ void main() {
           .thenAnswer((_) => Future.value(AppPreferencesEntity(
                 inactiveAppSince: inactiveSince?.millisecondsSinceEpoch,
                 inactiveAppLogoutTimeInSeconds: 30,
-              )));
+              ),),);
       when(userProfileStore.retrieve()).thenAnswer((_) => Future.value(
             UserProfileModel(
               stealthModeEnabled: stealthModeEnabled,

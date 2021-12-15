@@ -10,9 +10,9 @@ import '../../../../../utils/helper.mocks.dart';
 void main() {
   isCrashlitycsEnabled = false;
 
-  late MockIApiProvider apiProvider = MockIApiProvider();
-  late MockIApiServerConfigure serverConfiguration = MockIApiServerConfigure();
-  late IUserProfileRepository sut = UserProfileRepository(
+  late final MockIApiProvider apiProvider = MockIApiProvider();
+  late final MockIApiServerConfigure serverConfiguration = MockIApiServerConfigure();
+  late final IUserProfileRepository sut = UserProfileRepository(
     apiProvider: apiProvider,
     serverConfiguration: serverConfiguration,
   );
@@ -21,7 +21,7 @@ void main() {
     when(apiProvider.post(
       path: anyNamed('path'),
       parameters: anyNamed('parameters'),
-    )).thenAnswer((_) async => Future.value(""));
+    ),).thenAnswer((_) async => Future.value(''));
   }
 
   group('UserProfileRepository', () {
@@ -44,7 +44,7 @@ void main() {
       test('should receive ValidField', () async {
         // arrange
         _setUpMockPost();
-        final actual = right(const ValidField());
+        final actual = right(ValidField());
         const toggle = true;
         // act
         final expected = await sut.stealthMode(toggle: toggle);
@@ -72,7 +72,7 @@ void main() {
       test('should receive ValidField', () async {
         // arrange
         _setUpMockPost();
-        final actual = right(const ValidField());
+        final actual = right(ValidField());
         const toggle = false;
         // act
         final matcher = await sut.anonymousMode(toggle: toggle);

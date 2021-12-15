@@ -1,3 +1,4 @@
+
 class TweetEngageRequestOption {
   final String tweetId;
   final String? message;
@@ -8,10 +9,6 @@ class TweetEngageRequestOption {
     this.message,
     this.dislike = false,
   });
-
-  final String tweetId;
-  final String? message;
-  final bool dislike;
 }
 
 class TweetCreateRequestOption {
@@ -20,6 +17,4 @@ class TweetCreateRequestOption {
   TweetCreateRequestOption({
     required this.message,
   });
-
-  final String? message;
 }

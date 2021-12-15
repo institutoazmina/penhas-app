@@ -15,10 +15,8 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ReplyTweetPage extends StatefulWidget {
-  const ReplyTweetPage({Key? key, this.title = 'ReplyTweet'}) : super(key: key);
-
   final String title;
-  const ReplyTweetPage({Key? key, this.title = "ReplyTweet"}) : super(key: key);
+  const ReplyTweetPage({Key? key, this.title = 'ReplyTweet'}) : super(key: key);
 
   @override
   _ReplyTweetPageState createState() => _ReplyTweetPageState();
@@ -62,7 +60,9 @@ class _ReplyTweetPageState
   @override
   void dispose() {
     super.dispose();
-    _disposers!.forEach((d) => d());
+    for (var d in _disposers!) {
+      d();
+    }
   }
 
   @override
@@ -88,7 +88,6 @@ class _ReplyTweetPageState
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Expanded(
-                            flex: 1,
                             child: TweetAvatar(tweet: controller.tweet!),
                           ),
                           const SizedBox(
@@ -248,9 +247,10 @@ class _ReplyTweetPageState
     );
   }
 
-  void _handleTap(BuildContext context) {
+  _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
+    }
     WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 

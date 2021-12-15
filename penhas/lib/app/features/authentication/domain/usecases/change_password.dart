@@ -17,8 +17,6 @@ class ChangePassword {
 
   const ChangePassword._(this._repository);
 
-  final IChangePasswordRepository? _repository;
-
   Future<Either<Failure, ValidField>> call({
     required EmailAddress emailAddress,
     required SignUpPassword password,

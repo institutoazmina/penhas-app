@@ -26,5 +26,5 @@ void main() async {
         child: AppWidget(),
       ),
     );
-  }, FirebaseCrashlytics.instance.recordError);
+  }, FirebaseCrashlytics.instance.recordError,);
 }

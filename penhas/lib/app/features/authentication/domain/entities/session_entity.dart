@@ -4,7 +4,7 @@ class SessionEntity extends Equatable {
   final String? sessionToken;
   final bool deletedScheduled;
 
-  SessionEntity({
+  const SessionEntity({
     required this.sessionToken,
     this.deletedScheduled = false,
   });

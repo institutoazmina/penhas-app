@@ -3,15 +3,17 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/core/extension/asuka.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
+import 'card_profile_header_edit_page.dart';
+
 class CardProfilePasswordPage extends StatelessWidget {
+  final String content;
+  final void Function(String, String) onChange;
+
   const CardProfilePasswordPage({
     Key? key,
     required this.content,
     required this.onChange,
   }) : super(key: key);
-
-  final String content;
-  final void Function(String, String) onChange;
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +47,12 @@ class CardProfilePasswordPage extends StatelessWidget {
 
 extension _Modal on CardProfilePasswordPage {
   void showModal({required BuildContext context}) {
-    TextEditingController newPasswordController = TextEditingController();
-    TextEditingController oldPasswordController = TextEditingController();
+    final TextEditingController newPasswordController = TextEditingController();
+    final TextEditingController oldPasswordController = TextEditingController();
 
     Modular.to.showDialog(
       builder: (context) => AlertDialog(
-        title: Text('Email'),
+        title: const Text('Email'),
         scrollable: true,
         content: Column(
           children: [
@@ -59,9 +61,7 @@ extension _Modal on CardProfilePasswordPage {
               keyboardType: TextInputType.text,
               controller: newPasswordController,
               decoration: const InputDecoration(
-                hintText: 'Digite a nova senha',
-                filled: true,
-              ),
+                  hintText: 'Digite a nova senha', filled: true,),
             ),
             const SizedBox(height: 20),
             TextFormField(
@@ -69,9 +69,7 @@ extension _Modal on CardProfilePasswordPage {
               keyboardType: TextInputType.text,
               controller: oldPasswordController,
               decoration: const InputDecoration(
-                hintText: 'Digite a senha atual',
-                filled: true,
-              ),
+                  hintText: 'Digite a senha atual', filled: true,),
             ),
           ],
         ),

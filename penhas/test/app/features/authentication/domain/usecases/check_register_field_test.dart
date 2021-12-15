@@ -18,7 +18,7 @@ import 'package:penhas/app/features/authentication/domain/usecases/sign_up_passw
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late MockIUserRegisterRepository repository = MockIUserRegisterRepository();
+  late final MockIUserRegisterRepository repository = MockIUserRegisterRepository();
   late CheckRegisterField sut = CheckRegisterField(repository);
 
   Cep? cep;
@@ -69,7 +69,7 @@ void main() {
       birthday: anyNamed('birthday'),
       genre: anyNamed('genre'),
       race: anyNamed('race'),
-    )).thenAnswer((_) async => answer);
+    ),).thenAnswer((_) async => answer);
   }
 
   void expectResult(Either<Failure, ValidField>? result,
@@ -85,7 +85,7 @@ void main() {
       birthday: birthday,
       genre: genre,
       race: race,
-    ));
+    ),);
     verifyNoMoreInteractions(repository);
   }
 
@@ -94,7 +94,7 @@ void main() {
       // arrange
       mockRepositoryRegister(left(RequiredParameter()));
       // act
-      final Either<Failure, ValidField>? result = await sut();
+      final Either<Failure, ValidField> result = await sut();
       // assert
       expect(result, left(RequiredParameter()));
       verifyZeroInteractions(repository);

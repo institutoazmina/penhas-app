@@ -21,12 +21,6 @@ class SupportCenterInputFilter extends StatelessWidget {
     required this.onKeywordsAction,
   }) : super(key: key);
 
-  final int totalOfFilter;
-  final String? initialValue;
-  final void Function() onFilterAction;
-  final void Function(String) onKeywordsAction;
-  final TextEditingController _textController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     _textController.value = TextEditingValue(text: initialValue ?? '');
@@ -78,10 +72,9 @@ class SupportCenterInputFilter extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 6),
                           child: TextField(
                             decoration: const InputDecoration.collapsed(
-                              hintText:
-                                  'Busque por cidade, UF ou nome do ponto de apoio',
-                              hintStyle: TextStyle(fontSize: 11),
-                            ),
+                                hintText:
+                                    'Busque por cidade, UF ou nome do ponto de apoio',
+                                hintStyle: TextStyle(fontSize: 11),),
                             controller: _textController,
                             onSubmitted: (t) => _submitKeywordFilter(context),
                           ),

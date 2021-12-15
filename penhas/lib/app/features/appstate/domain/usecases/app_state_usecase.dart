@@ -19,10 +19,10 @@ class AppStateUseCase {
     required LocalStore<UserProfileEntity> userProfileStore,
     required IAppConfiguration appConfiguration,
     required IAppModulesServices appModulesServices,
-  })  : this._appStateRepository = appStateRepository,
-        this._appConfiguration = appConfiguration,
-        this._userProfileStore = userProfileStore,
-        this._appModulesServices = appModulesServices;
+  })  : _appStateRepository = appStateRepository,
+        _appConfiguration = appConfiguration,
+        _userProfileStore = userProfileStore,
+        _appModulesServices = appModulesServices;
 
   Future<Either<Failure, AppStateEntity>> check() async {
     final currentState = await _appStateRepository.check();
@@ -44,9 +44,10 @@ class AppStateUseCase {
 
   Future<Either<Failure, AppStateEntity>> _processAppState(
       AppStateEntity appStateEntity) async {
-    var userProfile = appStateEntity.userProfile;
-    if (userProfile != null)
+    final userProfile = appStateEntity.userProfile;
+    if (userProfile != null) {
       await _userProfileStore.save(userProfile);
+    }
     await _appConfiguration.saveAppModes(appStateEntity.appMode);
     await _appModulesServices.save(appStateEntity.modules);
     return right(appStateEntity);

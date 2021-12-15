@@ -13,7 +13,7 @@ class FilterTagEntity extends Equatable {
   final String? label;
   final bool isSelected;
 
-  FilterTagEntity({
+  const FilterTagEntity({
     required this.id,
     required this.label,
     required this.isSelected,

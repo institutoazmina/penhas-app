@@ -11,18 +11,16 @@ class InactivityLogoutUseCase {
   InactivityLogoutUseCase({
     required LocalStore<AppPreferencesEntity>? appPreferencesStore,
     required LocalStore<UserProfileEntity>? userProfileStore,
-  })  : this._appPreferencesStore = appPreferencesStore,
-        this._userProfileStore = userProfileStore;
+  })  : _appPreferencesStore = appPreferencesStore,
+        _userProfileStore = userProfileStore;
 
   Future<Either<InactivityError?, AppRoute?>> inactivityRoute(DateTime now) {
     return _appPreferencesStore!
         .retrieve()
-        .then(
-          (preferences) => _inactiveForTooLong(
-            now,
-            preferences,
-          ),
-        )
+        .then((preferences) => _inactiveForTooLong(
+              now,
+              preferences,
+            ),)
         .then((isInactive) => _routeForInactiveCustomer(isInactive));
   }
 
@@ -38,7 +36,7 @@ class InactivityLogoutUseCase {
       return right(AppRoute('/authentication/sign_in_stealth'));
     }
 
-    return left(InactivityError.customerNotStealth);
+    return left(InactivityError.CUSTOMER_NOT_STEALTH);
   }
 
   bool _inactiveForTooLong(DateTime now, AppPreferencesEntity preferences) {
@@ -79,6 +77,6 @@ class InactivityLogoutUseCase {
 }
 
 enum InactivityError {
-  customerActive,
-  customerNotStealth,
+  CUSTOMER_ACTIVE,
+  CUSTOMER_NOT_STEALTH
 }

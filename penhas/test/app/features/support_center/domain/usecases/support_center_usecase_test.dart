@@ -8,9 +8,9 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late MockISupportCenterRepository supportCenterRepository =
+  late final MockISupportCenterRepository supportCenterRepository =
       MockISupportCenterRepository();
-  late MockILocationServices locationServices = MockILocationServices();
+  late final MockILocationServices locationServices = MockILocationServices();
   late SupportCenterUseCase sut;
 
   setUp(() {

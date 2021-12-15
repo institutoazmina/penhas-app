@@ -19,12 +19,10 @@ class Birthday extends Equatable with MapValidatorFailure {
 
   factory Birthday.datetime(DateTime dt) {
     String? input;
-    if (dt != null) {
-      final day = _twoDigits(dt.day);
-      final month = _twoDigits(dt.month);
-      final year = _fourDigits(dt.year);
-      input = "$day/$month/$year";
-    }
+    final day = _twoDigits(dt.day);
+    final month = _twoDigits(dt.month);
+    final year = _fourDigits(dt.year);
+    input = "$day/$month/$year";
 
     return Birthday._(_validate(input));
   }

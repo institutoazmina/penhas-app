@@ -6,14 +6,14 @@ import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageSharedPreferences implements ILocalStorage {
-  LocalStorageSharedPreferences() {
-    _init();
-  }
-
   final Completer<SharedPreferences> _instance = Completer<SharedPreferences>();
 
-  Future<void> _init() async {
+  _init() async {
     _instance.complete(await SharedPreferences.getInstance());
+  }
+
+  LocalStorageSharedPreferences() {
+    _init();
   }
 
   @override
@@ -27,7 +27,7 @@ class LocalStorageSharedPreferences implements ILocalStorage {
     final shared = await _instance.future;
     return catching(() {
       final value = shared.getString(key);
-      if (value == null) throw ValueNotFound("Value not found with key `$key`");
+      if (value == null) throw ValueNotFound('Value not found with key `$key`');
       return value;
     });
   }

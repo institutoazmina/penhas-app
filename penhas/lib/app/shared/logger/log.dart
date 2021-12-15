@@ -5,7 +5,7 @@ import 'package:logging/logging.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:stack_trace/stack_trace.dart';
 
-typedef T OnError<T>(Object exception, StackTrace? stack);
+typedef OnError<T> = T Function(Object exception, StackTrace? stack);
 
 bool isCrashlitycsEnabled = true;
 
@@ -23,12 +23,13 @@ void logError(Object exception, [StackTrace? stack]) {
     error: exception,
     stackTrace: stack,
   );
-  if (isCrashlitycsEnabled)
+  if (isCrashlitycsEnabled) {
     FirebaseCrashlytics.instance.recordError(exception, stack);
+  }
 }
 
 OnError get catchErrorLogger {
-  Trace currentTrace = Trace.current(1);
+  final Trace currentTrace = Trace.current(1);
   return (Object exception, StackTrace? stackTrace) async {
     final trace = Trace.from(stackTrace ?? Trace.current());
     if (!trace.frames.contains(currentTrace.frames.first)) {

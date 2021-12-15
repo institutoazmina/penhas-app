@@ -13,8 +13,8 @@ class AuthenticationWithEmailAndPassword {
   AuthenticationWithEmailAndPassword({
     required IAuthenticationRepository? authenticationRepository,
     required IAppConfiguration? appConfiguration,
-  })  : this._repository = authenticationRepository,
-        this._appConfiguration = appConfiguration;
+  })  : _repository = authenticationRepository,
+        _appConfiguration = appConfiguration;
 
   Future<Either<Failure, SessionEntity>> call({
     required EmailAddress email,

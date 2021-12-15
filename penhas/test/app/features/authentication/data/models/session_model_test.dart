@@ -7,7 +7,6 @@ import '../../../../../utils/json_util.dart';
 void main() {
   final sessionModel = SessionModel(
     sessionToken: 'my_strong_session_token',
-    deletedScheduled: false,
   );
 
   group('SessionModel', () {

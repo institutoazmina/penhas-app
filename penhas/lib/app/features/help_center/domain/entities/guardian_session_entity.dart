@@ -13,7 +13,7 @@ class GuardianSessioEntity extends Equatable {
   final int maximumInvites;
   final List<GuardianEntity> guards;
 
-  GuardianSessioEntity({
+  const GuardianSessioEntity({
     required this.remainingInvites,
     required this.maximumInvites,
     required this.guards,
@@ -36,7 +36,7 @@ class GuardianEntity extends Equatable {
   final GuardianSessionMeta meta;
   final List<GuardianContactEntity> contacts;
 
-  GuardianEntity({
+  const GuardianEntity({
     required this.meta,
     required this.contacts,
   });
@@ -70,7 +70,7 @@ class GuardianSessionMeta extends Equatable {
   final String? header;
   final GuardianStatus status;
 
-  GuardianSessionMeta({
+  const GuardianSessionMeta({
     required this.canEdit,
     required this.canDelete,
     required this.canResend,
@@ -102,7 +102,7 @@ class GuardianContactEntity extends Equatable {
   final String? mobile;
   final String? status;
 
-  GuardianContactEntity({
+  const GuardianContactEntity({
     required this.id,
     required this.name,
     required this.mobile,

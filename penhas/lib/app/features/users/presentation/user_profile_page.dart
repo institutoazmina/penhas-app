@@ -5,8 +5,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:penhas/app/features/users/domain/entities/user_detail_entity.dart';
 import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
+import 'package:penhas/app/features/users/domain/presentation/user_profile_controller.dart';
 import 'package:penhas/app/features/users/domain/states/user_profile_state.dart';
-import 'package:penhas/app/features/users/presentation/user_profile_controller.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
@@ -53,9 +53,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
       children: [
         buildHeader(user.profile),
         buildContent(user.profile),
-        user.isMyself
-            ? Container()
-            : Padding(
+        if (user.isMyself) Container() else Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 70.0,
                   vertical: 20.0,
@@ -74,8 +72,6 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
                   ),
                 ),
               ),
-            ),
-          ),
       ],
     );
   }
@@ -88,7 +84,6 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
         children: [
           CircleAvatar(
             radius: 34,
-            child: SvgPicture.network(user.avatar!),
             backgroundColor: Colors.white38,
             child: SvgPicture.network(user.avatar!),
           ),
@@ -105,7 +100,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
   }
 
   Widget buildContent(UserDetailProfileEntity user) {
-    List<String> skills = user.skills!.split(",");
+    final List<String> skills = user.skills!.split(',');
     skills.removeWhere((e) => e.isEmpty);
 
     return Container(
@@ -148,63 +143,57 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
 
   Tooltip builtTagItem(String item, int index) {
     return Tooltip(
-      message: item,
-      child: ItemTags(
-        activeColor: DesignSystemColors.easterPurple,
-        color: DesignSystemColors.easterPurple,
-        title: item,
-        index: index,
-        elevation: 0,
-        textStyle: tagStyle,
-        textColor: DesignSystemColors.white,
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(20.0),
-          bottomRight: Radius.circular(20.0),
-          topRight: Radius.circular(20.0),
-        ),
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-      ),
-    );
+        message: item,
+        child: ItemTags(
+          activeColor: DesignSystemColors.easterPurple,
+          color: DesignSystemColors.easterPurple,
+          title: item,
+          index: index,
+          elevation: 0,
+          textStyle: tagStyle,
+          textColor: DesignSystemColors.white,
+          borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(20.0),
+            bottomRight: Radius.circular(20.0),
+            topRight: Radius.circular(20.0),
+          ),
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+        ),);
   }
 
   TextStyle get nameStyle => const TextStyle(
-        fontFamily: 'Lato',
-        fontSize: 16.0,
-        letterSpacing: 0.5,
-        color: DesignSystemColors.white,
-        fontWeight: FontWeight.bold,
-      );
+      fontFamily: 'Lato',
+      fontSize: 16.0,
+      letterSpacing: 0.5,
+      color: DesignSystemColors.white,
+      fontWeight: FontWeight.bold,);
 
   TextStyle get headerStyle => const TextStyle(
-        fontFamily: 'Lato',
-        fontSize: 16.0,
-        letterSpacing: 0.5,
-        color: DesignSystemColors.darkIndigoThree,
-        fontWeight: FontWeight.bold,
-      );
+      fontFamily: 'Lato',
+      fontSize: 16.0,
+      letterSpacing: 0.5,
+      color: DesignSystemColors.darkIndigoThree,
+      fontWeight: FontWeight.bold,);
 
   TextStyle get bodyStyle => const TextStyle(
-        fontFamily: 'Lato',
-        fontSize: 14.0,
-        letterSpacing: 0.4,
-        height: 1.2,
-        color: DesignSystemColors.darkIndigoThree,
-        fontWeight: FontWeight.normal,
-      );
+      fontFamily: 'Lato',
+      fontSize: 14.0,
+      letterSpacing: 0.4,
+      height: 1.2,
+      color: DesignSystemColors.darkIndigoThree,
+      fontWeight: FontWeight.normal,);
 
   TextStyle get tagStyle => const TextStyle(
-        fontFamily: 'Lato',
-        fontSize: 12.0,
-        letterSpacing: 0.4,
-        color: DesignSystemColors.white,
-        fontWeight: FontWeight.normal,
-      );
+      fontFamily: 'Lato',
+      fontSize: 12.0,
+      letterSpacing: 0.4,
+      color: DesignSystemColors.white,
+      fontWeight: FontWeight.normal,);
 
   TextStyle get buttomTitleStyle => const TextStyle(
-        fontFamily: 'Lato',
-        fontSize: 12.0,
-        letterSpacing: 0.4,
-        color: DesignSystemColors.white,
-        fontWeight: FontWeight.bold,
-      );
+      fontFamily: 'Lato',
+      fontSize: 12.0,
+      letterSpacing: 0.4,
+      color: DesignSystemColors.white,
+      fontWeight: FontWeight.bold,);
 }

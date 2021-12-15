@@ -9,14 +9,10 @@ class TutorialPageViewWidget extends StatelessWidget {
     String? title,
     required String description,
     required Widget bodyWidget,
-  })  : this._title = title,
-        this._description = description,
-        this._bodyWidget = bodyWidget,
+  })  : _title = title,
+        _description = description,
+        _bodyWidget = bodyWidget,
         super(key: key);
-
-  final String? _title;
-  final String _description;
-  final Widget _bodyWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +25,7 @@ class TutorialPageViewWidget extends StatelessWidget {
         child: Column(
           children: <Widget>[
             _titleBuilder(),
-            if (_title == null) Container() else const SizedBox(height: 28.0),
+            if (_title == null) Container() else SizedBox(height: 28.0),
             _bodyWidgetBuilder(),
             const SizedBox(height: 28.0),
             _descriptionBuilder(),
@@ -62,7 +58,7 @@ class TutorialPageViewWidget extends StatelessWidget {
         : Center(
             child: Text(
               _title!,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'Lato',
                 fontSize: 22.0,
                 fontWeight: FontWeight.bold,

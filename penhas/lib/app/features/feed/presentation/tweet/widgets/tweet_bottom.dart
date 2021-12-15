@@ -14,13 +14,11 @@ class TweetBottom extends StatefulWidget {
   final TweetEntity tweet;
   final ITweetController controller;
 
-  TweetBottom({
+  const TweetBottom({
     Key? key,
     required this.tweet,
     required this.controller,
-  })  : assert(tweet != null),
-        assert(controller != null),
-        super(key: key);
+  })  : super(key: key);
 
   @override
   _TweetBottomState createState() => _TweetBottomState();

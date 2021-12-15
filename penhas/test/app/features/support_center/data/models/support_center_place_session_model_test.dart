@@ -32,8 +32,8 @@ void main() {
         hasMore: false,
         places: [
           SupportCenterPlaceEntity(
-            id: "2676",
-            rate: "n/a",
+            id: '2676',
+            rate: 'n/a',
             ratedByClient: 0,
             distance: '4',
             latitude: -23.557338,

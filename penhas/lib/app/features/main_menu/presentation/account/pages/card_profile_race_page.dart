@@ -51,7 +51,7 @@ extension _Modal on CardProfileRacePage {
   void showModal() {
     Modular.to.showDialog(
       builder: (context) => AlertDialog(
-        title: Text('Raça'),
+        title: const Text('Raça'),
         scrollable: true,
         content: SizedBox(
           height: 350,
@@ -79,17 +79,17 @@ extension _HumanMapper on CardProfileRacePage {
     return HumanRace.values
         .map((v) => RadioListTile(
               value: v.rawValue,
-              groupValue: this.content,
+              groupValue: content,
               selected: isSelected(v.rawValue),
               onChanged: (dynamic v) => updateRace(context, v),
               activeColor: DesignSystemColors.ligthPurple,
               title: Text(v.label, style: contentTextStyle),
-            ))
+            ),)
         .toList();
   }
 
   void updateRace(BuildContext context, String? id) {
-    onChange(id ?? "");
+    onChange(id ?? '');
     Navigator.of(context).pop();
   }
 

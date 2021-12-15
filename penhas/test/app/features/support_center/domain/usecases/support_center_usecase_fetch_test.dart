@@ -9,10 +9,10 @@ import 'package:penhas/app/features/support_center/domain/usecases/support_cente
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late MockISupportCenterRepository supportCenterRepository =
+  late final MockISupportCenterRepository supportCenterRepository =
       MockISupportCenterRepository();
-  late MockILocationServices locationServices = MockILocationServices();
-  late SupportCenterUseCase sut = SupportCenterUseCase(
+  late final MockILocationServices locationServices = MockILocationServices();
+  late final SupportCenterUseCase sut = SupportCenterUseCase(
     locationService: locationServices,
     supportCenterRepository: supportCenterRepository,
   );
@@ -21,7 +21,7 @@ void main() {
     group('fetch', () {
       test('should get GPSFailure for invalid gps information', () async {
         // arrange
-        const fetchRequest = SupportCenterFetchRequest();
+        final fetchRequest = SupportCenterFetchRequest();
         const gpsFailure =
             'Não foi possível encontrar sua localização através do CEP 01203-777, tente novamente mais tarde ou ative a localização';
         final actual = left(
@@ -29,9 +29,9 @@ void main() {
         );
         when(supportCenterRepository.fetch(any)).thenAnswer((_) async => left(
               GpsFailure(gpsFailure),
-            ));
+            ),);
         when(locationServices.currentLocation()).thenAnswer((_) async => right(
-            UserLocationEntity(accuracy: 0, latitude: 0.0, longitude: 0.0)));
+            const UserLocationEntity(latitude: 0.0),),);
         when(locationServices.isPermissionGranted())
             .thenAnswer((_) async => true);
         // act

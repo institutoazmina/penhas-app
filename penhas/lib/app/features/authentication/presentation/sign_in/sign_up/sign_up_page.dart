@@ -9,18 +9,17 @@ import 'package:penhas/app/features/authentication/presentation/shared/input_box
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/sign_up_controller.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key, this.title = 'SignUp'}) : super(key: key);
+import 'sign_up_controller.dart';
 
+class SignUpPage extends StatefulWidget {
   final String title;
-  const SignUpPage({Key? key, this.title = "SignUp"}) : super(key: key);
+  const SignUpPage({Key? key, this.title = 'SignUp'}) : super(key: key);
 
   @override
   _SignUpPageState createState() => _SignUpPageState();
@@ -29,7 +28,7 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
 
   final format = DateFormat('dd/MM/yyyy');
@@ -60,7 +59,9 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
 
   @override
   void dispose() {
-    _disposers!.forEach((d) => d());
+    for (var d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 
@@ -96,17 +97,13 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
                       const SizedBox(height: 24.0),
                       Observer(builder: (_) => _builBirthday()),
                       const SizedBox(height: 24.0),
-                      Observer(
-                        builder: (_) {
-                          return _buildCpf();
-                        },
-                      ),
+                      Observer(builder: (_) {
+                        return _buildCpf();
+                      },),
                       const SizedBox(height: 24.0),
-                      Observer(
-                        builder: (_) {
-                          return _buildCep();
-                        },
-                      ),
+                      Observer(builder: (_) {
+                        return _buildCep();
+                      },),
                       _forgetCep(),
                       const SizedBox(height: 24.0),
                       SizedBox(height: 40.0, child: _buildNextButton()),
@@ -139,7 +136,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
       width: 100,
       alignment: Alignment.topLeft,
       child: Padding(
-        padding: EdgeInsets.zero,
+        padding: const EdgeInsets.only(bottom: 0.0),
         child: RaisedButton(
           onPressed: () async {
             const url =
@@ -147,7 +144,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
             launch(url);
           },
           elevation: 0,
-          padding: EdgeInsets.zero,
+          padding: const EdgeInsets.only(bottom: 0.0),
           color: Colors.transparent,
           child: const Text(
             'Não sei o meu CEP',
@@ -209,6 +206,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
   void _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
+    }
     WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 
@@ -225,14 +223,14 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
     );
   }
 
-  Widget _buildNextButton() {
+  RaisedButton _buildNextButton() {
     return RaisedButton(
       onPressed: () => controller.nextStepPressed(),
       elevation: 0,
       color: DesignSystemColors.ligthPurple,
       shape: kButtonShapeFilled,
-      child: const Text(
-        'Próximo',
+      child: Text(
+        "Próximo",
         style: kTextStyleDefaultFilledButtonLabel,
       ),
     );

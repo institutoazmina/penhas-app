@@ -10,8 +10,8 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late MockHttpClient apiClient = MockHttpClient();
-  late MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
+  late final MockHttpClient apiClient = MockHttpClient();
+  late final MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
   late IQuizDataSource dataSource;
   QuizRequestEntity? quizRequest;
   late String bodyContent;
@@ -24,9 +24,9 @@ void main() {
       serverConfiguration: serverConfigure,
     );
 
-    quizRequest = const QuizRequestEntity(
+    quizRequest = QuizRequestEntity(
       sessionId: '200',
-      options: {'YN1': 'Y'},
+      options: const {'YN1': 'Y'},
     );
     bodyContent =
         JsonUtil.getStringSync(from: 'profile/quiz_session_response.json');
@@ -36,13 +36,13 @@ void main() {
     when(serverConfigure.apiToken)
         .thenAnswer((_) => Future.value(SESSSION_TOKEN));
     when(serverConfigure.userAgent)
-        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
+        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
     final userAgent = await serverConfigure.userAgent;
     return {
-      'X-Api-Key': sessionToken,
+      'X-Api-Key': SESSSION_TOKEN,
       'User-Agent': userAgent,
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
     };
@@ -61,7 +61,7 @@ void main() {
     return when(apiClient.post(
       any,
       headers: anyNamed('headers'),
-    ));
+    ),);
   }
 
   void _setUpMockHttpClientSuccess200() {
@@ -113,7 +113,7 @@ void main() {
         () async {
       // arrange
       final sessionHttpCodeError = [401, 403];
-      for (final httpCode in sessionHttpCodeError) {
+      for (var httpCode in sessionHttpCodeError) {
         _setUpMockHttpClientFailedWithHttp(code: httpCode);
         // act
         final sut = dataSource.update;

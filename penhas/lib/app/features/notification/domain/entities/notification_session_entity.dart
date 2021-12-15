@@ -5,7 +5,7 @@ class NotificationSessionEntity extends Equatable {
   final String? nextPage;
   final List<NotificationEntity>? notifications;
 
-  NotificationSessionEntity({
+  const NotificationSessionEntity({
     required this.hasMore,
     required this.nextPage,
     required this.notifications,
@@ -17,9 +17,9 @@ class NotificationSessionEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        this.hasMore,
-        this.nextPage,
-        this.notifications,
+        hasMore,
+        nextPage,
+        notifications,
       ];
 
   @override
@@ -34,7 +34,7 @@ class NotificationEntity extends Equatable {
   final String? content;
   final String? route;
 
-  NotificationEntity({
+  const NotificationEntity({
     required this.content,
     required this.icon,
     required this.name,
@@ -52,12 +52,12 @@ class NotificationEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        this.content,
-        this.icon,
-        this.name,
-        this.time,
-        this.title,
-        this.route,
+        content,
+        icon,
+        name,
+        time,
+        title,
+        route,
       ];
 
   @override

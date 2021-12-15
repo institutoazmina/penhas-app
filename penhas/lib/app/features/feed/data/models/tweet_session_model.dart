@@ -29,7 +29,7 @@ class TweetSessionModel extends TweetSessionEntity {
         : null;
 
     return TweetSessionModel(
-        hasMore, orderBy, parent, tweets, nextPage as String?);
+        hasMore, orderBy, parent, tweets, nextPage as String?,);
   }
 
   static List<TweetTiles?> _parseTweet(List<dynamic>? tweets) {

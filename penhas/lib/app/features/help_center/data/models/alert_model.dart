@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class AlertModel extends Equatable {
-  AlertModel({
+  const AlertModel({
     required this.title,
     required this.message,
   });

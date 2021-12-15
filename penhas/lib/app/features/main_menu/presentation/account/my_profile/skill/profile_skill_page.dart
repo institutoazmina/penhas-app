@@ -8,7 +8,7 @@ import 'package:penhas/app/features/main_menu/presentation/account/my_profile/sk
 import 'package:penhas/app/features/main_menu/presentation/account/my_profile/skill/profile_skill_controller.dart';
 
 class ProfileSkillPage extends StatefulWidget {
-  ProfileSkillPage({Key? key}) : super(key: key);
+  const ProfileSkillPage({Key? key}) : super(key: key);
 
   @override
   _FilterPageState createState() => _FilterPageState();

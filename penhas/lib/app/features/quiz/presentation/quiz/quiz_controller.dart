@@ -9,9 +9,9 @@ import 'package:penhas/app/shared/navigation/route.dart';
 
 part 'quiz_controller.g.dart';
 
-const String errorServerFailure =
+const String ERROR_SERVER_FAILURE =
     'O servidor está com problema neste momento, tente novamente.';
-const String errorInternetConnectionFailure =
+const String ERROR_INTERNET_CONNECTION_FAILURE =
     'O servidor está inacessível, o PenhaS está com acesso à Internet?';
 
 class QuizController extends _QuizControllerBase with _$QuizController {
@@ -36,11 +36,6 @@ abstract class _QuizControllerBase with Store {
     messages.addAll(reversedCurrent);
     _parseUserReply(reversedCurrent);
   }
-
-  final QuizSessionEntity _quizSession;
-  final IQuizRepository _repository;
-  final AppStateUseCase _appStateUseCase;
-  String? _sessionId;
 
   ObservableList<QuizMessageEntity> messages =
       ObservableList<QuizMessageEntity>();
@@ -133,12 +128,12 @@ abstract class _QuizControllerBase with Store {
     String newMessageContent;
 
     if (reply[messageRemoved.ref] == 'Y') {
-      newMessageContent = "Sim";
+      newMessageContent = 'Sim';
     } else {
       newMessageContent = 'Não';
     }
 
-    QuizMessageEntity newMessage = QuizMessageEntity(
+    final QuizMessageEntity newMessage = QuizMessageEntity(
       ref: messageRemoved.ref,
       content: newMessageContent,
       type: QuizMessageType.displayTextResponse,
@@ -151,7 +146,7 @@ abstract class _QuizControllerBase with Store {
     Map<String, String> reply,
     QuizMessageEntity messageRemoved,
   ) {
-    String display = reply[messageRemoved.ref]!
+    final String display = reply[messageRemoved.ref]!
         .split(',')
         .map((e) => messageRemoved.options!.firstWhere((o) => o.index == e))
         .map((e) => e.display)
@@ -197,10 +192,8 @@ abstract class _QuizControllerBase with Store {
     _parseUserReply(messages);
   }
 
-  Future<void> _updateAppStates(
-    AppStateEntity appStateEntity,
-    void Function(AppStateEntity appState) onUpdate,
-  ) async {
+  Future<void> _updateAppStates(AppStateEntity appStateEntity,
+      void Function(AppStateEntity appState) onUpdate) async {
     final appState = await _appStateUseCase.check();
     appState.fold(
       (_) => {},
@@ -211,10 +204,10 @@ abstract class _QuizControllerBase with Store {
   void _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
       case InternetConnectionFailure:
-        errorMessage = errorInternetConnectionFailure;
+        _setErrorMessage(ERROR_INTERNET_CONNECTION_FAILURE);
         break;
       case ServerFailure:
-        errorMessage = errorServerFailure;
+        _setErrorMessage(ERROR_SERVER_FAILURE);
         break;
       case ServerSideFormFieldValidationFailure:
         _mapFailureToFields(failure as ServerSideFormFieldValidationFailure);

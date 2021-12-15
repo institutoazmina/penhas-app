@@ -15,9 +15,9 @@ class ChatMessageModel extends ChatMessageEntity {
 
   factory ChatMessageModel.fromJson(Map<String, dynamic> jsonData) =>
       ChatMessageModel(
-        id: jsonData["id"],
-        isMe: jsonData["is_me"] == 1,
-        message: jsonData["message"],
-        time: DateTime.parse(jsonData["time"] as String),
+        id: jsonData['id'],
+        isMe: jsonData['is_me'] == 1,
+        message: jsonData['message'],
+        time: DateTime.parse(jsonData['time'] as String),
       );
 }

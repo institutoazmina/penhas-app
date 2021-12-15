@@ -6,7 +6,7 @@ class GeolocationEntity extends Equatable {
   final String? locationToken;
   final UserLocationEntity? userLocation;
 
-  GeolocationEntity({
+  const GeolocationEntity({
     this.label,
     this.locationToken,
     this.userLocation,

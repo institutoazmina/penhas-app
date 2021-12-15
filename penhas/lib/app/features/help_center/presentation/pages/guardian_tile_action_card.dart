@@ -53,14 +53,18 @@ class GuardianTileActionCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 2.0),
-                  child: Text(card.guardian.name!,
-                      style: kTextStyleGuardianCardTitle),
+                  padding: const EdgeInsets.symmetric(vertical: 2.0),
+                  child: Text(
+                    card.guardian.name!,
+                    style: kTextStyleGuardianCardTitle,
+                  ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 2.0),
-                  child: Text(card.guardian.mobile!,
-                      style: kTextStyleGuardianCardMobile),
+                  padding: const EdgeInsets.symmetric(vertical: 2.0),
+                  child: Text(
+                    card.guardian.mobile!,
+                    style: kTextStyleGuardianCardMobile,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 2.0),
@@ -153,7 +157,7 @@ class GuardianTileActionCard extends StatelessWidget {
   void _onDeletePressed(void Function()? action) {
     Modular.to.showDialog(
       builder: (context) => AlertDialog(
-        title: Text('Apagar', style: kTextStyleAlertDialogTitle),
+        title: const Text('Apagar', style: kTextStyleAlertDialogTitle),
         content: Text(
           card.deleteWarning ?? 'Deseja excluir ${card.guardian.name}?',
           style: kTextStyleAlertDialogDescription,
@@ -183,7 +187,7 @@ class GuardianTileActionCard extends StatelessWidget {
   void _onResendPressed(void Function()? action) {
     Modular.to.showDialog(
       builder: (context) => AlertDialog(
-        title: Text('Reenviar', style: kTextStyleAlertDialogTitle),
+        title: const Text('Reenviar', style: kTextStyleAlertDialogTitle),
         content: Text(
           'Deseja reenviar o convite para ${card.guardian.name}?',
           style: kTextStyleAlertDialogDescription,

@@ -18,11 +18,10 @@ import 'package:penhas/app/features/authentication/domain/usecases/sign_up_passw
 
 import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
-import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late MockHttpClient apiclient = MockHttpClient();
-  late MockIApiServerConfigure serverConfiguration = MockIApiServerConfigure();
+  late final MockHttpClient apiclient = MockHttpClient();
+  late final MockIApiServerConfigure serverConfiguration = MockIApiServerConfigure();
 
   final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
   Cep? cep;
@@ -55,7 +54,7 @@ void main() {
     // MockApiServerConfigure configuration
     when(serverConfiguration.baseUri).thenAnswer((_) => serverEndpoint);
     when(serverConfiguration.userAgent)
-        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
+        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
   });
 
   Future<Map<String, String>> setupHttpHeader() async {
@@ -104,7 +103,7 @@ void main() {
 
   void setupHttpClientError400() {
     final bodyContent = JsonUtil.getStringSync(
-        from: 'authentication/registration_email_already_exists.json');
+        from: 'authentication/registration_email_already_exists.json',);
     when(apiclient.post(any, headers: anyNamed('headers')))
         .thenAnswer((_) async => http.Response(bodyContent, 400));
   }
@@ -126,16 +125,15 @@ void main() {
         final loginUri = await setupHttpRequest(justValidadeField: false);
         // act
         await dataSource.register(
-          emailAddress: emailAddress,
-          password: password,
-          cep: cep,
-          cpf: cpf,
-          fullname: fullname,
-          nickName: nickName,
-          birthday: birthday,
-          genre: genre,
-          race: race,
-        );
+            emailAddress: emailAddress,
+            password: password,
+            cep: cep,
+            cpf: cpf,
+            fullname: fullname,
+            nickName: nickName,
+            birthday: birthday,
+            genre: genre,
+            race: race,);
         // assert
         verify(apiclient.post(loginUri, headers: headers));
       });
@@ -148,32 +146,6 @@ void main() {
         final sessionModel = SessionModel.fromJson(jsonData);
         // act
         final result = await dataSource.register(
-          emailAddress: emailAddress,
-          password: password,
-          cep: cep,
-          cpf: cpf,
-          fullname: fullname,
-          nickName: nickName,
-          birthday: birthday,
-          genre: genre,
-          race: race,
-        );
-        // assert
-        expect(result, sessionModel);
-      });
-      test(
-          'should return ApiProviderException when the response code is nonsuccess (non 200)',
-          () async {
-        // arrange
-        final bodyContent = await JsonUtil.getJson(
-          from: 'authentication/registration_email_already_exists.json',
-        );
-        setupHttpClientError400();
-        // act
-        final sut = dataSource.register;
-        // assert
-        expect(
-          () => sut(
             emailAddress: emailAddress,
             password: password,
             cep: cep,
@@ -182,13 +154,33 @@ void main() {
             nickName: nickName,
             birthday: birthday,
             genre: genre,
-            race: race,
-          ),
-          throwsA(
-            isA<ApiProviderException>()
-                .having((e) => e.bodyContent, 'Got bodyContent', bodyContent),
-          ),
-        );
+            race: race,);
+        // assert
+        expect(result, sessionModel);
+      });
+      test(
+          'should return ApiProviderException when the response code is nonsuccess (non 200)',
+          () async {
+        // arrange
+        final bodyContent = await JsonUtil.getJson(
+            from: 'authentication/registration_email_already_exists.json',);
+        setupHttpClientError400();
+        // act
+        final sut = dataSource.register;
+        // assert
+        expect(
+            () async => await sut(
+                emailAddress: emailAddress,
+                password: password,
+                cep: cep,
+                cpf: cpf,
+                fullname: fullname,
+                nickName: nickName,
+                birthday: birthday,
+                genre: genre,
+                race: race,),
+            throwsA(isA<ApiProviderException>()
+                .having((e) => e.bodyContent, 'Got bodyContent', bodyContent),),);
       });
     });
     group('checkField', () {
@@ -207,21 +199,20 @@ void main() {
       test('should return ValidField when the response code is 200 (success)',
           () async {
         // arrange
-        const String bodyContent = '{"continue": 1}';
+        final String bodyContent = '{"continue": 1}';
         setupHttpClientSuccess200(bodyContent);
         // act
         final result =
             await dataSource.checkField(emailAddress: emailAddress, cpf: cpf);
         // assert
-        expect(result, const ValidField());
+        expect(result, ValidField());
       });
       test(
           'should return ApiProviderException when the response code is nonsuccess (non 200)',
           () async {
         // arrange
         final bodyContent = await JsonUtil.getJson(
-          from: 'authentication/registration_email_already_exists.json',
-        );
+            from: 'authentication/registration_email_already_exists.json',);
         setupHttpClientError400();
         // act
         final Future<ValidField> Function(
@@ -237,12 +228,9 @@ void main() {
             Fullname socialName}) sut = dataSource.checkField;
         // assert
         expect(
-          () => sut(emailAddress: emailAddress, cpf: cpf),
-          throwsA(
-            isA<ApiProviderException>()
-                .having((e) => e.bodyContent, 'Got bodyContent', bodyContent),
-          ),
-        );
+            () async => await sut(emailAddress: emailAddress, cpf: cpf),
+            throwsA(isA<ApiProviderException>()
+                .having((e) => e.bodyContent, 'Got bodyContent', bodyContent),),);
       });
     });
   });

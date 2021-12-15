@@ -5,7 +5,7 @@ class StealthModeTutorialState extends Equatable {
     required this.locationPermissionGranted,
   });
 
-  StealthModeTutorialState({
+  const StealthModeTutorialState({
     required this.locationPermissionGranted});
 
   @override

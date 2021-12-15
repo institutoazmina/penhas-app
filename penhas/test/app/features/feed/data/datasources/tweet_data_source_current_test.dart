@@ -9,9 +9,9 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late MockHttpClient apiClient = MockHttpClient();
+  late final MockHttpClient apiClient = MockHttpClient();
   late ITweetDataSource dataSource;
-  late MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
+  late final MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
   Uri? serverEndpoint;
   const String SESSSION_TOKEN = 'my_really.long.JWT';
 
@@ -27,7 +27,7 @@ void main() {
     when(serverConfigure.apiToken)
         .thenAnswer((_) => Future.value(SESSSION_TOKEN));
     when(serverConfigure.userAgent)
-        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
+        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
@@ -52,7 +52,7 @@ void main() {
     return when(apiClient.get(
       any,
       headers: anyNamed('headers'),
-    ));
+    ),);
   }
 
   void _setUpMockGetHttpClientSuccess200(String? bodyContent) {

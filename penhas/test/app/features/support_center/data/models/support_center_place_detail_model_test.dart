@@ -31,8 +31,8 @@ void main() {
             maximumRate: 5,
             ratedByClient: 0,
             place: SupportCenterPlaceEntity(
-              id: "2566",
-              rate: "n/a",
+              id: '2566',
+              rate: 'n/a',
               ratedByClient: 0,
               distance: null,
               latitude: -23.482957,

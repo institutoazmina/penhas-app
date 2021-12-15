@@ -8,12 +8,12 @@ import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.da
 class FilterSkillsModel extends Equatable {
   final List<FilterTagEntity>? skills;
 
-  FilterSkillsModel({
+  const FilterSkillsModel({
     required this.skills,
   });
 
   factory FilterSkillsModel.fromJson(Map<String, dynamic> jsonData) {
-    final List<dynamic> jsonSkills = jsonData["skills"];
+    final List<dynamic> jsonSkills = jsonData['skills'];
     final List<FilterTagEntity> skills = jsonSkills
         .map((e) => FilterTagModel.fromJson(e))
         .whereNotNull()

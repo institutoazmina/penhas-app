@@ -10,7 +10,7 @@ void main() {
       test(
         'should get CpfInvalidFailure for null value',
         () {
-          var result = Cpf("").value;
+          final result = Cpf('').value;
 
           expect(result, left(CpfInvalidFailure()));
         },
@@ -27,7 +27,7 @@ void main() {
       test(
         'should get value from a valid cpf',
         () {
-          const testValue = '236.932.813-43';
+          final testValue = '236.932.813-43';
           final result = Cpf(testValue).value;
 
           expect(result, right('23693281343'));

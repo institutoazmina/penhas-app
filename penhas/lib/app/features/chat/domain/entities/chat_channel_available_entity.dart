@@ -10,7 +10,7 @@ class ChatChannelAvailableEntity extends Equatable {
   final ChatChannelEntity? support;
   final ChatAssistantEntity? assistant;
 
-  ChatChannelAvailableEntity({
+  const ChatChannelAvailableEntity({
     required this.hasMore,
     required this.nextPage,
     required this.channels,

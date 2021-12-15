@@ -7,8 +7,8 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  final String jsonFile = 'filters/filter_skills.json';
-  late MockIApiProvider apiProvider = MockIApiProvider();
+  const String jsonFile = 'filters/filter_skills.json';
+  late final MockIApiProvider apiProvider = MockIApiProvider();
   late IFilterSkillRepository sut;
 
   setUp(() {

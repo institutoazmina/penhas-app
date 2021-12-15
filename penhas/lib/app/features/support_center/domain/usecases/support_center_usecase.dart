@@ -23,8 +23,8 @@ class SupportCenterUseCase {
   SupportCenterUseCase({
     required ILocationServices locationService,
     required ISupportCenterRepository supportCenterRepository,
-  })  : this._locationService = locationService,
-        this._supportCenterRepository = supportCenterRepository;
+  })  : _locationService = locationService,
+        _supportCenterRepository = supportCenterRepository;
 
   Future<Either<Failure, SupportCenterMetadataEntity?>> metadata() async {
     if (_cacheMetadata != null) {
@@ -120,7 +120,7 @@ extension _PrivateMethods on SupportCenterUseCase {
     if (_cachedGeoLocation != null &&
         _cachedGeoLocation!.locationToken != null) {
       return GeolocationEntity(
-          locationToken: _cachedGeoLocation!.locationToken);
+          locationToken: _cachedGeoLocation!.locationToken,);
     } else if (geoLocation != null) {
       return GeolocationEntity(userLocation: geoLocation);
     }

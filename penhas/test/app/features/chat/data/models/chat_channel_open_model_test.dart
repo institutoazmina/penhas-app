@@ -12,7 +12,7 @@ void main() {
   group('ChatChannelOpenModel', () {
     test('should a subclass of ChatChannelOpenEntity', () async {
       // act
-      const model = ChatChannelOpenModel(session: null, token: null);
+      final model = ChatChannelOpenModel(session: null, token: null);
       // assert
       expect(model, isA<ChatChannelOpenEntity>());
     });
@@ -20,13 +20,13 @@ void main() {
       // arrange
       const jsonFile = 'chat/chat_open_channel.json';
       final jsonData = await JsonUtil.getJson(from: jsonFile);
-      const actual = ChatChannelOpenModel(
+      final actual = ChatChannelOpenModel(
         token: '__my_very_secret_session__',
         session: ChatChannelSessionModel(
           hasMore: false,
           newer: '__my_pagination__',
           older: null,
-          messages: [],
+          messages: const [],
           metadata: ChatChannelSessionMetadataModel(
             canSendMessage: true,
             didBlocked: false,

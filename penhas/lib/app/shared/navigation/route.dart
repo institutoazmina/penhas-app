@@ -8,13 +8,13 @@ class AppRoute {
     assert(uri.trim().isNotEmpty);
     assert(uri.startsWith('/'));
 
-    List<String> pathAndArgs = uri.split('?');
+    final List<String> pathAndArgs = uri.split('?');
     path = pathAndArgs.first;
 
     if (pathAndArgs.length > 1) {
       args = HashMap<String, String>();
       pathAndArgs.last.split('&').forEach((arg) {
-        List<String> kv = arg.split('=');
+        final List<String> kv = arg.split('=');
         args![kv.first] = kv.last;
       });
     }

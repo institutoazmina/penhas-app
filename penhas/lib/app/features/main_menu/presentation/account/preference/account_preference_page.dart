@@ -6,10 +6,11 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/main_menu/domain/entities/account_preference_entity.dart';
 import 'package:penhas/app/features/main_menu/domain/states/account_preference_state.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/preference/account_preference_controller.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import 'account_preference_controller.dart';
 
 class AccountPreferencePage extends StatefulWidget {
   const AccountPreferencePage({Key? key}) : super(key: key);
@@ -51,7 +52,9 @@ class _AccountPreferencePageState
 
   @override
   void dispose() {
-    _disposers!.forEach((d) => d());
+    for (var d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 }
@@ -91,10 +94,8 @@ extension _PageBuilder on _AccountPreferencePageState {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Marque abaixo quais notificações deseja receber',
-                style: kTextStyleAlertDialogTitle,
-              ),
+              const Text('Marque abaixo quais notificações deseja receber',
+                  style: kTextStyleAlertDialogTitle,),
               const SizedBox(height: 16),
               Expanded(
                 child: ListView.builder(
@@ -113,7 +114,7 @@ extension _PageBuilder on _AccountPreferencePageState {
                         controlAffinity: ListTileControlAffinity.leading,
                         contentPadding: EdgeInsets.zero,
                       );
-                    }),
+                    },),
               ),
             ],
           ),
@@ -124,6 +125,14 @@ extension _PageBuilder on _AccountPreferencePageState {
 }
 
 extension _TextStyle on _AccountPreferencePageState {
+  TextStyle get contentTextStyle => const TextStyle(
+        fontFamily: 'Lato',
+        fontSize: 14.0,
+        letterSpacing: 0.45,
+        color: DesignSystemColors.darkIndigoThree,
+        fontWeight: FontWeight.bold,
+      );
+
   TextStyle get itemTitleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,

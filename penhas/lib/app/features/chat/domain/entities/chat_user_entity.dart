@@ -7,7 +7,7 @@ class ChatUserEntity extends Equatable {
   final int? userId;
   final bool blockedMe;
 
-  ChatUserEntity({
+  const ChatUserEntity({
     required this.activity,
     required this.nickname,
     required this.avatar,

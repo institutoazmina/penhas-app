@@ -43,20 +43,14 @@ abstract class IApiProvider {
 }
 
 class ApiProvider implements IApiProvider {
-  ApiProvider({
-    required IApiServerConfigure serverConfiguration,
-    required INetworkInfo networkInfo,
-  })  : _serverConfiguration = serverConfiguration,
-        _networkInfo = networkInfo;
-
   final INetworkInfo _networkInfo;
   final IApiServerConfigure _serverConfiguration;
 
   ApiProvider({
     required IApiServerConfigure serverConfiguration,
     required INetworkInfo networkInfo,
-  })  : this._serverConfiguration = serverConfiguration,
-        this._networkInfo = networkInfo;
+  })  : _serverConfiguration = serverConfiguration,
+        _networkInfo = networkInfo;
 
   @override
   Future<String> get({
@@ -94,7 +88,8 @@ class ApiProvider implements IApiProvider {
   }
 
   @override
-  Future<String> delete({String? path, Map<String, String?>? parameters}) async {
+  Future<String> delete(
+      {String? path, Map<String, String?>? parameters}) async {
     final Uri uriRequest = setupHttpRequest(
       path: path,
       queryParameters: parameters,
@@ -119,7 +114,7 @@ class ApiProvider implements IApiProvider {
     );
     final header = await setupHttpHeader(headers);
     final MultipartRequest request = MultipartRequest('POST', uriRequest);
-    final cleanedField = fields ?? <String, String>{};
+    final cleanedField = fields ?? Map<String, String>();
     request
       ..headers.addAll(header)
       ..fields.addAll(cleanedField)
@@ -158,7 +153,7 @@ extension _ApiProvider on ApiProvider {
     headers ??= {};
     headers.addAll(
       {
-        'X-Api-Key': await _serverConfiguration.apiToken ?? "",
+        'X-Api-Key': await _serverConfiguration.apiToken ?? '',
         'User-Agent': await _serverConfiguration.userAgent,
       },
     );
@@ -168,7 +163,7 @@ extension _ApiProvider on ApiProvider {
           'application/x-www-form-urlencoded; charset=utf-8';
     }
 
-    return httpHeaders;
+    return headers;
   }
 
   Uri setupHttpRequest({
@@ -179,7 +174,9 @@ extension _ApiProvider on ApiProvider {
     queryParameters.removeWhere((k, v) => v == null);
     return _serverConfiguration.baseUri.replace(
       path: path,
-      queryParameters: queryParameters.isEmpty ? null : queryParameters as Map<String, dynamic>?,
+      queryParameters: queryParameters.isEmpty
+          ? null
+          : queryParameters as Map<String, dynamic>?,
     );
   }
 }
@@ -212,7 +209,7 @@ extension _FutureExtension<T extends BaseResponse> on Future<T> {
             jsonData = value.body;
           }
 
-          Map<String, dynamic>? bodyContent = Map<String, dynamic>();
+          Map<String, dynamic> bodyContent = <String, dynamic>{};
           try {
             bodyContent = jsonDecode(jsonData);
           } catch (e, stack) {

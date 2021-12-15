@@ -15,7 +15,7 @@ class GuardianTileDescription extends StatelessWidget {
     return Container(
       child: Text(
         description!,
-        style: TextStyle(
+        style: const TextStyle(
           color: DesignSystemColors.darkIndigoThree,
           fontSize: 14.0,
           letterSpacing: 0.45,

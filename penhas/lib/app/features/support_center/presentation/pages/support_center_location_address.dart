@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class SupportCenterLocationAddress extends StatelessWidget {
+  final String _message;
+  final VoidCallback _onPressed;
+
   const SupportCenterLocationAddress({
     Key? key,
     required String message,
     required VoidCallback onPressed,
-  })  : this._message = message,
-        this._onPressed = onPressed,
+  })  : _message = message,
+        _onPressed = onPressed,
         super(key: key);
-
-  final String _message;
-  final VoidCallback _onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +38,11 @@ class SupportCenterLocationAddress extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 onPressed: _onPressed,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
+                  padding: EdgeInsets.only(left: 16.0),
                   child: Row(
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(right: 8.0),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
                         child: Icon(Icons.place),
                       ),
                       Flexible(
@@ -71,10 +71,9 @@ class SupportCenterLocationAddress extends StatelessWidget {
 
 extension _TextStylePrivate on SupportCenterLocationAddress {
   TextStyle get addressTextStyle => const TextStyle(
-        color: DesignSystemColors.darkIndigoThree,
-        fontFamily: 'Lato',
-        fontSize: 14.0,
-        letterSpacing: 0.45,
-        fontWeight: FontWeight.bold,
-      );
+      color: DesignSystemColors.darkIndigoThree,
+      fontFamily: 'Lato',
+      fontSize: 14.0,
+      letterSpacing: 0.45,
+      fontWeight: FontWeight.bold,);
 }

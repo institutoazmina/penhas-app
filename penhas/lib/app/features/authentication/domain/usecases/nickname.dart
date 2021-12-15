@@ -8,7 +8,7 @@ import 'package:penhas/app/features/authentication/domain/usecases/map_validator
 class Nickname extends Equatable with MapValidatorFailure {
   final Either<Failure, String?> value;
 
-  String? get rawValue => value.getOrElse(() => "");
+  String? get rawValue => value.getOrElse(() => '');
   bool get isValid => value.isRight();
 
   factory Nickname(String? input) {

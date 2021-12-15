@@ -30,7 +30,7 @@ class ZodiacModule extends WidgetModule {
               audioServices: i.get<IAudioRecordServices>(),
               featureToogle: i.get<SecurityModeActionFeature>(),
               locationService: i.get<ILocationServices>(),
-              guardianRepository: i.get<IGuardianRepository>()),
+              guardianRepository: i.get<IGuardianRepository>(),),
                   ),
         Bind.factory<SecurityModeActionFeature>(
           (i) => SecurityModeActionFeature(

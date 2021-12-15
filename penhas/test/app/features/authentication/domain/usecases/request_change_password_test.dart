@@ -3,8 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/change_password.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
@@ -15,7 +17,7 @@ void main() {
   late SignUpPassword password;
   late String resetToken;
 
-  late MockIChangePasswordRepository repository =
+  late final MockIChangePasswordRepository repository =
       MockIChangePasswordRepository();
   late ChangePassword sut;
 
@@ -33,23 +35,21 @@ void main() {
           password: anyNamed('password'),
           resetToken: anyNamed(
             'resetToken',
-          ),
-        ),
-      );
+          ),),);
     }
 
     test('should received a ResetPasswordResponseEntity for successful request',
         () async {
       // arrange
-      mockResquest().thenAnswer((_) async => right(const ValidField()));
+      mockResquest().thenAnswer((_) async => right(ValidField()));
       // act
-      final Either<Failure, ValidField>? result = await sut(
+      final Either<Failure, ValidField> result = await sut(
         emailAddress: emailAddress,
         password: password,
         resetToken: resetToken,
       );
       // assert
-      expect(result, right(const ValidField()));
+      expect(result, right(ValidField()));
     });
     test(
         'should received a ServerSideFormFieldValidationFailure from invalid token',
@@ -59,18 +59,15 @@ void main() {
       const message = 'Número não confere.';
       const field = 'token';
       const reason = 'invalid';
-      mockResquest().thenAnswer(
-        (_) async => left(
-          ServerSideFormFieldValidationFailure(
-            error: error,
-            field: field,
-            message: message,
-            reason: reason,
-          ),
-        ),
-      );
+      mockResquest()
+          .thenAnswer((_) async => left(ServerSideFormFieldValidationFailure(
+                error: error,
+                field: field,
+                message: message,
+                reason: reason,
+              ),),);
       // act
-      final Either<Failure, ValidField>? result = await sut(
+      final Either<Failure, ValidField> result = await sut(
         emailAddress: emailAddress,
         resetToken: resetToken,
         password: password,
@@ -78,14 +75,12 @@ void main() {
       // assert
       expect(
         result,
-        left(
-          ServerSideFormFieldValidationFailure(
-            error: error,
-            field: field,
-            message: message,
-            reason: reason,
-          ),
-        ),
+        left(ServerSideFormFieldValidationFailure(
+          error: error,
+          field: field,
+          message: message,
+          reason: reason,
+        ),),
       );
     });
   });

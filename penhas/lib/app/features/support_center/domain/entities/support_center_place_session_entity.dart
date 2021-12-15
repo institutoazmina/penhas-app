@@ -9,7 +9,7 @@ class SupportCenterPlaceSessionEntity extends Equatable {
   final String? nextPage;
   final List<SupportCenterPlaceEntity>? places;
 
-  SupportCenterPlaceSessionEntity({
+  const SupportCenterPlaceSessionEntity({
     required this.maximumRate,
     required this.latitude,
     required this.longitude,

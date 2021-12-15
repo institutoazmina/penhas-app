@@ -24,13 +24,11 @@ abstract class IAudioSyncManager {
 class AudioSyncManager implements IAudioSyncManager {
   Timer? _syncTimer;
   bool _syncAudioRunning = false;
-  // ignore: unused_field
-  late Timer _syncTimer;
   final _pendingUploadAudio = Queue<File>();
   final IAudioSyncRepository _audioRepository;
 
   AudioSyncManager({required IAudioSyncRepository audioRepository})
-      : this._audioRepository = audioRepository {
+      : _audioRepository = audioRepository {
     _init();
   }
 
@@ -45,13 +43,13 @@ class AudioSyncManager implements IAudioSyncManager {
     required String sequence,
     String? suffix,
   }) async {
-    String extension = suffix;
-    if (!extension.startsWith('.')) {
-      extension = '.$extension';
+    suffix ??= '.aac';
+    if (!suffix.startsWith('.')) {
+      suffix = '.$suffix';
     }
 
     final prefix = DateTime.now().millisecondsSinceEpoch.toString();
-    final fileName = '${prefix}_${session}_$sequence$extension';
+    final fileName = '${prefix}_${session}_${sequence}_$suffix';
     final path = await getApplicationDocumentsDirectory()
         .then((dir) => join(dir.path, fileName));
     final directory = dirname(path);
@@ -77,7 +75,7 @@ class AudioSyncManager implements IAudioSyncManager {
   @override
   Future<Either<Failure, File>> cache(AudioEntity audio) async {
     final File file = await cacheFile(audio);
-    const int emptyFileSize = 100;
+    final int emptyFileSize = 100;
 
     try {
       if (file.lengthSync() > emptyFileSize) {
@@ -113,7 +111,6 @@ extension _AudioSyncManager on AudioSyncManager {
   }
 
   void setupUploadTimer() {
-    // Why this block is commented?
     // if (_syncTimer != null) {
     //   return;
     // }
@@ -137,10 +134,8 @@ extension _AudioSyncManager on AudioSyncManager {
     // );
   }
 
-  // ignore: unused_element
-  Future<void> cleanCache() async {
-    final DateTime purgeCacheTime =
-        DateTime.now().subtract(const Duration(days: 3));
+  void cleanCache() async {
+    final DateTime purgeCacheTime = DateTime.now().subtract(const Duration(days: 3));
 
     final List<File> files = await getTemporaryDirectory()
         .then((dir) => dir.listSync(recursive: true))
@@ -149,12 +144,11 @@ extension _AudioSyncManager on AudioSyncManager {
     files.retainWhere((f) => f.path.endsWith('.cached'));
     // se o último acesso for maior que o purgeCacheTime
     files.retainWhere(
-      (f) => purgeCacheTime.compareTo(f.statSync().accessed) > 0,
-    );
+        (f) => purgeCacheTime.compareTo(f.statSync().accessed) > 0,);
     files.map((e) => e.deleteSync());
   }
 
-  Future<void> syncAudios() async {
+  void syncAudios() async {
     if (_syncAudioRunning || _pendingUploadAudio.isEmpty) {
       return;
     }
@@ -182,7 +176,7 @@ extension _AudioSyncManager on AudioSyncManager {
       }
 
       final fileName = file.name;
-      final parts = fileName.split(RegExp('[_.]'));
+      final parts = fileName.split('_');
       final audio = AudioData(
         media: file,
         eventId: parts[1],
@@ -203,7 +197,7 @@ extension _AudioSyncManager on AudioSyncManager {
   }
 
   void handleUploadFailure(Failure failure, File file) {
-    logError(failure);
+    print(failure);
   }
 
   String mapEpochToUTC(String time) {
@@ -233,8 +227,8 @@ extension _AudioSyncManager on AudioSyncManager {
 
   Future<void> loadAudioQueue() async {
     final dirs = await dirAudioUploadContent();
-    dirs.forEach((file) {
-      var status = _pendingUploadAudio.firstWhereOrNull(
+    for (var file in dirs) {
+      final status = _pendingUploadAudio.firstWhereOrNull(
         (e) => e.path == file.path,
       );
 

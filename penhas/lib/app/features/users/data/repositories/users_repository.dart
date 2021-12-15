@@ -23,12 +23,11 @@ class UsersRepository implements IUsersRepository {
 
   UsersRepository({
     required IApiProvider? apiProvider,
-  }) : this._apiProvider = apiProvider;
+  }) : _apiProvider = apiProvider;
 
   @override
   Future<Either<Failure, UserDetailEntity>> profileDetail(
-    String clientId,
-  ) async {
+      String clientId) async {
     const endPoint = '/profile';
     final parameters = {'cliente_id': clientId};
 
@@ -46,15 +45,15 @@ class UsersRepository implements IUsersRepository {
   @override
   Future<Either<Failure, UserSearchSessionEntity>> search(
       UserSearchOptions option) async {
-    final endPoint = "/search-users";
+    const endPoint = '/search-users';
     final skills = (option.skills != null && option.skills!.isNotEmpty)
-        ? option.skills!.join(",")
+        ? option.skills!.join(',')
         : null;
     final parameters = {
-      "name": option.name,
-      "skills": skills,
-      "rows": option.rows?.toString() ?? "100",
-      "next_page": option.nextPage,
+      'name': option.name,
+      'skills': skills,
+      'rows': option.rows?.toString() ?? '100',
+      'next_page': option.nextPage,
     };
 
     try {
@@ -71,15 +70,14 @@ class UsersRepository implements IUsersRepository {
 
 extension _FutureExtension<T extends String> on Future<T> {
   Future<UserDetailEntity> parseDetail() async {
-    return this.then((data) async {
+    return then((data) async {
       final jsonData = jsonDecode(data) as Map<String, dynamic>;
       return UserDetailModel.fromJson(jsonData);
     });
   }
 
   Future<UserSearchSessionEntity> parseSearchSession() async {
-    return this
-        .then((v) => jsonDecode(v) as Map<String, dynamic>)
+    return then((v) => jsonDecode(v) as Map<String, dynamic>)
         .then((v) => UserSearchSessionModel.fromJson(v));
   }
 }

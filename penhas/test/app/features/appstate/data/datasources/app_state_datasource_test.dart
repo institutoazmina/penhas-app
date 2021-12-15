@@ -9,11 +9,11 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late MockHttpClient apiClient = MockHttpClient();
-  late MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
+  late final MockHttpClient apiClient = MockHttpClient();
+  late final MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
   late String bodyContent;
   final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
-  late IAppStateDataSource dataSource = AppStateDataSource(
+  late final IAppStateDataSource dataSource = AppStateDataSource(
     apiClient: apiClient,
     serverConfiguration: serverConfigure,
   );
@@ -23,11 +23,11 @@ void main() {
         JsonUtil.getStringSync(from: 'profile/about_with_quiz_session.json');
 
     // MockApiServerConfigure configuration
-    when(serverConfigure.baseUri).thenAnswer(((_) => serverEndpoint));
+    when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
     when(serverConfigure.apiToken)
         .thenAnswer((_) => Future.value('my.very.strong'));
     when(serverConfigure.userAgent)
-        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
+        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
@@ -51,7 +51,7 @@ void main() {
     return when(apiClient.get(
       any,
       headers: anyNamed('headers'),
-    ));
+    ),);
   }
 
   void _setUpMockHttpClientSuccess200() {
@@ -101,7 +101,7 @@ void main() {
         () async {
       // arrange
       final sessionHttpCodeError = [401, 403];
-      for (final httpCode in sessionHttpCodeError) {
+      for (var httpCode in sessionHttpCodeError) {
         _setUpMockHttpClientFailedWithHttp(code: httpCode);
         // act
         final sut = dataSource.check;

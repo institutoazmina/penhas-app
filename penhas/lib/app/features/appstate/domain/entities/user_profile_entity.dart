@@ -16,7 +16,7 @@ class UserProfileEntity extends Equatable {
   final DateTime birthdate;
   final List<String> skill;
 
-  UserProfileEntity({
+  const UserProfileEntity({
     required this.fullName,
     required this.race,
     required this.genre,
@@ -33,18 +33,18 @@ class UserProfileEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        this.fullName,
-        this.race,
-        this.genre,
-        this.jaFoiVitimaDeViolencia,
-        this.skill,
-        this.email,
-        this.nickname,
-        this.avatar,
-        this.minibio,
-        this.stealthModeEnabled,
-        this.anonymousModeEnabled,
-        this.birthdate,
+        fullName,
+        race,
+        genre,
+        jaFoiVitimaDeViolencia,
+        skill,
+        email,
+        nickname,
+        avatar,
+        minibio,
+        stealthModeEnabled,
+        anonymousModeEnabled,
+        birthdate,
       ];
 
   @override

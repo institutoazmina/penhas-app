@@ -10,12 +10,12 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late MockIAppStateRepository appStateRepository = MockIAppStateRepository();
-  late MockIAppConfiguration appConfiguration = MockIAppConfiguration();
-  late MockUserProfileStore profileStore = MockUserProfileStore();
-  late MockIAppModulesServices appModulesServices = MockIAppModulesServices();
+  late final MockIAppStateRepository appStateRepository = MockIAppStateRepository();
+  late final MockIAppConfiguration appConfiguration = MockIAppConfiguration();
+  late final MockUserProfileStore profileStore = MockUserProfileStore();
+  late final MockIAppModulesServices appModulesServices = MockIAppModulesServices();
 
-  late AppStateUseCase sut = AppStateUseCase(
+  late final AppStateUseCase sut = AppStateUseCase(
     userProfileStore: profileStore,
     appConfiguration: appConfiguration,
     appStateRepository: appStateRepository,

@@ -12,7 +12,7 @@ class UserDetailEntity extends Equatable {
   final bool isMyself;
   final UserDetailProfileEntity profile;
 
-  UserDetailEntity({
+  const UserDetailEntity({
     required this.isMyself,
     required this.profile,
   });

@@ -82,6 +82,6 @@ abstract class _ResetPasswordTwoControllerBase with Store, MapFailureMessage {
 
   void _forwardToStep3() {
     Modular.to.pushNamed('/authentication/reset_password/step3',
-        arguments: _userRegisterModel!);
+        arguments: _userRegisterModel!,);
   }
 }

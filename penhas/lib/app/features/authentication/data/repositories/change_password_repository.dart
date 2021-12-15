@@ -18,8 +18,8 @@ class ChangePasswordRepository
   ChangePasswordRepository({
     required IChangePasswordDataSource? changePasswordDataSource,
     required INetworkInfo? networkInfo,
-  })  : this._networkInfo = networkInfo,
-        this._dataSource = changePasswordDataSource;
+  })  : _networkInfo = networkInfo,
+        _dataSource = changePasswordDataSource;
 
   @override
   Future<Either<Failure, ResetPasswordResponseEntity>> request(
@@ -62,10 +62,10 @@ class ChangePasswordRepository
 
     if (error is ApiProviderException) {
       return ServerSideFormFieldValidationFailure(
-        error: error.bodyContent!['error'],
-        field: error.bodyContent!['field'],
-        reason: error.bodyContent!['reason'],
-        message: error.bodyContent!['message'],
+        error: error.bodyContent['error'],
+        field: error.bodyContent['field'],
+        reason: error.bodyContent['reason'],
+        message: error.bodyContent['message'],
       );
     }
 

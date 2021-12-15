@@ -38,7 +38,7 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
   final StealthSecurityAction _securityAction;
   final PasswordValidator _passwordValidator;
 
-  EmailAddress _emailAddress = EmailAddress("");
+  EmailAddress _emailAddress = EmailAddress('');
   SignInPassword? _password;
   bool _isSecurityRunning = false;
   StreamSubscription? _streamCache;
@@ -87,13 +87,13 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
   String userGreetings = '';
 
   @observable
-  String? userEmail = "";
+  String? userEmail = '';
 
   @observable
   String warningPassword = '';
 
   @observable
-  String? errorMessage = "";
+  String? errorMessage = '';
 
   @observable
   IZodiac sign = ZodiacSignAquarius();
@@ -134,7 +134,7 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
     _progress = ObservableFuture(_repository.signInWithEmailAndPassword(
       emailAddress: _emailAddress,
       password: _password!,
-    ));
+    ),);
 
     final Either<Failure, SessionEntity> response = await _progress!;
 

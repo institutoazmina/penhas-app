@@ -12,7 +12,7 @@ import '../../../../../utils/helper.mocks.dart';
 
 void main() {
   late IAudioSyncRepository sut;
-  late MockIApiProvider apiProvider = MockIApiProvider();
+  late final MockIApiProvider apiProvider = MockIApiProvider();
 
   setUp(() {
     sut = AudioSyncRepository(apiProvider: apiProvider);
@@ -22,7 +22,7 @@ void main() {
     test('should get ValidField for a valid upload', () async {
       // arrange
       final expected = right(
-        const ValidField(message: 'Áudio recebido com sucesso!'),
+        ValidField(message: 'Áudio recebido com sucesso!'),
       );
       final audio = AudioData(
         sequence: '1',
@@ -49,7 +49,7 @@ void main() {
       when(apiProvider.upload(
               path: anyNamed('path'),
               file: anyNamed('file'),
-              fields: anyNamed('fields')))
+              fields: anyNamed('fields'),),)
           .thenThrow(ApiProviderSessionError());
       final audio = AudioData(
         createdAt: '1',

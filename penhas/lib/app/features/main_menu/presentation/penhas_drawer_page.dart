@@ -13,10 +13,8 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class PenhasDrawerPage extends StatefulWidget {
   final String title;
-  const PenhasDrawerPage({Key? key, this.title = "Penhas Drawer"})
+  const PenhasDrawerPage({Key? key, this.title = 'Penhas Drawer'})
       : super(key: key);
-
-  final String title;
 
   @override
   _PenhasDrawerPageState createState() => _PenhasDrawerPageState();
@@ -32,94 +30,91 @@ class _PenhasDrawerPageState
     return Container(
       color: Colors.transparent,
       child: SafeArea(
-        child: Container(
-          constraints: BoxConstraints.expand(
-            width: MediaQuery.of(context).size.width - 60,
-          ),
-          color: Colors.white,
-          child: Observer(
-            builder: (_) {
-              return ListView(
-                children: <Widget>[
-                  PenhasDrawerHeaderPage(
-                    userName: controller.userName,
-                    userAvatar: _buildAvatar(controller.userAvatar),
+          child: Container(
+        constraints: BoxConstraints.expand(
+            width: MediaQuery.of(context).size.width - 60,),
+        color: Colors.white,
+        child: Observer(
+          builder: (_) {
+            return ListView(
+              children: <Widget>[
+                PenhasDrawerHeaderPage(
+                  userName: controller.userName,
+                  userAvatar: _buildAvatar(controller.userAvatar),
+                ),
+                _buildSecurityToggle(
+                  controller.showSecurityOptions,
+                  controller.anonymousModeState,
+                ),
+                _buildSecurityToggle(
+                  controller.showSecurityOptions,
+                  controller.stealthModeState,
+                ),
+                _buildStealthModeNotice(controller.showSecurityOptions),
+                _buildItemList(
+                  title: 'Informações pessoais',
+                  icon: SvgPicture.asset(
+                    'assets/images/svg/drawer/user_profile.svg',
+                    color: DesignSystemColors.darkIndigoThree,
                   ),
-                  _buildSecurityToggle(
-                    controller.showSecurityOptions,
-                    controller.anonymousModeState,
+                  onPressed: () {
+                    Modular.to.pushNamed('/mainboard/menu/profile_edit');
+                  },
+                ),
+                _buildItemList(
+                  title: 'Configurações',
+                  icon: SvgPicture.asset(
+                    'assets/images/svg/drawer/account_setting.svg',
+                    color: DesignSystemColors.darkIndigoThree,
                   ),
-                  _buildSecurityToggle(
-                    controller.showSecurityOptions,
-                    controller.stealthModeState,
+                  onPressed: () {
+                    Modular.to.pushNamed('/mainboard/menu/account_preference');
+                  },
+                ),
+                _buildItemList(
+                  title: 'Exclusão da conta',
+                  icon: SvgPicture.asset(
+                    'assets/images/svg/drawer/trash.svg',
+                    color: DesignSystemColors.darkIndigoThree,
                   ),
-                  _buildStealthModeNotice(controller.showSecurityOptions),
-                  _buildItemList(
-                    title: 'Informações pessoais',
-                    icon: SvgPicture.asset(
-                      'assets/images/svg/drawer/user_profile.svg',
-                      color: DesignSystemColors.darkIndigoThree,
-                    ),
-                    onPressed: () {
-                      Modular.to.pushNamed('/mainboard/menu/profile_edit');
-                    },
+                  onPressed: () {
+                    Modular.to.pushNamed('/mainboard/menu/account_delete');
+                  },
+                ),
+                _buildItemList(
+                  title: 'Sobre o PenhaS',
+                  icon: SvgPicture.asset(
+                    'assets/images/svg/drawer/menu_penhas_icone.svg',
+                    color: DesignSystemColors.darkIndigoThree,
                   ),
-                  _buildItemList(
-                    title: 'Configurações',
-                    icon: SvgPicture.asset(
-                      'assets/images/svg/drawer/account_setting.svg',
-                      color: DesignSystemColors.darkIndigoThree,
-                    ),
-                    onPressed: () {
-                      Modular.to
-                          .pushNamed('/mainboard/menu/account_preference');
-                    },
-                  ),
-                  _buildItemList(
-                    title: 'Exclusão da conta',
-                    icon: SvgPicture.asset(
-                      'assets/images/svg/drawer/trash.svg',
-                      color: DesignSystemColors.darkIndigoThree,
-                    ),
-                    onPressed: () {
-                      Modular.to.pushNamed('/mainboard/menu/account_delete');
-                    },
-                  ),
-                  _buildItemList(
-                    title: 'Sobre o PenhaS',
-                    icon: SvgPicture.asset(
-                      'assets/images/svg/drawer/menu_penhas_icone.svg',
-                      color: DesignSystemColors.darkIndigoThree,
-                    ),
-                    onPressed: () {
-                      Modular.to.pushNamed('/mainboard/menu/about');
-                    },
-                  ),
-                  Container(
-                    constraints: const BoxConstraints(minHeight: 126.0),
-                    alignment: Alignment.bottomCenter,
-                    child: FlatButton(
-                      onPressed: () => controller.logoutPressed(),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const <Widget>[
-                          Icon(
-                            Icons.power_settings_new,
-                            size: 40,
-                            color: DesignSystemColors.ligthPurple,
-                          ),
-                          SizedBox(width: 12),
-                          Text('Sair', style: kTextStyleDrawerLogoutLabel),
-                        ],
-                      ),
+                  onPressed: () {
+                    Modular.to.pushNamed('/mainboard/menu/about');
+                  },
+                ),
+                Container(
+                  constraints: const BoxConstraints(minHeight: 126.0),
+                  alignment: Alignment.bottomCenter,
+                  child: FlatButton(
+                    onPressed: () => controller.logoutPressed(),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const <Widget>[
+                        Icon(
+                          Icons.power_settings_new,
+                          size: 40,
+                          color: DesignSystemColors.ligthPurple,
+                        ),
+                        SizedBox(width: 12),
+                        Text('Sair', style: kTextStyleDrawerLogoutLabel),
+                      ],
                     ),
                   ),
-                ],
-              );
-            },
-          ),
+                ),
+              ],
+            );
+          },
         ),
-      ),
+      ),),
     );
   }
 
@@ -142,13 +137,11 @@ class _PenhasDrawerPageState
                   onPressed: () async {
                     Navigator.push(
                       context,
-                      TutorialScaleRoute(page: const StealthModeTutorialPage()),
+                      TutorialScaleRoute(page: StealthModeTutorialPage()),
                     );
                   },
-                  child: Text(
-                    'Como funciona',
-                    style: securityTutorialButtonTextStyle,
-                  ),
+                  child: Text('Como funciona',
+                      style: securityTutorialButtonTextStyle,),
                 )
               ],
             ),
@@ -178,10 +171,8 @@ class _PenhasDrawerPageState
         padding: const EdgeInsets.only(left: 16.0),
         height: listHeight,
         decoration: const BoxDecoration(
-          border: Border(
-            bottom: BorderSide(color: DesignSystemColors.pinkishGrey),
-          ),
-        ),
+            border: Border(
+                bottom: BorderSide(color: DesignSystemColors.pinkishGrey),),),
         child: Row(
           children: <Widget>[
             SizedBox(height: 26.0, width: 26.0, child: icon),
@@ -205,16 +196,14 @@ class _PenhasDrawerPageState
 
 extension _TextStyel on _PenhasDrawerPageState {
   TextStyle get securityContextTextStyle => const TextStyle(
-        color: DesignSystemColors.darkIndigoThree,
-        fontFamily: 'Lato',
-        fontSize: 14.0,
-        fontWeight: FontWeight.normal,
-      );
+      color: DesignSystemColors.darkIndigoThree,
+      fontFamily: 'Lato',
+      fontSize: 14.0,
+      fontWeight: FontWeight.normal,);
 
   TextStyle get securityTutorialButtonTextStyle => const TextStyle(
-        color: DesignSystemColors.pinky,
-        fontFamily: 'Lato',
-        fontSize: 14.0,
-        fontWeight: FontWeight.bold,
-      );
+      color: DesignSystemColors.pinky,
+      fontFamily: 'Lato',
+      fontSize: 14.0,
+      fontWeight: FontWeight.bold,);
 }

@@ -56,7 +56,7 @@ class _GuardianModel {
 
 class _GuardianContactModel {
   static GuardianContactEntity fromJson(Map<String, dynamic> jsonData) {
-    int parsed = jsonData['id'] ?? 0;
+    final int parsed = jsonData['id'] ?? 0;
     return GuardianContactEntity(
       id: parsed,
       mobile: jsonData['celular'],

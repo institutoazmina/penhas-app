@@ -20,6 +20,6 @@ class SplashModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-        ChildRoute(Modular.initialRoute, child: (_, args) => SplashPage()),
+        ChildRoute(Modular.initialRoute, child: (_, args) => const SplashPage()),
       ];
 }

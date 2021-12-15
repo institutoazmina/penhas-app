@@ -10,8 +10,8 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late MockHttpClient apiClient = MockHttpClient();
-  late MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
+  late final MockHttpClient apiClient = MockHttpClient();
+  late final MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
   late IGuardianDataSource dataSource;
   final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
   const String SESSSION_TOKEN = 'my_really.long.JWT';
@@ -27,13 +27,13 @@ void main() {
     when(serverConfigure.apiToken)
         .thenAnswer((_) => Future.value(SESSSION_TOKEN));
     when(serverConfigure.userAgent)
-        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
+        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
     final userAgent = await serverConfigure.userAgent;
     return {
-      'X-Api-Key': sessionToken,
+      'X-Api-Key': SESSSION_TOKEN,
       'User-Agent': userAgent,
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
     };
@@ -53,7 +53,7 @@ void main() {
       any,
       headers: anyNamed('headers'),
       body: anyNamed('body'),
-    ));
+    ),);
   }
 
   void _setUpMockPostHttpClientSuccess200(String? bodyContent) {
@@ -87,10 +87,9 @@ void main() {
       UserLocationEntity? userLocation;
 
       setUp(() {
-        userLocation = UserLocationEntity(latitude: 1.0, longitude: -1.0);
+        userLocation = const UserLocationEntity(latitude: 1.0, longitude: -1.0);
         bodyContent = JsonUtil.getStringSync(
-          from: 'help_center/guardian_alert_warning.json',
-        );
+            from: 'help_center/guardian_alert_warning.json',);
       });
 
       group('alert()', () {
@@ -101,8 +100,8 @@ void main() {
             const endPointPath = '/me/guardioes/alert';
             final headers = await _setUpHttpHeader();
             final request = _setuHttpRequest(endPointPath, {
-              'gps_lat': "${userLocation!.latitude}",
-              'gps_long': "${userLocation!.longitude}"
+              'gps_lat': '${userLocation!.latitude}',
+              'gps_long': '${userLocation!.longitude}'
             });
             _setUpMockPostHttpClientSuccess200(bodyContent);
             // act
@@ -119,7 +118,7 @@ void main() {
             final expected = AlertModel(
                 title: 'Alerta enviado!',
                 message:
-                    "Não há guardiões cadastrado! Nenhum alerta foi enviado.");
+                    'Não há guardiões cadastrado! Nenhum alerta foi enviado.',);
             // act
             final received = await dataSource.alert(userLocation);
             // assert
@@ -132,14 +131,11 @@ void main() {
           () async {
             // arrange
             final bodyWithError = JsonUtil.getStringSync(
-              from: 'help_center/guardian_alert_gps_error.json',
-            );
+                from: 'help_center/guardian_alert_gps_error.json',);
             _setUpMockPostHttpClientSuccess400(bodyWithError);
             // assert
-            expect(
-              () => dataSource.alert(userLocation),
-              throwsA(isA<GuardianAlertGpsFailure>()),
-            );
+            expect(() async => await dataSource.alert(userLocation),
+                throwsA(isA<GuardianAlertGpsFailure>()),);
           },
         );
       });

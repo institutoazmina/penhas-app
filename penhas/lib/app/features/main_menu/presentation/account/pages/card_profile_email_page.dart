@@ -3,6 +3,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/core/extension/asuka.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
+import 'card_profile_header_edit_page.dart';
+
 class CardProfileEmailPage extends StatelessWidget {
   final String? content;
   final void Function(String, String) onChange;
@@ -12,9 +14,6 @@ class CardProfileEmailPage extends StatelessWidget {
     required this.content,
     required this.onChange,
   }) : super(key: key);
-
-  final String? content;
-  final void Function(String, String) onChange;
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +47,12 @@ class CardProfileEmailPage extends StatelessWidget {
 
 extension _Modal on CardProfileEmailPage {
   void showModal({required BuildContext context}) {
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
 
     Modular.to.showDialog(
       builder: (context) => AlertDialog(
-        title: Text('Email'),
+        title: const Text('Email'),
         scrollable: true,
         content: Column(
           children: [
@@ -61,9 +60,7 @@ extension _Modal on CardProfileEmailPage {
               controller: emailController,
               keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
-                hintText: 'Digite o novo email',
-                filled: true,
-              ),
+                  hintText: 'Digite o novo email', filled: true,),
             ),
             const SizedBox(height: 20),
             TextFormField(
@@ -71,9 +68,7 @@ extension _Modal on CardProfileEmailPage {
               keyboardType: TextInputType.text,
               controller: passwordController,
               decoration: const InputDecoration(
-                hintText: 'Digite a senha atual',
-                filled: true,
-              ),
+                  hintText: 'Digite a senha atual', filled: true,),
             ),
           ],
         ),

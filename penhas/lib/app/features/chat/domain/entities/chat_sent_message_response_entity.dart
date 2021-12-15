@@ -5,7 +5,7 @@ class ChatSentMessageResponseEntity extends Equatable {
   final String? lastMessageEtag;
   final String? currentMessageEtag;
 
-  ChatSentMessageResponseEntity({
+  const ChatSentMessageResponseEntity({
     required this.id,
     required this.lastMessageEtag,
     required this.currentMessageEtag,

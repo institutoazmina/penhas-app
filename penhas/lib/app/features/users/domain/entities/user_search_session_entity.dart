@@ -8,7 +8,7 @@ class UserSearchSessionEntity extends Equatable {
   final String? nextPage;
   final List<UserDetailProfileEntity>? users;
 
-  UserSearchSessionEntity({
+  const UserSearchSessionEntity({
     required this.hasMore,
     required this.nextPage,
     required this.users,

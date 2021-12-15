@@ -6,14 +6,14 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class HelpCenterCardGuardian extends StatelessWidget {
+  final VoidCallback create;
+  final VoidCallback manager;
+
   const HelpCenterCardGuardian({
     Key? key,
     required this.create,
     required this.manager,
   }) : super(key: key);
-
-  final VoidCallback create;
-  final VoidCallback manager;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,7 @@ class HelpCenterCardGuardian extends StatelessWidget {
                     onPressed: () async {
                       await Navigator.push(
                         context,
-                        TutorialScaleRoute(page: const GuardianTutorialPage()),
+                        TutorialScaleRoute(page: GuardianTutorialPage()),
                       );
                     },
                   )
@@ -80,8 +80,8 @@ class HelpCenterCardGuardian extends StatelessWidget {
                         backgroundColor: DesignSystemColors.cobaltTwo,
                         onPressed: create,
                         shape: kButtonShapeOutlineWhite,
-                        child: const Text('Novo guardião',
-                            style: kTextStyleHelpCenterButtonLabel,),
+                        child: Text('Novo guardião',
+                            style: kTextStyleHelpCenterButtonLabel),
                       ),
                     ),
                   ),
@@ -96,7 +96,7 @@ class HelpCenterCardGuardian extends StatelessWidget {
                           backgroundColor: DesignSystemColors.easterPurple,
                           onPressed: manager,
                           shape: kButtonShapeOutlinePurple,
-                          child: const Text(
+                          child: Text(
                             'Meus guardiões',
                             style: kTextStyleHelpCenterButtonLabel,
                           ),),

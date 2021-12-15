@@ -6,7 +6,7 @@ class QuizRequestEntity extends Equatable {
   final String? sessionId;
   final Map<String, String> options;
 
-  QuizRequestEntity({
+  const QuizRequestEntity({
     required this.sessionId,
     required this.options,
   });

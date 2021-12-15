@@ -11,7 +11,7 @@ class ChatChannelSessionEntity extends Equatable {
   final ChatChannelSessionMetadataEntity? metadata;
   final ChatUserEntity? user;
 
-  ChatChannelSessionEntity({
+  const ChatChannelSessionEntity({
     required this.hasMore,
     required this.newer,
     required this.older,
@@ -69,7 +69,7 @@ class ChatChannelSessionMetadataEntity extends Equatable {
   final bool isBlockable;
   final String? lastMessageEtag;
 
-  ChatChannelSessionMetadataEntity({
+  const ChatChannelSessionMetadataEntity({
     required this.canSendMessage,
     required this.didBlocked,
     required this.headerMessage,

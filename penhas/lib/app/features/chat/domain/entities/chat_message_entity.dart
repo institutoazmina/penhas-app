@@ -6,7 +6,7 @@ class ChatMessageEntity extends Equatable {
   final String? message;
   final DateTime time;
 
-  ChatMessageEntity({
+  const ChatMessageEntity({
     required this.id,
     required this.isMe,
     required this.message,

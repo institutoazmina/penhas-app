@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_header_edit_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
+
+import 'card_profile_header_edit_page.dart';
 
 class CardProfileSingleTilePage extends StatelessWidget {
   final String title;
@@ -13,10 +14,6 @@ class CardProfileSingleTilePage extends StatelessWidget {
     this.background = DesignSystemColors.white,
   }) : super(key: key);
 
-  final String title;
-  final String? content;
-  final Color background;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,10 +21,9 @@ class CardProfileSingleTilePage extends StatelessWidget {
         color: background,
         border: Border(
           bottom: BorderSide(
-            color: background == DesignSystemColors.white
-                ? DesignSystemColors.pinkishGrey
-                : background,
-          ),
+              color: background == DesignSystemColors.white
+                  ? DesignSystemColors.pinkishGrey
+                  : background,),
         ),
       ),
       child: Padding(

@@ -15,8 +15,8 @@ class QuizRepository implements IQuizRepository {
   QuizRepository({
     required INetworkInfo networkInfo,
     required IQuizDataSource? dataSource,
-  })  : this._dataSource = dataSource,
-        this._networkInfo = networkInfo;
+  })  : _dataSource = dataSource,
+        _networkInfo = networkInfo;
 
   @override
   Future<Either<Failure, AppStateEntity>> update(
@@ -36,15 +36,15 @@ class QuizRepository implements IQuizRepository {
     }
 
     if (error is ApiProviderException) {
-      if (error.bodyContent!['error'] == 'expired_jwt') {
+      if (error.bodyContent['error'] == 'expired_jwt') {
         return ServerSideSessionFailed();
       }
 
       return ServerSideFormFieldValidationFailure(
-          error: error.bodyContent!['error'],
-          field: error.bodyContent!['field'],
-          reason: error.bodyContent!['reason'],
-          message: error.bodyContent!['message']);
+          error: error.bodyContent['error'],
+          field: error.bodyContent['field'],
+          reason: error.bodyContent['reason'],
+          message: error.bodyContent['message'],);
     }
 
     if (error is ApiProviderSessionError) {

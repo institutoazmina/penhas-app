@@ -3,7 +3,7 @@ import 'package:penhas/app/core/pages/tutorial_page_view_widget.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class RecordTutorialPage extends StatefulWidget {
-  RecordTutorialPage({Key? key}) : super(key: key);
+  const RecordTutorialPage({Key? key}) : super(key: key);
 
   @override
   _RecordTutorialPageState createState() => _RecordTutorialPageState();
@@ -123,7 +123,7 @@ class _RecordTutorialPageState extends State<RecordTutorialPage> {
         color: DesignSystemColors.ligthPurple,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        padding: EdgeInsets.zero,
+        padding: const EdgeInsets.all(0.0),
         elevation: 0.0,
         onPressed: () {
           isLastPage ? _dispose() : _nextPage();

@@ -26,14 +26,14 @@ abstract class _MainboardStoreBase with Store {
     setupProgress = setup();
   }
 
-  PageController pageController = PageController(initialPage: 0);
+  PageController pageController = PageController();
 
   @observable
   ObservableList<MainboardState> pages =
       List<MainboardState>.empty().asObservable();
 
   @observable
-  MainboardState selectedPage = MainboardState.feed();
+  MainboardState selectedPage = const MainboardState.feed();
 
   @action
   Future changePage({required MainboardState to}) async {
@@ -51,29 +51,29 @@ abstract class _MainboardStoreBase with Store {
 
 extension _Methods on _MainboardStoreBase {
   Future<void> setup() async {
-    List<MainboardState> authorizedPages = [];
+    final List<MainboardState> authorizedPages = [];
 
     if (await FeedToggleFeature(modulesServices: _modulesServices).isEnabled) {
-      authorizedPages.add(MainboardState.feed());
+      authorizedPages.add(const MainboardState.feed());
     }
 
     if (await TweetToggleFeature(modulesServices: _modulesServices).isEnabled) {
-      authorizedPages.add(MainboardState.compose());
+      authorizedPages.add(const MainboardState.compose());
     }
 
     if (await SecurityModeActionFeature(modulesServices: _modulesServices)
         .isEnabled) {
-      authorizedPages.add(MainboardState.helpCenter());
+      authorizedPages.add(const MainboardState.helpCenter());
     }
 
     if (await ChatSupportToggleFeature(modulesServices: _modulesServices)
         .isEnabled) {
-      authorizedPages.add(MainboardState.chat());
+      authorizedPages.add(const MainboardState.chat());
     }
 
     if (await SupportCenterToggleFeature(modulesServices: _modulesServices)
         .isEnabled) {
-      authorizedPages.add(MainboardState.supportPoint());
+      authorizedPages.add(const MainboardState.supportPoint());
     }
 
     pages = authorizedPages.asObservable();

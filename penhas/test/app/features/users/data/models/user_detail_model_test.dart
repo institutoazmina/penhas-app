@@ -25,14 +25,14 @@ void main() {
     test('should return a valid model with a valid JSON', () async {
       // arrange
       final jsonData = await JsonUtil.getJson(from: jsonFile);
-      const profile = UserDetailProfileModel(
+      final profile = UserDetailProfileModel(
         nickname: 'Leticia',
         avatar: 'https://api.example.com/avatar/padrao.svg',
         clientId: 1335,
         miniBio: '',
         skills: '',
       );
-      const actual = UserDetailModel(isMyself: false, profile: profile);
+      final actual = UserDetailModel(isMyself: false, profile: profile);
       // act
       final matcher = UserDetailModel.fromJson(jsonData);
       // assert

@@ -7,14 +7,6 @@ import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_bottom
 import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_title.dart';
 
 class SingleTweet extends StatelessWidget {
-  const SingleTweet({
-    Key? key,
-    required this.tweet,
-    required BuildContext context,
-    required this.controller,
-  })  : _context = context,
-        super(key: key);
-
   final TweetEntity tweet;
   final BuildContext _context;
   final ITweetController controller;
@@ -24,9 +16,7 @@ class SingleTweet extends StatelessWidget {
     required this.tweet,
     required BuildContext context,
     required this.controller,
-  })  : assert(context != null),
-        assert(controller != null),
-        this._context = context,
+  })  : _context = context,
         super(key: key);
 
   @override
@@ -51,6 +41,7 @@ class SingleTweet extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Expanded(
+                flex: 1,
                 child: TweetAvatar(tweet: tweet),
               ),
               const SizedBox(width: 6.0),

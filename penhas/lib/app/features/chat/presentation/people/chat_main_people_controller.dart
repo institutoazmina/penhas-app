@@ -91,7 +91,7 @@ extension _ChatMainPeopleControllerBasePrivate
   }
 
   void handleLoadSession(UserSearchSessionEntity session) {
-    List<ChatMainTileEntity> tiles = [];
+    final List<ChatMainTileEntity> tiles = [];
 
     tiles.add(ChatMainPeopleFilterCardTile(_tags.length));
 
@@ -126,7 +126,7 @@ extension _ChatMainPeopleControllerBasePrivate
         .toList();
 
     Modular.to
-        .pushNamed("/mainboard/filters", arguments: tags)
+        .pushNamed('/mainboard/filters', arguments: tags)
         .then((v) => v as FilterActionObserver?)
         .then((v) => handleFilterUpdate(v));
   }

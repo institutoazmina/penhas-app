@@ -5,7 +5,7 @@ class ChatChannelOpenEntity extends Equatable {
   final String? token;
   final ChatChannelSessionEntity? session;
 
-  ChatChannelOpenEntity({
+  const ChatChannelOpenEntity({
     required this.token,
     this.session,
   });

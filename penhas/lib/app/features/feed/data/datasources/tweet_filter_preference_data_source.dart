@@ -18,8 +18,8 @@ class TweetFilterPreferenceDataSource
   TweetFilterPreferenceDataSource({
     required http.Client? apiClient,
     required IApiServerConfigure? serverConfiguration,
-  })  : this._apiClient = apiClient,
-        this._serverConfiguration = serverConfiguration;
+  })  : _apiClient = apiClient,
+        _serverConfiguration = serverConfiguration;
 
   @override
   Future<TweetFilterSessionModel> fetch() async {
@@ -43,7 +43,7 @@ class TweetFilterPreferenceDataSource
     final userAgent = await _serverConfiguration!.userAgent;
     final apiToken = await _serverConfiguration!.apiToken;
     return {
-      'X-Api-Key': apiToken ?? "",
+      'X-Api-Key': apiToken ?? '',
       'User-Agent': userAgent,
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
     };

@@ -17,7 +17,7 @@ class AppModulesServices implements IAppModulesServices {
   final _appModuleKey = 'br.com.penhas.appModules';
 
   AppModulesServices({required ILocalStorage storage})
-      : this._storage = storage;
+      : _storage = storage;
 
   @override
   Future<void> save(List<AppStateModuleEntity> modules) {
@@ -35,7 +35,7 @@ class AppModulesServices implements IAppModulesServices {
   Future<AppStateModuleEntity?> feature({required String name}) {
     return _storage
         .get(_appModuleKey)
-        .then((value) => value.getOrElse(() => "[]"))
+        .then((value) => value.getOrElse(() => '[]'))
         .then((source) => jsonDecode(source) as List<dynamic>)
         .then((value) => _filterFeature(name: name, objects: value));
   }
@@ -55,7 +55,7 @@ class AppModulesServices implements IAppModulesServices {
 }
 
 extension AppStateModuleEntityJson on AppStateModuleEntity {
-  Map<String, Object?> toJson() => {'code': this.code, 'meta': this.meta};
+  Map<String, Object?> toJson() => {'code': code, 'meta': meta};
 
   static AppStateModuleEntity fromJson(Map<String, dynamic> object) =>
       AppStateModuleEntity(

@@ -49,7 +49,7 @@ class AppStateEntity extends Equatable {
   final AppStateModeEntity appMode;
   final List<AppStateModuleEntity> modules;
 
-  AppStateEntity({
+  const AppStateEntity({
     required this.quizSession,
     required this.userProfile,
     required this.appMode,
@@ -75,7 +75,7 @@ class QuizSessionEntity extends Equatable {
   final bool isFinished;
   final String? endScreen;
 
-  QuizSessionEntity({
+  const QuizSessionEntity({
     required this.currentMessage,
     required this.sessionId,
     required this.isFinished,
@@ -101,23 +101,15 @@ class QuizMessageEntity extends Equatable {
   final String? buttonLabel;
   final List<QuizMessageMultiplechoicesOptions>? options;
 
-  QuizMessageEntity({
+  const QuizMessageEntity({
     required this.content,
     required this.type,
-    this.ref = "",
+    this.ref = '',
     this.style,
     this.action,
     this.options,
     this.buttonLabel,
   });
-
-  final String? content;
-  final QuizMessageType type;
-  final String ref;
-  final String? style;
-  final String? action;
-  final String? buttonLabel;
-  final List<QuizMessageMultiplechoicesOptions>? options;
 
   @override
   List<dynamic> get props =>
@@ -125,7 +117,7 @@ class QuizMessageEntity extends Equatable {
 
   @override
   String toString() {
-    return 'QuizMessageEntity{content: ${content.toString()}, type: ${type.toString()}, style: ${style.toString()}, action: ${action.toString()}, ref: $ref}, buttonLabel: ${buttonLabel.toString()}, options: ${options.toString()}';
+    return 'QuizMessageEntity{content: ${content.toString()}, type: ${type.toString()}, style: ${style.toString()}, action: ${action.toString()}, ref: ${ref.toString()}}, buttonLabel: ${buttonLabel.toString()}, options: ${options.toString()}';
   }
 }
 
@@ -133,13 +125,10 @@ class QuizMessageMultiplechoicesOptions extends Equatable {
   final String? display;
   final String? index;
 
-  QuizMessageMultiplechoicesOptions({
+  const QuizMessageMultiplechoicesOptions({
     required this.display,
     required this.index,
   });
-
-  final String? display;
-  final String? index;
 
   @override
   List<Object?> get props => [display, index!];
@@ -154,11 +143,9 @@ class QuizMessageMultiplechoicesOptions extends Equatable {
 class AppStateModeEntity extends Equatable {
   final bool hasActivedGuardian;
 
-  AppStateModeEntity({
-    this.hasActivedGuardian: false,
+  const AppStateModeEntity({
+    this.hasActivedGuardian = false,
   });
-
-  final bool hasActivedGuardian;
 
   @override
   bool get stringify => true;
@@ -178,7 +165,7 @@ class AppStateModuleEntity extends Equatable {
   final String code;
   final String meta;
 
-  AppStateModuleEntity({
+  const AppStateModuleEntity({
     required this.code,
     required this.meta,
   });

@@ -6,7 +6,7 @@ import '../../../utils/helper.mocks.dart';
 
 void main() {
   late NetworkInfo networkInfo;
-  late MockDataConnectionChecker mockDataConnectionChecker =
+  late final MockDataConnectionChecker mockDataConnectionChecker =
       MockDataConnectionChecker();
 
   setUp(() {

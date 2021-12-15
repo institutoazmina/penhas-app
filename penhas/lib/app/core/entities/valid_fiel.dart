@@ -5,12 +5,7 @@ import 'package:penhas/app/shared/logger/log.dart';
 class ValidField extends Equatable {
   final String? message;
 
-  factory ValidField.fromJson(Map<String, dynamic> jsonData) {
-    final String? message = jsonData['message'] ?? jsonData['text'];
-    return ValidField(message: message);
-  }
-
-  final String? message;
+  const ValidField({this.message});
 
   @override
   List<Object?> get props => [message];

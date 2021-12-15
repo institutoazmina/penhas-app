@@ -10,7 +10,6 @@ import 'package:penhas/app/features/support_center/domain/states/support_center_
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_detail_map.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_rate.dart';
-import 'package:penhas/app/features/support_center/presentation/show/support_center_show_controller.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/logger/log.dart';
@@ -34,11 +33,9 @@ class _SupportCenterShowPageState
         elevation: 0.0,
         backgroundColor: DesignSystemColors.easterPurple,
       ),
-      body: Observer(
-        builder: (_) {
-          return bodyBuilder(context, controller.state);
-        },
-      ),
+      body: Observer(builder: (_) {
+        return bodyBuilder(context, controller.state);
+      },),
     );
   }
 }
@@ -77,17 +74,15 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
               child: SupportCenterDetailMap(detail: detail),
             ),
             Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
               color: DesignSystemColors.systemBackgroundColor,
               child: Text(
                 detail.place!.name!,
                 style: TextStyle(
-                  color: placeColor,
-                  fontFamily: 'Lato',
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                ),
+                    color: placeColor,
+                    fontFamily: 'Lato',
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,),
               ),
             ),
             Container(
@@ -108,9 +103,7 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
                     child: Column(
                       children: [
                         Text(
-                          detail.place!.category.name!.toUpperCase() +
-                              " | " +
-                              detail.place!.typeOfPlace!.toUpperCase(),
+                          "${detail.place!.category.name!.toUpperCase()} | ${detail.place!.typeOfPlace!.toUpperCase()}",
                           style: placeTypeTextStyle,
                         ),
                       ],
@@ -120,8 +113,7 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
               ),
             ),
             Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
               child: HtmlWidget(
                 detail.place!.htmlContent!,
                 webViewJs: false,
@@ -134,10 +126,8 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
                 Expanded(
                   flex: 5,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                      vertical: 20.0,
-                    ),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
                     color: DesignSystemColors.systemBackgroundColor,
                     child: SizedBox(
                       height: 44,
@@ -202,10 +192,10 @@ extension _Maps on _SupportCenterShowPageState {
                 children: [
                   Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal:
-                          (fullWidth(context) - fullWidth(context) * .2) / 2,
-                      vertical: 12,
-                    ),
+                        horizontal:
+                            (fullWidth(context) - fullWidth(context) * .2) /
+                                2,
+                        vertical: 12,),
                     child: Container(
                       height: 5,
                       decoration: BoxDecoration(
@@ -236,17 +226,8 @@ extension _Maps on _SupportCenterShowPageState {
                                 width: 30.0,
                               ),
                             ),
-                            title: Text(
-                              map.mapName,
-                              style: mapTitleTextStyle,
-                            ),
-                            leading: SvgPicture.asset(
-                              map.icon,
-                              height: 30.0,
-                              width: 30.0,
-                            ),
-                          ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -264,29 +245,30 @@ extension _Maps on _SupportCenterShowPageState {
 
 extension _TextStyle on _SupportCenterShowPageState {
   TextStyle get placeTypeTextStyle => const TextStyle(
-        color: DesignSystemColors.brownishGrey,
-        fontFamily: 'Lato',
-        fontSize: 12.0,
-        fontWeight: FontWeight.normal,
-      );
+      color: DesignSystemColors.brownishGrey,
+      fontFamily: 'Lato',
+      fontSize: 12.0,
+      fontWeight: FontWeight.normal,);
 
+  TextStyle get addressContentTextStyle => const TextStyle(
+      color: DesignSystemColors.warnGrey,
+      fontFamily: 'Lato',
+      fontSize: 14.0,
+      fontWeight: FontWeight.bold,);
   TextStyle get buttonTitle => const TextStyle(
-        color: DesignSystemColors.white,
-        fontFamily: 'Lato',
-        fontSize: 12.0,
-        fontWeight: FontWeight.bold,
-      );
+      color: DesignSystemColors.white,
+      fontFamily: 'Lato',
+      fontSize: 12.0,
+      fontWeight: FontWeight.bold,);
   TextStyle get mapTitleTextStyle => const TextStyle(
-        color: Colors.black,
-        fontFamily: 'Lato',
-        fontSize: 16.0,
-        fontWeight: FontWeight.normal,
-      );
+      color: Colors.black,
+      fontFamily: 'Lato',
+      fontSize: 16.0,
+      fontWeight: FontWeight.normal,);
   TextStyle get htmlContentTextStyle => const TextStyle(
-        fontFamily: 'Lato',
-        fontSize: 14.0,
-        letterSpacing: 0.4,
-        color: DesignSystemColors.darkIndigoThree,
-        fontWeight: FontWeight.normal,
-      );
+      fontFamily: 'Lato',
+      fontSize: 14.0,
+      letterSpacing: 0.4,
+      color: DesignSystemColors.darkIndigoThree,
+      fontWeight: FontWeight.normal,);
 }

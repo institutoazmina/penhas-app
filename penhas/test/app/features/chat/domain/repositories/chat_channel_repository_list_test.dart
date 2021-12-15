@@ -8,8 +8,8 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  late MockIApiProvider apiProvider = MockIApiProvider();
-  late IChatChannelRepository sut =
+  late final MockIApiProvider apiProvider = MockIApiProvider();
+  late final IChatChannelRepository sut =
       ChatChannelRepository(apiProvider: apiProvider);
 
   group('ChatChannel', () {

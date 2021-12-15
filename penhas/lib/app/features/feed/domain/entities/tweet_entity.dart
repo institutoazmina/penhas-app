@@ -84,7 +84,7 @@ class TweetMeta extends Equatable {
   final bool liked;
   final bool owner;
 
-  TweetMeta({required this.liked, required this.owner});
+  const TweetMeta({required this.liked, required this.owner});
 
   @override
   List<Object?> get props => [liked, owner];

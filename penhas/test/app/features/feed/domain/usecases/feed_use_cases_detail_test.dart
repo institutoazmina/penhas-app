@@ -10,8 +10,8 @@ import '../../../../../utils/helper.mocks.dart';
 
 void main() {
   late TweetEntity tweetRequest;
-  late MockITweetRepository repository = MockITweetRepository();
-  late MockTweetFilterPreference filterPreference = MockTweetFilterPreference();
+  late final MockITweetRepository repository = MockITweetRepository();
+  late final MockTweetFilterPreference filterPreference = MockTweetFilterPreference();
 
   late int maxRowsPerRequest;
 
@@ -27,7 +27,7 @@ void main() {
         anonymous: false,
         content: 'content 1',
         avatar: 'https:/site.com/avatas.svg',
-        meta: const TweetMeta(liked: false, owner: false),);
+        meta: TweetMeta(liked: false, owner: false),);
   });
 
   group('FeedUseCases', () {
@@ -42,11 +42,11 @@ void main() {
       TweetSessionEntity? firstSession;
 
       setUp(() {
-        emptySession = const TweetSessionEntity(
+        emptySession = TweetSessionEntity(
           nextPage: null,
           hasMore: false,
           orderBy: TweetSessionOrder.oldestFirst,
-          tweets: [],
+          tweets: const [],
         );
 
         firstSession = TweetSessionEntity(
@@ -64,7 +64,7 @@ void main() {
       test('should request with parent_id and after', () async {
         // arrange
         when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer(((_) async => right(emptySession!)));
+            .thenAnswer((_) async => right(emptySession!));
         // act
         final sut = FeedUseCases(
           repository: repository,
@@ -86,12 +86,12 @@ void main() {
       test('should get empty response if tweet does not have detail', () async {
         // arrange
         when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer(((_) async => right(emptySession!)));
+            .thenAnswer((_) async => right(emptySession!));
         final sut = FeedUseCases(
           repository: repository,
           filterPreference: filterPreference,
         );
-        final expected = right(const FeedCache(tweets: []));
+        final expected = right(FeedCache(tweets: const []));
         // act
         final received = await sut.fetchTweetDetail(tweetRequest.id);
         // assert
@@ -100,7 +100,7 @@ void main() {
       test('should get a list of tweet from detail', () async {
         // arrange
         when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer(((_) async => right(firstSession!)));
+            .thenAnswer((_) async => right(firstSession!));
         final sut = FeedUseCases(
           repository: repository,
           filterPreference: filterPreference,
@@ -169,7 +169,7 @@ void main() {
       test('should request with parent_id and after of last tweet', () async {
         // arrange
         when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer(((_) async => right(firstSession)));
+            .thenAnswer((_) async => right(firstSession));
         final afterTweet = tweetRequest.copyWith(
           id: 'id_6',
           userName: 'user_2',
@@ -203,10 +203,10 @@ void main() {
           maxRows: maxRowsPerRequest,
         );
         when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer(((_) async => right(firstSession)));
+            .thenAnswer((_) async => right(firstSession));
         await sut.fetchTweetDetail(tweetRequest.id);
         when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer(((_) async => right(secondSession)));
+            .thenAnswer((_) async => right(secondSession));
         final expected = right(FeedCache(tweets: [
           tweetRequest.copyWith(
               id: 'id_5',
@@ -246,15 +246,15 @@ void main() {
           maxRows: maxRowsPerRequest,
         );
         when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer(((_) async => right(firstSession)));
+            .thenAnswer((_) async => right(firstSession));
         await sut.fetchTweetDetail(tweetRequest.id);
         when(repository.fetch(option: anyNamed('option'))).thenAnswer(
           (_) async => right(
-            const TweetSessionEntity(
+            TweetSessionEntity(
                 nextPage: null,
                 hasMore: false,
                 orderBy: TweetSessionOrder.oldestFirst,
-                tweets: [],),
+                tweets: const [],),
           ),
         );
         final expected = right(FeedCache(tweets: [

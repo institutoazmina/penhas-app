@@ -5,7 +5,7 @@ class SupportCenterCepError extends StatelessWidget {
   const SupportCenterCepError({
     Key? key,
     required String message,
-  })  : this._message = message,
+  })  : _message = message,
         super(key: key);
 
   final String _message;

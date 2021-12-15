@@ -12,8 +12,6 @@ class NotificationCardPage extends StatelessWidget {
   const NotificationCardPage({Key? key, required this.notification})
       : super(key: key);
 
-  final NotificationEntity notification;
-
   @override
   Widget build(BuildContext context) {
     timeago.setLocaleMessages('pt_br', timeago.PtBrMessages());
@@ -48,7 +46,7 @@ class NotificationCardPage extends StatelessWidget {
                       children: [
                         Text(notification.name!, style: titleTextStyle),
                         Text(timeago.format(notification.time!, locale: 'pt_br'),
-                            style: timeTextStyle),
+                            style: timeTextStyle,),
                       ],
                     ),
                   ),
@@ -80,23 +78,20 @@ class NotificationCardPage extends StatelessWidget {
 
 extension _TextStyle on NotificationCardPage {
   TextStyle get titleTextStyle => const TextStyle(
-        color: DesignSystemColors.darkIndigoThree,
-        fontFamily: 'Lato',
-        fontSize: 14.0,
-        fontWeight: FontWeight.normal,
-      );
+      color: DesignSystemColors.darkIndigoThree,
+      fontFamily: 'Lato',
+      fontSize: 14.0,
+      fontWeight: FontWeight.normal,);
 
   TextStyle get timeTextStyle => const TextStyle(
-        color: DesignSystemColors.warnGrey,
-        fontFamily: 'Lato',
-        fontSize: 12.0,
-        fontWeight: FontWeight.normal,
-      );
+      color: DesignSystemColors.warnGrey,
+      fontFamily: 'Lato',
+      fontSize: 12.0,
+      fontWeight: FontWeight.normal,);
 
   TextStyle get contentTextStyle => const TextStyle(
-        color: DesignSystemColors.darkIndigoThree,
-        fontFamily: 'Lato',
-        fontSize: 14.0,
-        fontWeight: FontWeight.normal,
-      );
+      color: DesignSystemColors.darkIndigoThree,
+      fontFamily: 'Lato',
+      fontSize: 14.0,
+      fontWeight: FontWeight.normal,);
 }

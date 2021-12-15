@@ -8,8 +8,8 @@ import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late MockITweetRepository repository = MockITweetRepository();
-  late MockTweetFilterPreference filterPreference = MockTweetFilterPreference();
+  late final MockITweetRepository repository = MockITweetRepository();
+  late final MockTweetFilterPreference filterPreference = MockTweetFilterPreference();
 
   setUp(() {
     when(filterPreference.getCategory()).thenReturn([]);
@@ -42,7 +42,7 @@ void main() {
           anonymous: false,
           content: 'content 1',
           avatar: 'http://site.com/avatar_2.png',
-          meta: const TweetMeta(liked: true, owner: true),
+          meta: TweetMeta(liked: true, owner: true),
           lastReply: const [],
         );
         tweetEntity3 = TweetEntity(
@@ -55,7 +55,7 @@ void main() {
           anonymous: false,
           content: 'comment 3',
           avatar: 'http://site.com/avatar_1.png',
-          meta: const TweetMeta(liked: true, owner: true),
+          meta: TweetMeta(liked: true, owner: true),
           lastReply: const [],
         );
         tweetEntity2 = TweetEntity(
@@ -68,19 +68,18 @@ void main() {
           anonymous: false,
           content: 'content 2',
           avatar: 'http://site.com/avatar_1.png',
-          meta: const TweetMeta(liked: true, owner: true),
+          meta: TweetMeta(liked: true, owner: true),
           lastReply: [tweetEntity3],
         );
 
         firstSessionResponse = TweetSessionEntity(
-          nextPage: null,
-          hasMore: true,
-          orderBy: TweetSessionOrder.latestFirst,
-          tweets: [
-            tweetEntity1,
-            tweetEntity2,
-          ],
-        );
+            nextPage: null,
+            hasMore: true,
+            orderBy: TweetSessionOrder.latestFirst,
+            tweets: [
+              tweetEntity1,
+              tweetEntity2,
+            ],);
       });
 
       test('should create commented tweet and get updated cache', () async {
@@ -103,7 +102,7 @@ void main() {
           anonymous: false,
           content: 'commented tweet = 5',
           avatar: 'http://site.com/avatar_42.png',
-          meta: const TweetMeta(liked: false, owner: true),
+          meta: TweetMeta(liked: false, owner: true),
           lastReply: const [],
         );
         final commentedTweet = tweetEntity1.copyWith(
@@ -111,12 +110,10 @@ void main() {
           lastReply: [newTweet],
         );
         final expected = right(
-          FeedCache(
-            tweets: [
-              commentedTweet,
-              tweetEntity2,
-            ],
-          ),
+          FeedCache(tweets: [
+            commentedTweet,
+            tweetEntity2,
+          ],),
         );
 
         when(repository.reply(option: anyNamed('option')))
@@ -149,7 +146,7 @@ void main() {
           anonymous: false,
           content: 'commented tweet',
           avatar: 'http://site.com/avatar_42.png',
-          meta: const TweetMeta(liked: false, owner: true),
+          meta: TweetMeta(liked: false, owner: true),
           lastReply: const [],
         );
         final commentedTweet = tweetEntity2.copyWith(
@@ -157,12 +154,10 @@ void main() {
           lastReply: [newTweet],
         );
         final expected = right(
-          FeedCache(
-            tweets: [
-              tweetEntity1,
-              commentedTweet,
-            ],
-          ),
+          FeedCache(tweets: [
+            tweetEntity1,
+            commentedTweet,
+          ],),
         );
 
         when(repository.reply(option: anyNamed('option')))
