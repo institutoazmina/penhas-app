@@ -5,18 +5,19 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/features/authentication/presentation/reset_password/pages/reset_password_two/reset_password_two_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
-import 'reset_password_two_controller.dart';
 
 class ResetPasswordTwoPage extends StatefulWidget {
-  final String title;
   const ResetPasswordTwoPage({Key? key, this.title = 'ResetPasswordTwo'})
       : super(key: key);
+
+  final String title;
 
   @override
   _ResetPasswordTwoPageState createState() => _ResetPasswordTwoPageState();
@@ -45,7 +46,7 @@ class _ResetPasswordTwoPageState
 
   @override
   void dispose() {
-    for (var d in _disposers!) {
+    for (final d in _disposers!) {
       d();
     }
     super.dispose();
@@ -91,8 +92,9 @@ class _ResetPasswordTwoPageState
                             height: 102,
                             width: 102,
                             child: SvgPicture.asset(
-                                'assets/images/svg/reset_password/recovery_password_step_2.svg',
-                                color: Colors.white,),
+                              'assets/images/svg/reset_password/recovery_password_step_2.svg',
+                              color: Colors.white,
+                            ),
                           ),
                         ],
                       ),
@@ -106,14 +108,16 @@ class _ResetPasswordTwoPageState
                         ),
                       ),
                       const SizedBox(height: 4),
-                      Observer(builder: (_) {
-                        return _buildInputField(
-                          labelText: 'Token',
-                          keyboardType: TextInputType.number,
-                          onChanged: controller.setToken,
-                          onError: controller.warrningToken,
-                        );
-                      },),
+                      Observer(
+                        builder: (_) {
+                          return _buildInputField(
+                            labelText: 'Token',
+                            keyboardType: TextInputType.number,
+                            onChanged: controller.setToken,
+                            onError: controller.warrningToken,
+                          );
+                        },
+                      ),
                       const SizedBox(height: 24),
                       SizedBox(height: 40.0, child: _buildNextButton()),
                     ],
@@ -129,7 +133,6 @@ class _ResetPasswordTwoPageState
 
   Widget _buildInputField({
     String? labelText,
-    String? hintText,
     required TextInputType keyboardType,
     required Function(String) onChanged,
     String? onError,
@@ -151,8 +154,8 @@ class _ResetPasswordTwoPageState
       elevation: 0,
       color: DesignSystemColors.ligthPurple,
       shape: kButtonShapeFilled,
-      child: Text(
-        "Próximo",
+      child: const Text(
+        'Próximo',
         style: kTextStyleDefaultFilledButtonLabel,
       ),
     );

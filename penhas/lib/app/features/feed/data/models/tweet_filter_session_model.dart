@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_filter_session_entity.dart';
 
 class TweetFilterSessionModel extends TweetFilterSessionEntity {
-  TweetFilterSessionModel({
+  const TweetFilterSessionModel({
     required List<TweetFilterEntity> categories,
     required List<TweetFilterEntity> tags,
   }) : super(categories: categories, tags: tags);

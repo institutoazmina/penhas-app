@@ -13,8 +13,6 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  isCrashlitycsEnabled = false;
-
   late final MockHttpClient mockHttpClient = MockHttpClient();
   late final MockIApiServerConfigure mockApiServerConfigure =
       MockIApiServerConfigure();
@@ -121,7 +119,7 @@ void main() {
       final sut = dataSource.signInWithEmailAndPassword;
       // assert
       expect(
-        () async => await sut(emailAddress: emailAddress, password: password),
+        () => sut(emailAddress: emailAddress, password: password),
         throwsA(
           isA<ApiProviderException>()
               .having((e) => e.bodyContent, 'Got bodyContent', bodyContent),

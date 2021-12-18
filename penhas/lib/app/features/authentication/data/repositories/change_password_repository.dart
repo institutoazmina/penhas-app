@@ -12,14 +12,14 @@ import 'package:penhas/app/shared/logger/log.dart';
 
 class ChangePasswordRepository
     implements IResetPasswordRepository, IChangePasswordRepository {
-  final IChangePasswordDataSource? _dataSource;
-  final INetworkInfo? _networkInfo;
-
   ChangePasswordRepository({
     required IChangePasswordDataSource? changePasswordDataSource,
     required INetworkInfo? networkInfo,
   })  : _networkInfo = networkInfo,
         _dataSource = changePasswordDataSource;
+
+  final IChangePasswordDataSource? _dataSource;
+  final INetworkInfo? _networkInfo;
 
   @override
   Future<Either<Failure, ResetPasswordResponseEntity>> request(
@@ -47,7 +47,7 @@ class ChangePasswordRepository
         password: password,
         resetToken: resetToken,
       );
-      return right(ValidField());
+      return right(const ValidField());
     } catch (e, stack) {
       logError(e, stack);
       final fail = await _handleError(e);
@@ -80,7 +80,7 @@ class ChangePasswordRepository
         emailAddress: emailAddress,
         resetToken: resetToken,
       );
-      return right(ValidField());
+      return right(const ValidField());
     } catch (e, stack) {
       logError(e, stack);
       final fail = await _handleError(e);

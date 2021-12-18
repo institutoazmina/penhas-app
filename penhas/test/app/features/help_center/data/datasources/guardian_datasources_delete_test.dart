@@ -70,7 +70,7 @@ void main() {
       GuardianContactEntity? guardian;
 
       setUp(() {
-        guardian = GuardianContactEntity(
+        guardian = const GuardianContactEntity(
           id: 1,
           name: 'Maria',
           mobile: '1191910101',

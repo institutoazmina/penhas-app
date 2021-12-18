@@ -9,12 +9,10 @@ void main() {
     test('should be a subclass of UserProfileEntity', () async {
       // act
       final profileModel = UserProfileModel(
-        nickname: null,
         birthdate: DateTime(1980, 3, 3),
         fullName: 'Fulana da Silva',
         race: 'pardo',
         genre: 'Feminino',
-        skill: const [],
       );
       // assert
       expect(profileModel, isA<UserProfileEntity>());
@@ -38,7 +36,6 @@ void main() {
         jaFoiVitimaDeViolencia:
             userProfileData['ja_foi_vitima_de_violencia'] == 1,
         minibio: userProfileData['minibio'] as String?,
-        skill: const [],
       );
       // act
       final received = UserProfileModel.fromJson(userProfileData);
@@ -78,7 +75,6 @@ void main() {
         jaFoiVitimaDeViolencia:
             userProfileData['ja_foi_vitima_de_violencia'] == 1,
         minibio: userProfileData['minibio'] as String?,
-        skill: const [],
       );
       // act
       final received = userModel.toJson();

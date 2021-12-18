@@ -43,7 +43,7 @@ class SecurityModeActionFeature {
       return AudioRecordDurationEntity(audioEachDuration, audioFullDuration);
     } catch (e, stack) {
       logError(e, stack);
-      return AudioRecordDurationEntity(30, 900);
+      return const AudioRecordDurationEntity(30, 900);
     }
   }
 }

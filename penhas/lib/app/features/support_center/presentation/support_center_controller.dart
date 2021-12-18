@@ -29,7 +29,7 @@ class SupportCenterController extends _SupportCenterControllerBase
 abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   List<FilterTagEntity> _tags = [];
   late SupportCenterPlaceSessionEntity currentPlaceSession;
-  var _fetchRequest = SupportCenterFetchRequest();
+  var _fetchRequest = const SupportCenterFetchRequest();
 
   final SupportCenterUseCase _supportCenterUseCase;
 

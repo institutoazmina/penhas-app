@@ -66,7 +66,6 @@ class _SupportCenterAddPageState
     return SafeArea(
       child: PageProgressIndicator(
         progressState: controller.progressState,
-        progressMessage: 'Processando',
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +87,7 @@ class _SupportCenterAddPageState
 
   @override
   void dispose() {
-    for (var d in _disposers!) {
+    for (final d in _disposers!) {
       d();
     }
     super.dispose();

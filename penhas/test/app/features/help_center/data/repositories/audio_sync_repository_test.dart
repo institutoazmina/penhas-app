@@ -22,7 +22,7 @@ void main() {
     test('should get ValidField for a valid upload', () async {
       // arrange
       final expected = right(
-        ValidField(message: 'Áudio recebido com sucesso!'),
+        const ValidField(message: 'Áudio recebido com sucesso!'),
       );
       final audio = AudioData(
         sequence: '1',

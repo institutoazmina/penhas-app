@@ -55,7 +55,7 @@ class _NewGuardianPageState
 
   @override
   void dispose() {
-    for (var d in _disposers!) {
+    for (final d in _disposers!) {
       d();
     }
     super.dispose();
@@ -233,7 +233,7 @@ class _NewGuardianPageState
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Text(
+          child: const Text(
             'Adicionar guardião',
             style: TextStyle(
               fontFamily: 'Lato',

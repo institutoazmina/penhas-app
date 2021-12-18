@@ -40,7 +40,7 @@ void main() {
         final TweetSessionEntity? expectedSession = sessionModel;
         // act
         final receivedSession =
-            await repository.fetch(option: TweetRequestOption());
+            await repository.fetch(option: const TweetRequestOption());
         // assert
         expect(receivedSession, right(expectedSession));
       });
@@ -66,7 +66,7 @@ void main() {
             anonymous: false,
             content: 'Mensagem 1',
             avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-            meta: TweetMeta(liked: false, owner: true),
+            meta: const TweetMeta(liked: false, owner: true),
             lastReply: const [],
           ),
         );
@@ -79,14 +79,14 @@ void main() {
     group('delete', () {
       setUp(() {
         when(dataSource.delete(option: anyNamed('option')))
-            .thenAnswer((_) => Future.value(ValidField()));
+            .thenAnswer((_) => Future.value(const ValidField()));
       });
       test('should detete tweet from a valid session', () async {
         // arrange
         final requestOption = TweetEngageRequestOption(
           tweetId: '200528T2055370004',
         );
-        final expected = right(ValidField());
+        final expected = right(const ValidField());
         // act
         final received = await repository.delete(option: requestOption);
         // assert
@@ -117,7 +117,7 @@ void main() {
           anonymous: false,
           content: 'sleep 6',
           avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-          meta: TweetMeta(liked: true, owner: true),
+          meta: const TweetMeta(liked: true, owner: true),
           lastReply: const [],
         ),);
         // act
@@ -151,7 +151,7 @@ void main() {
             anonymous: false,
             content: 'um breve comentario',
             avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-            meta: TweetMeta(liked: false, owner: true),
+            meta: const TweetMeta(liked: false, owner: true),
             lastReply: const [],
           ),
         );
@@ -190,7 +190,7 @@ void main() {
               anonymous: false,
               content: 'Comentário 7',
               avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-              meta: TweetMeta(liked: false, owner: true),
+              meta: const TweetMeta(liked: false, owner: true),
               lastReply: const [],
             )
           ],
@@ -206,7 +206,7 @@ void main() {
     group('report()', () {
       setUp(() {
         when(dataSource.report(option: anyNamed('option')))
-            .thenAnswer((_) => Future.value(ValidField()));
+            .thenAnswer((_) => Future.value(const ValidField()));
       });
       test('should report a valid tweet', () async {
         // arrange
@@ -214,7 +214,7 @@ void main() {
           tweetId: '200528T2055370004',
           message: 'esse tweet me ofende pq XPTO',
         );
-        final expected = right(ValidField());
+        final expected = right(const ValidField());
         // act
         final received = await repository.report(option: requestOption);
         // assert

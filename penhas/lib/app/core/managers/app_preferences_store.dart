@@ -8,7 +8,7 @@ class AppPreferencesStore extends LocalStore<AppPreferencesEntity> {
       : super('br.com.penhas.app_preferences', storage);
 
   @override
-  AppPreferencesEntity defaultEntity() => AppPreferencesEntity(
+  AppPreferencesEntity defaultEntity() => const AppPreferencesEntity(
         inactiveAppSince: null,
         inactiveAppLogoutTimeInSeconds: 30,
       );

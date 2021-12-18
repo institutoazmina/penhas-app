@@ -8,8 +8,6 @@ import 'package:penhas/app/shared/logger/log.dart';
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  isCrashlitycsEnabled = false;
-
   late final MockIApiProvider apiProvider = MockIApiProvider();
   late final MockIApiServerConfigure serverConfiguration = MockIApiServerConfigure();
   late final IUserProfileRepository sut = UserProfileRepository(
@@ -44,7 +42,7 @@ void main() {
       test('should receive ValidField', () async {
         // arrange
         _setUpMockPost();
-        final actual = right(ValidField());
+        final actual = right(const ValidField());
         const toggle = true;
         // act
         final expected = await sut.stealthMode(toggle: toggle);
@@ -72,7 +70,7 @@ void main() {
       test('should receive ValidField', () async {
         // arrange
         _setUpMockPost();
-        final actual = right(ValidField());
+        final actual = right(const ValidField());
         const toggle = false;
         // act
         final matcher = await sut.anonymousMode(toggle: toggle);

@@ -2,17 +2,11 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/map_validator_failure.dart';
 import 'package:penhas/app/shared/logger/log.dart';
-
-import 'map_validator_failure.dart';
 
 @immutable
 class Birthday extends Equatable with MapValidatorFailure {
-  final Either<Failure, String?> value;
-
-  String? get rawValue => value.getOrElse(() => null);
-  bool get isValid => value.isRight();
-
   factory Birthday(String? input) {
     return Birthday._(_validate(input));
   }
@@ -22,7 +16,7 @@ class Birthday extends Equatable with MapValidatorFailure {
     final day = _twoDigits(dt.day);
     final month = _twoDigits(dt.month);
     final year = _fourDigits(dt.year);
-    input = "$day/$month/$year";
+    input = '$day/$month/$year';
 
     return Birthday._(_validate(input));
   }

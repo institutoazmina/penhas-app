@@ -43,7 +43,7 @@ class _SignUpTwoPageState
 
   @override
   void dispose() {
-    for (var d in _disposers!) {
+    for (final d in _disposers!) {
       d();
     }
     super.dispose();
@@ -179,8 +179,8 @@ class _SignUpTwoPageState
       elevation: 0,
       color: DesignSystemColors.ligthPurple,
       shape: kButtonShapeFilled,
-      child: Text(
-        "Próximo",
+      child: const Text(
+        'Próximo',
         style: kTextStyleDefaultFilledButtonLabel,
       ),
     );

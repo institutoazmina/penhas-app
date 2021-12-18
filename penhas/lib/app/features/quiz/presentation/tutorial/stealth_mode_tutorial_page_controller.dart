@@ -19,7 +19,7 @@ abstract class _StealthModeTutorialPageControllerBase with Store {
   }
 
   @observable
-  StealthModeTutorialState state = StealthModeTutorialState(locationPermissionGranted: false);
+  StealthModeTutorialState state = const StealthModeTutorialState(locationPermissionGranted: false);
 
   Future<void> _loadState() async {
     final isPermissionGranted = await _locationService.isPermissionGranted();

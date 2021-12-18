@@ -108,7 +108,7 @@ class GuardianDataSource implements IGuardianDataSource {
     );
 
     if (_successfulResponse.contains(response.statusCode)) {
-      return ValidField();
+      return const ValidField();
     } else if (_invalidSessionCode.contains(response.statusCode)) {
       throw ApiProviderSessionError();
     } else {

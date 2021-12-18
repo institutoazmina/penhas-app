@@ -38,11 +38,11 @@ class SupportCenterLocationAddress extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 onPressed: _onPressed,
                 child: Padding(
-                  padding: EdgeInsets.only(left: 16.0),
+                  padding: const EdgeInsets.only(left: 16.0),
                   child: Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
+                      const Padding(
+                        padding: EdgeInsets.only(right: 8.0),
                         child: Icon(Icons.place),
                       ),
                       Flexible(

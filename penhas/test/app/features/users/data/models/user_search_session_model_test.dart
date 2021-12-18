@@ -11,7 +11,7 @@ void main() {
   group('UserSearchSessionModel', () {
     test('should be a subclass of UserDetailEntity', () async {
       // arrange
-      final model = UserSearchSessionModel(
+      const model = UserSearchSessionModel(
         hasMore: false,
         nextPage: 'my_secret_pagination_token',
         users: null,
@@ -24,42 +24,42 @@ void main() {
       final jsonData = await JsonUtil.getJson(from: jsonFile);
       const avatar = 'https://api.example.com/avatar/padrao.svg';
       final users = [
-        UserDetailProfileModel(
+        const UserDetailProfileModel(
           activity: 'há alguns dias',
           nickname: 'Maria',
           avatar: avatar,
           clientId: 180,
           skills: 'Escuta acolhedora',
         ),
-        UserDetailProfileModel(
+        const UserDetailProfileModel(
           activity: 'há alguns dias',
           nickname: 'Julia',
           avatar: avatar,
           clientId: 3191,
           skills: 'Psicologia',
         ),
-        UserDetailProfileModel(
+        const UserDetailProfileModel(
           activity: 'há alguns dias',
           nickname: 'Li',
           avatar: avatar,
           clientId: 3286,
           skills: 'Escuta acolhedora',
         ),
-        UserDetailProfileModel(
+        const UserDetailProfileModel(
           activity: 'há algumas semanas',
           nickname: 'Lilo',
           avatar: avatar,
           clientId: 3264,
           skills: 'Escuta acolhedora',
         ),
-        UserDetailProfileModel(
+        const UserDetailProfileModel(
           activity: 'há algumas semanas',
           nickname: 'Patricia',
           avatar: avatar,
           clientId: 1196,
           skills: 'Escuta acolhedora, Saúde e bem estar',
         ),
-        UserDetailProfileModel(
+        const UserDetailProfileModel(
           activity: 'há muito tempo',
           nickname: 'Leticia',
           avatar: avatar,
@@ -82,10 +82,10 @@ void main() {
       // arrange
       const jsonFileEmpty = 'users/users_search_empty.json';
       final jsonData = await JsonUtil.getJson(from: jsonFileEmpty);
-      final actual = UserSearchSessionModel(
+      const actual = UserSearchSessionModel(
         hasMore: false,
         nextPage: null,
-        users: const [],
+        users: [],
       );
       // act
       final matcher = UserSearchSessionModel.fromJson(jsonData);

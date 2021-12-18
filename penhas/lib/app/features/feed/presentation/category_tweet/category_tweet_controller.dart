@@ -79,8 +79,8 @@ abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
 
   void _updateCategory(TweetFilterSessionEntity filters) {
     final seleted = filters.categories.firstWhere((e) => e.isSelected);
-    this.selectedRadio = seleted.id;
-    this._currentCategory = seleted.id;
+    selectedRadio = seleted.id;
+    _currentCategory = seleted.id;
 
     categories = filters.categories.asObservable();
   }

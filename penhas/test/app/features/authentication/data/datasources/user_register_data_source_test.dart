@@ -199,13 +199,13 @@ void main() {
       test('should return ValidField when the response code is 200 (success)',
           () async {
         // arrange
-        final String bodyContent = '{"continue": 1}';
+        const String bodyContent = '{"continue": 1}';
         setupHttpClientSuccess200(bodyContent);
         // act
         final result =
             await dataSource.checkField(emailAddress: emailAddress, cpf: cpf);
         // assert
-        expect(result, ValidField());
+        expect(result, const ValidField());
       });
       test(
           'should return ApiProviderException when the response code is nonsuccess (non 200)',

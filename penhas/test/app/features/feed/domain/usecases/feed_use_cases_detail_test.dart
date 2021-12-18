@@ -27,7 +27,7 @@ void main() {
         anonymous: false,
         content: 'content 1',
         avatar: 'https:/site.com/avatas.svg',
-        meta: TweetMeta(liked: false, owner: false),);
+        meta: const TweetMeta(liked: false, owner: false),);
   });
 
   group('FeedUseCases', () {
@@ -42,11 +42,11 @@ void main() {
       TweetSessionEntity? firstSession;
 
       setUp(() {
-        emptySession = TweetSessionEntity(
+        emptySession = const TweetSessionEntity(
           nextPage: null,
           hasMore: false,
           orderBy: TweetSessionOrder.oldestFirst,
-          tweets: const [],
+          tweets: [],
         );
 
         firstSession = TweetSessionEntity(
@@ -91,7 +91,7 @@ void main() {
           repository: repository,
           filterPreference: filterPreference,
         );
-        final expected = right(FeedCache(tweets: const []));
+        final expected = right(const FeedCache(tweets: []));
         // act
         final received = await sut.fetchTweetDetail(tweetRequest.id);
         // assert
@@ -250,11 +250,11 @@ void main() {
         await sut.fetchTweetDetail(tweetRequest.id);
         when(repository.fetch(option: anyNamed('option'))).thenAnswer(
           (_) async => right(
-            TweetSessionEntity(
+            const TweetSessionEntity(
                 nextPage: null,
                 hasMore: false,
                 orderBy: TweetSessionOrder.oldestFirst,
-                tweets: const [],),
+                tweets: [],),
           ),
         );
         final expected = right(FeedCache(tweets: [

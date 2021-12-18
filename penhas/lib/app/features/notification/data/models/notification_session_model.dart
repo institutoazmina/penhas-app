@@ -1,7 +1,7 @@
 import 'package:penhas/app/features/notification/domain/entities/notification_session_entity.dart';
 
 class NotificationSessionModel extends NotificationSessionEntity {
-  NotificationSessionModel({
+  const NotificationSessionModel({
     required bool hasMore,
     required String? nextPage,
     required List<NotificationEntity>? notifications,

@@ -70,7 +70,6 @@ class ReplyTweet extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Expanded(
-              flex: 1,
               child: TweetAvatar(tweet: tweet),
             ),
             const SizedBox(width: 6.0),

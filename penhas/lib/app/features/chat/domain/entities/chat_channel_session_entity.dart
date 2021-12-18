@@ -1,16 +1,8 @@
 import 'package:equatable/equatable.dart';
-
-import 'chat_message_entity.dart';
-import 'chat_user_entity.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_message_entity.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
 
 class ChatChannelSessionEntity extends Equatable {
-  final bool? hasMore;
-  final String? newer;
-  final String? older;
-  final List<ChatMessageEntity>? messages;
-  final ChatChannelSessionMetadataEntity? metadata;
-  final ChatUserEntity? user;
-
   const ChatChannelSessionEntity({
     required this.hasMore,
     required this.newer,
@@ -41,7 +33,6 @@ class ChatChannelSessionEntity extends Equatable {
       ];
 }
 
-@immutable
 class ChatChannelSessionMetadataEntity extends Equatable {
   const ChatChannelSessionMetadataEntity({
     required this.canSendMessage,
@@ -52,31 +43,12 @@ class ChatChannelSessionMetadataEntity extends Equatable {
     required this.lastMessageEtag,
   });
 
-  factory ChatChannelSessionMetadataEntity.empty() =>
-      const ChatChannelSessionMetadataEntity(
-        canSendMessage: false,
-        didBlocked: false,
-        headerMessage: null,
-        headerWarning: null,
-        isBlockable: false,
-        lastMessageEtag: null,
-      );
-
   final bool canSendMessage;
   final bool didBlocked;
   final String? headerMessage;
   final String? headerWarning;
   final bool isBlockable;
   final String? lastMessageEtag;
-
-  const ChatChannelSessionMetadataEntity({
-    required this.canSendMessage,
-    required this.didBlocked,
-    required this.headerMessage,
-    required this.headerWarning,
-    required this.isBlockable,
-    required this.lastMessageEtag,
-  });
 
   @override
   bool get stringify => true;
@@ -85,9 +57,19 @@ class ChatChannelSessionMetadataEntity extends Equatable {
   List<Object?> get props => [
         canSendMessage,
         didBlocked,
-        headerMessage!,
-        headerWarning!,
+        headerMessage,
+        headerWarning,
         isBlockable,
-        lastMessageEtag!,
+        lastMessageEtag,
       ];
+
+  static final ChatChannelSessionMetadataEntity empty =
+      const ChatChannelSessionMetadataEntity(
+    didBlocked: false,
+    isBlockable: false,
+    canSendMessage: false,
+    headerMessage: null,
+    headerWarning: null,
+    lastMessageEtag: null,
+  );
 }

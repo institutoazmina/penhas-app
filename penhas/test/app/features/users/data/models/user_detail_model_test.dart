@@ -15,7 +15,7 @@ void main() {
   group('UserDetailModel', () {
     test('should be a subclass of UserDetailEntity', () async {
       // arrange
-      final model = UserDetailModel(
+      const model = UserDetailModel(
         isMyself: false,
         profile: UserDetailProfileModel(),
       );
@@ -25,14 +25,14 @@ void main() {
     test('should return a valid model with a valid JSON', () async {
       // arrange
       final jsonData = await JsonUtil.getJson(from: jsonFile);
-      final profile = UserDetailProfileModel(
+      const profile = UserDetailProfileModel(
         nickname: 'Leticia',
         avatar: 'https://api.example.com/avatar/padrao.svg',
         clientId: 1335,
         miniBio: '',
         skills: '',
       );
-      final actual = UserDetailModel(isMyself: false, profile: profile);
+      const actual = const UserDetailModel(isMyself: false, profile: profile);
       // act
       final matcher = UserDetailModel.fromJson(jsonData);
       // assert

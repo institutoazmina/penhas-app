@@ -56,7 +56,7 @@ class HelpCenterCardRecord extends StatelessWidget {
                     onPressed: () async {
                       await Navigator.push(
                         context,
-                        TutorialScaleRoute(page: RecordTutorialPage()),
+                        TutorialScaleRoute(page: const RecordTutorialPage()),
                       );
                     },
                   )
@@ -75,8 +75,8 @@ class HelpCenterCardRecord extends StatelessWidget {
                     backgroundColor: DesignSystemColors.easterPurple,
                     onPressed: onPressed,
                     shape: kButtonShapeOutlinePurple,
-                    child: Text('Minhas gravações',
-                        style: kTextStyleHelpCenterButtonLabel),),
+                    child: const Text('Minhas gravações',
+                        style: kTextStyleHelpCenterButtonLabel,),),
               ),
             ],
           ),

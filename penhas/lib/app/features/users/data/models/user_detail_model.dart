@@ -4,7 +4,7 @@ import 'package:penhas/app/features/users/domain/entities/user_detail_entity.dar
 
 @immutable
 class UserDetailModel extends UserDetailEntity {
-  UserDetailModel({
+  const UserDetailModel({
     required bool isMyself,
     required UserDetailProfileModel profile,
   }) : super(isMyself: isMyself, profile: profile);

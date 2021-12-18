@@ -3,7 +3,7 @@ import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.da
 
 @immutable
 class FilterTagModel extends FilterTagEntity {
-  FilterTagModel({
+  const FilterTagModel({
     required String id,
     required String? label,
     required bool isSelected,

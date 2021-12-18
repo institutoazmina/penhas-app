@@ -1,7 +1,7 @@
 import 'package:penhas/app/features/appstate/domain/entities/app_preferences_entity.dart';
 
 class AppPreferencesModel extends AppPreferencesEntity {
-  AppPreferencesModel({
+  const AppPreferencesModel({
     required int? inactiveAppSince,
     required int inactiveAppLogoutTimeInSeconds,
   }) : super(

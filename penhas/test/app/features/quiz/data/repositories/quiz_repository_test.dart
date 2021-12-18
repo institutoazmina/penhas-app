@@ -24,10 +24,9 @@ void main() {
   late Map<String, dynamic> jsonData;
 
   setUp(() async {
-    isCrashlitycsEnabled = false;
-    quizRequest = QuizRequestEntity(
+    quizRequest = const QuizRequestEntity(
       sessionId: '200',
-      options: const {'YN1': 'Y'},
+      options: {'YN1': 'Y'},
     );
     jsonData =
         await JsonUtil.getJson(from: 'profile/quiz_session_response.json');
@@ -62,10 +61,12 @@ void main() {
     test('should return ServerSideSessionFailed for a invalid JWT', () async {
       // arrange
       when(dataSource.update(quiz: anyNamed('quiz'))).thenThrow(
-        ApiProviderException(bodyContent: {
-          'error': 'expired_jwt',
-          'nessage': 'Bad request - Invalid JWT'
-        },),
+        ApiProviderException(
+          bodyContent: {
+            'error': 'expired_jwt',
+            'nessage': 'Bad request - Invalid JWT'
+          },
+        ),
       );
       final expected = left(ServerSideSessionFailed());
       // act

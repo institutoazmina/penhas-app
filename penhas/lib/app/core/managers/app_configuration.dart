@@ -11,7 +11,7 @@ const String baseUrl = String.fromEnvironment(
 );
 
 abstract class IAppConfiguration {
-  Future<String?> get apiToken;
+  Future<String> get apiToken;
 
   Future<void> saveApiToken({required String? token});
 
@@ -33,8 +33,6 @@ class AppConfiguration implements IAppConfiguration {
   final _appModes = 'br.com.penhas.appConfigurationModes';
   final ILocalStorage _storage;
 
-  AppConfiguration({required ILocalStorage storage}) : _storage = storage;
-
   @override
   Future<String> get apiToken {
     return _storage.get(_tokenKey).then((value) => value.getOrElse(() => ''));
@@ -49,9 +47,7 @@ class AppConfiguration implements IAppConfiguration {
   }
 
   @override
-  // Uri get penhasServer => Uri.parse('https://***REMOVED***/');
-  // Uri get penhasServer => Uri.parse('http://10.0.2.2:9000/');
-  Uri get penhasServer => Uri.parse('https://***REMOVED***');
+  Uri get penhasServer => Uri.parse(baseUrl);
 
   @override
   Future<void> saveApiToken({required String? token}) async {
@@ -78,7 +74,7 @@ class AppConfiguration implements IAppConfiguration {
         .get(_appModes)
         .then((source) => source.map((r) => jsonDecode(r)))
         .then((value) => value.map((r) => _buildAppStateMode(r)))
-        .then((value) => value.getOrElse(() => AppStateModeEntity()));
+        .then((value) => value.getOrElse(() => const AppStateModeEntity()));
   }
 
   AppStateModeEntity _buildAppStateMode(Map<String, dynamic> data) {

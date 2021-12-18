@@ -47,7 +47,7 @@ class _CategoryTweetPageState
 
   @override
   void dispose() {
-    for (var d in _disposers!) {
+    for (final d in _disposers!) {
       d();
     }
     super.dispose();
@@ -135,14 +135,14 @@ class _CategoryTweetPageState
         elevation: 0,
         color: DesignSystemColors.ligthPurple,
         shape: kButtonShapeOutlinePurple,
-        child: Text("Aplicar filtro",
+        child: const Text('Aplicar filtro',
             style: TextStyle(
               fontFamily: 'Lato',
               fontWeight: FontWeight.bold,
               fontSize: 14.0,
               color: Colors.white,
               letterSpacing: 0.45,
-            )),
+            ),),
       ),
     );
   }

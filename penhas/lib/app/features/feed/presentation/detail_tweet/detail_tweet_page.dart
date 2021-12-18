@@ -54,7 +54,7 @@ class _DetailTweetPageState
   @override
   void dispose() {
     super.dispose();
-    for (var d in _disposers!) {
+    for (final d in _disposers!) {
       d();
     }
     _scrollController.dispose();
@@ -154,7 +154,6 @@ class _MainTweet extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Expanded(
-                  flex: 1,
                   child: TweetAvatar(tweet: tweet!),
                 ),
                 const SizedBox(width: 6.0),

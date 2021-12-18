@@ -20,7 +20,8 @@ class SignUpController extends _SignUpControllerBase with _$SignUpController {
 
 abstract class _SignUpControllerBase with Store, MapFailureMessage {
   final IUserRegisterRepository repository;
-  final UserRegisterFormFieldModel _userRegisterModel = UserRegisterFormFieldModel();
+  final UserRegisterFormFieldModel _userRegisterModel =
+      UserRegisterFormFieldModel();
 
   _SignUpControllerBase(this.repository);
 
@@ -65,8 +66,7 @@ abstract class _SignUpControllerBase with Store, MapFailureMessage {
   void setBirthday(String birthday) {
     _userRegisterModel.birthday = Birthday(birthday);
 
-    warningBirthday =
-        birthday == null ? '' : _userRegisterModel.validateBirthday;
+    warningBirthday = _userRegisterModel.validateBirthday;
   }
 
   @action
@@ -107,8 +107,10 @@ abstract class _SignUpControllerBase with Store, MapFailureMessage {
   }
 
   void _forwardToStep2() {
-    Modular.to.pushNamed('/authentication/signup/step2',
-        arguments: _userRegisterModel,);
+    Modular.to.pushNamed(
+      '/authentication/signup/step2',
+      arguments: _userRegisterModel,
+    );
   }
 
   bool _isValidToProceed() {

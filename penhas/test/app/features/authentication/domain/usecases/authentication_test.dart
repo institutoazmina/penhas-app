@@ -22,7 +22,7 @@ void main() {
   );
 
   group('authentication with email and password', () {
-    final successSession = SessionEntity(
+    const successSession = SessionEntity(
         sessionToken: 'my_strong_session_token',);
     final emailAddress = EmailAddress('valid@email.com');
     final password = SignInPassword('_myStr0ngP@ssw0rd', PasswordValidator());

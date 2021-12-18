@@ -52,7 +52,7 @@ class _AccountPreferencePageState
 
   @override
   void dispose() {
-    for (var d in _disposers!) {
+    for (final d in _disposers!) {
       d();
     }
     super.dispose();

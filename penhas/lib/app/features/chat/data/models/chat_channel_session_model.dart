@@ -1,10 +1,9 @@
+import 'package:penhas/app/features/chat/data/models/chat_message_model.dart';
+import 'package:penhas/app/features/chat/data/models/chat_user_model.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_session_entity.dart';
 
-import 'chat_message_model.dart';
-import 'chat_user_model.dart';
-
 class ChatChannelSessionModel extends ChatChannelSessionEntity {
-  ChatChannelSessionModel({
+  const ChatChannelSessionModel({
     required bool? hasMore,
     required String? newer,
     required String? older,
@@ -22,9 +21,8 @@ class ChatChannelSessionModel extends ChatChannelSessionEntity {
 
   factory ChatChannelSessionModel.fromJson(Map<String, dynamic> jsonData) {
     final List jsonMessages = jsonData['messages'];
-    final List<ChatMessageModel> messages = jsonMessages
-        .map((e) => ChatMessageModel.fromJson(e))
-        .toList();
+    final List<ChatMessageModel> messages =
+        jsonMessages.map((e) => ChatMessageModel.fromJson(e)).toList();
 
     return ChatChannelSessionModel(
       hasMore: jsonData['has_more'] == 1,
@@ -38,7 +36,7 @@ class ChatChannelSessionModel extends ChatChannelSessionEntity {
 }
 
 class ChatChannelSessionMetadataModel extends ChatChannelSessionMetadataEntity {
-  ChatChannelSessionMetadataModel({
+  const ChatChannelSessionMetadataModel({
     required bool canSendMessage,
     required bool didBlocked,
     required String? headerMessage,

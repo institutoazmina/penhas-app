@@ -40,7 +40,7 @@ void main() {
     test('should show warning message for invalid email address', () {
       expect(sut.warningEmail, '');
       // arrange
-      final invalidEmailAddress = 'myaddress';
+      const invalidEmailAddress = 'myaddress';
       // act
       sut.setEmail(invalidEmailAddress);
       // assert
@@ -50,8 +50,8 @@ void main() {
     test('should reset warning message after user input valid email address',
         () {
       // arrange
-      final invalidEmailAddress = 'myaddress';
-      final validEmailAddress = 'my_email@app.com';
+      const invalidEmailAddress = 'myaddress';
+      const validEmailAddress = 'my_email@app.com';
       // act
       sut.setEmail(invalidEmailAddress);
       sut.setEmail(validEmailAddress);
@@ -61,8 +61,8 @@ void main() {
 
     test('should reset warning message after user input a valid password', () {
       // arrange
-      final invalidPassword = '';
-      final validPassword = 'sTr0ngMy';
+      const invalidPassword = '';
+      const validPassword = 'sTr0ngMy';
       // act
       sut.setPassword(invalidPassword);
       sut.setPassword(validPassword);
@@ -89,8 +89,8 @@ void main() {
     void testServerError(Failure failure, String errorMessage) async {
       // arrange
       mockAuthenticationFailure(failure);
-      final validPassword = 'sTr0ngMy';
-      final validEmailAddress = 'my_email@app.com';
+      const validPassword = 'sTr0ngMy';
+      const validEmailAddress = 'my_email@app.com';
       // act
       sut.setPassword(validPassword);
       sut.setEmail(validEmailAddress);

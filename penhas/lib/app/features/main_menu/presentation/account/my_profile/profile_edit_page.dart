@@ -57,7 +57,7 @@ class _ProfileEditPageState
 
   @override
   void dispose() {
-    for (var d in _disposers!) {
+    for (final d in _disposers!) {
       d();
     }
     super.dispose();
@@ -125,7 +125,7 @@ extension _PageBuilder on _ProfileEditPageState {
               ),
               CardProfileSingleTilePage(
                 title: 'Data de Nascimento',
-                content: "${profile.birthdate.day}/${profile.birthdate.month}/${profile.birthdate.year}",
+                content: '${profile.birthdate.day}/${profile.birthdate.month}/${profile.birthdate.year}',
                 background: DesignSystemColors.systemBackgroundColor,
               ),
               CardProfileRacePage(

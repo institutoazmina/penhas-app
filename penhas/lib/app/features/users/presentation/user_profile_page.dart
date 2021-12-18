@@ -66,7 +66,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
                     color: DesignSystemColors.ligthPurple,
                     shape: kButtonShapeFilled,
                     child: Text(
-                      "Conversar",
+                      'Conversar',
                       style: buttomTitleStyle,
                     ),
                   ),

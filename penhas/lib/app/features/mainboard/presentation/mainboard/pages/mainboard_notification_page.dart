@@ -29,8 +29,8 @@ class MainboardNotificationPage extends StatelessWidget {
               fontWeight: FontWeight.normal,),
         ),
         child: counter == 0
-            ? Icon(Icons.notifications_none, size: 34)
-            : Icon(Icons.notifications, size: 34),
+            ? const Icon(Icons.notifications_none, size: 34)
+            : const Icon(Icons.notifications, size: 34),
       ),
       onPressed: () async => _forwardNotification(),
     );

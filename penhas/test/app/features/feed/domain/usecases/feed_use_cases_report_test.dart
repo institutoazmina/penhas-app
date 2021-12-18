@@ -29,7 +29,7 @@ void main() {
 
       setUp(() {
         maxRowsPerRequet = 5;
-        validField = ValidField(message: 'Report enviado');
+        validField = const ValidField(message: 'Report enviado');
       });
 
       test('should get message from server', () async {
@@ -51,7 +51,7 @@ void main() {
             anonymous: false,
             content: 'content 1',
             avatar: 'https://site.com/avatar.svg',
-            meta: TweetMeta(liked: false, owner: false),);
+            meta: const TweetMeta(liked: false, owner: false),);
 
         when(repository.report(option: anyNamed('option')))
             .thenAnswer((_) async => right(validField));

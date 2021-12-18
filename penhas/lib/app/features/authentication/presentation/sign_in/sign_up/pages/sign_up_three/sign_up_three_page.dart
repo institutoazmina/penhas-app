@@ -41,7 +41,7 @@ class _SignUpThreePageState
 
   @override
   void dispose() {
-    for (var d in _disposers!) {
+    for (final d in _disposers!) {
       d();
     }
     super.dispose();
@@ -146,8 +146,8 @@ class _SignUpThreePageState
       elevation: 0,
       color: DesignSystemColors.ligthPurple,
       shape: kButtonShapeFilled,
-      child: Text(
-        "Cadastrar",
+      child: const Text(
+        'Cadastrar',
         style: kTextStyleDefaultFilledButtonLabel,
       ),
     );

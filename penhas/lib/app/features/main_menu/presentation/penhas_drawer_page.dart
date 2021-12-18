@@ -137,7 +137,7 @@ class _PenhasDrawerPageState
                   onPressed: () async {
                     Navigator.push(
                       context,
-                      TutorialScaleRoute(page: StealthModeTutorialPage()),
+                      TutorialScaleRoute(page: const StealthModeTutorialPage()),
                     );
                   },
                   child: Text('Como funciona',

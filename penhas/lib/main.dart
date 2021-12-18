@@ -10,7 +10,7 @@ import 'package:penhas/app/app_widget.dart';
 
 const _kTestingCrashlytics = false;
 
-void main() async {
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
@@ -19,12 +19,15 @@ void main() async {
       .setCrashlyticsCollectionEnabled(_kTestingCrashlytics || !kDebugMode);
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
-  runZonedGuarded(() async {
-    runApp(
-      ModularApp(
-        module: AppModule(),
-        child: AppWidget(),
-      ),
-    );
-  }, FirebaseCrashlytics.instance.recordError,);
+  runZonedGuarded(
+    () async {
+      runApp(
+        ModularApp(
+          module: AppModule(),
+          child: AppWidget(),
+        ),
+      );
+    },
+    FirebaseCrashlytics.instance.recordError,
+  );
 }

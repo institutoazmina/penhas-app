@@ -32,7 +32,7 @@ class MainboarButtonPage extends StatelessWidget {
 
   Widget _buildBottomBarIcon(MainboardState current, MainboardState selected) {
     String asset;
-    final String rootPath = 'assets/images/svg/bottom_bar';
+    const String rootPath = 'assets/images/svg/bottom_bar';
 
     asset = current.when(
       chat: () => '$rootPath/chat.svg',

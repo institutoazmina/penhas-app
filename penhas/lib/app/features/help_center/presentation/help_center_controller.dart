@@ -174,7 +174,7 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   }
 
   HelpCenterState _parseFailure(Failure failure) {
-    final state = const HelpCenterState.initial();
+    const state = HelpCenterState.initial();
     if (failure is GuardianAlertGpsFailure) {
       return state;
     }

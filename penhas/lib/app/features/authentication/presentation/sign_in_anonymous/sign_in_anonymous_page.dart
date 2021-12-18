@@ -10,12 +10,13 @@ import 'package:penhas/app/features/authentication/presentation/shared/snack_bar
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
-import 'sign_in_anonymous_controller.dart';
+import 'package:penhas/app/features/authentication/presentation/sign_in_anonymous/sign_in_anonymous_controller.dart';
 
 class SignInAnonymousPage extends StatefulWidget {
-  final String title;
   const SignInAnonymousPage({Key? key, this.title = 'Authentication'})
       : super(key: key);
+
+  final String title;
 
   @override
   _SignInAnonymousPage createState() => _SignInAnonymousPage();
@@ -58,13 +59,16 @@ class _SignInAnonymousPage
               onPanDown: (_) => _handleTap(context),
               child: SafeArea(
                 child: SingleChildScrollView(
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(16.0, 80.0, 16.0, 8.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      16.0, 80.0, 16.0, 8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      const Icon(DesignSystemLogo.penhasLogo,
-                          color: Colors.white, size: 60,),
+                      const Icon(
+                        DesignSystemLogo.penhasLogo,
+                        color: Colors.white,
+                        size: 60,
+                      ),
                       Observer(builder: (_) => _buildUserField()),
                       Observer(builder: (_) => _buildPasswordField()),
                       _buildLoginButton(),
@@ -83,7 +87,7 @@ class _SignInAnonymousPage
 
   @override
   void dispose() {
-    for (var d in _disposers!) {
+    for (final d in _disposers!) {
       d();
     }
     super.dispose();

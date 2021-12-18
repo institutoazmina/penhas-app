@@ -22,11 +22,11 @@ void main() {
     when(appStateUseCase.check()).thenAnswer(
       (_) => Future.value(
         right(
-          AppStateEntity(
+          const AppStateEntity(
             quizSession: null,
             userProfile: null,
             appMode: AppStateModeEntity(),
-            modules: const [],
+            modules: [],
           ),
         ),
       ),
@@ -36,9 +36,9 @@ void main() {
   group('UserProfile', () {
     test('should enable stealth mode', () async {
       // arrange
-      final actual = right(ValidField());
+      final actual = right(const ValidField());
       when(repository.stealthMode(toggle: anyNamed('toggle')))
-          .thenAnswer((_) async => right(ValidField()));
+          .thenAnswer((_) async => right(const ValidField()));
 
       // act
       final expected = await sut.stealthMode(toggle: true);
@@ -50,9 +50,9 @@ void main() {
 
     test('should disable stealth mode', () async {
       // arrange
-      final actual = right(ValidField());
+      final actual = right(const ValidField());
       when(repository.stealthMode(toggle: anyNamed('toggle')))
-          .thenAnswer((_) async => right(ValidField()));
+          .thenAnswer((_) async => right(const ValidField()));
       // act
       final expected = await sut.stealthMode(toggle: false);
       // assert
@@ -62,9 +62,9 @@ void main() {
 
     test('should enable anonymous mode', () async {
       // arrange
-      final actual = right(ValidField());
+      final actual = right(const ValidField());
       when(repository.anonymousMode(toggle: anyNamed('toggle')))
-          .thenAnswer((_) async => right(ValidField()));
+          .thenAnswer((_) async => right(const ValidField()));
       // act
       final expected = await sut.anonymousMode(toggle: true);
       // assert
@@ -74,9 +74,9 @@ void main() {
 
     test('should disable anonymous mode', () async {
       // arrange
-      final actual = right(ValidField());
+      final actual = right(const ValidField());
       when(repository.anonymousMode(toggle: anyNamed('toggle')))
-          .thenAnswer((_) async => right(ValidField()));
+          .thenAnswer((_) async => right(const ValidField()));
 
       // act
       final expected = await sut.anonymousMode(toggle: false);

@@ -127,14 +127,14 @@ extension _FilterLoadedStatePageMethods on FilterLoadedStatePage {
         elevation: 0,
         color: DesignSystemColors.ligthPurple,
         shape: kButtonShapeOutlinePurple,
-        child: Text("Aplicar filtro",
+        child: const Text('Aplicar filtro',
             style: TextStyle(
               fontFamily: 'Lato',
               fontWeight: FontWeight.bold,
               fontSize: 14.0,
               color: Colors.white,
               letterSpacing: 0.45,
-            )),
+            ),),
       ),
     );
   }

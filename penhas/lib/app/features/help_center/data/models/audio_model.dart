@@ -28,7 +28,8 @@ class _AudioModelParseData {
         (int.tryParse(meta['request_granted'].toString()) ?? 0) == 1;
     final id = data['event_id'];
     final createdAt = _AudioModelParseData.parseDate(
-        data['last_cliente_created_at'] as String,);
+      data['last_cliente_created_at'] as String,
+    );
 
     return AudioEntity(
       id: id as String?,
@@ -41,11 +42,12 @@ class _AudioModelParseData {
   }
 
   static DateTime? parseDate(String date) {
-    if (!date.endsWith('Z')) {
-      date = '${date}Z';
+    String utcDate = date;
+    if (!utcDate.endsWith('Z')) {
+      utcDate = '${utcDate}Z';
     }
     try {
-      return DateTime.parse(date).toLocal();
+      return DateTime.parse(utcDate).toLocal();
     } catch (e, stack) {
       logError(e, stack);
       return null;

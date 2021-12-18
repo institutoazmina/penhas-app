@@ -1,7 +1,7 @@
 import 'package:penhas/app/features/chat/domain/entities/chat_message_entity.dart';
 
 class ChatMessageModel extends ChatMessageEntity {
-  ChatMessageModel({
+  const ChatMessageModel({
     required int? id,
     required bool isMe,
     required String? message,

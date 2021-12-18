@@ -1,7 +1,7 @@
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 
 class SessionModel extends SessionEntity {
-  SessionModel({
+  const SessionModel({
     required String? sessionToken,
     bool deletedScheduled = false,
   }) : super(

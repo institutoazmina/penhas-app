@@ -64,7 +64,7 @@ class ChatChannelCard extends StatelessWidget {
   }
 
   String transformDate(DateTime time) {
-    return "${formatWithZero(time.day)}/${formatWithZero(time.month)}/${formatWithZero(time.year)}";
+    return '${formatWithZero(time.day)}/${formatWithZero(time.month)}/${formatWithZero(time.year)}';
   }
 
   String formatWithZero(int value) => value > 9 ? '$value' : '0$value';

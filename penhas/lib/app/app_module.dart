@@ -11,6 +11,8 @@ import 'package:penhas/app/features/appstate/data/repositories/app_state_reposit
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/appstate/domain/repositories/i_app_state_repository.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
+import 'package:penhas/app/features/authentication/presentation/deleted_account/deleted_account_controller.dart';
+import 'package:penhas/app/features/authentication/presentation/deleted_account/deleted_account_page.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_module.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz/quiz_module.dart';
@@ -24,8 +26,6 @@ import 'core/managers/user_profile_store.dart';
 import 'core/network/api_client.dart';
 import 'core/storage/local_storage_shared_preferences.dart';
 import 'features/appstate/domain/entities/app_preferences_entity.dart';
-import 'features/authentication/presentation/deleted_account/deleted_account_controller.dart';
-import 'features/authentication/presentation/deleted_account/deleted_account_page.dart';
 import 'features/help_center/data/repositories/audio_sync_repository.dart';
 import 'features/main_menu/domain/repositories/user_profile_repository.dart';
 
@@ -34,10 +34,10 @@ class AppModule extends Module {
   List<Bind> get binds => [
         Bind.factory<AppStateUseCase>(
           (i) => AppStateUseCase(
-              appStateRepository: i(),
-              userProfileStore: i(),
-              appConfiguration: i(),
-              appModulesServices: i(),
+            appStateRepository: i(),
+            userProfileStore: i(),
+            appConfiguration: i(),
+            appModulesServices: i(),
           ),
         ),
         Bind.factory<IAppStateRepository>(
@@ -77,11 +77,13 @@ class AppModule extends Module {
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
-        Bind.factory((i) => DeletedAccountController(
-              profileRepository: i.get<IUserProfileRepository>(),
-              appConfiguration: i.get<IAppConfiguration>(),
-              sessionToken: i.args?.data,
-            ),),
+        Bind.factory(
+          (i) => DeletedAccountController(
+            profileRepository: i.get<IUserProfileRepository>(),
+            appConfiguration: i.get<IAppConfiguration>(),
+            sessionToken: i.args?.data,
+          ),
+        ),
         Bind.factory<IAppConfiguration>(
           (i) => AppConfiguration(
             storage: i.get<ILocalStorage>(),
@@ -123,7 +125,7 @@ class AppModule extends Module {
         ModuleRoute('/quiz', module: QuizModule()),
         ChildRoute(
           '/accountDeleted',
-          child: (context, args) => DeletedAccountPage(),
+          child: (context, args) => const DeletedAccountPage(),
           transition: TransitionType.rightToLeft,
         )
       ];

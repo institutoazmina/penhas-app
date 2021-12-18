@@ -48,7 +48,7 @@ void main() {
                 anonymous: false,
                 content: 'content 2',
                 avatar: 'http://site.com/avatar_2.png',
-                meta: TweetMeta(liked: false, owner: true),
+                meta: const TweetMeta(liked: false, owner: true),
                 lastReply: const [],
               ),
               TweetEntity(
@@ -61,7 +61,7 @@ void main() {
                 anonymous: false,
                 content: 'content 1',
                 avatar: 'http://site.com/avatar_1.png',
-                meta: TweetMeta(liked: false, owner: true),
+                meta: const TweetMeta(liked: false, owner: true),
                 lastReply: const [],
               ),
             ],);
@@ -80,7 +80,7 @@ void main() {
                 anonymous: false,
                 content: 'content 1',
                 avatar: 'http://site.com/avatar_1.png',
-                meta: TweetMeta(liked: false, owner: true),
+                meta: const TweetMeta(liked: false, owner: true),
                 lastReply: const [],
               ),
               TweetEntity(
@@ -93,15 +93,15 @@ void main() {
                 anonymous: false,
                 content: 'content 4',
                 avatar: 'http://site.com/avatar_2.png',
-                meta: TweetMeta(liked: false, owner: true),
+                meta: const TweetMeta(liked: false, owner: true),
                 lastReply: const [],
               ),
             ],);
-        thirdSessionResponse = TweetSessionEntity(
+        thirdSessionResponse = const TweetSessionEntity(
           nextPage: '_next_page_request_1_',
           hasMore: false,
           orderBy: TweetSessionOrder.oldestFirst,
-          tweets: const [],
+          tweets: [],
         );
       });
       test('should get the newest tweets', () async {
@@ -197,7 +197,7 @@ void main() {
                 anonymous: false,
                 content: 'content 4',
                 avatar: 'http://site.com/avatar_2.png',
-                meta: TweetMeta(liked: false, owner: true),
+                meta: const TweetMeta(liked: false, owner: true),
                 lastReply: const [],
               ),
               TweetEntity(
@@ -210,7 +210,7 @@ void main() {
                 anonymous: false,
                 content: 'content 3',
                 avatar: 'http://site.com/avatar_1.png',
-                meta: TweetMeta(liked: false, owner: true),
+                meta: const TweetMeta(liked: false, owner: true),
                 lastReply: const [],
               ),
             ],);
@@ -229,7 +229,7 @@ void main() {
                 anonymous: false,
                 content: 'content 2',
                 avatar: 'http://site.com/avatar_1.png',
-                meta: TweetMeta(liked: false, owner: true),
+                meta: const TweetMeta(liked: false, owner: true),
                 lastReply: const [],
               ),
               TweetEntity(
@@ -242,7 +242,7 @@ void main() {
                 anonymous: false,
                 content: 'content 1',
                 avatar: 'http://site.com/avatar_2.png',
-                meta: TweetMeta(liked: false, owner: true),
+                meta: const TweetMeta(liked: false, owner: true),
                 lastReply: const [],
               ),
             ],);
@@ -261,7 +261,7 @@ void main() {
                 anonymous: false,
                 content: 'content 1',
                 avatar: 'http://site.com/avatar_2.png',
-                meta: TweetMeta(liked: false, owner: true),
+                meta: const TweetMeta(liked: false, owner: true),
                 lastReply: const [],
               ),
               TweetEntity(
@@ -274,7 +274,7 @@ void main() {
                 anonymous: false,
                 content: 'content 2',
                 avatar: 'http://site.com/avatar_1.png',
-                meta: TweetMeta(liked: false, owner: true),
+                meta: const TweetMeta(liked: false, owner: true),
                 lastReply: const [],
               ),
             ],);

@@ -166,7 +166,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
         path: endPoint,
         parameters: parameters,
       );
-      return right(ValidField());
+      return right(const ValidField());
     } catch (error, stack) {
       logError(error, stack);
       return left(MapExceptionToFailure.map(error));

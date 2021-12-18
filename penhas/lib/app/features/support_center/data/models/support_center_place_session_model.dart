@@ -16,7 +16,7 @@ class SupportCenterPlaceSessionModel extends SupportCenterPlaceSessionEntity {
   @override
   final List<SupportCenterPlaceEntity>? places;
 
-  SupportCenterPlaceSessionModel(
+  const SupportCenterPlaceSessionModel(
     this.maximumRate,
     this.latitude,
     this.longitude,

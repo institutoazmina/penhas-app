@@ -11,16 +11,16 @@ abstract class IAppStateDataSource {
 }
 
 class AppStateDataSource implements IAppStateDataSource {
-  final http.Client _apiClient;
-  final IApiServerConfigure _serverConfiguration;
-  final Set<int> _successfulResponse = {200};
-  final Set<int> _invalidSessionCode = {401, 403};
-
   AppStateDataSource({
     required http.Client apiClient,
     required serverConfiguration,
   })  : _apiClient = apiClient,
         _serverConfiguration = serverConfiguration;
+
+  final http.Client _apiClient;
+  final IApiServerConfigure _serverConfiguration;
+  final Set<int> _successfulResponse = {200};
+  final Set<int> _invalidSessionCode = {401, 403};
 
   @override
   Future<AppStateModel> check() async {
@@ -46,13 +46,13 @@ class AppStateDataSource implements IAppStateDataSource {
     final httpRequest = _serverConfiguration.baseUri.replace(path: '/me');
 
     final List<String?> parameters = [
-      if (update.nickName == null) null else 'apelido=' + Uri.encodeComponent(update.nickName!),
-      if (update.minibio == null) null else 'minibio=' + Uri.encodeComponent(update.minibio!),
-      if (update.race == null) null else 'raca=' + Uri.encodeComponent(update.race!),
-      if (update.skills == null) null else 'skills=' + Uri.encodeComponent(update.skills!.join(",")),
-      if (update.oldPassword == null) null else 'senha_atual=' + Uri.encodeComponent(update.oldPassword!),
-      if (update.newPassword == null) null else 'senha=' + Uri.encodeComponent(update.newPassword!),
-      if (update.email == null) null else 'email=' + Uri.encodeComponent(update.email!),
+      if (update.nickName == null) null else 'apelido=${Uri.encodeComponent(update.nickName!)}',
+      if (update.minibio == null) null else 'minibio=${Uri.encodeComponent(update.minibio!)}',
+      if (update.race == null) null else 'raca=${Uri.encodeComponent(update.race!)}',
+      if (update.skills == null) null else 'skills=${Uri.encodeComponent(update.skills!.join(","))}',
+      if (update.oldPassword == null) null else 'senha_atual=${Uri.encodeComponent(update.oldPassword!)}',
+      if (update.newPassword == null) null else 'senha=${Uri.encodeComponent(update.newPassword!)}',
+      if (update.email == null) null else 'email=${Uri.encodeComponent(update.email!)}',
     ];
 
     parameters.removeWhere((e) => e == null);

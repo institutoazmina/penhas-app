@@ -113,7 +113,7 @@ void main() {
           anonymous: false,
           content: 'um breve comentario',
           avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-          meta: TweetMeta(liked: false, owner: true),
+          meta: const TweetMeta(liked: false, owner: true),
           lastReply: const [],
         );
         // act

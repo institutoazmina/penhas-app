@@ -60,7 +60,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
 
   @override
   void dispose() {
-    for (var d in _disposers!) {
+    for (final d in _disposers!) {
       d();
     }
     controller.dispose();
@@ -126,7 +126,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
     );
   }
 
-  Widget _empty() => SizedBox(width: 0.0, height: 0.0);
+  Widget _empty() => const SizedBox(width: 0.0, height: 0.0);
 
   ReactionDisposer _showErrorMessage() {
     return reaction((_) => controller.errorMessage, (String? message) {

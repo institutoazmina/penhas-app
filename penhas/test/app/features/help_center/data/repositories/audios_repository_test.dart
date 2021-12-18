@@ -12,7 +12,6 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  isCrashlitycsEnabled = false;
   late IAudiosRepository sut;
   late final MockIApiProvider apiProvider = MockIApiProvider();
 
@@ -45,14 +44,15 @@ void main() {
     });
     test('should delete audio', () async {
       // arrange
-      final expected = right(ValidField());
+      final expected = right(const ValidField());
       final audio = AudioEntity(
-          id: '6db0260b-9733-4610-9586-de5141d79c32',
-          audioDuration: '2m18s',
-          createdAt: DateTime.parse('2020-08-15T16:58:54Z').toLocal(),
-          canPlay: false,
-          isRequested: true,
-          isRequestGranted: false,);
+        id: '6db0260b-9733-4610-9586-de5141d79c32',
+        audioDuration: '2m18s',
+        createdAt: DateTime.parse('2020-08-15T16:58:54Z').toLocal(),
+        canPlay: false,
+        isRequested: true,
+        isRequestGranted: false,
+      );
       when(
         apiProvider.delete(
           path: anyNamed('path'),
@@ -67,24 +67,31 @@ void main() {
 
     test('should request audio', () async {
       // arrange
-      final Either<Failure, ValidField> expected = right(ValidField(
+      final Either<Failure, ValidField> expected = right(
+        const ValidField(
           message:
-              'Enviaremos uma mensagem quando o arquivo estiver disponível.',),);
+              'Enviaremos uma mensagem quando o arquivo estiver disponível.',
+        ),
+      );
       final audio = AudioEntity(
-          id: '6db0260b-9733-4610-9586-de5141d79c32',
-          audioDuration: '2m18s',
-          createdAt: DateTime.parse('2020-08-15T16:58:54Z').toLocal(),
-          canPlay: false,
-          isRequested: true,
-          isRequestGranted: false,);
+        id: '6db0260b-9733-4610-9586-de5141d79c32',
+        audioDuration: '2m18s',
+        createdAt: DateTime.parse('2020-08-15T16:58:54Z').toLocal(),
+        canPlay: false,
+        isRequested: true,
+        isRequestGranted: false,
+      );
       when(
         apiProvider.post(
           path: anyNamed('path'),
           headers: anyNamed('headers'),
           parameters: anyNamed('parameters'),
         ),
-      ).thenAnswer((_) => Future.value(
-          '{"message":"Enviaremos uma mensagem quando o arquivo estiver disponível.","success":1}',),);
+      ).thenAnswer(
+        (_) => Future.value(
+          '{"message":"Enviaremos uma mensagem quando o arquivo estiver disponível.","success":1}',
+        ),
+      );
       // act
       final result = await sut.requestAccess(audio);
       // assert

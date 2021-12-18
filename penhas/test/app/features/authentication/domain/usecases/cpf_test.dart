@@ -27,7 +27,7 @@ void main() {
       test(
         'should get value from a valid cpf',
         () {
-          final testValue = '236.932.813-43';
+          const testValue = '236.932.813-43';
           final result = Cpf(testValue).value;
 
           expect(result, right('23693281343'));

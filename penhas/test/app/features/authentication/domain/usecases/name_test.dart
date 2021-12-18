@@ -28,7 +28,7 @@ void main() {
       test(
         'should get value from a valid fullname',
         () {
-          final testValue = 'Maria da Penha Maia Fernandes';
+          const testValue = 'Maria da Penha Maia Fernandes';
           final result = Fullname(testValue).value;
 
           expect(result, right(testValue));
@@ -60,7 +60,7 @@ void main() {
       test(
         'should get value from a valid nickname',
         () {
-          final testValue = 'penha';
+          const testValue = 'penha';
           final result = Nickname(testValue).value;
 
           expect(result, right(testValue));

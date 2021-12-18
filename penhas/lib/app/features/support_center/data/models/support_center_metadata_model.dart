@@ -3,7 +3,7 @@ import 'package:penhas/app/features/filters/data/models/filter_tag_model.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_metadata_entity.dart';
 
 class SupportCenterMetadataModel extends SupportCenterMetadataEntity {
-  SupportCenterMetadataModel({
+  const SupportCenterMetadataModel({
     required List<FilterTagModel>? categories,
     required List<FilterTagModel>? projects,
   }) : super(

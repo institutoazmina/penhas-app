@@ -101,7 +101,7 @@ void main() {
       test('should get a valid ValidField for a successful request', () async {
         // arrange
         _setUpMockPostHttpClientSuccess200(bodyContent);
-        final expected = ValidField(message: 'Report enviado');
+        const expected = ValidField(message: 'Report enviado');
         // act
         final received = await dataSource.report(option: requestOption);
         // assert

@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:penhas/app/features/users/domain/entities/user_search_session_entity.dart';
 
 class UserSearchSessionModel extends UserSearchSessionEntity {
-  UserSearchSessionModel({
+  const UserSearchSessionModel({
     required bool hasMore,
     required String? nextPage,
     required List<UserDetailProfileModel>? users,

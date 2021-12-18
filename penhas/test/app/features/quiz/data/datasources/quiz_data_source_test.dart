@@ -24,9 +24,9 @@ void main() {
       serverConfiguration: serverConfigure,
     );
 
-    quizRequest = QuizRequestEntity(
+    quizRequest = const QuizRequestEntity(
       sessionId: '200',
-      options: const {'YN1': 'Y'},
+      options: {'YN1': 'Y'},
     );
     bodyContent =
         JsonUtil.getStringSync(from: 'profile/quiz_session_response.json');
@@ -113,7 +113,7 @@ void main() {
         () async {
       // arrange
       final sessionHttpCodeError = [401, 403];
-      for (var httpCode in sessionHttpCodeError) {
+      for (final httpCode in sessionHttpCodeError) {
         _setUpMockHttpClientFailedWithHttp(code: httpCode);
         // act
         final sut = dataSource.update;

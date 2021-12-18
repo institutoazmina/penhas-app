@@ -122,14 +122,14 @@ extension _WidgetPrivateBuilder on _SupportCenterLocationPageState {
         padding: EdgeInsets.zero,
         onPressed: controller.askForLocationPermission,
         child: Padding(
-          padding: EdgeInsets.only(left: 16.0),
+          padding: const EdgeInsets.only(left: 16.0),
           child: Row(
             children: [
               locationIcon,
               Padding(
-                padding: EdgeInsets.only(left: 16.0),
+                padding: const EdgeInsets.only(left: 16.0),
                 child: Text(
-                  "Utilizando sua localização atual",
+                  'Utilizando sua localização atual',
                   style: localizationDescriptionTextStyle,
                 ),
               )
@@ -147,7 +147,7 @@ extension _WidgetPrivateBuilder on _SupportCenterLocationPageState {
         width: 100,
         alignment: Alignment.topLeft,
         child: Padding(
-          padding: const EdgeInsets.only(bottom: 0.0),
+          padding: const EdgeInsets.only(),
           child: RaisedButton(
             onPressed: () async {
               const url =
@@ -155,7 +155,7 @@ extension _WidgetPrivateBuilder on _SupportCenterLocationPageState {
               launch(url);
             },
             elevation: 0,
-            padding: const EdgeInsets.only(bottom: 0.0),
+            padding: const EdgeInsets.only(),
             color: Colors.transparent,
             child: Text('Não sei o CEP', style: forgetCepTextStyle),
           ),

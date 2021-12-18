@@ -75,7 +75,7 @@ void main() {
       setUp(() {
         bodyContent = JsonUtil.getStringSync(
             from: 'help_center/guardian_update_name.json',);
-        guardian = GuardianContactEntity(
+        guardian = const GuardianContactEntity(
           id: 1,
           name: 'Maria',
           mobile: '1191910101',

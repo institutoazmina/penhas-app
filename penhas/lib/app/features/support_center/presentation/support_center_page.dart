@@ -49,7 +49,7 @@ class _SupportCenterPageState
 
   @override
   void dispose() {
-    for (var d in _disposers!) {
+    for (final d in _disposers!) {
       d();
     }
     super.dispose();
@@ -137,7 +137,7 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
                       radius: 12,
                       backgroundColor: DesignSystemColors.pumpkinOrange,
                       child: SvgPicture.asset(
-                          "assets/images/svg/support_center/location.svg"),
+                          'assets/images/svg/support_center/location.svg',),
                     ),
                   ),
                   FlatButton(
@@ -146,7 +146,7 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
                       radius: 12,
                       backgroundColor: DesignSystemColors.pumpkinOrange,
                       child: SvgPicture.asset(
-                          "assets/images/svg/support_center/list.svg"),
+                          'assets/images/svg/support_center/list.svg',),
                     ),
                   ),
                   FlatButton(
@@ -155,7 +155,7 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
                       radius: 20,
                       backgroundColor: DesignSystemColors.pumpkinOrange,
                       child: SvgPicture.asset(
-                          "assets/images/svg/support_center/suggest_place.svg"),
+                          'assets/images/svg/support_center/suggest_place.svg',),
                     ),
                   ),
                 ],

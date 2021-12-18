@@ -47,6 +47,6 @@ class UserProfile {
 
   Future<Either<Failure, ValidField>> _syncAppState() async {
     await _appStateUseCase!.check();
-    return right(ValidField());
+    return right(const ValidField());
   }
 }

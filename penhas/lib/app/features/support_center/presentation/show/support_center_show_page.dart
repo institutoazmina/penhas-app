@@ -103,7 +103,7 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
                     child: Column(
                       children: [
                         Text(
-                          "${detail.place!.category.name!.toUpperCase()} | ${detail.place!.typeOfPlace!.toUpperCase()}",
+                          '${detail.place!.category.name!.toUpperCase()} | ${detail.place!.typeOfPlace!.toUpperCase()}',
                           style: placeTypeTextStyle,
                         ),
                       ],

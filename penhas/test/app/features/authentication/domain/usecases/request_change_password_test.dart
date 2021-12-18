@@ -41,7 +41,7 @@ void main() {
     test('should received a ResetPasswordResponseEntity for successful request',
         () async {
       // arrange
-      mockResquest().thenAnswer((_) async => right(ValidField()));
+      mockResquest().thenAnswer((_) async => right(const ValidField()));
       // act
       final Either<Failure, ValidField> result = await sut(
         emailAddress: emailAddress,
@@ -49,7 +49,7 @@ void main() {
         resetToken: resetToken,
       );
       // assert
-      expect(result, right(ValidField()));
+      expect(result, right(const ValidField()));
     });
     test(
         'should received a ServerSideFormFieldValidationFailure from invalid token',

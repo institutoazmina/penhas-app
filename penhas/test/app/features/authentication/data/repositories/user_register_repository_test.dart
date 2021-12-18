@@ -23,10 +23,9 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  isCrashlitycsEnabled = false;
-
   late final MockINetworkInfo networkInfo = MockINetworkInfo();
-  late final MockIUserRegisterDataSource dataSource = MockIUserRegisterDataSource();
+  late final MockIUserRegisterDataSource dataSource =
+      MockIUserRegisterDataSource();
   late final MockIAppConfiguration appConfiguration = MockIAppConfiguration();
   late final UserRegisterRepository sut = UserRegisterRepository(
     dataSource: dataSource,
@@ -58,31 +57,35 @@ void main() {
   });
 
   PostExpectation<dynamic> mockDataSourceRegister() {
-    return when(dataSource.register(
-      emailAddress: anyNamed('emailAddress'),
-      password: anyNamed('password'),
-      cep: anyNamed('cep'),
-      cpf: anyNamed('cpf'),
-      fullname: anyNamed('fullname'),
-      nickName: anyNamed('nickName'),
-      birthday: anyNamed('birthday'),
-      genre: anyNamed('genre'),
-      race: anyNamed('race'),
-    ),);
+    return when(
+      dataSource.register(
+        emailAddress: anyNamed('emailAddress'),
+        password: anyNamed('password'),
+        cep: anyNamed('cep'),
+        cpf: anyNamed('cpf'),
+        fullname: anyNamed('fullname'),
+        nickName: anyNamed('nickName'),
+        birthday: anyNamed('birthday'),
+        genre: anyNamed('genre'),
+        race: anyNamed('race'),
+      ),
+    );
   }
 
   PostExpectation<dynamic> mockDataSourceCheckField() {
-    return when(dataSource.checkField(
-      emailAddress: anyNamed('emailAddress'),
-      password: anyNamed('password'),
-      cep: anyNamed('cep'),
-      cpf: anyNamed('cpf'),
-      fullname: anyNamed('fullname'),
-      nickName: anyNamed('nickName'),
-      birthday: anyNamed('birthday'),
-      genre: anyNamed('genre'),
-      race: anyNamed('race'),
-    ),);
+    return when(
+      dataSource.checkField(
+        emailAddress: anyNamed('emailAddress'),
+        password: anyNamed('password'),
+        cep: anyNamed('cep'),
+        cpf: anyNamed('cpf'),
+        fullname: anyNamed('fullname'),
+        nickName: anyNamed('nickName'),
+        birthday: anyNamed('birthday'),
+        genre: anyNamed('genre'),
+        race: anyNamed('race'),
+      ),
+    );
   }
 
   Future<Either<Failure, SessionEntity>> executeRegister() {
@@ -117,17 +120,19 @@ void main() {
     Either<Failure, SessionEntity> result,
     Either<Failure, SessionEntity> expected,
   ) {
-    verify(dataSource.register(
-      emailAddress: emailAddress,
-      password: password,
-      cep: cep,
-      cpf: cpf,
-      fullname: fullname,
-      nickName: nickName,
-      birthday: birthday,
-      genre: genre,
-      race: race,
-    ),);
+    verify(
+      dataSource.register(
+        emailAddress: emailAddress,
+        password: password,
+        cep: cep,
+        cpf: cpf,
+        fullname: fullname,
+        nickName: nickName,
+        birthday: birthday,
+        genre: genre,
+        race: race,
+      ),
+    );
     expect(result, expected);
     verifyNoMoreInteractions(dataSource);
   }
@@ -136,17 +141,19 @@ void main() {
     Either<Failure, ValidField> result,
     Either<Failure, ValidField> expected,
   ) {
-    verify(dataSource.checkField(
-      emailAddress: emailAddress,
-      password: password,
-      cep: cep,
-      cpf: cpf,
-      fullname: fullname,
-      nickName: nickName,
-      birthday: birthday,
-      genre: genre,
-      race: race,
-    ),);
+    verify(
+      dataSource.checkField(
+        emailAddress: emailAddress,
+        password: password,
+        cep: cep,
+        cpf: cpf,
+        fullname: fullname,
+        nickName: nickName,
+        birthday: birthday,
+        genre: genre,
+        race: race,
+      ),
+    );
     expect(result, expected);
     verifyNoMoreInteractions(dataSource);
   }
@@ -159,7 +166,7 @@ void main() {
       test('should return valid SessionEntity for valid fields', () async {
         // arrange
         mockDataSourceRegister().thenAnswer(
-          (_) async => SessionModel(sessionToken: SESSSION_TOKEN),
+          (_) async => const SessionModel(sessionToken: SESSSION_TOKEN),
         );
         // act
         final result = await executeRegister();
@@ -167,7 +174,7 @@ void main() {
         verify(appConfiguration.saveApiToken(token: SESSSION_TOKEN));
         expectedRegisterResult(
           result,
-          right(SessionEntity(sessionToken: SESSSION_TOKEN)),
+          right(const SessionEntity(sessionToken: SESSSION_TOKEN)),
         );
       });
       test(
@@ -175,7 +182,8 @@ void main() {
           () async {
         // arrange
         final serverValidation = await JsonUtil.getJson(
-            from: 'authentication/registration_email_already_exists.json',);
+          from: 'authentication/registration_email_already_exists.json',
+        );
         final fieldFailure = ServerSideFormFieldValidationFailure(
           error: serverValidation['error'] as String?,
           field: serverValidation['field'] as String?,
@@ -217,18 +225,19 @@ void main() {
       });
       test('should return ValidField for valid fields', () async {
         // arrange
-        mockDataSourceCheckField().thenAnswer((_) async => ValidField());
+        mockDataSourceCheckField().thenAnswer((_) async => const ValidField());
         // act
         final result = await executeCheck();
         // assert
-        expectedCheckResult(result, right(ValidField()));
+        expectedCheckResult(result, right(const ValidField()));
       });
       test(
           'should return ServerSideFormFieldValidationFailure for invalid field',
           () async {
         // arrange
         final invalidField = await JsonUtil.getJson(
-            from: 'authentication/cpf_form_field_error.json',);
+          from: 'authentication/cpf_form_field_error.json',
+        );
         final fieldFailure = ServerSideFormFieldValidationFailure(
           error: invalidField['error'] as String?,
           field: invalidField['field'] as String?,

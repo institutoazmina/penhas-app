@@ -14,8 +14,6 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  isCrashlitycsEnabled = false;
-
   late final MockHttpClient mockHttpClient = MockHttpClient();
   late final MockIApiServerConfigure mockApiServerConfigure =
       MockIApiServerConfigure();
@@ -70,7 +68,8 @@ void main() {
           () async {
         // arrange
         final bodyContent = JsonUtil.getStringSync(
-            from: 'authentication/request_reset_password.json',);
+          from: 'authentication/request_reset_password.json',
+        );
         when(mockHttpClient.post(any, headers: anyNamed('headers')))
             .thenAnswer((_) async => http.Response(bodyContent, 200));
         // act
@@ -82,9 +81,11 @@ void main() {
           () async {
         // arrange
         final jsonData = await JsonUtil.getJson(
-            from: 'authentication/request_reset_password.json',);
+          from: 'authentication/request_reset_password.json',
+        );
         final bodyContent = JsonUtil.getStringSync(
-            from: 'authentication/request_reset_password.json',);
+          from: 'authentication/request_reset_password.json',
+        );
         final expectedModel = PasswordResetResponseModel.fromJson(jsonData);
         when(mockHttpClient.post(any, headers: anyNamed('headers')))
             .thenAnswer((_) async => http.Response(bodyContent, 200));
@@ -107,9 +108,12 @@ void main() {
         final sut = dataSource.request;
         // assert
         expect(
-            () async => await sut(emailAddress: emailAddress),
-            throwsA(isA<ApiProviderException>()
-                .having((e) => e.bodyContent, 'Got bodyContent', bodyContent),),);
+          () async => await sut(emailAddress: emailAddress),
+          throwsA(
+            isA<ApiProviderException>()
+                .having((e) => e.bodyContent, 'Got bodyContent', bodyContent),
+          ),
+        );
       });
     });
 
@@ -135,7 +139,8 @@ void main() {
           () async {
         // arrange
         final bodyContent = JsonUtil.getStringSync(
-            from: 'authentication/request_reset_password.json',);
+          from: 'authentication/request_reset_password.json',
+        );
         when(mockHttpClient.post(any, headers: anyNamed('headers')))
             .thenAnswer((_) async => http.Response(bodyContent, 200));
         // act
@@ -145,14 +150,19 @@ void main() {
           resetToken: validToken,
         );
         // assert
-        verify(mockHttpClient.post(httpResquest,
-            headers: httpHeader,),);
+        verify(
+          mockHttpClient.post(
+            httpResquest,
+            headers: httpHeader,
+          ),
+        );
       });
       test('should return ValidField when the response code is 200 (success)',
           () async {
         // arrange
         final bodyContent = JsonUtil.getStringSync(
-            from: 'authentication/request_reset_password.json',);
+          from: 'authentication/request_reset_password.json',
+        );
         when(mockHttpClient.post(any, headers: anyNamed('headers')))
             .thenAnswer((_) async => http.Response(bodyContent, 200));
         // act
@@ -162,7 +172,7 @@ void main() {
           resetToken: validToken,
         );
         // assert
-        expect(result, ValidField());
+        expect(result, const ValidField());
       });
       test(
           'should throw ApiProviderException when the response code is nonsuccess (non 200)',
@@ -178,13 +188,16 @@ void main() {
         final sut = dataSource.reset;
         // assert
         expect(
-            () async => await sut(
-                  emailAddress: emailAddress,
-                  password: password,
-                  resetToken: validToken,
-                ),
-            throwsA(isA<ApiProviderException>()
-                .having((e) => e.bodyContent, 'Got bodyContent', bodyContent),),);
+          () async => await sut(
+            emailAddress: emailAddress,
+            password: password,
+            resetToken: validToken,
+          ),
+          throwsA(
+            isA<ApiProviderException>()
+                .having((e) => e.bodyContent, 'Got bodyContent', bodyContent),
+          ),
+        );
       });
     });
   });

@@ -152,12 +152,12 @@ class MainboardModule extends Module {
         ),
         ChildRoute(
           '/tags',
-          child: (context, args) => FilterTweetPage(),
+          child: (context, args) => const FilterTweetPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/tweet/perfil_chat',
-          child: (context, args) => FeedRoutingPerfilChatPage(),
+          child: (context, args) => const FeedRoutingPerfilChatPage(),
           transition: TransitionType.rightToLeft,
         ),
       ];
@@ -188,17 +188,17 @@ class MainboardModule extends Module {
   List<ModularRoute> get supportCenter => [
         ChildRoute(
           '/supportcenter/add',
-          child: (context, args) => SupportCenterAddPage(),
+          child: (context, args) => const SupportCenterAddPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/supportcenter/list',
-          child: (context, args) => SupportCenterListPage(),
+          child: (context, args) => const SupportCenterListPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/supportcenter/location',
-          child: (context, args) => SupportCenterLocationPage(),
+          child: (context, args) => const SupportCenterLocationPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
@@ -211,7 +211,7 @@ class MainboardModule extends Module {
   List<ModularRoute> get notificationCenter => [
         ChildRoute(
           '/notification',
-          child: (context, args) => NotificationPage(),
+          child: (context, args) => const NotificationPage(),
           transition: TransitionType.rightToLeft,
         ),
       ];
@@ -300,12 +300,12 @@ class MainboardModule extends Module {
   List<ModularRoute> get chat => [
         ChildRoute(
           '/chat/:token',
-          child: (context, args) => ChatPage(),
+          child: (context, args) => const ChatPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/chat_from_feed',
-          child: (context, args) => ChatPage(),
+          child: (context, args) => const ChatPage(),
           transition: TransitionType.noTransition,
         ),
       ];

@@ -11,8 +11,8 @@ void main() {
   group('GuardianSessionModel', () {
     test('should be a subclass of GuardianSessioEntity', () async {
       // arrange
-      sessionModel = GuardianSessionModel(
-        guards: const [],
+      sessionModel = const GuardianSessionModel(
+        guards: [],
         remainingInvites: 0,
         maximumInvites: 0,
       );
@@ -24,7 +24,7 @@ void main() {
       // arrange
       final jsonData =
           await JsonUtil.getJson(from: 'help_center/guardian_list.json');
-      final expected = GuardianSessionModel(
+      const expected = GuardianSessionModel(
         remainingInvites: 5,
         maximumInvites: 5,
         guards: [
@@ -55,7 +55,7 @@ void main() {
                 description: 'Guardiões que ainda não aceitaram seu convite.',
                 header: 'Pendentes',
                 status: GuardianStatus.pending,),
-            contacts: const [],
+            contacts: [],
           )
         ],
       );

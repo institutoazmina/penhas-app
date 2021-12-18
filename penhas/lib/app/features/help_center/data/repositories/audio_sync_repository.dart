@@ -87,7 +87,7 @@ class AudioSyncRepository implements IAudioSyncRepository {
         file: file,
         fields: fields,
       );
-      return right(ValidField());
+      return right(const ValidField());
     } catch (error, stack) {
       logError(error, stack);
       return left(MapExceptionToFailure.map(error));

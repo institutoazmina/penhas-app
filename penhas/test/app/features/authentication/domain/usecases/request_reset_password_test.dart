@@ -24,7 +24,7 @@ void main() {
         () async {
       // arrange
       when(repository.request(emailAddress: anyNamed('emailAddress')))
-          .thenAnswer((_) async => right(ResetPasswordResponseEntity(
+          .thenAnswer((_) async => right(const ResetPasswordResponseEntity(
                 message: RESPONSE_MESSAGE,
                 digits: RESPONSE_DIGITS,
                 ttl: RESPONSE_TTL,
@@ -36,7 +36,7 @@ void main() {
       // assert
       expect(
           result,
-          right(ResetPasswordResponseEntity(
+          right(const ResetPasswordResponseEntity(
             message: RESPONSE_MESSAGE,
             digits: RESPONSE_DIGITS,
             ttl: RESPONSE_TTL,

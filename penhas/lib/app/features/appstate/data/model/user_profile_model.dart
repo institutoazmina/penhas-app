@@ -1,7 +1,7 @@
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 
 class UserProfileModel extends UserProfileEntity {
-  UserProfileModel({
+  const UserProfileModel({
     String? fullName,
     String? email,
     String? genre,

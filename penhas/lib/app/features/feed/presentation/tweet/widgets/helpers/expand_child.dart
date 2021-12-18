@@ -292,7 +292,7 @@ class ExpandArrow extends StatelessWidget {
                 DefaultTextStyle(
                   style: Theme.of(context).textTheme.subtitle2?.copyWith(
                         color: Theme.of(context).textTheme.caption?.color,
-                      ) ?? TextStyle(),
+                      ) ?? const TextStyle(),
                   child: Text(
                     tooltipMessage,
                     style: hintTextStyle!,

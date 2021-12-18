@@ -20,7 +20,7 @@ class GuardianRateLimitPage extends StatelessWidget {
     letterSpacing: 0.44,
   );
 
-  GuardianRateLimitPage({
+  const GuardianRateLimitPage({
     Key? key,
     required int maxLimit,
   })  : _maxLimit = maxLimit,

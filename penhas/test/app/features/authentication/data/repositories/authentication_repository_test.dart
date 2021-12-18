@@ -16,9 +16,8 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  isCrashlitycsEnabled = false;
-
-  late final MockAuthenticationDataSource dataSource = MockAuthenticationDataSource();
+  late final MockAuthenticationDataSource dataSource =
+      MockAuthenticationDataSource();
   late final MockIAppConfiguration appConfiguration = MockIAppConfiguration();
   late final MockINetworkInfo networkInfo = MockINetworkInfo();
   late AuthenticationRepository repository;
@@ -63,10 +62,12 @@ void main() {
           password: password,
         );
         // assert
-        verify(dataSource.signInWithEmailAndPassword(
-          emailAddress: email,
-          password: password,
-        ),);
+        verify(
+          dataSource.signInWithEmailAndPassword(
+            emailAddress: email,
+            password: password,
+          ),
+        );
 
         verify(appConfiguration.saveApiToken(token: sessionModel.sessionToken));
 
@@ -100,17 +101,23 @@ void main() {
           password: password,
         );
         // assert
-        verify(dataSource.signInWithEmailAndPassword(
-          emailAddress: email,
-          password: password,
-        ),);
+        verify(
+          dataSource.signInWithEmailAndPassword(
+            emailAddress: email,
+            password: password,
+          ),
+        );
         expect(
-            result,
-            left(ServerSideFormFieldValidationFailure(
-                error: 'wrongpassword',
-                field: 'password',
-                reason: 'invalid',
-                message: 'E-mail ou senha inválida.',),),);
+          result,
+          left(
+            ServerSideFormFieldValidationFailure(
+              error: 'wrongpassword',
+              field: 'password',
+              reason: 'invalid',
+              message: 'E-mail ou senha inválida.',
+            ),
+          ),
+        );
       });
     });
 
@@ -129,10 +136,12 @@ void main() {
           password: password,
         );
         // assert
-        verify(dataSource.signInWithEmailAndPassword(
-          emailAddress: email,
-          password: password,
-        ),);
+        verify(
+          dataSource.signInWithEmailAndPassword(
+            emailAddress: email,
+            password: password,
+          ),
+        );
         verify(networkInfo.isConnected);
         expect(result, left(InternetConnectionFailure()));
       });

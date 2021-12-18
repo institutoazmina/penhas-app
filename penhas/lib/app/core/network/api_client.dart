@@ -3,21 +3,20 @@ import 'dart:io';
 
 import 'package:http/http.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
+import 'package:penhas/app/core/network/api_server_configure.dart';
+import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/shared/logger/log.dart';
-
-import 'api_server_configure.dart';
-import 'network_info.dart';
 
 abstract class IApiProvider {
   Future<String> get({
     required String path,
-    Map<String, String>? headers,
+    Map<String, String> headers,
     Map<String, String?>? parameters,
   });
 
   Future<String> post({
     required String path,
-    Map<String, String>? headers,
+    Map<String, String> headers,
     Map<String?, String?>? parameters,
     String? body,
   });
@@ -30,32 +29,32 @@ abstract class IApiProvider {
   Future<String> upload({
     required String path,
     required MultipartFile file,
-    Map<String, String>? headers,
+    Map<String, String> headers,
     Map<String, String>? fields,
   });
 
   Future<String> download({
     required String path,
     required File file,
-    Map<String, String>? headers,
+    Map<String, String> headers,
     Map<String, String>? fields,
   });
 }
 
 class ApiProvider implements IApiProvider {
-  final INetworkInfo _networkInfo;
-  final IApiServerConfigure _serverConfiguration;
-
   ApiProvider({
     required IApiServerConfigure serverConfiguration,
     required INetworkInfo networkInfo,
   })  : _serverConfiguration = serverConfiguration,
         _networkInfo = networkInfo;
 
+  final INetworkInfo _networkInfo;
+  final IApiServerConfigure _serverConfiguration;
+
   @override
   Future<String> get({
     required String path,
-    Map<String, String>? headers,
+    Map<String, String> headers = const {},
     Map<String, String?>? parameters,
   }) async {
     final Uri uriRequest = setupHttpRequest(
@@ -72,7 +71,7 @@ class ApiProvider implements IApiProvider {
   @override
   Future<String> post({
     required String path,
-    Map<String, String>? headers,
+    Map<String, String> headers = const {},
     Map<String?, String?>? parameters,
     String? body,
   }) async {
@@ -88,8 +87,10 @@ class ApiProvider implements IApiProvider {
   }
 
   @override
-  Future<String> delete(
-      {String? path, Map<String, String?>? parameters}) async {
+  Future<String> delete({
+    String? path,
+    Map<String, String?>? parameters,
+  }) async {
     final Uri uriRequest = setupHttpRequest(
       path: path,
       queryParameters: parameters,
@@ -105,7 +106,7 @@ class ApiProvider implements IApiProvider {
   Future<String> upload({
     required String path,
     required MultipartFile file,
-    Map<String, String>? headers,
+    Map<String, String> headers = const {},
     Map<String, String>? fields,
   }) async {
     final Uri uriRequest = setupHttpRequest(
@@ -114,7 +115,7 @@ class ApiProvider implements IApiProvider {
     );
     final header = await setupHttpHeader(headers);
     final MultipartRequest request = MultipartRequest('POST', uriRequest);
-    final cleanedField = fields ?? Map<String, String>();
+    final cleanedField = fields ?? <String, String>{};
     request
       ..headers.addAll(header)
       ..fields.addAll(cleanedField)
@@ -130,7 +131,7 @@ class ApiProvider implements IApiProvider {
   Future<String> download({
     required String path,
     required File file,
-    Map<String, String>? headers,
+    Map<String, String> headers = const {},
     Map<String, String>? fields,
   }) async {
     final Uri uriRequest = setupHttpRequest(
@@ -148,9 +149,9 @@ class ApiProvider implements IApiProvider {
 }
 
 extension _ApiProvider on ApiProvider {
-  Future<Map<String, String>> setupHttpHeader(
-      Map<String, String>? headers) async {
-    headers ??= {};
+  Future<Map<String, String>> setupHttpHeader([
+    Map<String, String> headers = const {},
+  ]) async {
     headers.addAll(
       {
         'X-Api-Key': await _serverConfiguration.apiToken ?? '',

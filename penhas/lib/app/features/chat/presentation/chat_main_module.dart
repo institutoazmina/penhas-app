@@ -61,5 +61,5 @@ class ChatMainModule extends WidgetModule {
       ];
 
   @override
-  Widget get view => ChatMainPage();
+  Widget get view => const ChatMainPage();
 }

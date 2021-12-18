@@ -1,11 +1,10 @@
 import 'package:collection/collection.dart';
+import 'package:penhas/app/features/chat/data/models/chat_assistant_model.dart';
+import 'package:penhas/app/features/chat/data/models/chat_channel_model.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_available_entity.dart';
 
-import 'chat_assistant_model.dart';
-import 'chat_channel_model.dart';
-
 class ChatChannelAvailableModel extends ChatChannelAvailableEntity {
-  ChatChannelAvailableModel({
+  const ChatChannelAvailableModel({
     required bool? hasMore,
     required String? nextPage,
     required List<ChatChannelModel>? channels,

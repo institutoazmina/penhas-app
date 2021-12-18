@@ -30,7 +30,7 @@ void main() {
 
     test('clears inactive since to null when customer was inactive', () async {
       await _setActive(inactiveSince: DateTime.now());
-      verify(appPreferencesStore.save(AppPreferencesEntity(
+      verify(appPreferencesStore.save(const AppPreferencesEntity(
         inactiveAppSince: null,
         inactiveAppLogoutTimeInSeconds: 30,
       ),),);
@@ -38,7 +38,7 @@ void main() {
 
     test('keeps inactive since null when customer was active', () async {
       await _setActive(inactiveSince: null);
-      verify(appPreferencesStore.save(AppPreferencesEntity(
+      verify(appPreferencesStore.save(const AppPreferencesEntity(
         inactiveAppSince: null,
         inactiveAppLogoutTimeInSeconds: 30,
       ),),);

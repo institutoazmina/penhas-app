@@ -14,7 +14,7 @@ class PenhasDrawerHeaderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color drawerGrey = const Color.fromRGBO(239, 239, 239, 1.0);
+    const Color drawerGrey = Color.fromRGBO(239, 239, 239, 1.0);
 
     return Container(
       padding: const EdgeInsets.only(left: 16.0),

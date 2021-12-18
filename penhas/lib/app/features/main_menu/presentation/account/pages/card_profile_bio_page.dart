@@ -64,7 +64,7 @@ extension _Modal on CardProfileBioPage {
           maxLines: 5,
           maxLength: 2200,
           decoration: const InputDecoration(
-              hintText: 'Informe uma minibio', filled: true),
+              hintText: 'Informe uma minibio', filled: true,),
         ),
         actions: <Widget>[
           FlatButton(

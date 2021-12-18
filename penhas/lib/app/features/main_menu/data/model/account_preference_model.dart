@@ -1,7 +1,7 @@
 import 'package:penhas/app/features/main_menu/domain/entities/account_preference_entity.dart';
 
 class AccountPreferenceModel extends AccountPreferenceEntity {
-  AccountPreferenceModel({
+  const AccountPreferenceModel({
     required String? key,
     required String? label,
     required bool value,
@@ -20,7 +20,7 @@ class AccountPreferenceModel extends AccountPreferenceEntity {
 }
 
 class AccountPreferenceSessionModel extends AccountPreferenceSessionEntity {
-  AccountPreferenceSessionModel({
+  const AccountPreferenceSessionModel({
     required List<AccountPreferenceModel> preferences,
   }) : super(preferences: preferences);
 

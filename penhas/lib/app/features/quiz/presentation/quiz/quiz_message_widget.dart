@@ -28,12 +28,12 @@ class QuizMessageWidget extends StatelessWidget {
         : const Color.fromRGBO(239, 239, 239, 1.0);
     final Color textColor = isDisplayTextResponse ? Colors.white : Colors.black;
 
-    final Radius radius = const Radius.circular(16.0);
+    const Radius radius = Radius.circular(16.0);
 
     final BorderRadiusGeometry borderRadius = isDisplayTextResponse
-        ? BorderRadius.only(
+        ? const BorderRadius.only(
             topLeft: radius, topRight: radius, bottomLeft: radius,)
-        : BorderRadius.only(
+        : const BorderRadius.only(
             topLeft: radius, topRight: radius, bottomRight: radius,);
 
     final AlignmentGeometry alignment =

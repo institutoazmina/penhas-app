@@ -27,7 +27,7 @@ void main() {
       test(
         'should get value from a valid birthday',
         () {
-          final testValue = '01/01/1994';
+          const testValue = '01/01/1994';
           final result = Birthday(testValue).value;
 
           expect(result, right('1994-01-01'));
@@ -37,7 +37,7 @@ void main() {
       test(
         'should get value from a valid birthday from Datetime',
         () {
-          final testValue = DateTime.utc(1994, 1);
+          final testValue = DateTime.utc(1994);
           final result = Birthday.datetime(testValue).value;
 
           expect(result, right('1994-01-01'));

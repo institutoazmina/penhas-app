@@ -83,7 +83,7 @@ class _QuizPageState extends ModularState<QuizPage, QuizController> {
   @override
   void dispose() {
     super.dispose();
-    for (var d in _disposers!) {
+    for (final d in _disposers!) {
       d();
     }
   }

@@ -57,7 +57,7 @@ class HelpCenterCardGuardian extends StatelessWidget {
                     onPressed: () async {
                       await Navigator.push(
                         context,
-                        TutorialScaleRoute(page: GuardianTutorialPage()),
+                        TutorialScaleRoute(page: const GuardianTutorialPage()),
                       );
                     },
                   )
@@ -80,8 +80,8 @@ class HelpCenterCardGuardian extends StatelessWidget {
                         backgroundColor: DesignSystemColors.cobaltTwo,
                         onPressed: create,
                         shape: kButtonShapeOutlineWhite,
-                        child: Text('Novo guardião',
-                            style: kTextStyleHelpCenterButtonLabel),
+                        child: const Text('Novo guardião',
+                            style: kTextStyleHelpCenterButtonLabel,),
                       ),
                     ),
                   ),
@@ -96,7 +96,7 @@ class HelpCenterCardGuardian extends StatelessWidget {
                           backgroundColor: DesignSystemColors.easterPurple,
                           onPressed: manager,
                           shape: kButtonShapeOutlinePurple,
-                          child: Text(
+                          child: const Text(
                             'Meus guardiões',
                             style: kTextStyleHelpCenterButtonLabel,
                           ),),

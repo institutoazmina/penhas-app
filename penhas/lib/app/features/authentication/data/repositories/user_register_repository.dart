@@ -19,10 +19,6 @@ import 'package:penhas/app/features/authentication/domain/usecases/sign_up_passw
 import 'package:penhas/app/shared/logger/log.dart';
 
 class UserRegisterRepository implements IUserRegisterRepository {
-  final INetworkInfo? _networkInfo;
-  final IUserRegisterDataSource? _dataSource;
-  final IAppConfiguration? _appConfiguration;
-
   UserRegisterRepository({
     required INetworkInfo? networkInfo,
     required IAppConfiguration? appConfiguration,
@@ -30,6 +26,10 @@ class UserRegisterRepository implements IUserRegisterRepository {
   })  : _dataSource = dataSource,
         _networkInfo = networkInfo,
         _appConfiguration = appConfiguration;
+
+  final INetworkInfo? _networkInfo;
+  final IUserRegisterDataSource? _dataSource;
+  final IAppConfiguration? _appConfiguration;
 
   @override
   Future<Either<Failure, ValidField>> checkField({
@@ -46,17 +46,18 @@ class UserRegisterRepository implements IUserRegisterRepository {
   }) async {
     try {
       await _dataSource!.checkField(
-          emailAddress: emailAddress,
-          password: password,
-          cep: cep,
-          cpf: cpf,
-          fullname: fullname,
-          nickName: nickName,
-          birthday: birthday,
-          genre: genre,
-          race: race,);
+        emailAddress: emailAddress,
+        password: password,
+        cep: cep,
+        cpf: cpf,
+        fullname: fullname,
+        nickName: nickName,
+        birthday: birthday,
+        genre: genre,
+        race: race,
+      );
 
-      return right(ValidField());
+      return right(const ValidField());
     } catch (e, stack) {
       logError(e, stack);
       return left(await _handleError(e));
@@ -78,16 +79,17 @@ class UserRegisterRepository implements IUserRegisterRepository {
   }) async {
     try {
       final session = await _dataSource!.register(
-          emailAddress: emailAddress,
-          password: password,
-          cep: cep,
-          cpf: cpf,
-          fullname: fullname,
-          nickName: nickName,
-          birthday: birthday,
-          genre: genre,
-          race: race,
-          socialName: socialName,);
+        emailAddress: emailAddress,
+        password: password,
+        cep: cep,
+        cpf: cpf,
+        fullname: fullname,
+        nickName: nickName,
+        birthday: birthday,
+        genre: genre,
+        race: race,
+        socialName: socialName,
+      );
 
       await _appConfiguration!.saveApiToken(token: session.sessionToken);
 
@@ -110,10 +112,11 @@ class UserRegisterRepository implements IUserRegisterRepository {
 
     if (error is ApiProviderException) {
       return ServerSideFormFieldValidationFailure(
-          error: error.bodyContent['error'],
-          field: error.bodyContent['field'],
-          reason: error.bodyContent['reason'],
-          message: error.bodyContent['message'],);
+        error: error.bodyContent['error'],
+        field: error.bodyContent['field'],
+        reason: error.bodyContent['reason'],
+        message: error.bodyContent['message'],
+      );
     }
 
     return ServerFailure();

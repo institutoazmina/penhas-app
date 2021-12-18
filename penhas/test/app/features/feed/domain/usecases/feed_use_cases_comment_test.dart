@@ -42,7 +42,7 @@ void main() {
           anonymous: false,
           content: 'content 1',
           avatar: 'http://site.com/avatar_2.png',
-          meta: TweetMeta(liked: true, owner: true),
+          meta: const TweetMeta(liked: true, owner: true),
           lastReply: const [],
         );
         tweetEntity3 = TweetEntity(
@@ -55,7 +55,7 @@ void main() {
           anonymous: false,
           content: 'comment 3',
           avatar: 'http://site.com/avatar_1.png',
-          meta: TweetMeta(liked: true, owner: true),
+          meta: const TweetMeta(liked: true, owner: true),
           lastReply: const [],
         );
         tweetEntity2 = TweetEntity(
@@ -68,7 +68,7 @@ void main() {
           anonymous: false,
           content: 'content 2',
           avatar: 'http://site.com/avatar_1.png',
-          meta: TweetMeta(liked: true, owner: true),
+          meta: const TweetMeta(liked: true, owner: true),
           lastReply: [tweetEntity3],
         );
 
@@ -102,7 +102,7 @@ void main() {
           anonymous: false,
           content: 'commented tweet = 5',
           avatar: 'http://site.com/avatar_42.png',
-          meta: TweetMeta(liked: false, owner: true),
+          meta: const TweetMeta(liked: false, owner: true),
           lastReply: const [],
         );
         final commentedTweet = tweetEntity1.copyWith(
@@ -146,7 +146,7 @@ void main() {
           anonymous: false,
           content: 'commented tweet',
           avatar: 'http://site.com/avatar_42.png',
-          meta: TweetMeta(liked: false, owner: true),
+          meta: const TweetMeta(liked: false, owner: true),
           lastReply: const [],
         );
         final commentedTweet = tweetEntity2.copyWith(

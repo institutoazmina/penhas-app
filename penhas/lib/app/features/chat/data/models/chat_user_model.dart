@@ -1,7 +1,7 @@
 import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
 
 class ChatUserModel extends ChatUserEntity {
-  ChatUserModel({
+  const ChatUserModel({
     required String activity,
     required String? nickname,
     required String? avatar,

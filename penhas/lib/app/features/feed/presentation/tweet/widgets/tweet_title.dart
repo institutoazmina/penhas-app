@@ -156,8 +156,8 @@ class TweetTitle extends StatelessWidget {
             child: Text(tweet.userName!, style: kTextStyleFeedTweetTitle),),
         if (isDetail) _buildDetailTime() else _buildTime(),
         if (controller == null) Container() else IconButton(
-                icon: Icon(Icons.more_vert),
-                onPressed: () => _showTweetAction()),
+                icon: const Icon(Icons.more_vert),
+                onPressed: () => _showTweetAction(),),
       ],
     );
   }
@@ -176,8 +176,8 @@ class TweetTitle extends StatelessWidget {
           ),
         ),
         if (controller == null) Container() else IconButton(
-                icon: Icon(Icons.more_vert),
-                onPressed: () => _showTweetAction()),
+                icon: const Icon(Icons.more_vert),
+                onPressed: () => _showTweetAction(),),
       ],
     );
   }

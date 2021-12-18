@@ -9,17 +9,17 @@ import 'package:penhas/app/features/authentication/presentation/shared/input_box
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/sign_up_controller.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'sign_up_controller.dart';
-
 class SignUpPage extends StatefulWidget {
-  final String title;
   const SignUpPage({Key? key, this.title = 'SignUp'}) : super(key: key);
+
+  final String title;
 
   @override
   _SignUpPageState createState() => _SignUpPageState();
@@ -59,7 +59,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
 
   @override
   void dispose() {
-    for (var d in _disposers!) {
+    for (final d in _disposers!) {
       d();
     }
     super.dispose();
@@ -97,13 +97,17 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
                       const SizedBox(height: 24.0),
                       Observer(builder: (_) => _builBirthday()),
                       const SizedBox(height: 24.0),
-                      Observer(builder: (_) {
-                        return _buildCpf();
-                      },),
+                      Observer(
+                        builder: (_) {
+                          return _buildCpf();
+                        },
+                      ),
                       const SizedBox(height: 24.0),
-                      Observer(builder: (_) {
-                        return _buildCep();
-                      },),
+                      Observer(
+                        builder: (_) {
+                          return _buildCep();
+                        },
+                      ),
                       _forgetCep(),
                       const SizedBox(height: 24.0),
                       SizedBox(height: 40.0, child: _buildNextButton()),
@@ -136,7 +140,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
       width: 100,
       alignment: Alignment.topLeft,
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 0.0),
+        padding: EdgeInsets.zero,
         child: RaisedButton(
           onPressed: () async {
             const url =
@@ -144,7 +148,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
             launch(url);
           },
           elevation: 0,
-          padding: const EdgeInsets.only(bottom: 0.0),
+          padding: EdgeInsets.zero,
           color: Colors.transparent,
           child: const Text(
             'Não sei o meu CEP',
@@ -229,8 +233,8 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
       elevation: 0,
       color: DesignSystemColors.ligthPurple,
       shape: kButtonShapeFilled,
-      child: Text(
-        "Próximo",
+      child: const Text(
+        'Próximo',
         style: kTextStyleDefaultFilledButtonLabel,
       ),
     );

@@ -3,7 +3,7 @@ import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.da
 import 'package:penhas/app/features/chat/domain/entities/chat_assistant_entity.dart';
 
 class ChatAssistantModel extends ChatAssistantEntity {
-  ChatAssistantModel({
+  const ChatAssistantModel({
     required String? title,
     required String? subtitle,
     required String? avatar,

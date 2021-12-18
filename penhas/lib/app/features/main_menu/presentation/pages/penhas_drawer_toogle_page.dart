@@ -14,14 +14,14 @@ class PenhasDrawerTooglePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const double listHeight = 80;
-    final Color drawerGrey = const Color.fromRGBO(239, 239, 239, 1.0);
+    const Color drawerGrey = Color.fromRGBO(239, 239, 239, 1.0);
 
     return Container(
       padding: const EdgeInsets.only(left: 16.0),
       height: listHeight,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: drawerGrey,
-          border: const Border(bottom: BorderSide(color: DesignSystemColors.white)),),
+          border: Border(bottom: BorderSide(color: DesignSystemColors.white)),),
       child: Center(
         child: SwitchListTile(
           contentPadding: const EdgeInsets.only(right: 16.0),

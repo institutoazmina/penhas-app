@@ -44,9 +44,6 @@ abstract class IUserRegisterDataSource {
 }
 
 class UserRegisterDataSource implements IUserRegisterDataSource {
-  final http.Client? apiClient;
-  final IApiServerConfigure? serverConfiguration;
-
   UserRegisterDataSource({
     required this.apiClient,
     required this.serverConfiguration,

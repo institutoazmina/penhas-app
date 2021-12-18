@@ -59,7 +59,7 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
 
   @override
   void dispose() {
-    for (var d in _disposers!) {
+    for (final d in _disposers!) {
       d();
     }
     _scrollController.dispose();

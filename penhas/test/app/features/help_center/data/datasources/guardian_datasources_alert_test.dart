@@ -115,7 +115,7 @@ void main() {
           () async {
             // arrange
             _setUpMockPostHttpClientSuccess200(bodyContent);
-            final expected = AlertModel(
+            const expected = AlertModel(
                 title: 'Alerta enviado!',
                 message:
                     'Não há guardiões cadastrado! Nenhum alerta foi enviado.',);

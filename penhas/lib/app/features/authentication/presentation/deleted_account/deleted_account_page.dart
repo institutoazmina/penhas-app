@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/features/authentication/presentation/deleted_account/deleted_account_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
-
-import 'deleted_account_controller.dart';
 
 class DeletedAccountPage extends StatefulWidget {
   const DeletedAccountPage({Key? key}) : super(key: key);
@@ -49,7 +48,7 @@ class _DeletedAccountPageState
 
   @override
   void dispose() {
-    for (var d in _disposers!) {
+    for (final d in _disposers!) {
       d();
     }
     super.dispose();
@@ -114,7 +113,7 @@ extension _MethodPrivate on _DeletedAccountPageState {
                       color: DesignSystemColors.ligthPurple,
                       shape: kButtonShapeOutlinePurple,
                       child:
-                          Text("Reativar Conta", style: activeButtonTextStyle),
+                          Text('Reativar Conta', style: activeButtonTextStyle),
                     ),
                   ),
                 ),

@@ -24,9 +24,6 @@ abstract class IChangePasswordDataSource {
 }
 
 class ChangePasswordDataSource implements IChangePasswordDataSource {
-  final http.Client apiClient;
-  final IApiServerConfigure serverConfiguration;
-
   ChangePasswordDataSource({
     required this.apiClient,
     required this.serverConfiguration,

@@ -9,6 +9,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/authentication/presentation/shared/password_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_controller.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/link_button.dart';
@@ -17,12 +18,10 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'package:penhas/app/shared/navigation/navigator.dart';
 import 'package:penhas/app/shared/navigation/route.dart';
 
-import 'sign_in_controller.dart';
-
 class SignInPage extends StatefulWidget {
-  final String title;
-
   const SignInPage({Key? key, this.title = 'Authentication'}) : super(key: key);
+
+  final String title;
 
   @override
   _SignInPageState createState() => _SignInPageState();
@@ -64,13 +63,16 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
               onPanDown: (_) => _handleTap(context),
               child: SafeArea(
                 child: SingleChildScrollView(
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(16.0, 80.0, 16.0, 8.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      16.0, 80.0, 16.0, 8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      const Icon(DesignSystemLogo.penhasLogo,
-                          color: Colors.white, size: 60,),
+                      const Icon(
+                        DesignSystemLogo.penhasLogo,
+                        color: Colors.white,
+                        size: 60,
+                      ),
                       Observer(builder: (_) => _buildUserField()),
                       Observer(builder: (_) => _buildPasswordField()),
                       _buildLoginButton(),
@@ -82,12 +84,14 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
                       ),
                       LinkButton(
                         onPressed: () => AppNavigator.push(
-                            AppRoute('/authentication/terms_of_use'),),
+                          AppRoute('/authentication/terms_of_use'),
+                        ),
                         text: 'Termos de uso',
                       ),
                       LinkButton(
                         onPressed: () => AppNavigator.push(
-                            AppRoute('/authentication/privacy_policy'),),
+                          AppRoute('/authentication/privacy_policy'),
+                        ),
                         text: 'Política de privacidade',
                       ),
                     ],
@@ -103,7 +107,7 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
 
   @override
   void dispose() {
-    for (var d in _disposers!) {
+    for (final d in _disposers!) {
       d();
     }
     super.dispose();
@@ -155,7 +159,7 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
           elevation: 0,
           color: Colors.transparent,
           shape: kButtonShapeOutlineWhite,
-          child: Text(
+          child: const Text(
             'Cadastrar',
             style: kTextStyleDefaultFilledButtonLabel,
           ),
@@ -164,7 +168,7 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
     );
   }
 
-  _handleTap(BuildContext context) {
+  void _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
     }

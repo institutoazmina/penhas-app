@@ -6,20 +6,11 @@ import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.da
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 
 class AppStateModel extends AppStateEntity {
-  @override
-  final QuizSessionEntity? quizSession;
-  @override
-  final UserProfileEntity? userProfile;
-  @override
-  final AppStateModeEntity appMode;
-  @override
-  final List<AppStateModuleEntity> modules;
-
-  AppStateModel(
-    this.quizSession,
-    this.userProfile,
-    this.appMode,
-    this.modules,
+  const AppStateModel(
+    QuizSessionEntity? quizSession,
+    UserProfileEntity? userProfile,
+    AppStateModeEntity appMode,
+    List<AppStateModuleEntity> modules,
   ) : super(
           quizSession: quizSession,
           userProfile: userProfile,
@@ -28,7 +19,7 @@ class AppStateModel extends AppStateEntity {
         );
 
   factory AppStateModel.fromJson(Map<String, dynamic> jsonData) {
-    final qtyActiveGuardians = jsonData['qtde_guardioes_ativos'] ?? 0;
+    final int qtyActiveGuardians = jsonData['qtde_guardioes_ativos'] ?? 0;
     final appMode = AppStateModeEntity(
       hasActivedGuardian: qtyActiveGuardians > 0,
     );
@@ -92,7 +83,8 @@ class AppStateModel extends AppStateEntity {
       return null;
     }
 
-    final String meta = module['meta'] == null ? '{}' : jsonEncode(module['meta']);
+    final String meta =
+        module['meta'] == null ? '{}' : jsonEncode(module['meta']);
     return AppStateModuleEntity(code: code, meta: meta);
   }
 
@@ -130,7 +122,8 @@ class AppStateModel extends AppStateEntity {
   }
 
   static List<QuizMessageEntity> _buildDisplayResponseMessage(
-      Map<String, dynamic> message) {
+    Map<String, dynamic> message,
+  ) {
     return [
       QuizMessageEntity(
         content: message['content'],
@@ -146,7 +139,8 @@ class AppStateModel extends AppStateEntity {
   }
 
   static List<QuizMessageMultiplechoicesOptions>? _mapToOptions(
-      List<dynamic>? options) {
+    List<dynamic>? options,
+  ) {
     if (options == null || options.isEmpty) {
       return null;
     }

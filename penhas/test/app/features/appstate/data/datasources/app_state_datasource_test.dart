@@ -101,7 +101,7 @@ void main() {
         () async {
       // arrange
       final sessionHttpCodeError = [401, 403];
-      for (var httpCode in sessionHttpCodeError) {
+      for (final httpCode in sessionHttpCodeError) {
         _setUpMockHttpClientFailedWithHttp(code: httpCode);
         // act
         final sut = dataSource.check;

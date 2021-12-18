@@ -15,20 +15,6 @@ class ChatUserEntity extends Equatable {
     required this.blockedMe,
   });
 
-  factory ChatUserEntity.empty() => const ChatUserEntity(
-        userId: -1,
-        activity: null,
-        avatar: null,
-        nickname: null,
-        blockedMe: false,
-      );
-
-  final String? activity;
-  final String? nickname;
-  final String? avatar;
-  final int? userId;
-  final bool blockedMe;
-
   @override
   bool get stringify => true;
 
@@ -40,4 +26,12 @@ class ChatUserEntity extends Equatable {
         userId,
         blockedMe,
       ];
+
+  static ChatUserEntity get empty => const ChatUserEntity(
+        userId: -1,
+        activity: null,
+        avatar: null,
+        nickname: null,
+        blockedMe: false,
+      );
 }

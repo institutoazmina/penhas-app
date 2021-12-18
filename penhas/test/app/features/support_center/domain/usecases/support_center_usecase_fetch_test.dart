@@ -21,7 +21,7 @@ void main() {
     group('fetch', () {
       test('should get GPSFailure for invalid gps information', () async {
         // arrange
-        final fetchRequest = SupportCenterFetchRequest();
+        const fetchRequest = SupportCenterFetchRequest();
         const gpsFailure =
             'Não foi possível encontrar sua localização através do CEP 01203-777, tente novamente mais tarde ou ative a localização';
         final actual = left(
@@ -31,7 +31,7 @@ void main() {
               GpsFailure(gpsFailure),
             ),);
         when(locationServices.currentLocation()).thenAnswer((_) async => right(
-            const UserLocationEntity(latitude: 0.0),),);
+            const UserLocationEntity(),),);
         when(locationServices.isPermissionGranted())
             .thenAnswer((_) async => true);
         // act

@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:penhas/app/features/help_center/domain/entities/guardian_session_entity.dart';
 
 class GuardianSessionModel extends GuardianSessioEntity {
-  GuardianSessionModel({
+  const GuardianSessionModel({
     required List<GuardianEntity> guards,
     required int remainingInvites,
     required int maximumInvites,

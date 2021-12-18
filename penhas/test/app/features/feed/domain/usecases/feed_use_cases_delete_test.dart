@@ -45,7 +45,7 @@ void main() {
               anonymous: false,
               content: 'content 2',
               avatar: 'http://site.com/avatar_2.png',
-              meta: TweetMeta(liked: false, owner: true),
+              meta: const TweetMeta(liked: false, owner: true),
               lastReply: const [],
             ),
             TweetEntity(
@@ -58,7 +58,7 @@ void main() {
               anonymous: false,
               content: 'content 1',
               avatar: 'http://site.com/avatar_1.png',
-              meta: TweetMeta(liked: false, owner: true),
+              meta: const TweetMeta(liked: false, owner: true),
               lastReply: [
                 TweetEntity(
                   id: 'id_3',
@@ -70,7 +70,7 @@ void main() {
                   anonymous: false,
                   content: 'just replied',
                   avatar: 'http://site.com/2.svg',
-                  meta: TweetMeta(liked: false, owner: false),
+                  meta: const TweetMeta(liked: false, owner: false),
                   lastReply: const [],
                 ),
               ],
@@ -91,7 +91,7 @@ void main() {
           anonymous: true,
           content: 'content 1',
           avatar: 'http://site.com/1.svg',
-          meta: TweetMeta(liked: false, owner: true),
+          meta: const TweetMeta(liked: false, owner: true),
           lastReply: const [],
         );
 
@@ -114,7 +114,7 @@ void main() {
                 anonymous: false,
                 content: 'content 2',
                 avatar: 'http://site.com/avatar_2.png',
-                meta: TweetMeta(liked: false, owner: true),
+                meta: const TweetMeta(liked: false, owner: true),
                 lastReply: const [],
               ),
             ],
@@ -126,7 +126,7 @@ void main() {
         await sut.fetchNewestTweet();
 
         when(repository.delete(option: anyNamed('option')))
-            .thenAnswer((_) async => right(ValidField()));
+            .thenAnswer((_) async => right(const ValidField()));
         // act
         final received = await sut.delete(tweet);
         // assert
@@ -145,7 +145,7 @@ void main() {
           anonymous: false,
           content: 'just replied',
           avatar: 'http://site.com/2.svg',
-          meta: TweetMeta(liked: false, owner: false),
+          meta: const TweetMeta(liked: false, owner: false),
           lastReply: const [],
         );
 
@@ -168,7 +168,7 @@ void main() {
                 anonymous: false,
                 content: 'content 2',
                 avatar: 'http://site.com/avatar_2.png',
-                meta: TweetMeta(liked: false, owner: true),
+                meta: const TweetMeta(liked: false, owner: true),
                 lastReply: const [],
               ),
               TweetEntity(
@@ -181,7 +181,7 @@ void main() {
                 anonymous: false,
                 content: 'content 1',
                 avatar: 'http://site.com/avatar_1.png',
-                meta: TweetMeta(liked: false, owner: true),
+                meta: const TweetMeta(liked: false, owner: true),
                 lastReply: const [],
               ),
             ],
@@ -193,7 +193,7 @@ void main() {
         await sut.fetchNewestTweet();
 
         when(repository.delete(option: anyNamed('option')))
-            .thenAnswer((_) async => right(ValidField()));
+            .thenAnswer((_) async => right(const ValidField()));
         // act
         final received = await sut.delete(tweet);
         // assert

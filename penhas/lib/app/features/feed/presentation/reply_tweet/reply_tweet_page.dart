@@ -60,7 +60,7 @@ class _ReplyTweetPageState
   @override
   void dispose() {
     super.dispose();
-    for (var d in _disposers!) {
+    for (final d in _disposers!) {
       d();
     }
   }

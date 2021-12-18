@@ -72,7 +72,7 @@ void main() {
       test(
         'should get value from a valid password',
         () {
-          final validPassword = '_myStrongP4ss@rd';
+          const validPassword = '_myStrongP4ss@rd';
           final result = SignUpPassword(validPassword, validator);
 
           expect(result.value, right(validPassword));
@@ -84,7 +84,7 @@ void main() {
       test(
         'should get value from a valid password with only lower case letters',
             () {
-          final validPassword = '_mystrongp4ss@rd';
+          const validPassword = '_mystrongp4ss@rd';
           final result = SignUpPassword(validPassword, validator);
 
           expect(result.value, right(validPassword));
@@ -95,7 +95,7 @@ void main() {
       test(
         'should get value from a valid password with only upper case letters',
             () {
-          final validPassword = '_MYSTRONGP4SS@RD';
+          const validPassword = '_MYSTRONGP4SS@RD';
           final result = SignUpPassword(validPassword, validator);
 
           expect(result.value, right(validPassword));

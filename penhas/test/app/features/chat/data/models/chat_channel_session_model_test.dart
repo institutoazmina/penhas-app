@@ -33,7 +33,7 @@ void main() {
           hasMore: false,
           newer: null,
           older: null,
-          messages: const [],
+          messages: [],
           metadata: ChatChannelSessionMetadataModel(
             canSendMessage: true,
             didBlocked: false,

@@ -5,7 +5,7 @@ import 'package:penhas/app/features/authentication/domain/entities/session_entit
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  final sessionModel = SessionModel(
+  const sessionModel = SessionModel(
     sessionToken: 'my_strong_session_token',
   );
 

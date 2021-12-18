@@ -13,11 +13,11 @@ void main() {
   group('TweetSessionModel', () {
     test('tweets should be a subclass of TweetSessionEntity', () async {
       // arrange
-      tweetSessionMondel = TweetSessionModel(
+      tweetSessionMondel = const TweetSessionModel(
         false,
         TweetSessionOrder.latestFirst,
         null,
-        const [],
+        [],
         null,
       );
       // assert
@@ -43,7 +43,7 @@ void main() {
               anonymous: false,
               content: 'sleep 7',
               avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-              meta: TweetMeta(liked: false, owner: true),
+              meta: const TweetMeta(liked: false, owner: true),
               lastReply: const [],
             ),
             TweetRelatedNewsModel(header: 'google', news: [
@@ -61,7 +61,7 @@ void main() {
               anonymous: false,
               content: 'sleep 6',
               avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-              meta: TweetMeta(liked: false, owner: true),
+              meta: const TweetMeta(liked: false, owner: true),
               lastReply: const [],
             ),
             TweetNewsModel(
@@ -117,7 +117,7 @@ void main() {
               anonymous: false,
               content: 'sleep 6',
               avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-              meta: TweetMeta(liked: true, owner: true),
+              meta: const TweetMeta(liked: true, owner: true),
               lastReply: [
                 TweetModel(
                   id: '200603T1121340001',
@@ -130,7 +130,7 @@ void main() {
                   content: 'um breve comentario',
                   avatar:
                       'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-                  meta: TweetMeta(liked: false, owner: true),
+                  meta: const TweetMeta(liked: false, owner: true),
                   lastReply: const [],
                 )
               ],

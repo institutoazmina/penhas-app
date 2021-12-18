@@ -16,7 +16,7 @@ void main() {
     sut = TweetFilterPreference(
       repository: mockRepository,
     );
-    response = TweetFilterSessionEntity(categories: [
+    response = const TweetFilterSessionEntity(categories: [
       TweetFilterEntity(id: '1', isSelected: true, label: 'C 1'),
       TweetFilterEntity(id: '2', isSelected: false, label: 'C 2'),
     ], tags: [
@@ -31,7 +31,7 @@ void main() {
       // arrange
       when(mockRepository.retreive()).thenAnswer((_) async => right(response!));
 
-      final expected = right(TweetFilterSessionEntity(categories: [
+      final expected = right(const TweetFilterSessionEntity(categories: [
         TweetFilterEntity(id: '1', isSelected: true, label: 'C 1'),
         TweetFilterEntity(id: '2', isSelected: false, label: 'C 2'),
       ], tags: [
@@ -49,7 +49,7 @@ void main() {
         () async {
       // arrange
       when(mockRepository.retreive()).thenAnswer((_) async => right(response!));
-      final expected = right(TweetFilterSessionEntity(categories: [
+      final expected = right(const TweetFilterSessionEntity(categories: [
         TweetFilterEntity(id: '1', isSelected: false, label: 'C 1'),
         TweetFilterEntity(id: '2', isSelected: true, label: 'C 2'),
       ], tags: [

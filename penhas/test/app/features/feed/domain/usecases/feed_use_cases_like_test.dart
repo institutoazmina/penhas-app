@@ -42,7 +42,7 @@ void main() {
           anonymous: false,
           content: 'content 4',
           avatar: 'http://site.com/avatar_2.png',
-          meta: TweetMeta(liked: false, owner: true),
+          meta: const TweetMeta(liked: false, owner: true),
           lastReply: const [],
         );
         tweetEntity3 = TweetEntity(
@@ -55,7 +55,7 @@ void main() {
           anonymous: false,
           content: 'comment 3',
           avatar: 'http://site.com/avatar_1.png',
-          meta: TweetMeta(liked: false, owner: true),
+          meta: const TweetMeta(liked: false, owner: true),
           lastReply: const [],
         );
         tweetEntity2 = TweetEntity(
@@ -68,7 +68,7 @@ void main() {
           anonymous: false,
           content: 'content 3',
           avatar: 'http://site.com/avatar_1.png',
-          meta: TweetMeta(liked: false, owner: true),
+          meta: const TweetMeta(liked: false, owner: true),
           lastReply: [tweetEntity3],
         );
 
@@ -95,7 +95,7 @@ void main() {
 
         final likeResponse = tweetEntity1.copyWith(
             totalLikes: tweetEntity1.totalLikes + 1,
-            meta: TweetMeta(liked: true, owner: true),);
+            meta: const TweetMeta(liked: true, owner: true),);
         final expected = right(
           FeedCache(tweets: [
             likeResponse,
@@ -123,7 +123,7 @@ void main() {
 
         final likeResponse = tweetEntity3.copyWith(
             totalLikes: tweetEntity3.totalLikes + 1,
-            meta: TweetMeta(liked: true, owner: true),);
+            meta: const TweetMeta(liked: true, owner: true),);
         when(repository.like(option: anyNamed('option')))
             .thenAnswer((_) async => right(likeResponse));
         final expected = right(
@@ -159,7 +159,7 @@ void main() {
           anonymous: false,
           content: 'content 4',
           avatar: 'http://site.com/avatar_2.png',
-          meta: TweetMeta(liked: true, owner: true),
+          meta: const TweetMeta(liked: true, owner: true),
           lastReply: const [],
         );
         tweetEntity3 = TweetEntity(
@@ -172,7 +172,7 @@ void main() {
           anonymous: false,
           content: 'comment 3',
           avatar: 'http://site.com/avatar_1.png',
-          meta: TweetMeta(liked: true, owner: true),
+          meta: const TweetMeta(liked: true, owner: true),
           lastReply: const [],
         );
         tweetEntity2 = TweetEntity(
@@ -185,7 +185,7 @@ void main() {
           anonymous: false,
           content: 'content 3',
           avatar: 'http://site.com/avatar_1.png',
-          meta: TweetMeta(liked: true, owner: true),
+          meta: const TweetMeta(liked: true, owner: true),
           lastReply: [tweetEntity3],
         );
 
@@ -212,7 +212,7 @@ void main() {
 
         final likeResponse = tweetEntity1!.copyWith(
             totalLikes: tweetEntity1!.totalLikes - 1,
-            meta: TweetMeta(liked: false, owner: true),);
+            meta: const TweetMeta(liked: false, owner: true),);
         final expected = right(
           FeedCache(tweets: [
             likeResponse,
@@ -239,7 +239,7 @@ void main() {
         await sut.fetchOldestTweet();
 
         final likeResponse = tweetEntity3!.copyWith(
-            totalLikes: 0, meta: TweetMeta(liked: false, owner: true),);
+            totalLikes: 0, meta: const TweetMeta(liked: false, owner: true),);
         when(repository.like(option: anyNamed('option')))
             .thenAnswer((_) async => right(likeResponse));
         final expected = right(

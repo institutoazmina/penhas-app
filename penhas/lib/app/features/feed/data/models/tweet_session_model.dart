@@ -1,10 +1,10 @@
-import 'package:collection/collection.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_model.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
 
 class TweetSessionModel extends TweetSessionEntity {
   const TweetSessionModel(
+    bool hasMore,
     TweetSessionOrder orderBy,
     TweetTiles? parent,
     List<TweetTiles?> tweets,
@@ -40,7 +40,7 @@ class TweetSessionModel extends TweetSessionEntity {
     return tweets
         .map((e) => e as Map<String, dynamic>)
         .map((e) => _parseJson(e))
-        .whereNotNull()
+        .where((e) => e != null)
         .toList();
   }
 

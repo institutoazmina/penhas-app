@@ -8,14 +8,11 @@ import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
 import 'package:penhas/app/features/appstate/data/repositories/app_state_repository.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/appstate/domain/repositories/i_app_state_repository.dart';
-import 'package:penhas/app/shared/logger/log.dart';
 
 import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  isCrashlitycsEnabled = false;
-
   late final INetworkInfo networkInfo = MockINetworkInfo();
   late final MockIAppStateDataSource dataSource = MockIAppStateDataSource();
   late Map<String, dynamic> jsonData;
@@ -57,10 +54,12 @@ void main() {
     test('should return ServerSideSessionFailed for a invalid JWT', () async {
       // arrange
       when(dataSource.check()).thenThrow(
-        ApiProviderException(bodyContent: {
-          'error': 'expired_jwt',
-          'nessage': 'Bad request - Invalid JWT'
-        },),
+        ApiProviderException(
+          bodyContent: {
+            'error': 'expired_jwt',
+            'nessage': 'Bad request - Invalid JWT'
+          },
+        ),
       );
       final expected = left(ServerSideSessionFailed());
       // act

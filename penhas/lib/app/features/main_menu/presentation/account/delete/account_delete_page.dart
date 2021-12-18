@@ -54,7 +54,7 @@ class _AccountDeletePageState
 
   @override
   void dispose() {
-    for (var d in _disposers!) {
+    for (final d in _disposers!) {
       d();
     }
     super.dispose();
@@ -157,7 +157,7 @@ extension _PageBuilder on _AccountDeletePageState {
                         elevation: 0,
                         color: DesignSystemColors.ligthPurple,
                         shape: kButtonShapeOutlinePurple,
-                        child: Text("Excluir conta", style: buttonTextStyle),
+                        child: Text('Excluir conta', style: buttonTextStyle),
                       ),
                     ),
                   ),

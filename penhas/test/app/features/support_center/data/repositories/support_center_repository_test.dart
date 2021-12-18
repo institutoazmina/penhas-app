@@ -14,11 +14,10 @@ import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  isCrashlitycsEnabled = false;
   late final MockIApiProvider apiProvider = MockIApiProvider();
   late final ISupportCenterRepository sut =
       SupportCenterRepository(apiProvider: apiProvider);
-  final SupportCenterFetchRequest fetchRequest = SupportCenterFetchRequest();
+  const SupportCenterFetchRequest fetchRequest = SupportCenterFetchRequest();
 
   group('SupportCenterRepository', () {
     test('metadata should return valid objects from server', () async {

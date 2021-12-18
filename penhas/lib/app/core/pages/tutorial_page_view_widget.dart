@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
 class TutorialPageViewWidget extends StatelessWidget {
-  final String? _title;
-  final String _description;
-  final Widget _bodyWidget;
   const TutorialPageViewWidget({
     Key? key,
     String? title,
@@ -13,6 +10,10 @@ class TutorialPageViewWidget extends StatelessWidget {
         _description = description,
         _bodyWidget = bodyWidget,
         super(key: key);
+
+  final String? _title;
+  final String _description;
+  final Widget _bodyWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class TutorialPageViewWidget extends StatelessWidget {
         child: Column(
           children: <Widget>[
             _titleBuilder(),
-            if (_title == null) Container() else SizedBox(height: 28.0),
+            if (_title == null) Container() else const SizedBox(height: 28.0),
             _bodyWidgetBuilder(),
             const SizedBox(height: 28.0),
             _descriptionBuilder(),

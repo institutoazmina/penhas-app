@@ -17,10 +17,10 @@ class _SplashPageState extends ModularState<SplashPage, SplashController> {
     controller.init();
     return Container(
       color: DesignSystemColors.ligthPurple,
-      child: Center(
+      child: const Center(
           child: CircularProgressIndicator(
         backgroundColor: Colors.white,
-      )),
+      ),),
     );
   }
 }
