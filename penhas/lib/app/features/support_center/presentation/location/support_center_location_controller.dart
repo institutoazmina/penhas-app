@@ -23,9 +23,6 @@ class SupportCenterLocationController
 
 abstract class _SupportCenterLocationControllerBase
     with Store, MapFailureMessage {
-  final SupportCenterUseCase _supportCenterUseCase;
-  GeolocationEntity? _selectedGeoLocation;
-
   _SupportCenterLocationControllerBase(this._supportCenterUseCase);
 
   final SupportCenterUseCase _supportCenterUseCase;

@@ -148,7 +148,7 @@ class _ResetPasswordTwoPageState
     );
   }
 
-  RaisedButton _buildNextButton() {
+  Widget _buildNextButton() {
     return RaisedButton(
       onPressed: () => controller.nextStepPressed(),
       elevation: 0,

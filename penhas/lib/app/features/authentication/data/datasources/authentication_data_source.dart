@@ -20,9 +20,6 @@ abstract class IAuthenticationDataSource {
 }
 
 class AuthenticationDataSource implements IAuthenticationDataSource {
-  final http.Client? apiClient;
-  final IApiServerConfigure? serverConfiguration;
-
   AuthenticationDataSource({
     required this.apiClient,
     required this.serverConfiguration,

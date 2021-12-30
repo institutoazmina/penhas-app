@@ -22,11 +22,11 @@ class ChatMainTalksController extends _ChatMainTalksControllerBase
 }
 
 abstract class _ChatMainTalksControllerBase with Store, MapFailureMessage {
-  final IChatChannelRepository _chatChannelRepository;
-
   _ChatMainTalksControllerBase(this._chatChannelRepository) {
     _init();
   }
+
+  final IChatChannelRepository _chatChannelRepository;
 
   Future<void> _init() async {
     await loadScreen();
@@ -54,7 +54,7 @@ abstract class _ChatMainTalksControllerBase with Store, MapFailureMessage {
   @action
   Future<void> openAssistantCard(ChatMainSupportTile data) async {
     if (data.quizSession != null) {
-      await Modular.to.popAndPushNamed('/quiz', arguments: data.quizSession!);
+      await Modular.to.popAndPushNamed('/quiz', arguments: data.quizSession);
       return;
     }
 
@@ -67,7 +67,9 @@ abstract class _ChatMainTalksControllerBase with Store, MapFailureMessage {
 
 extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
   Future<void> forwardToChat(ChatChannelOpenEntity session) async {
-    return Modular.to.pushNamed('/mainboard/chat/${session.token}', arguments: session).then(
+    return Modular.to
+        .pushNamed('/mainboard/chat/${session.token}', arguments: session)
+        .then(
       (value) async {
         if (value is bool && value) {
           await loadScreen();
@@ -80,7 +82,8 @@ extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
     currentState = const ChatMainTalksState.loading();
     _fetchProgress = ObservableFuture(_chatChannelRepository.listChannel());
 
-    final Either<Failure, ChatChannelAvailableEntity> response = await _fetchProgress!;
+    final Either<Failure, ChatChannelAvailableEntity> response =
+        await _fetchProgress!;
 
     response.fold(
       (failure) => handleLoadPageError(failure),

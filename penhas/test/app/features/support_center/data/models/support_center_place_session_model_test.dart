@@ -16,14 +16,7 @@ void main() {
   group('SupportCenterPlaceSessionModel', () {
     test('should a subclass of SupportCenterPlaceSessionEntity', () async {
       // act
-      const model = SupportCenterPlaceSessionModel(
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-      );
+      const model = SupportCenterPlaceSessionModel();
       // assert
       expect(model, isA<SupportCenterPlaceSessionEntity>());
     });
@@ -33,12 +26,11 @@ void main() {
       // arrange
       final jsonData = await JsonUtil.getJson(from: supportCenterSessionFile);
       const actual = SupportCenterPlaceSessionModel(
-        5,
-        -23.52901,
-        -46.6504,
-        false,
-        null,
-        [
+        maximumRate: 5,
+        latitude: -23.52901,
+        longitude: -46.6504,
+        hasMore: false,
+        places: [
           SupportCenterPlaceEntity(
             id: '2676',
             rate: 'n/a',

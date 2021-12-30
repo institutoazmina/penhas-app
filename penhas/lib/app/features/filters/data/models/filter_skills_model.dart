@@ -6,8 +6,6 @@ import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.da
 
 @immutable
 class FilterSkillsModel extends Equatable {
-  final List<FilterTagEntity>? skills;
-
   const FilterSkillsModel({
     required this.skills,
   });

@@ -21,7 +21,8 @@ import '../../../../../utils/json_util.dart';
 
 void main() {
   late final MockHttpClient apiclient = MockHttpClient();
-  late final MockIApiServerConfigure serverConfiguration = MockIApiServerConfigure();
+  late final MockIApiServerConfigure serverConfiguration =
+      MockIApiServerConfigure();
 
   final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
   Cep? cep;
@@ -65,8 +66,9 @@ void main() {
     };
   }
 
-  Future<Map<String, dynamic>> setupQueryParameters(
-      {required bool justValidadeField}) async {
+  Future<Map<String, dynamic>> setupQueryParameters({
+    required bool justValidadeField,
+  }) async {
     final userAgent = await serverConfiguration.userAgent;
     final Map<String, String?> queryParameters = {
       'app_version': userAgent,
@@ -103,7 +105,8 @@ void main() {
 
   void setupHttpClientError400() {
     final bodyContent = JsonUtil.getStringSync(
-        from: 'authentication/registration_email_already_exists.json',);
+      from: 'authentication/registration_email_already_exists.json',
+    );
     when(apiclient.post(any, headers: anyNamed('headers')))
         .thenAnswer((_) async => http.Response(bodyContent, 400));
   }
@@ -125,15 +128,16 @@ void main() {
         final loginUri = await setupHttpRequest(justValidadeField: false);
         // act
         await dataSource.register(
-            emailAddress: emailAddress,
-            password: password,
-            cep: cep,
-            cpf: cpf,
-            fullname: fullname,
-            nickName: nickName,
-            birthday: birthday,
-            genre: genre,
-            race: race,);
+          emailAddress: emailAddress,
+          password: password,
+          cep: cep,
+          cpf: cpf,
+          fullname: fullname,
+          nickName: nickName,
+          birthday: birthday,
+          genre: genre,
+          race: race,
+        );
         // assert
         verify(apiclient.post(loginUri, headers: headers));
       });
@@ -146,15 +150,16 @@ void main() {
         final sessionModel = SessionModel.fromJson(jsonData);
         // act
         final result = await dataSource.register(
-            emailAddress: emailAddress,
-            password: password,
-            cep: cep,
-            cpf: cpf,
-            fullname: fullname,
-            nickName: nickName,
-            birthday: birthday,
-            genre: genre,
-            race: race,);
+          emailAddress: emailAddress,
+          password: password,
+          cep: cep,
+          cpf: cpf,
+          fullname: fullname,
+          nickName: nickName,
+          birthday: birthday,
+          genre: genre,
+          race: race,
+        );
         // assert
         expect(result, sessionModel);
       });
@@ -163,24 +168,29 @@ void main() {
           () async {
         // arrange
         final bodyContent = await JsonUtil.getJson(
-            from: 'authentication/registration_email_already_exists.json',);
+          from: 'authentication/registration_email_already_exists.json',
+        );
         setupHttpClientError400();
         // act
         final sut = dataSource.register;
         // assert
         expect(
-            () async => await sut(
-                emailAddress: emailAddress,
-                password: password,
-                cep: cep,
-                cpf: cpf,
-                fullname: fullname,
-                nickName: nickName,
-                birthday: birthday,
-                genre: genre,
-                race: race,),
-            throwsA(isA<ApiProviderException>()
-                .having((e) => e.bodyContent, 'Got bodyContent', bodyContent),),);
+          () => sut(
+            emailAddress: emailAddress,
+            password: password,
+            cep: cep,
+            cpf: cpf,
+            fullname: fullname,
+            nickName: nickName,
+            birthday: birthday,
+            genre: genre,
+            race: race,
+          ),
+          throwsA(
+            isA<ApiProviderException>()
+                .having((e) => e.bodyContent, 'Got bodyContent', bodyContent),
+          ),
+        );
       });
     });
     group('checkField', () {
@@ -212,25 +222,30 @@ void main() {
           () async {
         // arrange
         final bodyContent = await JsonUtil.getJson(
-            from: 'authentication/registration_email_already_exists.json',);
+          from: 'authentication/registration_email_already_exists.json',
+        );
         setupHttpClientError400();
         // act
-        final Future<ValidField> Function(
-            {Birthday birthday,
-            Cep cep,
-            Cpf? cpf,
-            EmailAddress? emailAddress,
-            Fullname fullname,
-            Genre genre,
-            Nickname nickName,
-            SignUpPassword password,
-            HumanRace race,
-            Fullname socialName}) sut = dataSource.checkField;
+        final Future<ValidField> Function({
+          Birthday birthday,
+          Cep cep,
+          Cpf? cpf,
+          EmailAddress? emailAddress,
+          Fullname fullname,
+          Genre genre,
+          Nickname nickName,
+          SignUpPassword password,
+          HumanRace race,
+          Fullname socialName,
+        }) sut = dataSource.checkField;
         // assert
         expect(
-            () async => await sut(emailAddress: emailAddress, cpf: cpf),
-            throwsA(isA<ApiProviderException>()
-                .having((e) => e.bodyContent, 'Got bodyContent', bodyContent),),);
+          () => sut(emailAddress: emailAddress, cpf: cpf),
+          throwsA(
+            isA<ApiProviderException>()
+                .having((e) => e.bodyContent, 'Got bodyContent', bodyContent),
+          ),
+        );
       });
     });
   });

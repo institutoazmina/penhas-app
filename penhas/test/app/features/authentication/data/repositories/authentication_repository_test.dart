@@ -3,14 +3,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/data/datasources/authentication_data_source.dart';
 import 'package:penhas/app/features/authentication/data/models/session_model.dart';
 import 'package:penhas/app/features/authentication/data/repositories/authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
-import 'package:penhas/app/shared/logger/log.dart';
 
 import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
@@ -78,7 +76,7 @@ void main() {
           () async {
         // arrange
         mockSignInResponse(dataSource: dataSource)
-            .thenThrow(ApiProviderException());
+            .thenThrow(const ApiProviderException());
         // act
         final result = await repository.signInWithEmailAndPassword(
           emailAddress: email,
@@ -129,7 +127,7 @@ void main() {
       test('should return InternetConnectionFailure', () async {
         // arrange
         mockSignInResponse(dataSource: dataSource)
-            .thenThrow(ApiProviderException());
+            .thenThrow(const ApiProviderException());
         // act
         final result = await repository.signInWithEmailAndPassword(
           emailAddress: email,
@@ -150,7 +148,7 @@ void main() {
 }
 
 PostExpectation<dynamic> mockSignInResponse(
-    {dataSource = AuthenticationDataSource}) {
+    {required MockAuthenticationDataSource dataSource,}) {
   return when(
     dataSource.signInWithEmailAndPassword(
       emailAddress: anyNamed('emailAddress'),

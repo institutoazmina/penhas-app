@@ -14,18 +14,14 @@ abstract class ITweetController {
 }
 
 class TweetController implements ITweetController {
-  final FeedUseCases _useCase;
-
   TweetController({
     required FeedUseCases useCase,
   }) : _useCase = useCase;
 
+  final FeedUseCases _useCase;
+
   @override
   Future<void> like(TweetEntity tweet) async {
-    if (tweet == null) {
-      return;
-    }
-
     if (tweet.meta.liked) {
       await _useCase.unlike(tweet);
     } else {
@@ -35,19 +31,11 @@ class TweetController implements ITweetController {
 
   @override
   Future<void> reply(TweetEntity tweet) async {
-    if (tweet == null) {
-      return;
-    }
-
     Modular.to.pushNamed('/mainboard/reply', arguments: tweet);
   }
 
   @override
   Future<void> delete(TweetEntity tweet) async {
-    if (tweet == null) {
-      return;
-    }
-
     await _useCase.delete(tweet);
   }
 
@@ -60,12 +48,14 @@ class TweetController implements ITweetController {
         return AlertDialog(
           title: const Text('Denunciar'),
           content: TextFormField(
-            maxLengthEnforcement: MaxLengthEnforcement.enforced, controller: _controller,
+            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+            controller: _controller,
             maxLength: 500,
             maxLines: 5,
             decoration: const InputDecoration(
-                hintText: 'Informe o motivo de denúncia deste post',
-                filled: true,),
+              hintText: 'Informe o motivo de denúncia deste post',
+              filled: true,
+            ),
           ),
           actions: <Widget>[
             FlatButton(
@@ -76,9 +66,10 @@ class TweetController implements ITweetController {
             ),
             FlatButton(
               child: const Text('Enviar'),
-              onPressed: () async {
-                await _useCase.report(tweet, _controller.text);
-                Navigator.of(context).pop();
+              onPressed: () {
+                _useCase
+                    .report(tweet, _controller.text)
+                    .then((value) => Navigator.of(context).pop());
               },
             ),
           ],

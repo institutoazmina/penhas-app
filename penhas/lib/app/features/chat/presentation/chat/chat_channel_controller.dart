@@ -19,9 +19,6 @@ class ChatChannelController extends _ChatChannelControllerBase
 }
 
 abstract class _ChatChannelControllerBase with Store, MapFailureMessage {
-  final ChatChannelUseCase _useCase;
-  late StreamSubscription _streamDatasource;
-
   _ChatChannelControllerBase(this._useCase) {
     _streamDatasource = _useCase.dataSource.listen(parseStream);
   }

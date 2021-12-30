@@ -5,10 +5,11 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TweetGroupNews extends StatefulWidget {
-  final TweetNewsGroupEntity _group;
   const TweetGroupNews({Key? key, required TweetNewsGroupEntity group})
       : _group = group,
         super(key: key);
+
+  final TweetNewsGroupEntity _group;
 
   @override
   _TweetGroupNewsState createState() => _TweetGroupNewsState();
@@ -35,19 +36,24 @@ class _TweetGroupNewsState extends State<TweetGroupNews> {
               SizedBox(
                 height: 216.0,
                 child: PageView.builder(
-                    itemCount: group.news.length,
-                    controller: PageController(
-                        viewportFraction: viewportFraction,),
-                    onPageChanged: (int page) =>
-                        setState(() => _currentPage = page),
-                    itemBuilder: (context, i) {
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 6.0, left: 6.0),
-                        child: _NewsItem(news: group.news[i]),
-                      );
-                    },),
+                  itemCount: group.news.length,
+                  controller: PageController(
+                    viewportFraction: viewportFraction,
+                  ),
+                  onPageChanged: (int page) =>
+                      setState(() => _currentPage = page),
+                  itemBuilder: (context, i) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 6.0, left: 6.0),
+                      child: _NewsItem(news: group.news[i]),
+                    );
+                  },
+                ),
               ),
-              if (group.news.length > 1) _buildPaginationController() else Container(),
+              if (group.news.length > 1)
+                _buildPaginationController()
+              else
+                Container(),
             ],
           ),
         ),
@@ -62,14 +68,12 @@ class _TweetGroupNewsState extends State<TweetGroupNews> {
     );
   }
 
-  Container _buildPaginationController() {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 22.0, bottom: 8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: _buildPageIndicator(),
-        ),
+  Widget _buildPaginationController() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 22.0, bottom: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: _buildPageIndicator(),
       ),
     );
   }
@@ -90,20 +94,22 @@ class _TweetGroupNewsState extends State<TweetGroupNews> {
       height: 10.0,
       width: isActive ? 24.0 : 10.0,
       decoration: BoxDecoration(
-          color: isActive
-              ? DesignSystemColors.ligthPurple
-              : DesignSystemColors.blueyGrey,
-          borderRadius: const BorderRadius.all(Radius.circular(12)),),
+        color: isActive
+            ? DesignSystemColors.ligthPurple
+            : DesignSystemColors.blueyGrey,
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
+      ),
     );
   }
 }
 
 class _NewsItem extends StatelessWidget {
-  final TweetNewsEntity news;
   const _NewsItem({
     Key? key,
     required this.news,
   }) : super(key: key);
+
+  final TweetNewsEntity news;
 
   @override
   Widget build(BuildContext context) {
@@ -141,11 +147,12 @@ class _NewsItem extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                    flex: 2,
-                    child: Text(
-                      news.date!,
-                      style: kTextStyleFeedTweetInput,
-                    ),)
+                  flex: 2,
+                  child: Text(
+                    news.date!,
+                    style: kTextStyleFeedTweetInput,
+                  ),
+                )
               ],
             )
           ],
@@ -154,7 +161,7 @@ class _NewsItem extends StatelessWidget {
     );
   }
 
-  void launchURL(String uri) async {
+  Future<void> launchURL(String uri) async {
     if (await canLaunch(uri)) {
       await launch(uri);
     }

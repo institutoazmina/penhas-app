@@ -16,11 +16,11 @@ abstract class IAudiosRepository {
 }
 
 class AudiosRepository implements IAudiosRepository {
-  final IApiProvider? _apiProvider;
-
   AudiosRepository({
     required IApiProvider? apiProvider,
   }) : _apiProvider = apiProvider;
+
+  final IApiProvider? _apiProvider;
 
   @override
   Future<Either<Failure, List<AudioEntity>?>> fetch() async {

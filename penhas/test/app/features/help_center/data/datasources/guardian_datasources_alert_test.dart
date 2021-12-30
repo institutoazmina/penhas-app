@@ -11,10 +11,11 @@ import '../../../../../utils/json_util.dart';
 
 void main() {
   late final MockHttpClient apiClient = MockHttpClient();
-  late final MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
+  late final MockIApiServerConfigure serverConfigure =
+      MockIApiServerConfigure();
   late IGuardianDataSource dataSource;
   final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
-  const String SESSSION_TOKEN = 'my_really.long.JWT';
+  const String sessionToken = 'my_really.long.JWT';
 
   setUp(() {
     dataSource = GuardianDataSource(
@@ -25,7 +26,7 @@ void main() {
     // MockApiServerConfigure configuration
     when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
     when(serverConfigure.apiToken)
-        .thenAnswer((_) => Future.value(SESSSION_TOKEN));
+        .thenAnswer((_) => Future.value(sessionToken));
     when(serverConfigure.userAgent)
         .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
   });
@@ -33,7 +34,7 @@ void main() {
   Future<Map<String, String>> _setUpHttpHeader() async {
     final userAgent = await serverConfigure.userAgent;
     return {
-      'X-Api-Key': SESSSION_TOKEN,
+      'X-Api-Key': sessionToken,
       'User-Agent': userAgent,
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
     };
@@ -49,11 +50,13 @@ void main() {
   }
 
   PostExpectation<Future<http.Response>> _mockPostRequest() {
-    return when(apiClient.post(
-      any,
-      headers: anyNamed('headers'),
-      body: anyNamed('body'),
-    ),);
+    return when(
+      apiClient.post(
+        any,
+        headers: anyNamed('headers'),
+        body: anyNamed('body'),
+      ),
+    );
   }
 
   void _setUpMockPostHttpClientSuccess200(String? bodyContent) {
@@ -89,7 +92,8 @@ void main() {
       setUp(() {
         userLocation = const UserLocationEntity(latitude: 1.0, longitude: -1.0);
         bodyContent = JsonUtil.getStringSync(
-            from: 'help_center/guardian_alert_warning.json',);
+          from: 'help_center/guardian_alert_warning.json',
+        );
       });
 
       group('alert()', () {
@@ -116,9 +120,10 @@ void main() {
             // arrange
             _setUpMockPostHttpClientSuccess200(bodyContent);
             const expected = AlertModel(
-                title: 'Alerta enviado!',
-                message:
-                    'Não há guardiões cadastrado! Nenhum alerta foi enviado.',);
+              title: 'Alerta enviado!',
+              message:
+                  'Não há guardiões cadastrado! Nenhum alerta foi enviado.',
+            );
             // act
             final received = await dataSource.alert(userLocation);
             // assert
@@ -131,11 +136,14 @@ void main() {
           () async {
             // arrange
             final bodyWithError = JsonUtil.getStringSync(
-                from: 'help_center/guardian_alert_gps_error.json',);
+              from: 'help_center/guardian_alert_gps_error.json',
+            );
             _setUpMockPostHttpClientSuccess400(bodyWithError);
             // assert
-            expect(() async => await dataSource.alert(userLocation),
-                throwsA(isA<GuardianAlertGpsFailure>()),);
+            expect(
+              () => dataSource.alert(userLocation),
+              throwsA(isA<GuardianAlertGpsFailure>()),
+            );
           },
         );
       });

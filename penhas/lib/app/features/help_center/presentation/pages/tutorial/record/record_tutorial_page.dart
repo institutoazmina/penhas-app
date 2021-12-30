@@ -123,7 +123,7 @@ class _RecordTutorialPageState extends State<RecordTutorialPage> {
         color: DesignSystemColors.ligthPurple,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        padding: const EdgeInsets.all(0.0),
+        padding: EdgeInsets.zero,
         elevation: 0.0,
         onPressed: () {
           isLastPage ? _dispose() : _nextPage();

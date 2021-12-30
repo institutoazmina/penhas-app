@@ -9,39 +9,48 @@ import 'package:penhas/app/features/authentication/domain/usecases/request_reset
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late final EmailAddress emailAddress = EmailAddress('valid_email@exemple.com');
-  late final MockIResetPasswordRepository repository = MockIResetPasswordRepository();
+  late final EmailAddress emailAddress =
+      EmailAddress('valid_email@exemple.com');
+  late final MockIResetPasswordRepository repository =
+      MockIResetPasswordRepository();
   late final RequestResetPassword sut =
       RequestResetPassword(resetPasswordRepository: repository);
 
-  const RESPONSE_TTL = 3600;
-  const RESPONSE_DIGITS = 6;
-  const RESPONSE_MESSAGE = 'Enviamos um código com 6 números para o seu e-mail';
-  const RESPONSE_TTL_RETRY = 216;
+  const responseTtl = 3600;
+  const responseDigits = 6;
+  const responseMessage = 'Enviamos um código com 6 números para o seu e-mail';
+  const responseTtlRetry = 216;
 
   group('Request reset password', () {
     test('should received a ResetPasswordResponseEntity for successful request',
         () async {
       // arrange
       when(repository.request(emailAddress: anyNamed('emailAddress')))
-          .thenAnswer((_) async => right(const ResetPasswordResponseEntity(
-                message: RESPONSE_MESSAGE,
-                digits: RESPONSE_DIGITS,
-                ttl: RESPONSE_TTL,
-                ttlRetry: RESPONSE_TTL_RETRY,
-              ),),);
+          .thenAnswer(
+        (_) async => right(
+          const ResetPasswordResponseEntity(
+            message: responseMessage,
+            digits: responseDigits,
+            ttl: responseTtl,
+            ttlRetry: responseTtlRetry,
+          ),
+        ),
+      );
       // act
       final Either<Failure, ResetPasswordResponseEntity> result =
           await sut(email: emailAddress);
       // assert
       expect(
-          result,
-          right(const ResetPasswordResponseEntity(
-            message: RESPONSE_MESSAGE,
-            digits: RESPONSE_DIGITS,
-            ttl: RESPONSE_TTL,
-            ttlRetry: RESPONSE_TTL_RETRY,
-          ),),);
+        result,
+        right(
+          const ResetPasswordResponseEntity(
+            message: responseMessage,
+            digits: responseDigits,
+            ttl: responseTtl,
+            ttlRetry: responseTtlRetry,
+          ),
+        ),
+      );
     });
   });
 }

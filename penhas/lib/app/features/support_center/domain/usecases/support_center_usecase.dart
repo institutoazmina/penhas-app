@@ -15,16 +15,16 @@ import 'package:penhas/app/features/support_center/domain/entities/support_cente
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
 
 class SupportCenterUseCase {
-  final ILocationServices _locationService;
-  final ISupportCenterRepository _supportCenterRepository;
-  GeolocationEntity? _cachedGeoLocation;
-  SupportCenterMetadataEntity? _cacheMetadata;
-
   SupportCenterUseCase({
     required ILocationServices locationService,
     required ISupportCenterRepository supportCenterRepository,
   })  : _locationService = locationService,
         _supportCenterRepository = supportCenterRepository;
+
+  final ILocationServices _locationService;
+  final ISupportCenterRepository _supportCenterRepository;
+  GeolocationEntity? _cachedGeoLocation;
+  SupportCenterMetadataEntity? _cacheMetadata;
 
   Future<Either<Failure, SupportCenterMetadataEntity?>> metadata() async {
     if (_cacheMetadata != null) {
@@ -57,7 +57,9 @@ class SupportCenterUseCase {
   }
 
   Future<bool> askForLocationPermission(
-      String title, Widget description) async {
+    String title,
+    Widget description,
+  ) async {
     return _locationService
         .requestPermission(title: title, description: description)
         .then(
@@ -88,7 +90,8 @@ class SupportCenterUseCase {
   }
 
   Future<Either<Failure, SupportCenterPlaceDetailEntity>> detail(
-      SupportCenterPlaceEntity? placeEntity) async {
+    SupportCenterPlaceEntity? placeEntity,
+  ) async {
     return _supportCenterRepository.detail(placeEntity);
   }
 
@@ -101,8 +104,8 @@ class SupportCenterUseCase {
 }
 
 extension _PrivateMethods on SupportCenterUseCase {
-  Future<bool> hasLocationPermission() async {
-    return await _locationService.isPermissionGranted();
+  Future<bool> hasLocationPermission() {
+    return _locationService.isPermissionGranted();
   }
 
   Future<GeolocationEntity?> currentLocation() async {
@@ -120,7 +123,8 @@ extension _PrivateMethods on SupportCenterUseCase {
     if (_cachedGeoLocation != null &&
         _cachedGeoLocation!.locationToken != null) {
       return GeolocationEntity(
-          locationToken: _cachedGeoLocation!.locationToken,);
+        locationToken: _cachedGeoLocation!.locationToken,
+      );
     } else if (geoLocation != null) {
       return GeolocationEntity(userLocation: geoLocation);
     }

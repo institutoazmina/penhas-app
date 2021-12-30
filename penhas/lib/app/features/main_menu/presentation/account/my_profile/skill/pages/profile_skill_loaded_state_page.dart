@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
@@ -6,18 +5,18 @@ import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ProfilSkillLoadedStatePage extends StatelessWidget {
-  final void Function() onResetAction;
-  final void Function(List<FilterTagEntity>) onAplyFilterAction;
-  final List<FilterTagEntity> tags;
-
-  final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
-
   ProfilSkillLoadedStatePage({
     Key? key,
     required this.tags,
     required this.onResetAction,
     required this.onAplyFilterAction,
   }) : super(key: key);
+
+  final void Function() onResetAction;
+  final void Function(List<FilterTagEntity>) onAplyFilterAction;
+  final List<FilterTagEntity> tags;
+
+  final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +74,7 @@ class ProfilSkillLoadedStatePage extends StatelessWidget {
 extension _FilterLoadedStatePageMethods on ProfilSkillLoadedStatePage {
   Tooltip builtTagItem(FilterTagEntity item, int index) {
     return Tooltip(
-      message: item.label!,
+      message: item.label,
       child: ItemTags(
         activeColor: DesignSystemColors.easterPurple,
         title: item.label!,
@@ -128,14 +127,16 @@ extension _FilterLoadedStatePageMethods on ProfilSkillLoadedStatePage {
         elevation: 0,
         color: DesignSystemColors.ligthPurple,
         shape: kButtonShapeOutlinePurple,
-        child: const Text('Atualizar',
-            style: TextStyle(
-              fontFamily: 'Lato',
-              fontWeight: FontWeight.bold,
-              fontSize: 14.0,
-              color: Colors.white,
-              letterSpacing: 0.45,
-            ),),
+        child: const Text(
+          'Atualizar',
+          style: TextStyle(
+            fontFamily: 'Lato',
+            fontWeight: FontWeight.bold,
+            fontSize: 14.0,
+            color: Colors.white,
+            letterSpacing: 0.45,
+          ),
+        ),
       ),
     );
   }

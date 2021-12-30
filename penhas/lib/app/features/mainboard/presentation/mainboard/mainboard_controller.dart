@@ -29,13 +29,6 @@ class MainboardController extends _MainboardControllerBase
 }
 
 abstract class _MainboardControllerBase with Store {
-  Timer? _syncTimer;
-  final int notificationInterval = 60;
-  final MainboardStore mainboardStore;
-  final InactivityLogoutUseCase _inactivityLogoutUseCase;
-  final INotificationRepository _notification;
-  final IAppModulesServices _modulesServices;
-
   _MainboardControllerBase(
     this.mainboardStore,
     this._inactivityLogoutUseCase,

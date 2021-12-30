@@ -5,18 +5,18 @@ import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class FilterLoadedStatePage extends StatelessWidget {
-  final void Function() onResetAction;
-  final void Function(List<FilterTagEntity>) onAplyFilterAction;
-  final List<FilterTagEntity> tags;
-
-  final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
-
   FilterLoadedStatePage({
     Key? key,
     required this.tags,
     required this.onResetAction,
     required this.onAplyFilterAction,
   }) : super(key: key);
+
+  final void Function() onResetAction;
+  final void Function(List<FilterTagEntity>) onAplyFilterAction;
+  final List<FilterTagEntity> tags;
+
+  final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +74,7 @@ class FilterLoadedStatePage extends StatelessWidget {
 extension _FilterLoadedStatePageMethods on FilterLoadedStatePage {
   Tooltip builtTagItem(FilterTagEntity item, int index) {
     return Tooltip(
-      message: item.label!,
+      message: item.label,
       child: ItemTags(
         activeColor: DesignSystemColors.easterPurple,
         title: item.label!,

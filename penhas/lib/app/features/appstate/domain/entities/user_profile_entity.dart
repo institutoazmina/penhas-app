@@ -3,19 +3,6 @@ import 'package:meta/meta.dart';
 
 @immutable
 class UserProfileEntity extends Equatable {
-  final String? email;
-  final String? avatar;
-  final String? nickname;
-  final String? fullName;
-  final String? minibio;
-  final String? race;
-  final String? genre;
-  final bool stealthModeEnabled;
-  final bool anonymousModeEnabled;
-  final bool jaFoiVitimaDeViolencia;
-  final DateTime birthdate;
-  final List<String> skill;
-
   const UserProfileEntity({
     required this.fullName,
     required this.race,
@@ -30,6 +17,19 @@ class UserProfileEntity extends Equatable {
     required this.anonymousModeEnabled,
     required this.birthdate,
   });
+
+  final String? email;
+  final String? avatar;
+  final String? nickname;
+  final String? fullName;
+  final String? minibio;
+  final String? race;
+  final String? genre;
+  final bool stealthModeEnabled;
+  final bool anonymousModeEnabled;
+  final bool jaFoiVitimaDeViolencia;
+  final DateTime birthdate;
+  final List<String> skill;
 
   @override
   List<Object?> get props => [

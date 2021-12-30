@@ -72,13 +72,19 @@ abstract class _SignUpThreeControllerBase with Store, MapFailureMessage {
   void setPassword(String password) {
     _userRegisterModel!.password = SignUpPassword(password, _passwordValidator);
     warningPassword = _userRegisterModel!.password!.mapFailure;
-    warningConfirmationPassword = _userRegisterModel!.passwordConfirmation!.isEmpty ? '' : _userRegisterModel!.validatePasswordConfirmation;
+    warningConfirmationPassword =
+        _userRegisterModel!.passwordConfirmation!.isEmpty
+            ? ''
+            : _userRegisterModel!.validatePasswordConfirmation;
   }
 
   @action
   void setConfirmationPassword(String password) {
     _userRegisterModel!.passwordConfirmation = password;
-    warningConfirmationPassword = _userRegisterModel!.passwordConfirmation!.isEmpty ? '' : _userRegisterModel!.validatePasswordConfirmation;
+    warningConfirmationPassword =
+        _userRegisterModel!.passwordConfirmation!.isEmpty
+            ? ''
+            : _userRegisterModel!.validatePasswordConfirmation;
   }
 
   @action
@@ -110,10 +116,6 @@ abstract class _SignUpThreeControllerBase with Store, MapFailureMessage {
     );
   }
 
-  void _setErrorMessage(String? message) {
-    errorMessage = message;
-  }
-
   bool _isValidToProceed() {
     bool isValid = true;
 
@@ -130,7 +132,8 @@ abstract class _SignUpThreeControllerBase with Store, MapFailureMessage {
 
     if (_userRegisterModel!.validatePasswordConfirmation.isNotEmpty) {
       isValid = false;
-      warningConfirmationPassword = _userRegisterModel!.validatePasswordConfirmation;
+      warningConfirmationPassword =
+          _userRegisterModel!.validatePasswordConfirmation;
     }
 
     return isValid;

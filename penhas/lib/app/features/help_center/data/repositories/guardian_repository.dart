@@ -21,14 +21,14 @@ abstract class IGuardianRepository {
 
 @immutable
 class GuardianRepository extends IGuardianRepository {
-  final IGuardianDataSource? _dataSource;
-  final INetworkInfo _networkInfo;
-
   GuardianRepository({
     required IGuardianDataSource? dataSource,
     required INetworkInfo networkInfo,
   })  : _networkInfo = networkInfo,
         _dataSource = dataSource;
+
+  final IGuardianDataSource? _dataSource;
+  final INetworkInfo _networkInfo;
 
   @override
   Future<Either<Failure, GuardianSessioEntity>> fetch() async {
@@ -113,10 +113,11 @@ class GuardianRepository extends IGuardianRepository {
       }
 
       return ServerSideFormFieldValidationFailure(
-          error: error.bodyContent['error'],
-          field: error.bodyContent['field'],
-          reason: error.bodyContent['reason'],
-          message: error.bodyContent['message'],);
+        error: error.bodyContent['error'],
+        field: error.bodyContent['field'],
+        reason: error.bodyContent['reason'],
+        message: error.bodyContent['message'],
+      );
     }
 
     if (error is ApiProviderSessionError) {

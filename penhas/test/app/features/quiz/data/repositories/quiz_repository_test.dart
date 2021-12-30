@@ -6,7 +6,6 @@ import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
 import 'package:penhas/app/features/quiz/data/repositories/quiz_repository.dart';
 import 'package:penhas/app/features/quiz/domain/entities/quiz_request_entity.dart';
-import 'package:penhas/app/shared/logger/log.dart';
 
 import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
@@ -61,7 +60,7 @@ void main() {
     test('should return ServerSideSessionFailed for a invalid JWT', () async {
       // arrange
       when(dataSource.update(quiz: anyNamed('quiz'))).thenThrow(
-        ApiProviderException(
+        const ApiProviderException(
           bodyContent: {
             'error': 'expired_jwt',
             'nessage': 'Bad request - Invalid JWT'

@@ -6,14 +6,14 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class HelpCenterCardGuardian extends StatelessWidget {
-  final VoidCallback create;
-  final VoidCallback manager;
-
   const HelpCenterCardGuardian({
     Key? key,
     required this.create,
     required this.manager,
   }) : super(key: key);
+
+  final VoidCallback create;
+  final VoidCallback manager;
 
   @override
   Widget build(BuildContext context) {

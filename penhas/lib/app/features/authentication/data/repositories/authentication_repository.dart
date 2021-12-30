@@ -11,10 +11,6 @@ import 'package:penhas/app/features/authentication/domain/usecases/sign_in_passw
 import 'package:penhas/app/shared/logger/log.dart';
 
 class AuthenticationRepository implements IAuthenticationRepository {
-  final IAuthenticationDataSource _dataSource;
-  final INetworkInfo _networkInfo;
-  final IAppConfiguration _appConfiguration;
-
   AuthenticationRepository({
     required INetworkInfo networkInfo,
     required IAppConfiguration appConfiguration,
@@ -22,6 +18,10 @@ class AuthenticationRepository implements IAuthenticationRepository {
   })  : _dataSource = dataSource,
         _networkInfo = networkInfo,
         _appConfiguration = appConfiguration;
+
+  final IAuthenticationDataSource _dataSource;
+  final INetworkInfo _networkInfo;
+  final IAppConfiguration _appConfiguration;
 
   @override
   Future<Either<Failure, SessionEntity>> signInWithEmailAndPassword({

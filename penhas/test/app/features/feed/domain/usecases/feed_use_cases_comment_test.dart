@@ -9,10 +9,11 @@ import '../../../../../utils/helper.mocks.dart';
 
 void main() {
   late final MockITweetRepository repository = MockITweetRepository();
-  late final MockTweetFilterPreference filterPreference = MockTweetFilterPreference();
+  late final MockTweetFilterPreference filterPreference =
+      MockTweetFilterPreference();
 
   setUp(() {
-    when(filterPreference.getCategory()).thenReturn([]);
+    when(filterPreference.categories).thenReturn([]);
     when(filterPreference.getTags()).thenReturn([]);
   });
 
@@ -73,13 +74,14 @@ void main() {
         );
 
         firstSessionResponse = TweetSessionEntity(
-            nextPage: null,
-            hasMore: true,
-            orderBy: TweetSessionOrder.latestFirst,
-            tweets: [
-              tweetEntity1,
-              tweetEntity2,
-            ],);
+          nextPage: null,
+          hasMore: true,
+          orderBy: TweetSessionOrder.latestFirst,
+          tweets: [
+            tweetEntity1,
+            tweetEntity2,
+          ],
+        );
       });
 
       test('should create commented tweet and get updated cache', () async {
@@ -110,10 +112,12 @@ void main() {
           lastReply: [newTweet],
         );
         final expected = right(
-          FeedCache(tweets: [
-            commentedTweet,
-            tweetEntity2,
-          ],),
+          FeedCache(
+            tweets: [
+              commentedTweet,
+              tweetEntity2,
+            ],
+          ),
         );
 
         when(repository.reply(option: anyNamed('option')))
@@ -154,10 +158,12 @@ void main() {
           lastReply: [newTweet],
         );
         final expected = right(
-          FeedCache(tweets: [
-            tweetEntity1,
-            commentedTweet,
-          ],),
+          FeedCache(
+            tweets: [
+              tweetEntity1,
+              commentedTweet,
+            ],
+          ),
         );
 
         when(repository.reply(option: anyNamed('option')))

@@ -54,7 +54,7 @@ void main() {
     test('should return ServerSideSessionFailed for a invalid JWT', () async {
       // arrange
       when(dataSource.check()).thenThrow(
-        ApiProviderException(
+        const ApiProviderException(
           bodyContent: {
             'error': 'expired_jwt',
             'nessage': 'Bad request - Invalid JWT'

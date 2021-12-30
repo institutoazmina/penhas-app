@@ -5,13 +5,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/support_center/domain/states/support_center_location_state.dart';
+import 'package:penhas/app/features/support_center/presentation/location/support_center_location_controller.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_cep_error.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_location_address.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_location_general_error.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'support_center_location_controller.dart';
 
 class SupportCenterLocationPage extends StatefulWidget {
   const SupportCenterLocationPage({Key? key}) : super(key: key);
@@ -38,22 +37,24 @@ class _SupportCenterLocationPageState extends ModularState<
         elevation: 0.0,
         backgroundColor: DesignSystemColors.easterPurple,
       ),
-      body: Observer(builder: (_) {
-        return PageProgressIndicator(
-          progressState: controller.progressState,
-          progressMessage: 'Pesquisando o CEP',
-          child: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                buildEnableGeo(),
-                buildUpdateCepLocation(context),
-                actionOnStateUpdate(controller.state),
-              ],
+      body: Observer(
+        builder: (_) {
+          return PageProgressIndicator(
+            progressState: controller.progressState,
+            progressMessage: 'Pesquisando o CEP',
+            child: SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  buildEnableGeo(),
+                  buildUpdateCepLocation(context),
+                  actionOnStateUpdate(controller.state),
+                ],
+              ),
             ),
-          ),
-        );
-      },),
+          );
+        },
+      ),
     );
   }
 }
@@ -147,7 +148,7 @@ extension _WidgetPrivateBuilder on _SupportCenterLocationPageState {
         width: 100,
         alignment: Alignment.topLeft,
         child: Padding(
-          padding: const EdgeInsets.only(),
+          padding: EdgeInsets.zero,
           child: RaisedButton(
             onPressed: () async {
               const url =
@@ -155,7 +156,7 @@ extension _WidgetPrivateBuilder on _SupportCenterLocationPageState {
               launch(url);
             },
             elevation: 0,
-            padding: const EdgeInsets.only(),
+            padding: EdgeInsets.zero,
             color: Colors.transparent,
             child: Text('Não sei o CEP', style: forgetCepTextStyle),
           ),
@@ -195,21 +196,24 @@ extension _PrivateMethdos on _SupportCenterLocationPageState {
 extension __SupportCenterLocationPageStateTextStyle
     on _SupportCenterLocationPageState {
   TextStyle get localizationDescriptionTextStyle => const TextStyle(
-      color: DesignSystemColors.darkIndigoThree,
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      letterSpacing: 0.45,
-      fontWeight: FontWeight.normal,);
+        color: DesignSystemColors.darkIndigoThree,
+        fontFamily: 'Lato',
+        fontSize: 14.0,
+        letterSpacing: 0.45,
+        fontWeight: FontWeight.normal,
+      );
   TextStyle get inputCepTextStyle => const TextStyle(
-      color: DesignSystemColors.darkIndigoThree,
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      letterSpacing: 0.45,
-      fontWeight: FontWeight.bold,);
+        color: DesignSystemColors.darkIndigoThree,
+        fontFamily: 'Lato',
+        fontSize: 14.0,
+        letterSpacing: 0.45,
+        fontWeight: FontWeight.bold,
+      );
   TextStyle get forgetCepTextStyle => const TextStyle(
-      fontFamily: 'Lato',
-      fontWeight: FontWeight.normal,
-      fontSize: 14.0,
-      color: DesignSystemColors.darkIndigoThree,
-      decoration: TextDecoration.underline,);
+        fontFamily: 'Lato',
+        fontWeight: FontWeight.normal,
+        fontSize: 14.0,
+        color: DesignSystemColors.darkIndigoThree,
+        decoration: TextDecoration.underline,
+      );
 }

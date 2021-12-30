@@ -1,13 +1,9 @@
 import 'dart:collection';
 
 class AppRoute {
-  String? path;
-  Map<String, String>? args;
-
-  AppRoute(String uri) {
-    assert(uri.trim().isNotEmpty);
-    assert(uri.startsWith('/'));
-
+  AppRoute(String uri)
+      : assert(uri.trim().isNotEmpty),
+        assert(uri.startsWith('/')) {
     final List<String> pathAndArgs = uri.split('?');
     path = pathAndArgs.first;
 

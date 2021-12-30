@@ -19,19 +19,21 @@ abstract class IChatChannelRepository {
   Future<Either<Failure, ChatChannelAvailableEntity>> listChannel();
   Future<Either<Failure, ChatChannelOpenEntity>> openChannel(String clientId);
   Future<Either<Failure, ChatChannelSessionEntity>> getMessages(
-      ChatChannelRequest option);
+    ChatChannelRequest option,
+  );
   Future<Either<Failure, ChatSentMessageResponseEntity>> sentMessage(
-      ChatChannelRequest option);
+    ChatChannelRequest option,
+  );
   Future<Either<Failure, ValidField>> blockChannel(ChatChannelRequest option);
   Future<Either<Failure, ValidField>> deleteChannel(ChatChannelRequest option);
 }
 
 class ChatChannelRepository implements IChatChannelRepository {
-  final IApiProvider? _apiProvider;
-
   ChatChannelRepository({
     required IApiProvider? apiProvider,
   }) : _apiProvider = apiProvider;
+
+  final IApiProvider? _apiProvider;
 
   @override
   Future<Either<Failure, ChatChannelAvailableEntity>> listChannel() async {
@@ -48,7 +50,8 @@ class ChatChannelRepository implements IChatChannelRepository {
 
   @override
   Future<Either<Failure, ChatChannelOpenEntity>> openChannel(
-      String clientId) async {
+    String clientId,
+  ) async {
     const endPoint = '/me/chats-session';
     final parameters = {
       'prefetch': '1',
@@ -71,7 +74,8 @@ class ChatChannelRepository implements IChatChannelRepository {
 
   @override
   Future<Either<Failure, ChatChannelSessionEntity>> getMessages(
-      ChatChannelRequest option) async {
+    ChatChannelRequest option,
+  ) async {
     const endPoint = '/me/chats-messages';
     final parameters = {
       'chat_auth': option.token,
@@ -95,7 +99,8 @@ class ChatChannelRepository implements IChatChannelRepository {
 
   @override
   Future<Either<Failure, ChatSentMessageResponseEntity>> sentMessage(
-      ChatChannelRequest option) async {
+    ChatChannelRequest option,
+  ) async {
     const endPoint = '/me/chats-messages';
     final parameters = {
       'chat_auth': option.token,
@@ -121,7 +126,8 @@ class ChatChannelRepository implements IChatChannelRepository {
 
   @override
   Future<Either<Failure, ValidField>> blockChannel(
-      ChatChannelRequest option) async {
+    ChatChannelRequest option,
+  ) async {
     const endPoint = '/me/manage-blocks';
     final parameters = {
       'block': option.block! ? '1' : '0',
@@ -141,7 +147,8 @@ class ChatChannelRepository implements IChatChannelRepository {
 
   @override
   Future<Either<Failure, ValidField>> deleteChannel(
-      ChatChannelRequest option) async {
+    ChatChannelRequest option,
+  ) async {
     const endPoint = '/me/chats-session';
     final parameters = {'chat_auth': option.token};
 

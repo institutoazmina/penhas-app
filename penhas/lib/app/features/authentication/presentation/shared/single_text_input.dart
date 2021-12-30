@@ -3,12 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class SingleTextInput extends StatelessWidget {
-  final TextInputType _keyboardType;
-  final TextStyle _style;
-  final void Function(String) _onChanged;
-  final TextInputFormatter? _inputFormatter;
-  final InputDecoration _boxDecoration;
-
   const SingleTextInput({
     Key? key,
     TextInputFormatter? inputFormatter,

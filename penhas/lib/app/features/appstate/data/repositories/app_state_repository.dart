@@ -18,12 +18,6 @@ class AppStateRepository implements IAppStateRepository {
   final INetworkInfo _networkInfo;
   final IAppStateDataSource _dataSource;
 
-  AppStateRepository({
-    required INetworkInfo networkInfo,
-    required IAppStateDataSource dataSource,
-  })  : _dataSource = dataSource,
-        _networkInfo = networkInfo;
-
   @override
   Future<Either<Failure, AppStateEntity>> check() async {
     try {
@@ -59,10 +53,11 @@ class AppStateRepository implements IAppStateRepository {
       }
 
       return ServerSideFormFieldValidationFailure(
-          error: error.bodyContent['error'],
-          field: error.bodyContent['field'],
-          reason: error.bodyContent['reason'],
-          message: error.bodyContent['message'],);
+        error: error.bodyContent['error'],
+        field: error.bodyContent['field'],
+        reason: error.bodyContent['reason'],
+        message: error.bodyContent['message'],
+      );
     }
 
     if (error is ApiProviderSessionError) {

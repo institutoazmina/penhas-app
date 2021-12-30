@@ -9,6 +9,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/help_center/domain/states/help_center_state.dart';
+import 'package:penhas/app/features/help_center/presentation/help_center_controller.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/help_center/help_center_action_guardian.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/help_center/help_center_action_police.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/help_center/help_center_action_record.dart';
@@ -16,11 +17,11 @@ import 'package:penhas/app/features/help_center/presentation/pages/help_center/h
 import 'package:penhas/app/features/help_center/presentation/pages/help_center/help_center_card_record.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
-import 'help_center_controller.dart';
 
 class HelpCenterPage extends StatefulWidget {
-  final String title;
   const HelpCenterPage({Key? key, this.title = 'HelpCenter'}) : super(key: key);
+
+  final String title;
 
   @override
   _HelpCenterPageState createState() => _HelpCenterPageState();
@@ -104,13 +105,19 @@ class _HelpCenterPageState
       child: Container(
         color: DesignSystemColors.nigthBlue,
         child: Padding(
-          padding:
-              const EdgeInsets.only(left: 16.0, right: 16.0, top: 12.0, bottom: 12.0),
+          padding: const EdgeInsets.only(
+            left: 16.0,
+            right: 16.0,
+            top: 12.0,
+            bottom: 12.0,
+          ),
           child: Row(
             children: <Widget>[
               Expanded(
-                  child: SvgPicture.asset(
-                      'assets/images/svg/bottom_bar/emergency_controll.svg',),),
+                child: SvgPicture.asset(
+                  'assets/images/svg/bottom_bar/emergency_controll.svg',
+                ),
+              ),
               const Expanded(
                 flex: 6,
                 child: Text(
@@ -131,8 +138,12 @@ class _HelpCenterPageState
       child: Container(
         color: DesignSystemColors.nigthBlue,
         child: Padding(
-          padding:
-              const EdgeInsets.only(left: 16.0, right: 16.0, top: 12.0, bottom: 12.0),
+          padding: const EdgeInsets.only(
+            left: 16.0,
+            right: 16.0,
+            top: 12.0,
+            bottom: 12.0,
+          ),
           child: Row(
             children: const <Widget>[
               Expanded(
@@ -212,7 +223,8 @@ class _HelpCenterPageState
           title: Column(
             children: <Widget>[
               SvgPicture.asset(
-                  'assets/images/svg/help_center/guardians/guardians_alert.svg',),
+                'assets/images/svg/help_center/guardians/guardians_alert.svg',
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 12.0),
                 child: Text(action.title, style: kTextStyleAlertDialogTitle),

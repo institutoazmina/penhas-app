@@ -17,7 +17,6 @@ import 'package:penhas/app/features/authentication/domain/usecases/human_race.da
 import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
-import 'package:penhas/app/shared/logger/log.dart';
 
 import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
@@ -32,7 +31,7 @@ void main() {
     networkInfo: networkInfo,
     appConfiguration: appConfiguration,
   );
-  const String SESSSION_TOKEN = 'my_really.long.JWT';
+  const String sessionToken = 'my_really.long.JWT';
 
   Cep? cep;
   Cpf? cpf;
@@ -166,15 +165,15 @@ void main() {
       test('should return valid SessionEntity for valid fields', () async {
         // arrange
         mockDataSourceRegister().thenAnswer(
-          (_) async => const SessionModel(sessionToken: SESSSION_TOKEN),
+          (_) async => const SessionModel(sessionToken: sessionToken),
         );
         // act
         final result = await executeRegister();
         // assert
-        verify(appConfiguration.saveApiToken(token: SESSSION_TOKEN));
+        verify(appConfiguration.saveApiToken(token: sessionToken));
         expectedRegisterResult(
           result,
-          right(const SessionEntity(sessionToken: SESSSION_TOKEN)),
+          right(const SessionEntity(sessionToken: sessionToken)),
         );
       });
       test(
@@ -208,7 +207,7 @@ void main() {
 
       test('should return InternetConnectionFailure', () async {
         // arrange
-        mockDataSourceRegister().thenThrow(ApiProviderException());
+        mockDataSourceRegister().thenThrow(const ApiProviderException());
         // act
         final result = await executeRegister();
         // assert
@@ -259,7 +258,7 @@ void main() {
       });
       test('should return InternetConnectionFailure', () async {
         // arrange
-        mockDataSourceCheckField().thenThrow(ApiProviderException());
+        mockDataSourceCheckField().thenThrow(const ApiProviderException());
         // act
         final result = await executeCheck();
         // assert

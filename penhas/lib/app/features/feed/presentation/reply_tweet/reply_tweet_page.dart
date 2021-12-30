@@ -15,8 +15,9 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ReplyTweetPage extends StatefulWidget {
-  final String title;
   const ReplyTweetPage({Key? key, this.title = 'ReplyTweet'}) : super(key: key);
+
+  final String title;
 
   @override
   _ReplyTweetPageState createState() => _ReplyTweetPageState();
@@ -247,7 +248,7 @@ class _ReplyTweetPageState
     );
   }
 
-  _handleTap(BuildContext context) {
+  void _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
     }

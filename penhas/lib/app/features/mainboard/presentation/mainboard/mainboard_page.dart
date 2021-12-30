@@ -4,16 +4,16 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_page.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart';
+import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_controller.dart';
+import 'package:penhas/app/features/mainboard/presentation/mainboard/pages/mainboard_app_bar_page.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/pages/mainboard_body_page.dart';
+import 'package:penhas/app/features/mainboard/presentation/mainboard/pages/mainboard_bottom_navigation_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-import 'mainboard_controller.dart';
-import 'pages/mainboard_app_bar_page.dart';
-import 'pages/mainboard_bottom_navigation_page.dart';
-
 class MainboardPage extends StatefulWidget {
-  final String title;
   const MainboardPage({Key? key, this.title = 'Mainboard'}) : super(key: key);
+
+  final String title;
 
   @override
   _MainboardPageState createState() => _MainboardPageState();
@@ -39,16 +39,19 @@ class _MainboardPageState
 
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (_) {
-      return controller.securityState.when(
-        enable: () => enabledSecurityMode(),
-        disable: () => disabledSecurityMode(),
-      );
-    },);
+    return Observer(
+      builder: (_) {
+        return controller.securityState.when(
+          enable: () => enabledSecurityMode(),
+          disable: () => disabledSecurityMode(),
+        );
+      },
+    );
   }
 
   Widget _buildFab() {
-    final bool keyboardIsOpened = MediaQuery.of(context).viewInsets.bottom != 0.0;
+    final bool keyboardIsOpened =
+        MediaQuery.of(context).viewInsets.bottom != 0.0;
 
     return keyboardIsOpened
         ? Container()

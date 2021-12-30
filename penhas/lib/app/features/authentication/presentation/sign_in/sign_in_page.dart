@@ -64,7 +64,7 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
               child: SafeArea(
                 child: SingleChildScrollView(
                   padding: const EdgeInsetsDirectional.fromSTEB(
-                      16.0, 80.0, 16.0, 8.0),
+                      16.0, 80.0, 16.0, 8.0,),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[

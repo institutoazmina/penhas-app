@@ -137,7 +137,7 @@ class GuardianDataSource implements IGuardianDataSource {
     } else if (_invalidSessionCode.contains(response.statusCode)) {
       throw ApiProviderSessionError();
     } else {
-      final jsonData = jsonDecode(response.body);
+      final Map<String, dynamic> jsonData = jsonDecode(response.body);
       if (jsonData['error'] == 'gps_position_invalid') {
         throw GuardianAlertGpsFailure();
       } else {

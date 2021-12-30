@@ -1,7 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
@@ -30,7 +28,7 @@ void main() {
       );
       test(
         'should get PasswordInvalidFailure for password without min length require',
-            () {
+        () {
           final result = SignUpPassword('1Ba@2cD', validator);
 
           expect(result.value, left(MinLengthRule()));
@@ -41,7 +39,7 @@ void main() {
       );
       test(
         'should get PasswordInvalidFailure for password without letters',
-            () {
+        () {
           final result = SignUpPassword('12345678@', validator);
 
           expect(result.value, left(LettersRule()));
@@ -51,7 +49,7 @@ void main() {
       );
       test(
         'should get PasswordInvalidFailure for password without numbers',
-            () {
+        () {
           final result = SignUpPassword('@bcdefgh', validator);
 
           expect(result.value, left(NumbersRule()));
@@ -61,7 +59,7 @@ void main() {
       );
       test(
         'should get PasswordInvalidFailure for password without special characters',
-            () {
+        () {
           final result = SignUpPassword('1bcdefgh', validator);
 
           expect(result.value, left(SpecialCharactersRule()));
@@ -83,7 +81,7 @@ void main() {
       );
       test(
         'should get value from a valid password with only lower case letters',
-            () {
+        () {
           const validPassword = '_mystrongp4ss@rd';
           final result = SignUpPassword(validPassword, validator);
 
@@ -94,7 +92,7 @@ void main() {
       );
       test(
         'should get value from a valid password with only upper case letters',
-            () {
+        () {
           const validPassword = '_MYSTRONGP4SS@RD';
           final result = SignUpPassword(validPassword, validator);
 

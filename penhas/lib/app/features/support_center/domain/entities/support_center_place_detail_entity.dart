@@ -2,10 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
 
 class SupportCenterPlaceDetailEntity extends Equatable {
-  final int? maximumRate;
-  final int? ratedByClient;
-  final SupportCenterPlaceEntity? place;
-
   const SupportCenterPlaceDetailEntity({
     required this.maximumRate,
     required this.ratedByClient,

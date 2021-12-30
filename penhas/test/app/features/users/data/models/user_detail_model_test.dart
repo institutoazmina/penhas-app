@@ -32,7 +32,7 @@ void main() {
         miniBio: '',
         skills: '',
       );
-      const actual = const UserDetailModel(isMyself: false, profile: profile);
+      const actual = UserDetailModel(isMyself: false, profile: profile);
       // act
       final matcher = UserDetailModel.fromJson(jsonData);
       // assert

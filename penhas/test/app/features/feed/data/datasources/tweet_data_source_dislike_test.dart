@@ -10,10 +10,11 @@ import '../../../../../utils/json_util.dart';
 
 void main() {
   late final MockHttpClient apiClient = MockHttpClient();
-  late final MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
+  late final MockIApiServerConfigure serverConfigure =
+      MockIApiServerConfigure();
   late ITweetDataSource dataSource;
   final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
-  const String SESSSION_TOKEN = 'my_really.long.JWT';
+  const String sessionToken = 'my_really.long.JWT';
 
   setUp(() {
     dataSource = TweetDataSource(
@@ -24,7 +25,7 @@ void main() {
     // MockApiServerConfigure configuration
     when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
     when(serverConfigure.apiToken)
-        .thenAnswer((_) => Future.value(SESSSION_TOKEN));
+        .thenAnswer((_) => Future.value(sessionToken));
     when(serverConfigure.userAgent)
         .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
   });
@@ -48,11 +49,13 @@ void main() {
   }
 
   PostExpectation<Future<http.Response>> _mockPostRequest() {
-    return when(apiClient.post(
-      any,
-      headers: anyNamed('headers'),
-      body: anyNamed('body'),
-    ),);
+    return when(
+      apiClient.post(
+        any,
+        headers: anyNamed('headers'),
+        body: anyNamed('body'),
+      ),
+    );
   }
 
   void _setUpMockPostHttpClientSuccess200(String? bodyContent) {

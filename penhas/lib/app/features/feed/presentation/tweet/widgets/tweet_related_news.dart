@@ -4,11 +4,12 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TweetRelatedNews extends StatefulWidget {
-  final TweetRelatedNewsEntity related;
   const TweetRelatedNews({
     Key? key,
     required this.related,
   }) : super(key: key);
+
+  final TweetRelatedNewsEntity related;
 
   @override
   _TweetRelatedNewsState createState() => _TweetRelatedNewsState();
@@ -26,13 +27,17 @@ class _TweetRelatedNewsState extends State<TweetRelatedNews> {
         children: <Widget>[
           const Padding(
             padding: EdgeInsets.only(left: 12.0),
-            child: Text('Conteúdo relacionado a',
-                style: kTextStyleFeedTweetReplyHeader,),
+            child: Text(
+              'Conteúdo relacionado a',
+              style: kTextStyleFeedTweetReplyHeader,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 12.0, bottom: 12.0),
-            child: Text('"${widget.related.header}"',
-                style: kTextStyleDrawerUsername,),
+            child: Text(
+              '"${widget.related.header}"',
+              style: kTextStyleDrawerUsername,
+            ),
           ),
           SizedBox(
             height: 110,
@@ -87,7 +92,7 @@ class _TweetRelatedNewsState extends State<TweetRelatedNews> {
     );
   }
 
-  void _launchURL(String uri) async {
+  Future<void> _launchURL(String uri) async {
     if (await canLaunch(uri)) {
       await launch(uri);
     }

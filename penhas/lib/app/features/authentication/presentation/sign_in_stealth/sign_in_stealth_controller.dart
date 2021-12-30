@@ -31,18 +31,6 @@ class SignInStealthController extends _SignInStealthController
 }
 
 abstract class _SignInStealthController with Store, MapFailureMessage {
-  final String _invalidFieldsToProceedLogin =
-      'E-mail e senha precisam estarem corretos para continuar.';
-  final LocalStore<UserProfileEntity> _userProfileStore;
-  final IAuthenticationRepository _repository;
-  final StealthSecurityAction _securityAction;
-  final PasswordValidator _passwordValidator;
-
-  EmailAddress _emailAddress = EmailAddress('');
-  SignInPassword? _password;
-  bool _isSecurityRunning = false;
-  StreamSubscription? _streamCache;
-
   _SignInStealthController(
     this._repository,
     this._userProfileStore,
@@ -123,18 +111,18 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
 
   @action
   Future<void> signInWithEmailAndPasswordPressed() async {
-    _setErrorMessage('');
-
     if (!_emailAddress.isValid || !_password!.isValid) {
-      _setErrorMessage(_invalidFieldsToProceedLogin);
+      errorMessage = _invalidFieldsToProceedLogin;
       return;
     }
     errorMessage = '';
 
-    _progress = ObservableFuture(_repository.signInWithEmailAndPassword(
-      emailAddress: _emailAddress,
-      password: _password!,
-    ),);
+    _progress = ObservableFuture(
+      _repository.signInWithEmailAndPassword(
+        emailAddress: _emailAddress,
+        password: _password!,
+      ),
+    );
 
     final Either<Failure, SessionEntity> response = await _progress!;
 
@@ -176,20 +164,14 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
     Modular.to.pushReplacementNamed('/mainboard');
   }
 
-  void _setErrorMessage(String? msg) {
-    errorMessage = msg;
-  }
-
-  _registerDataSource() {
+  void _registerDataSource() {
     _streamCache = _securityAction.isRunning.listen((event) {
       isSecurityRunning = event;
     });
   }
 
-  _cancelDataSource() {
-    if (_streamCache != null) {
-      _streamCache!.cancel();
-      _streamCache = null;
-    }
+  void _cancelDataSource() {
+    _streamCache?.cancel();
+    _streamCache = null;
   }
 }

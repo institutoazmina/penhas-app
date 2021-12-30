@@ -7,12 +7,11 @@ import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/support_center/domain/states/support_center_state.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_gps_error.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_filter.dart';
+import 'package:penhas/app/features/support_center/presentation/support_center_controller.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
-
-import 'pages/support_center_general_error.dart';
-import 'pages/support_center_gps_error.dart';
-import 'pages/support_center_input_filter.dart';
-import 'support_center_controller.dart';
 
 class SupportCenterPage extends StatefulWidget {
   const SupportCenterPage({Key? key}) : super(key: key);
@@ -61,9 +60,10 @@ class _SupportCenterPageState
     _disposers ??= [
       reaction((_) => controller.errorMessage, (String? message) {
         showSnackBar(
-            scaffoldKey: _scaffoldKey,
-            message: message,
-            duration: const Duration(seconds: 2),);
+          scaffoldKey: _scaffoldKey,
+          message: message,
+          duration: const Duration(seconds: 2),
+        );
       }),
     ];
   }
@@ -120,46 +120,54 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
               SupportCenterInputFilter(
                 initialValue: controller.currentKeywords,
                 totalOfFilter: controller.categoriesSelected,
-                onFilterAction: () => _dismissSnackBarForAction(controller.onFilterAction),
-                onKeywordsAction: (keywords) => _dismissSnackBarForAction(controller.onKeywordsAction, argument: keywords),
+                onFilterAction: () =>
+                    _dismissSnackBarForAction(controller.onFilterAction),
+                onKeywordsAction: (keywords) => _dismissSnackBarForAction(
+                  controller.onKeywordsAction,
+                  argument: keywords,
+                ),
               ),
             ],
           ),
           Positioned(
             bottom: 40,
             right: 0,
-            child: Container(
-              child: Column(
-                children: [
-                  FlatButton(
-                    onPressed: () => _dismissSnackBarForAction(controller.location),
-                    child: CircleAvatar(
-                      radius: 12,
-                      backgroundColor: DesignSystemColors.pumpkinOrange,
-                      child: SvgPicture.asset(
-                          'assets/images/svg/support_center/location.svg',),
+            child: Column(
+              children: [
+                FlatButton(
+                  onPressed: () =>
+                      _dismissSnackBarForAction(controller.location),
+                  child: CircleAvatar(
+                    radius: 12,
+                    backgroundColor: DesignSystemColors.pumpkinOrange,
+                    child: SvgPicture.asset(
+                      'assets/images/svg/support_center/location.svg',
                     ),
                   ),
-                  FlatButton(
-                    onPressed: () => _dismissSnackBarForAction(controller.listPlaces),
-                    child: CircleAvatar(
-                      radius: 12,
-                      backgroundColor: DesignSystemColors.pumpkinOrange,
-                      child: SvgPicture.asset(
-                          'assets/images/svg/support_center/list.svg',),
+                ),
+                FlatButton(
+                  onPressed: () =>
+                      _dismissSnackBarForAction(controller.listPlaces),
+                  child: CircleAvatar(
+                    radius: 12,
+                    backgroundColor: DesignSystemColors.pumpkinOrange,
+                    child: SvgPicture.asset(
+                      'assets/images/svg/support_center/list.svg',
                     ),
                   ),
-                  FlatButton(
-                    onPressed: () => _dismissSnackBarForAction(controller.addPlace),
-                    child: CircleAvatar(
-                      radius: 20,
-                      backgroundColor: DesignSystemColors.pumpkinOrange,
-                      child: SvgPicture.asset(
-                          'assets/images/svg/support_center/suggest_place.svg',),
+                ),
+                FlatButton(
+                  onPressed: () =>
+                      _dismissSnackBarForAction(controller.addPlace),
+                  child: CircleAvatar(
+                    radius: 20,
+                    backgroundColor: DesignSystemColors.pumpkinOrange,
+                    child: SvgPicture.asset(
+                      'assets/images/svg/support_center/suggest_place.svg',
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           )
         ],
@@ -167,12 +175,14 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
     );
   }
 
-  void _dismissSnackBarForAction(Function action, {dynamic argument}){
+  void _dismissSnackBarForAction(Function action, {dynamic argument}) {
     _scaffoldKey.currentState?.hideCurrentSnackBar();
 
     if (argument == null) {
+      // ignore: avoid_dynamic_calls
       action();
-    } else{
+    } else {
+      // ignore: avoid_dynamic_calls
       action(argument);
     }
   }

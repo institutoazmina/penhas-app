@@ -12,14 +12,14 @@ abstract class ITweetFilterPreferenceRepository {
 
 class TweetFilterPreferenceRepository
     implements ITweetFilterPreferenceRepository {
-  final INetworkInfo _networkInfo;
-  final ITweetFilterPreferenceDataSource? _dataSource;
-
   TweetFilterPreferenceRepository({
     required INetworkInfo networkInfo,
     required ITweetFilterPreferenceDataSource? dataSource,
   })  : _dataSource = dataSource,
         _networkInfo = networkInfo;
+
+  final INetworkInfo _networkInfo;
+  final ITweetFilterPreferenceDataSource? _dataSource;
 
   @override
   Future<Either<Failure, TweetFilterSessionEntity>> retreive() async {

@@ -10,10 +10,11 @@ import '../../../../../utils/helper.mocks.dart';
 
 void main() {
   late final MockITweetRepository repository = MockITweetRepository();
-  late final MockTweetFilterPreference filterPreference = MockTweetFilterPreference();
+  late final MockTweetFilterPreference filterPreference =
+      MockTweetFilterPreference();
 
   setUp(() {
-    when(filterPreference.getCategory()).thenReturn([]);
+    when(filterPreference.categories).thenReturn([]);
     when(filterPreference.getTags()).thenReturn([]);
   });
 

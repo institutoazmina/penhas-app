@@ -60,72 +60,74 @@ class _FilterTweetPageState
         backgroundColor: DesignSystemColors.ligthPurple,
       ),
       body: PageProgressIndicator(
-          progressState: _currentState,
-          progressMessage: 'Carregando os temas',
-          child: SizedBox.expand(
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Container(
-                  color: DesignSystemColors.systemBackgroundColor,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      const Padding(
-                        padding: EdgeInsets.only(top: 4, bottom: 20),
-                        child: Text(
-                          'Selecione os temas de seu interesse:',
-                          style: kTextStyleFeedTweetBody,
-                        ),
+        progressState: _currentState,
+        progressMessage: 'Carregando os temas',
+        child: SizedBox.expand(
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                color: DesignSystemColors.systemBackgroundColor,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    const Padding(
+                      padding: EdgeInsets.only(top: 4, bottom: 20),
+                      child: Text(
+                        'Selecione os temas de seu interesse:',
+                        style: kTextStyleFeedTweetBody,
                       ),
-                      Expanded(
-                        child: Tags(
-                          spacing: 12.0,
-                          key: _tagStateKey,
-                          alignment: WrapAlignment.start,
-                          runAlignment: WrapAlignment.start,
-                          itemCount: controller.tags.length,
-                          itemBuilder: (int index) {
-                            final item = controller.tags[index];
-                            return _builtTagItem(item, index);
-                          },
-                        ),
+                    ),
+                    Expanded(
+                      child: Tags(
+                        spacing: 12.0,
+                        key: _tagStateKey,
+                        alignment: WrapAlignment.start,
+                        runAlignment: WrapAlignment.start,
+                        itemCount: controller.tags.length,
+                        itemBuilder: (int index) {
+                          final item = controller.tags[index];
+                          return _builtTagItem(item, index);
+                        },
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          _buildResetPasswordButton(),
-                          _buildApplyButton(),
-                        ],
-                      )
-                    ],
-                  ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        _buildResetPasswordButton(),
+                        _buildApplyButton(),
+                      ],
+                    )
+                  ],
                 ),
               ),
             ),
-          ),),
+          ),
+        ),
+      ),
     );
   }
 
   Tooltip _builtTagItem(TweetFilterEntity item, int index) {
     return Tooltip(
-        message: item.label!,
-        child: ItemTags(
-          activeColor: DesignSystemColors.easterPurple,
-          title: item.label!,
-          index: index,
-          active: item.isSelected,
-          customData: item.id,
-          elevation: 0,
-          textStyle: kTextStyleTitleTag,
-          textColor: DesignSystemColors.easterPurple,
-          borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(20.0),
-            bottomRight: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
-          ),
-          padding: const EdgeInsets.fromLTRB(16, 6, 16, 6),
-        ),);
+      message: item.label,
+      child: ItemTags(
+        activeColor: DesignSystemColors.easterPurple,
+        title: item.label!,
+        index: index,
+        active: item.isSelected,
+        customData: item.id,
+        elevation: 0,
+        textStyle: kTextStyleTitleTag,
+        textColor: DesignSystemColors.easterPurple,
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(20.0),
+          bottomRight: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+        padding: const EdgeInsets.fromLTRB(16, 6, 16, 6),
+      ),
+    );
   }
 
   Widget _buildResetPasswordButton() {
@@ -161,14 +163,16 @@ class _FilterTweetPageState
         elevation: 0,
         color: DesignSystemColors.ligthPurple,
         shape: kButtonShapeOutlinePurple,
-        child: const Text('Aplicar filtro',
-            style: TextStyle(
-              fontFamily: 'Lato',
-              fontWeight: FontWeight.bold,
-              fontSize: 14.0,
-              color: Colors.white,
-              letterSpacing: 0.45,
-            ),),
+        child: const Text(
+          'Aplicar filtro',
+          style: TextStyle(
+            fontFamily: 'Lato',
+            fontWeight: FontWeight.bold,
+            fontSize: 14.0,
+            color: Colors.white,
+            letterSpacing: 0.45,
+          ),
+        ),
       ),
     );
   }

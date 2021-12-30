@@ -3,23 +3,25 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/features/main_menu/domain/repositories/user_profile_repository.dart';
-import 'package:penhas/app/shared/logger/log.dart';
 
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
   late final MockIApiProvider apiProvider = MockIApiProvider();
-  late final MockIApiServerConfigure serverConfiguration = MockIApiServerConfigure();
+  late final MockIApiServerConfigure serverConfiguration =
+      MockIApiServerConfigure();
   late final IUserProfileRepository sut = UserProfileRepository(
     apiProvider: apiProvider,
     serverConfiguration: serverConfiguration,
   );
 
   void _setUpMockPost() {
-    when(apiProvider.post(
-      path: anyNamed('path'),
-      parameters: anyNamed('parameters'),
-    ),).thenAnswer((_) async => Future.value(''));
+    when(
+      apiProvider.post(
+        path: anyNamed('path'),
+        parameters: anyNamed('parameters'),
+      ),
+    ).thenAnswer((_) async => Future.value(''));
   }
 
   group('UserProfileRepository', () {

@@ -19,11 +19,11 @@ class SignUpController extends _SignUpControllerBase with _$SignUpController {
 }
 
 abstract class _SignUpControllerBase with Store, MapFailureMessage {
+  _SignUpControllerBase(this.repository);
+
   final IUserRegisterRepository repository;
   final UserRegisterFormFieldModel _userRegisterModel =
       UserRegisterFormFieldModel();
-
-  _SignUpControllerBase(this.repository);
 
   @observable
   ObservableFuture<Either<Failure, ValidField>>? _progress;
@@ -85,7 +85,7 @@ abstract class _SignUpControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> nextStepPressed() async {
-    _setErrorMessage('');
+    errorMessage = '';
     if (!_isValidToProceed()) {
       return;
     }
@@ -139,15 +139,11 @@ abstract class _SignUpControllerBase with Store, MapFailureMessage {
     return isValid;
   }
 
-  void _setErrorMessage(String? message) {
-    errorMessage = message;
-  }
-
   void _triggerMessageError(Failure failure) {
     if (failure is ServerSideFormFieldValidationFailure) {
-      _setErrorMessage(_mapFailureToFields(failure));
+      errorMessage = _mapFailureToFields(failure);
     } else {
-      _setErrorMessage(mapFailureMessage(failure));
+      errorMessage = mapFailureMessage(failure);
     }
   }
 

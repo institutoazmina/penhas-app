@@ -20,15 +20,15 @@ class DeletedAccountController extends _DeletedAccountControllerBase
 }
 
 abstract class _DeletedAccountControllerBase with Store, MapFailureMessage {
-  final String? _sessionToken;
-  final IAppConfiguration _appConfiguration;
-  final IUserProfileRepository _profileRepository;
-
   _DeletedAccountControllerBase(
     this._profileRepository,
     this._appConfiguration,
     this._sessionToken,
   );
+
+  final String? _sessionToken;
+  final IAppConfiguration _appConfiguration;
+  final IUserProfileRepository _profileRepository;
 
   @observable
   ObservableFuture<Either<Failure, ValidField>>? _progress;
@@ -43,7 +43,7 @@ abstract class _DeletedAccountControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> reactive() async {
-    setErrorMessage('');
+    errorMessage = '';
 
     _progress = ObservableFuture(
       _profileRepository.reactivate(token: _sessionToken),
@@ -59,10 +59,6 @@ abstract class _DeletedAccountControllerBase with Store, MapFailureMessage {
 }
 
 extension _PrivateMethods on _DeletedAccountControllerBase {
-  void setErrorMessage(String? message) {
-    errorMessage = message;
-  }
-
   PageProgressState monitorProgress(ObservableFuture<Object>? observable) {
     if (observable == null || observable.status == FutureStatus.rejected) {
       return PageProgressState.initial;
@@ -74,7 +70,7 @@ extension _PrivateMethods on _DeletedAccountControllerBase {
   }
 
   void handleError(Failure failure) {
-    setErrorMessage(mapFailureMessage(failure));
+    errorMessage = mapFailureMessage(failure);
   }
 
   Future<void> handleSession(ValidField session) async {

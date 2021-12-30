@@ -1,15 +1,16 @@
+import 'package:collection/collection.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_model.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
 
 class TweetSessionModel extends TweetSessionEntity {
   const TweetSessionModel(
-    bool hasMore,
     TweetSessionOrder orderBy,
     TweetTiles? parent,
-    List<TweetTiles?> tweets,
-    String? nextPage,
-  ) : super(
+    List<TweetTiles> tweets,
+    String? nextPage, {
+    required bool hasMore,
+  }) : super(
           hasMore: hasMore,
           orderBy: orderBy,
           parent: parent,
@@ -29,10 +30,15 @@ class TweetSessionModel extends TweetSessionEntity {
         : null;
 
     return TweetSessionModel(
-        hasMore, orderBy, parent, tweets, nextPage as String?,);
+      orderBy,
+      parent,
+      tweets,
+      nextPage,
+      hasMore: hasMore,
+    );
   }
 
-  static List<TweetTiles?> _parseTweet(List<dynamic>? tweets) {
+  static List<TweetTiles> _parseTweet(List<dynamic>? tweets) {
     if (tweets == null || tweets.isEmpty) {
       return [];
     }
@@ -40,7 +46,7 @@ class TweetSessionModel extends TweetSessionEntity {
     return tweets
         .map((e) => e as Map<String, dynamic>)
         .map((e) => _parseJson(e))
-        .where((e) => e != null)
+        .whereNotNull()
         .toList();
   }
 

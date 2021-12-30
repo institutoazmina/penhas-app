@@ -27,7 +27,8 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
           'Use o alerta de guardiões quando estiver em situação de violência. Eles receberão um aviso de que você está em risco com informações da sua localização.',
       bodyWidget: Image(
         image: AssetImage(
-            'assets/images/tutorial_guardian_3/tutorial_guardian_3.png',),
+          'assets/images/tutorial_guardian_3/tutorial_guardian_3.png',
+        ),
         width: 270,
         height: 270,
         fit: BoxFit.fitWidth,
@@ -39,7 +40,8 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
           'Em situações de emergência, abra o app, clique e segure no símbolo do seu signo para acionar o botão de pânico. Isso enviará um alerta para seus guardiões e durante 15 minutos um áudio será gravado.',
       bodyWidget: Image(
         image: AssetImage(
-            'assets/images/tutorial_guardian_2/tutorial_guardian_2.png',),
+          'assets/images/tutorial_guardian_2/tutorial_guardian_2.png',
+        ),
         width: 250,
         height: 270,
         fit: BoxFit.fitWidth,
@@ -55,14 +57,15 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
     return Scaffold(
       backgroundColor: DesignSystemColors.charcoalGrey,
       appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          leading: IconButton(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            icon: const Icon(Icons.cancel),
-            onPressed: () => Navigator.of(context).pop(),
-          ),),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        leading: IconButton(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          icon: const Icon(Icons.cancel),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(
@@ -86,7 +89,10 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
               const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.only(
-                    left: 12.0, right: 12.0, bottom: 12.0,),
+                  left: 12.0,
+                  right: 12.0,
+                  bottom: 12.0,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -111,7 +117,7 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
         color: DesignSystemColors.ligthPurple,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        padding: const EdgeInsets.all(0.0),
+        padding: EdgeInsets.zero,
         elevation: 0.0,
         onPressed: () {
           isLastPage ? _dispose() : _nextPage();
@@ -157,8 +163,9 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
       height: 10.0,
       width: isActive ? 24.0 : 10.0,
       decoration: BoxDecoration(
-          color: isActive ? Colors.white : DesignSystemColors.blueyGrey,
-          borderRadius: const BorderRadius.all(Radius.circular(12)),),
+        color: isActive ? Colors.white : DesignSystemColors.blueyGrey,
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
+      ),
     );
   }
 }

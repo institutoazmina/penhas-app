@@ -11,9 +11,9 @@ part 'account_preference_controller.g.dart';
 
 class AccountPreferenceController extends _AccountPreferenceControllerBase
     with _$AccountPreferenceController {
-  AccountPreferenceController(
-      {required IUserProfileRepository profileRepository})
-      : super(profileRepository);
+  AccountPreferenceController({
+    required IUserProfileRepository profileRepository,
+  }) : super(profileRepository);
 }
 
 abstract class _AccountPreferenceControllerBase with Store, MapFailureMessage {
@@ -43,13 +43,17 @@ abstract class _AccountPreferenceControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  Future<void> update(String? key, bool status) async {
-    setMessageErro('');
+  Future<void> update(
+    String? key, {
+    required bool status,
+  }) async {
+    messageError = '';
     _progress = ObservableFuture(
       _userProfileRepository.updatePreferences(key: key, status: status),
     );
 
-    final Either<Failure, AccountPreferenceSessionEntity> result = await _progress!;
+    final Either<Failure, AccountPreferenceSessionEntity> result =
+        await _progress!;
 
     result.fold(
       (failure) => handleUpdateError(failure),
@@ -78,12 +82,7 @@ extension _MethodPrivate on _AccountPreferenceControllerBase {
   }
 
   void handleUpdateError(Failure failure) {
-    final message = mapFailureMessage(failure);
-    setMessageErro(message);
-  }
-
-  void setMessageErro(String? message) {
-    messageError = message;
+    messageError = mapFailureMessage(failure);
   }
 
   PageProgressState monitorProgress(ObservableFuture<Object>? observable) {

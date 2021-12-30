@@ -21,12 +21,16 @@ import 'package:penhas/app/shared/logger/log.dart';
 abstract class ISupportCenterRepository {
   Future<Either<Failure, SupportCenterMetadataEntity?>> metadata();
   Future<Either<Failure, SupportCenterPlaceSessionEntity>> fetch(
-      SupportCenterFetchRequest? options);
+    SupportCenterFetchRequest? options,
+  );
   Future<Either<Failure, GeolocationEntity>> mapGeoFromCep(String? cep);
   Future<Either<Failure, SupportCenterPlaceDetailEntity>> detail(
-      SupportCenterPlaceEntity? placeEntity);
+    SupportCenterPlaceEntity? placeEntity,
+  );
   Future<Either<Failure, ValidField>> rate(
-      SupportCenterPlaceEntity? place, double rate);
+    SupportCenterPlaceEntity? place,
+    double rate,
+  );
   Future<Either<Failure, AlertModel>> suggestion({
     required String? name,
     required String? address,
@@ -36,11 +40,11 @@ abstract class ISupportCenterRepository {
 }
 
 class SupportCenterRepository implements ISupportCenterRepository {
-  final IApiProvider? _apiProvider;
-
   SupportCenterRepository({
     required IApiProvider? apiProvider,
   }) : _apiProvider = apiProvider;
+
+  final IApiProvider? _apiProvider;
 
   @override
   Future<Either<Failure, SupportCenterMetadataEntity?>> metadata() async {
@@ -61,7 +65,8 @@ class SupportCenterRepository implements ISupportCenterRepository {
 
   @override
   Future<Either<Failure, SupportCenterPlaceSessionEntity>> fetch(
-      SupportCenterFetchRequest? options) async {
+    SupportCenterFetchRequest? options,
+  ) async {
     const endPoint = 'me/pontos-de-apoio';
 
     final Map<String, String?> parameters = <String, String?>{};
@@ -139,7 +144,8 @@ class SupportCenterRepository implements ISupportCenterRepository {
 
   @override
   Future<Either<Failure, SupportCenterPlaceDetailEntity>> detail(
-      SupportCenterPlaceEntity? placeEntity) async {
+    SupportCenterPlaceEntity? placeEntity,
+  ) async {
     final endPoint = ['me', 'pontos-de-apoio', placeEntity!.id].join('/');
 
     try {
@@ -158,7 +164,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
   ) async {
     final endPoint = ['me', 'avaliar-pontos-de-apoio'].join('/');
     final parameters = <String, String>{};
-    parameters['ponto_apoio_id'] = place!.id.toString();
+    parameters['ponto_apoio_id'] = place!.id;
     parameters['rating'] = rate.toInt().toString();
 
     try {

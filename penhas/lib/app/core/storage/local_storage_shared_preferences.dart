@@ -6,14 +6,14 @@ import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageSharedPreferences implements ILocalStorage {
-  final Completer<SharedPreferences> _instance = Completer<SharedPreferences>();
-
-  _init() async {
-    _instance.complete(await SharedPreferences.getInstance());
-  }
-
   LocalStorageSharedPreferences() {
     _init();
+  }
+
+  final Completer<SharedPreferences> _instance = Completer<SharedPreferences>();
+
+  Future<void> _init() async {
+    _instance.complete(await SharedPreferences.getInstance());
   }
 
   @override

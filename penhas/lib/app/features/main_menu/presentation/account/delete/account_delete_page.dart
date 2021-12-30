@@ -6,11 +6,10 @@ import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/main_menu/domain/states/profile_delete_state.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/delete/account_delete_controller.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
-
-import 'account_delete_controller.dart';
 
 class AccountDeletePage extends StatefulWidget {
   const AccountDeletePage({Key? key}) : super(key: key);

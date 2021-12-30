@@ -4,12 +4,12 @@ import 'package:penhas/app/features/chat/domain/entities/chat_channel_message.da
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatChannelMessagePage extends StatelessWidget {
-  final ChatChannelMessage content;
-
   const ChatChannelMessagePage({
     Key? key,
     required this.content,
   }) : super(key: key);
+
+  final ChatChannelMessage content;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,12 @@ class ChatChannelMessagePage extends StatelessWidget {
 
     final EdgeInsetsGeometry padding = content.content.isMe
         ? const EdgeInsets.only(left: 18.0, right: 8.0, bottom: 10.0, top: 10.0)
-        : const EdgeInsets.only(left: 8.0, right: 18.0, bottom: 10.0, top: 10.0);
+        : const EdgeInsets.only(
+            left: 8.0,
+            right: 18.0,
+            bottom: 10.0,
+            top: 10.0,
+          );
 
     final Color color = content.content.isMe
         ? DesignSystemColors.ligthPurple
@@ -30,9 +35,15 @@ class ChatChannelMessagePage extends StatelessWidget {
 
     final BorderRadiusGeometry borderRadius = content.content.isMe
         ? const BorderRadius.only(
-            topLeft: radius, topRight: radius, bottomLeft: radius,)
+            topLeft: radius,
+            topRight: radius,
+            bottomLeft: radius,
+          )
         : const BorderRadius.only(
-            topLeft: radius, topRight: radius, bottomRight: radius,);
+            topLeft: radius,
+            topRight: radius,
+            bottomRight: radius,
+          );
 
     final AlignmentGeometry alignment =
         content.content.isMe ? Alignment.centerRight : Alignment.centerLeft;
@@ -49,11 +60,9 @@ class ChatChannelMessagePage extends StatelessWidget {
         decoration: BoxDecoration(color: color, borderRadius: borderRadius),
         child: Container(
           constraints: const BoxConstraints(minWidth: 60.0),
-          child: Container(
-            child: HtmlWidget(
-              content.content.message!,
-              textStyle: TextStyle(fontSize: 15.0, color: textColor),
-            ),
+          child: HtmlWidget(
+            content.content.message!,
+            textStyle: TextStyle(fontSize: 15.0, color: textColor),
           ),
         ),
       ),

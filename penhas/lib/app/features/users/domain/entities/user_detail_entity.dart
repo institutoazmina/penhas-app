@@ -12,11 +12,6 @@ class UserDetailEntity extends Equatable {
   final bool isMyself;
   final UserDetailProfileEntity profile;
 
-  const UserDetailEntity({
-    required this.isMyself,
-    required this.profile,
-  });
-
   @override
   List<Object?> get props => [isMyself, profile];
 

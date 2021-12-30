@@ -11,23 +11,9 @@ import 'package:penhas/app/features/chat/domain/entities/chat_message_entity.dar
 import 'package:penhas/app/features/chat/domain/entities/chat_sent_message_response_entity.dart';
 import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
 import 'package:penhas/app/features/chat/domain/states/chat_channel_usecase_event.dart';
+import 'package:penhas/app/shared/logger/log.dart';
 
 class ChatChannelUseCase with MapFailureMessage {
-  final IChatChannelRepository _channelRepository;
-  final Duration _pollingSyncInterval = const Duration(seconds: 60);
-  Timer? _syncTimer;
-  String? _channelToken;
-  String? _newestPagination;
-  String? _oldestPagination;
-  String? _lastMessageEtag;
-  ChatChannelUseCaseEvent _currentEvent = const ChatChannelUseCaseEvent.initial();
-  ChatChannelSessionEntity? _currentSession;
-  final _messageCache = Queue<ChatChannelMessage>();
-
-  late final StreamController<ChatChannelUseCaseEvent> _streamController =
-      StreamController.broadcast();
-  Stream<ChatChannelUseCaseEvent> get dataSource => _streamController.stream;
-
   ChatChannelUseCase({
     required ChatChannelOpenEntity session,
     required IChatChannelRepository channelRepository,
@@ -36,12 +22,26 @@ class ChatChannelUseCase with MapFailureMessage {
     initial(session);
   }
 
+  final IChatChannelRepository _channelRepository;
+  final Duration _pollingSyncInterval = const Duration(seconds: 60);
+  Timer? _syncTimer;
+  String? _channelToken;
+  String? _lastMessageEtag;
+  ChatChannelUseCaseEvent _currentEvent =
+      const ChatChannelUseCaseEvent.initial();
+  ChatChannelSessionEntity? _currentSession;
+  final _messageCache = Queue<ChatChannelMessage>();
+
+  late final StreamController<ChatChannelUseCaseEvent> _streamController =
+      StreamController.broadcast();
+  Stream<ChatChannelUseCaseEvent> get dataSource => _streamController.stream;
+
   Future<void> block() async {
-    await blockChannel(true);
+    await blockChannel(isToBlock: true);
   }
 
   Future<void> unblock() async {
-    await blockChannel(false);
+    await blockChannel(isToBlock: false);
   }
 
   Future<void> delete() async {
@@ -51,8 +51,10 @@ class ChatChannelUseCase with MapFailureMessage {
       ),
     );
 
-    response.fold((failure) => handleFailure(failure),
-        (session) => updateFromDeletedAction(),);
+    response.fold(
+      (failure) => handleFailure(failure),
+      (session) => updateFromDeletedAction(),
+    );
   }
 
   Future<void> updateFromDeletedAction() async {
@@ -108,7 +110,7 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
             insertWarrningMessage: true,
           );
         } else {
-          handleSession(channel.session!, true);
+          handleSession(channel.session!, insertWarrningMessage: true);
         }
       },
     );
@@ -124,26 +126,25 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
 
     result.fold(
       (failure) => handleFailure(failure),
-      (session) => handleSession(session, insertWarrningMessage),
+      (session) =>
+          handleSession(session, insertWarrningMessage: insertWarrningMessage),
     );
   }
 
-  void handleFailure(Failure failure) async {
+  Future<void> handleFailure(Failure failure) async {
     final message = mapFailureMessage(failure);
     if (_currentEvent == const ChatChannelUseCaseEvent.initial()) {
       _currentEvent = ChatChannelUseCaseEvent.errorOnLoading(message!);
       _streamController.add(_currentEvent);
     }
 
-    print(failure);
+    logError(failure);
   }
 
   void handleSession(
-    ChatChannelSessionEntity session,
-    bool insertWarrningMessage,
-  ) {
-    _newestPagination = session.newer;
-    _oldestPagination = session.older;
+    ChatChannelSessionEntity session, {
+    required bool insertWarrningMessage,
+  }) {
     final List<ChatChannelMessage> messages = [];
 
     if (_currentSession?.user != session.user) {
@@ -229,7 +230,7 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
     }
   }
 
-  Future<void> blockChannel(bool isToBlock) async {
+  Future<void> blockChannel({required bool isToBlock}) async {
     final request = ChatChannelRequest(
       token: _channelToken,
       clientId: _currentSession!.user!.userId.toString(),
@@ -240,11 +241,11 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
 
     response.fold(
       (failure) => handleFailure(failure),
-      (session) => updateProfileAfterBlockAction(isToBlock),
+      (session) => updateProfileAfterBlockAction(isToBlock: isToBlock),
     );
   }
 
-  void updateProfileAfterBlockAction(bool isToBlock) {
+  void updateProfileAfterBlockAction({required bool isToBlock}) {
     final metadata = ChatChannelSessionMetadataEntity(
       canSendMessage: !isToBlock,
       didBlocked: isToBlock,

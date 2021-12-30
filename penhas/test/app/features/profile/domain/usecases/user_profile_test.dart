@@ -9,7 +9,8 @@ import '../../../../../utils/helper.mocks.dart';
 
 void main() {
   late final MockAppStateUseCase appStateUseCase = MockAppStateUseCase();
-  late final MockIUserProfileRepository repository = MockIUserProfileRepository();
+  late final MockIUserProfileRepository repository =
+      MockIUserProfileRepository();
   late final MockUserProfileStore profileStore = MockUserProfileStore();
 
   late final UserProfile sut = UserProfile(

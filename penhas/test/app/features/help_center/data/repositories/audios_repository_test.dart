@@ -6,7 +6,6 @@ import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/help_center/data/models/audio_model.dart';
 import 'package:penhas/app/features/help_center/data/repositories/audios_repository.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
-import 'package:penhas/app/shared/logger/log.dart';
 
 import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';

@@ -3,13 +3,6 @@ import 'package:meta/meta.dart';
 
 @immutable
 class UserDetailProfileEntity extends Equatable {
-  final String? nickname;
-  final String? avatar;
-  final int? clientId;
-  final String? miniBio;
-  final String? skills;
-  final String? activity;
-
   const UserDetailProfileEntity({
     required this.nickname,
     required this.avatar,

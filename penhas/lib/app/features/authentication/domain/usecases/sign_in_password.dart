@@ -5,9 +5,6 @@ import 'package:penhas/app/features/authentication/domain/usecases/password_vali
 
 @immutable
 class SignInPassword extends Password {
-  final PasswordValidator _passwordValidator;
-  final String? _input;
-
   SignInPassword(this._input, this._passwordValidator);
 
   final PasswordValidator _passwordValidator;

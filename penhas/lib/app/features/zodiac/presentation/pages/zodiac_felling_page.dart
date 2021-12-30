@@ -5,11 +5,12 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ZodiacFellingPage extends StatelessWidget {
-  final IZodiac sign;
   const ZodiacFellingPage({
     required this.sign,
     Key? key,
   }) : super(key: key);
+
+  final IZodiac sign;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,8 @@ class ZodiacFellingPage extends StatelessWidget {
             itemCount: sign.feeling.length,
             itemBuilder: (int index) {
               return Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 decoration: const BoxDecoration(
                   color: DesignSystemColors.easterPurple,
                   borderRadius: BorderRadius.only(

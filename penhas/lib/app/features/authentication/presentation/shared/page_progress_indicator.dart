@@ -14,24 +14,12 @@ class PageProgressIndicator extends StatefulWidget {
   final PageProgressState progressState;
   final String progressMessage;
 
-  const PageProgressIndicator({
-    Key? key,
-    required this.child,
-    required this.progressState,
-    this.progressMessage = 'Processando',
-  }) : super(key: key);
-
   @override
   _PageProgressIndicator createState() => _PageProgressIndicator();
 }
 
 class _PageProgressIndicator extends State<PageProgressIndicator>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
-  late bool _isProgressVisible;
-  final Color _backgroundColor = Colors.black45;
-
   _PageProgressIndicator();
 
   late AnimationController _controller;

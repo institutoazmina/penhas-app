@@ -6,10 +6,9 @@ import 'package:penhas/app/features/chat/domain/entities/chat_main_tile_entity.d
 import 'package:penhas/app/features/chat/domain/states/chat_main_talks_state.dart';
 import 'package:penhas/app/features/chat/presentation/pages/chat_people_card.dart';
 import 'package:penhas/app/features/chat/presentation/pages/chat_people_filter_card.dart';
+import 'package:penhas/app/features/chat/presentation/people/chat_main_people_controller.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
-
-import 'chat_main_people_controller.dart';
 
 class ChatMainPeoplePage extends StatefulWidget {
   const ChatMainPeoplePage({Key? key}) : super(key: key);
@@ -51,9 +50,10 @@ extension _ChatMainPeoplePageBodyBuilder on _ChatMainPeoplePageState {
 
   Widget loading() {
     return PageProgressIndicator(
-        progressMessage: 'Carregando...',
-        progressState: PageProgressState.loading,
-        child: Container(color: DesignSystemColors.systemBackgroundColor),);
+      progressMessage: 'Carregando...',
+      progressState: PageProgressState.loading,
+      child: Container(color: DesignSystemColors.systemBackgroundColor),
+    );
   }
 
   Widget loaded(List<ChatMainTileEntity> tiles) {

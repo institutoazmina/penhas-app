@@ -8,14 +8,15 @@ import 'package:penhas/app/features/authentication/domain/usecases/sign_up_passw
 
 @immutable
 class ChangePassword {
-  final IChangePasswordRepository? _repository;
-
-  factory ChangePassword(
-      {required IChangePasswordRepository? changePasswordRepository}) {
+  factory ChangePassword({
+    required IChangePasswordRepository? changePasswordRepository,
+  }) {
     return ChangePassword._(changePasswordRepository);
   }
 
   const ChangePassword._(this._repository);
+
+  final IChangePasswordRepository? _repository;
 
   Future<Either<Failure, ValidField>> call({
     required EmailAddress emailAddress,

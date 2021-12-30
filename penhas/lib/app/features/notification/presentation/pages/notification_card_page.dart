@@ -7,10 +7,10 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class NotificationCardPage extends StatelessWidget {
-  final NotificationEntity notification;
-
   const NotificationCardPage({Key? key, required this.notification})
       : super(key: key);
+
+  final NotificationEntity notification;
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +45,10 @@ class NotificationCardPage extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(notification.name!, style: titleTextStyle),
-                        Text(timeago.format(notification.time!, locale: 'pt_br'),
-                            style: timeTextStyle,),
+                        Text(
+                          timeago.format(notification.time!, locale: 'pt_br'),
+                          style: timeTextStyle,
+                        ),
                       ],
                     ),
                   ),
@@ -78,20 +80,23 @@ class NotificationCardPage extends StatelessWidget {
 
 extension _TextStyle on NotificationCardPage {
   TextStyle get titleTextStyle => const TextStyle(
-      color: DesignSystemColors.darkIndigoThree,
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      fontWeight: FontWeight.normal,);
+        color: DesignSystemColors.darkIndigoThree,
+        fontFamily: 'Lato',
+        fontSize: 14.0,
+        fontWeight: FontWeight.normal,
+      );
 
   TextStyle get timeTextStyle => const TextStyle(
-      color: DesignSystemColors.warnGrey,
-      fontFamily: 'Lato',
-      fontSize: 12.0,
-      fontWeight: FontWeight.normal,);
+        color: DesignSystemColors.warnGrey,
+        fontFamily: 'Lato',
+        fontSize: 12.0,
+        fontWeight: FontWeight.normal,
+      );
 
   TextStyle get contentTextStyle => const TextStyle(
-      color: DesignSystemColors.darkIndigoThree,
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      fontWeight: FontWeight.normal,);
+        color: DesignSystemColors.darkIndigoThree,
+        fontFamily: 'Lato',
+        fontSize: 14.0,
+        fontWeight: FontWeight.normal,
+      );
 }

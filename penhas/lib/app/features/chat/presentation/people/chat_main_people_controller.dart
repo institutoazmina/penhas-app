@@ -24,10 +24,6 @@ class ChatMainPeopleController extends _ChatMainPeopleControllerBase
 }
 
 abstract class _ChatMainPeopleControllerBase with Store, MapFailureMessage {
-  List<FilterTagEntity> _tags = [];
-  final IUsersRepository _usersRepository;
-  final IFilterSkillRepository _skillRepository;
-
   _ChatMainPeopleControllerBase(
     this._usersRepository,
     this._skillRepository,

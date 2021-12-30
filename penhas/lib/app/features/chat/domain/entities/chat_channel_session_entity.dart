@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_message_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
 
@@ -33,6 +34,7 @@ class ChatChannelSessionEntity extends Equatable {
       ];
 }
 
+@immutable
 class ChatChannelSessionMetadataEntity extends Equatable {
   const ChatChannelSessionMetadataEntity({
     required this.canSendMessage,
@@ -42,6 +44,16 @@ class ChatChannelSessionMetadataEntity extends Equatable {
     required this.isBlockable,
     required this.lastMessageEtag,
   });
+
+  factory ChatChannelSessionMetadataEntity.empty() =>
+      const ChatChannelSessionMetadataEntity(
+        canSendMessage: false,
+        didBlocked: false,
+        headerMessage: null,
+        headerWarning: null,
+        isBlockable: false,
+        lastMessageEtag: null,
+      );
 
   final bool canSendMessage;
   final bool didBlocked;
@@ -62,14 +74,4 @@ class ChatChannelSessionMetadataEntity extends Equatable {
         isBlockable,
         lastMessageEtag,
       ];
-
-  static final ChatChannelSessionMetadataEntity empty =
-      const ChatChannelSessionMetadataEntity(
-    didBlocked: false,
-    isBlockable: false,
-    canSendMessage: false,
-    headerMessage: null,
-    headerWarning: null,
-    lastMessageEtag: null,
-  );
 }

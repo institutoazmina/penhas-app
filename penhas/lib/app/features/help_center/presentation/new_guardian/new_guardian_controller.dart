@@ -1,8 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
@@ -25,15 +23,15 @@ class NewGuardianController extends _NewGuardianControllerBase
 }
 
 abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
-  final IGuardianRepository _guardianRepository;
-  final ILocationServices _locationService;
-  String? guardianName;
-  String? guardianMobile;
-
   _NewGuardianControllerBase(
     this._guardianRepository,
     this._locationService,
   );
+
+  final IGuardianRepository _guardianRepository;
+  final ILocationServices _locationService;
+  String? guardianName;
+  String? guardianMobile;
 
   @observable
   ObservableFuture<Either<Failure, GuardianSessioEntity>>? _fetchProgress;
@@ -82,10 +80,11 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> loadPage() async {
-    _setErrorMessage('');
+    errorMessage = '';
     _fetchProgress = ObservableFuture(_guardianRepository.fetch());
 
-    final Either<Failure, GuardianSessioEntity> response = await _fetchProgress!;
+    final Either<Failure, GuardianSessioEntity> response =
+        await _fetchProgress!;
 
     response.fold(
       (failure) => _handleLoadPageError(failure),
@@ -128,7 +127,7 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
       return;
     }
 
-    _setErrorMessage('');
+    errorMessage = '';
     final guardian = GuardianContactEntity.createRequest(
       name: guardianName,
       mobile: guardianMobile,
@@ -139,7 +138,7 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
     final Either<Failure, AlertModel> response = await _createProgress!;
 
     response.fold(
-      (failure) => _setErrorMessage(mapFailureMessage(failure)),
+      (failure) => errorMessage = mapFailureMessage(failure),
       (session) => _handleCreatedGuardian(session),
     );
   }
@@ -158,8 +157,6 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
     currentState = NewGuardianState.error(message);
   }
 
-  void _setErrorMessage(String? message) => errorMessage = message;
-
   void _handleCreatedGuardian(AlertModel field) {
     alertState = GuardianAlertState.alert(
       GuardianAlertMessageAction(
@@ -170,11 +167,12 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
     );
   }
 
-  void _actionAfterNotice() async {
+  Future<void> _actionAfterNotice() async {
     await _locationService
         .requestPermission(
-            title: 'O guardião precisa da sua localização',
-            description: RequestLocationPermissionContentWidget(),)
+          title: 'O guardião precisa da sua localização',
+          description: RequestLocationPermissionContentWidget(),
+        )
         .then((value) => Modular.to.pop(true));
   }
 }

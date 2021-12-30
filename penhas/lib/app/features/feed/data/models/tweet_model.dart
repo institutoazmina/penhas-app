@@ -61,7 +61,7 @@ class TweetRelatedNewsModel extends TweetRelatedNewsEntity {
     required List<TweetNewsModel> news,
   }) : super(header: header, news: news);
 
-  static TweetRelatedNewsModel fromJson(Map<String, dynamic> jsonData) {
+  factory TweetRelatedNewsModel.fromJson(Map<String, dynamic> jsonData) {
     final List<TweetNewsModel> news = _parseNews(jsonData['news']);
 
     return TweetRelatedNewsModel(
@@ -81,7 +81,7 @@ class TweetNewsGroupModel extends TweetNewsGroupEntity {
     required List<TweetNewsModel> news,
   }) : super(header: header, news: news);
 
-  static TweetNewsGroupModel fromJson(Map<String, dynamic> jsonData) {
+  factory TweetNewsGroupModel.fromJson(Map<String, dynamic> jsonData) {
     final List<TweetNewsModel> news = _parseNews(jsonData['news']);
 
     return TweetNewsGroupModel(

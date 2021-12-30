@@ -18,10 +18,11 @@ class ResetPasswordController extends _ResetPasswordControllerBase
 }
 
 abstract class _ResetPasswordControllerBase with Store, MapFailureMessage {
-  final IResetPasswordRepository repository;
-  final UserRegisterFormFieldModel _userRegisterModel = UserRegisterFormFieldModel();
-
   _ResetPasswordControllerBase(this.repository);
+
+  final IResetPasswordRepository repository;
+  final UserRegisterFormFieldModel _userRegisterModel =
+      UserRegisterFormFieldModel();
 
   @observable
   ObservableFuture<Either<Failure, ResetPasswordResponseEntity>>? _progress;
@@ -53,7 +54,7 @@ abstract class _ResetPasswordControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> nextStepPressed() async {
-    _setErrorMessage('');
+    errorMessage = '';
     if (!_isValidToProceed()) {
       return;
     }
@@ -62,15 +63,12 @@ abstract class _ResetPasswordControllerBase with Store, MapFailureMessage {
       repository.request(emailAddress: _userRegisterModel.emailAddress),
     );
 
-    final Either<Failure, ResetPasswordResponseEntity> response = await _progress!;
+    final Either<Failure, ResetPasswordResponseEntity> response =
+        await _progress!;
     response.fold(
-      (failure) => _setErrorMessage(mapFailureMessage(failure)),
+      (failure) => errorMessage = mapFailureMessage(failure),
       (session) => _forwardToStep2(session),
     );
-  }
-
-  void _setErrorMessage(String? s) {
-    errorMessage = s;
   }
 
   bool _isValidToProceed() {
@@ -85,7 +83,9 @@ abstract class _ResetPasswordControllerBase with Store, MapFailureMessage {
   }
 
   void _forwardToStep2(ResetPasswordResponseEntity entity) {
-    Modular.to.pushNamed('/authentication/reset_password/step2',
-        arguments: _userRegisterModel,);
+    Modular.to.pushNamed(
+      '/authentication/reset_password/step2',
+      arguments: _userRegisterModel,
+    );
   }
 }

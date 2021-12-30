@@ -9,11 +9,6 @@ import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity
 import 'package:penhas/app/features/appstate/domain/repositories/i_app_state_repository.dart';
 
 class AppStateUseCase {
-  final IAppStateRepository _appStateRepository;
-  final LocalStore<UserProfileEntity> _userProfileStore;
-  final IAppConfiguration _appConfiguration;
-  final IAppModulesServices _appModulesServices;
-
   AppStateUseCase({
     required IAppStateRepository appStateRepository,
     required LocalStore<UserProfileEntity> userProfileStore,
@@ -24,6 +19,11 @@ class AppStateUseCase {
         _userProfileStore = userProfileStore,
         _appModulesServices = appModulesServices;
 
+  final IAppStateRepository _appStateRepository;
+  final LocalStore<UserProfileEntity> _userProfileStore;
+  final IAppConfiguration _appConfiguration;
+  final IAppModulesServices _appModulesServices;
+
   Future<Either<Failure, AppStateEntity>> check() async {
     final currentState = await _appStateRepository.check();
     return currentState.fold(
@@ -33,7 +33,8 @@ class AppStateUseCase {
   }
 
   Future<Either<Failure, AppStateEntity>> update(
-      UpdateUserProfileEntity update) async {
+    UpdateUserProfileEntity update,
+  ) async {
     final currentState = await _appStateRepository.update(update);
 
     return currentState.fold(
@@ -43,7 +44,8 @@ class AppStateUseCase {
   }
 
   Future<Either<Failure, AppStateEntity>> _processAppState(
-      AppStateEntity appStateEntity) async {
+    AppStateEntity appStateEntity,
+  ) async {
     final userProfile = appStateEntity.userProfile;
     if (userProfile != null) {
       await _userProfileStore.save(userProfile);

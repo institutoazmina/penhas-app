@@ -21,15 +21,15 @@ class SplashController extends _SplashControllerBase with _$SplashController {
 }
 
 abstract class _SplashControllerBase with Store {
-  final AppStateUseCase _appStateUseCase;
-  final IAppConfiguration _appConfiguration;
-  final LocalStore<UserProfileEntity> _userProfileStore;
-
   _SplashControllerBase(
     this._appConfiguration,
     this._appStateUseCase,
     this._userProfileStore,
   );
+
+  final AppStateUseCase _appStateUseCase;
+  final IAppConfiguration _appConfiguration;
+  final LocalStore<UserProfileEntity> _userProfileStore;
 
   Future init() async {
     final authorizationStatus = await _appConfiguration.authorizationStatus;
@@ -50,7 +50,7 @@ abstract class _SplashControllerBase with Store {
     );
   }
 
-  void _forwardToAuthenticated() async {
+  Future<void> _forwardToAuthenticated() async {
     final profile = await _userProfileStore.retrieve();
 
     if (profile.stealthModeEnabled) {
@@ -81,7 +81,7 @@ abstract class _SplashControllerBase with Store {
   void _handleAppStates(AppStateEntity session) {
     if (session.quizSession != null &&
         session.quizSession!.isFinished == false) {
-      Modular.to.popAndPushNamed('/quiz', arguments: session.quizSession!);
+      Modular.to.popAndPushNamed('/quiz', arguments: session.quizSession);
       return;
     }
 

@@ -107,19 +107,21 @@ void main() {
         // arrange
         final requestOption =
             TweetEngageRequestOption(tweetId: '200520T0032210001');
-        final expected = right(TweetModel(
-          id: '200528T2055370004',
-          userName: 'penhas',
-          clientId: 551,
-          createdAt: '2020-05-28 20:55:37',
-          totalReply: 0,
-          totalLikes: 1,
-          anonymous: false,
-          content: 'sleep 6',
-          avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-          meta: const TweetMeta(liked: true, owner: true),
-          lastReply: const [],
-        ),);
+        final expected = right(
+          TweetModel(
+            id: '200528T2055370004',
+            userName: 'penhas',
+            clientId: 551,
+            createdAt: '2020-05-28 20:55:37',
+            totalReply: 0,
+            totalLikes: 1,
+            anonymous: false,
+            content: 'sleep 6',
+            avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
+            meta: const TweetMeta(liked: true, owner: true),
+            lastReply: const [],
+          ),
+        );
         // act
         final received = await repository.like(option: requestOption);
         // assert
@@ -175,27 +177,29 @@ void main() {
         final requestOption = TweetEngageRequestOption(
           tweetId: '200528T2055370004',
         );
-        final expected = right(TweetSessionModel(
-          false,
-          TweetSessionOrder.latestFirst,
-          null,
-          [
-            TweetModel(
-              id: '200608T1545460001',
-              userName: 'maria',
-              clientId: 551,
-              createdAt: '2020-06-08 15:45:46',
-              totalReply: 0,
-              totalLikes: 0,
-              anonymous: false,
-              content: 'Comentário 7',
-              avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-              meta: const TweetMeta(liked: false, owner: true),
-              lastReply: const [],
-            )
-          ],
-          null,
-        ),);
+        final expected = right(
+          TweetSessionModel(
+            TweetSessionOrder.latestFirst,
+            null,
+            [
+              TweetModel(
+                id: '200608T1545460001',
+                userName: 'maria',
+                clientId: 551,
+                createdAt: '2020-06-08 15:45:46',
+                totalReply: 0,
+                totalLikes: 0,
+                anonymous: false,
+                content: 'Comentário 7',
+                avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
+                meta: const TweetMeta(liked: false, owner: true),
+                lastReply: const [],
+              )
+            ],
+            null,
+            hasMore: false,
+          ),
+        );
         // act
         final received = await repository.current(option: requestOption);
         // assert

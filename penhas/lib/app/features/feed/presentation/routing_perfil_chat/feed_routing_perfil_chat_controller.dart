@@ -23,22 +23,24 @@ class FeedRoutingPerfilChatController
 
 abstract class _FeedRoutingPerfilChatControllerBase
     with Store, MapFailureMessage {
+  _FeedRoutingPerfilChatControllerBase(
+    this._routerType,
+    this._usersRepository,
+    this._channelRepository,
+  ) {
+    getRouterData();
+  }
+
   final FeedRouterType? _routerType;
   final IUsersRepository _usersRepository;
   final IChatChannelRepository _channelRepository;
-
-  _FeedRoutingPerfilChatControllerBase(
-      this._routerType, this._usersRepository, this._channelRepository) {
-    getRouterData();
-    //
-  }
 
   @observable
   FeedRoutingState routingState = const FeedRoutingState.initial('');
 
   @action
   Future<void> retry() async {
-    print('Ola mundo!');
+    // TODO: implement retry
   }
 }
 

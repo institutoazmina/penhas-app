@@ -4,12 +4,12 @@ import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.da
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class QuizMessageWidget extends StatelessWidget {
-  final QuizMessageEntity message;
-
   const QuizMessageWidget({
     Key? key,
     required this.message,
   }) : super(key: key);
+
+  final QuizMessageEntity message;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,12 @@ class QuizMessageWidget extends StatelessWidget {
 
     final EdgeInsetsGeometry padding = isDisplayTextResponse
         ? const EdgeInsets.only(left: 18.0, right: 8.0, bottom: 10.0, top: 10.0)
-        : const EdgeInsets.only(left: 8.0, right: 18.0, bottom: 10.0, top: 10.0);
+        : const EdgeInsets.only(
+            left: 8.0,
+            right: 18.0,
+            bottom: 10.0,
+            top: 10.0,
+          );
 
     final Color color = isDisplayTextResponse
         ? DesignSystemColors.ligthPurple
@@ -32,9 +37,15 @@ class QuizMessageWidget extends StatelessWidget {
 
     final BorderRadiusGeometry borderRadius = isDisplayTextResponse
         ? const BorderRadius.only(
-            topLeft: radius, topRight: radius, bottomLeft: radius,)
+            topLeft: radius,
+            topRight: radius,
+            bottomLeft: radius,
+          )
         : const BorderRadius.only(
-            topLeft: radius, topRight: radius, bottomRight: radius,);
+            topLeft: radius,
+            topRight: radius,
+            bottomRight: radius,
+          );
 
     final AlignmentGeometry alignment =
         isDisplayTextResponse ? Alignment.centerRight : Alignment.centerLeft;

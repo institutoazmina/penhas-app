@@ -7,17 +7,14 @@ import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart
 import 'package:penhas/app/features/support_center/presentation/support_center_module.dart';
 
 class MainboardBodyPage extends StatelessWidget {
-  final List<MainboardState>? pages;
-  final PageController? pageController;
-
   const MainboardBodyPage({
     Key? key,
     required this.pages,
     required this.pageController,
   }) : super(key: key);
 
-  final List<MainboardState> pages;
-  final PageController pageController;
+  final List<MainboardState>? pages;
+  final PageController? pageController;
 
   @override
   Widget build(BuildContext context) {

@@ -8,7 +8,4 @@ class SupportCenterToggleFeature {
   static String featureCode = 'pontos_de_apoio';
 
   Future<bool> get isEnabled => _modulesServices.isEnabled(featureCode);
-
-  SupportCenterToggleFeature({required IAppModulesServices modulesServices})
-      : _modulesServices = modulesServices;
 }

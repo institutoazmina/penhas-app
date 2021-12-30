@@ -8,7 +8,6 @@ import 'package:penhas/app/features/support_center/data/models/support_center_me
 import 'package:penhas/app/features/support_center/data/models/support_center_place_session_model.dart';
 import 'package:penhas/app/features/support_center/data/repositories/support_center_repository.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_fetch_request.dart';
-import 'package:penhas/app/shared/logger/log.dart';
 
 import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';

@@ -2,11 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 
 class ChatAssistantEntity extends Equatable {
-  final String? title;
-  final String? subtitle;
-  final String? avatar;
-  final QuizSessionEntity? quizSession;
-
   const ChatAssistantEntity({
     required this.title,
     required this.subtitle,

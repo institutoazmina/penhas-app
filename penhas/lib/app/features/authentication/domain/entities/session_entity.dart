@@ -1,9 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 class SessionEntity extends Equatable {
-  final String? sessionToken;
-  final bool deletedScheduled;
-
   const SessionEntity({
     required this.sessionToken,
     this.deletedScheduled = false,

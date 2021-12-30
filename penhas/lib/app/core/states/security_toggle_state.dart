@@ -1,8 +1,4 @@
 class SecurityToggleState {
-  final String title;
-  final bool? isEnabled;
-  final void Function(bool value) onChanged;
-
   SecurityToggleState({
     required this.title,
     required this.isEnabled,

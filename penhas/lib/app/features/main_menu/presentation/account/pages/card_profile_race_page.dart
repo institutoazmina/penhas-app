@@ -6,8 +6,6 @@ import 'package:penhas/app/features/main_menu/presentation/account/pages/card_pr
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class CardProfileRacePage extends StatelessWidget {
-  final String? content;
-  final void Function(String) onChange;
   const CardProfileRacePage({
     Key? key,
     required this.content,
@@ -77,14 +75,16 @@ extension _TextStyle on CardProfileRacePage {
 extension _HumanMapper on CardProfileRacePage {
   List<Widget> datasource(BuildContext context) {
     return HumanRace.values
-        .map((v) => RadioListTile(
-              value: v.rawValue,
-              groupValue: content,
-              selected: isSelected(v.rawValue),
-              onChanged: (dynamic v) => updateRace(context, v),
-              activeColor: DesignSystemColors.ligthPurple,
-              title: Text(v.label, style: contentTextStyle),
-            ),)
+        .map(
+          (v) => RadioListTile(
+            value: v.rawValue,
+            groupValue: content,
+            selected: isSelected(v.rawValue),
+            onChanged: (dynamic v) => updateRace(context, v),
+            activeColor: DesignSystemColors.ligthPurple,
+            title: Text(v.label, style: contentTextStyle),
+          ),
+        )
         .toList();
   }
 

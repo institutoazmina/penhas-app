@@ -13,11 +13,10 @@ abstract class IAppModulesServices {
 }
 
 class AppModulesServices implements IAppModulesServices {
+  AppModulesServices({required ILocalStorage storage}) : _storage = storage;
+
   final ILocalStorage _storage;
   final _appModuleKey = 'br.com.penhas.appModules';
-
-  AppModulesServices({required ILocalStorage storage})
-      : _storage = storage;
 
   @override
   Future<void> save(List<AppStateModuleEntity> modules) {
@@ -40,8 +39,10 @@ class AppModulesServices implements IAppModulesServices {
         .then((value) => _filterFeature(name: name, objects: value));
   }
 
-  AppStateModuleEntity? _filterFeature(
-      {String? name, required List<dynamic> objects}) {
+  AppStateModuleEntity? _filterFeature({
+    String? name,
+    required List<dynamic> objects,
+  }) {
     final object = objects
         .map((e) => e as Map<String, dynamic>)
         .firstWhereOrNull((e) => e['code'] == name);

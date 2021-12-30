@@ -16,14 +16,17 @@ void main() {
     sut = TweetFilterPreference(
       repository: mockRepository,
     );
-    response = const TweetFilterSessionEntity(categories: [
-      TweetFilterEntity(id: '1', isSelected: true, label: 'C 1'),
-      TweetFilterEntity(id: '2', isSelected: false, label: 'C 2'),
-    ], tags: [
-      TweetFilterEntity(id: '1', isSelected: false, label: 'Tag - 1'),
-      TweetFilterEntity(id: '2', isSelected: false, label: 'Tag - 2'),
-      TweetFilterEntity(id: '3', isSelected: false, label: 'Tag - 3')
-    ],);
+    response = const TweetFilterSessionEntity(
+      categories: [
+        TweetFilterEntity(id: '1', isSelected: true, label: 'C 1'),
+        TweetFilterEntity(id: '2', isSelected: false, label: 'C 2'),
+      ],
+      tags: [
+        TweetFilterEntity(id: '1', isSelected: false, label: 'Tag - 1'),
+        TweetFilterEntity(id: '2', isSelected: false, label: 'Tag - 2'),
+        TweetFilterEntity(id: '3', isSelected: false, label: 'Tag - 3')
+      ],
+    );
   });
 
   group('TweetFilterPreference', () {
@@ -31,14 +34,19 @@ void main() {
       // arrange
       when(mockRepository.retreive()).thenAnswer((_) async => right(response!));
 
-      final expected = right(const TweetFilterSessionEntity(categories: [
-        TweetFilterEntity(id: '1', isSelected: true, label: 'C 1'),
-        TweetFilterEntity(id: '2', isSelected: false, label: 'C 2'),
-      ], tags: [
-        TweetFilterEntity(id: '1', isSelected: false, label: 'Tag - 1'),
-        TweetFilterEntity(id: '2', isSelected: false, label: 'Tag - 2'),
-        TweetFilterEntity(id: '3', isSelected: false, label: 'Tag - 3')
-      ],),);
+      final expected = right(
+        const TweetFilterSessionEntity(
+          categories: [
+            TweetFilterEntity(id: '1', isSelected: true, label: 'C 1'),
+            TweetFilterEntity(id: '2', isSelected: false, label: 'C 2'),
+          ],
+          tags: [
+            TweetFilterEntity(id: '1', isSelected: false, label: 'Tag - 1'),
+            TweetFilterEntity(id: '2', isSelected: false, label: 'Tag - 2'),
+            TweetFilterEntity(id: '3', isSelected: false, label: 'Tag - 3')
+          ],
+        ),
+      );
       // act
       final received = await sut.retreive();
       // assert
@@ -49,28 +57,24 @@ void main() {
         () async {
       // arrange
       when(mockRepository.retreive()).thenAnswer((_) async => right(response!));
-      final expected = right(const TweetFilterSessionEntity(categories: [
-        TweetFilterEntity(id: '1', isSelected: false, label: 'C 1'),
-        TweetFilterEntity(id: '2', isSelected: true, label: 'C 2'),
-      ], tags: [
-        TweetFilterEntity(id: '1', isSelected: false, label: 'Tag - 1'),
-        TweetFilterEntity(id: '2', isSelected: true, label: 'Tag - 2'),
-        TweetFilterEntity(id: '3', isSelected: true, label: 'Tag - 3')
-      ],),);
+      final expected = right(
+        const TweetFilterSessionEntity(
+          categories: [
+            TweetFilterEntity(id: '1', isSelected: false, label: 'C 1'),
+            TweetFilterEntity(id: '2', isSelected: true, label: 'C 2'),
+          ],
+          tags: [
+            TweetFilterEntity(id: '1', isSelected: false, label: 'Tag - 1'),
+            TweetFilterEntity(id: '2', isSelected: true, label: 'Tag - 2'),
+            TweetFilterEntity(id: '3', isSelected: true, label: 'Tag - 3')
+          ],
+        ),
+      );
       // act
-      sut.saveCategory(['2']);
+      sut.categories = ['2'];
       sut.saveTags(['2', '3']);
 
       final received = await sut.retreive();
-      // assert
-      expect(received, expected);
-    });
-    test('should retrieve categories preference', () async {
-      // arrange
-      sut.saveCategory(['1']);
-      final expected = ['1'];
-      // act
-      final received = sut.getCategory();
       // assert
       expect(received, expected);
     });

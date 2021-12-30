@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/entities/user_location.dart';
@@ -36,12 +35,6 @@ class HelpCenterController extends _HelpCenterControllerBase
 }
 
 abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
-  final IGuardianRepository _guardianRepository;
-  final ILocationServices _locationService;
-  final IAppConfiguration _appConfiguration;
-  final SecurityModeActionFeature _featureToogle;
-  final IAudioRecordServices _audioServices;
-
   _HelpCenterControllerBase(
     this._guardianRepository,
     this._locationService,
@@ -49,6 +42,12 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
     this._featureToogle,
     this._audioServices,
   );
+
+  final IGuardianRepository _guardianRepository;
+  final ILocationServices _locationService;
+  final IAppConfiguration _appConfiguration;
+  final SecurityModeActionFeature _featureToogle;
+  final IAudioRecordServices _audioServices;
 
   @observable
   ObservableFuture<Either<Failure, AlertModel>>? _alertProgress;
@@ -97,10 +96,11 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   Future<void> triggerGuardian() async {
     _locationService
         .requestPermission(
-            title: 'O guardião precisa da sua localização',
-            description: RequestLocationPermissionContentWidget(),)
+      title: 'O guardião precisa da sua localização',
+      description: RequestLocationPermissionContentWidget(),
+    )
         .then((value) {
-      _setErrorMessage('');
+      errorMessage = '';
       _resetAlertState();
       _getCurrentLocatin()
           .then((location) => _triggerGuardian(location))
@@ -110,7 +110,7 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> triggerCallPolice() async {
-    _setErrorMessage('');
+    errorMessage = '';
     _resetAlertState();
     _featureToogle.callingNumber
         .then((number) => alertState = HelpCenterState.callingPolice(number))
@@ -119,7 +119,7 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> triggerAudioRecord() async {
-    _setErrorMessage('');
+    errorMessage = '';
     _resetAlertState();
     await _audioServices.requestPermission().then(
           (value) => {
@@ -127,8 +127,8 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
               granted: () => Modular.to
                   .pushNamed('/mainboard/helpcenter/audioRecord')
                   .then((value) {
-                if (value as bool) {
-                  _setErrorMessage('Gravação finalizada.');
+                if (value == true) {
+                  errorMessage = 'Gravação finalizada.';
                 }
               }),
               orElse: () {},
@@ -179,16 +179,13 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
       return state;
     }
 
-    _setErrorMessage(mapFailureMessage(failure));
+    errorMessage = mapFailureMessage(failure);
     return state;
   }
 
   Future<bool> _hasActivedGuardian() {
-    return _appConfiguration.appMode
-        .then((mode) => mode.hasActivedGuardian);
+    return _appConfiguration.appMode.then((mode) => mode.hasActivedGuardian);
   }
-
-  void _setErrorMessage(String? message) => errorMessage = message;
 
   void _resetAlertState() => alertState = const HelpCenterState.initial();
 }

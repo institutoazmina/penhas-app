@@ -4,21 +4,17 @@ import 'package:penhas/app/features/users/domain/entities/user_detail_profile_en
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatPeopleCard extends StatelessWidget {
-  final UserDetailProfileEntity person;
-  final void Function(UserDetailProfileEntity person) onPressed;
-
   const ChatPeopleCard({
     Key? key,
     required this.person,
     required this.onPressed,
   }) : super(key: key);
 
+  final UserDetailProfileEntity person;
+  final void Function(UserDetailProfileEntity person) onPressed;
+
   @override
   Widget build(BuildContext context) {
-    if (person == null) {
-      return Container();
-    }
-
     return GestureDetector(
       onTap: () => onPressed(person),
       child: Container(
@@ -62,15 +58,17 @@ class ChatPeopleCard extends StatelessWidget {
 
 extension _ChatTalkCardPrivate on ChatPeopleCard {
   TextStyle get cardTitleTextStyle => const TextStyle(
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      letterSpacing: 0.5,
-      color: DesignSystemColors.darkIndigoThree,
-      fontWeight: FontWeight.bold,);
+        fontFamily: 'Lato',
+        fontSize: 14.0,
+        letterSpacing: 0.5,
+        color: DesignSystemColors.darkIndigoThree,
+        fontWeight: FontWeight.bold,
+      );
   TextStyle get cardStatusTextStyle => const TextStyle(
-      fontFamily: 'Lato',
-      fontSize: 12.0,
-      letterSpacing: 0.4,
-      color: DesignSystemColors.warnGrey,
-      fontWeight: FontWeight.normal,);
+        fontFamily: 'Lato',
+        fontSize: 12.0,
+        letterSpacing: 0.4,
+        color: DesignSystemColors.warnGrey,
+        fontWeight: FontWeight.normal,
+      );
 }

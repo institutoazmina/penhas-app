@@ -6,6 +6,23 @@ const Duration _kExpand = Duration(milliseconds: 300);
 /// This widget unfolds a hidden widget to the user, called [child].
 /// This action is performed when the user clicks the 'expand' arrow.
 class ExpandChild extends StatefulWidget {
+  const ExpandChild({
+    Key? key,
+    this.collapsedHint,
+    this.expandedHint,
+    this.arrowPadding,
+    this.arrowColor,
+    this.arrowSize = 30,
+    this.icon,
+    this.hintTextStyle,
+    this.expandArrowStyle = ExpandArrowStyle.icon,
+    this.animationDuration = _kExpand,
+    required this.child,
+    this.hideArrowOnExpanded = false,
+    this.alignment = Alignment.topCenter,
+    this.trimSize = 0,
+  }) : super(key: key);
+
   /// Message used as a tooltip when the widget is minimized.
   /// Default value set to [MaterialLocalizations.of(context).collapsedIconTapHint].
   final String? collapsedHint;
@@ -48,23 +65,6 @@ class ExpandChild extends StatefulWidget {
   final double trimSize;
 
   final Alignment alignment;
-
-  const ExpandChild({
-    Key? key,
-    this.collapsedHint,
-    this.expandedHint,
-    this.arrowPadding,
-    this.arrowColor,
-    this.arrowSize = 30,
-    this.icon,
-    this.hintTextStyle,
-    this.expandArrowStyle = ExpandArrowStyle.icon,
-    this.animationDuration = _kExpand,
-    required this.child,
-    this.hideArrowOnExpanded = false,
-    this.alignment = Alignment.topCenter,
-    this.trimSize = 0,
-  }) : super(key: key);
 
   @override
   _ExpandChildState createState() => _ExpandChildState();
@@ -114,9 +114,7 @@ class _ExpandChildState extends State<ExpandChild>
 
       setState(() {
         final height = context.size?.height ?? 0;
-        _foo = widget.trimSize > height
-            ? 1.0
-            : widget.trimSize / height;
+        _foo = widget.trimSize > height ? 1.0 : widget.trimSize / height;
 
         _showExpand = height > widget.trimSize;
       });
@@ -152,28 +150,31 @@ class _ExpandChildState extends State<ExpandChild>
             child: Container(key: _localChildrenKey, child: child),
           ),
         ),
-        if (_showExpand) ClipRect(
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  heightFactor:
-                      widget.hideArrowOnExpanded ? 1 - _heightFactor.value : 1,
-                  child: InkWell(
-                    onTap: _handleTap,
-                    child: ExpandArrow(
-                      collapsedHint: widget.collapsedHint,
-                      expandedHint: widget.expandedHint,
-                      animation: _iconTurns,
-                      padding: widget.arrowPadding,
-                      onTap: _handleTap,
-                      arrowColor: widget.arrowColor,
-                      arrowSize: widget.arrowSize,
-                      icon: widget.icon,
-                      hintTextStyle: widget.hintTextStyle,
-                      expandArrowStyle: widget.expandArrowStyle,
-                    ),
-                  ),
+        if (_showExpand)
+          ClipRect(
+            child: Align(
+              alignment: Alignment.topCenter,
+              heightFactor:
+                  widget.hideArrowOnExpanded ? 1 - _heightFactor.value : 1,
+              child: InkWell(
+                onTap: _handleTap,
+                child: ExpandArrow(
+                  collapsedHint: widget.collapsedHint,
+                  expandedHint: widget.expandedHint,
+                  animation: _iconTurns,
+                  padding: widget.arrowPadding,
+                  onTap: _handleTap,
+                  arrowColor: widget.arrowColor,
+                  arrowSize: widget.arrowSize,
+                  icon: widget.icon,
+                  hintTextStyle: widget.hintTextStyle,
+                  expandArrowStyle: widget.expandArrowStyle,
                 ),
-              ) else Container(),
+              ),
+            ),
+          )
+        else
+          Container(),
       ],
     );
   }
@@ -204,6 +205,20 @@ enum ExpandArrowStyle {
 /// the hidden information to the user. It posses an [animation] parameter.
 /// Most widget parameters are customizable.
 class ExpandArrow extends StatelessWidget {
+  const ExpandArrow({
+    Key? key,
+    this.collapsedHint,
+    this.expandedHint,
+    required this.animation,
+    this.padding,
+    this.onTap,
+    this.arrowColor,
+    this.arrowSize,
+    this.icon,
+    this.hintTextStyle,
+    this.expandArrowStyle,
+  }) : super(key: key);
+
   /// String used as a tooltip when the widget is minimized.
   /// Default value set to [MaterialLocalizations.of(context).collapsedIconTapHint].
   final String? collapsedHint;
@@ -241,20 +256,6 @@ class ExpandArrow extends StatelessWidget {
   ///  Defines arrow rendering style. Default is [ExpandArrowStyle.icon].
   final ExpandArrowStyle? expandArrowStyle;
 
-  const ExpandArrow({
-    Key? key,
-    this.collapsedHint,
-    this.expandedHint,
-    required this.animation,
-    this.padding,
-    this.onTap,
-    this.arrowColor,
-    this.arrowSize,
-    this.icon,
-    this.hintTextStyle,
-    this.expandArrowStyle,
-  })  : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     final tooltipMessage = animation.value < 0.25
@@ -270,7 +271,7 @@ class ExpandArrow extends StatelessWidget {
       child: InkResponse(
         containedInkWell: isNotIcon,
         highlightShape: isNotIcon ? BoxShape.rectangle : BoxShape.circle,
-        onTap: onTap!,
+        onTap: onTap,
         child: Padding(
           padding: padding ??
               EdgeInsets.all(expandArrowStyle == ExpandArrowStyle.text ? 8 : 4),
@@ -291,11 +292,12 @@ class ExpandArrow extends StatelessWidget {
                 const SizedBox(width: 2.0),
                 DefaultTextStyle(
                   style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                        color: Theme.of(context).textTheme.caption?.color,
-                      ) ?? const TextStyle(),
+                            color: Theme.of(context).textTheme.caption?.color,
+                          ) ??
+                      const TextStyle(),
                   child: Text(
                     tooltipMessage,
-                    style: hintTextStyle!,
+                    style: hintTextStyle,
                   ),
                 ),
                 const SizedBox(width: 2.0),

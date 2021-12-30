@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/core/extension/asuka.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_header_edit_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-import 'card_profile_header_edit_page.dart';
-
 class CardProfilePasswordPage extends StatelessWidget {
-  final String content;
-  final void Function(String, String) onChange;
-
   const CardProfilePasswordPage({
     Key? key,
     required this.content,
     required this.onChange,
   }) : super(key: key);
+
+  final String content;
+  final void Function(String, String) onChange;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +60,9 @@ extension _Modal on CardProfilePasswordPage {
               keyboardType: TextInputType.text,
               controller: newPasswordController,
               decoration: const InputDecoration(
-                  hintText: 'Digite a nova senha', filled: true,),
+                hintText: 'Digite a nova senha',
+                filled: true,
+              ),
             ),
             const SizedBox(height: 20),
             TextFormField(
@@ -69,7 +70,9 @@ extension _Modal on CardProfilePasswordPage {
               keyboardType: TextInputType.text,
               controller: oldPasswordController,
               decoration: const InputDecoration(
-                  hintText: 'Digite a senha atual', filled: true,),
+                hintText: 'Digite a senha atual',
+                filled: true,
+              ),
             ),
           ],
         ),

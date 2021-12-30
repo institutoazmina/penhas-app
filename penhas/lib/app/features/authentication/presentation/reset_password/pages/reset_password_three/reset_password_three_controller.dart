@@ -23,10 +23,6 @@ class ResetPasswordThreeController extends _ResetPasswordThreeControllerBase
 }
 
 abstract class _ResetPasswordThreeControllerBase with Store, MapFailureMessage {
-  final IChangePasswordRepository _repository;
-  final UserRegisterFormFieldModel? _userRegisterModel;
-  final PasswordValidator _passwordValidator;
-
   _ResetPasswordThreeControllerBase(
     this._repository,
     this._userRegisterModel,
@@ -99,10 +95,6 @@ abstract class _ResetPasswordThreeControllerBase with Store, MapFailureMessage {
       (failure) => errorMessage = mapFailureMessage(failure),
       (session) => _forwardLogin(),
     );
-  }
-
-  void _setErrorMessage(String? message) {
-    errorMessage = message;
   }
 
   bool _isValidToProceed() {

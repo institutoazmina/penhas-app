@@ -11,6 +11,8 @@ class TweetAvatar extends StatelessWidget {
     required this.tweet,
   })  : super(key: key);
 
+  final TweetEntity tweet;
+  
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(

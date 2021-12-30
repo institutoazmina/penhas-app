@@ -5,27 +5,31 @@ import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity
 import 'package:penhas/app/shared/navigation/route.dart';
 
 class InactivityLogoutUseCase {
-  final LocalStore<AppPreferencesEntity>? _appPreferencesStore;
-  final LocalStore<UserProfileEntity>? _userProfileStore;
-
   InactivityLogoutUseCase({
     required LocalStore<AppPreferencesEntity>? appPreferencesStore,
     required LocalStore<UserProfileEntity>? userProfileStore,
   })  : _appPreferencesStore = appPreferencesStore,
         _userProfileStore = userProfileStore;
 
+  final LocalStore<AppPreferencesEntity>? _appPreferencesStore;
+  final LocalStore<UserProfileEntity>? _userProfileStore;
+
   Future<Either<InactivityError?, AppRoute?>> inactivityRoute(DateTime now) {
     return _appPreferencesStore!
         .retrieve()
-        .then((preferences) => _inactiveForTooLong(
-              now,
-              preferences,
-            ),)
+        .then(
+          (preferences) => _inactiveForTooLong(
+            now,
+            preferences,
+          ),
+        )
         .then((isInactive) => _routeForInactiveCustomer(isInactive));
   }
 
-  Future<Either<InactivityError?, AppRoute?>> _routeForInactiveCustomer(bool isInactive) async {
-    if (!isInactive) return left(InactivityError.CUSTOMER_ACTIVE);
+  Future<Either<InactivityError?, AppRoute?>> _routeForInactiveCustomer(
+    bool isInactive,
+  ) async {
+    if (!isInactive) return left(InactivityError.customerActive);
 
     final profile = await _userProfileStore!.retrieve();
 
@@ -36,7 +40,7 @@ class InactivityLogoutUseCase {
       return right(AppRoute('/authentication/sign_in_stealth'));
     }
 
-    return left(InactivityError.CUSTOMER_NOT_STEALTH);
+    return left(InactivityError.customerNotStealth);
   }
 
   bool _inactiveForTooLong(DateTime now, AppPreferencesEntity preferences) {
@@ -77,6 +81,6 @@ class InactivityLogoutUseCase {
 }
 
 enum InactivityError {
-  CUSTOMER_ACTIVE,
-  CUSTOMER_NOT_STEALTH
+  customerActive,
+  customerNotStealth,
 }

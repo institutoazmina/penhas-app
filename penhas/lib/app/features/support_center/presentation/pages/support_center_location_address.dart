@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class SupportCenterLocationAddress extends StatelessWidget {
-  final String _message;
-  final VoidCallback _onPressed;
-
   const SupportCenterLocationAddress({
     Key? key,
     required String message,
@@ -12,6 +9,9 @@ class SupportCenterLocationAddress extends StatelessWidget {
   })  : _message = message,
         _onPressed = onPressed,
         super(key: key);
+
+  final String _message;
+  final VoidCallback _onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +71,10 @@ class SupportCenterLocationAddress extends StatelessWidget {
 
 extension _TextStylePrivate on SupportCenterLocationAddress {
   TextStyle get addressTextStyle => const TextStyle(
-      color: DesignSystemColors.darkIndigoThree,
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      letterSpacing: 0.45,
-      fontWeight: FontWeight.bold,);
+        color: DesignSystemColors.darkIndigoThree,
+        fontFamily: 'Lato',
+        fontSize: 14.0,
+        letterSpacing: 0.45,
+        fontWeight: FontWeight.bold,
+      );
 }

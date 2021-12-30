@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class GuardianTileHeader extends StatelessWidget {
-  final String? title;
   const GuardianTileHeader({
     Key? key,
     required this.title,

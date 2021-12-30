@@ -4,18 +4,18 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/features/feed/presentation/category_tweet/category_tweet_controller.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
-import 'category_tweet_controller.dart';
-
 class CategoryTweetPage extends StatefulWidget {
-  final String title;
   const CategoryTweetPage({
     Key? key,
     this.title = 'CategoryTweet',
   }) : super(key: key);
+
+  final String title;
 
   @override
   _CategoryTweetPageState createState() => _CategoryTweetPageState();
@@ -98,10 +98,11 @@ class _CategoryTweetPageState
     return Observer(
       builder: (_) {
         return ListView.builder(
-            itemCount: controller.categories.length,
-            itemBuilder: (context, index) {
-              final item = controller.categories[index];
-              return Observer(builder: (_) {
+          itemCount: controller.categories.length,
+          itemBuilder: (context, index) {
+            final item = controller.categories[index];
+            return Observer(
+              builder: (_) {
                 return RadioListTile(
                   activeColor: DesignSystemColors.ligthPurple,
                   value: item.id,
@@ -113,8 +114,10 @@ class _CategoryTweetPageState
                   selected: item.isSelected,
                   onChanged: (dynamic value) => controller.setCategory(value),
                 );
-              },);
-            },);
+              },
+            );
+          },
+        );
       },
     );
   }
@@ -135,14 +138,16 @@ class _CategoryTweetPageState
         elevation: 0,
         color: DesignSystemColors.ligthPurple,
         shape: kButtonShapeOutlinePurple,
-        child: const Text('Aplicar filtro',
-            style: TextStyle(
-              fontFamily: 'Lato',
-              fontWeight: FontWeight.bold,
-              fontSize: 14.0,
-              color: Colors.white,
-              letterSpacing: 0.45,
-            ),),
+        child: const Text(
+          'Aplicar filtro',
+          style: TextStyle(
+            fontFamily: 'Lato',
+            fontWeight: FontWeight.bold,
+            fontSize: 14.0,
+            color: Colors.white,
+            letterSpacing: 0.45,
+          ),
+        ),
       ),
     );
   }

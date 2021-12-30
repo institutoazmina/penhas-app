@@ -18,7 +18,8 @@ import 'package:penhas/app/features/authentication/domain/usecases/sign_up_passw
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late final MockIUserRegisterRepository repository = MockIUserRegisterRepository();
+  late final MockIUserRegisterRepository repository =
+      MockIUserRegisterRepository();
   late CheckRegisterField sut = CheckRegisterField(repository);
 
   Cep? cep;
@@ -59,33 +60,39 @@ void main() {
   }
 
   void mockRepositoryRegister(Either<Failure, ValidField> answer) {
-    when(repository.checkField(
-      emailAddress: anyNamed('emailAddress'),
-      password: anyNamed('password'),
-      cep: anyNamed('cep'),
-      cpf: anyNamed('cpf'),
-      fullname: anyNamed('fullname'),
-      nickName: anyNamed('nickName'),
-      birthday: anyNamed('birthday'),
-      genre: anyNamed('genre'),
-      race: anyNamed('race'),
-    ),).thenAnswer((_) async => answer);
+    when(
+      repository.checkField(
+        emailAddress: anyNamed('emailAddress'),
+        password: anyNamed('password'),
+        cep: anyNamed('cep'),
+        cpf: anyNamed('cpf'),
+        fullname: anyNamed('fullname'),
+        nickName: anyNamed('nickName'),
+        birthday: anyNamed('birthday'),
+        genre: anyNamed('genre'),
+        race: anyNamed('race'),
+      ),
+    ).thenAnswer((_) async => answer);
   }
 
-  void expectResult(Either<Failure, ValidField>? result,
-      Either<Failure, ValidField> expected) {
+  void expectResult(
+    Either<Failure, ValidField>? result,
+    Either<Failure, ValidField> expected,
+  ) {
     expect(result, expected);
-    verify(repository.checkField(
-      emailAddress: emailAddress,
-      password: password,
-      cep: cep,
-      cpf: cpf,
-      fullname: fullname,
-      nickName: nickName,
-      birthday: birthday,
-      genre: genre,
-      race: race,
-    ),);
+    verify(
+      repository.checkField(
+        emailAddress: emailAddress,
+        password: password,
+        cep: cep,
+        cpf: cpf,
+        fullname: fullname,
+        nickName: nickName,
+        birthday: birthday,
+        genre: genre,
+        race: race,
+      ),
+    );
     verifyNoMoreInteractions(repository);
   }
 

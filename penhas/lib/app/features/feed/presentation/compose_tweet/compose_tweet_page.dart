@@ -12,9 +12,10 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ComposeTweetPage extends StatefulWidget {
-  final String title;
   const ComposeTweetPage({Key? key, this.title = 'ComposeTweet'})
       : super(key: key);
+
+  final String title;
 
   @override
   _ComposeTweetPageState createState() => _ComposeTweetPageState();
@@ -209,7 +210,7 @@ class _ComposeTweetPageState
     );
   }
 
-  _handleTap(BuildContext context) {
+  void _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
     }

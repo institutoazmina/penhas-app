@@ -12,7 +12,7 @@ class SupportCenterListController extends _SupportCenterListControllerBase
 
 abstract class _SupportCenterListControllerBase with Store {
   _SupportCenterListControllerBase(this._session) {
-    places = _session.places!.asObservable();
+    places = _session.places.asObservable();
   }
 
   final SupportCenterPlaceSessionEntity _session;

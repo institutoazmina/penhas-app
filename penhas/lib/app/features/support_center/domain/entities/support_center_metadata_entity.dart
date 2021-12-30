@@ -2,9 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
 
 class SupportCenterMetadataEntity extends Equatable {
-  final List<FilterTagEntity>? categories;
-  final List<FilterTagEntity>? projects;
-
   const SupportCenterMetadataEntity({
     required this.categories,
     required this.projects,

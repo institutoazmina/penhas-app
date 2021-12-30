@@ -10,7 +10,8 @@ import '../../../../../utils/json_util.dart';
 
 void main() {
   late final MockHttpClient apiClient = MockHttpClient();
-  late final MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
+  late final MockIApiServerConfigure serverConfigure =
+      MockIApiServerConfigure();
   late String bodyContent;
   final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
   late final IAppStateDataSource dataSource = AppStateDataSource(
@@ -48,10 +49,12 @@ void main() {
   }
 
   PostExpectation<Future<http.Response>> _mockRequest() {
-    return when(apiClient.get(
-      any,
-      headers: anyNamed('headers'),
-    ),);
+    return when(
+      apiClient.get(
+        any,
+        headers: anyNamed('headers'),
+      ),
+    );
   }
 
   void _setUpMockHttpClientSuccess200() {
@@ -107,7 +110,7 @@ void main() {
         final sut = dataSource.check;
         // assert
         expect(
-          () async => await sut(),
+          () => sut(),
           throwsA(isA<ApiProviderSessionError>()),
         );
       }

@@ -17,7 +17,9 @@ mixin MapFailureMessage {
         message = serverFailure;
         break;
       case ServerSideFormFieldValidationFailure:
-        message = mapServerSideValidationFailure(failure as ServerSideFormFieldValidationFailure);
+        message = mapServerSideValidationFailure(
+          failure as ServerSideFormFieldValidationFailure,
+        );
         break;
       default:
         throw UnsupportedError;
@@ -27,7 +29,8 @@ mixin MapFailureMessage {
   }
 
   String? mapServerSideValidationFailure(
-      ServerSideFormFieldValidationFailure failure) {
+    ServerSideFormFieldValidationFailure failure,
+  ) {
     return failure.message;
   }
 }

@@ -3,30 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class MainboardNotificationPage extends StatelessWidget {
-  final int counter;
-  final void Function() resetCounter;
-
   const MainboardNotificationPage({
     Key? key,
     required this.counter,
     required this.resetCounter,
   }) : super(key: key);
 
+  final int counter;
+  final void Function() resetCounter;
+
   @override
   Widget build(BuildContext context) {
     return IconButton(
       icon: Badge(
         elevation: 0.0,
-        position: _badgePosition(counter)!,
+        position: _badgePosition(counter),
         showBadge: counter > 0,
         toAnimate: false,
         badgeContent: Text(
           counter > 99 ? '+99' : counter.toString(),
           style: const TextStyle(
-              color: Colors.white,
-              fontFamily: 'Lato',
-              fontSize: 11.0,
-              fontWeight: FontWeight.normal,),
+            color: Colors.white,
+            fontFamily: 'Lato',
+            fontSize: 11.0,
+            fontWeight: FontWeight.normal,
+          ),
         ),
         child: counter == 0
             ? const Icon(Icons.notifications_none, size: 34)

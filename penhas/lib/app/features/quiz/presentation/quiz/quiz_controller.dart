@@ -9,9 +9,9 @@ import 'package:penhas/app/shared/navigation/route.dart';
 
 part 'quiz_controller.g.dart';
 
-const String ERROR_SERVER_FAILURE =
+const String errorServerFailure =
     'O servidor está com problema neste momento, tente novamente.';
-const String ERROR_INTERNET_CONNECTION_FAILURE =
+const String errorInternetConnectionFailure =
     'O servidor está inacessível, o PenhaS está com acesso à Internet?';
 
 class QuizController extends _QuizControllerBase with _$QuizController {
@@ -23,19 +23,22 @@ class QuizController extends _QuizControllerBase with _$QuizController {
 }
 
 abstract class _QuizControllerBase with Store {
-  final QuizSessionEntity _quizSession;
-  final IQuizRepository _repository;
-  final AppStateUseCase _appStateUseCase;
-  String? _sessionId;
-
   _QuizControllerBase(
-      this._quizSession, this._appStateUseCase, this._repository) {
+    this._quizSession,
+    this._appStateUseCase,
+    this._repository,
+  ) {
     final reversedCurrent = _quizSession.currentMessage!.reversed.toList();
     _sessionId = _quizSession.sessionId;
 
     messages.addAll(reversedCurrent);
     _parseUserReply(reversedCurrent);
   }
+
+  final QuizSessionEntity _quizSession;
+  final IQuizRepository _repository;
+  final AppStateUseCase _appStateUseCase;
+  String? _sessionId;
 
   ObservableList<QuizMessageEntity> messages =
       ObservableList<QuizMessageEntity>();
@@ -192,8 +195,10 @@ abstract class _QuizControllerBase with Store {
     _parseUserReply(messages);
   }
 
-  Future<void> _updateAppStates(AppStateEntity appStateEntity,
-      void Function(AppStateEntity appState) onUpdate) async {
+  Future<void> _updateAppStates(
+    AppStateEntity appStateEntity,
+    void Function(AppStateEntity appState) onUpdate,
+  ) async {
     final appState = await _appStateUseCase.check();
     appState.fold(
       (_) => {},
@@ -204,10 +209,10 @@ abstract class _QuizControllerBase with Store {
   void _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
       case InternetConnectionFailure:
-        _setErrorMessage(ERROR_INTERNET_CONNECTION_FAILURE);
+        errorMessage = errorInternetConnectionFailure;
         break;
       case ServerFailure:
-        _setErrorMessage(ERROR_SERVER_FAILURE);
+        errorMessage = errorServerFailure;
         break;
       case ServerSideFormFieldValidationFailure:
         _mapFailureToFields(failure as ServerSideFormFieldValidationFailure);
@@ -218,10 +223,6 @@ abstract class _QuizControllerBase with Store {
   }
 
   void _mapFailureToFields(ServerSideFormFieldValidationFailure failure) {
-    _setErrorMessage(failure.message);
-  }
-
-  void _setErrorMessage(String? message) {
-    errorMessage = message;
+    errorMessage = failure.message;
   }
 }

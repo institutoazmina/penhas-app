@@ -3,9 +3,6 @@ import 'package:penhas/app/features/quiz/presentation/quiz/quiz_typedef.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class QuiZButtonYesNoWidget extends StatelessWidget {
-  final String reference;
-  final UserReaction onPressed;
-
   const QuiZButtonYesNoWidget({
     Key? key,
     required this.reference,

@@ -1,8 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_model.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
@@ -14,9 +12,10 @@ import '../../../../../utils/json_util.dart';
 void main() {
   late final MockHttpClient apiClient = MockHttpClient();
   late ITweetDataSource dataSource;
-  late final MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
+  late final MockIApiServerConfigure serverConfigure =
+      MockIApiServerConfigure();
   Uri? serverEndpoint;
-  const String SESSSION_TOKEN = 'my_really.long.JWT';
+  const String sessionToken = 'my_really.long.JWT';
 
   setUp(() {
     serverEndpoint = Uri.https('api.anyserver.io', '/');
@@ -28,7 +27,7 @@ void main() {
     // MockApiServerConfigure configuration
     when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint!);
     when(serverConfigure.apiToken)
-        .thenAnswer((_) => Future.value(SESSSION_TOKEN));
+        .thenAnswer((_) => Future.value(sessionToken));
     when(serverConfigure.userAgent)
         .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
   });
@@ -36,7 +35,7 @@ void main() {
   Future<Map<String, String>> _setUpHttpHeader() async {
     final userAgent = await serverConfigure.userAgent;
     return {
-      'X-Api-Key': SESSSION_TOKEN,
+      'X-Api-Key': sessionToken,
       'User-Agent': userAgent,
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
     };
@@ -52,11 +51,13 @@ void main() {
   }
 
   PostExpectation<Future<http.Response>> _mockPostRequest() {
-    return when(apiClient.post(
-      any,
-      headers: anyNamed('headers'),
-      body: anyNamed('body'),
-    ),);
+    return when(
+      apiClient.post(
+        any,
+        headers: anyNamed('headers'),
+        body: anyNamed('body'),
+      ),
+    );
   }
 
   void _setUpMockPostHttpClientSuccess200(String? bodyContent) {
@@ -105,17 +106,18 @@ void main() {
         // arrange
         _setUpMockPostHttpClientSuccess200(bodyContent);
         final expected = TweetModel(
-            id: '200608T1805540001',
-            userName: 'maria',
-            clientId: 424,
-            createdAt: '2020-06-08 18:05:54',
-            totalReply: 0,
-            totalLikes: 0,
-            anonymous: false,
-            content: 'Mensagem 1',
-            avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-            meta: const TweetMeta(liked: false, owner: true),
-            lastReply: const [],);
+          id: '200608T1805540001',
+          userName: 'maria',
+          clientId: 424,
+          createdAt: '2020-06-08 18:05:54',
+          totalReply: 0,
+          totalLikes: 0,
+          anonymous: false,
+          content: 'Mensagem 1',
+          avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
+          meta: const TweetMeta(liked: false, owner: true),
+          lastReply: const [],
+        );
         // act
         final received = await dataSource.create(option: requestOption);
         // assert

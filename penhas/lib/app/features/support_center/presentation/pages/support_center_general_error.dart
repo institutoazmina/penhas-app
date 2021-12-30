@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class SupportCenterGeneralError extends StatelessWidget {
-  final String _message;
-  final VoidCallback _onPressed;
-
   const SupportCenterGeneralError({
     Key? key,
     required String message,
@@ -12,6 +9,9 @@ class SupportCenterGeneralError extends StatelessWidget {
   })  : _message = message,
         _onPressed = onPressed,
         super(key: key);
+
+  final String _message;
+  final VoidCallback _onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -63,13 +63,14 @@ class SupportCenterGeneralError extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 48.0),
                 child: FlatButton.icon(
-                    onPressed: _onPressed,
-                    icon: const Icon(
-                      Icons.loop,
-                      color: DesignSystemColors.easterPurple,
-                      size: 60,
-                    ),
-                    label: Container(),),
+                  onPressed: _onPressed,
+                  icon: const Icon(
+                    Icons.loop,
+                    color: DesignSystemColors.easterPurple,
+                    size: 60,
+                  ),
+                  label: Container(),
+                ),
               ),
               const Text(
                 'Tentar novamente',

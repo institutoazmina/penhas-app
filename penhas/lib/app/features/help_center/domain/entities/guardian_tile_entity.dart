@@ -5,30 +5,24 @@ import 'package:penhas/app/features/help_center/domain/entities/guardian_session
 abstract class GuardianTileEntity extends Equatable {}
 
 class GuardianTileHeaderEntity extends GuardianTileEntity {
-  final String? title;
-
   GuardianTileHeaderEntity({required this.title});
+
+  final String? title;
 
   @override
   List<Object?> get props => [title!];
 }
 
 class GuardianTileDescriptionEntity extends GuardianTileEntity {
-  final String? description;
-
   GuardianTileDescriptionEntity({required this.description});
+
+  final String? description;
 
   @override
   List<Object?> get props => [description!];
 }
 
 class GuardianTileCardEntity extends GuardianTileEntity {
-  final GuardianContactEntity guardian;
-  final String? deleteWarning;
-  final void Function(String name)? onEditPressed;
-  final void Function()? onDeletePressed;
-  final void Function()? onResendPressed;
-
   GuardianTileCardEntity({
     required this.guardian,
     required this.deleteWarning,
@@ -52,7 +46,6 @@ class GuardianTileEmptyCardEntity extends GuardianTileEntity {
 
   final void Function() onPressed;
 
-  GuardianTileEmptyCardEntity({required this.onPressed});
   @override
   List<Object?> get props => [];
 }

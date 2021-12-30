@@ -14,9 +14,9 @@ import 'package:penhas/app/features/feed/domain/usecases/tweet_filter_preference
 
 @immutable
 class FeedCache extends Equatable {
-  final List<TweetTiles?> tweets;
-
   const FeedCache({required this.tweets});
+
+  final List<TweetTiles?> tweets;
 
   @override
   List<Object?> get props => [tweets];
@@ -44,14 +44,6 @@ class FeedUseCases {
   List<TweetTiles?> _tweetCacheFetch = [];
   final Map<String?, List<TweetEntity?>> _tweetReplyMap = {};
   String? _nextPage;
-
-  FeedUseCases({
-    required ITweetRepository repository,
-    required TweetFilterPreference filterPreference,
-    int? maxRows = 100,
-  })  : _repository = repository,
-        _filterPreference = filterPreference,
-        _maxRowsPerRequest = maxRows;
 
   Future<Either<Failure, FeedCache>> fetchNewestTweet() async {
     final request = _newestRequestOption();
@@ -91,7 +83,8 @@ class FeedUseCases {
   }
 
   Future<Either<Failure, FeedCache>> fetchNewestTweetDetail(
-      String? tweetId) async {
+    String? tweetId,
+  ) async {
     final option = _buildTweetDetailRequest(tweetId);
     final result = await _repository.fetch(option: option);
 
@@ -212,7 +205,7 @@ class FeedUseCases {
   }
 
   String? _getCategory() {
-    final List<String> category = _filterPreference.getCategory();
+    final List<String> category = _filterPreference.categories;
     return category.isEmpty ? null : category.join(',');
   }
 
@@ -338,7 +331,8 @@ class FeedUseCases {
         currentTweet.lastReply!.first!.id == newTweet.id) {
       // se a tweet for um reply, reconstrua o principal com o novo reply
       final reply = newTweet.copyWith(
-          lastReply: currentTweet.lastReply!.first!.lastReply,);
+        lastReply: currentTweet.lastReply!.first!.lastReply,
+      );
       final princialTweet = currentTweet.copyWith(lastReply: [reply]);
       _tweetCacheFetch[index] = princialTweet;
     }
@@ -413,10 +407,12 @@ class FeedUseCases {
       }
     }
 
-    return FeedCache(tweets: [
-      if (session.parent != null) session.parent,
-      ..._tweetReplyMap[tweetId]!
-    ],);
+    return FeedCache(
+      tweets: [
+        if (session.parent != null) session.parent,
+        ..._tweetReplyMap[tweetId]!
+      ],
+    );
   }
 
   void dispose() {

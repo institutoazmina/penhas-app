@@ -6,10 +6,6 @@ import 'package:penhas/app/features/main_menu/presentation/account/pages/card_pr
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class CardProfileNamePage extends StatelessWidget {
-  final String? name;
-  final String? avatar;
-  final void Function(String) onChange;
-
   const CardProfileNamePage({
     Key? key,
     required this.name,

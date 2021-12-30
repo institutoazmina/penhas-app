@@ -15,9 +15,6 @@ import 'package:penhas/app/features/authentication/presentation/shared/user_regi
 part 'sign_up_two_controller.g.dart';
 
 class MenuItemModel {
-  final String? display;
-  final String value;
-
   MenuItemModel(this.display, this.value);
 
   final String? display;
@@ -26,9 +23,10 @@ class MenuItemModel {
 
 class SignUpTwoController extends _SignUpTwoControllerBase
     with _$SignUpTwoController {
-  SignUpTwoController(IUserRegisterRepository repository,
-      UserRegisterFormFieldModel? userFormFielModel)
-      : super(repository, userFormFielModel);
+  SignUpTwoController(
+    IUserRegisterRepository repository,
+    UserRegisterFormFieldModel? userFormFielModel,
+  ) : super(repository, userFormFielModel);
 
   static List<MenuItemModel> genreDataSource() {
     return Genre.values
@@ -121,8 +119,7 @@ abstract class _SignUpTwoControllerBase with Store, MapFailureMessage {
   void setNickname(String name) {
     _userRegisterModel!.nickname = Nickname(name);
 
-    warningNickname =
-        name.isEmpty ? '' : _userRegisterModel!.validateNickname;
+    warningNickname = name.isEmpty ? '' : _userRegisterModel!.validateNickname;
   }
 
   @action
@@ -182,8 +179,10 @@ abstract class _SignUpTwoControllerBase with Store, MapFailureMessage {
   }
 
   void _forwardToStep3() {
-    Modular.to.pushNamed('/authentication/signup/step3',
-        arguments: _userRegisterModel!,);
+    Modular.to.pushNamed(
+      '/authentication/signup/step3',
+      arguments: _userRegisterModel,
+    );
   }
 
   bool _isValidToProceed() {

@@ -23,17 +23,19 @@ abstract class IUserProfileRepository {
 }
 
 class UserProfileRepository implements IUserProfileRepository {
-  final IApiProvider? _apiProvider;
-  final IApiServerConfigure _serverConfiguration;
-
   UserProfileRepository({
     required IApiProvider? apiProvider,
     required IApiServerConfigure serverConfiguration,
   })  : _apiProvider = apiProvider,
         _serverConfiguration = serverConfiguration;
 
+  final IApiProvider? _apiProvider;
+  final IApiServerConfigure _serverConfiguration;
+
   @override
-  Future<Either<Failure, ValidField>> stealthMode({required bool toggle}) async {
+  Future<Either<Failure, ValidField>> stealthMode({
+    required bool toggle,
+  }) async {
     final endPoint = ['me', 'modo-camuflado-toggle'].join('/');
     final parameters = {'active': toggle ? '1' : '0'};
 
@@ -49,7 +51,9 @@ class UserProfileRepository implements IUserProfileRepository {
   }
 
   @override
-  Future<Either<Failure, ValidField>> anonymousMode({required bool toggle}) async {
+  Future<Either<Failure, ValidField>> anonymousMode({
+    required bool toggle,
+  }) async {
     final endPoint = ['me', 'modo-anonimo-toggle'].join('/');
     final parameters = {'active': toggle ? '1' : '0'};
 
@@ -65,8 +69,9 @@ class UserProfileRepository implements IUserProfileRepository {
   }
 
   @override
-  Future<Either<Failure, ValidField>> delete(
-      {required String password}) async {
+  Future<Either<Failure, ValidField>> delete({
+    required String password,
+  }) async {
     const endPoint = '/me';
 
     final parameters = {
@@ -88,7 +93,8 @@ class UserProfileRepository implements IUserProfileRepository {
     final endPoint = ['me', 'delete-text'].join('/');
 
     try {
-      final response = await _apiProvider!.get(path: endPoint).parseValidField();
+      final response =
+          await _apiProvider!.get(path: endPoint).parseValidField();
       return right(response);
     } catch (error, stack) {
       logError(error, stack);
@@ -97,8 +103,9 @@ class UserProfileRepository implements IUserProfileRepository {
   }
 
   @override
-  Future<Either<Failure, ValidField>> reactivate(
-      {required String? token}) async {
+  Future<Either<Failure, ValidField>> reactivate({
+    required String? token,
+  }) async {
     const endPoint = '/reactivate';
 
     final parameters = {
@@ -131,8 +138,10 @@ class UserProfileRepository implements IUserProfileRepository {
   }
 
   @override
-  Future<Either<Failure, AccountPreferenceSessionModel>> updatePreferences(
-      {String? key, required bool status}) async {
+  Future<Either<Failure, AccountPreferenceSessionModel>> updatePreferences({
+    String? key,
+    required bool status,
+  }) async {
     const endPoint = '/me/preferences';
     final parameters = {key: status ? '1' : '0'};
 

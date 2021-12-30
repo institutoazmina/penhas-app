@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -101,8 +100,6 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
 }
 
 extension _AudiosControllerBasePrivate on _AudiosControllerBase {
-  void setErrorMessage(String? message) => errorMessage = message;
-
   void handleLoadSession(List<AudioEntity> session) {
     final audios = session.map((e) => buildTile(e)).toList();
     currentState = AudiosState.loaded(audios);
@@ -120,8 +117,9 @@ extension _AudiosControllerBasePrivate on _AudiosControllerBase {
     if (isRequestRequired) {
       final request = await _audiosRepository.requestAccess(audio);
       request.fold(
-        (failure) => setErrorMessage(mapFailureMessage(failure)),
-        (session) => actionSheetState = AudioTileAction.notice(session.message!),
+        (failure) => errorMessage = mapFailureMessage(failure),
+        (session) =>
+            actionSheetState = AudioTileAction.notice(session.message!),
       );
     } else if (audio.canPlay) {
       final playingAudio = await _audioPlayer.start(

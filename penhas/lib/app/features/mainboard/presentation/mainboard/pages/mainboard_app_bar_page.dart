@@ -18,13 +18,6 @@ class MainBoardAppBarPage extends StatelessWidget
   final MainboardState currentPage;
   final void Function() resetCounter;
 
-  const MainBoardAppBarPage({
-    Key? key,
-    required this.counter,
-    required this.currentPage,
-    required this.resetCounter,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return currentPage.maybeWhen(

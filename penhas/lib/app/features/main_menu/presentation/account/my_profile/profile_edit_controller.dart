@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -27,11 +26,6 @@ class ProfileEditController extends _ProfileEditControllerBase
 }
 
 abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
-  final AppStateUseCase _appStateUseCase;
-  final IFilterSkillRepository _skillRepository;
-  final SecurityModeActionFeature _securityModeActionFeature;
-  List<FilterTagEntity>? _tags = [];
-
   _ProfileEditControllerBase(
     this._appStateUseCase,
     this._skillRepository,
@@ -39,6 +33,11 @@ abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
   ) {
     loadProfile();
   }
+
+  final AppStateUseCase _appStateUseCase;
+  final IFilterSkillRepository _skillRepository;
+  final SecurityModeActionFeature _securityModeActionFeature;
+  List<FilterTagEntity>? _tags = [];
 
   @observable
   ObservableFuture<Either<Failure, AppStateEntity>>? _progress;
@@ -65,35 +64,35 @@ abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> editNickName(String name) async {
-    setMessageErro('');
+    updateError = '';
     final update = UpdateUserProfileEntity(nickName: name);
     updateProfile(update);
   }
 
   @action
   Future<void> editMinibio(String content) async {
-    setMessageErro('');
+    updateError = '';
     final update = UpdateUserProfileEntity(minibio: content);
     updateProfile(update);
   }
 
   @action
   Future<void> updateRace(String id) async {
-    setMessageErro('');
+    updateError = '';
     final update = UpdateUserProfileEntity(race: id);
     updateProfile(update);
   }
 
   @action
   Future<void> updatedEmail(String email, String password) async {
-    setMessageErro('');
+    updateError = '';
     final update = UpdateUserProfileEntity(email: email, oldPassword: password);
     updateProfile(update);
   }
 
   @action
   Future<void> updatePassword(String newPassword, String oldPassword) async {
-    setMessageErro('');
+    updateError = '';
     final update = UpdateUserProfileEntity(
       newPassword: newPassword,
       oldPassword: oldPassword,
@@ -113,13 +112,14 @@ abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
 
     Modular.to
         .pushNamed('/mainboard/menu/profile_edit/skills', arguments: tags)
-        .then((v) => v as FilterActionObserver)
+        .then((v) => v as FilterActionObserver?)
         .then((v) => handleFilterUpdate(v));
   }
 }
 
 extension _PrivateMethod on _ProfileEditControllerBase {
-  Future<void> handleFilterUpdate(FilterActionObserver v) async {
+  Future<void> handleFilterUpdate(FilterActionObserver? v) async {
+    if (v == null) return;
     final updatedSkill = v.when(
       reset: () => UpdateUserProfileEntity(skills: []),
       updated: (s) => UpdateUserProfileEntity(
@@ -154,7 +154,7 @@ extension _PrivateMethod on _ProfileEditControllerBase {
     );
   }
 
-  void handleSession(AppStateEntity session) async {
+  Future<void> handleSession(AppStateEntity session) async {
     _tags!.map((e) => null);
     final List<FilterTagEntity?> userSkills =
         session.userProfile!.skill.map((e) => selectSkill(e)).toList();
@@ -165,7 +165,9 @@ extension _PrivateMethod on _ProfileEditControllerBase {
         await _securityModeActionFeature.isEnabled;
 
     state = ProfileEditState.loaded(
-        session.userProfile!, securityModeFeatureEnabled,);
+      session.userProfile!,
+      securityModeFeatureEnabled: securityModeFeatureEnabled,
+    );
   }
 
   void handleLoadPageError(Failure failure) {
@@ -174,12 +176,7 @@ extension _PrivateMethod on _ProfileEditControllerBase {
   }
 
   void handleUpdateError(Failure failure) {
-    final msg = mapFailureMessage(failure);
-    setMessageErro(msg);
-  }
-
-  void setMessageErro(String? message) {
-    updateError = message;
+    updateError = mapFailureMessage(failure);
   }
 
   PageProgressState monitorProgress(ObservableFuture<Object>? observable) {

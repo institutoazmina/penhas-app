@@ -30,16 +30,6 @@ class StealthSecurityAction {
   AudioRecordDurationEntity? _audioDurationEntity;
   StreamController<bool>? _streamController = StreamController.broadcast();
 
-  StealthSecurityAction({
-    required ILocationServices locationService,
-    required IAudioRecordServices audioServices,
-    required IGuardianRepository guardianRepository,
-    required SecurityModeActionFeature featureToogle,
-  })  : _audioServices = audioServices,
-        _featureToogle = featureToogle,
-        _locationService = locationService,
-        _guardianRepository = guardianRepository;
-
   Stream<bool> get isRunning => _streamController!.stream;
 
   Future<void> start() async {
@@ -69,7 +59,6 @@ class StealthSecurityAction {
       }
     } catch (e, stack) {
       logError(e, stack);
-      print(e);
     }
   }
 
@@ -102,7 +91,8 @@ class StealthSecurityAction {
 
         _currentRecordDurantion += _audioDurationEntity!.audioEachDuration;
 
-        if (_currentRecordDurantion >= _audioDurationEntity!.audioFullDuration) {
+        if (_currentRecordDurantion >=
+            _audioDurationEntity!.audioFullDuration) {
           timer.cancel();
           _streamController!.add(false);
           _recording = false;

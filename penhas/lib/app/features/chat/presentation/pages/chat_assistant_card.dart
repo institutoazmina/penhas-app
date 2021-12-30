@@ -3,12 +3,6 @@ import 'package:penhas/app/features/chat/domain/entities/chat_main_tile_entity.d
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatAssistantCard extends StatelessWidget {
-  final String? title;
-  final Widget icon;
-  final String? description;
-  final ChatMainSupportTile channel;
-  final void Function(ChatMainSupportTile channel) onPressed;
-
   const ChatAssistantCard({
     Key? key,
     required this.title,
@@ -17,6 +11,12 @@ class ChatAssistantCard extends StatelessWidget {
     required this.channel,
     required this.onPressed,
   }) : super(key: key);
+
+  final String? title;
+  final Widget icon;
+  final String? description;
+  final ChatMainSupportTile channel;
+  final void Function(ChatMainSupportTile channel) onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -63,16 +63,18 @@ class ChatAssistantCard extends StatelessWidget {
 
 extension _ChatTalkCardPrivate on ChatAssistantCard {
   TextStyle get titleStyle => const TextStyle(
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      letterSpacing: 0.45,
-      color: DesignSystemColors.darkIndigoThree,
-      fontWeight: FontWeight.bold,);
+        fontFamily: 'Lato',
+        fontSize: 14.0,
+        letterSpacing: 0.45,
+        color: DesignSystemColors.darkIndigoThree,
+        fontWeight: FontWeight.bold,
+      );
   TextStyle get descriptionStyle => const TextStyle(
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      height: 1.3,
-      letterSpacing: 0.45,
-      color: DesignSystemColors.darkIndigoThree,
-      fontWeight: FontWeight.normal,);
+        fontFamily: 'Lato',
+        fontSize: 14.0,
+        height: 1.3,
+        letterSpacing: 0.45,
+        color: DesignSystemColors.darkIndigoThree,
+        fontWeight: FontWeight.normal,
+      );
 }

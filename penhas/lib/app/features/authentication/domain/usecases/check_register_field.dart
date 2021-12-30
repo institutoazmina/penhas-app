@@ -13,8 +13,6 @@ import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart
 import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
 class CheckRegisterField {
-  final IUserRegisterRepository? repository;
-
   CheckRegisterField(this.repository);
 
   final IUserRegisterRepository? repository;

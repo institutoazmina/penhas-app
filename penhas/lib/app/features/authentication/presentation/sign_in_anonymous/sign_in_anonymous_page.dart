@@ -7,10 +7,10 @@ import 'package:penhas/app/features/authentication/presentation/shared/login_but
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/password_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/features/authentication/presentation/sign_in_anonymous/sign_in_anonymous_controller.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
-import 'package:penhas/app/features/authentication/presentation/sign_in_anonymous/sign_in_anonymous_controller.dart';
 
 class SignInAnonymousPage extends StatefulWidget {
   const SignInAnonymousPage({Key? key, this.title = 'Authentication'})
@@ -60,7 +60,11 @@ class _SignInAnonymousPage
               child: SafeArea(
                 child: SingleChildScrollView(
                   padding: const EdgeInsetsDirectional.fromSTEB(
-                      16.0, 80.0, 16.0, 8.0),
+                    16.0,
+                    80.0,
+                    16.0,
+                    8.0,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
@@ -168,7 +172,7 @@ class _SignInAnonymousPage
     );
   }
 
-  _handleTap(BuildContext context) {
+  void _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
     }

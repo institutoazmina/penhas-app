@@ -17,9 +17,6 @@ class SupportCenterShowController extends _SupportCenterShowControllerBase
 }
 
 abstract class _SupportCenterShowControllerBase with Store, MapFailureMessage {
-  final SupportCenterUseCase _useCase;
-  final SupportCenterPlaceEntity? _place;
-
   _SupportCenterShowControllerBase(this._place, this._useCase) {
     setup();
   }

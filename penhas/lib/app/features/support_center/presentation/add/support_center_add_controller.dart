@@ -20,16 +20,16 @@ class SupportCenterAddController extends _SupportCenterAddControllerBase
 }
 
 abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
+  _SupportCenterAddControllerBase(this._supportCenterUseCase) {
+    setup();
+  }
+
   String? _address;
   String? _placeName;
   String? _placeDescription;
   FilterTagEntity? _category;
 
   final SupportCenterUseCase _supportCenterUseCase;
-
-  _SupportCenterAddControllerBase(this._supportCenterUseCase) {
-    setup();
-  }
 
   @observable
   ObservableFuture<Either<Failure, AlertModel>>? _savingSuggestion;
@@ -95,7 +95,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   @action
   Future<void> savePlace() async {
     resetErrors();
-    setMessageErro('');
 
     if (_category == null) {
       categoryError = 'O tipo é um campo obrigatório';
@@ -113,16 +112,18 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
       placeDescriptionError = 'Deixa uma descrição do ponto de apoio';
     }
 
-    _savingSuggestion = ObservableFuture(_supportCenterUseCase.saveSuggestion(
-      name: _placeName,
-      address: _address,
-      category: _category!.id,
-      description: _placeDescription,
-    ),);
+    _savingSuggestion = ObservableFuture(
+      _supportCenterUseCase.saveSuggestion(
+        name: _placeName,
+        address: _address,
+        category: _category!.id,
+        description: _placeDescription,
+      ),
+    );
 
     final Either<Failure, AlertModel> result = await _savingSuggestion!;
     result.fold(
-      (failure) => setMessageErro(mapFailureMessage(failure)),
+      (failure) => errorMessage = mapFailureMessage(failure),
       (valid) => handleSuccessAddSupportCenter(valid),
     );
   }
@@ -131,6 +132,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     addressError = '';
     placeNameError = '';
     placeDescriptionError = '';
+    errorMessage = '';
   }
 }
 
@@ -157,10 +159,6 @@ extension _Private on _SupportCenterAddControllerBase {
     state = const SupportCenterAddState.loaded();
   }
 
-  void setMessageErro(String? message) {
-    errorMessage = message;
-  }
-
   void handleSuccessAddSupportCenter(AlertModel field) {
     alertState = GuardianAlertState.alert(
       GuardianAlertMessageAction(
@@ -171,7 +169,7 @@ extension _Private on _SupportCenterAddControllerBase {
     );
   }
 
-  void actionAfterNotice() async {
+  Future<void> actionAfterNotice() async {
     Modular.to.pop(true);
   }
 

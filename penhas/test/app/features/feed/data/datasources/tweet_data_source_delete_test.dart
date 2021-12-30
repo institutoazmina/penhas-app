@@ -9,11 +9,12 @@ import '../../../../../utils/helper.mocks.dart';
 
 void main() {
   late final MockHttpClient apiClient = MockHttpClient();
-  late final MockIApiServerConfigure serverConfigure = MockIApiServerConfigure();
+  late final MockIApiServerConfigure serverConfigure =
+      MockIApiServerConfigure();
   final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
   late ITweetDataSource dataSource;
 
-  const String SESSSION_TOKEN = 'my_really.long.JWT';
+  const String sessionToken = 'my_really.long.JWT';
 
   setUp(() {
     dataSource = TweetDataSource(
@@ -24,7 +25,7 @@ void main() {
     // MockApiServerConfigure configuration
     when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
     when(serverConfigure.apiToken)
-        .thenAnswer((_) => Future.value(SESSSION_TOKEN));
+        .thenAnswer((_) => Future.value(sessionToken));
     when(serverConfigure.userAgent)
         .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
   });

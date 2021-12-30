@@ -33,8 +33,9 @@ class ChangePasswordDataSource implements IChangePasswordDataSource {
   final IApiServerConfigure serverConfiguration;
 
   @override
-  Future<PasswordResetResponseModel> request(
-      {EmailAddress? emailAddress}) async {
+  Future<PasswordResetResponseModel> request({
+    EmailAddress? emailAddress,
+  }) async {
     final userAgent = await serverConfiguration.userAgent;
     final Map<String, String?> queryParameters = {
       'app_version': userAgent,
@@ -56,10 +57,11 @@ class ChangePasswordDataSource implements IChangePasswordDataSource {
   }
 
   @override
-  Future<ValidField> reset(
-      {EmailAddress? emailAddress,
-      SignUpPassword? password,
-      String? resetToken}) async {
+  Future<ValidField> reset({
+    EmailAddress? emailAddress,
+    SignUpPassword? password,
+    String? resetToken,
+  }) async {
     final userAgent = await serverConfiguration.userAgent;
     final Map<String, String?> queryParameters = {
       'dry': '0',
@@ -92,8 +94,10 @@ class ChangePasswordDataSource implements IChangePasswordDataSource {
   }
 
   @override
-  Future<ValidField> validToken(
-      {EmailAddress? emailAddress, String? resetToken}) async {
+  Future<ValidField> validToken({
+    EmailAddress? emailAddress,
+    String? resetToken,
+  }) async {
     final userAgent = await serverConfiguration.userAgent;
     final Map<String, String?> queryParameters = {
       'dry': '1',

@@ -3,27 +3,14 @@ import 'package:penhas/app/features/support_center/domain/entities/support_cente
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
 
 class SupportCenterPlaceSessionModel extends SupportCenterPlaceSessionEntity {
-  @override
-  final int? maximumRate;
-  @override
-  final double? latitude;
-  @override
-  final double? longitude;
-  @override
-  final String? nextPage;
-  @override
-  final bool? hasMore;
-  @override
-  final List<SupportCenterPlaceEntity>? places;
-
-  const SupportCenterPlaceSessionModel(
-    this.maximumRate,
-    this.latitude,
-    this.longitude,
-    this.hasMore,
-    this.nextPage,
-    this.places,
-  ) : super(
+  const SupportCenterPlaceSessionModel({
+    int? maximumRate,
+    double? latitude,
+    double? longitude,
+    bool? hasMore,
+    String? nextPage,
+    List<SupportCenterPlaceEntity> places = const [],
+  }) : super(
           maximumRate: maximumRate,
           latitude: latitude,
           longitude: longitude,
@@ -33,7 +20,8 @@ class SupportCenterPlaceSessionModel extends SupportCenterPlaceSessionEntity {
         );
 
   factory SupportCenterPlaceSessionModel.fromJson(
-      Map<String, dynamic> jsonData) {
+    Map<String, dynamic> jsonData,
+  ) {
     final maximumRate = "${jsonData["avaliacao_maxima"]}".safeParseInt();
     final latitude = "${jsonData["latitude"]}".safeParseDouble();
     final longitude = "${jsonData["longitude"]}".safeParseDouble();
@@ -46,12 +34,12 @@ class SupportCenterPlaceSessionModel extends SupportCenterPlaceSessionEntity {
         .toList();
 
     return SupportCenterPlaceSessionModel(
-      maximumRate,
-      latitude,
-      longitude,
-      hasMore,
-      nextPage,
-      places,
+      maximumRate: maximumRate,
+      latitude: latitude,
+      longitude: longitude,
+      hasMore: hasMore,
+      nextPage: nextPage,
+      places: places,
     );
   }
 }

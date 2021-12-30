@@ -7,15 +7,16 @@ import 'package:penhas/app/features/authentication/presentation/shared/input_box
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/pages/sign_up_two/sign_up_two_controller.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
-import 'sign_up_two_controller.dart';
 
 class SignUpTwoPage extends StatefulWidget {
-  final String title;
   const SignUpTwoPage({Key? key, this.title = 'SignUpTwo'}) : super(key: key);
+
+  final String title;
 
   @override
   _SignUpTwoPageState createState() => _SignUpTwoPageState();
@@ -68,44 +69,49 @@ class _SignUpTwoPageState
               onTap: () => _handleTap(context),
               onPanDown: (_) => _handleTap(context),
               child: SafeArea(
-                  child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    _buildHeader(),
-                    const SizedBox(height: 18.0),
-                    _buildSubHeader(),
-                    const SizedBox(height: 22.0),
-                    Observer(builder: (_) => _buildNickName()),
-                    Observer(builder: (_) => _buildSocialName()),
-                    const SizedBox(height: 24.0),
-                    Observer(builder: (_) {
-                      return _buildDropdownList(
-                        context: context,
-                        labelText: 'Gênero',
-                        onError: controller.warningGenre,
-                        onChange: controller.setGenre,
-                        currentValue: controller.currentGenre,
-                        dataSource: dataSourceGenre,
-                      );
-                    },),
-                    const SizedBox(height: 24.0),
-                    Observer(builder: (_) {
-                      return _buildDropdownList(
-                        context: context,
-                        labelText: 'Raça',
-                        onError: controller.warningRace,
-                        onChange: controller.setRace,
-                        currentValue: controller.currentRace,
-                        dataSource: dataSourceRace,
-                      );
-                    },),
-                    const SizedBox(height: 24.0),
-                    SizedBox(height: 40.0, child: _buildNextButton()),
-                  ],
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      _buildHeader(),
+                      const SizedBox(height: 18.0),
+                      _buildSubHeader(),
+                      const SizedBox(height: 22.0),
+                      Observer(builder: (_) => _buildNickName()),
+                      Observer(builder: (_) => _buildSocialName()),
+                      const SizedBox(height: 24.0),
+                      Observer(
+                        builder: (_) {
+                          return _buildDropdownList(
+                            context: context,
+                            labelText: 'Gênero',
+                            onError: controller.warningGenre,
+                            onChange: controller.setGenre,
+                            currentValue: controller.currentGenre,
+                            dataSource: dataSourceGenre,
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 24.0),
+                      Observer(
+                        builder: (_) {
+                          return _buildDropdownList(
+                            context: context,
+                            labelText: 'Raça',
+                            onError: controller.warningRace,
+                            onChange: controller.setRace,
+                            currentValue: controller.currentRace,
+                            dataSource: dataSourceRace,
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 24.0),
+                      SizedBox(height: 40.0, child: _buildNextButton()),
+                    ],
+                  ),
                 ),
-              ),),
+              ),
             ),
           ),
         ),
@@ -163,7 +169,8 @@ class _SignUpTwoPageState
           errorText: (onError?.isEmpty ?? true) ? null : onError,
           labelText: labelText,
           labelStyle: const TextStyle(color: Colors.white),
-          contentPadding: const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
+          contentPadding:
+              const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
         ),
         items: dataSource as List<DropdownMenuItem<T>>,
         onChanged: onChange,
@@ -173,7 +180,7 @@ class _SignUpTwoPageState
     );
   }
 
-  RaisedButton _buildNextButton() {
+  Widget _buildNextButton() {
     return RaisedButton(
       onPressed: () => controller.nextStepPressed(),
       elevation: 0,
@@ -187,7 +194,8 @@ class _SignUpTwoPageState
   }
 
   static List<DropdownMenuItem<String>> _buildDataSource(
-      List<MenuItemModel> list) {
+    List<MenuItemModel> list,
+  ) {
     return list
         .map(
           (v) => DropdownMenuItem<String>(
@@ -231,7 +239,7 @@ class _SignUpTwoPageState
     );
   }
 
-  _handleTap(BuildContext context) {
+  void _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
     }

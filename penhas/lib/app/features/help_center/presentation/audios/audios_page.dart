@@ -11,17 +11,16 @@ import 'package:penhas/app/features/help_center/domain/entities/audio_play_tile_
 import 'package:penhas/app/features/help_center/domain/states/audio_playing.dart';
 import 'package:penhas/app/features/help_center/domain/states/audio_tile_action.dart';
 import 'package:penhas/app/features/help_center/domain/states/audios_state.dart';
+import 'package:penhas/app/features/help_center/presentation/audios/audios_controller.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/audio/audio_play_widget.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/guardian_error_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
-import 'audios_controller.dart';
-
 class AudiosPage extends StatefulWidget {
-  final String title;
-
   const AudiosPage({Key? key, this.title = 'Audios'}) : super(key: key);
+
+  final String title;
 
   @override
   _AudiosPageState createState() => _AudiosPageState();
@@ -108,19 +107,21 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
           key: _refreshIndicatorKey,
           onRefresh: () async => controller.loadPage(),
           child: ListView.builder(
-              itemCount: tiles.length,
-              itemBuilder: (context, index) {
-                final audio = tiles[index];
-                final isPlaying = audio.audio == _playingAudio;
-                final backgroundColor = _selectingAudioMenu == audio.audio
-                    ? DesignSystemColors.blueyGrey
-                    : Colors.transparent;
+            itemCount: tiles.length,
+            itemBuilder: (context, index) {
+              final audio = tiles[index];
+              final isPlaying = audio.audio == _playingAudio;
+              final backgroundColor = _selectingAudioMenu == audio.audio
+                  ? DesignSystemColors.blueyGrey
+                  : Colors.transparent;
 
-                return AudioPlayWidget(
-                    audioPlay: tiles[index],
-                    isPlaying: isPlaying,
-                    backgroundColor: backgroundColor,);
-              },),
+              return AudioPlayWidget(
+                audioPlay: tiles[index],
+                isPlaying: isPlaying,
+                backgroundColor: backgroundColor,
+              );
+            },
+          ),
         ),
       ),
     );
@@ -205,7 +206,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
     );
   }
 
-  void _actionSheet(AudioEntity audio) async {
+  Future<void> _actionSheet(AudioEntity audio) async {
     final BuildContext _context = _scaffoldKey.currentContext!;
     await showModalBottomSheet(
       context: _context,
@@ -225,13 +226,16 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
             children: <Widget>[
               _buildDivider(),
               Container(
-                  padding: const EdgeInsets.all(16.0),
-                  child: const Text(
-                      'Para solicitar o download do arquivo de áudio entrar em contato com PenhaS pelo chat ou email penhas@azmina.com.br',
-                      style: TextStyle(fontSize: 16.0),),),
+                padding: const EdgeInsets.all(16.0),
+                child: const Text(
+                  'Para solicitar o download do arquivo de áudio entrar em contato com PenhaS pelo chat ou email penhas@azmina.com.br',
+                  style: TextStyle(fontSize: 16.0),
+                ),
+              ),
               ListTile(
                 leading: SvgPicture.asset(
-                    'assets/images/svg/tweet_action/tweet_action_delete.svg',),
+                  'assets/images/svg/tweet_action/tweet_action_delete.svg',
+                ),
                 title: const Text('Apagar'),
                 onTap: () {
                   Navigator.of(_context).pop();

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class PenhasDrawerHeaderPage extends StatelessWidget {
-  final String _userName;
-  final Widget _userAvatar;
   const PenhasDrawerHeaderPage({
     Key? key,
     required String userName,
@@ -11,6 +9,9 @@ class PenhasDrawerHeaderPage extends StatelessWidget {
   })  : _userName = userName,
         _userAvatar = userAvatar,
         super(key: key);
+
+  final String _userName;
+  final Widget _userAvatar;
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +36,13 @@ class PenhasDrawerHeaderPage extends StatelessWidget {
           Container(
             padding: const EdgeInsets.fromLTRB(6.0, 4.0, 6.0, 4.0),
             decoration: const BoxDecoration(
-                color: Color.fromRGBO(234, 234, 234, 1),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(6.0),
-                  bottomLeft: Radius.circular(6.0),
-                  bottomRight: Radius.circular(6.0),
-                ),),
+              color: Color.fromRGBO(234, 234, 234, 1),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(6.0),
+                bottomLeft: Radius.circular(6.0),
+                bottomRight: Radius.circular(6.0),
+              ),
+            ),
             child: const Text('Você', style: kTextStyleDrawerUserNameTag),
           ),
         ],

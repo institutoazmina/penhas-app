@@ -12,14 +12,14 @@ import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositorie
 import 'package:penhas/app/shared/logger/log.dart';
 
 class TweetRepository implements ITweetRepository {
-  final INetworkInfo _networkInfo;
-  final ITweetDataSource? _dataSource;
-
   TweetRepository({
     required INetworkInfo networkInfo,
     required ITweetDataSource? dataSource,
   })  : _dataSource = dataSource,
         _networkInfo = networkInfo;
+
+  final INetworkInfo _networkInfo;
+  final ITweetDataSource? _dataSource;
 
   @override
   Future<Either<Failure, TweetSessionEntity>> fetch({
@@ -48,8 +48,9 @@ class TweetRepository implements ITweetRepository {
   }
 
   @override
-  Future<Either<Failure, TweetEntity>> create(
-      {TweetCreateRequestOption? option}) async {
+  Future<Either<Failure, TweetEntity>> create({
+    TweetCreateRequestOption? option,
+  }) async {
     try {
       final result = await _dataSource!.create(option: option);
       return right(result);
@@ -60,8 +61,9 @@ class TweetRepository implements ITweetRepository {
   }
 
   @override
-  Future<Either<Failure, TweetEntity>> reply(
-      {TweetEngageRequestOption? option}) async {
+  Future<Either<Failure, TweetEntity>> reply({
+    TweetEngageRequestOption? option,
+  }) async {
     try {
       final result = await _dataSource!.reply(option: option);
       return right(result);
@@ -72,8 +74,9 @@ class TweetRepository implements ITweetRepository {
   }
 
   @override
-  Future<Either<Failure, TweetEntity>> like(
-      {TweetEngageRequestOption? option}) async {
+  Future<Either<Failure, TweetEntity>> like({
+    TweetEngageRequestOption? option,
+  }) async {
     try {
       final result = await _dataSource!.like(option: option);
       return right(result);
@@ -84,8 +87,9 @@ class TweetRepository implements ITweetRepository {
   }
 
   @override
-  Future<Either<Failure, ValidField>> delete(
-      {TweetEngageRequestOption? option}) async {
+  Future<Either<Failure, ValidField>> delete({
+    TweetEngageRequestOption? option,
+  }) async {
     try {
       final result = await _dataSource!.delete(option: option);
       return right(result);
@@ -96,8 +100,9 @@ class TweetRepository implements ITweetRepository {
   }
 
   @override
-  Future<Either<Failure, ValidField>> report(
-      {TweetEngageRequestOption? option}) async {
+  Future<Either<Failure, ValidField>> report({
+    TweetEngageRequestOption? option,
+  }) async {
     try {
       final result = await _dataSource!.report(option: option);
       return right(result);
@@ -118,10 +123,11 @@ class TweetRepository implements ITweetRepository {
       }
 
       return ServerSideFormFieldValidationFailure(
-          error: error.bodyContent['error'],
-          field: error.bodyContent['field'],
-          reason: error.bodyContent['reason'],
-          message: error.bodyContent['message'],);
+        error: error.bodyContent['error'],
+        field: error.bodyContent['field'],
+        reason: error.bodyContent['reason'],
+        message: error.bodyContent['message'],
+      );
     }
 
     if (error is ApiProviderSessionError) {

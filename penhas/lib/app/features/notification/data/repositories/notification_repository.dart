@@ -16,11 +16,11 @@ abstract class INotificationRepository {
 }
 
 class NotificationRepository implements INotificationRepository {
-  final IApiProvider? _apiProvider;
-
   NotificationRepository({
     required IApiProvider? apiProvider,
   }) : _apiProvider = apiProvider;
+
+  final IApiProvider? _apiProvider;
 
   @override
   Future<Either<Failure, ValidField>> unread() async {
@@ -59,7 +59,7 @@ class NotificationRepository implements INotificationRepository {
 
 extension _ParsePrivate on NotificationRepository {
   ValidField parseUnread(String body) {
-    final jsonData = jsonDecode(body);
+    final Map<String, dynamic> jsonData = jsonDecode(body);
     final count = "${jsonData["count"]}".safeParseInt();
     return ValidField(message: count.toString());
   }

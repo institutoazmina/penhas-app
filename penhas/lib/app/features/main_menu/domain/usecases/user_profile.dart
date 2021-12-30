@@ -7,10 +7,6 @@ import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.d
 import 'package:penhas/app/features/main_menu/domain/repositories/user_profile_repository.dart';
 
 class UserProfile {
-  final AppStateUseCase? _appStateUseCase;
-  final IUserProfileRepository? _repository;
-  final LocalStore<UserProfileEntity> _userProfileStore;
-
   UserProfile({
     required AppStateUseCase? appStateUseCase,
     required IUserProfileRepository? repository,
@@ -19,7 +15,13 @@ class UserProfile {
         _appStateUseCase = appStateUseCase,
         _userProfileStore = userProfileStore;
 
-  Future<Either<Failure, ValidField>> anonymousMode(bool toggle) async {
+  final AppStateUseCase? _appStateUseCase;
+  final IUserProfileRepository? _repository;
+  final LocalStore<UserProfileEntity> _userProfileStore;
+
+  Future<Either<Failure, ValidField>> anonymousMode({
+    required bool toggle,
+  }) async {
     final securityMode = await _repository!.anonymousMode(toggle: toggle);
 
     return securityMode.fold(
@@ -28,7 +30,9 @@ class UserProfile {
     );
   }
 
-  Future<Either<Failure, ValidField>> stealthMode(bool toggle) async {
+  Future<Either<Failure, ValidField>> stealthMode({
+    required bool toggle,
+  }) async {
     final securityMode = await _repository!.stealthMode(toggle: toggle);
 
     return securityMode.fold(

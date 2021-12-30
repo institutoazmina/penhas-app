@@ -17,15 +17,6 @@ class PassordInputField extends StatefulWidget {
   final String errorText;
   final String hintText;
 
-  const PassordInputField({
-    Key? key,
-    this.style = kTextStyleDefaultTextFieldLabelStyle,
-    required this.onChanged,
-    required this.labelText,
-    required this.errorText,
-    required this.hintText,
-  }) : super(key: key);
-
   @override
   _PassordInputFieldState createState() => _PassordInputFieldState();
 }

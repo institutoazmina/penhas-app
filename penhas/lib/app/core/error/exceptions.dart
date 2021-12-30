@@ -1,18 +1,18 @@
 import 'package:equatable/equatable.dart';
 
 abstract class NonCriticalError extends Error {
-  String? message;
-
   NonCriticalError([this.message]);
+
+  String? message;
 }
 
-class ApiProviderException implements Exception, Equatable {
-  ApiProviderException({this.bodyContent = const <String, dynamic>{}});
+class ApiProviderException extends Equatable implements Exception {
+  const ApiProviderException({this.bodyContent = const <String, dynamic>{}});
 
   final Map<String, dynamic> bodyContent;
 
   @override
-  final bool stringify = true;
+  bool get stringify => true;
 
   @override
   List<Object?> get props => [bodyContent];

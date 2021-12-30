@@ -9,9 +9,6 @@ class FeedToggleFeature {
 
   Future<bool> get isEnabled => _isEnabled();
 
-  FeedToggleFeature({required IAppModulesServices modulesServices})
-      : _modulesServices = modulesServices;
-
   Future<bool> _isEnabled() async {
     final module =
         await _modulesServices.feature(name: FeedToggleFeature.featureCode);

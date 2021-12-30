@@ -22,7 +22,8 @@ class WhiteBoxDecorationStyle extends InputDecoration {
           hintText: hintText,
           hintStyle: kTextStyleDefaultTextFieldLabelStyle,
           errorText: _normalizeHitText(errorText),
-          contentPadding: const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
+          contentPadding:
+              const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white70),
           ),
@@ -43,8 +44,9 @@ class PurpleBoxDecorationStyle extends InputDecoration {
           labelStyle: kTextStyleGreyDefaultTextFieldLabelStyle,
           hintText: hintText,
           hintStyle: kTextStyleGreyDefaultTextFieldLabelStyle,
-          errorText: _normalizeHitText(errorText)!,
-          contentPadding: const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
+          errorText: _normalizeHitText(errorText),
+          contentPadding:
+              const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: DesignSystemColors.easterPurple),
           ),

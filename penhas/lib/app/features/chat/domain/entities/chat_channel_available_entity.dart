@@ -4,12 +4,6 @@ import 'package:penhas/app/features/chat/domain/entities/chat_assistant_entity.d
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_entity.dart';
 
 class ChatChannelAvailableEntity extends Equatable {
-  final bool? hasMore;
-  final String? nextPage;
-  final List<ChatChannelEntity>? channels;
-  final ChatChannelEntity? support;
-  final ChatAssistantEntity? assistant;
-
   const ChatChannelAvailableEntity({
     required this.hasMore,
     required this.nextPage,

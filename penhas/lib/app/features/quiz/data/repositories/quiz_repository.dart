@@ -9,18 +9,19 @@ import 'package:penhas/app/features/quiz/domain/repositories/i_quiz_repository.d
 import 'package:penhas/app/shared/logger/log.dart';
 
 class QuizRepository implements IQuizRepository {
-  final INetworkInfo _networkInfo;
-  final IQuizDataSource? _dataSource;
-
   QuizRepository({
     required INetworkInfo networkInfo,
     required IQuizDataSource? dataSource,
   })  : _dataSource = dataSource,
         _networkInfo = networkInfo;
 
+  final INetworkInfo _networkInfo;
+  final IQuizDataSource? _dataSource;
+
   @override
-  Future<Either<Failure, AppStateEntity>> update(
-      {required QuizRequestEntity? quiz}) async {
+  Future<Either<Failure, AppStateEntity>> update({
+    required QuizRequestEntity? quiz,
+  }) async {
     try {
       final appState = await _dataSource!.update(quiz: quiz);
       return right(appState);
@@ -41,10 +42,11 @@ class QuizRepository implements IQuizRepository {
       }
 
       return ServerSideFormFieldValidationFailure(
-          error: error.bodyContent['error'],
-          field: error.bodyContent['field'],
-          reason: error.bodyContent['reason'],
-          message: error.bodyContent['message'],);
+        error: error.bodyContent['error'],
+        field: error.bodyContent['field'],
+        reason: error.bodyContent['reason'],
+        message: error.bodyContent['message'],
+      );
     }
 
     if (error is ApiProviderSessionError) {

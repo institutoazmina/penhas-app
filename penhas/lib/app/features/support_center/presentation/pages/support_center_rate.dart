@@ -5,14 +5,14 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class SupportCenterRate extends StatelessWidget {
-  final SupportCenterPlaceDetailEntity detail;
-  final void Function(double) onRated;
-
   const SupportCenterRate({
     Key? key,
     required this.detail,
     required this.onRated,
   }) : super(key: key);
+
+  final SupportCenterPlaceDetailEntity detail;
+  final void Function(double) onRated;
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +31,14 @@ class SupportCenterRate extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             child: SmoothStarRating(
-                allowHalfRating: false,
-                onRatingChanged: onRated,
-                rating: detail.ratedByClient!.toDouble(),
-                size: 40.0,
-                // isReadOnly: false,
-                color: DesignSystemColors.pumpkinOrange,
-                borderColor: DesignSystemColors.pumpkinOrange,),
+              allowHalfRating: false,
+              onRatingChanged: onRated,
+              rating: detail.ratedByClient!.toDouble(),
+              size: 40.0,
+              // isReadOnly: false,
+              color: DesignSystemColors.pumpkinOrange,
+              borderColor: DesignSystemColors.pumpkinOrange,
+            ),
           )
         ],
       ),
@@ -47,10 +48,11 @@ class SupportCenterRate extends StatelessWidget {
 
 extension _TextStyle on SupportCenterRate {
   TextStyle get rateTitleTextStyle => const TextStyle(
-      color: DesignSystemColors.darkIndigoThree,
-      fontFamily: 'Lato',
-      fontSize: 20.0,
-      fontWeight: FontWeight.bold,);
+        color: DesignSystemColors.darkIndigoThree,
+        fontFamily: 'Lato',
+        fontSize: 20.0,
+        fontWeight: FontWeight.bold,
+      );
   TextStyle get rateActionDescription => const TextStyle(
         color: DesignSystemColors.darkIndigoThree,
         fontFamily: 'Lato',

@@ -1,10 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 class NotificationSessionEntity extends Equatable {
-  final bool hasMore;
-  final String? nextPage;
-  final List<NotificationEntity>? notifications;
-
   const NotificationSessionEntity({
     required this.hasMore,
     required this.nextPage,
@@ -27,13 +23,6 @@ class NotificationSessionEntity extends Equatable {
 }
 
 class NotificationEntity extends Equatable {
-  final String? name;
-  final DateTime? time;
-  final String? icon;
-  final String? title;
-  final String? content;
-  final String? route;
-
   const NotificationEntity({
     required this.content,
     required this.icon,

@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
 void main() {
   final validator = PasswordValidator();

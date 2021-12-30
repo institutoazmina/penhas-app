@@ -8,7 +8,6 @@ import 'package:penhas/app/features/authentication/data/models/password_reset_re
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
-import 'package:penhas/app/shared/logger/log.dart';
 
 import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
@@ -108,7 +107,7 @@ void main() {
         final sut = dataSource.request;
         // assert
         expect(
-          () async => await sut(emailAddress: emailAddress),
+          () => sut(emailAddress: emailAddress),
           throwsA(
             isA<ApiProviderException>()
                 .having((e) => e.bodyContent, 'Got bodyContent', bodyContent),
@@ -188,7 +187,7 @@ void main() {
         final sut = dataSource.reset;
         // assert
         expect(
-          () async => await sut(
+          () => sut(
             emailAddress: emailAddress,
             password: password,
             resetToken: validToken,

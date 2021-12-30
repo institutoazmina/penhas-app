@@ -6,10 +6,7 @@ class AlertModel extends Equatable {
     required this.message,
   });
 
-  final String? title;
-  final String? message;
-
-  static AlertModel fromJson(Map<String, dynamic> json) {
+  factory AlertModel.fromJson(Map<String, dynamic> json) {
     return AlertModel(
       title: json['title'],
       message: json['message'] ?? json['text'],

@@ -1,15 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 class TweetRequestOption extends Equatable {
-  final int rows;
-  final String? after;
-  final String? before;
-  final String? parent;
-  final String? replyTo;
-  final String? nextPageToken;
-  final String? category;
-  final String? tags;
-
   const TweetRequestOption({
     this.after,
     this.before,
@@ -20,6 +11,15 @@ class TweetRequestOption extends Equatable {
     this.category,
     this.tags,
   });
+
+  final int rows;
+  final String? after;
+  final String? before;
+  final String? parent;
+  final String? replyTo;
+  final String? nextPageToken;
+  final String? category;
+  final String? tags;
 
   @override
   List<Object?> get props =>

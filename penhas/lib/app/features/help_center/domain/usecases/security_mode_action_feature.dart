@@ -5,6 +5,9 @@ import 'package:penhas/app/features/help_center/domain/entities/audio_record_dur
 import 'package:penhas/app/shared/logger/log.dart';
 
 class SecurityModeActionFeature {
+  SecurityModeActionFeature({required IAppModulesServices modulesServices})
+      : _modulesServices = modulesServices;
+
   final IAppModulesServices _modulesServices;
   static String featureCode = 'modo_seguranca';
 
@@ -12,20 +15,20 @@ class SecurityModeActionFeature {
 
   Future<bool> _isEnabled() async {
     final module = await _modulesServices.feature(
-        name: SecurityModeActionFeature.featureCode,);
+      name: SecurityModeActionFeature.featureCode,
+    );
     return module != null;
   }
 
   Future<String> get callingNumber => _callingNumber();
   Future<AudioRecordDurationEntity> get audioDuration => _audioDuration();
 
-  SecurityModeActionFeature({required IAppModulesServices modulesServices})
-      : _modulesServices = modulesServices;
-
   Future<String> _callingNumber() {
     return _modulesServices
         .feature(name: SecurityModeActionFeature.featureCode)
-        .then((module) => jsonDecode(module?.meta ?? '{}'))
+        .then(
+          (module) => jsonDecode(module?.meta ?? '{}') as Map<String, dynamic>,
+        )
         .then((json) => json['numero'] as String);
   }
 
@@ -38,8 +41,10 @@ class SecurityModeActionFeature {
 
   AudioRecordDurationEntity _mapAudioDuration(Map<String, dynamic> json) {
     try {
-      final int audioEachDuration = int.parse(json['audio_each_duration'] as String);
-      final int audioFullDuration = int.parse(json['audio_full_duration'] as String);
+      final int audioEachDuration =
+          int.parse(json['audio_each_duration'] as String);
+      final int audioFullDuration =
+          int.parse(json['audio_full_duration'] as String);
       return AudioRecordDurationEntity(audioEachDuration, audioFullDuration);
     } catch (e, stack) {
       logError(e, stack);

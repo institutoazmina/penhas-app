@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
@@ -13,9 +12,9 @@ part 'notification_controller.g.dart';
 
 class NotificationController extends _NotificationControllerBase
     with _$NotificationController {
-  NotificationController(
-      {required INotificationRepository notificationRepository})
-      : super(notificationRepository);
+  NotificationController({
+    required INotificationRepository notificationRepository,
+  }) : super(notificationRepository);
 }
 
 abstract class _NotificationControllerBase with Store, MapFailureMessage {
@@ -50,7 +49,8 @@ extension _PrivateMethod on _NotificationControllerBase {
     errorMessage = '';
     _loadNotifications = ObservableFuture(_repository.notifications());
 
-    final Either<Failure, NotificationSessionEntity> response = await _loadNotifications!;
+    final Either<Failure, NotificationSessionEntity> response =
+        await _loadNotifications!;
 
     response.fold(
       (failure) => handleStateError(failure),
@@ -68,9 +68,5 @@ extension _PrivateMethod on _NotificationControllerBase {
 
   void handleStateError(Failure f) {
     state = NotificationState.error(mapFailureMessage(f)!);
-  }
-
-  void setErrorMessage(String msg) {
-    errorMessage = msg;
   }
 }

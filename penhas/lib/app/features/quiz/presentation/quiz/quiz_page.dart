@@ -11,7 +11,6 @@ class QuizPage extends StatefulWidget {
   const QuizPage({Key? key, this.title = 'Quiz'}) : super(key: key);
 
   final String title;
-  const QuizPage({Key? key, this.title = 'Quiz'}) : super(key: key);
 
   @override
   _QuizPageState createState() => _QuizPageState();
@@ -70,8 +69,9 @@ class _QuizPageState extends ModularState<QuizPage, QuizController> {
             Observer(
               builder: (_) {
                 return QuizUserReplayWidget(
-                    message: controller.userReplyMessage!,
-                    onActionReplay: controller.onActionReply,);
+                  message: controller.userReplyMessage!,
+                  onActionReplay: controller.onActionReply,
+                );
               },
             )
           ],

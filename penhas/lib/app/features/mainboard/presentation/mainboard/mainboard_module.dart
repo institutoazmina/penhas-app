@@ -17,7 +17,6 @@ import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity
 import 'package:penhas/app/features/appstate/domain/repositories/i_app_state_repository.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_preferences_use_case.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entity.dart';
 import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
 import 'package:penhas/app/features/chat/domain/usecases/chat_channel_usecase.dart';
 import 'package:penhas/app/features/chat/presentation/chat/chat_channel_controller.dart';
@@ -93,10 +92,12 @@ class MainboardModule extends Module {
         ...chatBinds,
         Bind.factory<MainboardStore>(
           (i) => MainboardStore(
-              modulesServices: i.get<IAppModulesServices>(),
-              initialPage: i.args?.data == null
-                  ? const MainboardState.feed()
-                  : MainboardState.fromString(i.args?.data['page']),),
+            modulesServices: i.get<IAppModulesServices>(),
+            initialPage: i.args?.data == null
+                ? const MainboardState.feed()
+                // ignore: avoid_dynamic_calls
+                : MainboardState.fromString(i.args?.data['page']),
+          ),
         ),
         Bind.factory(
           (i) => MainboardController(
@@ -121,7 +122,10 @@ class MainboardModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-        ChildRoute(Modular.initialRoute, child: (_, args) => const MainboardPage()),
+        ChildRoute(
+          Modular.initialRoute,
+          child: (_, args) => const MainboardPage(),
+        ),
         ...tweetRoutes,
         ...helpCenter,
         ...supportCenter,
@@ -265,14 +269,16 @@ class MainboardModule extends Module {
         ),
         Bind.factory(
           (i) => ProfileEditController(
-              appStateUseCase: i.get<AppStateUseCase>(),
-              skillRepository: i.get<IFilterSkillRepository>(),
-              securityModeActionFeature: i.get<SecurityModeActionFeature>(),),
+            appStateUseCase: i.get<AppStateUseCase>(),
+            skillRepository: i.get<IFilterSkillRepository>(),
+            securityModeActionFeature: i.get<SecurityModeActionFeature>(),
+          ),
         ),
         Bind.factory(
           (i) => AccountDeleteController(
-              appConfiguration: i.get<IAppConfiguration>(),
-              profileRepository: i.get<IUserProfileRepository>(),),
+            appConfiguration: i.get<IAppConfiguration>(),
+            profileRepository: i.get<IUserProfileRepository>(),
+          ),
         ),
         Bind.factory(
           (i) => AccountPreferenceController(
@@ -435,10 +441,11 @@ class MainboardModule extends Module {
         ),
         Bind<AppStateUseCase>(
           (i) => AppStateUseCase(
-              appStateRepository: i.get<IAppStateRepository>(),
-              userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
-              appConfiguration: i.get<IAppConfiguration>(),
-              appModulesServices: i.get<IAppModulesServices>(),),
+            appStateRepository: i.get<IAppStateRepository>(),
+            userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
+            appConfiguration: i.get<IAppConfiguration>(),
+            appModulesServices: i.get<IAppModulesServices>(),
+          ),
         ),
         Bind<InactivityLogoutUseCase>(
           (i) => InactivityLogoutUseCase(
@@ -460,15 +467,17 @@ class MainboardModule extends Module {
         ),
         Bind<StealthModeTutorialPageController>(
           (i) => StealthModeTutorialPageController(
-              locationService: i.get<ILocationServices>(),),
+            locationService: i.get<ILocationServices>(),
+          ),
         ),
       ];
 
   List<Bind> get helpCenterBinds => [
         Bind(
           (i) => NewGuardianController(
-              guardianRepository: i.get<IGuardianRepository>(),
-              locationService: i.get<ILocationServices>(),),
+            guardianRepository: i.get<IGuardianRepository>(),
+            locationService: i.get<ILocationServices>(),
+          ),
         ),
         Bind(
           (i) => GuardiansController(
@@ -477,8 +486,9 @@ class MainboardModule extends Module {
         ),
         Bind(
           (i) => AudiosController(
-              audiosRepository: i.get<IAudiosRepository>(),
-              audioPlayServices: i.get<IAudioPlayServices>(),),
+            audiosRepository: i.get<IAudiosRepository>(),
+            audioPlayServices: i.get<IAudioPlayServices>(),
+          ),
         ),
         Bind(
           (i) => AudiosRepository(

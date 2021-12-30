@@ -9,9 +9,6 @@ import 'package:penhas/app/features/quiz/presentation/quiz/quiz_single_button.da
 import 'package:penhas/app/features/quiz/presentation/quiz/quiz_typedef.dart';
 
 class QuizUserReplayWidget extends StatelessWidget {
-  final QuizMessageEntity message;
-  final UserReaction onActionReplay;
-
   const QuizUserReplayWidget({
     Key? key,
     required this.message,

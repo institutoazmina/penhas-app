@@ -22,8 +22,9 @@ class ChangePasswordRepository
   final INetworkInfo? _networkInfo;
 
   @override
-  Future<Either<Failure, ResetPasswordResponseEntity>> request(
-      {EmailAddress? emailAddress}) async {
+  Future<Either<Failure, ResetPasswordResponseEntity>> request({
+    EmailAddress? emailAddress,
+  }) async {
     try {
       final ResetPasswordResponseEntity result =
           await _dataSource!.request(emailAddress: emailAddress);
@@ -73,8 +74,10 @@ class ChangePasswordRepository
   }
 
   @override
-  Future<Either<Failure, ValidField>> validToken(
-      {EmailAddress? emailAddress, String? resetToken}) async {
+  Future<Either<Failure, ValidField>> validToken({
+    EmailAddress? emailAddress,
+    String? resetToken,
+  }) async {
     try {
       await _dataSource!.validToken(
         emailAddress: emailAddress,

@@ -28,21 +28,14 @@ class AudioData {
   final String sequence;
   final String eventId;
   final File media;
-
-  AudioData({
-    required this.createdAt,
-    required this.sequence,
-    required this.eventId,
-    required this.media,
-  });
 }
 
 class AudioSyncRepository implements IAudioSyncRepository {
-  final IApiProvider? _apiProvider;
-
   AudioSyncRepository({
     required IApiProvider? apiProvider,
   }) : _apiProvider = apiProvider;
+
+  final IApiProvider? _apiProvider;
 
   @override
   Future<Either<Failure, ValidField>> upload(AudioData audio) async {

@@ -4,10 +4,6 @@ import 'package:penhas/app/features/users/domain/entities/user_detail_profile_en
 
 @immutable
 class UserSearchSessionEntity extends Equatable {
-  final bool hasMore;
-  final String? nextPage;
-  final List<UserDetailProfileEntity>? users;
-
   const UserSearchSessionEntity({
     required this.hasMore,
     required this.nextPage,

@@ -17,10 +17,10 @@ class CategoryTweetController extends _CategoryTweetControllerBase
 }
 
 abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
+  _CategoryTweetControllerBase(this.useCase);
+
   final TweetFilterPreference useCase;
   String? _currentCategory;
-
-  _CategoryTweetControllerBase(this.useCase);
 
   @observable
   ObservableFuture<Either<Failure, TweetFilterSessionEntity>>? _progress;
@@ -57,7 +57,7 @@ abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
 
     final Either<Failure, TweetFilterSessionEntity> response = await _progress!;
     response.fold(
-      (failure) => _setErrorMessage(mapFailureMessage(failure)),
+      (failure) => errorMessage = mapFailureMessage(failure),
       (filters) => _updateCategory(filters),
     );
   }
@@ -69,12 +69,8 @@ abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> apply() async {
-    useCase.saveCategory([selectedRadio]);
+    useCase.categories = [selectedRadio];
     Modular.to.pop(true);
-  }
-
-  void _setErrorMessage(String? message) {
-    errorMessage = message;
   }
 
   void _updateCategory(TweetFilterSessionEntity filters) {

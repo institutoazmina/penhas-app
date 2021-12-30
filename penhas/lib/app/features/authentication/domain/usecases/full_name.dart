@@ -6,11 +6,6 @@ import 'package:penhas/app/features/authentication/domain/usecases/map_validator
 
 @immutable
 class Fullname extends Equatable with MapValidatorFailure {
-  final Either<Failure, String?> value;
-
-  String? get rawValue => value.getOrElse(() => '');
-  bool get isValid => value.isRight();
-
   factory Fullname(String? input) {
     return Fullname._(_validate(input));
   }

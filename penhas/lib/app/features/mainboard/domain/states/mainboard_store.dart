@@ -18,13 +18,13 @@ class MainboardStore extends _MainboardStoreBase with _$MainboardStore {
 }
 
 abstract class _MainboardStoreBase with Store {
-  final IAppModulesServices _modulesServices;
-  final MainboardState _initialPage;
-  late Future setupProgress;
-
   _MainboardStoreBase(this._modulesServices, this._initialPage) {
     setupProgress = setup();
   }
+
+  final IAppModulesServices _modulesServices;
+  final MainboardState _initialPage;
+  late Future setupProgress;
 
   PageController pageController = PageController();
 

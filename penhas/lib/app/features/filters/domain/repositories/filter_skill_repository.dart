@@ -13,11 +13,11 @@ abstract class IFilterSkillRepository {
 }
 
 class FilterSkillRepository implements IFilterSkillRepository {
-  final IApiProvider? _apiProvider;
-
   FilterSkillRepository({
     required IApiProvider? apiProvider,
   }) : _apiProvider = apiProvider;
+
+  final IApiProvider? _apiProvider;
 
   @override
   Future<Either<Failure, List<FilterTagEntity>?>> skills() async {

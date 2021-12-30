@@ -21,10 +21,6 @@ class FeedController extends _FeedControllerBase with _$FeedController {
 }
 
 abstract class _FeedControllerBase with Store, MapFailureMessage {
-  final FeedUseCases useCase;
-  StreamSubscription? _streamCache;
-  final IAppModulesServices _modulesServices;
-
   _FeedControllerBase(this.useCase, this._modulesServices) {
     _registerDataSource();
     _setupSecurityState();
@@ -127,12 +123,7 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
     _cancelDataSource();
   }
 
-  void _setErrorMessage(String? msg) {
-    print(msg);
-    errorMessage = msg;
-  }
-
-  _registerDataSource() {
+  void _registerDataSource() {
     _streamCache = useCase.dataSource
         .listen((cache) => listTweets = cache.tweets.asObservable());
   }
@@ -145,10 +136,8 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
             : const FeedSecurityState.disable();
   }
 
-  _cancelDataSource() {
-    if (_streamCache != null) {
-      _streamCache!.cancel();
-      _streamCache = null;
-    }
+  void _cancelDataSource() {
+    _streamCache?.cancel();
+    _streamCache = null;
   }
 }

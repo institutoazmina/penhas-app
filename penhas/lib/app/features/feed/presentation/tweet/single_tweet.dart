@@ -7,10 +7,6 @@ import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_bottom
 import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_title.dart';
 
 class SingleTweet extends StatelessWidget {
-  final TweetEntity tweet;
-  final BuildContext _context;
-  final ITweetController controller;
-
   const SingleTweet({
     Key? key,
     required this.tweet,
@@ -18,6 +14,10 @@ class SingleTweet extends StatelessWidget {
     required this.controller,
   })  : _context = context,
         super(key: key);
+
+  final TweetEntity tweet;
+  final BuildContext _context;
+  final ITweetController controller;
 
   @override
   Widget build(BuildContext context) {

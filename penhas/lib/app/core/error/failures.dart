@@ -40,8 +40,6 @@ class AudioDownloadFailure extends Failure {}
 class FileSystemFailure extends Failure {}
 
 class GpsFailure extends Failure {
-  final String? message;
-
   GpsFailure(this.message);
 
   final String? message;
@@ -51,8 +49,6 @@ class GpsFailure extends Failure {
 }
 
 class AddressFailure extends Failure {
-  final String? message;
-
   AddressFailure(this.message);
 
   final String? message;
@@ -63,11 +59,6 @@ class AddressFailure extends Failure {
 
 @immutable
 class ServerSideFormFieldValidationFailure extends Failure {
-  final String? error;
-  final String? message;
-  final String? field;
-  final String? reason;
-
   ServerSideFormFieldValidationFailure({
     this.error,
     this.message,

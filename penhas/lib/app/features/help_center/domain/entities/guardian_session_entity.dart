@@ -13,12 +13,6 @@ class GuardianSessioEntity extends Equatable {
   final int maximumInvites;
   final List<GuardianEntity> guards;
 
-  const GuardianSessioEntity({
-    required this.remainingInvites,
-    required this.maximumInvites,
-    required this.guards,
-  });
-
   @override
   List<Object?> get props => [remainingInvites, maximumInvites, guards];
 
@@ -35,11 +29,6 @@ class GuardianEntity extends Equatable {
 
   final GuardianSessionMeta meta;
   final List<GuardianContactEntity> contacts;
-
-  const GuardianEntity({
-    required this.meta,
-    required this.contacts,
-  });
 
   @override
   List<Object?> get props => [meta, contacts];
@@ -70,16 +59,6 @@ class GuardianSessionMeta extends Equatable {
   final String? header;
   final GuardianStatus status;
 
-  const GuardianSessionMeta({
-    required this.canEdit,
-    required this.canDelete,
-    required this.canResend,
-    required this.deleteWarning,
-    required this.description,
-    required this.header,
-    required this.status,
-  });
-
   @override
   List<Object?> get props => [
         canEdit,
@@ -97,11 +76,6 @@ class GuardianSessionMeta extends Equatable {
 
 @immutable
 class GuardianContactEntity extends Equatable {
-  final int? id;
-  final String? name;
-  final String? mobile;
-  final String? status;
-
   const GuardianContactEntity({
     required this.id,
     required this.name,
@@ -141,10 +115,10 @@ class GuardianContactEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id!,
-        name!,
-        mobile!,
-        status!,
+        id,
+        name,
+        mobile,
+        status,
       ];
 
   @override

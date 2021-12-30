@@ -10,16 +10,16 @@ abstract class IQuizDataSource {
 }
 
 class QuizDataSource implements IQuizDataSource {
-  final http.Client? _apiClient;
-  final IApiServerConfigure? _serverConfiguration;
-  final Set<int> _successfulResponse = {200};
-  final Set<int> _invalidSessionCode = {401, 403};
-
   QuizDataSource({
     required http.Client? apiClient,
     required serverConfiguration,
   })  : _apiClient = apiClient,
         _serverConfiguration = serverConfiguration;
+
+  final http.Client? _apiClient;
+  final IApiServerConfigure? _serverConfiguration;
+  final Set<int> _successfulResponse = {200};
+  final Set<int> _invalidSessionCode = {401, 403};
 
   @override
   Future<AppStateModel> update({required QuizRequestEntity? quiz}) async {
@@ -53,9 +53,9 @@ class QuizDataSource implements IQuizDataSource {
     };
   }
 
-  Future<Uri> _setupHttpRequest(
-      {required Map<String, String> queryParameters}) async {
-    queryParameters.removeWhere((k, v) => v == null);
+  Future<Uri> _setupHttpRequest({
+    required Map<String, String> queryParameters,
+  }) async {
     return _serverConfiguration!.baseUri.replace(
       path: '/me/quiz',
       queryParameters: queryParameters,

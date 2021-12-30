@@ -1,37 +1,38 @@
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_modular/flutter_modular.dart';
-
-import 'route.dart';
+import 'package:penhas/app/shared/navigation/route.dart';
 
 class AppNavigator {
   static void popAndPush(AppRoute route) {
     if (route.args == null) {
-      Modular.to.popAndPushNamed(route.path!);
+      Modular.to.popAndPushNamed(route.path);
     } else {
-      Modular.to.popAndPushNamed(route.path!, arguments: route.args!);
+      Modular.to.popAndPushNamed(route.path, arguments: route.args);
     }
   }
 
   static void push(AppRoute route) {
     if (route.args == null) {
-      Modular.to.pushNamed(route.path!);
+      Modular.to.pushNamed(route.path);
     } else {
-      Modular.to.pushNamed(route.path!, arguments: route.args!);
+      Modular.to.pushNamed(route.path, arguments: route.args);
     }
   }
 
-  static void pushAndRemoveUntil(AppRoute route,
-      {required String removeUntil}) {
+  static void pushAndRemoveUntil(
+    AppRoute route, {
+    required String removeUntil,
+  }) {
     if (route.args == null) {
       Modular.to.pushNamedAndRemoveUntil(
-        route.path!,
+        route.path,
         material.ModalRoute.withName(removeUntil),
       );
     } else {
       Modular.to.pushNamedAndRemoveUntil(
-        route.path!,
+        route.path,
         material.ModalRoute.withName(removeUntil),
-        arguments: route.args!,
+        arguments: route.args,
       );
     }
   }

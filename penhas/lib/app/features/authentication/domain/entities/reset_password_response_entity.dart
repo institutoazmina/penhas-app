@@ -3,11 +3,6 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ResetPasswordResponseEntity extends Equatable {
-  final String? message;
-  final int? digits;
-  final int? ttl;
-  final int? ttlRetry;
-
   const ResetPasswordResponseEntity({
     required this.message,
     required this.digits,

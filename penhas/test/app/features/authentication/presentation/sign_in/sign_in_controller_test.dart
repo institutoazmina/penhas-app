@@ -2,8 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
-import 'package:penhas/app/features/authentication/data/repositories/authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_controller.dart';
 
@@ -71,10 +69,12 @@ void main() {
     });
 
     void mockAuthenticationFailure(Failure failure) {
-      when(authenticationRepositoryMock.signInWithEmailAndPassword(
-        emailAddress: anyNamed('emailAddress'),
-        password: anyNamed('password'),
-      ),).thenAnswer((_) async => left(failure));
+      when(
+        authenticationRepositoryMock.signInWithEmailAndPassword(
+          emailAddress: anyNamed('emailAddress'),
+          password: anyNamed('password'),
+        ),
+      ).thenAnswer((_) async => left(failure));
     }
 
     test('should validate inputs before hits repository', () async {
@@ -86,7 +86,7 @@ void main() {
       verifyZeroInteractions(authenticationRepositoryMock);
     });
 
-    void testServerError(Failure failure, String errorMessage) async {
+    Future<void> testServerError(Failure failure, String errorMessage) async {
       // arrange
       mockAuthenticationFailure(failure);
       const validPassword = 'sTr0ngMy';

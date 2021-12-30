@@ -17,11 +17,6 @@ class ChatMainAssistantCardTile extends ChatMainTileEntity {
 }
 
 class ChatMainSupportTile extends ChatMainTileEntity {
-  final String title;
-  final String content;
-  final ChatChannelEntity? channel;
-  final QuizSessionEntity? quizSession;
-
   ChatMainSupportTile({
     required this.title,
     required this.content,

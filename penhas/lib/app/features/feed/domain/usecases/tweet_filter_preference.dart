@@ -5,10 +5,6 @@ import 'package:penhas/app/features/feed/data/repositories/tweet_filter_preferen
 import 'package:penhas/app/features/feed/domain/entities/tweet_filter_session_entity.dart';
 
 class TweetFilterPreference {
-  final ITweetFilterPreferenceRepository? _repository;
-  List<String> _currentTags = [];
-  List<String> _currentCategory = [];
-
   TweetFilterPreference({
     required ITweetFilterPreferenceRepository? repository,
   }) : _repository = repository;
@@ -34,13 +30,13 @@ class TweetFilterPreference {
     }
 
     List<TweetFilterEntity>? rebuildedCategory;
-    if (_currentCategory.isNotEmpty) {
-      final setCategory = Set<String>.from(_currentCategory);
+    if (categories.isNotEmpty) {
+      final setCategory = Set<String>.from(categories);
       final indexCategory = response.categories.indexWhere(
         (e) => setCategory.contains(e.id),
       );
       if (indexCategory >= 0) {
-        rebuildedCategory = rebuildedCategory
+        rebuildedCategory = response.categories
             .map((e) => e.copyWith(isSelected: setCategory.contains(e.id)))
             .toList();
       }
@@ -49,22 +45,17 @@ class TweetFilterPreference {
     List<TweetFilterEntity>? rebuildedTags;
     if (_currentTags.isNotEmpty) {
       final setTags = Set<String>.from(_currentTags);
-      rebuildedTags = rebuildedTags
+      rebuildedTags = response.tags
           .map((e) => e.copyWith(isSelected: setTags.contains(e.id)))
           .toList();
     }
 
-    return right(TweetFilterSessionEntity(
+    return right(
+      TweetFilterSessionEntity(
         categories: rebuildedCategory ?? response.categories,
-        tags: rebuildedTags ?? response.tags,),);
-  }
-
-  void saveCategory(List<String> categories) {
-    _currentCategory = categories;
-  }
-
-  void saveTags(List<String?> tags) {
-    _currentTags = tags.whereNotNull().toList();
+        tags: rebuildedTags ?? response.tags,
+      ),
+    );
   }
 
   void saveTags(List<String?> tags) {

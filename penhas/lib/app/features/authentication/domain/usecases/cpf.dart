@@ -7,11 +7,6 @@ import 'package:penhas/app/features/authentication/domain/usecases/map_validator
 
 @immutable
 class Cpf extends Equatable with MapValidatorFailure {
-  final Either<Failure, String?> value;
-
-  String? get rawValue => value.getOrElse(() => '');
-  bool get isValid => value.isRight();
-
   factory Cpf(String input) {
     return Cpf._(_validate(input));
   }

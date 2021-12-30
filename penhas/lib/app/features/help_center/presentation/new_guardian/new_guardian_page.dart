@@ -18,9 +18,10 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class NewGuardianPage extends StatefulWidget {
-  final String title;
   const NewGuardianPage({Key? key, this.title = 'NewGuardian'})
       : super(key: key);
+
+  final String title;
 
   @override
   _NewGuardianPageState createState() => _NewGuardianPageState();
@@ -129,8 +130,9 @@ class _NewGuardianPageState
         style: kTextStyleGuardianBodyTextStyle,
         children: <TextSpan>[
           TextSpan(
-              text: ' Não precisa ser usuário do PenhaS.',
-              style: kTextStyleGuardianBodyTextBoldStyle,)
+            text: ' Não precisa ser usuário do PenhaS.',
+            style: kTextStyleGuardianBodyTextBoldStyle,
+          )
         ],
       ),
     );
@@ -139,16 +141,18 @@ class _NewGuardianPageState
   Widget _guardianNameInput() {
     return Padding(
       padding: const EdgeInsets.only(top: 20.0),
-      child: Observer(builder: (_) {
-        return SingleTextInput(
-          style: kTextStyleGreyDefaultTextFieldLabelStyle,
-          onChanged: controller.setGuardianName,
-          boxDecoration: PurpleBoxDecorationStyle(
-            labelText: 'Nome do guardião',
-            errorText: controller.warningName,
-          ),
-        );
-      },),
+      child: Observer(
+        builder: (_) {
+          return SingleTextInput(
+            style: kTextStyleGreyDefaultTextFieldLabelStyle,
+            onChanged: controller.setGuardianName,
+            boxDecoration: PurpleBoxDecorationStyle(
+              labelText: 'Nome do guardião',
+              errorText: controller.warningName,
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -173,50 +177,49 @@ class _NewGuardianPageState
   }
 
   Widget _description() {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 40),
-            child: RichText(
-              text: const TextSpan(
-                  text:
-                      '• Para que esta pessoa se torne sua guardiã, é preciso que ela',
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(top: 40),
+          child: RichText(
+            text: const TextSpan(
+              text:
+                  '• Para que esta pessoa se torne sua guardiã, é preciso que ela',
+              style: kTextStyleGuardianBodyTextStyle,
+              children: <TextSpan>[
+                TextSpan(
+                  text: ' aceite o convite ',
+                  style: kTextStyleGuardianBodyTextBoldStyle,
+                ),
+                TextSpan(
+                  text: 'que será enviado no número cadastrado.',
                   style: kTextStyleGuardianBodyTextStyle,
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: ' aceite o convite ',
-                      style: kTextStyleGuardianBodyTextBoldStyle,
-                    ),
-                    TextSpan(
-                      text: 'que será enviado no número cadastrado.',
-                      style: kTextStyleGuardianBodyTextStyle,
-                    )
-                  ],),
+                )
+              ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 14.0),
-            child: RichText(
-              text: const TextSpan(
-                text:
-                    '• Lembre-se de conversar com a pessoa antes de cadastra-la. É importante que ela esteja',
-                style: kTextStyleGuardianBodyTextStyle,
-                children: <TextSpan>[
-                  TextSpan(
-                    text: ' ciente que receberá seus pedidos de socorro ',
-                    style: kTextStyleGuardianBodyTextBoldStyle,
-                  ),
-                  TextSpan(
-                    text: 'via SMS.',
-                    style: kTextStyleGuardianBodyTextStyle,
-                  )
-                ],
-              ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 14.0),
+          child: RichText(
+            text: const TextSpan(
+              text:
+                  '• Lembre-se de conversar com a pessoa antes de cadastra-la. É importante que ela esteja',
+              style: kTextStyleGuardianBodyTextStyle,
+              children: <TextSpan>[
+                TextSpan(
+                  text: ' ciente que receberá seus pedidos de socorro ',
+                  style: kTextStyleGuardianBodyTextBoldStyle,
+                ),
+                TextSpan(
+                  text: 'via SMS.',
+                  style: kTextStyleGuardianBodyTextStyle,
+                )
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -278,7 +281,7 @@ class _NewGuardianPageState
     });
   }
 
-  _handleTap(BuildContext context) {
+  void _handleTap(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
     }
@@ -293,7 +296,8 @@ class _NewGuardianPageState
           title: Column(
             children: <Widget>[
               SvgPicture.asset(
-                  'assets/images/svg/help_center/guardians/guardians_sent_invite.svg',),
+                'assets/images/svg/help_center/guardians/guardians_sent_invite.svg',
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 12.0),
                 child: Text(action.title, style: kTextStyleAlertDialogTitle),

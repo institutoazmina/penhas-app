@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class SupportCenterInput extends StatelessWidget {
-  final int maxLines;
-  final String hintText;
-  final String errorText;
-  final ValueChanged<String> onChanged;
-
   const SupportCenterInput({
     Key? key,
     this.maxLines = 1,
@@ -14,6 +9,11 @@ class SupportCenterInput extends StatelessWidget {
     required this.errorText,
     required this.onChanged,
   }) : super(key: key);
+
+  final int maxLines;
+  final String hintText;
+  final String errorText;
+  final ValueChanged<String> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,8 @@ class SupportCenterInput extends StatelessWidget {
         decoration: InputDecoration(
           hintText: hintText,
           border: const OutlineInputBorder(),
-          contentPadding: const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
+          contentPadding:
+              const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(
               color: DesignSystemColors.easterPurple,
