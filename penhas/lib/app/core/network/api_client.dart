@@ -10,34 +10,34 @@ import 'package:penhas/app/shared/logger/log.dart';
 abstract class IApiProvider {
   Future<String> get({
     required String path,
-    Map<String, String> headers,
-    Map<String, String?>? parameters,
+    Map<String, String> headers = const {},
+    Map<String, String?> parameters = const {},
   });
 
   Future<String> post({
     required String path,
-    Map<String, String> headers,
-    Map<String?, String?>? parameters,
+    Map<String, String> headers = const {},
+    Map<String, String?> parameters = const {},
     String? body,
   });
 
   Future<String> delete({
     required String path,
-    Map<String, String?>? parameters,
+    Map<String, String?> parameters = const {},
   });
 
   Future<String> upload({
     required String path,
     required MultipartFile file,
-    Map<String, String> headers,
+    Map<String, String> headers = const {},
     Map<String, String>? fields,
   });
 
   Future<String> download({
     required String path,
     required File file,
-    Map<String, String> headers,
-    Map<String, String>? fields,
+    Map<String, String> headers = const {},
+    Map<String, String> fields = const {},
   });
 }
 
@@ -55,7 +55,7 @@ class ApiProvider implements IApiProvider {
   Future<String> get({
     required String path,
     Map<String, String> headers = const {},
-    Map<String, String?>? parameters,
+    Map<String, String?> parameters = const {},
   }) async {
     final Uri uriRequest = setupHttpRequest(
       path: path,
@@ -72,7 +72,7 @@ class ApiProvider implements IApiProvider {
   Future<String> post({
     required String path,
     Map<String, String> headers = const {},
-    Map<String?, String?>? parameters,
+    Map<String, String?> parameters = const {},
     String? body,
   }) async {
     final Uri uriRequest = setupHttpRequest(
@@ -89,7 +89,7 @@ class ApiProvider implements IApiProvider {
   @override
   Future<String> delete({
     String? path,
-    Map<String, String?>? parameters,
+    Map<String, String?> parameters = const {},
   }) async {
     final Uri uriRequest = setupHttpRequest(
       path: path,
@@ -132,7 +132,7 @@ class ApiProvider implements IApiProvider {
     required String path,
     required File file,
     Map<String, String> headers = const {},
-    Map<String, String>? fields,
+    Map<String, String> fields = const {},
   }) async {
     final Uri uriRequest = setupHttpRequest(
       path: path,
@@ -152,32 +152,29 @@ extension _ApiProvider on ApiProvider {
   Future<Map<String, String>> setupHttpHeader([
     Map<String, String> headers = const {},
   ]) async {
-    headers.addAll(
-      {
-        'X-Api-Key': await _serverConfiguration.apiToken ?? '',
-        'User-Agent': await _serverConfiguration.userAgent,
-      },
-    );
+    final Map<String, String> httpHeaders = {
+      'X-Api-Key': await _serverConfiguration.apiToken ?? '',
+      'User-Agent': await _serverConfiguration.userAgent,
+      ...headers,
+    };
 
-    if (!headers.containsKey('Content-Type')) {
-      headers['Content-Type'] =
+    if (!httpHeaders.containsKey('Content-Type')) {
+      httpHeaders['Content-Type'] =
           'application/x-www-form-urlencoded; charset=utf-8';
     }
 
-    return headers;
+    return httpHeaders;
   }
 
   Uri setupHttpRequest({
     required String? path,
-    required Map<String?, String?>? queryParameters,
+    Map<String, String?> queryParameters = const {},
   }) {
-    queryParameters ??= {};
-    queryParameters.removeWhere((k, v) => v == null);
+    final query = {...queryParameters};
+    query.removeWhere((k, v) => v == null);
     return _serverConfiguration.baseUri.replace(
       path: path,
-      queryParameters: queryParameters.isEmpty
-          ? null
-          : queryParameters as Map<String, dynamic>?,
+      queryParameters: query,
     );
   }
 }

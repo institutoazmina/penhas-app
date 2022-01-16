@@ -9,7 +9,7 @@ class AccountPreferenceEntity extends Equatable {
     required this.value,
   });
 
-  final String? key;
+  final String key;
   final String? label;
   final bool value;
 
@@ -18,8 +18,8 @@ class AccountPreferenceEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        key!,
-        label!,
+        key,
+        label,
         value,
       ];
 }

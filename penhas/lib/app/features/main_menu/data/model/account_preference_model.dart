@@ -2,7 +2,7 @@ import 'package:penhas/app/features/main_menu/domain/entities/account_preference
 
 class AccountPreferenceModel extends AccountPreferenceEntity {
   const AccountPreferenceModel({
-    required String? key,
+    required String key,
     required String? label,
     required bool value,
   }) : super(key: key, label: label, value: value);
@@ -24,7 +24,9 @@ class AccountPreferenceSessionModel extends AccountPreferenceSessionEntity {
     required List<AccountPreferenceModel> preferences,
   }) : super(preferences: preferences);
 
-  factory AccountPreferenceSessionModel.fromJson(Map<String, dynamic> jsonData) {
+  factory AccountPreferenceSessionModel.fromJson(
+    Map<String, dynamic> jsonData,
+  ) {
     final preferences = (jsonData['preferences'] as List<dynamic>)
         .map((e) => AccountPreferenceModel.fromJson(e))
         .toList();

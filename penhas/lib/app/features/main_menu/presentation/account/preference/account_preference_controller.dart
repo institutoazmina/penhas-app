@@ -44,7 +44,7 @@ abstract class _AccountPreferenceControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> update(
-    String? key, {
+    String key, {
     required bool status,
   }) async {
     messageError = '';
