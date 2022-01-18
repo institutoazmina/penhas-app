@@ -32,10 +32,9 @@ class SupportCenterRate extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             child: SmoothStarRating(
               allowHalfRating: false,
-              onRatingChanged: onRated,
+              onRated: onRated,
               rating: detail.ratedByClient!.toDouble(),
               size: 40.0,
-              // isReadOnly: false,
               color: DesignSystemColors.pumpkinOrange,
               borderColor: DesignSystemColors.pumpkinOrange,
             ),

@@ -67,8 +67,8 @@ dependencies:
   shared_preferences: ^2.0.11
   smooth_star_rating:
     git:
-      url: https://github.com/educup/smoothratingbar.git
-      ref: "4c5c5d3800c9b81a4015f030ff11a1b6b6384191"
+      url: https://github.com/bhavin-concetto/smoothratingbar.git
+      ref: "eb02312f9adc6a40e2488050fb2e58852a163bb8"
   timeago: ^3.1.0
   url_launcher: ^6.0.17
   uuid: ^3.0.5
