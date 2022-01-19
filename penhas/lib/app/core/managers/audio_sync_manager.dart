@@ -181,7 +181,7 @@ extension _AudioSyncManager on AudioSyncManager {
       }
 
       final fileName = file.name;
-      final parts = fileName.split('_');
+      final parts = fileName.split(RegExp('[_.]'));
       final audio = AudioData(
         media: file,
         eventId: parts[1],

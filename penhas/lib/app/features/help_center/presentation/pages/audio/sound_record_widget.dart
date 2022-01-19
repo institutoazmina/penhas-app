@@ -8,20 +8,19 @@ class SoundRecordWidget extends StatefulWidget {
 
   final AudioActivity? audioActivity;
   final VoidCallback? onPressed;
-  
+
   @override
   _SoundRecordWidgetState createState() => _SoundRecordWidgetState();
 }
 
 class _SoundRecordWidgetState extends State<SoundRecordWidget>
     with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
+  late final AnimationController _animationController =
+      AnimationController(vsync: this, duration: const Duration(seconds: 2));
   late Animation _animation;
 
   @override
   void initState() {
-    _animationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 2));
     _animation = Tween(begin: 0.0, end: 12.0).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
@@ -49,9 +48,10 @@ class _SoundRecordWidgetState extends State<SoundRecordWidget>
             boxShadow: [
               for (int i = 1; i <= 5; i++)
                 BoxShadow(
-                    color: DesignSystemColors.easterPurple
-                        .withOpacity(_animationController.value / 2),
-                    spreadRadius: i * _animation.value as double,)
+                  color: DesignSystemColors.easterPurple
+                      .withOpacity(_animationController.value / 2),
+                  spreadRadius: i * _animation.value as double,
+                )
             ],
           ),
           child: Column(
@@ -65,10 +65,11 @@ class _SoundRecordWidgetState extends State<SoundRecordWidget>
               Text(
                 widget.audioActivity?.time ?? '',
                 style: const TextStyle(
-                    fontFamily: 'Lato',
-                    fontSize: 35.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.normal,),
+                  fontFamily: 'Lato',
+                  fontSize: 35.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
             ],
           ),

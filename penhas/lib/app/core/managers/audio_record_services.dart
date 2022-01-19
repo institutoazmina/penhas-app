@@ -41,7 +41,7 @@ class AudioRecordServices implements IAudioRecordServices {
   AudioRecordServices({required IAudioSyncManager audioSyncManager})
       : _audioSyncManager = audioSyncManager;
 
-  final FlutterSoundRecorder _recorder =
+  late final FlutterSoundRecorder _recorder =
       FlutterSoundRecorder(logLevel: Level.warning);
   final IAudioSyncManager _audioSyncManager;
   final _audioCodec = Codec.aacADTS;
@@ -50,7 +50,6 @@ class AudioRecordServices implements IAudioRecordServices {
   Duration _currentDuration = Duration.zero;
   Duration _runningDuration = Duration.zero;
 
-  // ignore: cancel_subscriptions
   StreamSubscription? _recorderSubscription;
   StreamController<AudioActivity>? _streamController =
       StreamController.broadcast();
@@ -183,7 +182,8 @@ extension _AudioRecordServices on AudioRecordServices {
 
   Future<void> _startRecorder(String path) async {
     try {
-      _recorder.startRecorder(
+      _recorder.setSubscriptionDuration(const Duration(milliseconds: 100));
+      await _recorder.startRecorder(
         codec: _audioCodec,
         toFile: path,
         bitRate: 96000,
@@ -201,6 +201,7 @@ extension _AudioRecordServices on AudioRecordServices {
               DateFormat('mm:ss:SS', 'en_GB').format(date).substring(0, 8);
           _streamController!.add(AudioActivity(recordTime, e.decibels ?? 0));
         },
+        onError: catchErrorLogger,
       );
     } catch (err, stack) {
       logError(err, stack);

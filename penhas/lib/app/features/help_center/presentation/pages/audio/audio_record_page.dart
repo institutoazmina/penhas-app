@@ -38,8 +38,8 @@ class _AudioRecordState
 
   @override
   void dispose() {
-      _streamSubscription?.cancel();
-      _streamSubscription = null;
+    _streamSubscription?.cancel();
+    _streamSubscription = null;
 
     super.dispose();
   }
