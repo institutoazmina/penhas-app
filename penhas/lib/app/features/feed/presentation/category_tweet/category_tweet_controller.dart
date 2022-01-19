@@ -33,7 +33,7 @@ abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
   String? errorMessage = '';
 
   @observable
-  String selectedRadio = '';
+  String? selectedRadio;
 
   @computed
   PageProgressState get currentState {
@@ -65,11 +65,11 @@ abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
   @action
   Future<void> setCategory(String id) async {
     selectedRadio = id;
+    useCase.categories = [id];
   }
 
   @action
   Future<void> apply() async {
-    useCase.categories = [selectedRadio];
     Modular.to.pop(true);
   }
 

@@ -29,31 +29,31 @@ class TweetFilterPreference {
       return right(response);
     }
 
-    List<TweetFilterEntity>? rebuildedCategory;
+    List<TweetFilterEntity> rebuildedCategory = response.categories;
     if (categories.isNotEmpty) {
       final setCategory = Set<String>.from(categories);
       final indexCategory = response.categories.indexWhere(
         (e) => setCategory.contains(e.id),
       );
       if (indexCategory >= 0) {
-        rebuildedCategory = response.categories
+        rebuildedCategory = rebuildedCategory
             .map((e) => e.copyWith(isSelected: setCategory.contains(e.id)))
             .toList();
       }
     }
 
-    List<TweetFilterEntity>? rebuildedTags;
+    List<TweetFilterEntity> rebuildedTags = response.tags;
     if (_currentTags.isNotEmpty) {
       final setTags = Set<String>.from(_currentTags);
-      rebuildedTags = response.tags
+      rebuildedTags = rebuildedTags
           .map((e) => e.copyWith(isSelected: setTags.contains(e.id)))
           .toList();
     }
 
     return right(
       TweetFilterSessionEntity(
-        categories: rebuildedCategory ?? response.categories,
-        tags: rebuildedTags ?? response.tags,
+        categories: rebuildedCategory,
+        tags: rebuildedTags,
       ),
     );
   }

@@ -102,7 +102,7 @@ class AppModule extends Module {
           ),
         ),
         Bind.factory<ILocalStorage>((i) => LocalStorageSharedPreferences()),
-        Bind.singleton<IAudioSyncManager>(
+        Bind.lazySingleton<IAudioSyncManager>(
           (i) => AudioSyncManager(
             audioRepository: i.get<IAudioSyncRepository>(),
           ),

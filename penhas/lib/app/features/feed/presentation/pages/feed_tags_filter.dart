@@ -22,7 +22,7 @@ class FeedTagsFilter extends StatelessWidget {
         onPressed: () async {
           Modular.to.pushNamed('/mainboard/tags').then(
             (reload) {
-              if (reload as bool? ?? false) {
+              if (reload == true) {
                 reloadFeed();
               }
             },

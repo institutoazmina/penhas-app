@@ -107,7 +107,7 @@ class MainboardModule extends Module {
             notification: i.get<INotificationRepository>(),
           ),
         ),
-        Bind.singleton(
+        Bind.lazySingleton(
           (i) => FeedUseCases(
             repository: i.get<ITweetRepository>(),
             filterPreference: i.get<TweetFilterPreference>(),
@@ -367,7 +367,7 @@ class MainboardModule extends Module {
             useCase: i.get<TweetFilterPreference>(),
           ),
         ),
-        Bind.singleton(
+        Bind.factory(
           (i) => FilterTweetController(
             useCase: i.get<TweetFilterPreference>(),
           ),
@@ -377,7 +377,7 @@ class MainboardModule extends Module {
             apiProvider: i.get<IApiProvider>(),
           ),
         ),
-        Bind.singleton(
+        Bind.lazySingleton(
           (i) => FeedRoutingPerfilChatController(
             usersRepository: i.get<IUsersRepository>(),
             channelRepository: i.get<IChatChannelRepository>(),
@@ -414,7 +414,7 @@ class MainboardModule extends Module {
             dataSource: i.get<ITweetFilterPreferenceDataSource>(),
           ),
         ),
-        Bind.factory<TweetFilterPreference>(
+        Bind.lazySingleton(
           (i) => TweetFilterPreference(
             repository: i.get<ITweetFilterPreferenceRepository>(),
           ),

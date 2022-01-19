@@ -21,7 +21,7 @@ class FeedCategoryFilter extends StatelessWidget {
         elevation: 0.0,
         onPressed: () async {
           Modular.to.pushNamed('/mainboard/category').then((reload) {
-            if (reload as bool? ?? false) {
+            if (reload == true) {
               reloadFeed();
             }
           });
