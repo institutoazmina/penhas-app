@@ -419,27 +419,27 @@ class MainboardModule extends Module {
             repository: i.get<ITweetFilterPreferenceRepository>(),
           ),
         ),
-        Bind<ILocationServices>(
+        Bind.factory<ILocationServices>(
           (i) => LocationServices(),
         ),
       ];
 
   List<Bind> get drawerBinds => [
-        Bind(
+        Bind.factory(
           (i) => PenhasDrawerController(
             appConfigure: i.get<IAppConfiguration>(),
             userProfile: i.get<UserProfile>(),
             modulesServices: i.get<IAppModulesServices>(),
           ),
         ),
-        Bind<UserProfile>(
+        Bind.factory<UserProfile>(
           (i) => UserProfile(
             repository: i.get<IUserProfileRepository>(),
             userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
             appStateUseCase: i.get<AppStateUseCase>(),
           ),
         ),
-        Bind<AppStateUseCase>(
+        Bind.factory<AppStateUseCase>(
           (i) => AppStateUseCase(
             appStateRepository: i.get<IAppStateRepository>(),
             userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
@@ -447,25 +447,25 @@ class MainboardModule extends Module {
             appModulesServices: i.get<IAppModulesServices>(),
           ),
         ),
-        Bind<InactivityLogoutUseCase>(
+        Bind.factory<InactivityLogoutUseCase>(
           (i) => InactivityLogoutUseCase(
             appPreferencesStore: i.get<LocalStore<AppPreferencesEntity>>(),
             userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
           ),
         ),
-        Bind<IAppStateRepository>(
+        Bind.factory<IAppStateRepository>(
           (i) => AppStateRepository(
             networkInfo: i.get<INetworkInfo>(),
             dataSource: i.get<IAppStateDataSource>(),
           ),
         ),
-        Bind<IAppStateDataSource>(
+        Bind.factory<IAppStateDataSource>(
           (i) => AppStateDataSource(
             apiClient: i.get<http.Client>(),
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
-        Bind<StealthModeTutorialPageController>(
+        Bind.factory<StealthModeTutorialPageController>(
           (i) => StealthModeTutorialPageController(
             locationService: i.get<ILocationServices>(),
           ),
@@ -473,13 +473,13 @@ class MainboardModule extends Module {
       ];
 
   List<Bind> get helpCenterBinds => [
-        Bind(
+        Bind.factory(
           (i) => NewGuardianController(
             guardianRepository: i.get<IGuardianRepository>(),
             locationService: i.get<ILocationServices>(),
           ),
         ),
-        Bind(
+        Bind.factory(
           (i) => GuardiansController(
             guardianRepository: i.get<IGuardianRepository>(),
           ),
@@ -490,18 +490,18 @@ class MainboardModule extends Module {
             audioPlayServices: i.get<IAudioPlayServices>(),
           ),
         ),
-        Bind(
+        Bind.factory(
           (i) => AudiosRepository(
             apiProvider: i.get<IApiProvider>(),
           ),
         ),
-        Bind<IGuardianRepository>(
+        Bind.factory<IGuardianRepository>(
           (i) => GuardianRepository(
             dataSource: i.get<IGuardianDataSource>(),
             networkInfo: i.get<INetworkInfo>(),
           ),
         ),
-        Bind<IGuardianDataSource>(
+        Bind.factory<IGuardianDataSource>(
           (i) => GuardianDataSource(
             apiClient: i.get<http.Client>(),
             serverConfiguration: i.get<IApiServerConfigure>(),
