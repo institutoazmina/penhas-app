@@ -63,6 +63,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
       d();
     }
     controller.dispose();
+    _playingAudio = null;
     super.dispose();
   }
 

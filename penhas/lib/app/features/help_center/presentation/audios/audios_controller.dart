@@ -43,7 +43,7 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
   AudioTileAction actionSheetState = const AudioTileAction.initial();
 
   @observable
-  AudioPlaying? playingAudioState;
+  AudioPlaying playingAudioState = const AudioPlaying.none();
 
   @computed
   PageProgressState get loadState {

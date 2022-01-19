@@ -484,7 +484,7 @@ class MainboardModule extends Module {
             guardianRepository: i.get<IGuardianRepository>(),
           ),
         ),
-        Bind(
+        Bind.factory(
           (i) => AudiosController(
             audiosRepository: i.get<IAudiosRepository>(),
             audioPlayServices: i.get<IAudioPlayServices>(),

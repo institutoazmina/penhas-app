@@ -82,6 +82,7 @@ dependencies:
   meta: ^1.7.0
   crypto: ^3.0.1
   http_parser: ^4.0.0
+  logger: ^1.1.0
 
 dependency_overrides:
   flutter_modular:

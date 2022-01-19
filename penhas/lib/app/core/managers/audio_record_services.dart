@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:intl/intl.dart' show DateFormat;
+import 'package:logger/logger.dart' show Level;
 import 'package:penhas/app/core/extension/asuka.dart';
 import 'package:penhas/app/core/managers/audio_sync_manager.dart';
 import 'package:penhas/app/core/states/audio_permission_state.dart';
@@ -40,7 +41,8 @@ class AudioRecordServices implements IAudioRecordServices {
   AudioRecordServices({required IAudioSyncManager audioSyncManager})
       : _audioSyncManager = audioSyncManager;
 
-  final FlutterSoundRecorder _recorder = FlutterSoundRecorder();
+  final FlutterSoundRecorder _recorder =
+      FlutterSoundRecorder(logLevel: Level.warning);
   final IAudioSyncManager _audioSyncManager;
   final _audioCodec = Codec.aacADTS;
   String? _currentAudionSession;
@@ -73,6 +75,7 @@ class AudioRecordServices implements IAudioRecordServices {
   @override
   Future<void> stop() async {
     try {
+      if (_recorder.isStopped) return;
       await _recorder
           .stopRecorder()
           .then((value) => _audioSyncManager.syncAudio());
@@ -95,10 +98,8 @@ class AudioRecordServices implements IAudioRecordServices {
     _audioSyncManager.syncAudio();
 
     try {
-      if (_streamController != null) {
-        _streamController!.close();
-        _streamController = null;
-      }
+      _streamController?.close();
+      _streamController = null;
     } catch (e, stack) {
       logError(e, stack);
     }
@@ -142,17 +143,17 @@ extension _PermissionStatusMap on PermissionStatus {
 
 extension _AudioRecordServices on AudioRecordServices {
   void _cancelRecorderSubscriptions() {
-    if (_recorderSubscription != null) {
-      _recorderSubscription!.cancel();
-      _recorderSubscription = null;
-    }
+    _recorderSubscription?.cancel();
+    _recorderSubscription = null;
 
     _streamController?.close();
   }
 
   Future<void> _releaseAudioSession() async {
     try {
-      await _recorder.stopRecorder();
+      if (!_recorder.isStopped) {
+        await _recorder.stopRecorder();
+      }
       await _recorder.closeAudioSession();
     } catch (e, stack) {
       logError(e, stack);
@@ -189,7 +190,7 @@ extension _AudioRecordServices on AudioRecordServices {
         sampleRate: 32000,
       );
 
-      _recorderSubscription = _recorder.onProgress!.listen(
+      _recorderSubscription = _recorder.onProgress?.listen(
         (e) {
           _runningDuration = e.duration;
           final DateTime date = DateTime.fromMillisecondsSinceEpoch(
@@ -382,8 +383,10 @@ extension _AudioRecordServices on AudioRecordServices {
                   width: 120,
                   child: FlatButton(
                     color: DesignSystemColors.easterPurple,
-                    child: const Text('Sim',
-                        style: TextStyle(color: Colors.white),),
+                    child: const Text(
+                      'Sim',
+                      style: TextStyle(color: Colors.white),
+                    ),
                     onPressed: () async {
                       openAppSettings().then(
                         (value) => Navigator.of(context)
