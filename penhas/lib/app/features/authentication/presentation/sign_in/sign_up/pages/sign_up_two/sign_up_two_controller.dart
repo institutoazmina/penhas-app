@@ -25,7 +25,7 @@ class SignUpTwoController extends _SignUpTwoControllerBase
     with _$SignUpTwoController {
   SignUpTwoController(
     IUserRegisterRepository repository,
-    UserRegisterFormFieldModel? userFormFielModel,
+    UserRegisterFormFieldModel userFormFielModel,
   ) : super(repository, userFormFielModel);
 
   static List<MenuItemModel> genreDataSource() {
@@ -72,7 +72,7 @@ abstract class _SignUpTwoControllerBase with Store, MapFailureMessage {
   _SignUpTwoControllerBase(this.repository, this._userRegisterModel);
 
   final IUserRegisterRepository repository;
-  final UserRegisterFormFieldModel? _userRegisterModel;
+  final UserRegisterFormFieldModel _userRegisterModel;
 
   final String genreMessageErro = 'Gênero é requirido';
   final String raceMessageErro = 'Raça é requerida';
@@ -117,28 +117,29 @@ abstract class _SignUpTwoControllerBase with Store, MapFailureMessage {
 
   @action
   void setNickname(String name) {
-    _userRegisterModel!.nickname = Nickname(name);
+    _userRegisterModel.nickname = Nickname(name);
 
-    warningNickname = name.isEmpty ? '' : _userRegisterModel!.validateNickname;
+    warningNickname = name.isEmpty ? '' : _userRegisterModel.validateNickname;
   }
 
   @action
   void setSocialName(String name) {
-    _userRegisterModel!.socialName = Fullname(name);
+    _userRegisterModel.socialName = Fullname(name);
 
     warningSocialName =
-        name.isEmpty ? '' : _userRegisterModel!.validateSocialName;
+        name.isEmpty ? '' : _userRegisterModel.validateSocialName;
   }
 
   @action
-  void setGenre(String label) {
-    _userRegisterModel!.genre = Genre.values[int.parse(label)];
+  void setGenre(String? label) {
+    if (label == null) return;
+    _userRegisterModel.genre = Genre.values[int.parse(label)];
     currentGenre = label;
     warningGenre = '';
 
-    if (_userRegisterModel!.genre == null ||
-        _userRegisterModel!.genre == Genre.female ||
-        _userRegisterModel!.genre == Genre.male) {
+    if (_userRegisterModel.genre == null ||
+        _userRegisterModel.genre == Genre.female ||
+        _userRegisterModel.genre == Genre.male) {
       hasSocialNameField = false;
     } else {
       hasSocialNameField = true;
@@ -146,8 +147,9 @@ abstract class _SignUpTwoControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  void setRace(String label) {
-    _userRegisterModel!.race = HumanRace.values[int.parse(label)];
+  void setRace(String? label) {
+    if (label == null) return;
+    _userRegisterModel.race = HumanRace.values[int.parse(label)];
     currentRace = label;
     warningRace = '';
   }
@@ -161,13 +163,13 @@ abstract class _SignUpTwoControllerBase with Store, MapFailureMessage {
 
     _progress = ObservableFuture(
       repository.checkField(
-        birthday: _userRegisterModel!.birthday,
-        cpf: _userRegisterModel!.cpf,
-        fullname: _userRegisterModel!.fullname,
-        cep: _userRegisterModel!.cep,
-        nickName: _userRegisterModel!.nickname,
-        genre: _userRegisterModel!.genre,
-        race: _userRegisterModel!.race,
+        birthday: _userRegisterModel.birthday,
+        cpf: _userRegisterModel.cpf,
+        fullname: _userRegisterModel.fullname,
+        cep: _userRegisterModel.cep,
+        nickName: _userRegisterModel.nickname,
+        genre: _userRegisterModel.genre,
+        race: _userRegisterModel.race,
       ),
     );
 
@@ -188,17 +190,17 @@ abstract class _SignUpTwoControllerBase with Store, MapFailureMessage {
   bool _isValidToProceed() {
     bool isValid = true;
 
-    if (_userRegisterModel!.validateNickname.isNotEmpty) {
+    if (_userRegisterModel.validateNickname.isNotEmpty) {
       isValid = false;
-      warningNickname = _userRegisterModel!.validateNickname;
+      warningNickname = _userRegisterModel.validateNickname;
     }
 
-    if (_userRegisterModel!.genre == null) {
+    if (_userRegisterModel.genre == null) {
       isValid = false;
       warningGenre = genreMessageErro;
     }
 
-    if (_userRegisterModel!.race == null) {
+    if (_userRegisterModel.race == null) {
       isValid = false;
       warningRace = raceMessageErro;
     }
