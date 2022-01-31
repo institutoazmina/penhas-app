@@ -45,14 +45,14 @@ extension _ChatMainBuilder on _ChatMainPageState {
       child: SizedBox.expand(
         child: DefaultTabController(
           length: 2,
-          child: Scaffold(
-            appBar: AppBar(
-              elevation: 0,
-              toolbarHeight: 55,
-              backgroundColor: DesignSystemColors.systemBackgroundColor,
-              bottom: chatTabBar(controller.tabItems),
-            ),
-            body: buildBody(controller.tabItems),
+          child: Column(
+            children: [
+              Container(
+                color: DesignSystemColors.systemBackgroundColor,
+                child: chatTabBar(controller.tabItems),
+              ),
+              Expanded(child: buildBody(controller.tabItems)),
+            ],
           ),
         ),
       ),
