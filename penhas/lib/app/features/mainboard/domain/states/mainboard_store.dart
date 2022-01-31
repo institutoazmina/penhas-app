@@ -78,6 +78,6 @@ extension _Methods on _MainboardStoreBase {
 
     pages = authorizedPages.asObservable();
     selectedPage = _initialPage;
-    pageController = PageController(initialPage: pages.indexOf(_initialPage));
+    pageController.jumpToPage(pages.indexOf(_initialPage));
   }
 }

@@ -90,13 +90,13 @@ class MainboardModule extends Module {
         ...notificationBinds,
         ...menuBind,
         ...chatBinds,
-        Bind.lazySingleton<MainboardStore>(
+        Bind.factory<MainboardStore>(
           (i) => MainboardStore(
             modulesServices: i.get<IAppModulesServices>(),
-            initialPage: i.args?.data == null
-                ? const MainboardState.feed()
+            initialPage: i.args?.data is Map
                 // ignore: avoid_dynamic_calls
-                : MainboardState.fromString(i.args?.data['page']),
+                ? MainboardState.fromString(i.args?.data['page'])
+                : const MainboardState.feed(),
           ),
         ),
         Bind.factory(

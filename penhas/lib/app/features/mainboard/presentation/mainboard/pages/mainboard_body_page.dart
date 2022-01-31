@@ -13,15 +13,15 @@ class MainboardBodyPage extends StatelessWidget {
     required this.pageController,
   }) : super(key: key);
 
-  final List<MainboardState>? pages;
-  final PageController? pageController;
+  final List<MainboardState> pages;
+  final PageController pageController;
 
   @override
   Widget build(BuildContext context) {
     return PageView(
       physics: const NeverScrollableScrollPhysics(),
       controller: pageController,
-      children: pages!.map((e) => _buildPage(e)).toList(),
+      children: pages.map((e) => _buildPage(e)).toList(),
     );
   }
 
