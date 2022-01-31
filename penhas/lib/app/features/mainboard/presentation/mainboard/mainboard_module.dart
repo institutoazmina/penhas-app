@@ -77,7 +77,7 @@ import 'package:penhas/app/features/support_center/presentation/list/support_cen
 import 'package:penhas/app/features/support_center/presentation/location/support_center_location_page.dart';
 import 'package:penhas/app/features/support_center/presentation/show/support_center_show_page.dart';
 import 'package:penhas/app/features/users/data/repositories/users_repository.dart';
-import 'package:penhas/app/features/users/domain/presentation/user_profile_module.dart';
+import 'package:penhas/app/features/users/presentation/user_profile_module.dart';
 
 class MainboardModule extends Module {
   @override
