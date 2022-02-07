@@ -17,6 +17,7 @@ import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity
 import 'package:penhas/app/features/appstate/domain/repositories/i_app_state_repository.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_preferences_use_case.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entity.dart';
 import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
 import 'package:penhas/app/features/chat/domain/usecases/chat_channel_usecase.dart';
 import 'package:penhas/app/features/chat/presentation/chat/chat_channel_controller.dart';
@@ -327,6 +328,13 @@ class MainboardModule extends Module {
             useCase: i.get<ChatChannelUseCase>(),
           ),
         ),
+        Bind.factory(
+          (i) => ChatChannelUseCase(
+            session: i.args?.data ??
+                ChatChannelOpenEntity(token: i.args?.params['token']),
+            channelRepository: i.get<IChatChannelRepository>(),
+          ),
+        ),
       ];
 
   List<Bind> get audioServicesBinds => [
@@ -377,7 +385,7 @@ class MainboardModule extends Module {
             apiProvider: i.get<IApiProvider>(),
           ),
         ),
-        Bind.lazySingleton(
+        Bind.factory(
           (i) => FeedRoutingPerfilChatController(
             usersRepository: i.get<IUsersRepository>(),
             channelRepository: i.get<IChatChannelRepository>(),
