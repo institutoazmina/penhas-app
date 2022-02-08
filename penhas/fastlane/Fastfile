@@ -16,6 +16,8 @@ update_fastlane
 default_platform(:android)
 xcversion(version: "~> 13.1")
 
+$apiBaseUrl = "https://***REMOVED***"
+
 desc "Run code generators"
 lane :pre_build do
   Dir.chdir("..") do
@@ -29,8 +31,7 @@ platform :android do
   desc "Build release APK"
   lane :build do
     pre_build
-    #  --dart-define=env.apiBaseUrl=https://***REMOVED***
-    sh("flutter build apk --release")
+    sh("flutter build apk --release --dart-define=env.apiBaseUrl=#$apiBaseUrl")
   end
 
   desc "Build release Bundle"
@@ -45,7 +46,7 @@ platform :android do
     firebase_app_distribution(
       app: "1:51928851553:android:fc14989f5670877f663620",
       release_notes_file: "./deploy/beta/release_notes",
-      #testers_file: "./deploy/beta/testers.android",
+      # testers_file: "./deploy/beta/testers.android",
       groups: "androidtestersgroup",
       android_artifact_path: "./build/app/outputs/apk/release/app-release.apk"
     )
@@ -69,8 +70,7 @@ platform :ios do
   desc "Build release IPA"
   lane :build do
     pre_build
-    #  --dart-define=env.apiBaseUrl=https://***REMOVED***
-    sh("flutter build ios --release --no-codesign")
+    sh("flutter build ios --release --no-codesign --dart-define=env.apiBaseUrl=#$apiBaseUrl")
   end
 
   desc "Generates a provisioning profile, saving it in the current folder "
@@ -121,7 +121,7 @@ platform :ios do
     firebase_app_distribution(
       app: "1:51928851553:ios:f741dab1c05cf04e663620",
       release_notes_file: "./deploy/beta/release_notes",
-#      testers_file: "./deploy/beta/testers.ios",
+      # testers_file: "./deploy/beta/testers.ios",
       groups: "iostestersgroup",
       ipa_path: "./build/Runner/Runner.ipa",
       debug: true
