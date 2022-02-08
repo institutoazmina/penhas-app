@@ -114,7 +114,7 @@ class AudioRecordServices implements IAudioRecordServices {
     return permissionStatus().then(
       (p) => p.when(
         granted: () => const AudioPermissionState.granted(),
-        denied: () => askWhenPermissionIsDenied(),
+        denied: () => askForPermission(),
         permanentlyDenied: () => askWhenPermissionIsDenied(),
         restricted: () => const AudioPermissionState.restricted(),
         undefined: () => askForPermission(),

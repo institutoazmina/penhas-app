@@ -57,7 +57,7 @@ class LocationServices implements ILocationServices {
     return permissionStatus().then(
       (p) => p.when(
         granted: () => const LocationPermissionState.granted(),
-        denied: () => _requestDeniedPermission(),
+        denied: () => _requestPermission(title, description),
         permanentlyDenied: () => _requestDeniedPermission(),
         restricted: () => const LocationPermissionState.restricted(),
         undefined: () => _requestPermission(title, description),

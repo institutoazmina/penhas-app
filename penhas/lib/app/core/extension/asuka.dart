@@ -6,7 +6,9 @@ extension Dialog on IModularNavigator {
   Future showDialog({
     required WidgetBuilder builder,
     bool barrierDismissible = true,
-  }) async {
-    asuka.showDialog(builder: builder, barrierDismissible: barrierDismissible);
-  }
+  }) =>
+      asuka.showDialog(
+        builder: builder,
+        barrierDismissible: barrierDismissible,
+      );
 }
