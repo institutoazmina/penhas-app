@@ -1,16 +1,19 @@
 import 'dart:async';
+
+import 'package:dartz/dartz.dart';
+import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageSharedPreferences implements ILocalStorage {
-  Completer<SharedPreferences> _instance = Completer<SharedPreferences>();
-
-  _init() async {
-    _instance.complete(await SharedPreferences.getInstance());
-  }
-
   LocalStorageSharedPreferences() {
     _init();
+  }
+
+  final Completer<SharedPreferences> _instance = Completer<SharedPreferences>();
+
+  Future<void> _init() async {
+    _instance.complete(await SharedPreferences.getInstance());
   }
 
   @override
@@ -20,14 +23,26 @@ class LocalStorageSharedPreferences implements ILocalStorage {
   }
 
   @override
-  Future<String> get(String key) async {
+  Future<Either<dynamic, String>> get(String key) async {
     final shared = await _instance.future;
-    return shared.getString(key);
+    return catching(() {
+      final value = shared.getString(key);
+      if (value == null) throw ValueNotFound('Value not found with key `$key`');
+      return value;
+    });
   }
 
   @override
-  Future<void> put(String key, String value) async {
+  Future<void> put(String key, String? value) async {
     final shared = await _instance.future;
-    shared.setString(key, value);
+    if (value != null) {
+      shared.setString(key, value);
+    } else {
+      shared.remove(key);
+    }
   }
+}
+
+class ValueNotFound extends NonCriticalError {
+  ValueNotFound(String message) : super(message);
 }

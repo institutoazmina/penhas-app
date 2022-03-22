@@ -1,5 +1,5 @@
-import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 
 enum QuizMessageType {
@@ -15,7 +15,7 @@ enum QuizMessageType {
 }
 
 extension QuizMessageTypeExtension on QuizMessageType {
-  operator [](String key) {
+  QuizMessageType operator [](String key) {
     var type = QuizMessageType.displayText;
     switch (key.toLowerCase()) {
       case 'button':
@@ -44,20 +44,20 @@ extension QuizMessageTypeExtension on QuizMessageType {
 
 @immutable
 class AppStateEntity extends Equatable {
-  final QuizSessionEntity quizSession;
-  final UserProfileEntity userProfile;
+  const AppStateEntity({
+    required this.quizSession,
+    required this.userProfile,
+    required this.appMode,
+    required this.modules,
+  });
+
+  final QuizSessionEntity? quizSession;
+  final UserProfileEntity? userProfile;
   final AppStateModeEntity appMode;
   final List<AppStateModuleEntity> modules;
 
-  AppStateEntity({
-    @required this.quizSession,
-    @required this.userProfile,
-    @required this.appMode,
-    @required this.modules,
-  });
-
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         quizSession,
         userProfile,
         appMode,
@@ -70,109 +70,109 @@ class AppStateEntity extends Equatable {
 
 @immutable
 class QuizSessionEntity extends Equatable {
-  final List<QuizMessageEntity> currentMessage;
-  final String sessionId;
-  final bool isFinished;
-  final String endScreen;
-
-  QuizSessionEntity({
-    @required this.currentMessage,
-    @required this.sessionId,
-    @required this.isFinished,
-    @required this.endScreen,
+  const QuizSessionEntity({
+    required this.currentMessage,
+    required this.sessionId,
+    required this.isFinished,
+    required this.endScreen,
   });
 
+  final List<QuizMessageEntity>? currentMessage;
+  final String sessionId;
+  final bool isFinished;
+  final String? endScreen;
+
   @override
-  List<Object> get props => [currentMessage, sessionId, isFinished, endScreen];
+  List<Object?> get props => [currentMessage, sessionId, isFinished, endScreen];
 
   @override
   String toString() {
-    return "QuizSessionEntity{currentMessage: ${currentMessage.toString()}, sessionId: $sessionId, endScreen: ${endScreen.toString()}, isFinished: ${isFinished.toString()} }";
+    return 'QuizSessionEntity{currentMessage: ${currentMessage.toString()}, sessionId: $sessionId, endScreen: ${endScreen.toString()}, isFinished: ${isFinished.toString()} }';
   }
 }
 
 @immutable
 class QuizMessageEntity extends Equatable {
-  final String content;
-  final QuizMessageType type;
-  final String ref;
-  final String style;
-  final String action;
-  final String buttonLabel;
-  final List<QuizMessageMultiplechoicesOptions> options;
-
-  QuizMessageEntity({
-    @required this.content,
-    @required this.type,
-    this.ref,
+  const QuizMessageEntity({
+    required this.content,
+    required this.type,
+    this.ref = '',
     this.style,
     this.action,
     this.options,
     this.buttonLabel,
   });
 
+  final String? content;
+  final QuizMessageType type;
+  final String ref;
+  final String? style;
+  final String? action;
+  final String? buttonLabel;
+  final List<QuizMessageMultiplechoicesOptions>? options;
+
   @override
-  List<Object> get props =>
+  List<dynamic> get props =>
       [content, style, action, type, ref, options, buttonLabel];
 
   @override
   String toString() {
-    return "QuizMessageEntity{content: ${content.toString()}, type: ${type.toString()}, style: ${style.toString()}, action: ${action.toString()}, ref: ${ref.toString()}}, buttonLabel: ${buttonLabel.toString()}, options: ${options.toString()}";
+    return 'QuizMessageEntity{content: ${content.toString()}, type: ${type.toString()}, style: ${style.toString()}, action: ${action.toString()}, ref: $ref}, buttonLabel: ${buttonLabel.toString()}, options: ${options.toString()}';
   }
 }
 
 class QuizMessageMultiplechoicesOptions extends Equatable {
-  final String display;
-  final String index;
-
-  QuizMessageMultiplechoicesOptions({
-    @required this.display,
-    @required this.index,
+  const QuizMessageMultiplechoicesOptions({
+    required this.display,
+    required this.index,
   });
 
+  final String? display;
+  final String? index;
+
   @override
-  List<Object> get props => [display, index];
+  List<Object?> get props => [display, index!];
 
   @override
   String toString() {
-    return "QuizMessageMultiplechoicesOptions{index: ${index.toString()}, display: ${display.toString()}}";
+    return 'QuizMessageMultiplechoicesOptions{index: ${index.toString()}, display: ${display.toString()}}';
   }
 }
 
 @immutable
 class AppStateModeEntity extends Equatable {
-  final bool hasActivedGuardian;
-
-  AppStateModeEntity({
-    @required this.hasActivedGuardian,
+  const AppStateModeEntity({
+    this.hasActivedGuardian = false,
   });
+
+  final bool hasActivedGuardian;
 
   @override
   bool get stringify => true;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         hasActivedGuardian,
       ];
 
-  Map<String, Object> toJson() => {
+  Map<String, Object?> toJson() => {
         'hasActivedGuardian': hasActivedGuardian,
       };
 }
 
 @immutable
 class AppStateModuleEntity extends Equatable {
+  const AppStateModuleEntity({
+    required this.code,
+    required this.meta,
+  });
+
   final String code;
   final String meta;
-
-  AppStateModuleEntity({
-    @required this.code,
-    @required this.meta,
-  });
 
   @override
   bool get stringify => true;
 
   @override
-  List<Object> get props => [code, meta];
+  List<Object?> get props => [code, meta];
 }

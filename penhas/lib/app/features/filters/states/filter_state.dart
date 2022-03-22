@@ -5,7 +5,7 @@ import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.da
 part 'filter_state.freezed.dart';
 
 @freezed
-abstract class FilterState with _$FilterState {
+class FilterState with _$FilterState {
   const factory FilterState.initial() = _Initial;
   const factory FilterState.loaded(List<FilterTagEntity> tags) = _Loaded;
 }

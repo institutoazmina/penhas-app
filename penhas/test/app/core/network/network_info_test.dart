@@ -1,16 +1,15 @@
-import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 
-class MockDataConnectionChecker extends Mock implements DataConnectionChecker {}
+import '../../../utils/helper.mocks.dart';
 
 void main() {
-  NetworkInfo networkInfo;
-  MockDataConnectionChecker mockDataConnectionChecker;
+  late NetworkInfo networkInfo;
+  late final MockDataConnectionChecker mockDataConnectionChecker =
+      MockDataConnectionChecker();
 
   setUp(() {
-    mockDataConnectionChecker = MockDataConnectionChecker();
     networkInfo = NetworkInfo(mockDataConnectionChecker);
   });
 

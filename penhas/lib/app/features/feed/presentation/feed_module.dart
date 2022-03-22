@@ -9,15 +9,13 @@ import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.da
 class FeedModule extends WidgetModule {
   @override
   List<Bind> get binds => [
-        Bind(
+        Bind.factory(
           (i) => FeedController(
             useCase: i.get<FeedUseCases>(),
             modulesServices: i.get<IAppModulesServices>(),
           ),
         ),
       ];
-
-  static Inject get to => Inject<FeedModule>.of();
 
   @override
   Widget get view => FeedPage(tweetController: Modular.get<ITweetController>());

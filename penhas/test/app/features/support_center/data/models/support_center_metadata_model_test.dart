@@ -6,16 +6,16 @@ import 'package:penhas/app/features/support_center/domain/entities/support_cente
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  String supportCenterMetadataFile;
+  String? supportCenterMetadataFile;
 
   setUp(() {
-    supportCenterMetadataFile = "support_center/support_center_meta_data.json";
+    supportCenterMetadataFile = 'support_center/support_center_meta_data.json';
   });
 
   group('SupportCenterMetadataModel', () {
     test('should a subclass of SupportCenterMetadataEntity', () async {
       // act
-      final model = SupportCenterMetadataModel(
+      const model = SupportCenterMetadataModel(
         categories: null,
         projects: null,
       );
@@ -27,28 +27,28 @@ void main() {
         // arrange
         final jsonData =
             await JsonUtil.getJson(from: supportCenterMetadataFile);
-        final actual = SupportCenterMetadataModel(
+        const actual = SupportCenterMetadataModel(
           categories: [
             FilterTagModel(
-              id: "8",
-              label: "Casa da Mulher Brasileira",
+              id: '8',
+              label: 'Casa da Mulher Brasileira',
               isSelected: false,
             ),
             FilterTagModel(
-              id: "1",
-              label: "Centros de Atendimento",
+              id: '1',
+              label: 'Centros de Atendimento',
               isSelected: false,
             ),
             FilterTagModel(
-              id: "6",
-              label: "Centros de atendimento à mulher",
+              id: '6',
+              label: 'Centros de atendimento à mulher',
               isSelected: false,
             ),
           ],
           projects: [
-            FilterTagModel(id: "3", label: "MAMU", isSelected: false),
-            FilterTagModel(id: "2", label: "Mapa Delegacia", isSelected: false),
-            FilterTagModel(id: "1", label: "Penhas", isSelected: false),
+            FilterTagModel(id: '3', label: 'MAMU', isSelected: false),
+            FilterTagModel(id: '2', label: 'Mapa Delegacia', isSelected: false),
+            FilterTagModel(id: '1', label: 'Penhas', isSelected: false),
           ],
         );
         // act

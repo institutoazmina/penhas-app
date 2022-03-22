@@ -5,7 +5,7 @@ import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.da
 part 'filter_action_observer.freezed.dart';
 
 @freezed
-abstract class FilterActionObserver with _$FilterActionObserver {
+class FilterActionObserver with _$FilterActionObserver {
   const factory FilterActionObserver.reset() = _Reset;
   const factory FilterActionObserver.updated(List<FilterTagEntity> tags) =
       _Updated;

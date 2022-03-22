@@ -3,16 +3,16 @@ import 'package:meta/meta.dart';
 
 @immutable
 class TweetFilterSessionEntity extends Equatable {
+  const TweetFilterSessionEntity({
+    required this.categories,
+    required this.tags,
+  });
+
   final List<TweetFilterEntity> categories;
   final List<TweetFilterEntity> tags;
 
-  TweetFilterSessionEntity({
-    @required this.categories,
-    @required this.tags,
-  });
-
   @override
-  List<Object> get props => [categories, tags];
+  List<Object?> get props => [categories, tags];
 
   @override
   bool get stringify => true;
@@ -20,26 +20,27 @@ class TweetFilterSessionEntity extends Equatable {
 
 @immutable
 class TweetFilterEntity extends Equatable {
-  final String id;
-  final String label;
-  final bool isSelected;
-
-  TweetFilterEntity({
-    @required this.id,
-    @required this.label,
-    @required this.isSelected,
+  const TweetFilterEntity({
+    required this.id,
+    required this.label,
+    required this.isSelected,
   });
 
+  final String id;
+  final String? label;
+  final bool isSelected;
+
   @override
-  List<Object> get props => [id, label, isSelected];
+  List<Object?> get props => [id, label!, isSelected];
 
   @override
   bool get stringify => true;
 
-  TweetFilterEntity copyWith({String id, String label, bool isSelected}) {
+  TweetFilterEntity copyWith({String? id, String? label, bool? isSelected}) {
     return TweetFilterEntity(
-        id: id ?? this.id,
-        label: label ?? this.label,
-        isSelected: isSelected ?? this.isSelected);
+      id: id ?? this.id,
+      label: label ?? this.label,
+      isSelected: isSelected ?? this.isSelected,
+    );
   }
 }

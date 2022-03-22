@@ -1,6 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -18,43 +16,43 @@ part 'audios_controller.g.dart';
 
 class AudiosController extends _AudiosControllerBase with _$AudiosController {
   AudiosController({
-    @required IAudiosRepository audiosRepository,
-    @required IAudioPlayServices audioPlayServices,
+    required IAudiosRepository audiosRepository,
+    required IAudioPlayServices audioPlayServices,
   }) : super(audiosRepository, audioPlayServices);
 }
 
 abstract class _AudiosControllerBase with Store, MapFailureMessage {
+  _AudiosControllerBase(this._audiosRepository, this._audioPlayer);
+
   final IAudioPlayServices _audioPlayer;
   final IAudiosRepository _audiosRepository;
 
-  _AudiosControllerBase(this._audiosRepository, this._audioPlayer);
+  @observable
+  ObservableFuture<Either<Failure, List<AudioEntity>?>>? _fetchProgress;
 
   @observable
-  ObservableFuture<Either<Failure, List<AudioEntity>>> _fetchProgress;
+  ObservableFuture<Either<Failure, ValidField>>? _updateProgress;
 
   @observable
-  ObservableFuture<Either<Failure, ValidField>> _updateProgress;
+  String? errorMessage = '';
 
   @observable
-  String errorMessage = '';
+  AudiosState currentState = const AudiosState.initial();
 
   @observable
-  AudiosState currentState = AudiosState.initial();
+  AudioTileAction actionSheetState = const AudioTileAction.initial();
 
   @observable
-  AudioTileAction actionSheetState = AudioTileAction.initial();
-
-  @observable
-  AudioPlaying playingAudioState;
+  AudioPlaying playingAudioState = const AudioPlaying.none();
 
   @computed
   PageProgressState get loadState {
     if (_fetchProgress == null ||
-        _fetchProgress.status == FutureStatus.rejected) {
+        _fetchProgress!.status == FutureStatus.rejected) {
       return PageProgressState.initial;
     }
 
-    return _fetchProgress.status == FutureStatus.pending
+    return _fetchProgress!.status == FutureStatus.pending
         ? PageProgressState.loading
         : PageProgressState.loaded;
   }
@@ -62,36 +60,36 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
   @computed
   PageProgressState get updateState {
     if (_updateProgress == null ||
-        _updateProgress.status == FutureStatus.rejected) {
+        _updateProgress!.status == FutureStatus.rejected) {
       return PageProgressState.initial;
     }
 
-    return _updateProgress.status == FutureStatus.pending
+    return _updateProgress!.status == FutureStatus.pending
         ? PageProgressState.loading
         : PageProgressState.loaded;
   }
 
   @action
   Future<void> loadPage() async {
-    setErrorMessage('');
+    errorMessage = '';
     _fetchProgress = ObservableFuture(_audiosRepository.fetch());
 
-    final response = await _fetchProgress;
+    final Either<Failure, List<AudioEntity>?> response = await _fetchProgress!;
 
     response.fold(
       (failure) => handleLoadPageError(failure),
-      (session) => handleLoadSession(session),
+      (session) => handleLoadSession(session!),
     );
   }
 
   @action
   Future<void> delete(AudioEntity audio) async {
-    setErrorMessage('');
+    errorMessage = '';
     _updateProgress = ObservableFuture(_audiosRepository.delete(audio));
 
-    final response = await _updateProgress;
+    final Either<Failure, ValidField> response = await _updateProgress!;
     response.fold(
-      (failure) => setErrorMessage(mapFailureMessage(failure)),
+      (failure) => errorMessage = mapFailureMessage(failure),
       (session) async => loadPage(),
     );
   }
@@ -102,48 +100,47 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
 }
 
 extension _AudiosControllerBasePrivate on _AudiosControllerBase {
-  void setErrorMessage(String message) => errorMessage = message;
-
   void handleLoadSession(List<AudioEntity> session) {
     final audios = session.map((e) => buildTile(e)).toList();
     currentState = AudiosState.loaded(audios);
   }
 
   void handleLoadPageError(Failure failure) {
-    final message = mapFailureMessage(failure);
+    final message = mapFailureMessage(failure)!;
     currentState = AudiosState.error(message);
   }
 
-  void requestAudio(AudioEntity audio) async {
-    setErrorMessage('');
+  Future<void> requestAudio(AudioEntity audio) async {
+    errorMessage = '';
 
-    bool isRequestRequired = !audio.canPlay && !audio.isRequested;
+    final bool isRequestRequired = !audio.canPlay && !audio.isRequested;
     if (isRequestRequired) {
       final request = await _audiosRepository.requestAccess(audio);
-      request?.fold(
-        (failure) => setErrorMessage(mapFailureMessage(failure)),
-        (session) => actionSheetState = AudioTileAction.notice(session.message),
+      request.fold(
+        (failure) => errorMessage = mapFailureMessage(failure),
+        (session) =>
+            actionSheetState = AudioTileAction.notice(session.message!),
       );
     } else if (audio.canPlay) {
       final playingAudio = await _audioPlayer.start(
         audio,
-        onFinished: () => playingAudioState = AudioPlaying.none(),
+        onFinished: () => playingAudioState = const AudioPlaying.none(),
       );
       playingAudio.fold(
-        (failure) => setErrorMessage(mapFailureMessage(failure)),
+        (failure) => errorMessage = mapFailureMessage(failure),
         (r) => playingAudioState = AudioPlaying.playing(r),
       );
     }
   }
 
   AudioPlayTileEntity buildTile(AudioEntity audio) {
-    String description = "";
-    bool requireRequestDownloadAudio =
-        (!audio.canPlay && !audio.isRequested && !audio.isRequestGranted);
-    bool requestGrantedAndCanPlay =
-        (audio.canPlay && audio.isRequested && audio.isRequestGranted);
-    bool waitingAutorization =
-        (!audio.canPlay && audio.isRequested && !audio.isRequestGranted);
+    String description = '';
+    final bool requireRequestDownloadAudio =
+        !audio.canPlay && !audio.isRequested && !audio.isRequestGranted;
+    final bool requestGrantedAndCanPlay =
+        audio.canPlay && audio.isRequested && audio.isRequestGranted;
+    final bool waitingAutorization =
+        !audio.canPlay && audio.isRequested && !audio.isRequestGranted;
 
     if (requireRequestDownloadAudio) {
       description = 'Toque no ícone para solicitar o audio';

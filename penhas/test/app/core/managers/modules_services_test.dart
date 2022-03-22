@@ -1,17 +1,17 @@
 import 'dart:convert';
 
+import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
-import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 
-class MockLocalStorage extends Mock implements ILocalStorage {}
+import '../../../utils/helper.mocks.dart';
 
 void main() {
-  AppModulesServices sut;
-  ILocalStorage storage;
-  String appModuleKey;
+  late AppModulesServices sut;
+  late final MockILocalStorage storage = MockILocalStorage();
+  String? appModuleKey;
 
   String _convert(List<AppStateModuleEntity> modules) {
     final objects =
@@ -21,7 +21,6 @@ void main() {
 
   group('AppModulesServices', () {
     setUp(() {
-      storage = MockLocalStorage();
       appModuleKey = 'br.com.penhas.appModules';
       sut = AppModulesServices(storage: storage);
     });
@@ -30,8 +29,8 @@ void main() {
         () async {
       // arrange
       final modules = [
-        AppStateModuleEntity(code: 'module_1', meta: '{}'),
-        AppStateModuleEntity(code: 'module_2', meta: '{"data":true}'),
+        const AppStateModuleEntity(code: 'module_1', meta: '{}'),
+        const AppStateModuleEntity(code: 'module_2', meta: '{"data":true}'),
       ];
       final jsonString = _convert(modules);
       when(storage.put(any, any)).thenAnswer((_) => Future.value());
@@ -43,16 +42,16 @@ void main() {
 
     test('should get the module if exist on storage', () async {
       // arrange
-      final expected = AppStateModuleEntity(
+      const expected = AppStateModuleEntity(
         code: 'module_2',
         meta: '{"data":true}',
       );
       final modules = [
-        AppStateModuleEntity(code: 'module_1', meta: '{}'),
-        AppStateModuleEntity(code: 'module_2', meta: '{"data":true}'),
+        const AppStateModuleEntity(code: 'module_1', meta: '{}'),
+        const AppStateModuleEntity(code: 'module_2', meta: '{"data":true}'),
       ];
       final jsonString = _convert(modules);
-      when(storage.get(any)).thenAnswer((_) => Future.value(jsonString));
+      when(storage.get(any)).thenAnswer((_) => Future.value(right(jsonString)));
       // act
       final received = await sut.feature(name: 'module_2');
       // assert
@@ -61,13 +60,13 @@ void main() {
 
     test('should received null if module do not existe on storage', () async {
       // arrange
-      final expected = null;
+      const dynamic expected = null;
       final modules = [
-        AppStateModuleEntity(code: 'module_1', meta: '{}'),
-        AppStateModuleEntity(code: 'module_2', meta: '{"data":true}'),
+        const AppStateModuleEntity(code: 'module_1', meta: '{}'),
+        const AppStateModuleEntity(code: 'module_2', meta: '{"data":true}'),
       ];
       final jsonString = _convert(modules);
-      when(storage.get(any)).thenAnswer((_) => Future.value(jsonString));
+      when(storage.get(any)).thenAnswer((_) => Future.value(right(jsonString)));
       // act
       final received = await sut.feature(name: 'module_20');
       // assert

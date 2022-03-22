@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
@@ -18,26 +17,26 @@ part 'chat_main_talks_controller.g.dart';
 class ChatMainTalksController extends _ChatMainTalksControllerBase
     with _$ChatMainTalksController {
   ChatMainTalksController({
-    @required IChatChannelRepository chatChannelRepository,
+    required IChatChannelRepository chatChannelRepository,
   }) : super(chatChannelRepository);
 }
 
 abstract class _ChatMainTalksControllerBase with Store, MapFailureMessage {
-  final IChatChannelRepository _chatChannelRepository;
-
   _ChatMainTalksControllerBase(this._chatChannelRepository) {
     _init();
   }
+
+  final IChatChannelRepository _chatChannelRepository;
 
   Future<void> _init() async {
     await loadScreen();
   }
 
   @observable
-  ObservableFuture<Either<Failure, ChatChannelAvailableEntity>> _fetchProgress;
+  ObservableFuture<Either<Failure, ChatChannelAvailableEntity>>? _fetchProgress;
 
   @observable
-  ChatMainTalksState currentState = ChatMainTalksState.initial();
+  ChatMainTalksState currentState = const ChatMainTalksState.initial();
 
   @action
   Future<void> reload() async {
@@ -46,8 +45,8 @@ abstract class _ChatMainTalksControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> openChannel(ChatChannelEntity channel) async {
-    ChatChannelOpenEntity session =
-        ChatChannelOpenEntity(token: channel.token, session: null);
+    final ChatChannelOpenEntity session =
+        ChatChannelOpenEntity(token: channel.token);
 
     await forwardToChat(session);
   }
@@ -55,11 +54,12 @@ abstract class _ChatMainTalksControllerBase with Store, MapFailureMessage {
   @action
   Future<void> openAssistantCard(ChatMainSupportTile data) async {
     if (data.quizSession != null) {
-      return Modular.to.popAndPushNamed('/quiz', arguments: data.quizSession);
+      await Modular.to.popAndPushNamed('/quiz', arguments: data.quizSession);
+      return;
     }
 
-    ChatChannelOpenEntity session =
-        ChatChannelOpenEntity(token: data.channel.token, session: null);
+    final ChatChannelOpenEntity session =
+        ChatChannelOpenEntity(token: data.channel!.token);
 
     await forwardToChat(session);
   }
@@ -67,7 +67,9 @@ abstract class _ChatMainTalksControllerBase with Store, MapFailureMessage {
 
 extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
   Future<void> forwardToChat(ChatChannelOpenEntity session) async {
-    return Modular.to.pushNamed("/mainboard/chat/${session.token}", arguments: session).then(
+    return Modular.to
+        .pushNamed('/mainboard/chat/${session.token}', arguments: session)
+        .then(
       (value) async {
         if (value is bool && value) {
           await loadScreen();
@@ -77,10 +79,11 @@ extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
   }
 
   Future<void> loadScreen() async {
-    currentState = ChatMainTalksState.loading();
+    currentState = const ChatMainTalksState.loading();
     _fetchProgress = ObservableFuture(_chatChannelRepository.listChannel());
 
-    final response = await _fetchProgress;
+    final Either<Failure, ChatChannelAvailableEntity> response =
+        await _fetchProgress!;
 
     response.fold(
       (failure) => handleLoadPageError(failure),
@@ -89,14 +92,14 @@ extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
   }
 
   void handleLoadSession(ChatChannelAvailableEntity session) {
-    List<ChatMainTileEntity> tiles = List<ChatMainTileEntity>();
-    List<ChatMainSupportTile> cards = List<ChatMainSupportTile>();
+    final List<ChatMainTileEntity> tiles = [];
+    final List<ChatMainSupportTile> cards = [];
 
     if (session.assistant != null) {
       cards.add(
         ChatMainSupportTile(
-          title: session.assistant.title,
-          content: session.assistant.subtitle,
+          title: session.assistant!.title!,
+          content: session.assistant!.subtitle!,
           channel: ChatChannelEntity(
             token: null,
             lastMessageTime: null,
@@ -105,11 +108,11 @@ extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
               userId: null,
               activity: null,
               blockedMe: false,
-              avatar: session.assistant.avatar,
-              nickname: session.assistant.title,
+              avatar: session.assistant!.avatar,
+              nickname: session.assistant!.title,
             ),
           ),
-          quizSession: session.assistant.quizSession,
+          quizSession: session.assistant!.quizSession,
         ),
       );
     }
@@ -117,8 +120,8 @@ extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
     if (session.support != null) {
       cards.add(
         ChatMainSupportTile(
-          title: session.support.user.nickname,
-          content: "Fale com as adminstradoras do app",
+          title: session.support!.user.nickname!,
+          content: 'Fale com as adminstradoras do app',
           channel: session.support,
         ),
       );
@@ -128,11 +131,11 @@ extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
       tiles.add(ChatMainAssistantCardTile(cards: cards));
     }
 
-    if (session.channels.isNotEmpty) {
-      final total = session.channels.length;
-      final title = total > 1 ? "Suas conversas ($total)" : "Sua conversa";
+    if (session.channels!.isNotEmpty) {
+      final total = session.channels!.length;
+      final title = total > 1 ? 'Suas conversas ($total)' : 'Sua conversa';
       tiles.add(ChatMainChannelHeaderTile(title: title));
-      final channels = session.channels
+      final channels = session.channels!
           .map((e) => ChatMainChannelCardTile(channel: e))
           .toList();
       tiles.addAll(channels);
@@ -142,7 +145,7 @@ extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
   }
 
   void handleLoadPageError(Failure failure) {
-    final message = mapFailureMessage(failure);
+    final message = mapFailureMessage(failure)!;
     currentState = ChatMainTalksState.error(message);
   }
 }

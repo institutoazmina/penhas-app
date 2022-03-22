@@ -4,11 +4,12 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TweetRelatedNews extends StatefulWidget {
-  final TweetRelatedNewsEntity related;
   const TweetRelatedNews({
-    Key key,
-    @required this.related,
+    Key? key,
+    required this.related,
   }) : super(key: key);
+
+  final TweetRelatedNewsEntity related;
 
   @override
   _TweetRelatedNewsState createState() => _TweetRelatedNewsState();
@@ -20,19 +21,23 @@ class _TweetRelatedNewsState extends State<TweetRelatedNews> {
     final double viewPortScale = widget.related.news.length > 1 ? 0.80 : 0.95;
 
     return Padding(
-      padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
+      padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(left: 12.0),
-            child: Text('Conteúdo relacionado a',
-                style: kTextStyleFeedTweetReplyHeader),
+            child: Text(
+              'Conteúdo relacionado a',
+              style: kTextStyleFeedTweetReplyHeader,
+            ),
           ),
           Padding(
-            padding: EdgeInsets.only(left: 12.0, bottom: 12.0),
-            child: Text('"${widget.related.header}"',
-                style: kTextStyleDrawerUsername),
+            padding: const EdgeInsets.only(left: 12.0, bottom: 12.0),
+            child: Text(
+              '"${widget.related.header}"',
+              style: kTextStyleDrawerUsername,
+            ),
           ),
           SizedBox(
             height: 110,
@@ -43,8 +48,8 @@ class _TweetRelatedNewsState extends State<TweetRelatedNews> {
                 return Padding(
                   padding: const EdgeInsets.only(left: 6.0, right: 6.0),
                   child: Container(
-                    padding: EdgeInsets.all(12),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.all(12),
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(8.0)),
                       boxShadow: [
@@ -57,12 +62,12 @@ class _TweetRelatedNewsState extends State<TweetRelatedNews> {
                     ),
                     child: GestureDetector(
                       onTap: () async =>
-                          _launchURL(widget.related.news[i].newsUri),
+                          _launchURL(widget.related.news[i].newsUri!),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
                           Text(
-                            widget.related.news[i].title,
+                            widget.related.news[i].title!,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 3,
                             style: kTextStyleDrawerUsername,
@@ -70,7 +75,7 @@ class _TweetRelatedNewsState extends State<TweetRelatedNews> {
                           Padding(
                             padding: const EdgeInsets.only(top: 8.0),
                             child: Text(
-                              widget.related.news[i].source ?? "",
+                              widget.related.news[i].source ?? '',
                               style: kTextStyleFeedTweetShowReply,
                             ),
                           )
@@ -87,7 +92,7 @@ class _TweetRelatedNewsState extends State<TweetRelatedNews> {
     );
   }
 
-  void _launchURL(String uri) async {
+  Future<void> _launchURL(String uri) async {
     if (await canLaunch(uri)) {
       await launch(uri);
     }

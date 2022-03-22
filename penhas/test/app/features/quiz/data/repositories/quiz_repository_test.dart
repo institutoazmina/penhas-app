@@ -3,38 +3,33 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
-import 'package:penhas/app/features/quiz/data/datasources/quiz_data_source.dart';
 import 'package:penhas/app/features/quiz/data/repositories/quiz_repository.dart';
 import 'package:penhas/app/features/quiz/domain/entities/quiz_request_entity.dart';
 
+import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
-class MockQuizDataSource extends Mock implements IQuizDataSource {}
-
-class MockNetworkInfo extends Mock implements INetworkInfo {}
+Future<bool> isConnected() => Future.value(true);
 
 void main() {
-  INetworkInfo networkInfo;
-  IQuizDataSource dataSource;
-  QuizRequestEntity quizRequest;
-  QuizRepository quizRepository;
+  late final MockINetworkInfo networkInfo = MockINetworkInfo();
+  late final MockIQuizDataSource dataSource = MockIQuizDataSource();
+  late final QuizRepository quizRepository = QuizRepository(
+    dataSource: dataSource,
+    networkInfo: networkInfo,
+  );
+  late QuizRequestEntity quizRequest;
+  late Map<String, dynamic> jsonData;
 
-  Map<String, Object> jsonData;
   setUp(() async {
-    networkInfo = MockNetworkInfo();
-    dataSource = MockQuizDataSource();
-    quizRepository = QuizRepository(
-      dataSource: dataSource,
-      networkInfo: networkInfo,
-    );
-    quizRequest = QuizRequestEntity(
-      sessionId: "200",
+    quizRequest = const QuizRequestEntity(
+      sessionId: '200',
       options: {'YN1': 'Y'},
     );
     jsonData =
         await JsonUtil.getJson(from: 'profile/quiz_session_response.json');
+    when(networkInfo.isConnected).thenAnswer((_) => Future.value(true));
   });
 
   group('QuizRepository', () {
@@ -54,7 +49,7 @@ void main() {
         () async {
       // arrange
       when(dataSource.update(quiz: anyNamed('quiz')))
-          .thenThrow(ApiProviderSessionExpection());
+          .thenThrow(ApiProviderSessionError());
       final expected = left(ServerSideSessionFailed());
       // act
       final received = await quizRepository.update(quiz: quizRequest);
@@ -65,10 +60,12 @@ void main() {
     test('should return ServerSideSessionFailed for a invalid JWT', () async {
       // arrange
       when(dataSource.update(quiz: anyNamed('quiz'))).thenThrow(
-        ApiProviderException(bodyContent: {
-          "error": "expired_jwt",
-          "nessage": "Bad request - Invalid JWT"
-        }),
+        const ApiProviderException(
+          bodyContent: {
+            'error': 'expired_jwt',
+            'nessage': 'Bad request - Invalid JWT'
+          },
+        ),
       );
       final expected = left(ServerSideSessionFailed());
       // act

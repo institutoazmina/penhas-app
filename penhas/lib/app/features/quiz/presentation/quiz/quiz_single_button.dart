@@ -5,23 +5,23 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class QuizSingleButtonWidget extends StatelessWidget {
-  final String reference;
-  final String buttonLabel;
-  final UserReaction onPressed;
-
   const QuizSingleButtonWidget({
-    Key key,
-    @required this.reference,
-    @required this.onPressed,
-    @required this.buttonLabel,
+    Key? key,
+    required this.reference,
+    required this.onPressed,
+    required this.buttonLabel,
   }) : super(key: key);
+
+  final String reference;
+  final String? buttonLabel;
+  final UserReaction onPressed;
 
   @override
   Widget build(BuildContext context) {
-    final double horizontalMargin = 24.0;
+    const double horizontalMargin = 24.0;
 
     return Container(
-      padding: EdgeInsets.fromLTRB(
+      padding: const EdgeInsets.fromLTRB(
         horizontalMargin,
         4.0,
         horizontalMargin,
@@ -35,7 +35,7 @@ class QuizSingleButtonWidget extends StatelessWidget {
         onPressed: () => onPressed({reference: '1'}),
         shape: kButtonShapeFilled,
         child: Text(
-          buttonLabel,
+          buttonLabel!,
           style: kTextStyleDefaultFilledButtonLabel,
         ),
       ),

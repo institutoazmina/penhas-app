@@ -11,11 +11,12 @@ import 'package:penhas/app/shared/design_system/logo.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ZodiacPage extends StatefulWidget {
-  final String title;
-  ZodiacPage({
-    Key key,
-    this.title = "ZodiacPage",
+  const ZodiacPage({
+    Key? key,
+    this.title = 'ZodiacPage',
   }) : super(key: key);
+
+  final String title;
 
   @override
   _ZodiacPageState createState() => _ZodiacPageState();
@@ -31,32 +32,34 @@ class _ZodiacPageState extends ModularState<ZodiacPage, ZodiacController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _appBarBuilder(),
+      appBar: _appBarBuilder() as PreferredSizeWidget,
       body: SafeArea(
         child: SizedBox.expand(
           child: SingleChildScrollView(
             child: Container(
               color: DesignSystemColors.systemBackgroundColor,
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    "Hoje",
+                  const Text(
+                    'Hoje',
                     style: kTextStyleZodiacHoje,
                   ),
                   _buildLoginButton(),
                   Observer(
-                      name: "ZodiacPage.build.ZodiacSignPage",
-                      builder: (_) {
-                        return ZodiacSignPage(sign: controller.sign);
-                      }),
-                  ZodiacRullingPage(),
+                    name: 'ZodiacPage.build.ZodiacSignPage',
+                    builder: (_) {
+                      return ZodiacSignPage(sign: controller.sign);
+                    },
+                  ),
+                  const ZodiacRullingPage(),
                   Observer(
-                      name: "ZodiacPage.build.ZodiacFellingPage",
-                      builder: (_) {
-                        return ZodiacFellingPage(sign: controller.sign);
-                      }),
+                    name: 'ZodiacPage.build.ZodiacFellingPage',
+                    builder: (_) {
+                      return ZodiacFellingPage(sign: controller.sign);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -76,8 +79,8 @@ class _ZodiacPageState extends ModularState<ZodiacPage, ZodiacController> {
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             onPressed: () => controller.forwardStealthLogin(),
-            child: Text(
-              "Diário astrólogico",
+            child: const Text(
+              'Diário astrólogico',
               style: kTextStyleFeedTweetShowReply,
             ),
           ),
@@ -95,16 +98,16 @@ class _ZodiacPageState extends ModularState<ZodiacPage, ZodiacController> {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Icon(
+          const Icon(
             DesignSystemLogo.penhasLogo,
             color: Colors.white,
             size: 36,
           ),
           Observer(
-            name: "ZodiacPage.appBarBuilder",
+            name: 'ZodiacPage.appBarBuilder',
             builder: (_) {
               return Padding(
-                padding: EdgeInsets.only(top: 16.0),
+                padding: const EdgeInsets.only(top: 16.0),
                 child: ZodiacActionButton(
                   sign: controller.sign,
                   listOfSign: controller.signList,

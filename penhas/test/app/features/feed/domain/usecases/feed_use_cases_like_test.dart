@@ -3,21 +3,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
-import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
 import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
-import 'package:penhas/app/features/feed/domain/usecases/tweet_filter_preference.dart';
 
-class MockTweetRepository extends Mock implements ITweetRepository {}
-
-class MockTweetFilterPreference extends Mock implements TweetFilterPreference {}
+import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  ITweetRepository repository;
-  TweetFilterPreference filterPreference;
+  late final MockITweetRepository repository = MockITweetRepository();
+  late final MockTweetFilterPreference filterPreference =
+      MockTweetFilterPreference();
 
   setUp(() {
-    repository = MockTweetRepository();
-    filterPreference = MockTweetFilterPreference();
+    when(filterPreference.categories).thenReturn([]);
+    when(filterPreference.getTags()).thenReturn([]);
   });
 
   group('FeedUseCases', () {
@@ -28,11 +25,11 @@ void main() {
       verifyNoMoreInteractions(repository);
     });
     group('like', () {
-      int maxRowsPerRequet;
-      TweetSessionEntity firstSessionResponse;
-      TweetEntity tweetEntity1;
-      TweetEntity tweetEntity2;
-      TweetEntity tweetEntity3;
+      late int maxRowsPerRequet;
+      late TweetSessionEntity firstSessionResponse;
+      late TweetEntity tweetEntity1;
+      late TweetEntity tweetEntity2;
+      late TweetEntity tweetEntity3;
 
       setUp(() {
         maxRowsPerRequet = 5;
@@ -46,8 +43,8 @@ void main() {
           anonymous: false,
           content: 'content 4',
           avatar: 'http://site.com/avatar_2.png',
-          meta: TweetMeta(liked: false, owner: true),
-          lastReply: [],
+          meta: const TweetMeta(liked: false, owner: true),
+          lastReply: const [],
         );
         tweetEntity3 = TweetEntity(
           id: 'id_3',
@@ -59,8 +56,8 @@ void main() {
           anonymous: false,
           content: 'comment 3',
           avatar: 'http://site.com/avatar_1.png',
-          meta: TweetMeta(liked: false, owner: true),
-          lastReply: [],
+          meta: const TweetMeta(liked: false, owner: true),
+          lastReply: const [],
         );
         tweetEntity2 = TweetEntity(
           id: 'id_2',
@@ -72,18 +69,19 @@ void main() {
           anonymous: false,
           content: 'content 3',
           avatar: 'http://site.com/avatar_1.png',
-          meta: TweetMeta(liked: false, owner: true),
+          meta: const TweetMeta(liked: false, owner: true),
           lastReply: [tweetEntity3],
         );
 
         firstSessionResponse = TweetSessionEntity(
-            nextPage: null,
-            hasMore: true,
-            orderBy: TweetSessionOrder.latestFirst,
-            tweets: [
-              tweetEntity1,
-              tweetEntity2,
-            ]);
+          nextPage: null,
+          hasMore: true,
+          orderBy: TweetSessionOrder.latestFirst,
+          tweets: [
+            tweetEntity1,
+            tweetEntity2,
+          ],
+        );
       });
 
       test('main tweet should get updated cache', () async {
@@ -98,13 +96,16 @@ void main() {
         await sut.fetchOldestTweet();
 
         final likeResponse = tweetEntity1.copyWith(
-            totalLikes: (tweetEntity1.totalLikes + 1),
-            meta: TweetMeta(liked: true, owner: true));
+          totalLikes: tweetEntity1.totalLikes + 1,
+          meta: const TweetMeta(liked: true, owner: true),
+        );
         final expected = right(
-          FeedCache(tweets: [
-            likeResponse,
-            tweetEntity2,
-          ]),
+          FeedCache(
+            tweets: [
+              likeResponse,
+              tweetEntity2,
+            ],
+          ),
         );
         when(repository.like(option: anyNamed('option')))
             .thenAnswer((_) async => right(likeResponse));
@@ -126,17 +127,20 @@ void main() {
         await sut.fetchOldestTweet();
 
         final likeResponse = tweetEntity3.copyWith(
-            totalLikes: tweetEntity3.totalLikes + 1,
-            meta: TweetMeta(liked: true, owner: true));
+          totalLikes: tweetEntity3.totalLikes + 1,
+          meta: const TweetMeta(liked: true, owner: true),
+        );
         when(repository.like(option: anyNamed('option')))
             .thenAnswer((_) async => right(likeResponse));
         final expected = right(
-          FeedCache(tweets: [
-            tweetEntity1,
-            tweetEntity2.copyWith(
-              lastReply: [likeResponse],
-            ),
-          ]),
+          FeedCache(
+            tweets: [
+              tweetEntity1,
+              tweetEntity2.copyWith(
+                lastReply: [likeResponse],
+              ),
+            ],
+          ),
         );
         // act
         final received = await sut.like(tweetEntity3);
@@ -145,11 +149,11 @@ void main() {
       });
     });
     group('unlike', () {
-      int maxRowsPerRequet;
-      TweetSessionEntity firstSessionResponse;
-      TweetEntity tweetEntity1;
-      TweetEntity tweetEntity2;
-      TweetEntity tweetEntity3;
+      int? maxRowsPerRequet;
+      late TweetSessionEntity firstSessionResponse;
+      late TweetEntity tweetEntity1;
+      late TweetEntity tweetEntity2;
+      late TweetEntity tweetEntity3;
 
       setUp(() {
         maxRowsPerRequet = 5;
@@ -163,8 +167,8 @@ void main() {
           anonymous: false,
           content: 'content 4',
           avatar: 'http://site.com/avatar_2.png',
-          meta: TweetMeta(liked: true, owner: true),
-          lastReply: [],
+          meta: const TweetMeta(liked: true, owner: true),
+          lastReply: const [],
         );
         tweetEntity3 = TweetEntity(
           id: 'id_3',
@@ -176,8 +180,8 @@ void main() {
           anonymous: false,
           content: 'comment 3',
           avatar: 'http://site.com/avatar_1.png',
-          meta: TweetMeta(liked: true, owner: true),
-          lastReply: [],
+          meta: const TweetMeta(liked: true, owner: true),
+          lastReply: const [],
         );
         tweetEntity2 = TweetEntity(
           id: 'id_2',
@@ -189,18 +193,19 @@ void main() {
           anonymous: false,
           content: 'content 3',
           avatar: 'http://site.com/avatar_1.png',
-          meta: TweetMeta(liked: true, owner: true),
+          meta: const TweetMeta(liked: true, owner: true),
           lastReply: [tweetEntity3],
         );
 
         firstSessionResponse = TweetSessionEntity(
-            nextPage: null,
-            hasMore: true,
-            orderBy: TweetSessionOrder.latestFirst,
-            tweets: [
-              tweetEntity1,
-              tweetEntity2,
-            ]);
+          nextPage: null,
+          hasMore: true,
+          orderBy: TweetSessionOrder.latestFirst,
+          tweets: [
+            tweetEntity1,
+            tweetEntity2,
+          ],
+        );
       });
 
       test('main tweet should get updated cache', () async {
@@ -215,13 +220,16 @@ void main() {
         await sut.fetchOldestTweet();
 
         final likeResponse = tweetEntity1.copyWith(
-            totalLikes: (tweetEntity1.totalLikes - 1),
-            meta: TweetMeta(liked: false, owner: true));
+          totalLikes: tweetEntity1.totalLikes - 1,
+          meta: const TweetMeta(liked: false, owner: true),
+        );
         final expected = right(
-          FeedCache(tweets: [
-            likeResponse,
-            tweetEntity2,
-          ]),
+          FeedCache(
+            tweets: [
+              likeResponse,
+              tweetEntity2,
+            ],
+          ),
         );
         when(repository.like(option: anyNamed('option')))
             .thenAnswer((_) async => right(likeResponse));
@@ -243,16 +251,20 @@ void main() {
         await sut.fetchOldestTweet();
 
         final likeResponse = tweetEntity3.copyWith(
-            totalLikes: 0, meta: TweetMeta(liked: false, owner: true));
+          totalLikes: 0,
+          meta: const TweetMeta(liked: false, owner: true),
+        );
         when(repository.like(option: anyNamed('option')))
             .thenAnswer((_) async => right(likeResponse));
         final expected = right(
-          FeedCache(tweets: [
-            tweetEntity1,
-            tweetEntity2.copyWith(
-              lastReply: [likeResponse],
-            ),
-          ]),
+          FeedCache(
+            tweets: [
+              tweetEntity1,
+              tweetEntity2.copyWith(
+                lastReply: [likeResponse],
+              ),
+            ],
+          ),
         );
         // act
         final received = await sut.unlike(tweetEntity3);

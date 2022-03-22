@@ -2,42 +2,34 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
-import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/authentication/data/datasources/authentication_data_source.dart';
 import 'package:penhas/app/features/authentication/data/models/session_model.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
 
+import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
-class MockHttpClient extends Mock implements http.Client {}
-
-class MockApiServerConfigure extends Mock implements IApiServerConfigure {}
-
 void main() {
-  IAuthenticationDataSource dataSource;
-  MockHttpClient mockHttpClient;
-  MockApiServerConfigure mockApiServerConfigure;
-  EmailAddress emailAddress;
-  SignInPassword password;
-  Uri serverEndpoint;
+  late final MockHttpClient mockHttpClient = MockHttpClient();
+  late final MockIApiServerConfigure mockApiServerConfigure =
+      MockIApiServerConfigure();
+  late final EmailAddress emailAddress = EmailAddress('valid@email.com');
+  late final SignInPassword password =
+      SignInPassword('_veryStr0ngP4ssw@rd', PasswordValidator());
+  final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
+
+  late final IAuthenticationDataSource dataSource = AuthenticationDataSource(
+    apiClient: mockHttpClient,
+    serverConfiguration: mockApiServerConfigure,
+  );
 
   setUp(() {
-    mockHttpClient = MockHttpClient();
-    mockApiServerConfigure = MockApiServerConfigure();
-    dataSource = AuthenticationDataSource(
-      apiClient: mockHttpClient,
-      serverConfiguration: mockApiServerConfigure,
-    );
-    emailAddress = EmailAddress('valid@email.com');
-    password = SignInPassword('_veryStr0ngP4ssw@rd', PasswordValidator());
-    serverEndpoint = Uri.https('api.anyserver.io', '/');
-
     // MockApiServerConfigure configuration
     when(mockApiServerConfigure.baseUri).thenAnswer((_) => serverEndpoint);
     when(mockApiServerConfigure.userAgent)
-        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
+        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
   });
 
   Future<Map<String, String>> setUpHttpHeader() async {
@@ -92,7 +84,9 @@ void main() {
       final loginUri = await setuHttpRequest();
       // act
       await dataSource.signInWithEmailAndPassword(
-          emailAddress: emailAddress, password: password);
+        emailAddress: emailAddress,
+        password: password,
+      );
       // assert
       verify(mockHttpClient.post(loginUri, headers: headers));
     });
@@ -124,9 +118,12 @@ void main() {
       final sut = dataSource.signInWithEmailAndPassword;
       // assert
       expect(
-          () async => await sut(emailAddress: emailAddress, password: password),
-          throwsA(isA<ApiProviderException>()
-              .having((e) => e.bodyContent, 'Got bodyContent', bodyContent)));
+        () => sut(emailAddress: emailAddress, password: password),
+        throwsA(
+          isA<ApiProviderException>()
+              .having((e) => e.bodyContent, 'Got bodyContent', bodyContent),
+        ),
+      );
     });
   });
 }

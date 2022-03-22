@@ -1,36 +1,36 @@
 import 'dart:async';
 
-import 'package:meta/meta.dart';
 import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_record_duration_entity.dart';
 import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
+import 'package:penhas/app/shared/logger/log.dart';
 
 class StealthSecurityAction {
+  StealthSecurityAction({
+    required ILocationServices locationService,
+    required IAudioRecordServices audioServices,
+    required IGuardianRepository guardianRepository,
+    required SecurityModeActionFeature featureToogle,
+  })  : _audioServices = audioServices,
+        _featureToogle = featureToogle,
+        _locationService = locationService,
+        _guardianRepository = guardianRepository;
+
   final ILocationServices _locationService;
   final IAudioRecordServices _audioServices;
   final IGuardianRepository _guardianRepository;
   final SecurityModeActionFeature _featureToogle;
 
   bool _recording = true;
-  Timer _rotateAudioTimer;
+  Timer? _rotateAudioTimer;
   int _currentRecordDurantion = 0;
-  AudioRecordDurationEntity _audioDurationEntity;
-  StreamController<bool> _streamController = StreamController.broadcast();
+  AudioRecordDurationEntity? _audioDurationEntity;
+  StreamController<bool>? _streamController = StreamController.broadcast();
 
-  StealthSecurityAction({
-    @required ILocationServices locationService,
-    @required IAudioRecordServices audioServices,
-    @required IGuardianRepository guardianRepository,
-    @required SecurityModeActionFeature featureToogle,
-  })  : this._audioServices = audioServices,
-        this._featureToogle = featureToogle,
-        this._locationService = locationService,
-        this._guardianRepository = guardianRepository;
-
-  Stream<bool> get isRunning => _streamController.stream;
+  Stream<bool> get isRunning => _streamController!.stream;
 
   Future<void> start() async {
     _streamController ??= StreamController.broadcast();
@@ -38,34 +38,34 @@ class StealthSecurityAction {
     return _getCurrentLocatin()
         .then((location) => _triggerGuardian(location))
         .then((_) => _startAudioRecord())
-        .then((_) => _streamController.add(true));
+        .then((_) => _streamController!.add(true));
   }
 
   Future<void> stop() async {
     _recording = false;
     _rotateAudioTimer?.cancel();
     _audioServices.stop();
-    _streamController.add(false);
+    _streamController!.add(false);
   }
 
-  void dispose() async {
+  Future<void> dispose() async {
     await stop();
     _audioServices.dispose();
 
     try {
       if (_streamController != null) {
-        _streamController.close();
+        _streamController!.close();
         _streamController = null;
       }
-    } catch (e) {
-      print(e);
+    } catch (e, stack) {
+      logError(e, stack);
     }
   }
 
   Future<UserLocationEntity> _getCurrentLocatin() async {
     return _locationService
         .currentLocation()
-        .then((v) => v.getOrElse(() => UserLocationEntity()));
+        .then((v) => v.getOrElse(() => const UserLocationEntity())!);
   }
 
   Future<void> _triggerGuardian(UserLocationEntity location) async {
@@ -73,9 +73,7 @@ class StealthSecurityAction {
   }
 
   Future<void> _startAudioRecord() async {
-    if (_audioDurationEntity == null) {
-      _audioDurationEntity = await _featureToogle.audioDuration;
-    }
+    _audioDurationEntity ??= await _featureToogle.audioDuration;
 
     _setRotateTimer();
     return _audioServices.start();
@@ -83,19 +81,20 @@ class StealthSecurityAction {
 
   void _setRotateTimer() {
     _rotateAudioTimer = Timer.periodic(
-      Duration(seconds: _audioDurationEntity.audioEachDuration),
+      Duration(seconds: _audioDurationEntity!.audioEachDuration),
       (timer) {
         if (!_recording) {
           timer.cancel();
-          _streamController.add(false);
+          _streamController!.add(false);
           return;
         }
 
-        _currentRecordDurantion += _audioDurationEntity.audioEachDuration;
+        _currentRecordDurantion += _audioDurationEntity!.audioEachDuration;
 
-        if (_currentRecordDurantion >= _audioDurationEntity.audioFullDuration) {
+        if (_currentRecordDurantion >=
+            _audioDurationEntity!.audioFullDuration) {
           timer.cancel();
-          _streamController.add(false);
+          _streamController!.add(false);
           _recording = false;
         }
 

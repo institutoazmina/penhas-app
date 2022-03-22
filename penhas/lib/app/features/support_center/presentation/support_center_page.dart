@@ -7,15 +7,14 @@ import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/support_center/domain/states/support_center_state.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_gps_error.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_filter.dart';
+import 'package:penhas/app/features/support_center/presentation/support_center_controller.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-import 'pages/support_center_general_error.dart';
-import 'pages/support_center_gps_error.dart';
-import 'pages/support_center_input_filter.dart';
-import 'support_center_controller.dart';
-
 class SupportCenterPage extends StatefulWidget {
-  SupportCenterPage({Key key}) : super(key: key);
+  const SupportCenterPage({Key? key}) : super(key: key);
 
   @override
   _SupportCenterPageState createState() => _SupportCenterPageState();
@@ -24,16 +23,16 @@ class SupportCenterPage extends StatefulWidget {
 class _SupportCenterPageState
     extends ModularState<SupportCenterPage, SupportCenterController>
     with SnackBarHandler {
-  List<ReactionDisposer> _disposers;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  GoogleMapController mapController;
+  List<ReactionDisposer>? _disposers;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  GoogleMapController? mapController;
 
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
 
-    return Container(
+    return SizedBox(
       height: height,
       width: width,
       child: Scaffold(
@@ -47,8 +46,11 @@ class _SupportCenterPageState
     );
   }
 
+  @override
   void dispose() {
-    _disposers.forEach((d) => d());
+    for (final d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 
@@ -56,11 +58,12 @@ class _SupportCenterPageState
   void didChangeDependencies() {
     super.didChangeDependencies();
     _disposers ??= [
-      reaction((_) => controller.errorMessage, (String message) {
+      reaction((_) => controller.errorMessage, (String? message) {
         showSnackBar(
-            scaffoldKey: _scaffoldKey,
-            message: message,
-            duration: Duration(seconds: 2));
+          scaffoldKey: _scaffoldKey,
+          message: message,
+          duration: const Duration(seconds: 2),
+        );
       }),
     ];
   }
@@ -83,7 +86,7 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
 
   Widget loadedSupportCenterPage() {
     if (mapController != null) {
-      mapController.animateCamera(
+      mapController!.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
             tilt: 75.0,
@@ -97,7 +100,7 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
 
     return PageProgressIndicator(
       progressState: controller.progressState,
-      progressMessage: "Carregando",
+      progressMessage: 'Carregando',
       child: Stack(
         children: [
           GoogleMap(
@@ -105,9 +108,7 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
                 CameraPosition(target: controller.initialPosition),
             myLocationEnabled: true,
             myLocationButtonEnabled: false,
-            mapType: MapType.normal,
             markers: controller.placeMarkers,
-            zoomGesturesEnabled: true,
             zoomControlsEnabled: false,
             onMapCreated: (GoogleMapController controller) {
               mapController = controller;
@@ -119,46 +120,54 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
               SupportCenterInputFilter(
                 initialValue: controller.currentKeywords,
                 totalOfFilter: controller.categoriesSelected,
-                onFilterAction: () => _dismissSnackBarForAction(controller.onFilterAction),
-                onKeywordsAction: (keywords) => _dismissSnackBarForAction(controller.onKeywordsAction, argument: keywords),
+                onFilterAction: () =>
+                    _dismissSnackBarForAction(controller.onFilterAction),
+                onKeywordsAction: (keywords) => _dismissSnackBarForAction(
+                  controller.onKeywordsAction,
+                  argument: keywords,
+                ),
               ),
             ],
           ),
           Positioned(
             bottom: 40,
             right: 0,
-            child: Container(
-              child: Column(
-                children: [
-                  FlatButton(
-                    onPressed: () => _dismissSnackBarForAction(controller.location),
-                    child: CircleAvatar(
-                      radius: 12,
-                      child: SvgPicture.asset(
-                          "assets/images/svg/support_center/location.svg"),
-                      backgroundColor: DesignSystemColors.pumpkinOrange,
+            child: Column(
+              children: [
+                FlatButton(
+                  onPressed: () =>
+                      _dismissSnackBarForAction(controller.location),
+                  child: CircleAvatar(
+                    radius: 12,
+                    backgroundColor: DesignSystemColors.pumpkinOrange,
+                    child: SvgPicture.asset(
+                      'assets/images/svg/support_center/location.svg',
                     ),
                   ),
-                  FlatButton(
-                    onPressed: () => _dismissSnackBarForAction(controller.listPlaces),
-                    child: CircleAvatar(
-                      radius: 12,
-                      child: SvgPicture.asset(
-                          "assets/images/svg/support_center/list.svg"),
-                      backgroundColor: DesignSystemColors.pumpkinOrange,
+                ),
+                FlatButton(
+                  onPressed: () =>
+                      _dismissSnackBarForAction(controller.listPlaces),
+                  child: CircleAvatar(
+                    radius: 12,
+                    backgroundColor: DesignSystemColors.pumpkinOrange,
+                    child: SvgPicture.asset(
+                      'assets/images/svg/support_center/list.svg',
                     ),
                   ),
-                  FlatButton(
-                    onPressed: () => _dismissSnackBarForAction(controller.addPlace),
-                    child: CircleAvatar(
-                      radius: 20,
-                      child: SvgPicture.asset(
-                          "assets/images/svg/support_center/suggest_place.svg"),
-                      backgroundColor: DesignSystemColors.pumpkinOrange,
+                ),
+                FlatButton(
+                  onPressed: () =>
+                      _dismissSnackBarForAction(controller.addPlace),
+                  child: CircleAvatar(
+                    radius: 20,
+                    backgroundColor: DesignSystemColors.pumpkinOrange,
+                    child: SvgPicture.asset(
+                      'assets/images/svg/support_center/suggest_place.svg',
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           )
         ],
@@ -166,12 +175,14 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
     );
   }
 
-  void _dismissSnackBarForAction(Function action, {dynamic argument}){
-    _scaffoldKey.currentState.hideCurrentSnackBar();
+  void _dismissSnackBarForAction(Function action, {dynamic argument}) {
+    _scaffoldKey.currentState?.hideCurrentSnackBar();
 
     if (argument == null) {
+      // ignore: avoid_dynamic_calls
       action();
-    } else{
+    } else {
+      // ignore: avoid_dynamic_calls
       action(argument);
     }
   }

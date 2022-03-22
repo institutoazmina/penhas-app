@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/core/extension/asuka.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/input_box_style.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
@@ -17,9 +18,10 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class NewGuardianPage extends StatefulWidget {
-  final String title;
-  const NewGuardianPage({Key key, this.title = "NewGuardian"})
+  const NewGuardianPage({Key? key, this.title = 'NewGuardian'})
       : super(key: key);
+
+  final String title;
 
   @override
   _NewGuardianPageState createState() => _NewGuardianPageState();
@@ -28,7 +30,7 @@ class NewGuardianPage extends StatefulWidget {
 class _NewGuardianPageState
     extends ModularState<NewGuardianPage, NewGuardianController>
     with SnackBarHandler {
-  List<ReactionDisposer> _disposers;
+  List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   PageProgressState _loadState = PageProgressState.initial;
@@ -36,7 +38,7 @@ class _NewGuardianPageState
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       controller.loadPage();
     });
   }
@@ -54,7 +56,9 @@ class _NewGuardianPageState
 
   @override
   void dispose() {
-    _disposers.forEach((d) => d());
+    for (final d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 
@@ -63,7 +67,7 @@ class _NewGuardianPageState
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('Novo Guardião'),
+        title: const Text('Novo Guardião'),
         backgroundColor: DesignSystemColors.ligthPurple,
       ),
       body: PageProgressIndicator(
@@ -121,13 +125,14 @@ class _NewGuardianPageState
 
   Widget _headerMessage() {
     return RichText(
-      text: TextSpan(
+      text: const TextSpan(
         text: 'Cadastre uma pessoa próxima e de confiança para ser guardião.',
         style: kTextStyleGuardianBodyTextStyle,
         children: <TextSpan>[
           TextSpan(
-              text: ' Não precisa ser usuário do PenhaS.',
-              style: kTextStyleGuardianBodyTextBoldStyle)
+            text: ' Não precisa ser usuário do PenhaS.',
+            style: kTextStyleGuardianBodyTextBoldStyle,
+          )
         ],
       ),
     );
@@ -135,23 +140,25 @@ class _NewGuardianPageState
 
   Widget _guardianNameInput() {
     return Padding(
-      padding: EdgeInsets.only(top: 20.0),
-      child: Observer(builder: (_) {
-        return SingleTextInput(
-          style: kTextStyleGreyDefaultTextFieldLabelStyle,
-          onChanged: controller.setGuardianName,
-          boxDecoration: PurpleBoxDecorationStyle(
-            labelText: 'Nome do guardião',
-            errorText: controller.warningName,
-          ),
-        );
-      }),
+      padding: const EdgeInsets.only(top: 20.0),
+      child: Observer(
+        builder: (_) {
+          return SingleTextInput(
+            style: kTextStyleGreyDefaultTextFieldLabelStyle,
+            onChanged: controller.setGuardianName,
+            boxDecoration: PurpleBoxDecorationStyle(
+              labelText: 'Nome do guardião',
+              errorText: controller.warningName,
+            ),
+          );
+        },
+      ),
     );
   }
 
   Widget _guardianMobileInput() {
     return Padding(
-      padding: EdgeInsets.only(top: 20.0),
+      padding: const EdgeInsets.only(top: 20.0),
       child: Observer(
         builder: (_) {
           return SingleTextInput(
@@ -170,50 +177,49 @@ class _NewGuardianPageState
   }
 
   Widget _description() {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 40),
-            child: RichText(
-              text: TextSpan(
-                  text:
-                      '• Para que esta pessoa se torne sua guardiã, é preciso que ela',
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(top: 40),
+          child: RichText(
+            text: const TextSpan(
+              text:
+                  '• Para que esta pessoa se torne sua guardiã, é preciso que ela',
+              style: kTextStyleGuardianBodyTextStyle,
+              children: <TextSpan>[
+                TextSpan(
+                  text: ' aceite o convite ',
+                  style: kTextStyleGuardianBodyTextBoldStyle,
+                ),
+                TextSpan(
+                  text: 'que será enviado no número cadastrado.',
                   style: kTextStyleGuardianBodyTextStyle,
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: ' aceite o convite ',
-                      style: kTextStyleGuardianBodyTextBoldStyle,
-                    ),
-                    TextSpan(
-                      text: 'que será enviado no número cadastrado.',
-                      style: kTextStyleGuardianBodyTextStyle,
-                    )
-                  ]),
+                )
+              ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 14.0),
-            child: RichText(
-              text: TextSpan(
-                text:
-                    '• Lembre-se de conversar com a pessoa antes de cadastra-la. É importante que ela esteja',
-                style: kTextStyleGuardianBodyTextStyle,
-                children: <TextSpan>[
-                  TextSpan(
-                    text: ' ciente que receberá seus pedidos de socorro ',
-                    style: kTextStyleGuardianBodyTextBoldStyle,
-                  ),
-                  TextSpan(
-                    text: 'via SMS.',
-                    style: kTextStyleGuardianBodyTextStyle,
-                  )
-                ],
-              ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 14.0),
+          child: RichText(
+            text: const TextSpan(
+              text:
+                  '• Lembre-se de conversar com a pessoa antes de cadastra-la. É importante que ela esteja',
+              style: kTextStyleGuardianBodyTextStyle,
+              children: <TextSpan>[
+                TextSpan(
+                  text: ' ciente que receberá seus pedidos de socorro ',
+                  style: kTextStyleGuardianBodyTextBoldStyle,
+                ),
+                TextSpan(
+                  text: 'via SMS.',
+                  style: kTextStyleGuardianBodyTextStyle,
+                )
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -227,7 +233,10 @@ class _NewGuardianPageState
           onPressed: () => controller.addGuardian(),
           elevation: 0,
           color: DesignSystemColors.easterPurple,
-          child: Text(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: const Text(
             'Adicionar guardião',
             style: TextStyle(
               fontFamily: 'Lato',
@@ -236,16 +245,13 @@ class _NewGuardianPageState
               fontSize: 12.0,
             ),
           ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
         ),
       ),
     );
   }
 
   ReactionDisposer _showErrorMessage() {
-    return reaction((_) => controller.errorMessage, (String message) {
+    return reaction((_) => controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }
@@ -275,10 +281,11 @@ class _NewGuardianPageState
     });
   }
 
-  _handleTap(BuildContext context) {
-    if (MediaQuery.of(context).viewInsets.bottom > 0)
+  void _handleTap(BuildContext context) {
+    if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
-    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+    }
+    WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 
   void _showSentInvite(GuardianAlertMessageAction action) {
@@ -289,16 +296,16 @@ class _NewGuardianPageState
           title: Column(
             children: <Widget>[
               SvgPicture.asset(
-                  'assets/images/svg/help_center/guardians/guardians_sent_invite.svg'),
+                'assets/images/svg/help_center/guardians/guardians_sent_invite.svg',
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 12.0),
-                child:
-                    Text(action.title, style: kTextStyleAlertDialogTitle),
+                child: Text(action.title, style: kTextStyleAlertDialogTitle),
               ),
             ],
           ),
           content: Text(
-            action.message,
+            action.message!,
             style: kTextStyleAlertDialogDescription,
           ),
           shape: RoundedRectangleBorder(
@@ -306,9 +313,9 @@ class _NewGuardianPageState
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('Fechar'),
+              child: const Text('Fechar'),
               onPressed: () async {
-                Modular.to.pop();
+                Navigator.of(context).pop();
                 action.onPressed();
               },
             ),

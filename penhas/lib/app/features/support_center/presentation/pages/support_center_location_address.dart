@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class SupportCenterLocationAddress extends StatelessWidget {
+  const SupportCenterLocationAddress({
+    Key? key,
+    required String message,
+    required VoidCallback onPressed,
+  })  : _message = message,
+        _onPressed = onPressed,
+        super(key: key);
+
   final String _message;
   final VoidCallback _onPressed;
-
-  const SupportCenterLocationAddress({
-    Key key,
-    @required String message,
-    @required VoidCallback onPressed,
-  })  : this._message = message,
-        this._onPressed = onPressed,
-        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +20,13 @@ class SupportCenterLocationAddress extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 20.0),
+            padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 20.0),
             child: Container(
               height: 89,
               decoration: BoxDecoration(
                 color: DesignSystemColors.white,
                 borderRadius: BorderRadius.circular(8.0),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.black12,
                     offset: Offset(0.0, 1.0),
@@ -36,12 +36,13 @@ class SupportCenterLocationAddress extends StatelessWidget {
               ),
               child: FlatButton(
                 padding: EdgeInsets.zero,
+                onPressed: _onPressed,
                 child: Padding(
-                  padding: EdgeInsets.only(left: 16.0),
+                  padding: const EdgeInsets.only(left: 16.0),
                   child: Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
+                      const Padding(
+                        padding: EdgeInsets.only(right: 8.0),
                         child: Icon(Icons.place),
                       ),
                       Flexible(
@@ -59,7 +60,6 @@ class SupportCenterLocationAddress extends StatelessWidget {
                     ],
                   ),
                 ),
-                onPressed: _onPressed,
               ),
             ),
           )
@@ -70,10 +70,11 @@ class SupportCenterLocationAddress extends StatelessWidget {
 }
 
 extension _TextStylePrivate on SupportCenterLocationAddress {
-  TextStyle get addressTextStyle => TextStyle(
-      color: DesignSystemColors.darkIndigoThree,
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      letterSpacing: 0.45,
-      fontWeight: FontWeight.bold);
+  TextStyle get addressTextStyle => const TextStyle(
+        color: DesignSystemColors.darkIndigoThree,
+        fontFamily: 'Lato',
+        fontSize: 14.0,
+        letterSpacing: 0.45,
+        fontWeight: FontWeight.bold,
+      );
 }

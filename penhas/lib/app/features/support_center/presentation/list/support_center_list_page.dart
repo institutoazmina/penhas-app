@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
+import 'package:penhas/app/features/support_center/presentation/list/support_center_list_controller.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
-
-import 'support_center_list_controller.dart';
 
 typedef ActionOnSelected = void Function(SupportCenterPlaceEntity place);
 
 class SupportCenterListPage extends StatefulWidget {
-  SupportCenterListPage({Key key}) : super(key: key);
+  const SupportCenterListPage({Key? key}) : super(key: key);
 
   @override
   _SupportCenterListPageState createState() => _SupportCenterListPageState();
@@ -21,62 +20,69 @@ class _SupportCenterListPageState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Lista"),
+        title: const Text('Lista'),
         elevation: 0.0,
         backgroundColor: DesignSystemColors.easterPurple,
       ),
-      body: Observer(builder: (_) {
-        return Container(
-          color: DesignSystemColors.systemBackgroundColor,
-          child: SafeArea(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 20.0, horizontal: 16.0),
-                  child: Text(
-                    "Pontos de apoio encontrados",
-                    style: TextStyle().listTitle,
+      body: Observer(
+        builder: (_) {
+          return Container(
+            color: DesignSystemColors.systemBackgroundColor,
+            child: SafeArea(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 20.0,
+                      horizontal: 16.0,
+                    ),
+                    child: Text(
+                      'Pontos de apoio encontrados',
+                      style: const TextStyle().listTitle,
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: controller.places.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final place = controller.places[index];
-                      return Card(
-                          place: place, onSelected: controller.selected);
-                    },
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: controller.places.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final place = controller.places[index];
+                        return Card(
+                          place: place,
+                          onSelected: controller.selected,
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }
 
 class Card extends StatelessWidget {
+  const Card({Key? key, required this.place, required this.onSelected})
+      : super(key: key);
+
   final SupportCenterPlaceEntity place;
   final ActionOnSelected onSelected;
-  const Card({Key key, @required this.place, @required this.onSelected})
-      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final uf = place.uf;
     final rate = place.rate;
     final distance = place.distance;
-    final placeColor = DesignSystemColors.hexColor(place.category.color);
+    final placeColor = DesignSystemColors.hexColor(place.category.color!);
 
     return GestureDetector(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
         child: Container(
-          padding: EdgeInsets.all(12.0),
-          decoration: BoxDecoration(
+          padding: const EdgeInsets.all(12.0),
+          decoration: const BoxDecoration(
             color: DesignSystemColors.white,
             borderRadius: BorderRadius.all(Radius.circular(8.0)),
             boxShadow: [
@@ -106,12 +112,13 @@ class Card extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          place.name,
+                          place.name!,
                           style: TextStyle(
-                              color: placeColor,
-                              fontFamily: 'Lato',
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.bold),
+                            color: placeColor,
+                            fontFamily: 'Lato',
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
@@ -119,8 +126,8 @@ class Card extends StatelessWidget {
                             bottom: 20.0,
                           ),
                           child: Text(
-                            place.category.name.toUpperCase(),
-                            style: TextStyle().categoryName,
+                            place.category.name!.toUpperCase(),
+                            style: const TextStyle().categoryName,
                           ),
                         )
                       ],
@@ -133,11 +140,13 @@ class Card extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("$uf - ${distance}KM DE DISTÂNCIA",
-                        style: TextStyle().categoryName),
                     Text(
-                      "$rate/5",
-                      style: TextStyle().rate,
+                      '$uf - ${distance}KM DE DISTÂNCIA',
+                      style: const TextStyle().categoryName,
+                    ),
+                    Text(
+                      '$rate/5',
+                      style: const TextStyle().rate,
                     )
                   ],
                 ),
@@ -152,21 +161,24 @@ class Card extends StatelessWidget {
 }
 
 extension _TextStyle on TextStyle {
-  TextStyle get listTitle => TextStyle(
-      color: DesignSystemColors.darkIndigoThree,
-      fontFamily: 'Lato',
-      fontSize: 20.0,
-      fontWeight: FontWeight.bold);
+  TextStyle get listTitle => const TextStyle(
+        color: DesignSystemColors.darkIndigoThree,
+        fontFamily: 'Lato',
+        fontSize: 20.0,
+        fontWeight: FontWeight.bold,
+      );
 
-  TextStyle get categoryName => TextStyle(
-      color: DesignSystemColors.brownishGrey,
-      fontFamily: 'Lato',
-      fontSize: 12.0,
-      fontWeight: FontWeight.normal);
+  TextStyle get categoryName => const TextStyle(
+        color: DesignSystemColors.brownishGrey,
+        fontFamily: 'Lato',
+        fontSize: 12.0,
+        fontWeight: FontWeight.normal,
+      );
 
-  TextStyle get rate => TextStyle(
-      color: DesignSystemColors.darkIndigoThree,
-      fontFamily: 'Lato',
-      fontSize: 12.0,
-      fontWeight: FontWeight.normal);
+  TextStyle get rate => const TextStyle(
+        color: DesignSystemColors.darkIndigoThree,
+        fontFamily: 'Lato',
+        fontSize: 12.0,
+        fontWeight: FontWeight.normal,
+      );
 }

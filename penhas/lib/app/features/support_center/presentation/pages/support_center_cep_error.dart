@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class SupportCenterCepError extends StatelessWidget {
-  final String _message;
-
   const SupportCenterCepError({
-    Key key,
-    @required String message,
-  })  : this._message = message,
+    Key? key,
+    required String message,
+  })  : _message = message,
         super(key: key);
+
+  final String _message;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +19,8 @@ class SupportCenterCepError extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(
+            const Padding(
+              padding: EdgeInsets.only(
                 bottom: 28.0,
                 top: 12.0,
               ),
@@ -35,8 +35,8 @@ class SupportCenterCepError extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 32.0),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 32.0),
               child: Icon(
                 Icons.location_off,
                 color: DesignSystemColors.white,
@@ -48,7 +48,7 @@ class SupportCenterCepError extends StatelessWidget {
               child: Text(
                 _message,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'Lato',
                   fontSize: 18.0,
                   fontWeight: FontWeight.normal,

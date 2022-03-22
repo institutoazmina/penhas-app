@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -14,28 +13,28 @@ part 'deleted_account_controller.g.dart';
 class DeletedAccountController extends _DeletedAccountControllerBase
     with _$DeletedAccountController {
   DeletedAccountController({
-    @required IUserProfileRepository profileRepository,
-    @required IAppConfiguration appConfiguration,
-    @required String sessionToken,
+    required IUserProfileRepository profileRepository,
+    required IAppConfiguration appConfiguration,
+    required String? sessionToken,
   }) : super(profileRepository, appConfiguration, sessionToken);
 }
 
 abstract class _DeletedAccountControllerBase with Store, MapFailureMessage {
-  final String _sessionToken;
-  final IAppConfiguration _appConfiguration;
-  final IUserProfileRepository _profileRepository;
-
   _DeletedAccountControllerBase(
     this._profileRepository,
     this._appConfiguration,
     this._sessionToken,
   );
 
-  @observable
-  ObservableFuture<Either<Failure, ValidField>> _progress;
+  final String? _sessionToken;
+  final IAppConfiguration _appConfiguration;
+  final IUserProfileRepository _profileRepository;
 
   @observable
-  String errorMessage = "";
+  ObservableFuture<Either<Failure, ValidField>>? _progress;
+
+  @observable
+  String? errorMessage = '';
 
   @computed
   PageProgressState get progressState {
@@ -44,13 +43,13 @@ abstract class _DeletedAccountControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> reactive() async {
-    setErrorMessage("");
+    errorMessage = '';
 
     _progress = ObservableFuture(
       _profileRepository.reactivate(token: _sessionToken),
     );
 
-    final result = await _progress;
+    final Either<Failure, ValidField> result = await _progress!;
 
     result.fold(
       (failure) => handleError(failure),
@@ -60,11 +59,7 @@ abstract class _DeletedAccountControllerBase with Store, MapFailureMessage {
 }
 
 extension _PrivateMethods on _DeletedAccountControllerBase {
-  void setErrorMessage(String message) {
-    errorMessage = message;
-  }
-
-  PageProgressState monitorProgress(ObservableFuture<Object> observable) {
+  PageProgressState monitorProgress(ObservableFuture<Object>? observable) {
     if (observable == null || observable.status == FutureStatus.rejected) {
       return PageProgressState.initial;
     }
@@ -75,7 +70,7 @@ extension _PrivateMethods on _DeletedAccountControllerBase {
   }
 
   void handleError(Failure failure) {
-    setErrorMessage(mapFailureMessage(failure));
+    errorMessage = mapFailureMessage(failure);
   }
 
   Future<void> handleSession(ValidField session) async {

@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
@@ -17,44 +15,44 @@ part 'feed_controller.g.dart';
 
 class FeedController extends _FeedControllerBase with _$FeedController {
   FeedController({
-    @required FeedUseCases useCase,
-    @required IAppModulesServices modulesServices,
+    required FeedUseCases useCase,
+    required IAppModulesServices modulesServices,
   }) : super(useCase, modulesServices);
 }
 
 abstract class _FeedControllerBase with Store, MapFailureMessage {
-  final FeedUseCases useCase;
-  StreamSubscription _streamCache;
-  final IAppModulesServices _modulesServices;
-
   _FeedControllerBase(this.useCase, this._modulesServices) {
     _registerDataSource();
     _setupSecurityState();
   }
 
-  @observable
-  ObservableFuture<Either<Failure, FeedCache>> _fetchProgress;
+  final FeedUseCases useCase;
+  StreamSubscription? _streamCache;
+  final IAppModulesServices _modulesServices;
 
   @observable
-  ObservableFuture<Either<Failure, FeedCache>> _reloadProgress;
+  ObservableFuture<Either<Failure, FeedCache>>? _fetchProgress;
 
   @observable
-  ObservableList<TweetTiles> listTweets = ObservableList<TweetTiles>();
+  ObservableFuture<Either<Failure, FeedCache>>? _reloadProgress;
 
   @observable
-  String errorMessage;
+  ObservableList<TweetTiles?> listTweets = ObservableList<TweetTiles>();
 
   @observable
-  FeedSecurityState securityState = FeedSecurityState.disable();
+  String? errorMessage;
+
+  @observable
+  FeedSecurityState securityState = const FeedSecurityState.disable();
 
   @computed
   PageProgressState get reloadState {
     if (_reloadProgress == null ||
-        _reloadProgress.status == FutureStatus.rejected) {
+        _reloadProgress!.status == FutureStatus.rejected) {
       return PageProgressState.initial;
     }
 
-    return _reloadProgress.status == FutureStatus.pending
+    return _reloadProgress!.status == FutureStatus.pending
         ? PageProgressState.loading
         : PageProgressState.loaded;
   }
@@ -62,60 +60,60 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
   @computed
   PageProgressState get fetchState {
     if (_fetchProgress == null ||
-        _fetchProgress.status == FutureStatus.rejected) {
+        _fetchProgress!.status == FutureStatus.rejected) {
       return PageProgressState.initial;
     }
 
-    return _fetchProgress.status == FutureStatus.pending
+    return _fetchProgress!.status == FutureStatus.pending
         ? PageProgressState.loading
         : PageProgressState.loaded;
   }
 
   @action
   Future<void> fetchNextPage() async {
-    _setErrorMessage('');
+    errorMessage = '';
     if (fetchState == PageProgressState.loading) {
       return;
     }
 
     _fetchProgress = ObservableFuture(useCase.fetchNewestTweet());
 
-    final response = await _fetchProgress;
+    final Either<Failure, FeedCache> response = await _fetchProgress!;
     response.fold(
-      (failure) => _setErrorMessage(mapFailureMessage(failure)),
+      (failure) => errorMessage = mapFailureMessage(failure),
       (_) {}, // é atualizado via stream no _registerDataSource
     );
   }
 
   @action
   Future<void> fetchOldestPage() async {
-    _setErrorMessage('');
+    errorMessage = '';
     if (fetchState == PageProgressState.loading) {
       return;
     }
 
     _fetchProgress = ObservableFuture(useCase.fetchOldestTweet());
 
-    final response = await _fetchProgress;
+    final Either<Failure, FeedCache> response = await _fetchProgress!;
 
     response.fold(
-      (failure) => _setErrorMessage(mapFailureMessage(failure)),
+      (failure) => errorMessage = mapFailureMessage(failure),
       (_) {}, // é atualizado via stream no _registerDataSource
     );
   }
 
   @action
   Future<void> reloadFeed() async {
-    _setErrorMessage('');
+    errorMessage = '';
     if (reloadState == PageProgressState.loading) {
       return;
     }
 
     _reloadProgress = ObservableFuture(useCase.reloadTweetFeed());
 
-    final response = await _reloadProgress;
+    final Either<Failure, FeedCache> response = await _reloadProgress!;
     response.fold(
-      (failure) => _setErrorMessage(mapFailureMessage(failure)),
+      (failure) => errorMessage = mapFailureMessage(failure),
       (_) {}, // é atualizado via stream no _registerDataSource
     );
   }
@@ -125,12 +123,7 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
     _cancelDataSource();
   }
 
-  void _setErrorMessage(String msg) {
-    print(msg);
-    errorMessage = msg;
-  }
-
-  _registerDataSource() {
+  void _registerDataSource() {
     _streamCache = useCase.dataSource
         .listen((cache) => listTweets = cache.tweets.asObservable());
   }
@@ -139,14 +132,12 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
     securityState =
         await SecurityModeActionFeature(modulesServices: _modulesServices)
                 .isEnabled
-            ? FeedSecurityState.enable()
-            : FeedSecurityState.disable();
+            ? const FeedSecurityState.enable()
+            : const FeedSecurityState.disable();
   }
 
-  _cancelDataSource() {
-    if (_streamCache != null) {
-      _streamCache.cancel();
-      _streamCache = null;
-    }
+  void _cancelDataSource() {
+    _streamCache?.cancel();
+    _streamCache = null;
   }
 }

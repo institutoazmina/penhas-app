@@ -3,10 +3,11 @@ import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class SoundRecordWidget extends StatefulWidget {
-  final AudioActivity audioActivity;
-  final VoidCallback onPressed;
-  SoundRecordWidget({Key key, this.audioActivity, this.onPressed})
+  const SoundRecordWidget({Key? key, this.audioActivity, this.onPressed})
       : super(key: key);
+
+  final AudioActivity? audioActivity;
+  final VoidCallback? onPressed;
 
   @override
   _SoundRecordWidgetState createState() => _SoundRecordWidgetState();
@@ -14,13 +15,12 @@ class SoundRecordWidget extends StatefulWidget {
 
 class _SoundRecordWidgetState extends State<SoundRecordWidget>
     with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation _animation;
+  late final AnimationController _animationController =
+      AnimationController(vsync: this, duration: const Duration(seconds: 2));
+  late Animation _animation;
 
   @override
   void initState() {
-    _animationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 2));
     _animation = Tween(begin: 0.0, end: 12.0).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
@@ -48,27 +48,28 @@ class _SoundRecordWidgetState extends State<SoundRecordWidget>
             boxShadow: [
               for (int i = 1; i <= 5; i++)
                 BoxShadow(
-                    color: DesignSystemColors.easterPurple
-                        .withOpacity(_animationController.value / 2),
-                    spreadRadius: i * _animation.value)
+                  color: DesignSystemColors.easterPurple
+                      .withOpacity(_animationController.value / 2),
+                  spreadRadius: i * _animation.value as double,
+                )
             ],
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Icon(
+              const Icon(
                 Icons.mic,
                 color: Colors.white,
                 size: 42,
               ),
               Text(
                 widget.audioActivity?.time ?? '',
-                style: TextStyle(
-                    fontFamily: 'Lato',
-                    fontSize: 35.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.normal),
+                style: const TextStyle(
+                  fontFamily: 'Lato',
+                  fontSize: 35.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
             ],
           ),

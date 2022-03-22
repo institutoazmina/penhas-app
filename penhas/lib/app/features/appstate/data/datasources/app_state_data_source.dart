@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
@@ -12,16 +11,16 @@ abstract class IAppStateDataSource {
 }
 
 class AppStateDataSource implements IAppStateDataSource {
+  AppStateDataSource({
+    required http.Client apiClient,
+    required serverConfiguration,
+  })  : _apiClient = apiClient,
+        _serverConfiguration = serverConfiguration;
+
   final http.Client _apiClient;
   final IApiServerConfigure _serverConfiguration;
   final Set<int> _successfulResponse = {200};
   final Set<int> _invalidSessionCode = {401, 403};
-
-  AppStateDataSource({
-    @required http.Client apliClient,
-    @required serverConfiguration,
-  })  : this._apiClient = apliClient,
-        this._serverConfiguration = serverConfiguration;
 
   @override
   Future<AppStateModel> check() async {
@@ -32,7 +31,7 @@ class AppStateDataSource implements IAppStateDataSource {
     if (_successfulResponse.contains(response.statusCode)) {
       return AppStateModel.fromJson(json.decode(response.body));
     } else if (_invalidSessionCode.contains(response.statusCode)) {
-      throw ApiProviderSessionExpection();
+      throw ApiProviderSessionError();
     } else {
       throw ApiProviderException(bodyContent: json.decode(response.body));
     }
@@ -40,43 +39,31 @@ class AppStateDataSource implements IAppStateDataSource {
 
   @override
   Future<AppStateModel> update(UpdateUserProfileEntity update) async {
-    Map<String, String> httpHeader = await _setupHttpHeader();
+    final Map<String, String> httpHeader = await _setupHttpHeader();
     httpHeader['Content-Type'] =
         'application/x-www-form-urlencoded; charset=utf-8';
 
     final httpRequest = _serverConfiguration.baseUri.replace(path: '/me');
 
-    List<String> parameters = [
-      update.nickName == null
-          ? null
-          : 'apelido=' + Uri.encodeComponent(update.nickName),
-      update.minibio == null
-          ? null
-          : 'minibio=' + Uri.encodeComponent(update.minibio),
-      update.race == null ? null : 'raca=' + Uri.encodeComponent(update.race),
-      update.skills == null
-          ? null
-          : 'skills=' + Uri.encodeComponent(update.skills.join(",")),
-      update.oldPassword == null
-          ? null
-          : 'senha_atual=' + Uri.encodeComponent(update.oldPassword),
-      update.newPassword == null
-          ? null
-          : 'senha=' + Uri.encodeComponent(update.newPassword),
-      update.email == null
-          ? null
-          : 'email=' + Uri.encodeComponent(update.email),
+    final List<String?> parameters = [
+      if (update.nickName == null) null else 'apelido=${Uri.encodeComponent(update.nickName!)}',
+      if (update.minibio == null) null else 'minibio=${Uri.encodeComponent(update.minibio!)}',
+      if (update.race == null) null else 'raca=${Uri.encodeComponent(update.race!)}',
+      if (update.skills == null) null else 'skills=${Uri.encodeComponent(update.skills!.join(","))}',
+      if (update.oldPassword == null) null else 'senha_atual=${Uri.encodeComponent(update.oldPassword!)}',
+      if (update.newPassword == null) null else 'senha=${Uri.encodeComponent(update.newPassword!)}',
+      if (update.email == null) null else 'email=${Uri.encodeComponent(update.email!)}',
     ];
 
     parameters.removeWhere((e) => e == null);
     final bodyContent = parameters.join('&');
 
     final response = await _apiClient.put(httpRequest,
-        headers: httpHeader, body: bodyContent);
+        headers: httpHeader, body: bodyContent,);
     if (_successfulResponse.contains(response.statusCode)) {
       return AppStateModel.fromJson(json.decode(response.body));
     } else if (_invalidSessionCode.contains(response.statusCode)) {
-      throw ApiProviderSessionExpection();
+      throw ApiProviderSessionError();
     } else {
       throw ApiProviderException(bodyContent: json.decode(response.body));
     }
@@ -86,7 +73,7 @@ class AppStateDataSource implements IAppStateDataSource {
     final userAgent = await _serverConfiguration.userAgent;
     final apiToken = await _serverConfiguration.apiToken;
     return {
-      'X-Api-Key': apiToken,
+      'X-Api-Key': apiToken ?? '',
       'User-Agent': userAgent,
       'Content-Type': 'application/json; charset=utf-8',
     };

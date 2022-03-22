@@ -6,24 +6,24 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/states/feed_security_state.dart';
+import 'package:penhas/app/features/feed/presentation/feed_controller.dart';
+import 'package:penhas/app/features/feed/presentation/pages/feed_category_filter.dart';
+import 'package:penhas/app/features/feed/presentation/pages/feed_tags_filter.dart';
+import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/tweet.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_group_news.dart';
+import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_related_news.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-import 'feed_controller.dart';
-import 'pages/feed_category_filter.dart';
-import 'pages/feed_tags_filter.dart';
-import 'stores/tweet_controller.dart';
-import 'tweet/tweet.dart';
-import 'tweet/widgets/tweet_group_news.dart';
-import 'tweet/widgets/tweet_related_news.dart';
-
 class FeedPage extends StatefulWidget {
+  const FeedPage({
+    Key? key,
+    this.title = 'Feed',
+    required this.tweetController,
+  }) : super(key: key);
+
   final String title;
   final ITweetController tweetController;
-  const FeedPage({
-    Key key,
-    this.title = "Feed",
-    @required this.tweetController,
-  }) : super(key: key);
 
   @override
   _FeedPageState createState() => _FeedPageState();
@@ -31,7 +31,7 @@ class FeedPage extends StatefulWidget {
 
 class _FeedPageState extends ModularState<FeedPage, FeedController>
     with SnackBarHandler {
-  List<ReactionDisposer> _disposers;
+  List<ReactionDisposer>? _disposers;
 
   final _scrollController = ScrollController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -43,8 +43,8 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _refreshIndicatorKey.currentState.show();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      _refreshIndicatorKey.currentState?.show();
     });
   }
 
@@ -59,7 +59,9 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
 
   @override
   void dispose() {
-    _disposers.forEach((d) => d());
+    for (final d in _disposers!) {
+      d();
+    }
     _scrollController.dispose();
     controller.dispose();
     super.dispose();
@@ -74,30 +76,32 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
   }
 
   Observer _bodyBuilder() {
-    return Observer(builder: (_) {
-      return PageProgressIndicator(
-        progressState: _currentState,
-        progressMessage: 'Aplicando os filtros',
-        child: SizedBox.expand(
-          child: Container(
-            color: DesignSystemColors.systemBackgroundColor,
-            child: SafeArea(
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
-                    child: _buildFiltersButton(controller.securityState),
-                  ),
-                  Expanded(
-                    child: _buildRefreshIndicator(),
-                  ),
-                ],
+    return Observer(
+      builder: (_) {
+        return PageProgressIndicator(
+          progressState: _currentState,
+          progressMessage: 'Aplicando os filtros',
+          child: SizedBox.expand(
+            child: Container(
+              color: DesignSystemColors.systemBackgroundColor,
+              child: SafeArea(
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20.0),
+                      child: _buildFiltersButton(controller.securityState),
+                    ),
+                    Expanded(
+                      child: _buildRefreshIndicator(),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   RefreshIndicator _buildRefreshIndicator() {
@@ -130,10 +134,10 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
     }
   }
 
-  Widget _buildTweetItem(TweetTiles tweet, BuildContext context) {
+  Widget _buildTweetItem(TweetTiles? tweet, BuildContext context) {
     if (tweet is TweetEntity) {
       return Padding(
-        padding: EdgeInsets.only(
+        padding: const EdgeInsets.only(
           left: 12.0,
           right: 12.0,
           bottom: 6.0,
@@ -156,7 +160,7 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
   bool _handleScrollNotification(ScrollNotification notification) {
     final bool isEndOfListView = _scrollController.position.extentAfter == 0;
     if (isEndOfListView) {
-      _refreshIndicatorKey.currentState.show(atTop: false);
+      _refreshIndicatorKey.currentState?.show(atTop: false);
     }
 
     return true;
@@ -181,7 +185,7 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
   }
 
   ReactionDisposer _showErrorMessage() {
-    return reaction((_) => controller.errorMessage, (String message) {
+    return reaction((_) => controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }

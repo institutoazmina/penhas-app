@@ -5,15 +5,14 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/notification/domain/entities/notification_session_entity.dart';
 import 'package:penhas/app/features/notification/domain/states/notification_state.dart';
+import 'package:penhas/app/features/notification/presentation/notification_controller.dart';
+import 'package:penhas/app/features/notification/presentation/pages/notification_card_page.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
-import 'notification_controller.dart';
-import 'pages/notification_card_page.dart';
-
 class NotificationPage extends StatefulWidget {
-  NotificationPage({Key key}) : super(key: key);
+  const NotificationPage({Key? key}) : super(key: key);
 
   @override
   _NotificationState createState() => _NotificationState();
@@ -26,7 +25,7 @@ class _NotificationState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Notificações"),
+        title: const Text('Notificações'),
         elevation: 0.0,
         backgroundColor: DesignSystemColors.easterPurple,
       ),
@@ -53,7 +52,7 @@ extension _PageStateBuilder on _NotificationState {
   }
 
   Widget buildEmptyState() {
-    return SafeArea(
+    return const SafeArea(
       child: Center(child: Text('Você não tem notificações', style: kTextEmptyList,),),
     );
   }
@@ -62,7 +61,7 @@ extension _PageStateBuilder on _NotificationState {
     return SafeArea(
       child: PageProgressIndicator(
         progressState: PageProgressState.loading,
-        progressMessage: "Carregando...",
+        progressMessage: 'Carregando...',
         child: Container(color: DesignSystemColors.white),
       ),
     );

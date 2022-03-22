@@ -5,31 +5,18 @@ import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_request_option.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
-import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
 import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
-import 'package:penhas/app/features/feed/domain/usecases/tweet_filter_preference.dart';
 
-class MockTweetRepository extends Mock implements ITweetRepository {}
-
-class MockTweetFilterPreference extends Mock implements TweetFilterPreference {
-  @override
-  List<String> getTags() {
-    return [];
-  }
-
-  @override
-  List<String> getCategory() {
-    return [];
-  }
-}
+import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  ITweetRepository repository;
-  TweetFilterPreference filterPreference;
+  late final MockITweetRepository repository = MockITweetRepository();
+  late final MockTweetFilterPreference filterPreference =
+      MockTweetFilterPreference();
 
   setUp(() {
-    repository = MockTweetRepository();
-    filterPreference = MockTweetFilterPreference();
+    when(filterPreference.categories).thenReturn([]);
+    when(filterPreference.getTags()).thenReturn([]);
   });
 
   group('FeedUseCases', () {
@@ -40,78 +27,80 @@ void main() {
       verifyNoMoreInteractions(repository);
     });
     group('fetchNewestTweet', () {
-      int maxRowsPerRequet;
-      TweetSessionEntity firstSessionResponse;
-      TweetSessionEntity secondSessionResponse;
-      TweetSessionEntity thirdSessionResponse;
+      late int maxRowsPerRequet;
+      late TweetSessionEntity firstSessionResponse;
+      late TweetSessionEntity secondSessionResponse;
+      late TweetSessionEntity thirdSessionResponse;
 
       setUp(() {
         maxRowsPerRequet = 5;
         firstSessionResponse = TweetSessionEntity(
-            nextPage: '_next_page_request_1_',
-            hasMore: true,
-            orderBy: TweetSessionOrder.latestFirst,
-            tweets: [
-              TweetEntity(
-                id: 'id_2',
-                userName: 'user_2',
-                clientId: 2,
-                createdAt: '2020-01-01 00:00:02',
-                totalReply: 0,
-                totalLikes: 1,
-                anonymous: false,
-                content: 'content 2',
-                avatar: 'http://site.com/avatar_2.png',
-                meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
-              ),
-              TweetEntity(
-                id: 'id_1',
-                userName: 'user_1',
-                clientId: 1,
-                createdAt: '2020-01-01 00:00:01',
-                totalReply: 0,
-                totalLikes: 1,
-                anonymous: false,
-                content: 'content 1',
-                avatar: 'http://site.com/avatar_1.png',
-                meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
-              ),
-            ]);
+          nextPage: '_next_page_request_1_',
+          hasMore: true,
+          orderBy: TweetSessionOrder.latestFirst,
+          tweets: [
+            TweetEntity(
+              id: 'id_2',
+              userName: 'user_2',
+              clientId: 2,
+              createdAt: '2020-01-01 00:00:02',
+              totalReply: 0,
+              totalLikes: 1,
+              anonymous: false,
+              content: 'content 2',
+              avatar: 'http://site.com/avatar_2.png',
+              meta: const TweetMeta(liked: false, owner: true),
+              lastReply: const [],
+            ),
+            TweetEntity(
+              id: 'id_1',
+              userName: 'user_1',
+              clientId: 1,
+              createdAt: '2020-01-01 00:00:01',
+              totalReply: 0,
+              totalLikes: 1,
+              anonymous: false,
+              content: 'content 1',
+              avatar: 'http://site.com/avatar_1.png',
+              meta: const TweetMeta(liked: false, owner: true),
+              lastReply: const [],
+            ),
+          ],
+        );
         secondSessionResponse = TweetSessionEntity(
-            nextPage: '_next_page_request_1_',
-            hasMore: false,
-            orderBy: TweetSessionOrder.oldestFirst,
-            tweets: [
-              TweetEntity(
-                id: 'id_3',
-                userName: 'user_1',
-                clientId: 1,
-                createdAt: '2020-02-02 00:00:02',
-                totalReply: 0,
-                totalLikes: 1,
-                anonymous: false,
-                content: 'content 1',
-                avatar: 'http://site.com/avatar_1.png',
-                meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
-              ),
-              TweetEntity(
-                id: 'id_4',
-                userName: 'user_2',
-                clientId: 2,
-                createdAt: '2020-02-03 00:00:03',
-                totalReply: 0,
-                totalLikes: 1,
-                anonymous: false,
-                content: 'content 4',
-                avatar: 'http://site.com/avatar_2.png',
-                meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
-              ),
-            ]);
-        thirdSessionResponse = TweetSessionEntity(
+          nextPage: '_next_page_request_1_',
+          hasMore: false,
+          orderBy: TweetSessionOrder.oldestFirst,
+          tweets: [
+            TweetEntity(
+              id: 'id_3',
+              userName: 'user_1',
+              clientId: 1,
+              createdAt: '2020-02-02 00:00:02',
+              totalReply: 0,
+              totalLikes: 1,
+              anonymous: false,
+              content: 'content 1',
+              avatar: 'http://site.com/avatar_1.png',
+              meta: const TweetMeta(liked: false, owner: true),
+              lastReply: const [],
+            ),
+            TweetEntity(
+              id: 'id_4',
+              userName: 'user_2',
+              clientId: 2,
+              createdAt: '2020-02-03 00:00:03',
+              totalReply: 0,
+              totalLikes: 1,
+              anonymous: false,
+              content: 'content 4',
+              avatar: 'http://site.com/avatar_2.png',
+              meta: const TweetMeta(liked: false, owner: true),
+              lastReply: const [],
+            ),
+          ],
+        );
+        thirdSessionResponse = const TweetSessionEntity(
           nextPage: '_next_page_request_1_',
           hasMore: false,
           orderBy: TweetSessionOrder.oldestFirst,
@@ -126,7 +115,9 @@ void main() {
         final Either<Failure, FeedCache> expected =
             right(FeedCache(tweets: firstSessionResponse.tweets));
         final sut = FeedUseCases(
-            repository: repository, filterPreference: filterPreference);
+          repository: repository,
+          filterPreference: filterPreference,
+        );
         // act
         final received = await sut.fetchNewestTweet();
         // assert
@@ -158,10 +149,11 @@ void main() {
 
         verify(
           repository.fetch(
-              option: TweetRequestOption(
-            rows: maxRowsPerRequet,
-            after: (firstSessionResponse.tweets.first as TweetEntity).id,
-          )),
+            option: TweetRequestOption(
+              rows: maxRowsPerRequet,
+              after: (firstSessionResponse.tweets.first as TweetEntity).id,
+            ),
+          ),
         );
         expect(expected, received);
       });
@@ -189,109 +181,112 @@ void main() {
       });
     });
     group('fetchOldestTweet', () {
-      int maxRowsPerRequet;
-      TweetSessionEntity firstSessionResponse;
-      TweetSessionEntity secondSessionResponse;
-      TweetSessionEntity thirdSessionResponse;
+      int? maxRowsPerRequet;
+      late TweetSessionEntity firstSessionResponse;
+      late TweetSessionEntity secondSessionResponse;
+      late TweetSessionEntity thirdSessionResponse;
 
       setUp(() {
         maxRowsPerRequet = 5;
         firstSessionResponse = TweetSessionEntity(
-            nextPage: '_next_page_request_1_',
-            hasMore: true,
-            orderBy: TweetSessionOrder.latestFirst,
-            tweets: [
-              TweetEntity(
-                id: 'id_4',
-                userName: 'user_2',
-                clientId: 2,
-                createdAt: '2020-02-04 00:00:02',
-                totalReply: 0,
-                totalLikes: 1,
-                anonymous: false,
-                content: 'content 4',
-                avatar: 'http://site.com/avatar_2.png',
-                meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
-              ),
-              TweetEntity(
-                id: 'id_3',
-                userName: 'user_1',
-                clientId: 1,
-                createdAt: '2020-02-03 00:00:01',
-                totalReply: 0,
-                totalLikes: 1,
-                anonymous: false,
-                content: 'content 3',
-                avatar: 'http://site.com/avatar_1.png',
-                meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
-              ),
-            ]);
+          nextPage: '_next_page_request_1_',
+          hasMore: true,
+          orderBy: TweetSessionOrder.latestFirst,
+          tweets: [
+            TweetEntity(
+              id: 'id_4',
+              userName: 'user_2',
+              clientId: 2,
+              createdAt: '2020-02-04 00:00:02',
+              totalReply: 0,
+              totalLikes: 1,
+              anonymous: false,
+              content: 'content 4',
+              avatar: 'http://site.com/avatar_2.png',
+              meta: const TweetMeta(liked: false, owner: true),
+              lastReply: const [],
+            ),
+            TweetEntity(
+              id: 'id_3',
+              userName: 'user_1',
+              clientId: 1,
+              createdAt: '2020-02-03 00:00:01',
+              totalReply: 0,
+              totalLikes: 1,
+              anonymous: false,
+              content: 'content 3',
+              avatar: 'http://site.com/avatar_1.png',
+              meta: const TweetMeta(liked: false, owner: true),
+              lastReply: const [],
+            ),
+          ],
+        );
         secondSessionResponse = TweetSessionEntity(
-            nextPage: '_next_page_request_2_',
-            hasMore: true,
-            orderBy: TweetSessionOrder.latestFirst,
-            tweets: [
-              TweetEntity(
-                id: 'id_2',
-                userName: 'user_1',
-                clientId: 1,
-                createdAt: '2020-01-02 00:00:01',
-                totalReply: 0,
-                totalLikes: 1,
-                anonymous: false,
-                content: 'content 2',
-                avatar: 'http://site.com/avatar_1.png',
-                meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
-              ),
-              TweetEntity(
-                id: 'id_1',
-                userName: 'user_2',
-                clientId: 2,
-                createdAt: '2020-01-01 00:00:01',
-                totalReply: 0,
-                totalLikes: 1,
-                anonymous: false,
-                content: 'content 1',
-                avatar: 'http://site.com/avatar_2.png',
-                meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
-              ),
-            ]);
+          nextPage: '_next_page_request_2_',
+          hasMore: true,
+          orderBy: TweetSessionOrder.latestFirst,
+          tweets: [
+            TweetEntity(
+              id: 'id_2',
+              userName: 'user_1',
+              clientId: 1,
+              createdAt: '2020-01-02 00:00:01',
+              totalReply: 0,
+              totalLikes: 1,
+              anonymous: false,
+              content: 'content 2',
+              avatar: 'http://site.com/avatar_1.png',
+              meta: const TweetMeta(liked: false, owner: true),
+              lastReply: const [],
+            ),
+            TweetEntity(
+              id: 'id_1',
+              userName: 'user_2',
+              clientId: 2,
+              createdAt: '2020-01-01 00:00:01',
+              totalReply: 0,
+              totalLikes: 1,
+              anonymous: false,
+              content: 'content 1',
+              avatar: 'http://site.com/avatar_2.png',
+              meta: const TweetMeta(liked: false, owner: true),
+              lastReply: const [],
+            ),
+          ],
+        );
         thirdSessionResponse = TweetSessionEntity(
-            nextPage: '_next_page_request_3_',
-            hasMore: true,
-            orderBy: TweetSessionOrder.oldestFirst,
-            tweets: [
-              TweetEntity(
-                id: 'id_1',
-                userName: 'user_2',
-                clientId: 2,
-                createdAt: '2020-01-01 00:00:01',
-                totalReply: 0,
-                totalLikes: 1,
-                anonymous: false,
-                content: 'content 1',
-                avatar: 'http://site.com/avatar_2.png',
-                meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
-              ),
-              TweetEntity(
-                id: 'id_2',
-                userName: 'user_1',
-                clientId: 1,
-                createdAt: '2020-01-02 00:00:01',
-                totalReply: 0,
-                totalLikes: 1,
-                anonymous: false,
-                content: 'content 2',
-                avatar: 'http://site.com/avatar_1.png',
-                meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
-              ),
-            ]);
+          nextPage: '_next_page_request_3_',
+          hasMore: true,
+          orderBy: TweetSessionOrder.oldestFirst,
+          tweets: [
+            TweetEntity(
+              id: 'id_1',
+              userName: 'user_2',
+              clientId: 2,
+              createdAt: '2020-01-01 00:00:01',
+              totalReply: 0,
+              totalLikes: 1,
+              anonymous: false,
+              content: 'content 1',
+              avatar: 'http://site.com/avatar_2.png',
+              meta: const TweetMeta(liked: false, owner: true),
+              lastReply: const [],
+            ),
+            TweetEntity(
+              id: 'id_2',
+              userName: 'user_1',
+              clientId: 1,
+              createdAt: '2020-01-02 00:00:01',
+              totalReply: 0,
+              totalLikes: 1,
+              anonymous: false,
+              content: 'content 2',
+              avatar: 'http://site.com/avatar_1.png',
+              meta: const TweetMeta(liked: false, owner: true),
+              lastReply: const [],
+            ),
+          ],
+        );
       });
       test('should get the newest tweets for first time', () async {
         // arrange
@@ -301,7 +296,9 @@ void main() {
         final Either<Failure, FeedCache> expected =
             right(FeedCache(tweets: firstSessionResponse.tweets));
         final sut = FeedUseCases(
-            repository: repository, filterPreference: filterPreference);
+          repository: repository,
+          filterPreference: filterPreference,
+        );
         // act
         final received = await sut.fetchOldestTweet();
         // assert
@@ -336,12 +333,12 @@ void main() {
         verifyInOrder([
           repository.fetch(
             option: TweetRequestOption(
-              rows: maxRowsPerRequet,
+              rows: maxRowsPerRequet!,
             ),
           ),
           repository.fetch(
             option: TweetRequestOption(
-              rows: maxRowsPerRequet,
+              rows: maxRowsPerRequet!,
               nextPageToken: '_next_page_request_1_',
             ),
           ),
@@ -367,11 +364,11 @@ void main() {
         );
 
         when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(firstSessionResponse));
+            .thenAnswer((_) => Future.value(right(firstSessionResponse)));
         await sut.fetchOldestTweet();
 
         when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(thirdSessionResponse));
+            .thenAnswer((_) => Future.value(right(thirdSessionResponse)));
         // act
         final received = await sut.fetchOldestTweet();
         // assert
@@ -385,12 +382,12 @@ void main() {
         verifyInOrder([
           repository.fetch(
             option: TweetRequestOption(
-              rows: maxRowsPerRequet,
+              rows: maxRowsPerRequet!,
             ),
           ),
           repository.fetch(
             option: TweetRequestOption(
-              rows: maxRowsPerRequet,
+              rows: maxRowsPerRequet!,
               nextPageToken: '_next_page_request_1_',
             ),
           ),

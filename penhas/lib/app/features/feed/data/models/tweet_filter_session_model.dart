@@ -1,28 +1,23 @@
-import 'package:meta/meta.dart';
+import 'package:collection/collection.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_filter_session_entity.dart';
 
 class TweetFilterSessionModel extends TweetFilterSessionEntity {
-  final List<TweetFilterEntity> categories;
-  final List<TweetFilterEntity> tags;
-
-  TweetFilterSessionModel({
-    @required this.categories,
-    @required this.tags,
+  const TweetFilterSessionModel({
+    required List<TweetFilterEntity> categories,
+    required List<TweetFilterEntity> tags,
   }) : super(categories: categories, tags: tags);
 
-  factory TweetFilterSessionModel.fromJson(Map<String, Object> jsonData) {
-    final List<Object> tagsObject = jsonData['tags'];
-    final List<Object> categoriesObject = jsonData['categories'];
+  factory TweetFilterSessionModel.fromJson(Map<String, dynamic> jsonData) {
+    final List<dynamic> tagsObject = jsonData['tags'];
+    final List<dynamic> categoriesObject = jsonData['categories'];
     final List<TweetFilterEntity> categories = categoriesObject
-        .map((e) => e as Map<String, Object>)
         .map((e) => TweetFilterEntityModel.fromJson(e))
-        .where((e) => e != null)
+        .whereNotNull()
         .toList();
 
     final List<TweetFilterEntity> tags = tagsObject
-        .map((e) => e as Map<String, Object>)
         .map((e) => TweetFilterEntityModel.fromJson(e))
-        .where((e) => e != null)
+        .whereNotNull()
         .toList();
 
     return TweetFilterSessionModel(
@@ -33,12 +28,12 @@ class TweetFilterSessionModel extends TweetFilterSessionEntity {
 }
 
 class TweetFilterEntityModel {
-  static TweetFilterEntity fromJson(Map<String, Object> jsonData) {
+  static TweetFilterEntity? fromJson(Map<String, dynamic>? jsonData) {
     if (jsonData == null) return null;
     return TweetFilterEntity(
       id: jsonData['value'] ?? "${jsonData['id']}",
       label: jsonData['label'] ?? jsonData['title'],
-      isSelected: (jsonData['default'] as num) == 1 ?? false,
+      isSelected: jsonData['default'] == 1,
     );
   }
 }

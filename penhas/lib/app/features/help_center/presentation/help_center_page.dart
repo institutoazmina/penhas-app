@@ -4,10 +4,12 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/core/extension/asuka.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/help_center/domain/states/help_center_state.dart';
+import 'package:penhas/app/features/help_center/presentation/help_center_controller.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/help_center/help_center_action_guardian.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/help_center/help_center_action_police.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/help_center/help_center_action_record.dart';
@@ -15,11 +17,11 @@ import 'package:penhas/app/features/help_center/presentation/pages/help_center/h
 import 'package:penhas/app/features/help_center/presentation/pages/help_center/help_center_card_record.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
-import 'help_center_controller.dart';
 
 class HelpCenterPage extends StatefulWidget {
+  const HelpCenterPage({Key? key, this.title = 'HelpCenter'}) : super(key: key);
+
   final String title;
-  const HelpCenterPage({Key key, this.title = "HelpCenter"}) : super(key: key);
 
   @override
   _HelpCenterPageState createState() => _HelpCenterPageState();
@@ -28,14 +30,14 @@ class HelpCenterPage extends StatefulWidget {
 class _HelpCenterPageState
     extends ModularState<HelpCenterPage, HelpCenterController>
     with SnackBarHandler {
-  List<ReactionDisposer> _disposers;
+  List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _loadState = PageProgressState.initial;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       controller.checkLocalicationRequired();
     });
   }
@@ -99,19 +101,24 @@ class _HelpCenterPageState
 
   Widget _warnningBuilder() {
     return Padding(
-      padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+      padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
       child: Container(
         color: DesignSystemColors.nigthBlue,
         child: Padding(
-          padding:
-              EdgeInsets.only(left: 16.0, right: 16.0, top: 12.0, bottom: 12.0),
+          padding: const EdgeInsets.only(
+            left: 16.0,
+            right: 16.0,
+            top: 12.0,
+            bottom: 12.0,
+          ),
           child: Row(
             children: <Widget>[
               Expanded(
-                  flex: 1,
-                  child: SvgPicture.asset(
-                      'assets/images/svg/bottom_bar/emergency_controll.svg')),
-              Expanded(
+                child: SvgPicture.asset(
+                  'assets/images/svg/bottom_bar/emergency_controll.svg',
+                ),
+              ),
+              const Expanded(
                 flex: 6,
                 child: Text(
                   'Se o agressor estiver com arma de fogo ou objetos que possam machucar, chame a polícia!',
@@ -127,16 +134,19 @@ class _HelpCenterPageState
 
   Widget _warrningLocation() {
     return Padding(
-      padding: EdgeInsets.only(bottom: 20.0),
+      padding: const EdgeInsets.only(bottom: 20.0),
       child: Container(
         color: DesignSystemColors.nigthBlue,
         child: Padding(
-          padding:
-              EdgeInsets.only(left: 16.0, right: 16.0, top: 12.0, bottom: 12.0),
+          padding: const EdgeInsets.only(
+            left: 16.0,
+            right: 16.0,
+            top: 12.0,
+            bottom: 12.0,
+          ),
           child: Row(
-            children: <Widget>[
+            children: const <Widget>[
               Expanded(
-                flex: 1,
                 child: Icon(
                   Icons.location_off,
                   color: Colors.white,
@@ -159,7 +169,7 @@ class _HelpCenterPageState
 
   Widget _actionBuilder() {
     return Padding(
-      padding: EdgeInsets.only(left: 16.0, right: 16.0),
+      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -178,7 +188,7 @@ class _HelpCenterPageState
   }
 
   ReactionDisposer _showErrorMessage() {
-    return reaction((_) => controller.errorMessage, (String message) {
+    return reaction((_) => controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }
@@ -194,7 +204,7 @@ class _HelpCenterPageState
   }
 
   Future<void> _actionOnTap(String callingNumber) async {
-    await FlutterPhoneDirectCaller.directCall(callingNumber);
+    await FlutterPhoneDirectCaller.callNumber(callingNumber);
   }
 
   ReactionDisposer _showLoadProgress() {
@@ -213,16 +223,16 @@ class _HelpCenterPageState
           title: Column(
             children: <Widget>[
               SvgPicture.asset(
-                  'assets/images/svg/help_center/guardians/guardians_alert.svg'),
+                'assets/images/svg/help_center/guardians/guardians_alert.svg',
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 12.0),
-                child:
-                    Text(action.title, style: kTextStyleAlertDialogTitle),
+                child: Text(action.title, style: kTextStyleAlertDialogTitle),
               ),
             ],
           ),
           content: Text(
-            action.message,
+            action.message!,
             style: kTextStyleAlertDialogDescription,
           ),
           shape: RoundedRectangleBorder(
@@ -230,9 +240,9 @@ class _HelpCenterPageState
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('Fechar'),
+              child: const Text('Fechar'),
               onPressed: () async {
-                Modular.to.pop();
+                Navigator.of(context).pop();
                 action.onPressed();
               },
             ),

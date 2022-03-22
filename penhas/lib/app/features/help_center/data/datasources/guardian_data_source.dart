@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
@@ -12,24 +11,24 @@ import 'package:penhas/app/features/help_center/domain/entities/guardian_session
 
 abstract class IGuardianDataSource {
   Future<GuardianSessionModel> fetch();
-  Future<AlertModel> create(GuardianContactEntity guardian);
-  Future<ValidField> update(GuardianContactEntity guardian);
-  Future<ValidField> delete(GuardianContactEntity guardian);
-  Future<AlertModel> alert(UserLocationEntity location);
+  Future<AlertModel> create(GuardianContactEntity? guardian);
+  Future<ValidField> update(GuardianContactEntity? guardian);
+  Future<ValidField> delete(GuardianContactEntity? guardian);
+  Future<AlertModel> alert(UserLocationEntity? location);
   Future<ValidField> callPolice();
 }
 
 class GuardianDataSource implements IGuardianDataSource {
+  GuardianDataSource({
+    required http.Client apiClient,
+    required IApiServerConfigure serverConfiguration,
+  })  : _apiClient = apiClient,
+        _serverConfiguration = serverConfiguration;
+
   final http.Client _apiClient;
   final IApiServerConfigure _serverConfiguration;
   final Set<int> _successfulResponse = {200, 204};
   final Set<int> _invalidSessionCode = {401, 403};
-
-  GuardianDataSource({
-    @required http.Client apiClient,
-    @required serverConfiguration,
-  })  : this._apiClient = apiClient,
-        this._serverConfiguration = serverConfiguration;
 
   @override
   Future<GuardianSessionModel> fetch() async {
@@ -41,21 +40,21 @@ class GuardianDataSource implements IGuardianDataSource {
     final response = await _apiClient.get(httpRequest, headers: httpHeader);
 
     if (_successfulResponse.contains(response.statusCode)) {
-      return GuardianSessionModel.fromJson(json.decode(response.body));
+      return GuardianSessionModel.fromJson(jsonDecode(response.body));
     } else if (_invalidSessionCode.contains(response.statusCode)) {
-      throw ApiProviderSessionExpection();
+      throw ApiProviderSessionError();
     } else {
-      throw ApiProviderException(bodyContent: json.decode(response.body));
+      throw ApiProviderException(bodyContent: jsonDecode(response.body));
     }
   }
 
   @override
-  Future<AlertModel> create(GuardianContactEntity guardian) async {
+  Future<AlertModel> create(GuardianContactEntity? guardian) async {
     final httpHeader = await _setupHttpHeader();
     final httpRequest = await _setupHttpRequest(
       path: '/me/guardioes',
       queryParameters: {
-        'nome': guardian.name,
+        'nome': guardian!.name,
         'celular': guardian.mobile,
       },
     );
@@ -65,19 +64,19 @@ class GuardianDataSource implements IGuardianDataSource {
     );
 
     if (_successfulResponse.contains(response.statusCode)) {
-      return AlertModel.fromJson(json.decode(response.body));
+      return AlertModel.fromJson(jsonDecode(response.body));
     } else if (_invalidSessionCode.contains(response.statusCode)) {
-      throw ApiProviderSessionExpection();
+      throw ApiProviderSessionError();
     } else {
-      throw ApiProviderException(bodyContent: json.decode(response.body));
+      throw ApiProviderException(bodyContent: jsonDecode(response.body));
     }
   }
 
   @override
-  Future<ValidField> update(GuardianContactEntity guardian) async {
+  Future<ValidField> update(GuardianContactEntity? guardian) async {
     final httpHeader = await _setupHttpHeader();
     final httpRequest = await _setupHttpRequest(
-      path: '/me/guardioes/${guardian.id}',
+      path: '/me/guardioes/${guardian!.id}',
       queryParameters: {
         'nome': guardian.name,
       },
@@ -88,19 +87,19 @@ class GuardianDataSource implements IGuardianDataSource {
     );
 
     if (_successfulResponse.contains(response.statusCode)) {
-      return ValidField.fromJson(json.decode(response.body));
+      return ValidField.fromJson(jsonDecode(response.body));
     } else if (_invalidSessionCode.contains(response.statusCode)) {
-      throw ApiProviderSessionExpection();
+      throw ApiProviderSessionError();
     } else {
-      throw ApiProviderException(bodyContent: json.decode(response.body));
+      throw ApiProviderException(bodyContent: jsonDecode(response.body));
     }
   }
 
   @override
-  Future<ValidField> delete(GuardianContactEntity guardian) async {
+  Future<ValidField> delete(GuardianContactEntity? guardian) async {
     final httpHeader = await _setupHttpHeader();
     final httpRequest = await _setupHttpRequest(
-      path: '/me/guardioes/${guardian.id}',
+      path: '/me/guardioes/${guardian!.id}',
       queryParameters: {},
     );
     final response = await _apiClient.delete(
@@ -109,24 +108,22 @@ class GuardianDataSource implements IGuardianDataSource {
     );
 
     if (_successfulResponse.contains(response.statusCode)) {
-      return ValidField();
+      return const ValidField();
     } else if (_invalidSessionCode.contains(response.statusCode)) {
-      throw ApiProviderSessionExpection();
+      throw ApiProviderSessionError();
     } else {
-      throw ApiProviderException(bodyContent: json.decode(response.body));
+      throw ApiProviderException(bodyContent: jsonDecode(response.body));
     }
   }
 
   @override
-  Future<AlertModel> alert(UserLocationEntity location) async {
+  Future<AlertModel> alert(UserLocationEntity? location) async {
     final httpHeader = await _setupHttpHeader();
     final httpRequest = await _setupHttpRequest(
       path: '/me/guardioes/alert',
       queryParameters: {
-        'gps_lat':
-            location.latitude == null ? null : location.latitude.toString(),
-        'gps_long':
-            location.longitude == null ? null : location.longitude.toString()
+        'gps_lat': location?.latitude.toString(),
+        'gps_long': location?.longitude.toString()
       },
     );
 
@@ -136,15 +133,15 @@ class GuardianDataSource implements IGuardianDataSource {
     );
 
     if (_successfulResponse.contains(response.statusCode)) {
-      return AlertModel.fromJson(json.decode(response.body));
+      return AlertModel.fromJson(jsonDecode(response.body));
     } else if (_invalidSessionCode.contains(response.statusCode)) {
-      throw ApiProviderSessionExpection();
+      throw ApiProviderSessionError();
     } else {
-      final jsonData = json.decode(response.body);
-      if (jsonData['error'] == "gps_position_invalid") {
+      final Map<String, dynamic> jsonData = jsonDecode(response.body);
+      if (jsonData['error'] == 'gps_position_invalid') {
         throw GuardianAlertGpsFailure();
       } else {
-        throw ApiProviderException(bodyContent: json.decode(response.body));
+        throw ApiProviderException(bodyContent: jsonData);
       }
     }
   }
@@ -162,11 +159,11 @@ class GuardianDataSource implements IGuardianDataSource {
     );
 
     if (_successfulResponse.contains(response.statusCode)) {
-      return ValidField();
+      return const ValidField();
     } else if (_invalidSessionCode.contains(response.statusCode)) {
-      throw ApiProviderSessionExpection();
+      throw ApiProviderSessionError();
     } else {
-      throw ApiProviderException(bodyContent: json.decode(response.body));
+      throw ApiProviderException(bodyContent: jsonDecode(response.body));
     }
   }
 
@@ -174,15 +171,15 @@ class GuardianDataSource implements IGuardianDataSource {
     final userAgent = await _serverConfiguration.userAgent;
     final apiToken = await _serverConfiguration.apiToken;
     return {
-      'X-Api-Key': apiToken,
+      'X-Api-Key': apiToken ?? '',
       'User-Agent': userAgent,
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
     };
   }
 
   Future<Uri> _setupHttpRequest({
-    @required String path,
-    @required Map<String, String> queryParameters,
+    required String path,
+    required Map<String, String?> queryParameters,
   }) async {
     queryParameters.removeWhere((k, v) => v == null);
     return _serverConfiguration.baseUri.replace(

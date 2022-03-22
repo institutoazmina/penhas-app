@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_header_edit_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-import 'card_profile_header_edit_page.dart';
-
 class CardProfileSingleTilePage extends StatelessWidget {
-  final String title;
-  final String content;
-  final Color background;
   const CardProfileSingleTilePage({
-    Key key,
-    @required this.title,
-    @required this.content,
+    Key? key,
+    required this.title,
+    required this.content,
     this.background = DesignSystemColors.white,
   }) : super(key: key);
+
+  final String title;
+  final String? content;
+  final Color background;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: background ?? DesignSystemColors.white,
+        color: background,
         border: Border(
           bottom: BorderSide(
-              color: background == DesignSystemColors.white
-                  ? DesignSystemColors.pinkishGrey
-                  : background),
+            color: background == DesignSystemColors.white
+                ? DesignSystemColors.pinkishGrey
+                : background,
+          ),
         ),
       ),
       child: Padding(
@@ -39,7 +40,7 @@ class CardProfileSingleTilePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 16.0, bottom: 20.0),
               child: Text(
-                content,
+                content!,
                 style: contentTextStyle,
               ),
             )
@@ -51,7 +52,7 @@ class CardProfileSingleTilePage extends StatelessWidget {
 }
 
 extension _TextStyle on CardProfileSingleTilePage {
-  TextStyle get contentTextStyle => TextStyle(
+  TextStyle get contentTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,
         letterSpacing: 0.45,

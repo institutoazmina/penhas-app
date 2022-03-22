@@ -14,38 +14,36 @@ import 'package:penhas/app/features/feed/domain/usecases/tweet_filter_preference
 
 @immutable
 class FeedCache extends Equatable {
-  final List<TweetTiles> tweets;
+  const FeedCache({required this.tweets});
 
-  FeedCache({@required this.tweets});
+  final List<TweetTiles?> tweets;
 
   @override
-  List<Object> get props => [tweets];
+  List<Object?> get props => [tweets];
 
   @override
   bool get stringify => true;
 }
 
 class FeedUseCases {
+  FeedUseCases({
+    required ITweetRepository repository,
+    required TweetFilterPreference filterPreference,
+    int? maxRows = 100,
+  })  : _repository = repository,
+        _filterPreference = filterPreference,
+        _maxRowsPerRequest = maxRows;
+
   final ITweetRepository _repository;
   final TweetFilterPreference _filterPreference;
-  final int _maxRowsPerRequest;
+  final int? _maxRowsPerRequest;
   final StreamController<FeedCache> _streamController =
       StreamController.broadcast();
 
   Stream<FeedCache> get dataSource => _streamController.stream;
-  List<TweetTiles> _tweetCacheFetch = List<TweetTiles>();
-  Map<String, List<TweetEntity>> _tweetReplyMap = {};
-  String _nextPage;
-
-  FeedUseCases({
-    @required ITweetRepository repository,
-    @required TweetFilterPreference filterPreference,
-    int maxRows = 100,
-  })  : assert(repository != null),
-        assert(filterPreference != null),
-        _repository = repository,
-        _filterPreference = filterPreference,
-        _maxRowsPerRequest = maxRows;
+  List<TweetTiles?> _tweetCacheFetch = [];
+  final Map<String?, List<TweetEntity?>> _tweetReplyMap = {};
+  String? _nextPage;
 
   Future<Either<Failure, FeedCache>> fetchNewestTweet() async {
     final request = _newestRequestOption();
@@ -71,10 +69,10 @@ class FeedUseCases {
     _nextPage = null;
     _tweetCacheFetch = [];
     _streamController.add(FeedCache(tweets: _tweetCacheFetch));
-    return this.fetchNewestTweet();
+    return fetchNewestTweet();
   }
 
-  Future<Either<Failure, FeedCache>> fetchTweetDetail(String tweetId) async {
+  Future<Either<Failure, FeedCache>> fetchTweetDetail(String? tweetId) async {
     final option = _buildTweetDetailRequest(tweetId);
     final result = await _repository.fetch(option: option);
 
@@ -85,7 +83,8 @@ class FeedUseCases {
   }
 
   Future<Either<Failure, FeedCache>> fetchNewestTweetDetail(
-      String tweetId) async {
+    String? tweetId,
+  ) async {
     final option = _buildTweetDetailRequest(tweetId);
     final result = await _repository.fetch(option: option);
 
@@ -95,7 +94,7 @@ class FeedUseCases {
     );
   }
 
-  Future<Either<Failure, FeedCache>> create(String content) async {
+  Future<Either<Failure, FeedCache>> create(String? content) async {
     final option = TweetCreateRequestOption(message: content);
     final result = await _repository.create(option: option);
 
@@ -106,7 +105,7 @@ class FeedUseCases {
   }
 
   Future<Either<Failure, FeedCache>> delete(TweetEntity tweet) async {
-    final option = TweetEngageRequestOption(tweetId: tweet.id);
+    final option = TweetEngageRequestOption(tweetId: tweet.id!);
     final result = await _repository.delete(option: option);
 
     return result.fold<Either<Failure, FeedCache>>(
@@ -116,12 +115,12 @@ class FeedUseCases {
   }
 
   Future<Either<Failure, FeedCache>> like(TweetEntity tweet) async {
-    final option = TweetEngageRequestOption(tweetId: tweet.id);
+    final option = TweetEngageRequestOption(tweetId: tweet.id!);
     return _processTweetFavorite(option);
   }
 
   Future<Either<Failure, FeedCache>> unlike(TweetEntity tweet) async {
-    final option = TweetEngageRequestOption(tweetId: tweet.id, dislike: true);
+    final option = TweetEngageRequestOption(tweetId: tweet.id!, dislike: true);
     return _processTweetFavorite(option);
   }
 
@@ -137,11 +136,11 @@ class FeedUseCases {
   }
 
   Future<Either<Failure, FeedCache>> reply({
-    @required TweetEntity mainTweet,
-    @required String comment,
+    required TweetEntity mainTweet,
+    required String? comment,
   }) async {
     final option = TweetEngageRequestOption(
-      tweetId: mainTweet.id,
+      tweetId: mainTweet.id!,
       message: comment,
     );
 
@@ -162,7 +161,8 @@ class FeedUseCases {
     TweetEntity tweet,
     String reason,
   ) async {
-    final option = TweetEngageRequestOption(tweetId: tweet.id, message: reason);
+    final option =
+        TweetEngageRequestOption(tweetId: tweet.id!, message: reason);
     final result = await _repository.report(option: option);
 
     return result.fold<Either<Failure, ValidField>>(
@@ -172,26 +172,26 @@ class FeedUseCases {
   }
 
   TweetRequestOption _newestRequestOption() {
-    final TweetEntity firstValid = _tweetCacheFetch.length > 0
+    final TweetEntity? firstValid = _tweetCacheFetch.isNotEmpty
         ? _tweetCacheFetch.firstWhere(
             (e) => e is TweetEntity,
             orElse: () => null,
-          )
+          ) as TweetEntity?
         : null;
 
-    final String category = _getCategory();
-    final String tags = _getTags();
+    final String? category = _getCategory();
+    final String? tags = _getTags();
 
     if (firstValid == null) {
       return TweetRequestOption(
-        rows: _maxRowsPerRequest,
+        rows: _maxRowsPerRequest!,
         category: category,
         tags: tags,
-        after: (_tweetCacheFetch.length > 0) ? '000000T0000000000' : null,
+        after: (_tweetCacheFetch.isNotEmpty) ? '000000T0000000000' : null,
       );
     } else {
       return TweetRequestOption(
-        rows: _maxRowsPerRequest,
+        rows: _maxRowsPerRequest!,
         after: firstValid.id,
         category: category,
         tags: tags,
@@ -199,37 +199,37 @@ class FeedUseCases {
     }
   }
 
-  String _getTags() {
-    List<String> tags = _filterPreference.getTags();
-    return (tags == null || tags.isEmpty) ? null : tags.join(',');
+  String? _getTags() {
+    final List<String> tags = _filterPreference.getTags();
+    return tags.isEmpty ? null : tags.join(',');
   }
 
-  String _getCategory() {
-    List<String> category = _filterPreference.getCategory();
-    return (category == null || category.isEmpty) ? null : category.join(',');
+  String? _getCategory() {
+    final List<String> category = _filterPreference.categories;
+    return category.isEmpty ? null : category.join(',');
   }
 
   TweetRequestOption _oldestRequestOption() {
-    final TweetEntity lastValid = _tweetCacheFetch.length > 0
+    final TweetEntity? lastValid = _tweetCacheFetch.isNotEmpty
         ? _tweetCacheFetch.lastWhere(
             (e) => e is TweetEntity,
             orElse: () => null,
-          )
+          ) as TweetEntity?
         : null;
 
-    final String category = _getCategory();
-    final String tags = _getTags();
+    final String? category = _getCategory();
+    final String? tags = _getTags();
 
     if (lastValid == null) {
       return TweetRequestOption(
-        rows: _maxRowsPerRequest,
+        rows: _maxRowsPerRequest!,
         nextPageToken: _nextPage,
         category: category,
         tags: tags,
       );
     } else {
       return TweetRequestOption(
-        rows: _maxRowsPerRequest,
+        rows: _maxRowsPerRequest!,
         before: _nextPage == null ? lastValid.id : null,
         nextPageToken: _nextPage,
         category: category,
@@ -239,11 +239,11 @@ class FeedUseCases {
   }
 
   FeedCache _updateFetchCache(TweetSessionEntity session) {
-    if (_nextPage == null || _nextPage.isEmpty) {
+    if (_nextPage == null || _nextPage!.isEmpty) {
       _nextPage = session.nextPage;
     }
 
-    if (session.tweets != null && session.tweets.length > 0) {
+    if (session.tweets.isNotEmpty) {
       if (session.orderBy == TweetSessionOrder.latestFirst) {
         _tweetCacheFetch.insertAll(0, session.tweets);
       } else {
@@ -257,7 +257,7 @@ class FeedUseCases {
 
   FeedCache _appendFetchCache(TweetSessionEntity session) {
     _nextPage = session.nextPage;
-    if (session.tweets != null && session.tweets.length > 0) {
+    if (session.tweets.isNotEmpty) {
       if (session.orderBy == TweetSessionOrder.latestFirst) {
         _tweetCacheFetch.addAll(session.tweets);
       } else {
@@ -269,9 +269,9 @@ class FeedUseCases {
     return FeedCache(tweets: _tweetCacheFetch);
   }
 
-  TweetEntity _extractTweetEntity(int index) {
+  TweetEntity? _extractTweetEntity(int index) {
     if (index >= 0 && _tweetCacheFetch[index] is TweetEntity) {
-      return _tweetCacheFetch[index];
+      return _tweetCacheFetch[index] as TweetEntity?;
     }
 
     return null;
@@ -282,7 +282,7 @@ class FeedUseCases {
       (e) {
         if (e is TweetEntity) {
           return (e.id == tweet.id) ||
-              (e.lastReply.isNotEmpty && e.lastReply.first.id == tweet.id);
+              (e.lastReply!.isNotEmpty && e.lastReply!.first!.id == tweet.id);
         }
         return false;
       },
@@ -311,7 +311,8 @@ class FeedUseCases {
       (e) {
         if (e is TweetEntity) {
           return (e.id == newTweet.id) ||
-              (e.lastReply.isNotEmpty && e.lastReply.first.id == newTweet.id);
+              (e.lastReply!.isNotEmpty &&
+                  e.lastReply!.first!.id == newTweet.id);
         }
         return false;
       },
@@ -326,11 +327,12 @@ class FeedUseCases {
       _tweetCacheFetch[index] = newTweet.copyWith(
         lastReply: currentTweet.lastReply,
       );
-    } else if (currentTweet.lastReply.isNotEmpty &&
-        currentTweet.lastReply.first.id == newTweet.id) {
+    } else if (currentTweet.lastReply!.isNotEmpty &&
+        currentTweet.lastReply!.first!.id == newTweet.id) {
       // se a tweet for um reply, reconstrua o principal com o novo reply
-      final reply =
-          newTweet.copyWith(lastReply: currentTweet.lastReply.first.lastReply);
+      final reply = newTweet.copyWith(
+        lastReply: currentTweet.lastReply!.first!.lastReply,
+      );
       final princialTweet = currentTweet.copyWith(lastReply: [reply]);
       _tweetCacheFetch[index] = princialTweet;
     }
@@ -340,24 +342,24 @@ class FeedUseCases {
   }
 
   FeedCache _insertCreatedTweetIntoCache(TweetEntity tweet) {
-    if (tweet != null) {
-      _tweetCacheFetch.insertAll(
-        0,
-        [tweet],
-      );
-    }
+    _tweetCacheFetch.insertAll(
+      0,
+      [tweet],
+    );
 
     _updateStream();
     return FeedCache(tweets: _tweetCacheFetch);
   }
 
   FeedCache _updateRepliedTweetIntoCache(
-      TweetEntity mainTweet, TweetEntity repliedTweet) {
+    TweetEntity mainTweet,
+    TweetEntity repliedTweet,
+  ) {
     final index = _tweetCacheFetch
-        .indexWhere((e) => (e is TweetEntity && e.id == mainTweet.id));
+        .indexWhere((e) => e is TweetEntity && e.id == mainTweet.id);
 
     if (index >= 0) {
-      TweetEntity rebuildedTweet = mainTweet.copyWith(
+      final TweetEntity rebuildedTweet = mainTweet.copyWith(
         totalReply: mainTweet.totalReply + 1,
         lastReply: [repliedTweet],
       );
@@ -369,45 +371,48 @@ class FeedUseCases {
     return FeedCache(tweets: _tweetCacheFetch);
   }
 
-  _updateStream() {
+  void _updateStream() {
     _streamController.add(FeedCache(tweets: _tweetCacheFetch));
   }
 
-  TweetRequestOption _buildTweetDetailRequest(String tweetId) {
-    String afterTweetId = tweetId;
-    if (_tweetReplyMap[tweetId] != null && _tweetReplyMap[tweetId].isNotEmpty) {
-      afterTweetId = _tweetReplyMap[tweetId].last.id;
+  TweetRequestOption _buildTweetDetailRequest(String? tweetId) {
+    String? afterTweetId = tweetId;
+    if (_tweetReplyMap[tweetId] != null &&
+        _tweetReplyMap[tweetId]!.isNotEmpty) {
+      afterTweetId = _tweetReplyMap[tweetId]!.last!.id;
     }
 
     return TweetRequestOption(
       after: afterTweetId,
       parent: tweetId,
-      rows: _maxRowsPerRequest,
+      rows: _maxRowsPerRequest!,
     );
   }
 
-  FeedCache _buildTweetDetail(TweetSessionEntity session, String tweetId) {
+  FeedCache _buildTweetDetail(TweetSessionEntity session, String? tweetId) {
     if (_tweetReplyMap[tweetId] == null) {
       _tweetReplyMap[tweetId] = [];
     }
 
-    final List<TweetEntity> filteredResponse = session.tweets
+    final List<TweetEntity?> filteredResponse = session.tweets
         .map((e) => e is TweetEntity ? e : null)
         .where((e) => e != null)
         .toList();
 
-    if (filteredResponse != null && filteredResponse.length > 0) {
+    if (filteredResponse.isNotEmpty) {
       if (session.orderBy == TweetSessionOrder.latestFirst) {
-        _tweetReplyMap[tweetId].addAll(filteredResponse.reversed);
+        _tweetReplyMap[tweetId]!.addAll(filteredResponse.reversed);
       } else {
-        _tweetReplyMap[tweetId].addAll(filteredResponse);
+        _tweetReplyMap[tweetId]!.addAll(filteredResponse);
       }
     }
 
-    return FeedCache(tweets: [
-      if (session.parent != null) session.parent,
-      ..._tweetReplyMap[tweetId]
-    ]);
+    return FeedCache(
+      tweets: [
+        if (session.parent != null) session.parent,
+        ..._tweetReplyMap[tweetId]!
+      ],
+    );
   }
 
   void dispose() {

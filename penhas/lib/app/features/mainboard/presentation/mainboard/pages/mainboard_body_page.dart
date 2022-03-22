@@ -7,19 +7,19 @@ import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart
 import 'package:penhas/app/features/support_center/presentation/support_center_module.dart';
 
 class MainboardBodyPage extends StatelessWidget {
+  const MainboardBodyPage({
+    Key? key,
+    required this.pages,
+    required this.pageController,
+  }) : super(key: key);
+
   final List<MainboardState> pages;
   final PageController pageController;
-
-  const MainboardBodyPage({
-    Key key,
-    @required this.pages,
-    @required this.pageController,
-  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return PageView(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       controller: pageController,
       children: pages.map((e) => _buildPage(e)).toList(),
     );
@@ -29,7 +29,7 @@ class MainboardBodyPage extends StatelessWidget {
     return state.when(
       chat: () => ChatMainModule(),
       feed: () => FeedModule(),
-      compose: () => ComposeTweetPage(),
+      compose: () => const ComposeTweetPage(),
       supportPoint: () => SupportCenterModule(),
       helpCenter: () => HelpCenterModule(),
     );

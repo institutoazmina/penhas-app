@@ -5,31 +5,24 @@ import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/network/network_info.dart';
-import 'package:penhas/app/features/help_center/data/datasources/guardian_data_source.dart';
 import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
 import 'package:penhas/app/features/help_center/data/models/guardian_session_model.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
 import 'package:penhas/app/features/help_center/domain/entities/guardian_session_entity.dart';
 
+import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
-class MockGuardianDataSource extends Mock implements IGuardianDataSource {}
-
-class MockNetworkInfo extends Mock implements INetworkInfo {}
-
 void main() {
-  IGuardianRepository sut;
-  IGuardianDataSource dataSource;
-  INetworkInfo networkInfo;
+  late final MockIGuardianDataSource dataSource = MockIGuardianDataSource();
+  late final MockINetworkInfo networkInfo = MockINetworkInfo();
+  late final IGuardianRepository sut = GuardianRepository(
+    dataSource: dataSource,
+    networkInfo: networkInfo,
+  );
 
   setUp(() {
-    networkInfo = MockNetworkInfo();
-    dataSource = MockGuardianDataSource();
-    sut = GuardianRepository(
-      dataSource: dataSource,
-      networkInfo: networkInfo,
-    );
+    when(networkInfo.isConnected).thenAnswer((_) => Future.value(true));
   });
 
   group(
@@ -40,34 +33,37 @@ void main() {
         () async {
           // arrange
           final jsonSession = await JsonUtil.getJson(
-              from: 'help_center/guardian_empty_list.json');
+            from: 'help_center/guardian_empty_list.json',
+          );
           final sessionModel = GuardianSessionModel.fromJson(jsonSession);
-          final emptySession = GuardianSessionModel(
+          const emptySession = GuardianSessionModel(
             remainingInvites: 5,
             maximumInvites: 5,
             guards: [
               GuardianEntity(
-                  meta: GuardianSessionMeta(
-                      canEdit: true,
-                      canDelete: true,
-                      canResend: false,
-                      deleteWarning: '',
-                      description:
-                          "Guardiões que recebem seus pedidos de socorro.",
-                      header: "Guardiões",
-                      status: GuardianStatus.accepted),
-                  contacts: []),
+                meta: GuardianSessionMeta(
+                  canEdit: true,
+                  canDelete: true,
+                  canResend: false,
+                  deleteWarning: '',
+                  description: 'Guardiões que recebem seus pedidos de socorro.',
+                  header: 'Guardiões',
+                  status: GuardianStatus.accepted,
+                ),
+                contacts: [],
+              ),
               GuardianEntity(
-                  meta: GuardianSessionMeta(
-                      canEdit: true,
-                      canDelete: true,
-                      canResend: false,
-                      deleteWarning: '',
-                      description:
-                          "Guardiões que ainda não aceitaram seu convite.",
-                      header: "Pendentes",
-                      status: GuardianStatus.pending),
-                  contacts: []),
+                meta: GuardianSessionMeta(
+                  canEdit: true,
+                  canDelete: true,
+                  canResend: false,
+                  deleteWarning: '',
+                  description: 'Guardiões que ainda não aceitaram seu convite.',
+                  header: 'Pendentes',
+                  status: GuardianStatus.pending,
+                ),
+                contacts: [],
+              ),
             ],
           );
           when(dataSource.fetch()).thenAnswer((_) async => sessionModel);
@@ -98,7 +94,8 @@ void main() {
         () async {
           // arrange
           final jsonSession = await JsonUtil.getJson(
-              from: 'help_center/guardian_create_successful.json');
+            from: 'help_center/guardian_create_successful.json',
+          );
           final guardian = GuardianContactEntity.createRequest(
             name: 'Maria',
             mobile: '1191910101',
@@ -117,17 +114,18 @@ void main() {
         () async {
           // arrange
           final bodyContent = await JsonUtil.getJson(
-              from: 'help_center/guardian_bad_celular_number.json');
+            from: 'help_center/guardian_bad_celular_number.json',
+          );
           final guardian = GuardianContactEntity.createRequest(
             name: 'Maria',
             mobile: '91910101',
           );
           final expected = left(
             ServerSideFormFieldValidationFailure(
-              error: bodyContent['error'],
-              field: bodyContent['field'],
-              message: bodyContent['message'],
-              reason: bodyContent['reason'],
+              error: bodyContent['error'] as String?,
+              field: bodyContent['field'] as String?,
+              message: bodyContent['message'] as String?,
+              reason: bodyContent['reason'] as String?,
             ),
           );
           when(dataSource.create(any))
@@ -143,8 +141,9 @@ void main() {
         () async {
           // arrange
           final jsonSession = await JsonUtil.getJson(
-              from: 'help_center/guardian_update_name.json');
-          final guardian = GuardianContactEntity(
+            from: 'help_center/guardian_update_name.json',
+          );
+          const guardian = GuardianContactEntity(
             id: 1,
             mobile: '(11) 91910101',
             name: 'Renato Lindão',
@@ -164,14 +163,15 @@ void main() {
         'should remove one of my guardian',
         () async {
           // arrange
-          final guardian = GuardianContactEntity(
+          const guardian = GuardianContactEntity(
             id: 1,
             mobile: '(11) 91910101',
             name: 'Maria (PenhaS)',
             status: 'pending',
           );
-          final expected = right(ValidField());
-          when(dataSource.delete(any)).thenAnswer((_) async => ValidField());
+          final expected = right(const ValidField());
+          when(dataSource.delete(any))
+              .thenAnswer((_) async => const ValidField());
           // act
           final received = await sut.delete(guardian);
           // assert
@@ -184,14 +184,19 @@ void main() {
           'should get a valid message for valid request',
           () async {
             // arrange
-            final location = UserLocationEntity(latitude: 1.0, longitude: -1.0);
-            final expected = right(AlertModel(
-                title: "Alerta enviado!",
-                message: "Alerta disparado com sucesso para 1 guardião."));
-            when(dataSource.alert(any)).thenAnswer((_) async => AlertModel(
-                  title: "Alerta enviado!",
-                  message: "Alerta disparado com sucesso para 1 guardião.",
-                ));
+            const location = UserLocationEntity(latitude: 1.0, longitude: -1.0);
+            final expected = right(
+              const AlertModel(
+                title: 'Alerta enviado!',
+                message: 'Alerta disparado com sucesso para 1 guardião.',
+              ),
+            );
+            when(dataSource.alert(any)).thenAnswer(
+              (_) async => const AlertModel(
+                title: 'Alerta enviado!',
+                message: 'Alerta disparado com sucesso para 1 guardião.',
+              ),
+            );
             // act
             final received = await sut.alert(location);
             // assert

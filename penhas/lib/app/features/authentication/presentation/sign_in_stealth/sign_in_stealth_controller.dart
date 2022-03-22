@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/local_store.dart';
@@ -24,26 +23,14 @@ part 'sign_in_stealth_controller.g.dart';
 class SignInStealthController extends _SignInStealthController
     with _$SignInStealthController {
   SignInStealthController({
-    @required IAuthenticationRepository repository,
-    @required LocalStore<UserProfileEntity> userProfileStore,
-    @required StealthSecurityAction securityAction,
-    @required PasswordValidator passwordValidator,
+    required IAuthenticationRepository repository,
+    required LocalStore<UserProfileEntity> userProfileStore,
+    required StealthSecurityAction securityAction,
+    required PasswordValidator passwordValidator,
   }) : super(repository, userProfileStore, securityAction, passwordValidator);
 }
 
 abstract class _SignInStealthController with Store, MapFailureMessage {
-  final String _invalidFieldsToProceedLogin =
-      'E-mail e senha precisam estarem corretos para continuar.';
-  final LocalStore<UserProfileEntity> _userProfileStore;
-  final IAuthenticationRepository _repository;
-  final StealthSecurityAction _securityAction;
-  final PasswordValidator _passwordValidator;
-
-  EmailAddress _emailAddress = EmailAddress("");
-  SignInPassword _password;
-  bool _isSecurityRunning = false;
-  StreamSubscription _streamCache;
-
   _SignInStealthController(
     this._repository,
     this._userProfileStore,
@@ -54,11 +41,23 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
     _password = SignInPassword('', _passwordValidator);
   }
 
-  void _init() async {
+  final String _invalidFieldsToProceedLogin =
+      'E-mail e senha precisam estarem corretos para continuar.';
+  final LocalStore<UserProfileEntity> _userProfileStore;
+  final IAuthenticationRepository _repository;
+  final StealthSecurityAction _securityAction;
+  final PasswordValidator _passwordValidator;
+
+  EmailAddress _emailAddress = EmailAddress('');
+  SignInPassword? _password;
+  bool _isSecurityRunning = false;
+  StreamSubscription? _streamCache;
+
+  Future<void> _init() async {
     final profile = await _userProfileStore.retrieve();
     _emailAddress = EmailAddress(profile.email);
     userEmail = profile.email;
-    userGreetings = "Bem-vinda, ${profile.nickname}";
+    userGreetings = 'Bem-vinda, ${profile.nickname}';
 
     final zodiac = Zodiac();
     final _userProfile = await _userProfileStore.retrieve();
@@ -70,19 +69,19 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
   }
 
   @observable
-  ObservableFuture<Either<Failure, SessionEntity>> _progress;
+  ObservableFuture<Either<Failure, SessionEntity>>? _progress;
 
   @observable
-  String userGreetings = "";
+  String userGreetings = '';
 
   @observable
-  String userEmail = "";
+  String? userEmail = '';
 
   @observable
-  String warningPassword = "";
+  String warningPassword = '';
 
   @observable
-  String errorMessage = "";
+  String? errorMessage = '';
 
   @observable
   IZodiac sign = ZodiacSignAquarius();
@@ -95,11 +94,11 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
 
   @computed
   PageProgressState get currentState {
-    if (_progress == null || _progress.status == FutureStatus.rejected) {
+    if (_progress == null || _progress!.status == FutureStatus.rejected) {
       return PageProgressState.initial;
     }
 
-    return _progress.status == FutureStatus.pending
+    return _progress!.status == FutureStatus.pending
         ? PageProgressState.loading
         : PageProgressState.loaded;
   }
@@ -107,27 +106,28 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
   @action
   void setPassword(String password) {
     _password = SignInPassword(password, _passwordValidator);
-    warningPassword = _password.mapFailure;
+    warningPassword = _password!.mapFailure;
   }
 
   @action
   Future<void> signInWithEmailAndPasswordPressed() async {
-    _setErrorMessage('');
-
-    if (!_emailAddress.isValid || !_password.isValid) {
-      _setErrorMessage(_invalidFieldsToProceedLogin);
+    if (!_emailAddress.isValid || !_password!.isValid) {
+      errorMessage = _invalidFieldsToProceedLogin;
       return;
     }
+    errorMessage = '';
 
-    _progress = ObservableFuture(_repository.signInWithEmailAndPassword(
-      emailAddress: _emailAddress,
-      password: _password,
-    ));
+    _progress = ObservableFuture(
+      _repository.signInWithEmailAndPassword(
+        emailAddress: _emailAddress,
+        password: _password!,
+      ),
+    );
 
-    final response = await _progress;
+    final Either<Failure, SessionEntity> response = await _progress!;
 
     response.fold(
-      (failure) => _setErrorMessage(mapFailureMessage(failure)),
+      (failure) => errorMessage = mapFailureMessage(failure),
       (session) => _forwardToLogged(),
     );
   }
@@ -164,20 +164,14 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
     Modular.to.pushReplacementNamed('/mainboard');
   }
 
-  void _setErrorMessage(String msg) {
-    errorMessage = msg;
-  }
-
-  _registerDataSource() {
+  void _registerDataSource() {
     _streamCache = _securityAction.isRunning.listen((event) {
       isSecurityRunning = event;
     });
   }
 
-  _cancelDataSource() {
-    if (_streamCache != null) {
-      _streamCache.cancel();
-      _streamCache = null;
-    }
+  void _cancelDataSource() {
+    _streamCache?.cancel();
+    _streamCache = null;
   }
 }

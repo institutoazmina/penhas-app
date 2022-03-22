@@ -1,19 +1,19 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
-import 'package:penhas/app/features/users/domain/presentation/user_profile_controller.dart';
-import 'package:penhas/app/features/users/domain/presentation/user_profile_page.dart';
+import 'package:penhas/app/features/users/presentation/user_profile_controller.dart';
+import 'package:penhas/app/features/users/presentation/user_profile_page.dart';
 
-class UserProfileModule extends ChildModule {
+class UserProfileModule extends Module {
   @override
   List<Bind> get binds => [
-        Bind(
+        Bind.factory(
           (i) => UserProfileController(
             channelRepository: i.get<IChatChannelRepository>(),
-            person: i.args.data,
+            person: i.args?.data,
           ),
         ),
-        Bind<IChatChannelRepository>(
+        Bind.factory<IChatChannelRepository>(
           (i) => ChatChannelRepository(
             apiProvider: i.get<IApiProvider>(),
           ),
@@ -21,14 +21,12 @@ class UserProfileModule extends ChildModule {
       ];
 
   @override
-  List<ModularRouter> get routers => [
-        ModularRouter('/profile', child: (_, args) => UserProfilePage()),
-        ModularRouter(
+  List<ModularRoute> get routes => [
+        ChildRoute('/profile', child: (_, args) => const UserProfilePage()),
+        ChildRoute(
           '/profile_from_feed',
-          child: (_, args) => UserProfilePage(),
+          child: (_, args) => const UserProfilePage(),
           transition: TransitionType.noTransition,
         ),
       ];
-
-  static Inject get to => Inject<UserProfileModule>.of();
 }

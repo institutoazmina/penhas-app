@@ -4,7 +4,7 @@ enum ChatTabItem {
 }
 
 extension ChatTabTitle on ChatTabItem {
-  String get title {
+  String? get title {
     switch (this) {
       case ChatTabItem.people:
         return 'Pessoas';

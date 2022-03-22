@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class PassordInputField extends StatefulWidget {
+  const PassordInputField({
+    Key? key,
+    this.style = kTextStyleDefaultTextFieldLabelStyle,
+    required this.onChanged,
+    required this.labelText,
+    required this.errorText,
+    required this.hintText,
+  }) : super(key: key);
+
   final TextStyle style;
   final void Function(String) onChanged;
   final String labelText;
   final String errorText;
   final String hintText;
-
-  PassordInputField({
-    Key key,
-    this.style = kTextStyleDefaultTextFieldLabelStyle,
-    @required this.onChanged,
-    @required this.labelText,
-    @required this.errorText,
-    @required this.hintText,
-  }) : super(key: key);
 
   @override
   _PassordInputFieldState createState() => _PassordInputFieldState();
@@ -36,20 +36,20 @@ class _PassordInputFieldState extends State<PassordInputField> {
       obscureText: !_isPasswordVisible,
       decoration: InputDecoration(
         enabledBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
+            const OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
         focusedBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        border: OutlineInputBorder(),
+            const OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
+        border: const OutlineInputBorder(),
         labelText: widget.labelText,
         labelStyle: kTextStyleDefaultTextFieldLabelStyle,
         hintText: widget.hintText,
         hintStyle: kTextStyleDefaultTextFieldLabelStyle,
         errorText: _normalizeHitText(widget.errorText),
-        contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
+        contentPadding: const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
         suffixIcon: IconButton(
           icon: Icon(
               _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-              color: Colors.white70),
+              color: Colors.white70,),
           onPressed: _togglePassword,
         ),
       ),
@@ -62,7 +62,7 @@ class _PassordInputFieldState extends State<PassordInputField> {
     });
   }
 
-  String _normalizeHitText(String text) {
+  String? _normalizeHitText(String? text) {
     if (text == null || text.isEmpty) {
       return null;
     }

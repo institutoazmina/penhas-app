@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/features/authentication/presentation/reset_password/reset_password_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/input_box_style.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
@@ -12,12 +13,12 @@ import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
-import 'reset_password_controller.dart';
 
 class ResetPasswordPage extends StatefulWidget {
-  final String title;
-  const ResetPasswordPage({Key key, this.title = "ResetPassword"})
+  const ResetPasswordPage({Key? key, this.title = 'ResetPassword'})
       : super(key: key);
+
+  final String title;
 
   @override
   _ResetPasswordPageState createState() => _ResetPasswordPageState();
@@ -26,8 +27,8 @@ class ResetPasswordPage extends StatefulWidget {
 class _ResetPasswordPageState
     extends ModularState<ResetPasswordPage, ResetPasswordController>
     with SnackBarHandler {
-  List<ReactionDisposer> _disposers;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  List<ReactionDisposer>? _disposers;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
 
   @override
@@ -41,7 +42,9 @@ class _ResetPasswordPageState
 
   @override
   void dispose() {
-    _disposers.forEach((d) => d());
+    for (final d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 
@@ -65,11 +68,11 @@ class _ResetPasswordPageState
               onPanDown: (_) => _handleTap(context),
               child: SafeArea(
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.fromLTRB(30.0, 16.0, 30.0, 8.0),
+                  padding: const EdgeInsets.fromLTRB(30.0, 16.0, 30.0, 8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      SizedBox(
+                      const SizedBox(
                         height: 40,
                         child: Text(
                           'Esqueceu a senha?',
@@ -77,7 +80,7 @@ class _ResetPasswordPageState
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      SizedBox(height: 24),
+                      const SizedBox(height: 24),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -85,13 +88,14 @@ class _ResetPasswordPageState
                             height: 102,
                             width: 102,
                             child: SvgPicture.asset(
-                                'assets/images/svg/reset_password/recovery_password_step_1.svg',
-                                color: Colors.white),
+                              'assets/images/svg/reset_password/recovery_password_step_1.svg',
+                              color: Colors.white,
+                            ),
                           ),
                         ],
                       ),
-                      SizedBox(height: 46),
-                      SizedBox(
+                      const SizedBox(height: 46),
+                      const SizedBox(
                         height: 40,
                         child: Text(
                           'Informe o seu e-mail para receber o código de recuperação de senha.',
@@ -99,11 +103,13 @@ class _ResetPasswordPageState
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      SizedBox(height: 24),
-                      Observer(builder: (_) {
-                        return _buildEmail();
-                      }),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 24),
+                      Observer(
+                        builder: (_) {
+                          return _buildEmail();
+                        },
+                      ),
+                      const SizedBox(height: 30),
                       SizedBox(height: 40.0, child: _buildNextButton()),
                     ],
                   ),
@@ -127,21 +133,21 @@ class _ResetPasswordPageState
     );
   }
 
-  RaisedButton _buildNextButton() {
+  Widget _buildNextButton() {
     return RaisedButton(
       onPressed: () => controller.nextStepPressed(),
       elevation: 0,
       color: DesignSystemColors.ligthPurple,
-      child: Text(
-        "Próximo",
+      shape: kButtonShapeFilled,
+      child: const Text(
+        'Próximo',
         style: kTextStyleDefaultFilledButtonLabel,
       ),
-      shape: kButtonShapeFilled,
     );
   }
 
   ReactionDisposer _showErrorMessage() {
-    return reaction((_) => controller.errorMessage, (String message) {
+    return reaction((_) => controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }
@@ -155,8 +161,9 @@ class _ResetPasswordPageState
   }
 
   void _handleTap(BuildContext context) {
-    if (MediaQuery.of(context).viewInsets.bottom > 0)
+    if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
-    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+    }
+    WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 }

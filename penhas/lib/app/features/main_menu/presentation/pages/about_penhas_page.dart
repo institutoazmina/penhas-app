@@ -4,14 +4,14 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class AboutPenhasPage extends StatelessWidget {
-  const AboutPenhasPage({Key key}) : super(key: key);
+  const AboutPenhasPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        title: Text("Sobre o PenhaS"),
+        title: const Text('Sobre o PenhaS'),
         backgroundColor: DesignSystemColors.easterPurple,
       ),
       body: WebView(

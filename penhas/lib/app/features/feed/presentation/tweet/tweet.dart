@@ -5,18 +5,19 @@ import 'package:penhas/app/features/feed/presentation/tweet/reply_tweet.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/single_tweet.dart';
 
 class Tweet extends StatelessWidget {
+  const Tweet({
+    Key? key,
+    required this.model,
+    required this.controller,
+  }) : super(key: key);
+
   final TweetEntity model;
   final ITweetController controller;
-  const Tweet({
-    Key key,
-    @required this.model,
-    @required this.controller,
-  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final hasRepliedTweet =
-        model.lastReply != null && model.lastReply.isNotEmpty;
+        model.lastReply != null && model.lastReply!.isNotEmpty;
     return hasRepliedTweet
         ? ReplyTweet(context: context, tweet: model, controller: controller)
         : SingleTweet(context: context, tweet: model, controller: controller);

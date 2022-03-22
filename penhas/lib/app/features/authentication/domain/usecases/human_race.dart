@@ -28,7 +28,7 @@ extension EnumHumanRace on HumanRace {
   }
 
   String get label {
-    String label;
+    String? label;
     switch (this) {
       case HumanRace.white:
         label = 'Branca';
@@ -53,7 +53,7 @@ extension EnumHumanRace on HumanRace {
     return label;
   }
 
-  static HumanRace map(String code) {
+  static HumanRace map(String? code) {
     if (code == null) {
       return HumanRace.notDeclared;
     }

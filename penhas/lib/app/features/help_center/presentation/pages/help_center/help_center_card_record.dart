@@ -6,12 +6,12 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class HelpCenterCardRecord extends StatelessWidget {
-  final VoidCallback onPressed;
-
   const HelpCenterCardRecord({
-    Key key,
-    @required this.onPressed,
+    Key? key,
+    required this.onPressed,
   }) : super(key: key);
+
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -25,58 +25,63 @@ class HelpCenterCardRecord extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: DesignSystemColors.cobaltTwo,
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(40),
             topRight: Radius.circular(40),
             bottomLeft: Radius.circular(40),
           ),
           boxShadow: [
             BoxShadow(
-                color: Colors.black.withOpacity(0.5),
-                offset: Offset(0.0, 2.0),
-                blurRadius: 4.0)
+              color: Colors.black.withOpacity(0.5),
+              offset: const Offset(0.0, 2.0),
+              blurRadius: 4.0,
+            )
           ],
         ),
         child: Padding(
-          padding: EdgeInsets.fromLTRB(13, 6, 13, 18),
+          padding: const EdgeInsets.fromLTRB(13, 6, 13, 18),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Gravações',
                     style: kTextStyleHelpCenterActionHeader,
                   ),
                   IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.help_outline,
                       color: DesignSystemColors.pumpkinOrange,
                     ),
                     onPressed: () async {
                       await Navigator.push(
                         context,
-                        TutorialScaleRoute(page: RecordTutorialPage()),
+                        TutorialScaleRoute(page: const RecordTutorialPage()),
                       );
                     },
                   )
                 ],
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(top: 6, bottom: 12),
                 child: Text(
-                    'Captura de áudio para coleta de provas contra atos violentos.',
-                    style: kTextStyleRegisterSubtitleLabelStyle),
+                  'Captura de áudio para coleta de provas contra atos violentos.',
+                  style: kTextStyleRegisterSubtitleLabelStyle,
+                ),
               ),
               SizedBox(
                 height: 40,
                 child: FloatingActionButton(
-                    heroTag: 'recordCard_1',
-                    backgroundColor: DesignSystemColors.easterPurple,
-                    child: Text('Minhas gravações',
-                        style: kTextStyleHelpCenterButtonLabel),
-                    onPressed: onPressed,
-                    shape: kButtonShapeOutlinePurple),
+                  heroTag: 'recordCard_1',
+                  backgroundColor: DesignSystemColors.easterPurple,
+                  onPressed: onPressed,
+                  shape: kButtonShapeOutlinePurple,
+                  child: const Text(
+                    'Minhas gravações',
+                    style: kTextStyleHelpCenterButtonLabel,
+                  ),
+                ),
               ),
             ],
           ),

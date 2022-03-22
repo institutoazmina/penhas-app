@@ -1,5 +1,4 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
@@ -16,30 +15,32 @@ class FeedRoutingPerfilChatController
     extends _FeedRoutingPerfilChatControllerBase
     with _$FeedRoutingPerfilChatController {
   FeedRoutingPerfilChatController({
-    @required IUsersRepository usersRepository,
-    @required IChatChannelRepository channelRepository,
-    @required FeedRouterType routerType,
+    required IUsersRepository usersRepository,
+    required IChatChannelRepository channelRepository,
+    required FeedRouterType? routerType,
   }) : super(routerType, usersRepository, channelRepository);
 }
 
 abstract class _FeedRoutingPerfilChatControllerBase
     with Store, MapFailureMessage {
-  final FeedRouterType _routerType;
+  _FeedRoutingPerfilChatControllerBase(
+    this._routerType,
+    this._usersRepository,
+    this._channelRepository,
+  ) {
+    getRouterData();
+  }
+
+  final FeedRouterType? _routerType;
   final IUsersRepository _usersRepository;
   final IChatChannelRepository _channelRepository;
 
-  _FeedRoutingPerfilChatControllerBase(
-      this._routerType, this._usersRepository, this._channelRepository) {
-    getRouterData();
-    //
-  }
-
   @observable
-  FeedRoutingState routingState = FeedRoutingState.initial("");
+  FeedRoutingState routingState = const FeedRoutingState.initial('');
 
   @action
   Future<void> retry() async {
-    print("Ola mundo!");
+    // TODO: implement retry
   }
 }
 
@@ -49,16 +50,16 @@ extension _PrivateMethod on _FeedRoutingPerfilChatControllerBase {
       pageTitle(),
     );
 
-    _routerType.when(
+    _routerType!.when(
       chat: (clientId) => loadChat(clientId),
       profile: (clientId) => loadProfile(clientId),
     );
   }
 
   String pageTitle() {
-    return _routerType.when(
-      chat: (_) => "Chat",
-      profile: (_) => "Perfil",
+    return _routerType!.when(
+      chat: (_) => 'Chat',
+      profile: (_) => 'Perfil',
     );
   }
 
@@ -81,7 +82,7 @@ extension _PrivateMethod on _FeedRoutingPerfilChatControllerBase {
 
   void handleProfileDetail(UserDetailEntity userProfile) {
     Modular.to.pushReplacementNamed(
-      "/mainboard/users/profile_from_feed",
+      '/mainboard/users/profile_from_feed',
       arguments: userProfile,
     );
   }
@@ -89,13 +90,13 @@ extension _PrivateMethod on _FeedRoutingPerfilChatControllerBase {
   void handleFailure(Failure failure) {
     routingState = FeedRoutingState.error(
       pageTitle(),
-      mapFailureMessage(failure),
+      mapFailureMessage(failure)!,
     );
   }
 
   void handleChatSesssion(ChatChannelOpenEntity session) {
     Modular.to.pushReplacementNamed(
-      "/mainboard/chat_from_feed",
+      '/mainboard/chat_from_feed',
       arguments: session,
     );
   }

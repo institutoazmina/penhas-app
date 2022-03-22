@@ -6,14 +6,13 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/main_menu/domain/entities/account_preference_entity.dart';
 import 'package:penhas/app/features/main_menu/domain/states/account_preference_state.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/preference/account_preference_controller.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
-import 'account_preference_controller.dart';
-
 class AccountPreferencePage extends StatefulWidget {
-  const AccountPreferencePage({Key key}) : super(key: key);
+  const AccountPreferencePage({Key? key}) : super(key: key);
 
   @override
   _AccountPreferencePageState createState() => _AccountPreferencePageState();
@@ -22,14 +21,14 @@ class AccountPreferencePage extends StatefulWidget {
 class _AccountPreferencePageState
     extends ModularState<AccountPreferencePage, AccountPreferenceController>
     with SnackBarHandler {
-  List<ReactionDisposer> _disposers;
+  List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _disposers ??= [
-      reaction((_) => controller.messageError, (String message) {
+      reaction((_) => controller.messageError, (String? message) {
         showSnackBar(scaffoldKey: _scaffoldKey, message: message);
       }),
     ];
@@ -41,7 +40,7 @@ class _AccountPreferencePageState
       key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0.0,
-        title: Text("Configurações"),
+        title: const Text('Configurações'),
         backgroundColor: DesignSystemColors.easterPurple,
       ),
       body: Observer(
@@ -52,7 +51,9 @@ class _AccountPreferencePageState
 
   @override
   void dispose() {
-    _disposers.forEach((d) => d());
+    for (final d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 }
@@ -92,27 +93,29 @@ extension _PageBuilder on _AccountPreferencePageState {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Marque abaixo quais notificações deseja receber",
-                  style: kTextStyleAlertDialogTitle),
-              SizedBox(height: 16),
+              const Text(
+                'Marque abaixo quais notificações deseja receber',
+                style: kTextStyleAlertDialogTitle,
+              ),
+              const SizedBox(height: 16),
               Expanded(
                 child: ListView.builder(
-                    itemCount: preferences.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final preference = preferences[index];
-                      return CheckboxListTile(
-                        title:
-                            Text(preference.label, style: itemTitleTextStyle),
-                        value: preference.value,
-                        activeColor: DesignSystemColors.easterPurple,
-                        onChanged: (status) => controller.update(
-                          preference.key,
-                          status,
-                        ),
-                        controlAffinity: ListTileControlAffinity.leading,
-                        contentPadding: EdgeInsets.zero,
-                      );
-                    }),
+                  itemCount: preferences.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final preference = preferences[index];
+                    return CheckboxListTile(
+                      title: Text(preference.label!, style: itemTitleTextStyle),
+                      value: preference.value,
+                      activeColor: DesignSystemColors.easterPurple,
+                      onChanged: (status) => controller.update(
+                        preference.key,
+                        status: status == true,
+                      ),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      contentPadding: EdgeInsets.zero,
+                    );
+                  },
+                ),
               ),
             ],
           ),
@@ -123,15 +126,7 @@ extension _PageBuilder on _AccountPreferencePageState {
 }
 
 extension _TextStyle on _AccountPreferencePageState {
-  TextStyle get contentTextStyle => TextStyle(
-        fontFamily: 'Lato',
-        fontSize: 14.0,
-        letterSpacing: 0.45,
-        color: DesignSystemColors.darkIndigoThree,
-        fontWeight: FontWeight.bold,
-      );
-
-  TextStyle get itemTitleTextStyle => TextStyle(
+  TextStyle get itemTitleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,
         letterSpacing: 0.45,

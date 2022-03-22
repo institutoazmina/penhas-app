@@ -9,19 +9,19 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/authentication/presentation/shared/password_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_controller.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
-import 'package:penhas/app/shared/design_system/link_button.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
+import 'package:penhas/app/shared/design_system/link_button.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'package:penhas/app/shared/navigation/navigator.dart';
 import 'package:penhas/app/shared/navigation/route.dart';
-import 'sign_in_controller.dart';
 
 class SignInPage extends StatefulWidget {
-  final String title;
+  const SignInPage({Key? key, this.title = 'Authentication'}) : super(key: key);
 
-  const SignInPage({Key key, this.title = "Authentication"}) : super(key: key);
+  final String title;
 
   @override
   _SignInPageState createState() => _SignInPageState();
@@ -29,15 +29,15 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends ModularState<SignInPage, SignInController>
     with SnackBarHandler {
-  List<ReactionDisposer> _disposers;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  List<ReactionDisposer>? _disposers;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _disposers ??= [
-      reaction((_) => controller.errorMessage, (String message) {
+      reaction((_) => controller.errorMessage, (String? message) {
         showSnackBar(scaffoldKey: _scaffoldKey, message: message);
       }),
       reaction((_) => controller.currentState, (PageProgressState status) {
@@ -63,31 +63,40 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
               onPanDown: (_) => _handleTap(context),
               child: SafeArea(
                 child: SingleChildScrollView(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 80.0, 16.0, 8.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                    16.0,
+                    80.0,
+                    16.0,
+                    8.0,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      Icon(DesignSystemLogo.penhasLogo,
-                          color: Colors.white, size: 60),
+                      const Icon(
+                        DesignSystemLogo.penhasLogo,
+                        color: Colors.white,
+                        size: 60,
+                      ),
                       Observer(builder: (_) => _buildUserField()),
                       Observer(builder: (_) => _buildPasswordField()),
                       _buildLoginButton(),
                       _buildRegisterButton(),
-                      SizedBox(height: 16.0),
+                      const SizedBox(height: 16.0),
                       LinkButton(
                         onPressed: controller.resetPasswordPressed,
-                        text: "Esqueci minha senha",
+                        text: 'Esqueci minha senha',
                       ),
                       LinkButton(
                         onPressed: () => AppNavigator.push(
-                            AppRoute('/authentication/terms_of_use')),
-                        text: "Termos de uso",
+                          AppRoute('/authentication/terms_of_use'),
+                        ),
+                        text: 'Termos de uso',
                       ),
                       LinkButton(
                         onPressed: () => AppNavigator.push(
-                            AppRoute('/authentication/privacy_policy')),
-                        text: "Política de privacidade",
+                          AppRoute('/authentication/privacy_policy'),
+                        ),
+                        text: 'Política de privacidade',
                       ),
                     ],
                   ),
@@ -102,13 +111,15 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
 
   @override
   void dispose() {
-    _disposers.forEach((d) => d());
+    for (final d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 
   Widget _buildUserField() {
     return Padding(
-      padding: EdgeInsets.only(top: 72),
+      padding: const EdgeInsets.only(top: 72),
       child: SingleTextInput(
         keyboardType: TextInputType.emailAddress,
         onChanged: controller.setEmail,
@@ -123,7 +134,7 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
 
   Widget _buildPasswordField() {
     return Padding(
-      padding: EdgeInsets.only(top: 24),
+      padding: const EdgeInsets.only(top: 24),
       child: PassordInputField(
         labelText: 'Senha',
         hintText: 'Digite sua senha',
@@ -135,7 +146,7 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
 
   Widget _buildLoginButton() {
     return Padding(
-      padding: EdgeInsets.only(top: 24.0),
+      padding: const EdgeInsets.only(top: 24.0),
       child: LoginButton(
         onChanged: () async => controller.signInWithEmailAndPasswordPressed(),
       ),
@@ -144,26 +155,27 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
 
   Widget _buildRegisterButton() {
     return Padding(
-      padding: EdgeInsets.only(top: 24),
+      padding: const EdgeInsets.only(top: 24),
       child: SizedBox(
         height: 44,
         child: RaisedButton(
           onPressed: () => controller.registerUserPressed(),
           elevation: 0,
           color: Colors.transparent,
-          child: Text(
+          shape: kButtonShapeOutlineWhite,
+          child: const Text(
             'Cadastrar',
             style: kTextStyleDefaultFilledButtonLabel,
           ),
-          shape: kButtonShapeOutlineWhite,
         ),
       ),
     );
   }
 
-  _handleTap(BuildContext context) {
-    if (MediaQuery.of(context).viewInsets.bottom > 0)
+  void _handleTap(BuildContext context) {
+    if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
-    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+    }
+    WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 }

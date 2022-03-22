@@ -6,32 +6,49 @@ const Duration _kExpand = Duration(milliseconds: 300);
 /// This widget unfolds a hidden widget to the user, called [child].
 /// This action is performed when the user clicks the 'expand' arrow.
 class ExpandChild extends StatefulWidget {
+  const ExpandChild({
+    Key? key,
+    this.collapsedHint,
+    this.expandedHint,
+    this.arrowPadding,
+    this.arrowColor,
+    this.arrowSize = 30,
+    this.icon,
+    this.hintTextStyle,
+    this.expandArrowStyle = ExpandArrowStyle.icon,
+    this.animationDuration = _kExpand,
+    required this.child,
+    this.hideArrowOnExpanded = false,
+    this.alignment = Alignment.topCenter,
+    this.trimSize = 0,
+  }) : super(key: key);
+
   /// Message used as a tooltip when the widget is minimized.
   /// Default value set to [MaterialLocalizations.of(context).collapsedIconTapHint].
-  final String collapsedHint;
+  final String? collapsedHint;
 
   /// Message used as a tooltip when the widget is maximazed.
   /// Default value set to [MaterialLocalizations.of(context).expandedIconTapHint].
-  final String expandedHint;
+  final String? expandedHint;
 
   /// Defines padding value.
   ///
   /// Default value if this widget's icon-only: [EdgeInsets.all(4)].
   /// If text is shown: [EdgeInsets.all(8)].
-  final EdgeInsets arrowPadding;
+  final EdgeInsets? arrowPadding;
 
   /// Color of the arrow widget. Defaults to the caption text style color.
-  final Color arrowColor;
+  final Color? arrowColor;
 
   /// Size of the arrow widget. Default is [30].
   final double arrowSize;
 
   /// Icon that will be used instead of an arrow.
   /// Default is [Icons.expand_more].
-  final IconData icon;
+  final IconData? icon;
 
   /// Style of the displayed message.
-  final TextStyle hintTextStyle;
+  final TextStyle? hintTextStyle;
 
   /// Defines arrow rendering style.
   final ExpandArrowStyle expandArrowStyle;
@@ -49,24 +66,6 @@ class ExpandChild extends StatefulWidget {
 
   final Alignment alignment;
 
-  const ExpandChild({
-    Key key,
-    this.collapsedHint,
-    this.expandedHint,
-    this.arrowPadding,
-    this.arrowColor,
-    this.arrowSize = 30,
-    this.icon,
-    this.hintTextStyle,
-    this.expandArrowStyle = ExpandArrowStyle.icon,
-    this.animationDuration = _kExpand,
-    @required this.child,
-    this.hideArrowOnExpanded = false,
-    this.alignment = Alignment.topCenter,
-    this.trimSize,
-  })  : assert(hideArrowOnExpanded != null),
-        super(key: key);
-
   @override
   _ExpandChildState createState() => _ExpandChildState();
 }
@@ -80,18 +79,18 @@ class _ExpandChildState extends State<ExpandChild>
   static final _halfTurn = Tween<double>(begin: 0.0, end: 0.5);
 
   /// General animation controller.
-  AnimationController _controller;
+  late AnimationController _controller;
 
   /// Animations for height control.
-  Animation<double> _heightFactor;
+  late Animation<double> _heightFactor;
 
   /// Animations for arrow's rotation control.
-  Animation<double> _iconTurns;
+  late Animation<double> _iconTurns;
 
   /// Auxiliary variable to controll expand status.
   bool _isExpanded = false;
 
-  GlobalKey _localChildrenKey = GlobalKey();
+  final GlobalKey _localChildrenKey = GlobalKey();
   double _foo = 0.0;
   bool _showExpand = true;
 
@@ -109,16 +108,15 @@ class _ExpandChildState extends State<ExpandChild>
     _heightFactor = _controller.drive(_easeInCurve);
     _iconTurns = _controller.drive(_halfTurn.chain(_easeInCurve));
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       final context = _localChildrenKey.currentContext;
       if (context == null) return;
 
       setState(() {
-        _foo = widget.trimSize > context.size.height
-            ? 1.0
-            : widget.trimSize / context.size.height;
+        final height = context.size?.height ?? 0;
+        _foo = widget.trimSize > height ? 1.0 : widget.trimSize / height;
 
-        _showExpand = context.size.height > widget.trimSize;
+        _showExpand = height > widget.trimSize;
       });
     });
   }
@@ -140,7 +138,7 @@ class _ExpandChildState extends State<ExpandChild>
   /// Builds the widget itself. If the [_isExpanded] parameter is 'true',
   /// the [child] parameter will contain the child information, passed to
   /// this instance of the object.
-  Widget _buildChild(BuildContext context, Widget child) {
+  Widget _buildChild(BuildContext context, Widget? child) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -152,30 +150,31 @@ class _ExpandChildState extends State<ExpandChild>
             child: Container(key: _localChildrenKey, child: child),
           ),
         ),
-        _showExpand
-            ? ClipRect(
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  heightFactor:
-                      widget.hideArrowOnExpanded ? 1 - _heightFactor.value : 1,
-                  child: InkWell(
-                    onTap: _handleTap,
-                    child: ExpandArrow(
-                      collapsedHint: widget.collapsedHint,
-                      expandedHint: widget.expandedHint,
-                      animation: _iconTurns,
-                      padding: widget.arrowPadding,
-                      onTap: _handleTap,
-                      arrowColor: widget.arrowColor,
-                      arrowSize: widget.arrowSize,
-                      icon: widget.icon,
-                      hintTextStyle: widget.hintTextStyle,
-                      expandArrowStyle: widget.expandArrowStyle,
-                    ),
-                  ),
+        if (_showExpand)
+          ClipRect(
+            child: Align(
+              alignment: Alignment.topCenter,
+              heightFactor:
+                  widget.hideArrowOnExpanded ? 1 - _heightFactor.value : 1,
+              child: InkWell(
+                onTap: _handleTap,
+                child: ExpandArrow(
+                  collapsedHint: widget.collapsedHint,
+                  expandedHint: widget.expandedHint,
+                  animation: _iconTurns,
+                  padding: widget.arrowPadding,
+                  onTap: _handleTap,
+                  arrowColor: widget.arrowColor,
+                  arrowSize: widget.arrowSize,
+                  icon: widget.icon,
+                  hintTextStyle: widget.hintTextStyle,
+                  expandArrowStyle: widget.expandArrowStyle,
                 ),
-              )
-            : Container(),
+              ),
+            ),
+          )
+        else
+          Container(),
       ],
     );
   }
@@ -206,13 +205,27 @@ enum ExpandArrowStyle {
 /// the hidden information to the user. It posses an [animation] parameter.
 /// Most widget parameters are customizable.
 class ExpandArrow extends StatelessWidget {
+  const ExpandArrow({
+    Key? key,
+    this.collapsedHint,
+    this.expandedHint,
+    required this.animation,
+    this.padding,
+    this.onTap,
+    this.arrowColor,
+    this.arrowSize,
+    this.icon,
+    this.hintTextStyle,
+    this.expandArrowStyle,
+  }) : super(key: key);
+
   /// String used as a tooltip when the widget is minimized.
   /// Default value set to [MaterialLocalizations.of(context).collapsedIconTapHint].
-  final String collapsedHint;
+  final String? collapsedHint;
 
   /// String used as a tooltip when the widget is maximazed.
   /// Default value set to [MaterialLocalizations.of(context).expandedIconTapHint].
-  final String expandedHint;
+  final String? expandedHint;
 
   /// Controlls the arrow's fluid(TM) animation for
   /// the arrow's rotation.
@@ -222,41 +235,26 @@ class ExpandArrow extends StatelessWidget {
   ///
   /// Default value if this widget's icon-only: [EdgeInsets.all(4)].
   /// If text is shown: [EdgeInsets.all(8)].
-  final EdgeInsets padding;
+  final EdgeInsets? padding;
 
   /// Callback to controll what happeds when the arrow is clicked.
-  final void Function() onTap;
+  final void Function()? onTap;
 
   /// Defines arrow's color.
-  final Color arrowColor;
+  final Color? arrowColor;
 
   /// Defines arrow's size. Default is [30].
-  final double arrowSize;
+  final double? arrowSize;
 
   /// Icon that will be used instead of an arrow.
   /// Default is [Icons.expand_more].
-  final IconData icon;
+  final IconData? icon;
 
   /// Style of the displayed message.
-  final TextStyle hintTextStyle;
+  final TextStyle? hintTextStyle;
 
   ///  Defines arrow rendering style. Default is [ExpandArrowStyle.icon].
-  final ExpandArrowStyle expandArrowStyle;
-
-  const ExpandArrow({
-    Key key,
-    this.collapsedHint,
-    this.expandedHint,
-    @required this.animation,
-    this.padding,
-    this.onTap,
-    this.arrowColor,
-    this.arrowSize,
-    this.icon,
-    this.hintTextStyle,
-    this.expandArrowStyle,
-  })  : assert(animation != null),
-        super(key: key);
+  final ExpandArrowStyle? expandArrowStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -273,6 +271,7 @@ class ExpandArrow extends StatelessWidget {
       child: InkResponse(
         containedInkWell: isNotIcon,
         highlightShape: isNotIcon ? BoxShape.rectangle : BoxShape.circle,
+        onTap: onTap,
         child: Padding(
           padding: padding ??
               EdgeInsets.all(expandArrowStyle == ExpandArrowStyle.text ? 8 : 4),
@@ -284,17 +283,18 @@ class ExpandArrow extends StatelessWidget {
                   turns: animation,
                   child: Icon(
                     icon ?? Icons.expand_more,
-                    color:
-                        arrowColor ?? Theme.of(context).textTheme.caption.color,
+                    color: arrowColor ??
+                        Theme.of(context).textTheme.caption?.color,
                     size: arrowSize ?? 30,
                   ),
                 ),
               if (isNotIcon) ...[
                 const SizedBox(width: 2.0),
                 DefaultTextStyle(
-                  style: Theme.of(context).textTheme.subtitle2.copyWith(
-                        color: Theme.of(context).textTheme.caption.color,
-                      ),
+                  style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                            color: Theme.of(context).textTheme.caption?.color,
+                          ) ??
+                      const TextStyle(),
                   child: Text(
                     tooltipMessage,
                     style: hintTextStyle,
@@ -305,7 +305,6 @@ class ExpandArrow extends StatelessWidget {
             ],
           ),
         ),
-        onTap: onTap,
       ),
     );
   }

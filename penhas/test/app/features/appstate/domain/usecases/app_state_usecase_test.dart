@@ -2,45 +2,25 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/managers/app_configuration.dart';
-import 'package:penhas/app/core/managers/local_store.dart';
-import 'package:penhas/app/core/managers/modules_sevices.dart';
 import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
-import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
-import 'package:penhas/app/features/appstate/domain/repositories/i_app_state_repository.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
 
+import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
-class MockAppStateRepository extends Mock implements IAppStateRepository {}
-
-class MockUserProfileStore extends Mock implements LocalStore<UserProfileEntity> {}
-
-class MockAppConfiguration extends Mock implements IAppConfiguration {}
-
-class MockAppModulesServices extends Mock implements IAppModulesServices {}
-
 void main() {
-  AppStateUseCase sut;
-  IAppStateRepository appStateRepository;
-  IAppConfiguration appConfiguration;
-  LocalStore<UserProfileEntity> profileStore;
-  IAppModulesServices appModulesServices;
+  late final MockIAppStateRepository appStateRepository = MockIAppStateRepository();
+  late final MockIAppConfiguration appConfiguration = MockIAppConfiguration();
+  late final MockUserProfileStore profileStore = MockUserProfileStore();
+  late final MockIAppModulesServices appModulesServices = MockIAppModulesServices();
 
-  setUp(() {
-    profileStore = MockUserProfileStore();
-    appConfiguration = MockAppConfiguration();
-    appStateRepository = MockAppStateRepository();
-    appModulesServices = MockAppModulesServices();
-
-    sut = AppStateUseCase(
-      userProfileStore: profileStore,
-      appConfiguration: appConfiguration,
-      appStateRepository: appStateRepository,
-      appModulesServices: appModulesServices,
-    );
-  });
+  late final AppStateUseCase sut = AppStateUseCase(
+    userProfileStore: profileStore,
+    appConfiguration: appConfiguration,
+    appStateRepository: appStateRepository,
+    appModulesServices: appModulesServices,
+  );
 
   group('AppStateUseCase', () {
     test('should hit store user profile when get a valid session', () async {

@@ -5,37 +5,37 @@ import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ProfilSkillLoadedStatePage extends StatelessWidget {
+  ProfilSkillLoadedStatePage({
+    Key? key,
+    required this.tags,
+    required this.onResetAction,
+    required this.onAplyFilterAction,
+  }) : super(key: key);
+
   final void Function() onResetAction;
   final void Function(List<FilterTagEntity>) onAplyFilterAction;
   final List<FilterTagEntity> tags;
 
   final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
 
-  ProfilSkillLoadedStatePage({
-    Key key,
-    @required this.tags,
-    @required this.onResetAction,
-    @required this.onAplyFilterAction,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Habilidades'),
+        title: const Text('Habilidades'),
         backgroundColor: DesignSystemColors.ligthPurple,
       ),
       body: SizedBox.expand(
         child: SafeArea(
           child: Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: Container(
               color: DesignSystemColors.systemBackgroundColor,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(top: 4, bottom: 20),
+                    padding: const EdgeInsets.only(top: 4, bottom: 20),
                     child: Text(
                       'Selecione os temas que você está disponível para ajudar:',
                       style: filterTitleTextStyle,
@@ -44,7 +44,6 @@ class ProfilSkillLoadedStatePage extends StatelessWidget {
                   Expanded(
                     child: Tags(
                       spacing: 12.0,
-                      symmetry: false,
                       key: _tagStateKey,
                       alignment: WrapAlignment.start,
                       runAlignment: WrapAlignment.start,
@@ -57,7 +56,6 @@ class ProfilSkillLoadedStatePage extends StatelessWidget {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
                       buildResetPasswordButton(),
                       buildApplyButton(),
@@ -79,19 +77,19 @@ extension _FilterLoadedStatePageMethods on ProfilSkillLoadedStatePage {
       message: item.label,
       child: ItemTags(
         activeColor: DesignSystemColors.easterPurple,
-        title: item.label,
+        title: item.label!,
         index: index,
         active: item.isSelected,
         customData: item.id,
         elevation: 0,
         textStyle: tagTitleTextStyle,
         textColor: DesignSystemColors.easterPurple,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(20.0),
           bottomRight: Radius.circular(20.0),
           topRight: Radius.circular(20.0),
         ),
-        padding: EdgeInsets.fromLTRB(16, 6, 16, 6),
+        padding: const EdgeInsets.fromLTRB(16, 6, 16, 6),
       ),
     );
   }
@@ -105,8 +103,8 @@ extension _FilterLoadedStatePageMethods on ProfilSkillLoadedStatePage {
         color: Colors.transparent,
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
-        child: Text(
-          "Limpar",
+        child: const Text(
+          'Limpar',
           style: TextStyle(
             fontFamily: 'Lato',
             fontWeight: FontWeight.bold,
@@ -128,15 +126,17 @@ extension _FilterLoadedStatePageMethods on ProfilSkillLoadedStatePage {
         onPressed: () => applyFilter(),
         elevation: 0,
         color: DesignSystemColors.ligthPurple,
-        child: Text("Atualizar",
-            style: TextStyle(
-              fontFamily: 'Lato',
-              fontWeight: FontWeight.bold,
-              fontSize: 14.0,
-              color: Colors.white,
-              letterSpacing: 0.45,
-            )),
         shape: kButtonShapeOutlinePurple,
+        child: const Text(
+          'Atualizar',
+          style: TextStyle(
+            fontFamily: 'Lato',
+            fontWeight: FontWeight.bold,
+            fontSize: 14.0,
+            color: Colors.white,
+            letterSpacing: 0.45,
+          ),
+        ),
       ),
     );
   }
@@ -146,19 +146,21 @@ extension _FilterLoadedStatePageMethods on ProfilSkillLoadedStatePage {
       onAplyFilterAction([]);
     }
 
-    final seletedTags = _tagStateKey.currentState.getAllItem
-        .where((e) => e.active)
-        .map((e) => e.customData)
-        .map((e) => e as String)
-        .map((e) => tags.firstWhere((t) => t.id == e))
-        .toList();
+    final List<FilterTagEntity> seletedTags = _tagStateKey
+            .currentState?.getAllItem
+            .where((e) => e.active)
+            .map((e) => e.customData)
+            .whereType<String>()
+            .map((e) => tags.firstWhere((t) => t.id == e))
+            .toList() ??
+        List.empty();
 
     onAplyFilterAction(seletedTags);
   }
 }
 
 extension _FilterLoadedStatePageTextStyle on ProfilSkillLoadedStatePage {
-  TextStyle get filterTitleTextStyle => TextStyle(
+  TextStyle get filterTitleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,
         letterSpacing: 0.4,
@@ -166,7 +168,7 @@ extension _FilterLoadedStatePageTextStyle on ProfilSkillLoadedStatePage {
         color: DesignSystemColors.darkIndigoThree,
       );
 
-  TextStyle get tagTitleTextStyle => TextStyle(
+  TextStyle get tagTitleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,
         letterSpacing: 0.4,

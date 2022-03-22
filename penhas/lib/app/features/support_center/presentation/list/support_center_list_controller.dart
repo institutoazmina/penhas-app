@@ -11,11 +11,11 @@ class SupportCenterListController extends _SupportCenterListControllerBase
 }
 
 abstract class _SupportCenterListControllerBase with Store {
-  final SupportCenterPlaceSessionEntity _session;
-
   _SupportCenterListControllerBase(this._session) {
     places = _session.places.asObservable();
   }
+
+  final SupportCenterPlaceSessionEntity _session;
 
   @observable
   ObservableList<SupportCenterPlaceEntity> places =
@@ -24,7 +24,7 @@ abstract class _SupportCenterListControllerBase with Store {
   @action
   void selected(SupportCenterPlaceEntity place) {
     Modular.to.pushNamed(
-      "/mainboard/supportcenter/show",
+      '/mainboard/supportcenter/show',
       arguments: place,
     );
   }

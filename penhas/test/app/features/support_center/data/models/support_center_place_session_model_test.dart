@@ -6,24 +6,17 @@ import 'package:penhas/app/features/support_center/domain/entities/support_cente
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  String supportCenterSessionFile;
+  String? supportCenterSessionFile;
 
   setUp(() {
     supportCenterSessionFile =
-        "support_center/support_center_list_of_place.json";
+        'support_center/support_center_list_of_place.json';
   });
 
   group('SupportCenterPlaceSessionModel', () {
     test('should a subclass of SupportCenterPlaceSessionEntity', () async {
       // act
-      final model = SupportCenterPlaceSessionModel(
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-      );
+      const model = SupportCenterPlaceSessionModel();
       // assert
       expect(model, isA<SupportCenterPlaceSessionEntity>());
     });
@@ -32,26 +25,25 @@ void main() {
         () async {
       // arrange
       final jsonData = await JsonUtil.getJson(from: supportCenterSessionFile);
-      final actual = SupportCenterPlaceSessionModel(
-        5,
-        -23.52901,
-        -46.6504,
-        false,
-        null,
-        [
+      const actual = SupportCenterPlaceSessionModel(
+        maximumRate: 5,
+        latitude: -23.52901,
+        longitude: -46.6504,
+        hasMore: false,
+        places: [
           SupportCenterPlaceEntity(
-            id: 2676,
-            rate: "n/a",
+            id: '2676',
+            rate: 'n/a',
             ratedByClient: 0,
-            distance: "4",
+            distance: '4',
             latitude: -23.557338,
             longitude: -46.625331,
-            name: "1ª Delegacia de Defesa da Mulher - São Paulo",
-            uf: "SP",
+            name: '1ª Delegacia de Defesa da Mulher - São Paulo',
+            uf: 'SP',
             category: SupportCenterPlaceCategoryEntity(
               id: 5,
-              name: "Delegacias da mulher",
-              color: "#F982B4",
+              name: 'Delegacias da mulher',
+              color: '#F982B4',
             ),
             fullStreet: null,
             htmlContent: null,

@@ -1,21 +1,19 @@
-import 'package:meta/meta.dart';
-
 class TweetEngageRequestOption {
-  final String tweetId;
-  final String message;
-  final bool dislike;
-
   TweetEngageRequestOption({
-    this.tweetId,
+    required this.tweetId,
     this.message,
     this.dislike = false,
-  }) : assert(tweetId != null);
+  });
+
+  final String tweetId;
+  final String? message;
+  final bool dislike;
 }
 
 class TweetCreateRequestOption {
-  final String message;
-
   TweetCreateRequestOption({
-    @required this.message,
+    required this.message,
   });
+
+  final String? message;
 }

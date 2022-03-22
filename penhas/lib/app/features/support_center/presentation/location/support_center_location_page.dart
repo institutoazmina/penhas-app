@@ -5,16 +5,15 @@ import 'package:flutter_svg/svg.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/support_center/domain/states/support_center_location_state.dart';
+import 'package:penhas/app/features/support_center/presentation/location/support_center_location_controller.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_cep_error.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_location_address.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_location_general_error.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'support_center_location_controller.dart';
-
 class SupportCenterLocationPage extends StatefulWidget {
-  SupportCenterLocationPage({Key key}) : super(key: key);
+  const SupportCenterLocationPage({Key? key}) : super(key: key);
 
   @override
   _SupportCenterLocationPageState createState() =>
@@ -26,7 +25,7 @@ class _SupportCenterLocationPageState extends ModularState<
   final TextEditingController _textController = TextEditingController();
   final _maskCep = MaskTextInputFormatter(
     mask: '#####-###',
-    filter: {"#": RegExp(r'[0-9]')},
+    filter: {'#': RegExp('[0-9]')},
   );
 
   @override
@@ -34,26 +33,28 @@ class _SupportCenterLocationPageState extends ModularState<
     return Scaffold(
       backgroundColor: DesignSystemColors.systemBackgroundColor,
       appBar: AppBar(
-        title: Text("Localização"),
+        title: const Text('Localização'),
         elevation: 0.0,
         backgroundColor: DesignSystemColors.easterPurple,
       ),
-      body: Observer(builder: (_) {
-        return PageProgressIndicator(
-          progressState: controller.progressState,
-          progressMessage: "Pesquisando o CEP",
-          child: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                buildEnableGeo(),
-                buildUpdateCepLocation(context),
-                actionOnStateUpdate(controller.state),
-              ],
+      body: Observer(
+        builder: (_) {
+          return PageProgressIndicator(
+            progressState: controller.progressState,
+            progressMessage: 'Pesquisando o CEP',
+            child: SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  buildEnableGeo(),
+                  buildUpdateCepLocation(context),
+                  actionOnStateUpdate(controller.state),
+                ],
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }
@@ -61,7 +62,7 @@ class _SupportCenterLocationPageState extends ModularState<
 extension _WidgetPrivateBuilder on _SupportCenterLocationPageState {
   Widget buildUpdateCepLocation(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: DesignSystemColors.white,
         border:
             Border(bottom: BorderSide(color: DesignSystemColors.pinkishGrey)),
@@ -70,8 +71,8 @@ extension _WidgetPrivateBuilder on _SupportCenterLocationPageState {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(left: 16.0, top: 20.0),
-            child: Text("Escolha o ponto de partida", style: inputCepTextStyle),
+            padding: const EdgeInsets.only(left: 16.0, top: 20.0),
+            child: Text('Escolha o ponto de partida', style: inputCepTextStyle),
           ),
           buildInputCep(context),
           buildForgetCep(),
@@ -84,8 +85,8 @@ extension _WidgetPrivateBuilder on _SupportCenterLocationPageState {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 9.0),
       child: TextField(
-        decoration: InputDecoration(
-          hintText: "Pesquise aqui",
+        decoration: const InputDecoration(
+          hintText: 'Pesquise aqui',
           border: OutlineInputBorder(),
           contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
           enabledBorder: OutlineInputBorder(
@@ -95,7 +96,6 @@ extension _WidgetPrivateBuilder on _SupportCenterLocationPageState {
             borderSide: BorderSide(color: DesignSystemColors.easterPurple),
           ),
         ),
-        textCapitalization: TextCapitalization.none,
         inputFormatters: [_maskCep],
         controller: _textController,
         keyboardType: TextInputType.number,
@@ -106,7 +106,7 @@ extension _WidgetPrivateBuilder on _SupportCenterLocationPageState {
   }
 
   Widget buildEnableGeo() {
-    final locationAsset = 'assets/images/svg/support_center/trace_route.svg';
+    const locationAsset = 'assets/images/svg/support_center/trace_route.svg';
     final locationIcon = SvgPicture.asset(
       locationAsset,
       color: DesignSystemColors.warnGrey,
@@ -114,29 +114,29 @@ extension _WidgetPrivateBuilder on _SupportCenterLocationPageState {
 
     return Container(
       height: 60,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: DesignSystemColors.white,
         border:
             Border(bottom: BorderSide(color: DesignSystemColors.pinkishGrey)),
       ),
       child: FlatButton(
         padding: EdgeInsets.zero,
+        onPressed: controller.askForLocationPermission,
         child: Padding(
-          padding: EdgeInsets.only(left: 16.0),
+          padding: const EdgeInsets.only(left: 16.0),
           child: Row(
             children: [
               locationIcon,
               Padding(
-                padding: EdgeInsets.only(left: 16.0),
+                padding: const EdgeInsets.only(left: 16.0),
                 child: Text(
-                  "Utilizando sua localização atual",
+                  'Utilizando sua localização atual',
                   style: localizationDescriptionTextStyle,
                 ),
               )
             ],
           ),
         ),
-        onPressed: controller.askForLocationPermission,
       ),
     );
   }
@@ -148,17 +148,17 @@ extension _WidgetPrivateBuilder on _SupportCenterLocationPageState {
         width: 100,
         alignment: Alignment.topLeft,
         child: Padding(
-          padding: EdgeInsets.only(left: 0.0, bottom: 0.0),
+          padding: EdgeInsets.zero,
           child: RaisedButton(
             onPressed: () async {
-              final url =
+              const url =
                   'http://www.buscacep.correios.com.br/sistemas/buscacep/buscaCepEndereco.cfm';
               launch(url);
             },
             elevation: 0,
-            padding: EdgeInsets.only(left: 0.0, bottom: 0.0),
+            padding: EdgeInsets.zero,
             color: Colors.transparent,
-            child: Text("Não sei o CEP", style: forgetCepTextStyle),
+            child: Text('Não sei o CEP', style: forgetCepTextStyle),
           ),
         ),
       ),
@@ -186,7 +186,7 @@ extension _WidgetPrivateBuilder on _SupportCenterLocationPageState {
 
 extension _PrivateMethdos on _SupportCenterLocationPageState {
   void submitKeywordFilter(BuildContext context) {
-    FocusScopeNode currentFocus = FocusScope.of(context);
+    final FocusScopeNode currentFocus = FocusScope.of(context);
     if (!currentFocus.hasPrimaryFocus) {
       currentFocus.unfocus();
     }
@@ -195,22 +195,25 @@ extension _PrivateMethdos on _SupportCenterLocationPageState {
 
 extension __SupportCenterLocationPageStateTextStyle
     on _SupportCenterLocationPageState {
-  TextStyle get localizationDescriptionTextStyle => TextStyle(
-      color: DesignSystemColors.darkIndigoThree,
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      letterSpacing: 0.45,
-      fontWeight: FontWeight.normal);
-  TextStyle get inputCepTextStyle => TextStyle(
-      color: DesignSystemColors.darkIndigoThree,
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      letterSpacing: 0.45,
-      fontWeight: FontWeight.bold);
-  TextStyle get forgetCepTextStyle => TextStyle(
-      fontFamily: 'Lato',
-      fontWeight: FontWeight.normal,
-      fontSize: 14.0,
-      color: DesignSystemColors.darkIndigoThree,
-      decoration: TextDecoration.underline);
+  TextStyle get localizationDescriptionTextStyle => const TextStyle(
+        color: DesignSystemColors.darkIndigoThree,
+        fontFamily: 'Lato',
+        fontSize: 14.0,
+        letterSpacing: 0.45,
+        fontWeight: FontWeight.normal,
+      );
+  TextStyle get inputCepTextStyle => const TextStyle(
+        color: DesignSystemColors.darkIndigoThree,
+        fontFamily: 'Lato',
+        fontSize: 14.0,
+        letterSpacing: 0.45,
+        fontWeight: FontWeight.bold,
+      );
+  TextStyle get forgetCepTextStyle => const TextStyle(
+        fontFamily: 'Lato',
+        fontWeight: FontWeight.normal,
+        fontSize: 14.0,
+        color: DesignSystemColors.darkIndigoThree,
+        decoration: TextDecoration.underline,
+      );
 }

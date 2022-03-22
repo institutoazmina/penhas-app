@@ -6,17 +6,17 @@ import 'package:penhas/app/features/feed/domain/states/feed_router_type.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class TweetAvatar extends StatelessWidget {
-  final TweetEntity tweet;
   const TweetAvatar({
-    Key key,
-    @required this.tweet,
-  })  : assert(tweet != null),
-        super(key: key);
+    Key? key,
+    required this.tweet,
+  })  : super(key: key);
+
+  final TweetEntity tweet;
 
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      backgroundColor: Color.fromRGBO(239, 239, 239, 1.0),
+      backgroundColor: const Color.fromRGBO(239, 239, 239, 1.0),
       radius: 24.0,
       child: tweet.anonymous ? anonymousAvatar() : authenticatedAvatar(),
     );
@@ -26,8 +26,8 @@ class TweetAvatar extends StatelessWidget {
 extension _PrivateMethod on TweetAvatar {
   Widget avatar() {
     return SvgPicture.network(
-      tweet.avatar,
-      color: DesignSystemColors.darkIndigo,
+      tweet.avatar!,
+      //color: DesignSystemColors.darkIndigo,
       height: 36,
     );
   }
@@ -38,19 +38,19 @@ extension _PrivateMethod on TweetAvatar {
 
   Widget authenticatedAvatar() {
     return FlatButton(
-      child: avatar(),
       onPressed: () => showUserProfile(),
       color: Colors.transparent,
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       padding: EdgeInsets.zero,
+      child: avatar(),
     );
   }
 
   void showUserProfile() {
     final routeOption = FeedRouterType.profile(tweet.clientId);
     Modular.to.pushNamed(
-      "/mainboard/tweet/perfil_chat",
+      '/mainboard/tweet/perfil_chat',
       arguments: routeOption,
     );
   }

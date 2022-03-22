@@ -1,5 +1,0 @@
-lib/app/features/feed/presenter/feed/feed_module.dart
-lib/app/features/feed/presenter/feed/feed_page.dart
-test/app/features/feed/presenter/feed/feed_page_test.dart
-lib/app/features/feed/presenter/feed/feed_controller.dart
-test/app/features/feed/presenter/feed/feed_controller_test.dart

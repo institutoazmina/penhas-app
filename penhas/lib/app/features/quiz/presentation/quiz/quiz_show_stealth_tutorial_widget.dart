@@ -7,23 +7,23 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class QuizShowStealthTutorialWidget extends StatelessWidget {
-  final String reference;
-  final String buttonLabel;
-  final UserReaction onPressed;
-
   const QuizShowStealthTutorialWidget({
-    Key key,
-    @required this.reference,
-    @required this.onPressed,
-    @required this.buttonLabel,
+    Key? key,
+    required this.reference,
+    required this.onPressed,
+    required this.buttonLabel,
   }) : super(key: key);
+
+  final String reference;
+  final String? buttonLabel;
+  final UserReaction onPressed;
 
   @override
   Widget build(BuildContext context) {
-    final double horizontalMargin = 24.0;
+    const double horizontalMargin = 24.0;
 
     return Container(
-      padding: EdgeInsets.fromLTRB(
+      padding: const EdgeInsets.fromLTRB(
         horizontalMargin,
         4.0,
         horizontalMargin,
@@ -37,14 +37,14 @@ class QuizShowStealthTutorialWidget extends StatelessWidget {
         onPressed: () async {
           await Navigator.push(
             context,
-            TutorialScaleRoute(page: StealthModeTutorialPage()),
+            TutorialScaleRoute(page: const StealthModeTutorialPage()),
           ).then(
             (value) => onPressed({reference: value ? '1' : '0'}),
           );
         },
         shape: kButtonShapeFilled,
         child: Text(
-          buttonLabel,
+          buttonLabel!,
           style: kTextStyleDefaultFilledButtonLabel,
         ),
       ),

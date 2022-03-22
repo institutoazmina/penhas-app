@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
@@ -10,42 +9,45 @@ import 'package:penhas/app/shared/navigation/route.dart';
 
 part 'quiz_controller.g.dart';
 
-const String ERROR_SERVER_FAILURE =
-    "O servidor está com problema neste momento, tente novamente.";
-const String ERROR_INTERNET_CONNECTION_FAILURE =
-    "O servidor está inacessível, o PenhaS está com acesso à Internet?";
+const String errorServerFailure =
+    'O servidor está com problema neste momento, tente novamente.';
+const String errorInternetConnectionFailure =
+    'O servidor está inacessível, o PenhaS está com acesso à Internet?';
 
 class QuizController extends _QuizControllerBase with _$QuizController {
   QuizController({
-    @required QuizSessionEntity quizSession,
-    @required AppStateUseCase appStateUseCase,
-    @required IQuizRepository repository,
+    required QuizSessionEntity quizSession,
+    required AppStateUseCase appStateUseCase,
+    required IQuizRepository repository,
   }) : super(quizSession, appStateUseCase, repository);
 }
 
 abstract class _QuizControllerBase with Store {
-  final QuizSessionEntity _quizSession;
-  final IQuizRepository _repository;
-  final AppStateUseCase _appStateUseCase;
-  String _sessionId;
-
   _QuizControllerBase(
-      this._quizSession, this._appStateUseCase, this._repository) {
-    final reversedCurrent = _quizSession.currentMessage.reversed.toList();
+    this._quizSession,
+    this._appStateUseCase,
+    this._repository,
+  ) {
+    final reversedCurrent = _quizSession.currentMessage!.reversed.toList();
     _sessionId = _quizSession.sessionId;
 
     messages.addAll(reversedCurrent);
     _parseUserReply(reversedCurrent);
   }
 
+  final QuizSessionEntity _quizSession;
+  final IQuizRepository _repository;
+  final AppStateUseCase _appStateUseCase;
+  String? _sessionId;
+
   ObservableList<QuizMessageEntity> messages =
       ObservableList<QuizMessageEntity>();
 
   @observable
-  QuizMessageEntity userReplyMessage;
+  QuizMessageEntity? userReplyMessage;
 
   @observable
-  String errorMessage = '';
+  String? errorMessage = '';
 
   @action
   void onActionReply(Map<String, String> reply) {
@@ -61,12 +63,13 @@ abstract class _QuizControllerBase with Store {
     messages.insertAll(0, [
       actionMessageResult,
       QuizMessageEntity(
+        ref: messageRemoved.ref,
         content: messageRemoved.content,
         type: QuizMessageType.displayText,
       ),
     ]);
 
-    QuizRequestEntity request = QuizRequestEntity(
+    final QuizRequestEntity request = QuizRequestEntity(
       sessionId: _sessionId,
       options: reply,
     );
@@ -79,7 +82,10 @@ abstract class _QuizControllerBase with Store {
     Map<String, String> reply,
   ) {
     final message = QuizMessageEntity(
-        content: 'Desculpa, não entendi', type: QuizMessageType.displayText);
+      ref: messageRemoved.ref,
+      content: 'Desculpa, não entendi',
+      type: QuizMessageType.displayText,
+    );
 
     switch (messageRemoved.type) {
       case QuizMessageType.yesno:
@@ -101,6 +107,7 @@ abstract class _QuizControllerBase with Store {
     QuizMessageEntity messageRemoved,
   ) {
     return QuizMessageEntity(
+      ref: messageRemoved.ref,
       content: messageRemoved.buttonLabel,
       type: QuizMessageType.displayText,
     );
@@ -111,6 +118,7 @@ abstract class _QuizControllerBase with Store {
     QuizMessageEntity messageRemoved,
   ) {
     return QuizMessageEntity(
+      ref: messageRemoved.ref,
       content: 'Tutorial visto',
       type: QuizMessageType.displayTextResponse,
     );
@@ -123,12 +131,13 @@ abstract class _QuizControllerBase with Store {
     String newMessageContent;
 
     if (reply[messageRemoved.ref] == 'Y') {
-      newMessageContent = "Sim";
+      newMessageContent = 'Sim';
     } else {
-      newMessageContent = "Não";
+      newMessageContent = 'Não';
     }
 
-    QuizMessageEntity newMessage = QuizMessageEntity(
+    final QuizMessageEntity newMessage = QuizMessageEntity(
+      ref: messageRemoved.ref,
       content: newMessageContent,
       type: QuizMessageType.displayTextResponse,
     );
@@ -140,13 +149,14 @@ abstract class _QuizControllerBase with Store {
     Map<String, String> reply,
     QuizMessageEntity messageRemoved,
   ) {
-    String display = reply[messageRemoved.ref]
+    final String display = reply[messageRemoved.ref]!
         .split(',')
-        .map((e) => messageRemoved.options.firstWhere((o) => o.index == e))
+        .map((e) => messageRemoved.options!.firstWhere((o) => o.index == e))
         .map((e) => e.display)
         .join(', ');
 
     return QuizMessageEntity(
+      ref: messageRemoved.ref,
       content: display,
       type: QuizMessageType.displayTextResponse,
     );
@@ -171,22 +181,24 @@ abstract class _QuizControllerBase with Store {
     if (state.quizSession?.isFinished ?? true) {
       _updateAppStates(
         state,
-        (_) => AppNavigator.popAndPush(AppRoute(state.quizSession.endScreen)),
+        (_) => AppNavigator.popAndPush(AppRoute(state.quizSession!.endScreen!)),
       );
       return;
     }
 
-    _sessionId = state.quizSession.sessionId;
+    _sessionId = state.quizSession!.sessionId;
 
-    if (state?.quizSession?.currentMessage != null) {
-      messages.insertAll(0, state.quizSession.currentMessage.reversed);
+    if (state.quizSession?.currentMessage != null) {
+      messages.insertAll(0, state.quizSession!.currentMessage!.reversed);
     }
 
     _parseUserReply(messages);
   }
 
-  Future<void> _updateAppStates(AppStateEntity appStateEntity,
-      void onUpdate(AppStateEntity appState)) async {
+  Future<void> _updateAppStates(
+    AppStateEntity appStateEntity,
+    void Function(AppStateEntity appState) onUpdate,
+  ) async {
     final appState = await _appStateUseCase.check();
     appState.fold(
       (_) => {},
@@ -197,13 +209,13 @@ abstract class _QuizControllerBase with Store {
   void _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
       case InternetConnectionFailure:
-        _setErrorMessage(ERROR_INTERNET_CONNECTION_FAILURE);
+        errorMessage = errorInternetConnectionFailure;
         break;
       case ServerFailure:
-        _setErrorMessage(ERROR_SERVER_FAILURE);
+        errorMessage = errorServerFailure;
         break;
       case ServerSideFormFieldValidationFailure:
-        _mapFailureToFields(failure);
+        _mapFailureToFields(failure as ServerSideFormFieldValidationFailure);
         break;
       default:
         throw UnsupportedError;
@@ -211,10 +223,6 @@ abstract class _QuizControllerBase with Store {
   }
 
   void _mapFailureToFields(ServerSideFormFieldValidationFailure failure) {
-    _setErrorMessage(failure.message);
-  }
-
-  void _setErrorMessage(String message) {
-    errorMessage = message;
+    errorMessage = failure.message;
   }
 }

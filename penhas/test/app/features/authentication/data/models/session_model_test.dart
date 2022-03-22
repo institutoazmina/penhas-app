@@ -5,7 +5,9 @@ import 'package:penhas/app/features/authentication/domain/entities/session_entit
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  final sessionModel = SessionModel(sessionToken: 'my_strong_session_token');
+  const sessionModel = SessionModel(
+    sessionToken: 'my_strong_session_token',
+  );
 
   group('SessionModel', () {
     test('should be a subclass of SessionEntity', () {

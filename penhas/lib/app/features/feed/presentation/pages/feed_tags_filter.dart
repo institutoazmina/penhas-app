@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:meta/meta.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class FeedTagsFilter extends StatelessWidget {
-  final void Function() reloadFeed;
-
   const FeedTagsFilter({
-    Key key,
-    @required this.reloadFeed,
+    Key? key,
+    required this.reloadFeed,
   }) : super(key: key);
+
+  final void Function() reloadFeed;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class FeedTagsFilter extends StatelessWidget {
         onPressed: () async {
           Modular.to.pushNamed('/mainboard/tags').then(
             (reload) {
-              if (reload ?? false) {
+              if (reload == true) {
                 reloadFeed();
               }
             },
@@ -33,7 +32,7 @@ class FeedTagsFilter extends StatelessWidget {
         shape: kButtonShapeOutlinePurple,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
+          children: const <Widget>[
             Icon(
               Icons.filter_list,
               color: DesignSystemColors.ligthPurple,

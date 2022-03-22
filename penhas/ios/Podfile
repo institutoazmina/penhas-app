@@ -1,5 +1,7 @@
-# Uncomment this line to define a global platform for your project
-platform :ios, '10.0'
+# Define a global platform for project
+$iphoneosDeploymentTarget = '10.0'
+
+platform :ios, $iphoneosDeploymentTarget
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -48,9 +50,7 @@ def xcode_build_libraries_settings(target)
     config.build_settings['ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES'] = '$(inherited)'
 
     # corrigindo a tonelada de warning criado pelo XCode 12
-    if config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_f < 9.3
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.3'
-    end
+    config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iphoneosDeploymentTarget
   end
 end
 
@@ -67,13 +67,13 @@ def setup_app_permission(target)
       ## dart: PermissionGroup.camera
       'PERMISSION_CAMERA=0',
       ## dart: PermissionGroup.microphone
-      # 'PERMISSION_MICROPHONE=0',
+      'PERMISSION_MICROPHONE=1',
       ## dart: PermissionGroup.speech
       'PERMISSION_SPEECH_RECOGNIZER=0',
       ## dart: PermissionGroup.photos
       'PERMISSION_PHOTOS=0',
       ## dart: [PermissionGroup.location, PermissionGroup.locationAlways, PermissionGroup.locationWhenInUse]
-      # 'PERMISSION_LOCATION=0',
+      'PERMISSION_LOCATION=1',
       ## dart: PermissionGroup.notification
       'PERMISSION_NOTIFICATIONS=0',
       ## dart: PermissionGroup.mediaLibrary

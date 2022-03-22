@@ -7,36 +7,31 @@ import '../../../../../utils/json_util.dart';
 
 void main() {
   AppStateModel appStateModel;
-  UserProfileModel userProfile;
+  UserProfileModel? userProfile;
   setUp(() {
     userProfile = UserProfileModel(
       nickname: 'maria',
       email: 'email@valid.com',
       avatar: 'https://api.com/avatar/padrao.svg',
-      anonymousModeEnabled: false,
-      stealthModeEnabled: false,
       birthdate: DateTime(1980, 3, 3),
       fullName: 'Fulana da Silva',
-      race: "pardo",
-      genre: "Feminino",
-      jaFoiVitimaDeViolencia: false,
-      minibio: null,
-      skill: null,
+      race: 'pardo',
+      genre: 'Feminino',
     );
   });
 
   group('AppStateModel', () {
     test('should be a subclass of AppStateEntity', () async {
       // arrange
-      final session = QuizSessionEntity(
+      const session = QuizSessionEntity(
           currentMessage: [],
-          sessionId: "1",
+          sessionId: '1',
           endScreen: 'home',
-          isFinished: false);
-      final appMode = AppStateModeEntity(
-        hasActivedGuardian: false,
+          isFinished: false,);
+      const appMode = AppStateModeEntity(
+        
       );
-      final modes = List<AppStateModuleEntity>();
+      final List<AppStateModuleEntity> modes = [];
       // act
       appStateModel = AppStateModel(session, userProfile, appMode, modes);
       // assert
@@ -45,93 +40,93 @@ void main() {
 
     List<QuizMessageEntity> _currentMessage() {
       return [
-        QuizMessageEntity(
+        const QuizMessageEntity(
           content:
-              "Olá, eu sou a Assistente PenhaS ☺️ e vou te ajudar a conhecer o aplicativo 🤳",
+              'Olá, eu sou a Assistente PenhaS ☺️ e vou te ajudar a conhecer o aplicativo 🤳',
           type: QuizMessageType.displayText,
-          style: "normal",
+          style: 'normal',
         ),
-        QuizMessageEntity(
+        const QuizMessageEntity(
           content:
-              "Vou começar com algumas perguntas, para saber melhor como te ajudar",
+              'Vou começar com algumas perguntas, para saber melhor como te ajudar',
           type: QuizMessageType.displayText,
-          style: "normal",
+          style: 'normal',
         ),
-        QuizMessageEntity(
-          content: "Atualmente, você está em um relacionamento amoroso?",
+        const QuizMessageEntity(
+          content: 'Atualmente, você está em um relacionamento amoroso?',
           type: QuizMessageType.yesno,
-          ref: "YN1",
+          ref: 'YN1',
         ),
       ];
     }
 
     List<QuizMessageEntity> _currentMessageWithPrevious() {
       return [
-        QuizMessageEntity(
+        const QuizMessageEntity(
           content:
-              "Olá, eu sou a Assistente PenhaS ☺️ e vou te ajudar a conhecer o aplicativo 🤳",
+              'Olá, eu sou a Assistente PenhaS ☺️ e vou te ajudar a conhecer o aplicativo 🤳',
           type: QuizMessageType.displayText,
-          style: "normal",
+          style: 'normal',
         ),
-        QuizMessageEntity(
+        const QuizMessageEntity(
           content:
-              "Vou começar com algumas perguntas, para saber melhor como te ajudar",
+              'Vou começar com algumas perguntas, para saber melhor como te ajudar',
           type: QuizMessageType.displayText,
-          style: "normal",
+          style: 'normal',
         ),
-        QuizMessageEntity(
-          content: "Atualmente, você está em um relacionamento amoroso?",
+        const QuizMessageEntity(
+          content: 'Atualmente, você está em um relacionamento amoroso?',
           type: QuizMessageType.displayText,
-          style: "normal",
+          style: 'normal',
         ),
-        QuizMessageEntity(
-          content: "Sim",
+        const QuizMessageEntity(
+          content: 'Sim',
           type: QuizMessageType.displayTextResponse,
-          style: "normal",
+          style: 'normal',
         ),
-        QuizMessageEntity(
+        const QuizMessageEntity(
           content:
-              "Você acredita que tem uma relação saudável com o seu parceiro ou parceira?",
+              'Você acredita que tem uma relação saudável com o seu parceiro ou parceira?',
           type: QuizMessageType.yesno,
-          ref: "YN3",
+          ref: 'YN3',
         ),
       ];
     }
 
     List<QuizMessageEntity> _currentMessageWithMultipleChoices() {
       return [
-        QuizMessageEntity(
+        const QuizMessageEntity(
             content:
-                "Que tal nos contar um pouco como você acha que pode ajudar outras mulheres? Suas opções ficarão visíveis para as outras usuárias",
+                'Que tal nos contar um pouco como você acha que pode ajudar outras mulheres? Suas opções ficarão visíveis para as outras usuárias',
             type: QuizMessageType.multipleChoices,
-            ref: "MC7",
+            ref: 'MC7',
             options: [
               QuizMessageMultiplechoicesOptions(
-                  index: '0', display: 'Escuta acolhedora'),
+                  index: '0', display: 'Escuta acolhedora',),
               QuizMessageMultiplechoicesOptions(
-                  index: '1', display: 'Psicologia'),
+                  index: '1', display: 'Psicologia',),
               QuizMessageMultiplechoicesOptions(index: '2', display: 'Abrigo'),
-            ]),
+            ],),
       ];
     }
 
     List<QuizMessageEntity> _currentMessageWithTutorialStealth() {
       return [
-        QuizMessageEntity(
+        const QuizMessageEntity(
           content:
-              "Fulana da Silva, pelas suas respostas avalio que você está em situação de risco ⚠️",
+              'Fulana da Silva, pelas suas respostas avalio que você está em situação de risco ⚠️',
           type: QuizMessageType.displayText,
-          style: "normal",
+          style: 'normal',
         ),
-        QuizMessageEntity(
+        const QuizMessageEntity(
           content:
-              "Para garantir sua segurança, nenhuma outra usuária do PenhaS saberá sua identidade e você terá um perfil anônimo 👭",
+              'Para garantir sua segurança, nenhuma outra usuária do PenhaS saberá sua identidade e você terá um perfil anônimo 👭',
           type: QuizMessageType.displayText,
-          style: "normal",
+          style: 'normal',
         ),
-        QuizMessageEntity(
+        const QuizMessageEntity(
           content:
-              "Também recomendamos que você utilize o PenhaS com o <b>Modo Camuflado ativado<\/b>. Isso criará um disfarce para o app. Veja como funciona",
+              'Também recomendamos que você utilize o PenhaS com o <b>Modo Camuflado ativado</b>. Isso criará um disfarce para o app. Veja como funciona',
           type: QuizMessageType.showStealthTutorial,
           action: 'botao_tela_modo_camuflado',
           buttonLabel: 'Ver',
@@ -142,7 +137,7 @@ void main() {
 
     List<QuizMessageEntity> _currentMessageWithSingleButton() {
       return [
-        QuizMessageEntity(
+        const QuizMessageEntity(
           content:
               'Lindo 💜 Obrigada! Assim você nos ajuda a construir um ambiente em que mais mulheres se sintam mais seguras 🤗',
           type: QuizMessageType.button,
@@ -155,9 +150,9 @@ void main() {
 
     List<AppStateModuleEntity> _currentModules() {
       return [
-        AppStateModuleEntity(code: 'modo_anonimo', meta: '{}'),
-        AppStateModuleEntity(code: 'modo_seguranca', meta: '{"numero":"000"}'),
-        AppStateModuleEntity(code: 'modo_camuflado', meta: '{}'),
+        const AppStateModuleEntity(code: 'modo_anonimo', meta: '{}'),
+        const AppStateModuleEntity(code: 'modo_seguranca', meta: '{"numero":"000"}'),
+        const AppStateModuleEntity(code: 'modo_camuflado', meta: '{}'),
       ];
     }
 
@@ -169,11 +164,11 @@ void main() {
       final List<QuizMessageEntity> currentMessage = _currentMessage();
       final QuizSessionEntity quizSession = QuizSessionEntity(
         currentMessage: currentMessage,
-        sessionId: "200",
+        sessionId: '200',
         endScreen: null,
         isFinished: false,
       );
-      final appMode = AppStateModeEntity(
+      const appMode = AppStateModeEntity(
         hasActivedGuardian: true,
       );
       final modules = _currentModules();
@@ -194,17 +189,17 @@ void main() {
         () async {
       // arrange
       final jsonData = await JsonUtil.getJson(
-          from: 'profile/quiz_session_response_with_previous_message.json');
+          from: 'profile/quiz_session_response_with_previous_message.json',);
       final List<QuizMessageEntity> currentMessage =
           _currentMessageWithPrevious();
       final QuizSessionEntity quizSession = QuizSessionEntity(
         currentMessage: currentMessage,
-        sessionId: "247",
+        sessionId: '247',
         endScreen: null,
         isFinished: false,
       );
-      final appMode = AppStateModeEntity(
-        hasActivedGuardian: false,
+      const appMode = AppStateModeEntity(
+        
       );
       final modules = _currentModules();
       final userProfile = UserProfileModel(
@@ -212,14 +207,10 @@ void main() {
         email: 'email@valid.com',
         avatar: 'https://api.com/avatar/padrao.svg',
         anonymousModeEnabled: true,
-        stealthModeEnabled: false,
         birthdate: DateTime(1980, 3, 3),
         fullName: 'Fulana da Silva',
-        race: "pardo",
-        genre: "Feminino",
-        jaFoiVitimaDeViolencia: false,
-        minibio: null,
-        skill: null,
+        race: 'pardo',
+        genre: 'Feminino',
       );
       final AppStateEntity expected = AppStateModel(
         quizSession,
@@ -237,32 +228,28 @@ void main() {
         () async {
       // arrange
       final jsonData = await JsonUtil.getJson(
-          from: 'profile/quiz_session_resonse_multiple_choices.json');
+          from: 'profile/quiz_session_resonse_multiple_choices.json',);
       final List<QuizMessageEntity> currentMessage =
           _currentMessageWithMultipleChoices();
       final QuizSessionEntity quizSession = QuizSessionEntity(
         currentMessage: currentMessage,
-        sessionId: "255",
+        sessionId: '255',
         endScreen: null,
         isFinished: false,
       );
-      final appMode = AppStateModeEntity(
-        hasActivedGuardian: false,
+      const appMode = AppStateModeEntity(
+        
       );
       final modules = _currentModules();
       final userProfile = UserProfileModel(
         nickname: 'maria',
         email: 'email@valid.com',
         avatar: 'https://api.com/avatar/padrao.svg',
-        anonymousModeEnabled: false,
         stealthModeEnabled: true,
         birthdate: DateTime(1980, 3, 3),
         fullName: 'Fulana da Silva',
-        race: "pardo",
-        genre: "Feminino",
-        jaFoiVitimaDeViolencia: false,
-        minibio: null,
-        skill: null,
+        race: 'pardo',
+        genre: 'Feminino',
       );
       final AppStateEntity expected = AppStateModel(
         quizSession,
@@ -279,16 +266,16 @@ void main() {
     test('should return a valid model with JSON with showTutorial', () async {
       // arrange
       final jsonData = await JsonUtil.getJson(
-          from: 'profile/quiz_session_response_stealth_mode.json');
+          from: 'profile/quiz_session_response_stealth_mode.json',);
       final List<QuizMessageEntity> currentMessage =
           _currentMessageWithTutorialStealth();
       final QuizSessionEntity quizSession = QuizSessionEntity(
         currentMessage: currentMessage,
-        sessionId: "200",
+        sessionId: '200',
         endScreen: null,
         isFinished: false,
       );
-      final appMode = AppStateModeEntity(
+      const appMode = AppStateModeEntity(
         hasActivedGuardian: true,
       );
       final modules = _currentModules();
@@ -307,17 +294,17 @@ void main() {
     test('should return a valid model with JSON with single button', () async {
       // arrange
       final jsonData = await JsonUtil.getJson(
-          from: 'profile/quiz_session_response_button_fim.json');
+          from: 'profile/quiz_session_response_button_fim.json',);
       final List<QuizMessageEntity> currentMessage =
           _currentMessageWithSingleButton();
       final QuizSessionEntity quizSession = QuizSessionEntity(
         currentMessage: currentMessage,
-        sessionId: "310",
+        sessionId: '310',
         endScreen: 'home',
         isFinished: true,
       );
-      final appMode = AppStateModeEntity(
-        hasActivedGuardian: false,
+      const appMode = AppStateModeEntity(
+        
       );
       final modules = _currentModules();
       final AppStateEntity expected = AppStateModel(

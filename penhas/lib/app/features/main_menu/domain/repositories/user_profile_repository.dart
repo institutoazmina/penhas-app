@@ -1,39 +1,41 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
-import 'package:meta/meta.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_exception_to_failure.dart';
 import 'package:penhas/app/features/main_menu/data/model/account_preference_model.dart';
+import 'package:penhas/app/shared/logger/log.dart';
 
 abstract class IUserProfileRepository {
-  Future<Either<Failure, ValidField>> stealthMode({@required bool toggle});
-  Future<Either<Failure, ValidField>> anonymousMode({@required bool toggle});
+  Future<Either<Failure, ValidField>> stealthMode({required bool toggle});
+  Future<Either<Failure, ValidField>> anonymousMode({required bool toggle});
   Future<Either<Failure, ValidField>> deleteNotice();
-  Future<Either<Failure, ValidField>> delete({@required String password});
-  Future<Either<Failure, ValidField>> reactivate({@required String token});
+  Future<Either<Failure, ValidField>> delete({required String password});
+  Future<Either<Failure, ValidField>> reactivate({required String? token});
   Future<Either<Failure, AccountPreferenceSessionModel>> preferences();
   Future<Either<Failure, AccountPreferenceSessionModel>> updatePreferences({
-    @required String key,
-    @required bool status,
+    required String key,
+    required bool status,
   });
 }
 
 class UserProfileRepository implements IUserProfileRepository {
+  UserProfileRepository({
+    required IApiProvider apiProvider,
+    required IApiServerConfigure serverConfiguration,
+  })  : _apiProvider = apiProvider,
+        _serverConfiguration = serverConfiguration;
+
   final IApiProvider _apiProvider;
   final IApiServerConfigure _serverConfiguration;
 
-  UserProfileRepository({
-    @required IApiProvider apiProvider,
-    @required IApiServerConfigure serverConfiguration,
-  })  : this._apiProvider = apiProvider,
-        this._serverConfiguration = serverConfiguration;
-
   @override
-  Future<Either<Failure, ValidField>> stealthMode({bool toggle}) async {
+  Future<Either<Failure, ValidField>> stealthMode({
+    required bool toggle,
+  }) async {
     final endPoint = ['me', 'modo-camuflado-toggle'].join('/');
     final parameters = {'active': toggle ? '1' : '0'};
 
@@ -42,13 +44,16 @@ class UserProfileRepository implements IUserProfileRepository {
           .post(path: endPoint, parameters: parameters)
           .parseValidField();
       return right(response);
-    } catch (error) {
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
 
   @override
-  Future<Either<Failure, ValidField>> anonymousMode({bool toggle}) async {
+  Future<Either<Failure, ValidField>> anonymousMode({
+    required bool toggle,
+  }) async {
     final endPoint = ['me', 'modo-anonimo-toggle'].join('/');
     final parameters = {'active': toggle ? '1' : '0'};
 
@@ -57,15 +62,17 @@ class UserProfileRepository implements IUserProfileRepository {
           .post(path: endPoint, parameters: parameters)
           .parseValidField();
       return right(response);
-    } catch (error) {
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
 
   @override
-  Future<Either<Failure, ValidField>> delete(
-      {@required String password}) async {
-    final endPoint = '/me';
+  Future<Either<Failure, ValidField>> delete({
+    required String password,
+  }) async {
+    const endPoint = '/me';
 
     final parameters = {
       'senha_atual': password,
@@ -74,8 +81,9 @@ class UserProfileRepository implements IUserProfileRepository {
 
     try {
       await _apiProvider.delete(path: endPoint, parameters: parameters);
-      return right(ValidField());
-    } catch (error) {
+      return right(const ValidField());
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -87,15 +95,17 @@ class UserProfileRepository implements IUserProfileRepository {
     try {
       final response = await _apiProvider.get(path: endPoint).parseValidField();
       return right(response);
-    } catch (error) {
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
 
   @override
-  Future<Either<Failure, ValidField>> reactivate(
-      {@required String token}) async {
-    final endPoint = '/reactivate';
+  Future<Either<Failure, ValidField>> reactivate({
+    required String? token,
+  }) async {
+    const endPoint = '/reactivate';
 
     final parameters = {
       'app_version': await _serverConfiguration.userAgent,
@@ -105,38 +115,43 @@ class UserProfileRepository implements IUserProfileRepository {
     try {
       await _apiProvider.post(path: endPoint, parameters: parameters);
       return right(ValidField(message: token));
-    } catch (error) {
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
 
   @override
   Future<Either<Failure, AccountPreferenceSessionModel>> preferences() async {
-    final endPoint = '/me/preferences';
+    const endPoint = '/me/preferences';
 
     try {
       final data = await _apiProvider.get(path: endPoint);
-      final jsonData = jsonDecode(data) as Map<String, Object>;
+      final jsonData = jsonDecode(data) as Map<String, dynamic>;
       final session = AccountPreferenceSessionModel.fromJson(jsonData);
       return right(session);
-    } catch (error) {
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
 
   @override
-  Future<Either<Failure, AccountPreferenceSessionModel>> updatePreferences(
-      {String key, bool status}) async {
-    final endPoint = '/me/preferences';
-    final parameters = {key: status ? "1" : "0"};
+  Future<Either<Failure, AccountPreferenceSessionModel>> updatePreferences({
+    required String key,
+    required bool status,
+  }) async {
+    const endPoint = '/me/preferences';
+    final parameters = {key: status ? '1' : '0'};
 
     try {
       final data =
           await _apiProvider.post(path: endPoint, parameters: parameters);
-      final jsonData = jsonDecode(data) as Map<String, Object>;
+      final jsonData = jsonDecode(data) as Map<String, dynamic>;
       final session = AccountPreferenceSessionModel.fromJson(jsonData);
       return right(session);
-    } catch (error) {
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }

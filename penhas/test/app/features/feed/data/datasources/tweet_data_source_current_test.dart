@@ -1,27 +1,22 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
-import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_session_model.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
 
+import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
-class MockHttpClient extends Mock implements http.Client {}
-
-class MockApiServerConfigure extends Mock implements IApiServerConfigure {}
-
 void main() {
-  MockHttpClient apiClient;
-  ITweetDataSource dataSource;
-  MockApiServerConfigure serverConfigure;
-  Uri serverEndpoint;
-  const String SESSSION_TOKEN = 'my_really.long.JWT';
+  late final MockHttpClient apiClient = MockHttpClient();
+  late ITweetDataSource dataSource;
+  late final MockIApiServerConfigure serverConfigure =
+      MockIApiServerConfigure();
+  Uri? serverEndpoint;
+  const String sessionToken = 'my_really.long.JWT';
 
-  setUp(() async {
-    apiClient = MockHttpClient();
-    serverConfigure = MockApiServerConfigure();
+  setUp(() {
     serverEndpoint = Uri.https('api.anyserver.io', '/');
     dataSource = TweetDataSource(
       apiClient: apiClient,
@@ -29,17 +24,17 @@ void main() {
     );
 
     // MockApiServerConfigure configuration
-    when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
+    when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint!);
     when(serverConfigure.apiToken)
-        .thenAnswer((_) => Future.value(SESSSION_TOKEN));
+        .thenAnswer((_) => Future.value(sessionToken));
     when(serverConfigure.userAgent)
-        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
+        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
     final userAgent = await serverConfigure.userAgent;
     return {
-      'X-Api-Key': SESSSION_TOKEN,
+      'X-Api-Key': sessionToken,
       'User-Agent': userAgent,
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
     };
@@ -47,24 +42,26 @@ void main() {
 
   Uri _setuHttpRequest(String path, Map<String, String> queryParameters) {
     return Uri(
-      scheme: serverEndpoint.scheme,
-      host: serverEndpoint.host,
+      scheme: serverEndpoint!.scheme,
+      host: serverEndpoint!.host,
       path: path,
       queryParameters: queryParameters.isEmpty ? null : queryParameters,
     );
   }
 
   PostExpectation<Future<http.Response>> _mockGetRequest() {
-    return when(apiClient.get(
-      any,
-      headers: anyNamed('headers'),
-    ));
+    return when(
+      apiClient.get(
+        any,
+        headers: anyNamed('headers'),
+      ),
+    );
   }
 
-  void _setUpMockGetHttpClientSuccess200(String bodyContent) {
+  void _setUpMockGetHttpClientSuccess200(String? bodyContent) {
     _mockGetRequest().thenAnswer(
       (_) async => http.Response(
-        bodyContent,
+        bodyContent!,
         200,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
@@ -75,10 +72,10 @@ void main() {
 
   group('FeedDataSource', () {
     group('current()', () {
-      String bodyContent;
-      TweetEngageRequestOption requestOption;
+      String? bodyContent;
+      TweetEngageRequestOption? requestOption;
 
-      setUp(() async {
+      setUp(() {
         bodyContent =
             JsonUtil.getStringSync(from: 'feed/tweet_current_response.json');
         requestOption = TweetEngageRequestOption(tweetId: '200608T1545460001');
@@ -86,7 +83,7 @@ void main() {
 
       test('should perform a GET with X-API-Key', () async {
         // arrange
-        final endPointPath = '/timeline';
+        const endPointPath = '/timeline';
         final queryParameters = {
           'id': '200608T1545460001',
         };

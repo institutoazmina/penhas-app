@@ -1,7 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -22,11 +20,11 @@ part 'help_center_controller.g.dart';
 class HelpCenterController extends _HelpCenterControllerBase
     with _$HelpCenterController {
   HelpCenterController({
-    @required IGuardianRepository guardianRepository,
-    @required ILocationServices locationService,
-    @required IAppConfiguration appConfiguration,
-    @required SecurityModeActionFeature featureToogle,
-    @required IAudioRecordServices audioServices,
+    required IGuardianRepository guardianRepository,
+    required ILocationServices locationService,
+    required IAppConfiguration appConfiguration,
+    required SecurityModeActionFeature featureToogle,
+    required IAudioRecordServices audioServices,
   }) : super(
           guardianRepository,
           locationService,
@@ -37,12 +35,6 @@ class HelpCenterController extends _HelpCenterControllerBase
 }
 
 abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
-  final IGuardianRepository _guardianRepository;
-  final ILocationServices _locationService;
-  final IAppConfiguration _appConfiguration;
-  final SecurityModeActionFeature _featureToogle;
-  final IAudioRecordServices _audioServices;
-
   _HelpCenterControllerBase(
     this._guardianRepository,
     this._locationService,
@@ -51,26 +43,32 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
     this._audioServices,
   );
 
-  @observable
-  ObservableFuture<Either<Failure, AlertModel>> _alertProgress;
+  final IGuardianRepository _guardianRepository;
+  final ILocationServices _locationService;
+  final IAppConfiguration _appConfiguration;
+  final SecurityModeActionFeature _featureToogle;
+  final IAudioRecordServices _audioServices;
 
   @observable
-  HelpCenterState alertState = HelpCenterState.initial();
+  ObservableFuture<Either<Failure, AlertModel>>? _alertProgress;
+
+  @observable
+  HelpCenterState alertState = const HelpCenterState.initial();
 
   @observable
   bool isLocationPermissionRequired = false;
 
   @observable
-  String errorMessage = '';
+  String? errorMessage = '';
 
   @computed
   PageProgressState get loadState {
     if (_alertProgress == null ||
-        _alertProgress.status == FutureStatus.rejected) {
+        _alertProgress!.status == FutureStatus.rejected) {
       return PageProgressState.initial;
     }
 
-    return _alertProgress.status == FutureStatus.pending
+    return _alertProgress!.status == FutureStatus.pending
         ? PageProgressState.loading
         : PageProgressState.loaded;
   }
@@ -98,10 +96,11 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   Future<void> triggerGuardian() async {
     _locationService
         .requestPermission(
-            title: 'O guardião precisa da sua localização',
-            description: RequestLocationPermissionContentWidget())
+      title: 'O guardião precisa da sua localização',
+      description: RequestLocationPermissionContentWidget(),
+    )
         .then((value) {
-      _setErrorMessage('');
+      errorMessage = '';
       _resetAlertState();
       _getCurrentLocatin()
           .then((location) => _triggerGuardian(location))
@@ -111,7 +110,7 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> triggerCallPolice() async {
-    _setErrorMessage('');
+    errorMessage = '';
     _resetAlertState();
     _featureToogle.callingNumber
         .then((number) => alertState = HelpCenterState.callingPolice(number))
@@ -120,7 +119,7 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> triggerAudioRecord() async {
-    _setErrorMessage('');
+    errorMessage = '';
     _resetAlertState();
     await _audioServices.requestPermission().then(
           (value) => {
@@ -128,8 +127,8 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
               granted: () => Modular.to
                   .pushNamed('/mainboard/helpcenter/audioRecord')
                   .then((value) {
-                if (value) {
-                  _setErrorMessage("Gravação finalizada.");
+                if (value == true) {
+                  errorMessage = 'Gravação finalizada.';
                 }
               }),
               orElse: () {},
@@ -155,12 +154,12 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   Future<UserLocationEntity> _getCurrentLocatin() async {
     return _locationService
         .currentLocation()
-        .then((v) => v.getOrElse(() => UserLocationEntity()));
+        .then((v) => v.getOrElse(() => const UserLocationEntity())!);
   }
 
   Future<HelpCenterState> _triggerGuardian(UserLocationEntity location) async {
     _alertProgress = ObservableFuture(_guardianRepository.alert(location));
-    final result = await _alertProgress;
+    final Either<Failure, AlertModel> result = await _alertProgress!;
 
     return result.fold(
       (failure) => _parseFailure(failure),
@@ -175,21 +174,18 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
   }
 
   HelpCenterState _parseFailure(Failure failure) {
-    final state = HelpCenterState.initial();
+    const state = HelpCenterState.initial();
     if (failure is GuardianAlertGpsFailure) {
       return state;
     }
 
-    _setErrorMessage(mapFailureMessage(failure));
+    errorMessage = mapFailureMessage(failure);
     return state;
   }
 
   Future<bool> _hasActivedGuardian() {
-    return _appConfiguration.appMode
-        .then((mode) => mode?.hasActivedGuardian ?? false);
+    return _appConfiguration.appMode.then((mode) => mode.hasActivedGuardian);
   }
 
-  void _setErrorMessage(String message) => errorMessage = message;
-
-  void _resetAlertState() => alertState = HelpCenterState.initial();
+  void _resetAlertState() => alertState = const HelpCenterState.initial();
 }

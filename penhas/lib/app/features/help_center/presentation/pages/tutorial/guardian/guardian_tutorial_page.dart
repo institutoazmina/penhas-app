@@ -4,42 +4,44 @@ import 'package:penhas/app/core/pages/tutorial_page_view_widget.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class GuardianTutorialPage extends StatefulWidget {
-  GuardianTutorialPage({Key key}) : super(key: key);
+  const GuardianTutorialPage({Key? key}) : super(key: key);
 
   @override
   _GuardianTutorialPageState createState() => _GuardianTutorialPageState();
 }
 
 class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
-  List<TutorialPageViewWidget> _contentPageView = [
+  final List<TutorialPageViewWidget> _contentPageView = [
     TutorialPageViewWidget(
       description:
           'Guardiões são pessoas de sua confiança que você cadastra para te ajudar em situações de perigo.\n\nSeus guardiões não precisam ser usuários do PenhaS, pode ser qualquer pessoa desde que ela aceite o convite que será disparado para o número de telefone dela.',
       bodyWidget: SizedBox(
+        height: 270,
         child: SvgPicture.asset(
           'assets/images/svg/tutorial/tutorial_guardian_01.svg',
         ),
-        height: 270,
       ),
     ),
-    TutorialPageViewWidget(
+    const TutorialPageViewWidget(
       description:
           'Use o alerta de guardiões quando estiver em situação de violência. Eles receberão um aviso de que você está em risco com informações da sua localização.',
       bodyWidget: Image(
         image: AssetImage(
-            'assets/images/tutorial_guardian_3/tutorial_guardian_3.png'),
+          'assets/images/tutorial_guardian_3/tutorial_guardian_3.png',
+        ),
         width: 270,
         height: 270,
         fit: BoxFit.fitWidth,
         alignment: FractionalOffset.topCenter,
       ),
     ),
-    TutorialPageViewWidget(
+    const TutorialPageViewWidget(
       description:
           'Em situações de emergência, abra o app, clique e segure no símbolo do seu signo para acionar o botão de pânico. Isso enviará um alerta para seus guardiões e durante 15 minutos um áudio será gravado.',
       bodyWidget: Image(
         image: AssetImage(
-            'assets/images/tutorial_guardian_2/tutorial_guardian_2.png'),
+          'assets/images/tutorial_guardian_2/tutorial_guardian_2.png',
+        ),
         width: 250,
         height: 270,
         fit: BoxFit.fitWidth,
@@ -47,7 +49,7 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
       ),
     ),
   ];
-  final PageController _pageController = PageController(initialPage: 0);
+  final PageController _pageController = PageController();
   int _currentPage = 0;
 
   @override
@@ -55,14 +57,15 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
     return Scaffold(
       backgroundColor: DesignSystemColors.charcoalGrey,
       appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          leading: IconButton(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            icon: Icon(Icons.cancel),
-            onPressed: () => Navigator.of(context).pop(),
-          )),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        leading: IconButton(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          icon: const Icon(Icons.cancel),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(
@@ -73,20 +76,23 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
             children: <Widget>[
               Expanded(
                 child: PageView(
-                  physics: ClampingScrollPhysics(),
-                  children: _contentPageView,
+                  physics: const ClampingScrollPhysics(),
                   controller: _pageController,
                   onPageChanged: (int page) {
                     setState(() {
                       _currentPage = page;
                     });
                   },
+                  children: _contentPageView,
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.only(
-                    left: 12.0, right: 12.0, bottom: 12.0),
+                  left: 12.0,
+                  right: 12.0,
+                  bottom: 12.0,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -111,14 +117,14 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
         color: DesignSystemColors.ligthPurple,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        padding: EdgeInsets.all(0.0),
+        padding: EdgeInsets.zero,
         elevation: 0.0,
         onPressed: () {
           isLastPage ? _dispose() : _nextPage();
         },
         child: Text(
-          isLastPage ? "Entendi" : "Próximo",
-          style: TextStyle(
+          isLastPage ? 'Entendi' : 'Próximo',
+          style: const TextStyle(
             fontFamily: 'Lato',
             fontSize: 16.0,
             fontWeight: FontWeight.bold,
@@ -132,7 +138,7 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
 
   void _nextPage() {
     _pageController.nextPage(
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       curve: Curves.ease,
     );
   }
@@ -142,7 +148,7 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
   }
 
   List<Widget> _buildPageIndicator() {
-    List<Widget> list = [];
+    final List<Widget> list = [];
     for (int i = 0; i < _contentPageView.length; i++) {
       list.add(i == _currentPage ? _indicator(true) : _indicator(false));
     }
@@ -152,13 +158,14 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
 
   Widget _indicator(bool isActive) {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 150),
-      margin: EdgeInsets.symmetric(horizontal: 8.0),
+      duration: const Duration(milliseconds: 150),
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
       height: 10.0,
       width: isActive ? 24.0 : 10.0,
       decoration: BoxDecoration(
-          color: isActive ? Colors.white : DesignSystemColors.blueyGrey,
-          borderRadius: BorderRadius.all(Radius.circular(12))),
+        color: isActive ? Colors.white : DesignSystemColors.blueyGrey,
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
+      ),
     );
   }
 }

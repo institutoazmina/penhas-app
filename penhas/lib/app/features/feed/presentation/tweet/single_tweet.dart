@@ -1,34 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_avatar.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_body.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_bottom.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_title.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
 
 class SingleTweet extends StatelessWidget {
+  const SingleTweet({
+    Key? key,
+    required this.tweet,
+    required BuildContext context,
+    required this.controller,
+  })  : _context = context,
+        super(key: key);
+
   final TweetEntity tweet;
   final BuildContext _context;
   final ITweetController controller;
-
-  const SingleTweet({
-    Key key,
-    @required this.tweet,
-    @required BuildContext context,
-    @required this.controller,
-  })  : assert(context != null),
-        assert(controller != null),
-        this._context = context,
-        super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => controller.detail(tweet),
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
           boxShadow: [
@@ -46,9 +42,8 @@ class SingleTweet extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: TweetAvatar(tweet: tweet),
-                flex: 1,
               ),
-              SizedBox(width: 6.0),
+              const SizedBox(width: 6.0),
               Expanded(
                 flex: 5,
                 child: Column(

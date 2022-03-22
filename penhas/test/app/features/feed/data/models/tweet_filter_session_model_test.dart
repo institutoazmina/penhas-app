@@ -12,7 +12,7 @@ void main() {
   group('TweetFilterSessionModel', () {
     test('should be a subclass of TweetFilterSessionEntity', () async {
       // arrange
-      sessionModel = TweetFilterSessionModel(categories: [], tags: []);
+      sessionModel = const TweetFilterSessionModel(categories: [], tags: []);
       // assert
       expect(sessionModel, isA<TweetFilterSessionEntity>());
     });
@@ -21,24 +21,24 @@ void main() {
       // arrange
       final jsonData =
           await JsonUtil.getJson(from: 'feed/retrieve_fiters_tags.json');
-      final expected = TweetFilterSessionModel(categories: [
-        TweetFilterEntity(id: "all", isSelected: true, label: "Tudo"),
+      const expected = TweetFilterSessionModel(categories: [
+        TweetFilterEntity(id: 'all', isSelected: true, label: 'Tudo'),
         TweetFilterEntity(
-            id: "only_news", isSelected: false, label: "Apenas notícias"),
+            id: 'only_news', isSelected: false, label: 'Apenas notícias',),
         TweetFilterEntity(
-            id: "only_tweets", isSelected: false, label: "Apenas publicações"),
+            id: 'only_tweets', isSelected: false, label: 'Apenas publicações',),
         TweetFilterEntity(
-            id: "all_myself",
+            id: 'all_myself',
             isSelected: false,
-            label: "Minhas publicações e comentários"),
+            label: 'Minhas publicações e comentários',),
       ], tags: [
         TweetFilterEntity(
-            id: '371', label: "Direitos Humanos", isSelected: false),
+            id: '371', label: 'Direitos Humanos', isSelected: false,),
         TweetFilterEntity(
-            id: '370', label: "Elas no Congresso", isSelected: false),
+            id: '370', label: 'Elas no Congresso', isSelected: false,),
         TweetFilterEntity(
-            id: '375', label: "Violência doméstica", isSelected: false),
-      ]);
+            id: '375', label: 'Violência doméstica', isSelected: false,),
+      ],);
       // act
       final received = TweetFilterSessionModel.fromJson(jsonData);
       // assert

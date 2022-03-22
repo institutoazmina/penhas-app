@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:meta/meta.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_filter_preference_data_source.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_filter_session_entity.dart';
+import 'package:penhas/app/shared/logger/log.dart';
 
 abstract class ITweetFilterPreferenceRepository {
   Future<Either<Failure, TweetFilterSessionEntity>> retreive();
@@ -12,21 +12,22 @@ abstract class ITweetFilterPreferenceRepository {
 
 class TweetFilterPreferenceRepository
     implements ITweetFilterPreferenceRepository {
-  final INetworkInfo _networkInfo;
-  final ITweetFilterPreferenceDataSource _dataSource;
-
   TweetFilterPreferenceRepository({
-    @required INetworkInfo networkInfo,
-    @required ITweetFilterPreferenceDataSource dataSource,
-  })  : this._dataSource = dataSource,
-        this._networkInfo = networkInfo;
+    required INetworkInfo networkInfo,
+    required ITweetFilterPreferenceDataSource? dataSource,
+  })  : _dataSource = dataSource,
+        _networkInfo = networkInfo;
+
+  final INetworkInfo _networkInfo;
+  final ITweetFilterPreferenceDataSource? _dataSource;
 
   @override
   Future<Either<Failure, TweetFilterSessionEntity>> retreive() async {
     try {
-      final result = await _dataSource.fetch();
+      final result = await _dataSource!.fetch();
       return right(result);
-    } catch (e) {
+    } catch (e, stack) {
+      logError(e, stack);
       return left(await _handleError(e));
     }
   }
@@ -45,10 +46,10 @@ class TweetFilterPreferenceRepository
           error: error.bodyContent['error'],
           field: error.bodyContent['field'],
           reason: error.bodyContent['reason'],
-          message: error.bodyContent['message']);
+          message: error.bodyContent['message'],);
     }
 
-    if (error is ApiProviderSessionExpection) {
+    if (error is ApiProviderSessionError) {
       return ServerSideSessionFailed();
     }
 

@@ -7,16 +7,16 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class NotificationCardPage extends StatelessWidget {
-  final NotificationEntity notification;
-
-  const NotificationCardPage({Key key, @required this.notification})
+  const NotificationCardPage({Key? key, required this.notification})
       : super(key: key);
+
+  final NotificationEntity notification;
 
   @override
   Widget build(BuildContext context) {
     timeago.setLocaleMessages('pt_br', timeago.PtBrMessages());
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
             color: DesignSystemColors.pinkishGrey,
@@ -25,7 +25,7 @@ class NotificationCardPage extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          Modular.to.pushNamed(notification.route);
+          Modular.to.pushNamed(notification.route!);
         },
         child: Padding(
           padding: const EdgeInsets.all(18.0),
@@ -36,7 +36,7 @@ class NotificationCardPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SvgPicture.network(
-                    notification.icon,
+                    notification.icon!,
                     height: 24,
                     width: 24,
                   ),
@@ -44,13 +44,15 @@ class NotificationCardPage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     child: Column(
                       children: [
-                        Text(notification.name, style: titleTextStyle),
-                        Text(timeago.format(notification.time, locale: 'pt_br'),
-                            style: timeTextStyle),
+                        Text(notification.name!, style: titleTextStyle),
+                        Text(
+                          timeago.format(notification.time!, locale: 'pt_br'),
+                          style: timeTextStyle,
+                        ),
                       ],
                     ),
                   ),
-                  Text(notification.title, style: titleTextStyle),
+                  Text(notification.title!, style: titleTextStyle),
                 ],
               ),
               _notificationContent(notification.content),
@@ -61,14 +63,14 @@ class NotificationCardPage extends StatelessWidget {
     );
   }
 
-  Widget _notificationContent(String content) {
+  Widget _notificationContent(String? content) {
     if (content?.isEmpty ?? true) {
       return Container();
     }
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12.0),
       child: HtmlWidget(
-        notification.content,
+        notification.content!,
         webViewJs: false,
         textStyle: contentTextStyle,
       ),
@@ -77,21 +79,24 @@ class NotificationCardPage extends StatelessWidget {
 }
 
 extension _TextStyle on NotificationCardPage {
-  TextStyle get titleTextStyle => TextStyle(
-      color: DesignSystemColors.darkIndigoThree,
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      fontWeight: FontWeight.normal);
+  TextStyle get titleTextStyle => const TextStyle(
+        color: DesignSystemColors.darkIndigoThree,
+        fontFamily: 'Lato',
+        fontSize: 14.0,
+        fontWeight: FontWeight.normal,
+      );
 
-  TextStyle get timeTextStyle => TextStyle(
-      color: DesignSystemColors.warnGrey,
-      fontFamily: 'Lato',
-      fontSize: 12.0,
-      fontWeight: FontWeight.normal);
+  TextStyle get timeTextStyle => const TextStyle(
+        color: DesignSystemColors.warnGrey,
+        fontFamily: 'Lato',
+        fontSize: 12.0,
+        fontWeight: FontWeight.normal,
+      );
 
-  TextStyle get contentTextStyle => TextStyle(
-      color: DesignSystemColors.darkIndigoThree,
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      fontWeight: FontWeight.normal);
+  TextStyle get contentTextStyle => const TextStyle(
+        color: DesignSystemColors.darkIndigoThree,
+        fontFamily: 'Lato',
+        fontSize: 14.0,
+        fontWeight: FontWeight.normal,
+      );
 }

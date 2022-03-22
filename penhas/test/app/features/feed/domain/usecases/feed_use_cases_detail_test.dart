@@ -4,24 +4,18 @@ import 'package:mockito/mockito.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_request_option.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
-import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
 import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
-import 'package:penhas/app/features/feed/domain/usecases/tweet_filter_preference.dart';
 
-class MockTweetRepository extends Mock implements ITweetRepository {}
-
-class MockTweetFilterPreference extends Mock implements TweetFilterPreference {}
+import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  TweetEntity tweetRequest;
-  ITweetRepository repository;
-  TweetFilterPreference filterPreference;
+  late TweetEntity tweetRequest;
+  late final MockITweetRepository repository = MockITweetRepository();
+  late final MockTweetFilterPreference filterPreference = MockTweetFilterPreference();
 
-  int maxRowsPerRequest;
+  late int maxRowsPerRequest;
 
   setUp(() {
-    repository = MockTweetRepository();
-    filterPreference = MockTweetFilterPreference();
     maxRowsPerRequest = 2;
     tweetRequest = TweetEntity(
         id: 'id_1',
@@ -33,7 +27,7 @@ void main() {
         anonymous: false,
         content: 'content 1',
         avatar: 'https:/site.com/avatas.svg',
-        meta: TweetMeta(liked: false, owner: false));
+        meta: const TweetMeta(liked: false, owner: false),);
   });
 
   group('FeedUseCases', () {
@@ -44,15 +38,14 @@ void main() {
       verifyNoMoreInteractions(repository);
     });
     group('fetchTweetDetail', () {
-      TweetSessionEntity emptySession;
-      TweetSessionEntity firstSession;
+      TweetSessionEntity? emptySession;
+      TweetSessionEntity? firstSession;
 
       setUp(() {
-        emptySession = TweetSessionEntity(
+        emptySession = const TweetSessionEntity(
           nextPage: null,
           hasMore: false,
           orderBy: TweetSessionOrder.oldestFirst,
-          parent: null,
           tweets: [],
         );
 
@@ -60,19 +53,18 @@ void main() {
             nextPage: null,
             hasMore: false,
             orderBy: TweetSessionOrder.oldestFirst,
-            parent: null,
             tweets: [
               tweetRequest.copyWith(
                   id: 'id_5',
                   userName: 'user_2',
                   clientId: 2,
-                  content: 'reply 1')
-            ]);
+                  content: 'reply 1',)
+            ],);
       });
       test('should request with parent_id and after', () async {
         // arrange
         when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(emptySession));
+            .thenAnswer((_) async => right(emptySession!));
         // act
         final sut = FeedUseCases(
           repository: repository,
@@ -94,12 +86,12 @@ void main() {
       test('should get empty response if tweet does not have detail', () async {
         // arrange
         when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(emptySession));
+            .thenAnswer((_) async => right(emptySession!));
         final sut = FeedUseCases(
           repository: repository,
           filterPreference: filterPreference,
         );
-        final expected = right(FeedCache(tweets: []));
+        final expected = right(const FeedCache(tweets: []));
         // act
         final received = await sut.fetchTweetDetail(tweetRequest.id);
         // assert
@@ -108,7 +100,7 @@ void main() {
       test('should get a list of tweet from detail', () async {
         // arrange
         when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(firstSession));
+            .thenAnswer((_) async => right(firstSession!));
         final sut = FeedUseCases(
           repository: repository,
           filterPreference: filterPreference,
@@ -132,49 +124,47 @@ void main() {
       });
     });
     group('fetchNewestTweetDetail', () {
-      TweetSessionEntity firstSession;
-      TweetSessionEntity secondSession;
+      late TweetSessionEntity firstSession;
+      late TweetSessionEntity secondSession;
 
       setUp(() {
         firstSession = TweetSessionEntity(
             nextPage: null,
             hasMore: true,
             orderBy: TweetSessionOrder.oldestFirst,
-            parent: null,
             tweets: [
               tweetRequest.copyWith(
                   id: 'id_5',
                   createdAt: '1600-01-01 01:01:01',
                   userName: 'user_2',
                   clientId: 2,
-                  content: 'reply 1'),
+                  content: 'reply 1',),
               tweetRequest.copyWith(
                   id: 'id_6',
                   createdAt: '1600-02-02 02:02:02',
                   userName: 'user_2',
                   clientId: 2,
-                  content: 'reply 2'),
-            ]);
+                  content: 'reply 2',),
+            ],);
 
         secondSession = TweetSessionEntity(
             nextPage: null,
             hasMore: true,
             orderBy: TweetSessionOrder.oldestFirst,
-            parent: null,
             tweets: [
               tweetRequest.copyWith(
                   id: 'id_7',
                   userName: 'user_2',
                   createdAt: '1600-03-03 03:03:03',
                   clientId: 2,
-                  content: 'reply 3'),
+                  content: 'reply 3',),
               tweetRequest.copyWith(
                   id: 'id_8',
                   userName: 'user_2',
                   createdAt: '1600-04-04 04:04:04',
                   clientId: 2,
-                  content: 'reply 4'),
-            ]);
+                  content: 'reply 4',),
+            ],);
       });
       test('should request with parent_id and after of last tweet', () async {
         // arrange
@@ -223,26 +213,26 @@ void main() {
               createdAt: '1600-01-01 01:01:01',
               userName: 'user_2',
               clientId: 2,
-              content: 'reply 1'),
+              content: 'reply 1',),
           tweetRequest.copyWith(
               id: 'id_6',
               createdAt: '1600-02-02 02:02:02',
               userName: 'user_2',
               clientId: 2,
-              content: 'reply 2'),
+              content: 'reply 2',),
           tweetRequest.copyWith(
               id: 'id_7',
               createdAt: '1600-03-03 03:03:03',
               userName: 'user_2',
               clientId: 2,
-              content: 'reply 3'),
+              content: 'reply 3',),
           tweetRequest.copyWith(
               id: 'id_8',
               createdAt: '1600-04-04 04:04:04',
               userName: 'user_2',
               clientId: 2,
-              content: 'reply 4'),
-        ]));
+              content: 'reply 4',),
+        ],),);
         // act
         final received = await sut.fetchNewestTweetDetail(tweetRequest.id);
         // assert
@@ -260,12 +250,11 @@ void main() {
         await sut.fetchTweetDetail(tweetRequest.id);
         when(repository.fetch(option: anyNamed('option'))).thenAnswer(
           (_) async => right(
-            TweetSessionEntity(
+            const TweetSessionEntity(
                 nextPage: null,
                 hasMore: false,
                 orderBy: TweetSessionOrder.oldestFirst,
-                parent: null,
-                tweets: []),
+                tweets: [],),
           ),
         );
         final expected = right(FeedCache(tweets: [
@@ -274,14 +263,14 @@ void main() {
               createdAt: '1600-01-01 01:01:01',
               userName: 'user_2',
               clientId: 2,
-              content: 'reply 1'),
+              content: 'reply 1',),
           tweetRequest.copyWith(
               id: 'id_6',
               createdAt: '1600-02-02 02:02:02',
               userName: 'user_2',
               clientId: 2,
-              content: 'reply 2'),
-        ]));
+              content: 'reply 2',),
+        ],),);
         // act
         final received = await sut.fetchNewestTweetDetail(tweetRequest.id);
         // assert

@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
@@ -18,22 +17,22 @@ class SupportCenterLocationController
     extends _SupportCenterLocationControllerBase
     with _$SupportCenterLocationController {
   SupportCenterLocationController({
-    @required SupportCenterUseCase supportCenterUseCase,
+    required SupportCenterUseCase supportCenterUseCase,
   }) : super(supportCenterUseCase);
 }
 
 abstract class _SupportCenterLocationControllerBase
     with Store, MapFailureMessage {
-  final SupportCenterUseCase _supportCenterUseCase;
-  GeolocationEntity _selectedGeoLocation;
-
   _SupportCenterLocationControllerBase(this._supportCenterUseCase);
 
-  @observable
-  ObservableFuture<Either<Failure, GeolocationEntity>> _getGeoToken;
+  final SupportCenterUseCase _supportCenterUseCase;
+  GeolocationEntity? _selectedGeoLocation;
 
   @observable
-  SupportCenterLocationState state = SupportCenterLocationState.initial();
+  ObservableFuture<Either<Failure, GeolocationEntity>>? _getGeoToken;
+
+  @observable
+  SupportCenterLocationState state = const SupportCenterLocationState.initial();
 
   @computed
   PageProgressState get progressState {
@@ -42,7 +41,7 @@ abstract class _SupportCenterLocationControllerBase
 
   @action
   void setCep(String cep) {
-    Cep currentCep = Cep(cep);
+    final Cep currentCep = Cep(cep);
 
     if (currentCep.isValid) {
       getGeoToken(currentCep);
@@ -58,12 +57,12 @@ abstract class _SupportCenterLocationControllerBase
 
   @action
   Future<void> askForLocationPermission() async {
-    _supportCenterUseCase.updatedGeoLocation(GeolocationEntity());
+    _supportCenterUseCase.updatedGeoLocation(const GeolocationEntity());
 
     await _supportCenterUseCase.askForLocationPermission(
-      "Localização",
-      Text(
-        "Permintindo que a PenhaS tenha acesso a sua localização, será possivel apresentar os pontos de apoio mais próximo da onde você está.",
+      'Localização',
+      const Text(
+        'Permintindo que a PenhaS tenha acesso a sua localização, será possivel apresentar os pontos de apoio mais próximo da onde você está.',
         style: TextStyle(
           color: DesignSystemColors.darkIndigoThree,
           fontFamily: 'Lato',
@@ -82,7 +81,7 @@ extension _PrivateMethods on _SupportCenterLocationControllerBase {
   Future<void> getGeoToken(Cep cep) async {
     _getGeoToken = ObservableFuture(_supportCenterUseCase.mapGeoFromCep(cep));
 
-    final result = await _getGeoToken;
+    final Either<Failure, GeolocationEntity> result = await _getGeoToken!;
 
     result.fold(
       (failure) => handleFailure(failure),
@@ -90,7 +89,7 @@ extension _PrivateMethods on _SupportCenterLocationControllerBase {
     );
   }
 
-  PageProgressState monitorProgress(ObservableFuture<Object> observable) {
+  PageProgressState monitorProgress(ObservableFuture<Object>? observable) {
     if (observable == null || observable.status == FutureStatus.rejected) {
       return PageProgressState.initial;
     }
@@ -102,15 +101,15 @@ extension _PrivateMethods on _SupportCenterLocationControllerBase {
 
   void handleFailure(Failure failure) {
     if (failure is AddressFailure) {
-      state = SupportCenterLocationState.addressNotFound(failure.message);
+      state = SupportCenterLocationState.addressNotFound(failure.message!);
       return;
     }
 
-    state = SupportCenterLocationState.error(mapFailureMessage(failure));
+    state = SupportCenterLocationState.error(mapFailureMessage(failure)!);
   }
 
   void handleSuccessGeoToken(GeolocationEntity geolocation) {
     _selectedGeoLocation = geolocation;
-    state = SupportCenterLocationState.loaded(_selectedGeoLocation.label);
+    state = SupportCenterLocationState.loaded(_selectedGeoLocation!.label!);
   }
 }

@@ -5,19 +5,20 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ZodiacFellingPage extends StatelessWidget {
-  final IZodiac sign;
   const ZodiacFellingPage({
-    @required this.sign,
-    Key key,
+    required this.sign,
+    Key? key,
   }) : super(key: key);
+
+  final IZodiac sign;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 20),
+        const Padding(
+          padding: EdgeInsets.only(top: 20),
           child: Text(
             'Hoje estou me sentido:',
             style: kTextStyleZodiacFellingTitle,
@@ -27,14 +28,14 @@ class ZodiacFellingPage extends StatelessWidget {
           padding: const EdgeInsets.only(top: 20),
           child: Tags(
             spacing: 8.0,
-            symmetry: false,
             alignment: WrapAlignment.start,
             runAlignment: WrapAlignment.start,
             itemCount: sign.feeling.length,
             itemBuilder: (int index) {
               return Container(
-                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                decoration: BoxDecoration(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: const BoxDecoration(
                   color: DesignSystemColors.easterPurple,
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(14),

@@ -1,80 +1,78 @@
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_channel_entity.dart';
 import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
-
-import 'chat_channel_entity.dart';
 
 abstract class ChatMainTileEntity extends Equatable {}
 
 class ChatMainAssistantCardTile extends ChatMainTileEntity {
-  final List<ChatMainSupportTile> cards;
-
   ChatMainAssistantCardTile({
-    @required this.cards,
+    required this.cards,
   });
 
+  final List<ChatMainSupportTile> cards;
+
   @override
-  List<Object> get props => [cards];
+  List<Object?> get props => [cards];
 }
 
 class ChatMainSupportTile extends ChatMainTileEntity {
-  final String title;
-  final String content;
-  final ChatChannelEntity channel;
-  final QuizSessionEntity quizSession;
-
   ChatMainSupportTile({
-    @required this.title,
-    @required this.content,
+    required this.title,
+    required this.content,
     this.channel,
     this.quizSession,
   });
 
+  final String title;
+  final String content;
+  final ChatChannelEntity? channel;
+  final QuizSessionEntity? quizSession;
+
   @override
-  List<Object> get props => [title, content, channel, quizSession];
+  List<dynamic> get props => [title, content, channel, quizSession];
 }
 
 class ChatMainChannelHeaderTile extends ChatMainTileEntity {
-  final String title;
-
   ChatMainChannelHeaderTile({
-    @required this.title,
+    required this.title,
   });
 
+  final String title;
+
   @override
-  List<Object> get props => [title];
+  List<Object?> get props => [title];
 }
 
 class ChatMainChannelCardTile extends ChatMainTileEntity {
-  final ChatChannelEntity channel;
-
   ChatMainChannelCardTile({
-    @required this.channel,
+    required this.channel,
   });
 
+  final ChatChannelEntity channel;
+
   @override
-  List<Object> get props => [channel];
+  List<Object?> get props => [channel];
 }
 
 class ChatMainPeopleFilterCardTile extends ChatMainTileEntity {
-  final int totalFiltersSeleted;
-
   ChatMainPeopleFilterCardTile(
     this.totalFiltersSeleted,
   );
 
+  final int totalFiltersSeleted;
+
   @override
-  List<Object> get props => [totalFiltersSeleted];
+  List<Object?> get props => [totalFiltersSeleted];
 }
 
 class ChatMainPeopleCardTile extends ChatMainTileEntity {
-  final UserDetailProfileEntity person;
-
   ChatMainPeopleCardTile({
-    @required this.person,
+    required this.person,
   });
 
+  final UserDetailProfileEntity person;
+
   @override
-  List<Object> get props => [person];
+  List<Object?> get props => [person];
 }

@@ -3,26 +3,26 @@ import 'package:meta/meta.dart';
 
 @immutable
 class FilterTagEntity extends Equatable {
-  final String id;
-  final String label;
-  final bool isSelected;
-
-  FilterTagEntity({
-    @required this.id,
-    @required this.label,
-    @required this.isSelected,
+  const FilterTagEntity({
+    required this.id,
+    required this.label,
+    required this.isSelected,
   });
 
+  final String id;
+  final String? label;
+  final bool isSelected;
+
   @override
-  List<Object> get props => [id, label, isSelected];
+  List<Object?> get props => [id, label!, isSelected];
 
   @override
   bool get stringify => true;
 
-  FilterTagEntity copyWith({String id, String label, bool isSelected}) {
+  FilterTagEntity copyWith({String? id, String? label, bool? isSelected}) {
     return FilterTagEntity(
         id: id ?? this.id,
         label: label ?? this.label,
-        isSelected: isSelected ?? this.isSelected);
+        isSelected: isSelected ?? this.isSelected,);
   }
 }

@@ -4,7 +4,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class FilterInitialStatePage extends StatelessWidget {
   const FilterInitialStatePage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -13,7 +13,7 @@ class FilterInitialStatePage extends StatelessWidget {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: DesignSystemColors.ligthPurple,
-        title: Text("Filtros"),
+        title: const Text('Filtros'),
       ),
       body: PageProgressIndicator(
         progressMessage: 'Carregando...',

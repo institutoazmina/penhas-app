@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart' as material;
 import 'package:mobx/mobx.dart';
-import 'package:meta/meta.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_preferences_use_case.dart';
@@ -17,10 +16,10 @@ part 'mainboard_controller.g.dart';
 class MainboardController extends _MainboardControllerBase
     with _$MainboardController {
   MainboardController({
-    @required MainboardStore mainboardStore,
-    @required InactivityLogoutUseCase inactivityLogoutUseCase,
-    @required INotificationRepository notification,
-    @required IAppModulesServices modulesServices,
+    required MainboardStore mainboardStore,
+    required InactivityLogoutUseCase inactivityLogoutUseCase,
+    required INotificationRepository notification,
+    required IAppModulesServices modulesServices,
   }) : super(
           mainboardStore,
           inactivityLogoutUseCase,
@@ -30,13 +29,6 @@ class MainboardController extends _MainboardControllerBase
 }
 
 abstract class _MainboardControllerBase with Store {
-  Timer _syncTimer;
-  final int notificationInterval = 60;
-  final MainboardStore mainboardStore;
-  final InactivityLogoutUseCase _inactivityLogoutUseCase;
-  final INotificationRepository _notification;
-  final IAppModulesServices _modulesServices;
-
   _MainboardControllerBase(
     this.mainboardStore,
     this._inactivityLogoutUseCase,
@@ -46,6 +38,13 @@ abstract class _MainboardControllerBase with Store {
     setup();
   }
 
+  Timer? _syncTimer;
+  final int notificationInterval = 60;
+  final MainboardStore mainboardStore;
+  final InactivityLogoutUseCase _inactivityLogoutUseCase;
+  final INotificationRepository _notification;
+  final IAppModulesServices _modulesServices;
+
   @observable
   int selectedIndex = 0;
 
@@ -53,7 +52,7 @@ abstract class _MainboardControllerBase with Store {
   int notificationCounter = 0;
 
   @observable
-  MainboardSecurityState securityState = MainboardSecurityState.disable();
+  MainboardSecurityState securityState = const MainboardSecurityState.disable();
 
   @action
   void resetNotificatinCounter() {
@@ -61,7 +60,7 @@ abstract class _MainboardControllerBase with Store {
   }
 
   @action
-  changeAppState(material.AppLifecycleState state) async {
+  Future<void> changeAppState(material.AppLifecycleState state) async {
     switch (state) {
       case material.AppLifecycleState.inactive:
         _inactivityLogoutUseCase.setInactive(DateTime.now());
@@ -74,7 +73,7 @@ abstract class _MainboardControllerBase with Store {
         route.fold(
           (l) => {},
           (r) => AppNavigator.pushAndRemoveUntil(
-            r,
+            r!,
             removeUntil: '/',
           ),
         );
@@ -104,8 +103,8 @@ extension _PrivateMethod on _MainboardControllerBase {
     securityState =
         await SecurityModeActionFeature(modulesServices: _modulesServices)
                 .isEnabled
-            ? MainboardSecurityState.enable()
-            : MainboardSecurityState.disable();
+            ? const MainboardSecurityState.enable()
+            : const MainboardSecurityState.disable();
 
     setupUploadTimer();
     checkUnRead();
@@ -113,7 +112,7 @@ extension _PrivateMethod on _MainboardControllerBase {
 
   Future<void> checkUnRead() async {
     final result = await _notification.unread();
-    final validField = result.getOrElse(() => ValidField(message: "0"));
-    notificationCounter = int.tryParse(validField.message) ?? 0;
+    final validField = result.getOrElse(() => const ValidField(message: '0'));
+    notificationCounter = int.tryParse(validField.message!) ?? 0;
   }
 }

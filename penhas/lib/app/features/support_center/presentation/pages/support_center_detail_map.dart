@@ -4,18 +4,18 @@ import 'package:penhas/app/features/support_center/domain/entities/support_cente
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class SupportCenterDetailMap extends StatelessWidget {
-  final SupportCenterPlaceDetailEntity detail;
-
   const SupportCenterDetailMap({
-    Key key,
-    @required this.detail,
+    Key? key,
+    required this.detail,
   }) : super(key: key);
+
+  final SupportCenterPlaceDetailEntity detail;
 
   @override
   Widget build(BuildContext context) {
     final LatLng position = LatLng(
-      detail.place.latitude,
-      detail.place.longitude,
+      detail.place!.latitude!,
+      detail.place!.longitude!,
     );
 
     final cameraPosition = CameraPosition(
@@ -24,38 +24,35 @@ class SupportCenterDetailMap extends StatelessWidget {
     );
 
     final placeColor = HSLColor.fromColor(
-      DesignSystemColors.hexColor(detail.place.category.color),
+      DesignSystemColors.hexColor(detail.place!.category.color!),
     );
 
-    final Set<Marker> markers = Set<Marker>.from(
-      [
-        Marker(
-          position: position,
-          markerId: MarkerId(position.toString()),
-          infoWindow: InfoWindow(title: detail.place.name),
-          icon: BitmapDescriptor.defaultMarkerWithHue(placeColor.hue),
-        )
-      ],
-    );
+    final Set<Marker> markers = <Marker>{
+      Marker(
+        position: position,
+        markerId: MarkerId(position.toString()),
+        infoWindow: InfoWindow(title: detail.place!.name),
+        icon: BitmapDescriptor.defaultMarkerWithHue(placeColor.hue),
+      )
+    };
 
     return SafeArea(
-        child: Column(
-      children: [
-        Container(
-          height: 160,
-          child: GoogleMap(
-            initialCameraPosition: cameraPosition,
-            compassEnabled: false,
-            myLocationEnabled: false,
-            myLocationButtonEnabled: false,
-            scrollGesturesEnabled: false,
-            mapType: MapType.normal,
-            markers: markers,
-            zoomGesturesEnabled: false,
-            zoomControlsEnabled: false,
+      child: Column(
+        children: [
+          SizedBox(
+            height: 160,
+            child: GoogleMap(
+              initialCameraPosition: cameraPosition,
+              compassEnabled: false,
+              myLocationButtonEnabled: false,
+              scrollGesturesEnabled: false,
+              markers: markers,
+              zoomGesturesEnabled: false,
+              zoomControlsEnabled: false,
+            ),
           ),
-        ),
-      ],
-    ));
+        ],
+      ),
+    );
   }
 }

@@ -18,21 +18,24 @@ class SignUpThreeController extends _SignUpThreeControllerBase
     with _$SignUpThreeController {
   SignUpThreeController(
     IUserRegisterRepository repository,
-    UserRegisterFormFieldModel userFormFielModel,
+    UserRegisterFormFieldModel? userFormFielModel,
     PasswordValidator passwordValidator,
   ) : super(repository, userFormFielModel, passwordValidator);
 }
 
 abstract class _SignUpThreeControllerBase with Store, MapFailureMessage {
+  _SignUpThreeControllerBase(
+    this.repository,
+    this._userRegisterModel,
+    this._passwordValidator,
+  );
+
   final IUserRegisterRepository repository;
-  final UserRegisterFormFieldModel _userRegisterModel;
+  final UserRegisterFormFieldModel? _userRegisterModel;
   final PasswordValidator _passwordValidator;
 
-  _SignUpThreeControllerBase(
-      this.repository, this._userRegisterModel, this._passwordValidator);
-
   @observable
-  ObservableFuture<Either<Failure, SessionEntity>> _progress;
+  ObservableFuture<Either<Failure, SessionEntity>>? _progress;
 
   @observable
   String warningEmail = '';
@@ -44,96 +47,99 @@ abstract class _SignUpThreeControllerBase with Store, MapFailureMessage {
   String warningConfirmationPassword = '';
 
   @observable
-  String errorMessage = '';
+  String? errorMessage = '';
 
   @computed
   PageProgressState get currentState {
-    if (_progress == null || _progress.status == FutureStatus.rejected) {
+    if (_progress == null || _progress!.status == FutureStatus.rejected) {
       return PageProgressState.initial;
     }
 
-    return _progress.status == FutureStatus.pending
+    return _progress!.status == FutureStatus.pending
         ? PageProgressState.loading
         : PageProgressState.loaded;
   }
 
   @action
   void setEmail(String email) {
-    _userRegisterModel.emailAddress = EmailAddress(email);
+    _userRegisterModel!.emailAddress = EmailAddress(email);
 
     warningEmail =
-        email.length == 0 ? '' : _userRegisterModel.validateEmailAddress;
+        email.isEmpty ? '' : _userRegisterModel!.validateEmailAddress;
   }
 
   @action
   void setPassword(String password) {
-    _userRegisterModel.password = SignUpPassword(password, _passwordValidator);
-    warningPassword = _userRegisterModel.password.mapFailure;
-    warningConfirmationPassword = _userRegisterModel.passwordConfirmation.isEmpty ? '' : _userRegisterModel.validatePasswordConfirmation;
+    _userRegisterModel!.password = SignUpPassword(password, _passwordValidator);
+    warningPassword = _userRegisterModel!.password!.mapFailure;
+    warningConfirmationPassword =
+        _userRegisterModel!.passwordConfirmation!.isEmpty
+            ? ''
+            : _userRegisterModel!.validatePasswordConfirmation;
   }
 
   @action
   void setConfirmationPassword(String password) {
-    _userRegisterModel.passwordConfirmation = password;
-    warningConfirmationPassword = _userRegisterModel.passwordConfirmation.isEmpty ? '' : _userRegisterModel.validatePasswordConfirmation;
+    _userRegisterModel!.passwordConfirmation = password;
+    warningConfirmationPassword =
+        _userRegisterModel!.passwordConfirmation!.isEmpty
+            ? ''
+            : _userRegisterModel!.validatePasswordConfirmation;
   }
 
   @action
   Future<void> registerUserPress() async {
-    _setErrorMessage('');
+    errorMessage = '';
     if (!_isValidToProceed()) {
       return;
     }
 
     _progress = ObservableFuture(
       repository.signup(
-        emailAddress: _userRegisterModel.emailAddress,
-        password: _userRegisterModel.password,
-        cep: _userRegisterModel.cep,
-        cpf: _userRegisterModel.cpf,
-        fullname: _userRegisterModel.fullname,
-        socialName: _userRegisterModel.socialName,
-        nickName: _userRegisterModel.nickname,
-        birthday: _userRegisterModel.birthday,
-        genre: _userRegisterModel.genre,
-        race: _userRegisterModel.race,
+        emailAddress: _userRegisterModel!.emailAddress,
+        password: _userRegisterModel!.password,
+        cep: _userRegisterModel!.cep,
+        cpf: _userRegisterModel!.cpf,
+        fullname: _userRegisterModel!.fullname,
+        socialName: _userRegisterModel!.socialName,
+        nickName: _userRegisterModel!.nickname,
+        birthday: _userRegisterModel!.birthday,
+        genre: _userRegisterModel!.genre,
+        race: _userRegisterModel!.race,
       ),
     );
 
-    final response = await _progress;
+    final Either<Failure, SessionEntity> response = await _progress!;
     response.fold(
-      (failure) => _setErrorMessage(mapFailureMessage(failure)),
+      (failure) => errorMessage = mapFailureMessage(failure),
       (session) => _forwardToLogged(),
     );
-  }
-
-  void _setErrorMessage(String message) {
-    errorMessage = message;
   }
 
   bool _isValidToProceed() {
     bool isValid = true;
 
-    if (_userRegisterModel.validateEmailAddress.isNotEmpty) {
+    if (_userRegisterModel!.validateEmailAddress.isNotEmpty) {
       isValid = false;
-      warningEmail = _userRegisterModel.validateEmailAddress;
+      warningEmail = _userRegisterModel!.validateEmailAddress;
     }
 
-    isValid = _userRegisterModel.password.isValid;
+    isValid = _userRegisterModel!.password!.isValid;
 
     if (!isValid) {
-      warningPassword = _userRegisterModel.password.mapFailure;
+      warningPassword = _userRegisterModel!.password!.mapFailure;
     }
 
-    if (_userRegisterModel.validatePasswordConfirmation.isNotEmpty) {
+    if (_userRegisterModel!.validatePasswordConfirmation.isNotEmpty) {
       isValid = false;
-      warningConfirmationPassword = _userRegisterModel.validatePasswordConfirmation;
+      warningConfirmationPassword =
+          _userRegisterModel!.validatePasswordConfirmation;
     }
 
     return isValid;
   }
 
-  _forwardToLogged() {
+  void _forwardToLogged() {
     Modular.to.pushNamedAndRemoveUntil(
       '/',
       ModalRoute.withName('/'),

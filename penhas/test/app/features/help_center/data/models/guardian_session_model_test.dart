@@ -11,7 +11,7 @@ void main() {
   group('GuardianSessionModel', () {
     test('should be a subclass of GuardianSessioEntity', () async {
       // arrange
-      sessionModel = GuardianSessionModel(
+      sessionModel = const GuardianSessionModel(
         guards: [],
         remainingInvites: 0,
         maximumInvites: 0,
@@ -24,7 +24,7 @@ void main() {
       // arrange
       final jsonData =
           await JsonUtil.getJson(from: 'help_center/guardian_list.json');
-      final expected = GuardianSessionModel(
+      const expected = GuardianSessionModel(
         remainingInvites: 5,
         maximumInvites: 5,
         guards: [
@@ -33,16 +33,16 @@ void main() {
                 canEdit: true,
                 canDelete: true,
                 canResend: false,
-                deleteWarning: "",
-                description: "Guardiões que recebem seus pedidos de socorro.",
-                header: "Guardiões",
-                status: GuardianStatus.accepted),
+                deleteWarning: '',
+                description: 'Guardiões que recebem seus pedidos de socorro.',
+                header: 'Guardiões',
+                status: GuardianStatus.accepted,),
             contacts: [
               GuardianContactEntity(
                 id: 172,
-                mobile: "+1 484-291-8467",
-                name: "test nome",
-                status: "Convite enviado há pouco tempo",
+                mobile: '+1 484-291-8467',
+                name: 'test nome',
+                status: 'Convite enviado há pouco tempo',
               )
             ],
           ),
@@ -51,10 +51,10 @@ void main() {
                 canEdit: true,
                 canDelete: true,
                 canResend: false,
-                deleteWarning: "",
-                description: "Guardiões que ainda não aceitaram seu convite.",
-                header: "Pendentes",
-                status: GuardianStatus.pending),
+                deleteWarning: '',
+                description: 'Guardiões que ainda não aceitaram seu convite.',
+                header: 'Pendentes',
+                status: GuardianStatus.pending,),
             contacts: [],
           )
         ],

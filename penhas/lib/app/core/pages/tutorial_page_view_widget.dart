@@ -1,33 +1,34 @@
 import 'package:flutter/material.dart';
 
 class TutorialPageViewWidget extends StatelessWidget {
-  final String _title;
+  const TutorialPageViewWidget({
+    Key? key,
+    String? title,
+    required String description,
+    required Widget bodyWidget,
+  })  : _title = title,
+        _description = description,
+        _bodyWidget = bodyWidget,
+        super(key: key);
+
+  final String? _title;
   final String _description;
   final Widget _bodyWidget;
-  const TutorialPageViewWidget({
-    Key key,
-    String title,
-    @required String description,
-    @required Widget bodyWidget,
-  })  : this._title = title,
-        this._description = description,
-        this._bodyWidget = bodyWidget,
-        super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.only(
+        padding: const EdgeInsets.only(
           left: 12.0,
           right: 12.0,
         ),
         child: Column(
           children: <Widget>[
             _titleBuilder(),
-            _title == null ? Container() : SizedBox(height: 28.0),
+            if (_title == null) Container() else const SizedBox(height: 28.0),
             _bodyWidgetBuilder(),
-            SizedBox(height: 28.0),
+            const SizedBox(height: 28.0),
             _descriptionBuilder(),
           ],
         ),
@@ -38,7 +39,7 @@ class TutorialPageViewWidget extends StatelessWidget {
   Text _descriptionBuilder() {
     return Text(
       _description,
-      style: TextStyle(
+      style: const TextStyle(
         fontFamily: 'Lato',
         fontSize: 16.0,
         fontWeight: FontWeight.normal,
@@ -57,8 +58,8 @@ class TutorialPageViewWidget extends StatelessWidget {
         ? Container()
         : Center(
             child: Text(
-              _title,
-              style: TextStyle(
+              _title!,
+              style: const TextStyle(
                 fontFamily: 'Lato',
                 fontSize: 22.0,
                 fontWeight: FontWeight.bold,

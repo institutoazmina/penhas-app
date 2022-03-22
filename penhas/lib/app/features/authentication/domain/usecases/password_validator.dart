@@ -1,14 +1,14 @@
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
 class PasswordValidator {
-  Either<PasswordRule, String> validate(
-    String input,
+  Either<PasswordRule, String?> validate(
+    String? input,
     List<PasswordRule> rules,
   ) {
-    final firstViolatedRule = rules.firstWhere(
+    final firstViolatedRule = rules.firstWhereOrNull(
       (rule) => !rule.apply(input),
-      orElse: () => null,
     );
     return firstViolatedRule == null ? right(input) : left(firstViolatedRule);
   }
@@ -17,10 +17,10 @@ class PasswordValidator {
 abstract class PasswordRule extends Equatable {
   String get message;
 
-  bool apply(String input);
+  bool apply(String? input);
 
   @override
-  List<Object> get props => [message];
+  List<Object?> get props => [message];
 
   @override
   bool get stringify => true;
@@ -31,7 +31,7 @@ class EmptyRule extends PasswordRule {
   String get message => '';
 
   @override
-  bool apply(String input) {
+  bool apply(String? input) {
     return input != null && input.trim().isNotEmpty;
   }
 }
@@ -44,8 +44,8 @@ class MinLengthRule extends PasswordRule {
       'Senha precisa ter no mínimo $_minCharacters caracteres';
 
   @override
-  bool apply(String input) {
-    return input.length >= _minCharacters;
+  bool apply(String? input) {
+    return input!.length >= _minCharacters;
   }
 }
 
@@ -54,8 +54,8 @@ class LettersRule extends PasswordRule {
   String get message => 'Senha precisa ter ao menos 1 letra';
 
   @override
-  bool apply(String input) {
-    return input.contains(new RegExp(r'[A-Z]', caseSensitive: false));
+  bool apply(String? input) {
+    return input!.contains(RegExp('[A-Z]', caseSensitive: false));
   }
 }
 
@@ -64,8 +64,8 @@ class NumbersRule extends PasswordRule {
   String get message => 'Senha precisa ter ao menos 1 número';
 
   @override
-  bool apply(String input) {
-    return input.contains(new RegExp(r'[0-9]'));
+  bool apply(String? input) {
+    return input!.contains(RegExp('[0-9]'));
   }
 }
 
@@ -74,7 +74,7 @@ class SpecialCharactersRule extends PasswordRule {
   String get message => 'Senha precisa ter ao menos 1 caractere especial';
 
   @override
-  bool apply(String input) {
-    return input.contains(new RegExp(r'[^0-9A-Z]', caseSensitive: false));
+  bool apply(String? input) {
+    return input!.contains(RegExp('[^0-9A-Z]', caseSensitive: false));
   }
 }

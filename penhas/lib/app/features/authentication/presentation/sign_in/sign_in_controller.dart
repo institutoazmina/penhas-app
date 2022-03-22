@@ -17,48 +17,48 @@ part 'sign_in_controller.g.dart';
 
 class SignInController extends _SignInControllerBase with _$SignInController {
   SignInController(
-    IAuthenticationRepository repository,
+    IAuthenticationRepository? repository,
     PasswordValidator passwordValidator,
-    AppStateUseCase appStateUseCase,
+    AppStateUseCase? appStateUseCase,
   ) : super(repository, passwordValidator, appStateUseCase);
 }
 
 abstract class _SignInControllerBase with Store, MapFailureMessage {
-  final String _invalidFieldsToProceedLogin =
-      'E-mail e senha precisam estarem corretos para continuar.';
-  final IAuthenticationRepository repository;
-  final PasswordValidator _passwordValidator;
-  final AppStateUseCase _appStateUseCase;
-  EmailAddress _emailAddress = EmailAddress("");
-  SignInPassword _password;
-
   _SignInControllerBase(
     this.repository,
     this._passwordValidator,
     this._appStateUseCase,
   ) {
-    _password = SignInPassword("", _passwordValidator);
+    _password = SignInPassword('', _passwordValidator);
   }
 
-  @observable
-  ObservableFuture<Either<Failure, SessionEntity>> _progress;
+  final String _invalidFieldsToProceedLogin =
+      'E-mail e senha precisam estarem corretos para continuar.';
+  final IAuthenticationRepository? repository;
+  final PasswordValidator _passwordValidator;
+  final AppStateUseCase? _appStateUseCase;
+  EmailAddress _emailAddress = EmailAddress('');
+  late SignInPassword _password;
 
   @observable
-  String warningEmail = "";
+  ObservableFuture<Either<Failure, SessionEntity>>? _progress;
 
   @observable
-  String warningPassword = "";
+  String warningEmail = '';
 
   @observable
-  String errorMessage = "";
+  String warningPassword = '';
+
+  @observable
+  String? errorMessage = '';
 
   @computed
   PageProgressState get currentState {
-    if (_progress == null || _progress.status == FutureStatus.rejected) {
+    if (_progress == null || _progress!.status == FutureStatus.rejected) {
       return PageProgressState.initial;
     }
 
-    return _progress.status == FutureStatus.pending
+    return _progress!.status == FutureStatus.pending
         ? PageProgressState.loading
         : PageProgressState.loaded;
   }
@@ -67,7 +67,7 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
   void setEmail(String address) {
     _emailAddress = EmailAddress(address);
 
-    warningEmail = address.length == 0 ? '' : _emailAddress.mapFailure;
+    warningEmail = address.isEmpty ? '' : _emailAddress.mapFailure;
   }
 
   @action
@@ -78,22 +78,23 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> signInWithEmailAndPasswordPressed() async {
-    _setErrorMessage('');
-
     if (!_emailAddress.isValid || !_password.isValid) {
-      _setErrorMessage(_invalidFieldsToProceedLogin);
+      errorMessage = _invalidFieldsToProceedLogin;
       return;
     }
+    errorMessage = '';
 
-    _progress = ObservableFuture(repository.signInWithEmailAndPassword(
-      emailAddress: _emailAddress,
-      password: _password,
-    ));
+    _progress = ObservableFuture(
+      repository!.signInWithEmailAndPassword(
+        emailAddress: _emailAddress,
+        password: _password,
+      ),
+    );
 
-    final response = await _progress;
+    final Either<Failure, SessionEntity> response = await _progress!;
 
     response.fold(
-      (failure) => _setErrorMessage(mapFailureMessage(failure)),
+      (failure) => errorMessage = mapFailureMessage(failure),
       (session) => _forwardToLogged(session),
     );
   }
@@ -112,15 +113,11 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
     if (session.deletedScheduled) {
       Modular.to.pushNamed('/accountDeleted', arguments: session.sessionToken);
     } else {
-      final appState = await _appStateUseCase.check();
+      final appState = await _appStateUseCase!.check();
       appState.fold(
-        (failure) => _setErrorMessage(mapFailureMessage(failure)),
+        (failure) => errorMessage = mapFailureMessage(failure),
         (_) => AppNavigator.popAndPush(AppRoute('/mainboard?page=feed')),
       );
     }
-  }
-
-  void _setErrorMessage(String msg) {
-    errorMessage = msg;
   }
 }

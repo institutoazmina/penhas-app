@@ -5,9 +5,10 @@ abstract class INetworkInfo {
 }
 
 class NetworkInfo implements INetworkInfo {
+  NetworkInfo(this.connectionChecker);
+
   final DataConnectionChecker connectionChecker;
 
-  NetworkInfo(this.connectionChecker);
   @override
   Future<bool> get isConnected => connectionChecker.hasConnection;
 }

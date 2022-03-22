@@ -1,10 +1,10 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'guardian_alert_state.freezed.dart';
 
 @freezed
-abstract class GuardianAlertState with _$GuardianAlertState {
+class GuardianAlertState with _$GuardianAlertState {
   const factory GuardianAlertState.initial() = _Initial;
   const factory GuardianAlertState.alert(GuardianAlertMessageAction action) =
       _Alert;
@@ -13,14 +13,14 @@ abstract class GuardianAlertState with _$GuardianAlertState {
 abstract class GuardianAlertAction {}
 
 class GuardianAlertMessageAction extends GuardianAlertAction {
+  GuardianAlertMessageAction({
+    required this.title,
+    required this.message,
+    required this.onPressed,
+  });
+
   final String title;
-  final String message;
+  final String? message;
 
   final void Function() onPressed;
-
-  GuardianAlertMessageAction({
-    @required this.title,
-    @required this.message,
-    @required this.onPressed,
-  });
 }

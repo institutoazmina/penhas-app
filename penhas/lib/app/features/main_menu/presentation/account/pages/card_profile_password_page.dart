@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:penhas/app/core/extension/asuka.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_header_edit_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-import 'card_profile_header_edit_page.dart';
-
 class CardProfilePasswordPage extends StatelessWidget {
+  const CardProfilePasswordPage({
+    Key? key,
+    required this.content,
+    required this.onChange,
+  }) : super(key: key);
+
   final String content;
   final void Function(String, String) onChange;
-
-  const CardProfilePasswordPage({
-    Key key,
-    @required this.content,
-    @required this.onChange,
-  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,6 @@ class CardProfilePasswordPage extends StatelessWidget {
       color: DesignSystemColors.systemBackgroundColor,
       child: Padding(
         padding: const EdgeInsets.only(
-          top: 0.0,
           left: 16.0,
           right: 16.0,
         ),
@@ -28,7 +27,7 @@ class CardProfilePasswordPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CardProfileHeaderEditPage(
-              title: "Senha",
+              title: 'Senha',
               onEditAction: () => showModal(context: context),
             ),
             Padding(
@@ -46,44 +45,46 @@ class CardProfilePasswordPage extends StatelessWidget {
 }
 
 extension _Modal on CardProfilePasswordPage {
-  void showModal({@required BuildContext context}) {
-    TextEditingController newPasswordController = TextEditingController();
-    TextEditingController oldPasswordController = TextEditingController();
+  void showModal({required BuildContext context}) {
+    final TextEditingController newPasswordController = TextEditingController();
+    final TextEditingController oldPasswordController = TextEditingController();
 
     Modular.to.showDialog(
-      child: AlertDialog(
-        title: Text('Email'),
+      builder: (context) => AlertDialog(
+        title: const Text('Email'),
         scrollable: true,
         content: Column(
           children: [
             TextFormField(
-              maxLines: 1,
               autocorrect: false,
               keyboardType: TextInputType.text,
               controller: newPasswordController,
-              decoration: InputDecoration(
-                  hintText: 'Digite a nova senha', filled: true),
+              decoration: const InputDecoration(
+                hintText: 'Digite a nova senha',
+                filled: true,
+              ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextFormField(
-              maxLines: 1,
               autocorrect: false,
               keyboardType: TextInputType.text,
               controller: oldPasswordController,
-              decoration: InputDecoration(
-                  hintText: 'Digite a senha atual', filled: true),
+              decoration: const InputDecoration(
+                hintText: 'Digite a senha atual',
+                filled: true,
+              ),
             ),
           ],
         ),
         actions: <Widget>[
           FlatButton(
-            child: Text('Fechar'),
+            child: const Text('Fechar'),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
           FlatButton(
-            child: Text('Enviar'),
+            child: const Text('Enviar'),
             onPressed: () async {
               onChange(
                 newPasswordController.text,
@@ -99,7 +100,7 @@ extension _Modal on CardProfilePasswordPage {
 }
 
 extension _TextStyle on CardProfilePasswordPage {
-  TextStyle get contentTextStyle => TextStyle(
+  TextStyle get contentTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,
         letterSpacing: 0.45,

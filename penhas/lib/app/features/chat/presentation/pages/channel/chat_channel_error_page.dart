@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatChannelErrorPage extends StatelessWidget {
-  final String message;
   const ChatChannelErrorPage({
-    Key key,
-    @required this.message,
+    Key? key,
+    required this.message,
   }) : super(key: key);
+
+  final String message;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class ChatChannelErrorPage extends StatelessWidget {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: DesignSystemColors.easterPurple,
-        title: Text("Chat"),
+        title: const Text('Chat'),
       ),
       body: Container(
         color: Colors.grey,
@@ -22,8 +23,8 @@ class ChatChannelErrorPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(
+            const Padding(
+              padding: EdgeInsets.only(
                 bottom: 28.0,
                 top: 12.0,
               ),
@@ -39,8 +40,8 @@ class ChatChannelErrorPage extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 32.0),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 32.0),
               child: Icon(
                 Icons.warning,
                 color: DesignSystemColors.white,
@@ -51,7 +52,7 @@ class ChatChannelErrorPage extends StatelessWidget {
               padding: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: Text(
                 message,
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'Lato',
                   fontSize: 18.0,
                   fontWeight: FontWeight.normal,

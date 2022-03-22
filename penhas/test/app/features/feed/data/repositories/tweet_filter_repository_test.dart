@@ -1,31 +1,21 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:penhas/app/core/network/network_info.dart';
-import 'package:penhas/app/features/feed/data/datasources/tweet_filter_preference_data_source.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_filter_session_model.dart';
 import 'package:penhas/app/features/feed/data/repositories/tweet_filter_preference_repository.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_filter_session_entity.dart';
 
+import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
-class MockTweetFilterRepository extends Mock
-    implements ITweetFilterPreferenceRepository {}
-
-class MockNetworkInfo extends Mock implements INetworkInfo {}
-
-class MockTweetFilterPreferenceDataSource extends Mock
-    implements ITweetFilterPreferenceDataSource {}
-
 void main() {
-  INetworkInfo networkInfo;
-  ITweetFilterPreferenceRepository sut;
-  ITweetFilterPreferenceDataSource dataSource;
-  Map<String, Object> jsonSession;
+  late final MockINetworkInfo networkInfo = MockINetworkInfo();
+  late final MockITweetFilterPreferenceDataSource dataSource =
+      MockITweetFilterPreferenceDataSource();
+  late ITweetFilterPreferenceRepository sut;
+  Map<String, dynamic> jsonSession;
 
-  setUp(() async {
-    networkInfo = MockNetworkInfo();
-    dataSource = MockTweetFilterPreferenceDataSource();
+  setUp(() {
     sut = TweetFilterPreferenceRepository(
       networkInfo: networkInfo,
       dataSource: dataSource,
@@ -33,7 +23,7 @@ void main() {
   });
 
   group('TweetFilterPreferenceRepository', () {
-    TweetFilterSessionModel sessionModel;
+    TweetFilterSessionModel? sessionModel;
     setUp(() async {
       jsonSession =
           await JsonUtil.getJson(from: 'feed/retrieve_fiters_tags.json');
@@ -43,7 +33,7 @@ void main() {
     group('fetch()', () {
       test('should retrieve tweets from a valid session', () async {
         // arrange
-        final TweetFilterSessionEntity expectedSession = sessionModel;
+        final TweetFilterSessionEntity? expectedSession = sessionModel;
         // act
         final receivedSession = await sut.retreive();
         // assert

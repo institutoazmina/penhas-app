@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 
-import 'quiz_button_yes_no_widget.dart';
-import 'quiz_multiple_choices_widget.dart';
-import 'quiz_show_help_tutorial_widget.dart';
-import 'quiz_show_stealth_tutorial_widget.dart';
-import 'quiz_single_button.dart';
-import 'quiz_typedef.dart';
+import 'package:penhas/app/features/quiz/presentation/quiz/quiz_button_yes_no_widget.dart';
+import 'package:penhas/app/features/quiz/presentation/quiz/quiz_multiple_choices_widget.dart';
+import 'package:penhas/app/features/quiz/presentation/quiz/quiz_show_help_tutorial_widget.dart';
+import 'package:penhas/app/features/quiz/presentation/quiz/quiz_show_stealth_tutorial_widget.dart';
+import 'package:penhas/app/features/quiz/presentation/quiz/quiz_single_button.dart';
+import 'package:penhas/app/features/quiz/presentation/quiz/quiz_typedef.dart';
 
 class QuizUserReplayWidget extends StatelessWidget {
+  const QuizUserReplayWidget({
+    Key? key,
+    required this.message,
+    required this.onActionReplay,
+  }) : super(key: key);
+
   final QuizMessageEntity message;
   final UserReaction onActionReplay;
-
-  const QuizUserReplayWidget({
-    Key key,
-    @required this.message,
-    @required this.onActionReplay,
-  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,5 @@ class QuizUserReplayWidget extends StatelessWidget {
       case QuizMessageType.displayTextResponse:
         return Container();
     }
-
-    return Container();
   }
 }

@@ -1,12 +1,12 @@
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 
 class StealthModeTutorialState extends Equatable {
+  const StealthModeTutorialState({
+    required this.locationPermissionGranted,
+  });
+
   final bool locationPermissionGranted;
 
-  StealthModeTutorialState({
-    @required this.locationPermissionGranted});
-
   @override
-  List<Object> get props => [locationPermissionGranted];
+  List<Object?> get props => [locationPermissionGranted];
 }

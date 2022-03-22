@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:penhas/app/core/extension/asuka.dart';
 import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_header_edit_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class CardProfileNamePage extends StatelessWidget {
-  final String name;
-  final String avatar;
-  final void Function(String) onChange;
-
   const CardProfileNamePage({
-    Key key,
-    @required this.name,
-    @required this.avatar,
-    @required this.onChange,
+    Key? key,
+    required this.name,
+    required this.avatar,
+    required this.onChange,
   }) : super(key: key);
+
+  final String? name;
+  final String? avatar;
+  final void Function(String) onChange;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(color: DesignSystemColors.pinkishGrey),
         ),
@@ -33,7 +34,7 @@ class CardProfileNamePage extends StatelessWidget {
         child: Column(
           children: [
             CardProfileHeaderEditPage(
-              title: "Apelido",
+              title: 'Apelido',
               onEditAction: () => showModal(context: context),
             ),
             Padding(
@@ -41,17 +42,17 @@ class CardProfileNamePage extends StatelessWidget {
               child: Row(
                 children: [
                   CircleAvatar(
+                    radius: 21.0,
+                    backgroundColor: const Color.fromRGBO(239, 239, 239, 1.0),
                     child: SvgPicture.network(
-                      avatar,
+                      avatar!,
                       height: 27.0,
                       width: 32.0,
                     ),
-                    radius: 21.0,
-                    backgroundColor: Color.fromRGBO(239, 239, 239, 1.0),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 14.0),
-                    child: Text(name, style: nameTextStyle),
+                    child: Text(name!, style: nameTextStyle),
                   )
                 ],
               ),
@@ -64,7 +65,7 @@ class CardProfileNamePage extends StatelessWidget {
 }
 
 extension _TextStyle on CardProfileNamePage {
-  TextStyle get nameTextStyle => TextStyle(
+  TextStyle get nameTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,
         letterSpacing: 0.45,
@@ -74,28 +75,27 @@ extension _TextStyle on CardProfileNamePage {
 }
 
 extension _Dialog on CardProfileNamePage {
-  void showModal({@required BuildContext context}) {
-    TextEditingController _controller = TextEditingController();
-    _controller.text = name;
+  void showModal({required BuildContext context}) {
+    final TextEditingController _controller = TextEditingController();
+    _controller.text = name!;
 
     Modular.to.showDialog(
-      child: AlertDialog(
-        title: Text('Editar'),
+      builder: (context) => AlertDialog(
+        title: const Text('Editar'),
         content: TextFormField(
           controller: _controller,
-          maxLines: 1,
           decoration:
-              InputDecoration(hintText: 'Digite o novo nome', filled: true),
+              const InputDecoration(hintText: 'Digite o novo nome', filled: true),
         ),
         actions: <Widget>[
           FlatButton(
-            child: Text('Fechar'),
+            child: const Text('Fechar'),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
           FlatButton(
-            child: Text('Enviar'),
+            child: const Text('Enviar'),
             onPressed: () async {
               onChange(_controller.text);
               Navigator.of(context).pop();

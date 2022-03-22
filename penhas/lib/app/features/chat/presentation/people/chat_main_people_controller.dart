@@ -1,5 +1,4 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
@@ -19,16 +18,12 @@ part 'chat_main_people_controller.g.dart';
 class ChatMainPeopleController extends _ChatMainPeopleControllerBase
     with _$ChatMainPeopleController {
   ChatMainPeopleController({
-    @required IUsersRepository usersRepository,
-    @required IFilterSkillRepository skillRepository,
+    required IUsersRepository usersRepository,
+    required IFilterSkillRepository skillRepository,
   }) : super(usersRepository, skillRepository);
 }
 
 abstract class _ChatMainPeopleControllerBase with Store, MapFailureMessage {
-  List<FilterTagEntity> _tags = List<FilterTagEntity>();
-  final IUsersRepository _usersRepository;
-  final IFilterSkillRepository _skillRepository;
-
   _ChatMainPeopleControllerBase(
     this._usersRepository,
     this._skillRepository,
@@ -36,12 +31,16 @@ abstract class _ChatMainPeopleControllerBase with Store, MapFailureMessage {
     _init();
   }
 
+  List<FilterTagEntity> _tags = [];
+  final IUsersRepository _usersRepository;
+  final IFilterSkillRepository _skillRepository;
+
   Future<void> _init() async {
     await loadScreen(skills: _tags);
   }
 
   @observable
-  ChatMainTalksState currentState = ChatMainTalksState.initial();
+  ChatMainTalksState currentState = const ChatMainTalksState.initial();
 
   @action
   Future<void> reload() async {
@@ -52,7 +51,7 @@ abstract class _ChatMainPeopleControllerBase with Store, MapFailureMessage {
   Future<void> profile(UserDetailProfileEntity profile) {
     final userDetail = UserDetailEntity(isMyself: false, profile: profile);
     return Modular.to.pushNamed(
-      "/mainboard/users/profile",
+      '/mainboard/users/profile',
       arguments: userDetail,
     );
   }
@@ -62,7 +61,7 @@ abstract class _ChatMainPeopleControllerBase with Store, MapFailureMessage {
     final result = await _skillRepository.skills();
     result.fold(
       (failure) => handleFilterError(failure),
-      (skills) => handleFilterSuccess(skills),
+      (skills) => handleFilterSuccess(skills!),
     );
   }
 }
@@ -70,9 +69,9 @@ abstract class _ChatMainPeopleControllerBase with Store, MapFailureMessage {
 extension _ChatMainPeopleControllerBasePrivate
     on _ChatMainPeopleControllerBase {
   Future<void> loadScreen({
-    @required List<FilterTagEntity> skills,
+    required List<FilterTagEntity> skills,
   }) async {
-    currentState = ChatMainTalksState.loading();
+    currentState = const ChatMainTalksState.loading();
 
     final response = await _usersRepository.search(
       UserSearchOptions(
@@ -88,13 +87,13 @@ extension _ChatMainPeopleControllerBasePrivate
   }
 
   void handleLoadSession(UserSearchSessionEntity session) {
-    List<ChatMainTileEntity> tiles = List<ChatMainTileEntity>();
+    final List<ChatMainTileEntity> tiles = [];
 
     tiles.add(ChatMainPeopleFilterCardTile(_tags.length));
 
-    if (session.users.isNotEmpty) {
+    if (session.users!.isNotEmpty) {
       final channels =
-          session.users.map((e) => ChatMainPeopleCardTile(person: e)).toList();
+          session.users!.map((e) => ChatMainPeopleCardTile(person: e)).toList();
       tiles.addAll(channels);
     }
 
@@ -102,12 +101,12 @@ extension _ChatMainPeopleControllerBasePrivate
   }
 
   void handleLoadPageError(Failure failure) {
-    final message = mapFailureMessage(failure);
+    final message = mapFailureMessage(failure)!;
     currentState = ChatMainTalksState.error(message);
   }
 
   void handleFilterError(Failure failure) {
-    final message = mapFailureMessage(failure);
+    final message = mapFailureMessage(failure)!;
     currentState = ChatMainTalksState.error(message);
   }
 
@@ -123,27 +122,20 @@ extension _ChatMainPeopleControllerBasePrivate
         .toList();
 
     Modular.to
-        .pushNamed("/mainboard/filters", arguments: tags)
-        .then((v) => v as FilterActionObserver)
+        .pushNamed('/mainboard/filters', arguments: tags)
+        .then((v) => v as FilterActionObserver?)
         .then((v) => handleFilterUpdate(v));
   }
 
-  bool isSeleted(String id) {
-    try {
-      _tags.firstWhere((v) => v.id == id);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
+  bool isSeleted(String id) => _tags.map((e) => e.id).contains(id);
 
-  void handleFilterUpdate(FilterActionObserver action) {
+  void handleFilterUpdate(FilterActionObserver? action) {
     if (action == null) {
       return;
     }
 
     _tags = action.when(
-      reset: () => List<FilterTagEntity>(),
+      reset: () => List.empty(),
       updated: (listTags) => listTags,
     );
 

@@ -1,62 +1,61 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:meta/meta.dart';
 import 'package:http/http.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
-
-import 'api_server_configure.dart';
-import 'network_info.dart';
+import 'package:penhas/app/core/network/api_server_configure.dart';
+import 'package:penhas/app/core/network/network_info.dart';
+import 'package:penhas/app/shared/logger/log.dart';
 
 abstract class IApiProvider {
   Future<String> get({
-    @required String path,
-    Map<String, String> headers,
-    Map<String, String> parameters,
+    required String path,
+    Map<String, String> headers = const {},
+    Map<String, String?> parameters = const {},
   });
 
   Future<String> post({
-    @required String path,
-    Map<String, String> headers,
-    Map<String, String> parameters,
-    String body,
+    required String path,
+    Map<String, String> headers = const {},
+    Map<String, String?> parameters = const {},
+    String? body,
   });
 
   Future<String> delete({
-    @required String path,
-    Map<String, String> parameters,
+    required String path,
+    Map<String, String?> parameters = const {},
   });
 
   Future<String> upload({
-    @required String path,
-    @required MultipartFile file,
-    Map<String, String> headers,
-    Map<String, String> fields,
+    required String path,
+    required MultipartFile file,
+    Map<String, String> headers = const {},
+    Map<String, String>? fields,
   });
 
   Future<String> download({
-    @required String path,
-    @required File file,
-    Map<String, String> headers,
-    Map<String, String> fields,
+    required String path,
+    required File file,
+    Map<String, String> headers = const {},
+    Map<String, String> fields = const {},
   });
 }
 
 class ApiProvider implements IApiProvider {
+  ApiProvider({
+    required IApiServerConfigure serverConfiguration,
+    required INetworkInfo networkInfo,
+  })  : _serverConfiguration = serverConfiguration,
+        _networkInfo = networkInfo;
+
   final INetworkInfo _networkInfo;
   final IApiServerConfigure _serverConfiguration;
 
-  ApiProvider({
-    @required IApiServerConfigure serverConfiguration,
-    @required INetworkInfo networkInfo,
-  })  : this._serverConfiguration = serverConfiguration,
-        this._networkInfo = networkInfo;
-
   @override
   Future<String> get({
-    @required String path,
-    Map<String, String> headers,
-    Map<String, String> parameters,
+    required String path,
+    Map<String, String> headers = const {},
+    Map<String, String?> parameters = const {},
   }) async {
     final Uri uriRequest = setupHttpRequest(
       path: path,
@@ -71,10 +70,10 @@ class ApiProvider implements IApiProvider {
 
   @override
   Future<String> post({
-    @required String path,
-    Map<String, String> headers,
-    Map<String, String> parameters,
-    String body,
+    required String path,
+    Map<String, String> headers = const {},
+    Map<String, String?> parameters = const {},
+    String? body,
   }) async {
     final Uri uriRequest = setupHttpRequest(
       path: path,
@@ -88,7 +87,10 @@ class ApiProvider implements IApiProvider {
   }
 
   @override
-  Future<String> delete({String path, Map<String, String> parameters}) async {
+  Future<String> delete({
+    String? path,
+    Map<String, String?> parameters = const {},
+  }) async {
     final Uri uriRequest = setupHttpRequest(
       path: path,
       queryParameters: parameters,
@@ -102,10 +104,10 @@ class ApiProvider implements IApiProvider {
 
   @override
   Future<String> upload({
-    @required String path,
-    @required MultipartFile file,
-    Map<String, String> headers,
-    Map<String, String> fields,
+    required String path,
+    required MultipartFile file,
+    Map<String, String> headers = const {},
+    Map<String, String>? fields,
   }) async {
     final Uri uriRequest = setupHttpRequest(
       path: path,
@@ -113,7 +115,7 @@ class ApiProvider implements IApiProvider {
     );
     final header = await setupHttpHeader(headers);
     final MultipartRequest request = MultipartRequest('POST', uriRequest);
-    final cleanedField = fields == null ? Map<String, String>() : fields;
+    final cleanedField = fields ?? <String, String>{};
     request
       ..headers.addAll(header)
       ..fields.addAll(cleanedField)
@@ -127,10 +129,10 @@ class ApiProvider implements IApiProvider {
 
   @override
   Future<String> download({
-    @required String path,
-    @required File file,
-    Map<String, String> headers,
-    Map<String, String> fields,
+    required String path,
+    required File file,
+    Map<String, String> headers = const {},
+    Map<String, String> fields = const {},
   }) async {
     final Uri uriRequest = setupHttpRequest(
       path: path,
@@ -147,33 +149,32 @@ class ApiProvider implements IApiProvider {
 }
 
 extension _ApiProvider on ApiProvider {
-  Future<Map<String, String>> setupHttpHeader(
-      Map<String, String> headers) async {
-    headers ??= {};
-    headers.addAll(
-      {
-        'X-Api-Key': await _serverConfiguration.apiToken,
-        'User-Agent': await _serverConfiguration.userAgent,
-      },
-    );
+  Future<Map<String, String>> setupHttpHeader([
+    Map<String, String> headers = const {},
+  ]) async {
+    final Map<String, String> httpHeaders = {
+      'X-Api-Key': await _serverConfiguration.apiToken ?? '',
+      'User-Agent': await _serverConfiguration.userAgent,
+      ...headers,
+    };
 
-    if (!headers.containsKey('Content-Type')) {
-      headers['Content-Type'] =
+    if (!httpHeaders.containsKey('Content-Type')) {
+      httpHeaders['Content-Type'] =
           'application/x-www-form-urlencoded; charset=utf-8';
     }
 
-    return headers;
+    return httpHeaders;
   }
 
   Uri setupHttpRequest({
-    @required String path,
-    @required Map<String, String> queryParameters,
+    required String? path,
+    Map<String, String?> queryParameters = const {},
   }) {
-    queryParameters ??= {};
-    queryParameters.removeWhere((k, v) => v == null);
+    final query = {...queryParameters};
+    query.removeWhere((k, v) => v == null);
     return _serverConfiguration.baseUri.replace(
       path: path,
-      queryParameters: queryParameters.isEmpty ? null : queryParameters,
+      queryParameters: query,
     );
   }
 }
@@ -184,14 +185,14 @@ extension _FutureExtension<T extends BaseResponse> on Future<T> {
     final Set<int> invalidSessionCode = {401, 403};
     final Set<int> serverExceptions = {500, 501, 502, 503, 504, 505};
 
-    return this.then(
+    return then(
       (value) async {
         final statusCode = value.statusCode;
 
         if (successfulResponse.contains(statusCode)) {
           return Future.value(value);
         } else if (invalidSessionCode.contains(statusCode)) {
-          throw ApiProviderSessionExpection();
+          throw ApiProviderSessionError();
         } else if (serverExceptions.contains(statusCode)) {
           throw NetworkServerException();
         } else {
@@ -199,17 +200,18 @@ extension _FutureExtension<T extends BaseResponse> on Future<T> {
             throw InternetConnectionException();
           }
 
-          String jsonData;
+          late String jsonData;
           if (value is StreamedResponse) {
             jsonData = await value.stream.bytesToString();
           } else if (value is Response) {
             jsonData = value.body;
           }
 
-          Map<String, dynamic> bodyContent = Map<String, dynamic>();
+          Map<String, dynamic> bodyContent = <String, dynamic>{};
           try {
             bodyContent = jsonDecode(jsonData);
-          } catch (e) {
+          } catch (e, stack) {
+            logError(e, stack);
             bodyContent = {'parserError': e.toString()};
           }
 

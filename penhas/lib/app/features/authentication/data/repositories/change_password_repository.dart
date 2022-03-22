@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:meta/meta.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -9,26 +8,29 @@ import 'package:penhas/app/features/authentication/domain/entities/reset_passwor
 import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
+import 'package:penhas/app/shared/logger/log.dart';
 
 class ChangePasswordRepository
     implements IResetPasswordRepository, IChangePasswordRepository {
-  final IChangePasswordDataSource _dataSource;
-  final INetworkInfo _networkInfo;
-
   ChangePasswordRepository({
-    @required IChangePasswordDataSource changePasswordDataSource,
-    @required INetworkInfo networkInfo,
-  })  : this._networkInfo = networkInfo,
-        this._dataSource = changePasswordDataSource;
+    required IChangePasswordDataSource? changePasswordDataSource,
+    required INetworkInfo? networkInfo,
+  })  : _networkInfo = networkInfo,
+        _dataSource = changePasswordDataSource;
+
+  final IChangePasswordDataSource? _dataSource;
+  final INetworkInfo? _networkInfo;
 
   @override
-  Future<Either<Failure, ResetPasswordResponseEntity>> request(
-      {EmailAddress emailAddress}) async {
+  Future<Either<Failure, ResetPasswordResponseEntity>> request({
+    EmailAddress? emailAddress,
+  }) async {
     try {
       final ResetPasswordResponseEntity result =
-          await _dataSource.request(emailAddress: emailAddress);
+          await _dataSource!.request(emailAddress: emailAddress);
       return right(result);
-    } catch (e) {
+    } catch (e, stack) {
+      logError(e, stack);
       final fail = await _handleError(e);
       return left(fail);
     }
@@ -36,25 +38,26 @@ class ChangePasswordRepository
 
   @override
   Future<Either<Failure, ValidField>> reset({
-    EmailAddress emailAddress,
-    SignUpPassword password,
-    String resetToken,
+    EmailAddress? emailAddress,
+    SignUpPassword? password,
+    String? resetToken,
   }) async {
     try {
-      await _dataSource.reset(
+      await _dataSource!.reset(
         emailAddress: emailAddress,
         password: password,
         resetToken: resetToken,
       );
-      return right(ValidField());
-    } catch (e) {
+      return right(const ValidField());
+    } catch (e, stack) {
+      logError(e, stack);
       final fail = await _handleError(e);
       return left(fail);
     }
   }
 
   Future<Failure> _handleError(Object error) async {
-    if (await _networkInfo.isConnected == false) {
+    if (await _networkInfo!.isConnected == false) {
       return InternetConnectionFailure();
     }
 
@@ -71,15 +74,18 @@ class ChangePasswordRepository
   }
 
   @override
-  Future<Either<Failure, ValidField>> validToken(
-      {EmailAddress emailAddress, String resetToken}) async {
+  Future<Either<Failure, ValidField>> validToken({
+    EmailAddress? emailAddress,
+    String? resetToken,
+  }) async {
     try {
-      await _dataSource.validToken(
+      await _dataSource!.validToken(
         emailAddress: emailAddress,
         resetToken: resetToken,
       );
-      return right(ValidField());
-    } catch (e) {
+      return right(const ValidField());
+    } catch (e, stack) {
+      logError(e, stack);
       final fail = await _handleError(e);
       return left(fail);
     }

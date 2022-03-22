@@ -4,16 +4,16 @@ import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class MainboarButtonPage extends StatelessWidget {
-  final MainboardState currentPage;
-  final MainboardState pageSelected;
-  final void Function(MainboardState) onSelect;
-
   const MainboarButtonPage({
-    Key key,
-    @required this.onSelect,
-    @required this.currentPage,
-    @required this.pageSelected,
+    Key? key,
+    required this.onSelect,
+    required this.currentPage,
+    required this.pageSelected,
   }) : super(key: key);
+
+  final MainboardState currentPage;
+  final MainboardState? pageSelected;
+  final void Function(MainboardState) onSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +21,10 @@ class MainboarButtonPage extends StatelessWidget {
       child: FlatButton(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
-        onPressed: () => this.onSelect(this.currentPage),
+        onPressed: () => onSelect(currentPage),
         child: _buildBottomBarIcon(
-          this.currentPage,
-          this.pageSelected,
+          currentPage,
+          pageSelected!,
         ),
       ),
     );
@@ -32,7 +32,7 @@ class MainboarButtonPage extends StatelessWidget {
 
   Widget _buildBottomBarIcon(MainboardState current, MainboardState selected) {
     String asset;
-    String rootPath = 'assets/images/svg/bottom_bar';
+    const String rootPath = 'assets/images/svg/bottom_bar';
 
     asset = current.when(
       chat: () => '$rootPath/chat.svg',
@@ -54,7 +54,7 @@ class MainboarButtonPage extends StatelessWidget {
 
     final assetColor = selected.maybeWhen(
         helpCenter: () => DesignSystemColors.white,
-        orElse: () => DesignSystemColors.buttonBarIconColor);
+        orElse: () => DesignSystemColors.buttonBarIconColor,);
 
     return SvgPicture.asset(asset, color: assetColor);
   }

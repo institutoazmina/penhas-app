@@ -3,21 +3,14 @@ import 'package:penhas/app/features/support_center/domain/entities/support_cente
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
 
 class SupportCenterPlaceSessionModel extends SupportCenterPlaceSessionEntity {
-  final int maximumRate;
-  final double latitude;
-  final double longitude;
-  final String nextPage;
-  final bool hasMore;
-  final List<SupportCenterPlaceEntity> places;
-
-  SupportCenterPlaceSessionModel(
-    this.maximumRate,
-    this.latitude,
-    this.longitude,
-    this.hasMore,
-    this.nextPage,
-    this.places,
-  ) : super(
+  const SupportCenterPlaceSessionModel({
+    int? maximumRate,
+    double? latitude,
+    double? longitude,
+    bool? hasMore,
+    String? nextPage,
+    List<SupportCenterPlaceEntity> places = const [],
+  }) : super(
           maximumRate: maximumRate,
           latitude: latitude,
           longitude: longitude,
@@ -27,25 +20,26 @@ class SupportCenterPlaceSessionModel extends SupportCenterPlaceSessionEntity {
         );
 
   factory SupportCenterPlaceSessionModel.fromJson(
-      Map<String, Object> jsonData) {
-    final maximumRate = jsonData["avaliacao_maxima"].safeParseInt();
-    final latitude = jsonData["latitude"].safeParseDouble();
-    final longitude = jsonData["longitude"].safeParseDouble();
-    final hasMore = jsonData["has_more"].safeParseBool();
-    final nextPage = jsonData["label"];
+    Map<String, dynamic> jsonData,
+  ) {
+    final maximumRate = "${jsonData["avaliacao_maxima"]}".safeParseInt();
+    final latitude = "${jsonData["latitude"]}".safeParseDouble();
+    final longitude = "${jsonData["longitude"]}".safeParseDouble();
+    final hasMore = "${jsonData["has_more"]}".safeParseBool();
+    final nextPage = jsonData['label'];
 
-    final places = (jsonData["rows"] as List<Object>)
-        .map((e) => e as Map<String, Object>)
+    final places = (jsonData['rows'] as List<dynamic>)
+        .map((e) => e as Map<String, dynamic>)
         .map((e) => SupportCenterPlaceEntity.fromJson(e))
         .toList();
 
     return SupportCenterPlaceSessionModel(
-      maximumRate,
-      latitude,
-      longitude,
-      hasMore,
-      nextPage,
-      places,
+      maximumRate: maximumRate,
+      latitude: latitude,
+      longitude: longitude,
+      hasMore: hasMore,
+      nextPage: nextPage,
+      places: places,
     );
   }
 }

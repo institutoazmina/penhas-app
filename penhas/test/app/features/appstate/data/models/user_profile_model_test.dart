@@ -9,18 +9,10 @@ void main() {
     test('should be a subclass of UserProfileEntity', () async {
       // act
       final profileModel = UserProfileModel(
-        avatar: null,
-        nickname: null,
-        email: null,
-        stealthModeEnabled: null,
-        anonymousModeEnabled: null,
         birthdate: DateTime(1980, 3, 3),
         fullName: 'Fulana da Silva',
-        race: "pardo",
-        genre: "Feminino",
-        jaFoiVitimaDeViolencia: false,
-        minibio: null,
-        skill: null,
+        race: 'pardo',
+        genre: 'Feminino',
       );
       // assert
       expect(profileModel, isA<UserProfileEntity>());
@@ -30,21 +22,20 @@ void main() {
       // arrange
       final jsonData =
           await JsonUtil.getJson(from: 'profile/about_with_quiz_session.json');
-      final Map<String, Object> userProfileData = jsonData['user_profile'];
+      final Map<String, dynamic> userProfileData = jsonData['user_profile'];
       final expected = UserProfileModel(
-        email: userProfileData['email'],
-        nickname: userProfileData['apelido'],
-        avatar: userProfileData['avatar_url'],
+        email: userProfileData['email'] as String?,
+        nickname: userProfileData['apelido'] as String?,
+        avatar: userProfileData['avatar_url'] as String?,
         anonymousModeEnabled: userProfileData['modo_anonimo_ativo'] == 1,
         stealthModeEnabled: userProfileData['modo_camuflado_ativo'] == 1,
         birthdate: DateTime(1980, 3, 3),
-        fullName: userProfileData['nome_completo'],
-        race: userProfileData['raca'],
-        genre: userProfileData['genero'],
+        fullName: userProfileData['nome_completo'] as String?,
+        race: userProfileData['raca'] as String?,
+        genre: userProfileData['genero'] as String?,
         jaFoiVitimaDeViolencia:
             userProfileData['ja_foi_vitima_de_violencia'] == 1,
-        minibio: userProfileData['minibio'],
-        skill: null,
+        minibio: userProfileData['minibio'] as String?,
       );
       // act
       final received = UserProfileModel.fromJson(userProfileData);
@@ -56,35 +47,34 @@ void main() {
       // arrange
       final jsonData =
           await JsonUtil.getJson(from: 'profile/about_with_quiz_session.json');
-      final Map<String, Object> userProfileData = jsonData['user_profile'];
-      final Map<String, Object> expected = {
+      final Map<String, dynamic> userProfileData = jsonData['user_profile'];
+      final Map<String, Object?> expected = {
         'email': userProfileData['email'],
         'apelido': userProfileData['apelido'],
         'avatar_url': userProfileData['avatar_url'],
         'modo_anonimo_ativo': userProfileData['modo_anonimo_ativo'],
         'modo_camuflado_ativo': userProfileData['modo_camuflado_ativo'],
         'dt_nasc': '1980-03-03T00:00:00.000',
-        'nome_completo': "Fulana da Silva",
-        "minibio": null,
-        "raca": "pardo",
-        "genero": "Feminino",
-        "ja_foi_vitima_de_violencia": 0,
-        "skills": null
+        'nome_completo': 'Fulana da Silva',
+        'minibio': null,
+        'raca': 'pardo',
+        'genero': 'Feminino',
+        'ja_foi_vitima_de_violencia': 0,
+        'skills': []
       };
       final userModel = UserProfileModel(
-        email: userProfileData['email'],
-        nickname: userProfileData['apelido'],
-        avatar: userProfileData['avatar_url'],
+        email: userProfileData['email'] as String?,
+        nickname: userProfileData['apelido'] as String?,
+        avatar: userProfileData['avatar_url'] as String?,
         anonymousModeEnabled: userProfileData['modo_anonimo_ativo'] == 1,
         stealthModeEnabled: userProfileData['modo_camuflado_ativo'] == 1,
         birthdate: DateTime(1980, 3, 3),
-        fullName: userProfileData['nome_completo'],
-        race: userProfileData['raca'],
-        genre: userProfileData['genero'],
+        fullName: userProfileData['nome_completo'] as String?,
+        race: userProfileData['raca'] as String?,
+        genre: userProfileData['genero'] as String?,
         jaFoiVitimaDeViolencia:
             userProfileData['ja_foi_vitima_de_violencia'] == 1,
-        minibio: userProfileData['minibio'],
-        skill: null,
+        minibio: userProfileData['minibio'] as String?,
       );
       // act
       final received = userModel.toJson();

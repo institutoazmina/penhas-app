@@ -5,12 +5,12 @@ import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
 
 void main() {
   group(
-    "Cep",
+    'Cep',
     () {
       test(
         'should get CepInvalidFailure for null value',
         () {
-          var result = Cep(null).value;
+          final result = Cep(null).value;
 
           expect(result, left(CepInvalidFailure()));
         },
@@ -18,7 +18,7 @@ void main() {
       test(
         'should get CepInvalidFailure for empty value',
         () {
-          var result = Cep("").value;
+          final result = Cep('').value;
 
           expect(result, left(CepInvalidFailure()));
         },
@@ -27,8 +27,8 @@ void main() {
       test(
         'should get value from a valid cep',
         () {
-          var testValue = "63024-370";
-          var result = Cep(testValue).value;
+          const testValue = '63024-370';
+          final result = Cep(testValue).value;
 
           expect(result, right('63024370'));
         },

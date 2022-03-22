@@ -8,16 +8,17 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/authentication/presentation/shared/password_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/pages/sign_up_three/sign_up_three_controller.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
-import 'sign_up_three_controller.dart';
 
 class SignUpThreePage extends StatefulWidget {
-  final String title;
-  const SignUpThreePage({Key key, this.title = "SignUpThree"})
+  const SignUpThreePage({Key? key, this.title = 'SignUpThree'})
       : super(key: key);
+
+  final String title;
 
   @override
   _SignUpThreePageState createState() => _SignUpThreePageState();
@@ -26,7 +27,7 @@ class SignUpThreePage extends StatefulWidget {
 class _SignUpThreePageState
     extends ModularState<SignUpThreePage, SignUpThreeController>
     with SnackBarHandler {
-  List<ReactionDisposer> _disposers;
+  List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
 
@@ -41,7 +42,9 @@ class _SignUpThreePageState
 
   @override
   void dispose() {
-    _disposers.forEach((d) => d());
+    for (final d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 
@@ -64,25 +67,28 @@ class _SignUpThreePageState
               onTap: () => _handleTap(context),
               onPanDown: (_) => _handleTap(context),
               child: SafeArea(
-                  child: SingleChildScrollView(
-                padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    _buildHeader(),
-                    SizedBox(height: 18.0),
-                    _buildSubHeader(),
-                    SizedBox(height: 22.0),
-                    Observer(builder: (_) => _buildEmailField()),
-                    SizedBox(height: 22.0),
-                    Observer(builder: (_) => _buildPasswordField()),
-                    SizedBox(height: 22.0),
-                    Observer(builder: (_) => _buildConfirmationPasswordField()),
-                    SizedBox(height: 62.0),
-                    SizedBox(height: 40.0, child: _buildNextButton()),
-                  ],
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      _buildHeader(),
+                      const SizedBox(height: 18.0),
+                      _buildSubHeader(),
+                      const SizedBox(height: 22.0),
+                      Observer(builder: (_) => _buildEmailField()),
+                      const SizedBox(height: 22.0),
+                      Observer(builder: (_) => _buildPasswordField()),
+                      const SizedBox(height: 22.0),
+                      Observer(
+                        builder: (_) => _buildConfirmationPasswordField(),
+                      ),
+                      const SizedBox(height: 62.0),
+                      SizedBox(height: 40.0, child: _buildNextButton()),
+                    ],
+                  ),
                 ),
-              )),
+              ),
             ),
           ),
         ),
@@ -102,7 +108,7 @@ class _SignUpThreePageState
   }
 
   SizedBox _buildSubHeader() {
-    return SizedBox(
+    return const SizedBox(
       height: 60.0,
       child: Text(
         'Informe um email e defina uma senha segura. A senha precisa ter no mínimo 8 caracteres, com ao menos 1 letra, 1 número e 1 caractere especial.',
@@ -113,7 +119,7 @@ class _SignUpThreePageState
   }
 
   Text _buildHeader() {
-    return Text(
+    return const Text(
       'Crie sua conta',
       style: kTextStyleRegisterHeaderLabelStyle,
       textAlign: TextAlign.center,
@@ -138,27 +144,28 @@ class _SignUpThreePageState
     );
   }
 
-  RaisedButton _buildNextButton() {
+  Widget _buildNextButton() {
     return RaisedButton(
       onPressed: () => controller.registerUserPress(),
       elevation: 0,
       color: DesignSystemColors.ligthPurple,
-      child: Text(
-        "Cadastrar",
+      shape: kButtonShapeFilled,
+      child: const Text(
+        'Cadastrar',
         style: kTextStyleDefaultFilledButtonLabel,
       ),
-      shape: kButtonShapeFilled,
     );
   }
 
-  _handleTap(BuildContext context) {
-    if (MediaQuery.of(context).viewInsets.bottom > 0)
+  void _handleTap(BuildContext context) {
+    if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
-    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+    }
+    WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 
   ReactionDisposer _showErrorMessage() {
-    return reaction((_) => controller.errorMessage, (String message) {
+    return reaction((_) => controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }

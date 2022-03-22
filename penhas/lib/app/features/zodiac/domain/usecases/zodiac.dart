@@ -32,15 +32,16 @@ class Zodiac {
   IZodiac sign(DateTime birthdate) {
     const List<int> signDays = [0, 22, 20, 21, 21, 22, 23, 23, 23, 23, 22, 22];
 
-    if (birthdate.day < signDays[birthdate.month])
+    if (birthdate.day < signDays[birthdate.month]) {
       return _signNames[birthdate.month - 1];
-    else
+    } else {
       return _signNames[birthdate.month];
+    }
   }
 
   List<IZodiac> pickEigthRandonSign(DateTime birthdate) {
     final currentSign = sign(birthdate);
-    var signs = _signNames;
+    final signs = _signNames;
     signs.removeWhere((e) => e.name == currentSign.name);
     signs.shuffle();
     return signs;

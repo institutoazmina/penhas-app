@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
-import 'package:meta/meta.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/api_client.dart';
@@ -14,123 +13,133 @@ import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entit
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_request.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_session_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_sent_message_response_entity.dart';
-import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
+import 'package:penhas/app/shared/logger/log.dart';
 
 abstract class IChatChannelRepository {
   Future<Either<Failure, ChatChannelAvailableEntity>> listChannel();
   Future<Either<Failure, ChatChannelOpenEntity>> openChannel(String clientId);
   Future<Either<Failure, ChatChannelSessionEntity>> getMessages(
-      ChatChannelRequest option);
+    ChatChannelRequest option,
+  );
   Future<Either<Failure, ChatSentMessageResponseEntity>> sentMessage(
-      ChatChannelRequest option);
+    ChatChannelRequest option,
+  );
   Future<Either<Failure, ValidField>> blockChannel(ChatChannelRequest option);
   Future<Either<Failure, ValidField>> deleteChannel(ChatChannelRequest option);
 }
 
 class ChatChannelRepository implements IChatChannelRepository {
-  final IApiProvider _apiProvider;
-
   ChatChannelRepository({
-    @required IApiProvider apiProvider,
-  }) : this._apiProvider = apiProvider;
+    required IApiProvider? apiProvider,
+  }) : _apiProvider = apiProvider;
+
+  final IApiProvider? _apiProvider;
 
   @override
   Future<Either<Failure, ChatChannelAvailableEntity>> listChannel() async {
-    final endPoint = "/me/chats";
+    const endPoint = '/me/chats';
 
     try {
-      final response = await _apiProvider.get(path: endPoint).parseSession();
+      final response = await _apiProvider!.get(path: endPoint).parseSession();
       return right(response);
-    } catch (error) {
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
 
   @override
   Future<Either<Failure, ChatChannelOpenEntity>> openChannel(
-      String clientId) async {
-    final endPoint = "/me/chats-session";
+    String clientId,
+  ) async {
+    const endPoint = '/me/chats-session';
     final parameters = {
       'prefetch': '1',
       'cliente_id': clientId,
     };
 
     try {
-      final response = await _apiProvider
+      final response = await _apiProvider!
           .post(
             path: endPoint,
             parameters: parameters,
           )
           .parseOpenChannel();
       return right(response);
-    } catch (error) {
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
 
   @override
   Future<Either<Failure, ChatChannelSessionEntity>> getMessages(
-      ChatChannelRequest option) async {
-    final endPoint = "/me/chats-messages";
+    ChatChannelRequest option,
+  ) async {
+    const endPoint = '/me/chats-messages';
     final parameters = {
       'chat_auth': option.token,
       'pagination': option.pagination,
-      'rows': "${option.rows}"
+      'rows': '${option.rows}'
     };
 
     try {
-      final response = await _apiProvider
+      final response = await _apiProvider!
           .get(
             path: endPoint,
             parameters: parameters,
           )
           .parseSessionChannel();
       return right(response);
-    } catch (error) {
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
 
   @override
   Future<Either<Failure, ChatSentMessageResponseEntity>> sentMessage(
-      ChatChannelRequest option) async {
-    final endPoint = "/me/chats-messages";
+    ChatChannelRequest option,
+  ) async {
+    const endPoint = '/me/chats-messages';
     final parameters = {
       'chat_auth': option.token,
     };
 
-    final bodyContent = 'message=' + Uri.encodeComponent(option.message);
+    final bodyContent = 'message=${Uri.encodeComponent(option.message!)}';
 
     try {
-      final response = await _apiProvider
+      final response = await _apiProvider!
           .post(
             path: endPoint,
             parameters: parameters,
             body: bodyContent,
           )
-          .then((v) => jsonDecode(v) as Map<String, Object>)
+          .then((v) => jsonDecode(v) as Map<String, dynamic>)
           .then((v) => ChatSentMessageResponseEntity.fromJson(v));
       return right(response);
-    } catch (error) {
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
 
   @override
   Future<Either<Failure, ValidField>> blockChannel(
-      ChatChannelRequest option) async {
-    final endPoint = "/me/manage-blocks";
+    ChatChannelRequest option,
+  ) async {
+    const endPoint = '/me/manage-blocks';
     final parameters = {
-      'block': option.block ? "1" : "0",
+      'block': option.block! ? '1' : '0',
       'cliente_id': option.clientId,
     };
 
     try {
-      await _apiProvider.post(
+      await _apiProvider!.post(
         path: endPoint,
         parameters: parameters,
       );
-      return right(ValidField());
+      return right(const ValidField());
     } catch (error) {
       return left(MapExceptionToFailure.map(error));
     }
@@ -138,17 +147,19 @@ class ChatChannelRepository implements IChatChannelRepository {
 
   @override
   Future<Either<Failure, ValidField>> deleteChannel(
-      ChatChannelRequest option) async {
-    final endPoint = "/me/chats-session";
+    ChatChannelRequest option,
+  ) async {
+    const endPoint = '/me/chats-session';
     final parameters = {'chat_auth': option.token};
 
     try {
-      await _apiProvider.delete(
+      await _apiProvider!.delete(
         path: endPoint,
         parameters: parameters,
       );
-      return right(ValidField());
-    } catch (error) {
+      return right(const ValidField());
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
@@ -156,20 +167,17 @@ class ChatChannelRepository implements IChatChannelRepository {
 
 extension _ChatChannelRepository<T extends String> on Future<T> {
   Future<ChatChannelAvailableEntity> parseSession() async {
-    return this
-        .then((v) => jsonDecode(v) as Map<String, Object>)
+    return then((v) => jsonDecode(v) as Map<String, dynamic>)
         .then((v) => ChatChannelAvailableModel.fromJson(v));
   }
 
   Future<ChatChannelOpenEntity> parseOpenChannel() async {
-    return this
-        .then((v) => jsonDecode(v) as Map<String, Object>)
+    return then((v) => jsonDecode(v) as Map<String, dynamic>)
         .then((v) => ChatChannelOpenModel.fromJson(v));
   }
 
   Future<ChatChannelSessionEntity> parseSessionChannel() async {
-    return this
-        .then((v) => jsonDecode(v) as Map<String, Object>)
+    return then((v) => jsonDecode(v) as Map<String, dynamic>)
         .then((v) => ChatChannelSessionModel.fromJson(v));
   }
 }

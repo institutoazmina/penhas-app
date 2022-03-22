@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 enum PageProgressState { initial, loading, loaded }
 
 class PageProgressIndicator extends StatefulWidget {
+  const PageProgressIndicator({
+    Key? key,
+    required this.child,
+    required this.progressState,
+    this.progressMessage = 'Processando',
+  }) : super(key: key);
+
   final Widget child;
   final PageProgressState progressState;
   final String progressMessage;
-
-  PageProgressIndicator({
-    Key key,
-    @required this.child,
-    @required this.progressState,
-    this.progressMessage = 'Processando',
-  }) : super(key: key);
 
   @override
   _PageProgressIndicator createState() => _PageProgressIndicator();
@@ -20,12 +20,12 @@ class PageProgressIndicator extends StatefulWidget {
 
 class _PageProgressIndicator extends State<PageProgressIndicator>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> _animation;
-  bool _isProgressVisible;
-  final Color _backgroundColor = Colors.black45;
-
   _PageProgressIndicator();
+
+  late AnimationController _controller;
+  late Animation<double> _animation;
+  late bool _isProgressVisible;
+  final Color _backgroundColor = Colors.black45;
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _PageProgressIndicator extends State<PageProgressIndicator>
     _isProgressVisible = false;
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 20),
+      duration: const Duration(milliseconds: 20),
     );
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
     _animation.addStatusListener((status) {
@@ -72,7 +72,7 @@ class _PageProgressIndicator extends State<PageProgressIndicator>
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> widgets = <Widget>[];
+    final List<Widget> widgets = <Widget>[];
     widgets.add(widget.child);
 
     if (_isProgressVisible) {
@@ -104,9 +104,9 @@ class _PageProgressIndicator extends State<PageProgressIndicator>
         width: 100,
         child: Row(
           children: [
-            SizedBox(width: 18),
-            CircularProgressIndicator(),
-            SizedBox(width: 18),
+            const SizedBox(width: 18),
+            const CircularProgressIndicator(),
+            const SizedBox(width: 18),
             Text(widget.progressMessage),
           ],
         ),

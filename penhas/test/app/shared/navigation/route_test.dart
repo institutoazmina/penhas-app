@@ -5,27 +5,27 @@ void main() {
 
   group('Route', () {
     test('no argument route', () {
-      AppRoute actual = AppRoute('/aroute');
+      final AppRoute actual = AppRoute('/aroute');
       expect(actual.args, null);
       expect(actual.path, '/aroute');
     });
 
     test('single argument route', () {
-      AppRoute actual = AppRoute('/aroute?arg=val');
-      expect(actual.args, {"arg": "val"});
+      final AppRoute actual = AppRoute('/aroute?arg=val');
+      expect(actual.args, {'arg': 'val'});
       expect(actual.path, '/aroute');
     });
 
     test('repeated arguments route', () {
-      AppRoute actual = AppRoute('/aroute?arg=val&arg=other');
-      expect(actual.args, {"arg": "other"});
+      final AppRoute actual = AppRoute('/aroute?arg=val&arg=other');
+      expect(actual.args, {'arg': 'other'});
       expect(actual.path, '/aroute');
     });
 
 
     test('two arguments route', () {
-      AppRoute actual = AppRoute('/aroute?arg=val&second=arg');
-      expect(actual.args, {"arg": "val", "second": "arg"});
+      final AppRoute actual = AppRoute('/aroute?arg=val&second=arg');
+      expect(actual.args, {'arg': 'val', 'second': 'arg'});
       expect(actual.path, '/aroute');
     });
   });

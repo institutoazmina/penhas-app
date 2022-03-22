@@ -8,20 +8,19 @@ import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class TweetTitle extends StatelessWidget {
+  const TweetTitle({
+    Key? key,
+    required this.tweet,
+    required BuildContext context,
+    required this.controller,
+    this.isDetail = false,
+  })  : _context = context,
+        super(key: key);
+
   final TweetEntity tweet;
   final BuildContext _context;
-  final ITweetController controller;
+  final ITweetController? controller;
   final bool isDetail;
-
-  const TweetTitle({
-    Key key,
-    @required this.tweet,
-    @required BuildContext context,
-    @required this.controller,
-    this.isDetail = false,
-  })  : assert(tweet != null),
-        _context = context,
-        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +32,10 @@ class TweetTitle extends StatelessWidget {
   Widget _buildTime() {
     timeago.setLocaleMessages('pt_br', timeago.PtBrMessages());
     final parsedTime = _mapServerUtcToLocalDate(tweet.createdAt);
-    return Text(timeago.format(parsedTime, locale: 'pt_br'),
-        style: kTextStyleFeedTweetTime);
+    return Text(
+      timeago.format(parsedTime, locale: 'pt_br'),
+      style: kTextStyleFeedTweetTime,
+    );
   }
 
   Widget _buildDetailTime() {
@@ -47,18 +48,18 @@ class TweetTitle extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0),
       child: Text(
-        "$day/$month/${parsedTime.year} · $hour:$minute",
+        '$day/$month/${parsedTime.year} · $hour:$minute',
         style: kTextStyleFeedTweetTime,
       ),
     );
   }
 
   String _stringfyFormatted(int value) {
-    return value > 9 ? "$value" : "0$value";
+    return value > 9 ? '$value' : '0$value';
   }
 
-  DateTime _mapServerUtcToLocalDate(String time) {
-    final utcEnabled = "${time}Z";
+  DateTime _mapServerUtcToLocalDate(String? time) {
+    final utcEnabled = '${time}Z';
 
     return DateTime.parse(utcEnabled).toLocal();
   }
@@ -67,14 +68,14 @@ class TweetTitle extends StatelessWidget {
     return MediaQuery.of(context).size.width;
   }
 
-  void _showTweetAction() async {
+  Future<void> _showTweetAction() async {
     await showModalBottomSheet(
       context: _context,
       backgroundColor: Colors.transparent,
       builder: (context) {
         return Container(
-          padding: EdgeInsets.only(top: 5, bottom: 0),
-          decoration: BoxDecoration(
+          padding: const EdgeInsets.only(top: 5),
+          decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
@@ -96,7 +97,7 @@ class TweetTitle extends StatelessWidget {
       height: 5,
       decoration: BoxDecoration(
         color: Theme.of(context).dividerColor,
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(10),
         ),
       ),
@@ -104,13 +105,14 @@ class TweetTitle extends StatelessWidget {
   }
 
   List<Widget> _buildAction() {
-    List<Widget> actions = List<Widget>();
+    final List<Widget> actions = [];
     if (!tweet.anonymous && !tweet.meta.owner) {
       actions.add(
         ListTile(
           leading: SvgPicture.asset(
-              'assets/images/svg/tweet_action/tweet_action_chat.svg'),
-          title: Text('Conversar'),
+            'assets/images/svg/tweet_action/tweet_action_chat.svg',
+          ),
+          title: const Text('Conversar'),
           onTap: () => _showUserChat(),
         ),
       );
@@ -120,11 +122,12 @@ class TweetTitle extends StatelessWidget {
       actions.add(
         ListTile(
           leading: SvgPicture.asset(
-              'assets/images/svg/tweet_action/tweet_action_report.svg'),
-          title: Text('Denunciar'),
+            'assets/images/svg/tweet_action/tweet_action_report.svg',
+          ),
+          title: const Text('Denunciar'),
           onTap: () {
             Navigator.of(_context).pop();
-            controller.report(tweet);
+            controller!.report(tweet);
           },
         ),
       );
@@ -135,10 +138,11 @@ class TweetTitle extends StatelessWidget {
         0,
         ListTile(
           leading: SvgPicture.asset(
-              'assets/images/svg/tweet_action/tweet_action_delete.svg'),
-          title: Text('Apagar'),
+            'assets/images/svg/tweet_action/tweet_action_delete.svg',
+          ),
+          title: const Text('Apagar'),
           onTap: () {
-            controller
+            controller!
                 .delete(tweet)
                 .whenComplete(() => Navigator.of(_context).pop());
           },
@@ -153,14 +157,17 @@ class TweetTitle extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
-            child: Text(tweet.userName, style: kTextStyleFeedTweetTitle),
-            flex: 2),
-        isDetail ? _buildDetailTime() : _buildTime(),
-        controller == null
-            ? Container()
-            : IconButton(
-                icon: Icon(Icons.more_vert),
-                onPressed: () => _showTweetAction()),
+          flex: 2,
+          child: Text(tweet.userName!, style: kTextStyleFeedTweetTitle),
+        ),
+        if (isDetail) _buildDetailTime() else _buildTime(),
+        if (controller == null)
+          Container()
+        else
+          IconButton(
+            icon: const Icon(Icons.more_vert),
+            onPressed: () => _showTweetAction(),
+          ),
       ],
     );
   }
@@ -170,19 +177,21 @@ class TweetTitle extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: FlatButton(
-            child: _buttonTitle(),
             onPressed: () => _showUserProfile(),
             color: Colors.transparent,
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             padding: EdgeInsets.zero,
+            child: _buttonTitle(),
           ),
         ),
-        controller == null
-            ? Container()
-            : IconButton(
-                icon: Icon(Icons.more_vert),
-                onPressed: () => _showTweetAction()),
+        if (controller == null)
+          Container()
+        else
+          IconButton(
+            icon: const Icon(Icons.more_vert),
+            onPressed: () => _showTweetAction(),
+          ),
       ],
     );
   }
@@ -191,8 +200,8 @@ class TweetTitle extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(tweet.userName, style: kTextStyleFeedTweetTitle),
-        isDetail ? _buildDetailTime() : _buildTime(),
+        Text(tweet.userName!, style: kTextStyleFeedTweetTitle),
+        if (isDetail) _buildDetailTime() else _buildTime(),
       ],
     );
   }
@@ -201,7 +210,7 @@ class TweetTitle extends StatelessWidget {
     final routeOption = FeedRouterType.profile(tweet.clientId);
 
     Modular.to.pushNamed(
-      "/mainboard/tweet/perfil_chat",
+      '/mainboard/tweet/perfil_chat',
       arguments: routeOption,
     );
   }
@@ -210,7 +219,7 @@ class TweetTitle extends StatelessWidget {
     final routeOption = FeedRouterType.chat(tweet.clientId);
 
     Modular.to.pushNamed(
-      "/mainboard/tweet/perfil_chat",
+      '/mainboard/tweet/perfil_chat',
       arguments: routeOption,
     );
   }

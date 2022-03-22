@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class SupportCenterLocationGeneralError extends StatelessWidget {
-  final String _message;
-
   const SupportCenterLocationGeneralError({
-    Key key,
-    @required String message,
-  })  : this._message = message,
+    Key? key,
+    required String message,
+  })  : _message = message,
         super(key: key);
+
+  final String _message;
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +20,8 @@ class SupportCenterLocationGeneralError extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(
+              const Padding(
+                padding: EdgeInsets.only(
                   bottom: 28.0,
                   top: 12.0,
                 ),
@@ -36,8 +36,8 @@ class SupportCenterLocationGeneralError extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 32.0),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 32.0),
                 child: Icon(
                   Icons.warning,
                   color: DesignSystemColors.white,
@@ -48,7 +48,7 @@ class SupportCenterLocationGeneralError extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                 child: Text(
                   _message,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'Lato',
                     fontSize: 18.0,
                     fontWeight: FontWeight.normal,

@@ -6,5 +6,5 @@ PROJECT_DIR=$(dirname $(dirname `realpath ${BASH_SOURCE[0]}`))
 
 cd $PROJECT_DIR
 
-fastlane android distribute_android_beta --verbose
-#fastlane ios distribute_iOS_beta --verbose
+bundle exec fastlane android firebase_distribute --verbose
+bundle exec fastlane ios     firebase_distribute --verbose

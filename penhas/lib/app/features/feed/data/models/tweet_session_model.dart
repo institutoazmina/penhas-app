@@ -1,15 +1,16 @@
+import 'package:collection/collection.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_model.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
 
 class TweetSessionModel extends TweetSessionEntity {
-  TweetSessionModel(
-    bool hasMore,
+  const TweetSessionModel(
     TweetSessionOrder orderBy,
-    TweetTiles parent,
+    TweetTiles? parent,
     List<TweetTiles> tweets,
-    String nextPage,
-  ) : super(
+    String? nextPage, {
+    required bool hasMore,
+  }) : super(
           hasMore: hasMore,
           orderBy: orderBy,
           parent: parent,
@@ -17,32 +18,39 @@ class TweetSessionModel extends TweetSessionEntity {
           nextPage: nextPage,
         );
 
-  factory TweetSessionModel.fromJson(Map<String, Object> jsonData) {
-    final hasMore = jsonData['has_more'] == 1 ?? false;
+  factory TweetSessionModel.fromJson(Map<String, dynamic> jsonData) {
+    final hasMore = jsonData['has_more'] == 1;
     final nextPage = jsonData['next_page'];
     final orderBy = jsonData['order_by'] == 'latest_first'
         ? TweetSessionOrder.latestFirst
         : TweetSessionOrder.oldestFirst;
     final tweets = _parseTweet(jsonData['tweets']);
-    final parent =
-        jsonData['parent'] != null ? _parseJson(jsonData['parent']) : null;
+    final parent = jsonData['parent'] != null
+        ? _parseJson(jsonData['parent'] as Map<String, dynamic>)
+        : null;
 
-    return TweetSessionModel(hasMore, orderBy, parent, tweets, nextPage);
+    return TweetSessionModel(
+      orderBy,
+      parent,
+      tweets,
+      nextPage,
+      hasMore: hasMore,
+    );
   }
 
-  static List<TweetTiles> _parseTweet(List<Object> tweets) {
+  static List<TweetTiles> _parseTweet(List<dynamic>? tweets) {
     if (tweets == null || tweets.isEmpty) {
       return [];
     }
 
     return tweets
-        .map((e) => e as Map<String, Object>)
+        .map((e) => e as Map<String, dynamic>)
         .map((e) => _parseJson(e))
-        .where((e) => e != null)
+        .whereNotNull()
         .toList();
   }
 
-  static TweetTiles _parseJson(Map<String, dynamic> json) {
+  static TweetTiles? _parseJson(Map<String, dynamic> json) {
     if (json['type'] == 'tweet') {
       return TweetModel.fromJson(json);
     }

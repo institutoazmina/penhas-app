@@ -15,22 +15,23 @@ import 'package:penhas/app/features/authentication/presentation/shared/user_regi
 part 'sign_up_two_controller.g.dart';
 
 class MenuItemModel {
-  final String display;
-  final String value;
-
   MenuItemModel(this.display, this.value);
+
+  final String? display;
+  final String value;
 }
 
 class SignUpTwoController extends _SignUpTwoControllerBase
     with _$SignUpTwoController {
-  SignUpTwoController(IUserRegisterRepository repository,
-      UserRegisterFormFieldModel userFormFielModel)
-      : super(repository, userFormFielModel);
+  SignUpTwoController(
+    IUserRegisterRepository repository,
+    UserRegisterFormFieldModel userFormFielModel,
+  ) : super(repository, userFormFielModel);
 
   static List<MenuItemModel> genreDataSource() {
     return Genre.values
         .map(
-          (v) => MenuItemModel(_mapGenreToLabel(v), "${v.index}"),
+          (v) => MenuItemModel(_mapGenreToLabel(v), '${v.index}'),
         )
         .toList();
   }
@@ -38,13 +39,13 @@ class SignUpTwoController extends _SignUpTwoControllerBase
   static List<MenuItemModel> raceDataSource() {
     return HumanRace.values
         .map(
-          (v) => MenuItemModel(v.label, "${v.index}"),
+          (v) => MenuItemModel(v.label, '${v.index}'),
         )
         .toList();
   }
 
-  static String _mapGenreToLabel(Genre genre) {
-    String label;
+  static String? _mapGenreToLabel(Genre genre) {
+    String? label;
     switch (genre) {
       case Genre.female:
         label = 'Feminino';
@@ -68,16 +69,16 @@ class SignUpTwoController extends _SignUpTwoControllerBase
 }
 
 abstract class _SignUpTwoControllerBase with Store, MapFailureMessage {
+  _SignUpTwoControllerBase(this.repository, this._userRegisterModel);
+
   final IUserRegisterRepository repository;
   final UserRegisterFormFieldModel _userRegisterModel;
 
   final String genreMessageErro = 'Gênero é requirido';
   final String raceMessageErro = 'Raça é requerida';
 
-  _SignUpTwoControllerBase(this.repository, this._userRegisterModel);
-
   @observable
-  ObservableFuture<Either<Failure, ValidField>> _progress;
+  ObservableFuture<Either<Failure, ValidField>>? _progress;
 
   @observable
   String warningNickname = '';
@@ -105,11 +106,11 @@ abstract class _SignUpTwoControllerBase with Store, MapFailureMessage {
 
   @computed
   PageProgressState get currentState {
-    if (_progress == null || _progress.status == FutureStatus.rejected) {
+    if (_progress == null || _progress!.status == FutureStatus.rejected) {
       return PageProgressState.initial;
     }
 
-    return _progress.status == FutureStatus.pending
+    return _progress!.status == FutureStatus.pending
         ? PageProgressState.loading
         : PageProgressState.loaded;
   }
@@ -118,8 +119,7 @@ abstract class _SignUpTwoControllerBase with Store, MapFailureMessage {
   void setNickname(String name) {
     _userRegisterModel.nickname = Nickname(name);
 
-    warningNickname =
-        name.length == 0 ? '' : _userRegisterModel.validateNickname;
+    warningNickname = name.isEmpty ? '' : _userRegisterModel.validateNickname;
   }
 
   @action
@@ -127,11 +127,12 @@ abstract class _SignUpTwoControllerBase with Store, MapFailureMessage {
     _userRegisterModel.socialName = Fullname(name);
 
     warningSocialName =
-        name.length == 0 ? '' : _userRegisterModel.validateSocialName;
+        name.isEmpty ? '' : _userRegisterModel.validateSocialName;
   }
 
   @action
-  void setGenre(String label) {
+  void setGenre(String? label) {
+    if (label == null) return;
     _userRegisterModel.genre = Genre.values[int.parse(label)];
     currentGenre = label;
     warningGenre = '';
@@ -146,7 +147,8 @@ abstract class _SignUpTwoControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  void setRace(String label) {
+  void setRace(String? label) {
+    if (label == null) return;
     _userRegisterModel.race = HumanRace.values[int.parse(label)];
     currentRace = label;
     warningRace = '';
@@ -154,7 +156,7 @@ abstract class _SignUpTwoControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> nextStepPressed() async {
-    _setErrorMessage('');
+    errorMessage = '';
     if (!_isValidToProceed()) {
       return;
     }
@@ -171,7 +173,7 @@ abstract class _SignUpTwoControllerBase with Store, MapFailureMessage {
       ),
     );
 
-    final response = await _progress;
+    final Either<Failure, ValidField> response = await _progress!;
     response.fold(
       (failure) => mapFailureMessage(failure),
       (session) => _forwardToStep3(),
@@ -179,8 +181,10 @@ abstract class _SignUpTwoControllerBase with Store, MapFailureMessage {
   }
 
   void _forwardToStep3() {
-    Modular.to.pushNamed('/authentication/signup/step3',
-        arguments: _userRegisterModel);
+    Modular.to.pushNamed(
+      '/authentication/signup/step3',
+      arguments: _userRegisterModel,
+    );
   }
 
   bool _isValidToProceed() {
@@ -202,9 +206,5 @@ abstract class _SignUpTwoControllerBase with Store, MapFailureMessage {
     }
 
     return isValid;
-  }
-
-  void _setErrorMessage(String message) {
-    errorMessage = message;
   }
 }

@@ -4,28 +4,24 @@ import 'package:penhas/app/features/users/domain/entities/user_detail_profile_en
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatPeopleCard extends StatelessWidget {
+  const ChatPeopleCard({
+    Key? key,
+    required this.person,
+    required this.onPressed,
+  }) : super(key: key);
+
   final UserDetailProfileEntity person;
   final void Function(UserDetailProfileEntity person) onPressed;
 
-  const ChatPeopleCard({
-    Key key,
-    @required this.person,
-    @required this.onPressed,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    if (person == null) {
-      return Container();
-    }
-
     return GestureDetector(
       onTap: () => onPressed(person),
       child: Container(
         height: 80,
         decoration: BoxDecoration(
           border: Border(
-            bottom: BorderSide(color: Colors.grey[350]),
+            bottom: BorderSide(color: Colors.grey[350]!),
           ),
         ),
         child: Padding(
@@ -33,9 +29,9 @@ class ChatPeopleCard extends StatelessWidget {
           child: Row(
             children: [
               CircleAvatar(
-                backgroundColor: Color.fromRGBO(239, 239, 239, 1.0),
+                backgroundColor: const Color.fromRGBO(239, 239, 239, 1.0),
                 radius: 20,
-                child: SvgPicture.network(person.avatar),
+                child: SvgPicture.network(person.avatar!),
               ),
               Expanded(
                 child: Padding(
@@ -45,9 +41,9 @@ class ChatPeopleCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(width: 16),
-                      Text(person.nickname, style: cardTitleTextStyle),
-                      Text(person.activity, style: cardStatusTextStyle),
+                      const SizedBox(width: 16),
+                      Text(person.nickname!, style: cardTitleTextStyle),
+                      Text(person.activity!, style: cardStatusTextStyle),
                     ],
                   ),
                 ),
@@ -61,16 +57,18 @@ class ChatPeopleCard extends StatelessWidget {
 }
 
 extension _ChatTalkCardPrivate on ChatPeopleCard {
-  TextStyle get cardTitleTextStyle => TextStyle(
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      letterSpacing: 0.5,
-      color: DesignSystemColors.darkIndigoThree,
-      fontWeight: FontWeight.bold);
-  TextStyle get cardStatusTextStyle => TextStyle(
-      fontFamily: 'Lato',
-      fontSize: 12.0,
-      letterSpacing: 0.4,
-      color: DesignSystemColors.warnGrey,
-      fontWeight: FontWeight.normal);
+  TextStyle get cardTitleTextStyle => const TextStyle(
+        fontFamily: 'Lato',
+        fontSize: 14.0,
+        letterSpacing: 0.5,
+        color: DesignSystemColors.darkIndigoThree,
+        fontWeight: FontWeight.bold,
+      );
+  TextStyle get cardStatusTextStyle => const TextStyle(
+        fontFamily: 'Lato',
+        fontSize: 12.0,
+        letterSpacing: 0.4,
+        color: DesignSystemColors.warnGrey,
+        fontWeight: FontWeight.normal,
+      );
 }

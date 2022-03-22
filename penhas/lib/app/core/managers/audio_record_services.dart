@@ -4,71 +4,82 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:intl/intl.dart' show DateFormat;
+import 'package:logger/logger.dart' show Level;
+import 'package:penhas/app/core/extension/asuka.dart';
+import 'package:penhas/app/core/managers/audio_sync_manager.dart';
 import 'package:penhas/app/core/states/audio_permission_state.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
+import 'package:penhas/app/shared/logger/log.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
 
-import 'audio_sync_manager.dart';
-
 class AudioActivity {
+  AudioActivity(this.time, this.decibels);
+
   final String time;
   final double decibels;
-
-  AudioActivity(this.time, this.decibels);
 }
 
 abstract class IAudioRecordServices {
   Future<AudioPermissionState> requestPermission();
+
   Future<AudioPermissionState> permissionStatus();
+
   Future<void> start();
+
   Future<void> rotate();
+
   Future<void> stop();
+
   Stream<AudioActivity> get onProgress;
+
   void dispose();
 }
 
 class AudioRecordServices implements IAudioRecordServices {
-  FlutterSoundRecorder _recorder = FlutterSoundRecorder();
+  AudioRecordServices({required IAudioSyncManager audioSyncManager})
+      : _audioSyncManager = audioSyncManager;
+
+  late final FlutterSoundRecorder _recorder =
+      FlutterSoundRecorder(logLevel: Level.warning);
   final IAudioSyncManager _audioSyncManager;
   final _audioCodec = Codec.aacADTS;
-  String _currentAudionSession;
-  int _sessionSequence;
-  Duration _currentDuration = Duration(milliseconds: 0);
-  Duration _runningDuration = Duration(milliseconds: 0);
+  String? _currentAudionSession;
+  late int _sessionSequence;
+  Duration _currentDuration = Duration.zero;
+  Duration _runningDuration = Duration.zero;
 
-  StreamSubscription _recorderSubscription;
-  StreamController<AudioActivity> _streamController =
+  StreamSubscription? _recorderSubscription;
+  StreamController<AudioActivity>? _streamController =
       StreamController.broadcast();
 
-  AudioRecordServices({@required IAudioSyncManager audioSyncManager})
-      : this._audioSyncManager = audioSyncManager;
-
   @override
-  Stream<AudioActivity> get onProgress => _streamController.stream;
+  Stream<AudioActivity> get onProgress => _streamController!.stream;
 
   @override
   Future<void> start() async {
     _sessionSequence = 0;
-    _currentAudionSession = Uuid().v4();
+    _currentAudionSession = const Uuid().v4();
     _streamController ??= StreamController.broadcast();
 
     await permissionStatus().then(
       (p) => p.maybeWhen(
-          granted: () async => _setupRecordEnviroment(),
-          orElse: () => requestPermission()),
+        granted: () async => _setupRecordEnviroment(),
+        orElse: () => requestPermission(),
+      ),
     );
   }
 
   @override
   Future<void> stop() async {
     try {
+      if (_recorder.isStopped) return;
       await _recorder
           .stopRecorder()
           .then((value) => _audioSyncManager.syncAudio());
-    } catch (e) {
-      print(e);
+    } catch (e, stack) {
+      logError(e, stack);
     }
   }
 
@@ -86,12 +97,10 @@ class AudioRecordServices implements IAudioRecordServices {
     _audioSyncManager.syncAudio();
 
     try {
-      if (_streamController != null) {
-        _streamController.close();
-        _streamController = null;
-      }
-    } catch (e) {
-      print(e);
+      _streamController?.close();
+      _streamController = null;
+    } catch (e, stack) {
+      logError(e, stack);
     }
   }
 
@@ -104,10 +113,10 @@ class AudioRecordServices implements IAudioRecordServices {
   Future<AudioPermissionState> requestPermission() {
     return permissionStatus().then(
       (p) => p.when(
-        granted: () => AudioPermissionState.granted(),
-        denied: () => askWhenPermissionIsDenied(),
+        granted: () => const AudioPermissionState.granted(),
+        denied: () => askForPermission(),
         permanentlyDenied: () => askWhenPermissionIsDenied(),
-        restricted: () => AudioPermissionState.restricted(),
+        restricted: () => const AudioPermissionState.restricted(),
         undefined: () => askForPermission(),
       ),
     );
@@ -118,37 +127,35 @@ extension _PermissionStatusMap on PermissionStatus {
   AudioPermissionState mapFrom() {
     switch (this) {
       case PermissionStatus.denied:
-        return AudioPermissionState.denied();
+        return const AudioPermissionState.denied();
       case PermissionStatus.granted:
-        return AudioPermissionState.granted();
+        return const AudioPermissionState.granted();
       case PermissionStatus.restricted:
-        return AudioPermissionState.restricted();
+        return const AudioPermissionState.restricted();
       case PermissionStatus.permanentlyDenied:
-        return AudioPermissionState.permanentlyDenied();
-      case PermissionStatus.undetermined:
-        return AudioPermissionState.undefined();
+        return const AudioPermissionState.permanentlyDenied();
+      case PermissionStatus.limited:
+        return const AudioPermissionState.undefined();
     }
-
-    return AudioPermissionState.undefined();
   }
 }
 
 extension _AudioRecordServices on AudioRecordServices {
   void _cancelRecorderSubscriptions() {
-    if (_recorderSubscription != null) {
-      _recorderSubscription.cancel();
-      _recorderSubscription = null;
-    }
+    _recorderSubscription?.cancel();
+    _recorderSubscription = null;
 
     _streamController?.close();
   }
 
   Future<void> _releaseAudioSession() async {
     try {
-      await _recorder.stopRecorder();
+      if (!_recorder.isStopped) {
+        await _recorder.stopRecorder();
+      }
       await _recorder.closeAudioSession();
-    } catch (e) {
-      print('error on release _recorder');
+    } catch (e, stack) {
+      logError(e, stack);
     }
   }
 
@@ -160,59 +167,61 @@ extension _AudioRecordServices on AudioRecordServices {
     );
 
     _currentDuration = Duration(
-        milliseconds:
-            _currentDuration.inMilliseconds + _runningDuration.inMilliseconds);
+      milliseconds:
+          _currentDuration.inMilliseconds + _runningDuration.inMilliseconds,
+    );
 
     _sessionSequence += 1;
     _audioSyncManager
         .audioFile(
-            session: _currentAudionSession,
-            sequence: _sessionSequence.toString())
+          session: _currentAudionSession,
+          sequence: _sessionSequence.toString(),
+        )
         .then((file) => _startRecorder(file));
   }
 
   Future<void> _startRecorder(String path) async {
     try {
-      _recorder.startRecorder(
+      _recorder.setSubscriptionDuration(const Duration(milliseconds: 100));
+      await _recorder.startRecorder(
         codec: _audioCodec,
         toFile: path,
         bitRate: 96000,
         sampleRate: 32000,
-        numChannels: 1,
       );
 
-      _recorderSubscription = _recorder.onProgress.listen(
+      _recorderSubscription = _recorder.onProgress?.listen(
         (e) {
-          if (e != null && e.duration != null) {
-            _runningDuration = e.duration;
-            DateTime date = new DateTime.fromMillisecondsSinceEpoch(
-                _runningDuration.inMilliseconds +
-                    _currentDuration.inMilliseconds,
-                isUtc: true);
-            String recordTime =
-                DateFormat('mm:ss:SS', 'en_GB').format(date).substring(0, 8);
-            _streamController.add(AudioActivity(recordTime, e.decibels));
-          }
+          _runningDuration = e.duration;
+          final DateTime date = DateTime.fromMillisecondsSinceEpoch(
+            _runningDuration.inMilliseconds + _currentDuration.inMilliseconds,
+            isUtc: true,
+          );
+          final String recordTime =
+              DateFormat('mm:ss:SS', 'en_GB').format(date).substring(0, 8);
+          _streamController!.add(AudioActivity(recordTime, e.decibels ?? 0));
         },
+        onError: catchErrorLogger,
       );
-    } catch (err) {
-      print('startRecorder error: $err');
+    } catch (err, stack) {
+      logError(err, stack);
       _stopRecorder();
     }
   }
 
-  void _stopRecorder() async {
+  Future<void> _stopRecorder() async {
     try {
       await _recorder.stopRecorder();
       _cancelRecorderSubscriptions();
-    } catch (err) {
-      print('stopRecorder error: $err');
+    } catch (err, stack) {
+      logError(err, stack);
       _cancelRecorderSubscriptions();
     }
   }
 
   Future<AudioPermissionState> askForPermissionIfNeeded(
-      AudioPermissionState state) async {
+    AudioPermissionState state,
+  ) async {
     return state.maybeWhen(
       permanentlyDenied: () => askWhenPermissionIsDenied(),
       orElse: () => state,
@@ -226,21 +235,23 @@ extension _AudioRecordServices on AudioRecordServices {
           builder: (context) {
             return AlertDialog(
               title: Column(
-                children: <Widget>[
+                children: const <Widget>[
                   Icon(
                     Icons.mic_none,
                     color: DesignSystemColors.easterPurple,
                     size: 48,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 12.0),
-                    child: Text('Acesso ao microfone',
-                        style: kTextStyleAlertDialogTitle),
+                    padding: EdgeInsets.only(top: 12.0),
+                    child: Text(
+                      'Acesso ao microfone',
+                      style: kTextStyleAlertDialogTitle,
+                    ),
                   ),
                 ],
               ),
               content: RichText(
-                text: TextSpan(
+                text: const TextSpan(
                   text: 'PenhaS precisa ter acesso ao microfone para ',
                   style: kTextStyleAlertDialogDescription,
                   children: [
@@ -268,23 +279,26 @@ extension _AudioRecordServices on AudioRecordServices {
               ),
               actions: <Widget>[
                 FlatButton(
-                  child: Text('Agora não'),
+                  child: const Text('Agora não'),
                   onPressed: () async {
-                    Modular.to.pop(AudioPermissionState.denied());
+                    Navigator.of(context)
+                        .pop(const AudioPermissionState.denied());
                   },
                 ),
                 SizedBox(
                   width: 120,
                   child: FlatButton(
                     color: DesignSystemColors.easterPurple,
-                    child: Text('Sim claro!',
-                        style: TextStyle(color: Colors.white)),
+                    child: const Text(
+                      'Sim claro!',
+                      style: TextStyle(color: Colors.white),
+                    ),
                     onPressed: () async {
                       Permission.microphone
                           .request()
                           .then((value) => value.mapFrom())
                           .then((value) => askForPermissionIfNeeded(value))
-                          .then((value) => Modular.to.pop(value));
+                          .then((value) => Navigator.of(context).pop(value));
                     },
                   ),
                 ),
@@ -294,8 +308,11 @@ extension _AudioRecordServices on AudioRecordServices {
         )
         .then((value) => value as AudioPermissionState)
         .catchError(
-          (_) => AudioPermissionState.undefined(),
-        );
+      (e, stack) {
+        logError(e, stack);
+        return const AudioPermissionState.undefined();
+      },
+    );
   }
 
   Future<AudioPermissionState> askWhenPermissionIsDenied() {
@@ -305,16 +322,18 @@ extension _AudioRecordServices on AudioRecordServices {
           builder: (context) {
             return AlertDialog(
               title: Column(
-                children: <Widget>[
+                children: const <Widget>[
                   Icon(
                     Icons.mic_off,
                     color: DesignSystemColors.easterPurple,
                     size: 48,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 12.0),
-                    child: Text('Microfone bloqueado',
-                        style: kTextStyleAlertDialogTitle),
+                    padding: EdgeInsets.only(top: 12.0),
+                    child: Text(
+                      'Microfone bloqueado',
+                      style: kTextStyleAlertDialogTitle,
+                    ),
                   ),
                 ],
               ),
@@ -323,7 +342,7 @@ extension _AudioRecordServices on AudioRecordServices {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   RichText(
-                    text: TextSpan(
+                    text: const TextSpan(
                       text: 'O acesso ao ',
                       style: kTextStyleAlertDialogDescription,
                       children: [
@@ -342,7 +361,7 @@ extension _AudioRecordServices on AudioRecordServices {
                   Padding(
                     padding: const EdgeInsets.only(top: 12.0),
                     child: RichText(
-                      text: TextSpan(
+                      text: const TextSpan(
                         text: 'Você quer liberar o acesso agora?',
                         style: kTextStyleAlertDialogDescriptionBold,
                       ),
@@ -355,20 +374,24 @@ extension _AudioRecordServices on AudioRecordServices {
               ),
               actions: <Widget>[
                 FlatButton(
-                  child: Text('Não'),
+                  child: const Text('Não'),
                   onPressed: () async {
-                    Modular.to.pop(AudioPermissionState.denied());
+                    Navigator.of(context)
+                        .pop(const AudioPermissionState.denied());
                   },
                 ),
                 SizedBox(
                   width: 120,
                   child: FlatButton(
                     color: DesignSystemColors.easterPurple,
-                    child: Text('Sim', style: TextStyle(color: Colors.white)),
+                    child: const Text(
+                      'Sim',
+                      style: TextStyle(color: Colors.white),
+                    ),
                     onPressed: () async {
                       openAppSettings().then(
-                        (value) =>
-                            Modular.to.pop(AudioPermissionState.undefined()),
+                        (value) => Navigator.of(context)
+                            .pop(const AudioPermissionState.undefined()),
                       );
                     },
                   ),
@@ -379,7 +402,10 @@ extension _AudioRecordServices on AudioRecordServices {
         )
         .then((value) => value as AudioPermissionState)
         .catchError(
-          (_) => AudioPermissionState.undefined(),
-        );
+      (e, stack) {
+        logError(e, stack);
+        return const AudioPermissionState.undefined();
+      },
+    );
   }
 }

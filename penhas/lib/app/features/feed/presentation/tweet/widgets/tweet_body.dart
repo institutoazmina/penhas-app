@@ -3,23 +3,24 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class TweetBody extends StatelessWidget {
-  final String bodyContent;
   const TweetBody({
-    Key key,
-    @required String content,
-  })  : this.bodyContent = content,
+    Key? key,
+    required String? content,
+  })  : bodyContent = content,
         super(key: key);
+
+  final String? bodyContent;
 
   @override
   Widget build(BuildContext context) {
     final htmlBody = HtmlWidget(
-      bodyContent,
+      bodyContent!,
       webViewJs: false,
       textStyle: kTextStyleFeedTweetBody,
     );
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 12.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 12.0),
       child: htmlBody,
     );
   }

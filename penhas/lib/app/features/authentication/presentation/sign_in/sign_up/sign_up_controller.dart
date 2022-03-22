@@ -8,9 +8,9 @@ import 'package:penhas/app/features/authentication/domain/usecases/birthday.dart
 import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/cpf.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/full_name.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
 
 part 'sign_up_controller.g.dart';
 
@@ -19,36 +19,37 @@ class SignUpController extends _SignUpControllerBase with _$SignUpController {
 }
 
 abstract class _SignUpControllerBase with Store, MapFailureMessage {
-  final IUserRegisterRepository repository;
-  UserRegisterFormFieldModel _userRegisterModel = UserRegisterFormFieldModel();
-
   _SignUpControllerBase(this.repository);
 
-  @observable
-  ObservableFuture<Either<Failure, ValidField>> _progress;
+  final IUserRegisterRepository repository;
+  final UserRegisterFormFieldModel _userRegisterModel =
+      UserRegisterFormFieldModel();
 
   @observable
-  String errorMessage = '';
+  ObservableFuture<Either<Failure, ValidField>>? _progress;
 
   @observable
-  String warningFullname = '';
+  String? errorMessage = '';
 
   @observable
-  String warningBirthday = '';
+  String? warningFullname = '';
 
   @observable
-  String warningCpf = '';
+  String? warningBirthday = '';
 
   @observable
-  String warningCep = '';
+  String? warningCpf = '';
+
+  @observable
+  String? warningCep = '';
 
   @computed
   PageProgressState get currentState {
-    if (_progress == null || _progress.status == FutureStatus.rejected) {
+    if (_progress == null || _progress!.status == FutureStatus.rejected) {
       return PageProgressState.initial;
     }
 
-    return _progress.status == FutureStatus.pending
+    return _progress!.status == FutureStatus.pending
         ? PageProgressState.loading
         : PageProgressState.loaded;
   }
@@ -58,34 +59,33 @@ abstract class _SignUpControllerBase with Store, MapFailureMessage {
     _userRegisterModel.fullname = Fullname(fullname);
 
     warningFullname =
-        fullname.length == 0 ? '' : _userRegisterModel.validateFullName;
+        fullname.isEmpty ? '' : _userRegisterModel.validateFullName;
   }
 
   @action
   void setBirthday(String birthday) {
     _userRegisterModel.birthday = Birthday(birthday);
 
-    warningBirthday =
-        birthday == null ? '' : _userRegisterModel.validateBirthday;
+    warningBirthday = _userRegisterModel.validateBirthday;
   }
 
   @action
   void setCpf(String cpf) {
     _userRegisterModel.cpf = Cpf(cpf);
 
-    warningCpf = cpf.length == 0 ? '' : _userRegisterModel.validateCpf;
+    warningCpf = cpf.isEmpty ? '' : _userRegisterModel.validateCpf;
   }
 
   @action
   void setCep(String cep) {
     _userRegisterModel.cep = Cep(cep);
 
-    warningCep = cep.length == 0 ? '' : _userRegisterModel.validateCep;
+    warningCep = cep.isEmpty ? '' : _userRegisterModel.validateCep;
   }
 
   @action
   Future<void> nextStepPressed() async {
-    _setErrorMessage('');
+    errorMessage = '';
     if (!_isValidToProceed()) {
       return;
     }
@@ -99,7 +99,7 @@ abstract class _SignUpControllerBase with Store, MapFailureMessage {
       ),
     );
 
-    final response = await _progress;
+    final Either<Failure, ValidField> response = await _progress!;
     response.fold(
       (failure) => _triggerMessageError(failure),
       (session) => _forwardToStep2(),
@@ -107,8 +107,10 @@ abstract class _SignUpControllerBase with Store, MapFailureMessage {
   }
 
   void _forwardToStep2() {
-    Modular.to.pushNamed('/authentication/signup/step2',
-        arguments: _userRegisterModel);
+    Modular.to.pushNamed(
+      '/authentication/signup/step2',
+      arguments: _userRegisterModel,
+    );
   }
 
   bool _isValidToProceed() {
@@ -137,20 +139,16 @@ abstract class _SignUpControllerBase with Store, MapFailureMessage {
     return isValid;
   }
 
-  void _setErrorMessage(String message) {
-    errorMessage = message;
-  }
-
   void _triggerMessageError(Failure failure) {
     if (failure is ServerSideFormFieldValidationFailure) {
-      _setErrorMessage(_mapFailureToFields(failure));
+      errorMessage = _mapFailureToFields(failure);
     } else {
-      _setErrorMessage(mapFailureMessage(failure));
+      errorMessage = mapFailureMessage(failure);
     }
   }
 
-  String _mapFailureToFields(ServerSideFormFieldValidationFailure failure) {
-    String message = '';
+  String? _mapFailureToFields(ServerSideFormFieldValidationFailure failure) {
+    String? message = '';
     if (failure.field == 'nome_completo') {
       _mapToFullNameField(failure);
     } else if (failure.field == 'dt_nasc') {
@@ -167,7 +165,7 @@ abstract class _SignUpControllerBase with Store, MapFailureMessage {
   }
 
   void _mapToFullNameField(ServerSideFormFieldValidationFailure failure) {
-    String message = failure.message;
+    String? message = failure.message;
     if (failure.error == 'name_not_match') {
       message = 'Nome não confere com o CPF';
     }
@@ -176,19 +174,19 @@ abstract class _SignUpControllerBase with Store, MapFailureMessage {
   }
 
   void _mapToCpfField(ServerSideFormFieldValidationFailure failure) {
-    String message = failure.message;
+    final String? message = failure.message;
 
     warningCpf = message;
   }
 
   void _mapToCepField(ServerSideFormFieldValidationFailure failure) {
-    String message = failure.message;
+    final String? message = failure.message;
 
     warningCep = message;
   }
 
   void _mapToBirthdayField(ServerSideFormFieldValidationFailure failure) {
-    String message = failure.message;
+    final String? message = failure.message;
 
     warningBirthday = message;
   }

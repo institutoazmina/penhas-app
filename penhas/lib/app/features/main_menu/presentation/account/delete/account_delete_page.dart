@@ -6,14 +6,13 @@ import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/main_menu/domain/states/profile_delete_state.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/delete/account_delete_controller.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-import 'account_delete_controller.dart';
-
 class AccountDeletePage extends StatefulWidget {
-  const AccountDeletePage({Key key}) : super(key: key);
+  const AccountDeletePage({Key? key}) : super(key: key);
 
   @override
   _AccountDeletePageState createState() => _AccountDeletePageState();
@@ -24,14 +23,14 @@ class _AccountDeletePageState
     with SnackBarHandler {
   bool _isPasswordVisible = false;
   final textController = TextEditingController();
-  List<ReactionDisposer> _disposers;
+  List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _disposers ??= [
-      reaction((_) => controller.errorMessage, (String message) {
+      reaction((_) => controller.errorMessage, (String? message) {
         showSnackBar(scaffoldKey: _scaffoldKey, message: message);
       }),
     ];
@@ -43,7 +42,7 @@ class _AccountDeletePageState
       key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0.0,
-        title: Text("Exclusão de conta"),
+        title: const Text('Exclusão de conta'),
         backgroundColor: DesignSystemColors.easterPurple,
       ),
       body: Observer(
@@ -54,7 +53,9 @@ class _AccountDeletePageState
 
   @override
   void dispose() {
-    _disposers.forEach((d) => d());
+    for (final d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 
@@ -91,7 +92,7 @@ extension _PageBuilder on _AccountDeletePageState {
 
     return SafeArea(
       child: PageProgressIndicator(
-        progressMessage: "Processando...",
+        progressMessage: 'Processando...',
         progressState: controller.progressState,
         child: SingleChildScrollView(
           child: Padding(
@@ -103,14 +104,13 @@ extension _PageBuilder on _AccountDeletePageState {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Excluir conta",
+                  'Excluir conta',
                   style: titleTextStyle,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
                   child: HtmlWidget(
                     bodyMessage,
-                    webViewJs: true,
                   ),
                 ),
                 Padding(
@@ -121,32 +121,32 @@ extension _PageBuilder on _AccountDeletePageState {
                     keyboardType: TextInputType.text,
                     obscureText: !_isPasswordVisible,
                     decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
+                      enabledBorder: const OutlineInputBorder(
                         borderSide:
                             BorderSide(color: DesignSystemColors.easterPurple),
                       ),
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                         borderSide:
                             BorderSide(color: DesignSystemColors.easterPurple),
                       ),
-                      border: OutlineInputBorder(),
-                      labelText: "Digite a senha atual",
+                      border: const OutlineInputBorder(),
+                      labelText: 'Digite a senha atual',
                       labelStyle: labelTextStyle,
                       contentPadding:
-                          EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
+                          const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
                       suffixIcon: IconButton(
                         icon: Icon(
                             _isPasswordVisible
                                 ? Icons.visibility
                                 : Icons.visibility_off,
-                            color: DesignSystemColors.easterPurple),
+                            color: DesignSystemColors.easterPurple,),
                         onPressed: _togglePassword,
                       ),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 40.0),
+                  padding: const EdgeInsets.symmetric(vertical: 40.0),
                   child: Center(
                     child: SizedBox(
                       height: 40,
@@ -155,8 +155,8 @@ extension _PageBuilder on _AccountDeletePageState {
                         onPressed: () => controller.delete(textController.text),
                         elevation: 0,
                         color: DesignSystemColors.ligthPurple,
-                        child: Text("Excluir conta", style: buttonTextStyle),
                         shape: kButtonShapeOutlinePurple,
+                        child: Text('Excluir conta', style: buttonTextStyle),
                       ),
                     ),
                   ),
@@ -171,7 +171,7 @@ extension _PageBuilder on _AccountDeletePageState {
 }
 
 extension _TextStyle on _AccountDeletePageState {
-  TextStyle get titleTextStyle => TextStyle(
+  TextStyle get titleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 20.0,
         letterSpacing: 0.63,
@@ -179,14 +179,14 @@ extension _TextStyle on _AccountDeletePageState {
         fontWeight: FontWeight.bold,
       );
 
-  TextStyle get labelTextStyle => TextStyle(
+  TextStyle get labelTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,
         color: DesignSystemColors.easterPurple,
         fontWeight: FontWeight.normal,
       );
 
-  TextStyle get buttonTextStyle => TextStyle(
+  TextStyle get buttonTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontWeight: FontWeight.bold,
         fontSize: 12.0,

@@ -2,22 +2,20 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/network/api_client.dart';
+import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/help_center/data/models/audio_model.dart';
 import 'package:penhas/app/features/help_center/data/repositories/audios_repository.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
 
+import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
-class MockApiProvider extends Mock implements IApiProvider {}
-
 void main() {
-  IAudiosRepository sut;
-  IApiProvider apiProvider;
+  late IAudiosRepository sut;
+  late final MockIApiProvider apiProvider = MockIApiProvider();
 
   setUpAll(
     () {
-      apiProvider = MockApiProvider();
       sut = AudiosRepository(apiProvider: apiProvider);
     },
   );
@@ -26,7 +24,7 @@ void main() {
     test('should fetch available audio when available on server', () async {
       // arrange
       final jsonData = await JsonUtil.getJson(from: 'audios/audios_fetch.json');
-      final actual = AudioModel.fromJson(jsonData);
+      final expected = AudioModel.fromJson(jsonData);
       when(
         apiProvider.get(
           path: anyNamed('path'),
@@ -39,20 +37,21 @@ void main() {
       // unwrap do Either pq ele não se dá bem com o Collection nativo,
       // eu teria que alterar para um List dele, mas me recurso a fazer isto
       // só para o teste, já que na códgio terá outras implicações.
-      final matcher = await sut.fetch().then((v) => v.getOrElse(() => null));
+      final result = await sut.fetch().then((v) => v.getOrElse(() => null)!);
       // assert
-      expect(actual, matcher);
+      expect(result, expected);
     });
     test('should delete audio', () async {
       // arrange
-      final actual = right(ValidField());
+      final expected = right(const ValidField());
       final audio = AudioEntity(
-          id: "6db0260b-9733-4610-9586-de5141d79c32",
-          audioDuration: "2m18s",
-          createdAt: DateTime.parse("2020-08-15T16:58:54Z").toLocal(),
-          canPlay: false,
-          isRequested: true,
-          isRequestGranted: false);
+        id: '6db0260b-9733-4610-9586-de5141d79c32',
+        audioDuration: '2m18s',
+        createdAt: DateTime.parse('2020-08-15T16:58:54Z').toLocal(),
+        canPlay: false,
+        isRequested: true,
+        isRequestGranted: false,
+      );
       when(
         apiProvider.delete(
           path: anyNamed('path'),
@@ -60,35 +59,42 @@ void main() {
         ),
       ).thenAnswer((_) => Future.value(''));
       // act
-      final matcher = await sut.delete(audio);
+      final result = await sut.delete(audio);
       // assert
-      expect(actual, matcher);
+      expect(result, expected);
     });
 
     test('should request audio', () async {
       // arrange
-      final actual = right(ValidField(
+      final Either<Failure, ValidField> expected = right(
+        const ValidField(
           message:
-              'Enviaremos uma mensagem quando o arquivo estiver disponível.'));
+              'Enviaremos uma mensagem quando o arquivo estiver disponível.',
+        ),
+      );
       final audio = AudioEntity(
-          id: "6db0260b-9733-4610-9586-de5141d79c32",
-          audioDuration: "2m18s",
-          createdAt: DateTime.parse("2020-08-15T16:58:54Z").toLocal(),
-          canPlay: false,
-          isRequested: true,
-          isRequestGranted: false);
+        id: '6db0260b-9733-4610-9586-de5141d79c32',
+        audioDuration: '2m18s',
+        createdAt: DateTime.parse('2020-08-15T16:58:54Z').toLocal(),
+        canPlay: false,
+        isRequested: true,
+        isRequestGranted: false,
+      );
       when(
         apiProvider.post(
           path: anyNamed('path'),
           headers: anyNamed('headers'),
           parameters: anyNamed('parameters'),
         ),
-      ).thenAnswer((_) => Future.value(
-          '{"message":"Enviaremos uma mensagem quando o arquivo estiver disponível","success":1}'));
+      ).thenAnswer(
+        (_) => Future.value(
+          '{"message":"Enviaremos uma mensagem quando o arquivo estiver disponível.","success":1}',
+        ),
+      );
       // act
-      final matcher = await sut.requestAccess(audio);
+      final result = await sut.requestAccess(audio);
       // assert
-      expect(actual, matcher);
+      expect(result, expected);
     });
   });
 }

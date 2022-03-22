@@ -4,8 +4,11 @@ import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity
 part 'profile_edit_state.freezed.dart';
 
 @freezed
-abstract class ProfileEditState with _$ProfileEditState {
+class ProfileEditState with _$ProfileEditState {
   const factory ProfileEditState.initial() = _Initial;
-  const factory ProfileEditState.loaded(UserProfileEntity profile, bool securityModeFeatureEnabled) = _Loaded;
+  const factory ProfileEditState.loaded(
+    UserProfileEntity profile, {
+    required bool securityModeFeatureEnabled,
+  }) = _Loaded;
   const factory ProfileEditState.error(String message) = _ErrorDetails;
 }

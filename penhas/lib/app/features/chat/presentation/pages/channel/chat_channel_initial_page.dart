@@ -4,7 +4,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ChatChannelInitialPage extends StatelessWidget {
   const ChatChannelInitialPage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -13,7 +13,7 @@ class ChatChannelInitialPage extends StatelessWidget {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: DesignSystemColors.easterPurple,
-        title: Text("Chat"),
+        title: const Text('Chat'),
       ),
       body: PageProgressIndicator(
         progressMessage: 'Carregando...',

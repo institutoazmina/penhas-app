@@ -1,27 +1,19 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/features/support_center/data/models/support_center_metadata_model.dart';
-import 'package:penhas/app/features/support_center/data/repositories/support_center_repository.dart';
 import 'package:penhas/app/features/support_center/domain/usecases/support_center_usecase.dart';
 
+import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
-class MockLocationServices extends Mock implements ILocationServices {}
-
-class MockSupportCenterRepository extends Mock
-    implements ISupportCenterRepository {}
-
 void main() {
-  ISupportCenterRepository supportCenterRepository;
-  ILocationServices locationServices;
-  SupportCenterUseCase sut;
+  late final MockISupportCenterRepository supportCenterRepository =
+      MockISupportCenterRepository();
+  late final MockILocationServices locationServices = MockILocationServices();
+  late SupportCenterUseCase sut;
 
   setUp(() {
-    supportCenterRepository = MockSupportCenterRepository();
-    locationServices = MockLocationServices();
-
     sut = SupportCenterUseCase(
       locationService: locationServices,
       supportCenterRepository: supportCenterRepository,
@@ -32,7 +24,7 @@ void main() {
     group('metadata', () {
       test('should hit repository for first access', () async {
         // arrange
-        final jsonFile = "support_center/support_center_meta_data.json";
+        const jsonFile = 'support_center/support_center_meta_data.json';
         final jsonData = await JsonUtil.getJson(from: jsonFile);
 
         when(supportCenterRepository.metadata()).thenAnswer(
@@ -47,12 +39,12 @@ void main() {
       });
 
       test('should avoid hit repository twice', () async {
-        final jsonFile = "support_center/support_center_meta_data.json";
+        const jsonFile = 'support_center/support_center_meta_data.json';
         final jsonData = await JsonUtil.getJson(from: jsonFile);
 
         when(supportCenterRepository.metadata()).thenAnswer(
-          (_) async => right(
-            SupportCenterMetadataModel.fromJson(jsonData),
+          (_) => Future.value(
+            right(SupportCenterMetadataModel.fromJson(jsonData)),
           ),
         );
         await sut.metadata();

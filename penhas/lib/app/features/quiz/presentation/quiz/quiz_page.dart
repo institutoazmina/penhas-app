@@ -2,33 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/features/quiz/presentation/quiz/quiz_controller.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz/quiz_message_widget.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz/quiz_user_replay_widget.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
-import 'quiz_controller.dart';
 
 class QuizPage extends StatefulWidget {
+  const QuizPage({Key? key, this.title = 'Quiz'}) : super(key: key);
+
   final String title;
-  const QuizPage({Key key, this.title = "Quiz"}) : super(key: key);
 
   @override
   _QuizPageState createState() => _QuizPageState();
 }
 
 class _QuizPageState extends ModularState<QuizPage, QuizController> {
-  List<ReactionDisposer> _disposers;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  List<ReactionDisposer>? _disposers;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _disposers ??= [
-      reaction((_) => controller.errorMessage, (String message) {
-        if (message.isEmpty) {
+      reaction((_) => controller.errorMessage, (String? message) {
+        if (message!.isEmpty) {
           return;
         }
 
-        _scaffoldKey.currentState.showSnackBar(
+        _scaffoldKey.currentState?.showSnackBar(
           SnackBar(
             content: Text(message),
           ),
@@ -53,7 +54,7 @@ class _QuizPageState extends ModularState<QuizPage, QuizController> {
                   builder: (_) {
                     return ListView.builder(
                       reverse: true,
-                      padding: EdgeInsets.only(top: 8.0),
+                      padding: const EdgeInsets.only(top: 8.0),
                       itemCount: controller.messages.length,
                       itemBuilder: (BuildContext context, int index) {
                         return QuizMessageWidget(
@@ -68,8 +69,9 @@ class _QuizPageState extends ModularState<QuizPage, QuizController> {
             Observer(
               builder: (_) {
                 return QuizUserReplayWidget(
-                    message: controller.userReplyMessage,
-                    onActionReplay: controller.onActionReply);
+                  message: controller.userReplyMessage!,
+                  onActionReplay: controller.onActionReply,
+                );
               },
             )
           ],
@@ -81,14 +83,16 @@ class _QuizPageState extends ModularState<QuizPage, QuizController> {
   @override
   void dispose() {
     super.dispose();
-    _disposers.forEach((d) => d());
+    for (final d in _disposers!) {
+      d();
+    }
   }
 
   AppBar _buildAppBar() {
     return AppBar(
       elevation: 0.0,
       backgroundColor: DesignSystemColors.ligthPurple,
-      title: Center(
+      title: const Center(
         child: SizedBox(
           width: 39.0,
           height: 18.0,

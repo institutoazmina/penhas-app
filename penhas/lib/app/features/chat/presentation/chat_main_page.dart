@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_tab_item.dart';
+import 'package:penhas/app/features/chat/presentation/chat_main_controller.dart';
+import 'package:penhas/app/features/chat/presentation/people/chat_main_people_page.dart';
+import 'package:penhas/app/features/chat/presentation/talk/chat_main_talks_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-import 'chat_main_controller.dart';
-import 'people/chat_main_people_page.dart';
-import 'talk/chat_main_talks_page.dart';
-
 class ChatMainPage extends StatefulWidget {
-  ChatMainPage({Key key}) : super(key: key);
+  const ChatMainPage({Key? key}) : super(key: key);
 
   @override
   _ChatMainPageState createState() => _ChatMainPageState();
@@ -32,7 +31,7 @@ class _ChatMainPageState
 
 extension _ChatMainBuilder on _ChatMainPageState {
   Widget buildSupportChat() {
-    return SafeArea(
+    return const SafeArea(
       child: SizedBox.expand(
         child: Scaffold(
           body: ChatMainTalksPage(),
@@ -45,16 +44,17 @@ extension _ChatMainBuilder on _ChatMainPageState {
     return SafeArea(
       child: SizedBox.expand(
         child: DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              appBar: AppBar(
-                elevation: 0,
-                toolbarHeight: 55,
-                backgroundColor: DesignSystemColors.systemBackgroundColor,
-                bottom: chatTabBar(controller.tabItems),
+          length: 2,
+          child: Column(
+            children: [
+              Container(
+                color: DesignSystemColors.systemBackgroundColor,
+                child: chatTabBar(controller.tabItems),
               ),
-              body: buildBody(controller.tabItems),
-            )),
+              Expanded(child: buildBody(controller.tabItems)),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -73,26 +73,29 @@ extension _ChatMainPageStatePrivate on _ChatMainPageState {
   }
 
   Widget buildBody(List<ChatTabItem> items) {
-    final widgets = items
-        .map((e) => e == ChatTabItem.people
-        ? ChatMainPeoplePage()
-        : ChatMainTalksPage());
+    final widgets = items.map(
+      (e) => e == ChatTabItem.people
+          ? const ChatMainPeoplePage()
+          : const ChatMainTalksPage(),
+    );
     return TabBarView(children: widgets.toList());
   }
 }
 
 extension _ChatMainPageStateTextStyle on _ChatMainPageState {
-  TextStyle get chatTabSelectedTextStyle => TextStyle(
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      letterSpacing: 0.4,
-      color: DesignSystemColors.pinky,
-      fontWeight: FontWeight.bold);
+  TextStyle get chatTabSelectedTextStyle => const TextStyle(
+        fontFamily: 'Lato',
+        fontSize: 14.0,
+        letterSpacing: 0.4,
+        color: DesignSystemColors.pinky,
+        fontWeight: FontWeight.bold,
+      );
 
-  TextStyle get chatTabUnselectedTextStyle => TextStyle(
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      letterSpacing: 0.4,
-      color: DesignSystemColors.pinky,
-      fontWeight: FontWeight.normal);
+  TextStyle get chatTabUnselectedTextStyle => const TextStyle(
+        fontFamily: 'Lato',
+        fontSize: 14.0,
+        letterSpacing: 0.4,
+        color: DesignSystemColors.pinky,
+        fontWeight: FontWeight.normal,
+      );
 }

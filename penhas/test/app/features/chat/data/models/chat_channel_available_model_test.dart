@@ -14,7 +14,7 @@ void main() {
   group('ChatChannelAvailableModel', () {
     test('should a subclass of ChatChannelAvailableEntity', () async {
       // act
-      final model = ChatChannelAvailableModel(
+      const model = ChatChannelAvailableModel(
         assistant: null,
         hasMore: null,
         nextPage: null,
@@ -26,63 +26,61 @@ void main() {
     });
     test('should return a valid model with a valid JSON', () async {
       // arrange
-      final jsonFile = "chat/chat_list_channel.json";
+      const jsonFile = 'chat/chat_list_channel.json';
       final jsonData = await JsonUtil.getJson(from: jsonFile);
       final actual = ChatChannelAvailableModel(
         hasMore: false,
         nextPage: null,
         channels: [
           ChatChannelModel(
-            token: "__my_very_secret_session__",
-            lastMessageTime: DateTime.parse("2020-10-04T09:20:37Z"),
+            token: '__my_very_secret_session__',
+            lastMessageTime: DateTime.parse('2020-10-04T09:20:37Z'),
             lastMessageIsMime: true,
-            user: ChatUserModel(
+            user: const ChatUserModel(
               blockedMe: false,
-              activity: "há pouco tempo",
-              nickname: "Maria",
-              avatar: "https://api.example.com/avatar/padrao.svg",
+              activity: 'há pouco tempo',
+              nickname: 'Maria',
+              avatar: 'https://api.example.com/avatar/padrao.svg',
               userId: null,
             ),
           ),
           ChatChannelModel(
-            token: "__my_very_secret_session__",
-            lastMessageTime: DateTime.parse("2020-10-04T09:15:27Z"),
+            token: '__my_very_secret_session__',
+            lastMessageTime: DateTime.parse('2020-10-04T09:15:27Z'),
             lastMessageIsMime: true,
-            user: ChatUserModel(
+            user: const ChatUserModel(
               blockedMe: false,
-              activity: "há alguns dias",
-              nickname: "Julia",
-              avatar: "https://api.example.com/avatar/padrao.svg",
+              activity: 'há alguns dias',
+              nickname: 'Julia',
+              avatar: 'https://api.example.com/avatar/padrao.svg',
               userId: null,
             ),
           ),
         ],
         support: ChatChannelModel(
-          token: "Sda24",
-          lastMessageTime: DateTime.parse("2020-09-09T01:00:58Z"),
+          token: 'Sda24',
+          lastMessageTime: DateTime.parse('2020-09-09T01:00:58Z'),
           lastMessageIsMime: true,
-          user: ChatUserModel(
+          user: const ChatUserModel(
             blockedMe: false,
-            activity: "",
-            nickname: "Suporte PenhaS",
-            avatar: "https://api.example.com/avatar/suporte-chat.png",
+            activity: '',
+            nickname: 'Suporte PenhaS',
+            avatar: 'https://api.example.com/avatar/suporte-chat.png',
             userId: null,
           ),
         ),
-        assistant: ChatAssistantModel(
+        assistant: const ChatAssistantModel(
           avatar: null,
-          title: "Assistente PenhaS",
-          subtitle: "Entenda se você está em situação de violência",
+          title: 'Assistente PenhaS',
+          subtitle: 'Entenda se você está em situação de violência',
           quizSession: QuizSessionEntity(
             currentMessage: [
               QuizMessageEntity(
-                  content: "Deseja responder o questionário novamente?",
+                  content: 'Deseja responder o questionário novamente?',
                   type: QuizMessageType.yesno,
-                  style: null,
-                  action: null,
-                  ref: "reset_questionnaire")
+                  ref: 'reset_questionnaire',)
             ],
-            sessionId: "Ada24",
+            sessionId: 'Ada24',
             isFinished: false,
             endScreen: null,
           ),
@@ -96,38 +94,36 @@ void main() {
     test('should return a valid model with a valid JSON with empty channels',
         () async {
       // arrange
-      final jsonFile = "chat/chat_list_channel_empty.json";
+      const jsonFile = 'chat/chat_list_channel_empty.json';
       final jsonData = await JsonUtil.getJson(from: jsonFile);
       final actual = ChatChannelAvailableModel(
         hasMore: false,
         nextPage: null,
-        channels: [],
+        channels: const [],
         support: ChatChannelModel(
-          token: "Sda24",
-          lastMessageTime: DateTime.parse("2020-09-09T01:00:58Z"),
+          token: 'Sda24',
+          lastMessageTime: DateTime.parse('2020-09-09T01:00:58Z'),
           lastMessageIsMime: true,
-          user: ChatUserModel(
+          user: const ChatUserModel(
             blockedMe: false,
-            activity: "",
-            nickname: "Suporte PenhaS",
-            avatar: "https://api.example.com/avatar/suporte-chat.png",
+            activity: '',
+            nickname: 'Suporte PenhaS',
+            avatar: 'https://api.example.com/avatar/suporte-chat.png',
             userId: null,
           ),
         ),
-        assistant: ChatAssistantModel(
+        assistant: const ChatAssistantModel(
           avatar: null,
-          title: "Assistente PenhaS",
-          subtitle: "Entenda se você está em situação de violência",
+          title: 'Assistente PenhaS',
+          subtitle: 'Entenda se você está em situação de violência',
           quizSession: QuizSessionEntity(
             currentMessage: [
               QuizMessageEntity(
-                  content: "Deseja responder o questionário novamente?",
+                  content: 'Deseja responder o questionário novamente?',
                   type: QuizMessageType.yesno,
-                  style: null,
-                  action: null,
-                  ref: "reset_questionnaire")
+                  ref: 'reset_questionnaire',)
             ],
-            sessionId: "Ada24",
+            sessionId: 'Ada24',
             isFinished: false,
             endScreen: null,
           ),

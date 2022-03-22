@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:dartz/dartz.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -7,34 +6,38 @@ import 'package:penhas/app/features/appstate/data/datasources/app_state_data_sou
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/appstate/domain/entities/update_user_profile_entity.dart';
 import 'package:penhas/app/features/appstate/domain/repositories/i_app_state_repository.dart';
+import 'package:penhas/app/shared/logger/log.dart';
 
 class AppStateRepository implements IAppStateRepository {
+  AppStateRepository({
+    required INetworkInfo networkInfo,
+    required IAppStateDataSource dataSource,
+  })  : _dataSource = dataSource,
+        _networkInfo = networkInfo;
+
   final INetworkInfo _networkInfo;
   final IAppStateDataSource _dataSource;
-
-  AppStateRepository({
-    @required INetworkInfo networkInfo,
-    @required IAppStateDataSource dataSource,
-  })  : this._dataSource = dataSource,
-        this._networkInfo = networkInfo;
 
   @override
   Future<Either<Failure, AppStateEntity>> check() async {
     try {
       final appState = await _dataSource.check();
       return right(appState);
-    } catch (e) {
+    } catch (e, stack) {
+      logError(e, stack);
       return left(await _handleError(e));
     }
   }
 
   @override
   Future<Either<Failure, AppStateEntity>> update(
-      UpdateUserProfileEntity update) async {
+    UpdateUserProfileEntity update,
+  ) async {
     try {
       final appState = await _dataSource.update(update);
       return right(appState);
-    } catch (e) {
+    } catch (e, stack) {
+      logError(e, stack);
       return left(await _handleError(e));
     }
   }
@@ -50,13 +53,14 @@ class AppStateRepository implements IAppStateRepository {
       }
 
       return ServerSideFormFieldValidationFailure(
-          error: error.bodyContent['error'],
-          field: error.bodyContent['field'],
-          reason: error.bodyContent['reason'],
-          message: error.bodyContent['message']);
+        error: error.bodyContent['error'],
+        field: error.bodyContent['field'],
+        reason: error.bodyContent['reason'],
+        message: error.bodyContent['message'],
+      );
     }
 
-    if (error is ApiProviderSessionExpection) {
+    if (error is ApiProviderSessionError) {
       return ServerSideSessionFailed();
     }
 

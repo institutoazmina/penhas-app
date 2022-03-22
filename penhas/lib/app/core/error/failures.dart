@@ -1,9 +1,9 @@
-import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 
 abstract class Failure extends Equatable {
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 
   @override
   bool get stringify => true;
@@ -40,30 +40,25 @@ class AudioDownloadFailure extends Failure {}
 class FileSystemFailure extends Failure {}
 
 class GpsFailure extends Failure {
-  final String message;
-
   GpsFailure(this.message);
 
+  final String? message;
+
   @override
-  List<Object> get props => [message];
+  List<Object?> get props => [message];
 }
 
 class AddressFailure extends Failure {
-  final String message;
-
   AddressFailure(this.message);
 
+  final String? message;
+
   @override
-  List<Object> get props => [message];
+  List<Object?> get props => [message];
 }
 
 @immutable
 class ServerSideFormFieldValidationFailure extends Failure {
-  final String error;
-  final String message;
-  final String field;
-  final String reason;
-
   ServerSideFormFieldValidationFailure({
     this.error,
     this.message,
@@ -71,6 +66,11 @@ class ServerSideFormFieldValidationFailure extends Failure {
     this.reason,
   });
 
+  final String? error;
+  final String? message;
+  final String? field;
+  final String? reason;
+
   @override
-  List<Object> get props => [error, message, field, reason];
+  List<Object?> get props => [error, message, field, reason];
 }

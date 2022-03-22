@@ -11,7 +11,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class FilterTweetPage extends StatefulWidget {
-  FilterTweetPage({Key key}) : super(key: key);
+  const FilterTweetPage({Key? key}) : super(key: key);
 
   @override
   _FilterTweetPageState createState() => _FilterTweetPageState();
@@ -20,7 +20,7 @@ class FilterTweetPage extends StatefulWidget {
 class _FilterTweetPageState
     extends ModularState<FilterTweetPage, FilterTweetController>
     with SnackBarHandler {
-  List<ReactionDisposer> _disposers;
+  List<ReactionDisposer>? _disposers;
   final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -29,7 +29,7 @@ class _FilterTweetPageState
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       controller.getTags();
     });
   }
@@ -45,86 +45,89 @@ class _FilterTweetPageState
 
   @override
   void dispose() {
-    _disposers.forEach((d) => d());
+    for (final d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('Filtrar temas'),
+        title: const Text('Filtrar temas'),
         backgroundColor: DesignSystemColors.ligthPurple,
       ),
       body: PageProgressIndicator(
-          progressState: _currentState,
-          progressMessage: 'Carregando os temas',
-          child: SizedBox.expand(
-            child: SafeArea(
-              child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Container(
-                  color: DesignSystemColors.systemBackgroundColor,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(top: 4, bottom: 20),
-                        child: Text(
-                          'Selecione os temas de seu interesse:',
-                          style: kTextStyleFeedTweetBody,
-                        ),
+        progressState: _currentState,
+        progressMessage: 'Carregando os temas',
+        child: SizedBox.expand(
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                color: DesignSystemColors.systemBackgroundColor,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    const Padding(
+                      padding: EdgeInsets.only(top: 4, bottom: 20),
+                      child: Text(
+                        'Selecione os temas de seu interesse:',
+                        style: kTextStyleFeedTweetBody,
                       ),
-                      Expanded(
-                        child: Tags(
-                          spacing: 12.0,
-                          symmetry: false,
-                          key: _tagStateKey,
-                          alignment: WrapAlignment.start,
-                          runAlignment: WrapAlignment.start,
-                          itemCount: controller.tags.length,
-                          itemBuilder: (int index) {
-                            final item = controller.tags[index];
-                            return _builtTagItem(item, index);
-                          },
-                        ),
+                    ),
+                    Expanded(
+                      child: Tags(
+                        spacing: 12.0,
+                        key: _tagStateKey,
+                        alignment: WrapAlignment.start,
+                        runAlignment: WrapAlignment.start,
+                        itemCount: controller.tags.length,
+                        itemBuilder: (int index) {
+                          final item = controller.tags[index];
+                          return _builtTagItem(item, index);
+                        },
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          _buildResetPasswordButton(),
-                          _buildApplyButton(),
-                        ],
-                      )
-                    ],
-                  ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        _buildResetPasswordButton(),
+                        _buildApplyButton(),
+                      ],
+                    )
+                  ],
                 ),
               ),
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 
   Tooltip _builtTagItem(TweetFilterEntity item, int index) {
     return Tooltip(
-        message: item.label,
-        child: ItemTags(
-          activeColor: DesignSystemColors.easterPurple,
-          title: item.label,
-          index: index,
-          active: item.isSelected,
-          customData: item.id,
-          elevation: 0,
-          textStyle: kTextStyleTitleTag,
-          textColor: DesignSystemColors.easterPurple,
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(20.0),
-            bottomRight: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
-          ),
-          padding: EdgeInsets.fromLTRB(16, 6, 16, 6),
-        ));
+      message: item.label,
+      child: ItemTags(
+        activeColor: DesignSystemColors.easterPurple,
+        title: item.label!,
+        index: index,
+        active: item.isSelected,
+        customData: item.id,
+        elevation: 0,
+        textStyle: kTextStyleTitleTag,
+        textColor: DesignSystemColors.easterPurple,
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(20.0),
+          bottomRight: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+        padding: const EdgeInsets.fromLTRB(16, 6, 16, 6),
+      ),
+    );
   }
 
   Widget _buildResetPasswordButton() {
@@ -136,8 +139,8 @@ class _FilterTweetPageState
         color: Colors.transparent,
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
-        child: Text(
-          "Limpar",
+        child: const Text(
+          'Limpar',
           style: TextStyle(
             fontFamily: 'Lato',
             fontWeight: FontWeight.bold,
@@ -159,21 +162,23 @@ class _FilterTweetPageState
         onPressed: () => _apply(),
         elevation: 0,
         color: DesignSystemColors.ligthPurple,
-        child: Text("Aplicar filtro",
-            style: TextStyle(
-              fontFamily: 'Lato',
-              fontWeight: FontWeight.bold,
-              fontSize: 14.0,
-              color: Colors.white,
-              letterSpacing: 0.45,
-            )),
         shape: kButtonShapeOutlinePurple,
+        child: const Text(
+          'Aplicar filtro',
+          style: TextStyle(
+            fontFamily: 'Lato',
+            fontWeight: FontWeight.bold,
+            fontSize: 14.0,
+            color: Colors.white,
+            letterSpacing: 0.45,
+          ),
+        ),
       ),
     );
   }
 
   ReactionDisposer _showErrorMessage() {
-    return reaction((_) => controller.errorMessage, (String message) {
+    return reaction((_) => controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }
@@ -191,11 +196,12 @@ class _FilterTweetPageState
       return Future.value(true);
     }
 
-    final seletedTags = _tagStateKey.currentState.getAllItem
-        .where((e) => e.active)
-        .map((e) => e.customData)
-        .map((e) => e as String)
-        .toList();
+    final List<String> seletedTags = _tagStateKey.currentState?.getAllItem
+            .where((e) => e.active)
+            .map((e) => e.customData)
+            .whereType<String>()
+            .toList() ??
+        List.empty();
 
     return controller.setTags(seletedTags).then((value) => true);
   }

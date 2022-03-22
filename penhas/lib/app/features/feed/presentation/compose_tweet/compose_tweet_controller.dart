@@ -1,34 +1,33 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart';
-import 'package:penhas/app/features/mainboard/domain/states/mainboard_store.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
+import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart';
+import 'package:penhas/app/features/mainboard/domain/states/mainboard_store.dart';
 
 part 'compose_tweet_controller.g.dart';
 
 class ComposeTweetController extends _ComposeTweetControllerBase
     with _$ComposeTweetController {
   ComposeTweetController({
-    @required FeedUseCases useCase,
-    @required MainboardStore mainboardStore,
+    required FeedUseCases useCase,
+    required MainboardStore mainboardStore,
   }) : super(useCase, mainboardStore);
 }
 
 abstract class _ComposeTweetControllerBase with Store, MapFailureMessage {
+  _ComposeTweetControllerBase(this.useCase, this.mainboardStore);
+
   final FeedUseCases useCase;
   final MainboardStore mainboardStore;
   final _tweetContentLimitSize = 2200;
-  String tweetContent;
-
-  _ComposeTweetControllerBase(this.useCase, this.mainboardStore);
+  String? tweetContent;
 
   @observable
-  ObservableFuture<Either<Failure, FeedCache>> _progress;
+  ObservableFuture<Either<Failure, FeedCache>>? _progress;
 
   @observable
   bool isAnonymousMode = false;
@@ -40,53 +39,49 @@ abstract class _ComposeTweetControllerBase with Store, MapFailureMessage {
   TextEditingController editingController = TextEditingController();
 
   @observable
-  String errorMessage = '';
+  String? errorMessage = '';
 
   @computed
   PageProgressState get currentState {
-    if (_progress == null || _progress.status == FutureStatus.rejected) {
+    if (_progress == null || _progress!.status == FutureStatus.rejected) {
       return PageProgressState.initial;
     }
 
-    return _progress.status == FutureStatus.pending
+    return _progress!.status == FutureStatus.pending
         ? PageProgressState.loading
         : PageProgressState.loaded;
   }
 
   @action
   void setTweetContent(String content) {
-    isEnableCreateButton = (content != null) && content.isNotEmpty;
+    isEnableCreateButton = content.isNotEmpty;
     tweetContent = content;
   }
 
   @action
   Future<void> createTweetPressed() async {
-    _setErrorMessage('');
+    errorMessage = '';
     if (!isEnableCreateButton) {
       return;
     }
 
-    final content = tweetContent.length > _tweetContentLimitSize
-        ? tweetContent.substring(0, _tweetContentLimitSize - 1)
+    final content = tweetContent!.length > _tweetContentLimitSize
+        ? tweetContent!.substring(0, _tweetContentLimitSize - 1)
         : tweetContent;
 
     _progress = ObservableFuture(
       useCase.create(content),
     );
 
-    final response = await _progress;
+    final Either<Failure, FeedCache> response = await _progress!;
     response.fold(
-      (failure) => _setErrorMessage(mapFailureMessage(failure)),
+      (failure) => errorMessage = mapFailureMessage(failure),
       (valid) => _updatedTweet(),
     );
   }
 
-  void _setErrorMessage(String message) {
-    errorMessage = message;
-  }
-
   void _updatedTweet() {
     editingController.clear();
-    mainboardStore.changePage(to: MainboardState.feed());
+    mainboardStore.changePage(to: const MainboardState.feed());
   }
 }

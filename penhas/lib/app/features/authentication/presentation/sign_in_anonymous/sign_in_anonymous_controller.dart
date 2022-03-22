@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/local_store.dart';
@@ -18,57 +17,60 @@ part 'sign_in_anonymous_controller.g.dart';
 class SignInAnonymousController extends _SignInAnonymousController
     with _$SignInAnonymousController {
   SignInAnonymousController({
-    @required IAuthenticationRepository repository,
-    @required LocalStore<UserProfileEntity> userProfileStore,
-    @required PasswordValidator passwordValidator,
+    required IAuthenticationRepository repository,
+    required LocalStore<UserProfileEntity> userProfileStore,
+    required PasswordValidator passwordValidator,
   }) : super(repository, userProfileStore, passwordValidator);
 }
 
 abstract class _SignInAnonymousController with Store, MapFailureMessage {
+  _SignInAnonymousController(
+    this._repository,
+    this._userProfileStore,
+    this._passwordValidator,
+  ) {
+    _init();
+    _password = SignInPassword('', _passwordValidator);
+  }
+
   final String _invalidFieldsToProceedLogin =
       'E-mail e senha precisam estarem corretos para continuar.';
   final LocalStore<UserProfileEntity> _userProfileStore;
   final IAuthenticationRepository _repository;
   final PasswordValidator _passwordValidator;
 
-  EmailAddress _emailAddress = EmailAddress("");
-  SignInPassword _password;
+  EmailAddress _emailAddress = EmailAddress('');
+  late SignInPassword _password;
 
-  _SignInAnonymousController(
-      this._repository, this._userProfileStore, this._passwordValidator) {
-    _init();
-    _password = SignInPassword('', _passwordValidator);
-  }
-
-  void _init() async {
+  Future<void> _init() async {
     final profile = await _userProfileStore.retrieve();
     _emailAddress = EmailAddress(profile.email);
     userEmail = profile.email;
-    userGreetings = "Bem-vinda, ${profile.nickname}";
+    userGreetings = 'Bem-vinda, ${profile.nickname}';
   }
 
   @observable
-  ObservableFuture<Either<Failure, SessionEntity>> _progress;
+  ObservableFuture<Either<Failure, SessionEntity>>? _progress;
 
   @observable
-  String userGreetings = "";
+  String userGreetings = '';
 
   @observable
-  String userEmail = "";
+  String? userEmail = '';
 
   @observable
-  String warningPassword = "";
+  String warningPassword = '';
 
   @observable
-  String errorMessage = "";
+  String? errorMessage = '';
 
   @computed
   PageProgressState get currentState {
-    if (_progress == null || _progress.status == FutureStatus.rejected) {
+    if (_progress == null || _progress!.status == FutureStatus.rejected) {
       return PageProgressState.initial;
     }
 
-    return _progress.status == FutureStatus.pending
+    return _progress!.status == FutureStatus.pending
         ? PageProgressState.loading
         : PageProgressState.loaded;
   }
@@ -81,22 +83,23 @@ abstract class _SignInAnonymousController with Store, MapFailureMessage {
 
   @action
   Future<void> signInWithEmailAndPasswordPressed() async {
-    _setErrorMessage('');
-
     if (!_emailAddress.isValid || !_password.isValid) {
-      _setErrorMessage(_invalidFieldsToProceedLogin);
+      errorMessage = _invalidFieldsToProceedLogin;
       return;
     }
+    errorMessage = '';
 
-    _progress = ObservableFuture(_repository.signInWithEmailAndPassword(
-      emailAddress: _emailAddress,
-      password: _password,
-    ));
+    _progress = ObservableFuture(
+      _repository.signInWithEmailAndPassword(
+        emailAddress: _emailAddress,
+        password: _password,
+      ),
+    );
 
-    final response = await _progress;
+    final Either<Failure, SessionEntity> response = await _progress!;
 
     response.fold(
-      (failure) => _setErrorMessage(mapFailureMessage(failure)),
+      (failure) => errorMessage = mapFailureMessage(failure),
       (session) => _forwardToLogged(),
     );
   }
@@ -113,9 +116,5 @@ abstract class _SignInAnonymousController with Store, MapFailureMessage {
 
   Future<void> _forwardToLogged() async {
     Modular.to.pushReplacementNamed('/mainboard');
-  }
-
-  void _setErrorMessage(String msg) {
-    errorMessage = msg;
   }
 }

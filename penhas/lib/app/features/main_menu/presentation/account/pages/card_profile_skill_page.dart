@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
+import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_header_edit_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-import 'card_profile_header_edit_page.dart';
-
 class CardProfileSkillPage extends StatelessWidget {
-  final List<FilterTagEntity> skills;
-  final void Function() onEditAction;
-
   const CardProfileSkillPage({
-    Key key,
-    @required this.skills,
-    @required this.onEditAction,
+    Key? key,
+    required this.skills,
+    required this.onEditAction,
   }) : super(key: key);
+
+  final List<FilterTagEntity?> skills;
+  final void Function() onEditAction;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(color: DesignSystemColors.pinkishGrey),
         ),
@@ -33,18 +32,18 @@ class CardProfileSkillPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CardProfileHeaderEditPage(
-                title: "Disponível para falar sobre",
-                onEditAction: onEditAction),
+              title: 'Disponível para falar sobre',
+              onEditAction: onEditAction,
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 4.0, bottom: 20.0),
               child: Tags(
                 spacing: 12.0,
-                symmetry: false,
                 alignment: WrapAlignment.start,
                 runAlignment: WrapAlignment.start,
                 itemCount: skills.length,
                 itemBuilder: (int index) {
-                  final item = skills[index];
+                  final item = skills[index]!;
                   return builtTagItem(item, index);
                 },
               ),
@@ -62,7 +61,7 @@ extension _TextStyle on CardProfileSkillPage {
       message: item.label,
       child: ItemTags(
         activeColor: DesignSystemColors.easterPurple,
-        title: item.label,
+        title: item.label!,
         index: index,
         active: item.isSelected,
         customData: item.id,
@@ -70,17 +69,17 @@ extension _TextStyle on CardProfileSkillPage {
         pressEnabled: false,
         textStyle: tagTitleTextStyle,
         textColor: DesignSystemColors.easterPurple,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(20.0),
           bottomRight: Radius.circular(20.0),
           topRight: Radius.circular(20.0),
         ),
-        padding: EdgeInsets.fromLTRB(16, 6, 16, 6),
+        padding: const EdgeInsets.fromLTRB(16, 6, 16, 6),
       ),
     );
   }
 
-  TextStyle get tagTitleTextStyle => TextStyle(
+  TextStyle get tagTitleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,
         letterSpacing: 0.4,

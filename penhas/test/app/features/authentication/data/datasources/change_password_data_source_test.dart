@@ -3,33 +3,29 @@ import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
-import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/authentication/data/datasources/change_password_data_source.dart';
 import 'package:penhas/app/features/authentication/data/models/password_reset_response_model.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
+import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
-class MockHttpClient extends Mock implements http.Client {}
-
-class MockApiServerConfigure extends Mock implements IApiServerConfigure {}
-
 void main() {
-  IChangePasswordDataSource dataSource;
-  MockHttpClient mockHttpClient;
-  MockApiServerConfigure mockApiServerConfigure;
-  EmailAddress emailAddress;
-  SignUpPassword password;
-  String validToken;
-  Uri serverEndpoint;
-  String userAgent;
-  Map<String, String> httpHeader;
+  late final MockHttpClient mockHttpClient = MockHttpClient();
+  late final MockIApiServerConfigure mockApiServerConfigure =
+      MockIApiServerConfigure();
 
-  setUp(() async {
-    mockHttpClient = MockHttpClient();
-    mockApiServerConfigure = MockApiServerConfigure();
+  late IChangePasswordDataSource dataSource;
+  EmailAddress? emailAddress;
+  SignUpPassword? password;
+  String? validToken;
+  final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
+  const String userAgent = 'iOS 11.4/Simulator/1.0.0';
+  late Map<String, String> httpHeader;
+
+  setUp(() {
     dataSource = ChangePasswordDataSource(
       apiClient: mockHttpClient,
       serverConfiguration: mockApiServerConfigure,
@@ -38,14 +34,11 @@ void main() {
     password = SignUpPassword('my_str0ng_P4ssw@rd', PasswordValidator());
     validToken = '666242';
 
-    serverEndpoint = Uri.https('api.anyserver.io', '/');
-
     // MockApiServerConfigure configuration
     when(mockApiServerConfigure.baseUri).thenAnswer((_) => serverEndpoint);
     when(mockApiServerConfigure.userAgent)
-        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
+        .thenAnswer((_) => Future.value(userAgent));
 
-    userAgent = await mockApiServerConfigure.userAgent;
     httpHeader = {
       'User-Agent': userAgent,
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -53,13 +46,13 @@ void main() {
   });
 
   group('ChangePasswordDataSource', () {
-    Uri httpResquest;
-    Map<String, String> queryParameters;
+    Uri? httpResquest;
+    Map<String, String?> queryParameters;
     group('request', () {
       setUp(() {
         queryParameters = {
           'app_version': userAgent,
-          'email': emailAddress.rawValue,
+          'email': emailAddress!.rawValue,
         };
         httpResquest = Uri(
           scheme: serverEndpoint.scheme,
@@ -74,7 +67,8 @@ void main() {
           () async {
         // arrange
         final bodyContent = JsonUtil.getStringSync(
-            from: 'authentication/request_reset_password.json');
+          from: 'authentication/request_reset_password.json',
+        );
         when(mockHttpClient.post(any, headers: anyNamed('headers')))
             .thenAnswer((_) async => http.Response(bodyContent, 200));
         // act
@@ -86,9 +80,11 @@ void main() {
           () async {
         // arrange
         final jsonData = await JsonUtil.getJson(
-            from: 'authentication/request_reset_password.json');
+          from: 'authentication/request_reset_password.json',
+        );
         final bodyContent = JsonUtil.getStringSync(
-            from: 'authentication/request_reset_password.json');
+          from: 'authentication/request_reset_password.json',
+        );
         final expectedModel = PasswordResetResponseModel.fromJson(jsonData);
         when(mockHttpClient.post(any, headers: anyNamed('headers')))
             .thenAnswer((_) async => http.Response(bodyContent, 200));
@@ -111,9 +107,12 @@ void main() {
         final sut = dataSource.request;
         // assert
         expect(
-            () async => await sut(emailAddress: emailAddress),
-            throwsA(isA<ApiProviderException>()
-                .having((e) => e.bodyContent, 'Got bodyContent', bodyContent)));
+          () => sut(emailAddress: emailAddress),
+          throwsA(
+            isA<ApiProviderException>()
+                .having((e) => e.bodyContent, 'Got bodyContent', bodyContent),
+          ),
+        );
       });
     });
 
@@ -122,8 +121,8 @@ void main() {
         queryParameters = {
           'dry': '0',
           'app_version': userAgent,
-          'email': emailAddress.rawValue,
-          'senha': password.rawValue,
+          'email': emailAddress!.rawValue,
+          'senha': password!.rawValue,
           'token': validToken,
         };
         httpResquest = Uri(
@@ -139,7 +138,8 @@ void main() {
           () async {
         // arrange
         final bodyContent = JsonUtil.getStringSync(
-            from: 'authentication/request_reset_password.json');
+          from: 'authentication/request_reset_password.json',
+        );
         when(mockHttpClient.post(any, headers: anyNamed('headers')))
             .thenAnswer((_) async => http.Response(bodyContent, 200));
         // act
@@ -149,13 +149,19 @@ void main() {
           resetToken: validToken,
         );
         // assert
-        verify(mockHttpClient.post(httpResquest, headers: httpHeader));
+        verify(
+          mockHttpClient.post(
+            httpResquest,
+            headers: httpHeader,
+          ),
+        );
       });
       test('should return ValidField when the response code is 200 (success)',
           () async {
         // arrange
         final bodyContent = JsonUtil.getStringSync(
-            from: 'authentication/request_reset_password.json');
+          from: 'authentication/request_reset_password.json',
+        );
         when(mockHttpClient.post(any, headers: anyNamed('headers')))
             .thenAnswer((_) async => http.Response(bodyContent, 200));
         // act
@@ -165,7 +171,7 @@ void main() {
           resetToken: validToken,
         );
         // assert
-        expect(result, ValidField());
+        expect(result, const ValidField());
       });
       test(
           'should throw ApiProviderException when the response code is nonsuccess (non 200)',
@@ -181,13 +187,16 @@ void main() {
         final sut = dataSource.reset;
         // assert
         expect(
-            () async => await sut(
-                  emailAddress: emailAddress,
-                  password: password,
-                  resetToken: validToken,
-                ),
-            throwsA(isA<ApiProviderException>()
-                .having((e) => e.bodyContent, 'Got bodyContent', bodyContent)));
+          () => sut(
+            emailAddress: emailAddress,
+            password: password,
+            resetToken: validToken,
+          ),
+          throwsA(
+            isA<ApiProviderException>()
+                .having((e) => e.bodyContent, 'Got bodyContent', bodyContent),
+          ),
+        );
       });
     });
   });

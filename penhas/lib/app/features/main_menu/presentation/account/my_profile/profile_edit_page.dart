@@ -18,7 +18,7 @@ import 'package:penhas/app/features/support_center/presentation/pages/support_ce
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ProfileEditPage extends StatefulWidget {
-  const ProfileEditPage({Key key}) : super(key: key);
+  const ProfileEditPage({Key? key}) : super(key: key);
 
   @override
   _ProfileEditPageState createState() => _ProfileEditPageState();
@@ -27,14 +27,14 @@ class ProfileEditPage extends StatefulWidget {
 class _ProfileEditPageState
     extends ModularState<ProfileEditPage, ProfileEditController>
     with SnackBarHandler {
-  List<ReactionDisposer> _disposers;
+  List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _disposers ??= [
-      reaction((_) => controller.updateError, (String message) {
+      reaction((_) => controller.updateError, (String? message) {
         showSnackBar(scaffoldKey: _scaffoldKey, message: message);
       }),
     ];
@@ -46,7 +46,7 @@ class _ProfileEditPageState
       key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0.0,
-        title: Text("Meu perfil"),
+        title: const Text('Meu perfil'),
         backgroundColor: DesignSystemColors.easterPurple,
       ),
       body: Observer(
@@ -57,7 +57,9 @@ class _ProfileEditPageState
 
   @override
   void dispose() {
-    _disposers.forEach((d) => d());
+    for (final d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 }
@@ -66,8 +68,8 @@ extension _PageBuilder on _ProfileEditPageState {
   Widget bodyBuilder(ProfileEditState state) {
     return state.when(
       initial: () => bodyLoading(),
-      loaded: (profile, securityModeFeatureEnabled) =>
-          bodyLoaded(profile, securityModeFeatureEnabled),
+      loaded: (profile, securityModeFeatureEnabled) => bodyLoaded(profile,
+          securityModeFeatureEnabled: securityModeFeatureEnabled,),
       error: (msg) => SupportCenterGeneralError(
         message: msg,
         onPressed: controller.retry,
@@ -86,7 +88,9 @@ extension _PageBuilder on _ProfileEditPageState {
   }
 
   Widget bodyLoaded(
-      UserProfileEntity profile, bool securityModeFeatureEnabled) {
+    UserProfileEntity profile, {
+    required bool securityModeFeatureEnabled,
+  }) {
     return SafeArea(
       child: PageProgressIndicator(
         progressMessage: 'Atualizando...',
@@ -102,7 +106,7 @@ extension _PageBuilder on _ProfileEditPageState {
               ),
               if (securityModeFeatureEnabled)
                 CardProfileBioPage(
-                  content: profile.minibio ?? "",
+                  content: profile.minibio ?? '',
                   onChange: controller.editMinibio,
                 ),
               if (securityModeFeatureEnabled)
@@ -112,22 +116,19 @@ extension _PageBuilder on _ProfileEditPageState {
                 ),
               if (securityModeFeatureEnabled)
                 CardProfileSingleTilePage(
-                  title: "Já foi vítima de violência contra a mulher?",
-                  content: profile.jaFoiVitimaDeViolencia ? "Sim" : "Não",
+                  title: 'Já foi vítima de violência contra a mulher?',
+                  content: profile.jaFoiVitimaDeViolencia ? 'Sim' : 'Não',
                 ),
-              CardProfileSingleTilePage(
-                title: "Cadastro",
+              const CardProfileSingleTilePage(
+                title: 'Cadastro',
                 content:
-                    "Informações privadas que nenhuma outra usuária terá acesso.",
+                    'Informações privadas que nenhuma outra usuária terá acesso.',
                 background: DesignSystemColors.systemBackgroundColor,
               ),
               CardProfileSingleTilePage(
-                title: "Data de Nascimento",
-                content: profile.birthdate.day.toString() +
-                    "/" +
-                    profile.birthdate.month.toString() +
-                    "/" +
-                    profile.birthdate.year.toString(),
+                title: 'Data de Nascimento',
+                content:
+                    '${profile.birthdate.day}/${profile.birthdate.month}/${profile.birthdate.year}',
                 background: DesignSystemColors.systemBackgroundColor,
               ),
               CardProfileRacePage(
@@ -135,7 +136,7 @@ extension _PageBuilder on _ProfileEditPageState {
                 onChange: controller.updateRace,
               ),
               CardProfileSingleTilePage(
-                title: "Sexo",
+                title: 'Sexo',
                 content: profile.genre,
                 background: DesignSystemColors.systemBackgroundColor,
               ),
@@ -159,27 +160,27 @@ extension _Modal on _ProfileEditPageState {}
 
 extension _ProfileEditPage on _ProfileEditPageState {
   Widget profileHeader() {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Dados do Perfil", style: profileHeaderTitleTextStyle),
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: Text("Informações exibidas para as usuários do PenhaS.",
-                  style: profileHeaderContentTextStyle),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Dados do Perfil', style: profileHeaderTitleTextStyle),
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: Text(
+              'Informações exibidas para as usuários do PenhaS.',
+              style: profileHeaderContentTextStyle,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
 
 extension _TextStyle on _ProfileEditPageState {
-  TextStyle get profileHeaderTitleTextStyle => TextStyle(
+  TextStyle get profileHeaderTitleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 20.0,
         letterSpacing: 0.63,
@@ -187,7 +188,7 @@ extension _TextStyle on _ProfileEditPageState {
         fontWeight: FontWeight.bold,
       );
 
-  TextStyle get profileHeaderContentTextStyle => TextStyle(
+  TextStyle get profileHeaderContentTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,
         letterSpacing: 0.63,

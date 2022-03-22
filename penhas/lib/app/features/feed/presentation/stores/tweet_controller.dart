@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:meta/meta.dart';
+import 'package:penhas/app/core/extension/asuka.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
 
@@ -13,18 +14,14 @@ abstract class ITweetController {
 }
 
 class TweetController implements ITweetController {
-  final FeedUseCases _useCase;
-
   TweetController({
-    @required FeedUseCases useCase,
+    required FeedUseCases useCase,
   }) : _useCase = useCase;
+
+  final FeedUseCases _useCase;
 
   @override
   Future<void> like(TweetEntity tweet) async {
-    if (tweet == null) {
-      return;
-    }
-
     if (tweet.meta.liked) {
       await _useCase.unlike(tweet);
     } else {
@@ -34,19 +31,11 @@ class TweetController implements ITweetController {
 
   @override
   Future<void> reply(TweetEntity tweet) async {
-    if (tweet == null) {
-      return;
-    }
-
     Modular.to.pushNamed('/mainboard/reply', arguments: tweet);
   }
 
   @override
   Future<void> delete(TweetEntity tweet) async {
-    if (tweet == null) {
-      return;
-    }
-
     await _useCase.delete(tweet);
   }
 
@@ -54,31 +43,33 @@ class TweetController implements ITweetController {
   Future<void> report(TweetEntity tweet) async {
     return Modular.to.showDialog(
       builder: (context) {
-        TextEditingController _controller = TextEditingController();
+        final TextEditingController _controller = TextEditingController();
 
         return AlertDialog(
-          title: Text('Denunciar'),
+          title: const Text('Denunciar'),
           content: TextFormField(
+            maxLengthEnforcement: MaxLengthEnforcement.enforced,
             controller: _controller,
             maxLength: 500,
             maxLines: 5,
-            maxLengthEnforced: true,
-            decoration: InputDecoration(
-                hintText: 'Informe o motivo de denúncia deste post',
-                filled: true),
+            decoration: const InputDecoration(
+              hintText: 'Informe o motivo de denúncia deste post',
+              filled: true,
+            ),
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('Fechar'),
+              child: const Text('Fechar'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             FlatButton(
-              child: Text('Enviar'),
-              onPressed: () async {
-                await _useCase.report(tweet, _controller.text);
-                Navigator.of(context).pop();
+              child: const Text('Enviar'),
+              onPressed: () {
+                _useCase
+                    .report(tweet, _controller.text)
+                    .then((value) => Navigator.of(context).pop());
               },
             ),
           ],

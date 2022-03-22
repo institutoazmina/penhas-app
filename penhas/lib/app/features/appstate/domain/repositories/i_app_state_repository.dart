@@ -6,5 +6,6 @@ import 'package:penhas/app/features/appstate/domain/entities/update_user_profile
 abstract class IAppStateRepository {
   Future<Either<Failure, AppStateEntity>> check();
   Future<Either<Failure, AppStateEntity>> update(
-      UpdateUserProfileEntity update);
+    UpdateUserProfileEntity update,
+  );
 }

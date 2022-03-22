@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:meta/meta.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class FeedCategoryFilter extends StatelessWidget {
-  final void Function() reloadFeed;
-
   const FeedCategoryFilter({
-    Key key,
-    @required this.reloadFeed,
+    Key? key,
+    required this.reloadFeed,
   }) : super(key: key);
+
+  final void Function() reloadFeed;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +21,7 @@ class FeedCategoryFilter extends StatelessWidget {
         elevation: 0.0,
         onPressed: () async {
           Modular.to.pushNamed('/mainboard/category').then((reload) {
-            if (reload ?? false) {
+            if (reload == true) {
               reloadFeed();
             }
           });
@@ -31,7 +30,7 @@ class FeedCategoryFilter extends StatelessWidget {
         shape: kButtonShapeOutlinePurple,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
+          children: const <Widget>[
             Text('Categorias', style: kTextStyleFeedCategoryButtonLabel),
             Icon(
               Icons.arrow_drop_down,

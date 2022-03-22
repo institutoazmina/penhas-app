@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_avatar.dart';
@@ -10,26 +9,23 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class ReplyTweet extends StatelessWidget {
+  const ReplyTweet({
+    Key? key,
+    required this.tweet,
+    required this.controller,
+    required BuildContext context,
+  })  : _context = context,
+        super(key: key);
+
   final TweetEntity tweet;
   final BuildContext _context;
 
   final ITweetController controller;
 
-  const ReplyTweet({
-    Key key,
-    @required this.tweet,
-    @required this.controller,
-    @required BuildContext context,
-  })  : assert(tweet != null),
-        assert(context != null),
-        assert(controller != null),
-        this._context = context,
-        super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(8.0)),
         boxShadow: [
@@ -47,15 +43,15 @@ class ReplyTweet extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             _buildMainTweet(_context),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 12.0, top: 12.0),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 12.0, top: 12.0),
               child: Divider(
                 height: 2,
                 color: DesignSystemColors.warnGrey,
               ),
             ),
-            Text('Comentário', style: kTextStyleFeedTweetReplyHeader),
-            SizedBox(height: 20),
+            const Text('Comentário', style: kTextStyleFeedTweetReplyHeader),
+            const SizedBox(height: 20),
             // expanded replied tweets
             ..._expandeRepliedTweeters(_context),
             _buildReplyAction(),
@@ -75,9 +71,8 @@ class ReplyTweet extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: TweetAvatar(tweet: tweet),
-              flex: 1,
             ),
-            SizedBox(width: 6.0),
+            const SizedBox(width: 6.0),
             Expanded(
               flex: 5,
               child: Column(
@@ -103,10 +98,10 @@ class ReplyTweet extends StatelessWidget {
   }
 
   List<Widget> _expandeRepliedTweeters(BuildContext context) {
-    return tweet.lastReply
+    return tweet.lastReply!
         .map(
           (e) => _RepliedTweet(
-            repliedTweet: e,
+            repliedTweet: e!,
             controller: controller,
           ),
         )
@@ -117,8 +112,8 @@ class ReplyTweet extends StatelessWidget {
     return tweet.totalReply > 1
         ? Column(
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(bottom: 12.0, top: 12.0),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 12.0, top: 12.0),
                 child: Divider(
                   height: 2,
                   color: DesignSystemColors.warnGrey,
@@ -129,8 +124,8 @@ class ReplyTweet extends StatelessWidget {
                 color: Colors.white,
                 highlightColor: Colors.white,
                 splashColor: Colors.white,
-                child: Text(
-                  "Ver todos os comentários",
+                child: const Text(
+                  'Ver todos os comentários',
                   style: kTextStyleFeedTweetShowReply,
                 ),
               ),
@@ -141,16 +136,15 @@ class ReplyTweet extends StatelessWidget {
 }
 
 class _RepliedTweet extends StatelessWidget {
+  const _RepliedTweet({
+    Key? key,
+    required TweetEntity repliedTweet,
+    required this.controller,
+  })  : tweet = repliedTweet,
+        super(key: key);
+
   final TweetEntity tweet;
   final ITweetController controller;
-
-  const _RepliedTweet({
-    Key key,
-    @required TweetEntity repliedTweet,
-    @required this.controller,
-  })  : assert(repliedTweet != null),
-        tweet = repliedTweet,
-        super(key: key);
 
   @override
   Widget build(BuildContext context) {

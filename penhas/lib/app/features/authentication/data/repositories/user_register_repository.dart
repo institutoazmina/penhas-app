@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:meta/meta.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -17,78 +16,82 @@ import 'package:penhas/app/features/authentication/domain/usecases/genre.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/human_race.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
+import 'package:penhas/app/shared/logger/log.dart';
 
 class UserRegisterRepository implements IUserRegisterRepository {
-  final INetworkInfo _networkInfo;
-  final IUserRegisterDataSource _dataSource;
-  final IAppConfiguration _appConfiguration;
-
   UserRegisterRepository({
-    @required INetworkInfo networkInfo,
-    @required IAppConfiguration appConfiguration,
-    @required IUserRegisterDataSource dataSource,
-  })  : this._dataSource = dataSource,
-        this._networkInfo = networkInfo,
-        this._appConfiguration = appConfiguration;
+    required INetworkInfo? networkInfo,
+    required IAppConfiguration? appConfiguration,
+    required IUserRegisterDataSource? dataSource,
+  })  : _dataSource = dataSource,
+        _networkInfo = networkInfo,
+        _appConfiguration = appConfiguration;
+
+  final INetworkInfo? _networkInfo;
+  final IUserRegisterDataSource? _dataSource;
+  final IAppConfiguration? _appConfiguration;
 
   @override
   Future<Either<Failure, ValidField>> checkField({
-    EmailAddress emailAddress,
-    SignUpPassword password,
-    Cep cep,
-    Cpf cpf,
-    Fullname fullname,
-    Fullname socialName,
-    Nickname nickName,
-    Birthday birthday,
-    Genre genre,
-    HumanRace race,
+    EmailAddress? emailAddress,
+    SignUpPassword? password,
+    Cep? cep,
+    Cpf? cpf,
+    Fullname? fullname,
+    Fullname? socialName,
+    Nickname? nickName,
+    Birthday? birthday,
+    Genre? genre,
+    HumanRace? race,
   }) async {
     try {
-      await _dataSource.checkField(
-          emailAddress: emailAddress,
-          password: password,
-          cep: cep,
-          cpf: cpf,
-          fullname: fullname,
-          nickName: nickName,
-          birthday: birthday,
-          genre: genre,
-          race: race);
+      await _dataSource!.checkField(
+        emailAddress: emailAddress,
+        password: password,
+        cep: cep,
+        cpf: cpf,
+        fullname: fullname,
+        nickName: nickName,
+        birthday: birthday,
+        genre: genre,
+        race: race,
+      );
 
-      return right(ValidField());
-    } catch (e) {
+      return right(const ValidField());
+    } catch (e, stack) {
+      logError(e, stack);
       return left(await _handleError(e));
     }
   }
 
   @override
   Future<Either<Failure, SessionEntity>> signup({
-    @required EmailAddress emailAddress,
-    @required SignUpPassword password,
-    @required Cep cep,
-    @required Cpf cpf,
-    @required Fullname fullname,
-    @required Fullname socialName,
-    @required Nickname nickName,
-    @required Birthday birthday,
-    @required Genre genre,
-    @required HumanRace race,
+    required EmailAddress? emailAddress,
+    required SignUpPassword? password,
+    required Cep? cep,
+    required Cpf? cpf,
+    required Fullname? fullname,
+    Fullname? socialName,
+    required Nickname? nickName,
+    required Birthday? birthday,
+    required Genre? genre,
+    required HumanRace? race,
   }) async {
     try {
-      final session = await _dataSource.register(
-          emailAddress: emailAddress,
-          password: password,
-          cep: cep,
-          cpf: cpf,
-          fullname: fullname,
-          nickName: nickName,
-          birthday: birthday,
-          genre: genre,
-          race: race,
-          socialName: socialName);
+      final session = await _dataSource!.register(
+        emailAddress: emailAddress,
+        password: password,
+        cep: cep,
+        cpf: cpf,
+        fullname: fullname,
+        nickName: nickName,
+        birthday: birthday,
+        genre: genre,
+        race: race,
+        socialName: socialName,
+      );
 
-      await _appConfiguration.saveApiToken(token: session.sessionToken);
+      await _appConfiguration!.saveApiToken(token: session.sessionToken);
 
       return right(
         SessionEntity(
@@ -96,22 +99,24 @@ class UserRegisterRepository implements IUserRegisterRepository {
           deletedScheduled: session.deletedScheduled,
         ),
       );
-    } catch (e) {
+    } catch (e, stack) {
+      logError(e, stack);
       return left(await _handleError(e));
     }
   }
 
   Future<Failure> _handleError(Object error) async {
-    if (await _networkInfo.isConnected == false) {
+    if (await _networkInfo!.isConnected == false) {
       return InternetConnectionFailure();
     }
 
     if (error is ApiProviderException) {
       return ServerSideFormFieldValidationFailure(
-          error: error.bodyContent['error'],
-          field: error.bodyContent['field'],
-          reason: error.bodyContent['reason'],
-          message: error.bodyContent['message']);
+        error: error.bodyContent['error'],
+        field: error.bodyContent['field'],
+        reason: error.bodyContent['reason'],
+        message: error.bodyContent['message'],
+      );
     }
 
     return ServerFailure();

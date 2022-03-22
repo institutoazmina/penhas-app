@@ -5,7 +5,7 @@ class RequestLocationPermissionContentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RichText(
-      text: TextSpan(
+      text: const TextSpan(
         text: 'Quando um guardião é cadastrado, recomendamos que o ',
         style: kTextStyleAlertDialogDescription,
         children: [
@@ -15,7 +15,7 @@ class RequestLocationPermissionContentWidget extends StatelessWidget {
           ),
           TextSpan(
             text:
-            'seja autorizado a obter a sua localização. Esta informação será enviada para o Guardião quando o botão ',
+                'seja autorizado a obter a sua localização. Esta informação será enviada para o Guardião quando o botão ',
             style: kTextStyleAlertDialogDescription,
           ),
           TextSpan(

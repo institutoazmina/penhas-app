@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:meta/meta.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
@@ -8,15 +7,16 @@ import 'package:penhas/app/features/authentication/presentation/shared/input_box
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/pages/sign_up_two/sign_up_two_controller.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
-import 'sign_up_two_controller.dart';
 
 class SignUpTwoPage extends StatefulWidget {
+  const SignUpTwoPage({Key? key, this.title = 'SignUpTwo'}) : super(key: key);
+
   final String title;
-  const SignUpTwoPage({Key key, this.title = "SignUpTwo"}) : super(key: key);
 
   @override
   _SignUpTwoPageState createState() => _SignUpTwoPageState();
@@ -25,8 +25,8 @@ class SignUpTwoPage extends StatefulWidget {
 class _SignUpTwoPageState
     extends ModularState<SignUpTwoPage, SignUpTwoController>
     with SnackBarHandler {
-  List<ReactionDisposer> _disposers;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  List<ReactionDisposer>? _disposers;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
 
   final dataSourceGenre =
@@ -44,7 +44,9 @@ class _SignUpTwoPageState
 
   @override
   void dispose() {
-    _disposers.forEach((d) => d());
+    for (final d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 
@@ -67,44 +69,49 @@ class _SignUpTwoPageState
               onTap: () => _handleTap(context),
               onPanDown: (_) => _handleTap(context),
               child: SafeArea(
-                  child: SingleChildScrollView(
-                padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    _buildHeader(),
-                    SizedBox(height: 18.0),
-                    _buildSubHeader(),
-                    SizedBox(height: 22.0),
-                    Observer(builder: (_) => _buildNickName()),
-                    Observer(builder: (_) => _buildSocialName()),
-                    SizedBox(height: 24.0),
-                    Observer(builder: (_) {
-                      return _buildDropdownList(
-                        context: context,
-                        labelText: 'Gênero',
-                        onError: controller.warningGenre,
-                        onChange: controller.setGenre,
-                        currentValue: controller.currentGenre,
-                        dataSource: dataSourceGenre,
-                      );
-                    }),
-                    SizedBox(height: 24.0),
-                    Observer(builder: (_) {
-                      return _buildDropdownList(
-                        context: context,
-                        labelText: 'Raça',
-                        onError: controller.warningRace,
-                        onChange: controller.setRace,
-                        currentValue: controller.currentRace,
-                        dataSource: dataSourceRace,
-                      );
-                    }),
-                    SizedBox(height: 24.0),
-                    SizedBox(height: 40.0, child: _buildNextButton()),
-                  ],
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      _buildHeader(),
+                      const SizedBox(height: 18.0),
+                      _buildSubHeader(),
+                      const SizedBox(height: 22.0),
+                      Observer(builder: (_) => _buildNickName()),
+                      Observer(builder: (_) => _buildSocialName()),
+                      const SizedBox(height: 24.0),
+                      Observer(
+                        builder: (_) {
+                          return _buildDropdownList(
+                            context: context,
+                            labelText: 'Gênero',
+                            onError: controller.warningGenre,
+                            onChange: controller.setGenre,
+                            currentValue: controller.currentGenre,
+                            dataSource: dataSourceGenre,
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 24.0),
+                      Observer(
+                        builder: (_) {
+                          return _buildDropdownList(
+                            context: context,
+                            labelText: 'Raça',
+                            onError: controller.warningRace,
+                            onChange: controller.setRace,
+                            currentValue: controller.currentRace,
+                            dataSource: dataSourceRace,
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 24.0),
+                      SizedBox(height: 40.0, child: _buildNextButton()),
+                    ],
+                  ),
                 ),
-              )),
+              ),
             ),
           ),
         ),
@@ -114,7 +121,6 @@ class _SignUpTwoPageState
 
   SingleTextInput _buildNickName() {
     return SingleTextInput(
-      keyboardType: TextInputType.text,
       onChanged: controller.setNickname,
       boxDecoration: WhiteBoxDecorationStyle(
         labelText: 'Apelido',
@@ -128,9 +134,8 @@ class _SignUpTwoPageState
       offstage: !controller.hasSocialNameField,
       child: Column(
         children: <Widget>[
-          SizedBox(height: 24.0),
+          const SizedBox(height: 24.0),
           SingleTextInput(
-            keyboardType: TextInputType.text,
             onChanged: controller.setSocialName,
             boxDecoration: WhiteBoxDecorationStyle(
               labelText: 'Nome social',
@@ -143,57 +148,59 @@ class _SignUpTwoPageState
   }
 
   Widget _buildDropdownList<T>({
-    @required BuildContext context,
-    @required String labelText,
-    @required String onError,
-    @required onChange,
-    @required T currentValue,
-    @required List dataSource,
+    required BuildContext context,
+    required String labelText,
+    required String? onError,
+    required onChange,
+    required T currentValue,
+    required List dataSource,
   }) {
     return Theme(
       data: Theme.of(context)
-          .copyWith(canvasColor: Color.fromRGBO(141, 146, 157, 1)),
+          .copyWith(canvasColor: const Color.fromRGBO(141, 146, 157, 1)),
       child: DropdownButtonFormField(
         decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
+          enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white70),
           ),
-          focusedBorder: OutlineInputBorder(
+          focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white70),
           ),
           errorText: (onError?.isEmpty ?? true) ? null : onError,
           labelText: labelText,
-          labelStyle: TextStyle(color: Colors.white),
-          contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
+          labelStyle: const TextStyle(color: Colors.white),
+          contentPadding:
+              const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
         ),
-        items: dataSource,
+        items: dataSource as List<DropdownMenuItem<T>>,
         onChanged: onChange,
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
         value: currentValue == '' ? null : currentValue,
       ),
     );
   }
 
-  RaisedButton _buildNextButton() {
+  Widget _buildNextButton() {
     return RaisedButton(
       onPressed: () => controller.nextStepPressed(),
       elevation: 0,
       color: DesignSystemColors.ligthPurple,
-      child: Text(
-        "Próximo",
+      shape: kButtonShapeFilled,
+      child: const Text(
+        'Próximo',
         style: kTextStyleDefaultFilledButtonLabel,
       ),
-      shape: kButtonShapeFilled,
     );
   }
 
   static List<DropdownMenuItem<String>> _buildDataSource(
-      List<MenuItemModel> list) {
+    List<MenuItemModel> list,
+  ) {
     return list
         .map(
           (v) => DropdownMenuItem<String>(
-            child: Text(v.display),
             value: v.value,
+            child: Text(v.display!),
           ),
         )
         .toList();
@@ -214,7 +221,7 @@ class _SignUpTwoPageState
   }
 
   SizedBox _buildSubHeader() {
-    return SizedBox(
+    return const SizedBox(
       height: 60.0,
       child: Text(
         'Nos conte um pouco mais sobre você.',
@@ -225,16 +232,17 @@ class _SignUpTwoPageState
   }
 
   Text _buildHeader() {
-    return Text(
+    return const Text(
       'Crie sua conta',
       style: kTextStyleRegisterHeaderLabelStyle,
       textAlign: TextAlign.center,
     );
   }
 
-  _handleTap(BuildContext context) {
-    if (MediaQuery.of(context).viewInsets.bottom > 0)
+  void _handleTap(BuildContext context) {
+    if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
-    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+    }
+    WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 }

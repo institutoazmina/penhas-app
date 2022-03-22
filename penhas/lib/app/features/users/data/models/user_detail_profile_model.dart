@@ -1,21 +1,13 @@
-import 'package:meta/meta.dart';
 import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
 
 class UserDetailProfileModel extends UserDetailProfileEntity {
-  final String nickname;
-  final String avatar;
-  final int clientId;
-  final String miniBio;
-  final String skills;
-  final String activity;
-
-  UserDetailProfileModel({
-    @required this.nickname,
-    @required this.avatar,
-    @required this.clientId,
-    @required this.miniBio,
-    @required this.skills,
-    @required this.activity,
+  const UserDetailProfileModel({
+    String? nickname,
+    String? avatar,
+    int? clientId,
+    String? miniBio,
+    String? skills,
+    String? activity,
   }) : super(
           nickname: nickname,
           avatar: avatar,
@@ -25,7 +17,7 @@ class UserDetailProfileModel extends UserDetailProfileEntity {
           activity: activity,
         );
 
-  factory UserDetailProfileModel.fromJson(Map<String, Object> jsonData) {
+  factory UserDetailProfileModel.fromJson(Map<String, dynamic> jsonData) {
     return UserDetailProfileModel(
       nickname: jsonData['apelido'],
       avatar: jsonData['avatar_url'],

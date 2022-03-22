@@ -2,45 +2,47 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/managers/local_store.dart';
-import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
-import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
-import 'package:penhas/app/features/main_menu/domain/repositories/user_profile_repository.dart';
+import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/main_menu/domain/usecases/user_profile.dart';
 
-class MockAppStateUseCase extends Mock implements AppStateUseCase {}
-
-class MockUserProfileStore extends Mock implements LocalStore<UserProfileEntity> {}
-
-class MockUserProfileRepository extends Mock implements IUserProfileRepository {
-}
+import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  UserProfile sut;
-  AppStateUseCase appStateUseCase;
-  IUserProfileRepository repository;
-  LocalStore<UserProfileEntity> profileStore;
+  late final MockAppStateUseCase appStateUseCase = MockAppStateUseCase();
+  late final MockIUserProfileRepository repository =
+      MockIUserProfileRepository();
+  late final MockUserProfileStore profileStore = MockUserProfileStore();
+
+  late final UserProfile sut = UserProfile(
+    repository: repository,
+    userProfileStore: profileStore,
+    appStateUseCase: appStateUseCase,
+  );
 
   setUp(() {
-    repository = MockUserProfileRepository();
-    profileStore = MockUserProfileStore();
-    appStateUseCase = MockAppStateUseCase();
-    sut = UserProfile(
-      repository: repository,
-      userProfileStore: profileStore,
-      appStateUseCase: appStateUseCase,
+    when(appStateUseCase.check()).thenAnswer(
+      (_) => Future.value(
+        right(
+          const AppStateEntity(
+            quizSession: null,
+            userProfile: null,
+            appMode: AppStateModeEntity(),
+            modules: [],
+          ),
+        ),
+      ),
     );
   });
 
   group('UserProfile', () {
     test('should enable stealth mode', () async {
       // arrange
-      final actual = right(ValidField());
+      final actual = right(const ValidField());
       when(repository.stealthMode(toggle: anyNamed('toggle')))
-          .thenAnswer((_) async => right(ValidField()));
-      when(appStateUseCase.check()).thenAnswer((_) => null);
+          .thenAnswer((_) async => right(const ValidField()));
+
       // act
-      final expected = await sut.stealthMode(true);
+      final expected = await sut.stealthMode(toggle: true);
       // assert
       expect(actual, expected);
       verify(repository.stealthMode(toggle: true));
@@ -49,11 +51,11 @@ void main() {
 
     test('should disable stealth mode', () async {
       // arrange
-      final actual = right(ValidField());
+      final actual = right(const ValidField());
       when(repository.stealthMode(toggle: anyNamed('toggle')))
-          .thenAnswer((_) async => right(ValidField()));
+          .thenAnswer((_) async => right(const ValidField()));
       // act
-      final expected = await sut.stealthMode(false);
+      final expected = await sut.stealthMode(toggle: false);
       // assert
       expect(actual, expected);
       verify(repository.stealthMode(toggle: false));
@@ -61,11 +63,11 @@ void main() {
 
     test('should enable anonymous mode', () async {
       // arrange
-      final actual = right(ValidField());
+      final actual = right(const ValidField());
       when(repository.anonymousMode(toggle: anyNamed('toggle')))
-          .thenAnswer((_) async => right(ValidField()));
+          .thenAnswer((_) async => right(const ValidField()));
       // act
-      final expected = await sut.anonymousMode(true);
+      final expected = await sut.anonymousMode(toggle: true);
       // assert
       expect(actual, expected);
       verify(repository.anonymousMode(toggle: true));
@@ -73,12 +75,12 @@ void main() {
 
     test('should disable anonymous mode', () async {
       // arrange
-      final actual = right(ValidField());
+      final actual = right(const ValidField());
       when(repository.anonymousMode(toggle: anyNamed('toggle')))
-          .thenAnswer((_) async => right(ValidField()));
-      when(appStateUseCase.check()).thenAnswer((_) => null);
+          .thenAnswer((_) async => right(const ValidField()));
+
       // act
-      final expected = await sut.anonymousMode(false);
+      final expected = await sut.anonymousMode(toggle: false);
       // assert
       expect(actual, expected);
       verify(repository.anonymousMode(toggle: false));

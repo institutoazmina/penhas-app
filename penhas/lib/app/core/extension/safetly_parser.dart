@@ -1,5 +1,7 @@
-extension SafetlyParser on Object {
-  double safeParseDouble() {
+import 'package:penhas/app/shared/logger/log.dart';
+
+extension SafetlyParser on Object? {
+  double? safeParseDouble() {
     final value = this;
 
     if (value is String) {
@@ -11,23 +13,24 @@ extension SafetlyParser on Object {
     return null;
   }
 
-  int safeParseInt() {
+  int safeParseInt({int def = 0}) {
     final value = this;
 
     if (value is String) {
-      return int.tryParse(value);
+      return int.tryParse(value) ?? def;
     } else if (value is num) {
       return value.toInt();
     }
 
-    return null;
+    return def;
   }
 
   bool safeParseBool() {
     final value = this;
     try {
-      return (value as num) == 1 ?? false;
-    } catch (e) {
+      return value == 1;
+    } catch (e, stack) {
+      logError(e, stack);
       return false;
     }
   }

@@ -1,9 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
@@ -20,30 +17,30 @@ part 'new_guardian_controller.g.dart';
 class NewGuardianController extends _NewGuardianControllerBase
     with _$NewGuardianController {
   NewGuardianController({
-    @required IGuardianRepository guardianRepository,
-    @required ILocationServices locationService,
+    required IGuardianRepository guardianRepository,
+    required ILocationServices locationService,
   }) : super(guardianRepository, locationService);
 }
 
 abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
-  final IGuardianRepository _guardianRepository;
-  final ILocationServices _locationService;
-  String guardianName;
-  String guardianMobile;
-
   _NewGuardianControllerBase(
     this._guardianRepository,
     this._locationService,
   );
 
-  @observable
-  ObservableFuture<Either<Failure, GuardianSessioEntity>> _fetchProgress;
+  final IGuardianRepository _guardianRepository;
+  final ILocationServices _locationService;
+  String? guardianName;
+  String? guardianMobile;
 
   @observable
-  ObservableFuture<Either<Failure, AlertModel>> _createProgress;
+  ObservableFuture<Either<Failure, GuardianSessioEntity>>? _fetchProgress;
 
   @observable
-  String errorMessage = '';
+  ObservableFuture<Either<Failure, AlertModel>>? _createProgress;
+
+  @observable
+  String? errorMessage = '';
 
   @observable
   String warningMobile = '';
@@ -52,19 +49,19 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
   String warningName = '';
 
   @observable
-  NewGuardianState currentState = NewGuardianState.initial();
+  NewGuardianState currentState = const NewGuardianState.initial();
 
   @observable
-  GuardianAlertState alertState = GuardianAlertState.initial();
+  GuardianAlertState alertState = const GuardianAlertState.initial();
 
   @computed
   PageProgressState get loadState {
     if (_fetchProgress == null ||
-        _fetchProgress.status == FutureStatus.rejected) {
+        _fetchProgress!.status == FutureStatus.rejected) {
       return PageProgressState.initial;
     }
 
-    return _fetchProgress.status == FutureStatus.pending
+    return _fetchProgress!.status == FutureStatus.pending
         ? PageProgressState.loading
         : PageProgressState.loaded;
   }
@@ -72,21 +69,22 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
   @computed
   PageProgressState get createState {
     if (_createProgress == null ||
-        _createProgress.status == FutureStatus.rejected) {
+        _createProgress!.status == FutureStatus.rejected) {
       return PageProgressState.initial;
     }
 
-    return _createProgress.status == FutureStatus.pending
+    return _createProgress!.status == FutureStatus.pending
         ? PageProgressState.loading
         : PageProgressState.loaded;
   }
 
   @action
   Future<void> loadPage() async {
-    _setErrorMessage('');
+    errorMessage = '';
     _fetchProgress = ObservableFuture(_guardianRepository.fetch());
 
-    final response = await _fetchProgress;
+    final Either<Failure, GuardianSessioEntity> response =
+        await _fetchProgress!;
 
     response.fold(
       (failure) => _handleLoadPageError(failure),
@@ -98,7 +96,7 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
   void setGuardianName(String name) {
     guardianName = name;
 
-    if (guardianName != null || guardianName.isNotEmpty) {
+    if (guardianName != null || guardianName!.isNotEmpty) {
       warningName = '';
     }
   }
@@ -107,7 +105,7 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
   void setGuardianMobile(String mobile) {
     guardianMobile = mobile;
 
-    if (guardianMobile != null || guardianMobile.isNotEmpty) {
+    if (guardianMobile != null || guardianMobile!.isNotEmpty) {
       warningMobile = '';
     }
   }
@@ -117,11 +115,11 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
     warningName = '';
     warningMobile = '';
 
-    if (guardianName == null || guardianName.isEmpty) {
+    if (guardianName == null || guardianName!.isEmpty) {
       warningName = 'É necessário informar o nome';
     }
 
-    if (guardianMobile == null || guardianMobile.isEmpty) {
+    if (guardianMobile == null || guardianMobile!.isEmpty) {
       warningMobile = 'É necessário informar o celular';
     }
 
@@ -129,7 +127,7 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
       return;
     }
 
-    _setErrorMessage('');
+    errorMessage = '';
     final guardian = GuardianContactEntity.createRequest(
       name: guardianName,
       mobile: guardianMobile,
@@ -137,10 +135,10 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
 
     _createProgress = ObservableFuture(_guardianRepository.create(guardian));
 
-    final response = await _createProgress;
+    final Either<Failure, AlertModel> response = await _createProgress!;
 
     response.fold(
-      (failure) => _setErrorMessage(mapFailureMessage(failure)),
+      (failure) => errorMessage = mapFailureMessage(failure),
       (session) => _handleCreatedGuardian(session),
     );
   }
@@ -151,15 +149,13 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
       return;
     }
 
-    currentState = NewGuardianState.loaded();
+    currentState = const NewGuardianState.loaded();
   }
 
   void _handleLoadPageError(Failure failure) {
-    final message = mapFailureMessage(failure);
+    final message = mapFailureMessage(failure)!;
     currentState = NewGuardianState.error(message);
   }
-
-  void _setErrorMessage(String message) => errorMessage = message;
 
   void _handleCreatedGuardian(AlertModel field) {
     alertState = GuardianAlertState.alert(
@@ -171,11 +167,12 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
     );
   }
 
-  void _actionAfterNotice() async {
+  Future<void> _actionAfterNotice() async {
     await _locationService
         .requestPermission(
-            title: 'O guardião precisa da sua localização',
-            description: RequestLocationPermissionContentWidget())
+          title: 'O guardião precisa da sua localização',
+          description: RequestLocationPermissionContentWidget(),
+        )
         .then((value) => Modular.to.pop(true));
   }
 }

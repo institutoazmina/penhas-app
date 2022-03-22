@@ -3,20 +3,20 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/core/extension/asuka.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
 import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/support_center/domain/states/support_center_add_state.dart';
+import 'package:penhas/app/features/support_center/presentation/add/support_center_add_controller.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_input.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
-import 'support_center_add_controller.dart';
-
 class SupportCenterAddPage extends StatefulWidget {
-  SupportCenterAddPage({Key key}) : super(key: key);
+  const SupportCenterAddPage({Key? key}) : super(key: key);
 
   @override
   _SupportCenterAddPageState createState() => _SupportCenterAddPageState();
@@ -25,21 +25,23 @@ class SupportCenterAddPage extends StatefulWidget {
 class _SupportCenterAddPageState
     extends ModularState<SupportCenterAddPage, SupportCenterAddController>
     with SnackBarHandler {
-  List<ReactionDisposer> _disposers;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  List<ReactionDisposer>? _disposers;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text("Adicionar Ponto"),
+        title: const Text('Adicionar Ponto'),
         elevation: 0.0,
         backgroundColor: DesignSystemColors.easterPurple,
       ),
-      body: Observer(builder: (_) {
-        return buildBody(context, controller.state);
-      }),
+      body: Observer(
+        builder: (_) {
+          return buildBody(context, controller.state);
+        },
+      ),
     );
   }
 
@@ -55,7 +57,7 @@ class _SupportCenterAddPageState
     return SafeArea(
       child: PageProgressIndicator(
         progressState: PageProgressState.loading,
-        progressMessage: "Carregando as categorias",
+        progressMessage: 'Carregando as categorias',
         child: Container(color: DesignSystemColors.systemBackgroundColor),
       ),
     );
@@ -65,7 +67,6 @@ class _SupportCenterAddPageState
     return SafeArea(
       child: PageProgressIndicator(
         progressState: controller.progressState,
-        progressMessage: "Processando",
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,8 +86,11 @@ class _SupportCenterAddPageState
     );
   }
 
+  @override
   void dispose() {
-    _disposers.forEach((d) => d());
+    for (final d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 
@@ -102,7 +106,9 @@ class _SupportCenterAddPageState
 
 extension _BuildWidget on _SupportCenterAddPageState {
   Widget buildInputPlaceInformation(
-      BuildContext context, List<FilterTagEntity> categories) {
+    BuildContext context,
+    List<FilterTagEntity> categories,
+  ) {
     final dataSource = buildDataSource(categories);
 
     return Container(
@@ -110,36 +116,36 @@ extension _BuildWidget on _SupportCenterAddPageState {
       child: Column(
         children: [
           Text(
-            "Adicione novos pontos de apoio para aumentar as opções de suporte das mulheres em situação de violência.",
+            'Adicione novos pontos de apoio para aumentar as opções de suporte das mulheres em situação de violência.',
             style: introdutionText,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12.0),
             child:
-                Text("Informação sobre o ponto de apoio", style: addressTitle),
+                Text('Informação sobre o ponto de apoio', style: addressTitle),
           ),
           SupportCenterInput(
             maxLines: 2,
-            hintText: "Insira um endereço ou CEP",
+            hintText: 'Insira um endereço ou CEP',
             errorText: controller.addressError,
             onChanged: controller.setAddress,
           ),
           buildDropdownList(
             context: context,
-            labelText: "Selecione o tipo de ponto de apoio",
+            labelText: 'Selecione o tipo de ponto de apoio',
             errorMessage: controller.categoryError,
             currentValue: controller.categorySelected,
             dataSource: dataSource,
           ),
           SupportCenterInput(
-            hintText: "Nome do ponto de apoio",
+            hintText: 'Nome do ponto de apoio',
             errorText: controller.placeNameError,
             onChanged: controller.setPlaceName,
           ),
           SupportCenterInput(
             maxLines: 6,
             hintText:
-                "Explique brevemente os serviços oferecidos por este ponto de apoio",
+                'Explique brevemente os serviços oferecidos por este ponto de apoio',
             errorText: controller.placeDescriptionError,
             onChanged: controller.setPlaceDescription,
           ),
@@ -159,14 +165,15 @@ extension _BuildWidget on _SupportCenterAddPageState {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
             child: Container(
               padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: DesignSystemColors.white,
                 borderRadius: BorderRadius.all(
                   Radius.circular(8),
                 ),
               ),
-              child: Text(
-                  "Essa informação ajuda usuárias do PenhaS que estão em situação de violência a entender se o ponto de apoio oferece o que ela precisa."),
+              child: const Text(
+                'Essa informação ajuda usuárias do PenhaS que estão em situação de violência a entender se o ponto de apoio oferece o que ela precisa.',
+              ),
             ),
           ),
           Padding(
@@ -179,7 +186,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
                 color: DesignSystemColors.ligthPurple,
                 shape: kButtonShapeFilled,
                 child: Text(
-                  "Adicionar ponto de apoio",
+                  'Adicionar ponto de apoio',
                   style: buttonTitle,
                 ),
               ),
@@ -194,45 +201,49 @@ extension _BuildWidget on _SupportCenterAddPageState {
     return list
         .map(
           (v) => DropdownMenuItem<String>(
-            child: Text(
-              v.label,
-            ),
             value: v.id,
+            child: Text(
+              v.label!,
+            ),
           ),
         )
         .toList();
   }
 
   Widget buildDropdownList({
-    @required BuildContext context,
-    @required String labelText,
-    @required String errorMessage,
-    @required String currentValue,
-    @required List dataSource,
+    required BuildContext context,
+    required String labelText,
+    String? errorMessage,
+    required String currentValue,
+    required List dataSource,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Theme(
         data: Theme.of(context)
-            .copyWith(canvasColor: Color.fromRGBO(141, 146, 157, 1)),
-        child: DropdownButtonFormField(
+            .copyWith(canvasColor: const Color.fromRGBO(141, 146, 157, 1)),
+        child: DropdownButtonFormField<dynamic>(
           isExpanded: true,
           decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
+            enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: DesignSystemColors.easterPurple),
             ),
-            focusedBorder: OutlineInputBorder(
+            focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: DesignSystemColors.easterPurple),
             ),
             errorText: (errorMessage?.isEmpty ?? true) ? null : errorMessage,
-            border: OutlineInputBorder(
-                borderSide: BorderSide(color: DesignSystemColors.easterPurple)),
-            contentPadding: EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
+            border: const OutlineInputBorder(
+              borderSide: BorderSide(color: DesignSystemColors.easterPurple),
+            ),
+            contentPadding:
+                const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
             hintText: labelText,
-            hintStyle: TextStyle(color: Colors.black),
+            hintStyle: const TextStyle(color: Colors.black),
           ),
-          items: dataSource,
-          onChanged: controller.setCategorie,
+          items: dataSource as List<DropdownMenuItem>,
+          onChanged: (category) {
+            controller.setCategorie(category as String);
+          },
           value: currentValue.isEmpty ? null : currentValue,
         ),
       ),
@@ -240,7 +251,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
   }
 
   ReactionDisposer showErrorMessage() {
-    return reaction((_) => controller.errorMessage, (String message) {
+    return reaction((_) => controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }
@@ -262,16 +273,16 @@ extension _BuildWidget on _SupportCenterAddPageState {
           title: Column(
             children: <Widget>[
               SvgPicture.asset(
-                  'assets/images/svg/help_center/guardians/guardians_sent_invite.svg'),
+                'assets/images/svg/help_center/guardians/guardians_sent_invite.svg',
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 12.0),
-                child:
-                    Text(action.title, style: kTextStyleAlertDialogTitle),
+                child: Text(action.title, style: kTextStyleAlertDialogTitle),
               ),
             ],
           ),
           content: Text(
-            action.message,
+            action.message!,
             style: kTextStyleAlertDialogDescription,
           ),
           shape: RoundedRectangleBorder(
@@ -279,9 +290,9 @@ extension _BuildWidget on _SupportCenterAddPageState {
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('Fechar'),
+              child: const Text('Fechar'),
               onPressed: () async {
-                Modular.to.pop();
+                Navigator.of(context).pop();
                 action.onPressed();
               },
             ),
@@ -293,19 +304,22 @@ extension _BuildWidget on _SupportCenterAddPageState {
 }
 
 extension _SupportCenterAddPageStateTextStyle on _SupportCenterAddPageState {
-  TextStyle get introdutionText => TextStyle(
-      color: DesignSystemColors.darkIndigoThree,
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      fontWeight: FontWeight.normal);
-  TextStyle get addressTitle => TextStyle(
-      color: DesignSystemColors.darkIndigoThree,
-      fontFamily: 'Lato',
-      fontSize: 20.0,
-      fontWeight: FontWeight.bold);
-  TextStyle get buttonTitle => TextStyle(
-      color: DesignSystemColors.white,
-      fontFamily: 'Lato',
-      fontSize: 12.0,
-      fontWeight: FontWeight.bold);
+  TextStyle get introdutionText => const TextStyle(
+        color: DesignSystemColors.darkIndigoThree,
+        fontFamily: 'Lato',
+        fontSize: 14.0,
+        fontWeight: FontWeight.normal,
+      );
+  TextStyle get addressTitle => const TextStyle(
+        color: DesignSystemColors.darkIndigoThree,
+        fontFamily: 'Lato',
+        fontSize: 20.0,
+        fontWeight: FontWeight.bold,
+      );
+  TextStyle get buttonTitle => const TextStyle(
+        color: DesignSystemColors.white,
+        fontFamily: 'Lato',
+        fontSize: 12.0,
+        fontWeight: FontWeight.bold,
+      );
 }

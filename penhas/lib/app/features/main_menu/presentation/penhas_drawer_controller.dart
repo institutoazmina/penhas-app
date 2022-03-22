@@ -1,5 +1,4 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
@@ -12,32 +11,35 @@ part 'penhas_drawer_controller.g.dart';
 class PenhasDrawerController extends _PenhasDrawerControllerBase
     with _$PenhasDrawerController {
   PenhasDrawerController({
-    @required IAppConfiguration appConfigure,
-    @required UserProfile userProfile,
-    @required IAppModulesServices modulesServices,
+    required IAppConfiguration appConfigure,
+    required UserProfile userProfile,
+    required IAppModulesServices modulesServices,
   }) : super(appConfigure, userProfile, modulesServices);
 }
 
 abstract class _PenhasDrawerControllerBase with Store {
+  _PenhasDrawerControllerBase(
+    this._appConfigure,
+    this._userProfile,
+    this._modulesServices,
+  ) {
+    _init();
+  }
+
   final UserProfile _userProfile;
   final IAppConfiguration _appConfigure;
   final IAppModulesServices _modulesServices;
 
-  _PenhasDrawerControllerBase(
-      this._appConfigure, this._userProfile, this._modulesServices) {
-    _init();
-  }
-
-  _init() async {
+  Future<void> _init() async {
     showSecurityOptions = await _showSecurityModeToggle();
     await _updateProfileInformation();
   }
 
   @observable
-  String userName = "";
+  String userName = '';
 
   @observable
-  String userAvatar = "";
+  String userAvatar = '';
 
   @observable
   bool showSecurityOptions = false;
@@ -56,7 +58,7 @@ abstract class _PenhasDrawerControllerBase with Store {
 
   Future<void> _toggleAnymousMode(bool toggle) async {
     anonymousModeState = _anonyousToggleState(toggle);
-    final action = await _userProfile.anonymousMode(toggle);
+    final action = await _userProfile.anonymousMode(toggle: toggle);
 
     action.fold(
       (failure) => null,
@@ -66,7 +68,7 @@ abstract class _PenhasDrawerControllerBase with Store {
 
   Future<void> _toggleStealthMode(bool toggle) async {
     stealthModeState = _stealthToggleState(toggle);
-    final action = await _userProfile.stealthMode(toggle);
+    final action = await _userProfile.stealthMode(toggle: toggle);
 
     action.fold(
       (failure) => null,
@@ -84,13 +86,13 @@ abstract class _PenhasDrawerControllerBase with Store {
 
   Future<void> _updateProfileInformation() async {
     final profile = await _userProfile.currentProfile();
-    userName = profile.nickname ?? "";
-    userAvatar = profile.avatar ?? "";
+    userName = profile.nickname ?? '';
+    userAvatar = profile.avatar ?? '';
     stealthModeState = _stealthToggleState(profile.stealthModeEnabled);
     anonymousModeState = _anonyousToggleState(profile.anonymousModeEnabled);
   }
 
-  SecurityToggleState _anonyousToggleState(bool isEnabled) {
+  SecurityToggleState _anonyousToggleState(bool? isEnabled) {
     return SecurityToggleState(
       title: 'Estou em situação de violência',
       isEnabled: isEnabled,
@@ -98,7 +100,7 @@ abstract class _PenhasDrawerControllerBase with Store {
     );
   }
 
-  SecurityToggleState _stealthToggleState(bool isEnabled) {
+  SecurityToggleState _stealthToggleState(bool? isEnabled) {
     return SecurityToggleState(
       title: 'Modo camuflado',
       isEnabled: isEnabled,

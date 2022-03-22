@@ -6,16 +6,16 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class QuizMultipleChoicesWidget extends StatefulWidget {
+  const QuizMultipleChoicesWidget({
+    Key? key,
+    required this.reference,
+    required this.onPressed,
+    required this.options,
+  }) : super(key: key);
+
   final String reference;
   final UserReaction onPressed;
-  final List<QuizMessageMultiplechoicesOptions> options;
-
-  QuizMultipleChoicesWidget({
-    Key key,
-    @required this.reference,
-    @required this.onPressed,
-    @required this.options,
-  }) : super(key: key);
+  final List<QuizMessageMultiplechoicesOptions>? options;
 
   @override
   _QuizMultipleChoicesWidgetState createState() =>
@@ -23,7 +23,7 @@ class QuizMultipleChoicesWidget extends StatefulWidget {
 }
 
 class _QuizMultipleChoicesWidgetState extends State<QuizMultipleChoicesWidget> {
-  final _selectedValues = List<String>();
+  final _selectedValues = [];
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class _QuizMultipleChoicesWidgetState extends State<QuizMultipleChoicesWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         boxShadow: [
           BoxShadow(
@@ -44,28 +44,26 @@ class _QuizMultipleChoicesWidgetState extends State<QuizMultipleChoicesWidget> {
         ],
       ),
       child: Padding(
-        padding: EdgeInsets.fromLTRB(24.0, 0.0, 24.0, 8.0),
+        padding: const EdgeInsets.fromLTRB(24.0, 0.0, 24.0, 8.0),
         child: Column(
           children: <Widget>[
             Container(
-              constraints: BoxConstraints(maxHeight: 208),
+              constraints: const BoxConstraints(maxHeight: 208),
               child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    Container(
-                      child: ListTileTheme(
-                        contentPadding: EdgeInsets.zero,
-                        child: ListBody(
-                          children:
-                              widget.options.map((e) => _buildItem(e)).toList(),
-                        ),
+                    ListTileTheme(
+                      contentPadding: EdgeInsets.zero,
+                      child: ListBody(
+                        children:
+                            widget.options!.map((e) => _buildItem(e)).toList(),
                       ),
                     ),
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
@@ -75,10 +73,9 @@ class _QuizMultipleChoicesWidgetState extends State<QuizMultipleChoicesWidget> {
                     elevation: 0.0,
                     shape: kButtonShapeFilled,
                     color: DesignSystemColors.ligthPurple,
-                    onPressed: _selectedValues.length == 0
-                        ? null
-                        : () => _onSavePressed(),
-                    child: Text(
+                    onPressed:
+                        _selectedValues.isEmpty ? null : () => _onSavePressed(),
+                    child: const Text(
                       'Enviar',
                       style: kTextStyleDefaultFilledButtonLabel,
                     ),
@@ -106,14 +103,15 @@ class _QuizMultipleChoicesWidgetState extends State<QuizMultipleChoicesWidget> {
     return SizedBox(
       height: 44.0,
       child: CheckboxListTile(
-          onChanged: (v) => _onItemCheckedChange(option.index, v),
-          value: checked,
-          title: Text(option.display),
-          controlAffinity: ListTileControlAffinity.leading),
+        onChanged: (v) => _onItemCheckedChange(option.index, v == true),
+        value: checked,
+        title: Text(option.display!),
+        controlAffinity: ListTileControlAffinity.leading,
+      ),
     );
   }
 
-  void _onItemCheckedChange(String itemValue, bool checked) {
+  void _onItemCheckedChange(String? itemValue, bool checked) {
     setState(() {
       if (checked) {
         _selectedValues.add(itemValue);

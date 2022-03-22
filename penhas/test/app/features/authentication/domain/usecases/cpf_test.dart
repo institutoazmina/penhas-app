@@ -5,12 +5,12 @@ import 'package:penhas/app/features/authentication/domain/usecases/cpf.dart';
 
 void main() {
   group(
-    "Cpf",
+    'Cpf',
     () {
       test(
         'should get CpfInvalidFailure for null value',
         () {
-          var result = Cpf(null).value;
+          final result = Cpf('').value;
 
           expect(result, left(CpfInvalidFailure()));
         },
@@ -18,7 +18,7 @@ void main() {
       test(
         'should get CpfInvalidFailure for empty value',
         () {
-          var result = Cpf("").value;
+          final result = Cpf('').value;
 
           expect(result, left(CpfInvalidFailure()));
         },
@@ -27,8 +27,8 @@ void main() {
       test(
         'should get value from a valid cpf',
         () {
-          var testValue = "236.932.813-43";
-          var result = Cpf(testValue).value;
+          const testValue = '236.932.813-43';
+          final result = Cpf(testValue).value;
 
           expect(result, right('23693281343'));
         },

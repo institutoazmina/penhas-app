@@ -15,8 +15,9 @@ import 'package:penhas/app/features/help_center/presentation/pages/guardian_tile
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class GuardiansPage extends StatefulWidget {
+  const GuardiansPage({Key? key, this.title = 'Guardians'}) : super(key: key);
+
   final String title;
-  const GuardiansPage({Key key, this.title = "Guardians"}) : super(key: key);
 
   @override
   _GuardiansPageState createState() => _GuardiansPageState();
@@ -25,7 +26,7 @@ class GuardiansPage extends StatefulWidget {
 class _GuardiansPageState
     extends ModularState<GuardiansPage, GuardiansController>
     with SnackBarHandler {
-  List<ReactionDisposer> _disposers;
+  List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
@@ -35,7 +36,7 @@ class _GuardiansPageState
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       controller.loadPage();
     });
   }
@@ -52,7 +53,9 @@ class _GuardiansPageState
 
   @override
   void dispose() {
-    _disposers.forEach((d) => d());
+    for (final d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 
@@ -61,7 +64,7 @@ class _GuardiansPageState
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('Meus Guardiões'),
+        title: const Text('Meus Guardiões'),
         backgroundColor: DesignSystemColors.ligthPurple,
       ),
       body: PageProgressIndicator(
@@ -96,30 +99,31 @@ class _GuardiansPageState
           key: _refreshIndicatorKey,
           onRefresh: () async => controller.loadPage(),
           child: ListView.builder(
-              itemCount: tiles.length,
-              itemBuilder: (context, index) {
-                final tile = tiles[index];
-                if (tile is GuardianTileHeaderEntity) {
-                  return GuardianTileHeader(title: tile.title);
-                }
-                if (tile is GuardianTileDescriptionEntity) {
-                  return GuardianTileDescription(description: tile.description);
-                }
-                if (tile is GuardianTileCardEntity) {
-                  return GuardianTileActionCard(
-                    card: tile,
-                  );
-                }
-                if (tile is GuardianTileEmptyCardEntity) {
-                  return GuardianTileEmptyCard(
-                    card: tile,
-                  );
-                }
-                return Container(
-                  height: 60,
-                  color: Colors.black,
+            itemCount: tiles.length,
+            itemBuilder: (context, index) {
+              final tile = tiles[index];
+              if (tile is GuardianTileHeaderEntity) {
+                return GuardianTileHeader(title: tile.title);
+              }
+              if (tile is GuardianTileDescriptionEntity) {
+                return GuardianTileDescription(description: tile.description);
+              }
+              if (tile is GuardianTileCardEntity) {
+                return GuardianTileActionCard(
+                  card: tile,
                 );
-              }),
+              }
+              if (tile is GuardianTileEmptyCardEntity) {
+                return GuardianTileEmptyCard(
+                  card: tile,
+                );
+              }
+              return Container(
+                height: 60,
+                color: Colors.black,
+              );
+            },
+          ),
         ),
       ),
     );
@@ -128,7 +132,7 @@ class _GuardiansPageState
   Widget _empty() => Container(color: DesignSystemColors.white);
 
   ReactionDisposer _showErrorMessage() {
-    return reaction((_) => controller.errorMessage, (String message) {
+    return reaction((_) => controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }

@@ -6,17 +6,15 @@ import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/help_center/data/repositories/audio_sync_repository.dart';
 
-class MockApiProvider extends Mock implements IApiProvider {}
+import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  IAudioSyncRepository sut;
-  IApiProvider apiProvider;
+  late IAudioSyncRepository sut;
+  late final MockIApiProvider apiProvider = MockIApiProvider();
 
   setUp(() {
-    apiProvider = MockApiProvider();
     sut = AudioSyncRepository(apiProvider: apiProvider);
   });
 
@@ -24,7 +22,7 @@ void main() {
     test('should get ValidField for a valid upload', () async {
       // arrange
       final expected = right(
-        ValidField(message: "Áudio recebido com sucesso!"),
+        const ValidField(message: 'Áudio recebido com sucesso!'),
       );
       final audio = AudioData(
         sequence: '1',
@@ -34,12 +32,12 @@ void main() {
           'test/assets/audio/silence.aac',
         ),
       );
-      final bodyMessage =
+      const bodyMessage =
           '{"message":"Áudio recebido com sucesso!","success":1,"data":{"id":1234}}';
       when(apiProvider.upload(
               path: anyNamed('path'),
               file: anyNamed('file'),
-              fields: anyNamed('fields')))
+              fields: anyNamed('fields'),),)
           .thenAnswer((_) async => bodyMessage);
       // act
       final received = await sut.upload(audio);
@@ -51,8 +49,8 @@ void main() {
       when(apiProvider.upload(
               path: anyNamed('path'),
               file: anyNamed('file'),
-              fields: anyNamed('fields')))
-          .thenThrow(ApiProviderSessionExpection());
+              fields: anyNamed('fields'),),)
+          .thenThrow(ApiProviderSessionError());
       final audio = AudioData(
         createdAt: '1',
         sequence: '1',

@@ -4,21 +4,18 @@ import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
-import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
 import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
-import 'package:penhas/app/features/feed/domain/usecases/tweet_filter_preference.dart';
 
-class MockTweetRepository extends Mock implements ITweetRepository {}
-
-class MockTweetFilterPreference extends Mock implements TweetFilterPreference {}
+import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  ITweetRepository repository;
-  TweetFilterPreference filterPreference;
+  late final MockITweetRepository repository = MockITweetRepository();
+  late final MockTweetFilterPreference filterPreference =
+      MockTweetFilterPreference();
 
   setUp(() {
-    repository = MockTweetRepository();
-    filterPreference = MockTweetFilterPreference();
+    when(filterPreference.categories).thenReturn([]);
+    when(filterPreference.getTags()).thenReturn([]);
   });
 
   group('FeedUseCases', () {
@@ -29,8 +26,8 @@ void main() {
       verifyNoMoreInteractions(repository);
     });
     group('delete', () {
-      int maxRowsPerRequet;
-      TweetSessionEntity firstSessionResponse;
+      late int maxRowsPerRequet;
+      late TweetSessionEntity firstSessionResponse;
 
       setUp(() {
         maxRowsPerRequet = 5;
@@ -49,8 +46,8 @@ void main() {
               anonymous: false,
               content: 'content 2',
               avatar: 'http://site.com/avatar_2.png',
-              meta: TweetMeta(liked: false, owner: true),
-              lastReply: [],
+              meta: const TweetMeta(liked: false, owner: true),
+              lastReply: const [],
             ),
             TweetEntity(
               id: 'id_1',
@@ -62,7 +59,7 @@ void main() {
               anonymous: false,
               content: 'content 1',
               avatar: 'http://site.com/avatar_1.png',
-              meta: TweetMeta(liked: false, owner: true),
+              meta: const TweetMeta(liked: false, owner: true),
               lastReply: [
                 TweetEntity(
                   id: 'id_3',
@@ -74,8 +71,8 @@ void main() {
                   anonymous: false,
                   content: 'just replied',
                   avatar: 'http://site.com/2.svg',
-                  meta: TweetMeta(liked: false, owner: false),
-                  lastReply: [],
+                  meta: const TweetMeta(liked: false, owner: false),
+                  lastReply: const [],
                 ),
               ],
             ),
@@ -95,8 +92,8 @@ void main() {
           anonymous: true,
           content: 'content 1',
           avatar: 'http://site.com/1.svg',
-          meta: TweetMeta(liked: false, owner: true),
-          lastReply: [],
+          meta: const TweetMeta(liked: false, owner: true),
+          lastReply: const [],
         );
 
         final sut = FeedUseCases(
@@ -118,8 +115,8 @@ void main() {
                 anonymous: false,
                 content: 'content 2',
                 avatar: 'http://site.com/avatar_2.png',
-                meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
+                meta: const TweetMeta(liked: false, owner: true),
+                lastReply: const [],
               ),
             ],
           ),
@@ -130,7 +127,7 @@ void main() {
         await sut.fetchNewestTweet();
 
         when(repository.delete(option: anyNamed('option')))
-            .thenAnswer((_) async => right(ValidField()));
+            .thenAnswer((_) async => right(const ValidField()));
         // act
         final received = await sut.delete(tweet);
         // assert
@@ -149,8 +146,8 @@ void main() {
           anonymous: false,
           content: 'just replied',
           avatar: 'http://site.com/2.svg',
-          meta: TweetMeta(liked: false, owner: false),
-          lastReply: [],
+          meta: const TweetMeta(liked: false, owner: false),
+          lastReply: const [],
         );
 
         final sut = FeedUseCases(
@@ -172,8 +169,8 @@ void main() {
                 anonymous: false,
                 content: 'content 2',
                 avatar: 'http://site.com/avatar_2.png',
-                meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
+                meta: const TweetMeta(liked: false, owner: true),
+                lastReply: const [],
               ),
               TweetEntity(
                 id: 'id_1',
@@ -185,8 +182,8 @@ void main() {
                 anonymous: false,
                 content: 'content 1',
                 avatar: 'http://site.com/avatar_1.png',
-                meta: TweetMeta(liked: false, owner: true),
-                lastReply: [],
+                meta: const TweetMeta(liked: false, owner: true),
+                lastReply: const [],
               ),
             ],
           ),
@@ -197,7 +194,7 @@ void main() {
         await sut.fetchNewestTweet();
 
         when(repository.delete(option: anyNamed('option')))
-            .thenAnswer((_) async => right(ValidField()));
+            .thenAnswer((_) async => right(const ValidField()));
         // act
         final received = await sut.delete(tweet);
         // assert

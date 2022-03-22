@@ -1,3 +1,4 @@
+import 'package:asuka/asuka.dart' as asuka;
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
@@ -14,21 +15,22 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'PenhaS',
+      builder: asuka.builder,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Lato')),
-      navigatorKey: Modular.navigatorKey,
-      localizationsDelegates: [
+          textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Lato'),),
+      localizationsDelegates: const [
         GlobalWidgetsLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate
       ],
-      navigatorObservers: [observer],
-      supportedLocales: [
-        const Locale('pt', "BR"),
+      navigatorObservers: [
+        observer,
+        asuka.asukaHeroController,
       ],
-      initialRoute: '/',
-      onGenerateRoute: Modular.generateRoute,
-    );
+      supportedLocales: const [
+        Locale('pt', 'BR'),
+      ],
+    ).modular();
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:meta/meta.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
 import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
 import 'package:penhas/app/features/filters/states/filter_action_observer.dart';
@@ -11,23 +10,23 @@ part 'profile_skill_controller.g.dart';
 class ProfileSkillController extends _ProfileSkillControllerBase
     with _$ProfileSkillController {
   ProfileSkillController({
-    @required List<FilterTagEntity> tags,
+    required List<FilterTagEntity> tags,
   }) : super(tags);
 }
 
 abstract class _ProfileSkillControllerBase with Store, MapFailureMessage {
-  final List<FilterTagEntity> _filterTags;
-
   _ProfileSkillControllerBase(this._filterTags) {
     currentState = FilterState.loaded(_filterTags);
   }
 
+  final List<FilterTagEntity> _filterTags;
+
   @observable
-  FilterState currentState = FilterState.initial();
+  FilterState currentState = const FilterState.initial();
 
   @action
   Future<void> reset() async {
-    Modular.to.pop(FilterActionObserver.reset());
+    Modular.to.pop(const FilterActionObserver.reset());
   }
 
   @action

@@ -1,23 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
 void main() {
   final validator = PasswordValidator();
   group(
-    "Password",
+    'Password',
     () {
       test(
         'should get PasswordInvalidFailure for null password',
@@ -30,7 +19,7 @@ void main() {
       test(
         'should get PasswordInvalidFailure for empty password',
         () {
-          final result = SignInPassword("", validator);
+          final result = SignInPassword('', validator);
 
           expect(result.value, left(EmptyRule()));
           expect(result.isValid, false);
@@ -40,7 +29,7 @@ void main() {
       test(
         'should get value from a valid password',
         () {
-          final validPassword = "_myStrongP4ss@rd";
+          const validPassword = '_myStrongP4ss@rd';
           final result = SignInPassword(validPassword, validator);
 
           expect(result.value, right(validPassword));
@@ -52,7 +41,7 @@ void main() {
       test(
         'should get value from a valid password with only lower case letters',
         () {
-          final validPassword = "_mystrongp4ss@rd";
+          const validPassword = '_mystrongp4ss@rd';
           final result = SignInPassword(validPassword, validator);
 
           expect(result.value, right(validPassword));
@@ -63,7 +52,7 @@ void main() {
       test(
         'should get value from a valid password with only upper case letters',
         () {
-          final validPassword = "_MYSTRONGP4SS@RD";
+          const validPassword = '_MYSTRONGP4SS@RD';
           final result = SignInPassword(validPassword, validator);
 
           expect(result.value, right(validPassword));
@@ -74,7 +63,7 @@ void main() {
       test(
         'should get value from a valid password without letters',
         () {
-          final validPassword = "12345678@";
+          const validPassword = '12345678@';
           final result = SignInPassword(validPassword, validator);
 
           expect(result.value, right(validPassword));
@@ -85,7 +74,7 @@ void main() {
       test(
         'should get value from a valid password without numbers',
         () {
-          final validPassword = "@bcdefgh";
+          const validPassword = '@bcdefgh';
           final result = SignInPassword(validPassword, validator);
 
           expect(result.value, right(validPassword));
@@ -96,7 +85,7 @@ void main() {
       test(
         'should get value from a valid password without special characters',
         () {
-          final validPassword = "1bcdefgh";
+          const validPassword = '1bcdefgh';
           final result = SignInPassword(validPassword, validator);
 
           expect(result.value, right(validPassword));

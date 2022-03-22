@@ -11,13 +11,19 @@
 #
 
 # Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
+update_fastlane
 
 default_platform(:android)
+xcversion(version: "~> 13.1")
+
+$apiBaseUrl = "https://***REMOVED***"
 
 desc "Run code generators"
 lane :pre_build do
-  sh("flutter packages pub run build_runner build --delete-conflicting-outputs")
+  Dir.chdir("..") do
+    sh("flutter pub get")
+    sh("flutter packages pub run build_runner build --delete-conflicting-outputs")
+  end
 end
 
 platform :android do
@@ -25,7 +31,7 @@ platform :android do
   desc "Build release APK"
   lane :build do
     pre_build
-    sh("flutter build apk --release")
+    sh("flutter build apk --release --dart-define=env.apiBaseUrl=#$apiBaseUrl")
   end
 
   desc "Build release Bundle"
@@ -35,14 +41,25 @@ platform :android do
   end
 
   desc "Distribute to Android beta testers"
-  lane :distribute_android_beta do
+  lane :firebase_distribute do
     build
     firebase_app_distribution(
       app: "1:51928851553:android:fc14989f5670877f663620",
       release_notes_file: "./deploy/beta/release_notes",
-      testers_file: "./deploy/beta/testers.android",
+      # testers_file: "./deploy/beta/testers.android",
       groups: "androidtestersgroup",
       android_artifact_path: "./build/app/outputs/apk/release/app-release.apk"
+    )
+  end
+
+  desc "Deploy a new version to the Play Store"
+  lane :release do
+    build_bundle
+
+    upload_to_play_store(
+      track: "alpha",
+      release_status: "completed",
+      aab: "./build/app/outputs/aab/release/app-release.aab",
     )
   end
 
@@ -53,50 +70,77 @@ platform :ios do
   desc "Build release IPA"
   lane :build do
     pre_build
-    sh("flutter build ios --release --no-codesign")
+    sh("flutter build ios --release --no-codesign --dart-define=env.apiBaseUrl=#$apiBaseUrl")
   end
 
-  lane :beta do
-    get_certificates           # invokes cert
-    get_provisioning_profile   # invokes sigh
-    build_app
-  end
-
+  desc "Generates a provisioning profile, saving it in the current folder "
   lane :update_profile do
+    #get_certificates
+
     sigh(
-      provisioning_name: "PenhaS AdHoc",
+      provisioning_name: "PenhaS-AdHoc",
       force: true,
       adhoc: true,
       output_path: './ios/certificates'
     )
   end
 
+  desc "Registers new devices to the Apple Dev Portal"
   lane :sync_device_info do
     register_devices(
       devices_file: "./deploy/beta/device_file.ios"
     )
   end
 
-  desc "Distribute to iOS beta testers"
-  lane :distribute_iOS_beta do
+  desc "Generate IPA"
+  lane :generate_beta_ipa do
     build
     sync_device_info
     update_profile
 
     gym(
       scheme: "Runner",
-      archive_path: "./ios/build/Runner.xcarchive",
+      workspace: "./ios/Runner.xcworkspace",
+      configuration: "Release",
+      archive_path: "./build/ios/Runner.xcarchive",
       export_method: "ad-hoc",
       output_directory: "./build/Runner"
     )
+  end
+
+  desc "Distribute to iOS beta testers in TestFlight"
+  lane :testflight_distribute do
+    generate_beta_ipa
+    pilot
+  end
+
+  desc "Distribute to iOS beta testers in Firebase"
+  lane :firebase_distribute do
+    generate_beta_ipa
 
     firebase_app_distribution(
-        app: "1:51928851553:ios:f741dab1c05cf04e663620",
-        release_notes_file: "./deploy/beta/release_notes",
-        testers_file: "./deploy/beta/testers.ios",
-        groups: "iostestersgroup",
-        ipa_path: "./build/Runner/Runner.ipa",
-      #   debug: true
+      app: "1:51928851553:ios:f741dab1c05cf04e663620",
+      release_notes_file: "./deploy/beta/release_notes",
+      # testers_file: "./deploy/beta/testers.ios",
+      groups: "iostestersgroup",
+      ipa_path: "./build/Runner/Runner.ipa",
+      debug: true
     )
+  end
+
+  desc "Deploy a new version to the App Store"
+  lane :release do
+    # match(type: "appstore")
+    # snapshot
+    gym(
+      scheme: "Runner",
+      workspace: "./ios/Runner.xcworkspace",
+      configuration: "Release",
+      archive_path: "./build/ios/Runner.xcarchive",
+      export_method: "app-store",
+      output_directory: "./build/Runner"
+    ) # Build your app
+    deliver(force: true)
+    # frameit
   end
 end

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/managers/local_store.dart';
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
@@ -14,18 +13,12 @@ part 'zodiac_controller.g.dart';
 
 class ZodiacController extends _ZodiacControllerBase with _$ZodiacController {
   ZodiacController({
-    @required LocalStore<UserProfileEntity> userProfileStore,
-    @required StealthSecurityAction securityAction,
+    required LocalStore<UserProfileEntity> userProfileStore,
+    required StealthSecurityAction securityAction,
   }) : super(userProfileStore, securityAction);
 }
 
 abstract class _ZodiacControllerBase with Store {
-  final LocalStore<UserProfileEntity> _userProfileStore;
-  final StealthSecurityAction _securityAction;
-
-  bool _isSecurityRunning = false;
-  StreamSubscription _streamCache;
-
   _ZodiacControllerBase(
     this._userProfileStore,
     this._securityAction,
@@ -33,7 +26,13 @@ abstract class _ZodiacControllerBase with Store {
     _init();
   }
 
-  void _init() async {
+  final LocalStore<UserProfileEntity> _userProfileStore;
+  final StealthSecurityAction _securityAction;
+
+  bool _isSecurityRunning = false;
+  StreamSubscription? _streamCache;
+
+  Future<void> _init() async {
     final zodiac = Zodiac();
     final _userProfile = await _userProfileStore.retrieve();
     sign = zodiac.sign(_userProfile.birthdate);
@@ -75,16 +74,14 @@ abstract class _ZodiacControllerBase with Store {
     _securityAction.dispose();
   }
 
-  _registerDataSource() {
+  void _registerDataSource() {
     _streamCache = _securityAction.isRunning.listen((event) {
       isSecurityRunning = event;
     });
   }
 
-  _cancelDataSource() {
-    if (_streamCache != null) {
-      _streamCache.cancel();
-      _streamCache = null;
-    }
+  void _cancelDataSource() {
+    _streamCache?.cancel();
+    _streamCache = null;
   }
 }

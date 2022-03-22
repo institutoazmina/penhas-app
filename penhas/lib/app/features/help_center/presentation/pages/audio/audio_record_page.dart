@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/features/help_center/presentation/pages/audio/audio_record_controller.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/audio/sound_record_widget.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-import 'audio_record_controller.dart';
-
 class AudioRecordPage extends StatefulWidget {
-  const AudioRecordPage({Key key}) : super(key: key);
+  const AudioRecordPage({Key? key}) : super(key: key);
 
   @override
   _AudioRecordState createState() => _AudioRecordState();
@@ -20,13 +19,13 @@ class _AudioRecordState
     extends ModularState<AudioRecordPage, AudioRecordController>
     with SnackBarHandler {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  AudioActivity _audioActivity;
-  StreamSubscription _streamSubscription;
+  AudioActivity? _audioActivity;
+  StreamSubscription? _streamSubscription;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       await controller.startAudioRecord();
     });
 
@@ -39,10 +38,8 @@ class _AudioRecordState
 
   @override
   void dispose() {
-    if (_streamSubscription != null) {
-      _streamSubscription.cancel();
-      _streamSubscription = null;
-    }
+    _streamSubscription?.cancel();
+    _streamSubscription = null;
 
     super.dispose();
   }

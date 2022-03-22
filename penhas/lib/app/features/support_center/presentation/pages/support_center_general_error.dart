@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
 class SupportCenterGeneralError extends StatelessWidget {
+  const SupportCenterGeneralError({
+    Key? key,
+    required String message,
+    required VoidCallback onPressed,
+  })  : _message = message,
+        _onPressed = onPressed,
+        super(key: key);
+
   final String _message;
   final VoidCallback _onPressed;
-
-  const SupportCenterGeneralError({
-    Key key,
-    @required String message,
-    @required VoidCallback onPressed,
-  })  : this._message = message,
-        this._onPressed = onPressed,
-        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +23,8 @@ class SupportCenterGeneralError extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(
+              const Padding(
+                padding: EdgeInsets.only(
                   bottom: 28.0,
                   top: 12.0,
                 ),
@@ -39,8 +39,8 @@ class SupportCenterGeneralError extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 32.0),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 32.0),
                 child: Icon(
                   Icons.warning,
                   color: DesignSystemColors.white,
@@ -51,7 +51,7 @@ class SupportCenterGeneralError extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                 child: Text(
                   _message,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'Lato',
                     fontSize: 18.0,
                     fontWeight: FontWeight.normal,
@@ -63,15 +63,16 @@ class SupportCenterGeneralError extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 48.0),
                 child: FlatButton.icon(
-                    onPressed: _onPressed,
-                    icon: Icon(
-                      Icons.loop,
-                      color: DesignSystemColors.easterPurple,
-                      size: 60,
-                    ),
-                    label: Container()),
+                  onPressed: _onPressed,
+                  icon: const Icon(
+                    Icons.loop,
+                    color: DesignSystemColors.easterPurple,
+                    size: 60,
+                  ),
+                  label: Container(),
+                ),
               ),
-              Text(
+              const Text(
                 'Tentar novamente',
                 style: TextStyle(
                   fontFamily: 'Lato',

@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/core/extension/asuka.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
@@ -10,16 +11,16 @@ import 'package:penhas/app/features/help_center/domain/entities/audio_play_tile_
 import 'package:penhas/app/features/help_center/domain/states/audio_playing.dart';
 import 'package:penhas/app/features/help_center/domain/states/audio_tile_action.dart';
 import 'package:penhas/app/features/help_center/domain/states/audios_state.dart';
+import 'package:penhas/app/features/help_center/presentation/audios/audios_controller.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/audio/audio_play_widget.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/guardian_error_page.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
-import 'audios_controller.dart';
-
 class AudiosPage extends StatefulWidget {
+  const AudiosPage({Key? key, this.title = 'Audios'}) : super(key: key);
+
   final String title;
-  const AudiosPage({Key key, this.title = "Audios"}) : super(key: key);
 
   @override
   _AudiosPageState createState() => _AudiosPageState();
@@ -27,19 +28,19 @@ class AudiosPage extends StatefulWidget {
 
 class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
     with SnackBarHandler {
-  List<ReactionDisposer> _disposers;
+  List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
   PageProgressState _loadState = PageProgressState.initial;
-  AudioEntity _playingAudio;
-  AudioEntity _selectingAudioMenu;
+  AudioEntity? _playingAudio;
+  AudioEntity? _selectingAudioMenu;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       controller.loadPage();
     });
   }
@@ -58,8 +59,11 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
 
   @override
   void dispose() {
-    _disposers.forEach((d) => d());
+    for (final d in _disposers!) {
+      d();
+    }
     controller.dispose();
+    _playingAudio = null;
     super.dispose();
   }
 
@@ -69,7 +73,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
       key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0.0,
-        title: Text('Minhas gravações'),
+        title: const Text('Minhas gravações'),
         backgroundColor: DesignSystemColors.ligthPurple,
       ),
       body: PageProgressIndicator(
@@ -99,28 +103,35 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
     return Container(
       color: Colors.white,
       child: Padding(
-        padding: EdgeInsets.only(top: 22),
+        padding: const EdgeInsets.only(top: 22),
         child: RefreshIndicator(
           key: _refreshIndicatorKey,
           onRefresh: () async => controller.loadPage(),
           child: ListView.builder(
-              itemCount: tiles.length,
-              itemBuilder: (context, index) {
-                final audio = tiles[index];
-                final isPlaying = audio.audio == _playingAudio;
-                final backgroundColor = _selectingAudioMenu == audio.audio ? DesignSystemColors.blueyGrey : Colors.transparent;
+            itemCount: tiles.length,
+            itemBuilder: (context, index) {
+              final audio = tiles[index];
+              final isPlaying = audio.audio == _playingAudio;
+              final backgroundColor = _selectingAudioMenu == audio.audio
+                  ? DesignSystemColors.blueyGrey
+                  : Colors.transparent;
 
-                return AudioPlayWidget(audioPlay: tiles[index], isPlaying: isPlaying, backgroundColor: backgroundColor);
-              }),
+              return AudioPlayWidget(
+                audioPlay: tiles[index],
+                isPlaying: isPlaying,
+                backgroundColor: backgroundColor,
+              );
+            },
+          ),
         ),
       ),
     );
   }
 
-  Widget _empty() => Container(width: 0.0, height: 0.0);
+  Widget _empty() => const SizedBox(width: 0.0, height: 0.0);
 
   ReactionDisposer _showErrorMessage() {
-    return reaction((_) => controller.errorMessage, (String message) {
+    return reaction((_) => controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }
@@ -151,31 +162,32 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
           setState(() {
             _selectingAudioMenu = audio;
           });
-          _actionSheet(audio); },
+          _actionSheet(audio);
+        },
       );
     });
   }
 
   ReactionDisposer _showAudioPlayStatus() {
     return reaction((_) => controller.playingAudioState,
-            (AudioPlaying actionSheetState) {
-          actionSheetState.when(
-            none: () => setState(() {
-              _playingAudio = null;
-            }),
-            playing: (audio) => setState(() {
-              _playingAudio = audio;
-            }),
-          );
-        });
+        (AudioPlaying? actionSheetState) {
+      actionSheetState!.when(
+        none: () => setState(() {
+          _playingAudio = null;
+        }),
+        playing: (audio) => setState(() {
+          _playingAudio = audio;
+        }),
+      );
+    });
   }
 
-  void _showActionNotice(String message) {
+  void _showActionNotice(String? message) {
     if (message == null || message.isEmpty) return;
 
     Modular.to.showDialog(
-      child: AlertDialog(
-        title: Text('Informação', style: kTextStyleAlertDialogTitle),
+      builder: (context) => AlertDialog(
+        title: const Text('Informação', style: kTextStyleAlertDialogTitle),
         content: Text(
           message,
           style: kTextStyleAlertDialogDescription,
@@ -185,26 +197,25 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
         ),
         actions: <Widget>[
           FlatButton(
-            child: Text('Ok'),
+            child: const Text('Ok'),
             onPressed: () {
-              Modular.to.pop();
+              Navigator.of(context).pop();
             },
           )
         ],
       ),
-      barrierDismissible: true,
     );
   }
 
-  void _actionSheet(AudioEntity audio) async {
-    final BuildContext _context = _scaffoldKey.currentContext;
+  Future<void> _actionSheet(AudioEntity audio) async {
+    final BuildContext _context = _scaffoldKey.currentContext!;
     await showModalBottomSheet(
       context: _context,
       backgroundColor: Colors.transparent,
       builder: (context) {
         return Container(
-          padding: EdgeInsets.only(top: 5, bottom: 0),
-          decoration: BoxDecoration(
+          padding: const EdgeInsets.only(top: 5),
+          decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
@@ -216,14 +227,17 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
             children: <Widget>[
               _buildDivider(),
               Container(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                      "Para solicitar o download do arquivo de áudio entrar em contato com PenhaS pelo chat ou email penhas@azmina.com.br",
-                      style: TextStyle(fontSize: 16.0))),
+                padding: const EdgeInsets.all(16.0),
+                child: const Text(
+                  'Para solicitar o download do arquivo de áudio entrar em contato com PenhaS pelo chat ou email penhas@azmina.com.br',
+                  style: TextStyle(fontSize: 16.0),
+                ),
+              ),
               ListTile(
                 leading: SvgPicture.asset(
-                    'assets/images/svg/tweet_action/tweet_action_delete.svg'),
-                title: Text('Apagar'),
+                  'assets/images/svg/tweet_action/tweet_action_delete.svg',
+                ),
+                title: const Text('Apagar'),
                 onTap: () {
                   Navigator.of(_context).pop();
                   controller.delete(audio);
@@ -237,7 +251,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
   }
 
   double _fullWidth() {
-    return MediaQuery.of(_scaffoldKey.currentContext).size.width;
+    return MediaQuery.of(_scaffoldKey.currentContext!).size.width;
   }
 
   Widget _buildDivider() {
@@ -246,7 +260,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
       height: 5,
       decoration: BoxDecoration(
         color: Theme.of(context).dividerColor,
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(10),
         ),
       ),

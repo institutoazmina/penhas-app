@@ -1,24 +1,23 @@
 import 'dart:collection';
 
 class AppRoute {
-  String path;
-  Map<String, String> args;
-
-  AppRoute(String uri) {
-    assert(uri.trim().isNotEmpty);
-    assert(uri.startsWith('/'));
-
-    List<String> pathAndArgs = uri.split('?');
+  AppRoute(String uri)
+      : assert(uri.trim().isNotEmpty),
+        assert(uri.startsWith('/')) {
+    final List<String> pathAndArgs = uri.split('?');
     path = pathAndArgs.first;
 
     if (pathAndArgs.length > 1) {
-      args = new HashMap<String, String>();
+      args = HashMap<String, String>();
       pathAndArgs.last.split('&').forEach((arg) {
-        List<String> kv = arg.split('=');
-        args[kv.first] = kv.last;
+        final List<String> kv = arg.split('=');
+        args![kv.first] = kv.last;
       });
     }
   }
+
+  late String path;
+  Map<String, String>? args;
 
   @override
   bool operator ==(Object other) =>

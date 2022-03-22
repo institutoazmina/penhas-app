@@ -4,7 +4,7 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 
 class ProfileSkillInitialStatePage extends StatelessWidget {
   const ProfileSkillInitialStatePage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -13,7 +13,7 @@ class ProfileSkillInitialStatePage extends StatelessWidget {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: DesignSystemColors.ligthPurple,
-        title: Text("Habilidades"),
+        title: const Text('Habilidades'),
       ),
       body: PageProgressIndicator(
         progressMessage: 'Carregando...',

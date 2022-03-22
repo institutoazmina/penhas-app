@@ -13,20 +13,20 @@ import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart
 import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
 class CheckRegisterField {
-  final IUserRegisterRepository repository;
-
   CheckRegisterField(this.repository);
 
+  final IUserRegisterRepository? repository;
+
   Future<Either<Failure, ValidField>> call({
-    EmailAddress emailAddress,
-    SignUpPassword password,
-    Cep cep,
-    Cpf cpf,
-    Fullname fullname,
-    Nickname nickName,
-    Birthday birthday,
-    Genre genre,
-    HumanRace race,
+    EmailAddress? emailAddress,
+    SignUpPassword? password,
+    Cep? cep,
+    Cpf? cpf,
+    Fullname? fullname,
+    Nickname? nickName,
+    Birthday? birthday,
+    Genre? genre,
+    HumanRace? race,
   }) async {
     if (emailAddress == null &&
         password == null &&
@@ -40,7 +40,7 @@ class CheckRegisterField {
       return left(RequiredParameter());
     }
 
-    return repository.checkField(
+    return repository!.checkField(
       emailAddress: emailAddress,
       password: password,
       cep: cep,

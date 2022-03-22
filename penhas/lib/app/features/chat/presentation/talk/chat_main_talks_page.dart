@@ -6,13 +6,12 @@ import 'package:penhas/app/features/chat/domain/entities/chat_main_tile_entity.d
 import 'package:penhas/app/features/chat/domain/states/chat_main_talks_state.dart';
 import 'package:penhas/app/features/chat/presentation/pages/chat_assistant_card.dart';
 import 'package:penhas/app/features/chat/presentation/pages/chat_channel_card.dart';
+import 'package:penhas/app/features/chat/presentation/talk/chat_main_talks_controller.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-import 'chat_main_talks_controller.dart';
-
 class ChatMainTalksPage extends StatefulWidget {
-  const ChatMainTalksPage({Key key}) : super(key: key);
+  const ChatMainTalksPage({Key? key}) : super(key: key);
 
   @override
   _ChatMainTalksPageState createState() => _ChatMainTalksPageState();
@@ -51,8 +50,8 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
   Widget loading() {
     return PageProgressIndicator(
         progressMessage: 'Carregando...',
-        child: Container(color: DesignSystemColors.systemBackgroundColor),
-        progressState: PageProgressState.loading);
+        progressState: PageProgressState.loading,
+        child: Container(color: DesignSystemColors.systemBackgroundColor),);
   }
 
   Widget loaded(List<ChatMainTileEntity> tiles) {
@@ -114,7 +113,7 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
 
   Widget buildChannelHeader(ChatMainChannelHeaderTile tile) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
       child: Text(
         tile.title,
         style: talksDividerTitleTextStyle,
@@ -130,16 +129,16 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
   }
 
   Widget buildNetworkIcon(ChatMainSupportTile data) {
-    if (data?.channel?.user?.avatar == null) {
+    if (data.channel?.user.avatar == null) {
       return Image.asset(
-        "assets/images/chat/penhasAssistant/penhasAssistant.png",
+        'assets/images/chat/penhasAssistant/penhasAssistant.png',
         height: 40,
         width: 40,
       );
     }
 
     return Image.network(
-      data.channel.user.avatar,
+      data.channel!.user.avatar!,
       width: 40,
       height: 40,
     );
@@ -147,10 +146,10 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
 }
 
 extension _ChatMainTalksPageTextStyle on _ChatMainTalksPageState {
-  TextStyle get talksDividerTitleTextStyle => TextStyle(
+  TextStyle get talksDividerTitleTextStyle => const TextStyle(
       fontFamily: 'Lato',
       fontSize: 16.0,
       letterSpacing: 0.5,
       color: DesignSystemColors.darkIndigoThree,
-      fontWeight: FontWeight.bold);
+      fontWeight: FontWeight.bold,);
 }

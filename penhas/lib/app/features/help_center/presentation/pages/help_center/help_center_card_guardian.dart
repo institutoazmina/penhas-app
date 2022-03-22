@@ -6,14 +6,14 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class HelpCenterCardGuardian extends StatelessWidget {
+  const HelpCenterCardGuardian({
+    Key? key,
+    required this.create,
+    required this.manager,
+  }) : super(key: key);
+
   final VoidCallback create;
   final VoidCallback manager;
-
-  const HelpCenterCardGuardian({
-    Key key,
-    @required this.create,
-    @required this.manager,
-  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class HelpCenterCardGuardian extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: DesignSystemColors.cobaltTwo,
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
             topRight: Radius.circular(40),
             bottomLeft: Radius.circular(40),
             bottomRight: Radius.circular(40),
@@ -34,74 +34,72 @@ class HelpCenterCardGuardian extends StatelessWidget {
           boxShadow: [
             BoxShadow(
                 color: Colors.black.withOpacity(0.5),
-                offset: Offset(0.0, 2.0),
-                blurRadius: 4.0)
+                offset: const Offset(0.0, 2.0),
+                blurRadius: 4.0,)
           ],
         ),
         child: Padding(
-          padding: EdgeInsets.fromLTRB(13, 6, 13, 18),
+          padding: const EdgeInsets.fromLTRB(13, 6, 13, 18),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Guardiões',
                     style: kTextStyleHelpCenterActionHeader,
                   ),
                   IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.help_outline,
                       color: DesignSystemColors.pumpkinOrange,
                     ),
                     onPressed: () async {
                       await Navigator.push(
                         context,
-                        TutorialScaleRoute(page: GuardianTutorialPage()),
+                        TutorialScaleRoute(page: const GuardianTutorialPage()),
                       );
                     },
                   )
                 ],
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(top: 6, bottom: 12),
                 child: Text(
                     'Seus contatos de confiança para dispara pedidos de socorro.',
-                    style: kTextStyleRegisterSubtitleLabelStyle),
+                    style: kTextStyleRegisterSubtitleLabelStyle,),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Expanded(
-                    flex: 1,
                     child: SizedBox(
                       height: 40,
                       child: FloatingActionButton(
                         heroTag: 'guardian_1',
                         backgroundColor: DesignSystemColors.cobaltTwo,
-                        child: Text('Novo guardião',
-                            style: kTextStyleHelpCenterButtonLabel),
                         onPressed: create,
                         shape: kButtonShapeOutlineWhite,
+                        child: const Text('Novo guardião',
+                            style: kTextStyleHelpCenterButtonLabel,),
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 8,
                   ),
                   Expanded(
-                    flex: 1,
                     child: SizedBox(
                       height: 40,
                       child: FloatingActionButton(
                           heroTag: 'guardian_2',
                           backgroundColor: DesignSystemColors.easterPurple,
-                          child: Text(
+                          onPressed: manager,
+                          shape: kButtonShapeOutlinePurple,
+                          child: const Text(
                             'Meus guardiões',
                             style: kTextStyleHelpCenterButtonLabel,
-                          ),
-                          onPressed: manager,
-                          shape: kButtonShapeOutlinePurple),
+                          ),),
                     ),
                   ),
                 ],

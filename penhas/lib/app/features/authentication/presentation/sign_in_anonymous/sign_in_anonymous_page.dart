@@ -7,15 +7,16 @@ import 'package:penhas/app/features/authentication/presentation/shared/login_but
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/password_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/features/authentication/presentation/sign_in_anonymous/sign_in_anonymous_controller.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/logo.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
-import 'sign_in_anonymous_controller.dart';
 
 class SignInAnonymousPage extends StatefulWidget {
-  final String title;
-  const SignInAnonymousPage({Key key, this.title = "Authentication"})
+  const SignInAnonymousPage({Key? key, this.title = 'Authentication'})
       : super(key: key);
+
+  final String title;
 
   @override
   _SignInAnonymousPage createState() => _SignInAnonymousPage();
@@ -24,15 +25,15 @@ class SignInAnonymousPage extends StatefulWidget {
 class _SignInAnonymousPage
     extends ModularState<SignInAnonymousPage, SignInAnonymousController>
     with SnackBarHandler {
-  List<ReactionDisposer> _disposers;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  List<ReactionDisposer>? _disposers;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _disposers ??= [
-      reaction((_) => controller.errorMessage, (String message) {
+      reaction((_) => controller.errorMessage, (String? message) {
         showSnackBar(scaffoldKey: _scaffoldKey, message: message);
       }),
       reaction((_) => controller.currentState, (PageProgressState status) {
@@ -58,13 +59,20 @@ class _SignInAnonymousPage
               onPanDown: (_) => _handleTap(context),
               child: SafeArea(
                 child: SingleChildScrollView(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 80.0, 16.0, 8.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                    16.0,
+                    80.0,
+                    16.0,
+                    8.0,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      Icon(DesignSystemLogo.penhasLogo,
-                          color: Colors.white, size: 60),
+                      const Icon(
+                        DesignSystemLogo.penhasLogo,
+                        color: Colors.white,
+                        size: 60,
+                      ),
                       Observer(builder: (_) => _buildUserField()),
                       Observer(builder: (_) => _buildPasswordField()),
                       _buildLoginButton(),
@@ -83,7 +91,9 @@ class _SignInAnonymousPage
 
   @override
   void dispose() {
-    _disposers.forEach((d) => d());
+    for (final d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 
@@ -91,7 +101,7 @@ class _SignInAnonymousPage
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.only(top: 52.0),
+          padding: const EdgeInsets.only(top: 52.0),
           child: Text(
             controller.userGreetings,
             style: kTextStyleRegisterHeaderLabelStyle,
@@ -100,7 +110,7 @@ class _SignInAnonymousPage
         Padding(
           padding: const EdgeInsets.only(bottom: 30, top: 30),
           child: Text(
-            controller.userEmail,
+            controller.userEmail!,
             style: kTextStyleRegisterSubtitleLabelStyle,
           ),
         )
@@ -119,7 +129,7 @@ class _SignInAnonymousPage
 
   Widget _buildLoginButton() {
     return Padding(
-      padding: EdgeInsets.only(top: 32.0),
+      padding: const EdgeInsets.only(top: 32.0),
       child: LoginButton(
         onChanged: () async => controller.signInWithEmailAndPasswordPressed(),
       ),
@@ -128,15 +138,15 @@ class _SignInAnonymousPage
 
   Widget _buildResetPasswordButton() {
     return Padding(
-      padding: EdgeInsets.only(top: 60),
+      padding: const EdgeInsets.only(top: 60),
       child: SizedBox(
         height: 44.0,
         child: RaisedButton(
           onPressed: () => controller.resetPasswordPressed(),
           elevation: 0,
           color: Colors.transparent,
-          child: Text(
-            "Esqueci minha senha",
+          child: const Text(
+            'Esqueci minha senha',
             style: kTextStyleFeedTweetShowReply,
           ),
         ),
@@ -146,15 +156,15 @@ class _SignInAnonymousPage
 
   Widget _changeAccount() {
     return Padding(
-      padding: EdgeInsets.only(top: 8),
+      padding: const EdgeInsets.only(top: 8),
       child: SizedBox(
         height: 44.0,
         child: RaisedButton(
           onPressed: () => controller.changeAccount(),
           elevation: 0,
           color: Colors.transparent,
-          child: Text(
-            "Acessar outra conta",
+          child: const Text(
+            'Acessar outra conta',
             style: kTextStyleFeedTweetShowReply,
           ),
         ),
@@ -162,9 +172,10 @@ class _SignInAnonymousPage
     );
   }
 
-  _handleTap(BuildContext context) {
-    if (MediaQuery.of(context).viewInsets.bottom > 0)
+  void _handleTap(BuildContext context) {
+    if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
-    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+    }
+    WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 }

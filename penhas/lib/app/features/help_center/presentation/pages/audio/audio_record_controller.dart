@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
@@ -13,27 +12,25 @@ part 'audio_record_controller.g.dart';
 class AudioRecordController extends _AudioRecordController
     with _$AudioRecordController {
   AudioRecordController({
-    @required IAudioRecordServices audioServices,
-    @required SecurityModeActionFeature featureToogle,
+    required IAudioRecordServices audioServices,
+    required SecurityModeActionFeature featureToogle,
   }) : super(audioServices, featureToogle);
 }
 
 abstract class _AudioRecordController with Store, MapFailureMessage {
+  _AudioRecordController(this._audioServices, this._featureToogle);
+
   final IAudioRecordServices _audioServices;
   final SecurityModeActionFeature _featureToogle;
 
   bool _recording = true;
-  Timer _rotateAudioTimer;
+  Timer? _rotateAudioTimer;
   int _currentRecordDurantion = 0;
-  AudioRecordDurationEntity _audioDurationEntity;
-
-  _AudioRecordController(this._audioServices, this._featureToogle);
+  AudioRecordDurationEntity? _audioDurationEntity;
 
   @action
   Future<void> startAudioRecord() async {
-    if (_audioDurationEntity == null) {
-      _audioDurationEntity = await _featureToogle.audioDuration;
-    }
+    _audioDurationEntity ??= await _featureToogle.audioDuration;
 
     _setRotateTimer();
     return _audioServices.start();
@@ -41,30 +38,30 @@ abstract class _AudioRecordController with Store, MapFailureMessage {
 
   @action
   Future<void> stopAudioRecord() async {
-    dispose();
+    await dispose();
     Modular.to.pop(true);
   }
 
   Stream<AudioActivity> get audioActivity => _audioServices.onProgress;
 
-  void dispose() {
+  Future<void> dispose() async {
     _recording = false;
     _rotateAudioTimer?.cancel();
-    _audioServices.stop();
+    await _audioServices.stop();
     _audioServices.dispose();
   }
 
   void _setRotateTimer() {
     _rotateAudioTimer = Timer.periodic(
-        Duration(seconds: _audioDurationEntity.audioEachDuration), (timer) {
+        Duration(seconds: _audioDurationEntity!.audioEachDuration), (timer) {
       if (!_recording) {
         timer.cancel();
         return;
       }
 
-      _currentRecordDurantion += _audioDurationEntity.audioEachDuration;
+      _currentRecordDurantion += _audioDurationEntity!.audioEachDuration;
 
-      if (_currentRecordDurantion >= _audioDurationEntity.audioFullDuration) {
+      if (_currentRecordDurantion >= _audioDurationEntity!.audioFullDuration) {
         timer.cancel();
         Modular.to.pop();
       }

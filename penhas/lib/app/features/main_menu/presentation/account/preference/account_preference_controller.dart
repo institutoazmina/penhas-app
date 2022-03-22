@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
@@ -12,26 +11,26 @@ part 'account_preference_controller.g.dart';
 
 class AccountPreferenceController extends _AccountPreferenceControllerBase
     with _$AccountPreferenceController {
-  AccountPreferenceController(
-      {@required IUserProfileRepository profileRepository})
-      : super(profileRepository);
+  AccountPreferenceController({
+    required IUserProfileRepository profileRepository,
+  }) : super(profileRepository);
 }
 
 abstract class _AccountPreferenceControllerBase with Store, MapFailureMessage {
-  final IUserProfileRepository _userProfileRepository;
-
   _AccountPreferenceControllerBase(this._userProfileRepository) {
     loadPage();
   }
 
-  @observable
-  ObservableFuture<Either<Failure, AccountPreferenceSessionEntity>> _progress;
+  final IUserProfileRepository _userProfileRepository;
 
   @observable
-  AccountPreferenceState state = AccountPreferenceState.initial();
+  ObservableFuture<Either<Failure, AccountPreferenceSessionEntity>>? _progress;
 
   @observable
-  String messageError = "";
+  AccountPreferenceState state = const AccountPreferenceState.initial();
+
+  @observable
+  String? messageError = '';
 
   @computed
   PageProgressState get progress {
@@ -44,13 +43,17 @@ abstract class _AccountPreferenceControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  Future<void> update(String key, bool status) async {
-    setMessageErro("");
+  Future<void> update(
+    String key, {
+    required bool status,
+  }) async {
+    messageError = '';
     _progress = ObservableFuture(
       _userProfileRepository.updatePreferences(key: key, status: status),
     );
 
-    final result = await _progress;
+    final Either<Failure, AccountPreferenceSessionEntity> result =
+        await _progress!;
 
     result.fold(
       (failure) => handleUpdateError(failure),
@@ -74,20 +77,15 @@ extension _MethodPrivate on _AccountPreferenceControllerBase {
   }
 
   void handleError(Failure failure) {
-    final message = mapFailureMessage(failure);
+    final message = mapFailureMessage(failure)!;
     state = AccountPreferenceState.error(message);
   }
 
   void handleUpdateError(Failure failure) {
-    final message = mapFailureMessage(failure);
-    setMessageErro(message);
+    messageError = mapFailureMessage(failure);
   }
 
-  void setMessageErro(String message) {
-    messageError = message;
-  }
-
-  PageProgressState monitorProgress(ObservableFuture<Object> observable) {
+  PageProgressState monitorProgress(ObservableFuture<Object>? observable) {
     if (observable == null || observable.status == FutureStatus.rejected) {
       return PageProgressState.initial;
     }

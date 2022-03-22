@@ -1,22 +1,25 @@
-import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'dart:convert';
 
+import 'package:penhas/app/core/storage/i_local_storage.dart';
+
 abstract class LocalStore<T> {
+  LocalStore(this._key, this._storage);
+
   final ILocalStorage _storage;
   final String _key;
 
-  LocalStore(this._key, this._storage);
+  Map<String, dynamic> toJson(T entity);
 
-  Map<String, Object> toJson(T entity);
-  T fromJson(Map<String, Object> json);
-  Future<T> defaultEntity();
+  T fromJson(Map<String, dynamic> json);
+
+  T defaultEntity();
 
   Future<T> retrieve() {
     return _storage
         .get(_key)
-        .then((data) => json.decode(data) as Map<String, Object>)
-        .then((json) => fromJson(json))
-        .catchError((_) => defaultEntity());
+        .then((data) => data.map((r) => json.decode(r)))
+        .then((data) => data.map((r) => fromJson(r)))
+        .then((value) => value.getOrElse(() => defaultEntity()));
   }
 
   Future<void> save(T entity) {

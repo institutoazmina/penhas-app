@@ -1,10 +1,10 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'location_permission_state.freezed.dart';
 
 @freezed
-abstract class LocationPermissionState with _$LocationPermissionState {
+class LocationPermissionState with _$LocationPermissionState {
   const factory LocationPermissionState.granted() = _Granted;
   const factory LocationPermissionState.denied() = _Denied;
   const factory LocationPermissionState.permanentlyDenied() =

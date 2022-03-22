@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/features/authentication/presentation/deleted_account/deleted_account_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-import 'deleted_account_controller.dart';
-
 class DeletedAccountPage extends StatefulWidget {
-  DeletedAccountPage({Key key}) : super(key: key);
+  const DeletedAccountPage({Key? key}) : super(key: key);
 
   @override
   _DeletedAccountPageState createState() => _DeletedAccountPageState();
@@ -19,14 +18,14 @@ class DeletedAccountPage extends StatefulWidget {
 class _DeletedAccountPageState
     extends ModularState<DeletedAccountPage, DeletedAccountController>
     with SnackBarHandler {
-  List<ReactionDisposer> _disposers;
+  List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _disposers ??= [
-      reaction((_) => controller.errorMessage, (String message) {
+      reaction((_) => controller.errorMessage, (String? message) {
         showSnackBar(scaffoldKey: _scaffoldKey, message: message);
       }),
     ];
@@ -37,7 +36,7 @@ class _DeletedAccountPageState
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text("Conta excluída"),
+        title: const Text('Conta excluída'),
         elevation: 0.0,
         backgroundColor: DesignSystemColors.easterPurple,
       ),
@@ -49,13 +48,15 @@ class _DeletedAccountPageState
 
   @override
   void dispose() {
-    _disposers.forEach((d) => d());
+    for (final d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 }
 
 extension _TextStyle on _DeletedAccountPageState {
-  TextStyle get titleTextStyle => TextStyle(
+  TextStyle get titleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 20.0,
         letterSpacing: 0.63,
@@ -63,14 +64,14 @@ extension _TextStyle on _DeletedAccountPageState {
         fontWeight: FontWeight.bold,
       );
 
-  TextStyle get labelTextStyle => TextStyle(
+  TextStyle get labelTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,
         color: DesignSystemColors.darkIndigoThree,
         fontWeight: FontWeight.normal,
       );
 
-  TextStyle get activeButtonTextStyle => TextStyle(
+  TextStyle get activeButtonTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontWeight: FontWeight.bold,
         fontSize: 12.0,
@@ -96,12 +97,12 @@ extension _MethodPrivate on _DeletedAccountPageState {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 30.0),
                 child: Text(
-                  "Esta conta está marcada para ser excluída.\n\nVocê pode intererromper este processo agora reativando a conta.",
+                  'Esta conta está marcada para ser excluída.\n\nVocê pode intererromper este processo agora reativando a conta.',
                   style: labelTextStyle,
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 60.0),
+                padding: const EdgeInsets.symmetric(vertical: 60.0),
                 child: Center(
                   child: SizedBox(
                     height: 40,
@@ -110,9 +111,9 @@ extension _MethodPrivate on _DeletedAccountPageState {
                       onPressed: () => controller.reactive(),
                       elevation: 0,
                       color: DesignSystemColors.ligthPurple,
-                      child:
-                          Text("Reativar Conta", style: activeButtonTextStyle),
                       shape: kButtonShapeOutlinePurple,
+                      child:
+                          Text('Reativar Conta', style: activeButtonTextStyle),
                     ),
                   ),
                 ),

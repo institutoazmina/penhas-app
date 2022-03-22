@@ -3,21 +3,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
-import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
 import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
-import 'package:penhas/app/features/feed/domain/usecases/tweet_filter_preference.dart';
 
-class MockTweetRepository extends Mock implements ITweetRepository {}
-
-class MockTweetFilterPreference extends Mock implements TweetFilterPreference {}
+import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  ITweetRepository repository;
-  TweetFilterPreference filterPreference;
+  late final MockITweetRepository repository = MockITweetRepository();
+  late final MockTweetFilterPreference filterPreference =
+      MockTweetFilterPreference();
 
-  setUpAll(() {
-    repository = MockTweetRepository();
-    filterPreference = MockTweetFilterPreference();
+  setUp(() {
+    when(filterPreference.categories).thenReturn([]);
+    when(filterPreference.getTags()).thenReturn([]);
   });
 
   group('FeedUseCases', () {
@@ -28,11 +25,11 @@ void main() {
       verifyNoMoreInteractions(repository);
     });
     group('reply', () {
-      int maxRowsPerRequet;
-      TweetSessionEntity firstSessionResponse;
-      TweetEntity tweetEntity1;
-      TweetEntity tweetEntity2;
-      TweetEntity tweetEntity3;
+      int? maxRowsPerRequet;
+      late TweetSessionEntity firstSessionResponse;
+      late TweetEntity tweetEntity1;
+      late TweetEntity tweetEntity2;
+      late TweetEntity tweetEntity3;
 
       setUp(() {
         maxRowsPerRequet = 5;
@@ -46,8 +43,8 @@ void main() {
           anonymous: false,
           content: 'content 1',
           avatar: 'http://site.com/avatar_2.png',
-          meta: TweetMeta(liked: true, owner: true),
-          lastReply: [],
+          meta: const TweetMeta(liked: true, owner: true),
+          lastReply: const [],
         );
         tweetEntity3 = TweetEntity(
           id: 'id_3',
@@ -59,8 +56,8 @@ void main() {
           anonymous: false,
           content: 'comment 3',
           avatar: 'http://site.com/avatar_1.png',
-          meta: TweetMeta(liked: true, owner: true),
-          lastReply: [],
+          meta: const TweetMeta(liked: true, owner: true),
+          lastReply: const [],
         );
         tweetEntity2 = TweetEntity(
           id: 'id_2',
@@ -72,18 +69,19 @@ void main() {
           anonymous: false,
           content: 'content 2',
           avatar: 'http://site.com/avatar_1.png',
-          meta: TweetMeta(liked: true, owner: true),
+          meta: const TweetMeta(liked: true, owner: true),
           lastReply: [tweetEntity3],
         );
 
         firstSessionResponse = TweetSessionEntity(
-            nextPage: null,
-            hasMore: true,
-            orderBy: TweetSessionOrder.latestFirst,
-            tweets: [
-              tweetEntity1,
-              tweetEntity2,
-            ]);
+          nextPage: null,
+          hasMore: true,
+          orderBy: TweetSessionOrder.latestFirst,
+          tweets: [
+            tweetEntity1,
+            tweetEntity2,
+          ],
+        );
       });
 
       test('should create commented tweet and get updated cache', () async {
@@ -94,7 +92,7 @@ void main() {
           maxRows: maxRowsPerRequet,
         );
         when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(firstSessionResponse));
+            .thenAnswer((_) => Future.value(right(firstSessionResponse)));
         await sut.fetchOldestTweet();
         final newTweet = TweetEntity(
           id: 'id_5',
@@ -106,18 +104,20 @@ void main() {
           anonymous: false,
           content: 'commented tweet = 5',
           avatar: 'http://site.com/avatar_42.png',
-          meta: TweetMeta(liked: false, owner: true),
-          lastReply: [],
+          meta: const TweetMeta(liked: false, owner: true),
+          lastReply: const [],
         );
         final commentedTweet = tweetEntity1.copyWith(
           totalReply: tweetEntity1.totalReply + 1,
           lastReply: [newTweet],
         );
         final expected = right(
-          FeedCache(tweets: [
-            commentedTweet,
-            tweetEntity2,
-          ]),
+          FeedCache(
+            tweets: [
+              commentedTweet,
+              tweetEntity2,
+            ],
+          ),
         );
 
         when(repository.reply(option: anyNamed('option')))
@@ -138,7 +138,7 @@ void main() {
           maxRows: maxRowsPerRequet,
         );
         when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(firstSessionResponse));
+            .thenAnswer((_) => Future.value(right(firstSessionResponse)));
         await sut.fetchOldestTweet();
         final newTweet = TweetEntity(
           id: 'id_5',
@@ -150,18 +150,20 @@ void main() {
           anonymous: false,
           content: 'commented tweet',
           avatar: 'http://site.com/avatar_42.png',
-          meta: TweetMeta(liked: false, owner: true),
-          lastReply: [],
+          meta: const TweetMeta(liked: false, owner: true),
+          lastReply: const [],
         );
         final commentedTweet = tweetEntity2.copyWith(
           totalReply: 2,
           lastReply: [newTweet],
         );
         final expected = right(
-          FeedCache(tweets: [
-            tweetEntity1,
-            commentedTweet,
-          ]),
+          FeedCache(
+            tweets: [
+              tweetEntity1,
+              commentedTweet,
+            ],
+          ),
         );
 
         when(repository.reply(option: anyNamed('option')))

@@ -1,7 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
@@ -14,24 +12,20 @@ import 'package:penhas/app/features/filters/domain/repositories/filter_skill_rep
 import 'package:penhas/app/features/filters/states/filter_action_observer.dart';
 import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
 import 'package:penhas/app/features/main_menu/domain/states/profile_edit_state.dart';
+import 'package:penhas/app/shared/logger/log.dart';
 
 part 'profile_edit_controller.g.dart';
 
 class ProfileEditController extends _ProfileEditControllerBase
     with _$ProfileEditController {
   ProfileEditController({
-    @required AppStateUseCase appStateUseCase,
-    @required IFilterSkillRepository skillRepository,
-    @required SecurityModeActionFeature securityModeActionFeature,
+    required AppStateUseCase appStateUseCase,
+    required IFilterSkillRepository skillRepository,
+    required SecurityModeActionFeature securityModeActionFeature,
   }) : super(appStateUseCase, skillRepository, securityModeActionFeature);
 }
 
 abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
-  final AppStateUseCase _appStateUseCase;
-  final IFilterSkillRepository _skillRepository;
-  final SecurityModeActionFeature _securityModeActionFeature;
-  List<FilterTagEntity> _tags = List<FilterTagEntity>();
-
   _ProfileEditControllerBase(
     this._appStateUseCase,
     this._skillRepository,
@@ -40,18 +34,23 @@ abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
     loadProfile();
   }
 
-  @observable
-  ObservableFuture<Either<Failure, AppStateEntity>> _progress;
+  final AppStateUseCase _appStateUseCase;
+  final IFilterSkillRepository _skillRepository;
+  final SecurityModeActionFeature _securityModeActionFeature;
+  List<FilterTagEntity>? _tags = [];
 
   @observable
-  ObservableList<FilterTagEntity> profileSkill =
+  ObservableFuture<Either<Failure, AppStateEntity>>? _progress;
+
+  @observable
+  ObservableList<FilterTagEntity?> profileSkill =
       ObservableList<FilterTagEntity>();
 
   @observable
-  ProfileEditState state = ProfileEditState.initial();
+  ProfileEditState state = const ProfileEditState.initial();
 
   @observable
-  String updateError = "";
+  String? updateError = '';
 
   @computed
   PageProgressState get progressState {
@@ -65,35 +64,35 @@ abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> editNickName(String name) async {
-    setMessageErro("");
+    updateError = '';
     final update = UpdateUserProfileEntity(nickName: name);
     updateProfile(update);
   }
 
   @action
   Future<void> editMinibio(String content) async {
-    setMessageErro("");
+    updateError = '';
     final update = UpdateUserProfileEntity(minibio: content);
     updateProfile(update);
   }
 
   @action
   Future<void> updateRace(String id) async {
-    setMessageErro("");
+    updateError = '';
     final update = UpdateUserProfileEntity(race: id);
     updateProfile(update);
   }
 
   @action
   Future<void> updatedEmail(String email, String password) async {
-    setMessageErro("");
+    updateError = '';
     final update = UpdateUserProfileEntity(email: email, oldPassword: password);
     updateProfile(update);
   }
 
   @action
   Future<void> updatePassword(String newPassword, String oldPassword) async {
-    setMessageErro("");
+    updateError = '';
     final update = UpdateUserProfileEntity(
       newPassword: newPassword,
       oldPassword: oldPassword,
@@ -103,7 +102,7 @@ abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> editSkill() async {
-    final tags = _tags
+    final tags = _tags!
         .map(
           (e) => e.copyWith(
             isSelected: isSeleted(e.id),
@@ -112,14 +111,15 @@ abstract class _ProfileEditControllerBase with Store, MapFailureMessage {
         .toList();
 
     Modular.to
-        .pushNamed("/mainboard/menu/profile_edit/skills", arguments: tags)
-        .then((v) => v as FilterActionObserver)
+        .pushNamed('/mainboard/menu/profile_edit/skills', arguments: tags)
+        .then((v) => v as FilterActionObserver?)
         .then((v) => handleFilterUpdate(v));
   }
 }
 
 extension _PrivateMethod on _ProfileEditControllerBase {
-  Future<void> handleFilterUpdate(FilterActionObserver v) async {
+  Future<void> handleFilterUpdate(FilterActionObserver? v) async {
+    if (v == null) return;
     final updatedSkill = v.when(
       reset: () => UpdateUserProfileEntity(skills: []),
       updated: (s) => UpdateUserProfileEntity(
@@ -132,7 +132,7 @@ extension _PrivateMethod on _ProfileEditControllerBase {
 
   Future<void> loadProfile() async {
     final resultSkill = await _skillRepository.skills();
-    _tags = resultSkill.getOrElse(() => List<FilterTagEntity>());
+    _tags = resultSkill.getOrElse(() => List.empty());
 
     final result = await _appStateUseCase.check();
     result.fold(
@@ -146,7 +146,7 @@ extension _PrivateMethod on _ProfileEditControllerBase {
       _appStateUseCase.update(update),
     );
 
-    final result = await _progress;
+    final Either<Failure, AppStateEntity> result = await _progress!;
 
     result.fold(
       (failure) => handleUpdateError(failure),
@@ -154,33 +154,32 @@ extension _PrivateMethod on _ProfileEditControllerBase {
     );
   }
 
-  void handleSession(AppStateEntity session) async {
-    _tags.map((e) => null);
-    List<FilterTagEntity> userSkills =
-        session.userProfile.skill.map((e) => selectSkill(e)).toList();
+  Future<void> handleSession(AppStateEntity session) async {
+    _tags!.map((e) => null);
+    final List<FilterTagEntity?> userSkills =
+        session.userProfile!.skill.map((e) => selectSkill(e)).toList();
     userSkills.removeWhere((e) => e == null);
     profileSkill = userSkills.asObservable();
 
-    final securityModeFeatureEnabled = await _securityModeActionFeature.isEnabled;
+    final securityModeFeatureEnabled =
+        await _securityModeActionFeature.isEnabled;
 
-    state = ProfileEditState.loaded(session.userProfile, securityModeFeatureEnabled);
+    state = ProfileEditState.loaded(
+      session.userProfile!,
+      securityModeFeatureEnabled: securityModeFeatureEnabled,
+    );
   }
 
   void handleLoadPageError(Failure failure) {
-    final message = mapFailureMessage(failure);
+    final message = mapFailureMessage(failure)!;
     state = ProfileEditState.error(message);
   }
 
   void handleUpdateError(Failure failure) {
-    final msg = mapFailureMessage(failure);
-    setMessageErro(msg);
+    updateError = mapFailureMessage(failure);
   }
 
-  void setMessageErro(String message) {
-    updateError = message;
-  }
-
-  PageProgressState monitorProgress(ObservableFuture<Object> observable) {
+  PageProgressState monitorProgress(ObservableFuture<Object>? observable) {
     if (observable == null || observable.status == FutureStatus.rejected) {
       return PageProgressState.initial;
     }
@@ -192,22 +191,24 @@ extension _PrivateMethod on _ProfileEditControllerBase {
 
   bool isSeleted(String id) {
     try {
-      profileSkill.firstWhere((v) => v.id == id);
+      profileSkill.firstWhere((v) => v!.id == id);
       return true;
-    } catch (e) {
+    } catch (e, stack) {
+      logError(e, stack);
       return false;
     }
   }
 
-  FilterTagEntity selectSkill(String id) {
+  FilterTagEntity? selectSkill(String id) {
     try {
-      final tag = _tags.firstWhere((v) => v.id == id);
+      final tag = _tags!.firstWhere((v) => v.id == id);
       return FilterTagEntity(
         id: tag.id,
         isSelected: true,
         label: tag.label,
       );
-    } catch (e) {
+    } catch (e, stack) {
+      logError(e, stack);
       return null;
     }
   }

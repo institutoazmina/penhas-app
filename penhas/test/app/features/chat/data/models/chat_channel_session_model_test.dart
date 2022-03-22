@@ -12,7 +12,7 @@ void main() {
   group('ChatChannelSessionModel', () {
     test('should a subclass of ChatChannelSessionEntity', () async {
       // act
-      final model = ChatChannelSessionModel(
+      const model = ChatChannelSessionModel(
         hasMore: null,
         newer: null,
         older: null,
@@ -27,9 +27,9 @@ void main() {
     test('should return a valid model from valid JSON with empty messages',
         () async {
       // arrange
-      final jsonFile = "chat/chat_read_channel_empty.json";
+      const jsonFile = 'chat/chat_read_channel_empty.json';
       final jsonData = await JsonUtil.getJson(from: jsonFile);
-      final actual = ChatChannelSessionModel(
+      const actual = ChatChannelSessionModel(
           hasMore: false,
           newer: null,
           older: null,
@@ -37,18 +37,18 @@ void main() {
           metadata: ChatChannelSessionMetadataModel(
             canSendMessage: true,
             didBlocked: false,
-            headerMessage: "",
-            headerWarning: "",
+            headerMessage: '',
+            headerWarning: '',
             isBlockable: true,
-            lastMessageEtag: "4df2ae",
+            lastMessageEtag: '4df2ae',
           ),
           user: ChatUserModel(
             blockedMe: false,
-            activity: "há pouco tempo",
-            nickname: "Julia",
-            avatar: "https://api.example.com/avatar/padrao.svg",
+            activity: 'há pouco tempo',
+            nickname: 'Julia',
+            avatar: 'https://api.example.com/avatar/padrao.svg',
             userId: 3191,
-          ));
+          ),);
       // act
       final matcher = ChatChannelSessionModel.fromJson(jsonData);
       // assert
@@ -56,35 +56,35 @@ void main() {
     });
     test('should return a valid model with a valid JSON', () async {
       // arrange
-      final jsonFile = "chat/chat_read_channel.json";
+      const jsonFile = 'chat/chat_read_channel.json';
       final jsonData = await JsonUtil.getJson(from: jsonFile);
       final actual = ChatChannelSessionModel(
           hasMore: false,
-          newer: "--my-pagination-token--",
-          older: "--my-older-pagination-token--",
+          newer: '--my-pagination-token--',
+          older: '--my-older-pagination-token--',
           messages: [
             ChatMessageModel(
               id: 172,
               isMe: true,
-              message: "Ola mundo!",
-              time: DateTime.parse("2020-10-04T09:30:54Z"),
+              message: 'Ola mundo!',
+              time: DateTime.parse('2020-10-04T09:30:54Z'),
             )
           ],
-          metadata: ChatChannelSessionMetadataModel(
+          metadata: const ChatChannelSessionMetadataModel(
             canSendMessage: true,
             didBlocked: false,
-            headerMessage: "Minha mensagem",
-            headerWarning: "Meu alerta",
+            headerMessage: 'Minha mensagem',
+            headerWarning: 'Meu alerta',
             isBlockable: true,
-            lastMessageEtag: "4a295f",
+            lastMessageEtag: '4a295f',
           ),
-          user: ChatUserModel(
+          user: const ChatUserModel(
             blockedMe: false,
-            activity: "há pouco tempo",
-            nickname: "Julia",
-            avatar: "https://api.example.com/avatar/padrao.svg",
+            activity: 'há pouco tempo',
+            nickname: 'Julia',
+            avatar: 'https://api.example.com/avatar/padrao.svg',
             userId: 3191,
-          ));
+          ),);
       // act
       final matcher = ChatChannelSessionModel.fromJson(jsonData);
       // assert

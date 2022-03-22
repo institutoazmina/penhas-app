@@ -1,33 +1,25 @@
-import 'package:meta/meta.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
-import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/appstate/data/datasources/app_state_data_source.dart';
 import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
 
+import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
-class MockHttpClient extends Mock implements http.Client {}
-
-class MockApiServerConfigure extends Mock implements IApiServerConfigure {}
-
 void main() {
-  MockHttpClient apiClient;
-  IAppStateDataSource dataSource;
-  MockApiServerConfigure serverConfigure;
-  String bodyContent;
-  Uri serverEndpoint;
+  late final MockHttpClient apiClient = MockHttpClient();
+  late final MockIApiServerConfigure serverConfigure =
+      MockIApiServerConfigure();
+  late String bodyContent;
+  final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
+  late final IAppStateDataSource dataSource = AppStateDataSource(
+    apiClient: apiClient,
+    serverConfiguration: serverConfigure,
+  );
 
-  setUp(() async {
-    apiClient = MockHttpClient();
-    serverConfigure = MockApiServerConfigure();
-    serverEndpoint = Uri.https('api.anyserver.io', '/');
-    dataSource = AppStateDataSource(
-      apliClient: apiClient,
-      serverConfiguration: serverConfigure,
-    );
+  setUp(() {
     bodyContent =
         JsonUtil.getStringSync(from: 'profile/about_with_quiz_session.json');
 
@@ -36,7 +28,7 @@ void main() {
     when(serverConfigure.apiToken)
         .thenAnswer((_) => Future.value('my.very.strong'));
     when(serverConfigure.userAgent)
-        .thenAnswer((_) => Future.value("iOS 11.4/Simulator/1.0.0"));
+        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
@@ -57,10 +49,12 @@ void main() {
   }
 
   PostExpectation<Future<http.Response>> _mockRequest() {
-    return when(apiClient.get(
-      any,
-      headers: anyNamed('headers'),
-    ));
+    return when(
+      apiClient.get(
+        any,
+        headers: anyNamed('headers'),
+      ),
+    );
   }
 
   void _setUpMockHttpClientSuccess200() {
@@ -73,7 +67,7 @@ void main() {
     );
   }
 
-  void _setUpMockHttpClientFailedWithHttp({@required int code}) {
+  void _setUpMockHttpClientFailedWithHttp({required int code}) {
     _mockRequest().thenAnswer(
       (_) async => http.Response(
         '{"status": $code, "error":"Some error messsage"}',
@@ -110,16 +104,16 @@ void main() {
         () async {
       // arrange
       final sessionHttpCodeError = [401, 403];
-      sessionHttpCodeError.forEach((httpCode) {
+      for (final httpCode in sessionHttpCodeError) {
         _setUpMockHttpClientFailedWithHttp(code: httpCode);
         // act
         final sut = dataSource.check;
         // assert
         expect(
-          () async => await sut(),
-          throwsA(isA<ApiProviderSessionExpection>()),
+          () => sut(),
+          throwsA(isA<ApiProviderSessionError>()),
         );
-      });
+      }
     });
   });
 }

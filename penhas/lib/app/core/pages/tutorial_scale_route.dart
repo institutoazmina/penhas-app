@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class TutorialScaleRoute extends PageRouteBuilder {
-  final Widget page;
   TutorialScaleRoute({this.page})
       : super(
           pageBuilder: (
@@ -9,7 +8,7 @@ class TutorialScaleRoute extends PageRouteBuilder {
             Animation<double> animation,
             Animation<double> secondaryAnimation,
           ) =>
-              page,
+              page!,
           transitionsBuilder: (
             BuildContext context,
             Animation<double> animation,
@@ -29,4 +28,6 @@ class TutorialScaleRoute extends PageRouteBuilder {
             child: child,
           ),
         );
+
+  final Widget? page;
 }

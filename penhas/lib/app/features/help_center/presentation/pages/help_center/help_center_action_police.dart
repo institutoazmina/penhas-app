@@ -4,11 +4,12 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class HelpCenterActionPolice extends StatelessWidget {
-  final VoidCallback onPressed;
   const HelpCenterActionPolice({
-    Key key,
-    @required this.onPressed,
+    Key? key,
+    required this.onPressed,
   }) : super(key: key);
+
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -22,18 +23,18 @@ class HelpCenterActionPolice extends StatelessWidget {
           border: Border.all(width: 2, color: DesignSystemColors.pumpkinOrange),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 10),
               child: SizedBox(
                 height: 41,
                 width: 49,
                 child: SvgPicture.asset(
-                    'assets/images/svg/help_center/help_center_call_police.svg'),
+                  'assets/images/svg/help_center/help_center_call_police.svg',
+                ),
               ),
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(top: 6.0, bottom: 6.0),
               child: Text(
                 'Ligar para a policia',

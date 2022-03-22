@@ -10,13 +10,13 @@ import 'package:penhas/app/features/support_center/domain/states/support_center_
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_detail_map.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_rate.dart';
+import 'package:penhas/app/features/support_center/presentation/show/support_center_show_controller.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
-
-import 'support_center_show_controller.dart';
+import 'package:penhas/app/shared/logger/log.dart';
 
 class SupportCenterShowPage extends StatefulWidget {
-  const SupportCenterShowPage({Key key}) : super(key: key);
+  const SupportCenterShowPage({Key? key}) : super(key: key);
 
   @override
   _SupportCenterShowPageState createState() => _SupportCenterShowPageState();
@@ -28,13 +28,15 @@ class _SupportCenterShowPageState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Detalhe do Ponto"),
+        title: const Text('Detalhe do Ponto'),
         elevation: 0.0,
         backgroundColor: DesignSystemColors.easterPurple,
       ),
-      body: Observer(builder: (_) {
-        return bodyBuilder(context, controller.state);
-      }),
+      body: Observer(
+        builder: (_) {
+          return bodyBuilder(context, controller.state);
+        },
+      ),
     );
   }
 }
@@ -53,7 +55,7 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
     return SafeArea(
       child: PageProgressIndicator(
         progressState: PageProgressState.loading,
-        progressMessage: "Carregando...",
+        progressMessage: 'Carregando...',
         child: Container(color: DesignSystemColors.white),
       ),
     );
@@ -63,29 +65,32 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
     BuildContext context,
     SupportCenterPlaceDetailEntity detail,
   ) {
-    final placeColor = DesignSystemColors.hexColor(detail.place.category.color);
+    final placeColor =
+        DesignSystemColors.hexColor(detail.place!.category.color!);
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
+            SizedBox(
               height: 160,
               child: SupportCenterDetailMap(detail: detail),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
               color: DesignSystemColors.systemBackgroundColor,
               child: Text(
-                detail.place.name,
+                detail.place!.name!,
                 style: TextStyle(
-                    color: placeColor,
-                    fontFamily: 'Lato',
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold),
+                  color: placeColor,
+                  fontFamily: 'Lato',
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               color: DesignSystemColors.systemBackgroundColor,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,9 +107,7 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
                     child: Column(
                       children: [
                         Text(
-                          detail.place.category.name.toUpperCase() +
-                              " | " +
-                              detail.place.typeOfPlace.toUpperCase(),
+                          '${detail.place!.category.name!.toUpperCase()} | ${detail.place!.typeOfPlace!.toUpperCase()}',
                           style: placeTypeTextStyle,
                         ),
                       ],
@@ -114,21 +117,24 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
               child: HtmlWidget(
-                detail.place.htmlContent,
+                detail.place!.htmlContent!,
                 webViewJs: false,
                 textStyle: htmlContentTextStyle,
               ),
             ),
             Row(
               children: [
-                Expanded(flex: 1, child: Container()),
+                Expanded(child: Container()),
                 Expanded(
                   flex: 5,
                   child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 20.0,
+                    ),
                     color: DesignSystemColors.systemBackgroundColor,
                     child: SizedBox(
                       height: 44,
@@ -138,14 +144,14 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
                         color: DesignSystemColors.ligthPurple,
                         shape: kButtonShapeFilled,
                         child: Text(
-                          "Traçar rota",
+                          'Traçar rota',
                           style: buttonTitle,
                         ),
                       ),
                     ),
                   ),
                 ),
-                Expanded(flex: 1, child: Container()),
+                Expanded(child: Container()),
               ],
             ),
             SupportCenterRate(
@@ -169,14 +175,14 @@ extension _Maps on _SupportCenterShowPageState {
     SupportCenterPlaceDetailEntity detail,
   ) async {
     try {
-      final coords = Coords(detail.place.latitude, detail.place.longitude);
-      final title = detail.place.name;
+      final coords = Coords(detail.place!.latitude!, detail.place!.longitude!);
+      final title = detail.place!.name;
       final availableMaps = await MapLauncher.installedMaps;
 
       showModalBottomSheet(
         context: context,
         backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
@@ -186,50 +192,47 @@ extension _Maps on _SupportCenterShowPageState {
         builder: (BuildContext context) {
           return SafeArea(
             child: Container(
-              constraints: BoxConstraints(minHeight: 120),
+              constraints: const BoxConstraints(minHeight: 120),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal:
-                            ((fullWidth(context) - fullWidth(context) * .2) /
-                                2),
-                        vertical: 12),
+                      horizontal:
+                          (fullWidth(context) - fullWidth(context) * .2) / 2,
+                      vertical: 12,
+                    ),
                     child: Container(
                       height: 5,
                       decoration: BoxDecoration(
                         color: Theme.of(context).dividerColor,
-                        borderRadius: BorderRadius.all(
+                        borderRadius: const BorderRadius.all(
                           Radius.circular(10),
                         ),
                       ),
                     ),
                   ),
                   SingleChildScrollView(
-                    child: Container(
-                      child: Wrap(
-                        children: <Widget>[
-                          for (var map in availableMaps)
-                            ListTile(
-                              onTap: () => map.showMarker(
-                                coords: coords,
-                                title: title,
-                              ),
-                              title: Text(
-                                map.mapName,
-                                style: mapTitleTextStyle,
-                              ),
-                              leading: SvgPicture.asset(
-                                map.icon,
-                                height: 30.0,
-                                width: 30.0,
-                              ),
+                    child: Wrap(
+                      children: <Widget>[
+                        for (var map in availableMaps)
+                          ListTile(
+                            onTap: () => map.showMarker(
+                              coords: coords,
+                              title: title!,
                             ),
-                        ],
-                      ),
+                            title: Text(
+                              map.mapName,
+                              style: mapTitleTextStyle,
+                            ),
+                            leading: SvgPicture.asset(
+                              map.icon,
+                              height: 30.0,
+                              width: 30.0,
+                            ),
+                          ),
+                      ],
                     ),
                   ),
                 ],
@@ -238,38 +241,37 @@ extension _Maps on _SupportCenterShowPageState {
           );
         },
       );
-    } catch (e) {
-      print(e);
+    } catch (e, stack) {
+      logError(e, stack);
     }
   }
 }
 
 extension _TextStyle on _SupportCenterShowPageState {
-  TextStyle get placeTypeTextStyle => TextStyle(
-      color: DesignSystemColors.brownishGrey,
-      fontFamily: 'Lato',
-      fontSize: 12.0,
-      fontWeight: FontWeight.normal);
+  TextStyle get placeTypeTextStyle => const TextStyle(
+        color: DesignSystemColors.brownishGrey,
+        fontFamily: 'Lato',
+        fontSize: 12.0,
+        fontWeight: FontWeight.normal,
+      );
 
-  TextStyle get addressContentTextStyle => TextStyle(
-      color: DesignSystemColors.warnGrey,
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      fontWeight: FontWeight.bold);
-  TextStyle get buttonTitle => TextStyle(
-      color: DesignSystemColors.white,
-      fontFamily: 'Lato',
-      fontSize: 12.0,
-      fontWeight: FontWeight.bold);
-  TextStyle get mapTitleTextStyle => TextStyle(
-      color: Colors.black,
-      fontFamily: 'Lato',
-      fontSize: 16.0,
-      fontWeight: FontWeight.normal);
-  TextStyle get htmlContentTextStyle => TextStyle(
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      letterSpacing: 0.4,
-      color: DesignSystemColors.darkIndigoThree,
-      fontWeight: FontWeight.normal);
+  TextStyle get buttonTitle => const TextStyle(
+        color: DesignSystemColors.white,
+        fontFamily: 'Lato',
+        fontSize: 12.0,
+        fontWeight: FontWeight.bold,
+      );
+  TextStyle get mapTitleTextStyle => const TextStyle(
+        color: Colors.black,
+        fontFamily: 'Lato',
+        fontSize: 16.0,
+        fontWeight: FontWeight.normal,
+      );
+  TextStyle get htmlContentTextStyle => const TextStyle(
+        fontFamily: 'Lato',
+        fontSize: 14.0,
+        letterSpacing: 0.4,
+        color: DesignSystemColors.darkIndigoThree,
+        fontWeight: FontWeight.normal,
+      );
 }

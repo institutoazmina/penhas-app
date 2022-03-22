@@ -4,18 +4,18 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
+import 'package:penhas/app/features/feed/presentation/category_tweet/category_tweet_controller.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
-import 'category_tweet_controller.dart';
-
 class CategoryTweetPage extends StatefulWidget {
-  final String title;
   const CategoryTweetPage({
-    Key key,
-    this.title = "CategoryTweet",
+    Key? key,
+    this.title = 'CategoryTweet',
   }) : super(key: key);
+
+  final String title;
 
   @override
   _CategoryTweetPageState createState() => _CategoryTweetPageState();
@@ -24,14 +24,14 @@ class CategoryTweetPage extends StatefulWidget {
 class _CategoryTweetPageState
     extends ModularState<CategoryTweetPage, CategoryTweetController>
     with SnackBarHandler {
-  List<ReactionDisposer> _disposers;
+  List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       controller.getCategories();
     });
   }
@@ -47,7 +47,9 @@ class _CategoryTweetPageState
 
   @override
   void dispose() {
-    _disposers.forEach((d) => d());
+    for (final d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 
@@ -62,11 +64,11 @@ class _CategoryTweetPageState
         child: SizedBox.expand(
           child: SafeArea(
             child: Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.only(top: 4, bottom: 20),
                     child: Text(
                       'Selecione uma das categoria:',
@@ -78,9 +80,8 @@ class _CategoryTweetPageState
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
-                      SizedBox(height: 40, width: 160),
+                      const SizedBox(height: 40, width: 160),
                       _buildApplyButton(),
                     ],
                   )
@@ -97,30 +98,33 @@ class _CategoryTweetPageState
     return Observer(
       builder: (_) {
         return ListView.builder(
-            itemCount: controller.categories.length,
-            itemBuilder: (context, index) {
-              final item = controller.categories[index];
-              return Observer(builder: (_) {
+          itemCount: controller.categories.length,
+          itemBuilder: (context, index) {
+            final item = controller.categories[index];
+            return Observer(
+              builder: (_) {
                 return RadioListTile(
                   activeColor: DesignSystemColors.ligthPurple,
                   value: item.id,
                   title: Text(
-                    item.label,
+                    item.label!,
                     style: kTextStyleFeedTweetBody,
                   ),
                   groupValue: controller.selectedRadio,
                   selected: item.isSelected,
-                  onChanged: (value) => controller.setCategory(value),
+                  onChanged: (dynamic value) => controller.setCategory(value),
                 );
-              });
-            });
+              },
+            );
+          },
+        );
       },
     );
   }
 
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
-      title: Text('Categoria'),
+      title: const Text('Categoria'),
       backgroundColor: DesignSystemColors.ligthPurple,
     );
   }
@@ -133,21 +137,23 @@ class _CategoryTweetPageState
         onPressed: () => controller.apply(),
         elevation: 0,
         color: DesignSystemColors.ligthPurple,
-        child: Text("Aplicar filtro",
-            style: TextStyle(
-              fontFamily: 'Lato',
-              fontWeight: FontWeight.bold,
-              fontSize: 14.0,
-              color: Colors.white,
-              letterSpacing: 0.45,
-            )),
         shape: kButtonShapeOutlinePurple,
+        child: const Text(
+          'Aplicar filtro',
+          style: TextStyle(
+            fontFamily: 'Lato',
+            fontWeight: FontWeight.bold,
+            fontSize: 14.0,
+            color: Colors.white,
+            letterSpacing: 0.45,
+          ),
+        ),
       ),
     );
   }
 
   ReactionDisposer _showErrorMessage() {
-    return reaction((_) => controller.errorMessage, (String message) {
+    return reaction((_) => controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }

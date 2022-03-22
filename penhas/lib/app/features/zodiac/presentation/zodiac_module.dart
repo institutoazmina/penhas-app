@@ -19,55 +19,46 @@ import 'package:penhas/app/features/zodiac/presentation/zodiac_page.dart';
 class ZodiacModule extends WidgetModule {
   @override
   List<Bind> get binds => [
-        Bind(
+        Bind.factory(
           (i) => ZodiacController(
             userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
             securityAction: i.get<StealthSecurityAction>(),
           ),
-          singleton: false,
-        ),
-        Bind(
+                  ),
+        Bind.factory(
           (i) => StealthSecurityAction(
               audioServices: i.get<IAudioRecordServices>(),
               featureToogle: i.get<SecurityModeActionFeature>(),
               locationService: i.get<ILocationServices>(),
-              guardianRepository: i.get<IGuardianRepository>()),
-          singleton: false,
-        ),
-        Bind<SecurityModeActionFeature>(
+              guardianRepository: i.get<IGuardianRepository>(),),
+                  ),
+        Bind.factory<SecurityModeActionFeature>(
           (i) => SecurityModeActionFeature(
             modulesServices: i.get<IAppModulesServices>(),
           ),
-          singleton: false,
-        ),
-        Bind<IGuardianRepository>(
+                  ),
+        Bind.factory<IGuardianRepository>(
           (i) => GuardianRepository(
             dataSource: i.get<IGuardianDataSource>(),
             networkInfo: i.get<INetworkInfo>(),
           ),
-          singleton: false,
-        ),
-        Bind<ILocationServices>(
+                  ),
+        Bind.factory<ILocationServices>(
           (i) => LocationServices(),
-          singleton: false,
-        ),
-        Bind<IGuardianDataSource>(
+                  ),
+        Bind.factory<IGuardianDataSource>(
           (i) => GuardianDataSource(
             apiClient: i.get<http.Client>(),
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
-          singleton: false,
-        ),
-        Bind<IAudioRecordServices>(
+                  ),
+        Bind.factory<IAudioRecordServices>(
           (i) => AudioRecordServices(
             audioSyncManager: i.get<IAudioSyncManager>(),
           ),
-          singleton: false,
-        ),
+                  ),
       ];
 
-  static Inject get to => Inject<ZodiacModule>.of();
-
   @override
-  Widget get view => ZodiacPage();
+  Widget get view => const ZodiacPage();
 }

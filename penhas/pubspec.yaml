@@ -11,61 +11,104 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 2.0.1+34
+version: 3.0.0-dev14+49
+publish_to: none
 
 environment:
-  sdk: ">=2.6.0 <3.0.0"
+  sdk: '>=2.15.0 <3.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  badges: ^1.1.4
-  cpfcnpj: ^1.0.3
-  cupertino_icons: ^1.0.0
-  dartz: ^0.9.1
-  data_connection_checker: ^0.3.4
-  device_info: ">=0.4.2+9 <2.0.0"
-  email_validator: ^1.0.4
-  equatable: ^1.1.1
-  firebase_analytics: ^6.2.0
-  firebase_core: ^0.5.2
-  firebase_crashlytics: ^0.2.3
-  flutter_mobx: ^1.1.0
-  flutter_modular: ^2.0.1
-  flutter_phone_direct_caller: ^1.0.1
-  flutter_sound_lite: 6.1.4
-  flutter_svg: ^0.19.0
-  flutter_tags: ^0.4.8+2
-  flutter_widget_from_html: ^0.5.0
-  freezed_annotation: ^0.12.0
-  geolocator: 6.2.0
-  google_maps_flutter: 1.2.0
-  map_launcher: ^1.0.0
-  mask_text_input_formatter: ^1.0.6
-  mobx: ^1.1.1
-  package_info: ">=0.4.0+16 <2.0.0"
-  path: ^1.6.0
-  path_provider: ^1.6.11
-  permission_handler: ^5.0.1+1
-  provider: ^4.0.4
-  shared_preferences: ^0.5.6+3
-  smooth_star_rating: ^1.1.1
-  timeago: ^2.0.26
-  url_launcher: ^5.4.7
-  uuid: ^2.2.0
-  webview_flutter: ^1.0.7
+  badges: ^2.0.2
+  cpfcnpj:
+    git:
+      url: https://github.com/erickhaendel/dart-cpfcnpj.git
+      ref: "6258774d3de58ee9122f2b6047ebb0c5b833df19"
+  cupertino_icons: ^1.0.4
+  dartz: ^0.10.1
+  data_connection_checker:
+    git:
+      url: https://github.com/uSlashVlad/data_connection_checker.git
+      ref: "1b983aa377d9984ab18292d5ff33768e284e93d6"
+  device_info: ^2.0.3
+  email_validator: ^2.0.1
+  equatable: ^2.0.3
+  firebase_analytics: ^8.3.2
+  firebase_core: ^1.10.5
+  firebase_crashlytics: ^2.4.3
+  flutter_mobx: ^2.0.2
+  flutter_modular:
+    git:
+      url: https://github.com/pedrox-hs/modular.git
+      path: flutter_modular
+      ref: improvements
+  flutter_phone_direct_caller: ^2.1.0
+  flutter_sound_lite: ^8.5.0
+  flutter_svg: ^1.0.3
+  flutter_tags:
+    git:
+      url: https://github.com/pedrox-hs/flutter_tags.git
+      ref: null-safety
+  flutter_widget_from_html: ^0.8.3+1
+  freezed_annotation: ^1.1.0
+  geolocator: ^8.0.0
+  google_maps_flutter: ^2.1.1
+  map_launcher: ^2.1.1
+  mask_text_input_formatter: ^2.0.0
+  mobx: ^2.0.5
+  package_info: ^2.0.2
+  path: ^1.8.0
+  path_provider: ^2.0.8
+  permission_handler: ^8.3.0
+  provider: ^6.0.1
+  shared_preferences: ^2.0.11
+  smooth_star_rating:
+    git:
+      url: https://github.com/bhavin-concetto/smoothratingbar.git
+      ref: "eb02312f9adc6a40e2488050fb2e58852a163bb8"
+  timeago: ^3.1.0
+  url_launcher: ^6.0.17
+  uuid: ^3.0.5
+  webview_flutter: ^3.0.0
+  collection: ^1.15.0
+  asuka: ^2.0.0
+  stack_trace: ^1.10.0
+  logging: ^1.0.2
+  http: ^0.13.4
+  intl: ^0.17.0
+  meta: ^1.7.0
+  crypto: ^3.0.1
+  http_parser: ^4.0.0
+  logger: ^1.1.0
+
+dependency_overrides:
+  flutter_modular:
+    git:
+      url: https://github.com/pedrox-hs/modular.git
+      path: flutter_modular
+      ref: improvements
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^1.10.2
-  flutter_launcher_icons: ^0.8.1
-  flutter_launcher_name: ^0.0.1
-  freezed: ^0.12.1
-  mobx_codegen: ^1.0.3
-  mockito: ^4.1.1
+  build_runner: ^2.1.5
+  flutter_modular_test:
+    git:
+      url: https://github.com/pedrox-hs/modular.git
+      path: flutter_modular_test
+      ref: improvements
+  flutter_launcher_icons: ^0.9.2
+  flutter_launcher_name:
+    git:
+      url: https://github.com/ride4sun/flutter_launcher_name
+      ref: "cd516a8e7483bfc7971ec9ac8f2d589e68247441"
+  freezed: ^1.1.0
+  mobx_codegen: ^2.0.4
+  mockito: ^5.0.16
+  lint: ^1.8.1
 
 flutter_icons:
   ios: true

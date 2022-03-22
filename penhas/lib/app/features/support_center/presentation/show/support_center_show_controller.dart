@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
@@ -12,21 +11,21 @@ part 'support_center_show_controller.g.dart';
 class SupportCenterShowController extends _SupportCenterShowControllerBase
     with _$SupportCenterShowController {
   SupportCenterShowController({
-    @required SupportCenterUseCase supportCenterUseCase,
-    @required SupportCenterPlaceEntity place,
+    required SupportCenterUseCase supportCenterUseCase,
+    required SupportCenterPlaceEntity? place,
   }) : super(place, supportCenterUseCase);
 }
 
 abstract class _SupportCenterShowControllerBase with Store, MapFailureMessage {
-  final SupportCenterUseCase _useCase;
-  final SupportCenterPlaceEntity _place;
-
   _SupportCenterShowControllerBase(this._place, this._useCase) {
     setup();
   }
 
+  final SupportCenterUseCase _useCase;
+  final SupportCenterPlaceEntity? _place;
+
   @observable
-  SupportCenterShowState state = SupportCenterShowState.initial();
+  SupportCenterShowState state = const SupportCenterShowState.initial();
 
   @action
   Future<void> onRate(double value) async {
@@ -48,11 +47,12 @@ extension _PrivateMethods on _SupportCenterShowControllerBase {
     );
   }
 
-  void handleLoadDetailSuccess(SupportCenterPlaceDetailEntity detail) async {
+  Future<void> handleLoadDetailSuccess(
+      SupportCenterPlaceDetailEntity detail,) async {
     state = SupportCenterShowState.loaded(detail);
   }
 
   void handleStateError(Failure f) {
-    state = SupportCenterShowState.error(mapFailureMessage(f));
+    state = SupportCenterShowState.error(mapFailureMessage(f)!);
   }
 }

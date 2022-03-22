@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/features/authentication/presentation/reset_password/pages/reset_password_three/reset_password_three_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/password_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
@@ -11,12 +12,12 @@ import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
-import 'reset_password_three_controller.dart';
 
 class ResetPasswordThreePage extends StatefulWidget {
-  final String title;
-  const ResetPasswordThreePage({Key key, this.title = "ResetPasswordThree"})
+  const ResetPasswordThreePage({Key? key, this.title = 'ResetPasswordThree'})
       : super(key: key);
+
+  final String title;
 
   @override
   _ResetPasswordThreePageState createState() => _ResetPasswordThreePageState();
@@ -25,8 +26,8 @@ class ResetPasswordThreePage extends StatefulWidget {
 class _ResetPasswordThreePageState
     extends ModularState<ResetPasswordThreePage, ResetPasswordThreeController>
     with SnackBarHandler {
-  List<ReactionDisposer> _disposers;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  List<ReactionDisposer>? _disposers;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
 
   @override
@@ -40,7 +41,9 @@ class _ResetPasswordThreePageState
 
   @override
   void dispose() {
-    _disposers.forEach((d) => d());
+    for (final d in _disposers!) {
+      d();
+    }
     super.dispose();
   }
 
@@ -64,11 +67,11 @@ class _ResetPasswordThreePageState
               onPanDown: (_) => _handleTap(context),
               child: SafeArea(
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.fromLTRB(30.0, 16.0, 30.0, 8.0),
+                  padding: const EdgeInsets.fromLTRB(30.0, 16.0, 30.0, 8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      SizedBox(
+                      const SizedBox(
                         height: 60,
                         child: Text(
                           'Configure uma nova senha',
@@ -76,7 +79,7 @@ class _ResetPasswordThreePageState
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      SizedBox(height: 24),
+                      const SizedBox(height: 24),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -84,13 +87,14 @@ class _ResetPasswordThreePageState
                             height: 102,
                             width: 102,
                             child: SvgPicture.asset(
-                                'assets/images/svg/reset_password/recovery_password_step_2.svg',
-                                color: Colors.white),
+                              'assets/images/svg/reset_password/recovery_password_step_2.svg',
+                              color: Colors.white,
+                            ),
                           ),
                         ],
                       ),
-                      SizedBox(height: 24),
-                      SizedBox(
+                      const SizedBox(height: 24),
+                      const SizedBox(
                         height: 40,
                         child: Text(
                           'Crie uma senha diferente das anteriores',
@@ -98,15 +102,17 @@ class _ResetPasswordThreePageState
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      SizedBox(height: 24),
+                      const SizedBox(height: 24),
                       Observer(
                         builder: (_) {
                           return _buildPasswordField();
                         },
                       ),
-                      SizedBox(height: 24.0),
-                      Observer(builder: (_) => _buildConfirmationPasswordField()),
-                      SizedBox(height: 24),
+                      const SizedBox(height: 24.0),
+                      Observer(
+                        builder: (_) => _buildConfirmationPasswordField(),
+                      ),
+                      const SizedBox(height: 24),
                       SizedBox(height: 40.0, child: _buildNextButton()),
                     ],
                   ),
@@ -137,27 +143,28 @@ class _ResetPasswordThreePageState
     );
   }
 
-  RaisedButton _buildNextButton() {
+  Widget _buildNextButton() {
     return RaisedButton(
       onPressed: () => controller.nextStepPressed(),
       elevation: 0,
       color: DesignSystemColors.ligthPurple,
-      child: Text(
-        "Salvar",
+      shape: kButtonShapeFilled,
+      child: const Text(
+        'Salvar',
         style: kTextStyleDefaultFilledButtonLabel,
       ),
-      shape: kButtonShapeFilled,
     );
   }
 
-  _handleTap(BuildContext context) {
-    if (MediaQuery.of(context).viewInsets.bottom > 0)
+  void _handleTap(BuildContext context) {
+    if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
-    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+    }
+    WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
   }
 
   ReactionDisposer _showErrorMessage() {
-    return reaction((_) => controller.errorMessage, (String message) {
+    return reaction((_) => controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }

@@ -6,31 +6,33 @@ import 'package:penhas/app/features/users/domain/entities/user_detail_entity.dar
 import '../../../../../utils/json_util.dart';
 
 void main() {
-  String jsonFile;
+  String? jsonFile;
 
   setUp(() {
-    jsonFile = "users/users_detail.json";
+    jsonFile = 'users/users_detail.json';
   });
 
   group('UserDetailModel', () {
     test('should be a subclass of UserDetailEntity', () async {
       // arrange
-      final model = UserDetailModel(isMyself: false, profile: null);
+      const model = UserDetailModel(
+        isMyself: false,
+        profile: UserDetailProfileModel(),
+      );
       // assert
       expect(model, isA<UserDetailEntity>());
     });
     test('should return a valid model with a valid JSON', () async {
       // arrange
       final jsonData = await JsonUtil.getJson(from: jsonFile);
-      final profile = UserDetailProfileModel(
-        nickname: "Leticia",
-        avatar: "https://api.example.com/avatar/padrao.svg",
+      const profile = UserDetailProfileModel(
+        nickname: 'Leticia',
+        avatar: 'https://api.example.com/avatar/padrao.svg',
         clientId: 1335,
-        miniBio: "",
-        skills: "",
-        activity: null,
+        miniBio: '',
+        skills: '',
       );
-      final actual = UserDetailModel(isMyself: false, profile: profile);
+      const actual = UserDetailModel(isMyself: false, profile: profile);
       // act
       final matcher = UserDetailModel.fromJson(jsonData);
       // assert
