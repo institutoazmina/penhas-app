@@ -25,6 +25,9 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   }
 
   String? _address;
+  String? _cep;
+  String? _ddd;
+  String? _phone;
   String? _placeName;
   String? _placeDescription;
   FilterTagEntity? _category;
@@ -47,6 +50,15 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   String? errorMessage = '';
 
   @observable
+  String cep = '';
+
+  @observable
+  String ddd = '';
+  
+  @observable
+  String phone = '';
+
+  @observable
   ObservableList<FilterTagEntity> places = ObservableList<FilterTagEntity>();
 
   @observable
@@ -54,6 +66,15 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @observable
   String categoryError = '';
+
+  @observable
+  String cepError = '';
+
+  @observable
+  String dddError = '';
+
+  @observable
+  String phoneError = '';
 
   @observable
   SupportCenterAddState state = const SupportCenterAddState.initial();
@@ -93,6 +114,24 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   }
 
   @action
+  void setPhone(String phone) {
+    phoneError = phone.isEmpty || phone.length < 8 ? 'Telefone é campo obrigatório' : '';
+    _phone = phone;
+  }
+
+  @action
+  void setDdd(String ddd) {
+    _ddd = ddd;
+  }
+
+  @action
+  void setCep(String cep) {
+    cepError = cep.isEmpty || cep.length < 9 ? 'Cep é campo obrigatório' : '';
+    _cep = cep;
+  }
+
+
+  @action
   Future<void> savePlace() async {
     resetErrors();
 
@@ -102,6 +141,14 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
     if (_address == null || _address!.isEmpty) {
       addressError = 'Endereço é campo obrigatório';
+    }
+
+    if (_cep == null || _cep!.isEmpty) {
+      cepError = 'Cep é campo obrigatório';
+    }
+
+    if (_phone == null || _phone!.isEmpty) {
+      phoneError = 'Phone é campo obrigatório';
     }
 
     if (_placeName == null || _placeName!.isEmpty) {
@@ -118,6 +165,9 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
         address: _address,
         category: _category!.id,
         description: _placeDescription,
+        cep: _cep,
+        phone: _phone,
+        ddd: _ddd,
       ),
     );
 
@@ -130,6 +180,9 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   void resetErrors() {
     addressError = '';
+    placeNameError = '';
+    phoneError = '';
+    cepError = '';
     placeNameError = '';
     placeDescriptionError = '';
     errorMessage = '';

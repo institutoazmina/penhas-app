@@ -36,6 +36,9 @@ abstract class ISupportCenterRepository {
     required String? address,
     required String category,
     required String? description,
+    required String? ddd,
+    required String? cep,
+    required String? phone,
   });
 }
 
@@ -121,13 +124,19 @@ class SupportCenterRepository implements ISupportCenterRepository {
     required String? address,
     required String category,
     required String? description,
+    required String? ddd,
+    required String? cep,
+    required String? phone,
   }) async {
     const endPoint = '/me/sugerir-pontos-de-apoio';
     final bodyContent = [
       'nome=${Uri.encodeComponent(name!)}',
       'categoria=${Uri.encodeComponent(category)}',
-      'endereco_ou_cep=${Uri.encodeComponent(address!)}',
+      'endereco=${Uri.encodeComponent(address!)}',
       'descricao_servico=${Uri.encodeComponent(description!)}',
+      'cep=${Uri.encodeComponent(cep!)}',
+      'ddd=${Uri.encodeComponent(ddd!)}',
+      'phone=${Uri.encodeComponent(phone!)}',
     ].join('&');
 
     try {

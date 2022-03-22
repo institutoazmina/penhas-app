@@ -80,12 +80,18 @@ class SupportCenterUseCase {
     required String? address,
     required String category,
     required String? description,
+    required String? ddd,
+    required String? cep,
+    required String? phone,
   }) {
     return _supportCenterRepository.suggestion(
       name: name,
       address: address,
       category: category,
       description: description,
+      phone: phone,
+      ddd: ddd,
+      cep: cep,
     );
   }
 

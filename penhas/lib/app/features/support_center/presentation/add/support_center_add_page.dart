@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/extension/asuka.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
@@ -11,9 +12,11 @@ import 'package:penhas/app/features/help_center/domain/states/guardian_alert_sta
 import 'package:penhas/app/features/support_center/domain/states/support_center_add_state.dart';
 import 'package:penhas/app/features/support_center/presentation/add/support_center_add_controller.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_input.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_inputs.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
+
 
 class SupportCenterAddPage extends StatefulWidget {
   const SupportCenterAddPage({Key? key}) : super(key: key);
@@ -110,6 +113,21 @@ extension _BuildWidget on _SupportCenterAddPageState {
     List<FilterTagEntity> categories,
   ) {
     final dataSource = buildDataSource(categories);
+    final _maskCep = MaskTextInputFormatter(
+      mask: '#####-###',
+      filter: {'#': RegExp('[0-9]')},
+    );
+
+    final _maskDdd = MaskTextInputFormatter(
+      mask: '0##',
+      filter: {'#': RegExp('[0-9]')},
+    );
+
+    final _maskPhone = MaskTextInputFormatter(
+      mask: '####-####',
+      filter: {'#': RegExp('[0-9]')},
+    );
+
 
     return Container(
       padding: const EdgeInsets.all(16.0),
@@ -124,11 +142,29 @@ extension _BuildWidget on _SupportCenterAddPageState {
             child:
                 Text('Informação sobre o ponto de apoio', style: addressTitle),
           ),
+          SupportCenterInputCep(
+            hintText: 'Insira um CEP',
+            errorText: controller.cepError,
+            onChanged: controller.setCep,
+            mask: [_maskCep],
+          ),
           SupportCenterInput(
             maxLines: 2,
-            hintText: 'Insira um endereço ou CEP',
+            hintText: 'Insira um endereço',
             errorText: controller.addressError,
             onChanged: controller.setAddress,
+          ),
+          SupportCenterInputDdd(
+            hintText: 'DDD',
+            errorText: controller.dddError,
+            onChanged: controller.setDdd,
+            mask: [_maskDdd],
+          ),
+          SupportCenterInputPhone(
+            hintText: 'Insira telefone',
+            errorText: controller.phoneError,
+            onChanged: controller.setPhone,
+            mask: [_maskPhone],
           ),
           buildDropdownList(
             context: context,
