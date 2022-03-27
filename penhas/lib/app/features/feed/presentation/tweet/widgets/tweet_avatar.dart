@@ -12,7 +12,7 @@ class TweetAvatar extends StatelessWidget {
   })  : super(key: key);
 
   final TweetEntity tweet;
-  
+
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
@@ -27,7 +27,7 @@ extension _PrivateMethod on TweetAvatar {
   Widget avatar() {
     return SvgPicture.network(
       tweet.avatar!,
-      color: DesignSystemColors.darkIndigo,
+      //color: DesignSystemColors.darkIndigo,
       height: 36,
     );
   }

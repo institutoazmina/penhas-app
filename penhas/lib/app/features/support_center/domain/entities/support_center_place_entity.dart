@@ -100,24 +100,6 @@ class SupportCenterPlaceCategoryEntity extends Equatable {
   List<Object?> get props => [id, name, color];
 }
 
-class SupportCenterPlaceCategoryEntity extends Equatable {
-  const SupportCenterPlaceCategoryEntity({
-    required this.id,
-    required this.name,
-    required this.color,
-  });
-
-  final int? id;
-  final String? name;
-  final String? color;
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object?> get props => [id, name, color];
-}
-
 extension _SupportCenterPlaceCategoryEntityParse
     on SupportCenterPlaceCategoryEntity {
   static SupportCenterPlaceCategoryEntity fromJson(

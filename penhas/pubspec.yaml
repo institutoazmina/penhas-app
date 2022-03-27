@@ -47,7 +47,7 @@ dependencies:
       ref: improvements
   flutter_phone_direct_caller: ^2.1.0
   flutter_sound_lite: ^8.5.0
-  flutter_svg: ^1.0.0
+  flutter_svg: ^1.0.3
   flutter_tags:
     git:
       url: https://github.com/pedrox-hs/flutter_tags.git
