@@ -17,7 +17,6 @@ import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
-
 class SupportCenterAddPage extends StatefulWidget {
   const SupportCenterAddPage({Key? key}) : super(key: key);
 
@@ -127,7 +126,6 @@ extension _BuildWidget on _SupportCenterAddPageState {
       mask: '####-####',
       filter: {'#': RegExp('[0-9]')},
     );
-
 
     return Container(
       padding: const EdgeInsets.all(16.0),

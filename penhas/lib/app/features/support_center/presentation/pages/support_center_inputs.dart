@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-
 class SupportCenterInputCep extends StatelessWidget {
   const SupportCenterInputCep({
     Key? key,
@@ -65,7 +64,6 @@ class SupportCenterInputDdd extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
@@ -90,15 +88,14 @@ class SupportCenterInputDdd extends StatelessWidget {
         keyboardType: TextInputType.number,
         onChanged: onChanged,
         maxLength: 3,
+        inputFormatters: mask,
       ),
     );
   }
 }
 
-
-
 class SupportCenterInputPhone extends StatelessWidget {
-  const SupportCenterInputPhone({
+  SupportCenterInputPhone({
     Key? key,
     required this.hintText,
     required this.errorText,
@@ -138,7 +135,32 @@ class SupportCenterInputPhone extends StatelessWidget {
         keyboardType: TextInputType.number,
         onChanged: onChanged,
         maxLength: 11,
+        inputFormatters: mask,
       ),
     );
+  }
+}
+
+class DynamicMaskPhoneFormatter extends MaskTextInputFormatter {
+
+  DynamicMaskPhoneFormatter({String initialText = ''})
+      : super(
+          mask: '####-####',
+          filter: {'#': RegExp('[0-9]')},
+          initialText: initialText,
+        );
+
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue,) {
+    if (newValue.text.length < 9) {
+      updateMask(mask: '####-####');
+    }else if (newValue.text.length < 10) {
+      updateMask(mask: '#####-####');
+    } else{
+      updateMask(mask: '#### ### ###');
+    }
+
+    return super.formatEditUpdate(oldValue, newValue);
   }
 }
