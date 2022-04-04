@@ -17,6 +17,7 @@ default_platform(:android)
 xcversion(version: "~> 13.1")
 
 $apiBaseUrl = "https://***REMOVED***"
+#$apiBaseUrl = "https://***REMOVED***"
 
 desc "Run code generators"
 lane :pre_build do
@@ -45,8 +46,8 @@ platform :android do
     build
     firebase_app_distribution(
       app: "1:51928851553:android:fc14989f5670877f663620",
-      release_notes_file: "./deploy/beta/release_notes",
-      # testers_file: "./deploy/beta/testers.android",
+      release_notes_file: "./deploy/beta/release_notes.md",
+      testers_file: "./deploy/beta/testers.android",
       groups: "androidtestersgroup",
       android_artifact_path: "./build/app/outputs/apk/release/app-release.apk"
     )
@@ -59,7 +60,7 @@ platform :android do
     upload_to_play_store(
       track: "alpha",
       release_status: "completed",
-      aab: "./build/app/outputs/aab/release/app-release.aab",
+      aab: "./build/app/outputs/bundle/release/app-release.aab",
     )
   end
 
@@ -75,13 +76,13 @@ platform :ios do
 
   desc "Generates a provisioning profile, saving it in the current folder "
   lane :update_profile do
-    #get_certificates
-
+    cert(
+      output_path: './ios/certificates',
+    )
     sigh(
-      provisioning_name: "PenhaS-AdHoc",
+      provisioning_name: "PenhaS AppStore",
       force: true,
-      adhoc: true,
-      output_path: './ios/certificates'
+      output_path: './ios/certificates',
     )
   end
 
@@ -103,8 +104,9 @@ platform :ios do
       workspace: "./ios/Runner.xcworkspace",
       configuration: "Release",
       archive_path: "./build/ios/Runner.xcarchive",
-      export_method: "ad-hoc",
-      output_directory: "./build/Runner"
+      export_method: "app-store",
+      output_directory: "./build/Runner",
+      export_xcargs: "-allowProvisioningUpdates",
     )
   end
 
@@ -120,8 +122,8 @@ platform :ios do
 
     firebase_app_distribution(
       app: "1:51928851553:ios:f741dab1c05cf04e663620",
-      release_notes_file: "./deploy/beta/release_notes",
-      # testers_file: "./deploy/beta/testers.ios",
+      release_notes_file: "./deploy/beta/release_notes.md",
+      testers_file: "./deploy/beta/testers.ios",
       groups: "iostestersgroup",
       ipa_path: "./build/Runner/Runner.ipa",
       debug: true
