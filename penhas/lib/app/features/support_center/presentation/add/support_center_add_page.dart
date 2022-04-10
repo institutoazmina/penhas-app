@@ -111,14 +111,11 @@ extension _BuildWidget on _SupportCenterAddPageState {
     BuildContext context,
     List<FilterTagEntity> categories,
   ) {
+    
     final dataSource = buildDataSource(categories);
+    
     final _maskCep = MaskTextInputFormatter(
       mask: '#####-###',
-      filter: {'#': RegExp('[0-9]')},
-    );
-
-    final _maskDdd = MaskTextInputFormatter(
-      mask: '0##',
       filter: {'#': RegExp('[0-9]')},
     );
 
@@ -151,12 +148,6 @@ extension _BuildWidget on _SupportCenterAddPageState {
             hintText: 'Insira um endereço',
             errorText: controller.addressError,
             onChanged: controller.setAddress,
-          ),
-          SupportCenterInputDdd(
-            hintText: 'DDD',
-            errorText: controller.dddError,
-            onChanged: controller.setDdd,
-            mask: [_maskDdd],
           ),
           SupportCenterInputPhone(
             hintText: 'Insira telefone',

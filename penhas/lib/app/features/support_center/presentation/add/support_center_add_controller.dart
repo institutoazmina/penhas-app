@@ -26,7 +26,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   String? _address;
   String? _cep;
-  String? _ddd;
   String? _phone;
   String? _placeName;
   String? _placeDescription;
@@ -51,9 +50,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @observable
   String cep = '';
-
-  @observable
-  String ddd = '';
   
   @observable
   String phone = '';
@@ -69,10 +65,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @observable
   String cepError = '';
-
-  @observable
-  String dddError = '';
-
+  
   @observable
   String phoneError = '';
 
@@ -120,11 +113,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  void setDdd(String ddd) {
-    _ddd = ddd;
-  }
-
-  @action
   void setCep(String cep) {
     cepError = cep.isEmpty || cep.length < 9 ? 'Cep é campo obrigatório' : '';
     _cep = cep;
@@ -167,7 +155,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
         description: _placeDescription,
         cep: _cep,
         phone: _phone,
-        ddd: _ddd,
       ),
     );
 
@@ -183,7 +170,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     placeNameError = '';
     phoneError = '';
     cepError = '';
-    placeNameError = '';
     placeDescriptionError = '';
     errorMessage = '';
   }

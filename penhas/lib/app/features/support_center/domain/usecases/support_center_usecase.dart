@@ -80,7 +80,6 @@ class SupportCenterUseCase {
     required String? address,
     required String category,
     required String? description,
-    required String? ddd,
     required String? cep,
     required String? phone,
   }) {
@@ -90,7 +89,6 @@ class SupportCenterUseCase {
       category: category,
       description: description,
       phone: phone,
-      ddd: ddd,
       cep: cep,
     );
   }

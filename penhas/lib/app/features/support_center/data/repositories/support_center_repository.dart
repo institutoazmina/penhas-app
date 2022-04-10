@@ -36,7 +36,6 @@ abstract class ISupportCenterRepository {
     required String? address,
     required String category,
     required String? description,
-    required String? ddd,
     required String? cep,
     required String? phone,
   });
@@ -124,7 +123,6 @@ class SupportCenterRepository implements ISupportCenterRepository {
     required String? address,
     required String category,
     required String? description,
-    required String? ddd,
     required String? cep,
     required String? phone,
   }) async {
@@ -135,7 +133,6 @@ class SupportCenterRepository implements ISupportCenterRepository {
       'endereco=${Uri.encodeComponent(address!)}',
       'descricao_servico=${Uri.encodeComponent(description!)}',
       'cep=${Uri.encodeComponent(cep!)}',
-      'ddd=${Uri.encodeComponent(ddd!)}',
       'phone=${Uri.encodeComponent(phone!)}',
     ].join('&');
 
