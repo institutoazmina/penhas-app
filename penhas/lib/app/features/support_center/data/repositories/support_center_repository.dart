@@ -133,7 +133,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
       'endereco=${Uri.encodeComponent(address!)}',
       'descricao_servico=${Uri.encodeComponent(description!)}',
       'cep=${Uri.encodeComponent(cep!)}',
-      'phone=${Uri.encodeComponent(phone!)}',
+      'telefone=${Uri.encodeComponent(phone!)}',
     ].join('&');
 
     try {

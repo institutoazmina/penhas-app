@@ -53,13 +53,11 @@ class SupportCenterInputPhone extends StatelessWidget {
     required this.hintText,
     required this.errorText,
     required this.onChanged,
-    required this.mask,
   }) : super(key: key);
 
   final String hintText;
   final String errorText;
   final ValueChanged<String> onChanged;
-  final List<MaskTextInputFormatter> mask;
 
   @override
   Widget build(BuildContext context) {
@@ -85,10 +83,8 @@ class SupportCenterInputPhone extends StatelessWidget {
           ),
           errorText: errorText.isEmpty ? null : errorText,
         ),
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.phone,
         onChanged: onChanged,
-        maxLength: 11,
-        inputFormatters: mask,
       ),
     );
   }

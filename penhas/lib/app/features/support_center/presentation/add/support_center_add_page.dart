@@ -119,11 +119,6 @@ extension _BuildWidget on _SupportCenterAddPageState {
       filter: {'#': RegExp('[0-9]')},
     );
 
-    final _maskPhone = MaskTextInputFormatter(
-      mask: '####-####',
-      filter: {'#': RegExp('[0-9]')},
-    );
-
     return Container(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -150,10 +145,9 @@ extension _BuildWidget on _SupportCenterAddPageState {
             onChanged: controller.setAddress,
           ),
           SupportCenterInputPhone(
-            hintText: 'Insira telefone',
+            hintText: 'Insira o telefone com o DDD',
             errorText: controller.phoneError,
             onChanged: controller.setPhone,
-            mask: [_maskPhone],
           ),
           buildDropdownList(
             context: context,
