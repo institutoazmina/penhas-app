@@ -11,23 +11,25 @@ import '../../../../../utils/helper.mocks.dart';
 void main() {
   late TweetEntity tweetRequest;
   late final MockITweetRepository repository = MockITweetRepository();
-  late final MockTweetFilterPreference filterPreference = MockTweetFilterPreference();
+  late final MockTweetFilterPreference filterPreference =
+      MockTweetFilterPreference();
 
   late int maxRowsPerRequest;
 
   setUp(() {
     maxRowsPerRequest = 2;
     tweetRequest = TweetEntity(
-        id: 'id_1',
-        userName: 'user_1',
-        clientId: 1,
-        createdAt: '1500-01-01 01:01:01',
-        totalReply: 0,
-        totalLikes: 0,
-        anonymous: false,
-        content: 'content 1',
-        avatar: 'https:/site.com/avatas.svg',
-        meta: const TweetMeta(liked: false, owner: false),);
+      id: 'id_1',
+      userName: 'user_1',
+      clientId: 1,
+      createdAt: '1500-01-01 01:01:01',
+      totalReply: 0,
+      totalLikes: 0,
+      anonymous: false,
+      content: 'content 1',
+      avatar: 'https:/site.com/avatas.svg',
+      meta: const TweetMeta(liked: false, owner: false),
+    );
   });
 
   group('FeedUseCases', () {
@@ -50,16 +52,18 @@ void main() {
         );
 
         firstSession = TweetSessionEntity(
-            nextPage: null,
-            hasMore: false,
-            orderBy: TweetSessionOrder.oldestFirst,
-            tweets: [
-              tweetRequest.copyWith(
-                  id: 'id_5',
-                  userName: 'user_2',
-                  clientId: 2,
-                  content: 'reply 1',)
-            ],);
+          nextPage: null,
+          hasMore: false,
+          orderBy: TweetSessionOrder.oldestFirst,
+          tweets: [
+            tweetRequest.copyWith(
+              id: 'id_5',
+              userName: 'user_2',
+              clientId: 2,
+              content: 'reply 1',
+            )
+          ],
+        );
       });
       test('should request with parent_id and after', () async {
         // arrange
@@ -129,42 +133,48 @@ void main() {
 
       setUp(() {
         firstSession = TweetSessionEntity(
-            nextPage: null,
-            hasMore: true,
-            orderBy: TweetSessionOrder.oldestFirst,
-            tweets: [
-              tweetRequest.copyWith(
-                  id: 'id_5',
-                  createdAt: '1600-01-01 01:01:01',
-                  userName: 'user_2',
-                  clientId: 2,
-                  content: 'reply 1',),
-              tweetRequest.copyWith(
-                  id: 'id_6',
-                  createdAt: '1600-02-02 02:02:02',
-                  userName: 'user_2',
-                  clientId: 2,
-                  content: 'reply 2',),
-            ],);
+          nextPage: null,
+          hasMore: true,
+          orderBy: TweetSessionOrder.oldestFirst,
+          tweets: [
+            tweetRequest.copyWith(
+              id: 'id_5',
+              createdAt: '1600-01-01 01:01:01',
+              userName: 'user_2',
+              clientId: 2,
+              content: 'reply 1',
+            ),
+            tweetRequest.copyWith(
+              id: 'id_6',
+              createdAt: '1600-02-02 02:02:02',
+              userName: 'user_2',
+              clientId: 2,
+              content: 'reply 2',
+            ),
+          ],
+        );
 
         secondSession = TweetSessionEntity(
-            nextPage: null,
-            hasMore: true,
-            orderBy: TweetSessionOrder.oldestFirst,
-            tweets: [
-              tweetRequest.copyWith(
-                  id: 'id_7',
-                  userName: 'user_2',
-                  createdAt: '1600-03-03 03:03:03',
-                  clientId: 2,
-                  content: 'reply 3',),
-              tweetRequest.copyWith(
-                  id: 'id_8',
-                  userName: 'user_2',
-                  createdAt: '1600-04-04 04:04:04',
-                  clientId: 2,
-                  content: 'reply 4',),
-            ],);
+          nextPage: null,
+          hasMore: true,
+          orderBy: TweetSessionOrder.oldestFirst,
+          tweets: [
+            tweetRequest.copyWith(
+              id: 'id_7',
+              userName: 'user_2',
+              createdAt: '1600-03-03 03:03:03',
+              clientId: 2,
+              content: 'reply 3',
+            ),
+            tweetRequest.copyWith(
+              id: 'id_8',
+              userName: 'user_2',
+              createdAt: '1600-04-04 04:04:04',
+              clientId: 2,
+              content: 'reply 4',
+            ),
+          ],
+        );
       });
       test('should request with parent_id and after of last tweet', () async {
         // arrange
@@ -207,32 +217,40 @@ void main() {
         await sut.fetchTweetDetail(tweetRequest.id);
         when(repository.fetch(option: anyNamed('option')))
             .thenAnswer((_) async => right(secondSession));
-        final expected = right(FeedCache(tweets: [
-          tweetRequest.copyWith(
-              id: 'id_5',
-              createdAt: '1600-01-01 01:01:01',
-              userName: 'user_2',
-              clientId: 2,
-              content: 'reply 1',),
-          tweetRequest.copyWith(
-              id: 'id_6',
-              createdAt: '1600-02-02 02:02:02',
-              userName: 'user_2',
-              clientId: 2,
-              content: 'reply 2',),
-          tweetRequest.copyWith(
-              id: 'id_7',
-              createdAt: '1600-03-03 03:03:03',
-              userName: 'user_2',
-              clientId: 2,
-              content: 'reply 3',),
-          tweetRequest.copyWith(
-              id: 'id_8',
-              createdAt: '1600-04-04 04:04:04',
-              userName: 'user_2',
-              clientId: 2,
-              content: 'reply 4',),
-        ],),);
+        final expected = right(
+          FeedCache(
+            tweets: [
+              tweetRequest.copyWith(
+                id: 'id_5',
+                createdAt: '1600-01-01 01:01:01',
+                userName: 'user_2',
+                clientId: 2,
+                content: 'reply 1',
+              ),
+              tweetRequest.copyWith(
+                id: 'id_6',
+                createdAt: '1600-02-02 02:02:02',
+                userName: 'user_2',
+                clientId: 2,
+                content: 'reply 2',
+              ),
+              tweetRequest.copyWith(
+                id: 'id_7',
+                createdAt: '1600-03-03 03:03:03',
+                userName: 'user_2',
+                clientId: 2,
+                content: 'reply 3',
+              ),
+              tweetRequest.copyWith(
+                id: 'id_8',
+                createdAt: '1600-04-04 04:04:04',
+                userName: 'user_2',
+                clientId: 2,
+                content: 'reply 4',
+              ),
+            ],
+          ),
+        );
         // act
         final received = await sut.fetchNewestTweetDetail(tweetRequest.id);
         // assert
@@ -251,26 +269,33 @@ void main() {
         when(repository.fetch(option: anyNamed('option'))).thenAnswer(
           (_) async => right(
             const TweetSessionEntity(
-                nextPage: null,
-                hasMore: false,
-                orderBy: TweetSessionOrder.oldestFirst,
-                tweets: [],),
+              nextPage: null,
+              hasMore: false,
+              orderBy: TweetSessionOrder.oldestFirst,
+              tweets: [],
+            ),
           ),
         );
-        final expected = right(FeedCache(tweets: [
-          tweetRequest.copyWith(
-              id: 'id_5',
-              createdAt: '1600-01-01 01:01:01',
-              userName: 'user_2',
-              clientId: 2,
-              content: 'reply 1',),
-          tweetRequest.copyWith(
-              id: 'id_6',
-              createdAt: '1600-02-02 02:02:02',
-              userName: 'user_2',
-              clientId: 2,
-              content: 'reply 2',),
-        ],),);
+        final expected = right(
+          FeedCache(
+            tweets: [
+              tweetRequest.copyWith(
+                id: 'id_5',
+                createdAt: '1600-01-01 01:01:01',
+                userName: 'user_2',
+                clientId: 2,
+                content: 'reply 1',
+              ),
+              tweetRequest.copyWith(
+                id: 'id_6',
+                createdAt: '1600-02-02 02:02:02',
+                userName: 'user_2',
+                clientId: 2,
+                content: 'reply 2',
+              ),
+            ],
+          ),
+        );
         // act
         final received = await sut.fetchNewestTweetDetail(tweetRequest.id);
         // assert

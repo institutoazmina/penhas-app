@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
+import 'package:penhas/app/core/extension/either.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_model.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_session_model.dart';
 import 'package:penhas/app/features/feed/data/repositories/tweet_repository.dart';
@@ -42,7 +43,7 @@ void main() {
         final receivedSession =
             await repository.fetch(option: const TweetRequestOption());
         // assert
-        expect(receivedSession, right(expectedSession));
+        expect(receivedSession.get(), expectedSession);
       });
     });
     group('create()', () {
@@ -73,7 +74,7 @@ void main() {
         // act
         final received = await repository.create(option: requestOption);
         // assert
-        expect(expected, received);
+        expect(received, expected);
       });
     });
     group('delete', () {
@@ -90,7 +91,7 @@ void main() {
         // act
         final received = await repository.delete(option: requestOption);
         // assert
-        expect(expected, received);
+        expect(received, expected);
       });
     });
     group('like()', () {
@@ -125,7 +126,7 @@ void main() {
         // act
         final received = await repository.like(option: requestOption);
         // assert
-        expect(expected, received);
+        expect(received, expected);
       });
     });
     group('reply()', () {
@@ -160,7 +161,7 @@ void main() {
         // act
         final received = await repository.reply(option: requestOption);
         // assert
-        expect(expected, received);
+        expect(received, expected);
       });
     });
     group('current()', () {
@@ -192,7 +193,8 @@ void main() {
                 anonymous: false,
                 content: 'Comentário 7',
                 avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-                meta: const TweetMeta(liked: false, owner: true),
+                meta:
+                    const TweetMeta(liked: false, owner: true, canReply: false),
                 lastReply: const [],
               )
             ],
@@ -203,7 +205,7 @@ void main() {
         // act
         final received = await repository.current(option: requestOption);
         // assert
-        expect(expected, received);
+        expect(received, expected);
       });
     });
 
@@ -222,7 +224,7 @@ void main() {
         // act
         final received = await repository.report(option: requestOption);
         // assert
-        expect(expected, received);
+        expect(received, expected);
       });
     });
   });

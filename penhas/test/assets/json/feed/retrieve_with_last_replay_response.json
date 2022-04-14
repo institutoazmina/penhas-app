@@ -28,7 +28,8 @@
       "media": [],
       "meta": {
         "liked": 1,
-        "owner": 1
+        "owner": 1,
+        "can_reply": 1
       },
       "name": "penhas",
       "qtde_comentarios": 1,

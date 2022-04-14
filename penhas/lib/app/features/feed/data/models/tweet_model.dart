@@ -32,6 +32,7 @@ class TweetModel extends TweetEntity {
     final tweetMeta = TweetMeta(
       liked: meta['liked'] == 1,
       owner: meta['owner'] == 1,
+      canReply: meta['can_reply'] == 1,
     );
 
     List<TweetModel> lastReply = [];

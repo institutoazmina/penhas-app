@@ -42,16 +42,17 @@ void main() {
 
         final expected = right(validField);
         final tweet = TweetEntity(
-            id: 'id_1',
-            userName: 'userName',
-            clientId: 1,
-            createdAt: '2020-01-01 01-01-01',
-            totalReply: 0,
-            totalLikes: 0,
-            anonymous: false,
-            content: 'content 1',
-            avatar: 'https://site.com/avatar.svg',
-            meta: const TweetMeta(liked: false, owner: false),);
+          id: 'id_1',
+          userName: 'userName',
+          clientId: 1,
+          createdAt: '2020-01-01 01-01-01',
+          totalReply: 0,
+          totalLikes: 0,
+          anonymous: false,
+          content: 'content 1',
+          avatar: 'https://site.com/avatar.svg',
+          meta: const TweetMeta(liked: false, owner: false),
+        );
 
         when(repository.report(option: anyNamed('option')))
             .thenAnswer((_) async => right(validField));

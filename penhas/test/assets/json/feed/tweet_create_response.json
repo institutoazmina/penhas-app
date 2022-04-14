@@ -9,7 +9,8 @@
   "media": [],
   "meta": {
     "liked": 0,
-    "owner": 1
+    "owner": 1,
+    "can_reply": 1
   },
   "name": "maria",
   "qtde_comentarios": 0,

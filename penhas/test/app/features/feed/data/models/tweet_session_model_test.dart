@@ -64,7 +64,7 @@ void main() {
             anonymous: false,
             content: 'sleep 6',
             avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-            meta: const TweetMeta(liked: false, owner: true),
+            meta: const TweetMeta(liked: false, owner: true, canReply: false),
             lastReply: const [],
           ),
           TweetNewsModel(
@@ -107,7 +107,7 @@ void main() {
       // act
       final result = TweetSessionModel.fromJson(jsonData);
       // assert
-      expect(expectedSession, result);
+      expect(result, expectedSession);
     });
 
     test('should get lastReplay when it exists', () async {
@@ -141,19 +141,23 @@ void main() {
                 anonymous: false,
                 content: 'um breve comentario',
                 avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-                meta: const TweetMeta(liked: false, owner: true),
+                meta: const TweetMeta(
+                  liked: false,
+                  owner: true,
+                  canReply: false,
+                ),
                 lastReply: const [],
               )
             ],
           ),
         ],
         null,
-            hasMore: true,
+        hasMore: true,
       );
       // act
       final result = TweetSessionModel.fromJson(jsonData);
       // assert
-      expect(expectedSession, result);
+      expect(result, expectedSession);
     });
   });
 }
