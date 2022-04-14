@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
@@ -19,11 +20,11 @@ class DetailTweetController extends _DetailTweetControllerBase
 }
 
 abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
-  _DetailTweetControllerBase(this.useCase, this.tweetId, this.tweet) {
-    listTweets = ObservableList.of([if (tweet != null) tweet!]);
+  _DetailTweetControllerBase(this.useCase, this.tweetId, TweetEntity? tweet) {
+    listTweets = ObservableList.of([if (tweet != null) tweet]);
   }
 
-  final TweetEntity? tweet;
+  TweetEntity? get tweet => listTweets.isNotEmpty ? listTweets.first : null;
   final FeedUseCases useCase;
   String? tweetContent;
   String? tweetId;
@@ -45,6 +46,8 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
 
   @observable
   String? errorMessage = '';
+
+  bool get allowReply => tweet?.meta.canReply == true;
 
   @computed
   PageProgressState get currentState {
@@ -82,5 +85,9 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
   void _updateListOfTweets(FeedCache cache) {
     final tweets = cache.tweets.whereType<TweetEntity>().toList();
     listTweets = tweets.asObservable();
+  }
+
+  void reply() {
+    Modular.to.pushNamed('/mainboard/reply', arguments: tweet);
   }
 }
