@@ -83,6 +83,7 @@ dependencies:
   crypto: ^3.0.1
   http_parser: ^4.0.0
   logger: ^1.1.0
+  scroll_to_index: ^2.1.1
 
 dependency_overrides:
   flutter_modular:

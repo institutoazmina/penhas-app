@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -10,6 +11,11 @@ import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_body.d
 import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_bottom.dart';
 import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_title.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
+import 'package:penhas/app/shared/design_system/text_styles.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
+
+Color _defaultColor = Colors.white;
+Color _highlightColor = DesignSystemColors.ligthPurple.withOpacity(0.1);
 
 class DetailTweetPage extends StatefulWidget {
   const DetailTweetPage({
@@ -29,7 +35,7 @@ class _DetailTweetPageState
     extends ModularState<DetailTweetPage, DetailTweetController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  final _scrollController = ScrollController();
+  final _scrollController = AutoScrollController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
@@ -68,32 +74,50 @@ class _DetailTweetPageState
         child: Container(
           color: DesignSystemColors.systemBackgroundColor,
           child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
-              child: Observer(
-                builder: (_) {
-                  return RefreshIndicator(
-                    key: _refreshIndicatorKey,
-                    onRefresh: _onRefresh,
-                    notificationPredicate: _handleScrollNotification,
-                    child: ListView.builder(
-                      itemCount: controller.listTweets.length,
-                      controller: _scrollController,
-                      itemBuilder: (context, index) {
-                        return _buildTweetItem(
-                          controller.listTweets[index],
-                          context,
-                        );
-                      },
-                    ),
-                  );
-                },
-              ),
+            child: Observer(
+              builder: (_) {
+                _scrollToSelectedPosition();
+                return RefreshIndicator(
+                  key: _refreshIndicatorKey,
+                  onRefresh: _onRefresh,
+                  notificationPredicate: _handleScrollNotification,
+                  child: _buildTweetListWithParentButton(),
+                );
+              },
             ),
           ),
         ),
       ),
       floatingActionButton: Observer(builder: (_) => _buildReplyFab()),
+    );
+  }
+
+  Widget _buildTweetListWithParentButton() {
+    final String? parentId = controller.tweet?.parentId;
+    if (parentId == null || controller.isWithoutGoToParentAction) {
+      return _buildTweetList();
+    }
+    return Column(
+      children: [
+        ShowParentTweetWidget(widget.tweetController, parentId),
+        Flexible(child: _buildTweetList()),
+      ],
+    );
+  }
+
+  Widget _buildTweetList() {
+    return ListView.separated(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 12,
+        vertical: 8,
+      ),
+      itemCount: controller.listTweets.length,
+      controller: _scrollController,
+      itemBuilder: _buildTweetItem,
+      separatorBuilder: (_, __) => SizedBox(
+        height: 1,
+        child: ColoredBox(color: Colors.grey[350]!),
+      ),
     );
   }
 
@@ -122,20 +146,31 @@ class _DetailTweetPageState
     }
   }
 
-  Widget _buildTweetItem(TweetEntity tweet, BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 6.0, right: 6.0),
-      child: _ReplyTweet(tweet: tweet, controller: widget.tweetController),
+  Widget _buildTweetItem(BuildContext context, int index) {
+    final TweetEntity tweet = controller.listTweets[index];
+    return AutoScrollTag(
+      key: ValueKey(index),
+      index: index,
+      controller: _scrollController,
+      child: _ReplyTweet(
+        tweet: tweet,
+        controller: widget.tweetController,
+        isComment: index > 0,
+        isHighlighted: index == controller.selectedPosition,
+        onHighlightFinish: controller.highlightDone,
+      ),
     );
   }
 
   bool _handleScrollNotification(ScrollNotification notification) {
     final bool isEndOfListView = _scrollController.position.extentAfter == 0;
-    if (isEndOfListView) {
+    final bool isRefreshVisible = isEndOfListView && !controller.isFullyLoaded;
+
+    if (isRefreshVisible) {
       _refreshIndicatorKey.currentState?.show(atTop: false);
     }
 
-    return isEndOfListView;
+    return isRefreshVisible;
   }
 
   ReactionDisposer _showErrorMessage() {
@@ -147,53 +182,142 @@ class _DetailTweetPageState
   void _navigateToComment() {
     controller.reply();
   }
+
+  void _scrollToSelectedPosition() {
+    if (controller.selectedPosition != invalidPosition) {
+      _scrollController.scrollToIndex(
+        controller.selectedPosition,
+        duration: const Duration(milliseconds: 100),
+      );
+    }
+  }
 }
 
-class _ReplyTweet extends StatelessWidget {
+class _ReplyTweet extends StatefulWidget {
   const _ReplyTweet({
     Key? key,
-    this.tweet,
-    this.controller,
+    required this.tweet,
+    required this.controller,
+    required this.isComment,
+    required this.isHighlighted,
+    required this.onHighlightFinish,
   }) : super(key: key);
 
-  final TweetEntity? tweet;
-  final ITweetController? controller;
+  final TweetEntity tweet;
+  final ITweetController controller;
+  final bool isComment;
+  final bool isHighlighted;
+  final void Function() onHighlightFinish;
+
+  @override
+  State<StatefulWidget> createState() => _ReplyTweetState();
+}
+
+class _ReplyTweetState extends State<_ReplyTweet> {
+  TweetEntity get _tweet => widget.tweet;
+  ITweetController get controller => widget.controller;
+  bool get _isComment => widget.isComment;
+  Color _tweetBackground = _defaultColor;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _highlightIfNeeded();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 12.0, top: 8.0, right: 6.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                TweetTitle(
-                  tweet: tweet!,
-                  context: context,
-                  isDetail: true,
-                  controller: controller,
-                ),
-                TweetBody(content: tweet!.content),
-                TweetBottom(tweet: tweet!, controller: controller!)
-              ],
-            ),
+    return GestureDetector(
+      onTap: _isComment ? _onTap : null,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        color: _tweetBackground,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
           ),
-          Container(
-            alignment: Alignment.centerLeft,
-            margin: const EdgeInsets.only(top: 8, bottom: 8),
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(color: Colors.grey[350]!),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              TweetTitle(
+                tweet: _tweet,
+                context: context,
+                isDetail: true,
+                controller: controller,
               ),
-            ),
-            child: Container(),
+              TweetBody(content: _tweet.content),
+              TweetBottom(tweet: _tweet, controller: controller),
+              if (_isComment && _tweet.totalReply > 0)
+                ShowReplyWidget(controller, _tweet),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
+
+  void _onTap() {
+    controller.detail(_tweet);
+  }
+
+  void _highlightIfNeeded() {
+    if (!widget.isHighlighted) return;
+
+    _timer ??= Timer.periodic(
+      const Duration(milliseconds: 250),
+      (timer) {
+        setState(() {
+          if (_tweetBackground == _highlightColor) {
+            _tweetBackground = _defaultColor;
+            if (timer.tick >= 2) {
+              widget.onHighlightFinish();
+              timer.cancel();
+            }
+          } else {
+            _tweetBackground = _highlightColor;
+          }
+        });
+      },
+    );
+  }
+}
+
+class ShowReplyWidget extends StatelessWidget {
+  const ShowReplyWidget(this.controller, this.tweet);
+
+  final ITweetController controller;
+  final TweetEntity tweet;
+
+  @override
+  Widget build(BuildContext context) => TextButton(
+        onPressed: () => controller.detail(tweet),
+        child: Text(
+          tweet.totalReply == 1 ? 'Ver resposta' : 'Ver todas as respostas',
+          style: kTextStyleFeedTweetShowReply,
+        ),
+      );
+}
+
+class ShowParentTweetWidget extends StatelessWidget {
+  const ShowParentTweetWidget(this.controller, this.tweetId);
+
+  final ITweetController controller;
+  final String tweetId;
+
+  @override
+  Widget build(BuildContext context) => TextButton(
+        onPressed: () => controller.parent(tweetId),
+        child: const Text(
+          'Carregar publicação',
+          style: kTextStyleFeedTweetShowReply,
+        ),
+      );
 }

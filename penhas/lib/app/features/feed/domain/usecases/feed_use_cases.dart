@@ -394,10 +394,8 @@ class FeedUseCases {
       _tweetReplyMap[tweetId] = [];
     }
 
-    final List<TweetEntity?> filteredResponse = session.tweets
-        .map((e) => e is TweetEntity ? e : null)
-        .where((e) => e != null)
-        .toList();
+    final List<TweetEntity?> filteredResponse =
+        session.tweets.whereType<TweetEntity>().toList();
 
     if (filteredResponse.isNotEmpty) {
       if (session.orderBy == TweetSessionOrder.latestFirst) {

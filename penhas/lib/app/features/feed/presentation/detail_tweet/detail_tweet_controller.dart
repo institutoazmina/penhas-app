@@ -10,24 +10,34 @@ import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
 
 part 'detail_tweet_controller.g.dart';
 
+const int invalidPosition = -1;
+
 class DetailTweetController extends _DetailTweetControllerBase
     with _$DetailTweetController {
   DetailTweetController({
     required FeedUseCases useCase,
-    String? tweetId,
     TweetEntity? tweet,
-  }) : super(useCase, tweetId ?? tweet!.id, tweet);
+    String? tweetId,
+    String? commentId,
+  }) : super(useCase, tweet, tweetId ?? tweet!.id, commentId);
 }
 
 abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
-  _DetailTweetControllerBase(this.useCase, this.tweetId, TweetEntity? tweet) {
+  _DetailTweetControllerBase(
+    this.useCase,
+    TweetEntity? tweet,
+    this.tweetId,
+    this.commentId,
+  ) : isWithoutGoToParentAction = tweet != null {
     listTweets = ObservableList.of([if (tweet != null) tweet]);
   }
-
+  final bool isWithoutGoToParentAction;
   TweetEntity? get tweet => listTweets.isNotEmpty ? listTweets.first : null;
   final FeedUseCases useCase;
   String? tweetContent;
   String? tweetId;
+  String? commentId;
+  bool isFullyLoaded = false;
 
   @observable
   ObservableFuture<Either<Failure, FeedCache>>? _progress;
@@ -48,6 +58,13 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
   String? errorMessage = '';
 
   bool get allowReply => tweet?.meta.canReply == true;
+
+  @observable
+  bool highlightPending = true;
+
+  int get selectedPosition => commentId != null && highlightPending
+      ? listTweets.indexWhere((e) => e.id == commentId)
+      : invalidPosition;
 
   @computed
   PageProgressState get currentState {
@@ -73,6 +90,8 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> fetchNextPage() async {
+    if (isFullyLoaded) return;
+
     _progress = ObservableFuture(useCase.fetchNewestTweetDetail(tweetId));
 
     final Either<Failure, FeedCache> response = await _progress!;
@@ -82,8 +101,13 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
     );
   }
 
+  void highlightDone() {
+    highlightPending = false;
+  }
+
   void _updateListOfTweets(FeedCache cache) {
     final tweets = cache.tweets.whereType<TweetEntity>().toList();
+    isFullyLoaded = tweets.length == listTweets.length;
     listTweets = tweets.asObservable();
   }
 

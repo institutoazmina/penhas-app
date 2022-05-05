@@ -19,7 +19,8 @@
         "media": [],
         "meta": {
           "liked": 0,
-          "owner": 1
+          "owner": 1,
+          "parent_id": "200528T2055370004"
         },
         "name": "penhas",
         "qtde_comentarios": 0,

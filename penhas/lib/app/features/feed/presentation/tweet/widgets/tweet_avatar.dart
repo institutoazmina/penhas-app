@@ -3,13 +3,12 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/states/feed_router_type.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
 
 class TweetAvatar extends StatelessWidget {
   const TweetAvatar({
     Key? key,
     required this.tweet,
-  })  : super(key: key);
+  }) : super(key: key);
 
   final TweetEntity tweet;
 

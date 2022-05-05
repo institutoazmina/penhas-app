@@ -14,10 +14,12 @@ class TweetEntity extends TweetTiles {
     required this.content,
     required this.avatar,
     required this.meta,
+    this.parentId,
     this.lastReply,
   });
 
   final String? id;
+  final String? parentId;
   final String? userName;
   final int clientId;
   final String? createdAt;
@@ -41,12 +43,13 @@ class TweetEntity extends TweetTiles {
         createdAt,
         totalReply,
         totalLikes,
+        parentId,
         lastReply,
       ];
 
   @override
   String toString() {
-    return 'TweetEntity{id: ${id.toString()}, name: ${userName.toString()}, clientId: ${clientId.toString()}, createdAt: ${createdAt.toString()}, totalReply: ${totalReply.toString()}, totalLikes: ${totalLikes.toString()}, anonymous: ${anonymous.toString()}, content: ${content.toString()}, avatar: ${avatar.toString()}, meta: ${meta.toString()}, lastReplay: ${lastReply.toString()}}';
+    return 'TweetEntity{id: ${id.toString()}, parentId: $parentId, name: ${userName.toString()}, clientId: ${clientId.toString()}, createdAt: ${createdAt.toString()}, totalReply: ${totalReply.toString()}, totalLikes: ${totalLikes.toString()}, anonymous: ${anonymous.toString()}, content: ${content.toString()}, avatar: ${avatar.toString()}, meta: ${meta.toString()}, lastReplay: ${lastReply.toString()}}';
   }
 
   TweetEntity copyWith({
@@ -60,6 +63,7 @@ class TweetEntity extends TweetTiles {
     String? content,
     String? avatar,
     TweetMeta? meta,
+    String? parentId,
     List<TweetEntity?>? lastReply,
   }) {
     return TweetEntity(
@@ -73,6 +77,7 @@ class TweetEntity extends TweetTiles {
       content: content ?? this.content,
       avatar: avatar ?? this.avatar,
       meta: meta ?? this.meta,
+      parentId: parentId ?? this.parentId,
       lastReply: lastReply ?? this.lastReply,
     );
   }

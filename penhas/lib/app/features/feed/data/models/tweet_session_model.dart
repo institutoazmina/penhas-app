@@ -24,10 +24,10 @@ class TweetSessionModel extends TweetSessionEntity {
     final orderBy = jsonData['order_by'] == 'latest_first'
         ? TweetSessionOrder.latestFirst
         : TweetSessionOrder.oldestFirst;
-    final tweets = _parseTweet(jsonData['tweets']);
     final parent = jsonData['parent'] != null
         ? _parseJson(jsonData['parent'] as Map<String, dynamic>)
         : null;
+    final tweets = _parseTweet(jsonData['tweets']);
 
     return TweetSessionModel(
       orderBy,
@@ -45,7 +45,7 @@ class TweetSessionModel extends TweetSessionEntity {
 
     return tweets
         .map((e) => e as Map<String, dynamic>)
-        .map((e) => _parseJson(e))
+        .map(_parseJson)
         .whereNotNull()
         .toList();
   }
