@@ -115,10 +115,23 @@ class _StealthModeTutorialPageState extends ModularState<
       const TutorialPageViewWidget(
         title: 'Garanta sua privacidade',
         description:
-            'Em situação de emergência clique e segure no símbolo do signo em destaque, até que ele troque de cor. Isso enviará um alerta para seus guardiões e durante 15 minutos um áudio será gravado.',
+            'Aplique um disfarce de app de signo para esconder o verdadeiro conteúdo do PenhaS.\n\nPara entrar no app com o modo modo camuflado ativo, clique no botão "Diário astrológico" para ser direcionada para a tela de login.',
         bodyWidget: Image(
           image: AssetImage(
             'assets/images/stealth_mode_tutorial_image_1/stealth_mode_tutorial_image_1.png',
+          ),
+          height: 300,
+          fit: BoxFit.fitWidth,
+          alignment: FractionalOffset.topCenter,
+        ),
+      ),
+      const TutorialPageViewWidget(
+        title: 'Botão de Pânico Disfarçado',
+        description:
+            'Em situação de emergência clique e segure no símbolo do signo em destaque, até que ele troque de cor. Isso enviará um alerta para seus guardiões e durante 15 minutos um áudio será gravado.',
+        bodyWidget: Image(
+          image: AssetImage(
+            'assets/images/stealth_mode_tutorial_image_2/stealth_mode_tutorial_image_2.png',
           ),
           width: 270,
           height: 270,
@@ -134,7 +147,7 @@ class _StealthModeTutorialPageState extends ModularState<
           children: [
             const Image(
               image: AssetImage(
-                'assets/images/stealth_mode_tutorial_image_2/stealth_mode_tutorial_image_2.jpg',
+                'assets/images/stealth_mode_tutorial_image_3/stealth_mode_tutorial_image_3.jpg',
               ),
               width: 270,
               height: 270,
@@ -163,7 +176,7 @@ class _StealthModeTutorialPageState extends ModularState<
             'Ao habilitar o modo camuflado o seu feed ficará anônimo para manter o seu perfil sigiloso',
         bodyWidget: Image(
           image: AssetImage(
-            'assets/images/stealth_mode_tutorial_image_3/stealth_mode_tutorial_image_3.png',
+            'assets/images/stealth_mode_tutorial_image_4/stealth_mode_tutorial_image_4.png',
           ),
           width: 270,
           height: 270,
