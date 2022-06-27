@@ -6,13 +6,11 @@ class SupportCenterInputCep extends StatelessWidget {
   const SupportCenterInputCep({
     Key? key,
     required this.hintText,
-    required this.errorText,
     required this.onChanged,
     required this.mask,
   }) : super(key: key);
 
   final String hintText;
-  final String errorText;
   final ValueChanged<String> onChanged;
   final List<MaskTextInputFormatter> mask;
 
@@ -37,7 +35,6 @@ class SupportCenterInputCep extends StatelessWidget {
               color: DesignSystemColors.easterPurple,
             ),
           ),
-          errorText: errorText.isEmpty ? null : errorText,
         ),
         keyboardType: TextInputType.number,
         onChanged: onChanged,

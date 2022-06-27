@@ -134,7 +134,6 @@ extension _BuildWidget on _SupportCenterAddPageState {
           ),
           SupportCenterInputCep(
             hintText: 'Insira um CEP',
-            errorText: controller.cepError,
             onChanged: controller.setCep,
             mask: [_maskCep],
           ),

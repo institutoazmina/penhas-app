@@ -62,9 +62,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @observable
   String categoryError = '';
-
-  @observable
-  String cepError = '';
   
   @observable
   String phoneError = '';
@@ -114,7 +111,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @action
   void setCep(String cep) {
-    cepError = cep.isEmpty || cep.length < 9 ? 'Cep é campo obrigatório' : '';
     _cep = cep;
   }
 
@@ -129,10 +125,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
     if (_address == null || _address!.isEmpty) {
       addressError = 'Endereço é campo obrigatório';
-    }
-
-    if (_cep == null || _cep!.isEmpty) {
-      cepError = 'Cep é campo obrigatório';
     }
 
     if (_phone == null || _phone!.isEmpty) {
@@ -169,7 +161,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     addressError = '';
     placeNameError = '';
     phoneError = '';
-    cepError = '';
     placeDescriptionError = '';
     errorMessage = '';
   }
