@@ -12,6 +12,7 @@ class TweetModel extends TweetEntity {
     required String? content,
     required String avatar,
     required TweetMeta meta,
+    String? parentId,
     required List<TweetModel> lastReply,
   }) : super(
           id: id,
@@ -24,6 +25,7 @@ class TweetModel extends TweetEntity {
           content: content,
           avatar: avatar,
           meta: meta,
+          parentId: parentId,
           lastReply: lastReply,
         );
 
@@ -51,6 +53,7 @@ class TweetModel extends TweetEntity {
       content: jsonData['content'],
       avatar: jsonData['icon'],
       meta: tweetMeta,
+      parentId: meta['parent_id'],
       lastReply: lastReply,
     );
   }

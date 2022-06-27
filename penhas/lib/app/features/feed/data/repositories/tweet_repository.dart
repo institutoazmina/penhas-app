@@ -14,19 +14,19 @@ import 'package:penhas/app/shared/logger/log.dart';
 class TweetRepository implements ITweetRepository {
   TweetRepository({
     required INetworkInfo networkInfo,
-    required ITweetDataSource? dataSource,
+    required ITweetDataSource dataSource,
   })  : _dataSource = dataSource,
         _networkInfo = networkInfo;
 
   final INetworkInfo _networkInfo;
-  final ITweetDataSource? _dataSource;
+  final ITweetDataSource _dataSource;
 
   @override
   Future<Either<Failure, TweetSessionEntity>> fetch({
     required TweetRequestOption option,
   }) async {
     try {
-      final result = await _dataSource!.fetch(option: option);
+      final result = await _dataSource.fetch(option: option);
       return right(result);
     } catch (e, stack) {
       logError(e, stack);
@@ -39,7 +39,7 @@ class TweetRepository implements ITweetRepository {
     TweetEngageRequestOption? option,
   }) async {
     try {
-      final result = await _dataSource!.current(option: option);
+      final result = await _dataSource.current(option: option);
       return right(result);
     } catch (e, stack) {
       logError(e, stack);
@@ -52,7 +52,7 @@ class TweetRepository implements ITweetRepository {
     TweetCreateRequestOption? option,
   }) async {
     try {
-      final result = await _dataSource!.create(option: option);
+      final result = await _dataSource.create(option: option);
       return right(result);
     } catch (e, stack) {
       logError(e, stack);
@@ -65,7 +65,7 @@ class TweetRepository implements ITweetRepository {
     TweetEngageRequestOption? option,
   }) async {
     try {
-      final result = await _dataSource!.reply(option: option);
+      final result = await _dataSource.reply(option: option);
       return right(result);
     } catch (e, stack) {
       logError(e, stack);
@@ -78,7 +78,7 @@ class TweetRepository implements ITweetRepository {
     TweetEngageRequestOption? option,
   }) async {
     try {
-      final result = await _dataSource!.like(option: option);
+      final result = await _dataSource.like(option: option);
       return right(result);
     } catch (e, stack) {
       logError(e, stack);
@@ -91,7 +91,7 @@ class TweetRepository implements ITweetRepository {
     TweetEngageRequestOption? option,
   }) async {
     try {
-      final result = await _dataSource!.delete(option: option);
+      final result = await _dataSource.delete(option: option);
       return right(result);
     } catch (e, stack) {
       logError(e, stack);
@@ -104,7 +104,7 @@ class TweetRepository implements ITweetRepository {
     TweetEngageRequestOption? option,
   }) async {
     try {
-      final result = await _dataSource!.report(option: option);
+      final result = await _dataSource.report(option: option);
       return right(result);
     } catch (e, stack) {
       logError(e, stack);

@@ -10,7 +10,8 @@ abstract class ITweetController {
   Future<void> reply(TweetEntity tweet);
   Future<void> delete(TweetEntity tweet);
   Future<void> report(TweetEntity tweet);
-  Future<void> detail(TweetEntity tweet);
+  Future<void> detail(TweetEntity tweet, {String? commentId});
+  Future parent(String parentId);
 }
 
 class TweetController implements ITweetController {
@@ -79,7 +80,15 @@ class TweetController implements ITweetController {
   }
 
   @override
-  Future<void> detail(TweetEntity tweet) async {
-    Modular.to.pushNamed('/mainboard/tweet/${tweet.id}', arguments: tweet);
+  Future<void> detail(TweetEntity tweet, {String? commentId}) async {
+    Modular.to.pushNamed(
+      '/mainboard/tweet/${tweet.id}?comment_id=$commentId',
+      arguments: tweet,
+    );
+  }
+
+  @override
+  Future parent(String parentId) async {
+    return Modular.to.pushNamed('/mainboard/tweet/$parentId');
   }
 }

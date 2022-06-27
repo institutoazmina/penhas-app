@@ -102,6 +102,7 @@ class ReplyTweet extends StatelessWidget {
         .map(
           (e) => _RepliedTweet(
             repliedTweet: e!,
+            parentTweet: tweet,
             controller: controller,
           ),
         )
@@ -138,18 +139,22 @@ class ReplyTweet extends StatelessWidget {
 class _RepliedTweet extends StatelessWidget {
   const _RepliedTweet({
     Key? key,
-    required TweetEntity repliedTweet,
+    required this.repliedTweet,
+    required this.parentTweet,
     required this.controller,
-  })  : tweet = repliedTweet,
-        super(key: key);
+  }) : super(key: key);
 
-  final TweetEntity tweet;
+  final TweetEntity parentTweet;
+  final TweetEntity repliedTweet;
   final ITweetController controller;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => controller.detail(tweet),
+      onTap: () => controller.detail(
+        parentTweet,
+        commentId: repliedTweet.id,
+      ),
       child: Container(
         color: Colors.white,
         child: Column(
@@ -157,12 +162,12 @@ class _RepliedTweet extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             TweetTitle(
-              tweet: tweet,
+              tweet: repliedTweet,
               context: context,
               controller: controller,
             ),
-            TweetBody(content: tweet.content),
-            TweetBottom(tweet: tweet, controller: controller),
+            TweetBody(content: repliedTweet.content),
+            TweetBottom(tweet: repliedTweet, controller: controller),
           ],
         ),
       ),

@@ -368,6 +368,7 @@ class MainboardModule extends Module {
             useCase: i.get<FeedUseCases>(),
             tweetId: i.args?.params['id'],
             tweet: i.args?.data,
+            commentId: i.args?.queryParams['comment_id'],
           ),
         ),
         Bind.factory(
