@@ -11,4 +11,11 @@
             android:gravity="center"
             android:src="@drawable/penhas_logo_white" />
     </item>
+    <item android:bottom="24dp">
+        <bitmap
+            android:tileMode="disabled"
+            android:antialias="true"
+            android:gravity="bottom|center_horizontal"
+            android:src="@drawable/ic_splash_azmina" />
+    </item>
 </layer-list>

@@ -79,17 +79,22 @@ class TweetEntity extends TweetTiles {
 }
 
 class TweetMeta extends Equatable {
-  const TweetMeta({required this.liked, required this.owner});
+  const TweetMeta({
+    required this.liked,
+    required this.owner,
+    this.canReply = true,
+  });
 
   final bool liked;
   final bool owner;
+  final bool canReply;
 
   @override
-  List<Object?> get props => [liked, owner];
+  List<Object?> get props => [liked, owner, canReply];
 
   @override
   String toString() {
-    return 'TweetMeta {liked: ${liked.toString()}, owner: ${owner.toString()}}';
+    return 'TweetMeta {liked: ${liked.toString()}, owner: ${owner.toString()}, canReply: $canReply';
   }
 }
 

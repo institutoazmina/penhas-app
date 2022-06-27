@@ -14,7 +14,8 @@
       "media": [],
       "meta": {
         "liked": 0,
-        "owner": 1
+        "owner": 1,
+        "can_reply": 1
       },
       "name": "penhas",
       "qtde_comentarios": 0,
@@ -42,7 +43,8 @@
       "media": [],
       "meta": {
         "liked": 0,
-        "owner": 1
+        "owner": 1,
+        "can_reply": 0
       },
       "name": "penhas",
       "qtde_comentarios": 0,

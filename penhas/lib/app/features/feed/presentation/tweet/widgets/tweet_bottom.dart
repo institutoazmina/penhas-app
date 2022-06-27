@@ -9,7 +9,7 @@ class TweetBottom extends StatefulWidget {
     Key? key,
     required this.tweet,
     required this.controller,
-  })  : super(key: key);
+  }) : super(key: key);
 
   final TweetEntity tweet;
   final ITweetController controller;
@@ -34,6 +34,9 @@ class _TweetBottomState extends State<TweetBottom> {
     super.dispose();
   }
 
+  bool get _allowReply => widget.tweet.meta.canReply;
+  bool get _isReplyVisible => _allowReply || widget.tweet.totalReply > 0;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -42,23 +45,31 @@ class _TweetBottomState extends State<TweetBottom> {
         children: <Widget>[
           IconButton(
             icon: _isLiked
-                ? const Icon(Icons.favorite,
-                    size: 30.0, color: DesignSystemColors.pumpkinOrange,)
-                : const Icon(Icons.favorite_border,
-                    size: 30.0, color: DesignSystemColors.blueyGrey,),
+                ? const Icon(
+                    Icons.favorite,
+                    size: 30.0,
+                    color: DesignSystemColors.pumpkinOrange,
+                  )
+                : const Icon(
+                    Icons.favorite_border,
+                    size: 30.0,
+                    color: DesignSystemColors.blueyGrey,
+                  ),
             onPressed: _toogleLike,
           ),
           Text('$_likeCount', style: kTextStyleFeedTweetTime),
           const SizedBox(width: 20),
-          IconButton(
-            icon: const Icon(
-              Icons.chat_bubble_outline,
-              size: 30.0,
-              color: DesignSystemColors.blueyGrey,
+          if (_isReplyVisible)
+            IconButton(
+              icon: const Icon(
+                Icons.chat_bubble_outline,
+                size: 30.0,
+                color: DesignSystemColors.blueyGrey,
+              ),
+              onPressed: _allowReply ? _onReplyPressed : null,
             ),
-            onPressed: () => widget.controller.reply(widget.tweet),
-          ),
-          Text('${widget.tweet.totalReply}', style: kTextStyleFeedTweetTime),
+          if (_isReplyVisible)
+            Text('${widget.tweet.totalReply}', style: kTextStyleFeedTweetTime),
         ],
       ),
     );
@@ -71,5 +82,9 @@ class _TweetBottomState extends State<TweetBottom> {
     });
 
     widget.controller.like(widget.tweet);
+  }
+
+  void _onReplyPressed() {
+    widget.controller.reply(widget.tweet);
   }
 }

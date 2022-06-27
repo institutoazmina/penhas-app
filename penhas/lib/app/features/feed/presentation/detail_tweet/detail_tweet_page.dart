@@ -93,6 +93,18 @@ class _DetailTweetPageState
           ),
         ),
       ),
+      floatingActionButton: Observer(builder: (_) => _buildReplyFab()),
+    );
+  }
+
+  Widget _buildReplyFab() {
+    if (!controller.allowReply) return Container();
+    return FloatingActionButton(
+      heroTag: 'comment',
+      backgroundColor: DesignSystemColors.ligthPurple,
+      tooltip: 'Comentar',
+      onPressed: _navigateToComment,
+      child: const Icon(Icons.chat_bubble_outline),
     );
   }
 
@@ -130,6 +142,10 @@ class _DetailTweetPageState
     return reaction((_) => controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
+  }
+
+  void _navigateToComment() {
+    controller.reply();
   }
 }
 
