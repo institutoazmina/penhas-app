@@ -38,6 +38,7 @@ abstract class ISupportCenterRepository {
     required String? description,
     required String? cep,
     required String? phone,
+    required String? coverage,
   });
 }
 
@@ -125,6 +126,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
     required String? description,
     required String? cep,
     required String? phone,
+    required String? coverage,
   }) async {
     const endPoint = '/me/sugerir-pontos-de-apoio';
     final bodyContent = [
@@ -134,6 +136,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
       'descricao_servico=${Uri.encodeComponent(description!)}',
       'cep=${Uri.encodeComponent(cep!)}',
       'telefone=${Uri.encodeComponent(phone!)}',
+      'abrangencia=${Uri.encodeComponent(coverage!)}',
     ].join('&');
 
     try {

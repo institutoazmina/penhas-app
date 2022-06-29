@@ -73,7 +73,7 @@ class _SupportCenterAddPageState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildInputPlaceInformation(context, controller.places),
+              buildInputPlaceInformation(context, controller.places, ['Local', 'Regional', 'Nacional']),
               buildPlaceAction(),
             ],
           ),
@@ -110,9 +110,11 @@ extension _BuildWidget on _SupportCenterAddPageState {
   Widget buildInputPlaceInformation(
     BuildContext context,
     List<FilterTagEntity> categories,
+    List<String> coverage,
   ) {
     
-    final dataSource = buildDataSource(categories);
+    final categoriesList = buildCategoriesList(categories);
+    final coverageList = buildCoverageList(coverage);
     
     final _maskCep = MaskTextInputFormatter(
       mask: '#####-###',
@@ -148,17 +150,24 @@ extension _BuildWidget on _SupportCenterAddPageState {
             errorText: controller.phoneError,
             onChanged: controller.setPhone,
           ),
-          buildDropdownList(
+          buildDropDownCategoriesList(
             context: context,
             labelText: 'Selecione o tipo de ponto de apoio',
             errorMessage: controller.categoryError,
             currentValue: controller.categorySelected,
-            dataSource: dataSource,
+            dataSource: categoriesList,
           ),
           SupportCenterInput(
             hintText: 'Nome do ponto de apoio',
             errorText: controller.placeNameError,
             onChanged: controller.setPlaceName,
+          ),
+          buildDropDownCoverageList(
+            context: context,
+            labelText: 'Selecione a abrangência do ponto de apoio',
+            errorMessage: controller.coverageError,
+            currentValue: controller.coverageSelected,
+            dataSource: coverageList,
           ),
           SupportCenterInput(
             maxLines: 6,
@@ -215,7 +224,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
     );
   }
 
-  List<DropdownMenuItem<String>> buildDataSource(List<FilterTagEntity> list) {
+   List<DropdownMenuItem<String>> buildCategoriesList(List<FilterTagEntity> list) {
     return list
         .map(
           (v) => DropdownMenuItem<String>(
@@ -228,7 +237,20 @@ extension _BuildWidget on _SupportCenterAddPageState {
         .toList();
   }
 
-  Widget buildDropdownList({
+  List<DropdownMenuItem<String>> buildCoverageList(List<String> list) {
+    return list
+        .map(
+          (v) => DropdownMenuItem<String>(
+            value: v.toLowerCase(),
+            child: Text(
+              v,
+            ),
+          ),
+        )
+        .toList();
+  }
+
+  Widget buildDropDownCategoriesList({
     required BuildContext context,
     required String labelText,
     String? errorMessage,
@@ -267,6 +289,47 @@ extension _BuildWidget on _SupportCenterAddPageState {
       ),
     );
   }
+
+  Widget buildDropDownCoverageList({
+    required BuildContext context,
+    required String labelText,
+    String? errorMessage,
+    required String currentValue,
+    required List dataSource,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Theme(
+        data: Theme.of(context)
+            .copyWith(canvasColor: const Color.fromRGBO(141, 146, 157, 1)),
+        child: DropdownButtonFormField<dynamic>(
+          isExpanded: true,
+          decoration: InputDecoration(
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: DesignSystemColors.easterPurple),
+            ),
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: DesignSystemColors.easterPurple),
+            ),
+            errorText: (errorMessage?.isEmpty ?? true) ? null : errorMessage,
+            border: const OutlineInputBorder(
+              borderSide: BorderSide(color: DesignSystemColors.easterPurple),
+            ),
+            contentPadding:
+                const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
+            hintText: labelText,
+            hintStyle: const TextStyle(color: Colors.black),
+          ),
+          items: dataSource as List<DropdownMenuItem>,
+          onChanged: (coverage) {
+            controller.setCoverage(coverage as String);
+          },
+          value: currentValue.isEmpty ? null : currentValue,
+        ),
+      ),
+    );
+  }
+
 
   ReactionDisposer showErrorMessage() {
     return reaction((_) => controller.errorMessage, (String? message) {

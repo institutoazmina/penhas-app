@@ -30,6 +30,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   String? _placeName;
   String? _placeDescription;
   FilterTagEntity? _category;
+  String? _coverage;
 
   final SupportCenterUseCase _supportCenterUseCase;
 
@@ -58,10 +59,19 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   ObservableList<FilterTagEntity> places = ObservableList<FilterTagEntity>();
 
   @observable
+  ObservableList<FilterTagEntity> coverage = ObservableList<FilterTagEntity>();
+
+  @observable
   String categorySelected = '';
 
   @observable
+  String coverageSelected = '';
+
+  @observable
   String categoryError = '';
+
+  @observable
+  String coverageError = '';
   
   @observable
   String phoneError = '';
@@ -98,9 +108,15 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @action
   void setCategorie(String value) {
-    categoryError = value.isNotEmpty ? '' : 'Nome do ponto é campo obrigatório';
+    categoryError = value.isNotEmpty ? '' : 'Categoria é campo obrigatório';
     _category = places.firstWhere((element) => element.id == value);
     categorySelected = _category!.id;
+  }
+
+  @action
+  void setCoverage(String coverage) {
+    coverageError = coverage.isNotEmpty ? '' : 'Abrangência é campo obrigatório';
+    _coverage = coverage;
   }
 
   @action
@@ -121,6 +137,10 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
     if (_category == null) {
       categoryError = 'O tipo é um campo obrigatório';
+    }
+
+    if (_coverage == null) {
+      coverageError = 'Abrangência é campo obrigatório';
     }
 
     if (_address == null || _address!.isEmpty) {
@@ -144,6 +164,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
         name: _placeName,
         address: _address,
         category: _category!.id,
+        coverage: _coverage,
         description: _placeDescription,
         cep: _cep,
         phone: _phone,

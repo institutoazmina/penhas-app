@@ -82,6 +82,7 @@ class SupportCenterUseCase {
     required String? description,
     required String? cep,
     required String? phone,
+    required String? coverage,
   }) {
     return _supportCenterRepository.suggestion(
       name: name,
@@ -90,6 +91,7 @@ class SupportCenterUseCase {
       description: description,
       phone: phone,
       cep: cep,
+      coverage: coverage,
     );
   }
 
