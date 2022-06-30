@@ -31,6 +31,8 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   String? _placeDescription;
   FilterTagEntity? _category;
   String? _coverage;
+  String? _complement;
+  String? _neighborhood;
 
   final SupportCenterUseCase _supportCenterUseCase;
 
@@ -51,6 +53,12 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @observable
   String cep = '';
+
+  @observable
+  String? complement = '';
+
+  @observable
+  String? neighborhood = '';
   
   @observable
   String phone = '';
@@ -130,6 +138,16 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     _cep = cep;
   }
 
+  @action
+  void setComplement(String complement) {
+    _complement = complement;
+  }
+
+  @action
+  void setNeighborhood(String neighborhood) {
+    _neighborhood = neighborhood;
+  }
+
 
   @action
   Future<void> savePlace() async {
@@ -168,6 +186,8 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
         description: _placeDescription,
         cep: _cep,
         phone: _phone,
+        complement: _complement,
+        neighborhood: _neighborhood,
       ),
     );
 
