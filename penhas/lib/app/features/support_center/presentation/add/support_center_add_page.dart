@@ -146,14 +146,19 @@ extension _BuildWidget on _SupportCenterAddPageState {
             onChanged: controller.setAddress,
           ),
           SupportCenterInput(
-            hintText: 'Complemento',
+            hintText: 'Insira um Complemento',
             errorText: '',
             onChanged: controller.setComplement,
           ),
           SupportCenterInput(
-            hintText: 'Bairro',
+            hintText: 'Insira um Bairro',
             errorText: '',
             onChanged: controller.setNeighborhood,
+          ),
+          SupportCenterInput(
+            hintText: 'Insira um Município',
+            errorText: controller.cityError,
+            onChanged: controller.setCity,
           ),
           SupportCenterInputPhone(
             hintText: 'Insira o telefone com o DDD',

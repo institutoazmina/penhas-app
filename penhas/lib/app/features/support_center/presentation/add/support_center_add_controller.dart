@@ -33,6 +33,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   String? _coverage;
   String? _complement;
   String? _neighborhood;
+  String? _city;
 
   final SupportCenterUseCase _supportCenterUseCase;
 
@@ -62,6 +63,9 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   
   @observable
   String phone = '';
+
+  @observable
+  String cityError = '';
 
   @observable
   ObservableList<FilterTagEntity> places = ObservableList<FilterTagEntity>();
@@ -148,6 +152,12 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     _neighborhood = neighborhood;
   }
 
+  @action
+  void setCity(String city) {
+    cityError = city.isNotEmpty ? '' : 'Município é campo obrigatório';
+    _city = city;
+  }
+
 
   @action
   Future<void> savePlace() async {
@@ -177,6 +187,10 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
       placeDescriptionError = 'Deixa uma descrição do ponto de apoio';
     }
 
+    if (_city == null || _city!.isEmpty) {
+      cityError = 'Município é campo obrigatório';
+    }
+
     _savingSuggestion = ObservableFuture(
       _supportCenterUseCase.saveSuggestion(
         name: _placeName,
@@ -188,6 +202,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
         phone: _phone,
         complement: _complement,
         neighborhood: _neighborhood,
+        city: _city,
       ),
     );
 
@@ -203,6 +218,9 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     placeNameError = '';
     phoneError = '';
     placeDescriptionError = '';
+    categoryError = '';
+    coverageError = '';
+    cityError = '';
     errorMessage = '';
   }
 }
