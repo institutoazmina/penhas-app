@@ -12,7 +12,8 @@ import 'package:penhas/app/features/help_center/domain/states/guardian_alert_sta
 import 'package:penhas/app/features/support_center/domain/states/support_center_add_state.dart';
 import 'package:penhas/app/features/support_center/presentation/add/support_center_add_controller.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_input.dart';
-import 'package:penhas/app/features/support_center/presentation/pages/support_center_inputs.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_cep.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_phone.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
