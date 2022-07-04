@@ -13,6 +13,7 @@ import 'package:penhas/app/features/support_center/domain/states/support_center_
 import 'package:penhas/app/features/support_center/presentation/add/support_center_add_controller.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_input.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_cep.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_dropdown_uf.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_phone.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
@@ -160,6 +161,13 @@ extension _BuildWidget on _SupportCenterAddPageState {
             hintText: 'Insira um Município',
             errorText: controller.cityError,
             onChanged: controller.setCity,
+          ),
+          SupportCenterUF(
+            labelText: 'Selecione a abrangência do ponto de apoio',
+            errorMessage: controller.coverageError,
+            currentValue: controller.coverageSelected,
+            dataSource: ['Ba', 'SP'],
+            onChanged: controller.setPlaceName,
           ),
           SupportCenterInputPhone(
             hintText: 'Insira o telefone com o DDD',
