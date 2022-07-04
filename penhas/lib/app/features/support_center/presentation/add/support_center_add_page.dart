@@ -11,9 +11,9 @@ import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.da
 import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/support_center/domain/states/support_center_add_state.dart';
 import 'package:penhas/app/features/support_center/presentation/add/support_center_add_controller.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_dropdown_input.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_input.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_cep.dart';
-import 'package:penhas/app/features/support_center/presentation/pages/support_center_dropdown_uf.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_phone.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
@@ -117,6 +117,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
     
     final categoriesList = buildCategoriesList(categories);
     final coverageList = buildCoverageList(coverage);
+    final ufList = buildUfList(['']);
     
     final _maskCep = MaskTextInputFormatter(
       mask: '#####-###',
@@ -162,11 +163,11 @@ extension _BuildWidget on _SupportCenterAddPageState {
             errorText: controller.cityError,
             onChanged: controller.setCity,
           ),
-          SupportCenterUF(
-            labelText: 'Selecione a abrangência do ponto de apoio',
+          SupportCenterDropdownInput(
+            labelText: 'Selecione o Estado',
             errorMessage: controller.coverageError,
             currentValue: controller.coverageSelected,
-            dataSource: ['Ba', 'SP'],
+            dataSource: ufList,
             onChanged: controller.setPlaceName,
           ),
           SupportCenterInputPhone(
@@ -192,6 +193,15 @@ extension _BuildWidget on _SupportCenterAddPageState {
             errorMessage: controller.coverageError,
             currentValue: controller.coverageSelected,
             dataSource: coverageList,
+          ),
+          SupportCenterDropdownInput(
+            labelText: 'Selecione a abrangência do ponto de apoio',
+            errorMessage: controller.coverageError,
+            currentValue: controller.coverageSelected,
+            dataSource: coverageList,
+            onChanged: (coverage) {
+              controller.setCoverage(coverage);
+            },
           ),
           SupportCenterInput(
             maxLines: 6,
@@ -262,6 +272,15 @@ extension _BuildWidget on _SupportCenterAddPageState {
   }
 
   List<DropdownMenuItem<String>> buildCoverageList(List<String> list) {
+    return buildDataSource(list);
+  }
+
+  List<DropdownMenuItem<String>> buildUfList(List<String> list) {
+    return buildDataSource(list);
+  }
+
+
+  List<DropdownMenuItem<String>> buildDataSource(List<String> list) {
     return list
         .map(
           (v) => DropdownMenuItem<String>(

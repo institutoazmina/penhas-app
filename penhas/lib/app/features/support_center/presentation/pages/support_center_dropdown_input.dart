@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-class SupportCenterUF extends StatelessWidget {
-  const SupportCenterUF({
+class SupportCenterDropdownInput extends StatelessWidget {
+  const SupportCenterDropdownInput({
     Key? key,
     this.maxLines = 1,
     required this.labelText,
@@ -16,7 +16,7 @@ class SupportCenterUF extends StatelessWidget {
   final String labelText;
   final String errorMessage;
   final String currentValue;
-  final List<String> dataSource;
+  final List<DropdownMenuItem<String>> dataSource;
   final ValueChanged<String> onChanged;
 
   @override
