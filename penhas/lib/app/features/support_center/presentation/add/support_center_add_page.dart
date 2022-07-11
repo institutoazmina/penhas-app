@@ -186,6 +186,11 @@ extension _BuildWidget on _SupportCenterAddPageState {
             errorText: controller.placeNameError,
             onChanged: controller.setPlaceName,
           ),
+          SupportCenterInput(
+            hintText: 'Email do ponto de apoio',
+            errorText: '',
+            onChanged: controller.setEmail,
+          ),
           buildDropDownCoverageList(
             context: context,
             labelText: 'Selecione a abrangência do ponto de apoio',

@@ -35,6 +35,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   String? _complement;
   String? _neighborhood;
   String? _city;
+  String? _email;
   String? _observation;
 
   final SupportCenterUseCase _supportCenterUseCase;
@@ -178,6 +179,11 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   }
 
   @action
+  void setEmail(String email){
+    _email = email;
+  }
+
+  @action
   Future<void> savePlace() async {
     resetErrors();
 
@@ -213,6 +219,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
       _supportCenterUseCase.saveSuggestion(
         name: _placeName,
         address: _address,
+        email: _email,
         category: _category!.id,
         coverage: _coverage,
         observation: _observation,

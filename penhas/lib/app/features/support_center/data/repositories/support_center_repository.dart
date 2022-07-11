@@ -33,6 +33,7 @@ abstract class ISupportCenterRepository {
   );
   Future<Either<Failure, AlertModel>> suggestion({
     required String? name,
+    required String? email,
     required String? address,
     required String category,
     required String? observation,
@@ -126,6 +127,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
   Future<Either<Failure, AlertModel>> suggestion({
     required String? name,
     required String? address,
+    required String? email,
     required String category,
     required String? observation,
     required String? cep,
@@ -149,6 +151,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
       'bairro=${Uri.encodeComponent(neighborhood!)}',
       'municipio=${Uri.encodeComponent(city!)}',
       'uf=${Uri.encodeComponent(uf!)}',
+      'email=${Uri.encodeComponent(email!)}',
     ].join('&');
 
     try {

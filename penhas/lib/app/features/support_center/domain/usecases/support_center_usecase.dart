@@ -78,6 +78,7 @@ class SupportCenterUseCase {
   Future<Either<Failure, AlertModel>> saveSuggestion({
     required String? name,
     required String? address,
+    required String? email,
     required String category,
     required String? cep,
     required String? phone,
@@ -91,6 +92,7 @@ class SupportCenterUseCase {
     return _supportCenterRepository.suggestion(
       name: name,
       address: address,
+      email: email,
       category: category,
       phone: phone,
       cep: cep,
