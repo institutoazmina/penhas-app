@@ -143,7 +143,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
           ),
           SupportCenterInput(
             maxLines: 2,
-            hintText: 'Insira um endereço',
+            hintText: 'Insira o logradouro',
             errorText: controller.addressError,
             onChanged: controller.setAddress,
           ),

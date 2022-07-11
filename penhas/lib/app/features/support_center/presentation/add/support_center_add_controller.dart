@@ -108,7 +108,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @action
   void setAddress(String address) {
-    addressError = address.isNotEmpty ? '' : 'Endereço é campo obrigatório';
+    addressError = address.isNotEmpty ? '' : 'Logradouro é campo obrigatório';
     _address = address;
   }
 
@@ -188,7 +188,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     }
 
     if (_address == null || _address!.isEmpty) {
-      addressError = 'Endereço é campo obrigatório';
+      addressError = 'Logradouro é campo obrigatório';
     }
 
     if (_phone == null || _phone!.isEmpty) {

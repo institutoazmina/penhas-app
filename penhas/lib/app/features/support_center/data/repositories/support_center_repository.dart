@@ -140,7 +140,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
     final bodyContent = [
       'nome=${Uri.encodeComponent(name!)}',
       'categoria=${Uri.encodeComponent(category)}',
-      'endereco=${Uri.encodeComponent(address!)}',
+      'nome_logradouro=${Uri.encodeComponent(address!)}',
       'descricao_servico=${Uri.encodeComponent(description!)}',
       'cep=${Uri.encodeComponent(cep!)}',
       'telefone=${Uri.encodeComponent(phone!)}',
