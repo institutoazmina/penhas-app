@@ -14,6 +14,7 @@ import 'package:penhas/app/features/support_center/presentation/add/support_cent
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_dropdown_input.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_input.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_cep.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_number.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_phone.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
@@ -151,6 +152,11 @@ extension _BuildWidget on _SupportCenterAddPageState {
             hintText: 'Insira um Complemento',
             errorText: '',
             onChanged: controller.setComplement,
+          ),
+          SupportCenterInputNumber(
+            hintText: 'Número',
+            errorText: controller.numberError,
+            onChanged: controller.setNumber,
           ),
           SupportCenterInput(
             hintText: 'Insira um Bairro',
