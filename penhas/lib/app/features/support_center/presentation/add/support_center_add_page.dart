@@ -205,9 +205,9 @@ extension _BuildWidget on _SupportCenterAddPageState {
           SupportCenterInput(
             maxLines: 6,
             hintText:
-                'Explique brevemente os serviços oferecidos por este ponto de apoio',
-            errorText: controller.placeDescriptionError,
-            onChanged: controller.setPlaceDescription,
+                'Observação',
+            errorText: '',
+            onChanged: controller.setObservation,
           ),
         ],
       ),

@@ -35,6 +35,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   String? _complement;
   String? _neighborhood;
   String? _city;
+  String? _observation;
 
   final SupportCenterUseCase _supportCenterUseCase;
 
@@ -126,6 +127,11 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   }
 
   @action
+  void setObservation(String observation) {
+    _observation = observation;
+  }
+
+  @action
   void setCategorie(String value) {
     categoryError = value.isNotEmpty ? '' : 'Categoria é campo obrigatório';
     _category = places.firstWhere((element) => element.id == value);
@@ -199,10 +205,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
       placeNameError = 'Nome do ponto é campo obrigatório';
     }
 
-    if (_placeDescription == null || _placeDescription!.isEmpty) {
-      placeDescriptionError = 'Deixa uma descrição do ponto de apoio';
-    }
-
     if (_city == null || _city!.isEmpty) {
       cityError = 'Município é campo obrigatório';
     }
@@ -213,7 +215,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
         address: _address,
         category: _category!.id,
         coverage: _coverage,
-        description: _placeDescription,
+        observation: _observation,
         cep: _cep,
         uf: _uf,
         phone: _phone,
