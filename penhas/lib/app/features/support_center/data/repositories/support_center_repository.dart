@@ -42,6 +42,7 @@ abstract class ISupportCenterRepository {
     required String? complement,
     required String? neighborhood,
     required String? city,
+    required String? uf,
   });
 }
 
@@ -133,6 +134,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
     required String? complement,
     required String? neighborhood,
     required String? city,
+    required String? uf,
   }) async {
     const endPoint = '/me/sugerir-pontos-de-apoio';
     final bodyContent = [
@@ -145,7 +147,8 @@ class SupportCenterRepository implements ISupportCenterRepository {
       'abrangencia=${Uri.encodeComponent(coverage!)}',
       'complemento=${Uri.encodeComponent(complement!)}',
       'bairro=${Uri.encodeComponent(neighborhood!)}',
-      'municioio=${Uri.encodeComponent(city!)}',
+      'municipio=${Uri.encodeComponent(city!)}',
+      'uf=${Uri.encodeComponent(uf!)}',
     ].join('&');
 
     try {

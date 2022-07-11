@@ -86,6 +86,7 @@ class SupportCenterUseCase {
     required String? complement,
     required String? neighborhood,
     required String? city,
+    required String? uf,
   }) {
     return _supportCenterRepository.suggestion(
       name: name,
@@ -97,7 +98,8 @@ class SupportCenterUseCase {
       coverage: coverage,
       complement: complement,
       neighborhood: neighborhood,
-      city: city
+      city: city,
+      uf: uf
     );
   }
 

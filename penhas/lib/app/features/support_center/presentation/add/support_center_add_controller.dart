@@ -31,6 +31,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   String? _placeDescription;
   FilterTagEntity? _category;
   String? _coverage;
+  String? _uf;
   String? _complement;
   String? _neighborhood;
   String? _city;
@@ -60,6 +61,9 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @observable
   String? neighborhood = '';
+
+  @observable
+  String ufSelected = '';
   
   @observable
   String phone = '';
@@ -87,6 +91,9 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   
   @observable
   String phoneError = '';
+
+  @observable
+  String ufError = '';
 
   @observable
   SupportCenterAddState state = const SupportCenterAddState.initial();
@@ -132,6 +139,12 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   }
 
   @action
+  void setUf(String uf) {
+    ufError = uf.isNotEmpty ? '' : 'Estado é campo obrigatório';
+    _uf = uf;
+  }
+
+  @action
   void setPhone(String phone) {
     phoneError = phone.isEmpty || phone.length < 8 ? 'Telefone é campo obrigatório' : '';
     _phone = phone;
@@ -158,7 +171,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     _city = city;
   }
 
-
   @action
   Future<void> savePlace() async {
     resetErrors();
@@ -169,6 +181,10 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
     if (_coverage == null) {
       coverageError = 'Abrangência é campo obrigatório';
+    }
+
+    if (_uf == null) {
+      ufError = 'Estado é campo obrigatório';
     }
 
     if (_address == null || _address!.isEmpty) {
@@ -199,6 +215,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
         coverage: _coverage,
         description: _placeDescription,
         cep: _cep,
+        uf: _uf,
         phone: _phone,
         complement: _complement,
         neighborhood: _neighborhood,
@@ -220,6 +237,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     placeDescriptionError = '';
     categoryError = '';
     coverageError = '';
+    ufError = '';
     cityError = '';
     errorMessage = '';
   }

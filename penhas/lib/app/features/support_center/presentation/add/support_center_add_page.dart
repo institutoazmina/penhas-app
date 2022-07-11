@@ -75,7 +75,7 @@ class _SupportCenterAddPageState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildInputPlaceInformation(context, controller.places, ['Local', 'Regional', 'Nacional']),
+              buildInputPlaceInformation(context, controller.places),
               buildPlaceAction(),
             ],
           ),
@@ -111,13 +111,12 @@ class _SupportCenterAddPageState
 extension _BuildWidget on _SupportCenterAddPageState {
   Widget buildInputPlaceInformation(
     BuildContext context,
-    List<FilterTagEntity> categories,
-    List<String> coverage,
+    List<FilterTagEntity> categories
   ) {
     
     final categoriesList = buildCategoriesList(categories);
-    final coverageList = buildCoverageList(coverage);
-    final ufList = buildUfList(['']);
+    final coverageList = buildCoverageList(['Local', 'Regional', 'Nacional']);
+    final ufList = buildUfList(['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO']);
     
     final _maskCep = MaskTextInputFormatter(
       mask: '#####-###',
@@ -165,10 +164,10 @@ extension _BuildWidget on _SupportCenterAddPageState {
           ),
           SupportCenterDropdownInput(
             labelText: 'Selecione o Estado',
-            errorMessage: controller.coverageError,
-            currentValue: controller.coverageSelected,
+            errorMessage: controller.ufError,
+            currentValue: controller.ufSelected,
             dataSource: ufList,
-            onChanged: controller.setPlaceName,
+            onChanged: controller.setUf,
           ),
           SupportCenterInputPhone(
             hintText: 'Insira o telefone com o DDD',
