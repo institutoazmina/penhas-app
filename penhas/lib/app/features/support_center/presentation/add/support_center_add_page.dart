@@ -137,6 +137,16 @@ extension _BuildWidget on _SupportCenterAddPageState {
             child:
                 Text('Informação sobre o ponto de apoio', style: addressTitle),
           ),
+          SupportCenterInput(
+            hintText: 'Nome do ponto de apoio',
+            errorText: controller.placeNameError,
+            onChanged: controller.setPlaceName,
+          ),
+          SupportCenterInput(
+            hintText: 'Email do ponto de apoio',
+            errorText: '',
+            onChanged: controller.setEmail,
+          ),
           SupportCenterInputCep(
             hintText: 'Insira um CEP',
             onChanged: controller.setCep,
@@ -153,9 +163,9 @@ extension _BuildWidget on _SupportCenterAddPageState {
             errorText: '',
             onChanged: controller.setComplement,
           ),
-          SupportCenterInputNumber(
+          SupportCenterInput(
             hintText: 'Número',
-            errorText: controller.numberError,
+            errorText: '',
             onChanged: controller.setNumber,
           ),
           SupportCenterInput(
@@ -188,16 +198,6 @@ extension _BuildWidget on _SupportCenterAddPageState {
             errorMessage: controller.categoryError,
             currentValue: controller.categorySelected,
             dataSource: categoriesList,
-          ),
-          SupportCenterInput(
-            hintText: 'Nome do ponto de apoio',
-            errorText: controller.placeNameError,
-            onChanged: controller.setPlaceName,
-          ),
-          SupportCenterInput(
-            hintText: 'Email do ponto de apoio',
-            errorText: '',
-            onChanged: controller.setEmail,
           ),
           SupportCenterDropdownInput(
             labelText: 'Selecione a abrangência do ponto de apoio',

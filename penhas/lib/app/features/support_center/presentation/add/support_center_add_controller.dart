@@ -184,7 +184,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @action
   void setNumber(String number) {
-    numberError = number.isNotEmpty ? '' : 'Número é campo obrigatório';
     _number = number;
   }
 
@@ -198,7 +197,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     resetErrors();
 
     if (_category == null) {
-      categoryError = 'O tipo é um campo obrigatório';
+      categoryError = 'Tipo é um campo obrigatório';
     }
 
     if (_coverage == null) {
@@ -223,10 +222,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
     if (_city == null || _city!.isEmpty) {
       cityError = 'Município é campo obrigatório';
-    }
-
-    if (_number == null || _number!.isEmpty) {
-      numberError = 'Número é campo obrigatório';
     }
 
     _savingSuggestion = ObservableFuture(
@@ -261,7 +256,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     placeDescriptionError = '';
     categoryError = '';
     coverageError = '';
-    numberError = '';
     ufError = '';
     cityError = '';
     errorMessage = '';
