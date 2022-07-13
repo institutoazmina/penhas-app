@@ -209,6 +209,11 @@ extension _BuildWidget on _SupportCenterAddPageState {
             },
           ),
           SupportCenterInput(
+            hintText: 'Horário de Funcionamento',
+            errorText: '',
+            onChanged: controller.setHour,
+          ),
+          SupportCenterInput(
             maxLines: 6,
             hintText:
                 'Observação',

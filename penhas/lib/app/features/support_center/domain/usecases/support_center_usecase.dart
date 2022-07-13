@@ -89,6 +89,7 @@ class SupportCenterUseCase {
     required String? uf,
     required String? number,
     required String? observation,
+    required String? hour,
   }) {
     return _supportCenterRepository.suggestion(
       name: name,
@@ -103,7 +104,8 @@ class SupportCenterUseCase {
       city: city,
       number: number,
       uf: uf,
-      observation: observation
+      observation: observation,
+      hour: hour
     );
   }
 

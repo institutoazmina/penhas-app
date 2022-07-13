@@ -45,6 +45,8 @@ abstract class ISupportCenterRepository {
     required String? city,
     required String? uf,
     required String? number,
+    required String? hour,
+    
   });
 }
 
@@ -139,6 +141,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
     required String? city,
     required String? uf,
     required String? number,
+    required String? hour,
   }) async {
     const endPoint = '/me/sugerir-pontos-de-apoio';
     final bodyContent = [
@@ -155,6 +158,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
       'uf=${Uri.encodeComponent(uf!)}',
       'email=${Uri.encodeComponent(email!)}',
       'numero=${Uri.encodeComponent(number!)}',
+      'horario=${Uri.encodeComponent(hour!)}',
     ].join('&');
 
     try {

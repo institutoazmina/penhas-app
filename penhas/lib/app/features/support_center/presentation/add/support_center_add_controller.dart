@@ -33,6 +33,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   String? _coverage;
   String? _uf;
   String? _complement;
+  String? _hour;
   String? _neighborhood;
   String? _city;
   String? _number;
@@ -58,6 +59,9 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @observable
   String cep = '';
+  
+  @observable
+  String hour = '';
 
   @observable
   String? complement = '';
@@ -192,6 +196,13 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     _email = email;
   }
 
+
+  @action
+  void setHour(String hour){
+    _hour = hour;
+  }
+
+
   @action
   Future<void> savePlace() async {
     resetErrors();
@@ -239,6 +250,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
         complement: _complement,
         neighborhood: _neighborhood,
         city: _city,
+        hour: _hour
       ),
     );
 
