@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-class SupportCenterInputPhone extends StatelessWidget {
-  const SupportCenterInputPhone({
+class SupportCenterInputDDD extends StatelessWidget {
+  const SupportCenterInputDDD({
     Key? key,
     required this.hintText,
     required this.errorText,
@@ -13,7 +13,6 @@ class SupportCenterInputPhone extends StatelessWidget {
   final String hintText;
   final String errorText;
   final ValueChanged<String> onChanged;
-  
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +42,7 @@ class SupportCenterInputPhone extends StatelessWidget {
           FilteringTextInputFormatter.digitsOnly
         ],
         onChanged: onChanged,
+        maxLength: 2,
       ),
     );
   }

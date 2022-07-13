@@ -81,7 +81,7 @@ class SupportCenterUseCase {
     required String? email,
     required String category,
     required String? cep,
-    required String? phone,
+    required String? phone1,
     required String? coverage,
     required String? complement,
     required String? neighborhood,
@@ -90,13 +90,14 @@ class SupportCenterUseCase {
     required String? number,
     required String? observation,
     required String? hour,
+    required String? ddd1,
   }) {
     return _supportCenterRepository.suggestion(
       name: name,
       address: address,
       email: email,
       category: category,
-      phone: phone,
+      phone1: phone1,
       cep: cep,
       coverage: coverage,
       complement: complement,
@@ -105,7 +106,8 @@ class SupportCenterUseCase {
       number: number,
       uf: uf,
       observation: observation,
-      hour: hour
+      hour: hour,
+      ddd1: ddd1
     );
   }
 

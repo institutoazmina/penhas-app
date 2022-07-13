@@ -14,6 +14,7 @@ import 'package:penhas/app/features/support_center/presentation/add/support_cent
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_dropdown_input.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_input.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_cep.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_ddd.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_number.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_phone.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
@@ -187,10 +188,15 @@ extension _BuildWidget on _SupportCenterAddPageState {
               controller.setUf(uf);
             },
           ),
+          SupportCenterInputDDD(
+            hintText: 'Insira o DDD',
+            errorText: controller.ddd1Error,
+            onChanged: controller.setDdd1,
+          ),
           SupportCenterInputPhone(
-            hintText: 'Insira o telefone com o DDD',
-            errorText: controller.phoneError,
-            onChanged: controller.setPhone,
+            hintText: 'Insira um telefone',
+            errorText: controller.phone1Error,
+            onChanged: controller.setPhone1,
           ),
           buildDropDownCategoriesList(
             context: context,
@@ -215,8 +221,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
           ),
           SupportCenterInput(
             maxLines: 6,
-            hintText:
-                'Observação',
+            hintText: 'Observação',
             errorText: '',
             onChanged: controller.setObservation,
           ),
@@ -335,7 +340,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
           ),
           items: dataSource as List<DropdownMenuItem>,
           onChanged: (category) {
-            controller.setCategorie(category as String);
+            controller.setCategory(category as String);
           },
           value: currentValue.isEmpty ? null : currentValue,
         ),

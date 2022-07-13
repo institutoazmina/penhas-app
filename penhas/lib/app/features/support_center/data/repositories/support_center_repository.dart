@@ -38,7 +38,7 @@ abstract class ISupportCenterRepository {
     required String category,
     required String? observation,
     required String? cep,
-    required String? phone,
+    required String? phone1,
     required String? coverage,
     required String? complement,
     required String? neighborhood,
@@ -46,6 +46,7 @@ abstract class ISupportCenterRepository {
     required String? uf,
     required String? number,
     required String? hour,
+    required String? ddd1,
     
   });
 }
@@ -134,7 +135,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
     required String category,
     required String? observation,
     required String? cep,
-    required String? phone,
+    required String? phone1,
     required String? coverage,
     required String? complement,
     required String? neighborhood,
@@ -142,6 +143,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
     required String? uf,
     required String? number,
     required String? hour,
+    required String? ddd1,
   }) async {
     const endPoint = '/me/sugerir-pontos-de-apoio';
     final bodyContent = [
@@ -150,7 +152,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
       'nome_logradouro=${Uri.encodeComponent(address!)}',
       'observacao=${Uri.encodeComponent(observation!)}',
       'cep=${Uri.encodeComponent(cep!)}',
-      'telefone=${Uri.encodeComponent(phone!)}',
+      'telefone1=${Uri.encodeComponent(phone1!)}',
       'abrangencia=${Uri.encodeComponent(coverage!)}',
       'complemento=${Uri.encodeComponent(complement!)}',
       'bairro=${Uri.encodeComponent(neighborhood!)}',
@@ -159,6 +161,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
       'email=${Uri.encodeComponent(email!)}',
       'numero=${Uri.encodeComponent(number!)}',
       'horario=${Uri.encodeComponent(hour!)}',
+      'ddd1=${Uri.encodeComponent(ddd1!)}',
     ].join('&');
 
     try {

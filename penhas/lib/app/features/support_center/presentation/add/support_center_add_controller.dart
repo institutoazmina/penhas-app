@@ -26,7 +26,8 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   String? _address;
   String? _cep;
-  String? _phone;
+  String? _phone1;
+  String? _ddd1;
   String? _placeName;
   String? _placeDescription;
   FilterTagEntity? _category;
@@ -58,22 +59,13 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   String? errorMessage = '';
 
   @observable
-  String cep = '';
-  
-  @observable
-  String hour = '';
-
-  @observable
-  String? complement = '';
-
-  @observable
-  String? neighborhood = '';
-
-  @observable
   String ufSelected = '';
   
   @observable
-  String phone = '';
+  String ddd1Error = '';
+
+  @observable
+  String phone1Error = '';
 
   @observable
   String cityError = '';
@@ -95,9 +87,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @observable
   String coverageError = '';
-  
-  @observable
-  String phoneError = '';
 
   @observable
   String numberError = '';
@@ -141,7 +130,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  void setCategorie(String value) {
+  void setCategory(String value) {
     categoryError = value.isNotEmpty ? '' : 'Categoria é campo obrigatório';
     _category = places.firstWhere((element) => element.id == value);
     categorySelected = _category!.id;
@@ -160,9 +149,21 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  void setPhone(String phone) {
-    phoneError = phone.isEmpty || phone.length < 8 ? 'Telefone é campo obrigatório' : '';
-    _phone = phone;
+  void setDdd1(String ddd1) {
+    ddd1Error = ddd1.isNotEmpty && ddd1.length < 2 ? 'Confira o formato' : '';
+    _ddd1 = ddd1;
+  }
+
+
+  @action
+  void setPhone1(String phone1) {
+
+    if((_ddd1 != null || _ddd1!.isNotEmpty) && phone1.isEmpty){
+      phone1Error = 'Telefone é campo obrigatório';
+    }else if(phone1.length < 8){
+      phone1Error ='Confira o formato';
+    }
+    _phone1 = phone1;
   }
 
   @action
@@ -223,8 +224,16 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
       addressError = 'Logradouro é campo obrigatório';
     }
 
-    if (_phone == null || _phone!.isEmpty) {
-      phoneError = 'Phone é campo obrigatório';
+    if (_ddd1 != null && _ddd1!.length < 2) {
+      ddd1Error ='Confira o formato';
+    }
+
+    if(_ddd1 != null || _ddd1!.isNotEmpty){
+      if(_phone1!.isEmpty){
+        phone1Error = 'Telefone é campo obrigatório';
+      }else if(_phone1!.length < 8){
+        phone1Error ='Confira o formato';
+      } 
     }
 
     if (_placeName == null || _placeName!.isEmpty) {
@@ -246,11 +255,12 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
         cep: _cep,
         uf: _uf,
         number: _number,
-        phone: _phone,
+        phone1: _phone1,
         complement: _complement,
         neighborhood: _neighborhood,
         city: _city,
-        hour: _hour
+        hour: _hour,
+        ddd1: _ddd1
       ),
     );
 
@@ -264,7 +274,8 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   void resetErrors() {
     addressError = '';
     placeNameError = '';
-    phoneError = '';
+    phone1Error = '';
+    ddd1Error = '';
     placeDescriptionError = '';
     categoryError = '';
     coverageError = '';
