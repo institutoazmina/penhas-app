@@ -112,7 +112,7 @@ class _SupportCenterAddPageState
 extension _BuildWidget on _SupportCenterAddPageState {
   Widget buildInputPlaceInformation(
     BuildContext context,
-    List<FilterTagEntity> categories
+    List<FilterTagEntity> categories,
   ) {
     
     final categoriesList = buildCategoriesList(categories);
@@ -144,7 +144,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
           ),
           SupportCenterInput(
             maxLines: 2,
-            hintText: 'Insira o logradouro',
+            hintText: 'Insira o Logradouro',
             errorText: controller.addressError,
             onChanged: controller.setAddress,
           ),
@@ -173,7 +173,9 @@ extension _BuildWidget on _SupportCenterAddPageState {
             errorMessage: controller.ufError,
             currentValue: controller.ufSelected,
             dataSource: ufList,
-            onChanged: controller.setUf,
+            onChanged: (uf) {
+              controller.setUf(uf);
+            },
           ),
           SupportCenterInputPhone(
             hintText: 'Insira o telefone com o DDD',
@@ -196,13 +198,6 @@ extension _BuildWidget on _SupportCenterAddPageState {
             hintText: 'Email do ponto de apoio',
             errorText: '',
             onChanged: controller.setEmail,
-          ),
-          buildDropDownCoverageList(
-            context: context,
-            labelText: 'Selecione a abrangência do ponto de apoio',
-            errorMessage: controller.coverageError,
-            currentValue: controller.coverageSelected,
-            dataSource: coverageList,
           ),
           SupportCenterDropdownInput(
             labelText: 'Selecione a abrangência do ponto de apoio',
@@ -336,46 +331,6 @@ extension _BuildWidget on _SupportCenterAddPageState {
           items: dataSource as List<DropdownMenuItem>,
           onChanged: (category) {
             controller.setCategorie(category as String);
-          },
-          value: currentValue.isEmpty ? null : currentValue,
-        ),
-      ),
-    );
-  }
-
-  Widget buildDropDownCoverageList({
-    required BuildContext context,
-    required String labelText,
-    String? errorMessage,
-    required String currentValue,
-    required List dataSource,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Theme(
-        data: Theme.of(context)
-            .copyWith(canvasColor: const Color.fromRGBO(141, 146, 157, 1)),
-        child: DropdownButtonFormField<dynamic>(
-          isExpanded: true,
-          decoration: InputDecoration(
-            enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: DesignSystemColors.easterPurple),
-            ),
-            focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: DesignSystemColors.easterPurple),
-            ),
-            errorText: (errorMessage?.isEmpty ?? true) ? null : errorMessage,
-            border: const OutlineInputBorder(
-              borderSide: BorderSide(color: DesignSystemColors.easterPurple),
-            ),
-            contentPadding:
-                const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
-            hintText: labelText,
-            hintStyle: const TextStyle(color: Colors.black),
-          ),
-          items: dataSource as List<DropdownMenuItem>,
-          onChanged: (coverage) {
-            controller.setCoverage(coverage as String);
           },
           value: currentValue.isEmpty ? null : currentValue,
         ),

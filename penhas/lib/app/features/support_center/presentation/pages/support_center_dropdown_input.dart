@@ -17,7 +17,7 @@ class SupportCenterDropdownInput extends StatelessWidget {
   final String errorMessage;
   final String currentValue;
   final List<DropdownMenuItem<String>> dataSource;
-  final ValueChanged<String> onChanged;
+  final ValueChanged<dynamic> onChanged;
 
   @override
   Widget build(BuildContext context) {
