@@ -47,6 +47,8 @@ abstract class ISupportCenterRepository {
     required String? number,
     required String? hour,
     required String? ddd1,
+    required String? ddd2,
+    required String? phone2,
     
   });
 }
@@ -135,7 +137,6 @@ class SupportCenterRepository implements ISupportCenterRepository {
     required String category,
     required String? observation,
     required String? cep,
-    required String? phone1,
     required String? coverage,
     required String? complement,
     required String? neighborhood,
@@ -144,6 +145,9 @@ class SupportCenterRepository implements ISupportCenterRepository {
     required String? number,
     required String? hour,
     required String? ddd1,
+    required String? phone1,
+    required String? ddd2,
+    required String? phone2,
   }) async {
     const endPoint = '/me/sugerir-pontos-de-apoio';
     final bodyContent = [
@@ -152,7 +156,6 @@ class SupportCenterRepository implements ISupportCenterRepository {
       'nome_logradouro=${Uri.encodeComponent(address!)}',
       'observacao=${Uri.encodeComponent(observation!)}',
       'cep=${Uri.encodeComponent(cep!)}',
-      'telefone1=${Uri.encodeComponent(phone1!)}',
       'abrangencia=${Uri.encodeComponent(coverage!)}',
       'complemento=${Uri.encodeComponent(complement!)}',
       'bairro=${Uri.encodeComponent(neighborhood!)}',
@@ -162,6 +165,9 @@ class SupportCenterRepository implements ISupportCenterRepository {
       'numero=${Uri.encodeComponent(number!)}',
       'horario=${Uri.encodeComponent(hour!)}',
       'ddd1=${Uri.encodeComponent(ddd1!)}',
+      'telefone1=${Uri.encodeComponent(phone1!)}',
+      'ddd2=${Uri.encodeComponent(ddd2!)}',
+      'telefone2=${Uri.encodeComponent(phone2!)}',
     ].join('&');
 
     try {

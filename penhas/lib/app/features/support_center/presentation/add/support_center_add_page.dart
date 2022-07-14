@@ -11,6 +11,7 @@ import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.da
 import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/support_center/domain/states/support_center_add_state.dart';
 import 'package:penhas/app/features/support_center/presentation/add/support_center_add_controller.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_checkbox.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_dropdown_input.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_input.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_cep.dart';
@@ -197,6 +198,16 @@ extension _BuildWidget on _SupportCenterAddPageState {
             hintText: 'Insira um telefone',
             errorText: controller.phone1Error,
             onChanged: controller.setPhone1,
+          ),
+          SupportCenterInputDDD(
+            hintText: 'Insira o DDD',
+            errorText: controller.ddd2Error,
+            onChanged: controller.setDdd2,
+          ),
+          SupportCenterInputPhone(
+            hintText: 'Insira um telefone',
+            errorText: controller.phone2Error,
+            onChanged: controller.setPhone2,
           ),
           buildDropDownCategoriesList(
             context: context,

@@ -28,8 +28,9 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   String? _cep;
   String? _phone1;
   String? _ddd1;
+  String? _phone2;
+  String? _ddd2;
   String? _placeName;
-  String? _placeDescription;
   FilterTagEntity? _category;
   String? _coverage;
   String? _uf;
@@ -66,6 +67,12 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @observable
   String phone1Error = '';
+
+  @observable
+  String ddd2Error = '';
+
+  @observable
+  String phone2Error = '';
 
   @observable
   String cityError = '';
@@ -118,13 +125,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  void setPlaceDescription(String description) {
-    placeDescriptionError =
-        description.isNotEmpty ? '' : 'Nome do ponto é campo obrigatório';
-    _placeDescription = description;
-  }
-
-  @action
   void setObservation(String observation) {
     _observation = observation;
   }
@@ -150,20 +150,44 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @action
   void setDdd1(String ddd1) {
-    ddd1Error = ddd1.isNotEmpty && ddd1.length < 2 ? 'Confira o formato' : '';
+    ddd1Error = checkDdd(ddd1);
     _ddd1 = ddd1;
   }
 
+  @action
+  void setDdd2(String ddd2) {
+    ddd2Error = checkDdd(ddd2);
+    _ddd2 = ddd2;
+  }
+
+  @action
+  String checkDdd(String? ddd){
+    if(ddd!.isEmpty && ddd.length < 2){
+      return 'Confira o formato';
+    }
+    return 'tudo bem';
+  }
 
   @action
   void setPhone1(String phone1) {
-
-    if((_ddd1 != null || _ddd1!.isNotEmpty) && phone1.isEmpty){
-      phone1Error = 'Telefone é campo obrigatório';
-    }else if(phone1.length < 8){
-      phone1Error ='Confira o formato';
-    }
+    phone1Error = checkPhone(phone1, _ddd1);
     _phone1 = phone1;
+  }
+
+  @action
+  void setPhone2(String phone2) {
+    phone2Error = checkPhone(phone2, _ddd2);
+    _phone2 = phone2;
+  }
+
+  @action
+  String checkPhone(String currentPhone, String? ddd){
+    if((ddd != null || ddd!.isNotEmpty) && currentPhone.isEmpty){
+      return 'Telefone é campo obrigatório';
+    }else if(currentPhone.length < 8){
+      return 'Confira o formato';
+    }
+    return '';
   }
 
   @action
@@ -236,6 +260,10 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
       } 
     }
 
+    if (_ddd2 != null && _ddd2!.length < 2) {
+      ddd2Error ='Confira o formato';
+    }
+    
     if (_placeName == null || _placeName!.isEmpty) {
       placeNameError = 'Nome do ponto é campo obrigatório';
     }
@@ -255,12 +283,14 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
         cep: _cep,
         uf: _uf,
         number: _number,
-        phone1: _phone1,
         complement: _complement,
         neighborhood: _neighborhood,
         city: _city,
         hour: _hour,
-        ddd1: _ddd1
+        ddd1: _ddd1,
+        phone1: _phone1,
+        ddd2: _ddd2,
+        phone2: _phone2,
       ),
     );
 
@@ -275,7 +305,9 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     addressError = '';
     placeNameError = '';
     phone1Error = '';
+    phone2Error = '';
     ddd1Error = '';
+    ddd2Error = '';
     placeDescriptionError = '';
     categoryError = '';
     coverageError = '';
