@@ -160,12 +160,11 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     _ddd2 = ddd2;
   }
 
-  @action
-  String checkDdd(String? ddd){
-    if(ddd!.isEmpty && ddd.length < 2){
+  String checkDdd(String ddd){
+    if(ddd.isNotEmpty && ddd.length < 2){
       return 'Confira o formato';
     }
-    return 'tudo bem';
+    return '';
   }
 
   @action
@@ -252,14 +251,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
       ddd1Error ='Confira o formato';
     }
 
-    if(_ddd1 != null || _ddd1!.isNotEmpty){
-      if(_phone1!.isEmpty){
-        phone1Error = 'Telefone é campo obrigatório';
-      }else if(_phone1!.length < 8){
-        phone1Error ='Confira o formato';
-      } 
-    }
-
     if (_ddd2 != null && _ddd2!.length < 2) {
       ddd2Error ='Confira o formato';
     }
@@ -271,6 +262,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     if (_city == null || _city!.isEmpty) {
       cityError = 'Município é campo obrigatório';
     }
+
 
     _savingSuggestion = ObservableFuture(
       _supportCenterUseCase.saveSuggestion(
