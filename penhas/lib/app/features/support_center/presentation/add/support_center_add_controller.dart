@@ -152,12 +152,14 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   void setDdd1(String ddd1) {
     ddd1Error = checkDdd(ddd1);
     _ddd1 = ddd1;
+    setPhone1(_phone1 ?? '');
   }
 
   @action
   void setDdd2(String ddd2) {
     ddd2Error = checkDdd(ddd2);
     _ddd2 = ddd2;
+    setPhone1(_phone2 ?? '');
   }
 
   String checkDdd(String ddd){
@@ -182,7 +184,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   @action
   String checkPhone(String currentPhone, String? ddd){
     if((ddd != null || ddd!.isNotEmpty) && currentPhone.isEmpty){
-      return 'Telefone é campo obrigatório';
+      return 'Telefone é um campo obrigatório';
     }else if(currentPhone.length < 8){
       return 'Confira o formato';
     }
@@ -226,6 +228,17 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     _hour = hour;
   }
 
+  String phoneError(String phone, String ddd){
+    if(ddd.isNotEmpty){
+      if(phone.isEmpty){
+        return 'Telefone é campo obrigatório';
+      }else if(phone.length < 8){
+        return 'Confira o formato';
+      }    
+    }
+    return '';
+  }
+
 
   @action
   Future<void> savePlace() async {
@@ -263,6 +276,9 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
       cityError = 'Município é campo obrigatório';
     }
 
+    phoneError(_phone1 ?? '', _ddd1 ?? '');
+
+    phoneError(_phone2 ?? '', _ddd2 ?? '');
 
     _savingSuggestion = ObservableFuture(
       _supportCenterUseCase.saveSuggestion(
