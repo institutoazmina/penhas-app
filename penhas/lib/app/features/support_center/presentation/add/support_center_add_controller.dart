@@ -61,7 +61,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @observable
   String ufSelected = '';
-  
+
   @observable
   String ddd1Error = '';
 
@@ -138,7 +138,8 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @action
   void setCoverage(String coverage) {
-    coverageError = coverage.isNotEmpty ? '' : 'Abrangência é campo obrigatório';
+    coverageError =
+        coverage.isNotEmpty ? '' : 'Abrangência é campo obrigatório';
     _coverage = coverage;
   }
 
@@ -162,8 +163,8 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     setPhone1(_phone2 ?? '');
   }
 
-  String checkDdd(String ddd){
-    if(ddd.isNotEmpty && ddd.length < 2){
+  String checkDdd(String ddd) {
+    if (ddd.isNotEmpty && ddd.length < 2) {
       return 'Confira o formato';
     }
     return '';
@@ -182,10 +183,10 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  String checkPhone(String currentPhone, String? ddd){
-    if((ddd != null || ddd!.isNotEmpty) && currentPhone.isEmpty){
+  String checkPhone(String currentPhone, String? ddd) {
+    if ((ddd != null || ddd!.isNotEmpty) && currentPhone.isEmpty) {
       return 'Telefone é um campo obrigatório';
-    }else if(currentPhone.length < 8){
+    } else if (currentPhone.length < 8) {
       return 'Confira o formato';
     }
     return '';
@@ -218,34 +219,32 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  void setEmail(String email){
+  void setEmail(String email) {
     _email = email;
   }
 
-
   @action
-  void setHour(String hour){
+  void setHour(String hour) {
     _hour = hour;
   }
 
-  String phoneError(String phone, String ddd){
-    if(ddd.isNotEmpty){
-      if(phone.isEmpty){
-        return 'Telefone é campo obrigatório';
-      }else if(phone.length < 8){
-        return 'Confira o formato';
-      }    
+  String phoneError(String phone, String ddd) {
+    if (ddd.isNotEmpty) {
+      if (phone.isEmpty) {
+        return 'Telefone é campo obrigatório quando inserido o DDD';
+      } else if (phone.length < 8) {
+        return 'Confira o formato do telefone';
+      }
     }
     return '';
   }
-
 
   @action
   Future<void> savePlace() async {
     resetErrors();
 
     if (_category == null) {
-      categoryError = 'Tipo é um campo obrigatório';
+      categoryError = 'Categoria é um campo obrigatório';
     }
 
     if (_coverage == null) {
@@ -257,19 +256,20 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     }
 
     if (_address == null || _address!.isEmpty) {
-      addressError = 'Logradouro é campo obrigatório';
+      addressError =
+          'Nome do logradouro (Rua, Avenida, etc.) é campo obrigatório';
     }
 
     if (_ddd1 != null && _ddd1!.length < 2) {
-      ddd1Error ='Confira o formato';
+      ddd1Error = 'Confira o formato do DDD 1';
     }
 
     if (_ddd2 != null && _ddd2!.length < 2) {
-      ddd2Error ='Confira o formato';
+      ddd2Error = 'Confira o formato DDD 2';
     }
-    
+
     if (_placeName == null || _placeName!.isEmpty) {
-      placeNameError = 'Nome do ponto é campo obrigatório';
+      placeNameError = 'Nome do ponto de apoio é um campo obrigatório';
     }
 
     if (_city == null || _city!.isEmpty) {

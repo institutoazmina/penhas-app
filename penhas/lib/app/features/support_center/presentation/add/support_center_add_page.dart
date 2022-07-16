@@ -114,11 +114,38 @@ extension _BuildWidget on _SupportCenterAddPageState {
     BuildContext context,
     List<FilterTagEntity> categories,
   ) {
-    
     final categoriesList = buildCategoriesList(categories);
     final coverageList = buildCoverageList(['Local', 'Regional', 'Nacional']);
-    final ufList = buildUfList(['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO']);
-    
+    final ufList = buildUfList([
+      'AC',
+      'AL',
+      'AP',
+      'AM',
+      'BA',
+      'CE',
+      'DF',
+      'ES',
+      'GO',
+      'MA',
+      'MT',
+      'MS',
+      'MG',
+      'PA',
+      'PB',
+      'PR',
+      'PE',
+      'PI',
+      'RJ',
+      'RN',
+      'RS',
+      'RO',
+      'RR',
+      'SC',
+      'SP',
+      'SE',
+      'TO'
+    ]);
+
     final _maskCep = MaskTextInputFormatter(
       mask: '#####-###',
       filter: {'#': RegExp('[0-9]')},
@@ -137,49 +164,59 @@ extension _BuildWidget on _SupportCenterAddPageState {
             child:
                 Text('Informação sobre o ponto de apoio', style: addressTitle),
           ),
+          Text(
+            '* Marcam os campos com preenchimento obrigatório.',
+            style: introdutionText,
+          ),
           SupportCenterInput(
-            hintText: 'Nome do ponto de apoio',
+            hintText: 'Nome *',
             errorText: controller.placeNameError,
             onChanged: controller.setPlaceName,
           ),
-          SupportCenterInput(
-            hintText: 'Email do ponto de apoio',
-            errorText: '',
-            onChanged: controller.setEmail,
+          buildDropDownCategoriesList(
+            context: context,
+            labelText: 'Categoria *',
+            errorMessage: controller.categoryError,
+            currentValue: controller.categorySelected,
+            dataSource: categoriesList,
           ),
-          SupportCenterInputCep(
-            hintText: 'Insira um CEP',
-            onChanged: controller.setCep,
-            mask: [_maskCep],
+          SupportCenterDropdownInput(
+            labelText: 'Abrangência *',
+            errorMessage: controller.coverageError,
+            currentValue: controller.coverageSelected,
+            dataSource: coverageList,
+            onChanged: (coverage) {
+              controller.setCoverage(coverage);
+            },
           ),
           SupportCenterInput(
             maxLines: 2,
-            hintText: 'Insira o Logradouro',
+            hintText: 'Nome do logradouro (Rua, Avenida, etc) *',
             errorText: controller.addressError,
             onChanged: controller.setAddress,
           ),
           SupportCenterInput(
-            hintText: 'Insira um Complemento',
-            errorText: '',
-            onChanged: controller.setComplement,
-          ),
-          SupportCenterInput(
-            hintText: 'Número',
+            hintText: 'Número *',
             errorText: '',
             onChanged: controller.setNumber,
           ),
           SupportCenterInput(
-            hintText: 'Insira um Bairro',
+            hintText: 'Complemento',
+            errorText: '',
+            onChanged: controller.setComplement,
+          ),
+          SupportCenterInput(
+            hintText: 'Bairro',
             errorText: '',
             onChanged: controller.setNeighborhood,
           ),
           SupportCenterInput(
-            hintText: 'Insira um Município',
+            hintText: 'Município *',
             errorText: controller.cityError,
             onChanged: controller.setCity,
           ),
           SupportCenterDropdownInput(
-            labelText: 'Selecione o Estado',
+            labelText: 'Estado *',
             errorMessage: controller.ufError,
             currentValue: controller.ufSelected,
             dataSource: ufList,
@@ -187,41 +224,35 @@ extension _BuildWidget on _SupportCenterAddPageState {
               controller.setUf(uf);
             },
           ),
+          SupportCenterInputCep(
+            hintText: 'CEP',
+            onChanged: controller.setCep,
+            mask: [_maskCep],
+          ),
           SupportCenterInputDDD(
-            hintText: 'Insira o DDD',
+            hintText: 'DDD primário',
             errorText: controller.ddd1Error,
             onChanged: controller.setDdd1,
           ),
           SupportCenterInputPhone(
-            hintText: 'Insira um telefone',
+            hintText: 'Telefone primário',
             errorText: controller.phone1Error,
             onChanged: controller.setPhone1,
           ),
           SupportCenterInputDDD(
-            hintText: 'Insira o DDD',
+            hintText: 'DDD secundário',
             errorText: controller.ddd2Error,
             onChanged: controller.setDdd2,
           ),
           SupportCenterInputPhone(
-            hintText: 'Insira um telefone',
+            hintText: 'Telefone secundário',
             errorText: controller.phone2Error,
             onChanged: controller.setPhone2,
           ),
-          buildDropDownCategoriesList(
-            context: context,
-            labelText: 'Selecione o tipo de ponto de apoio',
-            errorMessage: controller.categoryError,
-            currentValue: controller.categorySelected,
-            dataSource: categoriesList,
-          ),
-          SupportCenterDropdownInput(
-            labelText: 'Selecione a abrangência do ponto de apoio',
-            errorMessage: controller.coverageError,
-            currentValue: controller.coverageSelected,
-            dataSource: coverageList,
-            onChanged: (coverage) {
-              controller.setCoverage(coverage);
-            },
+          SupportCenterInput(
+            hintText: 'Email',
+            errorText: '',
+            onChanged: controller.setEmail,
           ),
           SupportCenterInput(
             hintText: 'Horário de Funcionamento',
@@ -282,7 +313,8 @@ extension _BuildWidget on _SupportCenterAddPageState {
     );
   }
 
-   List<DropdownMenuItem<String>> buildCategoriesList(List<FilterTagEntity> list) {
+  List<DropdownMenuItem<String>> buildCategoriesList(
+      List<FilterTagEntity> list) {
     return list
         .map(
           (v) => DropdownMenuItem<String>(
@@ -302,7 +334,6 @@ extension _BuildWidget on _SupportCenterAddPageState {
   List<DropdownMenuItem<String>> buildUfList(List<String> list) {
     return buildDataSource(list);
   }
-
 
   List<DropdownMenuItem<String>> buildDataSource(List<String> list) {
     return list
@@ -356,7 +387,6 @@ extension _BuildWidget on _SupportCenterAddPageState {
       ),
     );
   }
-
 
   ReactionDisposer showErrorMessage() {
     return reaction((_) => controller.errorMessage, (String? message) {
