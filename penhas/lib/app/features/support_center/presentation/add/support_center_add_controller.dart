@@ -41,6 +41,8 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   String? _number;
   String? _email;
   String? _observation;
+  String? _is24h;
+  String? _hasWhatsapp;
 
   final SupportCenterUseCase _supportCenterUseCase;
 
@@ -61,6 +63,12 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @observable
   String ufSelected = '';
+
+  @observable
+  String is24hSelected = '';
+
+  @observable
+  String hasWhatsappSelected = '';
 
   @observable
   String ddd1Error = '';
@@ -147,6 +155,16 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   void setUf(String uf) {
     ufError = uf.isNotEmpty ? '' : 'Estado é campo obrigatório';
     _uf = uf;
+  }
+
+  @action
+  void setIs24h(String value) {
+    _is24h = value;
+  }
+
+  @action
+  void setHasWhasapp(String value) {
+    _hasWhatsapp = value;
   }
 
   @action
@@ -299,6 +317,8 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
         phone1: _phone1,
         ddd2: _ddd2,
         phone2: _phone2,
+        is24h: _is24h,
+        hasWhatsapp: _hasWhatsapp,
       ),
     );
 

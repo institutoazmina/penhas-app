@@ -145,6 +145,10 @@ extension _BuildWidget on _SupportCenterAddPageState {
       'SE',
       'TO'
     ]);
+    final yesNoList = buildUfList([
+      'Sim',
+      'Não',
+    ]);
 
     final _maskCep = MaskTextInputFormatter(
       mask: '#####-###',
@@ -239,6 +243,15 @@ extension _BuildWidget on _SupportCenterAddPageState {
             errorText: controller.phone1Error,
             onChanged: controller.setPhone1,
           ),
+          SupportCenterDropdownInput(
+            labelText: 'Telefone é WhatsApp?',
+            errorMessage: '',
+            currentValue: controller.is24hSelected,
+            dataSource: yesNoList,
+            onChanged: (v) {
+              controller.setHasWhasapp(v);
+            },
+          ),
           SupportCenterInputDDD(
             hintText: 'DDD secundário',
             errorText: controller.ddd2Error,
@@ -258,6 +271,15 @@ extension _BuildWidget on _SupportCenterAddPageState {
             hintText: 'Horário de Funcionamento',
             errorText: '',
             onChanged: controller.setHour,
+          ),
+          SupportCenterDropdownInput(
+            labelText: 'Atende 24H?',
+            errorMessage: '',
+            currentValue: controller.is24hSelected,
+            dataSource: yesNoList,
+            onChanged: (v) {
+              controller.setIs24h(v);
+            },
           ),
           SupportCenterInput(
             maxLines: 6,

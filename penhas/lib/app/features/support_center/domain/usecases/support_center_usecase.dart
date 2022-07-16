@@ -93,6 +93,8 @@ class SupportCenterUseCase {
     required String? phone1,
     required String? ddd2,
     required String? phone2,
+    required String? is24h,
+    required String? hasWhatsapp,
   }) {
     return _supportCenterRepository.suggestion(
       name: name,
@@ -112,6 +114,8 @@ class SupportCenterUseCase {
       phone1: phone1,
       ddd2: ddd2,
       phone2: phone2,
+      is24h: is24h,
+      hasWhatsapp: hasWhatsapp,
     );
   }
 
