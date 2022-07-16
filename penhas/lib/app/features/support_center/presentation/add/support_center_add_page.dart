@@ -359,7 +359,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Theme(
         data: Theme.of(context)
-            .copyWith(canvasColor: const Color.fromRGBO(141, 146, 157, 1)),
+            .copyWith(canvasColor: const Color.fromRGBO(240, 240, 240, 1)),
         child: DropdownButtonFormField<dynamic>(
           isExpanded: true,
           decoration: InputDecoration(
@@ -369,10 +369,10 @@ extension _BuildWidget on _SupportCenterAddPageState {
             focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: DesignSystemColors.easterPurple),
             ),
-            errorText: (errorMessage?.isEmpty ?? true) ? null : errorMessage,
             border: const OutlineInputBorder(
               borderSide: BorderSide(color: DesignSystemColors.easterPurple),
             ),
+            errorText: (errorMessage?.isEmpty ?? true) ? null : errorMessage,
             contentPadding:
                 const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
             hintText: labelText,

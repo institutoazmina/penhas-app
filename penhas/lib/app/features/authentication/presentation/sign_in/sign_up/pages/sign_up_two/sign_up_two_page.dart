@@ -157,7 +157,7 @@ class _SignUpTwoPageState
   }) {
     return Theme(
       data: Theme.of(context)
-          .copyWith(canvasColor: const Color.fromRGBO(141, 146, 157, 1)),
+          .copyWith(canvasColor: const Color.fromRGBO(240, 240, 240, 1)),
       child: DropdownButtonFormField(
         decoration: InputDecoration(
           enabledBorder: const OutlineInputBorder(

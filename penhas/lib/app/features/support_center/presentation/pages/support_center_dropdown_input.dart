@@ -43,7 +43,7 @@ class SupportCenterDropdownInput extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Theme(
         data: Theme.of(context)
-            .copyWith(canvasColor: const Color.fromRGBO(141, 146, 157, 1)),
+            .copyWith(canvasColor: const Color.fromRGBO(240, 240, 240, 1)),
         child: DropdownButtonFormField<dynamic>(
           isExpanded: true,
           decoration: InputDecoration(
