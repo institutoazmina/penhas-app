@@ -152,7 +152,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
     required String? is24h,
     required String? hasWhatsapp,
   }) async {
-    const endPoint = '/me/sugerir-pontos-de-apoio';
+    const endPoint = '/me/sugerir-pontos-de-apoio-completo';
     final bodyContent = [
       'nome=${Uri.encodeComponent(name!)}',
       'categoria=${Uri.encodeComponent(category)}',
