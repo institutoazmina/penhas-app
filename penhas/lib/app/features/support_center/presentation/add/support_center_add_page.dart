@@ -42,10 +42,13 @@ class _SupportCenterAddPageState
         elevation: 0.0,
         backgroundColor: DesignSystemColors.easterPurple,
       ),
-      body: Observer(
-        builder: (_) {
-          return buildBody(context, controller.state);
-        },
+      body: Scrollbar(
+        isAlwaysShown: true,
+        child: Observer(
+          builder: (_) {
+            return buildBody(context, controller.state);
+          },
+        ), 
       ),
     );
   }
