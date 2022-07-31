@@ -232,7 +232,8 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  void setNumber(String number) {
+  void setNumber(String number) {    
+    numberError = number.isNotEmpty ? '' : 'Número é campo obrigatório';
     _number = number;
   }
 

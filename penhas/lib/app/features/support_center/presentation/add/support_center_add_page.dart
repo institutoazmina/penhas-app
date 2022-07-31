@@ -204,7 +204,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
           ),
           SupportCenterInput(
             hintText: 'Número *',
-            errorText: '',
+            errorText: controller.numberError,
             onChanged: controller.setNumber,
           ),
           SupportCenterInput(
