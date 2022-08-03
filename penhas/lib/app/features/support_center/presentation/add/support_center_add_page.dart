@@ -202,94 +202,94 @@ extension _BuildWidget on _SupportCenterAddPageState {
             errorText: controller.addressError,
             onChanged: controller.setAddress,
           ),
-          SupportCenterInput(
-            hintText: 'Número *',
-            errorText: controller.numberError,
-            onChanged: controller.setNumber,
-          ),
-          SupportCenterInput(
-            hintText: 'Complemento',
-            errorText: '',
-            onChanged: controller.setComplement,
-          ),
-          SupportCenterInput(
-            hintText: 'Bairro',
-            errorText: '',
-            onChanged: controller.setNeighborhood,
-          ),
-          SupportCenterInput(
-            hintText: 'Município *',
-            errorText: controller.cityError,
-            onChanged: controller.setCity,
-          ),
-          SupportCenterDropdownInput(
-            labelText: 'Estado *',
-            errorMessage: controller.ufError,
-            currentValue: controller.ufSelected,
-            dataSource: ufList,
-            onChanged: (uf) {
-              controller.setUf(uf);
-            },
-          ),
+          // SupportCenterInput(
+          //   hintText: 'Número *',
+          //   errorText: controller.numberError,
+          //   onChanged: controller.setNumber,
+          // ),
+          // SupportCenterInput(
+          //   hintText: 'Complemento',
+          //   errorText: '',
+          //   onChanged: controller.setComplement,
+          // ),
+          // SupportCenterInput(
+          //   hintText: 'Bairro',
+          //   errorText: '',
+          //   onChanged: controller.setNeighborhood,
+          // ),
+          // SupportCenterInput(
+          //   hintText: 'Município *',
+          //   errorText: controller.cityError,
+          //   onChanged: controller.setCity,
+          // ),
+          // SupportCenterDropdownInput(
+          //   labelText: 'Estado *',
+          //   errorMessage: controller.ufError,
+          //   currentValue: controller.ufSelected,
+          //   dataSource: ufList,
+          //   onChanged: (uf) {
+          //     controller.setUf(uf);
+          //   },
+          // ),
           SupportCenterInputCep(
             hintText: 'CEP',
             onChanged: controller.setCep,
             mask: [_maskCep],
           ),
-          SupportCenterInputDDD(
-            hintText: 'DDD primário',
-            errorText: controller.ddd1Error,
-            onChanged: controller.setDdd1,
-          ),
-          SupportCenterInputPhone(
-            hintText: 'Telefone primário',
-            errorText: controller.phone1Error,
-            onChanged: controller.setPhone1,
-          ),
-          SupportCenterDropdownInput(
-            labelText: 'Telefone é WhatsApp?',
-            errorMessage: '',
-            currentValue: controller.is24hSelected,
-            dataSource: yesNoList,
-            onChanged: (v) {
-              controller.setHasWhasapp(v);
-            },
-          ),
-          SupportCenterInputDDD(
-            hintText: 'DDD secundário',
-            errorText: controller.ddd2Error,
-            onChanged: controller.setDdd2,
-          ),
-          SupportCenterInputPhone(
-            hintText: 'Telefone secundário',
-            errorText: controller.phone2Error,
-            onChanged: controller.setPhone2,
-          ),
+          // SupportCenterInputDDD(
+          //   hintText: 'DDD primário',
+          //   errorText: controller.ddd1Error,
+          //   onChanged: controller.setDdd1,
+          // ),
+          // SupportCenterInputPhone(
+          //   hintText: 'Telefone primário',
+          //   errorText: controller.phone1Error,
+          //   onChanged: controller.setPhone1,
+          // ),
+          // SupportCenterDropdownInput(
+          //   labelText: 'Telefone é WhatsApp?',
+          //   errorMessage: '',
+          //   currentValue: controller.is24hSelected,
+          //   dataSource: yesNoList,
+          //   onChanged: (v) {
+          //     controller.setHasWhasapp(v);
+          //   },
+          // ),
+          // SupportCenterInputDDD(
+          //   hintText: 'DDD secundário',
+          //   errorText: controller.ddd2Error,
+          //   onChanged: controller.setDdd2,
+          // ),
+          // SupportCenterInputPhone(
+          //   hintText: 'Telefone secundário',
+          //   errorText: controller.phone2Error,
+          //   onChanged: controller.setPhone2,
+          // ),
           SupportCenterInput(
             hintText: 'Email',
-            errorText: '',
+            errorText: controller.emailError,
             onChanged: controller.setEmail,
           ),
-          SupportCenterInput(
-            hintText: 'Horário de Funcionamento',
-            errorText: '',
-            onChanged: controller.setHour,
-          ),
-          SupportCenterDropdownInput(
-            labelText: 'Atende 24H?',
-            errorMessage: '',
-            currentValue: controller.is24hSelected,
-            dataSource: yesNoList,
-            onChanged: (v) {
-              controller.setIs24h(v);
-            },
-          ),
-          SupportCenterInput(
-            maxLines: 6,
-            hintText: 'Observação',
-            errorText: '',
-            onChanged: controller.setObservation,
-          ),
+          // SupportCenterInput(
+          //   hintText: 'Horário de Funcionamento',
+          //   errorText: '',
+          //   onChanged: controller.setHour,
+          // ),
+          // SupportCenterDropdownInput(
+          //   labelText: 'Atende 24H?',
+          //   errorMessage: '',
+          //   currentValue: controller.is24hSelected,
+          //   dataSource: yesNoList,
+          //   onChanged: (v) {
+          //     controller.setIs24h(v);
+          //   },
+          // ),
+          // SupportCenterInput(
+          //   maxLines: 6,
+          //   hintText: 'Observação',
+          //   errorText: '',
+          //   onChanged: controller.setObservation,
+          // ),
         ],
       ),
     );
