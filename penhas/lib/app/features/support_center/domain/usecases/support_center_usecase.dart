@@ -91,8 +91,8 @@ class SupportCenterUseCase {
     required String? hour,
     required String? ddd1,
     required String? phone1,
-    // required String? ddd2,
-    // required String? phone2,
+    required String? ddd2,
+    required String? phone2,
     required String? is24h,
     required String? hasWhatsapp,
   }) {
@@ -112,8 +112,8 @@ class SupportCenterUseCase {
       hour: hour,
       ddd1: ddd1,
       phone1: phone1,
-      // ddd2: ddd2,
-      // phone2: phone2,
+      ddd2: ddd2,
+      phone2: phone2,
       is24h: is24h,
       hasWhatsapp: hasWhatsapp,
     );

@@ -25,8 +25,8 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   }
 
   String? _address;
-  String? _cep = '';
-  String? _email = '';
+  String _cep = '';
+  String _email = '';
   String? _placeName;
   FilterTagEntity? _category;
   String? _coverage;
@@ -35,12 +35,12 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   String? _neighborhood = '';
   // String? _city;
   // String? _uf;
-  String? _hour = '';
+  String _hour = '';
   String? _number;
-  String? _phone1 = '';
-  String? _ddd1 = '';
-  // String? _phone2;
-  // String? _ddd2;
+  String _phone1 = '';
+  String _ddd1 = '';
+  String _phone2 = '';
+  String _ddd2 = '';
   String? _is24h = '';
   String? _hasWhatsapp = '';
 
@@ -76,11 +76,11 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   @observable
   String phone1Error = '';
 
-  // @observable
-  // String ddd2Error = '';
+  @observable
+  String ddd2Error = '';
 
-  // @observable
-  // String phone2Error = '';
+  @observable
+  String phone2Error = '';
 
   @observable
   String? errorMessage = '';
@@ -177,15 +177,15 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   void setDdd1(String ddd1) {
     ddd1Error = checkDdd(ddd1);
     _ddd1 = ddd1;
-    setPhone1(_phone1 ?? '');
+    setPhone1(_phone1);
   }
 
-  // @action
-  // void setDdd2(String ddd2) {
-  //   ddd2Error = checkDdd(ddd2);
-  //   _ddd2 = ddd2;
-  //   setPhone1(_phone2 ?? '');
-  // }
+  @action
+  void setDdd2(String ddd2) {
+    ddd2Error = checkDdd(ddd2);
+    _ddd2 = ddd2;
+    setPhone2(_phone2);
+  }
 
   String checkDdd(String ddd) {
     if (ddd.length == 1) {
@@ -200,21 +200,22 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     _phone1 = phone1;
   }
 
-  // @action
-  // void setPhone2(String phone2) {
-  //   phone2Error = checkPhone(phone2, _ddd2);
-  //   _phone2 = phone2;
-  // }
+  @action
+  void setPhone2(String phone2) {
+    phone2Error = checkPhone(phone2, _ddd2);
+    _phone2 = phone2;
+  }
 
   @action
-  String checkPhone(String currentPhone, String? ddd) {
-    if (ddd != null && ddd.isNotEmpty){
+  String checkPhone(String currentPhone, String ddd) {
+    if (ddd.isNotEmpty){
       if(currentPhone.isEmpty) {
         return 'Telefone é um campo obrigatório';
-      } else if (currentPhone.length < 8) {
-        return 'Confira o formato';
       }
     } 
+    if (currentPhone.isNotEmpty && currentPhone.length < 8) {
+      return 'Confira o formato';
+    }
     return '';
   }
 
@@ -255,16 +256,17 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     _hour = hour;
   }
 
-  String phoneError(String phone, String ddd) {
-    if (ddd.isNotEmpty) {
-      if (phone.isEmpty) {
-        return 'Telefone é campo obrigatório quando inserido o DDD';
-      } else if (phone.length < 8) {
-        return 'Confira o formato do telefone';
-      }
-    }
-    return '';
-  }
+  // String phoneError(String phone, String ddd) {
+  //   if (ddd.isNotEmpty) {
+  //     if (phone.isEmpty) {
+  //       return 'Telefone é um campo obrigatório';
+  //     }
+  //   }
+  //   if (phone.length < 8) {
+  //     return 'Confira o formato';
+  //   }
+  //   return '';
+  // }
 
   @action
   Future<void> savePlace() async {
@@ -299,18 +301,17 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     //   cityError = 'Município é campo obrigatório';
     // }
 
-    if (_ddd1!.length == 1) {
+    if (_ddd1.length == 1) {
       ddd1Error = 'Confira o formato.';
     }
 
-    // if (_ddd2 != null && _ddd2!.length < 2) {
-    //   ddd2Error = 'Confira o formato DDD 2';
-    // }
+    if (_ddd2.length == 1) {
+      ddd2Error = 'Confira o formato.';
+    }
+    
+    phone1Error = checkPhone(_phone1, _ddd1);
 
-
-    phoneError(_phone1 ?? '', _ddd1 ?? '');
-
-    // phoneError(_phone2 ?? '', _ddd2 ?? '');
+    phone2Error = checkPhone(_phone2, _ddd2);
 
     _savingSuggestion = ObservableFuture(
       _supportCenterUseCase.saveSuggestion(
@@ -329,8 +330,8 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
         hour: _hour,
         ddd1: _ddd1,
         phone1: _phone1,
-        // ddd2: _ddd2,
-        // phone2: _phone2,
+        ddd2: _ddd2,
+        phone2: _phone2,
         is24h: _is24h,
         hasWhatsapp: _hasWhatsapp,
       ),
@@ -347,9 +348,9 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     addressError = '';
     placeNameError = '';
     phone1Error = '';
-    // phone2Error = '';
+    phone2Error = '';
     ddd1Error = '';
-    // ddd2Error = '';
+    ddd2Error = '';
     placeDescriptionError = '';
     categoryError = '';
     coverageError = '';

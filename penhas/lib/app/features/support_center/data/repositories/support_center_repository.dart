@@ -47,8 +47,8 @@ abstract class ISupportCenterRepository {
     required String? hour,
     required String? ddd1,
     required String? phone1,
-    // required String? ddd2,
-    // required String? phone2,
+    required String? ddd2,
+    required String? phone2,
     required String? hasWhatsapp,
     required String? is24h,
   });
@@ -147,8 +147,8 @@ class SupportCenterRepository implements ISupportCenterRepository {
     required String? hour,
     required String? ddd1,
     required String? phone1,
-    // required String? ddd2,
-    // required String? phone2,
+    required String? ddd2,
+    required String? phone2,
     required String? is24h,
     required String? hasWhatsapp,
   }) async {
@@ -169,8 +169,8 @@ class SupportCenterRepository implements ISupportCenterRepository {
       'horario=${Uri.encodeComponent(hour!)}',
       'ddd1=${Uri.encodeComponent(ddd1!)}',
       'telefone1=${Uri.encodeComponent(phone1!)}',
-      // 'ddd2=${Uri.encodeComponent(ddd2!)}',
-      // 'telefone2=${Uri.encodeComponent(phone2!)}',
+      'ddd2=${Uri.encodeComponent(ddd2!)}',
+      'telefone2=${Uri.encodeComponent(phone2!)}',
       'is24h=${Uri.encodeComponent(is24h!)}',
       'hasWhatsapp=${Uri.encodeComponent(hasWhatsapp!)}',
     ].join('&');

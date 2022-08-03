@@ -255,16 +255,16 @@ extension _BuildWidget on _SupportCenterAddPageState {
               controller.setHasWhasapp(v);
             },
           ),
-          // SupportCenterInputDDD(
-          //   hintText: 'DDD secundário',
-          //   errorText: controller.ddd2Error,
-          //   onChanged: controller.setDdd2,
-          // ),
-          // SupportCenterInputPhone(
-          //   hintText: 'Telefone secundário',
-          //   errorText: controller.phone2Error,
-          //   onChanged: controller.setPhone2,
-          // ),
+          SupportCenterInputDDD(
+            hintText: 'DDD secundário',
+            errorText: controller.ddd2Error,
+            onChanged: controller.setDdd2,
+          ),
+          SupportCenterInputPhone(
+            hintText: 'Telefone secundário',
+            errorText: controller.phone2Error,
+            onChanged: controller.setPhone2,
+          ),
           SupportCenterInput(
             hintText: 'Email',
             errorText: controller.emailError,
