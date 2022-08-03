@@ -30,19 +30,19 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   String? _placeName;
   FilterTagEntity? _category;
   String? _coverage;
-  // String? _observation;
-  // String? _complement;
-  // String? _neighborhood;
+  String? _observation = '';
+  String? _complement = '';
+  String? _neighborhood = '';
   // String? _city;
   // String? _uf;
-  // String? _hour;
-  // String? _number;
+  String? _hour = '';
+  String? _number;
   // String? _phone1;
   // String? _ddd1;
   // String? _phone2;
   // String? _ddd2;
-  // String? _is24h;
-  // String? _hasWhatsapp;
+  String? _is24h = '';
+  String? _hasWhatsapp = '';
 
   final SupportCenterUseCase _supportCenterUseCase;
 
@@ -61,15 +61,14 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   // @observable
   // String cityError = '';
 
-
   // @observable
   // String ufSelected = '';
 
-  // @observable
-  // String is24hSelected = '';
+  @observable
+  String is24hSelected = '';
 
-  // @observable
-  // String hasWhatsappSelected = '';
+  @observable
+  String hasWhatsappSelected = '';
 
   // @observable
   // String ddd1Error = '';
@@ -110,8 +109,8 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   @observable
   String emailError = '';
 
-  // @observable
-  // String numberError = '';
+  @observable
+  String numberError = '';
 
   // @observable
   // String ufError = '';
@@ -139,10 +138,10 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     _placeName = name;
   }
 
-  // @action
-  // void setObservation(String observation) {
-  //   _observation = observation;
-  // }
+  @action
+  void setObservation(String observation) {
+    _observation = observation;
+  }
 
   @action
   void setCategory(String value) {
@@ -164,15 +163,15 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   //   _uf = uf;
   // }
 
-  // @action
-  // void setIs24h(String value) {
-  //   _is24h = value;
-  // }
+  @action
+  void setIs24h(String value) {
+    _is24h = value;
+  }
 
-  // @action
-  // void setHasWhasapp(String value) {
-  //   _hasWhatsapp = value;
-  // }
+  @action
+  void setHasWhasapp(String value) {
+    _hasWhatsapp = value;
+  }
 
   // @action
   // void setDdd1(String ddd1) {
@@ -222,15 +221,15 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     _cep = cep;
   }
 
-  // @action
-  // void setComplement(String complement) {
-  //   _complement = complement;
-  // }
+  @action
+  void setComplement(String complement) {
+    _complement = complement;
+  }
 
-  // @action
-  // void setNeighborhood(String neighborhood) {
-  //   _neighborhood = neighborhood;
-  // }
+  @action
+  void setNeighborhood(String neighborhood) {
+    _neighborhood = neighborhood;
+  }
 
   // @action
   // void setCity(String city) {
@@ -238,21 +237,21 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   //   _city = city;
   // }
 
-  // @action
-  // void setNumber(String number) {    
-  //   numberError = number.isNotEmpty ? '' : 'Número é campo obrigatório';
-  //   _number = number;
-  // }
+  @action
+  void setNumber(String number) {    
+    numberError = number.isNotEmpty ? '' : 'Número é campo obrigatório';
+    _number = number;
+  }
 
   @action
   void setEmail(String email) {
     _email = email;
   }
 
-  // @action
-  // void setHour(String hour) {
-  //   _hour = hour;
-  // }
+  @action
+  void setHour(String hour) {
+    _hour = hour;
+  }
 
   // String phoneError(String phone, String ddd) {
   //   if (ddd.isNotEmpty) {
@@ -286,6 +285,14 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
           'Nome do logradouro (Rua, Avenida, etc.) é campo obrigatório';
     }
 
+    if (_placeName == null || _placeName!.isEmpty) {
+      placeNameError = 'Nome do ponto de apoio é um campo obrigatório';
+    }
+
+    if (_number == null || _number!.isEmpty) {
+      numberError = 'Número é campo obrigatório';
+    }
+
     // if (_city == null || _city!.isEmpty) {
     //   cityError = 'Município é campo obrigatório';
     // }
@@ -298,9 +305,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     //   ddd2Error = 'Confira o formato DDD 2';
     // }
 
-    if (_placeName == null || _placeName!.isEmpty) {
-      placeNameError = 'Nome do ponto de apoio é um campo obrigatório';
-    }
 
     // phoneError(_phone1 ?? '', _ddd1 ?? '');
 
@@ -313,20 +317,20 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
         email: _email,
         category: _category!.id,
         coverage: _coverage,
-        // observation: _observation,
+        observation: _observation,
         cep: _cep,
         // uf: _uf,
-        // number: _number,
-        // complement: _complement,
-        // neighborhood: _neighborhood,
+        number: _number,
+        complement: _complement,
+        neighborhood: _neighborhood,
         // city: _city,
-        // hour: _hour,
+        hour: _hour,
         //ddd1: _ddd1,
         // phone1: _phone1,
         // ddd2: _ddd2,
         // phone2: _phone2,
-        // is24h: _is24h,
-        // hasWhatsapp: _hasWhatsapp,
+        is24h: _is24h,
+        hasWhatsapp: _hasWhatsapp,
       ),
     );
 
@@ -350,7 +354,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     emailError = '';
     cepError = '';
     // ufError = '';
-    //cityError = '';
+    // cityError = '';
     errorMessage = '';
   }
 }

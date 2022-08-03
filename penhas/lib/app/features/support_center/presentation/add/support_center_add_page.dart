@@ -202,21 +202,21 @@ extension _BuildWidget on _SupportCenterAddPageState {
             errorText: controller.addressError,
             onChanged: controller.setAddress,
           ),
-          // SupportCenterInput(
-          //   hintText: 'Número *',
-          //   errorText: controller.numberError,
-          //   onChanged: controller.setNumber,
-          // ),
-          // SupportCenterInput(
-          //   hintText: 'Complemento',
-          //   errorText: '',
-          //   onChanged: controller.setComplement,
-          // ),
-          // SupportCenterInput(
-          //   hintText: 'Bairro',
-          //   errorText: '',
-          //   onChanged: controller.setNeighborhood,
-          // ),
+          SupportCenterInput(
+            hintText: 'Número *',
+            errorText: controller.numberError,
+            onChanged: controller.setNumber,
+          ),
+          SupportCenterInput(
+            hintText: 'Complemento',
+            errorText: '',
+            onChanged: controller.setComplement,
+          ),
+          SupportCenterInput(
+            hintText: 'Bairro',
+            errorText: '',
+            onChanged: controller.setNeighborhood,
+          ),
           // SupportCenterInput(
           //   hintText: 'Município *',
           //   errorText: controller.cityError,
@@ -246,15 +246,15 @@ extension _BuildWidget on _SupportCenterAddPageState {
           //   errorText: controller.phone1Error,
           //   onChanged: controller.setPhone1,
           // ),
-          // SupportCenterDropdownInput(
-          //   labelText: 'Telefone é WhatsApp?',
-          //   errorMessage: '',
-          //   currentValue: controller.is24hSelected,
-          //   dataSource: yesNoList,
-          //   onChanged: (v) {
-          //     controller.setHasWhasapp(v);
-          //   },
-          // ),
+          SupportCenterDropdownInput(
+            labelText: 'Telefone é WhatsApp?',
+            errorMessage: '',
+            currentValue: controller.is24hSelected,
+            dataSource: yesNoList,
+            onChanged: (v) {
+              controller.setHasWhasapp(v);
+            },
+          ),
           // SupportCenterInputDDD(
           //   hintText: 'DDD secundário',
           //   errorText: controller.ddd2Error,
@@ -270,26 +270,26 @@ extension _BuildWidget on _SupportCenterAddPageState {
             errorText: controller.emailError,
             onChanged: controller.setEmail,
           ),
-          // SupportCenterInput(
-          //   hintText: 'Horário de Funcionamento',
-          //   errorText: '',
-          //   onChanged: controller.setHour,
-          // ),
-          // SupportCenterDropdownInput(
-          //   labelText: 'Atende 24H?',
-          //   errorMessage: '',
-          //   currentValue: controller.is24hSelected,
-          //   dataSource: yesNoList,
-          //   onChanged: (v) {
-          //     controller.setIs24h(v);
-          //   },
-          // ),
-          // SupportCenterInput(
-          //   maxLines: 6,
-          //   hintText: 'Observação',
-          //   errorText: '',
-          //   onChanged: controller.setObservation,
-          // ),
+          SupportCenterInput(
+            hintText: 'Horário de Funcionamento',
+            errorText: '',
+            onChanged: controller.setHour,
+          ),
+          SupportCenterDropdownInput(
+            labelText: 'Atende 24H?',
+            errorMessage: '',
+            currentValue: controller.is24hSelected,
+            dataSource: yesNoList,
+            onChanged: (v) {
+              controller.setIs24h(v);
+            },
+          ),
+          SupportCenterInput(
+            maxLines: 6,
+            hintText: 'Observação',
+            errorText: '',
+            onChanged: controller.setObservation,
+          ),
         ],
       ),
     );
