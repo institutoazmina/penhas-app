@@ -236,11 +236,11 @@ extension _BuildWidget on _SupportCenterAddPageState {
             onChanged: controller.setCep,
             mask: [_maskCep],
           ),
-          // SupportCenterInputDDD(
-          //   hintText: 'DDD primário',
-          //   errorText: controller.ddd1Error,
-          //   onChanged: controller.setDdd1,
-          // ),
+          SupportCenterInputDDD(
+            hintText: 'DDD primário',
+            errorText: controller.ddd1Error,
+            onChanged: controller.setDdd1,
+          ),
           // SupportCenterInputPhone(
           //   hintText: 'Telefone primário',
           //   errorText: controller.phone1Error,

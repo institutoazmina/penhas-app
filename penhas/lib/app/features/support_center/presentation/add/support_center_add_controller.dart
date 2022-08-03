@@ -38,7 +38,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   String? _hour = '';
   String? _number;
   // String? _phone1;
-  // String? _ddd1;
+  String? _ddd1 = '';
   // String? _phone2;
   // String? _ddd2;
   String? _is24h = '';
@@ -70,8 +70,8 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   @observable
   String hasWhatsappSelected = '';
 
-  // @observable
-  // String ddd1Error = '';
+  @observable
+  String ddd1Error = '';
 
   // @observable
   // String phone1Error = '';
@@ -173,12 +173,12 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     _hasWhatsapp = value;
   }
 
-  // @action
-  // void setDdd1(String ddd1) {
-  //   ddd1Error = checkDdd(ddd1);
-  //   _ddd1 = ddd1;
-  //   // setPhone1(_phone1 ?? '');
-  // }
+  @action
+  void setDdd1(String ddd1) {
+    ddd1Error = checkDdd(ddd1);
+    _ddd1 = ddd1;
+    // setPhone1(_phone1 ?? '');
+  }
 
   // @action
   // void setDdd2(String ddd2) {
@@ -187,12 +187,12 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   //   setPhone1(_phone2 ?? '');
   // }
 
-  // String checkDdd(String ddd) {
-  //   if (ddd.isNotEmpty && ddd.length < 2) {
-  //     return 'Confira o formato';
-  //   }
-  //   return '';
-  // }
+  String checkDdd(String ddd) {
+    if (ddd.length == 1) {
+      return 'Confira o formato.';
+    }
+    return '';
+  }
 
   // @action
   // void setPhone1(String phone1) {
@@ -297,9 +297,9 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     //   cityError = 'Município é campo obrigatório';
     // }
 
-    // if (_ddd1 != null && _ddd1!.length < 2) {
-    //   ddd1Error = 'Confira o formato do DDD 1';
-    // }
+    if (_ddd1!.length == 1) {
+      ddd1Error = 'Confira o formato.';
+    }
 
     // if (_ddd2 != null && _ddd2!.length < 2) {
     //   ddd2Error = 'Confira o formato DDD 2';
@@ -325,7 +325,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
         neighborhood: _neighborhood,
         // city: _city,
         hour: _hour,
-        //ddd1: _ddd1,
+        ddd1: _ddd1,
         // phone1: _phone1,
         // ddd2: _ddd2,
         // phone2: _phone2,
@@ -346,7 +346,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     placeNameError = '';
     // phone1Error = '';
     // phone2Error = '';
-    // ddd1Error = '';
+    ddd1Error = '';
     // ddd2Error = '';
     placeDescriptionError = '';
     categoryError = '';
