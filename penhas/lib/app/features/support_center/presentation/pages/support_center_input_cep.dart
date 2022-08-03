@@ -22,6 +22,7 @@ class SupportCenterInputCep extends StatelessWidget {
         decoration: InputDecoration(
           counterText: '',
           hintText: hintText,
+          hintStyle: const TextStyle(color: Colors.black),
           border: const OutlineInputBorder(),
           contentPadding:
               const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
