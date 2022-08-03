@@ -37,7 +37,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   // String? _uf;
   String? _hour = '';
   String? _number;
-  // String? _phone1;
+  String? _phone1 = '';
   String? _ddd1 = '';
   // String? _phone2;
   // String? _ddd2;
@@ -73,8 +73,8 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   @observable
   String ddd1Error = '';
 
-  // @observable
-  // String phone1Error = '';
+  @observable
+  String phone1Error = '';
 
   // @observable
   // String ddd2Error = '';
@@ -177,7 +177,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   void setDdd1(String ddd1) {
     ddd1Error = checkDdd(ddd1);
     _ddd1 = ddd1;
-    // setPhone1(_phone1 ?? '');
+    setPhone1(_phone1 ?? '');
   }
 
   // @action
@@ -194,11 +194,11 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     return '';
   }
 
-  // @action
-  // void setPhone1(String phone1) {
-  //   phone1Error = checkPhone(phone1, _ddd1);
-  //   _phone1 = phone1;
-  // }
+  @action
+  void setPhone1(String phone1) {
+    phone1Error = checkPhone(phone1, _ddd1);
+    _phone1 = phone1;
+  }
 
   // @action
   // void setPhone2(String phone2) {
@@ -206,15 +206,17 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   //   _phone2 = phone2;
   // }
 
-  // @action
-  // String checkPhone(String currentPhone, String? ddd) {
-  //   if ((ddd != null || ddd!.isNotEmpty) && currentPhone.isEmpty) {
-  //     return 'Telefone é um campo obrigatório';
-  //   } else if (currentPhone.length < 8) {
-  //     return 'Confira o formato';
-  //   }
-  //   return '';
-  // }
+  @action
+  String checkPhone(String currentPhone, String? ddd) {
+    if (ddd != null && ddd.isNotEmpty){
+      if(currentPhone.isEmpty) {
+        return 'Telefone é um campo obrigatório';
+      } else if (currentPhone.length < 8) {
+        return 'Confira o formato';
+      }
+    } 
+    return '';
+  }
 
   @action
   void setCep(String cep) {
@@ -253,16 +255,16 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     _hour = hour;
   }
 
-  // String phoneError(String phone, String ddd) {
-  //   if (ddd.isNotEmpty) {
-  //     if (phone.isEmpty) {
-  //       return 'Telefone é campo obrigatório quando inserido o DDD';
-  //     } else if (phone.length < 8) {
-  //       return 'Confira o formato do telefone';
-  //     }
-  //   }
-  //   return '';
-  // }
+  String phoneError(String phone, String ddd) {
+    if (ddd.isNotEmpty) {
+      if (phone.isEmpty) {
+        return 'Telefone é campo obrigatório quando inserido o DDD';
+      } else if (phone.length < 8) {
+        return 'Confira o formato do telefone';
+      }
+    }
+    return '';
+  }
 
   @action
   Future<void> savePlace() async {
@@ -306,7 +308,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     // }
 
 
-    // phoneError(_phone1 ?? '', _ddd1 ?? '');
+    phoneError(_phone1 ?? '', _ddd1 ?? '');
 
     // phoneError(_phone2 ?? '', _ddd2 ?? '');
 
@@ -326,7 +328,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
         // city: _city,
         hour: _hour,
         ddd1: _ddd1,
-        // phone1: _phone1,
+        phone1: _phone1,
         // ddd2: _ddd2,
         // phone2: _phone2,
         is24h: _is24h,
@@ -344,7 +346,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   void resetErrors() {
     addressError = '';
     placeNameError = '';
-    // phone1Error = '';
+    phone1Error = '';
     // phone2Error = '';
     ddd1Error = '';
     // ddd2Error = '';

@@ -241,11 +241,11 @@ extension _BuildWidget on _SupportCenterAddPageState {
             errorText: controller.ddd1Error,
             onChanged: controller.setDdd1,
           ),
-          // SupportCenterInputPhone(
-          //   hintText: 'Telefone primário',
-          //   errorText: controller.phone1Error,
-          //   onChanged: controller.setPhone1,
-          // ),
+          SupportCenterInputPhone(
+            hintText: 'Telefone primário',
+            errorText: controller.phone1Error,
+            onChanged: controller.setPhone1,
+          ),
           SupportCenterDropdownInput(
             labelText: 'Telefone é WhatsApp?',
             errorMessage: '',
