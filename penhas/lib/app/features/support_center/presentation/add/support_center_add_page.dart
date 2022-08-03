@@ -217,20 +217,20 @@ extension _BuildWidget on _SupportCenterAddPageState {
             errorText: '',
             onChanged: controller.setNeighborhood,
           ),
-          // SupportCenterInput(
-          //   hintText: 'Município *',
-          //   errorText: controller.cityError,
-          //   onChanged: controller.setCity,
-          // ),
-          // SupportCenterDropdownInput(
-          //   labelText: 'Estado *',
-          //   errorMessage: controller.ufError,
-          //   currentValue: controller.ufSelected,
-          //   dataSource: ufList,
-          //   onChanged: (uf) {
-          //     controller.setUf(uf);
-          //   },
-          // ),
+          SupportCenterInput(
+            hintText: 'Município *',
+            errorText: controller.cityError,
+            onChanged: controller.setCity,
+          ),
+          SupportCenterDropdownInput(
+            labelText: 'Estado *',
+            errorMessage: controller.ufError,
+            currentValue: controller.ufSelected,
+            dataSource: ufList,
+            onChanged: (uf) {
+              controller.setUf(uf);
+            },
+          ),
           SupportCenterInputCep(
             hintText: 'CEP',
             onChanged: controller.setCep,

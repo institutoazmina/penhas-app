@@ -33,8 +33,8 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   String? _observation = '';
   String? _complement = '';
   String? _neighborhood = '';
-  // String? _city;
-  // String? _uf;
+  String? _city;
+  String? _uf;
   String _hour = '';
   String? _number;
   String _phone1 = '';
@@ -58,11 +58,11 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   @observable
   String placeDescriptionError = '';
 
-  // @observable
-  // String cityError = '';
+  @observable
+  String cityError = '';
 
-  // @observable
-  // String ufSelected = '';
+  @observable
+  String ufSelected = '';
 
   @observable
   String is24hSelected = '';
@@ -112,8 +112,8 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   @observable
   String numberError = '';
 
-  // @observable
-  // String ufError = '';
+  @observable
+  String ufError = '';
 
   @observable
   SupportCenterAddState state = const SupportCenterAddState.initial();
@@ -157,11 +157,11 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     _coverage = coverage;
   }
 
-  // @action
-  // void setUf(String uf) {
-  //   ufError = uf.isNotEmpty ? '' : 'Estado é campo obrigatório';
-  //   _uf = uf;
-  // }
+  @action
+  void setUf(String uf) {
+    ufError = uf.isNotEmpty ? '' : 'Estado é campo obrigatório';
+    _uf = uf;
+  }
 
   @action
   void setIs24h(String value) {
@@ -234,11 +234,11 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     _neighborhood = neighborhood;
   }
 
-  // @action
-  // void setCity(String city) {
-  //   cityError = city.isNotEmpty ? '' : 'Município é campo obrigatório';
-  //   _city = city;
-  // }
+  @action
+  void setCity(String city) {
+    cityError = city.isNotEmpty ? '' : 'Município é campo obrigatório';
+    _city = city;
+  }
 
   @action
   void setNumber(String number) {    
@@ -256,18 +256,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     _hour = hour;
   }
 
-  // String phoneError(String phone, String ddd) {
-  //   if (ddd.isNotEmpty) {
-  //     if (phone.isEmpty) {
-  //       return 'Telefone é um campo obrigatório';
-  //     }
-  //   }
-  //   if (phone.length < 8) {
-  //     return 'Confira o formato';
-  //   }
-  //   return '';
-  // }
-
   @action
   Future<void> savePlace() async {
     resetErrors();
@@ -280,9 +268,9 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
       coverageError = 'Abrangência é campo obrigatório';
     }
 
-    // if (_uf == null) {
-    //   ufError = 'Estado é campo obrigatório';
-    // }
+    if (_uf == null) {
+      ufError = 'Estado é campo obrigatório';
+    }
 
     if (_address == null || _address!.isEmpty) {
       addressError =
@@ -297,9 +285,9 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
       numberError = 'Número é campo obrigatório';
     }
 
-    // if (_city == null || _city!.isEmpty) {
-    //   cityError = 'Município é campo obrigatório';
-    // }
+    if (_city == null || _city!.isEmpty) {
+      cityError = 'Município é campo obrigatório';
+    }
 
     if (_ddd1.length == 1) {
       ddd1Error = 'Confira o formato.';
@@ -322,11 +310,11 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
         coverage: _coverage,
         observation: _observation,
         cep: _cep,
-        // uf: _uf,
+        uf: _uf,
         number: _number,
         complement: _complement,
         neighborhood: _neighborhood,
-        // city: _city,
+        city: _city,
         hour: _hour,
         ddd1: _ddd1,
         phone1: _phone1,
@@ -356,8 +344,8 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     coverageError = '';
     emailError = '';
     cepError = '';
-    // ufError = '';
-    // cityError = '';
+    ufError = '';
+    cityError = '';
     errorMessage = '';
   }
 }
