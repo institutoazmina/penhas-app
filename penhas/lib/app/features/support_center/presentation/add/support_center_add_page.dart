@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/extension/asuka.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
@@ -10,7 +11,11 @@ import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.da
 import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
 import 'package:penhas/app/features/support_center/domain/states/support_center_add_state.dart';
 import 'package:penhas/app/features/support_center/presentation/add/support_center_add_controller.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_dropdown_input.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_input.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_cep.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_ddd.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_phone.dart';
 import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
@@ -37,10 +42,13 @@ class _SupportCenterAddPageState
         elevation: 0.0,
         backgroundColor: DesignSystemColors.easterPurple,
       ),
-      body: Observer(
-        builder: (_) {
-          return buildBody(context, controller.state);
-        },
+      body: Scrollbar(
+        isAlwaysShown: true,
+        child: Observer(
+          builder: (_) {
+            return buildBody(context, controller.state);
+          },
+        ), 
       ),
     );
   }
@@ -109,7 +117,46 @@ extension _BuildWidget on _SupportCenterAddPageState {
     BuildContext context,
     List<FilterTagEntity> categories,
   ) {
-    final dataSource = buildDataSource(categories);
+    final categoriesList = buildCategoriesList(categories);
+    final coverageList = buildCoverageList(['Local', 'Regional', 'Nacional']);
+    final ufList = buildUfList([
+      'AC',
+      'AL',
+      'AP',
+      'AM',
+      'BA',
+      'CE',
+      'DF',
+      'ES',
+      'GO',
+      'MA',
+      'MT',
+      'MS',
+      'MG',
+      'PA',
+      'PB',
+      'PR',
+      'PE',
+      'PI',
+      'RJ',
+      'RN',
+      'RS',
+      'RO',
+      'RR',
+      'SC',
+      'SP',
+      'SE',
+      'TO'
+    ]);
+    final yesNoList = buildUfList([
+      'Sim',
+      'Não',
+    ]);
+
+    final _maskCep = MaskTextInputFormatter(
+      mask: '#####-###',
+      filter: {'#': RegExp('[0-9]')},
+    );
 
     return Container(
       padding: const EdgeInsets.all(16.0),
@@ -124,30 +171,124 @@ extension _BuildWidget on _SupportCenterAddPageState {
             child:
                 Text('Informação sobre o ponto de apoio', style: addressTitle),
           ),
-          SupportCenterInput(
-            maxLines: 2,
-            hintText: 'Insira um endereço ou CEP',
-            errorText: controller.addressError,
-            onChanged: controller.setAddress,
-          ),
-          buildDropdownList(
-            context: context,
-            labelText: 'Selecione o tipo de ponto de apoio',
-            errorMessage: controller.categoryError,
-            currentValue: controller.categorySelected,
-            dataSource: dataSource,
+          Text(
+            '* Marcam os campos com preenchimento obrigatório.',
+            style: introdutionText,
           ),
           SupportCenterInput(
-            hintText: 'Nome do ponto de apoio',
+            hintText: 'Nome *',
             errorText: controller.placeNameError,
             onChanged: controller.setPlaceName,
           ),
+          buildDropDownCategoriesList(
+            context: context,
+            labelText: 'Categoria *',
+            errorMessage: controller.categoryError,
+            currentValue: controller.categorySelected,
+            dataSource: categoriesList,
+          ),
+          SupportCenterDropdownInput(
+            labelText: 'Abrangência *',
+            errorMessage: controller.coverageError,
+            currentValue: controller.coverageSelected,
+            dataSource: coverageList,
+            onChanged: (coverage) {
+              controller.setCoverage(coverage);
+            },
+          ),
+          SupportCenterInput(
+            maxLines: 2,
+            hintText: 'Nome do logradouro (Rua, Avenida, etc) *',
+            errorText: controller.addressError,
+            onChanged: controller.setAddress,
+          ),
+          SupportCenterInput(
+            hintText: 'Número *',
+            errorText: controller.numberError,
+            onChanged: controller.setNumber,
+          ),
+          SupportCenterInput(
+            hintText: 'Complemento',
+            errorText: '',
+            onChanged: controller.setComplement,
+          ),
+          SupportCenterInput(
+            hintText: 'Bairro',
+            errorText: '',
+            onChanged: controller.setNeighborhood,
+          ),
+          SupportCenterInput(
+            hintText: 'Município *',
+            errorText: controller.cityError,
+            onChanged: controller.setCity,
+          ),
+          SupportCenterDropdownInput(
+            labelText: 'Estado *',
+            errorMessage: controller.ufError,
+            currentValue: controller.ufSelected,
+            dataSource: ufList,
+            onChanged: (uf) {
+              controller.setUf(uf);
+            },
+          ),
+          SupportCenterInputCep(
+            hintText: 'CEP',
+            onChanged: controller.setCep,
+            mask: [_maskCep],
+          ),
+          SupportCenterInputDDD(
+            hintText: 'DDD primário',
+            errorText: controller.ddd1Error,
+            onChanged: controller.setDdd1,
+          ),
+          SupportCenterInputPhone(
+            hintText: 'Telefone primário',
+            errorText: controller.phone1Error,
+            onChanged: controller.setPhone1,
+          ),
+          SupportCenterDropdownInput(
+            labelText: 'Telefone é WhatsApp?',
+            errorMessage: '',
+            currentValue: controller.is24hSelected,
+            dataSource: yesNoList,
+            onChanged: (v) {
+              controller.setHasWhasapp(v);
+            },
+          ),
+          SupportCenterInputDDD(
+            hintText: 'DDD secundário',
+            errorText: controller.ddd2Error,
+            onChanged: controller.setDdd2,
+          ),
+          SupportCenterInputPhone(
+            hintText: 'Telefone secundário',
+            errorText: controller.phone2Error,
+            onChanged: controller.setPhone2,
+          ),
+          SupportCenterInput(
+            hintText: 'Email',
+            errorText: controller.emailError,
+            onChanged: controller.setEmail,
+          ),
+          SupportCenterInput(
+            hintText: 'Horário de Funcionamento',
+            errorText: '',
+            onChanged: controller.setHour,
+          ),
+          SupportCenterDropdownInput(
+            labelText: 'Atende 24H?',
+            errorMessage: '',
+            currentValue: controller.is24hSelected,
+            dataSource: yesNoList,
+            onChanged: (v) {
+              controller.setIs24h(v);
+            },
+          ),
           SupportCenterInput(
             maxLines: 6,
-            hintText:
-                'Explique brevemente os serviços oferecidos por este ponto de apoio',
-            errorText: controller.placeDescriptionError,
-            onChanged: controller.setPlaceDescription,
+            hintText: 'Observação',
+            errorText: '',
+            onChanged: controller.setObservation,
           ),
         ],
       ),
@@ -197,7 +338,8 @@ extension _BuildWidget on _SupportCenterAddPageState {
     );
   }
 
-  List<DropdownMenuItem<String>> buildDataSource(List<FilterTagEntity> list) {
+  List<DropdownMenuItem<String>> buildCategoriesList(
+      List<FilterTagEntity> list) {
     return list
         .map(
           (v) => DropdownMenuItem<String>(
@@ -210,7 +352,28 @@ extension _BuildWidget on _SupportCenterAddPageState {
         .toList();
   }
 
-  Widget buildDropdownList({
+  List<DropdownMenuItem<String>> buildCoverageList(List<String> list) {
+    return buildDataSource(list);
+  }
+
+  List<DropdownMenuItem<String>> buildUfList(List<String> list) {
+    return buildDataSource(list);
+  }
+
+  List<DropdownMenuItem<String>> buildDataSource(List<String> list) {
+    return list
+        .map(
+          (v) => DropdownMenuItem<String>(
+            value: v.toLowerCase(),
+            child: Text(
+              v,
+            ),
+          ),
+        )
+        .toList();
+  }
+
+  Widget buildDropDownCategoriesList({
     required BuildContext context,
     required String labelText,
     String? errorMessage,
@@ -221,7 +384,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Theme(
         data: Theme.of(context)
-            .copyWith(canvasColor: const Color.fromRGBO(141, 146, 157, 1)),
+            .copyWith(canvasColor: const Color.fromRGBO(240, 240, 240, 1)),
         child: DropdownButtonFormField<dynamic>(
           isExpanded: true,
           decoration: InputDecoration(
@@ -231,10 +394,10 @@ extension _BuildWidget on _SupportCenterAddPageState {
             focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: DesignSystemColors.easterPurple),
             ),
-            errorText: (errorMessage?.isEmpty ?? true) ? null : errorMessage,
             border: const OutlineInputBorder(
               borderSide: BorderSide(color: DesignSystemColors.easterPurple),
             ),
+            errorText: (errorMessage?.isEmpty ?? true) ? null : errorMessage,
             contentPadding:
                 const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
             hintText: labelText,
@@ -242,7 +405,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
           ),
           items: dataSource as List<DropdownMenuItem>,
           onChanged: (category) {
-            controller.setCategorie(category as String);
+            controller.setCategory(category as String);
           },
           value: currentValue.isEmpty ? null : currentValue,
         ),

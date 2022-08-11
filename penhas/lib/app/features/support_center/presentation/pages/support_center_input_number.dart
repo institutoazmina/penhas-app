@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-class SupportCenterInput extends StatelessWidget {
-  const SupportCenterInput({
+class SupportCenterInputNumber extends StatelessWidget {
+  const SupportCenterInputNumber({
     Key? key,
     this.maxLines = 1,
     required this.hintText,
@@ -23,7 +23,6 @@ class SupportCenterInput extends StatelessWidget {
         maxLines: maxLines,
         decoration: InputDecoration(
           hintText: hintText,
-          hintStyle: const TextStyle(color: Colors.black),
           border: const OutlineInputBorder(),
           contentPadding:
               const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
@@ -39,7 +38,7 @@ class SupportCenterInput extends StatelessWidget {
           ),
           errorText: errorText.isEmpty ? null : errorText,
         ),
-        keyboardType: TextInputType.streetAddress,
+        keyboardType: TextInputType.number,
         onChanged: onChanged,
       ),
     );

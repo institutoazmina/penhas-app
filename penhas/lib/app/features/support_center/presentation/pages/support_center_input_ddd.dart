@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-class SupportCenterInput extends StatelessWidget {
-  const SupportCenterInput({
+class SupportCenterInputDDD extends StatelessWidget {
+  const SupportCenterInputDDD({
     Key? key,
-    this.maxLines = 1,
     required this.hintText,
     required this.errorText,
     required this.onChanged,
   }) : super(key: key);
 
-  final int maxLines;
   final String hintText;
   final String errorText;
   final ValueChanged<String> onChanged;
@@ -19,9 +18,9 @@ class SupportCenterInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: TextField(
-        maxLines: maxLines,
+      child: TextFormField(
         decoration: InputDecoration(
+          counterText: '',
           hintText: hintText,
           hintStyle: const TextStyle(color: Colors.black),
           border: const OutlineInputBorder(),
@@ -39,8 +38,12 @@ class SupportCenterInput extends StatelessWidget {
           ),
           errorText: errorText.isEmpty ? null : errorText,
         ),
-        keyboardType: TextInputType.streetAddress,
+        keyboardType: TextInputType.phone,
+        inputFormatters: <TextInputFormatter>[
+          FilteringTextInputFormatter.digitsOnly
+        ],
         onChanged: onChanged,
+        maxLength: 2,
       ),
     );
   }

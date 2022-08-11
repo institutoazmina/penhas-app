@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 
-class SupportCenterInput extends StatelessWidget {
-  const SupportCenterInput({
+class SupportCenterInputCep extends StatelessWidget {
+  const SupportCenterInputCep({
     Key? key,
-    this.maxLines = 1,
     required this.hintText,
-    required this.errorText,
     required this.onChanged,
+    required this.mask,
   }) : super(key: key);
 
-  final int maxLines;
   final String hintText;
-  final String errorText;
   final ValueChanged<String> onChanged;
+  final List<MaskTextInputFormatter> mask;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: TextField(
-        maxLines: maxLines,
+      child: TextFormField(
         decoration: InputDecoration(
+          counterText: '',
           hintText: hintText,
           hintStyle: const TextStyle(color: Colors.black),
           border: const OutlineInputBorder(),
@@ -37,10 +36,11 @@ class SupportCenterInput extends StatelessWidget {
               color: DesignSystemColors.easterPurple,
             ),
           ),
-          errorText: errorText.isEmpty ? null : errorText,
         ),
-        keyboardType: TextInputType.streetAddress,
+        keyboardType: TextInputType.number,
         onChanged: onChanged,
+        maxLength: 9,
+        inputFormatters: mask,
       ),
     );
   }

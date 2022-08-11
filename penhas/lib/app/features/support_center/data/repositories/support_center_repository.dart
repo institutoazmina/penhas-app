@@ -33,9 +33,24 @@ abstract class ISupportCenterRepository {
   );
   Future<Either<Failure, AlertModel>> suggestion({
     required String? name,
+    required String? email,
     required String? address,
     required String category,
-    required String? description,
+    required String? observation,
+    required String? cep,
+    required String? coverage,
+    required String? complement,
+    required String? neighborhood,
+    required String? city,
+    required String? uf,
+    required String? number,
+    required String? hour,
+    required String? ddd1,
+    required String? phone1,
+    required String? ddd2,
+    required String? phone2,
+    required String? hasWhatsapp,
+    required String? is24h,
   });
 }
 
@@ -119,15 +134,45 @@ class SupportCenterRepository implements ISupportCenterRepository {
   Future<Either<Failure, AlertModel>> suggestion({
     required String? name,
     required String? address,
+    required String? email,
     required String category,
-    required String? description,
+    required String? observation,
+    required String? cep,
+    required String? coverage,
+    required String? complement,
+    required String? neighborhood,
+    required String? city,
+    required String? uf,
+    required String? number,
+    required String? hour,
+    required String? ddd1,
+    required String? phone1,
+    required String? ddd2,
+    required String? phone2,
+    required String? is24h,
+    required String? hasWhatsapp,
   }) async {
-    const endPoint = '/me/sugerir-pontos-de-apoio';
+    const endPoint = '/me/sugerir-pontos-de-apoio-completo';
     final bodyContent = [
       'nome=${Uri.encodeComponent(name!)}',
       'categoria=${Uri.encodeComponent(category)}',
-      'endereco_ou_cep=${Uri.encodeComponent(address!)}',
-      'descricao_servico=${Uri.encodeComponent(description!)}',
+      'nome_logradouro=${Uri.encodeComponent(address!)}',
+      'observacao=${Uri.encodeComponent(observation!)}',
+      'cep=${Uri.encodeComponent(cep!)}',
+      'abrangencia=${Uri.encodeComponent(coverage!)}',
+      'complemento=${Uri.encodeComponent(complement!)}',
+      'bairro=${Uri.encodeComponent(neighborhood!)}',
+      'municipio=${Uri.encodeComponent(city!)}',
+      'uf=${Uri.encodeComponent(uf!)}',
+      'email=${Uri.encodeComponent(email!)}',
+      'numero=${Uri.encodeComponent(number!)}',
+      'horario=${Uri.encodeComponent(hour!)}',
+      'ddd1=${Uri.encodeComponent(ddd1!)}',
+      'telefone1=${Uri.encodeComponent(phone1!)}',
+      'ddd2=${Uri.encodeComponent(ddd2!)}',
+      'telefone2=${Uri.encodeComponent(phone2!)}',
+      'is24h=${Uri.encodeComponent(is24h!)}',
+      'hasWhatsapp=${Uri.encodeComponent(hasWhatsapp!)}',
     ].join('&');
 
     try {

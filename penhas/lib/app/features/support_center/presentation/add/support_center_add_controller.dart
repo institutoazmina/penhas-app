@@ -25,9 +25,24 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   }
 
   String? _address;
+  String _cep = '';
+  String _email = '';
   String? _placeName;
-  String? _placeDescription;
   FilterTagEntity? _category;
+  String? _coverage;
+  String? _observation = '';
+  String? _complement = '';
+  String? _neighborhood = '';
+  String? _city;
+  String? _uf;
+  String _hour = '';
+  String? _number;
+  String _phone1 = '';
+  String _ddd1 = '';
+  String _phone2 = '';
+  String _ddd2 = '';
+  String? _is24h = '';
+  String? _hasWhatsapp = '';
 
   final SupportCenterUseCase _supportCenterUseCase;
 
@@ -44,16 +59,61 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   String placeDescriptionError = '';
 
   @observable
+  String cityError = '';
+
+  @observable
+  String ufSelected = '';
+
+  @observable
+  String is24hSelected = '';
+
+  @observable
+  String hasWhatsappSelected = '';
+
+  @observable
+  String ddd1Error = '';
+
+  @observable
+  String phone1Error = '';
+
+  @observable
+  String ddd2Error = '';
+
+  @observable
+  String phone2Error = '';
+
+  @observable
   String? errorMessage = '';
 
   @observable
   ObservableList<FilterTagEntity> places = ObservableList<FilterTagEntity>();
 
   @observable
+  ObservableList<FilterTagEntity> coverage = ObservableList<FilterTagEntity>();
+
+  @observable
   String categorySelected = '';
 
   @observable
+  String coverageSelected = '';
+
+  @observable
   String categoryError = '';
+
+  @observable
+  String coverageError = '';
+  
+  @observable
+  String cepError = '';
+  
+  @observable
+  String emailError = '';
+
+  @observable
+  String numberError = '';
+
+  @observable
+  String ufError = '';
 
   @observable
   SupportCenterAddState state = const SupportCenterAddState.initial();
@@ -68,7 +128,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @action
   void setAddress(String address) {
-    addressError = address.isNotEmpty ? '' : 'Endereço é campo obrigatório';
+    addressError = address.isNotEmpty ? '' : 'Logradouro é campo obrigatório';
     _address = address;
   }
 
@@ -79,17 +139,121 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  void setPlaceDescription(String description) {
-    placeDescriptionError =
-        description.isNotEmpty ? '' : 'Nome do ponto é campo obrigatório';
-    _placeDescription = description;
+  void setObservation(String observation) {
+    _observation = observation;
   }
 
   @action
-  void setCategorie(String value) {
-    categoryError = value.isNotEmpty ? '' : 'Nome do ponto é campo obrigatório';
+  void setCategory(String value) {
+    categoryError = value.isNotEmpty ? '' : 'Categoria é campo obrigatório';
     _category = places.firstWhere((element) => element.id == value);
     categorySelected = _category!.id;
+  }
+
+  @action
+  void setCoverage(String coverage) {
+    coverageError =
+        coverage.isNotEmpty ? '' : 'Abrangência é campo obrigatório';
+    _coverage = coverage;
+  }
+
+  @action
+  void setUf(String uf) {
+    ufError = uf.isNotEmpty ? '' : 'Estado é campo obrigatório';
+    _uf = uf;
+  }
+
+  @action
+  void setIs24h(String value) {
+    _is24h = value;
+  }
+
+  @action
+  void setHasWhasapp(String value) {
+    _hasWhatsapp = value;
+  }
+
+  @action
+  void setDdd1(String ddd1) {
+    ddd1Error = checkDdd(ddd1);
+    _ddd1 = ddd1;
+    setPhone1(_phone1);
+  }
+
+  @action
+  void setDdd2(String ddd2) {
+    ddd2Error = checkDdd(ddd2);
+    _ddd2 = ddd2;
+    setPhone2(_phone2);
+  }
+
+  String checkDdd(String ddd) {
+    if (ddd.length == 1) {
+      return 'Confira o formato.';
+    }
+    return '';
+  }
+
+  @action
+  void setPhone1(String phone1) {
+    phone1Error = checkPhone(phone1, _ddd1);
+    _phone1 = phone1;
+  }
+
+  @action
+  void setPhone2(String phone2) {
+    phone2Error = checkPhone(phone2, _ddd2);
+    _phone2 = phone2;
+  }
+
+  @action
+  String checkPhone(String currentPhone, String ddd) {
+    if (ddd.isNotEmpty){
+      if(currentPhone.isEmpty) {
+        return 'Telefone é um campo obrigatório';
+      }
+    } 
+    if (currentPhone.isNotEmpty && currentPhone.length < 8) {
+      return 'Confira o formato';
+    }
+    return '';
+  }
+
+  @action
+  void setCep(String cep) {
+    _cep = cep;
+  }
+
+  @action
+  void setComplement(String complement) {
+    _complement = complement;
+  }
+
+  @action
+  void setNeighborhood(String neighborhood) {
+    _neighborhood = neighborhood;
+  }
+
+  @action
+  void setCity(String city) {
+    cityError = city.isNotEmpty ? '' : 'Município é campo obrigatório';
+    _city = city;
+  }
+
+  @action
+  void setNumber(String number) {    
+    numberError = number.isNotEmpty ? '' : 'Número é campo obrigatório';
+    _number = number;
+  }
+
+  @action
+  void setEmail(String email) {
+    _email = email;
+  }
+
+  @action
+  void setHour(String hour) {
+    _hour = hour;
   }
 
   @action
@@ -97,27 +261,67 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     resetErrors();
 
     if (_category == null) {
-      categoryError = 'O tipo é um campo obrigatório';
+      categoryError = 'Categoria é um campo obrigatório';
+    }
+
+    if (_coverage == null) {
+      coverageError = 'Abrangência é campo obrigatório';
+    }
+
+    if (_uf == null) {
+      ufError = 'Estado é campo obrigatório';
     }
 
     if (_address == null || _address!.isEmpty) {
-      addressError = 'Endereço é campo obrigatório';
+      addressError =
+          'Nome do logradouro (Rua, Avenida, etc.) é campo obrigatório';
     }
 
     if (_placeName == null || _placeName!.isEmpty) {
-      placeNameError = 'Nome do ponto é campo obrigatório';
+      placeNameError = 'Nome do ponto de apoio é um campo obrigatório';
     }
 
-    if (_placeDescription == null || _placeDescription!.isEmpty) {
-      placeDescriptionError = 'Deixa uma descrição do ponto de apoio';
+    if (_number == null || _number!.isEmpty) {
+      numberError = 'Número é campo obrigatório';
     }
+
+    if (_city == null || _city!.isEmpty) {
+      cityError = 'Município é campo obrigatório';
+    }
+
+    if (_ddd1.length == 1) {
+      ddd1Error = 'Confira o formato.';
+    }
+
+    if (_ddd2.length == 1) {
+      ddd2Error = 'Confira o formato.';
+    }
+    
+    phone1Error = checkPhone(_phone1, _ddd1);
+
+    phone2Error = checkPhone(_phone2, _ddd2);
 
     _savingSuggestion = ObservableFuture(
       _supportCenterUseCase.saveSuggestion(
         name: _placeName,
         address: _address,
+        email: _email,
         category: _category!.id,
-        description: _placeDescription,
+        coverage: _coverage,
+        observation: _observation,
+        cep: _cep,
+        uf: _uf,
+        number: _number,
+        complement: _complement,
+        neighborhood: _neighborhood,
+        city: _city,
+        hour: _hour,
+        ddd1: _ddd1,
+        phone1: _phone1,
+        ddd2: _ddd2,
+        phone2: _phone2,
+        is24h: _is24h,
+        hasWhatsapp: _hasWhatsapp,
       ),
     );
 
@@ -131,7 +335,17 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   void resetErrors() {
     addressError = '';
     placeNameError = '';
+    phone1Error = '';
+    phone2Error = '';
+    ddd1Error = '';
+    ddd2Error = '';
     placeDescriptionError = '';
+    categoryError = '';
+    coverageError = '';
+    emailError = '';
+    cepError = '';
+    ufError = '';
+    cityError = '';
     errorMessage = '';
   }
 }
