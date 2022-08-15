@@ -25,6 +25,7 @@ class DesignSystemColors {
   static const nigthBlue = Color.fromRGBO(5, 8, 70, 1);
   static const bluishPurple = Color.fromRGBO(129, 51, 255, 1);
   static const systemBackgroundColor = Color.fromRGBO(248, 248, 248, 1);
+  static const splashColor = Color.fromARGB(16, 0, 0, 0);
   static Color hexColor(String value) {
     String hexColor = value.toUpperCase().replaceAll('#', '');
     if (hexColor.length == 6) {

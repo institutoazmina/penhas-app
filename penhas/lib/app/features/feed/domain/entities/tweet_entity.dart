@@ -126,13 +126,13 @@ class TweetNewsEntity extends TweetTiles {
   });
 
   final String? date;
-  final String? newsUri;
+  final String newsUri;
   final String? imageUri;
   final String? source;
-  final String? title;
+  final String title;
 
   @override
-  List<Object?> get props => [date, newsUri, imageUri, source, title!];
+  List<Object?> get props => [date, newsUri, imageUri, source, title];
 
   @override
   bool get stringify => true;

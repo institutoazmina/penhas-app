@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' as material;
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/shared/logger/log.dart';
 import 'package:penhas/app/shared/navigation/route.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AppNavigator {
   static void popAndPush(AppRoute route) {
@@ -50,5 +51,16 @@ class AppNavigator {
       },
     );
     return lastRoute?.settings.name;
+  }
+
+  static Future<void> launchURL(String url) async {
+    try {
+      if (!await canLaunch(url)) {
+        throw 'Can\'t launch url "$url"';
+      }
+      await launch(url);
+    } catch (e, stack) {
+      logError(e, stack);
+    }
   }
 }

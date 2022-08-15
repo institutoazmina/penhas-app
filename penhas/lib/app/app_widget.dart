@@ -18,7 +18,8 @@ class AppWidget extends StatelessWidget {
       builder: asuka.builder,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Lato'),),
+        textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Lato'),
+      ),
       localizationsDelegates: const [
         GlobalWidgetsLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

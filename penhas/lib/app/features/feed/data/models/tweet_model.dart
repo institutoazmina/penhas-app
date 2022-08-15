@@ -101,10 +101,10 @@ class TweetNewsGroupModel extends TweetNewsGroupEntity {
 class TweetNewsModel extends TweetNewsEntity {
   TweetNewsModel({
     String? date,
-    String? newsUri,
+    required String newsUri,
     String? imageUri,
     String? source,
-    String? title,
+    required String title,
   }) : super(
           date: date,
           newsUri: newsUri,

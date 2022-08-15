@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
+import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:penhas/app/shared/navigation/navigator.dart';
 
 class TweetRelatedNews extends StatefulWidget {
   const TweetRelatedNews({
@@ -45,45 +46,7 @@ class _TweetRelatedNewsState extends State<TweetRelatedNews> {
               itemCount: widget.related.news.length,
               controller: PageController(viewportFraction: viewPortScale),
               itemBuilder: (context, i) {
-                return Padding(
-                  padding: const EdgeInsets.only(left: 6.0, right: 6.0),
-                  child: Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          offset: Offset(0.0, 1.0),
-                          blurRadius: 4.0,
-                        )
-                      ],
-                    ),
-                    child: GestureDetector(
-                      onTap: () async =>
-                          _launchURL(widget.related.news[i].newsUri!),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          Text(
-                            widget.related.news[i].title!,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 3,
-                            style: kTextStyleDrawerUsername,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: Text(
-                              widget.related.news[i].source ?? '',
-                              style: kTextStyleFeedTweetShowReply,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                );
+                return _TweetRelatedNewsContent(widget.related.news[i]);
               },
             ),
           )
@@ -91,10 +54,64 @@ class _TweetRelatedNewsState extends State<TweetRelatedNews> {
       ),
     );
   }
+}
 
-  Future<void> _launchURL(String uri) async {
-    if (await canLaunch(uri)) {
-      await launch(uri);
-    }
+class _TweetRelatedNewsContent extends StatelessWidget {
+  const _TweetRelatedNewsContent(
+    this._entity, {
+    Key? key,
+  }) : super(key: key);
+
+  final TweetNewsEntity _entity;
+
+  @override
+  Widget build(BuildContext context) {
+    const boxRadius = BorderRadius.all(Radius.circular(8.0));
+    return Padding(
+      padding: const EdgeInsets.only(left: 6, right: 6, bottom: 6),
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: boxRadius,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              offset: Offset(0.0, 1.0),
+              blurRadius: 4.0,
+            )
+          ],
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () => AppNavigator.launchURL(_entity.newsUri),
+            borderRadius: boxRadius,
+            splashColor: DesignSystemColors.splashColor,
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Text(
+                    _entity.title,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 3,
+                    style: kTextStyleDrawerUsername,
+                  ),
+                  if (_entity.source != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(
+                        _entity.source!,
+                        style: kTextStyleFeedTweetShowReply,
+                      ),
+                    )
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

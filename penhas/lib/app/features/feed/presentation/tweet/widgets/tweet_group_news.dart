@@ -1,8 +1,9 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:penhas/app/shared/navigation/navigator.dart';
 
 class TweetGroupNews extends StatefulWidget {
   const TweetGroupNews({Key? key, required TweetNewsGroupEntity group})
@@ -32,7 +33,7 @@ class _TweetGroupNewsState extends State<TweetGroupNews> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              if (group.header.isEmpty) Container() else _buildHeader(group),
+              if (group.header.isNotEmpty) _buildHeader(group),
               SizedBox(
                 height: 216.0,
                 child: PageView.builder(
@@ -44,16 +45,17 @@ class _TweetGroupNewsState extends State<TweetGroupNews> {
                       setState(() => _currentPage = page),
                   itemBuilder: (context, i) {
                     return Padding(
-                      padding: const EdgeInsets.only(right: 6.0, left: 6.0),
+                      padding: const EdgeInsets.only(
+                        right: 6,
+                        left: 6,
+                        bottom: 6,
+                      ),
                       child: _NewsItem(news: group.news[i]),
                     );
                   },
                 ),
               ),
-              if (group.news.length > 1)
-                _buildPaginationController()
-              else
-                Container(),
+              if (group.news.length > 1) _buildPaginationController(),
             ],
           ),
         ),
@@ -70,7 +72,7 @@ class _TweetGroupNewsState extends State<TweetGroupNews> {
 
   Widget _buildPaginationController() {
     return Padding(
-      padding: const EdgeInsets.only(top: 22.0, bottom: 8.0),
+      padding: const EdgeInsets.only(top: 18, bottom: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: _buildPageIndicator(),
@@ -78,14 +80,9 @@ class _TweetGroupNewsState extends State<TweetGroupNews> {
     );
   }
 
-  List<Widget> _buildPageIndicator() {
-    final List<Widget> list = [];
-    for (int i = 0; i < widget._group.news.length; i++) {
-      list.add(i == _currentPage ? _indicator(true) : _indicator(false));
-    }
-
-    return list;
-  }
+  List<Widget> _buildPageIndicator() => widget._group.news
+      .mapIndexed((index, _) => _indicator(index == _currentPage))
+      .toList();
 
   Widget _indicator(bool isActive) {
     return AnimatedContainer(
@@ -113,57 +110,71 @@ class _NewsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => launch(news.newsUri!),
-      child: Container(
-        clipBehavior: Clip.antiAlias,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Image.network(
-              news.imageUri!,
-              height: 125,
-              fit: BoxFit.fitWidth,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(news.title!, style: kTextStyleDrawerListItem),
-            ),
-            Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    const boxRadius = BorderRadius.all(Radius.circular(8.0));
+    return Container(
+      clipBehavior: Clip.antiAlias,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: boxRadius,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            offset: Offset(0.0, 1.0),
+            blurRadius: 4.0,
+          )
+        ],
+      ),
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Expanded(
-                  flex: 5,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Text(
-                      news.source ?? '',
-                      style: kTextStyleFeedTweetShowReply,
-                    ),
-                  ),
+                Image.network(
+                  news.imageUri!,
+                  height: 125,
+                  fit: BoxFit.fitWidth,
                 ),
-                Expanded(
-                  flex: 2,
-                  child: Text(
-                    news.date!,
-                    style: kTextStyleFeedTweetInput,
-                  ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(news.title, style: kTextStyleDrawerListItem),
+                ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Text(
+                          news.source ?? '',
+                          style: kTextStyleFeedTweetShowReply,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        news.date!,
+                        style: kTextStyleFeedTweetInput,
+                      ),
+                    )
+                  ],
                 )
               ],
-            )
-          ],
-        ),
+            ),
+          ),
+          Positioned.fill(
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () => AppNavigator.launchURL(news.newsUri),
+                borderRadius: boxRadius,
+                splashColor: DesignSystemColors.splashColor,
+              ),
+            ),
+          )
+        ],
       ),
     );
-  }
-
-  Future<void> launchURL(String uri) async {
-    if (await canLaunch(uri)) {
-      await launch(uri);
-    }
   }
 }
