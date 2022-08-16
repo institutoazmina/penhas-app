@@ -10,12 +10,14 @@ class SupportCenterDropdownInput extends StatelessWidget {
     required this.currentValue,
     required this.dataSource,
     required this.onChanged,
+    this.focus = false,
   }) : super(key: key);
 
   final int maxLines;
   final String labelText;
   final String errorMessage;
   final String currentValue;
+  final bool focus;
   final List<DropdownMenuItem<String>> dataSource;
   final ValueChanged<dynamic> onChanged;
 
@@ -45,6 +47,7 @@ class SupportCenterDropdownInput extends StatelessWidget {
         data: Theme.of(context)
             .copyWith(canvasColor: const Color.fromRGBO(240, 240, 240, 1)),
         child: DropdownButtonFormField<dynamic>(
+          autofocus: focus,
           isExpanded: true,
           decoration: InputDecoration(
             enabledBorder: const OutlineInputBorder(
