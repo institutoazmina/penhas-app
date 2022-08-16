@@ -43,6 +43,7 @@ class _SupportCenterAddPageState
         backgroundColor: DesignSystemColors.easterPurple,
       ),
       body: Scrollbar(
+        thickness: 8,
         isAlwaysShown: true,
         child: Observer(
           builder: (_) {
