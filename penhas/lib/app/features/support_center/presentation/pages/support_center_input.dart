@@ -8,22 +8,18 @@ class SupportCenterInput extends StatelessWidget {
     required this.hintText,
     required this.errorText,
     required this.onChanged,
-    required this.focus,
   }) : super(key: key);
 
   final int maxLines;
   final String hintText;
   final String errorText;
   final ValueChanged<String> onChanged;
-  final FocusNode focus;
-
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextField(
-        focusNode: focus,
         maxLines: maxLines,
         decoration: InputDecoration(
           hintText: hintText,

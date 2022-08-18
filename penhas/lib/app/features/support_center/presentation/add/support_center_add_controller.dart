@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/src/widgets/focus_manager.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -44,29 +43,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   String _ddd2 = '';
   String? _is24h = '';
   String? _hasWhatsapp = '';
-
-  @observable
-  late FocusNode placeNameFocus;
-  @observable
-  late FocusNode categoryFocus;
-  @observable
-  late FocusNode coverageFocus;
-  @observable
-  late FocusNode addressFocus;
-  @observable
-  late FocusNode numberFocus;
-  @observable
-  late FocusNode cityFocus;
-  @observable
-  late FocusNode ufFocus;
-  @observable
-  late FocusNode phone1Focus;
-  @observable
-  late FocusNode ddd1Focus;
-  @observable
-  late FocusNode phone2Focus;
-  @observable
-  late FocusNode ddd2Focus;
 
   final SupportCenterUseCase _supportCenterUseCase;
 
@@ -325,27 +301,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
     phone2Error = checkPhone(_phone2, _ddd2);
 
-
-    if (placeNameError.isNotEmpty) {
-      placeNameFocus = FocusNode();
-    } else if (categoryError.isNotEmpty) {
-      categoryFocus = FocusNode();
-    } else if (coverageError.isNotEmpty) {
-      coverageFocus = FocusNode();
-    } else if (addressError.isNotEmpty) {
-      addressFocus = FocusNode();
-    } else if (numberError.isNotEmpty) {
-      numberFocus = FocusNode();
-    } else if (cityError.isNotEmpty) {
-      cityFocus = FocusNode();
-    } else if (ufError.isNotEmpty) {
-      ufFocus = FocusNode();
-    } else if (phone2Error.isNotEmpty) {
-      phone2Focus = FocusNode();
-    } else if (ddd2Error.isNotEmpty) {
-      ddd2Focus = FocusNode();
-    }
-
     _savingSuggestion = ObservableFuture(
       _supportCenterUseCase.saveSuggestion(
         name: _placeName,
@@ -375,9 +330,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
       (failure) => errorMessage = mapFailureMessage(failure),
       (valid) => handleSuccessAddSupportCenter(valid),
     );
-
   }
-
 
   void resetErrors() {
     addressError = '';
@@ -394,16 +347,6 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     ufError = '';
     cityError = '';
     errorMessage = '';
-    
-    placeNameFocus.dispose();
-    categoryFocus.dispose();
-    coverageFocus.dispose();
-    addressFocus.dispose();
-    numberFocus.dispose();
-    cityFocus.dispose();
-    ufFocus.dispose();
-    phone2Focus.dispose();
-    ddd2Focus.dispose();
   }
 }
 

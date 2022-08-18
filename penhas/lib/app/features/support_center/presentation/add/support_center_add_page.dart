@@ -118,17 +118,37 @@ extension _BuildWidget on _SupportCenterAddPageState {
     BuildContext context,
     List<FilterTagEntity> categories,
   ) {
-
-      late FocusNode myFocusNode;
-
     final categoriesList = buildCategoriesList(categories);
     final coverageList = buildCoverageList(['Local', 'Regional', 'Nacional']);
-    final ufList = buildUfList([ 'AC','AL','AP',
-      'AM','BA','CE','DF','ES','GO','MA','MT',
-      'MS','MG','PA','PB','PR','PE','PI','RJ',
-      'RN','RS','RO','RR','SC','SP','SE','TO'
+    final ufList = buildUfList([
+      'AC',
+      'AL',
+      'AP',
+      'AM',
+      'BA',
+      'CE',
+      'DF',
+      'ES',
+      'GO',
+      'MA',
+      'MT',
+      'MS',
+      'MG',
+      'PA',
+      'PB',
+      'PR',
+      'PE',
+      'PI',
+      'RJ',
+      'RN',
+      'RS',
+      'RO',
+      'RR',
+      'SC',
+      'SP',
+      'SE',
+      'TO'
     ]);
-
     final yesNoList = buildUfList([
       'Sim',
       'Não',
@@ -182,13 +202,11 @@ extension _BuildWidget on _SupportCenterAddPageState {
             hintText: 'Nome do logradouro (Rua, Avenida, etc) *',
             errorText: controller.addressError,
             onChanged: controller.setAddress,
-            focus: controller.addressFocus,
           ),
           SupportCenterInput(
             hintText: 'Número *',
             errorText: controller.numberError,
             onChanged: controller.setNumber,
-            focus: controller.numberFocus,
           ),
           SupportCenterInput(
             hintText: 'Complemento',
