@@ -33,6 +33,8 @@ class _SupportCenterAddPageState
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  final _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,6 +79,7 @@ class _SupportCenterAddPageState
       child: PageProgressIndicator(
         progressState: controller.progressState,
         child: SingleChildScrollView(
+          controller: _scrollController,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -296,6 +299,28 @@ extension _BuildWidget on _SupportCenterAddPageState {
     );
   }
 
+  bool isNotValid(){
+
+    final List<String> errorTextList = [
+      controller.addressError, 
+      controller.cityError,
+      controller.categoryError,
+      controller.cepError,
+      controller.cityError,
+      controller.coverageError,
+      controller.ddd1Error,
+      controller.ddd2Error,
+      controller.placeNameError,
+      controller.placeDescriptionError,
+      controller.ufError,
+      controller.placeNameError
+    ];
+
+    return errorTextList.any((e) => e.isNotEmpty);
+
+  }
+
+
   Widget buildPlaceAction() {
     return Container(
       height: 200,
@@ -323,7 +348,16 @@ extension _BuildWidget on _SupportCenterAddPageState {
             child: SizedBox(
               height: 44,
               child: RaisedButton(
-                onPressed: controller.savePlace,
+                onPressed: () async {
+                  controller.savePlace();
+                  if(isNotValid()){
+                    _scrollController.animateTo(
+                      0.0,
+                      curve: Curves.easeOut,
+                      duration: const Duration(milliseconds: 300),
+                    );
+                  }
+                },
                 elevation: 0,
                 color: DesignSystemColors.ligthPurple,
                 shape: kButtonShapeFilled,
