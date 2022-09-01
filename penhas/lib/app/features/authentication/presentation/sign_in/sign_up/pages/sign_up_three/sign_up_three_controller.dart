@@ -18,7 +18,7 @@ class SignUpThreeController extends _SignUpThreeControllerBase
     with _$SignUpThreeController {
   SignUpThreeController(
     IUserRegisterRepository repository,
-    UserRegisterFormFieldModel? userFormFielModel,
+    UserRegisterFormFieldModel userFormFielModel,
     PasswordValidator passwordValidator,
   ) : super(repository, userFormFielModel, passwordValidator);
 }
@@ -31,7 +31,7 @@ abstract class _SignUpThreeControllerBase with Store, MapFailureMessage {
   );
 
   final IUserRegisterRepository repository;
-  final UserRegisterFormFieldModel? _userRegisterModel;
+  final UserRegisterFormFieldModel _userRegisterModel;
   final PasswordValidator _passwordValidator;
 
   @observable
@@ -62,29 +62,28 @@ abstract class _SignUpThreeControllerBase with Store, MapFailureMessage {
 
   @action
   void setEmail(String email) {
-    _userRegisterModel!.emailAddress = EmailAddress(email);
+    _userRegisterModel.emailAddress = EmailAddress(email);
 
-    warningEmail =
-        email.isEmpty ? '' : _userRegisterModel!.validateEmailAddress;
+    warningEmail = email.isEmpty ? '' : _userRegisterModel.validateEmailAddress;
   }
 
   @action
   void setPassword(String password) {
-    _userRegisterModel!.password = SignUpPassword(password, _passwordValidator);
-    warningPassword = _userRegisterModel!.password!.mapFailure;
+    _userRegisterModel.password = SignUpPassword(password, _passwordValidator);
+    warningPassword = _userRegisterModel.password!.mapFailure;
     warningConfirmationPassword =
-        _userRegisterModel!.passwordConfirmation!.isEmpty
+        _userRegisterModel.passwordConfirmation?.isEmpty != false
             ? ''
-            : _userRegisterModel!.validatePasswordConfirmation;
+            : _userRegisterModel.validatePasswordConfirmation;
   }
 
   @action
   void setConfirmationPassword(String password) {
-    _userRegisterModel!.passwordConfirmation = password;
+    _userRegisterModel.passwordConfirmation = password;
     warningConfirmationPassword =
-        _userRegisterModel!.passwordConfirmation!.isEmpty
+        _userRegisterModel.passwordConfirmation!.isEmpty
             ? ''
-            : _userRegisterModel!.validatePasswordConfirmation;
+            : _userRegisterModel.validatePasswordConfirmation;
   }
 
   @action
@@ -96,16 +95,16 @@ abstract class _SignUpThreeControllerBase with Store, MapFailureMessage {
 
     _progress = ObservableFuture(
       repository.signup(
-        emailAddress: _userRegisterModel!.emailAddress,
-        password: _userRegisterModel!.password,
-        cep: _userRegisterModel!.cep,
-        cpf: _userRegisterModel!.cpf,
-        fullname: _userRegisterModel!.fullname,
-        socialName: _userRegisterModel!.socialName,
-        nickName: _userRegisterModel!.nickname,
-        birthday: _userRegisterModel!.birthday,
-        genre: _userRegisterModel!.genre,
-        race: _userRegisterModel!.race,
+        emailAddress: _userRegisterModel.emailAddress,
+        password: _userRegisterModel.password,
+        cep: _userRegisterModel.cep,
+        cpf: _userRegisterModel.cpf,
+        fullname: _userRegisterModel.fullname,
+        socialName: _userRegisterModel.socialName,
+        nickName: _userRegisterModel.nickname,
+        birthday: _userRegisterModel.birthday,
+        genre: _userRegisterModel.genre,
+        race: _userRegisterModel.race,
       ),
     );
 
@@ -119,21 +118,21 @@ abstract class _SignUpThreeControllerBase with Store, MapFailureMessage {
   bool _isValidToProceed() {
     bool isValid = true;
 
-    if (_userRegisterModel!.validateEmailAddress.isNotEmpty) {
+    if (_userRegisterModel.validateEmailAddress.isNotEmpty) {
       isValid = false;
-      warningEmail = _userRegisterModel!.validateEmailAddress;
+      warningEmail = _userRegisterModel.validateEmailAddress;
     }
 
-    isValid = _userRegisterModel!.password!.isValid;
+    isValid = _userRegisterModel.password!.isValid;
 
     if (!isValid) {
-      warningPassword = _userRegisterModel!.password!.mapFailure;
+      warningPassword = _userRegisterModel.password!.mapFailure;
     }
 
-    if (_userRegisterModel!.validatePasswordConfirmation.isNotEmpty) {
+    if (_userRegisterModel.validatePasswordConfirmation.isNotEmpty) {
       isValid = false;
       warningConfirmationPassword =
-          _userRegisterModel!.validatePasswordConfirmation;
+          _userRegisterModel.validatePasswordConfirmation;
     }
 
     return isValid;

@@ -6,32 +6,27 @@ import 'package:penhas/app/shared/navigation/route.dart';
 
 class InactivityLogoutUseCase {
   InactivityLogoutUseCase({
-    required LocalStore<AppPreferencesEntity>? appPreferencesStore,
-    required LocalStore<UserProfileEntity>? userProfileStore,
+    required LocalStore<AppPreferencesEntity> appPreferencesStore,
+    required LocalStore<UserProfileEntity> userProfileStore,
   })  : _appPreferencesStore = appPreferencesStore,
         _userProfileStore = userProfileStore;
 
-  final LocalStore<AppPreferencesEntity>? _appPreferencesStore;
-  final LocalStore<UserProfileEntity>? _userProfileStore;
+  final LocalStore<AppPreferencesEntity> _appPreferencesStore;
+  final LocalStore<UserProfileEntity> _userProfileStore;
 
-  Future<Either<InactivityError?, AppRoute?>> inactivityRoute(DateTime now) {
-    return _appPreferencesStore!
+  Future<Either<InactivityError, AppRoute>> inactivityRoute(DateTime now) {
+    return _appPreferencesStore
         .retrieve()
-        .then(
-          (preferences) => _inactiveForTooLong(
-            now,
-            preferences,
-          ),
-        )
-        .then((isInactive) => _routeForInactiveCustomer(isInactive));
+        .then((preferences) => _inactiveForTooLong(now, preferences))
+        .then(_routeForInactiveCustomer);
   }
 
-  Future<Either<InactivityError?, AppRoute?>> _routeForInactiveCustomer(
+  Future<Either<InactivityError, AppRoute>> _routeForInactiveCustomer(
     bool isInactive,
   ) async {
     if (!isInactive) return left(InactivityError.customerActive);
 
-    final profile = await _userProfileStore!.retrieve();
+    final profile = await _userProfileStore.retrieve();
 
     if (profile.stealthModeEnabled) {
       return right(AppRoute('/authentication/stealth'));
@@ -52,7 +47,7 @@ class InactivityLogoutUseCase {
   }
 
   Future<void> setInactive(DateTime now) {
-    return _appPreferencesStore!
+    return _appPreferencesStore
         .retrieve()
         .then((preferences) => _setAppInactive(now, preferences));
   }
@@ -63,11 +58,11 @@ class InactivityLogoutUseCase {
       inactiveAppLogoutTimeInSeconds:
           preferences.inactiveAppLogoutTimeInSeconds,
     );
-    return _appPreferencesStore!.save(entity);
+    return _appPreferencesStore.save(entity);
   }
 
   Future<void> setActive() {
-    return _appPreferencesStore!.retrieve().then(_setAppActive);
+    return _appPreferencesStore.retrieve().then(_setAppActive);
   }
 
   Future<void> _setAppActive(AppPreferencesEntity preferences) {
@@ -76,7 +71,7 @@ class InactivityLogoutUseCase {
       inactiveAppLogoutTimeInSeconds:
           preferences.inactiveAppLogoutTimeInSeconds,
     );
-    return _appPreferencesStore!.save(entity);
+    return _appPreferencesStore.save(entity);
   }
 }
 

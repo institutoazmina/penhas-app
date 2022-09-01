@@ -6,18 +6,18 @@ import 'package:url_launcher/url_launcher.dart';
 
 class AppNavigator {
   static void popAndPush(AppRoute route) {
-    if (route.args == null) {
-      Modular.to.popAndPushNamed(route.path);
-    } else {
-      Modular.to.popAndPushNamed(route.path, arguments: route.args);
-    }
+    Modular.to.popAndPushNamed(route.path, arguments: route.args);
   }
 
   static void push(AppRoute route) {
-    if (route.args == null) {
-      Modular.to.pushNamed(route.path);
+    Modular.to.pushNamed(route.path, arguments: route.args);
+  }
+
+  static void tryPopOrPushReplacement(AppRoute route) {
+    if (Modular.to.canPop()) {
+      Modular.to.pop();
     } else {
-      Modular.to.pushNamed(route.path, arguments: route.args);
+      Modular.to.pushReplacementNamed(route.path, arguments: route.args);
     }
   }
 

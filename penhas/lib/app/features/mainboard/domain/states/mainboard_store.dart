@@ -18,15 +18,13 @@ class MainboardStore extends _MainboardStoreBase with _$MainboardStore {
 }
 
 abstract class _MainboardStoreBase with Store {
-  _MainboardStoreBase(this._modulesServices, this._initialPage) {
-    setupProgress = setup();
-  }
+  _MainboardStoreBase(this._modulesServices, this._initialPage);
 
   final IAppModulesServices _modulesServices;
   final MainboardState _initialPage;
-  late Future setupProgress;
+  late final Future setupProgress = setup();
 
-  PageController pageController = PageController();
+  late final PageController pageController = _buildPageCtrl();
 
   @observable
   ObservableList<MainboardState> pages =
@@ -34,6 +32,11 @@ abstract class _MainboardStoreBase with Store {
 
   @observable
   MainboardState selectedPage = const MainboardState.feed();
+
+  PageController _buildPageCtrl() {
+    setupProgress.then((value) => null); // initialize when ctrl is attached
+    return PageController();
+  }
 
   @action
   Future changePage({required MainboardState to}) async {

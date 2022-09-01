@@ -17,6 +17,8 @@ import 'package:penhas/app/features/zodiac/domain/entities/izodiac.dart';
 import 'package:penhas/app/features/zodiac/domain/entities/zodiac_sign_aquarius.dart';
 import 'package:penhas/app/features/zodiac/domain/usecases/stealth_security_action.dart';
 import 'package:penhas/app/features/zodiac/domain/usecases/zodiac.dart';
+import 'package:penhas/app/shared/navigation/navigator.dart';
+import 'package:penhas/app/shared/navigation/route.dart';
 
 part 'sign_in_stealth_controller.g.dart';
 
@@ -60,10 +62,8 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
     userGreetings = 'Bem-vinda, ${profile.nickname}';
 
     final zodiac = Zodiac();
-    final _userProfile = await _userProfileStore.retrieve();
-    sign = zodiac.sign(_userProfile.birthdate);
-    signList =
-        zodiac.pickEigthRandonSign(_userProfile.birthdate).asObservable();
+    sign = zodiac.sign(profile.birthdate);
+    signList = zodiac.pickEigthRandonSign(profile.birthdate).asObservable();
 
     _registerDataSource();
   }
@@ -161,7 +161,7 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
   }
 
   Future<void> _forwardToLogged() async {
-    Modular.to.pushReplacementNamed('/mainboard');
+    AppNavigator.tryPopOrPushReplacement(AppRoute('/mainboard'));
   }
 
   void _registerDataSource() {

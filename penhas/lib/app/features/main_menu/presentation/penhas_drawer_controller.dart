@@ -57,7 +57,7 @@ abstract class _PenhasDrawerControllerBase with Store {
   }
 
   Future<void> _toggleAnymousMode(bool toggle) async {
-    anonymousModeState = _anonyousToggleState(toggle);
+    anonymousModeState = _anonymousToggleState(toggle);
     final action = await _userProfile.anonymousMode(toggle: toggle);
 
     action.fold(
@@ -89,10 +89,10 @@ abstract class _PenhasDrawerControllerBase with Store {
     userName = profile.nickname ?? '';
     userAvatar = profile.avatar ?? '';
     stealthModeState = _stealthToggleState(profile.stealthModeEnabled);
-    anonymousModeState = _anonyousToggleState(profile.anonymousModeEnabled);
+    anonymousModeState = _anonymousToggleState(profile.anonymousModeEnabled);
   }
 
-  SecurityToggleState _anonyousToggleState(bool? isEnabled) {
+  SecurityToggleState _anonymousToggleState(bool? isEnabled) {
     return SecurityToggleState(
       title: 'Estou em situação de violência',
       isEnabled: isEnabled,

@@ -47,50 +47,56 @@ class _SignInStealthPage
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.expand(
-      child: Container(
-        decoration: kLinearGradientDesignSystem,
-        child: Scaffold(
-          key: _scaffoldKey,
-          backgroundColor: Colors.transparent,
-          body: PageProgressIndicator(
-            progressState: _currentState,
-            child: GestureDetector(
-              onTap: () => _handleTap(context),
-              onPanDown: (_) => _handleTap(context),
-              child: SafeArea(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                    16.0,
-                    80.0,
-                    16.0,
-                    8.0,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      const Icon(
-                        DesignSystemLogo.penhasLogo,
-                        color: Colors.white,
-                        size: 60,
-                      ),
-                      Observer(builder: (_) => _buildUserField()),
-                      Observer(
-                        builder: (_) => Padding(
-                          padding: const EdgeInsets.only(bottom: 44),
-                          child: ZodiacActionButton(
-                            sign: controller.sign,
-                            isRunning: controller.isSecurityRunning,
-                            listOfSign: controller.signList,
-                            onPressed: () => controller.stealthAction(),
+    return WillPopScope(
+      onWillPop: () async {
+        SystemNavigator.pop();
+        return false;
+      },
+      child: SizedBox.expand(
+        child: DecoratedBox(
+          decoration: kLinearGradientDesignSystem,
+          child: Scaffold(
+            key: _scaffoldKey,
+            backgroundColor: Colors.transparent,
+            body: PageProgressIndicator(
+              progressState: _currentState,
+              child: GestureDetector(
+                onTap: () => _handleTap(context),
+                onPanDown: (_) => _handleTap(context),
+                child: SafeArea(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                      16.0,
+                      80.0,
+                      16.0,
+                      8.0,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        const Icon(
+                          DesignSystemLogo.penhasLogo,
+                          color: Colors.white,
+                          size: 60,
+                        ),
+                        Observer(builder: (_) => _buildUserField()),
+                        Observer(
+                          builder: (_) => Padding(
+                            padding: const EdgeInsets.only(bottom: 44),
+                            child: ZodiacActionButton(
+                              sign: controller.sign,
+                              isRunning: controller.isSecurityRunning,
+                              listOfSign: controller.signList,
+                              onPressed: () => controller.stealthAction(),
+                            ),
                           ),
                         ),
-                      ),
-                      Observer(builder: (_) => _buildPasswordField()),
-                      _buildLoginButton(),
-                      _buildResetPasswordButton(),
-                      _changeAccount(),
-                    ],
+                        Observer(builder: (_) => _buildPasswordField()),
+                        _buildLoginButton(),
+                        _buildResetPasswordButton(),
+                        _changeAccount(),
+                      ],
+                    ),
                   ),
                 ),
               ),

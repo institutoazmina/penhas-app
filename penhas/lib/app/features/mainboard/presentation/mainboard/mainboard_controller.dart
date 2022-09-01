@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart' as material;
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
@@ -61,6 +62,7 @@ abstract class _MainboardControllerBase with Store {
 
   @action
   Future<void> changeAppState(material.AppLifecycleState state) async {
+    Modular.debugPrintModular('state changed to $state');
     switch (state) {
       case material.AppLifecycleState.inactive:
         _inactivityLogoutUseCase.setInactive(DateTime.now());
@@ -69,14 +71,8 @@ abstract class _MainboardControllerBase with Store {
         final route = await _inactivityLogoutUseCase.inactivityRoute(
           DateTime.now(),
         );
-        _inactivityLogoutUseCase.setActive();
-        route.fold(
-          (l) => {},
-          (r) => AppNavigator.pushAndRemoveUntil(
-            r!,
-            removeUntil: '/',
-          ),
-        );
+        await _inactivityLogoutUseCase.setActive();
+        route.map(AppNavigator.push);
         break;
       case material.AppLifecycleState.detached:
       case material.AppLifecycleState.paused:

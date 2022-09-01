@@ -25,16 +25,16 @@ class AuthenticationDataSource implements IAuthenticationDataSource {
     required this.serverConfiguration,
   });
 
-  final http.Client? apiClient;
-  final IApiServerConfigure? serverConfiguration;
+  final http.Client apiClient;
+  final IApiServerConfigure serverConfiguration;
 
   @override
   Future<SessionModel> signInWithEmailAndPassword({
     required EmailAddress emailAddress,
     required SignInPassword password,
   }) async {
-    final userAgent = await serverConfiguration!.userAgent;
-    final queryParameters = {
+    final userAgent = await serverConfiguration.userAgent;
+    final body = {
       'app_version': userAgent,
       'email': emailAddress.rawValue,
       'senha': password.rawValue,
@@ -45,12 +45,15 @@ class AuthenticationDataSource implements IAuthenticationDataSource {
       'Content-Type': 'application/x-www-form-urlencoded'
     };
 
-    final loginUri = serverConfiguration!.baseUri.replace(
+    final loginUri = serverConfiguration.baseUri.replace(
       path: '/login',
-      queryParameters: queryParameters,
     );
 
-    final response = await apiClient!.post(loginUri, headers: headers);
+    final response = await apiClient.post(
+      loginUri,
+      headers: headers,
+      body: body,
+    );
 
     if (response.statusCode == HttpStatus.ok) {
       return SessionModel.fromJson(json.decode(response.body));

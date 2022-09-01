@@ -428,7 +428,7 @@ packages:
     description:
       path: flutter_modular
       ref: improvements
-      resolved-ref: e02039deeb6416583de075c5ac621ccfb1d8ff5b
+      resolved-ref: "9234c0d1701b367fc36493ae82667c091ae382bd"
       url: "https://github.com/pedrox-hs/modular.git"
     source: git
     version: "3.4.1+1"
@@ -444,7 +444,7 @@ packages:
     description:
       path: flutter_modular_test
       ref: improvements
-      resolved-ref: e02039deeb6416583de075c5ac621ccfb1d8ff5b
+      resolved-ref: "9234c0d1701b367fc36493ae82667c091ae382bd"
       url: "https://github.com/pedrox-hs/modular.git"
     source: git
     version: "1.0.1"
@@ -789,6 +789,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.11"
+  material_color_utilities:
+    dependency: transitive
+    description:
+      name: material_color_utilities
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.3"
   meta:
     dependency: "direct main"
     description:
@@ -1180,7 +1187,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.3"
+    version: "0.4.8"
   timeago:
     dependency: "direct main"
     description:

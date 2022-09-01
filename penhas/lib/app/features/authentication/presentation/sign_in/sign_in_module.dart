@@ -51,11 +51,13 @@ class SignInModule extends Module {
   List<Bind> get binds => [
         ..._interfaces,
         // Sign-In
-        Bind.factory((i) => SignInController(
-              i.get<IAuthenticationRepository>(),
-              i.get<PasswordValidator>(),
-              i.get<AppStateUseCase>(),
-            ),),
+        Bind.factory(
+          (i) => SignInController(
+            i.get<IAuthenticationRepository>(),
+            i.get<PasswordValidator>(),
+            i.get<AppStateUseCase>(),
+          ),
+        ),
         ..._signUp,
         ..._resetPassword,
         ..._signInAnonymous,
@@ -64,10 +66,13 @@ class SignInModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-        ChildRoute(Modular.initialRoute, child: (_, args) => const SignInPage()),
-        ChildRoute('/signup',
-            child: (_, args) => const SignUpPage(),
-            transition: TransitionType.rightToLeft,),
+        ChildRoute(Modular.initialRoute,
+            child: (_, args) => const SignInPage()),
+        ChildRoute(
+          '/signup',
+          child: (_, args) => const SignUpPage(),
+          transition: TransitionType.rightToLeft,
+        ),
         ChildRoute(
           '/signup/step2',
           child: (_, args) => const SignUpTwoPage(),
@@ -164,14 +169,16 @@ class SignInModule extends Module {
         Bind.factory(
           (i) => SignUpThreeController(
             i.get<IUserRegisterRepository>(),
-            i.args?.data,
+            i.args?.data!,
             i.get<PasswordValidator>(),
           ),
         ),
       ];
 
   List<Bind> get _resetPassword => [
-        Bind.factory((i) => ResetPasswordController(i.get<IResetPasswordRepository>())),
+        Bind.factory(
+          (i) => ResetPasswordController(i.get<IResetPasswordRepository>()),
+        ),
         Bind.factory(
           (i) => ResetPasswordTwoController(
             i.get<IChangePasswordRepository>(),
@@ -208,10 +215,11 @@ class SignInModule extends Module {
         ),
         Bind.factory(
           (i) => StealthSecurityAction(
-              audioServices: i.get<IAudioRecordServices>(),
-              featureToogle: i.get<SecurityModeActionFeature>(),
-              locationService: i.get<ILocationServices>(),
-              guardianRepository: i.get<IGuardianRepository>(),),
+            audioServices: i.get<IAudioRecordServices>(),
+            featureToogle: i.get<SecurityModeActionFeature>(),
+            locationService: i.get<ILocationServices>(),
+            guardianRepository: i.get<IGuardianRepository>(),
+          ),
         ),
         Bind.factory<SecurityModeActionFeature>(
           (i) => SecurityModeActionFeature(
