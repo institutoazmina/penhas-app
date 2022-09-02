@@ -16,7 +16,6 @@ class AppWidget extends StatelessWidget {
     return MaterialApp(
       title: 'PenhaS',
       builder: asuka.builder,
-      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Lato'),
       ),
