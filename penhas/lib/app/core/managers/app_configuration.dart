@@ -4,8 +4,7 @@ import 'package:penhas/app/core/data/authorization_status.dart';
 import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 
-// https://***REMOVED*** || https://***REMOVED*** || http://10.0.2.2:9000
-const String baseUrl = String.fromEnvironment(
+const String _apiBaseUrl = String.fromEnvironment(
   'env.apiBaseUrl',
   defaultValue: 'https://***REMOVED***',
 );
@@ -27,7 +26,11 @@ abstract class IAppConfiguration {
 }
 
 class AppConfiguration implements IAppConfiguration {
-  AppConfiguration({required ILocalStorage storage}) : _storage = storage;
+  AppConfiguration({
+    required String? apiBaseUrl,
+    required ILocalStorage storage,
+  })  : penhasServer = Uri.parse(apiBaseUrl ?? _apiBaseUrl),
+        _storage = storage;
 
   final _tokenKey = 'br.com.penhas.tokenServer';
   final _appModes = 'br.com.penhas.appConfigurationModes';
@@ -47,7 +50,7 @@ class AppConfiguration implements IAppConfiguration {
   }
 
   @override
-  Uri get penhasServer => Uri.parse(baseUrl);
+  final Uri penhasServer;
 
   @override
   Future<void> saveApiToken({required String? token}) async {

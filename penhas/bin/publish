@@ -1,0 +1,46 @@
+#!/bin/bash
+
+set -e
+
+PROJECT_DIR=$(dirname $(dirname `realpath ${BASH_SOURCE[0]}`))
+cd $PROJECT_DIR
+
+# define default values
+IS_RELEASE='false'
+PLATFORM='all'
+
+# extract arguments
+for i in "$@"; do
+  case $i in
+    --platform=*)
+      PLATFORM="${i#*=}"
+      shift
+      ;;
+    --release)
+      IS_RELEASE='true'
+      shift
+      ;;
+    --beta)
+      IS_RELEASE='false'
+      shift
+      ;;
+    -*|--*)
+      echo "Unknown option '$i'"
+      exit 1
+      ;;
+    *)
+      ;;
+  esac
+done
+
+# validate platform options
+case $PLATFORM in
+  all|android|ios)
+    ;;
+  *)
+    echo "Unknown platform '$PLATFORM'"
+    exit 1
+    ;;
+esac
+
+bundle exec fastlane $PLATFORM publish is_release:$IS_RELEASE --verbose

@@ -28,6 +28,10 @@ import 'package:penhas/app/features/quiz/presentation/quiz/quiz_module.dart';
 import 'package:penhas/app/features/splash/splash_module.dart';
 
 class AppModule extends Module {
+  AppModule({String? apiBaseUrl}) : _apiBaseUrl = apiBaseUrl;
+
+  final String? _apiBaseUrl;
+
   @override
   List<Bind> get binds => [
         Bind.factory<AppStateUseCase>(
@@ -83,6 +87,7 @@ class AppModule extends Module {
         ),
         Bind.factory<IAppConfiguration>(
           (i) => AppConfiguration(
+            apiBaseUrl: _apiBaseUrl,
             storage: i.get<ILocalStorage>(),
           ),
         ),

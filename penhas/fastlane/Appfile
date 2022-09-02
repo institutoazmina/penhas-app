@@ -1,6 +1,6 @@
 # Android
 json_key_file("") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
-package_name("br.com.azmina.penhas") # e.g. com.krausefx.app
+package_name("penhas.com.br") # e.g. com.krausefx.app
 
 # iOS
 app_identifier("penhas.alphacode.com.br") # The bundle identifier of your app

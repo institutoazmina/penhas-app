@@ -13,41 +13,53 @@
 # Uncomment the line if you want fastlane to automatically update itself
 update_fastlane
 
-default_platform(:android)
+default_platform(:all)
 xcversion(version: "~> 13.1")
 
-$apiBaseUrl = "https://***REMOVED***"
-#$apiBaseUrl = "https://***REMOVED***"
+api_base_url_prod = "https://***REMOVED***"
+api_base_url_dev = "https://***REMOVED***"
+
+profile_type_edirock = 'ad-hoc'
+profile_type_store = 'app-store'
+
+ios_devices_file = './build/ios_devices.txt'
 
 desc "Run code generators"
-lane :pre_build do
+private_lane :pre_build do
   Dir.chdir("..") do
     sh("flutter pub get")
     sh("flutter packages pub run build_runner build --delete-conflicting-outputs")
   end
 end
 
+platform :all do
+  desc "Publish Android and iOS Apps"
+  lane :publish do |options|
+    Fastlane::LaneManager.cruise_lane("android", "publish", options)
+    Fastlane::LaneManager.cruise_lane("ios", "publish", options)
+  end
+end
+
 platform :android do
 
   desc "Build release APK"
-  lane :build do
+  lane :build_apk do
     pre_build
-    sh("flutter build apk --release --dart-define=env.apiBaseUrl=#$apiBaseUrl")
+    sh("flutter build apk --release --dart-define=env.apiBaseUrl=#{api_base_url_dev}")
   end
 
   desc "Build release Bundle"
   lane :build_bundle do
     pre_build
-    sh("flutter build appbundle --release")
+    sh("flutter build appbundle --release --dart-define=env.apiBaseUrl=#{api_base_url_prod}")
   end
 
   desc "Distribute to Android beta testers"
   lane :firebase_distribute do
-    build
+    build_apk
     firebase_app_distribution(
       app: "1:51928851553:android:fc14989f5670877f663620",
-      release_notes_file: "./deploy/beta/release_notes.md",
-      testers_file: "./deploy/beta/testers.android",
+      release_notes: get_changelog(),
       groups: "androidtestersgroup",
       android_artifact_path: "./build/app/outputs/apk/release/app-release.apk"
     )
@@ -56,7 +68,6 @@ platform :android do
   desc "Deploy a new version to the Play Store"
   lane :release do
     build_bundle
-
     upload_to_play_store(
       track: "alpha",
       release_status: "completed",
@@ -64,47 +75,67 @@ platform :android do
     )
   end
 
+  desc "Publish APK, pass `is_release:true` to Play Store otherwise will be sent to Firebase"
+  lane :publish do |options|
+    if options[:is_release]
+      release
+    else
+      firebase_distribute
+    end
+  end
+
 end
 
 platform :ios do
 
   desc "Build release IPA"
-  lane :build do
+  lane :build do |options|
     pre_build
-    sh("flutter build ios --release --no-codesign --dart-define=env.apiBaseUrl=#$apiBaseUrl")
+    sh("flutter build ios --release --no-codesign --dart-define=env.apiBaseUrl=#{options[:api_base_url]}")
   end
 
   desc "Generates a provisioning profile, saving it in the current folder "
-  lane :update_profile do
-    cert(
-      output_path: './ios/certificates',
-    )
+  private_lane :update_profile do |options|
+
+    is_edirock = options[:profile_type] == profile_type_edirock
+    provisioning_name_suffix = is_edirock ? 'AdHoc' : 'AppStore'
+
+    cert(output_path: './ios/certificates')
+
     sigh(
-      provisioning_name: "PenhaS AppStore",
-      force: true,
+      provisioning_name: "PenhaS #{provisioning_name_suffix}",
       output_path: './ios/certificates',
+      adhoc: is_edirock,
+      force: true,
     )
   end
 
-  desc "Registers new devices to the Apple Dev Portal"
-  lane :sync_device_info do
-    register_devices(
-      devices_file: "./deploy/beta/device_file.ios"
+  desc "Download devices IDs from Firebase"
+  private_lane :download_udids do
+    firebase_app_distribution_get_udids(
+      app: "1:51928851553:ios:f741dab1c05cf04e663620",
+      output_file: ios_devices_file
     )
+  end
+
+  desc "Registers devices to the Apple Dev Portal"
+  private_lane :sync_device_info do
+    register_devices(devices_file: ios_devices_file)
   end
 
   desc "Generate IPA"
-  lane :generate_beta_ipa do
-    build
+  private_lane :generate_ipa do |options|
+    build(api_base_url: options[:api_base_url])
+    download_udids
     sync_device_info
-    update_profile
+    update_profile(profile_type: options[:profile_type])
 
     gym(
       scheme: "Runner",
       workspace: "./ios/Runner.xcworkspace",
       configuration: "Release",
       archive_path: "./build/ios/Runner.xcarchive",
-      export_method: "app-store",
+      export_method: options[:profile_type],
       output_directory: "./build/Runner",
       export_xcargs: "-allowProvisioningUpdates",
     )
@@ -112,37 +143,45 @@ platform :ios do
 
   desc "Distribute to iOS beta testers in TestFlight"
   lane :testflight_distribute do
-    generate_beta_ipa
+    generate_ipa(api_base_url: $api_base_url_prod, profile_type: profile_type_store)
     pilot
   end
 
   desc "Distribute to iOS beta testers in Firebase"
   lane :firebase_distribute do
-    generate_beta_ipa
+    generate_ipa(api_base_url: api_base_url_dev, profile_type: profile_type_edirock)
 
     firebase_app_distribution(
       app: "1:51928851553:ios:f741dab1c05cf04e663620",
-      release_notes_file: "./deploy/beta/release_notes.md",
-      testers_file: "./deploy/beta/testers.ios",
-      groups: "iostestersgroup",
+      release_notes: get_changelog(),
       ipa_path: "./build/Runner/Runner.ipa",
       debug: true
     )
   end
 
-  desc "Deploy a new version to the App Store"
-  lane :release do
-    # match(type: "appstore")
-    # snapshot
-    gym(
-      scheme: "Runner",
-      workspace: "./ios/Runner.xcworkspace",
-      configuration: "Release",
-      archive_path: "./build/ios/Runner.xcarchive",
-      export_method: "app-store",
-      output_directory: "./build/Runner"
-    ) # Build your app
-    deliver(force: true)
-    # frameit
+  desc "Publish iOS package, pass `is_release:true` to App Store otherwise will be sent to Firebase"
+  lane :publish do |options|
+    if options[:is_release]
+      testflight_distribute
+    else
+      firebase_distribute
+    end
   end
+
+end
+
+private_lane :get_changelog do
+  is_unreleased_section = false
+  changelog_contents = ''
+  File.readlines('../CHANGELOG.md').each do |line|
+    if is_unreleased_section
+      if line.start_with?("## [")
+        break
+      end
+      changelog_contents += line
+    end
+
+    is_unreleased_section = is_unreleased_section || line.start_with?("## [Unreleased]")
+  end
+  changelog_contents.strip
 end
