@@ -3,7 +3,10 @@
 ## Requisitos
 
 - SDK Flutter ^2.10.0
-- Ruby Bundler
+- Ruby Bundler >= 2.2.23
+- XCode
+- Android SDK (com a variável de ambiente `ANDROID_SDK_ROOT` definida)
+- [Firebase CLI](https://firebase.google.com/docs/cli)
 
 ## Instalação
 
@@ -48,6 +51,14 @@ flutter test
 
 ## Publicação
 
+O Fastlane é utilizado para fazer a publicação, antes de seguir, instale as dependências dele com o seguinte comando:
+```bash
+bundle install
+```
+Fazer login no Firebase CLI
+```bash
+firebase login
+```
 Temos dois canais de publicação do app: Beta e Release.
 
 ### Beta

@@ -154,6 +154,7 @@ platform :ios do
     firebase_app_distribution(
       app: "1:51928851553:ios:f741dab1c05cf04e663620",
       release_notes: get_changelog(),
+      groups: "iostestersgroup",
       ipa_path: "./build/Runner/Runner.ipa",
       debug: true
     )

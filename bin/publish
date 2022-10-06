@@ -2,7 +2,7 @@
 
 set -e
 
-PROJECT_DIR=$(dirname $(dirname `realpath ${BASH_SOURCE[0]}`))
+PROJECT_DIR=$(dirname $(dirname ${BASH_SOURCE[0]}))
 cd $PROJECT_DIR
 
 # define default values
