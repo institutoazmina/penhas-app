@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Modificado
 - Adição de novos campos dos pontos de apoio
+- Migração para nova conta do Firebase
 
 ### Corrigido
 - Clique nos cards com noticias relacionadas
