@@ -8,16 +8,19 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/app_module.dart';
 import 'package:penhas/app/app_widget.dart';
 
-const _kTestingCrashlytics = false;
+const _kFirebaseCollectionEnabled = !kDebugMode;
 
 Future main({String? apiBaseUrlOverride}) async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
   // Pass all uncaught errors from the framework to Crashlytics.
-  FirebaseCrashlytics.instance
-      .setCrashlyticsCollectionEnabled(_kTestingCrashlytics || !kDebugMode);
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+  
+  FirebaseCrashlytics.instance
+      .setCrashlyticsCollectionEnabled(_kFirebaseCollectionEnabled);
+  AppWidget.analytics
+      .setAnalyticsCollectionEnabled(_kFirebaseCollectionEnabled);
 
   runZonedGuarded(
     () async {
