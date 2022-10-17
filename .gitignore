@@ -187,10 +187,5 @@ lib/generated_plugin_registrant.dart
 fastlane/report.xml
 fastlane/metadata
 
-# Generated code
-*.freezed.dart
-*.g.dart
-*.mocks.dart
-
 # Slidy
 .slidy/*

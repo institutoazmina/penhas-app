@@ -24,14 +24,6 @@ profile_type_store = 'app-store'
 
 ios_devices_file = './build/ios_devices.txt'
 
-desc "Run code generators"
-private_lane :pre_build do
-  Dir.chdir("..") do
-    sh("flutter pub get")
-    sh("flutter packages pub run build_runner build --delete-conflicting-outputs")
-  end
-end
-
 platform :all do
   desc "Publish Android and iOS Apps"
   lane :publish do |options|
@@ -44,13 +36,11 @@ platform :android do
 
   desc "Build release APK"
   lane :build_apk do
-    pre_build
     sh("flutter build apk --release --dart-define=env.apiBaseUrl=#{api_base_url_dev}")
   end
 
   desc "Build release Bundle"
   lane :build_bundle do
-    pre_build
     sh("flutter build appbundle --release --dart-define=env.apiBaseUrl=#{api_base_url_prod}")
   end
 
@@ -90,7 +80,6 @@ platform :ios do
 
   desc "Build release IPA"
   lane :build do |options|
-    pre_build
     sh("flutter build ios --release --no-codesign --dart-define=env.apiBaseUrl=#{options[:api_base_url]}")
   end
 
