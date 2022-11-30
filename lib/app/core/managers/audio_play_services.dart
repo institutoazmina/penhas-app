@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:flutter_sound_lite/flutter_sound.dart';
+import 'package:flutter_sound/flutter_sound.dart';
 import 'package:logger/logger.dart' show Level;
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/audio_sync_manager.dart';
@@ -62,7 +62,7 @@ extension _AudioPlayServicesPrivate on AudioPlayServices {
 
   Future<void> setupPlayEnviroment() async {
     await releaseAudioSession();
-    await _playerModule.openAudioSession();
+    await _playerModule.openPlayer();
 
     _playerSubscription = _playerModule.onProgress?.listen((e) {
       // what to do in onProgress?
@@ -74,7 +74,7 @@ extension _AudioPlayServicesPrivate on AudioPlayServices {
       if (!_playerModule.isStopped) {
         await _playerModule.stopPlayer();
       }
-      await _playerModule.closeAudioSession();
+      await _playerModule.closePlayer();
     } catch (e, stack) {
       logError(e, stack);
     }

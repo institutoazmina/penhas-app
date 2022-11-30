@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_sound_lite/flutter_sound.dart';
+import 'package:flutter_sound/flutter_sound.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:logger/logger.dart' show Level;
 import 'package:penhas/app/core/extension/asuka.dart';
@@ -153,7 +153,7 @@ extension _AudioRecordServices on AudioRecordServices {
       if (!_recorder.isStopped) {
         await _recorder.stopRecorder();
       }
-      await _recorder.closeAudioSession();
+      await _recorder.closeRecorder();
     } catch (e, stack) {
       logError(e, stack);
     }
@@ -161,10 +161,7 @@ extension _AudioRecordServices on AudioRecordServices {
 
   Future<void> _setupRecordEnviroment() async {
     await _releaseAudioSession();
-    await _recorder.openAudioSession(
-      focus: AudioFocus.requestFocusAndKeepOthers,
-      category: SessionCategory.record,
-    );
+    await _recorder.openRecorder();
 
     _currentDuration = Duration(
       milliseconds:

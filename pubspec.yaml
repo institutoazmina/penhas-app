@@ -46,7 +46,7 @@ dependencies:
       path: flutter_modular
       ref: improvements
   flutter_phone_direct_caller: ^2.1.0
-  flutter_sound_lite: ^8.5.0
+  flutter_sound: ^9.2.13
   flutter_svg: ^1.0.3
   flutter_tags:
     git:
