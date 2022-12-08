@@ -8,6 +8,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/map_failu
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
 import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
 import 'package:penhas/app/features/filters/states/filter_action_observer.dart';
+import 'package:penhas/app/features/support_center/domain/entities/geolocation_entity.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_fetch_request.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_metadata_entity.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
@@ -55,7 +56,7 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   ObservableSet<Marker> placeMarkers = ObservableSet<Marker>();
 
   @observable
-  LatLng initialPosition = const LatLng(0, 0);
+  LatLng initialPosition = const LatLng(-15.793889, -47.882778);
 
   @observable
   SupportCenterState state = const SupportCenterState.loaded();
@@ -121,6 +122,41 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   @action
   Future<void> retry() async {
     await loadSupportCenter(_fetchRequest);
+  }
+
+  @action
+  Future<void> requestLocation(void Function(LatLng location) callback) async {
+    _supportCenterUseCase.updatedGeoLocation(const GeolocationEntity());
+
+    final granted = await _supportCenterUseCase.askForLocationPermission(
+      'Localização',
+      const Text(
+        'Permintindo que a PenhaS tenha acesso a sua localização, será possivel apresentar os pontos de apoio mais próximo da onde você está.',
+        style: TextStyle(
+          color: DesignSystemColors.darkIndigoThree,
+          fontFamily: 'Lato',
+          fontSize: 14.0,
+          letterSpacing: 0.45,
+          fontWeight: FontWeight.normal,
+        ),
+      ),
+    );
+
+    if (granted) {
+      final currentLocation = await _supportCenterUseCase.currentLocation();
+
+      if (currentLocation == null) return;
+      final latLng = currentLocation.toLatLng();
+
+      if (_fetchRequest.locationToken != null) {
+        _fetchRequest = _fetchRequest.copyWith(
+          locationToken: currentLocation.locationToken,
+        );
+        await loadSupportCenter(_fetchRequest);
+      }
+      
+      callback(latLng);
+    }
   }
 }
 
@@ -216,7 +252,11 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     state = const SupportCenterState.loaded();
     currentPlaceSession = session;
     initialPosition = LatLng(session.latitude!, session.longitude!);
-    final places = session.places.map((e) => buildMarker(e));
+
+    final Iterable<SupportCenterPlaceEntity> filteredPlaces = session.places
+        .where((place) => place.latitude != null && place.longitude != null);
+
+    final places = filteredPlaces.map((e) => buildMarker(e));
 
     if (places.isEmpty) {
       errorMessage =

@@ -75,7 +75,6 @@ import 'package:penhas/app/features/notification/presentation/notification_page.
 import 'package:penhas/app/features/quiz/presentation/tutorial/stealth_mode_tutorial_page_controller.dart';
 import 'package:penhas/app/features/support_center/presentation/add/support_center_add_page.dart';
 import 'package:penhas/app/features/support_center/presentation/list/support_center_list_page.dart';
-import 'package:penhas/app/features/support_center/presentation/location/support_center_location_page.dart';
 import 'package:penhas/app/features/support_center/presentation/show/support_center_show_page.dart';
 import 'package:penhas/app/features/users/data/repositories/users_repository.dart';
 import 'package:penhas/app/features/users/presentation/user_profile_module.dart';
@@ -199,11 +198,6 @@ class MainboardModule extends Module {
         ChildRoute(
           '/supportcenter/list',
           child: (context, args) => const SupportCenterListPage(),
-          transition: TransitionType.rightToLeft,
-        ),
-        ChildRoute(
-          '/supportcenter/location',
-          child: (context, args) => const SupportCenterLocationPage(),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(

@@ -64,9 +64,11 @@ class _SupportCenterListPageState
 }
 
 class Card extends StatelessWidget {
-  const Card({Key? key, required this.place, required this.onSelected})
-      : super(key: key);
-
+  const Card({
+    Key? key,
+    required this.place,
+    required this.onSelected,
+  }) : super(key: key);
   final SupportCenterPlaceEntity place;
   final ActionOnSelected onSelected;
 
@@ -74,8 +76,10 @@ class Card extends StatelessWidget {
   Widget build(BuildContext context) {
     final uf = place.uf;
     final rate = place.rate;
-    final distance = place.distance;
     final placeColor = DesignSystemColors.hexColor(place.category.color!);
+    final kmText =
+        place.distance != null ? '$uf - ${place.distance} KM DE DISTÂNCIA' : '';
+    final rateText = rate != null && rate != 'n/a' ? '$rate/5' : 'n/a';
 
     return GestureDetector(
       child: Padding(
@@ -141,11 +145,11 @@ class Card extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '$uf - ${distance}KM DE DISTÂNCIA',
+                      kmText,
                       style: const TextStyle().categoryName,
                     ),
                     Text(
-                      '$rate/5',
+                      rateText,
                       style: const TextStyle().rate,
                     )
                   ],

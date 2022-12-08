@@ -6,7 +6,6 @@ import 'package:penhas/app/features/support_center/data/repositories/support_cen
 import 'package:penhas/app/features/support_center/domain/usecases/support_center_usecase.dart';
 import 'package:penhas/app/features/support_center/presentation/add/support_center_add_controller.dart';
 import 'package:penhas/app/features/support_center/presentation/list/support_center_list_controller.dart';
-import 'package:penhas/app/features/support_center/presentation/location/support_center_location_controller.dart';
 import 'package:penhas/app/features/support_center/presentation/show/support_center_show_controller.dart';
 import 'package:penhas/app/features/support_center/presentation/support_center_controller.dart';
 import 'package:penhas/app/features/support_center/presentation/support_center_page.dart';
@@ -37,11 +36,6 @@ class SupportCenterModule extends WidgetModule {
         ),
         Bind.factory(
           (i) => SupportCenterListController(i.args?.data),
-        ),
-        Bind.factory(
-          (i) => SupportCenterLocationController(
-            supportCenterUseCase: i.get<SupportCenterUseCase>(),
-          ),
         ),
         Bind.factory(
           (i) => SupportCenterShowController(

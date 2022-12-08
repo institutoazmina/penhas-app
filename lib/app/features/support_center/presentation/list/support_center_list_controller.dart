@@ -1,4 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
@@ -14,7 +15,6 @@ abstract class _SupportCenterListControllerBase with Store {
   _SupportCenterListControllerBase(this._session) {
     places = _session.places.asObservable();
   }
-
   final SupportCenterPlaceSessionEntity _session;
 
   @observable

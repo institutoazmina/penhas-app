@@ -131,12 +131,6 @@ class SupportCenterUseCase {
   }) async {
     return _supportCenterRepository.rate(place, rate);
   }
-}
-
-extension _PrivateMethods on SupportCenterUseCase {
-  Future<bool> hasLocationPermission() {
-    return _locationService.isPermissionGranted();
-  }
 
   Future<GeolocationEntity?> currentLocation() async {
     UserLocationEntity? geoLocation;
@@ -160,5 +154,11 @@ extension _PrivateMethods on SupportCenterUseCase {
     }
 
     return null;
+  }
+}
+
+extension _PrivateMethods on SupportCenterUseCase {
+  Future<bool> hasLocationPermission() {
+    return _locationService.isPermissionGranted();
   }
 }

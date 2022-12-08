@@ -205,6 +205,15 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
     return _$retryAsyncAction.run(() => super.retry());
   }
 
+  final _$requestLocationAsyncAction =
+      AsyncAction('_SupportCenterControllerBase.requestLocation');
+
+  @override
+  Future<void> requestLocation(void Function(LatLng) callback) {
+    return _$requestLocationAsyncAction
+        .run(() => super.requestLocation(callback));
+  }
+
   @override
   String toString() {
     return '''

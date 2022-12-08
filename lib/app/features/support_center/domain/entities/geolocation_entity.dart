@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:penhas/app/core/entities/user_location.dart';
 
 class GeolocationEntity extends Equatable {
@@ -17,4 +18,7 @@ class GeolocationEntity extends Equatable {
 
   @override
   List<Object?> get props => [label, locationToken, userLocation];
+
+  LatLng toLatLng() =>
+    LatLng(userLocation!.latitude, userLocation!.longitude);
 }

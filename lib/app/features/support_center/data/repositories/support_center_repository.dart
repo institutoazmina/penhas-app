@@ -102,6 +102,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
             : options.keywords;
     parameters['next_page'] = options.nextPage;
     parameters['projeto'] = 'Penhas';
+    parameters['full_list'] = '1';
 
     try {
       final bodyResponse =

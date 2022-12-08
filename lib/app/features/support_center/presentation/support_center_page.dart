@@ -85,19 +85,17 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
   }
 
   Widget loadedSupportCenterPage() {
-    if (mapController != null) {
-      mapController!.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            tilt: 75.0,
-            zoom: 12.0,
-            bearing: 15.0,
-            target: controller.initialPosition,
-          ),
+    final initialPosition = controller.initialPosition;
+    mapController?.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          tilt: 75.0,
+          zoom: 12.0,
+          bearing: 15.0,
+          target: initialPosition,
         ),
-      );
-    }
-
+      ),
+    );
     return PageProgressIndicator(
       progressState: controller.progressState,
       progressMessage: 'Carregando',
@@ -105,10 +103,10 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
         children: [
           GoogleMap(
             initialCameraPosition:
-                CameraPosition(target: controller.initialPosition),
+                CameraPosition(target: initialPosition),
             myLocationEnabled: true,
-            myLocationButtonEnabled: false,
             markers: controller.placeMarkers,
+            myLocationButtonEnabled: false,
             zoomControlsEnabled: false,
             onMapCreated: (GoogleMapController controller) {
               mapController = controller;
@@ -135,8 +133,20 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
             child: Column(
               children: [
                 FlatButton(
-                  onPressed: () =>
-                      _dismissSnackBarForAction(controller.location),
+                  onPressed: () {
+                    controller.requestLocation((LatLng location) {
+                      mapController!.animateCamera(
+                        CameraUpdate.newCameraPosition(
+                          CameraPosition(
+                            tilt: 75.0,
+                            zoom: 12.0,
+                            bearing: 15.0,
+                            target: location,
+                          ),
+                        ),
+                      );
+                    });
+                  },
                   child: CircleAvatar(
                     radius: 12,
                     backgroundColor: DesignSystemColors.pumpkinOrange,
