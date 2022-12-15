@@ -3,9 +3,15 @@ import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:penhas/app/features/appstate/data/model/user_profile_model.dart';
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 
+typedef TimeProvider = DateTime Function();
+
 class UserProfileStore extends LocalStore<UserProfileEntity> {
-  UserProfileStore({required ILocalStorage storage})
-      : super('br.com.penhas.userProfile', storage);
+  UserProfileStore({
+    required ILocalStorage storage,
+    this.timeProvider = DateTime.now,
+  }) : super('br.com.penhas.userProfile', storage);
+
+  final TimeProvider timeProvider;
 
   @override
   UserProfileEntity defaultEntity() => UserProfileEntity(
@@ -14,7 +20,7 @@ class UserProfileStore extends LocalStore<UserProfileEntity> {
         avatar: null,
         stealthModeEnabled: false,
         anonymousModeEnabled: false,
-        birthdate: DateTime.now(),
+        birthdate: timeProvider(),
         fullName: null,
         genre: null,
         jaFoiVitimaDeViolencia: false,
@@ -34,7 +40,7 @@ class UserProfileStore extends LocalStore<UserProfileEntity> {
       fullName: userProfile.fullName,
       genre: userProfile.genre,
       jaFoiVitimaDeViolencia: userProfile.jaFoiVitimaDeViolencia,
-      minibio: userProfile.genre,
+      minibio: userProfile.minibio,
       race: userProfile.race,
       skill: userProfile.skill,
       email: userProfile.email,

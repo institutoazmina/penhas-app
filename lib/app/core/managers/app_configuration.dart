@@ -27,7 +27,7 @@ abstract class IAppConfiguration {
 
 class AppConfiguration implements IAppConfiguration {
   AppConfiguration({
-    required String? apiBaseUrl,
+    String? apiBaseUrl,
     required ILocalStorage storage,
   })  : penhasServer = Uri.parse(apiBaseUrl ?? _apiBaseUrl),
         _storage = storage;
@@ -37,9 +37,8 @@ class AppConfiguration implements IAppConfiguration {
   final ILocalStorage _storage;
 
   @override
-  Future<String> get apiToken {
-    return _storage.get(_tokenKey).then((value) => value.getOrElse(() => ''));
-  }
+  Future<String> get apiToken =>
+      _storage.get(_tokenKey).then((data) => data ?? '');
 
   @override
   Future<AuthorizationStatus> get authorizationStatus async {
@@ -72,13 +71,11 @@ class AppConfiguration implements IAppConfiguration {
   }
 
   @override
-  Future<AppStateModeEntity> get appMode async {
-    return _storage
-        .get(_appModes)
-        .then((source) => source.map((r) => jsonDecode(r)))
-        .then((value) => value.map((r) => _buildAppStateMode(r)))
-        .then((value) => value.getOrElse(() => const AppStateModeEntity()));
-  }
+  Future<AppStateModeEntity> get appMode => _storage
+      .get(_appModes)
+      .then((value) => jsonDecode(value!))
+      .then((value) => _buildAppStateMode(value))
+      .catchError((error) => const AppStateModeEntity());
 
   AppStateModeEntity _buildAppStateMode(Map<String, dynamic> data) {
     return AppStateModeEntity(

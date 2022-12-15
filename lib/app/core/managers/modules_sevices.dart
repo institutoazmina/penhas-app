@@ -34,7 +34,7 @@ class AppModulesServices implements IAppModulesServices {
   Future<AppStateModuleEntity?> feature({required String name}) {
     return _storage
         .get(_appModuleKey)
-        .then((value) => value.getOrElse(() => '[]'))
+        .then((value) => value ?? '[]')
         .then((source) => jsonDecode(source) as List<dynamic>)
         .then((value) => _filterFeature(name: name, objects: value));
   }

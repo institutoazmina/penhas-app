@@ -12,6 +12,8 @@ import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:penhas/app/core/storage/local_storage_shared_preferences.dart';
+import 'package:penhas/app/core/storage/migrator_local_storage.dart';
+import 'package:penhas/app/core/storage/secure_local_storage.dart';
 import 'package:penhas/app/features/appstate/data/datasources/app_state_data_source.dart';
 import 'package:penhas/app/features/appstate/data/repositories/app_state_repository.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_preferences_entity.dart';
@@ -26,6 +28,7 @@ import 'package:penhas/app/features/main_menu/domain/repositories/user_profile_r
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_module.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz/quiz_module.dart';
 import 'package:penhas/app/features/splash/splash_module.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppModule extends Module {
   AppModule({String? apiBaseUrl}) : _apiBaseUrl = apiBaseUrl;
@@ -106,7 +109,14 @@ class AppModule extends Module {
             storage: i.get<ILocalStorage>(),
           ),
         ),
-        Bind.factory<ILocalStorage>((i) => LocalStorageSharedPreferences()),
+        Bind.lazySingleton<ILocalStorage>(
+          (i) => MigratorLocalStorage(
+            sharedPreferencesStorage: LocalStorageSharedPreferences(
+              preferences: SharedPreferences.getInstance(),
+            ),
+            secureLocalStorage: SecureLocalStorage(),
+          ),
+        ),
         Bind.lazySingleton<IAudioSyncManager>(
           (i) => AudioSyncManager(
             audioRepository: i.get<IAudioSyncRepository>(),

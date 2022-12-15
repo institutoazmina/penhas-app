@@ -7,8 +7,8 @@ import 'dart:convert' as _i77;
 import 'dart:io' as _i32;
 import 'dart:typed_data' as _i78;
 
-import 'package:dartz/dartz.dart' as _i2;
-import 'package:data_connection_checker/data_connection_checker.dart' as _i3;
+import 'package:dartz/dartz.dart' as _i3;
+import 'package:data_connection_checker/data_connection_checker.dart' as _i2;
 import 'package:flutter/material.dart' as _i40;
 import 'package:http/http.dart' as _i14;
 import 'package:mockito/mockito.dart' as _i1;
@@ -152,12 +152,12 @@ import 'helper.dart' as _i80;
 
 class _FakeUri_0 extends _i1.Fake implements Uri {}
 
-class _FakeEither_1<L, R> extends _i1.Fake implements _i2.Either<L, R> {}
+class _FakeDuration_1 extends _i1.Fake implements Duration {}
 
-class _FakeDuration_2 extends _i1.Fake implements Duration {}
+class _FakeAddressCheckResult_2 extends _i1.Fake
+    implements _i2.AddressCheckResult {}
 
-class _FakeAddressCheckResult_3 extends _i1.Fake
-    implements _i3.AddressCheckResult {}
+class _FakeEither_3<L, R> extends _i1.Fake implements _i3.Either<L, R> {}
 
 class _FakeAppStateModeEntity_4 extends _i1.Fake
     implements _i4.AppStateModeEntity {}
@@ -236,11 +236,13 @@ class MockILocalStorage extends _i1.Mock implements _i20.ILocalStorage {
   }
 
   @override
-  _i19.Future<_i2.Either<dynamic, String>> get(String? key) =>
+  _i19.Future<bool> hasKey(String? key) =>
+      (super.noSuchMethod(Invocation.method(#hasKey, [key]),
+          returnValue: Future<bool>.value(false)) as _i19.Future<bool>);
+  @override
+  _i19.Future<String?> get(String? key) =>
       (super.noSuchMethod(Invocation.method(#get, [key]),
-              returnValue: Future<_i2.Either<dynamic, String>>.value(
-                  _FakeEither_1<dynamic, String>()))
-          as _i19.Future<_i2.Either<dynamic, String>>);
+          returnValue: Future<String?>.value()) as _i19.Future<String?>);
   @override
   _i19.Future<void> put(String? key, String? value) => (super.noSuchMethod(
       Invocation.method(#put, [key, value]),
@@ -259,47 +261,47 @@ class MockILocalStorage extends _i1.Mock implements _i20.ILocalStorage {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockDataConnectionChecker extends _i1.Mock
-    implements _i3.DataConnectionChecker {
+    implements _i2.DataConnectionChecker {
   MockDataConnectionChecker() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  List<_i3.AddressCheckOptions> get addresses =>
+  List<_i2.AddressCheckOptions> get addresses =>
       (super.noSuchMethod(Invocation.getter(#addresses),
-              returnValue: <_i3.AddressCheckOptions>[])
-          as List<_i3.AddressCheckOptions>);
+              returnValue: <_i2.AddressCheckOptions>[])
+          as List<_i2.AddressCheckOptions>);
   @override
-  set addresses(List<_i3.AddressCheckOptions>? _addresses) =>
+  set addresses(List<_i2.AddressCheckOptions>? _addresses) =>
       super.noSuchMethod(Invocation.setter(#addresses, _addresses),
           returnValueForMissingStub: null);
   @override
   Duration get checkInterval =>
       (super.noSuchMethod(Invocation.getter(#checkInterval),
-          returnValue: _FakeDuration_2()) as Duration);
+          returnValue: _FakeDuration_1()) as Duration);
   @override
   set checkInterval(Duration? _checkInterval) =>
       super.noSuchMethod(Invocation.setter(#checkInterval, _checkInterval),
           returnValueForMissingStub: null);
   @override
-  List<_i3.AddressCheckResult> get lastTryResults => (super.noSuchMethod(
+  List<_i2.AddressCheckResult> get lastTryResults => (super.noSuchMethod(
       Invocation.getter(#lastTryResults),
-      returnValue: <_i3.AddressCheckResult>[]) as List<_i3.AddressCheckResult>);
+      returnValue: <_i2.AddressCheckResult>[]) as List<_i2.AddressCheckResult>);
   @override
   _i19.Future<bool> get hasConnection =>
       (super.noSuchMethod(Invocation.getter(#hasConnection),
           returnValue: Future<bool>.value(false)) as _i19.Future<bool>);
   @override
-  _i19.Future<_i3.DataConnectionStatus> get connectionStatus =>
+  _i19.Future<_i2.DataConnectionStatus> get connectionStatus =>
       (super.noSuchMethod(Invocation.getter(#connectionStatus),
-              returnValue: Future<_i3.DataConnectionStatus>.value(
-                  _i3.DataConnectionStatus.disconnected))
-          as _i19.Future<_i3.DataConnectionStatus>);
+              returnValue: Future<_i2.DataConnectionStatus>.value(
+                  _i2.DataConnectionStatus.disconnected))
+          as _i19.Future<_i2.DataConnectionStatus>);
   @override
-  _i19.Stream<_i3.DataConnectionStatus> get onStatusChange =>
+  _i19.Stream<_i2.DataConnectionStatus> get onStatusChange =>
       (super.noSuchMethod(Invocation.getter(#onStatusChange),
-              returnValue: Stream<_i3.DataConnectionStatus>.empty())
-          as _i19.Stream<_i3.DataConnectionStatus>);
+              returnValue: Stream<_i2.DataConnectionStatus>.empty())
+          as _i19.Stream<_i2.DataConnectionStatus>);
   @override
   bool get hasListeners =>
       (super.noSuchMethod(Invocation.getter(#hasListeners), returnValue: false)
@@ -309,12 +311,12 @@ class MockDataConnectionChecker extends _i1.Mock
       (super.noSuchMethod(Invocation.getter(#isActivelyChecking),
           returnValue: false) as bool);
   @override
-  _i19.Future<_i3.AddressCheckResult> isHostReachable(
-          _i3.AddressCheckOptions? options) =>
+  _i19.Future<_i2.AddressCheckResult> isHostReachable(
+          _i2.AddressCheckOptions? options) =>
       (super.noSuchMethod(Invocation.method(#isHostReachable, [options]),
-              returnValue: Future<_i3.AddressCheckResult>.value(
-                  _FakeAddressCheckResult_3()))
-          as _i19.Future<_i3.AddressCheckResult>);
+              returnValue: Future<_i2.AddressCheckResult>.value(
+                  _FakeAddressCheckResult_2()))
+          as _i19.Future<_i2.AddressCheckResult>);
   @override
   String toString() => super.toString();
 }
@@ -329,20 +331,20 @@ class MockIAppStateRepository extends _i1.Mock
   }
 
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i4.AppStateEntity>> check() =>
+  _i19.Future<_i3.Either<_i22.Failure, _i4.AppStateEntity>> check() =>
       (super.noSuchMethod(Invocation.method(#check, []),
               returnValue:
-                  Future<_i2.Either<_i22.Failure, _i4.AppStateEntity>>.value(
-                      _FakeEither_1<_i22.Failure, _i4.AppStateEntity>()))
-          as _i19.Future<_i2.Either<_i22.Failure, _i4.AppStateEntity>>);
+                  Future<_i3.Either<_i22.Failure, _i4.AppStateEntity>>.value(
+                      _FakeEither_3<_i22.Failure, _i4.AppStateEntity>()))
+          as _i19.Future<_i3.Either<_i22.Failure, _i4.AppStateEntity>>);
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i4.AppStateEntity>> update(
+  _i19.Future<_i3.Either<_i22.Failure, _i4.AppStateEntity>> update(
           _i23.UpdateUserProfileEntity? update) =>
       (super.noSuchMethod(Invocation.method(#update, [update]),
               returnValue:
-                  Future<_i2.Either<_i22.Failure, _i4.AppStateEntity>>.value(
-                      _FakeEither_1<_i22.Failure, _i4.AppStateEntity>()))
-          as _i19.Future<_i2.Either<_i22.Failure, _i4.AppStateEntity>>);
+                  Future<_i3.Either<_i22.Failure, _i4.AppStateEntity>>.value(
+                      _FakeEither_3<_i22.Failure, _i4.AppStateEntity>()))
+          as _i19.Future<_i3.Either<_i22.Failure, _i4.AppStateEntity>>);
   @override
   String toString() => super.toString();
 }
@@ -551,20 +553,20 @@ class MockAppStateUseCase extends _i1.Mock implements _i33.AppStateUseCase {
   }
 
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i4.AppStateEntity>> check() =>
+  _i19.Future<_i3.Either<_i22.Failure, _i4.AppStateEntity>> check() =>
       (super.noSuchMethod(Invocation.method(#check, []),
               returnValue:
-                  Future<_i2.Either<_i22.Failure, _i4.AppStateEntity>>.value(
-                      _FakeEither_1<_i22.Failure, _i4.AppStateEntity>()))
-          as _i19.Future<_i2.Either<_i22.Failure, _i4.AppStateEntity>>);
+                  Future<_i3.Either<_i22.Failure, _i4.AppStateEntity>>.value(
+                      _FakeEither_3<_i22.Failure, _i4.AppStateEntity>()))
+          as _i19.Future<_i3.Either<_i22.Failure, _i4.AppStateEntity>>);
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i4.AppStateEntity>> update(
+  _i19.Future<_i3.Either<_i22.Failure, _i4.AppStateEntity>> update(
           _i23.UpdateUserProfileEntity? update) =>
       (super.noSuchMethod(Invocation.method(#update, [update]),
               returnValue:
-                  Future<_i2.Either<_i22.Failure, _i4.AppStateEntity>>.value(
-                      _FakeEither_1<_i22.Failure, _i4.AppStateEntity>()))
-          as _i19.Future<_i2.Either<_i22.Failure, _i4.AppStateEntity>>);
+                  Future<_i3.Either<_i22.Failure, _i4.AppStateEntity>>.value(
+                      _FakeEither_3<_i22.Failure, _i4.AppStateEntity>()))
+          as _i19.Future<_i3.Either<_i22.Failure, _i4.AppStateEntity>>);
   @override
   String toString() => super.toString();
 }
@@ -579,58 +581,58 @@ class MockIUserProfileRepository extends _i1.Mock
   }
 
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i5.ValidField>> stealthMode(
+  _i19.Future<_i3.Either<_i22.Failure, _i5.ValidField>> stealthMode(
           {bool? toggle}) =>
       (super.noSuchMethod(
           Invocation.method(#stealthMode, [], {#toggle: toggle}),
-          returnValue: Future<_i2.Either<_i22.Failure, _i5.ValidField>>.value(
-              _FakeEither_1<_i22.Failure, _i5.ValidField>())) as _i19
-          .Future<_i2.Either<_i22.Failure, _i5.ValidField>>);
+          returnValue: Future<_i3.Either<_i22.Failure, _i5.ValidField>>.value(
+              _FakeEither_3<_i22.Failure, _i5.ValidField>())) as _i19
+          .Future<_i3.Either<_i22.Failure, _i5.ValidField>>);
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i5.ValidField>> anonymousMode(
+  _i19.Future<_i3.Either<_i22.Failure, _i5.ValidField>> anonymousMode(
           {bool? toggle}) =>
       (super.noSuchMethod(
           Invocation.method(#anonymousMode, [], {#toggle: toggle}),
-          returnValue: Future<_i2.Either<_i22.Failure, _i5.ValidField>>.value(
-              _FakeEither_1<_i22.Failure, _i5.ValidField>())) as _i19
-          .Future<_i2.Either<_i22.Failure, _i5.ValidField>>);
+          returnValue: Future<_i3.Either<_i22.Failure, _i5.ValidField>>.value(
+              _FakeEither_3<_i22.Failure, _i5.ValidField>())) as _i19
+          .Future<_i3.Either<_i22.Failure, _i5.ValidField>>);
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i5.ValidField>> deleteNotice() =>
+  _i19.Future<_i3.Either<_i22.Failure, _i5.ValidField>> deleteNotice() =>
       (super.noSuchMethod(Invocation.method(#deleteNotice, []),
-          returnValue: Future<_i2.Either<_i22.Failure, _i5.ValidField>>.value(
-              _FakeEither_1<_i22.Failure, _i5.ValidField>())) as _i19
-          .Future<_i2.Either<_i22.Failure, _i5.ValidField>>);
+          returnValue: Future<_i3.Either<_i22.Failure, _i5.ValidField>>.value(
+              _FakeEither_3<_i22.Failure, _i5.ValidField>())) as _i19
+          .Future<_i3.Either<_i22.Failure, _i5.ValidField>>);
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i5.ValidField>> delete(
+  _i19.Future<_i3.Either<_i22.Failure, _i5.ValidField>> delete(
           {String? password}) =>
       (super.noSuchMethod(Invocation.method(#delete, [], {#password: password}),
-          returnValue: Future<_i2.Either<_i22.Failure, _i5.ValidField>>.value(
-              _FakeEither_1<_i22.Failure, _i5.ValidField>())) as _i19
-          .Future<_i2.Either<_i22.Failure, _i5.ValidField>>);
+          returnValue: Future<_i3.Either<_i22.Failure, _i5.ValidField>>.value(
+              _FakeEither_3<_i22.Failure, _i5.ValidField>())) as _i19
+          .Future<_i3.Either<_i22.Failure, _i5.ValidField>>);
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i5.ValidField>> reactivate(
+  _i19.Future<_i3.Either<_i22.Failure, _i5.ValidField>> reactivate(
           {String? token}) =>
       (super.noSuchMethod(Invocation.method(#reactivate, [], {#token: token}),
-          returnValue: Future<_i2.Either<_i22.Failure, _i5.ValidField>>.value(
-              _FakeEither_1<_i22.Failure, _i5.ValidField>())) as _i19
-          .Future<_i2.Either<_i22.Failure, _i5.ValidField>>);
+          returnValue: Future<_i3.Either<_i22.Failure, _i5.ValidField>>.value(
+              _FakeEither_3<_i22.Failure, _i5.ValidField>())) as _i19
+          .Future<_i3.Either<_i22.Failure, _i5.ValidField>>);
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i35.AccountPreferenceSessionModel>>
+  _i19.Future<_i3.Either<_i22.Failure, _i35.AccountPreferenceSessionModel>>
       preferences() => (super.noSuchMethod(Invocation.method(#preferences, []),
           returnValue:
-              Future<_i2.Either<_i22.Failure, _i35.AccountPreferenceSessionModel>>.value(
-                  _FakeEither_1<_i22.Failure,
+              Future<_i3.Either<_i22.Failure, _i35.AccountPreferenceSessionModel>>.value(
+                  _FakeEither_3<_i22.Failure,
                       _i35.AccountPreferenceSessionModel>())) as _i19
-          .Future<_i2.Either<_i22.Failure, _i35.AccountPreferenceSessionModel>>);
+          .Future<_i3.Either<_i22.Failure, _i35.AccountPreferenceSessionModel>>);
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i35.AccountPreferenceSessionModel>>
+  _i19.Future<_i3.Either<_i22.Failure, _i35.AccountPreferenceSessionModel>>
       updatePreferences({String? key, bool? status}) => (super.noSuchMethod(
           Invocation.method(
               #updatePreferences, [], {#key: key, #status: status}),
           returnValue:
-              Future<_i2.Either<_i22.Failure, _i35.AccountPreferenceSessionModel>>.value(
-                  _FakeEither_1<_i22.Failure, _i35.AccountPreferenceSessionModel>())) as _i19
-          .Future<_i2.Either<_i22.Failure, _i35.AccountPreferenceSessionModel>>);
+              Future<_i3.Either<_i22.Failure, _i35.AccountPreferenceSessionModel>>.value(
+                  _FakeEither_3<_i22.Failure, _i35.AccountPreferenceSessionModel>())) as _i19
+          .Future<_i3.Either<_i22.Failure, _i35.AccountPreferenceSessionModel>>);
   @override
   String toString() => super.toString();
 }
@@ -662,14 +664,14 @@ class MockILocationServices extends _i1.Mock implements _i38.ILocationServices {
   }
 
   @override
-  _i19.Future<_i2.Either<_i38.LocationFailure, _i39.UserLocationEntity?>>
+  _i19.Future<_i3.Either<_i38.LocationFailure, _i39.UserLocationEntity?>>
       currentLocation() => (super.noSuchMethod(
           Invocation.method(#currentLocation, []),
           returnValue:
-              Future<_i2.Either<_i38.LocationFailure, _i39.UserLocationEntity?>>.value(
-                  _FakeEither_1<_i38.LocationFailure,
+              Future<_i3.Either<_i38.LocationFailure, _i39.UserLocationEntity?>>.value(
+                  _FakeEither_3<_i38.LocationFailure,
                       _i39.UserLocationEntity?>())) as _i19
-          .Future<_i2.Either<_i38.LocationFailure, _i39.UserLocationEntity?>>);
+          .Future<_i3.Either<_i38.LocationFailure, _i39.UserLocationEntity?>>);
   @override
   _i19.Future<_i8.LocationPermissionState> requestPermission(
           {String? title, _i40.Widget? description}) =>
@@ -702,56 +704,56 @@ class MockITweetRepository extends _i1.Mock implements _i41.ITweetRepository {
   }
 
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i42.TweetSessionEntity>> fetch(
+  _i19.Future<_i3.Either<_i22.Failure, _i42.TweetSessionEntity>> fetch(
           {_i43.TweetRequestOption? option}) =>
       (super.noSuchMethod(Invocation.method(#fetch, [], {#option: option}),
               returnValue: Future<
-                      _i2.Either<_i22.Failure, _i42.TweetSessionEntity>>.value(
-                  _FakeEither_1<_i22.Failure, _i42.TweetSessionEntity>()))
-          as _i19.Future<_i2.Either<_i22.Failure, _i42.TweetSessionEntity>>);
+                      _i3.Either<_i22.Failure, _i42.TweetSessionEntity>>.value(
+                  _FakeEither_3<_i22.Failure, _i42.TweetSessionEntity>()))
+          as _i19.Future<_i3.Either<_i22.Failure, _i42.TweetSessionEntity>>);
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i42.TweetSessionEntity>> current(
+  _i19.Future<_i3.Either<_i22.Failure, _i42.TweetSessionEntity>> current(
           {_i44.TweetEngageRequestOption? option}) =>
       (super.noSuchMethod(Invocation.method(#current, [], {#option: option}),
               returnValue: Future<
-                      _i2.Either<_i22.Failure, _i42.TweetSessionEntity>>.value(
-                  _FakeEither_1<_i22.Failure, _i42.TweetSessionEntity>()))
-          as _i19.Future<_i2.Either<_i22.Failure, _i42.TweetSessionEntity>>);
+                      _i3.Either<_i22.Failure, _i42.TweetSessionEntity>>.value(
+                  _FakeEither_3<_i22.Failure, _i42.TweetSessionEntity>()))
+          as _i19.Future<_i3.Either<_i22.Failure, _i42.TweetSessionEntity>>);
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i45.TweetEntity>> create(
+  _i19.Future<_i3.Either<_i22.Failure, _i45.TweetEntity>> create(
           {_i44.TweetCreateRequestOption? option}) =>
       (super.noSuchMethod(Invocation.method(#create, [], {#option: option}),
-          returnValue: Future<_i2.Either<_i22.Failure, _i45.TweetEntity>>.value(
-              _FakeEither_1<_i22.Failure, _i45.TweetEntity>())) as _i19
-          .Future<_i2.Either<_i22.Failure, _i45.TweetEntity>>);
+          returnValue: Future<_i3.Either<_i22.Failure, _i45.TweetEntity>>.value(
+              _FakeEither_3<_i22.Failure, _i45.TweetEntity>())) as _i19
+          .Future<_i3.Either<_i22.Failure, _i45.TweetEntity>>);
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i45.TweetEntity>> reply(
+  _i19.Future<_i3.Either<_i22.Failure, _i45.TweetEntity>> reply(
           {_i44.TweetEngageRequestOption? option}) =>
       (super.noSuchMethod(Invocation.method(#reply, [], {#option: option}),
-          returnValue: Future<_i2.Either<_i22.Failure, _i45.TweetEntity>>.value(
-              _FakeEither_1<_i22.Failure, _i45.TweetEntity>())) as _i19
-          .Future<_i2.Either<_i22.Failure, _i45.TweetEntity>>);
+          returnValue: Future<_i3.Either<_i22.Failure, _i45.TweetEntity>>.value(
+              _FakeEither_3<_i22.Failure, _i45.TweetEntity>())) as _i19
+          .Future<_i3.Either<_i22.Failure, _i45.TweetEntity>>);
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i45.TweetEntity>> like(
+  _i19.Future<_i3.Either<_i22.Failure, _i45.TweetEntity>> like(
           {_i44.TweetEngageRequestOption? option}) =>
       (super.noSuchMethod(Invocation.method(#like, [], {#option: option}),
-          returnValue: Future<_i2.Either<_i22.Failure, _i45.TweetEntity>>.value(
-              _FakeEither_1<_i22.Failure, _i45.TweetEntity>())) as _i19
-          .Future<_i2.Either<_i22.Failure, _i45.TweetEntity>>);
+          returnValue: Future<_i3.Either<_i22.Failure, _i45.TweetEntity>>.value(
+              _FakeEither_3<_i22.Failure, _i45.TweetEntity>())) as _i19
+          .Future<_i3.Either<_i22.Failure, _i45.TweetEntity>>);
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i5.ValidField>> delete(
+  _i19.Future<_i3.Either<_i22.Failure, _i5.ValidField>> delete(
           {_i44.TweetEngageRequestOption? option}) =>
       (super.noSuchMethod(Invocation.method(#delete, [], {#option: option}),
-          returnValue: Future<_i2.Either<_i22.Failure, _i5.ValidField>>.value(
-              _FakeEither_1<_i22.Failure, _i5.ValidField>())) as _i19
-          .Future<_i2.Either<_i22.Failure, _i5.ValidField>>);
+          returnValue: Future<_i3.Either<_i22.Failure, _i5.ValidField>>.value(
+              _FakeEither_3<_i22.Failure, _i5.ValidField>())) as _i19
+          .Future<_i3.Either<_i22.Failure, _i5.ValidField>>);
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i5.ValidField>> report(
+  _i19.Future<_i3.Either<_i22.Failure, _i5.ValidField>> report(
           {_i44.TweetEngageRequestOption? option}) =>
       (super.noSuchMethod(Invocation.method(#report, [], {#option: option}),
-          returnValue: Future<_i2.Either<_i22.Failure, _i5.ValidField>>.value(
-              _FakeEither_1<_i22.Failure, _i5.ValidField>())) as _i19
-          .Future<_i2.Either<_i22.Failure, _i5.ValidField>>);
+          returnValue: Future<_i3.Either<_i22.Failure, _i5.ValidField>>.value(
+              _FakeEither_3<_i22.Failure, _i5.ValidField>())) as _i19
+          .Future<_i3.Either<_i22.Failure, _i5.ValidField>>);
   @override
   String toString() => super.toString();
 }
@@ -774,13 +776,13 @@ class MockTweetFilterPreference extends _i1.Mock
       super.noSuchMethod(Invocation.setter(#categories, _categories),
           returnValueForMissingStub: null);
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i47.TweetFilterSessionEntity>>
+  _i19.Future<_i3.Either<_i22.Failure, _i47.TweetFilterSessionEntity>>
       retreive() => (super.noSuchMethod(Invocation.method(#retreive, []),
               returnValue: Future<
-                      _i2.Either<_i22.Failure,
+                      _i3.Either<_i22.Failure,
                           _i47.TweetFilterSessionEntity>>.value(
-                  _FakeEither_1<_i22.Failure, _i47.TweetFilterSessionEntity>()))
-          as _i19.Future<_i2.Either<_i22.Failure, _i47.TweetFilterSessionEntity>>);
+                  _FakeEither_3<_i22.Failure, _i47.TweetFilterSessionEntity>()))
+          as _i19.Future<_i3.Either<_i22.Failure, _i47.TweetFilterSessionEntity>>);
   @override
   void saveTags(List<String?>? tags) =>
       super.noSuchMethod(Invocation.method(#saveTags, [tags]),
@@ -802,7 +804,7 @@ class MockIAuthenticationRepository extends _i1.Mock
   }
 
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i49.SessionEntity>>
+  _i19.Future<_i3.Either<_i22.Failure, _i49.SessionEntity>>
       signInWithEmailAndPassword(
               {_i28.EmailAddress? emailAddress,
               _i50.SignInPassword? password}) =>
@@ -810,9 +812,9 @@ class MockIAuthenticationRepository extends _i1.Mock
                   Invocation.method(#signInWithEmailAndPassword, [],
                       {#emailAddress: emailAddress, #password: password}),
                   returnValue:
-                      Future<_i2.Either<_i22.Failure, _i49.SessionEntity>>.value(
-                          _FakeEither_1<_i22.Failure, _i49.SessionEntity>()))
-              as _i19.Future<_i2.Either<_i22.Failure, _i49.SessionEntity>>);
+                      Future<_i3.Either<_i22.Failure, _i49.SessionEntity>>.value(
+                          _FakeEither_3<_i22.Failure, _i49.SessionEntity>()))
+              as _i19.Future<_i3.Either<_i22.Failure, _i49.SessionEntity>>);
   @override
   String toString() => super.toString();
 }
@@ -827,7 +829,7 @@ class MockIUserRegisterRepository extends _i1.Mock
   }
 
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i49.SessionEntity>> signup(
+  _i19.Future<_i3.Either<_i22.Failure, _i49.SessionEntity>> signup(
           {_i28.EmailAddress? emailAddress,
           _i29.SignUpPassword? password,
           _i52.Cep? cep,
@@ -852,11 +854,11 @@ class MockIUserRegisterRepository extends _i1.Mock
                 #race: race
               }),
               returnValue:
-                  Future<_i2.Either<_i22.Failure, _i49.SessionEntity>>.value(
-                      _FakeEither_1<_i22.Failure, _i49.SessionEntity>()))
-          as _i19.Future<_i2.Either<_i22.Failure, _i49.SessionEntity>>);
+                  Future<_i3.Either<_i22.Failure, _i49.SessionEntity>>.value(
+                      _FakeEither_3<_i22.Failure, _i49.SessionEntity>()))
+          as _i19.Future<_i3.Either<_i22.Failure, _i49.SessionEntity>>);
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i5.ValidField>> checkField(
+  _i19.Future<_i3.Either<_i22.Failure, _i5.ValidField>> checkField(
           {_i28.EmailAddress? emailAddress,
           _i29.SignUpPassword? password,
           _i52.Cep? cep,
@@ -880,9 +882,9 @@ class MockIUserRegisterRepository extends _i1.Mock
             #genre: genre,
             #race: race
           }),
-          returnValue: Future<_i2.Either<_i22.Failure, _i5.ValidField>>.value(
-              _FakeEither_1<_i22.Failure, _i5.ValidField>())) as _i19
-          .Future<_i2.Either<_i22.Failure, _i5.ValidField>>);
+          returnValue: Future<_i3.Either<_i22.Failure, _i5.ValidField>>.value(
+              _FakeEither_3<_i22.Failure, _i5.ValidField>())) as _i19
+          .Future<_i3.Either<_i22.Failure, _i5.ValidField>>);
   @override
   String toString() => super.toString();
 }
@@ -897,15 +899,15 @@ class MockIResetPasswordRepository extends _i1.Mock
   }
 
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i60.ResetPasswordResponseEntity>> request(
+  _i19.Future<_i3.Either<_i22.Failure, _i60.ResetPasswordResponseEntity>> request(
           {_i28.EmailAddress? emailAddress}) =>
       (super.noSuchMethod(
           Invocation.method(#request, [], {#emailAddress: emailAddress}),
           returnValue:
-              Future<_i2.Either<_i22.Failure, _i60.ResetPasswordResponseEntity>>.value(
-                  _FakeEither_1<_i22.Failure,
+              Future<_i3.Either<_i22.Failure, _i60.ResetPasswordResponseEntity>>.value(
+                  _FakeEither_3<_i22.Failure,
                       _i60.ResetPasswordResponseEntity>())) as _i19
-          .Future<_i2.Either<_i22.Failure, _i60.ResetPasswordResponseEntity>>);
+          .Future<_i3.Either<_i22.Failure, _i60.ResetPasswordResponseEntity>>);
   @override
   String toString() => super.toString();
 }
@@ -971,48 +973,48 @@ class MockISupportCenterRepository extends _i1.Mock
   }
 
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i63.SupportCenterMetadataEntity?>>
+  _i19.Future<_i3.Either<_i22.Failure, _i63.SupportCenterMetadataEntity?>>
       metadata() => (super.noSuchMethod(Invocation.method(#metadata, []),
           returnValue:
-              Future<_i2.Either<_i22.Failure, _i63.SupportCenterMetadataEntity?>>.value(
-                  _FakeEither_1<_i22.Failure,
+              Future<_i3.Either<_i22.Failure, _i63.SupportCenterMetadataEntity?>>.value(
+                  _FakeEither_3<_i22.Failure,
                       _i63.SupportCenterMetadataEntity?>())) as _i19
-          .Future<_i2.Either<_i22.Failure, _i63.SupportCenterMetadataEntity?>>);
+          .Future<_i3.Either<_i22.Failure, _i63.SupportCenterMetadataEntity?>>);
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i64.SupportCenterPlaceSessionEntity>> fetch(
+  _i19.Future<_i3.Either<_i22.Failure, _i64.SupportCenterPlaceSessionEntity>> fetch(
           _i65.SupportCenterFetchRequest? options) =>
       (super.noSuchMethod(Invocation.method(#fetch, [options]),
           returnValue:
-              Future<_i2.Either<_i22.Failure, _i64.SupportCenterPlaceSessionEntity>>.value(
-                  _FakeEither_1<_i22.Failure,
+              Future<_i3.Either<_i22.Failure, _i64.SupportCenterPlaceSessionEntity>>.value(
+                  _FakeEither_3<_i22.Failure,
                       _i64.SupportCenterPlaceSessionEntity>())) as _i19
-          .Future<_i2.Either<_i22.Failure, _i64.SupportCenterPlaceSessionEntity>>);
+          .Future<_i3.Either<_i22.Failure, _i64.SupportCenterPlaceSessionEntity>>);
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i66.GeolocationEntity>> mapGeoFromCep(
+  _i19.Future<_i3.Either<_i22.Failure, _i66.GeolocationEntity>> mapGeoFromCep(
           String? cep) =>
       (super.noSuchMethod(Invocation.method(#mapGeoFromCep, [cep]),
               returnValue: Future<
-                      _i2.Either<_i22.Failure, _i66.GeolocationEntity>>.value(
-                  _FakeEither_1<_i22.Failure, _i66.GeolocationEntity>()))
-          as _i19.Future<_i2.Either<_i22.Failure, _i66.GeolocationEntity>>);
+                      _i3.Either<_i22.Failure, _i66.GeolocationEntity>>.value(
+                  _FakeEither_3<_i22.Failure, _i66.GeolocationEntity>()))
+          as _i19.Future<_i3.Either<_i22.Failure, _i66.GeolocationEntity>>);
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i67.SupportCenterPlaceDetailEntity>>
+  _i19.Future<_i3.Either<_i22.Failure, _i67.SupportCenterPlaceDetailEntity>>
       detail(_i68.SupportCenterPlaceEntity? placeEntity) => (super.noSuchMethod(
           Invocation.method(#detail, [placeEntity]),
           returnValue:
-              Future<_i2.Either<_i22.Failure, _i67.SupportCenterPlaceDetailEntity>>.value(
-                  _FakeEither_1<_i22.Failure,
+              Future<_i3.Either<_i22.Failure, _i67.SupportCenterPlaceDetailEntity>>.value(
+                  _FakeEither_3<_i22.Failure,
                       _i67.SupportCenterPlaceDetailEntity>())) as _i19
-          .Future<_i2.Either<_i22.Failure, _i67.SupportCenterPlaceDetailEntity>>);
+          .Future<_i3.Either<_i22.Failure, _i67.SupportCenterPlaceDetailEntity>>);
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i5.ValidField>> rate(
+  _i19.Future<_i3.Either<_i22.Failure, _i5.ValidField>> rate(
           _i68.SupportCenterPlaceEntity? place, double? rate) =>
       (super.noSuchMethod(Invocation.method(#rate, [place, rate]),
-          returnValue: Future<_i2.Either<_i22.Failure, _i5.ValidField>>.value(
-              _FakeEither_1<_i22.Failure, _i5.ValidField>())) as _i19
-          .Future<_i2.Either<_i22.Failure, _i5.ValidField>>);
+          returnValue: Future<_i3.Either<_i22.Failure, _i5.ValidField>>.value(
+              _FakeEither_3<_i22.Failure, _i5.ValidField>())) as _i19
+          .Future<_i3.Either<_i22.Failure, _i5.ValidField>>);
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i12.AlertModel>> suggestion(
+  _i19.Future<_i3.Either<_i22.Failure, _i12.AlertModel>> suggestion(
           {String? name,
           String? email,
           String? address,
@@ -1054,9 +1056,9 @@ class MockISupportCenterRepository extends _i1.Mock
             #hasWhatsapp: hasWhatsapp,
             #is24h: is24h
           }),
-          returnValue: Future<_i2.Either<_i22.Failure, _i12.AlertModel>>.value(
-              _FakeEither_1<_i22.Failure, _i12.AlertModel>())) as _i19
-          .Future<_i2.Either<_i22.Failure, _i12.AlertModel>>);
+          returnValue: Future<_i3.Either<_i22.Failure, _i12.AlertModel>>.value(
+              _FakeEither_3<_i22.Failure, _i12.AlertModel>())) as _i19
+          .Future<_i3.Either<_i22.Failure, _i12.AlertModel>>);
   @override
   String toString() => super.toString();
 }
@@ -1207,16 +1209,16 @@ class MockIChangePasswordRepository extends _i1.Mock
   }
 
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i5.ValidField>> validToken(
+  _i19.Future<_i3.Either<_i22.Failure, _i5.ValidField>> validToken(
           {_i28.EmailAddress? emailAddress, String? resetToken}) =>
       (super.noSuchMethod(
           Invocation.method(#validToken, [],
               {#emailAddress: emailAddress, #resetToken: resetToken}),
-          returnValue: Future<_i2.Either<_i22.Failure, _i5.ValidField>>.value(
-              _FakeEither_1<_i22.Failure, _i5.ValidField>())) as _i19
-          .Future<_i2.Either<_i22.Failure, _i5.ValidField>>);
+          returnValue: Future<_i3.Either<_i22.Failure, _i5.ValidField>>.value(
+              _FakeEither_3<_i22.Failure, _i5.ValidField>())) as _i19
+          .Future<_i3.Either<_i22.Failure, _i5.ValidField>>);
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i5.ValidField>> reset(
+  _i19.Future<_i3.Either<_i22.Failure, _i5.ValidField>> reset(
           {_i28.EmailAddress? emailAddress,
           _i29.SignUpPassword? password,
           String? resetToken}) =>
@@ -1226,9 +1228,9 @@ class MockIChangePasswordRepository extends _i1.Mock
             #password: password,
             #resetToken: resetToken
           }),
-          returnValue: Future<_i2.Either<_i22.Failure, _i5.ValidField>>.value(
-              _FakeEither_1<_i22.Failure, _i5.ValidField>())) as _i19
-          .Future<_i2.Either<_i22.Failure, _i5.ValidField>>);
+          returnValue: Future<_i3.Either<_i22.Failure, _i5.ValidField>>.value(
+              _FakeEither_3<_i22.Failure, _i5.ValidField>())) as _i19
+          .Future<_i3.Either<_i22.Failure, _i5.ValidField>>);
   @override
   String toString() => super.toString();
 }
@@ -1292,7 +1294,7 @@ class MockAuthenticationRepository extends _i1.Mock
   }
 
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i49.SessionEntity>>
+  _i19.Future<_i3.Either<_i22.Failure, _i49.SessionEntity>>
       signInWithEmailAndPassword(
               {_i28.EmailAddress? emailAddress,
               _i50.SignInPassword? password}) =>
@@ -1300,9 +1302,9 @@ class MockAuthenticationRepository extends _i1.Mock
                   Invocation.method(#signInWithEmailAndPassword, [],
                       {#emailAddress: emailAddress, #password: password}),
                   returnValue:
-                      Future<_i2.Either<_i22.Failure, _i49.SessionEntity>>.value(
-                          _FakeEither_1<_i22.Failure, _i49.SessionEntity>()))
-              as _i19.Future<_i2.Either<_i22.Failure, _i49.SessionEntity>>);
+                      Future<_i3.Either<_i22.Failure, _i49.SessionEntity>>.value(
+                          _FakeEither_3<_i22.Failure, _i49.SessionEntity>()))
+              as _i19.Future<_i3.Either<_i22.Failure, _i49.SessionEntity>>);
   @override
   String toString() => super.toString();
 }
@@ -1317,13 +1319,13 @@ class MockITweetFilterPreferenceRepository extends _i1.Mock
   }
 
   @override
-  _i19.Future<_i2.Either<_i22.Failure, _i47.TweetFilterSessionEntity>>
+  _i19.Future<_i3.Either<_i22.Failure, _i47.TweetFilterSessionEntity>>
       retreive() => (super.noSuchMethod(Invocation.method(#retreive, []),
               returnValue: Future<
-                      _i2.Either<_i22.Failure,
+                      _i3.Either<_i22.Failure,
                           _i47.TweetFilterSessionEntity>>.value(
-                  _FakeEither_1<_i22.Failure, _i47.TweetFilterSessionEntity>()))
-          as _i19.Future<_i2.Either<_i22.Failure, _i47.TweetFilterSessionEntity>>);
+                  _FakeEither_3<_i22.Failure, _i47.TweetFilterSessionEntity>()))
+          as _i19.Future<_i3.Either<_i22.Failure, _i47.TweetFilterSessionEntity>>);
   @override
   String toString() => super.toString();
 }

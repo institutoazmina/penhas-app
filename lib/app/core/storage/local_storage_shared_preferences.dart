@@ -1,48 +1,47 @@
 import 'dart:async';
 
-import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:synchronized/extension.dart';
 
 class LocalStorageSharedPreferences implements ILocalStorage {
-  LocalStorageSharedPreferences() {
-    _init();
-  }
+  factory LocalStorageSharedPreferences({
+    required Future<SharedPreferences> preferences,
+  }) =>
+      LocalStorageSharedPreferences._(
+        preferences: Completer<SharedPreferences>()..complete(preferences),
+      );
 
-  final Completer<SharedPreferences> _instance = Completer<SharedPreferences>();
+  const LocalStorageSharedPreferences._({
+    required Completer<SharedPreferences> preferences,
+  }) : _preferences = preferences;
 
-  Future<void> _init() async {
-    _instance.complete(await SharedPreferences.getInstance());
-  }
-
-  @override
-  Future<void> delete(String key) async {
-    final shared = await _instance.future;
-    shared.remove(key);
-  }
+  final Completer<SharedPreferences> _preferences;
 
   @override
-  Future<Either<dynamic, String>> get(String key) async {
-    final shared = await _instance.future;
-    return catching(() {
-      final value = shared.getString(key);
-      if (value == null) throw ValueNotFound('Value not found with key `$key`');
-      return value;
-    });
-  }
+  Future<void> delete(String key) => synchronized(() async {
+    final preferences = await _preferences.future;
+    await preferences.remove(key);
+  });
 
   @override
-  Future<void> put(String key, String? value) async {
-    final shared = await _instance.future;
-    if (value != null) {
-      shared.setString(key, value);
-    } else {
-      shared.remove(key);
-    }
-  }
-}
+  Future<bool> hasKey(String key) =>
+      _preferences.future.then((preferences) => preferences.containsKey(key));
 
-class ValueNotFound extends NonCriticalError {
-  ValueNotFound(String message) : super(message);
+  @override
+  Future<String?> get(String key) => synchronized(
+        () async => _preferences.future.then(
+          (preferences) => preferences.getString(key),
+        ),
+      );
+
+  @override
+  Future<void> put(String key, String? value) => synchronized(() async {
+        final preferences = await _preferences.future;
+        if (value != null) {
+          await preferences.setString(key, value);
+        } else {
+          await preferences.remove(key);
+        }
+      });
 }

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
@@ -51,7 +50,7 @@ void main() {
         const AppStateModuleEntity(code: 'module_2', meta: '{"data":true}'),
       ];
       final jsonString = _convert(modules);
-      when(storage.get(any)).thenAnswer((_) => Future.value(right(jsonString)));
+      when(storage.get(any)).thenAnswer((_) => Future.value(jsonString));
       // act
       final received = await sut.feature(name: 'module_2');
       // assert
@@ -66,7 +65,7 @@ void main() {
         const AppStateModuleEntity(code: 'module_2', meta: '{"data":true}'),
       ];
       final jsonString = _convert(modules);
-      when(storage.get(any)).thenAnswer((_) => Future.value(right(jsonString)));
+      when(storage.get(any)).thenAnswer((_) => Future.value(jsonString));
       // act
       final received = await sut.feature(name: 'module_20');
       // assert
