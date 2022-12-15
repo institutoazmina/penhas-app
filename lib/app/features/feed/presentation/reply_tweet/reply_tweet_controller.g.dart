@@ -20,13 +20,13 @@ mixin _$ReplyTweetController on _ReplyTweetControllerBase, Store {
   final _$_progressAtom = Atom(name: '_ReplyTweetControllerBase._progress');
 
   @override
-  ObservableFuture<Either<Failure, FeedCache>>? get _progress {
+  ObservableFuture<Either<Failure, TweetEntity>>? get _progress {
     _$_progressAtom.reportRead();
     return super._progress;
   }
 
   @override
-  set _progress(ObservableFuture<Either<Failure, FeedCache>>? value) {
+  set _progress(ObservableFuture<Either<Failure, TweetEntity>>? value) {
     _$_progressAtom.reportWrite(value, super._progress, () {
       super._progress = value;
     });

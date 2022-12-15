@@ -90,7 +90,7 @@ class MainboardModule extends Module {
         ...notificationBinds,
         ...menuBind,
         ...chatBinds,
-        Bind.factory<MainboardStore>(
+        Bind.lazySingleton<MainboardStore>(
           (i) => MainboardStore(
             modulesServices: i.get<IAppModulesServices>(),
             initialPage: i.args?.data is Map

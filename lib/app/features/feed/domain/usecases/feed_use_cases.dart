@@ -135,7 +135,7 @@ class FeedUseCases {
     );
   }
 
-  Future<Either<Failure, FeedCache>> reply({
+  Future<Either<Failure, TweetEntity>> reply({
     required TweetEntity mainTweet,
     required String? comment,
   }) async {
@@ -146,14 +146,15 @@ class FeedUseCases {
 
     final result = await _repository.reply(option: option);
 
-    return result.fold<Either<Failure, FeedCache>>(
+    return result.fold<Either<Failure, TweetEntity>>(
       (failure) => left(failure),
-      (repliedTweet) => right(
+      (repliedTweet) {
         _updateRepliedTweetIntoCache(
           mainTweet,
           repliedTweet,
-        ),
-      ),
+        );
+        return right(repliedTweet);
+      },
     );
   }
 

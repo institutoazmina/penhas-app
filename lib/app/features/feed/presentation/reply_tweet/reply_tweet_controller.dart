@@ -26,7 +26,7 @@ abstract class _ReplyTweetControllerBase with Store, MapFailureMessage {
   String? tweetContent;
 
   @observable
-  ObservableFuture<Either<Failure, FeedCache>>? _progress;
+  ObservableFuture<Either<Failure, TweetEntity>>? _progress;
 
   @observable
   bool isAnonymousMode = false;
@@ -71,15 +71,15 @@ abstract class _ReplyTweetControllerBase with Store, MapFailureMessage {
       ),
     );
 
-    final Either<Failure, FeedCache> response = await _progress!;
+    final Either<Failure, TweetEntity> response = await _progress!;
     response.fold(
       (failure) => errorMessage = mapFailureMessage(failure),
-      (valid) => _updatedTweet(),
+      _updatedTweet,
     );
   }
 
-  void _updatedTweet() {
+  void _updatedTweet(TweetEntity reply) {
     editingController.clear();
-    Modular.to.pop();
+    Modular.to.pop(reply.id);
   }
 }

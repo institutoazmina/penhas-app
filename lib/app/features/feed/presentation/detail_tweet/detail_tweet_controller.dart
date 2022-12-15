@@ -112,6 +112,11 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
   }
 
   void reply() {
-    Modular.to.pushNamed('/mainboard/reply', arguments: tweet);
+    Modular.to.pushNamed('/mainboard/reply', arguments: tweet).then((commentId) {
+      if (commentId != null) {
+        isFullyLoaded = false;
+        fetchNextPage();
+      }
+    });
   }
 }
