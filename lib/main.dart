@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
@@ -7,20 +8,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:penhas/app/app_module.dart';
 import 'package:penhas/app/app_widget.dart';
-
-const _kFirebaseCollectionEnabled = !kDebugMode;
+import 'package:penhas/firebase_options.dart';
 
 Future main({String? apiBaseUrlOverride}) async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   // Pass all uncaught errors from the framework to Crashlytics.
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-  
-  FirebaseCrashlytics.instance
-      .setCrashlyticsCollectionEnabled(_kFirebaseCollectionEnabled);
-  AppWidget.analytics
-      .setAnalyticsCollectionEnabled(_kFirebaseCollectionEnabled);
+
+  if (kDebugMode) {
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+    await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(false);
+  }
 
   runZonedGuarded(
     () async {
@@ -31,6 +33,7 @@ Future main({String? apiBaseUrlOverride}) async {
         ),
       );
     },
-    FirebaseCrashlytics.instance.recordError,
+    (error, stack) =>
+        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true),
   );
 }

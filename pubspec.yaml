@@ -36,9 +36,9 @@ dependencies:
   device_info: ^2.0.3
   email_validator: ^2.0.1
   equatable: ^2.0.3
-  firebase_analytics: ^8.3.2
-  firebase_core: ^1.10.5
-  firebase_crashlytics: ^2.4.3
+  firebase_analytics: ^9.3.0
+  firebase_core: ^1.20.1
+  firebase_crashlytics: ^2.8.7
   flutter_mobx: ^2.0.2
   flutter_modular:
     git:
@@ -70,11 +70,11 @@ dependencies:
       url: https://github.com/bhavin-concetto/smoothratingbar.git
       ref: "eb02312f9adc6a40e2488050fb2e58852a163bb8"
   timeago: ^3.1.0
-  url_launcher: ^6.0.17
+  url_launcher: ^6.1.7
   uuid: ^3.0.5
   webview_flutter: ^3.0.0
   collection: ^1.15.0
-  asuka: ^2.0.0
+  asuka: ^2.0.1+3
   stack_trace: ^1.10.0
   logging: ^1.0.2
   http: ^0.13.4

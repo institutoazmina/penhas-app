@@ -16,7 +16,7 @@ void logWarn(String message) {
 }
 
 void logError(Object exception, [StackTrace? stack]) {
-  stack ??= StackTrace.current;
+  stack ??= Trace.current(1).vmTrace;
   dev.log(
     exception.toString(),
     level: Level.WARNING.value,

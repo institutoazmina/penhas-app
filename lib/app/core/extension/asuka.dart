@@ -1,4 +1,4 @@
-import 'package:asuka/asuka.dart' as asuka;
+import 'package:asuka/asuka.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -7,7 +7,7 @@ extension Dialog on IModularNavigator {
     required WidgetBuilder builder,
     bool barrierDismissible = true,
   }) =>
-      asuka.showDialog(
+      Asuka.showDialog(
         builder: builder,
         barrierDismissible: barrierDismissible,
       );

@@ -14,7 +14,7 @@ import 'package:penhas/app/shared/design_system/button_shape.dart';
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:penhas/app/shared/navigation/navigator.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key, this.title = 'SignUp'}) : super(key: key);
@@ -145,7 +145,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
           onPressed: () async {
             const url =
                 'http://www.buscacep.correios.com.br/sistemas/buscacep/buscaCepEndereco.cfm';
-            launch(url);
+            AppNavigator.launchURL(url);
           },
           elevation: 0,
           padding: EdgeInsets.zero,

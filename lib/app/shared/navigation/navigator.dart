@@ -55,10 +55,11 @@ class AppNavigator {
 
   static Future<void> launchURL(String url) async {
     try {
-      if (!await canLaunch(url)) {
+      final uri = Uri.parse(url);
+      if (!await canLaunchUrl(uri)) {
         throw 'Can\'t launch url "$url"';
       }
-      await launch(url);
+      await launchUrl(uri);
     } catch (e, stack) {
       logError(e, stack);
     }
