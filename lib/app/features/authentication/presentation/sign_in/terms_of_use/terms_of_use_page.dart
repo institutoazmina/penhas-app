@@ -3,7 +3,12 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class TermsOfUsePage extends StatelessWidget {
-  const TermsOfUsePage({Key? key}) : super(key: key);
+  const TermsOfUsePage({
+    Key? key,
+    required this.baseUrl,
+  }) : super(key: key);
+
+  final Uri baseUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +18,8 @@ class TermsOfUsePage extends StatelessWidget {
         title: const Text('Termos de Uso'),
         backgroundColor: DesignSystemColors.easterPurple,
       ),
-      body: const WebView(
-        initialUrl: 'https://***REMOVED***/web/termos-de-uso',
+      body: WebView(
+        initialUrl: baseUrl.resolve('web/termos-de-uso').toString(),
         javascriptMode: JavascriptMode.unrestricted,
       ),
     );

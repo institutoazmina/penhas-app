@@ -103,11 +103,15 @@ class SignInModule extends Module {
         ),
         ChildRoute(
           '/terms_of_use',
-          child: (_, args) => const TermsOfUsePage(),
+          child: (_, args) => TermsOfUsePage(
+            baseUrl: inject<IAppConfiguration>().penhasServer,
+          ),
         ),
         ChildRoute(
           '/privacy_policy',
-          child: (_, args) => const PrivacyPolicyPage(),
+          child: (_, args) => PrivacyPolicyPage(
+            baseUrl: inject<IAppConfiguration>().penhasServer,
+          ),
         ),
         ChildRoute(
           '/stealth',

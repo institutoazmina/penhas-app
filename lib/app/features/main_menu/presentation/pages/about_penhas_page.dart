@@ -4,7 +4,11 @@ import 'package:penhas/app/shared/navigation/navigator.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class AboutPenhasPage extends StatelessWidget {
-  const AboutPenhasPage({Key? key}) : super(key: key);
+  const AboutPenhasPage({Key? key,
+    required this.baseUrl,
+  }) : super(key: key);
+
+  final Uri baseUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +19,7 @@ class AboutPenhasPage extends StatelessWidget {
         backgroundColor: DesignSystemColors.easterPurple,
       ),
       body: WebView(
-        initialUrl: 'https://***REMOVED***/web/faq',
+        initialUrl: baseUrl.resolve('web/faq').toString(),
         javascriptMode: JavascriptMode.unrestricted,
         navigationDelegate: (NavigationRequest nav) async {
           if (nav.url.startsWith('mailto')) {

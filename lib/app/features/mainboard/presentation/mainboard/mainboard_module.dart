@@ -231,7 +231,9 @@ class MainboardModule extends Module {
   List<ModularRoute> get menuRouters => [
         ChildRoute(
           '/menu/about',
-          child: (context, args) => const AboutPenhasPage(),
+          child: (context, args) => AboutPenhasPage(
+            baseUrl: inject<IAppConfiguration>().penhasServer,
+          ),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(

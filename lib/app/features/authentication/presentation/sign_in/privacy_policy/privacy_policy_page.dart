@@ -3,7 +3,12 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class PrivacyPolicyPage extends StatelessWidget {
-  const PrivacyPolicyPage({Key? key}) : super(key: key);
+  const PrivacyPolicyPage({
+    Key? key,
+    required this.baseUrl,
+  }) : super(key: key);
+
+  final Uri baseUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +18,8 @@ class PrivacyPolicyPage extends StatelessWidget {
         title: const Text('Política de privacidade'),
         backgroundColor: DesignSystemColors.easterPurple,
       ),
-      body: const WebView(
-        initialUrl: 'https://***REMOVED***/web/politica-privacidade',
+      body: WebView(
+        initialUrl: baseUrl.resolve('web/politica-privacidade').toString(),
         javascriptMode: JavascriptMode.unrestricted,
       ),
     );
