@@ -21,7 +21,7 @@
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="LaunchImage" translatesAutoresizingMaskIntoConstraints="NO" id="YRO-k0-Ey4">
                                 <rect key="frame" x="115" y="430.66666666666669" width="198" height="65"/>
                             </imageView>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="LaunchImageAzMina" translatesAutoresizingMaskIntoConstraints="NO" id="G9a-Yn-e60">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="InstitutoAzmina" translatesAutoresizingMaskIntoConstraints="NO" id="G9a-Yn-e60">
                                 <rect key="frame" x="139" y="817.66666666666663" width="150" height="84.333333333333371"/>
                             </imageView>
                         </subviews>
@@ -29,8 +29,8 @@
                         <constraints>
                             <constraint firstItem="YRO-k0-Ey4" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="1a2-6s-vTC"/>
                             <constraint firstItem="YRO-k0-Ey4" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="4X2-HB-R7a"/>
-                            <constraint firstAttribute="bottom" secondItem="G9a-Yn-e60" secondAttribute="bottom" constant="24" id="7iV-Gk-OoA" userLabel="LaunchImageAzMina.bottom = bottom"/>
-                            <constraint firstItem="G9a-Yn-e60" firstAttribute="centerXWithinMargins" secondItem="Ze5-6b-2t3" secondAttribute="centerXWithinMargins" id="xWg-cM-RYv" userLabel="LaunchImageAzMina.centerX = centerX"/>
+                            <constraint firstAttribute="bottom" secondItem="G9a-Yn-e60" secondAttribute="bottom" constant="24" id="7iV-Gk-OoA" userLabel="InstitutoAzmina.bottom = bottom"/>
+                            <constraint firstItem="G9a-Yn-e60" firstAttribute="centerXWithinMargins" secondItem="Ze5-6b-2t3" secondAttribute="centerXWithinMargins" id="xWg-cM-RYv" userLabel="InstitutoAzmina.centerX = centerX"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -41,6 +41,6 @@
     </scenes>
     <resources>
         <image name="LaunchImage" width="198" height="65"/>
-        <image name="LaunchImageAzMina" width="150" height="84.333335876464844"/>
+        <image name="InstitutoAzmina" width="150" height="84.333335876464844"/>
     </resources>
 </document>

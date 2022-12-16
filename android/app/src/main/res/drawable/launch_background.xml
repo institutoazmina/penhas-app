@@ -16,6 +16,6 @@
             android:tileMode="disabled"
             android:antialias="true"
             android:gravity="bottom|center_horizontal"
-            android:src="@drawable/ic_splash_azmina" />
+            android:src="@drawable/instituto_azmina" />
     </item>
 </layer-list>
