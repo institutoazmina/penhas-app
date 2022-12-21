@@ -1,0 +1,14 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    fastlane-plugin-firebase_app_distribution (0.3.8)
+
+PLATFORMS
+  universal-darwin-21
+  x86_64-linux
+
+DEPENDENCIES
+  fastlane-plugin-firebase_app_distribution
+
+BUNDLED WITH
+   2.3.20
