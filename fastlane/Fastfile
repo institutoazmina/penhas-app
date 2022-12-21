@@ -25,7 +25,7 @@ android_testers_group = 'androidtestersgroup'
 ios_testers_group = 'iostestersgroup'
 
 ios_devices_file = "#{project_path}/build/ios_devices.txt"
-apple_api_key_path = "#{project_path}/ios/certificates/app-store-api-key.json"
+apple_api_key_path = "#{project_path}/ios/app-store-api-key.json"
 
 platform :android do
 

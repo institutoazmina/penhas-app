@@ -20,9 +20,9 @@ def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
     throw new GradleException("versionName not found. Define flutter.versionName in the local.properties file.")
 }
-def keystorePropertiesFile = rootProject.file("keystore.properties")
-def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+def secretsPropertiesFile = rootProject.file("secrets.properties")
+def secretsProperties = new Properties()
+secretsProperties.load(new FileInputStream(secretsPropertiesFile))
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
@@ -51,15 +51,15 @@ android {
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        manifestPlaceholders["GEO_API_KEY"] = System.getenv('GEO_API_KEY') ?: localProperties.getProperty('GEO_API_KEY')
+        manifestPlaceholders["GEO_API_KEY"] = System.getenv('GEO_API_KEY') ?: secretsProperties.getProperty('GEO_API_KEY')
     }
 
     signingConfigs {
         release {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
+            keyAlias secretsProperties['keyAlias']
+            keyPassword secretsProperties['keyPassword']
+            storeFile secretsProperties['storeFile'] ? file(secretsProperties['storeFile']) : null
+            storePassword secretsProperties['storePassword']
         }
     }
 
