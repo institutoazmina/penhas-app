@@ -22,7 +22,7 @@ on:
       TESTER_EMAIL:
         required: false
       FIREBASE_TOKEN:
-        required: true
+        required: false
       TARGET_LANE:
         required: true
 
