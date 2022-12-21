@@ -17,7 +17,7 @@ on:
         required: true
       GEO_API_KEY:
         required: true
-      FILES:
+      BUILD_CONFIG_FILES:
         required: true
       TESTER_EMAIL:
         required: false
@@ -68,7 +68,7 @@ jobs:
           working-directory: ${{ matrix.working-directory }}
 
       - name: Get secrets files
-        run: base64 -d <<< ${{ secrets.FILES }} | tar xzf -
+        run: base64 -d <<< ${{ secrets.BUILD_CONFIG_FILES }} | tar xzf -
 
       - name: Run lane to distribute
         uses: maierj/fastlane-action@v3.0.0

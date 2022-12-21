@@ -25,6 +25,6 @@ jobs:
     secrets:
       PENHAS_BASE_URL: ${{ secrets.BASE_URL }}
       GEO_API_KEY: ${{ secrets.GEO_API_KEY }}
-      FILES: ${{ secrets.FILES }}
+      BUILD_CONFIG_FILES: ${{ secrets.BUILD_CONFIG_FILES }}
       FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       TARGET_LANE: ${{ secrets.TARGET_LANE }}
