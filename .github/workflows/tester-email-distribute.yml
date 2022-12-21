@@ -1,0 +1,30 @@
+name: "Distribute app to tester"
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: "Build target platform"
+        options:
+          - android
+          - ios
+          - all
+        type: choice
+        required: true
+      tester_email:
+        description: "Tester email address"
+        type: string
+        required: true
+
+jobs:
+  distribute:
+    uses: ./.github/workflows/distribute.yml
+    with:
+      platform: ${{ github.event.inputs.platform }}
+      environment: firebase-distribution
+    secrets:
+      PENHAS_BASE_URL: ${{ secrets.BASE_URL }}
+      GEO_API_KEY: ${{ secrets.GEO_API_KEY }}
+      FILES: ${{ secrets.FILES }}
+      TESTER_EMAIL: ${{ github.event.inputs.tester_email }}
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
