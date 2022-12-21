@@ -23,6 +23,8 @@ on:
         required: false
       FIREBASE_TOKEN:
         required: true
+      TARGET_LANE:
+        required: true
 
 jobs:
   distribute:
@@ -83,24 +85,13 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.definition.outputs.matrix }}
-      lane: ${{ steps.lane.outputs.name }}
+      lane: ${{ steps.definition.outputs.name }}
     env:
       ENVIRONMENT: ${{ inputs.environment }}
       PLATFORM: ${{ inputs.platform }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3.2.0
-
-      - id: lane
-        name: Define lane
-        run: |
-          case "$ENVIRONMENT" in
-          production) LANE=release_distribute ;;
-          firebase-distribution) LANE=firebase_distribute ;;
-          *) echo "Invalid environment $ENVIRONMENT"; exit 1 ;;
-          esac
-
-          echo "name=$LANE" >> $GITHUB_OUTPUT
 
       - id: definition
         name: "Prepare distribution"
@@ -116,3 +107,6 @@ jobs:
           MATRIX="{ \"include\": $(yaml2json < .github/distribute-platforms.yml | jq -Mc "$JQ_EXPR") }"
 
           echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
+          echo "name=$LANE" >> $GITHUB_OUTPUT
+        env:
+          LANE: ${{ secrets.TARGET_LANE }}

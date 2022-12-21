@@ -28,3 +28,4 @@ jobs:
       FILES: ${{ secrets.FILES }}
       TESTER_EMAIL: ${{ github.event.inputs.tester_email }}
       FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      TARGET_LANE: ${{ secrets.TARGET_LANE }}

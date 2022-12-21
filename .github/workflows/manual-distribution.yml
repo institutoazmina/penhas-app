@@ -27,3 +27,4 @@ jobs:
       GEO_API_KEY: ${{ secrets.GEO_API_KEY }}
       FILES: ${{ secrets.FILES }}
       FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      TARGET_LANE: ${{ secrets.TARGET_LANE }}
