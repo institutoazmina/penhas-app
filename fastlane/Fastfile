@@ -16,8 +16,7 @@ update_fastlane
 default_platform(:all)
 xcversion(version: "~> 13.1")
 
-api_base_url_prod = "https://***REMOVED***"
-api_base_url_dev = "https://***REMOVED***"
+api_base_url = ENV['PENHAS_BASE_URL']
 
 profile_type_edirock = 'ad-hoc'
 profile_type_store = 'app-store'
@@ -36,19 +35,19 @@ platform :android do
 
   desc "Build release APK"
   lane :build_apk do
-    sh("flutter build apk --release --dart-define=env.apiBaseUrl=#{api_base_url_dev}")
+    sh("flutter build apk --release --dart-define=PENHAS_BASE_URL=#{api_base_url}")
   end
 
   desc "Build release Bundle"
   lane :build_bundle do
-    sh("flutter build appbundle --release --dart-define=env.apiBaseUrl=#{api_base_url_prod}")
+    sh("flutter build appbundle --release --dart-define=PENHAS_BASE_URL=#{api_base_url}")
   end
 
   desc "Distribute to Android beta testers"
   lane :firebase_distribute do
     build_apk
     firebase_app_distribution(
-      app: "1:51928851553:android:fc14989f5670877f663620",
+      app: firebase_android_id(),
       release_notes: get_changelog(),
       groups: "androidtestersgroup",
       android_artifact_path: "./build/app/outputs/apk/release/app-release.apk"
@@ -80,7 +79,7 @@ platform :ios do
 
   desc "Build release IPA"
   lane :build do |options|
-    sh("flutter build ios --release --no-codesign --dart-define=env.apiBaseUrl=#{options[:api_base_url]}")
+    sh("flutter build ios --release --no-codesign --dart-define=PENHAS_BASE_URL=#{options[:api_base_url]}")
   end
 
   desc "Generates a provisioning profile, saving it in the current folder "
@@ -100,9 +99,9 @@ platform :ios do
   end
 
   desc "Download devices IDs from Firebase"
-  private_lane :download_udids do
+  private_lane :download_udids do |options|
     firebase_app_distribution_get_udids(
-      app: "1:51928851553:ios:f741dab1c05cf04e663620",
+      app: options[:app_id],
       output_file: ios_devices_file
     )
   end
@@ -115,8 +114,6 @@ platform :ios do
   desc "Generate IPA"
   private_lane :generate_ipa do |options|
     build(api_base_url: options[:api_base_url])
-    download_udids
-    sync_device_info
     update_profile(profile_type: options[:profile_type])
 
     gym(
@@ -132,16 +129,21 @@ platform :ios do
 
   desc "Distribute to iOS beta testers in TestFlight"
   lane :testflight_distribute do
-    generate_ipa(api_base_url: $api_base_url_prod, profile_type: profile_type_store)
+    generate_ipa(api_base_url: $api_base_url, profile_type: profile_type_store)
     pilot
   end
 
   desc "Distribute to iOS beta testers in Firebase"
   lane :firebase_distribute do
-    generate_ipa(api_base_url: api_base_url_dev, profile_type: profile_type_edirock)
+    app_id = firebase_ios_id()
+
+    download_udids(app_id: app_id)
+    sync_device_info
+    
+    generate_ipa(api_base_url: api_base_url, profile_type: profile_type_edirock)
 
     firebase_app_distribution(
-      app: "1:51928851553:ios:f741dab1c05cf04e663620",
+      app: app_id,
       release_notes: get_changelog(),
       groups: "iostestersgroup",
       ipa_path: "./build/Runner/Runner.ipa",
@@ -174,4 +176,14 @@ private_lane :get_changelog do
     is_unreleased_section = is_unreleased_section || line.start_with?("## [Unreleased]")
   end
   changelog_contents.strip
+end
+
+private_lane :firebase_android_id do
+  google_services_file = "#{project_path}/android/app/google-services.json"
+  sh("cat '#{google_services_file}' | jq '.client[0]|.client_info.mobilesdk_app_id' -r").strip
+end
+
+private_lane :firebase_ios_id do
+  google_services_file = "#{project_path}/ios/Runner/GoogleService-Info.plist"
+  sh("cat '#{google_services_file}' | grep ':ios:' | sed 's/^.*>\\(.*\\)<.*\$/\\1/g'").strip
 end

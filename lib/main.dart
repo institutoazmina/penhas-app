@@ -10,7 +10,7 @@ import 'package:penhas/app/app_module.dart';
 import 'package:penhas/app/app_widget.dart';
 import 'package:penhas/firebase_options.dart';
 
-Future main({String? apiBaseUrlOverride}) async {
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -28,7 +28,7 @@ Future main({String? apiBaseUrlOverride}) async {
     () async {
       runApp(
         ModularApp(
-          module: AppModule(apiBaseUrl: apiBaseUrlOverride),
+          module: AppModule(),
           child: AppWidget(),
         ),
       );

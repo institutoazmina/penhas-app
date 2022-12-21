@@ -61,6 +61,11 @@ doc/api/
 # Fastlane sigh certificates
 **/ios/certificates
 
+# Android keystores
+*.jks
+*.keystore
+keystore.properties
+
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
@@ -189,3 +194,9 @@ fastlane/metadata
 
 # Slidy
 .slidy/*
+
+# Google Services
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+ios/firebase_app_id_file.json
+lib/firebase_options.dart

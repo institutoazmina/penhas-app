@@ -5,8 +5,8 @@ import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 
 const String _apiBaseUrl = String.fromEnvironment(
-  'env.apiBaseUrl',
-  defaultValue: 'https://***REMOVED***',
+  'PENHAS_BASE_URL',
+  defaultValue: 'https://api.penhas.com.br',
 );
 
 abstract class IAppConfiguration {
@@ -27,9 +27,9 @@ abstract class IAppConfiguration {
 
 class AppConfiguration implements IAppConfiguration {
   AppConfiguration({
-    String? apiBaseUrl,
+    String apiBaseUrl = _apiBaseUrl,
     required ILocalStorage storage,
-  })  : penhasServer = Uri.parse(apiBaseUrl ?? _apiBaseUrl),
+  })  : penhasServer = Uri.parse(apiBaseUrl),
         _storage = storage;
 
   final _tokenKey = 'br.com.penhas.tokenServer';

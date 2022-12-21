@@ -5,5 +5,6 @@ package_name("penhas.com.br") # e.g. com.krausefx.app
 # iOS
 app_identifier("penhas.alphacode.com.br") # The bundle identifier of your app
 
-itc_team_id("***REMOVED***") # App Store Connect Team ID
+apple_id(ENV['APPLE_ID'])
+itc_team_id(ENV['ITC_TEAM_ID'])
 team_id("295N44GCDS") # Developer Portal Team ID
