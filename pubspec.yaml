@@ -113,6 +113,7 @@ dev_dependencies:
   mockito: ^5.0.16
   lint: ^1.8.1
   mocktail: ^0.3.0
+  flutter_lints: ^1.0.4
 
 flutter_icons:
   ios: true
