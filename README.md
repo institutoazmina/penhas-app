@@ -6,7 +6,7 @@
 
 ## Requisitos
 
-- SDK Flutter ^2.10.0
+- [FVM](https://fvm.app/) (recomendável) ou SDK Flutter ^2.10.0
 - Android SDK
 - XCode
 - Projetos Android e iOS no Firebase
@@ -16,7 +16,7 @@
 
 ### Firebase
 
-Para ser possível executar o aplicativo, é necessário ter os arquivos de configuração do Firebase, para isso pode ser utilizado o Firebase CLI com o FlutterFire, siga o primeiro passo na documentação oficial (https://firebase.google.com/docs/flutter/setup?platform=ios#install-cli-tools) para instalar as ferramentas de linha de comando.
+Para ser possível executar o aplicativo, é necessário ter os arquivos de configuração do Firebase, para isso pode ser utilizado o Firebase CLI com o FlutterFire, siga o primeiro passo na [documentação oficial](https://firebase.google.com/docs/flutter/setup?platform=ios#install-cli-tools) para instalar as ferramentas de linha de comando.
 
 Após as ferramentas serem instaladas podemos baixar esses arquivos com o seguinte comando:
 
@@ -43,7 +43,7 @@ GEO_API_KEY=[SUA CHAVE DE API]
 ## Execução
 
 ```bash
-flutter run --dart-define=PENHAS_BASE_URL=[URL]
+fvm flutter run --dart-define=PENHAS_BASE_URL=[URL]
 ```
 
 ## Testes automatizados
@@ -51,6 +51,6 @@ flutter run --dart-define=PENHAS_BASE_URL=[URL]
 Para rodar os testes automatizados:
 
 ```bash
-flutter test
+fvm flutter test
 ```
 
