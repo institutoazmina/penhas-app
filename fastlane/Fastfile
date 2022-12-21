@@ -11,153 +11,173 @@
 #
 
 # Uncomment the line if you want fastlane to automatically update itself
-update_fastlane
+# update_fastlane
 
-default_platform(:all)
-xcversion(version: "~> 13.1")
+project_path = File.realpath(File.dirname(File.dirname(__FILE__)))
 
+app_name = 'PenhaS'
 api_base_url = ENV['PENHAS_BASE_URL']
 
-profile_type_edirock = 'ad-hoc'
+profile_type_edirock = 'ad-hoc' # Firebase
 profile_type_store = 'app-store'
 
-ios_devices_file = './build/ios_devices.txt'
+android_testers_group = 'androidtestersgroup'
+ios_testers_group = 'iostestersgroup'
 
-platform :all do
-  desc "Publish Android and iOS Apps"
-  lane :publish do |options|
-    Fastlane::LaneManager.cruise_lane("android", "publish", options)
-    Fastlane::LaneManager.cruise_lane("ios", "publish", options)
-  end
-end
+ios_devices_file = "#{project_path}/build/ios_devices.txt"
+apple_api_key_path = "#{project_path}/ios/certificates/app-store-api-key.json"
 
 platform :android do
 
-  desc "Build release APK"
+  desc 'Build release APK'
   lane :build_apk do
     sh("flutter build apk --release --dart-define=PENHAS_BASE_URL=#{api_base_url}")
   end
 
-  desc "Build release Bundle"
+  desc 'Build release Bundle'
   lane :build_bundle do
     sh("flutter build appbundle --release --dart-define=PENHAS_BASE_URL=#{api_base_url}")
   end
 
-  desc "Distribute to Android beta testers"
-  lane :firebase_distribute do
+  desc 'Distribute to Android beta testers'
+  lane :firebase_distribute do |options|
+    ENV['IS_FIREBASE_DISTRIBUTION'] = 'true'
+
+    tester_email = options[:tester_email]
+    testers_group = tester_email ? nil : android_testers_group
+
     build_apk
+
     firebase_app_distribution(
       app: firebase_android_id(),
       release_notes: get_changelog(),
-      groups: "androidtestersgroup",
-      android_artifact_path: "./build/app/outputs/apk/release/app-release.apk"
+      android_artifact_path: "#{project_path}/build/app/outputs/apk/release/app-release.apk",
+      groups: testers_group,
+      testers: tester_email,
     )
   end
 
-  desc "Deploy a new version to the Play Store"
-  lane :release do
+  desc 'Deploy a new version to the Play Store'
+  lane :release_distribute do
+    verify_play_store_key
     build_bundle
     upload_to_play_store(
-      track: "alpha",
-      release_status: "completed",
-      aab: "./build/app/outputs/bundle/release/app-release.aab",
+      track: 'alpha',
+      release_status: 'completed',
+      aab: "#{project_path}/build/app/outputs/bundle/release/app-release.aab",
     )
   end
 
-  desc "Publish APK, pass `is_release:true` to Play Store otherwise will be sent to Firebase"
-  lane :publish do |options|
-    if options[:is_release]
-      release
-    else
-      firebase_distribute
-    end
+  desc 'Verify if has valid Play Store credentials'
+  lane :verify_play_store_key do
+    validate_play_store_json_key(
+      json_key: CredentialsManager::AppfileConfig.try_fetch_value(:json_key_file),
+    )
   end
 
 end
 
 platform :ios do
 
-  desc "Build release IPA"
+  desc 'Build release IPA'
   lane :build do |options|
     sh("flutter build ios --release --no-codesign --dart-define=PENHAS_BASE_URL=#{options[:api_base_url]}")
   end
 
-  desc "Generates a provisioning profile, saving it in the current folder "
+  desc 'Generates a provisioning profile, saving it in the current folder '
   private_lane :update_profile do |options|
 
     is_edirock = options[:profile_type] == profile_type_edirock
     provisioning_name_suffix = is_edirock ? 'AdHoc' : 'AppStore'
 
-    cert(output_path: './ios/certificates')
+    cert(
+      output_path: "#{project_path}/ios/certificates",
+    )
 
     sigh(
-      provisioning_name: "PenhaS #{provisioning_name_suffix}",
-      output_path: './ios/certificates',
+      provisioning_name: "#{app_name} #{provisioning_name_suffix}",
+      output_path: "#{project_path}/ios/certificates",
       adhoc: is_edirock,
       force: true,
     )
   end
 
-  desc "Download devices IDs from Firebase"
+  desc 'Download devices IDs from Firebase'
   private_lane :download_udids do |options|
     firebase_app_distribution_get_udids(
       app: options[:app_id],
-      output_file: ios_devices_file
+      output_file: ios_devices_file,
     )
   end
 
-  desc "Registers devices to the Apple Dev Portal"
+  desc 'Registers devices to the Apple Dev Portal'
   private_lane :sync_device_info do
-    register_devices(devices_file: ios_devices_file)
+    register_devices(
+      devices_file: ios_devices_file,
+    )
   end
 
-  desc "Generate IPA"
+  desc 'Generate IPA'
   private_lane :generate_ipa do |options|
-    build(api_base_url: options[:api_base_url])
-    update_profile(profile_type: options[:profile_type])
+    build
+    update_profile(
+      profile_type: options[:profile_type],
+    )
 
     gym(
-      scheme: "Runner",
-      workspace: "./ios/Runner.xcworkspace",
-      configuration: "Release",
-      archive_path: "./build/ios/Runner.xcarchive",
+      scheme: 'Runner',
+      workspace: "#{project_path}/ios/Runner.xcworkspace",
+      configuration: 'Release',
+      archive_path: "#{project_path}/build/ios/Runner.xcarchive",
       export_method: options[:profile_type],
-      output_directory: "./build/Runner",
-      export_xcargs: "-allowProvisioningUpdates",
+      output_directory: "#{project_path}/build/Runner",
+      xcargs: '-allowProvisioningUpdates',
+      export_xcargs: '-allowProvisioningUpdates',
     )
   end
 
-  desc "Distribute to iOS beta testers in TestFlight"
-  lane :testflight_distribute do
-    generate_ipa(api_base_url: $api_base_url, profile_type: profile_type_store)
+  desc 'Distribute to iOS beta testers in TestFlight'
+  lane :release_distribute do
+    request_api_key
+    generate_ipa(profile_type: profile_type_store)
     pilot
   end
 
-  desc "Distribute to iOS beta testers in Firebase"
-  lane :firebase_distribute do
+  desc 'Distribute to iOS beta testers in Firebase'
+  lane :firebase_distribute do |options|
+    ENV['IS_FIREBASE_DISTRIBUTION'] = 'true'
+
+    tester_email = options[:tester_email]
+    testers_group = tester_email ? nil : ios_testers_group
+    
+    request_api_key
     app_id = firebase_ios_id()
 
     download_udids(app_id: app_id)
     sync_device_info
-    
-    generate_ipa(api_base_url: api_base_url, profile_type: profile_type_edirock)
+
+    generate_ipa(profile_type: profile_type_edirock)
 
     firebase_app_distribution(
       app: app_id,
       release_notes: get_changelog(),
-      groups: "iostestersgroup",
-      ipa_path: "./build/Runner/Runner.ipa",
-      debug: true
+      ipa_path: "#{project_path}/build/Runner/Runner.ipa",
+      groups: testers_group,
+      testers: tester_email,
     )
   end
 
-  desc "Publish iOS package, pass `is_release:true` to App Store otherwise will be sent to Firebase"
-  lane :publish do |options|
-    if options[:is_release]
-      testflight_distribute
-    else
-      firebase_distribute
-    end
+  private_lane :request_api_key do
+    api_key_content = File.read(apple_api_key_path)
+    api_key_json = JSON.parse(api_key_content)
+
+    app_store_connect_api_key(
+      key_id: api_key_json['key_id'],
+      issuer_id: api_key_json['issuer_id'],
+      key_content: api_key_json['key'],
+      duration: api_key_json['duration'],
+      in_house: api_key_json['in_house'],
+    )
   end
 
 end
@@ -165,15 +185,15 @@ end
 private_lane :get_changelog do
   is_unreleased_section = false
   changelog_contents = ''
-  File.readlines('../CHANGELOG.md').each do |line|
+  File.readlines("#{project_path}/CHANGELOG.md").each do |line|
     if is_unreleased_section
-      if line.start_with?("## [")
+      if line.start_with?('## [')
         break
       end
       changelog_contents += line
     end
 
-    is_unreleased_section = is_unreleased_section || line.start_with?("## [Unreleased]")
+    is_unreleased_section = is_unreleased_section || line.start_with?('## [Unreleased]')
   end
   changelog_contents.strip
 end
