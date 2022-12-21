@@ -15,8 +15,6 @@ on:
     secrets:
       PENHAS_BASE_URL:
         required: true
-      GEO_API_KEY:
-        required: true
       BUILD_CONFIG_FILES:
         required: true
       TESTER_EMAIL:
@@ -78,7 +76,6 @@ jobs:
           subdirectory: ${{ matrix.working-directory }}
         env:
           PENHAS_BASE_URL: ${{ secrets.BASE_URL }}
-          GEO_API_KEY: ${{ secrets.GEO_API_KEY }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 
   pre-distribute:
