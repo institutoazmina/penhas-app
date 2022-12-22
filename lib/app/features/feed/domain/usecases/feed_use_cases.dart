@@ -3,14 +3,15 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_request_option.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
-import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
-import 'package:penhas/app/features/feed/domain/usecases/tweet_filter_preference.dart';
+
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/error/failures.dart';
+import '../entities/tweet_engage_request_option.dart';
+import '../entities/tweet_entity.dart';
+import '../entities/tweet_request_option.dart';
+import '../entities/tweet_session_entity.dart';
+import '../repositories/i_tweet_repositories.dart';
+import 'tweet_filter_preference.dart';
 
 @immutable
 class FeedCache extends Equatable {
@@ -352,7 +353,7 @@ class FeedUseCases {
     return FeedCache(tweets: _tweetCacheFetch);
   }
 
-  FeedCache _updateRepliedTweetIntoCache(
+  void _updateRepliedTweetIntoCache(
     TweetEntity mainTweet,
     TweetEntity repliedTweet,
   ) {
@@ -369,7 +370,6 @@ class FeedUseCases {
     }
 
     _updateStream();
-    return FeedCache(tweets: _tweetCacheFetch);
   }
 
   void _updateStream() {

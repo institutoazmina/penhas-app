@@ -1,7 +1,7 @@
 # This file configures the analyzer to use the lint rule set from `package:lint`
 
 # For apps, use the default set
-include: package:lint/analysis_options.yaml
+include: package:flutter_lints/flutter.yaml
 # include: package:lints/recommended.yaml
 
 # Packages, that may be distributed (i.e. via pub.dev) should use the package 
@@ -14,9 +14,6 @@ analyzer:
     - '**.freezed.dart'
     - '**.g.dart'
     - '**.mocks.dart'
-  strong-mode:
-    implicit-casts: true
-    implicit-dynamic: true
 
 # You can customize the lint rules set to your own liking. A list of all rules
 # can be found at https://dart-lang.github.io/linter/lints/options/options.html
@@ -33,3 +30,4 @@ linter:
     prefer_single_quotes: true
 
     sort_pub_dependencies: false
+    prefer_relative_imports: true

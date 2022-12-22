@@ -9,7 +9,8 @@ import 'package:penhas/app/shared/navigation/route.dart';
 import '../../../../../utils/helper.mocks.dart';
 
 void main() {
-  late final MockAppPreferencesStore appPreferencesStore = MockAppPreferencesStore();
+  late final MockAppPreferencesStore appPreferencesStore =
+      MockAppPreferencesStore();
   late final MockUserProfileStore userProfileStore = MockUserProfileStore();
 
   late final InactivityLogoutUseCase useCase = InactivityLogoutUseCase(
@@ -19,29 +20,40 @@ void main() {
 
   group('AppPreferencesUseCase#setActive', () {
     Future<void> _setActive({required DateTime? inactiveSince}) async {
-      when(appPreferencesStore.retrieve())
-          .thenAnswer((_) => Future.value(AppPreferencesEntity(
-                inactiveAppSince: inactiveSince?.millisecondsSinceEpoch,
-                inactiveAppLogoutTimeInSeconds: 30,
-              ),),);
+      when(appPreferencesStore.retrieve()).thenAnswer(
+        (_) => Future.value(
+          AppPreferencesEntity(
+            inactiveAppSince: inactiveSince?.millisecondsSinceEpoch,
+            inactiveAppLogoutTimeInSeconds: 30,
+          ),
+        ),
+      );
       when(appPreferencesStore.save(any)).thenAnswer((_) => Future.value());
       return useCase.setActive();
     }
 
     test('clears inactive since to null when customer was inactive', () async {
       await _setActive(inactiveSince: DateTime.now());
-      verify(appPreferencesStore.save(const AppPreferencesEntity(
-        inactiveAppSince: null,
-        inactiveAppLogoutTimeInSeconds: 30,
-      ),),);
+      verify(
+        appPreferencesStore.save(
+          const AppPreferencesEntity(
+            inactiveAppSince: null,
+            inactiveAppLogoutTimeInSeconds: 30,
+          ),
+        ),
+      );
     });
 
     test('keeps inactive since null when customer was active', () async {
       await _setActive(inactiveSince: null);
-      verify(appPreferencesStore.save(const AppPreferencesEntity(
-        inactiveAppSince: null,
-        inactiveAppLogoutTimeInSeconds: 30,
-      ),),);
+      verify(
+        appPreferencesStore.save(
+          const AppPreferencesEntity(
+            inactiveAppSince: null,
+            inactiveAppLogoutTimeInSeconds: 30,
+          ),
+        ),
+      );
     });
   });
 
@@ -50,11 +62,14 @@ void main() {
       required DateTime now,
       required DateTime? previousInactivity,
     }) async {
-      when(appPreferencesStore.retrieve())
-          .thenAnswer((_) => Future.value(AppPreferencesEntity(
-                inactiveAppSince: previousInactivity?.millisecondsSinceEpoch,
-                inactiveAppLogoutTimeInSeconds: 30,
-              ),),);
+      when(appPreferencesStore.retrieve()).thenAnswer(
+        (_) => Future.value(
+          AppPreferencesEntity(
+            inactiveAppSince: previousInactivity?.millisecondsSinceEpoch,
+            inactiveAppLogoutTimeInSeconds: 30,
+          ),
+        ),
+      );
       when(appPreferencesStore.save(any)).thenAnswer((_) => Future.value());
       return useCase.setInactive(now);
     }
@@ -63,19 +78,29 @@ void main() {
 
     test('customer was not inactive then save inactivity time', () async {
       await _setInactivity(now: now, previousInactivity: null);
-      verify(appPreferencesStore.save(AppPreferencesEntity(
-        inactiveAppSince: now.millisecondsSinceEpoch,
-        inactiveAppLogoutTimeInSeconds: 30,
-      ),),);
+      verify(
+        appPreferencesStore.save(
+          AppPreferencesEntity(
+            inactiveAppSince: now.millisecondsSinceEpoch,
+            inactiveAppLogoutTimeInSeconds: 30,
+          ),
+        ),
+      );
     });
 
     test('customer was inactive then save new inactivity time', () async {
       await _setInactivity(
-          now: now, previousInactivity: now.subtract(const Duration(hours: 1)),);
-      verify(appPreferencesStore.save(AppPreferencesEntity(
-        inactiveAppSince: now.millisecondsSinceEpoch,
-        inactiveAppLogoutTimeInSeconds: 30,
-      ),),);
+        now: now,
+        previousInactivity: now.subtract(const Duration(hours: 1)),
+      );
+      verify(
+        appPreferencesStore.save(
+          AppPreferencesEntity(
+            inactiveAppSince: now.millisecondsSinceEpoch,
+            inactiveAppLogoutTimeInSeconds: 30,
+          ),
+        ),
+      );
     });
   });
 
@@ -86,18 +111,23 @@ void main() {
       required bool stealthModeEnabled,
       required bool anonymousModeEnabled,
     }) async {
-      when(appPreferencesStore.retrieve())
-          .thenAnswer((_) => Future.value(AppPreferencesEntity(
-                inactiveAppSince: inactiveSince?.millisecondsSinceEpoch,
-                inactiveAppLogoutTimeInSeconds: 30,
-              ),),);
-      when(userProfileStore.retrieve()).thenAnswer((_) => Future.value(
-            UserProfileModel(
-              stealthModeEnabled: stealthModeEnabled,
-              anonymousModeEnabled: anonymousModeEnabled,
-              birthdate: DateTime.now(),
-            ),
-          ),);
+      when(appPreferencesStore.retrieve()).thenAnswer(
+        (_) => Future.value(
+          AppPreferencesEntity(
+            inactiveAppSince: inactiveSince?.millisecondsSinceEpoch,
+            inactiveAppLogoutTimeInSeconds: 30,
+          ),
+        ),
+      );
+      when(userProfileStore.retrieve()).thenAnswer(
+        (_) => Future.value(
+          UserProfileModel(
+            stealthModeEnabled: stealthModeEnabled,
+            anonymousModeEnabled: anonymousModeEnabled,
+            birthdate: DateTime.now(),
+          ),
+        ),
+      );
       return useCase.inactivityRoute(now);
     }
 
@@ -116,7 +146,9 @@ void main() {
       );
 
       expect(value.isRight(), true);
-      expect(value.getOrElse(() => null), AppRoute('/authentication/stealth'));
+      value.forEach((route) {
+        expect(route, AppRoute('/authentication/stealth'));
+      });
     });
 
     test(
@@ -132,7 +164,9 @@ void main() {
       );
 
       expect(value.isRight(), true);
-      expect(value.getOrElse(() => null), AppRoute('/authentication/stealth'));
+      value.forEach((route) {
+        expect(route, AppRoute('/authentication/stealth'));
+      });
     });
 
     test(
@@ -148,7 +182,9 @@ void main() {
       );
 
       expect(value.isRight(), true);
-      expect(value.getOrElse(() => null), AppRoute('/authentication/stealth'));
+      value.forEach((route) {
+        expect(route, AppRoute('/authentication/stealth'));
+      });
     });
 
     test(
@@ -164,10 +200,9 @@ void main() {
       );
 
       expect(value.isRight(), true);
-      expect(
-        value.getOrElse(() => null),
-        AppRoute('/authentication/sign_in_stealth'),
-      );
+      value.forEach((route) {
+        expect(route, AppRoute('/authentication/sign_in_stealth'));
+      });
     });
 
     test(
@@ -183,10 +218,9 @@ void main() {
       );
 
       expect(value.isRight(), true);
-      expect(
-        value.getOrElse(() => null),
-        AppRoute('/authentication/sign_in_stealth'),
-      );
+      value.forEach((route) {
+        expect(route, AppRoute('/authentication/sign_in_stealth'));
+      });
     });
 
     test(
@@ -202,10 +236,9 @@ void main() {
       );
 
       expect(value.isLeft(), true);
-      expect(
-        value.swap().getOrElse(() => null),
-        InactivityError.customerActive,
-      );
+      value.swap().forEach((error) {
+        expect(error, InactivityError.customerActive);
+      });
     });
 
     test(
@@ -219,10 +252,9 @@ void main() {
       );
 
       expect(value.isLeft(), true);
-      expect(
-        value.swap().getOrElse(() => null),
-        InactivityError.customerActive,
-      );
+      value.swap().forEach((error) {
+        expect(error, InactivityError.customerActive);
+      });
     });
 
     test(
@@ -238,10 +270,9 @@ void main() {
       );
 
       expect(value.isLeft(), true);
-      expect(
-        value.swap().getOrElse(() => null),
-        InactivityError.customerNotStealth,
-      );
+      value.swap().forEach((error) {
+        expect(error, InactivityError.customerNotStealth);
+      });
     });
   });
 }
