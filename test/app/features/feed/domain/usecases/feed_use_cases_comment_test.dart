@@ -207,13 +207,13 @@ void main() {
             .thenAnswer((_) async => right(newTweet));
 
         // act
-        final actual = await sut.reply(
+        final received = await sut.reply(
           mainTweet: tweetEntity1,
           comment: 'commented tweet',
         );
 
         // assert
-        expect(expected, actual);
+        expect(received, expected);
       });
     });
   });
