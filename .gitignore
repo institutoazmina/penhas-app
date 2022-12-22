@@ -1,8 +1,19 @@
+################################################################################
+#                           SECURITY RELATED IGNORES                           #
+################################################################################
+.env
+.secrets
+*id_rsa
+*id_ed25519
+*.pem
 
 # Created by https://www.gitignore.io/api/dart,macos,flutter,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=dart,macos,flutter,visualstudiocode
 
 ### Dart ###
+################################################################################
+#                             DART RELATED IGNORES                             #
+################################################################################
 # See https://www.dartlang.org/guides/libraries/private-files
 
 # Files and directories created by pub
