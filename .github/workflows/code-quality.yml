@@ -12,6 +12,10 @@ on:
 
 name: Code checks workflow
 
+concurrency:
+  group: qa-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lint:
     name: Run lint on affected files
@@ -45,7 +49,7 @@ jobs:
       - name: Analyze code
         if: ${{ needs.check-changes.outputs.changed_files }}
         run: |
-          flutter analyze --fatal-infos \
+          dart analyze --fatal-infos --fatal-warnings \
             ${{ needs.check-changes.outputs.changed_files }}
 
       - name: Check code formatting
