@@ -29,5 +29,5 @@ linter:
     # prefer_double_quotes: true
     prefer_single_quotes: true
 
-    sort_pub_dependencies: true
+    sort_pub_dependencies: false
     prefer_relative_imports: true
