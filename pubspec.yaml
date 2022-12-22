@@ -110,7 +110,7 @@ dev_dependencies:
       ref: "cd516a8e7483bfc7971ec9ac8f2d589e68247441"
   freezed: ^1.1.0
   mobx_codegen: ^2.0.4
-  mockito: ^5.0.16
+  mockito: 5.0.16
   lint: ^1.8.1
   mocktail: ^0.3.0
   flutter_lints: ^1.0.4
