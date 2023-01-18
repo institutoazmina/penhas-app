@@ -17,6 +17,33 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  check-changes:
+    name: Check changed files
+    runs-on: ubuntu-latest
+    outputs:
+      changed_files: ${{ steps.added-and-modified-files.outputs.all }}
+      changed_dart_files: ${{ steps.added-and-modified-files.outputs.dart }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3.2.0
+
+      - id: changed-files
+        name: Get changed files
+        uses: tj-actions/changed-files@v35
+        with:
+          files: |
+            **/*.dart
+            **/pubspec.yaml
+
+      - id: added-and-modified-files
+        name: Get all added and modified files
+        run: |
+          changed_files=$(echo "${{ steps.changed-files.outputs.added_files }} ${{ steps.changed-files.outputs.modified_files }}" | xargs)
+          changed_dart_files=$(echo "$changed_files" | tr ' ' '\n' | grep -E '\.dart$' | xargs)
+
+          echo "all=$changed_files" >> $GITHUB_OUTPUT
+          echo "dart=$changed_dart_files" >> $GITHUB_OUTPUT
+
   lint:
     name: Run lint on affected files
     runs-on: ubuntu-latest
@@ -92,30 +119,3 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           file: ./coverage/lcov.info
-
-  check-changes:
-    name: Check changed files
-    runs-on: ubuntu-latest
-    outputs:
-      changed_files: ${{ steps.added-and-modified-files.outputs.all }}
-      changed_dart_files: ${{ steps.added-and-modified-files.outputs.dart }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3.2.0
-
-      - id: changed-files
-        name: Get changed files
-        uses: tj-actions/changed-files@v35
-        with:
-          files: |
-            **/*.dart
-            **/pubspec.yaml
-
-      - id: added-and-modified-files
-        name: Get all added and modified files
-        run: |
-          changed_files=$(echo "${{ steps.changed-files.outputs.added_files }} ${{ steps.changed-files.outputs.modified_files }}" | xargs)
-          changed_dart_files=$(echo "$changed_files" | tr ' ' '\n' | grep -E '\.dart$' | xargs)
-
-          echo "all=$changed_files" >> $GITHUB_OUTPUT
-          echo "dart=$changed_dart_files" >> $GITHUB_OUTPUT
