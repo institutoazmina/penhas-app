@@ -17,16 +17,15 @@ void main() {
         onChanged: callback,
       );
       // assert
-      print(toggle.onChanged);
       expect(toggle.title, title);
       expect(toggle.isEnabled, true);
+      expect(toggle.onChanged, isNotNull);
       expect(toggle.onChanged, callback);
     });
 
     test(
         'create an empty instance with a title, disabled state and empty callback',
         () {
-      // final callback = void (bool value) {};
       final toggle = SecurityToggleState.empty();
 
       expect(toggle.title, '');
