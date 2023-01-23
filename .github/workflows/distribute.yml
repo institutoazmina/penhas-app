@@ -15,14 +15,18 @@ on:
     secrets:
       PENHAS_BASE_URL:
         required: true
-      BUILD_CONFIG_FILES:
+      ANDROID_BUILD_FILES:
         required: true
-      TESTER_EMAIL:
-        required: false
+      IOS_BUILD_FILES:
+        required: true
       FIREBASE_TOKEN:
         required: false
-      TARGET_LANE:
+      APPLE_API_KEY_B64:
         required: true
+      GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64:
+        required: false
+      TESTER_EMAIL:
+        required: false
 
 jobs:
   distribute:
@@ -57,7 +61,19 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
-        
+
+      - name: Get config files for Android
+        if: ${{ matrix.platform == 'android' }}
+        run: |
+          base64 -d <<< ${{ secrets.ANDROID_BUILD_FILES }} | tar xzf -
+          base64 -d <<< "${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64 }}" > ${{ matrix.working-directory }}/play-store-api-key.json
+
+      - name: Get config files for iOS
+        if: ${{ matrix.platform == 'ios' }}
+        run: |
+          base64 -d <<< ${{ secrets.IOS_BUILD_FILES }} | tar xzf -
+          base64 -d <<< ${{ secrets.APPLE_API_KEY_B64 }} > ${{ matrix.working-directory }}/app-store-api-key.json
+
       - name: Install Ruby to use Fastlane
         uses: ruby/setup-ruby@v1
         with:
@@ -65,13 +81,10 @@ jobs:
           bundler-cache: true
           working-directory: ${{ matrix.working-directory }}
 
-      - name: Get secrets files
-        run: base64 -d <<< ${{ secrets.BUILD_CONFIG_FILES }} | tar xzf -
-
       - name: Run lane to distribute
         uses: maierj/fastlane-action@v3.0.0
         with:
-          lane: ${{ needs.pre-distribute.outputs.lane }}
+          lane: ${{ vars.TARGET_LANE }}
           options: '{ "tester_email": "${{ secrets.TESTER_EMAIL }}" }'
           subdirectory: ${{ matrix.working-directory }}
         env:
@@ -82,7 +95,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.definition.outputs.matrix }}
-      lane: ${{ steps.definition.outputs.name }}
     env:
       ENVIRONMENT: ${{ inputs.environment }}
       PLATFORM: ${{ inputs.platform }}
@@ -104,6 +116,3 @@ jobs:
           MATRIX="{ \"include\": $(yaml2json < .github/distribute-platforms.yml | jq -Mc "$JQ_EXPR") }"
 
           echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
-          echo "name=$LANE" >> $GITHUB_OUTPUT
-        env:
-          LANE: ${{ secrets.TARGET_LANE }}

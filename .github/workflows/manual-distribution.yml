@@ -22,8 +22,4 @@ jobs:
     with:
       platform: ${{ github.event.inputs.platform }}
       environment: ${{ github.event.inputs.environment }}
-    secrets:
-      PENHAS_BASE_URL: ${{ secrets.BASE_URL }}
-      BUILD_CONFIG_FILES: ${{ secrets.BUILD_CONFIG_FILES }}
-      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-      TARGET_LANE: ${{ secrets.TARGET_LANE }}
+    secrets: inherit

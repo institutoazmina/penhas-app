@@ -23,8 +23,10 @@ jobs:
       platform: ${{ github.event.inputs.platform }}
       environment: firebase-distribution
     secrets:
-      PENHAS_BASE_URL: ${{ secrets.BASE_URL }}
-      BUILD_CONFIG_FILES: ${{ secrets.BUILD_CONFIG_FILES }}
       TESTER_EMAIL: ${{ github.event.inputs.tester_email }}
+      PENHAS_BASE_URL: ${{ secrets.BASE_URL }}
       FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-      TARGET_LANE: ${{ secrets.TARGET_LANE }}
+      APPLE_API_KEY_B64: ${{ secrets.APPLE_API_KEY_B64 }}
+      GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64 }}
+      ANDROID_BUILD_FILES: ${{ secrets.ANDROID_BUILD_FILES }}
+      IOS_BUILD_FILES: ${{ secrets.IOS_BUILD_FILES }}
