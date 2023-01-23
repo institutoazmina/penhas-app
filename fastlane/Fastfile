@@ -80,8 +80,8 @@ end
 platform :ios do
 
   desc 'Build release IPA'
-  lane :build do |options|
-    sh("flutter build ios --release --no-codesign --dart-define=PENHAS_BASE_URL=#{options[:api_base_url]}")
+  lane :build do
+    sh("flutter build ios --release --no-codesign --dart-define=PENHAS_BASE_URL=#{api_base_url}")
   end
 
   desc 'Generates a provisioning profile, saving it in the current folder '

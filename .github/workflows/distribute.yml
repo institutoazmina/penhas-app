@@ -88,7 +88,7 @@ jobs:
           options: '{ "tester_email": "${{ secrets.TESTER_EMAIL }}" }'
           subdirectory: ${{ matrix.working-directory }}
         env:
-          PENHAS_BASE_URL: ${{ secrets.BASE_URL }}
+          PENHAS_BASE_URL: ${{ secrets.PENHAS_BASE_URL }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 
   pre-distribute:
