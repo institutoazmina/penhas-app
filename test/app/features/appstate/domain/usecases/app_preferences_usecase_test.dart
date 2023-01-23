@@ -146,7 +146,10 @@ void main() {
       );
 
       expect(value.isRight(), true);
-      expect(value.fold((l) => l, (r) => r), AppRoute('/authentication/stealth'));
+      expect(
+        value.fold((l) => l, (r) => r),
+        AppRoute('/authentication/stealth'),
+      );
     });
 
     test(
@@ -162,7 +165,10 @@ void main() {
       );
 
       expect(value.isRight(), true);
-      expect(value.fold((l) => l, (r) => r), AppRoute('/authentication/stealth'));
+      expect(
+        value.fold((l) => l, (r) => r),
+        AppRoute('/authentication/stealth'),
+      );
     });
 
     test(
@@ -178,7 +184,10 @@ void main() {
       );
 
       expect(value.isRight(), true);
-      expect(value.fold((l) => l, (r) => r), AppRoute('/authentication/stealth'));
+      expect(
+        value.fold((l) => l, (r) => r),
+        AppRoute('/authentication/stealth'),
+      );
     });
 
     test(
@@ -194,7 +203,10 @@ void main() {
       );
 
       expect(value.isRight(), true);
-      expect(value.fold((l) => l, (r) => r), AppRoute('/authentication/sign_in_stealth'));
+      expect(
+        value.fold((l) => l, (r) => r),
+        AppRoute('/authentication/sign_in_stealth'),
+      );
     });
 
     test(
@@ -210,7 +222,10 @@ void main() {
       );
 
       expect(value.isRight(), true);
-      expect(value.fold((l) => l, (r) => r), AppRoute('/authentication/sign_in_stealth'));
+      expect(
+        value.fold((l) => l, (r) => r),
+        AppRoute('/authentication/sign_in_stealth'),
+      );
     });
 
     test(
@@ -256,7 +271,10 @@ void main() {
       );
 
       expect(value.isLeft(), true);
-      expect(value.fold((l) => l, (r) => r), InactivityError.customerNotStealth);
+      expect(
+        value.fold((l) => l, (r) => r),
+        InactivityError.customerNotStealth,
+      );
     });
   });
 }
