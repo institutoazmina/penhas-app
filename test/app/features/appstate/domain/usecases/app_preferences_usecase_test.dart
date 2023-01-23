@@ -146,9 +146,7 @@ void main() {
       );
 
       expect(value.isRight(), true);
-      value.forEach((route) {
-        expect(route, AppRoute('/authentication/stealth'));
-      });
+      expect(value.fold((l) => l, (r) => r), AppRoute('/authentication/stealth'));
     });
 
     test(
@@ -164,9 +162,7 @@ void main() {
       );
 
       expect(value.isRight(), true);
-      value.forEach((route) {
-        expect(route, AppRoute('/authentication/stealth'));
-      });
+      expect(value.fold((l) => l, (r) => r), AppRoute('/authentication/stealth'));
     });
 
     test(
@@ -182,9 +178,7 @@ void main() {
       );
 
       expect(value.isRight(), true);
-      value.forEach((route) {
-        expect(route, AppRoute('/authentication/stealth'));
-      });
+      expect(value.fold((l) => l, (r) => r), AppRoute('/authentication/stealth'));
     });
 
     test(
@@ -200,9 +194,7 @@ void main() {
       );
 
       expect(value.isRight(), true);
-      value.forEach((route) {
-        expect(route, AppRoute('/authentication/sign_in_stealth'));
-      });
+      expect(value.fold((l) => l, (r) => r), AppRoute('/authentication/sign_in_stealth'));
     });
 
     test(
@@ -218,9 +210,7 @@ void main() {
       );
 
       expect(value.isRight(), true);
-      value.forEach((route) {
-        expect(route, AppRoute('/authentication/sign_in_stealth'));
-      });
+      expect(value.fold((l) => l, (r) => r), AppRoute('/authentication/sign_in_stealth'));
     });
 
     test(
@@ -236,9 +226,7 @@ void main() {
       );
 
       expect(value.isLeft(), true);
-      value.swap().forEach((error) {
-        expect(error, InactivityError.customerActive);
-      });
+      expect(value.fold((l) => l, (r) => r), InactivityError.customerActive);
     });
 
     test(
@@ -252,9 +240,7 @@ void main() {
       );
 
       expect(value.isLeft(), true);
-      value.swap().forEach((error) {
-        expect(error, InactivityError.customerActive);
-      });
+      expect(value.fold((l) => l, (r) => r), InactivityError.customerActive);
     });
 
     test(
@@ -270,9 +256,7 @@ void main() {
       );
 
       expect(value.isLeft(), true);
-      value.swap().forEach((error) {
-        expect(error, InactivityError.customerNotStealth);
-      });
+      expect(value.fold((l) => l, (r) => r), InactivityError.customerNotStealth);
     });
   });
 }
