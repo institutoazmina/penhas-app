@@ -3,7 +3,7 @@ json_key_file File.realpath("../play-store-api-key.json") # Path to the json sec
 package_name("penhas.com.br") # e.g. com.krausefx.app
 
 # iOS
-app_identifier("penhas.alphacode.com.br") # The bundle identifier of your app
+app_identifier(ENV['IOS_BUNDLE_ID']) # The bundle identifier of your app
 
 apple_id(ENV['APPLE_ID'])
 itc_team_id(ENV['ITC_TEAM_ID'])

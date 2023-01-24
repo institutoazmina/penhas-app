@@ -1,4 +1,7 @@
-if [[ ${CONFIGURATION} = "Debug" || ${IS_FIREBASE_DISTRIBUTION} = "true" ]]; then
+#!/bin/bash
+
+set -e
+
+if [[ "${PRODUCT_BUNDLE_IDENTIFIER}" == dev.* ]]; then
     /usr/libexec/PlistBuddy -c "Set :CFBundleDisplayName \"PenhaS Dev\"" "${TARGET_BUILD_DIR}/${INFOPLIST_PATH}"
-    /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier \"dev.penhas.alphacode.com.br\"" "${TARGET_BUILD_DIR}/${INFOPLIST_PATH}"
 fi

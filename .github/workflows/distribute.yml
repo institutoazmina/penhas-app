@@ -90,6 +90,7 @@ jobs:
         env:
           PENHAS_BASE_URL: ${{ secrets.PENHAS_BASE_URL }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          IOS_BUNDLE_ID: ${{ vars.IOS_BUNDLE_ID }}
 
   pre-distribute:
     runs-on: ubuntu-latest
