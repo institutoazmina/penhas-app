@@ -72,7 +72,7 @@ jobs:
         if: ${{ matrix.platform == 'ios' }}
         run: |
           base64 -d <<< ${{ secrets.IOS_BUILD_FILES }} | tar xzf -
-          base64 -d <<< ${{ secrets.APPLE_API_KEY_B64 }} > ${{ matrix.working-directory }}/app-store-api-key.json
+          base64 -d <<< "${{ secrets.APPLE_API_KEY_B64 }}" > ${{ matrix.working-directory }}/app-store-api-key.json
 
       - name: Install Ruby to use Fastlane
         uses: ruby/setup-ruby@v1
