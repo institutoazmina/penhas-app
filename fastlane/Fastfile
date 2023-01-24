@@ -113,6 +113,7 @@ platform :ios do
   desc 'Registers devices to the Apple Dev Portal'
   private_lane :sync_device_info do
     if File.exists?(ios_devices_file)
+      request_api_key
       register_devices(
         devices_file: ios_devices_file,
       )
@@ -122,6 +123,8 @@ platform :ios do
   desc 'Generate IPA'
   private_lane :generate_ipa do |options|
     build
+
+    request_api_key
     update_profile(
       profile_type: options[:profile_type],
     )
@@ -140,7 +143,6 @@ platform :ios do
 
   desc 'Distribute to iOS beta testers in TestFlight'
   lane :release_distribute do
-    request_api_key
     generate_ipa(profile_type: profile_type_store)
     pilot
   end
@@ -152,9 +154,7 @@ platform :ios do
     tester_email = options[:tester_email]
     testers_group = tester_email ? nil : ios_testers_group
     
-    request_api_key
     app_id = firebase_ios_id()
-
     download_udids(app_id: app_id)
     sync_device_info
 
@@ -177,8 +177,8 @@ platform :ios do
       key_id: api_key_json['key_id'],
       issuer_id: api_key_json['issuer_id'],
       key_content: api_key_json['key'],
-      duration: api_key_json['duration'],
-      in_house: api_key_json['in_house'],
+      duration: api_key_json['duration'] || 1200,
+      in_house: api_key_json['in_house'] || false,
     )
   end
 
