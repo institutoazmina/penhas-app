@@ -17,6 +17,8 @@ on:
         required: true
       ANDROID_BUILD_FILES:
         required: true
+      APPLE_ID:
+        required: true
       IOS_BUILD_FILES:
         required: true
       FIREBASE_TOKEN:
@@ -91,6 +93,7 @@ jobs:
           PENHAS_BASE_URL: ${{ secrets.PENHAS_BASE_URL }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           IOS_BUNDLE_ID: ${{ vars.IOS_BUNDLE_ID }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
 
   pre-distribute:
     runs-on: ubuntu-latest
