@@ -177,6 +177,7 @@ platform :ios do
       key_id: api_key_json['key_id'],
       issuer_id: api_key_json['issuer_id'],
       key_content: api_key_json['key'],
+      is_key_content_base64: true,
       duration: api_key_json['duration'] || 1200,
       in_house: api_key_json['in_house'] || false,
     )
