@@ -29,3 +29,4 @@ jobs:
       ANDROID_BUILD_FILES: ${{ secrets.ANDROID_BUILD_FILES }}
       IOS_BUILD_FILES: ${{ secrets.IOS_BUILD_FILES }}
       APPLE_ID: ${{ secrets.APPLE_ID }}
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
