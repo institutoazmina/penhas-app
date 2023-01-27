@@ -43,8 +43,8 @@ platform :android do
   lane :firebase_distribute do |options|
     ENV['IS_FIREBASE_DISTRIBUTION'] = 'true'
 
-    tester_email = options[:tester_email]
-    testers_group = tester_email ? nil : android_testers_group
+    tester_email = options[:tester_email] || ''
+    testers_group = tester_email.empty? ? android_testers_group : nil
 
     build_apk
 
@@ -151,8 +151,8 @@ platform :ios do
   lane :firebase_distribute do |options|
     ENV['IS_FIREBASE_DISTRIBUTION'] = 'true'
 
-    tester_email = options[:tester_email]
-    testers_group = tester_email ? nil : ios_testers_group
+    tester_email = options[:tester_email] || ''
+    testers_group = tester_email.empty? ? ios_testers_group : nil
     
     app_id = firebase_ios_id()
     download_udids(app_id: app_id)
