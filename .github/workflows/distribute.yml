@@ -25,6 +25,10 @@ on:
         required: false
       APPLE_API_KEY_B64:
         required: true
+      BUILD_CERTIFICATE_B64:
+        required: true
+      PROVISIONING_PASSWORD:
+        required: true
       GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64:
         required: false
       TESTER_EMAIL:
@@ -67,14 +71,18 @@ jobs:
       - name: Get config files for Android
         if: ${{ matrix.platform == 'android' }}
         run: |
-          base64 -d <<< ${{ secrets.ANDROID_BUILD_FILES }} | tar xzf -
+          base64 -d <<< "${{ secrets.ANDROID_BUILD_FILES }}" | tar xzf -
           base64 -d <<< "${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64 }}" > ${{ matrix.working-directory }}/play-store-api-key.json
 
       - name: Get config files for iOS
         if: ${{ matrix.platform == 'ios' }}
-        run: |
-          base64 -d <<< ${{ secrets.IOS_BUILD_FILES }} | tar xzf -
-          base64 -d <<< "${{ secrets.APPLE_API_KEY_B64 }}" > ${{ matrix.working-directory }}/app-store-api-key.json
+        run: bin/setup-ios-build-env.sh
+        env:
+          IOS_BUILD_FILES: ${{ secrets.IOS_BUILD_FILES }}
+          APPLE_API_KEY_B64: ${{ secrets.APPLE_API_KEY_B64 }}
+          WORKING_DIR: ${{ matrix.working-directory }}
+          BUILD_CERTIFICATE_B64: ${{ secrets.BUILD_CERTIFICATE_B64 }}
+          PROVISIONING_PASSWORD: ${{ secrets.PROVISIONING_PASSWORD }}
 
       - name: Install Ruby to use Fastlane
         uses: ruby/setup-ruby@v1

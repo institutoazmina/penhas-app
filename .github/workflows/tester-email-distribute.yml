@@ -30,3 +30,5 @@ jobs:
       ANDROID_BUILD_FILES: ${{ secrets.ANDROID_BUILD_FILES }}
       IOS_BUILD_FILES: ${{ secrets.IOS_BUILD_FILES }}
       APPLE_ID: ${{ secrets.APPLE_ID }}
+      BUILD_CERTIFICATE_B64: ${{ secrets.BUILD_CERTIFICATE_B64 }}
+      PROVISIONING_PASSWORD: ${{ secrets.PROVISIONING_PASSWORD }}

@@ -18,7 +18,7 @@ project_path = File.realpath(File.dirname(File.dirname(__FILE__)))
 app_name = 'PenhaS'
 api_base_url = ENV['PENHAS_BASE_URL']
 
-profile_type_edirock = 'ad-hoc' # Firebase
+profile_type_adhoc = 'ad-hoc' # Firebase
 profile_type_store = 'app-store'
 
 android_testers_group = 'androidtestersgroup'
@@ -87,17 +87,14 @@ platform :ios do
   desc 'Generates a provisioning profile, saving it in the current folder '
   private_lane :update_profile do |options|
 
-    is_edirock = options[:profile_type] == profile_type_edirock
-    provisioning_name_suffix = is_edirock ? 'AdHoc' : 'AppStore'
-
-    cert(
-      output_path: "#{project_path}/ios/certificates",
-    )
+    is_adhoc = options[:profile_type] == profile_type_adhoc
+    provisioning_name_suffix = is_adhoc ? 'AdHoc' : 'AppStore'
 
     sigh(
       provisioning_name: "#{app_name} #{provisioning_name_suffix}",
       output_path: "#{project_path}/ios/certificates",
-      adhoc: is_edirock,
+      skip_certificate_verification: true,
+      adhoc: is_adhoc,
       force: true,
     )
   end
@@ -135,7 +132,7 @@ platform :ios do
       configuration: 'Release',
       archive_path: "#{project_path}/build/ios/Runner.xcarchive",
       export_method: options[:profile_type],
-      output_directory: "#{project_path}/build/Runner",
+      output_directory: "#{project_path}/build/ios/Runner",
       xcargs: '-allowProvisioningUpdates',
       export_xcargs: '-allowProvisioningUpdates',
     )
@@ -158,7 +155,7 @@ platform :ios do
     download_udids(app_id: app_id)
     sync_device_info
 
-    generate_ipa(profile_type: profile_type_edirock)
+    generate_ipa(profile_type: profile_type_adhoc)
 
     firebase_app_distribution(
       app: app_id,
