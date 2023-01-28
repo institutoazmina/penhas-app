@@ -6,9 +6,9 @@ on:
       platform:
         description: "Build target platform"
         options:
+          - all
           - android
           - ios
-          - all
         type: choice
         required: true
       tester_email:
