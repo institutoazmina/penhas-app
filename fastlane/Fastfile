@@ -97,6 +97,8 @@ platform :ios do
       adhoc: is_adhoc,
       force: true,
     )
+
+    sh('ls -l ~/Library/MobileDevice/Provisioning\ Profiles')
   end
 
   desc 'Download devices IDs from Firebase'

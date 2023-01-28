@@ -9,6 +9,8 @@ base64 -d <<< "$BUILD_CERTIFICATE_B64" > $CERTIFICATE_PATH
 base64 -d <<< "$IOS_BUILD_FILES" | tar xzf -
 base64 -d <<< "$APPLE_API_KEY_B64" > $WORKING_DIR/app-store-api-key.json
 
+sudo xcode-select -s /Applications/Xcode_14.2.app
+
 security create-keychain -p '' $KEYCHAIN_PATH
 security import $CERTIFICATE_PATH -t agg -k $KEYCHAIN_PATH -P "$PROVISIONING_PASSWORD" -A
 

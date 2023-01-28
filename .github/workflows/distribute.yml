@@ -104,6 +104,12 @@ jobs:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           FASTLANE_SKIP_UPDATE_CHECK: true
 
+      - name: Clean up keychain and provisioning profile
+        if: ${{ always() && matrix.platform == 'ios' }}
+        run: |
+          security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
+          rm ~/Library/MobileDevice/Provisioning\ Profiles/*.mobileprovision
+
   pre-distribute:
     runs-on: ubuntu-latest
     outputs:
