@@ -30,5 +30,3 @@ jobs:
       IOS_BUILD_FILES: ${{ secrets.IOS_BUILD_FILES }}
       APPLE_ID: ${{ secrets.APPLE_ID }}
       FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-      BUILD_CERTIFICATE_B64: ${{ secrets.BUILD_CERTIFICATE_B64 }}
-      PROVISIONING_PASSWORD: ${{ secrets.PROVISIONING_PASSWORD }}

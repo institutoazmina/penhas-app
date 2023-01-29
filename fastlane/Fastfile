@@ -90,10 +90,15 @@ platform :ios do
     is_adhoc = options[:profile_type] == profile_type_adhoc
     provisioning_name_suffix = is_adhoc ? 'AdHoc' : 'AppStore'
 
+    cert(
+      output_path: "#{project_path}/ios/certificates",
+      platform: 'ios',
+    )
+
     sigh(
       provisioning_name: "#{app_name} #{provisioning_name_suffix}",
       output_path: "#{project_path}/ios/certificates",
-      skip_certificate_verification: false,
+      skip_certificate_verification: true,
       adhoc: is_adhoc,
       force: true,
     )
