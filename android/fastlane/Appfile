@@ -1,1 +1,7 @@
-../../fastlane/Appfile
+# Android
+package_name('penhas.com.br') # e.g. com.krausefx.app
+
+google_service_api_key = ENV['GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_PATH']
+if google_service_api_key && File.file?(google_service_api_key)
+    json_key_file(google_service_api_key) # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+end
