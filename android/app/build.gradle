@@ -22,7 +22,9 @@ if (flutterVersionName == null) {
 }
 def secretsPropertiesFile = rootProject.file("secrets.properties")
 def secretsProperties = new Properties()
-secretsProperties.load(new FileInputStream(secretsPropertiesFile))
+if (secretsPropertiesFile.exists()){
+    secretsProperties.load(new FileInputStream(secretsPropertiesFile))
+}
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
