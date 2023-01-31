@@ -92,3 +92,4 @@ jobs:
           KEYCHAIN_PATH: ${{ runner.temp }}/app-signing.keychain-db
           KEYCHAIN_PWD: ''
           PENHAS_BASE_URL: ${{ secrets.PENHAS_BASE_URL }}
+          TMP_DEVICES_FILE: ${{ runner.temp }}/ios_devices.txt
