@@ -1,5 +1,161 @@
+require 'fastlane_core/keychain_importer'
+
 import("../../fastlane/Fastfile")
 
 skip_docs
 
 default_platform(:ios)
+
+profile_type_edirock = 'ad-hoc' # Firebase
+profile_type_store = 'app-store'
+
+provisioning_names = {
+  "#{profile_type_edirock}": "#{$app_name} AdHoc",
+  "#{profile_type_store}": "#{$app_name} AppStore",
+}
+
+ios_devices_file = "#{$project_path}/build/ios_devices.txt"
+apple_api_key_path = ENV['APP_STORE_API_KEY_PATH']
+
+testers_group = 'iostestersgroup'
+
+platform :ios do
+
+  desc 'Build release IPA'
+  lane :build do
+    sh("flutter build ios --release --no-codesign --config-only --dart-define=PENHAS_BASE_URL=#{$api_base_url}")
+  end
+
+  desc 'Generates a provisioning profile, saving it in the current folder '
+  private_lane :update_profile do |options|
+
+    is_edirock = options[:profile_type] == profile_type_edirock
+    provisioning_name = provisioning_names[:"#{options[:profile_type]}"]
+    sigh_force = is_edirock && options[:force]
+
+    FastlaneCore::KeychainImporter.import_file(
+      ENV['CERTIFICATE_PATH'],
+      ENV['KEYCHAIN_PATH'],
+      certificate_password: ENV['CERTIFICATE_PWD'],
+      keychain_password: ENV['KEYCHAIN_PWD'],
+    )
+
+    sigh(
+      provisioning_name: provisioning_name,
+      output_path: "#{$project_path}/ios/certificates",
+      skip_certificate_verification: true,
+      adhoc: is_edirock,
+      force: sigh_force,
+    )
+  end
+
+  desc 'Download devices IDs from Firebase'
+  private_lane :download_udids do |options|
+    firebase_app_distribution_get_udids(
+      app: options[:app_id],
+      output_file: ios_devices_file,
+    )
+  end
+
+  desc 'Registers devices to the Apple Dev Portal'
+  private_lane :sync_device_info do
+    if File.exists?(ios_devices_file)
+      register_devices(
+        devices_file: ios_devices_file,
+      )
+    end
+  end
+
+  desc 'Generate IPA'
+  private_lane :generate_ipa do |options|
+    profile_uuid = update_profile(
+      profile_type: options[:profile_type],
+      force: options[:force_profile],
+    )
+
+    build(
+      profile_type: options[:profile_type],
+    )
+
+    gym(
+      scheme: 'Runner',
+      configuration: 'Release',
+      workspace: "#{$project_path}/ios/Runner.xcworkspace",
+      archive_path: "#{$project_path}/build/ios/Runner.xcarchive",
+      output_directory: "#{$project_path}/build/ios/Runner",
+      export_method: options[:profile_type],
+      xcargs: "PROVISIONING_PROFILE_SPECIFIER='#{profile_uuid}'",
+    )
+  end
+
+  desc 'Distribute to iOS beta testers in TestFlight'
+  lane :release_distribute do
+    request_api_key
+
+    generate_ipa(
+      profile_type: profile_type_store,
+    )
+
+    pilot(
+      ipa: "#{$project_path}/build/ios/Runner/Runner.ipa",
+    )
+  end
+
+  desc 'Distribute to iOS beta testers in Firebase'
+  lane :firebase_distribute do |options|
+    ENV['IS_FIREBASE_DISTRIBUTION'] = 'true'
+
+    testers = options[:tester_email] || ''
+    groups = testers.empty? ? testers_group : nil
+
+    request_api_key
+
+    app_id = firebase_id()
+    download_udids(app_id: app_id)
+    new_devices = sync_device_info || []
+
+    generate_ipa(
+      profile_type: profile_type_edirock,
+      force_profile: new_devices.any?,
+    )
+
+    firebase_app_distribution(
+      app: app_id,
+      release_notes: get_changelog(),
+      ipa_path: "#{$project_path}/build/ios/Runner/Runner.ipa",
+      groups: groups,
+      testers: testers,
+    )
+  end
+
+  private_lane :request_api_key do
+    api_key_content = File.read(apple_api_key_path)
+    api_key_json = JSON.parse(api_key_content)
+
+    app_store_connect_api_key(
+      key_id: api_key_json['key_id'],
+      issuer_id: api_key_json['issuer_id'],
+      key_content: api_key_json['key'],
+      duration: api_key_json['duration'] || 1200,
+      in_house: api_key_json['in_house'] || false,
+      is_key_content_base64: true,
+    )
+  end
+
+  desc 'Check if json credentials is valid'
+  lane :verify_app_store_auth do
+    request_api_key
+    app_store_build_number(
+      live: false,
+      app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier),
+      initial_build_number: true
+    )
+  end
+
+  desc 'Get Firebase project ID from config file'
+  lane :firebase_id do
+    google_services_file = "#{$project_path}/ios/Runner/GoogleService-Info.plist"
+    sh("cat '#{google_services_file}' | grep ':ios:' | sed 's/^.*>\\(.*\\)<.*\$/\\1/g'").strip
+  end
+
+end

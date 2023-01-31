@@ -3,3 +3,60 @@ import("../../fastlane/Fastfile")
 skip_docs
 
 default_platform(:android)
+
+testers_group = 'androidtestersgroup'
+
+platform :android do
+
+  desc 'Build release APK'
+  lane :build_apk do
+    sh("flutter build apk --release --dart-define=PENHAS_BASE_URL=#{$api_base_url}")
+  end
+
+  desc 'Build release Bundle'
+  lane :build_bundle do
+    sh("flutter build appbundle --release --dart-define=PENHAS_BASE_URL=#{$api_base_url}")
+  end
+
+  desc 'Distribute to Android beta testers'
+  lane :firebase_distribute do |options|
+    ENV['IS_FIREBASE_DISTRIBUTION'] = 'true'
+
+    testers = options[:tester_email] || ''
+    groups = testers.empty? ? testers_group : nil
+
+    build_apk
+
+    firebase_app_distribution(
+      app: firebase_id(),
+      release_notes: get_changelog(),
+      android_artifact_path: "#{$project_path}/build/app/outputs/apk/release/app-release.apk",
+      groups: groups,
+      testers: testers,
+    )
+  end
+
+  desc 'Deploy a new version to the Play Store'
+  lane :release_distribute do
+    build_bundle
+    upload_to_play_store(
+      track: 'alpha',
+      release_status: 'completed',
+      aab: "#{$project_path}/build/app/outputs/bundle/release/app-release.aab",
+    )
+  end
+
+  desc 'Verify if has valid Play Store credentials'
+  lane :verify_play_store_auth do
+    validate_play_store_json_key(
+      json_key: CredentialsManager::AppfileConfig.try_fetch_value(:json_key_file),
+    )
+  end
+
+  desc 'Get Firebase project ID from config file'
+  lane :firebase_id do
+    google_services_file = "#{$project_path}/android/app/google-services.json"
+    sh("cat '#{google_services_file}' | jq '.client[0]|.client_info.mobilesdk_app_id' -r").strip
+  end
+
+end

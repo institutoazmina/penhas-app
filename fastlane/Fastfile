@@ -13,193 +13,16 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
-project_path = File.realpath(File.dirname(File.dirname(__FILE__)))
+$project_path = File.realpath(File.dirname(File.dirname(__FILE__)))
 
-app_name = 'PenhaS'
-api_base_url = ENV['PENHAS_BASE_URL']
+$app_name = 'PenhaS'
+$api_base_url = ENV['PENHAS_BASE_URL']
 
-profile_type_adhoc = 'ad-hoc' # Firebase
-profile_type_store = 'app-store'
-
-android_testers_group = 'androidtestersgroup'
-ios_testers_group = 'iostestersgroup'
-
-ios_devices_file = "#{project_path}/build/ios_devices.txt"
-apple_api_key_path = "#{project_path}/ios/app-store-api-key.json"
-
-platform :android do
-
-  desc 'Build release APK'
-  lane :build_apk do
-    sh("flutter build apk --release --dart-define=PENHAS_BASE_URL=#{api_base_url}")
-  end
-
-  desc 'Build release Bundle'
-  lane :build_bundle do
-    sh("flutter build appbundle --release --dart-define=PENHAS_BASE_URL=#{api_base_url}")
-  end
-
-  desc 'Distribute to Android beta testers'
-  lane :firebase_distribute do |options|
-    ENV['IS_FIREBASE_DISTRIBUTION'] = 'true'
-
-    tester_email = options[:tester_email] || ''
-    testers_group = tester_email.empty? ? android_testers_group : nil
-
-    build_apk
-
-    firebase_app_distribution(
-      app: firebase_android_id(),
-      release_notes: get_changelog(),
-      android_artifact_path: "#{project_path}/build/app/outputs/apk/release/app-release.apk",
-      groups: testers_group,
-      testers: tester_email,
-    )
-  end
-
-  desc 'Deploy a new version to the Play Store'
-  lane :release_distribute do
-    verify_play_store_key
-    build_bundle
-    upload_to_play_store(
-      track: 'alpha',
-      release_status: 'completed',
-      aab: "#{project_path}/build/app/outputs/bundle/release/app-release.aab",
-    )
-  end
-
-  desc 'Verify if has valid Play Store credentials'
-  lane :verify_play_store_auth do
-    validate_play_store_json_key(
-      json_key: CredentialsManager::AppfileConfig.try_fetch_value(:json_key_file),
-    )
-  end
-
-end
-
-platform :ios do
-
-  desc 'Build release IPA'
-  lane :build do
-    sh("flutter build ios --release --no-codesign --dart-define=PENHAS_BASE_URL=#{api_base_url}")
-  end
-
-  desc 'Generates a provisioning profile, saving it in the current folder '
-  private_lane :update_profile do |options|
-
-    is_adhoc = options[:profile_type] == profile_type_adhoc
-    provisioning_name_suffix = is_adhoc ? 'AdHoc' : 'AppStore'
-
-    cert(
-      output_path: "#{project_path}/ios/certificates",
-      platform: 'ios',
-    )
-
-    sigh(
-      provisioning_name: "#{app_name} #{provisioning_name_suffix}",
-      output_path: "#{project_path}/ios/certificates",
-      skip_certificate_verification: true,
-      adhoc: is_adhoc,
-      force: true,
-    )
-  end
-
-  desc 'Download devices IDs from Firebase'
-  private_lane :download_udids do |options|
-    firebase_app_distribution_get_udids(
-      app: options[:app_id],
-      output_file: ios_devices_file,
-    )
-  end
-
-  desc 'Registers devices to the Apple Dev Portal'
-  private_lane :sync_device_info do
-    if File.exists?(ios_devices_file)
-      request_api_key
-      register_devices(
-        devices_file: ios_devices_file,
-      )
-    end
-  end
-
-  desc 'Generate IPA'
-  private_lane :generate_ipa do |options|
-    build
-
-    request_api_key
-    update_profile(
-      profile_type: options[:profile_type],
-    )
-
-    gym(
-      scheme: 'Runner',
-      workspace: "#{project_path}/ios/Runner.xcworkspace",
-      configuration: 'Release',
-      archive_path: "#{project_path}/build/ios/Runner.xcarchive",
-      export_method: options[:profile_type],
-      output_directory: "#{project_path}/build/ios/Runner",
-      xcargs: '-allowProvisioningUpdates',
-      export_xcargs: '-allowProvisioningUpdates',
-    )
-  end
-
-  desc 'Distribute to iOS beta testers in TestFlight'
-  lane :release_distribute do
-    generate_ipa(profile_type: profile_type_store)
-    pilot
-  end
-
-  desc 'Distribute to iOS beta testers in Firebase'
-  lane :firebase_distribute do |options|
-    ENV['IS_FIREBASE_DISTRIBUTION'] = 'true'
-
-    tester_email = options[:tester_email] || ''
-    testers_group = tester_email.empty? ? ios_testers_group : nil
-    
-    app_id = firebase_ios_id()
-    download_udids(app_id: app_id)
-    sync_device_info
-
-    generate_ipa(profile_type: profile_type_adhoc)
-
-    firebase_app_distribution(
-      app: app_id,
-      release_notes: get_changelog(),
-      ipa_path: "#{project_path}/build/Runner/Runner.ipa",
-      groups: testers_group,
-      testers: tester_email,
-    )
-  end
-
-  private_lane :request_api_key do
-    api_key_content = File.read(apple_api_key_path)
-    api_key_json = JSON.parse(api_key_content)
-
-    app_store_connect_api_key(
-      key_id: api_key_json['key_id'],
-      issuer_id: api_key_json['issuer_id'],
-      key_content: api_key_json['key'],
-      is_key_content_base64: true,
-      duration: api_key_json['duration'] || 1200,
-      in_house: api_key_json['in_house'] || false,
-    )
-  end
-
-  lane :verify_app_store_auth do
-    request_api_key
-    app_store_build_number(
-      live: false,
-      app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier),
-      initial_build_number: true
-    )
-  end
-
-end
 
 private_lane :get_changelog do
   is_unreleased_section = false
   changelog_contents = ''
-  File.readlines("#{project_path}/CHANGELOG.md").each do |line|
+  File.readlines("#{$project_path}/CHANGELOG.md").each do |line|
     if is_unreleased_section
       if line.start_with?('## [')
         break
@@ -210,14 +33,4 @@ private_lane :get_changelog do
     is_unreleased_section = is_unreleased_section || line.start_with?('## [Unreleased]')
   end
   changelog_contents.strip
-end
-
-private_lane :firebase_android_id do
-  google_services_file = "#{project_path}/android/app/google-services.json"
-  sh("cat '#{google_services_file}' | jq '.client[0]|.client_info.mobilesdk_app_id' -r").strip
-end
-
-private_lane :firebase_ios_id do
-  google_services_file = "#{project_path}/ios/Runner/GoogleService-Info.plist"
-  sh("cat '#{google_services_file}' | grep ':ios:' | sed 's/^.*>\\(.*\\)<.*\$/\\1/g'").strip
 end
