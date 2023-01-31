@@ -1,0 +1,94 @@
+name: "Distribute iOS Flutter app"
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: "Distribution environment"
+        type: string
+        required: true
+
+    secrets:
+      APPLE_API_KEY_B64:
+        required: true
+      APPLE_ID:
+        required: true
+      CERTIFICATE_CONTENT:
+        required: true
+      CERTIFICATE_PWD:
+        required: true
+      FIREBASE_TOKEN:
+        required: false
+      IOS_BUILD_FILES:
+        required: true
+      PENHAS_BASE_URL:
+        required: true
+      TESTER_EMAIL:
+        required: false
+
+jobs:
+
+  distribute:
+    runs-on: macos-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3.3.0
+
+      - name: Select Xcode version
+        run: sudo xcode-select -s /Applications/Xcode_14.2.app
+
+      - name: Retrieve Flutter version from FVM config
+        uses: kuhnroyal/flutter-fvm-config-action@v1
+
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
+
+      - name: Install project dependencies
+        run: flutter pub get
+
+      - name: Install Fastlane dependencies
+        run: cd ./ios && bundle install
+
+      - name: Get iOS secrets files
+        run: base64 -d <<< ${{ secrets.IOS_BUILD_FILES }} | tar xzf -
+
+      - name: Get App Store API KEY
+        run: base64 -d <<< "${{ secrets.APPLE_API_KEY_B64 }}" > $APPLE_API_KEY_PATH
+        env:
+          APPLE_API_KEY_PATH: ${{ runner.temp }}/app-store-api-key.json
+
+      - name: Create default keychain
+        run: |
+          security create-keychain -p "$KEYCHAIN_PWD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security default-keychain -s $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PWD" $KEYCHAIN_PATH
+          base64 -d <<< "$CERTIFICATE_CONTENT" > $CERTIFICATE_PATH
+        env:
+          APPLE_API_KEY_PATH: ${{ runner.temp }}/app-store-api-key.json
+          CERTIFICATE_CONTENT: ${{ secrets.CERTIFICATE_CONTENT }}
+          CERTIFICATE_PATH: ${{ runner.temp }}/build_certificate.p12
+          KEYCHAIN_PATH: ${{ runner.temp }}/app-signing.keychain-db
+          KEYCHAIN_PWD: ''
+
+      - name: Run lane to distribute
+        uses: maierj/fastlane-action@v3.0.0
+        with:
+          lane: ${{ vars.TARGET_LANE }}
+          options: '{ "tester_email": "${{ secrets.TESTER_EMAIL }}" }'
+          subdirectory: ./ios
+        env:
+          APPLE_API_KEY_PATH: ${{ runner.temp }}/app-store-api-key.json
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          CERTIFICATE_PATH: ${{ runner.temp }}/build_certificate.p12
+          CERTIFICATE_PWD: ${{ secrets.CERTIFICATE_PWD }}
+          FASTLANE_SKIP_UPDATE_CHECK: true
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          IOS_BUNDLE_ID: ${{ vars.IOS_BUNDLE_ID }}
+          KEYCHAIN_PATH: ${{ runner.temp }}/app-signing.keychain-db
+          KEYCHAIN_PWD: ''
+          PENHAS_BASE_URL: ${{ secrets.PENHAS_BASE_URL }}

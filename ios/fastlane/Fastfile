@@ -15,7 +15,7 @@ provisioning_names = {
 }
 
 ios_devices_file = "#{$project_path}/build/ios_devices.txt"
-apple_api_key_path = ENV['APP_STORE_API_KEY_PATH']
+apple_api_key_path = ENV['APPLE_API_KEY_PATH']
 
 testers_group = 'iostestersgroup'
 

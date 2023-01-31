@@ -17,16 +17,28 @@ on:
         required: true
 
 jobs:
-  distribute:
-    uses: ./.github/workflows/distribute.yml
+
+  distribute-android:
+    if: ${{ github.event.inputs.platform == 'android' || github.event.inputs.platform == 'all' }}
+    uses: ./.github/workflows/distribute-flutter-android.yml
     with:
-      platform: ${{ github.event.inputs.platform }}
       environment: ${{ github.event.inputs.environment }}
     secrets:
-      PENHAS_BASE_URL: ${{ secrets.PENHAS_BASE_URL }}
-      APPLE_API_KEY_B64: ${{ secrets.APPLE_API_KEY_B64 }}
-      GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64 }}
       ANDROID_BUILD_FILES: ${{ secrets.ANDROID_BUILD_FILES }}
-      IOS_BUILD_FILES: ${{ secrets.IOS_BUILD_FILES }}
-      APPLE_ID: ${{ secrets.APPLE_ID }}
       FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64 }}
+      PENHAS_BASE_URL: ${{ secrets.PENHAS_BASE_URL }}
+
+  distribute-ios:
+    if: ${{ github.event.inputs.platform == 'ios' || github.event.inputs.platform == 'all' }}
+    uses: ./.github/workflows/distribute-flutter-ios.yml
+    with:
+      environment: ${{ github.event.inputs.environment }}
+    secrets:
+      APPLE_API_KEY_B64: ${{ secrets.APPLE_API_KEY_B64 }}
+      APPLE_ID: ${{ secrets.APPLE_ID }}
+      CERTIFICATE_CONTENT: ${{ secrets.CERTIFICATE_CONTENT }}
+      CERTIFICATE_PWD: ${{ secrets.CERTIFICATE_PWD }}
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      IOS_BUILD_FILES: ${{ secrets.IOS_BUILD_FILES }}
+      PENHAS_BASE_URL: ${{ secrets.PENHAS_BASE_URL }}
