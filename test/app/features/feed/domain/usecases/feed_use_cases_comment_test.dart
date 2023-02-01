@@ -111,25 +111,26 @@ void main() {
           totalReply: tweetEntity1.totalReply + 1,
           lastReply: [newTweet],
         );
-        final expected = right(
-          FeedCache(
-            tweets: [
-              commentedTweet,
-              tweetEntity2,
-            ],
-          ),
+        final expected = FeedCache(
+          tweets: [
+            commentedTweet,
+            tweetEntity2,
+          ],
         );
 
         when(repository.reply(option: anyNamed('option')))
             .thenAnswer((_) async => right(newTweet));
+
         // act
-        final received = await sut.reply(
+        sut.reply(
           mainTweet: tweetEntity1,
           comment: 'commented tweet',
         );
+
         // assert
-        expect(received, expected);
+        expectLater(sut.dataSource, emits(expected));
       });
+
       test('should replaced current commented by new replied tweet', () async {
         // arrange
         final sut = FeedUseCases(
@@ -157,22 +158,60 @@ void main() {
           totalReply: 2,
           lastReply: [newTweet],
         );
-        final expected = right(
-          FeedCache(
-            tweets: [
-              tweetEntity1,
-              commentedTweet,
-            ],
-          ),
+        final expected = FeedCache(
+          tweets: [
+            tweetEntity1,
+            commentedTweet,
+          ],
         );
 
         when(repository.reply(option: anyNamed('option')))
             .thenAnswer((_) async => right(newTweet));
+
         // act
-        final received = await sut.reply(
+        sut.reply(
           mainTweet: tweetEntity2,
           comment: 'commented tweet',
         );
+
+        // assert
+        expectLater(sut.dataSource, emits(expected));
+      });
+
+      test('when create commented tweet should return updated tweet', () async {
+        // arrange
+        final sut = FeedUseCases(
+          repository: repository,
+          filterPreference: filterPreference,
+          maxRows: maxRowsPerRequet,
+        );
+        when(repository.fetch(option: anyNamed('option')))
+            .thenAnswer((_) => Future.value(right(firstSessionResponse)));
+        await sut.fetchOldestTweet();
+        final newTweet = TweetEntity(
+          id: 'id_5',
+          userName: 'maria',
+          clientId: 42,
+          createdAt: '2020-05-05 05:05:05',
+          totalReply: 0,
+          totalLikes: 0,
+          anonymous: false,
+          content: 'commented tweet = 5',
+          avatar: 'http://site.com/avatar_42.png',
+          meta: const TweetMeta(liked: false, owner: true),
+          lastReply: const [],
+        );
+        final expected = right(newTweet);
+
+        when(repository.reply(option: anyNamed('option')))
+            .thenAnswer((_) async => right(newTweet));
+
+        // act
+        final received = await sut.reply(
+          mainTweet: tweetEntity1,
+          comment: 'commented tweet',
+        );
+
         // assert
         expect(received, expected);
       });
