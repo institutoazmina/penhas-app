@@ -20,9 +20,4 @@ class TweetSessionEntity extends Equatable {
 
   @override
   List<Object?> get props => [hasMore, orderBy, parent, tweets, nextPage];
-
-  @override
-  String toString() {
-    return 'TweetSessionEntity{hasMore: ${hasMore.toString()}, orderBy: ${orderBy.toString()}, nextPage: ${nextPage.toString()}, tweets: ${tweets.toString()}}';
-  }
 }

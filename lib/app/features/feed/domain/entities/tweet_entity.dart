@@ -47,11 +47,6 @@ class TweetEntity extends TweetTiles {
         lastReply,
       ];
 
-  @override
-  String toString() {
-    return 'TweetEntity{id: ${id.toString()}, parentId: $parentId, name: ${userName.toString()}, clientId: ${clientId.toString()}, createdAt: ${createdAt.toString()}, totalReply: ${totalReply.toString()}, totalLikes: ${totalLikes.toString()}, anonymous: ${anonymous.toString()}, content: ${content.toString()}, avatar: ${avatar.toString()}, meta: ${meta.toString()}, lastReplay: ${lastReply.toString()}}';
-  }
-
   TweetEntity copyWith({
     String? id,
     String? userName,
@@ -96,11 +91,6 @@ class TweetMeta extends Equatable {
 
   @override
   List<Object?> get props => [liked, owner, canReply];
-
-  @override
-  String toString() {
-    return 'TweetMeta {liked: ${liked.toString()}, owner: ${owner.toString()}, canReply: $canReply';
-  }
 }
 
 class TweetNewsGroupEntity extends TweetTiles {
