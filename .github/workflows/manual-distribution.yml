@@ -41,4 +41,5 @@ jobs:
       CERTIFICATE_PWD: ${{ secrets.CERTIFICATE_PWD }}
       FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       IOS_BUILD_FILES: ${{ secrets.IOS_BUILD_FILES }}
+      KEYCHAIN_PWD: ${{ secrets.KEYCHAIN_PWD }}
       PENHAS_BASE_URL: ${{ secrets.PENHAS_BASE_URL }}

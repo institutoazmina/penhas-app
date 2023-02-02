@@ -21,6 +21,8 @@ on:
         required: false
       IOS_BUILD_FILES:
         required: true
+      KEYCHAIN_PWD:
+        required: true
       PENHAS_BASE_URL:
         required: true
       TESTER_EMAIL:
@@ -73,7 +75,7 @@ jobs:
           CERTIFICATE_CONTENT: ${{ secrets.CERTIFICATE_CONTENT }}
           CERTIFICATE_PATH: ${{ runner.temp }}/build_certificate.p12
           KEYCHAIN_PATH: ${{ runner.temp }}/app-signing.keychain-db
-          KEYCHAIN_PWD: ''
+          KEYCHAIN_PWD: ${{ secrets.KEYCHAIN_PWD }}
 
       - name: Run lane to distribute
         uses: maierj/fastlane-action@v3.0.0
@@ -90,6 +92,6 @@ jobs:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           IOS_BUNDLE_ID: ${{ vars.IOS_BUNDLE_ID }}
           KEYCHAIN_PATH: ${{ runner.temp }}/app-signing.keychain-db
-          KEYCHAIN_PWD: ''
+          KEYCHAIN_PWD: ${{ secrets.KEYCHAIN_PWD }}
           PENHAS_BASE_URL: ${{ secrets.PENHAS_BASE_URL }}
           TMP_DEVICES_FILE: ${{ runner.temp }}/ios_devices.txt
