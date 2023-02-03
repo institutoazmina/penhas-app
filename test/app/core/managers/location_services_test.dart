@@ -113,6 +113,31 @@ void main() {
             reason: 'Expect value $value for permission status $key');
       });
     });
+
+    test('isPermissionGranted return true for permission granted', () async {
+      final mockPermissionHandlerPlatform = PermissionHandlerPlatform.instance;
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+
+      when((() => mockPermissionHandlerPlatform
+              .checkPermissionStatus(Permission.locationWhenInUse)))
+          .thenAnswer((_) async => PermissionStatus.granted);
+
+      final result = await locationServices.isPermissionGranted();
+      expect(result, isTrue);
+    });
+
+    test('isPermissionGranted return false for not granted permission',
+        () async {
+      final mockPermissionHandlerPlatform = PermissionHandlerPlatform.instance;
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+
+      when((() => mockPermissionHandlerPlatform
+              .checkPermissionStatus(Permission.locationWhenInUse)))
+          .thenAnswer((_) async => PermissionStatus.restricted);
+
+      final result = await locationServices.isPermissionGranted();
+      expect(result, isFalse);
+    });
   });
 }
 
