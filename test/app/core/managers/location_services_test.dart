@@ -58,6 +58,33 @@ void main() {
         );
       },
     );
+
+    test(
+      'currentLocation return a empty UserLocationEntity for not granted permission',
+      () async {
+        // arrange
+        final mockPermissionHandlerPlatform =
+            PermissionHandlerPlatform.instance;
+        debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+
+        when((() => mockPermissionHandlerPlatform
+                .checkPermissionStatus(Permission.location)))
+            .thenAnswer((_) async => PermissionStatus.denied);
+
+        // act
+        final result = await locationServices.currentLocation();
+
+        // assert
+        expect(
+          result.fold((l) => null, (r) => r),
+          const UserLocationEntity(
+            latitude: 0.0,
+            longitude: 0.0,
+            accuracy: 0.0,
+          ),
+        );
+      },
+    );
   });
 }
 
