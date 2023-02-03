@@ -16,19 +16,22 @@ abstract class IAudioPlayServices {
     AudioEntity audio, {
     OnFinished? onFinished,
   });
-  void dispose();
+
+  Future<void> dispose();
 }
 
 class AudioPlayServices implements IAudioPlayServices {
-  AudioPlayServices({required IAudioSyncManager audioSyncManager})
-      : _audioSyncManager = audioSyncManager;
+  AudioPlayServices({
+    required IAudioSyncManager audioSyncManager,
+    FlutterSoundPlayer? player,
+  })  : _audioSyncManager = audioSyncManager,
+        _playerModule = player ?? FlutterSoundPlayer(logLevel: Level.warning);
 
-  final _audioCodec = Codec.aacADTS;
-  late final FlutterSoundPlayer _playerModule =
-      FlutterSoundPlayer(logLevel: Level.warning);
-
+  final FlutterSoundPlayer _playerModule;
   final IAudioSyncManager _audioSyncManager;
   StreamSubscription? _playerSubscription;
+
+  final _audioCodec = Codec.aacADTS;
 
   @override
   Future<Either<Failure, AudioEntity>> start(
@@ -41,9 +44,9 @@ class AudioPlayServices implements IAudioPlayServices {
   }
 
   @override
-  void dispose() {
+  Future<void> dispose() async {
     _cancelPlayerSubscriptions();
-    _releaseAudioSession();
+    await _releaseAudioSession();
   }
 
   Future<void> _play(File file, OnFinished? onFinished) async {
