@@ -38,15 +38,18 @@ abstract class IAudioRecordServices {
 }
 
 class AudioRecordServices implements IAudioRecordServices {
-  AudioRecordServices({required IAudioSyncManager audioSyncManager})
-      : _audioSyncManager = audioSyncManager;
+  AudioRecordServices({
+    required IAudioSyncManager audioSyncManager,
+    FlutterSoundRecorder? recorder,
+  })  : _audioSyncManager = audioSyncManager,
+        _recorder = recorder ?? FlutterSoundRecorder(logLevel: Level.warning);
 
-  late final FlutterSoundRecorder _recorder =
-      FlutterSoundRecorder(logLevel: Level.warning);
-  final IAudioSyncManager _audioSyncManager;
   final _audioCodec = Codec.aacADTS;
-  String? _currentAudionSession;
+  final FlutterSoundRecorder _recorder;
+  final IAudioSyncManager _audioSyncManager;
+
   late int _sessionSequence;
+  String? _currentAudionSession;
   Duration _currentDuration = Duration.zero;
   Duration _runningDuration = Duration.zero;
 
@@ -63,11 +66,11 @@ class AudioRecordServices implements IAudioRecordServices {
     _currentAudionSession = const Uuid().v4();
     _streamController ??= StreamController.broadcast();
 
-    await permissionStatus().then(
-      (p) => p.maybeWhen(
-        granted: () async => _setupRecordEnviroment(),
-        orElse: () => requestPermission(),
-      ),
+    final currentPermission = await permissionStatus();
+
+    currentPermission.maybeWhen(
+      granted: () async => _setupRecordEnvironment(),
+      orElse: () => requestPermission(),
     );
   }
 
@@ -85,7 +88,7 @@ class AudioRecordServices implements IAudioRecordServices {
 
   @override
   Future<void> rotate() {
-    return _setupRecordEnviroment().then(
+    return _setupRecordEnvironment().then(
       (_) => _audioSyncManager.syncAudio(),
     );
   }
@@ -105,8 +108,11 @@ class AudioRecordServices implements IAudioRecordServices {
   }
 
   @override
-  Future<AudioPermissionState> permissionStatus() {
-    return Permission.microphone.status.then((value) => value.mapFrom());
+  Future<AudioPermissionState> permissionStatus() async {
+    final status = await Permission.microphone.status;
+    final mapper = status.mapFrom();
+
+    return mapper;
   }
 
   @override
@@ -159,7 +165,7 @@ extension _AudioRecordServices on AudioRecordServices {
     }
   }
 
-  Future<void> _setupRecordEnviroment() async {
+  Future<void> _setupRecordEnvironment() async {
     await _releaseAudioSession();
     await _recorder.openRecorder();
 
