@@ -74,5 +74,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>GeoApiKey</key>
+	<string>$(GEO_API_KEY)</string>
 </dict>
 </plist>

@@ -13,19 +13,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
-## all
-
-### all publish
-
-```sh
-[bundle exec] fastlane all publish
-```
-
-Publish Android and iOS Apps
-
-----
-
-
 ## Android
 
 ### android build_apk
@@ -52,58 +39,29 @@ Build release Bundle
 
 Distribute to Android beta testers
 
-### android release
+### android release_distribute
 
 ```sh
-[bundle exec] fastlane android release
+[bundle exec] fastlane android release_distribute
 ```
 
 Deploy a new version to the Play Store
 
-### android publish
+### android verify_play_store_auth
 
 ```sh
-[bundle exec] fastlane android publish
+[bundle exec] fastlane android verify_play_store_auth
 ```
 
-Publish APK, pass `is_release:true` to Play Store otherwise will be sent to Firebase
+Verify if has valid Play Store credentials
 
-----
-
-
-## iOS
-
-### ios build
+### android firebase_id
 
 ```sh
-[bundle exec] fastlane ios build
+[bundle exec] fastlane android firebase_id
 ```
 
-Build release IPA
-
-### ios testflight_distribute
-
-```sh
-[bundle exec] fastlane ios testflight_distribute
-```
-
-Distribute to iOS beta testers in TestFlight
-
-### ios firebase_distribute
-
-```sh
-[bundle exec] fastlane ios firebase_distribute
-```
-
-Distribute to iOS beta testers in Firebase
-
-### ios publish
-
-```sh
-[bundle exec] fastlane ios publish
-```
-
-Publish iOS package, pass `is_release:true` to App Store otherwise will be sent to Firebase
+Get Firebase project ID from config file
 
 ----
 

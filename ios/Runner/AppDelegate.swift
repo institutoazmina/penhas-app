@@ -9,8 +9,10 @@ import GoogleMaps
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
 
-    if let clientID = ProcessInfo.processInfo.environment["GEO_API_KEY"] {
-      GMSServices.provideAPIKey(clientID)
+    if let infoDictionary: [String: Any] = Bundle.main.infoDictionary {
+      if let clientID = infoDictionary["GeoApiKey"] {
+        GMSServices.provideAPIKey(clientID as! String)
+      }
     }
 
     GeneratedPluginRegistrant.register(with: self)

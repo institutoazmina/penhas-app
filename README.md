@@ -34,7 +34,7 @@ flutterfire configure -y \
 Para exibição dos pontos de apoio, utilizamos o Google Maps SDK para Flutter, siga os passos na página do plugin para gerar a chave de API e habilitar o Google Maps para as plataformas Android e iOS: https://pub.dev/packages/google_maps_flutter
 
 
-A chave gerada deve ser colocada nos arquivos de configuração do Android e iOS que ficam localizados em `android/local.properties` e `ios/Flutter/Secrets.xcconfig` respectivamente, crie esses arquivos caso não existam e coloque a chave da seguinte maneira:
+A chave gerada deve ser colocada nos arquivos de configuração do Android e iOS que ficam localizados em `android/secrets.properties` e `ios/Flutter/Secrets.xcconfig` respectivamente, crie esses arquivos caso não existam e coloque a chave da seguinte maneira:
 
 ```
 GEO_API_KEY=[SUA CHAVE DE API]
