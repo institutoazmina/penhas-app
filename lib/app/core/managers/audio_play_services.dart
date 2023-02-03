@@ -36,20 +36,18 @@ class AudioPlayServices implements IAudioPlayServices {
     OnFinished? onFinished,
   }) async {
     final file = await _audioSyncManager.cache(audio);
-    file.fold((l) {}, (file) => play(file, onFinished));
+    file.fold((l) {}, (file) => _play(file, onFinished));
     return file.map((e) => audio);
   }
 
   @override
   void dispose() {
-    cancelPlayerSubscriptions();
-    releaseAudioSession();
+    _cancelPlayerSubscriptions();
+    _releaseAudioSession();
   }
-}
 
-extension _AudioPlayServicesPrivate on AudioPlayServices {
-  Future<void> play(File file, OnFinished? onFinished) async {
-    await setupPlayEnviroment();
+  Future<void> _play(File file, OnFinished? onFinished) async {
+    await _setupPlayEnvironment();
     await _playerModule
         .setSubscriptionDuration(const Duration(milliseconds: 100));
 
@@ -60,8 +58,8 @@ extension _AudioPlayServicesPrivate on AudioPlayServices {
     );
   }
 
-  Future<void> setupPlayEnviroment() async {
-    await releaseAudioSession();
+  Future<void> _setupPlayEnvironment() async {
+    await _releaseAudioSession();
     await _playerModule.openPlayer();
 
     _playerSubscription = _playerModule.onProgress?.listen((e) {
@@ -69,7 +67,7 @@ extension _AudioPlayServicesPrivate on AudioPlayServices {
     });
   }
 
-  Future<void> releaseAudioSession() async {
+  Future<void> _releaseAudioSession() async {
     try {
       if (!_playerModule.isStopped) {
         await _playerModule.stopPlayer();
@@ -80,7 +78,7 @@ extension _AudioPlayServicesPrivate on AudioPlayServices {
     }
   }
 
-  void cancelPlayerSubscriptions() {
+  void _cancelPlayerSubscriptions() {
     _playerSubscription?.cancel();
     _playerSubscription = null;
   }
