@@ -5,12 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/core/states/location_permission_state.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:mocktail/mocktail.dart';
-// import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-// import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-
-import 'package:permission_handler/permission_handler.dart';
 import 'package:permission_handler_platform_interface/permission_handler_platform_interface.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
