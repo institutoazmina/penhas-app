@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:penhas/app/core/entities/user_location.dart';
@@ -88,56 +89,106 @@ void main() {
     );
 
     test(
-        'permissionStatus correct translate PermissionStatus to LocationPermissionState',
-        () async {
-      // arrange
-      final permissionMap = {
-        PermissionStatus.denied: LocationPermissionState.denied(),
-        PermissionStatus.granted: LocationPermissionState.granted(),
-        PermissionStatus.restricted: LocationPermissionState.restricted(),
-        PermissionStatus.permanentlyDenied:
-            LocationPermissionState.permanentlyDenied(),
-        PermissionStatus.limited: LocationPermissionState.undefined(),
-      };
+      'permissionStatus correct translate PermissionStatus to LocationPermissionState',
+      () async {
+        // arrange
+        final permissionMap = {
+          PermissionStatus.denied: LocationPermissionState.denied(),
+          PermissionStatus.granted: LocationPermissionState.granted(),
+          PermissionStatus.restricted: LocationPermissionState.restricted(),
+          PermissionStatus.permanentlyDenied:
+              LocationPermissionState.permanentlyDenied(),
+          PermissionStatus.limited: LocationPermissionState.undefined(),
+        };
 
-      permissionMap.forEach((key, value) async {
+        permissionMap.forEach((key, value) async {
+          final mockPermissionHandlerPlatform =
+              PermissionHandlerPlatform.instance;
+          debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+          when((() => mockPermissionHandlerPlatform.checkPermissionStatus(
+              Permission.locationWhenInUse))).thenAnswer((_) async => key);
+
+          // act
+          final result = await locationServices.permissionStatus();
+          expect(result, value,
+              reason: 'Expect value $value for permission status $key');
+        });
+      },
+    );
+
+    test(
+      'isPermissionGranted return true for permission granted',
+      () async {
         final mockPermissionHandlerPlatform =
             PermissionHandlerPlatform.instance;
         debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
-        when((() => mockPermissionHandlerPlatform.checkPermissionStatus(
-            Permission.locationWhenInUse))).thenAnswer((_) async => key);
 
-        // act
-        final result = await locationServices.permissionStatus();
-        expect(result, value,
-            reason: 'Expect value $value for permission status $key');
-      });
-    });
+        when((() => mockPermissionHandlerPlatform
+                .checkPermissionStatus(Permission.locationWhenInUse)))
+            .thenAnswer((_) async => PermissionStatus.granted);
 
-    test('isPermissionGranted return true for permission granted', () async {
-      final mockPermissionHandlerPlatform = PermissionHandlerPlatform.instance;
-      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+        final result = await locationServices.isPermissionGranted();
+        expect(result, isTrue);
+      },
+    );
 
-      when((() => mockPermissionHandlerPlatform
-              .checkPermissionStatus(Permission.locationWhenInUse)))
-          .thenAnswer((_) async => PermissionStatus.granted);
+    test(
+      'isPermissionGranted return false for not granted permission',
+      () async {
+        final mockPermissionHandlerPlatform =
+            PermissionHandlerPlatform.instance;
+        debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
 
-      final result = await locationServices.isPermissionGranted();
-      expect(result, isTrue);
-    });
+        when((() => mockPermissionHandlerPlatform
+                .checkPermissionStatus(Permission.locationWhenInUse)))
+            .thenAnswer((_) async => PermissionStatus.restricted);
 
-    test('isPermissionGranted return false for not granted permission',
-        () async {
-      final mockPermissionHandlerPlatform = PermissionHandlerPlatform.instance;
-      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+        final result = await locationServices.isPermissionGranted();
+        expect(result, isFalse);
+      },
+    );
 
-      when((() => mockPermissionHandlerPlatform
-              .checkPermissionStatus(Permission.locationWhenInUse)))
-          .thenAnswer((_) async => PermissionStatus.restricted);
+    test(
+      'requestPermission return a LocationPermissionState.granted for PermissionStatus.granted',
+      () async {
+        final mockPermissionHandlerPlatform =
+            PermissionHandlerPlatform.instance;
+        debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
 
-      final result = await locationServices.isPermissionGranted();
-      expect(result, isFalse);
-    });
+        when((() => mockPermissionHandlerPlatform
+                .checkPermissionStatus(Permission.locationWhenInUse)))
+            .thenAnswer((_) async => PermissionStatus.granted);
+
+        final locationServices = LocationServices();
+        final result = await locationServices.requestPermission(
+          title: '',
+          description: Container(),
+        );
+
+        expect(result, LocationPermissionState.granted());
+      },
+    );
+
+    test(
+      'requestPermission return a LocationPermissionState.restricted for PermissionStatus.restricted',
+      () async {
+        final mockPermissionHandlerPlatform =
+            PermissionHandlerPlatform.instance;
+        debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+
+        when((() => mockPermissionHandlerPlatform
+                .checkPermissionStatus(Permission.locationWhenInUse)))
+            .thenAnswer((_) async => PermissionStatus.restricted);
+
+        final locationServices = LocationServices();
+        final result = await locationServices.requestPermission(
+          title: '',
+          description: Container(),
+        );
+
+        expect(result, LocationPermissionState.restricted());
+      },
+    );
   });
 }
 
