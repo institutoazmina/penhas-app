@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
+import 'package:penhas/app/core/states/location_permission_state.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:mocktail/mocktail.dart';
 // import 'package:plugin_platform_interface/plugin_platform_interface.dart';
@@ -85,6 +86,33 @@ void main() {
         );
       },
     );
+
+    test(
+        'permissionStatus correct translate PermissionStatus to LocationPermissionState',
+        () async {
+      // arrange
+      final permissionMap = {
+        PermissionStatus.denied: LocationPermissionState.denied(),
+        PermissionStatus.granted: LocationPermissionState.granted(),
+        PermissionStatus.restricted: LocationPermissionState.restricted(),
+        PermissionStatus.permanentlyDenied:
+            LocationPermissionState.permanentlyDenied(),
+        PermissionStatus.limited: LocationPermissionState.undefined(),
+      };
+
+      permissionMap.forEach((key, value) async {
+        final mockPermissionHandlerPlatform =
+            PermissionHandlerPlatform.instance;
+        debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+        when((() => mockPermissionHandlerPlatform.checkPermissionStatus(
+            Permission.locationWhenInUse))).thenAnswer((_) async => key);
+
+        // act
+        final result = await locationServices.permissionStatus();
+        expect(result, value,
+            reason: 'Expect value $value for permission status $key');
+      });
+    });
   });
 }
 
