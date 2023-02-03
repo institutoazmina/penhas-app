@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/extension/safetly_parser.dart';
+import 'package:penhas/app/core/extension/safely_parser.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/map_exception_to_failure.dart';
 import 'package:penhas/app/features/notification/data/models/notification_session_model.dart';
