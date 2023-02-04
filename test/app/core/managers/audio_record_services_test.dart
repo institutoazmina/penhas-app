@@ -94,6 +94,22 @@ void main() {
         expect(result, AudioPermissionState.restricted());
       },
     );
+
+    test('dispose() release the audio record session', () async {
+      when(() => soundRecorder.isStopped).thenReturn(false);
+      when(() => audioSyncManager.syncAudio())..thenAnswer((_) async => true);
+      when(() => soundRecorder.stopRecorder()).thenAnswer((_) async => null);
+      when(() => soundRecorder.closeRecorder()).thenAnswer((_) async => null);
+
+      // act
+      await recordServices.dispose();
+
+      // assert
+      verify(() => soundRecorder.isStopped).called(1);
+      verify(() => soundRecorder.stopRecorder()).called(1);
+      verify(() => soundRecorder.closeRecorder()).called(1);
+      verify(() => audioSyncManager.syncAudio()).called(1);
+    });
   });
 }
 

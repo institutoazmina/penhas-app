@@ -34,7 +34,7 @@ abstract class IAudioRecordServices {
 
   Stream<AudioActivity> get onProgress;
 
-  void dispose();
+  Future<void> dispose();
 }
 
 class AudioRecordServices implements IAudioRecordServices {
@@ -94,10 +94,10 @@ class AudioRecordServices implements IAudioRecordServices {
   }
 
   @override
-  void dispose() {
+  Future<void> dispose() async {
     _cancelRecorderSubscriptions();
-    _releaseAudioSession();
-    _audioSyncManager.syncAudio();
+    await _releaseAudioSession();
+    await _audioSyncManager.syncAudio();
 
     try {
       _streamController?.close();
@@ -175,12 +175,12 @@ extension _AudioRecordServices on AudioRecordServices {
     );
 
     _sessionSequence += 1;
-    _audioSyncManager
-        .audioFile(
-          session: _currentAudionSession,
-          sequence: _sessionSequence.toString(),
-        )
-        .then((file) => _startRecorder(file));
+    final audioFileName = await _audioSyncManager.audioFile(
+      session: _currentAudionSession,
+      sequence: _sessionSequence.toString(),
+    );
+
+    await _startRecorder(audioFileName);
   }
 
   Future<void> _startRecorder(String path) async {
