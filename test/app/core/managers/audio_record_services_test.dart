@@ -54,6 +54,46 @@ void main() {
         });
       },
     );
+
+    test(
+      'requestPermission return a AudioPermissionState.granted for PermissionStatus.granted',
+      () async {
+        // arrange
+        final mockPermissionHandlerPlatform =
+            PermissionHandlerPlatform.instance;
+        debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+
+        when((() => mockPermissionHandlerPlatform
+                .checkPermissionStatus(Permission.microphone)))
+            .thenAnswer((_) async => PermissionStatus.granted);
+
+        // act
+        final result = await recordServices.requestPermission();
+
+        // assert
+        expect(result, AudioPermissionState.granted());
+      },
+    );
+
+    test(
+      'requestPermission return a AudioPermissionState.restricted for PermissionStatus.restricted',
+      () async {
+        // arrange
+        final mockPermissionHandlerPlatform =
+            PermissionHandlerPlatform.instance;
+        debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+
+        when((() => mockPermissionHandlerPlatform
+                .checkPermissionStatus(Permission.microphone)))
+            .thenAnswer((_) async => PermissionStatus.restricted);
+
+        // act
+        final result = await recordServices.requestPermission();
+
+        // assert
+        expect(result, AudioPermissionState.restricted());
+      },
+    );
   });
 }
 
