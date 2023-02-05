@@ -54,7 +54,7 @@ dependencies:
       ref: null-safety
   flutter_widget_from_html: ^0.8.3+1
   freezed_annotation: ^1.1.0
-  geolocator: ^8.0.0
+  geolocator: ^9.0.2
   google_maps_flutter: ^2.1.1
   map_launcher: ^2.1.1
   mask_text_input_formatter: ^2.0.0
@@ -114,6 +114,8 @@ dev_dependencies:
   lint: ^1.8.1
   mocktail: ^0.3.0
   flutter_lints: ^1.0.4
+  plugin_platform_interface: ^2.0.0
+  geolocator_platform_interface: ^4.0.3
 
 flutter_icons:
   ios: true
