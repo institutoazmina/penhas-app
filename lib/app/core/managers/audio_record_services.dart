@@ -67,11 +67,16 @@ class AudioRecordServices implements IAudioRecordServices {
     _streamController ??= StreamController.broadcast();
 
     final currentPermission = await permissionStatus();
-
-    currentPermission.maybeWhen(
-      granted: () async => _setupRecordEnvironment(),
-      orElse: () => requestPermission(),
+    final hasRecordPermission = currentPermission.maybeWhen(
+      granted: () => true,
+      orElse: () => false,
     );
+
+    if (hasRecordPermission) {
+      await _setupRecordEnvironment();
+    } else {
+      requestPermission();
+    }
   }
 
   @override
@@ -156,9 +161,11 @@ extension _AudioRecordServices on AudioRecordServices {
 
   Future<void> _releaseAudioSession() async {
     try {
-      if (!_recorder.isStopped) {
+      final isRecorderStopped = _recorder.isStopped;
+      if (!isRecorderStopped) {
         await _recorder.stopRecorder();
       }
+
       await _recorder.closeRecorder();
     } catch (e, stack) {
       logError(e, stack);
@@ -185,7 +192,8 @@ extension _AudioRecordServices on AudioRecordServices {
 
   Future<void> _startRecorder(String path) async {
     try {
-      _recorder.setSubscriptionDuration(const Duration(milliseconds: 100));
+      await _recorder
+          .setSubscriptionDuration(const Duration(milliseconds: 100));
       await _recorder.startRecorder(
         codec: _audioCodec,
         toFile: path,
