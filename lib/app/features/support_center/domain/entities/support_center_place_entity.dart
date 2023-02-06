@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:penhas/app/core/extension/safely_parser.dart';
+
+import '../../../../core/extension/safely_parser.dart';
 
 class SupportCenterPlaceEntity extends Equatable {
   const SupportCenterPlaceEntity({
