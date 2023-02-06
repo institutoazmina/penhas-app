@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
+
+import 'user_profile_entity.dart';
 
 enum QuizMessageType {
   from,

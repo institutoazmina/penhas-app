@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
+
+import 'tweet_entity.dart';
 
 enum TweetSessionOrder { latestFirst, oldestFirst }
 
