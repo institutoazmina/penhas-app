@@ -83,19 +83,18 @@ class AudioRecordServices implements IAudioRecordServices {
   Future<void> stop() async {
     try {
       if (_recorder.isStopped) return;
-      await _recorder
-          .stopRecorder()
-          .then((value) => _audioSyncManager.syncAudio());
+
+      await _recorder.stopRecorder();
+      await _audioSyncManager.syncAudio();
     } catch (e, stack) {
       logError(e, stack);
     }
   }
 
   @override
-  Future<void> rotate() {
-    return _setupRecordEnvironment().then(
-      (_) => _audioSyncManager.syncAudio(),
-    );
+  Future<void> rotate() async {
+    await _setupRecordEnvironment();
+    await _audioSyncManager.syncAudio();
   }
 
   @override
@@ -125,10 +124,10 @@ class AudioRecordServices implements IAudioRecordServices {
     return permissionStatus().then(
       (p) => p.when(
         granted: () => const AudioPermissionState.granted(),
-        denied: () => askForPermission(),
-        permanentlyDenied: () => askWhenPermissionIsDenied(),
+        denied: () => _askForPermission(),
+        permanentlyDenied: () => _askWhenPermissionIsDenied(),
         restricted: () => const AudioPermissionState.restricted(),
-        undefined: () => askForPermission(),
+        undefined: () => _askForPermission(),
       ),
     );
   }
@@ -230,16 +229,16 @@ extension _AudioRecordServices on AudioRecordServices {
     }
   }
 
-  Future<AudioPermissionState> askForPermissionIfNeeded(
+  Future<AudioPermissionState> _askForPermissionIfNeeded(
     AudioPermissionState state,
   ) async {
     return state.maybeWhen(
-      permanentlyDenied: () => askWhenPermissionIsDenied(),
+      permanentlyDenied: () => _askWhenPermissionIsDenied(),
       orElse: () => state,
     );
   }
 
-  Future<AudioPermissionState> askForPermission() {
+  Future<AudioPermissionState> _askForPermission() {
     return Modular.to
         .showDialog(
           barrierDismissible: false,
@@ -308,7 +307,7 @@ extension _AudioRecordServices on AudioRecordServices {
                       Permission.microphone
                           .request()
                           .then((value) => value.mapFrom())
-                          .then((value) => askForPermissionIfNeeded(value))
+                          .then((value) => _askForPermissionIfNeeded(value))
                           .then((value) => Navigator.of(context).pop(value));
                     },
                   ),
@@ -326,7 +325,7 @@ extension _AudioRecordServices on AudioRecordServices {
     );
   }
 
-  Future<AudioPermissionState> askWhenPermissionIsDenied() {
+  Future<AudioPermissionState> _askWhenPermissionIsDenied() {
     return Modular.to
         .showDialog(
           barrierDismissible: false,
