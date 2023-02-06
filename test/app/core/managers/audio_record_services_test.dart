@@ -1,17 +1,23 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_sound/public/flutter_sound_recorder.dart';
+import 'package:flutter_sound_platform_interface/flutter_sound_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/core/managers/audio_sync_manager.dart';
 import 'package:penhas/app/core/states/audio_permission_state.dart';
 import 'package:permission_handler_platform_interface/permission_handler_platform_interface.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import 'package:mocktail/mocktail.dart';
 
 void main() {
   late AudioRecordServices recordServices;
   late IAudioSyncManager audioSyncManager;
   late FlutterSoundRecorder soundRecorder;
+
+  setUpAll(() {
+    registerFallbackValue(Duration(milliseconds: 100));
+    registerFallbackValue(Codec.aacADTS);
+  });
 
   setUp(() {
     audioSyncManager = MockAudioSyncManager();
@@ -109,6 +115,45 @@ void main() {
       verify(() => soundRecorder.stopRecorder()).called(1);
       verify(() => soundRecorder.closeRecorder()).called(1);
       verify(() => audioSyncManager.syncAudio()).called(1);
+    });
+
+    test('start() record audio for microphone permission granted', () async {
+      // arrange
+      final mockPermissionHandlerPlatform = PermissionHandlerPlatform.instance;
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+
+      when((() => mockPermissionHandlerPlatform
+              .checkPermissionStatus(Permission.microphone)))
+          .thenAnswer((_) async => PermissionStatus.granted);
+
+      when(() => soundRecorder.isStopped).thenReturn(true);
+      when(() => soundRecorder.openRecorder()).thenAnswer((_) async => null);
+      when(() => soundRecorder.setSubscriptionDuration(any()))
+          .thenAnswer((_) async => null);
+      when(() => soundRecorder.startRecorder(
+            codec: any(named: 'codec'),
+            toFile: any(named: 'toFile'),
+            bitRate: any(named: 'bitRate'),
+            sampleRate: any(named: 'sampleRate'),
+          )).thenAnswer((_) async => null);
+
+      when(() => audioSyncManager.audioFile(
+            session: any(named: 'session'),
+            sequence: any(named: 'sequence'),
+          )).thenAnswer((_) async => '/tmp/file_name.txt');
+
+      // act
+      await recordServices.start();
+
+      // assert
+      verify(() => soundRecorder.isStopped).called(1);
+      verify(() => soundRecorder.closeRecorder()).called(1);
+      verify(() => soundRecorder.openRecorder()).called(1);
+      verify(() => soundRecorder.startRecorder(
+          codec: any(named: 'codec'),
+          toFile: any(named: 'toFile'),
+          bitRate: any(named: 'bitRate'),
+          sampleRate: any(named: 'sampleRate'))).called(1);
     });
   });
 }
