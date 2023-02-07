@@ -4,10 +4,11 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:logger/logger.dart' show Level;
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/managers/audio_sync_manager.dart';
-import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+
+import '../../features/help_center/domain/entities/audio_entity.dart';
+import '../../shared/logger/log.dart';
+import '../error/failures.dart';
+import 'audio_sync_manager.dart';
 
 typedef OnFinished = void Function();
 
