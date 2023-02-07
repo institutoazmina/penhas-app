@@ -13,9 +13,4 @@ class UserLocationEntity extends Equatable {
 
   @override
   List<Object?> get props => [latitude, longitude, accuracy];
-
-  @override
-  String toString() {
-    return 'UserLocation(latitude: ${latitude.toString()}, longitude: ${longitude.toString()}, accuracy: ${accuracy.toString()})';
-  }
 }
