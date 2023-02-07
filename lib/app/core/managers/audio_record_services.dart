@@ -5,14 +5,15 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:logger/logger.dart' show Level;
-import 'package:penhas/app/core/extension/asuka.dart';
-import 'package:penhas/app/core/managers/audio_sync_manager.dart';
-import 'package:penhas/app/core/states/audio_permission_state.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
-import 'package:penhas/app/shared/logger/log.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
+
+import '../../shared/design_system/colors.dart';
+import '../../shared/design_system/text_styles.dart';
+import '../../shared/logger/log.dart';
+import '../extension/asuka.dart';
+import '../states/audio_permission_state.dart';
+import 'audio_sync_manager.dart';
 
 class AudioActivity {
   AudioActivity(this.time, this.decibels);
