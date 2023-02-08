@@ -1,15 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
+import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/authentication/data/datasources/change_password_data_source.dart';
 import 'package:penhas/app/features/authentication/data/models/password_reset_response_model.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
-import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
 void main() {
@@ -25,6 +25,10 @@ void main() {
   const String userAgent = 'iOS 11.4/Simulator/1.0.0';
   late Map<String, String> httpHeader;
 
+  setUpAll(() {
+    registerFallbackValue(Uri());
+  });
+
   setUp(() {
     dataSource = ChangePasswordDataSource(
       apiClient: mockHttpClient,
@@ -35,9 +39,9 @@ void main() {
     validToken = '666242';
 
     // MockApiServerConfigure configuration
-    when(mockApiServerConfigure.baseUri).thenAnswer((_) => serverEndpoint);
-    when(mockApiServerConfigure.userAgent)
-        .thenAnswer((_) => Future.value(userAgent));
+    when(() => mockApiServerConfigure.baseUri).thenReturn(serverEndpoint);
+    when(() => mockApiServerConfigure.userAgent)
+        .thenAnswer((_) async => userAgent);
 
     httpHeader = {
       'User-Agent': userAgent,
@@ -45,16 +49,16 @@ void main() {
     };
   });
 
-  group('ChangePasswordDataSource', () {
-    Uri? httpResquest;
-    Map<String, String?> queryParameters;
+  group(ChangePasswordDataSource, () {
+    late Uri httpRequest;
+    late Map<String, String?> queryParameters;
     group('request', () {
       setUp(() {
         queryParameters = {
           'app_version': userAgent,
           'email': emailAddress!.rawValue,
         };
-        httpResquest = Uri(
+        httpRequest = Uri(
           scheme: serverEndpoint.scheme,
           host: serverEndpoint.host,
           path: '/reset-password/request-new',
@@ -63,45 +67,49 @@ void main() {
       });
 
       test(
-          'should perform a POST with parameters and application/x-www-form-urlencoded header',
-          () async {
-        // arrange
-        final bodyContent = JsonUtil.getStringSync(
-          from: 'authentication/request_reset_password.json',
-        );
-        when(mockHttpClient.post(any, headers: anyNamed('headers')))
-            .thenAnswer((_) async => http.Response(bodyContent, 200));
-        // act
-        await dataSource.request(emailAddress: emailAddress);
-        // assert
-        verify(mockHttpClient.post(httpResquest, headers: httpHeader));
-      });
-      test('should return SessionModel when the response code is 200 (success)',
-          () async {
-        // arrange
-        final jsonData = await JsonUtil.getJson(
-          from: 'authentication/request_reset_password.json',
-        );
-        final bodyContent = JsonUtil.getStringSync(
-          from: 'authentication/request_reset_password.json',
-        );
-        final expectedModel = PasswordResetResponseModel.fromJson(jsonData);
-        when(mockHttpClient.post(any, headers: anyNamed('headers')))
-            .thenAnswer((_) async => http.Response(bodyContent, 200));
-        // act
-        final result = await dataSource.request(emailAddress: emailAddress);
-        // assert
-        expect(result, expectedModel);
-      });
+        'must performance POST with user-agent and header configured',
+        () async {
+          // arrange
+          final bodyContent = JsonUtil.getStringSync(
+            from: 'authentication/request_reset_password.json',
+          );
+          when(() => mockHttpClient.post(any(), headers: any(named: 'headers')))
+              .thenAnswer((_) async => http.Response(bodyContent, 200));
+          // act
+          await dataSource.request(emailAddress: emailAddress);
+          // assert
+          verify(() => mockHttpClient.post(httpRequest, headers: httpHeader))
+              .called(1);
+        },
+      );
       test(
-          'should throw ApiProviderException when the response code is nonsuccess (non 200)',
+        'return SessionModel when the response code is 200 (success)',
+        () async {
+          // arrange
+          final jsonData = await JsonUtil.getJson(
+            from: 'authentication/request_reset_password.json',
+          );
+          final bodyContent = JsonUtil.getStringSync(
+            from: 'authentication/request_reset_password.json',
+          );
+          final expectedModel = PasswordResetResponseModel.fromJson(jsonData);
+          when(() => mockHttpClient.post(any(), headers: any(named: 'headers')))
+              .thenAnswer((_) async => http.Response(bodyContent, 200));
+          // act
+          final result = await dataSource.request(emailAddress: emailAddress);
+          // assert
+          expect(result, expectedModel);
+        },
+      );
+      test(
+          'throw ApiProviderException when the response code is nonsuccess (non 200)',
           () async {
         // arrange
         final jsonData =
             JsonUtil.getStringSync(from: 'authentication/email_not_found.json');
         final bodyContent =
             await JsonUtil.getJson(from: 'authentication/email_not_found.json');
-        when(mockHttpClient.post(any, headers: anyNamed('headers')))
+        when(() => mockHttpClient.post(any(), headers: any(named: 'headers')))
             .thenAnswer((_) async => http.Response(jsonData, 400));
         // act
         final sut = dataSource.request;
@@ -125,7 +133,7 @@ void main() {
           'senha': password!.rawValue,
           'token': validToken,
         };
-        httpResquest = Uri(
+        httpRequest = Uri(
           scheme: serverEndpoint.scheme,
           host: serverEndpoint.host,
           path: '/reset-password/write-new',
@@ -134,70 +142,76 @@ void main() {
       });
 
       test(
-          'should perform a POST with parameters and application/x-www-form-urlencoded header',
-          () async {
-        // arrange
-        final bodyContent = JsonUtil.getStringSync(
-          from: 'authentication/request_reset_password.json',
-        );
-        when(mockHttpClient.post(any, headers: anyNamed('headers')))
-            .thenAnswer((_) async => http.Response(bodyContent, 200));
-        // act
-        await dataSource.reset(
-          emailAddress: emailAddress,
-          password: password,
-          resetToken: validToken,
-        );
-        // assert
-        verify(
-          mockHttpClient.post(
-            httpResquest,
-            headers: httpHeader,
-          ),
-        );
-      });
-      test('should return ValidField when the response code is 200 (success)',
-          () async {
-        // arrange
-        final bodyContent = JsonUtil.getStringSync(
-          from: 'authentication/request_reset_password.json',
-        );
-        when(mockHttpClient.post(any, headers: anyNamed('headers')))
-            .thenAnswer((_) async => http.Response(bodyContent, 200));
-        // act
-        final result = await dataSource.reset(
-          emailAddress: emailAddress,
-          password: password,
-          resetToken: validToken,
-        );
-        // assert
-        expect(result, const ValidField());
-      });
-      test(
-          'should throw ApiProviderException when the response code is nonsuccess (non 200)',
-          () async {
-        // arrange
-        final jsonData =
-            JsonUtil.getStringSync(from: 'authentication/email_not_found.json');
-        final bodyContent =
-            await JsonUtil.getJson(from: 'authentication/email_not_found.json');
-        when(mockHttpClient.post(any, headers: anyNamed('headers')))
-            .thenAnswer((_) async => http.Response(jsonData, 400));
-        // act
-        final sut = dataSource.reset;
-        // assert
-        expect(
-          () => sut(
+        'must performance POST with user-agent and header configured',
+        () async {
+          // arrange
+          final bodyContent = JsonUtil.getStringSync(
+            from: 'authentication/request_reset_password.json',
+          );
+          when(() => mockHttpClient.post(any(), headers: any(named: 'headers')))
+              .thenAnswer((_) async => http.Response(bodyContent, 200));
+          // act
+          await dataSource.reset(
             emailAddress: emailAddress,
             password: password,
             resetToken: validToken,
-          ),
-          throwsA(
-            isA<ApiProviderException>()
-                .having((e) => e.bodyContent, 'Got bodyContent', bodyContent),
-          ),
-        );
-      });
+          );
+          // assert
+          verify(() => mockHttpClient.post(
+                httpRequest,
+                headers: httpHeader,
+              )).called(1);
+        },
+      );
+      test(
+        'return ValidField when the response code is 200 (success)',
+        () async {
+          // arrange
+          final bodyContent = JsonUtil.getStringSync(
+            from: 'authentication/request_reset_password.json',
+          );
+          when(() => mockHttpClient.post(any(), headers: any(named: 'headers')))
+              .thenAnswer((_) async => http.Response(bodyContent, 200));
+          // act
+          final result = await dataSource.reset(
+            emailAddress: emailAddress,
+            password: password,
+            resetToken: validToken,
+          );
+          // assert
+          expect(result, const ValidField());
+        },
+      );
+      test(
+        'throw ApiProviderException when the response code is nonsuccess (non 200)',
+        () async {
+          // arrange
+          final jsonData = JsonUtil.getStringSync(
+              from: 'authentication/email_not_found.json');
+          final bodyContent = await JsonUtil.getJson(
+              from: 'authentication/email_not_found.json');
+          when(() => mockHttpClient.post(any(), headers: any(named: 'headers')))
+              .thenAnswer((_) async => http.Response(jsonData, 400));
+          // act
+          final sut = dataSource.reset;
+          // assert
+          expect(
+            () => sut(
+              emailAddress: emailAddress,
+              password: password,
+              resetToken: validToken,
+            ),
+            throwsA(
+              isA<ApiProviderException>()
+                  .having((e) => e.bodyContent, 'Got bodyContent', bodyContent),
+            ),
+          );
+        },
+      );
     });
   });
 }
+
+class MockIApiServerConfigure extends Mock implements IApiServerConfigure {}
+
+class MockHttpClient extends Mock implements http.Client {}
