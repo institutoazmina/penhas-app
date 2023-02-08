@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
@@ -52,7 +54,7 @@ void main() {
   group(ChangePasswordDataSource, () {
     late Uri httpRequest;
     late Map<String, String?> queryParameters;
-    group('request', () {
+    group('request()', () {
       setUp(() {
         queryParameters = {
           'app_version': userAgent,
@@ -74,7 +76,8 @@ void main() {
             from: 'authentication/request_reset_password.json',
           );
           when(() => mockHttpClient.post(any(), headers: any(named: 'headers')))
-              .thenAnswer((_) async => http.Response(bodyContent, 200));
+              .thenAnswer(
+                  (_) async => http.Response(bodyContent, HttpStatus.ok));
           // act
           await dataSource.request(emailAddress: emailAddress);
           // assert
@@ -94,7 +97,8 @@ void main() {
           );
           final expectedModel = PasswordResetResponseModel.fromJson(jsonData);
           when(() => mockHttpClient.post(any(), headers: any(named: 'headers')))
-              .thenAnswer((_) async => http.Response(bodyContent, 200));
+              .thenAnswer(
+                  (_) async => http.Response(bodyContent, HttpStatus.ok));
           // act
           final result = await dataSource.request(emailAddress: emailAddress);
           // assert
@@ -110,7 +114,8 @@ void main() {
         final bodyContent =
             await JsonUtil.getJson(from: 'authentication/email_not_found.json');
         when(() => mockHttpClient.post(any(), headers: any(named: 'headers')))
-            .thenAnswer((_) async => http.Response(jsonData, 400));
+            .thenAnswer(
+                (_) async => http.Response(jsonData, HttpStatus.notFound));
         // act
         final sut = dataSource.request;
         // assert
@@ -124,7 +129,7 @@ void main() {
       });
     });
 
-    group('reset', () {
+    group('reset()', () {
       setUp(() {
         queryParameters = {
           'dry': '0',
@@ -149,7 +154,8 @@ void main() {
             from: 'authentication/request_reset_password.json',
           );
           when(() => mockHttpClient.post(any(), headers: any(named: 'headers')))
-              .thenAnswer((_) async => http.Response(bodyContent, 200));
+              .thenAnswer(
+                  (_) async => http.Response(bodyContent, HttpStatus.ok));
           // act
           await dataSource.reset(
             emailAddress: emailAddress,
@@ -171,7 +177,8 @@ void main() {
             from: 'authentication/request_reset_password.json',
           );
           when(() => mockHttpClient.post(any(), headers: any(named: 'headers')))
-              .thenAnswer((_) async => http.Response(bodyContent, 200));
+              .thenAnswer(
+                  (_) async => http.Response(bodyContent, HttpStatus.ok));
           // act
           final result = await dataSource.reset(
             emailAddress: emailAddress,
@@ -191,7 +198,8 @@ void main() {
           final bodyContent = await JsonUtil.getJson(
               from: 'authentication/email_not_found.json');
           when(() => mockHttpClient.post(any(), headers: any(named: 'headers')))
-              .thenAnswer((_) async => http.Response(jsonData, 400));
+              .thenAnswer(
+                  (_) async => http.Response(jsonData, HttpStatus.notFound));
           // act
           final sut = dataSource.reset;
           // assert
@@ -208,6 +216,89 @@ void main() {
           );
         },
       );
+    });
+
+    group('validToken()', () {
+      setUp(() {
+        queryParameters = {
+          'dry': '1',
+          'app_version': userAgent,
+          'email': emailAddress!.rawValue,
+          'token': validToken,
+        };
+        httpRequest = Uri(
+          scheme: serverEndpoint.scheme,
+          host: serverEndpoint.host,
+          path: '/reset-password/write-new',
+          queryParameters: queryParameters,
+        );
+      });
+
+      test(
+        'must performance POST with user-agent and header configured',
+        () async {
+          // arrange
+          final response = http.Response('{}', HttpStatus.ok);
+          when(() => mockHttpClient.post(any(), headers: any(named: 'headers')))
+              .thenAnswer((_) async => response);
+          // act
+          await dataSource.validToken(
+            emailAddress: emailAddress,
+            resetToken: validToken,
+          );
+          // assert
+          verify(() => mockHttpClient.post(httpRequest, headers: httpHeader))
+              .called(1);
+        },
+      );
+
+      test(
+        'returns ValidField when response is ok',
+        () async {
+          // arrange
+          final response = http.Response('{}', HttpStatus.ok);
+          when(() => mockHttpClient.post(
+                any(),
+                headers: any(named: 'headers'),
+              )).thenAnswer((_) async => response);
+          // arrange
+          final result = await dataSource.validToken(
+            emailAddress: emailAddress,
+            resetToken: validToken,
+          );
+          // act
+          expect(result, const ValidField());
+        },
+      );
+
+      test('throws ApiProviderException when response is not ok', () async {
+        // arrange
+
+        final response = http.Response(
+          '{"error": "test error"}',
+          HttpStatus.badRequest,
+        );
+        when(() => mockHttpClient.post(
+              any(),
+              headers: any(named: 'headers'),
+            )).thenAnswer((_) async => response);
+        // act
+        final sut = dataSource.validToken;
+        // assert
+        expect(
+          () => sut(
+            emailAddress: emailAddress,
+            resetToken: validToken,
+          ),
+          throwsA(
+            isA<ApiProviderException>().having(
+              (e) => e.bodyContent,
+              'Got bodyContent',
+              {'error': 'test error'},
+            ),
+          ),
+        );
+      });
     });
   });
 }
