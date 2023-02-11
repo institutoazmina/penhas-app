@@ -48,34 +48,27 @@ class AppStateDataSource implements IAppStateDataSource {
     final httpRequest = _serverConfiguration.baseUri.replace(path: '/me');
 
     final List<String?> parameters = [
-      if (update.nickName == null)
-        null
-      else
-        'apelido=${Uri.encodeComponent(update.nickName!)}',
-      if (update.minibio == null)
-        null
-      else
-        'minibio=${Uri.encodeComponent(update.minibio!)}',
-      if (update.race == null)
-        null
-      else
-        'raca=${Uri.encodeComponent(update.race!)}',
-      if (update.skills == null)
-        null
-      else
-        'skills=${Uri.encodeComponent(update.skills!.join(","))}',
-      if (update.oldPassword == null)
-        null
-      else
-        'senha_atual=${Uri.encodeComponent(update.oldPassword!)}',
-      if (update.newPassword == null)
-        null
-      else
-        'senha=${Uri.encodeComponent(update.newPassword!)}',
-      if (update.email == null)
-        null
-      else
-        'email=${Uri.encodeComponent(update.email!)}',
+      (update.nickName == null)
+          ? null
+          : 'apelido=${Uri.encodeComponent(update.nickName!)}',
+      (update.minibio == null)
+          ? null
+          : 'minibio=${Uri.encodeComponent(update.minibio!)}',
+      (update.race == null)
+          ? null
+          : 'raca=${Uri.encodeComponent(update.race!)}',
+      (update.skills == null)
+          ? null
+          : 'skills=${Uri.encodeComponent(update.skills!.join(","))}',
+      (update.oldPassword == null)
+          ? null
+          : 'senha_atual=${Uri.encodeComponent(update.oldPassword!)}',
+      (update.newPassword == null)
+          ? null
+          : 'senha=${Uri.encodeComponent(update.newPassword!)}',
+      (update.email == null)
+          ? null
+          : 'email=${Uri.encodeComponent(update.email!)}',
     ];
 
     parameters.removeWhere((e) => e == null);
