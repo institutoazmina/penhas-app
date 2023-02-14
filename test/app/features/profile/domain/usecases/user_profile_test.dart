@@ -9,14 +9,6 @@ import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.d
 import 'package:penhas/app/features/main_menu/domain/repositories/user_profile_repository.dart';
 import 'package:penhas/app/features/main_menu/domain/usecases/user_profile.dart';
 
-class MockAppStateUseCase extends Mock implements AppStateUseCase {}
-
-class MockUserProfileRepository extends Mock implements IUserProfileRepository {
-}
-
-class MockUserProfileStore extends Mock
-    implements LocalStore<UserProfileEntity> {}
-
 void main() {
   late AppStateUseCase appStateUseCase;
   late IUserProfileRepository repository;
@@ -113,3 +105,11 @@ void main() {
     );
   });
 }
+
+class MockAppStateUseCase extends Mock implements AppStateUseCase {}
+
+class MockUserProfileRepository extends Mock implements IUserProfileRepository {
+}
+
+class MockUserProfileStore extends Mock
+    implements LocalStore<UserProfileEntity> {}
