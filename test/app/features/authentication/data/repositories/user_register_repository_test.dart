@@ -1,9 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/managers/app_configuration.dart';
+import 'package:penhas/app/core/network/network_info.dart';
+import 'package:penhas/app/features/authentication/data/datasources/user_register_data_source.dart';
 import 'package:penhas/app/features/authentication/data/models/session_model.dart';
 import 'package:penhas/app/features/authentication/data/repositories/user_register_repository.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
@@ -18,32 +21,43 @@ import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
-import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
+class MockNetworkInfo extends Mock implements INetworkInfo {}
+
+class MockAppConfiguration extends Mock implements IAppConfiguration {}
+
+class MockUserRegisterDataSource extends Mock
+    implements IUserRegisterDataSource {}
+
 void main() {
-  late final MockINetworkInfo networkInfo = MockINetworkInfo();
-  late final MockIUserRegisterDataSource dataSource =
-      MockIUserRegisterDataSource();
-  late final MockIAppConfiguration appConfiguration = MockIAppConfiguration();
-  late final UserRegisterRepository sut = UserRegisterRepository(
-    dataSource: dataSource,
-    networkInfo: networkInfo,
-    appConfiguration: appConfiguration,
-  );
+  late INetworkInfo networkInfo;
+  late IUserRegisterDataSource dataSource;
+  late IAppConfiguration appConfiguration;
+  late UserRegisterRepository sut;
+
+  late Cep cep;
+  late Cpf cpf;
+  late EmailAddress emailAddress;
+  late SignUpPassword? password;
+  late Fullname fullname;
+  late Nickname nickName;
+  late Birthday birthday;
+  late HumanRace race;
+  late Genre genre;
+
   const String sessionToken = 'my_really.long.JWT';
 
-  Cep? cep;
-  Cpf? cpf;
-  EmailAddress? emailAddress;
-  SignUpPassword? password;
-  Fullname? fullname;
-  Nickname? nickName;
-  Birthday? birthday;
-  HumanRace? race;
-  Genre? genre;
-
   setUp(() {
+    networkInfo = MockNetworkInfo();
+    dataSource = MockUserRegisterDataSource();
+    appConfiguration = MockAppConfiguration();
+    sut = UserRegisterRepository(
+      dataSource: dataSource,
+      networkInfo: networkInfo,
+      appConfiguration: appConfiguration,
+    );
+
     emailAddress = EmailAddress('valid@email.com');
     password = SignUpPassword('_myStr0ngP@ssw0rd', PasswordValidator());
     cep = Cep('63024-370');
@@ -53,41 +67,76 @@ void main() {
     birthday = Birthday('1994-01-01');
     race = HumanRace.brown;
     genre = Genre.female;
+
+    when(() => appConfiguration.saveApiToken(token: sessionToken))
+        .thenAnswer((invocation) => Future.value());
   });
 
-  PostExpectation<dynamic> mockDataSourceRegister() {
-    return when(
-      dataSource.register(
-        emailAddress: anyNamed('emailAddress'),
-        password: anyNamed('password'),
-        cep: anyNamed('cep'),
-        cpf: anyNamed('cpf'),
-        fullname: anyNamed('fullname'),
-        nickName: anyNamed('nickName'),
-        birthday: anyNamed('birthday'),
-        genre: anyNamed('genre'),
-        race: anyNamed('race'),
+  void dataSourceRegisterWithException(Object throwable) {
+    when(
+      () => dataSource.register(
+        emailAddress: emailAddress,
+        password: password,
+        cep: cep,
+        cpf: cpf,
+        fullname: fullname,
+        nickName: nickName,
+        birthday: birthday,
+        genre: genre,
+        race: race,
+        socialName: null,
       ),
-    );
+    ).thenThrow(throwable);
   }
 
-  PostExpectation<dynamic> mockDataSourceCheckField() {
-    return when(
-      dataSource.checkField(
-        emailAddress: anyNamed('emailAddress'),
-        password: anyNamed('password'),
-        cep: anyNamed('cep'),
-        cpf: anyNamed('cpf'),
-        fullname: anyNamed('fullname'),
-        nickName: anyNamed('nickName'),
-        birthday: anyNamed('birthday'),
-        genre: anyNamed('genre'),
-        race: anyNamed('race'),
+  void dataSourceRegisterReturn(SessionModel value) {
+    when(
+      () => dataSource.register(
+        emailAddress: emailAddress,
+        password: password,
+        cep: cep,
+        cpf: cpf,
+        fullname: fullname,
+        nickName: nickName,
+        birthday: birthday,
+        genre: genre,
+        race: race,
+        socialName: null,
       ),
-    );
+    ).thenAnswer((_) async => value);
   }
 
-  Future<Either<Failure, SessionEntity>> executeRegister() {
+  void dataSourceSuccessCheckField() {
+    when(
+      () => dataSource.checkField(
+          emailAddress: emailAddress,
+          password: password,
+          cep: cep,
+          cpf: cpf,
+          fullname: fullname,
+          nickName: nickName,
+          birthday: birthday,
+          genre: genre,
+          race: race),
+    ).thenAnswer((_) async => const ValidField());
+  }
+
+  void dataSourceCheckFieldWithException(Object throwable) {
+    when(
+      () => dataSource.checkField(
+          emailAddress: emailAddress,
+          password: password,
+          cep: cep,
+          cpf: cpf,
+          fullname: fullname,
+          nickName: nickName,
+          birthday: birthday,
+          genre: genre,
+          race: race),
+    ).thenThrow(throwable);
+  }
+
+  Future<Either<Failure, SessionEntity>> executeUserSignUp() {
     return sut.signup(
       emailAddress: emailAddress,
       password: password,
@@ -101,7 +150,29 @@ void main() {
     );
   }
 
-  Future<Either<Failure, ValidField>> executeCheck() {
+  void expectedUserSignUpResult(
+    Either<Failure, SessionEntity> result,
+    Either<Failure, SessionEntity> expected,
+  ) {
+    verify(
+      () => dataSource.register(
+        emailAddress: emailAddress,
+        password: password,
+        cep: cep,
+        cpf: cpf,
+        fullname: fullname,
+        nickName: nickName,
+        birthday: birthday,
+        genre: genre,
+        race: race,
+        socialName: null,
+      ),
+    ).called(1);
+    expect(result, expected);
+    verifyNoMoreInteractions(dataSource);
+  }
+
+  Future<Either<Failure, ValidField>> executeUserCheckField() {
     return sut.checkField(
       emailAddress: emailAddress,
       password: password,
@@ -115,33 +186,12 @@ void main() {
     );
   }
 
-  void expectedRegisterResult(
-    Either<Failure, SessionEntity> result,
-    Either<Failure, SessionEntity> expected,
-  ) {
-    verify(
-      dataSource.register(
-        emailAddress: emailAddress,
-        password: password,
-        cep: cep,
-        cpf: cpf,
-        fullname: fullname,
-        nickName: nickName,
-        birthday: birthday,
-        genre: genre,
-        race: race,
-      ),
-    );
-    expect(result, expected);
-    verifyNoMoreInteractions(dataSource);
-  }
-
   void expectedCheckResult(
     Either<Failure, ValidField> result,
     Either<Failure, ValidField> expected,
   ) {
     verify(
-      dataSource.checkField(
+      () => dataSource.checkField(
         emailAddress: emailAddress,
         password: password,
         cep: cep,
@@ -152,118 +202,133 @@ void main() {
         genre: genre,
         race: race,
       ),
-    );
+    ).called(1);
     expect(result, expected);
     verifyNoMoreInteractions(dataSource);
   }
 
-  group('UserRegisterRepository', () {
-    group('device is online', () {
-      setUp(() {
-        when(networkInfo.isConnected).thenAnswer((_) async => true);
-      });
-      test('should return valid SessionEntity for valid fields', () async {
-        // arrange
-        mockDataSourceRegister().thenAnswer(
-          (_) async => const SessionModel(sessionToken: sessionToken),
-        );
-        // act
-        final result = await executeRegister();
-        // assert
-        verify(appConfiguration.saveApiToken(token: sessionToken));
-        expectedRegisterResult(
-          result,
-          right(const SessionEntity(sessionToken: sessionToken)),
-        );
-      });
-      test(
-          'should return ServerSideFormFieldValidationFailure for invalid field',
+  group(UserRegisterRepository, () {
+    group('signup()', () {
+      group('device is online', () {
+        setUp(() {
+          when(() => networkInfo.isConnected).thenAnswer((_) async => true);
+        });
+
+        test(
+          'return valid SessionEntity for valid fields',
           () async {
-        // arrange
-        final serverValidation = await JsonUtil.getJson(
-          from: 'authentication/registration_email_already_exists.json',
+            // arrange
+            dataSourceRegisterReturn(SessionModel(sessionToken: sessionToken));
+            // act
+            final result = await executeUserSignUp();
+            // assert
+            verify(() => appConfiguration.saveApiToken(token: sessionToken))
+                .called(1);
+            expectedUserSignUpResult(
+              result,
+              right(const SessionEntity(sessionToken: sessionToken)),
+            );
+          },
         );
-        final fieldFailure = ServerSideFormFieldValidationFailure(
-          error: serverValidation['error'] as String?,
-          field: serverValidation['field'] as String?,
-          reason: serverValidation['reason'] as String?,
-          message: serverValidation['message'] as String?,
-        );
-        mockDataSourceRegister()
-            .thenThrow(ApiProviderException(bodyContent: serverValidation));
-        // act
-        final result = await executeRegister();
-        // assert
-
-        verify(networkInfo.isConnected);
-        expectedRegisterResult(result, left(fieldFailure));
-      });
-    });
-
-    group('device is offline', () {
-      setUp(() {
-        when(networkInfo.isConnected).thenAnswer((_) async => false);
-      });
-
-      test('should return InternetConnectionFailure', () async {
-        // arrange
-        mockDataSourceRegister().thenThrow(const ApiProviderException());
-        // act
-        final result = await executeRegister();
-        // assert
-        verify(networkInfo.isConnected);
-        expectedRegisterResult(result, left(InternetConnectionFailure()));
-      });
-    });
-  });
-
-  group('UserRegisterRepository validating field', () {
-    group('device is online', () {
-      setUp(() {
-        when(networkInfo.isConnected).thenAnswer((_) async => true);
-      });
-      test('should return ValidField for valid fields', () async {
-        // arrange
-        mockDataSourceCheckField().thenAnswer((_) async => const ValidField());
-        // act
-        final result = await executeCheck();
-        // assert
-        expectedCheckResult(result, right(const ValidField()));
-      });
-      test(
-          'should return ServerSideFormFieldValidationFailure for invalid field',
+        test(
+          'return ServerSideFormFieldValidationFailure for invalid field',
           () async {
-        // arrange
-        final invalidField = await JsonUtil.getJson(
-          from: 'authentication/cpf_form_field_error.json',
+            // arrange
+            final serverValidation = await JsonUtil.getJson(
+              from: 'authentication/registration_email_already_exists.json',
+            );
+            final fieldFailure = ServerSideFormFieldValidationFailure(
+              error: serverValidation['error'] as String?,
+              field: serverValidation['field'] as String?,
+              reason: serverValidation['reason'] as String?,
+              message: serverValidation['message'] as String?,
+            );
+            dataSourceRegisterWithException(
+                ApiProviderException(bodyContent: serverValidation));
+            // act
+            final result = await executeUserSignUp();
+            // assert
+            verify(() => networkInfo.isConnected).called(1);
+            expectedUserSignUpResult(result, left(fieldFailure));
+          },
         );
-        final fieldFailure = ServerSideFormFieldValidationFailure(
-          error: invalidField['error'] as String?,
-          field: invalidField['field'] as String?,
-          reason: invalidField['reason'] as String?,
-          message: invalidField['message'] as String?,
+      });
+
+      group('device is offline', () {
+        setUp(() {
+          when(() => networkInfo.isConnected).thenAnswer((_) async => false);
+        });
+
+        test(
+          'return InternetConnectionFailure',
+          () async {
+            // arrange
+            dataSourceRegisterWithException(ApiProviderException());
+            // act
+            final result = await executeUserSignUp();
+            // assert
+            verify(() => networkInfo.isConnected).called(1);
+            expectedUserSignUpResult(result, left(InternetConnectionFailure()));
+          },
         );
-        mockDataSourceCheckField()
-            .thenThrow(ApiProviderException(bodyContent: invalidField));
-        // act
-        final result = await executeCheck();
-        // assert
-        verify(networkInfo.isConnected);
-        expectedCheckResult(result, left(fieldFailure));
       });
     });
-    group('device is offline', () {
-      setUp(() {
-        when(networkInfo.isConnected).thenAnswer((_) async => false);
+
+    group('checkField()', () {
+      group('device is online', () {
+        setUp(() {
+          when(() => networkInfo.isConnected).thenAnswer((_) async => true);
+        });
+        test(
+          'return ValidField for valid fields',
+          () async {
+            // arrange
+            dataSourceSuccessCheckField();
+            // act
+            final result = await executeUserCheckField();
+            // assert
+            expectedCheckResult(result, right(const ValidField()));
+          },
+        );
+        test(
+          'return ServerSideFormFieldValidationFailure for invalid field',
+          () async {
+            // arrange
+            final invalidField = await JsonUtil.getJson(
+              from: 'authentication/cpf_form_field_error.json',
+            );
+            final fieldFailure = ServerSideFormFieldValidationFailure(
+              error: invalidField['error'] as String?,
+              field: invalidField['field'] as String?,
+              reason: invalidField['reason'] as String?,
+              message: invalidField['message'] as String?,
+            );
+            dataSourceCheckFieldWithException(
+                ApiProviderException(bodyContent: invalidField));
+            // act
+            final result = await executeUserCheckField();
+            // assert
+            verify(() => networkInfo.isConnected);
+            expectedCheckResult(result, left(fieldFailure));
+          },
+        );
       });
-      test('should return InternetConnectionFailure', () async {
-        // arrange
-        mockDataSourceCheckField().thenThrow(const ApiProviderException());
-        // act
-        final result = await executeCheck();
-        // assert
-        verify(networkInfo.isConnected);
-        expectedCheckResult(result, left(InternetConnectionFailure()));
+      group('device is offline', () {
+        setUp(() {
+          when(() => networkInfo.isConnected).thenAnswer((_) async => false);
+        });
+        test(
+          'return InternetConnectionFailure',
+          () async {
+            // arrange
+            dataSourceCheckFieldWithException(ApiProviderException());
+            // act
+            final result = await executeUserCheckField();
+            // assert
+            verify(() => networkInfo.isConnected);
+            expectedCheckResult(result, left(InternetConnectionFailure()));
+          },
+        );
       });
     });
   });
