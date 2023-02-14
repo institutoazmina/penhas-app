@@ -1,108 +1,119 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/network/network_info.dart';
+import 'package:penhas/app/features/authentication/data/datasources/change_password_data_source.dart';
 import 'package:penhas/app/features/authentication/data/models/password_reset_response_model.dart';
 import 'package:penhas/app/features/authentication/data/repositories/change_password_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
-import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
-void main() {
-  late final MockIChangePasswordDataSource dataSource =
-      MockIChangePasswordDataSource();
-  late final MockINetworkInfo networkInfo = MockINetworkInfo();
+class MockChangePasswordDataSource extends Mock
+    implements IChangePasswordDataSource {}
 
-  late final ChangePasswordRepository sut = ChangePasswordRepository(
-    changePasswordDataSource: dataSource,
-    networkInfo: networkInfo,
-  );
+class MockNetworkInfo extends Mock implements INetworkInfo {}
+
+void main() {
   late EmailAddress emailAddress;
   late SignUpPassword password;
-  String? resetToken;
+  late String resetToken;
+
+  late INetworkInfo networkInfo;
+  late ChangePasswordRepository sut;
+  late IChangePasswordDataSource dataSource;
 
   setUp(() {
     emailAddress = EmailAddress('valid@email.com');
     password = SignUpPassword('my_new_str0ng_P4ssw0rd', PasswordValidator());
     resetToken = '666242';
+
+    networkInfo = MockNetworkInfo();
+    dataSource = MockChangePasswordDataSource();
+
+    sut = ChangePasswordRepository(
+      changePasswordDataSource: dataSource,
+      networkInfo: networkInfo,
+    );
+
+    when(() => networkInfo.isConnected).thenAnswer((_) async => true);
   });
 
-  PostExpectation<dynamic> mockResetDataSource() {
-    return when(
-      dataSource.reset(
-        emailAddress: anyNamed('emailAddress'),
-        password: anyNamed('password'),
-        resetToken: anyNamed('resetToken'),
-      ),
-    );
-  }
-
-  PostExpectation<dynamic> mockRequestDataSource() {
-    return when(dataSource.request(emailAddress: anyNamed('emailAddress')));
-  }
-
-  group('ChangePasswordRepository', () {
-    setUp(() {
-      when(networkInfo.isConnected).thenAnswer((_) async => true);
-    });
-    group('reset', () {
-      test('should return ValidField for successful password changed',
+  group(ChangePasswordRepository, () {
+    group(
+      'reset()',
+      () {
+        test(
+          'return ValidField for successful password changed',
           () async {
-        // arrange
-        mockResetDataSource().thenAnswer((_) async => const ValidField());
-        // act
-        final result = await sut.reset(
-          emailAddress: emailAddress,
-          password: password,
-          resetToken: resetToken,
+            // arrange
+            when(
+              () => dataSource.reset(
+                emailAddress: emailAddress,
+                password: password,
+                resetToken: resetToken,
+              ),
+            ).thenAnswer((_) async => ValidField());
+            // act
+            final result = await sut.reset(
+              emailAddress: emailAddress,
+              password: password,
+              resetToken: resetToken,
+            );
+            // assert
+            expect(result, right(ValidField()));
+          },
         );
-        // assert
-        expect(result, right(const ValidField()));
-      });
-      test(
-          'should return ServerSideFormFieldValidationFailure for non successful change password request',
-          () async {
-        // arrange
-        final bodyContent = await JsonUtil.getJson(
-          from: 'authentication/invalid_token_error.json',
-        );
-        mockResetDataSource()
-            .thenThrow(ApiProviderException(bodyContent: bodyContent));
-        // act
-        final result = await sut.reset(
-          emailAddress: emailAddress,
-          password: password,
-          resetToken: resetToken,
-        );
-        // assert
-        expect(
-          result,
-          left(
-            ServerSideFormFieldValidationFailure(
-              error: bodyContent['error'] as String?,
-              field: bodyContent['field'] as String?,
-              message: bodyContent['message'] as String?,
-              reason: bodyContent['reason'] as String?,
+        test(
+            'return ServerSideFormFieldValidationFailure for non successful change password request',
+            () async {
+          // arrange
+          final bodyContent = await JsonUtil.getJson(
+            from: 'authentication/invalid_token_error.json',
+          );
+          when(
+            () => dataSource.reset(
+              emailAddress: emailAddress,
+              password: password,
+              resetToken: resetToken,
             ),
-          ),
-        );
-      });
-    });
-    group('request', () {
-      test(
-          'should response ResetPasswordResponseEntity for a successful request',
+          ).thenThrow(ApiProviderException(bodyContent: bodyContent));
+          // act
+          final result = await sut.reset(
+            emailAddress: emailAddress,
+            password: password,
+            resetToken: resetToken,
+          );
+          // assert
+          expect(
+            result,
+            left(
+              ServerSideFormFieldValidationFailure(
+                error: bodyContent['error'] as String?,
+                field: bodyContent['field'] as String?,
+                message: bodyContent['message'] as String?,
+                reason: bodyContent['reason'] as String?,
+              ),
+            ),
+          );
+        });
+      },
+    );
+    group('request()', () {
+      test('return ResetPasswordResponseEntity for a successful request',
           () async {
         // arrange
         final bodyContent = await JsonUtil.getJson(
           from: 'authentication/request_reset_password.json',
         );
         final modelResponse = PasswordResetResponseModel.fromJson(bodyContent);
-        mockRequestDataSource().thenAnswer((_) async => modelResponse);
+        when(() => dataSource.request(emailAddress: emailAddress))
+            .thenAnswer((_) async => modelResponse);
         // act
         final result = await sut.request(emailAddress: emailAddress);
         // assert
@@ -119,12 +130,12 @@ void main() {
         );
       });
       test(
-          'should return ServerSideFormFieldValidationFailure for non successful change password request',
+          'return ServerSideFormFieldValidationFailure for non successful change password request',
           () async {
         // arrange
         final bodyContent =
             await JsonUtil.getJson(from: 'authentication/email_not_found.json');
-        mockRequestDataSource()
+        when(() => dataSource.request(emailAddress: emailAddress))
             .thenThrow(ApiProviderException(bodyContent: bodyContent));
         // act
         final result = await sut.request(
@@ -144,5 +155,61 @@ void main() {
         );
       });
     });
+
+    group(
+      'validToken()',
+      () {
+        test(
+          'return ValidField for successful token validation',
+          () async {
+            // arrange
+            when(
+              () => dataSource.validToken(
+                emailAddress: emailAddress,
+                resetToken: resetToken,
+              ),
+            ).thenAnswer((_) async => ValidField());
+            // act
+            final result = await sut.validToken(
+              emailAddress: emailAddress,
+              resetToken: resetToken,
+            );
+            // assert
+            expect(result, right(ValidField()));
+          },
+        );
+        test(
+            'return ServerSideFormFieldValidationFailure for non successful token validation',
+            () async {
+          // arrange
+          final bodyContent = await JsonUtil.getJson(
+            from: 'authentication/invalid_token_error.json',
+          );
+          when(
+            () => dataSource.validToken(
+              emailAddress: emailAddress,
+              resetToken: resetToken,
+            ),
+          ).thenThrow(ApiProviderException(bodyContent: bodyContent));
+          // act
+          final result = await sut.validToken(
+            emailAddress: emailAddress,
+            resetToken: resetToken,
+          );
+          // assert
+          expect(
+            result,
+            left(
+              ServerSideFormFieldValidationFailure(
+                error: bodyContent['error'] as String?,
+                field: bodyContent['field'] as String?,
+                message: bodyContent['message'] as String?,
+                reason: bodyContent['reason'] as String?,
+              ),
+            ),
+          );
+        });
+      },
+    );
   });
 }

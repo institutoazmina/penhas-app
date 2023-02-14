@@ -13,13 +13,13 @@ import 'package:penhas/app/shared/logger/log.dart';
 class ChangePasswordRepository
     implements IResetPasswordRepository, IChangePasswordRepository {
   ChangePasswordRepository({
-    required IChangePasswordDataSource? changePasswordDataSource,
-    required INetworkInfo? networkInfo,
+    required IChangePasswordDataSource changePasswordDataSource,
+    required INetworkInfo networkInfo,
   })  : _networkInfo = networkInfo,
         _dataSource = changePasswordDataSource;
 
-  final IChangePasswordDataSource? _dataSource;
-  final INetworkInfo? _networkInfo;
+  final IChangePasswordDataSource _dataSource;
+  final INetworkInfo _networkInfo;
 
   @override
   Future<Either<Failure, ResetPasswordResponseEntity>> request({
@@ -27,7 +27,7 @@ class ChangePasswordRepository
   }) async {
     try {
       final ResetPasswordResponseEntity result =
-          await _dataSource!.request(emailAddress: emailAddress);
+          await _dataSource.request(emailAddress: emailAddress);
       return right(result);
     } catch (e, stack) {
       logError(e, stack);
@@ -43,7 +43,7 @@ class ChangePasswordRepository
     String? resetToken,
   }) async {
     try {
-      await _dataSource!.reset(
+      await _dataSource.reset(
         emailAddress: emailAddress,
         password: password,
         resetToken: resetToken,
@@ -57,7 +57,7 @@ class ChangePasswordRepository
   }
 
   Future<Failure> _handleError(Object error) async {
-    if (await _networkInfo!.isConnected == false) {
+    if (await _networkInfo.isConnected == false) {
       return InternetConnectionFailure();
     }
 
@@ -79,7 +79,7 @@ class ChangePasswordRepository
     String? resetToken,
   }) async {
     try {
-      await _dataSource!.validToken(
+      await _dataSource.validToken(
         emailAddress: emailAddress,
         resetToken: resetToken,
       );
