@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/birthday.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/check_register_field.dart';
@@ -15,24 +16,26 @@ import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
-import '../../../../../utils/helper.mocks.dart';
+class MockUserRegisterRepository extends Mock
+    implements IUserRegisterRepository {}
 
 void main() {
-  late final MockIUserRegisterRepository repository =
-      MockIUserRegisterRepository();
-  late CheckRegisterField sut = CheckRegisterField(repository);
-
-  Cep? cep;
-  Cpf? cpf;
-  EmailAddress? emailAddress;
-  SignUpPassword? password;
-  Fullname? fullname;
-  Nickname? nickName;
-  Birthday? birthday;
-  HumanRace? race;
-  Genre? genre;
+  late Cep cep;
+  late Cpf cpf;
+  late EmailAddress emailAddress;
+  late SignUpPassword password;
+  late Fullname fullname;
+  late Nickname nickName;
+  late Birthday birthday;
+  late HumanRace race;
+  late Genre genre;
+  late IUserRegisterRepository repository;
+  late CheckRegisterField sut;
 
   setUp(() {
+    repository = MockUserRegisterRepository();
+    sut = CheckRegisterField(repository);
+
     sut = CheckRegisterField(repository);
     emailAddress = EmailAddress('valid@email.com');
     password = SignUpPassword('_myStr0ngP@ssw0rd', PasswordValidator());
@@ -61,16 +64,16 @@ void main() {
 
   void mockRepositoryRegister(Either<Failure, ValidField> answer) {
     when(
-      repository.checkField(
-        emailAddress: anyNamed('emailAddress'),
-        password: anyNamed('password'),
-        cep: anyNamed('cep'),
-        cpf: anyNamed('cpf'),
-        fullname: anyNamed('fullname'),
-        nickName: anyNamed('nickName'),
-        birthday: anyNamed('birthday'),
-        genre: anyNamed('genre'),
-        race: anyNamed('race'),
+      () => repository.checkField(
+        emailAddress: any(named: 'emailAddress'),
+        password: any(named: 'password'),
+        cep: any(named: 'cep'),
+        cpf: any(named: 'cpf'),
+        fullname: any(named: 'fullname'),
+        nickName: any(named: 'nickName'),
+        birthday: any(named: 'birthday'),
+        genre: any(named: 'genre'),
+        race: any(named: 'race'),
       ),
     ).thenAnswer((_) async => answer);
   }
@@ -80,8 +83,9 @@ void main() {
     Either<Failure, ValidField> expected,
   ) {
     expect(result, expected);
+
     verify(
-      repository.checkField(
+      () => repository.checkField(
         emailAddress: emailAddress,
         password: password,
         cep: cep,
@@ -92,39 +96,47 @@ void main() {
         genre: genre,
         race: race,
       ),
-    );
+    ).called(1);
+
     verifyNoMoreInteractions(repository);
   }
 
-  group('CheckRegisterField', () {
-    test('should get error for empty CheckRegisterField()', () async {
-      // arrange
-      mockRepositoryRegister(left(RequiredParameter()));
-      // act
-      final Either<Failure, ValidField> result = await sut();
-      // assert
-      expect(result, left(RequiredParameter()));
-      verifyZeroInteractions(repository);
-    });
+  group(CheckRegisterField, () {
+    test(
+      'get error for empty CheckRegisterField()',
+      () async {
+        // arrange
+        mockRepositoryRegister(left(RequiredParameter()));
+        // act
+        final Either<Failure, ValidField> result = await sut();
+        // assert
+        expect(result, left(RequiredParameter()));
+        verifyZeroInteractions(repository);
+      },
+    );
 
     test(
-        'should get ServerSideFormFieldValidationFailure message for validate fields',
-        () async {
-      // arrange
-      mockRepositoryRegister(left(ServerSideFormFieldValidationFailure()));
-      // act
-      final result = await runRegister();
-      // assert
-      expectResult(result, left(ServerSideFormFieldValidationFailure()));
-    });
+      'get ServerSideFormFieldValidationFailure message for validate fields',
+      () async {
+        // arrange
+        mockRepositoryRegister(left(ServerSideFormFieldValidationFailure()));
+        // act
+        final result = await runRegister();
+        // assert
+        expectResult(result, left(ServerSideFormFieldValidationFailure()));
+      },
+    );
 
-    test('should get ValidField message for valid field', () async {
-      // arrange
-      mockRepositoryRegister(right(const ValidField()));
-      // act
-      final result = await runRegister();
-      // assert
-      expectResult(result, right(const ValidField()));
-    });
+    test(
+      'should get ValidField message for valid field',
+      () async {
+        // arrange
+        mockRepositoryRegister(right(const ValidField()));
+        // act
+        final result = await runRegister();
+        // assert
+        expectResult(result, right(const ValidField()));
+      },
+    );
   });
 }
