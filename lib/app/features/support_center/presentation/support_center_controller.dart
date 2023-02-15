@@ -143,18 +143,11 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
     );
 
     if (granted) {
-      final currentLocation = await _supportCenterUseCase.currentLocation();
-
+      final currentLocation = await getCurrentLocation(_fetchRequest);
       if (currentLocation == null) return;
       final latLng = currentLocation.toLatLng();
-
-      if (_fetchRequest.locationToken != null) {
-        _fetchRequest = _fetchRequest.copyWith(
-          locationToken: currentLocation.locationToken,
-        );
-        await loadSupportCenter(_fetchRequest);
-      }
-      
+      await loadSupportCenterWithCurrentLocation(
+          _fetchRequest, currentLocation);
       callback(latLng);
     }
   }
@@ -244,6 +237,33 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
       (failure) => handleStateError(failure),
       (places) => handleLoadSupportCenterSuccess(places),
     );
+  }
+
+  Future<GeolocationEntity?> getCurrentLocation(
+      SupportCenterFetchRequest fetchRequest) async {
+    final currentLocation = await _supportCenterUseCase.currentLocation();
+
+    if (currentLocation == null) return null;
+    return currentLocation;
+  }
+
+  Future<void> reloadSupportCenter(
+      SupportCenterFetchRequest fetchRequest) async {
+    final currentLocation = await getCurrentLocation(_fetchRequest);
+    if (currentLocation == null) return;
+    await loadSupportCenterWithCurrentLocation(_fetchRequest, currentLocation);
+  }
+
+  Future<void>? loadSupportCenterWithCurrentLocation(
+      SupportCenterFetchRequest fetchRequest,
+      GeolocationEntity currentLocation) async {
+    if (_fetchRequest.locationToken != null) {
+      _fetchRequest = _fetchRequest.copyWith(
+        locationToken: currentLocation.locationToken,
+      );
+      await loadSupportCenter(_fetchRequest);
+    }
+    return;
   }
 
   Future<void> handleLoadSupportCenterSuccess(
