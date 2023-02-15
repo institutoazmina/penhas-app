@@ -59,6 +59,9 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   LatLng initialPosition = const LatLng(-15.793889, -47.882778);
 
   @observable
+  LatLng _mapPosition = const LatLng(0, 0);
+
+  @observable
   SupportCenterState state = const SupportCenterState.loaded();
 
   @observable
@@ -91,7 +94,7 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
     _fetchRequest = _fetchRequest.copyWith(
       keywords: validKeyWords.isEmpty ? '' : validKeyWords,
     );
-    await loadSupportCenter(_fetchRequest);
+    await reloadSupportCenter(_fetchRequest);
   }
 
   @action
@@ -122,6 +125,14 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   @action
   Future<void> retry() async {
     await loadSupportCenter(_fetchRequest);
+  }
+
+  setMapPosition(LatLng position) {
+    _mapPosition = position;
+  }
+
+  getMapPosition() {
+    return _mapPosition;
   }
 
   @action
@@ -249,7 +260,9 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
 
   Future<void> reloadSupportCenter(
       SupportCenterFetchRequest fetchRequest) async {
+    final mapPosition = getMapPosition();
     final currentLocation = await getCurrentLocation(_fetchRequest);
+
     if (currentLocation == null) return;
     await loadSupportCenterWithCurrentLocation(_fetchRequest, currentLocation);
   }
