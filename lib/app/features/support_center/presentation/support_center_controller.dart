@@ -18,6 +18,8 @@ import 'package:penhas/app/features/support_center/domain/usecases/support_cente
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/logger/log.dart';
 
+import '../../../core/entities/user_location.dart';
+
 part 'support_center_controller.g.dart';
 
 class SupportCenterController extends _SupportCenterControllerBase
@@ -58,7 +60,6 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   @observable
   LatLng initialPosition = const LatLng(-15.793889, -47.882778);
 
-  @observable
   LatLng _mapPosition = const LatLng(0, 0);
 
   @observable
@@ -131,7 +132,7 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
     _mapPosition = position;
   }
 
-  getMapPosition() {
+  LatLng getMapPosition() {
     return _mapPosition;
   }
 
@@ -233,7 +234,8 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
         : PageProgressState.loaded;
   }
 
-  Future<void> loadSupportCenter(SupportCenterFetchRequest fetchRequest) async {
+  Future<void> loadSupportCenter(SupportCenterFetchRequest fetchRequest,
+      {LatLng? mapLocation}) async {
     errorMessage = '';
     _loadSupportCenter = ObservableFuture(
       _supportCenterUseCase.fetch(
@@ -243,10 +245,11 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
 
     final Either<Failure, SupportCenterPlaceSessionEntity> result =
         await _loadSupportCenter!;
-
     result.fold(
       (failure) => handleStateError(failure),
-      (places) => handleLoadSupportCenterSuccess(places),
+      (places) => mapLocation != null
+          ? handleLoadSupportCenterSuccess(places, mapLocation: mapLocation)
+          : handleLoadSupportCenterSuccess(places),
     );
   }
 
@@ -261,30 +264,37 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
   Future<void> reloadSupportCenter(
       SupportCenterFetchRequest fetchRequest) async {
     final mapPosition = getMapPosition();
-    final currentLocation = await getCurrentLocation(_fetchRequest);
-
-    if (currentLocation == null) return;
-    await loadSupportCenterWithCurrentLocation(_fetchRequest, currentLocation);
+    final mapLocation = GeolocationEntity(
+        label: null,
+        locationToken: null,
+        userLocation: UserLocationEntity(
+            latitude: mapPosition.latitude,
+            longitude: mapPosition.longitude,
+            accuracy: 5.0));
+    await loadSupportCenterWithCurrentLocation(_fetchRequest, mapLocation);
   }
 
   Future<void>? loadSupportCenterWithCurrentLocation(
       SupportCenterFetchRequest fetchRequest,
       GeolocationEntity currentLocation) async {
-    if (_fetchRequest.locationToken != null) {
-      _fetchRequest = _fetchRequest.copyWith(
-        locationToken: currentLocation.locationToken,
-      );
-      await loadSupportCenter(_fetchRequest);
-    }
-    return;
+    _fetchRequest = _fetchRequest.copyWith(
+      locationToken: currentLocation.locationToken,
+    );
+    final mapLocation = LatLng(currentLocation.userLocation!.latitude,
+        currentLocation.userLocation!.longitude);
+    await loadSupportCenter(_fetchRequest, mapLocation: mapLocation);
   }
 
   Future<void> handleLoadSupportCenterSuccess(
-    SupportCenterPlaceSessionEntity session,
-  ) async {
+      SupportCenterPlaceSessionEntity session,
+      {LatLng? mapLocation}) async {
     state = const SupportCenterState.loaded();
     currentPlaceSession = session;
-    initialPosition = LatLng(session.latitude!, session.longitude!);
+    if (mapLocation?.latitude == null || mapLocation?.longitude == null) {
+      initialPosition = LatLng(session.latitude!, session.longitude!);
+    } else {
+      initialPosition = LatLng(mapLocation!.latitude, mapLocation.longitude);
+    }
 
     final Iterable<SupportCenterPlaceEntity> filteredPlaces = session.places
         .where((place) => place.latitude != null && place.longitude != null);
