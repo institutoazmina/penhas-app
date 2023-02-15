@@ -1,6 +1,6 @@
-import 'package:penhas/app/shared/logger/log.dart';
+import '../../shared/logger/log.dart';
 
-extension SafetlyParser on Object? {
+extension SafelyParser on Object? {
   double? safeParseDouble() {
     final value = this;
 

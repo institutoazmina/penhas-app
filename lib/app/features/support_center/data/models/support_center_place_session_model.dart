@@ -1,6 +1,6 @@
-import 'package:penhas/app/core/extension/safetly_parser.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
+import '../../../../core/extension/safely_parser.dart';
+import '../../domain/entities/support_center_place_entity.dart';
+import '../../domain/entities/support_center_place_session_entity.dart';
 
 class SupportCenterPlaceSessionModel extends SupportCenterPlaceSessionEntity {
   const SupportCenterPlaceSessionModel({
