@@ -62,6 +62,9 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
       northeast: const LatLng(0, 0), southwest: const LatLng(0, 0));
 
   @observable
+  bool useLatLngBounds = false;
+
+  @observable
   LatLng initialPosition = const LatLng(-15.793889, -47.882778);
 
   LatLng _mapPosition = const LatLng(0, 0);
@@ -275,6 +278,7 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
             latitude: mapPosition.latitude,
             longitude: mapPosition.longitude,
             accuracy: 5.0));
+    useLatLngBounds = true;
     await loadSupportCenterWithCurrentLocation(_fetchRequest, mapLocation);
   }
 

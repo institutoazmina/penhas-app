@@ -86,16 +86,22 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
 
   Widget loadedSupportCenterPage() {
     final initialPosition = controller.initialPosition;
-    mapController?.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          tilt: 75.0,
-          zoom: 12.0,
-          bearing: 15.0,
-          target: initialPosition,
+    if (controller.useLatLngBounds) {
+      mapController?.animateCamera(
+        CameraUpdate.newLatLngBounds(controller.latLngBounds, 10),
+      );
+    } else {
+      mapController?.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            tilt: 75.0,
+            zoom: 12.0,
+            bearing: 15.0,
+            target: initialPosition,
+          ),
         ),
-      ),
-    );
+      );
+    }
     return PageProgressIndicator(
       progressState: controller.progressState,
       progressMessage: 'Carregando',
