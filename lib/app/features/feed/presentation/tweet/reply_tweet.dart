@@ -153,7 +153,7 @@ class _RepliedTweet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => controller.detail(
+      onTap: () => controller.commentDetail(
         parentTweet,
         commentId: repliedTweet.id,
       ),

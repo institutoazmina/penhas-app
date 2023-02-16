@@ -11,7 +11,8 @@ abstract class ITweetController {
   Future<void> reply(TweetEntity tweet);
   Future<void> delete(TweetEntity tweet);
   Future<void> report(TweetEntity tweet);
-  Future<void> detail(TweetEntity tweet, {String? commentId});
+  Future<void> detail(TweetEntity tweet);
+  Future<void> commentDetail(TweetEntity tweet, {required String commentId});
   Future parent(String parentId);
 }
 
@@ -81,7 +82,18 @@ class TweetController implements ITweetController {
   }
 
   @override
-  Future<void> detail(TweetEntity tweet, {String? commentId}) async {
+  Future<void> detail(TweetEntity tweet) async {
+    Modular.to.pushNamed(
+      '/mainboard/tweet/${tweet.id}',
+      arguments: tweet,
+    );
+  }
+
+  @override
+  Future<void> commentDetail(
+    TweetEntity tweet, {
+    required String commentId,
+  }) async {
     Modular.to.pushNamed(
       '/mainboard/tweet/${tweet.id}?comment_id=$commentId',
       arguments: tweet,
