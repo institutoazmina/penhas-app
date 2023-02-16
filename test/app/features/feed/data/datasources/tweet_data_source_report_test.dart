@@ -1,34 +1,42 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
+import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
 
-import '../../../../../utils/helper.mocks.dart';
+class MockHttpClient extends Mock implements http.Client {}
+
+class MockApiServerConfigure extends Mock implements IApiServerConfigure {}
 
 void main() {
-  late final MockHttpClient apiClient = MockHttpClient();
-  late final MockIApiServerConfigure serverConfigure =
-      MockIApiServerConfigure();
-
-  final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
+  late Uri serverEndpoint;
+  late http.Client apiClient;
+  late ITweetDataSource dataSource;
+  late IApiServerConfigure serverConfigure;
   const String sessionToken = 'my_really.long.JWT';
 
-  late ITweetDataSource dataSource;
-
   setUp(() {
+    apiClient = MockHttpClient();
+    serverConfigure = MockApiServerConfigure();
+    serverEndpoint = Uri.https('api.anyserver.io', '/');
+
     dataSource = TweetDataSource(
       apiClient: apiClient,
       serverConfiguration: serverConfigure,
     );
 
     // MockApiServerConfigure configuration
-    when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
-    when(serverConfigure.apiToken)
+    when(() => serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
+    when(() => serverConfigure.apiToken)
         .thenAnswer((_) => Future.value(sessionToken));
-    when(serverConfigure.userAgent)
+    when(() => serverConfigure.userAgent)
         .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
+  });
+
+  setUpAll(() {
+    registerFallbackValue(Uri());
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
@@ -40,7 +48,7 @@ void main() {
     };
   }
 
-  Uri _setuHttpRequest(String path, Map<String, String> queryParameters) {
+  Uri _setUpHttpRequest(String path, Map<String, String> queryParameters) {
     return Uri(
       scheme: serverEndpoint.scheme,
       host: serverEndpoint.host,
@@ -49,18 +57,14 @@ void main() {
     );
   }
 
-  PostExpectation<Future<http.Response>> _mockPostRequest() {
-    return when(
-      apiClient.post(
-        any,
-        headers: anyNamed('headers'),
-        body: anyNamed('body'),
-      ),
-    );
-  }
-
   void _setUpMockPostHttpClientSuccess200(String? bodyContent) {
-    _mockPostRequest().thenAnswer(
+    when(
+      () => apiClient.post(
+        any(),
+        headers: any(named: 'headers'),
+        body: any(named: 'body'),
+      ),
+    ).thenAnswer(
       (_) async => http.Response(
         bodyContent!,
         200,
@@ -71,7 +75,7 @@ void main() {
     );
   }
 
-  group('FeedDataSource', () {
+  group(TweetDataSource, () {
     group('report()', () {
       String? bodyContent;
       TweetEngageRequestOption? requestOption;
@@ -83,33 +87,39 @@ void main() {
           message: 'esse tweet me ofende pq XPTO',
         );
       });
-      test('should perform a POST with X-API-Key', () async {
-        // arrange
-        final endPointPath = '/timeline/${requestOption!.tweetId}/report';
+      test(
+        'perform a POST with X-API-Key',
+        () async {
+          // arrange
+          final endPointPath = '/timeline/${requestOption!.tweetId}/report';
 
-        final headers = await _setUpHttpHeader();
-        final request = _setuHttpRequest(endPointPath, {});
-        _setUpMockPostHttpClientSuccess200(bodyContent);
-        // act
-        await dataSource.report(option: requestOption);
-        // assert
-        verify(
-          apiClient.post(
-            request,
-            headers: headers,
-            body: 'reason=esse%20tweet%20me%20ofende%20pq%20XPTO',
-          ),
-        );
-      });
-      test('should get a valid ValidField for a successful request', () async {
-        // arrange
-        _setUpMockPostHttpClientSuccess200(bodyContent);
-        const expected = ValidField(message: 'Report enviado');
-        // act
-        final received = await dataSource.report(option: requestOption);
-        // assert
-        expect(expected, received);
-      });
+          final headers = await _setUpHttpHeader();
+          final request = _setUpHttpRequest(endPointPath, {});
+          _setUpMockPostHttpClientSuccess200(bodyContent);
+          // act
+          await dataSource.report(option: requestOption);
+          // assert
+          verify(
+            () => apiClient.post(
+              request,
+              headers: headers,
+              body: 'reason=esse%20tweet%20me%20ofende%20pq%20XPTO',
+            ),
+          );
+        },
+      );
+      test(
+        'get a valid ValidField for a successful request',
+        () async {
+          // arrange
+          _setUpMockPostHttpClientSuccess200(bodyContent);
+          const expected = ValidField(message: 'Report enviado');
+          // act
+          final received = await dataSource.report(option: requestOption);
+          // assert
+          expect(expected, received);
+        },
+      );
     });
   });
 }
