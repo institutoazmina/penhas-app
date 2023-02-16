@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
+import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/authentication/data/datasources/user_register_data_source.dart';
 import 'package:penhas/app/features/authentication/data/models/session_model.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/birthday.dart';
@@ -16,46 +19,54 @@ import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
-import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
+class MockHttpClient extends Mock implements http.Client {}
+
+class MockIApiServerConfigure extends Mock implements IApiServerConfigure {}
+
 void main() {
-  late final MockHttpClient apiclient = MockHttpClient();
-  late final MockIApiServerConfigure serverConfiguration =
-      MockIApiServerConfigure();
+  final MockHttpClient apiClient = MockHttpClient();
+  final MockIApiServerConfigure serverConfiguration = MockIApiServerConfigure();
 
   final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
-  Cep? cep;
-  Cpf? cpf;
-  EmailAddress? emailAddress;
-  SignUpPassword? password;
-  Fullname? fullname;
-  Nickname? nickName;
-  Birthday? birthday;
-  Genre? genre;
-  HumanRace? race;
+  late Cep cep;
+  late Cpf cpf;
+  late EmailAddress emailAddress;
+  late SignUpPassword password;
+  late Fullname fullName;
+  late Fullname socialName;
+  late Nickname nickName;
+  late Birthday birthday;
+  late Genre genre;
+  late HumanRace race;
   late UserRegisterDataSource dataSource;
+
+  setUpAll(() {
+    registerFallbackValue(Uri());
+  });
 
   setUp(() {
     emailAddress = EmailAddress('valid@email.com');
     password = SignUpPassword('_myStr0ngP@ssw0rd', PasswordValidator());
     cep = Cep('63024-370');
     cpf = Cpf('23693281343');
-    fullname = Fullname('Maria da Penha Maia Fernandes');
+    fullName = Fullname('Maria da Penha Maia Fernandes');
+    socialName = Fullname('Maria da Penha');
     nickName = Nickname('penha');
     birthday = Birthday('1994-01-01');
     race = HumanRace.brown;
     genre = Genre.female;
 
     dataSource = UserRegisterDataSource(
-      apiClient: apiclient,
+      apiClient: apiClient,
       serverConfiguration: serverConfiguration,
     );
 
     // MockApiServerConfigure configuration
-    when(serverConfiguration.baseUri).thenAnswer((_) => serverEndpoint);
-    when(serverConfiguration.userAgent)
-        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
+    when(() => serverConfiguration.baseUri).thenReturn(serverEndpoint);
+    when(() => serverConfiguration.userAgent)
+        .thenAnswer((_) async => 'iOS 11.4/Simulator/1.0.0');
   });
 
   Future<Map<String, String>> setupHttpHeader() async {
@@ -73,15 +84,16 @@ void main() {
     final Map<String, String?> queryParameters = {
       'app_version': userAgent,
       'dry': justValidadeField ? '1' : '0',
-      'email': emailAddress!.rawValue,
-      'senha': justValidadeField ? null : password!.rawValue,
-      'cep': justValidadeField ? null : cep!.rawValue,
-      'cpf': cpf!.rawValue,
-      'nome_completo': justValidadeField ? null : fullname!.rawValue,
-      'apelido': justValidadeField ? null : nickName!.rawValue,
-      'dt_nasc': justValidadeField ? null : birthday!.rawValue,
-      'genero': justValidadeField ? null : genre?.rawValue,
-      'raca': justValidadeField ? null : race?.rawValue
+      'email': emailAddress.rawValue,
+      'senha': justValidadeField ? null : password.rawValue,
+      'cep': justValidadeField ? null : cep.rawValue,
+      'cpf': cpf.rawValue,
+      'nome_completo': justValidadeField ? null : fullName.rawValue,
+      'nome_social': justValidadeField ? null : socialName.rawValue,
+      'apelido': justValidadeField ? null : nickName.rawValue,
+      'dt_nasc': justValidadeField ? null : birthday.rawValue,
+      'genero': justValidadeField ? null : genre.rawValue,
+      'raca': justValidadeField ? null : race.rawValue
     };
     queryParameters.removeWhere((k, v) => v == null);
     return queryParameters;
@@ -99,16 +111,18 @@ void main() {
   }
 
   void setupHttpClientSuccess200(String bodyContent) {
-    when(apiclient.post(any, headers: anyNamed('headers')))
-        .thenAnswer((_) async => http.Response(bodyContent, 200));
+    when(() => apiClient.post(any(), headers: any(named: 'headers')))
+        .thenAnswer((_) async => http.Response(bodyContent, HttpStatus.ok));
   }
 
   void setupHttpClientError400() {
     final bodyContent = JsonUtil.getStringSync(
       from: 'authentication/registration_email_already_exists.json',
     );
-    when(apiclient.post(any, headers: anyNamed('headers')))
-        .thenAnswer((_) async => http.Response(bodyContent, 400));
+
+    when(() => apiClient.post(any(), headers: any(named: 'headers')))
+        .thenAnswer(
+            (_) async => http.Response(bodyContent, HttpStatus.notFound));
   }
 
   void setupHttpClientRegisterSuccess() {
@@ -117,10 +131,9 @@ void main() {
     setupHttpClientSuccess200(bodyContent);
   }
 
-  group('UserRegisterDataSource', () {
+  group(UserRegisterDataSource, () {
     group('register', () {
-      test(
-          'should perform a POST with parameters and application/x-www-form-urlencoded header',
+      test('must performance POST with user-agent and header configured',
           () async {
         // arrange
         setupHttpClientRegisterSuccess();
@@ -132,39 +145,43 @@ void main() {
           password: password,
           cep: cep,
           cpf: cpf,
-          fullname: fullname,
+          fullname: fullName,
+          socialName: socialName,
           nickName: nickName,
           birthday: birthday,
           genre: genre,
           race: race,
         );
         // assert
-        verify(apiclient.post(loginUri, headers: headers));
-      });
-      test('should return SessionModel when the response code is 200 (success)',
-          () async {
-        // arrange
-        setupHttpClientRegisterSuccess();
-        final jsonData =
-            await JsonUtil.getJson(from: 'authentication/login_success.json');
-        final sessionModel = SessionModel.fromJson(jsonData);
-        // act
-        final result = await dataSource.register(
-          emailAddress: emailAddress,
-          password: password,
-          cep: cep,
-          cpf: cpf,
-          fullname: fullname,
-          nickName: nickName,
-          birthday: birthday,
-          genre: genre,
-          race: race,
-        );
-        // assert
-        expect(result, sessionModel);
+        verify(() => apiClient.post(loginUri, headers: headers)).called(1);
       });
       test(
-          'should return ApiProviderException when the response code is nonsuccess (non 200)',
+        'return SessionModel when get HttpStatus.ok',
+        () async {
+          // arrange
+          setupHttpClientRegisterSuccess();
+          final jsonData =
+              await JsonUtil.getJson(from: 'authentication/login_success.json');
+          final sessionModel = SessionModel.fromJson(jsonData);
+          // act
+          final result = await dataSource.register(
+            emailAddress: emailAddress,
+            password: password,
+            cep: cep,
+            cpf: cpf,
+            fullname: fullName,
+            socialName: socialName,
+            nickName: nickName,
+            birthday: birthday,
+            genre: genre,
+            race: race,
+          );
+          // assert
+          expect(result, sessionModel);
+        },
+      );
+      test(
+          'return ApiProviderException when the response code is nonsuccess (non 200)',
           () async {
         // arrange
         final bodyContent = await JsonUtil.getJson(
@@ -180,7 +197,7 @@ void main() {
             password: password,
             cep: cep,
             cpf: cpf,
-            fullname: fullname,
+            fullname: fullName,
             nickName: nickName,
             birthday: birthday,
             genre: genre,
@@ -194,8 +211,7 @@ void main() {
       });
     });
     group('checkField', () {
-      test(
-          'should perform a POST with parameters and application/x-www-form-urlencoded header',
+      test('must performance POST with user-agent and header configured',
           () async {
         // arrange
         setupHttpClientRegisterSuccess();
@@ -204,19 +220,32 @@ void main() {
         // act
         await dataSource.checkField(emailAddress: emailAddress, cpf: cpf);
         // assert
-        verify(apiclient.post(loginUri, headers: headers));
+        verify(() => apiClient.post(loginUri, headers: headers)).called(1);
       });
-      test('should return ValidField when the response code is 200 (success)',
-          () async {
-        // arrange
-        const String bodyContent = '{"continue": 1}';
-        setupHttpClientSuccess200(bodyContent);
-        // act
-        final result =
-            await dataSource.checkField(emailAddress: emailAddress, cpf: cpf);
-        // assert
-        expect(result, const ValidField());
-      });
+      test(
+        'return ValidField when get HttpStatus.ok',
+        () async {
+          // arrange
+          const String bodyContent = '{"continue": 1}';
+          setupHttpClientSuccess200(bodyContent);
+          // act
+          final result = await dataSource.checkField(
+            emailAddress: emailAddress,
+            password: password,
+            cep: cep,
+            cpf: cpf,
+            fullname: fullName,
+            socialName: socialName,
+            nickName: nickName,
+            birthday: birthday,
+            genre: genre,
+            race: race,
+          );
+
+          // assert
+          expect(result, const ValidField());
+        },
+      );
       test(
           'should return ApiProviderException when the response code is nonsuccess (non 200)',
           () async {
@@ -226,18 +255,7 @@ void main() {
         );
         setupHttpClientError400();
         // act
-        final Future<ValidField> Function({
-          Birthday birthday,
-          Cep cep,
-          Cpf? cpf,
-          EmailAddress? emailAddress,
-          Fullname fullname,
-          Genre genre,
-          Nickname nickName,
-          SignUpPassword password,
-          HumanRace race,
-          Fullname socialName,
-        }) sut = dataSource.checkField;
+        final sut = dataSource.checkField;
         // assert
         expect(
           () => sut(emailAddress: emailAddress, cpf: cpf),
