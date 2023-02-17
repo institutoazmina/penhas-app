@@ -107,15 +107,18 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
       progressMessage: 'Carregando',
       child: Stack(
         children: [
-          GoogleMap(
-              initialCameraPosition: CameraPosition(target: initialPosition),
-              myLocationEnabled: true,
-              markers: controller.placeMarkers,
-              myLocationButtonEnabled: false,
-              zoomControlsEnabled: false,
-              onMapCreated: (GoogleMapController controller) {
-                mapController = controller;
-              }),
+          Padding(
+            padding: const EdgeInsets.only(top: 120),
+            child: GoogleMap(
+                initialCameraPosition: CameraPosition(target: initialPosition),
+                myLocationEnabled: true,
+                markers: controller.placeMarkers,
+                myLocationButtonEnabled: false,
+                zoomControlsEnabled: false,
+                onMapCreated: (GoogleMapController controller) {
+                  mapController = controller;
+                }),
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
