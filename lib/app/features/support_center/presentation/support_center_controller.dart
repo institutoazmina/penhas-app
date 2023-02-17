@@ -214,7 +214,7 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     final categories = _tags.map((e) => e.id).toList();
     _fetchRequest = _fetchRequest.copyWith(categories: categories);
     categoriesSelected = _tags.length;
-
+    useLatLngBounds = true;
     await loadSupportCenter(_fetchRequest);
   }
 
