@@ -1,35 +1,44 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/network/network_info.dart';
+import 'package:penhas/app/features/help_center/data/datasources/guardian_data_source.dart';
 import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
 import 'package:penhas/app/features/help_center/data/models/guardian_session_model.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
 import 'package:penhas/app/features/help_center/domain/entities/guardian_session_entity.dart';
 
-import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
+class MockNetworkInfo extends Mock implements INetworkInfo {}
+
+class MockGuardianDataSource extends Mock implements IGuardianDataSource {}
+
 void main() {
-  late final MockIGuardianDataSource dataSource = MockIGuardianDataSource();
-  late final MockINetworkInfo networkInfo = MockINetworkInfo();
-  late final IGuardianRepository sut = GuardianRepository(
-    dataSource: dataSource,
-    networkInfo: networkInfo,
-  );
+  late IGuardianRepository sut;
+  late IGuardianDataSource dataSource;
+  late INetworkInfo networkInfo;
 
   setUp(() {
-    when(networkInfo.isConnected).thenAnswer((_) => Future.value(true));
+    networkInfo = MockNetworkInfo();
+    dataSource = MockGuardianDataSource();
+    sut = GuardianRepository(
+      dataSource: dataSource,
+      networkInfo: networkInfo,
+    );
+
+    when(() => networkInfo.isConnected).thenAnswer((_) => Future.value(true));
   });
 
   group(
-    'GuardianRepository',
+    GuardianRepository,
     () {
       test(
-        'should get a empty list if there is no guardian',
+        'get a empty list if there is no guardian',
         () async {
           // arrange
           final jsonSession = await JsonUtil.getJson(
@@ -66,7 +75,7 @@ void main() {
               ),
             ],
           );
-          when(dataSource.fetch()).thenAnswer((_) async => sessionModel);
+          when(() => dataSource.fetch()).thenAnswer((_) async => sessionModel);
           final expected = right(emptySession);
           // act
           final receceived = await sut.fetch();
@@ -75,13 +84,13 @@ void main() {
         },
       );
       test(
-        'should get a list of guardians',
+        'get a list of guardians',
         () async {
           // arrange
           final jsonSession =
               await JsonUtil.getJson(from: 'help_center/guardian_list.json');
           final sessionModel = GuardianSessionModel.fromJson(jsonSession);
-          when(dataSource.fetch()).thenAnswer((_) async => sessionModel);
+          when(() => dataSource.fetch()).thenAnswer((_) async => sessionModel);
           final expected = right(sessionModel);
           // act
           final receceived = await sut.fetch();
@@ -90,7 +99,7 @@ void main() {
         },
       );
       test(
-        'should get ok message for a valid guardian inserted',
+        'get ok message for a valid guardian inserted',
         () async {
           // arrange
           final jsonSession = await JsonUtil.getJson(
@@ -102,15 +111,16 @@ void main() {
           );
           final response = AlertModel.fromJson(jsonSession);
           final expected = right(response);
-          when(dataSource.create(any)).thenAnswer((_) async => response);
+          when(() => dataSource.create(guardian))
+              .thenAnswer((_) async => response);
           // act
           final received = await sut.create(guardian);
           // assert
-          expect(received, expected);
+          expect(expected, received);
         },
       );
       test(
-        'should get invalid message for a invalid number',
+        'get invalid message for a invalid number',
         () async {
           // arrange
           final bodyContent = await JsonUtil.getJson(
@@ -128,16 +138,16 @@ void main() {
               reason: bodyContent['reason'] as String?,
             ),
           );
-          when(dataSource.create(any))
+          when(() => dataSource.create(guardian))
               .thenThrow(ApiProviderException(bodyContent: bodyContent));
           // act
           final received = await sut.create(guardian);
           // assert
-          expect(received, expected);
+          expect(expected, received);
         },
       );
       test(
-        'should update guardian name',
+        'update guardian name',
         () async {
           // arrange
           final jsonSession = await JsonUtil.getJson(
@@ -152,15 +162,16 @@ void main() {
 
           final response = ValidField.fromJson(jsonSession);
           final expected = right(response);
-          when(dataSource.update(any)).thenAnswer((_) async => response);
+          when(() => dataSource.update(guardian))
+              .thenAnswer((_) async => response);
           // act
           final received = await sut.update(guardian);
           // assert
-          expect(received, expected);
+          expect(expected, received);
         },
       );
       test(
-        'should remove one of my guardian',
+        'remove one of my guardian',
         () async {
           // arrange
           const guardian = GuardianContactEntity(
@@ -170,18 +181,18 @@ void main() {
             status: 'pending',
           );
           final expected = right(const ValidField());
-          when(dataSource.delete(any))
+          when(() => dataSource.delete(guardian))
               .thenAnswer((_) async => const ValidField());
           // act
           final received = await sut.delete(guardian);
           // assert
-          expect(received, expected);
+          expect(expected, received);
         },
       );
 
       group('alert', () {
         test(
-          'should get a valid message for valid request',
+          'get a valid message for valid request',
           () async {
             // arrange
             const location = UserLocationEntity(latitude: 1.0, longitude: -1.0);
@@ -191,7 +202,7 @@ void main() {
                 message: 'Alerta disparado com sucesso para 1 guardião.',
               ),
             );
-            when(dataSource.alert(any)).thenAnswer(
+            when(() => dataSource.alert(location)).thenAnswer(
               (_) async => const AlertModel(
                 title: 'Alerta enviado!',
                 message: 'Alerta disparado com sucesso para 1 guardião.',
@@ -200,7 +211,7 @@ void main() {
             // act
             final received = await sut.alert(location);
             // assert
-            expect(received, expected);
+            expect(expected, received);
           },
         );
       });
