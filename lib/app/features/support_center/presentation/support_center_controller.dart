@@ -65,8 +65,6 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   @observable
   LatLng initialPosition = const LatLng(-15.793889, -47.882778);
 
-  LatLng _mapPosition = const LatLng(0, 0);
-
   @observable
   SupportCenterState state = const SupportCenterState.loaded();
 
@@ -131,14 +129,6 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   @action
   Future<void> retry() async {
     await loadSupportCenter(_fetchRequest);
-  }
-
-  setMapPosition(LatLng position) {
-    _mapPosition = position;
-  }
-
-  LatLng getMapPosition() {
-    return _mapPosition;
   }
 
   @action
