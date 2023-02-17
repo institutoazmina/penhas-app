@@ -1,77 +1,91 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
+import 'package:penhas/app/features/quiz/data/datasources/quiz_data_source.dart';
 import 'package:penhas/app/features/quiz/data/repositories/quiz_repository.dart';
 import 'package:penhas/app/features/quiz/domain/entities/quiz_request_entity.dart';
 
-import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
-Future<bool> isConnected() => Future.value(true);
+class MockNetworkInfo extends Mock implements INetworkInfo {}
+
+class MockQuizDataSource extends Mock implements IQuizDataSource {}
 
 void main() {
-  late final MockINetworkInfo networkInfo = MockINetworkInfo();
-  late final MockIQuizDataSource dataSource = MockIQuizDataSource();
-  late final QuizRepository quizRepository = QuizRepository(
-    dataSource: dataSource,
-    networkInfo: networkInfo,
-  );
+  late INetworkInfo networkInfo;
+  late IQuizDataSource dataSource;
+  late QuizRepository quizRepository;
   late QuizRequestEntity quizRequest;
   late Map<String, dynamic> jsonData;
 
   setUp(() async {
+    networkInfo = MockNetworkInfo();
+    dataSource = MockQuizDataSource();
+    quizRepository = QuizRepository(
+      dataSource: dataSource,
+      networkInfo: networkInfo,
+    );
+
     quizRequest = const QuizRequestEntity(
       sessionId: '200',
       options: {'YN1': 'Y'},
     );
+
     jsonData =
         await JsonUtil.getJson(from: 'profile/quiz_session_response.json');
-    when(networkInfo.isConnected).thenAnswer((_) => Future.value(true));
+
+    when(() => networkInfo.isConnected).thenAnswer((_) async => true);
   });
 
-  group('QuizRepository', () {
-    test('should return a valid session for a valid update', () async {
-      // arrange
-      final expectedSession = AppStateModel.fromJson(jsonData);
+  group(QuizRepository, () {
+    test(
+      'return a valid session for a valid update',
+      () async {
+        // arrange
+        final expectedSession = AppStateModel.fromJson(jsonData);
 
-      when(dataSource.update(quiz: anyNamed('quiz')))
-          .thenAnswer((_) => Future.value(expectedSession));
-      // act
-      final receivedSession = await quizRepository.update(quiz: quizRequest);
-      // assert
-      expect(right(expectedSession), receivedSession);
-    });
+        when(() => dataSource.update(quiz: any(named: 'quiz')))
+            .thenAnswer((_) => Future.value(expectedSession));
+        // act
+        final receivedSession = await quizRepository.update(quiz: quizRequest);
+        // assert
+        expect(receivedSession.fold((l) => l, (r) => r), expectedSession);
+      },
+    );
 
-    test('should return ServerSideSessionFailed for a invalid session',
-        () async {
-      // arrange
-      when(dataSource.update(quiz: anyNamed('quiz')))
-          .thenThrow(ApiProviderSessionError());
-      final expected = left(ServerSideSessionFailed());
-      // act
-      final received = await quizRepository.update(quiz: quizRequest);
-      // assert
-      expect(received, expected);
-    });
+    test(
+      'return ServerSideSessionFailed for a invalid session',
+      () async {
+        // arrange
+        when(() => dataSource.update(quiz: any(named: 'quiz')))
+            .thenThrow(ApiProviderSessionError());
+        // act
+        final received = await quizRepository.update(quiz: quizRequest);
+        // assert
+        expect(received.fold((l) => l, (r) => r), ServerSideSessionFailed());
+      },
+    );
 
-    test('should return ServerSideSessionFailed for a invalid JWT', () async {
-      // arrange
-      when(dataSource.update(quiz: anyNamed('quiz'))).thenThrow(
-        const ApiProviderException(
-          bodyContent: {
-            'error': 'expired_jwt',
-            'nessage': 'Bad request - Invalid JWT'
-          },
-        ),
-      );
-      final expected = left(ServerSideSessionFailed());
-      // act
-      final received = await quizRepository.update(quiz: quizRequest);
-      // assert
-      expect(received, expected);
-    });
+    test(
+      'return ServerSideSessionFailed for a invalid JWT',
+      () async {
+        // arrange
+        when(() => dataSource.update(quiz: any(named: 'quiz'))).thenThrow(
+          const ApiProviderException(
+            bodyContent: {
+              'error': 'expired_jwt',
+              'message': 'Bad request - Invalid JWT'
+            },
+          ),
+        );
+        // act
+        final received = await quizRepository.update(quiz: quizRequest);
+        // assert
+        expect(received.fold((l) => l, (r) => r), ServerSideSessionFailed());
+      },
+    );
   });
 }
