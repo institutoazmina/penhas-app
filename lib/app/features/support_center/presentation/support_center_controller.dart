@@ -18,8 +18,6 @@ import 'package:penhas/app/features/support_center/domain/usecases/support_cente
 import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/logger/log.dart';
 
-import '../../../core/entities/user_location.dart';
-
 part 'support_center_controller.g.dart';
 
 class SupportCenterController extends _SupportCenterControllerBase
@@ -162,11 +160,10 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
     );
 
     if (granted) {
-      final currentLocation = await getCurrentLocation(_fetchRequest);
+      final currentLocation = await _supportCenterUseCase.currentLocation();
       if (currentLocation == null) return;
       final latLng = currentLocation.toLatLng();
-      await loadSupportCenterWithCurrentLocation(
-          _fetchRequest, currentLocation);
+      await loadSupportCenter(_fetchRequest);
       callback(latLng);
     }
   }
@@ -241,8 +238,7 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
         : PageProgressState.loaded;
   }
 
-  Future<void> loadSupportCenter(SupportCenterFetchRequest fetchRequest,
-      {LatLng? mapLocation}) async {
+  Future<void> loadSupportCenter(SupportCenterFetchRequest fetchRequest) async {
     errorMessage = '';
     _loadSupportCenter = ObservableFuture(
       _supportCenterUseCase.fetch(
@@ -254,55 +250,22 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
         await _loadSupportCenter!;
     result.fold(
       (failure) => handleStateError(failure),
-      (places) => mapLocation != null
-          ? handleLoadSupportCenterSuccess(places, mapLocation: mapLocation)
-          : handleLoadSupportCenterSuccess(places),
+      (places) => handleLoadSupportCenterSuccess(places),
     );
-  }
-
-  Future<GeolocationEntity?> getCurrentLocation(
-      SupportCenterFetchRequest fetchRequest) async {
-    final currentLocation = await _supportCenterUseCase.currentLocation();
-
-    if (currentLocation == null) return null;
-    return currentLocation;
   }
 
   Future<void> reloadSupportCenter(
       SupportCenterFetchRequest fetchRequest) async {
-    final mapPosition = getMapPosition();
-    final mapLocation = GeolocationEntity(
-        label: null,
-        locationToken: null,
-        userLocation: UserLocationEntity(
-            latitude: mapPosition.latitude,
-            longitude: mapPosition.longitude,
-            accuracy: 5.0));
     useLatLngBounds = true;
-    await loadSupportCenterWithCurrentLocation(_fetchRequest, mapLocation);
-  }
-
-  Future<void>? loadSupportCenterWithCurrentLocation(
-      SupportCenterFetchRequest fetchRequest,
-      GeolocationEntity currentLocation) async {
-    _fetchRequest = _fetchRequest.copyWith(
-      locationToken: currentLocation.locationToken,
-    );
-    final mapLocation = LatLng(currentLocation.userLocation!.latitude,
-        currentLocation.userLocation!.longitude);
-    await loadSupportCenter(_fetchRequest, mapLocation: mapLocation);
+    await loadSupportCenter(_fetchRequest);
   }
 
   Future<void> handleLoadSupportCenterSuccess(
-      SupportCenterPlaceSessionEntity session,
-      {LatLng? mapLocation}) async {
+      SupportCenterPlaceSessionEntity session) async {
     state = const SupportCenterState.loaded();
     currentPlaceSession = session;
-    if (mapLocation?.latitude == null || mapLocation?.longitude == null) {
-      initialPosition = LatLng(session.latitude!, session.longitude!);
-    } else {
-      initialPosition = LatLng(mapLocation!.latitude, mapLocation.longitude);
-    }
+
+    initialPosition = LatLng(session.latitude!, session.longitude!);
 
     final Iterable<SupportCenterPlaceEntity> filteredPlaces = session.places
         .where((place) => place.latitude != null && place.longitude != null);
@@ -329,22 +292,28 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     state = SupportCenterState.error(mapFailureMessage(f)!);
   }
 
-  static boundfromLatLng(List<LatLng> markersLatLngList) {
-    assert(markersLatLngList.isNotEmpty);
-    double? x0, x1, y0, y1;
-    for (LatLng latLng in markersLatLngList) {
-      if (x0 == null) {
-        x0 = x1 = latLng.latitude;
-        y0 = y1 = latLng.longitude;
-      } else {
-        if (latLng.latitude > x1!) x1 = latLng.latitude;
-        if (latLng.latitude < x0) x0 = latLng.latitude;
-        if (latLng.longitude > y1!) y1 = latLng.longitude;
-        if (latLng.longitude < y0!) y0 = latLng.longitude;
+  boundfromLatLng(List<LatLng> markersLatLngList) {
+    LatLngBounds brasilBounds = LatLngBounds(
+        northeast: const LatLng(5.24448639569, -34.7299934555),
+        southwest: const LatLng(-33.7683777809, -73.9872354804));
+
+    if (markersLatLngList.isNotEmpty) {
+      double? x0, x1, y0, y1;
+      for (LatLng latLng in markersLatLngList) {
+        if (x0 == null) {
+          x0 = x1 = latLng.latitude;
+          y0 = y1 = latLng.longitude;
+        } else {
+          if (latLng.latitude > x1!) x1 = latLng.latitude;
+          if (latLng.latitude < x0) x0 = latLng.latitude;
+          if (latLng.longitude > y1!) y1 = latLng.longitude;
+          if (latLng.longitude < y0!) y0 = latLng.longitude;
+        }
       }
+      return LatLngBounds(
+          northeast: LatLng(x1!, y1!), southwest: LatLng(x0!, y0!));
     }
-    return LatLngBounds(
-        northeast: LatLng(x1!, y1!), southwest: LatLng(x0!, y0!));
+    return brasilBounds;
   }
 
   Marker buildMarker(SupportCenterPlaceEntity place) {

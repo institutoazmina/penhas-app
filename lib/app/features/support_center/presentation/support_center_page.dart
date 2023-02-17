@@ -108,19 +108,14 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
       child: Stack(
         children: [
           GoogleMap(
-            initialCameraPosition: CameraPosition(target: initialPosition),
-            myLocationEnabled: true,
-            markers: controller.placeMarkers,
-            myLocationButtonEnabled: false,
-            zoomControlsEnabled: false,
-            onMapCreated: (GoogleMapController controller) {
-              mapController = controller;
-            },
-            onCameraMove: (CameraPosition position) {
-              controller.setMapPosition(
-                  LatLng(position.target.latitude, position.target.longitude));
-            },
-          ),
+              initialCameraPosition: CameraPosition(target: initialPosition),
+              myLocationEnabled: true,
+              markers: controller.placeMarkers,
+              myLocationButtonEnabled: false,
+              zoomControlsEnabled: false,
+              onMapCreated: (GoogleMapController controller) {
+                mapController = controller;
+              }),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
