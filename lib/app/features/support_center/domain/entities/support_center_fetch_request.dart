@@ -22,8 +22,14 @@ class SupportCenterFetchRequest extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object?> get props =>
-      [userLocation!, locationToken!, categories!, keywords!, nextPage!, rows!];
+  List<Object?> get props => [
+        userLocation,
+        locationToken,
+        categories,
+        keywords,
+        nextPage,
+        rows,
+      ];
 
   SupportCenterFetchRequest copyWith({
     UserLocationEntity? userLocation,
