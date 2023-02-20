@@ -44,7 +44,7 @@ void main() {
     });
     test('delete audio', () async {
       // arrange
-      final actual = right(const ValidField());
+      final expected = right(const ValidField());
       final audio = AudioEntity(
         id: '6db0260b-9733-4610-9586-de5141d79c32',
         audioDuration: '2m18s',
@@ -62,12 +62,12 @@ void main() {
       // act
       final result = await sut.delete(audio);
       // assert
-      expect(actual, result);
+      expect(result, expected);
     });
 
     test('request audio', () async {
       // arrange
-      final Either<Failure, ValidField> actual = right(
+      final Either<Failure, ValidField> expected = right(
         const ValidField(
           message:
               'Enviaremos uma mensagem quando o arquivo estiver disponível.',
@@ -95,7 +95,7 @@ void main() {
       // act
       final result = await sut.requestAccess(audio);
       // assert
-      expect(actual, result);
+      expect(result, expected);
     });
   });
 }
