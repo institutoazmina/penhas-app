@@ -2,14 +2,14 @@ import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 
 class TweetModel extends TweetEntity {
   TweetModel({
-    required String? id,
-    required String? userName,
+    required String id,
+    required String userName,
     required int clientId,
-    required String? createdAt,
+    required String createdAt,
     required int totalReply,
     required int totalLikes,
     required bool anonymous,
-    required String? content,
+    required String content,
     required String avatar,
     required TweetMeta meta,
     String? parentId,

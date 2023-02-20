@@ -16,8 +16,7 @@ class Tweet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasRepliedTweet =
-        model.lastReply != null && model.lastReply!.isNotEmpty;
+    final hasRepliedTweet = model.lastReply.isNotEmpty;
     return hasRepliedTweet
         ? ReplyTweet(context: context, tweet: model, controller: controller)
         : SingleTweet(context: context, tweet: model, controller: controller);
