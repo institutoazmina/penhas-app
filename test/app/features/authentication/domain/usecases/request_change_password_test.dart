@@ -1,48 +1,43 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/change_password.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 
-import '../../../../../utils/helper.mocks.dart';
+class MockIChangePasswordRepository extends Mock
+    implements IChangePasswordRepository {}
 
 void main() {
+  late String resetToken;
   late EmailAddress emailAddress;
   late SignUpPassword password;
-  late String resetToken;
 
-  late final MockIChangePasswordRepository repository =
-      MockIChangePasswordRepository();
   late ChangePassword sut;
+  late IChangePasswordRepository repository;
 
   setUp(() {
+    resetToken = '666422';
     emailAddress = EmailAddress('valid_email@exemple.com');
     password = SignUpPassword('my_very_strong_P4ssw@rd', PasswordValidator());
-    resetToken = '666422';
+
+    repository = MockIChangePasswordRepository();
     sut = ChangePassword(changePasswordRepository: repository);
   });
 
-  group('Request change password', () {
-    PostExpectation<Future<Either<Failure, ValidField>>> mockResquest() {
-      return when(
-        repository.reset(
-          emailAddress: anyNamed('emailAddress'),
-          password: anyNamed('password'),
-          resetToken: anyNamed(
-            'resetToken',
-          ),
-        ),
-      );
-    }
-
-    test('should received a ResetPasswordResponseEntity for successful request',
+  group(ChangePassword, () {
+    test('received a ResetPasswordResponseEntity for successful request',
         () async {
       // arrange
-      mockResquest().thenAnswer((_) async => right(const ValidField()));
+      when(() => repository.reset(
+            emailAddress: emailAddress,
+            password: password,
+            resetToken: resetToken,
+          )).thenAnswer((_) async => right(const ValidField()));
       // act
       final Either<Failure, ValidField> result = await sut(
         emailAddress: emailAddress,
@@ -52,15 +47,18 @@ void main() {
       // assert
       expect(result, right(const ValidField()));
     });
-    test(
-        'should received a ServerSideFormFieldValidationFailure from invalid token',
+    test('received a ServerSideFormFieldValidationFailure from invalid token',
         () async {
       // arrange
       const error = 'invalid_token';
       const message = 'Número não confere.';
       const field = 'token';
       const reason = 'invalid';
-      mockResquest().thenAnswer(
+      when(() => repository.reset(
+            emailAddress: emailAddress,
+            password: password,
+            resetToken: resetToken,
+          )).thenAnswer(
         (_) async => left(
           ServerSideFormFieldValidationFailure(
             error: error,
