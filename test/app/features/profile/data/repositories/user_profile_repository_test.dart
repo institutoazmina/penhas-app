@@ -58,10 +58,10 @@ void main() {
         () async {
           // arrange
           _setUpMockPost();
-          final actual = right(const ValidField());
+          final expected = right(const ValidField());
           const toggle = true;
           // act
-          final expected = await sut.stealthMode(toggle: toggle);
+          final actual = await sut.stealthMode(toggle: toggle);
           // assert
           expect(actual, expected);
         },
@@ -89,12 +89,12 @@ void main() {
         () async {
           // arrange
           _setUpMockPost();
-          final actual = right(const ValidField());
+          final expected = right(const ValidField());
           const toggle = false;
           // act
-          final matcher = await sut.anonymousMode(toggle: toggle);
+          final actual = await sut.anonymousMode(toggle: toggle);
           // assert
-          expect(actual, matcher);
+          expect(actual, expected);
         },
       );
     });
