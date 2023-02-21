@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
 class DesignSystemColors {
   static const ligthPurple = Color.fromRGBO(160, 101, 255, 1);
@@ -26,13 +26,14 @@ class DesignSystemColors {
   static const bluishPurple = Color.fromRGBO(129, 51, 255, 1);
   static const systemBackgroundColor = Color.fromRGBO(248, 248, 248, 1);
   static const splashColor = Color.fromARGB(16, 0, 0, 0);
+  static const dialogBarrierColor = Colors.black54;
+
   static Color hexColor(String value) {
     String hexColor = value.toUpperCase().replaceAll('#', '');
     if (hexColor.length == 6) {
       hexColor = 'FF$hexColor';
     }
 
-    final foo = Color(int.parse(hexColor, radix: 16));
-    return foo;
+    return Color(int.parse(hexColor, radix: 16));
   }
 }
