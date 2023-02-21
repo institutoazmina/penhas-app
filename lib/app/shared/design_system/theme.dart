@@ -8,6 +8,13 @@ abstract class AppTheme {
       bottomSheetTheme: base.bottomSheetTheme.copyWith(
         backgroundColor: Colors.transparent,
       ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          primary: Colors.black87,
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          minimumSize: const Size(88.0, 36.0),
+        ),
+      ),
     );
   }
 }
