@@ -47,7 +47,7 @@ void main() {
 
         // assert
         expect(
-          result.fold((l) => null, (r) => r),
+          result.fold((l) => l, (r) => r),
           UserLocationEntity(
               latitude: position.latitude,
               longitude: position.longitude,
@@ -73,7 +73,7 @@ void main() {
 
         // assert
         expect(
-          result.fold((l) => null, (r) => r),
+          result.fold((l) => l, (r) => r),
           const UserLocationEntity(
             latitude: 0.0,
             longitude: 0.0,
