@@ -53,12 +53,12 @@ void main() {
       'enable stealth mode',
       () async {
         // arrange
-        final actual = right(const ValidField());
+        final expected = right(const ValidField());
         when(() => repository.stealthMode(toggle: any(named: 'toggle')))
             .thenAnswer((_) async => right(const ValidField()));
 
         // act
-        final expected = await sut.stealthMode(toggle: true);
+        final actual = await sut.stealthMode(toggle: true);
         // assert
         expect(actual, expected);
         verify(() => repository.stealthMode(toggle: true)).called(1);
@@ -70,11 +70,11 @@ void main() {
       'disable stealth mode',
       () async {
         // arrange
-        final actual = right(const ValidField());
+        final expected = right(const ValidField());
         when(() => repository.stealthMode(toggle: any(named: 'toggle')))
             .thenAnswer((_) async => right(const ValidField()));
         // act
-        final expected = await sut.stealthMode(toggle: false);
+        final actual = await sut.stealthMode(toggle: false);
         // assert
         expect(actual, expected);
         verify(() => repository.stealthMode(toggle: false)).called(1);
@@ -85,11 +85,11 @@ void main() {
       'should enable anonymous mode',
       () async {
         // arrange
-        final actual = right(const ValidField());
+        final expected = right(const ValidField());
         when(() => repository.anonymousMode(toggle: any(named: 'toggle')))
             .thenAnswer((_) async => right(const ValidField()));
         // act
-        final expected = await sut.anonymousMode(toggle: true);
+        final actual = await sut.anonymousMode(toggle: true);
         // assert
         expect(actual, expected);
         verify(() => repository.anonymousMode(toggle: true)).called(1);
@@ -100,11 +100,11 @@ void main() {
       'should disable anonymous mode',
       () async {
         // arrange
-        final actual = right(const ValidField());
+        final expected = right(const ValidField());
         when(() => repository.anonymousMode(toggle: any(named: 'toggle')))
             .thenAnswer((_) async => right(const ValidField()));
         // act
-        final expected = await sut.anonymousMode(toggle: false);
+        final actual = await sut.anonymousMode(toggle: false);
         // assert
         expect(actual, expected);
         verify(() => repository.anonymousMode(toggle: false)).called(1);
