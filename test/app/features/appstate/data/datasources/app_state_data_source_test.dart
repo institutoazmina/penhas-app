@@ -173,6 +173,17 @@ void main() {
             skills: ['asd', 'zxc'],
             minibio: 'minha mini bio',
           );
+          final parameters = {
+            'apelido': profile.nickName,
+            'minibio': profile.minibio,
+            'raca': profile.race,
+            'skills': profile.skills?.join(','),
+            'senha_atual': profile.oldPassword,
+            'senha': profile.newPassword,
+            'email': profile.email,
+          }..removeWhere((key, value) => value == null);
+          final bodyContent = Uri(queryParameters: parameters).query;
+
           _setUpUpdateSuccessResponse();
           // act
           await sut.update(profile);
@@ -181,8 +192,7 @@ void main() {
             () => apiClient.put(
               stateUri,
               headers: headers,
-              body:
-                  'apelido=foo&minibio=minha%20mini%20bio&raca=foo&skills=asd%2Czxc&senha_atual=old-password&senha=strong_password&email=foo%40foo.com',
+              body: bodyContent,
               encoding: null,
             ),
           ).called(1);

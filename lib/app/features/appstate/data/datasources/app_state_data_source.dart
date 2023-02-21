@@ -46,34 +46,17 @@ class AppStateDataSource implements IAppStateDataSource {
         'application/x-www-form-urlencoded; charset=utf-8';
 
     final httpRequest = _serverConfiguration.baseUri.replace(path: '/me');
+    final parameters = {
+      'apelido': update.nickName,
+      'minibio': update.minibio,
+      'raca': update.race,
+      'skills': update.skills?.join(','),
+      'senha_atual': update.oldPassword,
+      'senha': update.newPassword,
+      'email': update.email,
+    }..removeWhere((key, value) => value == null);
 
-    final List<String?> parameters = [
-      (update.nickName == null)
-          ? null
-          : 'apelido=${Uri.encodeComponent(update.nickName!)}',
-      (update.minibio == null)
-          ? null
-          : 'minibio=${Uri.encodeComponent(update.minibio!)}',
-      (update.race == null)
-          ? null
-          : 'raca=${Uri.encodeComponent(update.race!)}',
-      (update.skills == null)
-          ? null
-          : 'skills=${Uri.encodeComponent(update.skills!.join(","))}',
-      (update.oldPassword == null)
-          ? null
-          : 'senha_atual=${Uri.encodeComponent(update.oldPassword!)}',
-      (update.newPassword == null)
-          ? null
-          : 'senha=${Uri.encodeComponent(update.newPassword!)}',
-      (update.email == null)
-          ? null
-          : 'email=${Uri.encodeComponent(update.email!)}',
-    ];
-
-    parameters.removeWhere((e) => e == null);
-    final bodyContent = parameters.join('&');
-
+    final bodyContent = Uri(queryParameters: parameters).query;
     final response = await _apiClient.put(
       httpRequest,
       headers: httpHeader,
