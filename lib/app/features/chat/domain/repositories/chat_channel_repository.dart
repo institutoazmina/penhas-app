@@ -1,19 +1,20 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/network/api_client.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_exception_to_failure.dart';
-import 'package:penhas/app/features/chat/data/models/chat_channel_available_model.dart';
-import 'package:penhas/app/features/chat/data/models/chat_channel_open_model.dart';
-import 'package:penhas/app/features/chat/data/models/chat_channel_session_model.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_available_entity.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entity.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_request.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_session_entity.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_sent_message_response_entity.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/network/api_client.dart';
+import '../../../authentication/presentation/shared/map_exception_to_failure.dart';
+import '../../data/models/chat_channel_available_model.dart';
+import '../../data/models/chat_channel_open_model.dart';
+import '../../data/models/chat_channel_session_model.dart';
+import '../entities/chat_channel_available_entity.dart';
+import '../entities/chat_channel_open_entity.dart';
+import '../entities/chat_channel_request.dart';
+import '../entities/chat_channel_session_entity.dart';
+import '../entities/chat_sent_message_response_entity.dart';
+import '../../../../shared/logger/log.dart';
 
 abstract class IChatChannelRepository {
   Future<Either<Failure, ChatChannelAvailableEntity>> listChannel();
@@ -30,17 +31,17 @@ abstract class IChatChannelRepository {
 
 class ChatChannelRepository implements IChatChannelRepository {
   ChatChannelRepository({
-    required IApiProvider? apiProvider,
+    required IApiProvider apiProvider,
   }) : _apiProvider = apiProvider;
 
-  final IApiProvider? _apiProvider;
+  final IApiProvider _apiProvider;
 
   @override
   Future<Either<Failure, ChatChannelAvailableEntity>> listChannel() async {
     const endPoint = '/me/chats';
 
     try {
-      final response = await _apiProvider!.get(path: endPoint).parseSession();
+      final response = await _apiProvider.get(path: endPoint).parseSession();
       return right(response);
     } catch (error, stack) {
       logError(error, stack);
@@ -59,11 +60,8 @@ class ChatChannelRepository implements IChatChannelRepository {
     };
 
     try {
-      final response = await _apiProvider!
-          .post(
-            path: endPoint,
-            parameters: parameters,
-          )
+      final response = await _apiProvider
+          .post(path: endPoint, parameters: parameters)
           .parseOpenChannel();
       return right(response);
     } catch (error, stack) {
@@ -84,11 +82,8 @@ class ChatChannelRepository implements IChatChannelRepository {
     };
 
     try {
-      final response = await _apiProvider!
-          .get(
-            path: endPoint,
-            parameters: parameters,
-          )
+      final response = await _apiProvider
+          .get(path: endPoint, parameters: parameters)
           .parseSessionChannel();
       return right(response);
     } catch (error, stack) {
@@ -109,7 +104,7 @@ class ChatChannelRepository implements IChatChannelRepository {
     final bodyContent = 'message=${Uri.encodeComponent(option.message!)}';
 
     try {
-      final response = await _apiProvider!
+      final response = await _apiProvider
           .post(
             path: endPoint,
             parameters: parameters,
@@ -135,7 +130,7 @@ class ChatChannelRepository implements IChatChannelRepository {
     };
 
     try {
-      await _apiProvider!.post(
+      await _apiProvider.post(
         path: endPoint,
         parameters: parameters,
       );
@@ -153,7 +148,7 @@ class ChatChannelRepository implements IChatChannelRepository {
     final parameters = {'chat_auth': option.token};
 
     try {
-      await _apiProvider!.delete(
+      await _apiProvider.delete(
         path: endPoint,
         parameters: parameters,
       );
