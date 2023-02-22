@@ -5,6 +5,7 @@ import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/chat/data/models/chat_channel_available_model.dart';
+import 'package:penhas/app/features/chat/data/models/chat_channel_open_model.dart';
 import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
 
 import '../../../../../utils/json_util.dart';
@@ -78,6 +79,39 @@ void main() {
           expect(actual, equals(left(InternetConnectionFailure())));
         },
       );
+    });
+
+    group('openChannel()', () {
+      const clientId = 'client_id';
+      test('return ChatChannelOpenEntity on success', () async {
+        // arrange
+        const jsonFile = 'chat/chat_open_channel.json';
+        final jsonData = await JsonUtil.getJson(from: jsonFile);
+        final expected = right(ChatChannelOpenModel.fromJson(jsonData));
+        when(
+          () => apiProvider.post(
+            path: '/me/chats-session',
+            headers: any(named: 'headers'),
+            parameters: {'prefetch': '1', 'cliente_id': clientId},
+          ),
+        ).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
+        // act
+        final actual = await sut.openChannel(clientId);
+        // assert
+        expect(actual, expected);
+      });
+
+      test('return failure on api error', () async {
+        // arrange
+        when(() => apiProvider.post(
+              path: '/me/chats-session',
+              parameters: {'prefetch': '1', 'cliente_id': clientId},
+            )).thenThrow(NetworkServerException());
+        // act
+        final actual = await sut.openChannel(clientId);
+        // assert
+        expect(actual, left(ServerFailure()));
+      });
     });
   });
 }
