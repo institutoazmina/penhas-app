@@ -19,11 +19,10 @@ class AppPreferencesStore extends LocalStore<AppPreferencesEntity> {
   }
 
   @override
-  Map<String, dynamic> toJson(AppPreferencesEntity appPreferences) {
+  Map<String, dynamic> toJson(AppPreferencesEntity entity) {
     final model = AppPreferencesModel(
-      inactiveAppSince: appPreferences.inactiveAppSince,
-      inactiveAppLogoutTimeInSeconds:
-          appPreferences.inactiveAppLogoutTimeInSeconds,
+      inactiveAppSince: entity.inactiveAppSince,
+      inactiveAppLogoutTimeInSeconds: entity.inactiveAppLogoutTimeInSeconds,
     );
     return model.toJson();
   }
