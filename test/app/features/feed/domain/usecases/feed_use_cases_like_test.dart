@@ -1,38 +1,51 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
+import 'package:penhas/app/features/feed/domain/entities/tweet_request_option.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
+import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
 import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
+import 'package:penhas/app/features/feed/domain/usecases/tweet_filter_preference.dart';
 
-import '../../../../../utils/helper.mocks.dart';
+class MockTweetRepository extends Mock implements ITweetRepository {}
+
+class MockTweetFilterPreference extends Mock implements TweetFilterPreference {}
 
 void main() {
-  late final MockITweetRepository repository = MockITweetRepository();
-  late final MockTweetFilterPreference filterPreference =
-      MockTweetFilterPreference();
+  late ITweetRepository repository;
+  late TweetFilterPreference filterPreference;
 
   setUp(() {
-    when(filterPreference.categories).thenReturn([]);
-    when(filterPreference.getTags()).thenReturn([]);
+    repository = MockTweetRepository();
+    filterPreference = MockTweetFilterPreference();
+
+    when(() => filterPreference.categories).thenReturn([]);
+    when(() => filterPreference.getTags()).thenReturn([]);
   });
 
-  group('FeedUseCases', () {
+  setUpAll(() {
+    registerFallbackValue(TweetRequestOption());
+    registerFallbackValue(TweetEngageRequestOption(tweetId: ''));
+  });
+
+  group(FeedUseCases, () {
     test('should not hit datasource on instantiate', () async {
       // act
       FeedUseCases(repository: repository, filterPreference: filterPreference);
       // assert
       verifyNoMoreInteractions(repository);
     });
-    group('like', () {
-      late int maxRowsPerRequet;
+    group('like()', () {
+      late int maxRowsPerRequest;
       late TweetSessionEntity firstSessionResponse;
       late TweetEntity tweetEntity1;
       late TweetEntity tweetEntity2;
       late TweetEntity tweetEntity3;
 
       setUp(() {
-        maxRowsPerRequet = 5;
+        maxRowsPerRequest = 5;
         tweetEntity1 = TweetEntity(
           id: 'id_1',
           userName: 'user_2',
@@ -89,9 +102,9 @@ void main() {
         final sut = FeedUseCases(
           repository: repository,
           filterPreference: filterPreference,
-          maxRows: maxRowsPerRequet,
+          maxRows: maxRowsPerRequest,
         );
-        when(repository.fetch(option: anyNamed('option')))
+        when(() => repository.fetch(option: any(named: 'option')))
             .thenAnswer((_) async => right(firstSessionResponse));
         await sut.fetchOldestTweet();
 
@@ -107,7 +120,7 @@ void main() {
             ],
           ),
         );
-        when(repository.like(option: anyNamed('option')))
+        when(() => repository.like(option: any(named: 'option')))
             .thenAnswer((_) async => right(likeResponse));
         // act
         final received = await sut.like(tweetEntity1);
@@ -120,9 +133,9 @@ void main() {
         final sut = FeedUseCases(
           repository: repository,
           filterPreference: filterPreference,
-          maxRows: maxRowsPerRequet,
+          maxRows: maxRowsPerRequest,
         );
-        when(repository.fetch(option: anyNamed('option')))
+        when(() => repository.fetch(option: any(named: 'option')))
             .thenAnswer((_) async => right(firstSessionResponse));
         await sut.fetchOldestTweet();
 
@@ -130,7 +143,7 @@ void main() {
           totalLikes: tweetEntity3.totalLikes + 1,
           meta: const TweetMeta(liked: true, owner: true),
         );
-        when(repository.like(option: anyNamed('option')))
+        when(() => repository.like(option: any(named: 'option')))
             .thenAnswer((_) async => right(likeResponse));
         final expected = right(
           FeedCache(
@@ -148,7 +161,7 @@ void main() {
         expect(expected, received);
       });
     });
-    group('unlike', () {
+    group('unlike()', () {
       int? maxRowsPerRequet;
       late TweetSessionEntity firstSessionResponse;
       late TweetEntity tweetEntity1;
@@ -215,7 +228,7 @@ void main() {
           filterPreference: filterPreference,
           maxRows: maxRowsPerRequet,
         );
-        when(repository.fetch(option: anyNamed('option')))
+        when(() => repository.fetch(option: any(named: 'option')))
             .thenAnswer((_) async => right(firstSessionResponse));
         await sut.fetchOldestTweet();
 
@@ -231,7 +244,7 @@ void main() {
             ],
           ),
         );
-        when(repository.like(option: anyNamed('option')))
+        when(() => repository.like(option: any(named: 'option')))
             .thenAnswer((_) async => right(likeResponse));
         // act
         final received = await sut.unlike(tweetEntity1);
@@ -246,7 +259,7 @@ void main() {
           filterPreference: filterPreference,
           maxRows: maxRowsPerRequet,
         );
-        when(repository.fetch(option: anyNamed('option')))
+        when(() => repository.fetch(option: any(named: 'option')))
             .thenAnswer((_) async => right(firstSessionResponse));
         await sut.fetchOldestTweet();
 
@@ -254,7 +267,7 @@ void main() {
           totalLikes: 0,
           meta: const TweetMeta(liked: false, owner: true),
         );
-        when(repository.like(option: anyNamed('option')))
+        when(() => repository.like(option: any(named: 'option')))
             .thenAnswer((_) async => right(likeResponse));
         final expected = right(
           FeedCache(
