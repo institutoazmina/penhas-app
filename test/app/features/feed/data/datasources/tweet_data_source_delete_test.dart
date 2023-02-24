@@ -1,33 +1,43 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
+import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
 
-import '../../../../../utils/helper.mocks.dart';
+class MockHttpClient extends Mock implements http.Client {}
+
+class MockApiServerConfigure extends Mock implements IApiServerConfigure {}
 
 void main() {
-  late final MockHttpClient apiClient = MockHttpClient();
-  late final MockIApiServerConfigure serverConfigure =
-      MockIApiServerConfigure();
-  final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
+  late Uri serverEndpoint;
+  late http.Client apiClient;
   late ITweetDataSource dataSource;
+  late IApiServerConfigure serverConfigure;
 
   const String sessionToken = 'my_really.long.JWT';
 
   setUp(() {
+    apiClient = MockHttpClient();
+    serverConfigure = MockApiServerConfigure();
+    serverEndpoint = Uri.https('api.anyserver.io', '/');
+
     dataSource = TweetDataSource(
       apiClient: apiClient,
       serverConfiguration: serverConfigure,
     );
 
     // MockApiServerConfigure configuration
-    when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
-    when(serverConfigure.apiToken)
+    when(() => serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
+    when(() => serverConfigure.apiToken)
         .thenAnswer((_) => Future.value(sessionToken));
-    when(serverConfigure.userAgent)
+    when(() => serverConfigure.userAgent)
         .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
+  });
+
+  setUpAll(() {
+    registerFallbackValue(Uri());
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
@@ -39,7 +49,7 @@ void main() {
     };
   }
 
-  Uri _setuHttpRequest(String path, Map<String, String> queryParameters) {
+  Uri _setUpHttpRequest(String path, Map<String, String> queryParameters) {
     return Uri(
       scheme: serverEndpoint.scheme,
       host: serverEndpoint.host,
@@ -50,9 +60,9 @@ void main() {
 
   void _setUpMockPostHttpClientSuccess204() {
     when(
-      apiClient.delete(
-        any,
-        headers: anyNamed('headers'),
+      () => apiClient.delete(
+        any(),
+        headers: any(named: 'headers'),
       ),
     ).thenAnswer(
       (_) async => http.Response(
@@ -65,7 +75,7 @@ void main() {
     );
   }
 
-  group('FeedDataSource', () {
+  group(TweetDataSource, () {
     group('delete()', () {
       TweetEngageRequestOption? requestOption;
 
@@ -73,28 +83,34 @@ void main() {
         requestOption = TweetEngageRequestOption(tweetId: '200528T2055370004');
       });
 
-      test('should perform a DELETE with X-API-Key', () async {
-        // arrange
-        const endPointPath = '/me/tweets';
-        final queryParameters = {'id': requestOption!.tweetId};
-        final headers = await _setUpHttpHeader();
-        final request = _setuHttpRequest(endPointPath, queryParameters);
-        _setUpMockPostHttpClientSuccess204();
-        // act
-        await dataSource.delete(option: requestOption);
-        // assert
-        verify(apiClient.delete(request, headers: headers));
-      });
+      test(
+        'perform a DELETE with X-API-Key',
+        () async {
+          // arrange
+          const endPointPath = '/me/tweets';
+          final queryParameters = {'id': requestOption!.tweetId};
+          final headers = await _setUpHttpHeader();
+          final request = _setUpHttpRequest(endPointPath, queryParameters);
+          _setUpMockPostHttpClientSuccess204();
+          // act
+          await dataSource.delete(option: requestOption);
+          // assert
+          verify(() => apiClient.delete(request, headers: headers)).called(1);
+        },
+      );
 
-      test('should get a valid ValidField for a successful delete', () async {
-        // arrange
-        _setUpMockPostHttpClientSuccess204();
-        const expected = ValidField();
-        // act
-        final received = await dataSource.delete(option: requestOption);
-        // assert
-        expect(expected, received);
-      });
+      test(
+        'get a valid ValidField for a successful delete',
+        () async {
+          // arrange
+          _setUpMockPostHttpClientSuccess204();
+          const expected = ValidField();
+          // act
+          final received = await dataSource.delete(option: requestOption);
+          // assert
+          expect(expected, received);
+        },
+      );
     });
   });
 }
