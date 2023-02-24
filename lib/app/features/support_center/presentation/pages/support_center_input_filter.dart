@@ -48,7 +48,7 @@ class SupportCenterInputFilter extends StatelessWidget {
                   ),
                   onPressed: () async {
                     Modular.to.showDialog(
-                      builder: (_) => SupportCenterHelpAlert(),
+                      builder: (_) => const SupportCenterHelpAlert(),
                     );
                   },
                 )
