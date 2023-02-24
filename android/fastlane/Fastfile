@@ -41,7 +41,7 @@ platform :android do
     build_bundle
     upload_to_play_store(
       track: 'alpha',
-      release_status: 'completed',
+      release_status: 'draft',
       aab: "#{$project_path}/build/app/outputs/bundle/release/app-release.aab",
     )
   end
