@@ -26,12 +26,19 @@ mixin _$FeedRoutingPerfilChatController
     });
   }
 
-  final _$retryAsyncAction =
-      AsyncAction('_FeedRoutingPerfilChatControllerBase.retry');
+  final _$_FeedRoutingPerfilChatControllerBaseActionController =
+      ActionController(name: '_FeedRoutingPerfilChatControllerBase');
 
   @override
-  Future<void> retry() {
-    return _$retryAsyncAction.run(() => super.retry());
+  void retry() {
+    final _$actionInfo = _$_FeedRoutingPerfilChatControllerBaseActionController
+        .startAction(name: '_FeedRoutingPerfilChatControllerBase.retry');
+    try {
+      return super.retry();
+    } finally {
+      _$_FeedRoutingPerfilChatControllerBaseActionController
+          .endAction(_$actionInfo);
+    }
   }
 
   @override

@@ -1,13 +1,14 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entity.dart';
-import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
-import 'package:penhas/app/features/feed/domain/states/feed_router_type.dart';
-import 'package:penhas/app/features/feed/domain/states/feed_routing_state.dart';
-import 'package:penhas/app/features/users/data/repositories/users_repository.dart';
-import 'package:penhas/app/features/users/domain/entities/user_detail_entity.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../../authentication/presentation/shared/map_failure_message.dart';
+import '../../../chat/domain/entities/chat_channel_open_entity.dart';
+import '../../../chat/domain/repositories/chat_channel_repository.dart';
+import '../../../users/data/repositories/users_repository.dart';
+import '../../../users/domain/entities/user_detail_entity.dart';
+import '../../domain/states/feed_router_type.dart';
+import '../../domain/states/feed_routing_state.dart';
 
 part 'feed_routing_perfil_chat_controller.g.dart';
 
@@ -17,7 +18,7 @@ class FeedRoutingPerfilChatController
   FeedRoutingPerfilChatController({
     required IUsersRepository usersRepository,
     required IChatChannelRepository channelRepository,
-    required FeedRouterType? routerType,
+    required FeedRouterType routerType,
   }) : super(routerType, usersRepository, channelRepository);
 }
 
@@ -28,10 +29,10 @@ abstract class _FeedRoutingPerfilChatControllerBase
     this._usersRepository,
     this._channelRepository,
   ) {
-    getRouterData();
+    _loadRouterData();
   }
 
-  final FeedRouterType? _routerType;
+  final FeedRouterType _routerType;
   final IUsersRepository _usersRepository;
   final IChatChannelRepository _channelRepository;
 
@@ -39,65 +40,54 @@ abstract class _FeedRoutingPerfilChatControllerBase
   FeedRoutingState routingState = const FeedRoutingState.initial('');
 
   @action
-  Future<void> retry() async {
-    // TODO: implement retry
-  }
-}
+  void retry() => _loadRouterData();
 
-extension _PrivateMethod on _FeedRoutingPerfilChatControllerBase {
-  Future<void> getRouterData() async {
+  void _loadRouterData() async {
     routingState = FeedRoutingState.initial(
-      pageTitle(),
+      _getPageTitle(),
     );
 
-    _routerType!.when(
-      chat: (clientId) => loadChat(clientId),
-      profile: (clientId) => loadProfile(clientId),
+    _routerType.when(
+      chat: _loadChat,
+      profile: _loadProfile,
     );
   }
 
-  String pageTitle() {
-    return _routerType!.when(
+  String _getPageTitle() {
+    return _routerType.when(
       chat: (_) => 'Chat',
       profile: (_) => 'Perfil',
     );
   }
 
-  Future<void> loadProfile(int clientId) async {
+  Future<void> _loadProfile(int clientId) async {
     final result = await _usersRepository.profileDetail(clientId.toString());
-    result.fold(
-      (failure) => handleFailure(failure),
-      (session) => handleProfileDetail(session),
-    );
+    result.fold(_handleFailure, _handleProfileDetail);
   }
 
-  Future<void> loadChat(int clientId) async {
+  Future<void> _loadChat(int clientId) async {
     final channel = await _channelRepository.openChannel(clientId.toString());
-
-    channel.fold(
-      (failure) => handleFailure(failure),
-      (session) => handleChatSesssion(session),
-    );
+    channel.fold(_handleFailure, _handleChatSesssion);
   }
 
-  void handleProfileDetail(UserDetailEntity userProfile) {
+  void _handleProfileDetail(UserDetailEntity userProfile) {
     Modular.to.pushReplacementNamed(
       '/mainboard/users/profile_from_feed',
       arguments: userProfile,
     );
   }
 
-  void handleFailure(Failure failure) {
-    routingState = FeedRoutingState.error(
-      pageTitle(),
-      mapFailureMessage(failure)!,
+  void _handleChatSesssion(ChatChannelOpenEntity chat) {
+    Modular.to.pushReplacementNamed(
+      '/mainboard/chat_from_feed',
+      arguments: chat,
     );
   }
 
-  void handleChatSesssion(ChatChannelOpenEntity session) {
-    Modular.to.pushReplacementNamed(
-      '/mainboard/chat_from_feed',
-      arguments: session,
+  void _handleFailure(Failure failure) {
+    routingState = FeedRoutingState.error(
+      _getPageTitle(),
+      mapFailureMessage(failure)!,
     );
   }
 }
