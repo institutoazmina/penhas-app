@@ -8,6 +8,7 @@ import 'package:penhas/app/features/chat/data/models/chat_channel_available_mode
 import 'package:penhas/app/features/chat/data/models/chat_channel_open_model.dart';
 import 'package:penhas/app/features/chat/data/models/chat_channel_session_model.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_request.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_sent_message_response_entity.dart';
 import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
 
 import '../../../../../utils/json_util.dart';
@@ -15,10 +16,16 @@ import '../../../../../utils/json_util.dart';
 void main() {
   late IApiProvider apiProvider;
   late IChatChannelRepository sut;
+  late ChatChannelRequest chatRequest;
 
   setUp(() {
     apiProvider = MockApiProvider();
     sut = ChatChannelRepository(apiProvider: apiProvider);
+    chatRequest = ChatChannelRequest(
+      token: 'my_strong_token',
+      rows: 20,
+      message: 'Hello, world!',
+    );
   });
 
   group(ChatChannelRepository, () {
@@ -171,10 +178,7 @@ void main() {
           ).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
 
           // act
-          final actual = await sut.getMessages(ChatChannelRequest(
-            token: 'my_strong_token',
-            rows: 20,
-          ));
+          final actual = await sut.getMessages(chatRequest);
 
           // assert
           expect(actual, expected);
@@ -193,10 +197,51 @@ void main() {
             ),
           ).thenThrow(InternetConnectionException());
           // act
-          final actual = await sut.getMessages(ChatChannelRequest(
-            token: 'my_strong_token',
-            rows: 20,
-          ));
+          final actual = await sut.getMessages(chatRequest);
+          // assert
+          expect(actual, equals(left(InternetConnectionFailure())));
+        },
+      );
+    });
+
+    group('sentMessage()', () {
+      test(
+        'return the ChatChannelSessionEntity on successful',
+        () async {
+          // arrange
+          const jsonFile = 'chat/chat_send_message_channel.json';
+          final jsonData = await JsonUtil.getJson(from: jsonFile);
+          final expected =
+              right(ChatSentMessageResponseEntity.fromJson(jsonData));
+          final encodedMessage = Uri.encodeComponent(chatRequest.message!);
+          final bodyContent = 'message=$encodedMessage';
+          when(
+            () => apiProvider.post(
+                path: '/me/chats-messages',
+                parameters: {'chat_auth': chatRequest.token},
+                body: bodyContent),
+          ).thenAnswer((_) async => JsonUtil.getString(from: jsonFile));
+          // act
+          final actual = await sut.sentMessage(chatRequest);
+          // assert
+          expect(actual, expected);
+        },
+      );
+
+      test(
+        'return a Failure when the call is unsuccessful',
+        () async {
+          // arrange
+          final encodedMessage = Uri.encodeComponent(chatRequest.message!);
+          final bodyContent = 'message=$encodedMessage';
+          when(
+            () => apiProvider.post(
+                path: '/me/chats-messages',
+                parameters: {'chat_auth': chatRequest.token},
+                body: bodyContent),
+          ).thenThrow(InternetConnectionException());
+          // act
+          final actual = await sut.sentMessage(chatRequest);
           // assert
           expect(actual, equals(left(InternetConnectionFailure())));
         },
