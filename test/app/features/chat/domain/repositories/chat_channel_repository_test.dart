@@ -252,13 +252,13 @@ void main() {
         () async {
           final block = {'1': true, '0': false};
           const jsonFile = 'chat/chat_block_channel.json';
-          block.forEach((key, value) async {
+          for (final item in block.entries) {
             //arrange
             final localOption = ChatChannelRequest(
               token: chatRequest.token,
               rows: chatRequest.rows,
               clientId: chatRequest.clientId,
-              block: value,
+              block: item.value,
             );
             mockPostSuccessfully(jsonFile);
             //act
@@ -271,11 +271,11 @@ void main() {
             verify(() => apiProvider.post(
                   path: '/me/manage-blocks',
                   parameters: {
-                    'block': key,
+                    'block': item.key,
                     'cliente_id': localOption.clientId
                   },
                 )).called(1);
-          });
+          }
         },
       );
 
@@ -288,6 +288,42 @@ void main() {
           final actual = await sut.blockChannel(chatRequest);
           //assert
           expect(actual, left(InternetConnectionFailure()));
+        },
+      );
+    });
+
+    group('deleteChannel()', () {
+      test(
+        'delete channel from server',
+        () async {
+          // arrange
+          when(() => apiProvider.delete(
+                path: any(named: 'path'),
+                parameters: any(named: 'parameters'),
+              )).thenAnswer((_) async => '');
+          // act
+          final result = await sut.deleteChannel(chatRequest);
+          // assert
+          expect(result, equals(right(ValidField())));
+          verify(() => apiProvider.delete(
+                path: '/me/chats-session',
+                parameters: {'chat_auth': chatRequest.token},
+              )).called(1);
+          verifyNoMoreInteractions(apiProvider);
+        },
+      );
+      test(
+        'return a Failure when the call is unsuccessful',
+        () async {
+          // arrange
+          when(() => apiProvider.delete(
+                path: any(named: 'path'),
+                parameters: any(named: 'parameters'),
+              )).thenThrow(NetworkServerException());
+          // act
+          final result = await sut.deleteChannel(chatRequest);
+          // assert
+          expect(result, equals(left(ServerFailure())));
         },
       );
     });
