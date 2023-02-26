@@ -31,6 +31,48 @@ void main() {
     );
   });
 
+  void mockGetSuccessfully(String jsonFile) {
+    when(
+      () => apiProvider.get(
+        path: any(named: 'path'),
+        headers: any(named: 'headers'),
+        parameters: any(named: 'parameters'),
+      ),
+    ).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
+  }
+
+  void mockGetException(Object throwable) {
+    when(
+      () => apiProvider.get(
+        path: any(named: 'path'),
+        headers: any(named: 'headers'),
+        parameters: any(named: 'parameters'),
+      ),
+    ).thenThrow(throwable);
+  }
+
+  void mockPostSuccessfully(String jsonFile) {
+    when(
+      () => apiProvider.post(
+        path: any(named: 'path'),
+        headers: any(named: 'headers'),
+        parameters: any(named: 'parameters'),
+        body: any(named: 'body'),
+      ),
+    ).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
+  }
+
+  void mockPostException(Object throwable) {
+    when(
+      () => apiProvider.post(
+        path: any(named: 'path'),
+        headers: any(named: 'headers'),
+        parameters: any(named: 'parameters'),
+        body: any(named: 'body'),
+      ),
+    ).thenThrow(throwable);
+  }
+
   group(ChatChannelRepository, () {
     group('listChannel()', () {
       test(
@@ -40,17 +82,12 @@ void main() {
           const jsonFile = 'chat/chat_list_channel_empty.json';
           final jsonData = await JsonUtil.getJson(from: jsonFile);
           final expected = right(ChatChannelAvailableModel.fromJson(jsonData));
-          when(
-            () => apiProvider.get(
-              path: '/me/chats',
-              headers: any(named: 'headers'),
-              parameters: any(named: 'parameters'),
-            ),
-          ).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
+          mockGetSuccessfully(jsonFile);
           // act
           final actual = await sut.listChannel();
           // assert
           expect(actual, expected);
+          verify(() => apiProvider.get(path: '/me/chats')).called(1);
         },
       );
       test(
@@ -60,31 +97,18 @@ void main() {
           const jsonFile = 'chat/chat_list_channel.json';
           final jsonData = await JsonUtil.getJson(from: jsonFile);
           final expected = right(ChatChannelAvailableModel.fromJson(jsonData));
-          when(
-            () => apiProvider.get(
-              path: any(named: 'path'),
-              headers: any(named: 'headers'),
-              parameters: any(named: 'parameters'),
-            ),
-          ).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
+          mockGetSuccessfully(jsonFile);
           // act
           final actual = await sut.listChannel();
           // assert
           expect(actual, expected);
         },
       );
-
       test(
         'return a failure when the call fails',
         () async {
           // arrange
-          when(
-            () => apiProvider.get(
-              path: any(named: 'path'),
-              headers: any(named: 'headers'),
-              parameters: any(named: 'parameters'),
-            ),
-          ).thenThrow(InternetConnectionException());
+          mockGetException(InternetConnectionException());
           // act
           final actual = await sut.listChannel();
           // assert
@@ -102,28 +126,24 @@ void main() {
           const jsonFile = 'chat/chat_open_channel.json';
           final jsonData = await JsonUtil.getJson(from: jsonFile);
           final expected = right(ChatChannelOpenModel.fromJson(jsonData));
-          when(
-            () => apiProvider.post(
-              path: '/me/chats-session',
-              headers: any(named: 'headers'),
-              parameters: {'prefetch': '1', 'cliente_id': clientId},
-            ),
-          ).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
+          mockPostSuccessfully(jsonFile);
           // act
           final actual = await sut.openChannel(clientId);
           // assert
           expect(actual, expected);
+          verify(
+            () => apiProvider.post(
+              path: '/me/chats-session',
+              parameters: {'prefetch': '1', 'cliente_id': clientId},
+            ),
+          ).called(1);
         },
       );
-
       test(
         'return failure on api error',
         () async {
           // arrange
-          when(() => apiProvider.post(
-                path: '/me/chats-session',
-                parameters: {'prefetch': '1', 'cliente_id': clientId},
-              )).thenThrow(NetworkServerException());
+          mockPostException(NetworkServerException());
           // act
           final actual = await sut.openChannel(clientId);
           // assert
@@ -140,17 +160,7 @@ void main() {
           const jsonFile = 'chat/chat_read_channel_empty.json';
           final jsonData = await JsonUtil.getJson(from: jsonFile);
           final expected = right(ChatChannelSessionModel.fromJson(jsonData));
-          when(
-            () => apiProvider.get(
-              path: '/me/chats-messages',
-              headers: any(named: 'headers'),
-              parameters: {
-                'chat_auth': 'my_strong_token',
-                'pagination': null,
-                'rows': '20'
-              },
-            ),
-          ).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
+          mockGetSuccessfully(jsonFile);
           // act
           final actual = await sut.getMessages(ChatChannelRequest(
             token: 'my_strong_token',
@@ -158,17 +168,7 @@ void main() {
           ));
           // assert
           expect(actual, expected);
-        },
-      );
-
-      test(
-        'return a ChatChannelSessionEntity on successful',
-        () async {
-          // arrange
-          const jsonFile = 'chat/chat_read_channel.json';
-          final jsonData = await JsonUtil.getJson(from: jsonFile);
-          final expected = right(ChatChannelSessionModel.fromJson(jsonData));
-          when(
+          verify(
             () => apiProvider.get(
               path: '/me/chats-messages',
               headers: any(named: 'headers'),
@@ -178,27 +178,28 @@ void main() {
                 'rows': '20'
               },
             ),
-          ).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
-
+          ).called(1);
+        },
+      );
+      test(
+        'return a ChatChannelSessionEntity on successful',
+        () async {
+          // arrange
+          const jsonFile = 'chat/chat_read_channel.json';
+          final jsonData = await JsonUtil.getJson(from: jsonFile);
+          final expected = right(ChatChannelSessionModel.fromJson(jsonData));
+          mockGetSuccessfully(jsonFile);
           // act
           final actual = await sut.getMessages(chatRequest);
-
           // assert
           expect(actual, expected);
         },
       );
-
       test(
         'return a Failure when the call is unsuccessful',
         () async {
           // arrange
-          when(
-            () => apiProvider.get(
-              path: any(named: 'path'),
-              headers: any(named: 'headers'),
-              parameters: any(named: 'parameters'),
-            ),
-          ).thenThrow(InternetConnectionException());
+          mockGetException(InternetConnectionException());
           // act
           final actual = await sut.getMessages(chatRequest);
           // assert
@@ -218,16 +219,17 @@ void main() {
               right(ChatSentMessageResponseEntity.fromJson(jsonData));
           final encodedMessage = Uri.encodeComponent(chatRequest.message!);
           final bodyContent = 'message=$encodedMessage';
-          when(
-            () => apiProvider.post(
-                path: '/me/chats-messages',
-                parameters: {'chat_auth': chatRequest.token},
-                body: bodyContent),
-          ).thenAnswer((_) async => JsonUtil.getString(from: jsonFile));
+          mockPostSuccessfully(jsonFile);
           // act
           final actual = await sut.sentMessage(chatRequest);
           // assert
           expect(actual, expected);
+          verify(
+            () => apiProvider.post(
+                path: '/me/chats-messages',
+                parameters: {'chat_auth': chatRequest.token},
+                body: bodyContent),
+          ).called(1);
         },
       );
 
@@ -235,14 +237,7 @@ void main() {
         'return a Failure when the call is unsuccessful',
         () async {
           // arrange
-          final encodedMessage = Uri.encodeComponent(chatRequest.message!);
-          final bodyContent = 'message=$encodedMessage';
-          when(
-            () => apiProvider.post(
-                path: '/me/chats-messages',
-                parameters: {'chat_auth': chatRequest.token},
-                body: bodyContent),
-          ).thenThrow(InternetConnectionException());
+          mockPostException(InternetConnectionException());
           // act
           final actual = await sut.sentMessage(chatRequest);
           // assert
@@ -256,6 +251,7 @@ void main() {
         'call the endpoint post method with correct parameters',
         () async {
           final block = {'1': true, '0': false};
+          const jsonFile = 'chat/chat_block_channel.json';
           block.forEach((key, value) async {
             //arrange
             final localOption = ChatChannelRequest(
@@ -264,10 +260,7 @@ void main() {
               clientId: chatRequest.clientId,
               block: value,
             );
-            when(() => apiProvider.post(
-                  path: any(named: 'path'),
-                  parameters: any(named: 'parameters'),
-                )).thenAnswer((_) async => '');
+            mockPostSuccessfully(jsonFile);
             //act
             final actual = await sut.blockChannel(localOption);
             //assert
@@ -290,15 +283,9 @@ void main() {
         'return a Failure when the call is unsuccessful',
         () async {
           //arrange
-          when(
-            () => apiProvider.post(
-              path: any(named: 'path'),
-              parameters: any(named: 'parameters'),
-            ),
-          ).thenThrow(InternetConnectionException());
+          mockPostException(InternetConnectionException());
           //act
           final actual = await sut.blockChannel(chatRequest);
-
           //assert
           expect(actual, left(InternetConnectionFailure()));
         },
