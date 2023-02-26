@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
@@ -71,14 +73,14 @@ void main() {
 
       when(() => flutterSoundPlayer
           .setSubscriptionDuration(Duration(milliseconds: 100))).thenAnswer(
-        (_) async => null,
+        (_) => Future.value(),
       );
 
       when(() => flutterSoundPlayer.startPlayer(
             fromURI: any(named: 'fromURI'),
             codec: Codec.aacADTS,
             whenFinished: any(named: 'whenFinished'),
-          )).thenAnswer((_) async => null);
+          )).thenAnswer((_) => Future.value());
 
       // act
       final result = await audioPlayServices.start(audioReference);
@@ -98,9 +100,10 @@ void main() {
       );
 
       when(() => flutterSoundPlayer.isStopped).thenReturn(false);
-      when(() => flutterSoundPlayer.stopPlayer()).thenAnswer((_) async => null);
+      when(() => flutterSoundPlayer.stopPlayer())
+          .thenAnswer((_) => Future.value());
       when(() => flutterSoundPlayer.closePlayer())
-          .thenAnswer((_) async => null);
+          .thenAnswer((_) => Future.value());
 
       // act
       await audioPlayServices.dispose();
