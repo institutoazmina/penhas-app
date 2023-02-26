@@ -101,11 +101,11 @@ void main() {
             _setUpMockGetHttpClientSuccess200(bodyContent);
             final jsonData =
                 await JsonUtil.getJson(from: 'help_center/guardian_list.json');
-            final actual = GuardianSessionModel.fromJson(jsonData);
+            final expected = GuardianSessionModel.fromJson(jsonData);
             // act
-            final received = await dataSource.fetch();
+            final actual = await dataSource.fetch();
             // assert
-            expect(actual, received);
+            expect(actual, expected);
           },
         );
       });

@@ -119,9 +119,9 @@ void main() {
             );
             final expected = AlertModel.fromJson(jsonData);
             // act
-            final received = await dataSource.create(guardian);
+            final actual = await dataSource.create(guardian);
             // assert
-            expect(received, expected);
+            expect(actual, expected);
           },
         );
       });

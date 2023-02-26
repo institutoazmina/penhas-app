@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
@@ -107,11 +109,10 @@ void main() {
           () async {
             // arrange
             _setUpMockPostHttpClientSuccess204();
-            const actual = ValidField();
             // act
-            final received = await dataSource.delete(guardian);
+            final actual = await dataSource.delete(guardian);
             // assert
-            expect(actual, received);
+            expect(actual, ValidField());
           },
         );
       });

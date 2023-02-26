@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
@@ -136,9 +138,9 @@ void main() {
                   'Não há guardiões cadastrado! Nenhum alerta foi enviado.',
             );
             // act
-            final received = await dataSource.alert(userLocation);
+            final actual = await dataSource.alert(userLocation);
             // assert
-            expect(expected, received);
+            expect(actual, expected);
           },
         );
 
