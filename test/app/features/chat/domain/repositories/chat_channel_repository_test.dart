@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/api_client.dart';
@@ -25,6 +26,8 @@ void main() {
       token: 'my_strong_token',
       rows: 20,
       message: 'Hello, world!',
+      block: true,
+      clientId: 'AxSwsGAGRW',
     );
   });
 
@@ -244,6 +247,60 @@ void main() {
           final actual = await sut.sentMessage(chatRequest);
           // assert
           expect(actual, equals(left(InternetConnectionFailure())));
+        },
+      );
+    });
+
+    group('blockChannel()', () {
+      test(
+        'call the endpoint post method with correct parameters',
+        () async {
+          final block = {'1': true, '0': false};
+          block.forEach((key, value) async {
+            //arrange
+            final localOption = ChatChannelRequest(
+              token: chatRequest.token,
+              rows: chatRequest.rows,
+              clientId: chatRequest.clientId,
+              block: value,
+            );
+            when(() => apiProvider.post(
+                  path: any(named: 'path'),
+                  parameters: any(named: 'parameters'),
+                )).thenAnswer((_) async => '');
+            //act
+            final actual = await sut.blockChannel(localOption);
+            //assert
+            expect(
+              actual.fold((l) => l, (r) => r),
+              ValidField(),
+            );
+            verify(() => apiProvider.post(
+                  path: '/me/manage-blocks',
+                  parameters: {
+                    'block': key,
+                    'cliente_id': localOption.clientId
+                  },
+                )).called(1);
+          });
+        },
+      );
+
+      test(
+        'return a Failure when the call is unsuccessful',
+        () async {
+          //arrange
+          when(
+            () => apiProvider.post(
+              path: any(named: 'path'),
+              parameters: any(named: 'parameters'),
+            ),
+          ).thenThrow(InternetConnectionException());
+          //act
+          final actual = await sut.blockChannel(chatRequest);
+
+          //assert
+          expect(actual, left(InternetConnectionFailure()));
         },
       );
     });
