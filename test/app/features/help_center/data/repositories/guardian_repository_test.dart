@@ -78,9 +78,9 @@ void main() {
           when(() => dataSource.fetch()).thenAnswer((_) async => sessionModel);
           final expected = right(emptySession);
           // act
-          final receceived = await sut.fetch();
+          final actual = await sut.fetch();
           // assert
-          expect(receceived, expected);
+          expect(actual, expected);
         },
       );
       test(
@@ -93,9 +93,9 @@ void main() {
           when(() => dataSource.fetch()).thenAnswer((_) async => sessionModel);
           final expected = right(sessionModel);
           // act
-          final receceived = await sut.fetch();
+          final actual = await sut.fetch();
           // assert
-          expect(receceived, expected);
+          expect(actual, expected);
         },
       );
       test(
@@ -114,9 +114,9 @@ void main() {
           when(() => dataSource.create(guardian))
               .thenAnswer((_) async => response);
           // act
-          final received = await sut.create(guardian);
+          final actual = await sut.create(guardian);
           // assert
-          expect(expected, received);
+          expect(actual, expected);
         },
       );
       test(
@@ -141,9 +141,9 @@ void main() {
           when(() => dataSource.create(guardian))
               .thenThrow(ApiProviderException(bodyContent: bodyContent));
           // act
-          final received = await sut.create(guardian);
+          final actual = await sut.create(guardian);
           // assert
-          expect(expected, received);
+          expect(actual, expected);
         },
       );
       test(
@@ -165,9 +165,9 @@ void main() {
           when(() => dataSource.update(guardian))
               .thenAnswer((_) async => response);
           // act
-          final received = await sut.update(guardian);
+          final actual = await sut.update(guardian);
           // assert
-          expect(expected, received);
+          expect(actual, expected);
         },
       );
       test(
@@ -184,9 +184,9 @@ void main() {
           when(() => dataSource.delete(guardian))
               .thenAnswer((_) async => const ValidField());
           // act
-          final received = await sut.delete(guardian);
+          final actual = await sut.delete(guardian);
           // assert
-          expect(expected, received);
+          expect(actual, expected);
         },
       );
 
@@ -209,9 +209,9 @@ void main() {
               ),
             );
             // act
-            final received = await sut.alert(location);
+            final actual = await sut.alert(location);
             // assert
-            expect(expected, received);
+            expect(actual, expected);
           },
         );
       });
