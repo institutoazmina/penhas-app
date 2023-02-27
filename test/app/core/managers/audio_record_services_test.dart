@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_sound/public/flutter_sound_recorder.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_platform_interface.dart';
@@ -108,9 +110,10 @@ void main() {
       'dispose() release the audio record session',
       () async {
         when(() => soundRecorder.isStopped).thenReturn(false);
-        when(() => audioSyncManager.syncAudio())..thenAnswer((_) async => true);
+        when(() => audioSyncManager.syncAudio()).thenAnswer((_) async => true);
         when(() => soundRecorder.stopRecorder()).thenAnswer((_) async => null);
-        when(() => soundRecorder.closeRecorder()).thenAnswer((_) async => null);
+        when(() => soundRecorder.closeRecorder())
+            .thenAnswer((_) => Future.value());
 
         // act
         await recordServices.dispose();
@@ -138,13 +141,13 @@ void main() {
         when(() => soundRecorder.isStopped).thenReturn(true);
         when(() => soundRecorder.openRecorder()).thenAnswer((_) async => null);
         when(() => soundRecorder.setSubscriptionDuration(any()))
-            .thenAnswer((_) async => null);
+            .thenAnswer((_) => Future.value());
         when(() => soundRecorder.startRecorder(
               codec: any(named: 'codec'),
               toFile: any(named: 'toFile'),
               bitRate: any(named: 'bitRate'),
               sampleRate: any(named: 'sampleRate'),
-            )).thenAnswer((_) async => null);
+            )).thenAnswer((_) => Future.value());
 
         when(() => audioSyncManager.audioFile(
               session: any(named: 'session'),
@@ -243,13 +246,13 @@ void main() {
         when(() => soundRecorder.isStopped).thenReturn(true);
         when(() => soundRecorder.openRecorder()).thenAnswer((_) async => null);
         when(() => soundRecorder.setSubscriptionDuration(any()))
-            .thenAnswer((_) async => null);
+            .thenAnswer((_) => Future.value());
         when(() => soundRecorder.startRecorder(
               codec: any(named: 'codec'),
               toFile: any(named: 'toFile'),
               bitRate: any(named: 'bitRate'),
               sampleRate: any(named: 'sampleRate'),
-            )).thenAnswer((_) async => null);
+            )).thenAnswer((_) => Future.value());
 
         when(() => audioSyncManager.audioFile(
               session: any(named: 'session'),
