@@ -2,14 +2,15 @@ import 'dart:async';
 
 import 'package:dartz/dartz.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/managers/modules_sevices.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/domain/states/feed_security_state.dart';
-import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
-import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
+
+import '../../../core/error/failures.dart';
+import '../../../core/managers/modules_sevices.dart';
+import '../../authentication/presentation/shared/map_failure_message.dart';
+import '../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../help_center/domain/usecases/security_mode_action_feature.dart';
+import '../domain/entities/tweet_entity.dart';
+import '../domain/states/feed_security_state.dart';
+import '../domain/usecases/feed_use_cases.dart';
 
 part 'feed_controller.g.dart';
 
@@ -124,7 +125,8 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
   }
 
   void _registerDataSource() {
-    _streamCache = useCase.dataSource
+    _streamCache = useCase
+        .tweetList()
         .listen((cache) => listTweets = cache.tweets.asObservable());
   }
 

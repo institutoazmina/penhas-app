@@ -1,12 +1,17 @@
+import 'dart:async';
+
+import 'package:collection/collection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../../authentication/presentation/shared/map_failure_message.dart';
+import '../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../domain/entities/tweet_entity.dart';
+import '../../domain/error/tweet_removed_error.dart';
+import '../../domain/usecases/feed_use_cases.dart';
 
 part 'detail_tweet_controller.g.dart';
 
@@ -30,12 +35,14 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
     this.commentId,
   ) : isWithoutGoToParentAction = tweet != null {
     listTweets = ObservableList.of([if (tweet != null) tweet]);
+    _listenDetailUpdates();
   }
-  final bool isWithoutGoToParentAction;
-  TweetEntity? get tweet => listTweets.isNotEmpty ? listTweets.first : null;
+
   final FeedUseCases useCase;
+  final bool isWithoutGoToParentAction;
+  TweetEntity? get tweet => listTweets.firstOrNull;
   String? tweetContent;
-  String? tweetId;
+  String tweetId;
   String? commentId;
   bool isFullyLoaded = false;
 
@@ -55,7 +62,7 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
   TextEditingController editingController = TextEditingController();
 
   @observable
-  String? errorMessage = '';
+  String? errorMessage;
 
   bool get allowReply => tweet?.meta.canReply == true;
 
@@ -77,15 +84,20 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
         : PageProgressState.loaded;
   }
 
+  StreamSubscription? _streamCache;
+
+  void _listenDetailUpdates() {
+    _streamCache = useCase.tweetDetail(tweetId).listen((e) {
+      e.fold(_onTweetDetailsError, _updateListOfTweets);
+    });
+  }
+
   @action
   Future<void> getDetail() async {
     _progress = ObservableFuture(useCase.fetchTweetDetail(tweetId));
 
     final Either<Failure, FeedCache> response = await _progress!;
-    response.fold(
-      (failure) => errorMessage = mapFailureMessage(failure),
-      (cache) => _updateListOfTweets(cache),
-    );
+    errorMessage = response.fold(mapFailureMessage, (_) => null);
   }
 
   @action
@@ -95,10 +107,7 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
     _progress = ObservableFuture(useCase.fetchNewestTweetDetail(tweetId));
 
     final Either<Failure, FeedCache> response = await _progress!;
-    response.fold(
-      (failure) => errorMessage = mapFailureMessage(failure),
-      (cache) => _updateListOfTweets(cache),
-    );
+    errorMessage = response.fold(mapFailureMessage, (_) => null);
   }
 
   void highlightDone() {
@@ -112,11 +121,20 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
   }
 
   void reply() {
-    Modular.to.pushNamed('/mainboard/reply', arguments: tweet).then((commentId) {
-      if (commentId != null) {
-        isFullyLoaded = false;
-        fetchNextPage();
-      }
-    });
+    Modular.to.pushNamed('/mainboard/reply', arguments: tweet);
+  }
+
+  void _onTweetDetailsError(Failure error) {
+    if (error is TweetRemovedError) {
+      Modular.to.pop();
+      return;
+    }
+
+    errorMessage = mapFailureMessage(error);
+  }
+
+  void dispose() {
+    _streamCache?.cancel();
+    _streamCache = null;
   }
 }

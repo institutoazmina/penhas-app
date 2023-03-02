@@ -1,23 +1,29 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../../../../core/entities/valid_fiel.dart';
 import '../../../../core/error/failures.dart';
+import '../../../../core/extension/list.dart';
 import '../entities/tweet_engage_request_option.dart';
 import '../entities/tweet_entity.dart';
 import '../entities/tweet_request_option.dart';
 import '../entities/tweet_session_entity.dart';
+import '../error/tweet_removed_error.dart';
 import '../repositories/i_tweet_repositories.dart';
 import 'tweet_filter_preference.dart';
+
+typedef _TweetDetail = Map<String, List<TweetEntity>>;
 
 @immutable
 class FeedCache extends Equatable {
   const FeedCache({required this.tweets});
 
-  final List<TweetTiles?> tweets;
+  final List<TweetTiles> tweets;
 
   @override
   List<Object?> get props => [tweets];
@@ -30,98 +36,98 @@ class FeedUseCases {
   FeedUseCases({
     required ITweetRepository repository,
     required TweetFilterPreference filterPreference,
-    int? maxRows = 100,
+    int maxRows = 100,
   })  : _repository = repository,
         _filterPreference = filterPreference,
         _maxRowsPerRequest = maxRows;
 
   final ITweetRepository _repository;
   final TweetFilterPreference _filterPreference;
-  final int? _maxRowsPerRequest;
-  final StreamController<FeedCache> _streamController =
-      StreamController.broadcast();
-
-  Stream<FeedCache> get dataSource => _streamController.stream;
-  List<TweetTiles?> _tweetCacheFetch = [];
-  final Map<String?, List<TweetEntity?>> _tweetReplyMap = {};
+  final int _maxRowsPerRequest;
   String? _nextPage;
+
+  List<TweetTiles> _tweetCacheFetch = [];
+  final _TweetDetail _tweetReplyMap = {};
+
+  final StreamController<FeedCache> _tweetListStreamCtrl = BehaviorSubject();
+
+  final StreamController<_TweetDetail> _tweetDetailsStreamCtrl =
+      BehaviorSubject();
+
+  Stream<FeedCache> tweetList() => _tweetListStreamCtrl.stream;
+
+  Stream<Either<Failure, FeedCache>> tweetDetail(String id) {
+    _tweetReplyMap.putIfAbsent(id, () {
+      final tweet = _findInTweetsCache(id);
+      return [if (tweet != null) tweet];
+    });
+
+    return _tweetDetailsStreamCtrl.stream
+        .doOnCancel(() => _tweetReplyMap.remove(id))
+        .map<Either<Failure, FeedCache>>(
+          (cache) => cache.containsKey(id)
+              ? right(FeedCache(tweets: cache[id]!))
+              : left(TweetRemovedError()),
+        )
+        .distinct();
+  }
 
   Future<Either<Failure, FeedCache>> fetchNewestTweet() async {
     final request = _newestRequestOption();
     final result = await _repository.fetch(option: request);
 
-    return result.fold<Either<Failure, FeedCache>>(
-      (failure) => left(failure),
-      (session) => right(_updateFetchCache(session)),
-    );
+    return result.map(_prependFetchCache);
   }
 
   Future<Either<Failure, FeedCache>> fetchOldestTweet() async {
     final request = _oldestRequestOption();
     final result = await _repository.fetch(option: request);
 
-    return result.fold<Either<Failure, FeedCache>>(
-      (failure) => left(failure),
-      (session) => right(_appendFetchCache(session)),
-    );
+    return result.map(_appendFetchCache);
   }
 
   Future<Either<Failure, FeedCache>> reloadTweetFeed() async {
     _nextPage = null;
-    _tweetCacheFetch = [];
-    _streamController.add(FeedCache(tweets: _tweetCacheFetch));
+    _tweetListStreamCtrl.add(FeedCache(tweets: _tweetCacheFetch = []));
     return fetchNewestTweet();
   }
 
-  Future<Either<Failure, FeedCache>> fetchTweetDetail(String? tweetId) async {
+  Future<Either<Failure, FeedCache>> fetchTweetDetail(String tweetId) async {
     final option = _buildTweetDetailRequest(tweetId);
     final result = await _repository.fetch(option: option);
 
-    return result.fold<Either<Failure, FeedCache>>(
-      (failure) => left(failure),
-      (session) => right(_buildTweetDetail(session, tweetId)),
+    return result.map(
+      (session) => _buildTweetDetail(session, tweetId),
     );
   }
 
-  Future<Either<Failure, FeedCache>> fetchNewestTweetDetail(
-    String? tweetId,
-  ) async {
-    final option = _buildTweetDetailRequest(tweetId);
-    final result = await _repository.fetch(option: option);
-
-    return result.fold<Either<Failure, FeedCache>>(
-      (failure) => left(failure),
-      (session) => right(_buildTweetDetail(session, tweetId)),
-    );
-  }
+  Future<Either<Failure, FeedCache>> fetchNewestTweetDetail(String tweetId) =>
+      fetchTweetDetail(tweetId);
 
   Future<Either<Failure, FeedCache>> create(String? content) async {
     final option = TweetCreateRequestOption(message: content);
     final result = await _repository.create(option: option);
 
-    return result.fold<Either<Failure, FeedCache>>(
-      (failure) => left(failure),
-      (session) => right(_insertCreatedTweetIntoCache(session)),
-    );
+    return result.map(_insertCreatedTweetIntoCache);
   }
 
   Future<Either<Failure, FeedCache>> delete(TweetEntity tweet) async {
-    final option = TweetEngageRequestOption(tweetId: tweet.id!);
+    final option = TweetEngageRequestOption(tweetId: tweet.id);
     final result = await _repository.delete(option: option);
 
-    return result.fold<Either<Failure, FeedCache>>(
-      (failure) => left(failure),
-      (session) => right(_deleteFetchCache(tweet)),
-    );
+    return result.map((session) {
+      _removeFromCache(tweet);
+      return FeedCache(tweets: _tweetCacheFetch);
+    });
   }
 
   Future<Either<Failure, FeedCache>> like(TweetEntity tweet) async {
-    final option = TweetEngageRequestOption(tweetId: tweet.id!);
+    final option = TweetEngageRequestOption(tweetId: tweet.id);
     return _processTweetFavorite(option);
   }
 
   Future<Either<Failure, FeedCache>> unlike(TweetEntity tweet) async {
-    final option = TweetEngageRequestOption(tweetId: tweet.id!, dislike: true);
+    final option = TweetEngageRequestOption(tweetId: tweet.id, dislike: true);
     return _processTweetFavorite(option);
   }
 
@@ -130,10 +136,10 @@ class FeedUseCases {
   ) async {
     final result = await _repository.like(option: option);
 
-    return result.fold<Either<Failure, FeedCache>>(
-      (failure) => left(failure),
-      (session) => right(_rebuildFetchCache(session)),
-    );
+    return result.map((tweet) {
+      _replaceInCache(tweet);
+      return FeedCache(tweets: _tweetCacheFetch);
+    });
   }
 
   Future<Either<Failure, TweetEntity>> reply({
@@ -141,64 +147,23 @@ class FeedUseCases {
     required String? comment,
   }) async {
     final option = TweetEngageRequestOption(
-      tweetId: mainTweet.id!,
+      tweetId: mainTweet.id,
       message: comment,
     );
 
     final result = await _repository.reply(option: option);
 
-    return result.fold<Either<Failure, TweetEntity>>(
-      (failure) => left(failure),
+    return result.map(
       (repliedTweet) {
-        _updateRepliedTweetIntoCache(
-          mainTweet,
-          repliedTweet,
-        );
-        return right(repliedTweet);
+        _updateRepliedTweetIntoCache(mainTweet, repliedTweet);
+        return repliedTweet;
       },
     );
   }
 
-  Future<Either<Failure, ValidField>> report(
-    TweetEntity tweet,
-    String reason,
-  ) async {
-    final option =
-        TweetEngageRequestOption(tweetId: tweet.id!, message: reason);
-    final result = await _repository.report(option: option);
-
-    return result.fold<Either<Failure, ValidField>>(
-      (failure) => left(failure),
-      (session) => right(session),
-    );
-  }
-
-  TweetRequestOption _newestRequestOption() {
-    final TweetEntity? firstValid = _tweetCacheFetch.isNotEmpty
-        ? _tweetCacheFetch.firstWhere(
-            (e) => e is TweetEntity,
-            orElse: () => null,
-          ) as TweetEntity?
-        : null;
-
-    final String? category = _getCategory();
-    final String? tags = _getTags();
-
-    if (firstValid == null) {
-      return TweetRequestOption(
-        rows: _maxRowsPerRequest!,
-        category: category,
-        tags: tags,
-        after: (_tweetCacheFetch.isNotEmpty) ? '000000T0000000000' : null,
-      );
-    } else {
-      return TweetRequestOption(
-        rows: _maxRowsPerRequest!,
-        after: firstValid.id,
-        category: category,
-        tags: tags,
-      );
-    }
+  Future<Either<Failure, ValidField>> report(TweetEntity tweet, String reason) {
+    final option = TweetEngageRequestOption(tweetId: tweet.id, message: reason);
+    return _repository.report(option: option);
   }
 
   String? _getTags() {
@@ -211,36 +176,36 @@ class FeedUseCases {
     return category.isEmpty ? null : category.join(',');
   }
 
-  TweetRequestOption _oldestRequestOption() {
-    final TweetEntity? lastValid = _tweetCacheFetch.isNotEmpty
-        ? _tweetCacheFetch.lastWhere(
-            (e) => e is TweetEntity,
-            orElse: () => null,
-          ) as TweetEntity?
-        : null;
+  TweetRequestOption _newestRequestOption() {
+    final firstValid = _tweetCacheFetch.firstWhereOrNull(
+      (e) => e is TweetEntity,
+    ) as TweetEntity?;
 
-    final String? category = _getCategory();
-    final String? tags = _getTags();
-
-    if (lastValid == null) {
-      return TweetRequestOption(
-        rows: _maxRowsPerRequest!,
-        nextPageToken: _nextPage,
-        category: category,
-        tags: tags,
-      );
-    } else {
-      return TweetRequestOption(
-        rows: _maxRowsPerRequest!,
-        before: _nextPage == null ? lastValid.id : null,
-        nextPageToken: _nextPage,
-        category: category,
-        tags: tags,
-      );
-    }
+    return TweetRequestOption(
+      rows: _maxRowsPerRequest,
+      category: _getCategory(),
+      tags: _getTags(),
+      after: firstValid == null && _tweetCacheFetch.isNotEmpty
+          ? '000000T0000000000'
+          : firstValid?.id,
+    );
   }
 
-  FeedCache _updateFetchCache(TweetSessionEntity session) {
+  TweetRequestOption _oldestRequestOption() {
+    final lastValid = _tweetCacheFetch.lastWhereOrNull(
+      (e) => e is TweetEntity,
+    ) as TweetEntity?;
+
+    return TweetRequestOption(
+      rows: _maxRowsPerRequest,
+      before: _nextPage == null ? lastValid?.id : null,
+      nextPageToken: _nextPage,
+      category: _getCategory(),
+      tags: _getTags(),
+    );
+  }
+
+  FeedCache _prependFetchCache(TweetSessionEntity session) {
     if (_nextPage == null || _nextPage!.isEmpty) {
       _nextPage = session.nextPage;
     }
@@ -271,84 +236,8 @@ class FeedUseCases {
     return FeedCache(tweets: _tweetCacheFetch);
   }
 
-  TweetEntity? _extractTweetEntity(int index) {
-    if (index >= 0 && _tweetCacheFetch[index] is TweetEntity) {
-      return _tweetCacheFetch[index] as TweetEntity?;
-    }
-
-    return null;
-  }
-
-  FeedCache _deleteFetchCache(TweetEntity tweet) {
-    final index = _tweetCacheFetch.indexWhere(
-      (e) {
-        if (e is TweetEntity) {
-          return (e.id == tweet.id) ||
-              (e.lastReply!.isNotEmpty && e.lastReply!.first!.id == tweet.id);
-        }
-        return false;
-      },
-    );
-
-    final currentTweet = _extractTweetEntity(index);
-    if (currentTweet == null) {
-      return FeedCache(tweets: _tweetCacheFetch);
-    }
-
-    if (currentTweet.id == tweet.id) {
-      _tweetCacheFetch.removeAt(index);
-    } else {
-      _tweetCacheFetch[index] = currentTweet.copyWith(
-        lastReply: [],
-        totalReply: currentTweet.totalReply - 1,
-      );
-    }
-
-    _updateStream();
-    return FeedCache(tweets: _tweetCacheFetch);
-  }
-
-  FeedCache _rebuildFetchCache(TweetEntity newTweet) {
-    final index = _tweetCacheFetch.indexWhere(
-      (e) {
-        if (e is TweetEntity) {
-          return (e.id == newTweet.id) ||
-              (e.lastReply!.isNotEmpty &&
-                  e.lastReply!.first!.id == newTweet.id);
-        }
-        return false;
-      },
-    );
-
-    final currentTweet = _extractTweetEntity(index);
-    if (currentTweet == null) {
-      return FeedCache(tweets: _tweetCacheFetch);
-    }
-
-    if (currentTweet.id == newTweet.id) {
-      _tweetCacheFetch[index] = newTweet.copyWith(
-        lastReply: currentTweet.lastReply,
-      );
-    } else if (currentTweet.lastReply!.isNotEmpty &&
-        currentTweet.lastReply!.first!.id == newTweet.id) {
-      // se a tweet for um reply, reconstrua o principal com o novo reply
-      final reply = newTweet.copyWith(
-        lastReply: currentTweet.lastReply!.first!.lastReply,
-      );
-      final princialTweet = currentTweet.copyWith(lastReply: [reply]);
-      _tweetCacheFetch[index] = princialTweet;
-    }
-
-    _updateStream();
-    return FeedCache(tweets: _tweetCacheFetch);
-  }
-
   FeedCache _insertCreatedTweetIntoCache(TweetEntity tweet) {
-    _tweetCacheFetch.insertAll(
-      0,
-      [tweet],
-    );
-
+    _tweetCacheFetch.insertAll(0, [tweet]);
     _updateStream();
     return FeedCache(tweets: _tweetCacheFetch);
   }
@@ -357,46 +246,36 @@ class FeedUseCases {
     TweetEntity mainTweet,
     TweetEntity repliedTweet,
   ) {
-    final index = _tweetCacheFetch
-        .indexWhere((e) => e is TweetEntity && e.id == mainTweet.id);
-
-    if (index >= 0) {
-      final TweetEntity rebuildedTweet = mainTweet.copyWith(
+    _tweetReplyMap[mainTweet.id]?.add(repliedTweet);
+    _replaceInCache(
+      mainTweet.copyWith(
         totalReply: mainTweet.totalReply + 1,
         lastReply: [repliedTweet],
-      );
-
-      _tweetCacheFetch[index] = rebuildedTweet;
-    }
-
-    _updateStream();
+      ),
+    );
   }
 
-  void _updateStream() {
-    _streamController.add(FeedCache(tweets: _tweetCacheFetch));
-  }
+  void _updateStream() =>
+      _tweetListStreamCtrl.add(FeedCache(tweets: _tweetCacheFetch));
 
-  TweetRequestOption _buildTweetDetailRequest(String? tweetId) {
-    String? afterTweetId = tweetId;
-    if (_tweetReplyMap[tweetId] != null &&
-        _tweetReplyMap[tweetId]!.isNotEmpty) {
-      afterTweetId = _tweetReplyMap[tweetId]!.last!.id;
-    }
+  TweetRequestOption _buildTweetDetailRequest(String tweetId) {
+    final afterTweetId = _tweetReplyMap[tweetId]?.lastOrNull?.id ?? tweetId;
 
     return TweetRequestOption(
       after: afterTweetId,
       parent: tweetId,
-      rows: _maxRowsPerRequest!,
+      rows: _maxRowsPerRequest,
     );
   }
 
-  FeedCache _buildTweetDetail(TweetSessionEntity session, String? tweetId) {
-    if (_tweetReplyMap[tweetId] == null) {
-      _tweetReplyMap[tweetId] = [];
+  FeedCache _buildTweetDetail(TweetSessionEntity session, String tweetId) {
+    final parent = session.parent as TweetEntity?;
+    if (parent != null) {
+      _replaceInCache(parent);
     }
+    _tweetReplyMap[tweetId] ??= [if (parent != null) parent];
 
-    final List<TweetEntity?> filteredResponse =
-        session.tweets.whereType<TweetEntity>().toList();
+    final filteredResponse = session.tweets.whereType<TweetEntity>().toList();
 
     if (filteredResponse.isNotEmpty) {
       if (session.orderBy == TweetSessionOrder.latestFirst) {
@@ -406,15 +285,125 @@ class FeedUseCases {
       }
     }
 
-    return FeedCache(
-      tweets: [
-        if (session.parent != null) session.parent,
-        ..._tweetReplyMap[tweetId]!
-      ],
-    );
+    _tweetDetailsStreamCtrl.add(_tweetReplyMap);
+
+    return FeedCache(tweets: _tweetReplyMap[tweetId]!);
   }
 
-  void dispose() {
-    _streamController.close();
+  void _replaceInCache(TweetEntity tweet) {
+    _updateInFeedCache(tweet);
+    _updateInLastReply(tweet);
+    _updateInReplyMap(tweet);
+  }
+
+  void _removeFromCache(TweetEntity tweet) {
+    _removeFromFeedCache(tweet);
+    _removeFromLastReply(tweet);
+    _removeFromReplyMap(tweet);
+  }
+
+  void _updateInFeedCache(TweetEntity tweet) {
+    if (tweet.parentId != null) return;
+
+    final isUpdated = _tweetCacheFetch.updateFirstWhere(
+      (item) => item is TweetEntity && item.id == tweet.id,
+      (item) => tweet.copyWith(
+        lastReply: tweet.lastReply.isNotEmpty
+            ? tweet.lastReply
+            : (item as TweetEntity).lastReply,
+      ),
+    );
+
+    if (isUpdated) _updateStream();
+  }
+
+  void _removeFromFeedCache(TweetEntity tweet) {
+    if (tweet.parentId != null) return;
+
+    final isUpdated = _tweetCacheFetch.removeFirstWhere(
+      (item) => item is TweetEntity && item.id == tweet.id,
+    );
+
+    if (isUpdated) _updateStream();
+  }
+
+  void _updateInLastReply(TweetEntity tweet) {
+    if (tweet.parentId == null) return;
+
+    final isUpdated = _tweetCacheFetch.updateFirstWhere(
+      (item) =>
+          item is TweetEntity &&
+          item.lastReply.firstWhereOrNull((r) => r.id == tweet.id) != null,
+      (item) => (item as TweetEntity).copyWith(
+        lastReply:
+            item.lastReply.map((e) => e.id == tweet.id ? tweet : e).toList(),
+      ),
+    );
+
+    if (isUpdated) _updateStream();
+  }
+
+  void _removeFromLastReply(TweetEntity tweet) {
+    if (tweet.parentId == null) return;
+
+    final isUpdated = _tweetCacheFetch.updateFirstWhere(
+      (item) =>
+          item is TweetEntity &&
+          item.lastReply.firstWhereOrNull((r) => r.id == tweet.id) != null,
+      (item) => (item as TweetEntity).copyWith(
+        totalReply: item.totalReply - 1,
+        lastReply: item.lastReply.whereNot((e) => e.id == tweet.id).toList(),
+      ),
+    );
+
+    if (isUpdated) _updateStream();
+  }
+
+  void _updateInReplyMap(TweetEntity tweet) {
+    if (!_tweetReplyMap.containsKey(tweet.id) &&
+        !_tweetReplyMap.containsKey(tweet.parentId)) return;
+
+    final isUpdated = _tweetReplyMap.entries.fold<bool>(
+      false,
+      (previous, current) =>
+          current.value.updateFirstWhere(
+            (item) => item.id == tweet.id,
+            (item) => tweet,
+          ) ||
+          previous,
+    );
+
+    if (isUpdated) _tweetDetailsStreamCtrl.add(_tweetReplyMap);
+  }
+
+  void _removeFromReplyMap(TweetEntity tweet) {
+    var isUpdated = false;
+    if (_tweetReplyMap.containsKey(tweet.parentId)) {
+      isUpdated = _tweetReplyMap[tweet.parentId]!.removeFirstWhere(
+        (item) => item.id == tweet.id,
+      );
+
+      var parent = _tweetReplyMap[tweet.parentId]!.first;
+      if (parent.id == tweet.parentId) {
+        parent = parent.copyWith(totalReply: parent.totalReply - 1);
+        _replaceInCache(parent);
+      }
+    }
+
+    if (_tweetReplyMap.containsKey(tweet.id)) {
+      _tweetReplyMap.remove(tweet.id);
+      isUpdated = true;
+    }
+
+    if (isUpdated) _tweetDetailsStreamCtrl.add(_tweetReplyMap);
+  }
+
+  TweetEntity? _findInTweetsCache(String id) {
+    return _tweetCacheFetch
+            .whereType<TweetEntity>()
+            .firstWhereOrNull((e) => e.id == id) ??
+        _tweetReplyMap.values
+            .expand((e) => e)
+            .firstWhereOrNull((e) => e.id == id);
   }
 }
