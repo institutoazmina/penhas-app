@@ -9,7 +9,7 @@ import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entit
 import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
 import 'package:penhas/app/features/feed/domain/states/feed_router_type.dart';
 import 'package:penhas/app/features/feed/domain/states/feed_routing_state.dart';
-import 'package:penhas/app/features/feed/presentation/routing_perfil_chat/feed_routing_perfil_chat_controller.dart';
+import 'package:penhas/app/features/feed/presentation/routing_perfil_chat/feed_routing_profile_chat_controller.dart';
 import 'package:penhas/app/features/users/data/repositories/users_repository.dart';
 import 'package:penhas/app/features/users/domain/entities/user_detail_entity.dart';
 import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
@@ -24,15 +24,16 @@ class MockChatChannelRepository extends Mock implements IChatChannelRepository {
 class MockModularNavigate extends Mock implements IModularNavigator {}
 
 void main() {
-  group(FeedRoutingPerfilChatController, () {
-    late FeedRoutingPerfilChatController controller;
+  group(FeedRoutingProfileChatController, () {
+    late FeedRoutingProfileChatController controller;
 
     late IUsersRepository mockUsersRepository;
     late IChatChannelRepository mockChatChannelRepository;
     late IModularNavigator mockNavigator;
 
-    FeedRoutingPerfilChatController initController(FeedRouterType routerType) =>
-        FeedRoutingPerfilChatController(
+    FeedRoutingProfileChatController initController(
+            FeedRouterType routerType) =>
+        FeedRoutingProfileChatController(
           usersRepository: mockUsersRepository,
           channelRepository: mockChatChannelRepository,
           routerType: routerType,

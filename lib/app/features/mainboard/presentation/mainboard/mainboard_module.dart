@@ -1,83 +1,84 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:http/http.dart' as http;
-import 'package:penhas/app/core/managers/app_configuration.dart';
-import 'package:penhas/app/core/managers/audio_play_services.dart';
-import 'package:penhas/app/core/managers/audio_record_services.dart';
-import 'package:penhas/app/core/managers/audio_sync_manager.dart';
-import 'package:penhas/app/core/managers/local_store.dart';
-import 'package:penhas/app/core/managers/location_services.dart';
-import 'package:penhas/app/core/managers/modules_sevices.dart';
-import 'package:penhas/app/core/network/api_client.dart';
-import 'package:penhas/app/core/network/api_server_configure.dart';
-import 'package:penhas/app/core/network/network_info.dart';
-import 'package:penhas/app/features/appstate/data/datasources/app_state_data_source.dart';
-import 'package:penhas/app/features/appstate/data/repositories/app_state_repository.dart';
-import 'package:penhas/app/features/appstate/domain/entities/app_preferences_entity.dart';
-import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
-import 'package:penhas/app/features/appstate/domain/repositories/i_app_state_repository.dart';
-import 'package:penhas/app/features/appstate/domain/usecases/app_preferences_use_case.dart';
-import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entity.dart';
-import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
-import 'package:penhas/app/features/chat/domain/usecases/chat_channel_usecase.dart';
-import 'package:penhas/app/features/chat/presentation/chat/chat_channel_controller.dart';
-import 'package:penhas/app/features/chat/presentation/chat/chat_channel_page.dart';
-import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart';
-import 'package:penhas/app/features/feed/data/datasources/tweet_filter_preference_data_source.dart';
-import 'package:penhas/app/features/feed/data/repositories/tweet_filter_preference_repository.dart';
-import 'package:penhas/app/features/feed/data/repositories/tweet_repository.dart';
-import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
-import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
-import 'package:penhas/app/features/feed/domain/usecases/tweet_filter_preference.dart';
-import 'package:penhas/app/features/feed/presentation/category_tweet/category_tweet_controller.dart';
-import 'package:penhas/app/features/feed/presentation/category_tweet/category_tweet_page.dart';
-import 'package:penhas/app/features/feed/presentation/compose_tweet/compose_tweet_controller.dart';
-import 'package:penhas/app/features/feed/presentation/detail_tweet/detail_tweet_controller.dart';
-import 'package:penhas/app/features/feed/presentation/detail_tweet/detail_tweet_page.dart';
-import 'package:penhas/app/features/feed/presentation/filter_tweet/filter_tweet_controller.dart';
-import 'package:penhas/app/features/feed/presentation/filter_tweet/filter_tweet_page.dart';
-import 'package:penhas/app/features/feed/presentation/reply_tweet/reply_tweet_controller.dart';
-import 'package:penhas/app/features/feed/presentation/reply_tweet/reply_tweet_page.dart';
-import 'package:penhas/app/features/feed/presentation/routing_perfil_chat/feed_routing_perfil_chat_controller.dart';
-import 'package:penhas/app/features/feed/presentation/routing_perfil_chat/feed_routing_perfil_chat_page.dart';
-import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
-import 'package:penhas/app/features/filters/domain/presentation/filter_module.dart';
-import 'package:penhas/app/features/filters/domain/repositories/filter_skill_repository.dart';
-import 'package:penhas/app/features/help_center/data/datasources/guardian_data_source.dart';
-import 'package:penhas/app/features/help_center/data/repositories/audios_repository.dart';
-import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
-import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
-import 'package:penhas/app/features/help_center/presentation/audios/audios_controller.dart';
-import 'package:penhas/app/features/help_center/presentation/audios/audios_page.dart';
-import 'package:penhas/app/features/help_center/presentation/guardians/guardians_controller.dart';
-import 'package:penhas/app/features/help_center/presentation/guardians/guardians_page.dart';
-import 'package:penhas/app/features/help_center/presentation/new_guardian/new_guardian_controller.dart';
-import 'package:penhas/app/features/help_center/presentation/new_guardian/new_guardian_page.dart';
-import 'package:penhas/app/features/help_center/presentation/pages/audio/audio_record_page.dart';
-import 'package:penhas/app/features/main_menu/domain/repositories/user_profile_repository.dart';
-import 'package:penhas/app/features/main_menu/domain/usecases/user_profile.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/delete/account_delete_controller.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/delete/account_delete_page.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/my_profile/profile_edit_controller.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/my_profile/profile_edit_page.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/my_profile/skill/profile_skill_module.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/preference/account_preference_controller.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/preference/account_preference_page.dart';
-import 'package:penhas/app/features/main_menu/presentation/pages/about_penhas_page.dart';
-import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_controller.dart';
-import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart';
-import 'package:penhas/app/features/mainboard/domain/states/mainboard_store.dart';
-import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_controller.dart';
-import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_page.dart';
-import 'package:penhas/app/features/notification/data/repositories/notification_repository.dart';
-import 'package:penhas/app/features/notification/presentation/notification_controller.dart';
-import 'package:penhas/app/features/notification/presentation/notification_page.dart';
-import 'package:penhas/app/features/quiz/presentation/tutorial/stealth_mode_tutorial_page_controller.dart';
-import 'package:penhas/app/features/support_center/presentation/add/support_center_add_page.dart';
-import 'package:penhas/app/features/support_center/presentation/list/support_center_list_page.dart';
-import 'package:penhas/app/features/support_center/presentation/show/support_center_show_page.dart';
-import 'package:penhas/app/features/users/data/repositories/users_repository.dart';
-import 'package:penhas/app/features/users/presentation/user_profile_module.dart';
+
+import '../../../../core/managers/app_configuration.dart';
+import '../../../../core/managers/audio_play_services.dart';
+import '../../../../core/managers/audio_record_services.dart';
+import '../../../../core/managers/audio_sync_manager.dart';
+import '../../../../core/managers/local_store.dart';
+import '../../../../core/managers/location_services.dart';
+import '../../../../core/managers/modules_sevices.dart';
+import '../../../../core/network/api_client.dart';
+import '../../../../core/network/api_server_configure.dart';
+import '../../../../core/network/network_info.dart';
+import '../../../appstate/data/datasources/app_state_data_source.dart';
+import '../../../appstate/data/repositories/app_state_repository.dart';
+import '../../../appstate/domain/entities/app_preferences_entity.dart';
+import '../../../appstate/domain/entities/user_profile_entity.dart';
+import '../../../appstate/domain/repositories/i_app_state_repository.dart';
+import '../../../appstate/domain/usecases/app_preferences_use_case.dart';
+import '../../../appstate/domain/usecases/app_state_usecase.dart';
+import '../../../chat/domain/entities/chat_channel_open_entity.dart';
+import '../../../chat/domain/repositories/chat_channel_repository.dart';
+import '../../../chat/domain/usecases/chat_channel_usecase.dart';
+import '../../../chat/presentation/chat/chat_channel_controller.dart';
+import '../../../chat/presentation/chat/chat_channel_page.dart';
+import '../../../feed/data/datasources/tweet_data_source.dart';
+import '../../../feed/data/datasources/tweet_filter_preference_data_source.dart';
+import '../../../feed/data/repositories/tweet_filter_preference_repository.dart';
+import '../../../feed/data/repositories/tweet_repository.dart';
+import '../../../feed/domain/repositories/i_tweet_repositories.dart';
+import '../../../feed/domain/usecases/feed_use_cases.dart';
+import '../../../feed/domain/usecases/tweet_filter_preference.dart';
+import '../../../feed/presentation/category_tweet/category_tweet_controller.dart';
+import '../../../feed/presentation/category_tweet/category_tweet_page.dart';
+import '../../../feed/presentation/compose_tweet/compose_tweet_controller.dart';
+import '../../../feed/presentation/detail_tweet/detail_tweet_controller.dart';
+import '../../../feed/presentation/detail_tweet/detail_tweet_page.dart';
+import '../../../feed/presentation/filter_tweet/filter_tweet_controller.dart';
+import '../../../feed/presentation/filter_tweet/filter_tweet_page.dart';
+import '../../../feed/presentation/reply_tweet/reply_tweet_controller.dart';
+import '../../../feed/presentation/reply_tweet/reply_tweet_page.dart';
+import '../../../feed/presentation/routing_perfil_chat/feed_routing_profile_chat_controller.dart';
+import '../../../feed/presentation/routing_perfil_chat/feed_routing_profile_chat_page.dart';
+import '../../../feed/presentation/stores/tweet_controller.dart';
+import '../../../filters/domain/presentation/filter_module.dart';
+import '../../../filters/domain/repositories/filter_skill_repository.dart';
+import '../../../help_center/data/datasources/guardian_data_source.dart';
+import '../../../help_center/data/repositories/audios_repository.dart';
+import '../../../help_center/data/repositories/guardian_repository.dart';
+import '../../../help_center/domain/usecases/security_mode_action_feature.dart';
+import '../../../help_center/presentation/audios/audios_controller.dart';
+import '../../../help_center/presentation/audios/audios_page.dart';
+import '../../../help_center/presentation/guardians/guardians_controller.dart';
+import '../../../help_center/presentation/guardians/guardians_page.dart';
+import '../../../help_center/presentation/new_guardian/new_guardian_controller.dart';
+import '../../../help_center/presentation/new_guardian/new_guardian_page.dart';
+import '../../../help_center/presentation/pages/audio/audio_record_page.dart';
+import '../../../main_menu/domain/repositories/user_profile_repository.dart';
+import '../../../main_menu/domain/usecases/user_profile.dart';
+import '../../../main_menu/presentation/account/delete/account_delete_controller.dart';
+import '../../../main_menu/presentation/account/delete/account_delete_page.dart';
+import '../../../main_menu/presentation/account/my_profile/profile_edit_controller.dart';
+import '../../../main_menu/presentation/account/my_profile/profile_edit_page.dart';
+import '../../../main_menu/presentation/account/my_profile/skill/profile_skill_module.dart';
+import '../../../main_menu/presentation/account/preference/account_preference_controller.dart';
+import '../../../main_menu/presentation/account/preference/account_preference_page.dart';
+import '../../../main_menu/presentation/pages/about_penhas_page.dart';
+import '../../../main_menu/presentation/penhas_drawer_controller.dart';
+import '../../../notification/data/repositories/notification_repository.dart';
+import '../../../notification/presentation/notification_controller.dart';
+import '../../../notification/presentation/notification_page.dart';
+import '../../../quiz/presentation/tutorial/stealth_mode_tutorial_page_controller.dart';
+import '../../../support_center/presentation/add/support_center_add_page.dart';
+import '../../../support_center/presentation/list/support_center_list_page.dart';
+import '../../../support_center/presentation/show/support_center_show_page.dart';
+import '../../../users/data/repositories/users_repository.dart';
+import '../../../users/presentation/user_profile_module.dart';
+import '../../domain/states/mainboard_state.dart';
+import '../../domain/states/mainboard_store.dart';
+import 'mainboard_controller.dart';
+import 'mainboard_page.dart';
 
 class MainboardModule extends Module {
   @override
@@ -161,7 +162,7 @@ class MainboardModule extends Module {
         ),
         ChildRoute(
           '/tweet/perfil_chat',
-          child: (context, args) => const FeedRoutingPerfilChatPage(),
+          child: (context, args) => const FeedRoutingProfileChatPage(),
           transition: TransitionType.rightToLeft,
         ),
       ];
@@ -383,7 +384,7 @@ class MainboardModule extends Module {
           ),
         ),
         Bind.factory(
-          (i) => FeedRoutingPerfilChatController(
+          (i) => FeedRoutingProfileChatController(
             usersRepository: i.get<IUsersRepository>(),
             channelRepository: i.get<IChatChannelRepository>(),
             routerType: i.args?.data,

@@ -10,21 +10,21 @@ import '../../../users/domain/entities/user_detail_entity.dart';
 import '../../domain/states/feed_router_type.dart';
 import '../../domain/states/feed_routing_state.dart';
 
-part 'feed_routing_perfil_chat_controller.g.dart';
+part 'feed_routing_profile_chat_controller.g.dart';
 
-class FeedRoutingPerfilChatController
-    extends _FeedRoutingPerfilChatControllerBase
-    with _$FeedRoutingPerfilChatController {
-  FeedRoutingPerfilChatController({
+class FeedRoutingProfileChatController
+    extends _FeedRoutingProfileChatControllerBase
+    with _$FeedRoutingProfileChatController {
+  FeedRoutingProfileChatController({
     required IUsersRepository usersRepository,
     required IChatChannelRepository channelRepository,
     required FeedRouterType routerType,
   }) : super(routerType, usersRepository, channelRepository);
 }
 
-abstract class _FeedRoutingPerfilChatControllerBase
+abstract class _FeedRoutingProfileChatControllerBase
     with Store, MapFailureMessage {
-  _FeedRoutingPerfilChatControllerBase(
+  _FeedRoutingProfileChatControllerBase(
     this._routerType,
     this._usersRepository,
     this._channelRepository,
