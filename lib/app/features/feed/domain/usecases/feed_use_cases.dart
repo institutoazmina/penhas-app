@@ -66,7 +66,7 @@ class FeedUseCases {
         .doOnCancel(() => _tweetReplyMap.remove(id))
         .map<Either<Failure, FeedCache>>(
           (cache) => cache.containsKey(id)
-              ? right(FeedCache(tweets: cache[id]!))
+              ? right(FeedCache(tweets: cache[id]!.sublist(0)))
               : left(TweetRemovedError()),
         )
         .distinct();

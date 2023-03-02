@@ -34,7 +34,7 @@ abstract class _DetailTweetControllerBase with Store, MapFailureMessage {
     this.tweetId,
     this.commentId,
   ) : isWithoutGoToParentAction = tweet != null {
-    listTweets = ObservableList.of([if (tweet != null) tweet]);
+    listTweets = ObservableList.of([]);
     _listenDetailUpdates();
   }
 
