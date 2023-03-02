@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/reply_tweet.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/single_tweet.dart';
+
+import '../../domain/entities/tweet_entity.dart';
+import '../stores/tweet_controller.dart';
+import 'reply_tweet.dart';
+import 'single_tweet.dart';
 
 class Tweet extends StatelessWidget {
   const Tweet({

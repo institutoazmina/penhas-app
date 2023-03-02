@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../../shared/design_system/colors.dart';
+import '../../../../../shared/design_system/text_styles.dart';
+import '../../../domain/entities/tweet_entity.dart';
+import '../../stores/tweet_controller.dart';
 
 class TweetBottom extends StatefulWidget {
   const TweetBottom({

@@ -1,4 +1,4 @@
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
+import '../../domain/entities/tweet_entity.dart';
 
 class TweetModel extends TweetEntity {
   TweetModel({
