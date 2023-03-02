@@ -6,6 +6,7 @@ import '../../../../core/entities/valid_fiel.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/api_server_configure.dart';
 import '../../domain/entities/tweet_engage_request_option.dart';
+import '../../domain/entities/tweet_entity.dart';
 import '../../domain/entities/tweet_request_option.dart';
 import '../models/tweet_model.dart';
 import '../models/tweet_session_model.dart';
@@ -20,6 +21,16 @@ abstract class ITweetDataSource {
   Future<TweetModel> reply({required TweetEngageRequestOption? option});
   Future<ValidField> report({required TweetEngageRequestOption? option});
   Future<ValidField> delete({required TweetEngageRequestOption? option});
+}
+
+abstract class ITweetLocalDataSource {
+  Stream<List<TweetTiles>> getTweets();
+  Stream<List<TweetEntity>> getRelatedTweets(String id);
+  void prepend(List<TweetTiles> tweets);
+  void append(List<TweetTiles> tweets, {String? parentId});
+  void replaceAll(List<TweetTiles> tweets);
+  void remove(TweetEntity tweet);
+  void update(TweetEntity tweet);
 }
 
 class TweetDataSource implements ITweetDataSource {
