@@ -102,6 +102,38 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
     });
   }
 
+  final _$latLngBoundsAtom =
+      Atom(name: '_SupportCenterControllerBase.latLngBounds');
+
+  @override
+  LatLngBounds get latLngBounds {
+    _$latLngBoundsAtom.reportRead();
+    return super.latLngBounds;
+  }
+
+  @override
+  set latLngBounds(LatLngBounds value) {
+    _$latLngBoundsAtom.reportWrite(value, super.latLngBounds, () {
+      super.latLngBounds = value;
+    });
+  }
+
+  final _$useLatLngBoundsAtom =
+      Atom(name: '_SupportCenterControllerBase.useLatLngBounds');
+
+  @override
+  bool get useLatLngBounds {
+    _$useLatLngBoundsAtom.reportRead();
+    return super.useLatLngBounds;
+  }
+
+  @override
+  set useLatLngBounds(bool value) {
+    _$useLatLngBoundsAtom.reportWrite(value, super.useLatLngBounds, () {
+      super.useLatLngBounds = value;
+    });
+  }
+
   final _$initialPositionAtom =
       Atom(name: '_SupportCenterControllerBase.initialPosition');
 
@@ -220,6 +252,8 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
 categoriesSelected: ${categoriesSelected},
 errorMessage: ${errorMessage},
 placeMarkers: ${placeMarkers},
+latLngBounds: ${latLngBounds},
+useLatLngBounds: ${useLatLngBounds},
 initialPosition: ${initialPosition},
 state: ${state},
 currentKeywords: ${currentKeywords},
