@@ -907,7 +907,7 @@ packages:
       name: mobx_codegen
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.6"
+    version: "2.0.4"
   mockito:
     dependency: "direct dev"
     description:
@@ -1229,7 +1229,7 @@ packages:
       name: source_gen
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.2"
+    version: "1.2.0"
   source_map_stack_trace:
     dependency: transitive
     description:
