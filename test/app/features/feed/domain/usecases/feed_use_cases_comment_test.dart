@@ -26,7 +26,7 @@ void main() {
   });
 
   setUpAll(() {
-    registerFallbackValue(TweetRequestOption());
+    registerFallbackValue(const TweetRequestOption());
     registerFallbackValue(TweetEngageRequestOption(tweetId: ''));
   });
 
@@ -147,7 +147,7 @@ void main() {
           );
 
           // assert
-          expectLater(sut.dataSource, emits(expected));
+          expectLater(sut.tweetList(), emits(expected));
         },
       );
 
@@ -197,7 +197,7 @@ void main() {
           );
 
           // assert
-          expectLater(sut.dataSource, emits(expected));
+          expectLater(sut.tweetList(), emits(expected));
         },
       );
 

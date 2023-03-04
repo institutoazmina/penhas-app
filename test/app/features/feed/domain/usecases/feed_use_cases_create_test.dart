@@ -25,7 +25,7 @@ void main() {
   });
 
   setUpAll(() {
-    registerFallbackValue(TweetRequestOption());
+    registerFallbackValue(const TweetRequestOption());
     registerFallbackValue(TweetCreateRequestOption(message: ''));
   });
 
@@ -37,7 +37,7 @@ void main() {
       verifyNoMoreInteractions(repository);
     });
     group('create()', () {
-      int? maxRowsPerRequest;
+      late int maxRowsPerRequest;
 
       setUp(() {
         maxRowsPerRequest = 5;

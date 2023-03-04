@@ -27,7 +27,7 @@ void main() {
   });
 
   setUpAll(() {
-    registerFallbackValue(TweetRequestOption());
+    registerFallbackValue(const TweetRequestOption());
     registerFallbackValue(TweetEngageRequestOption(tweetId: ''));
   });
 
@@ -160,6 +160,7 @@ void main() {
           // arrange
           final tweet = TweetEntity(
             id: 'id_3',
+            parentId: 'id_1',
             userName: 'user_3',
             clientId: 3,
             createdAt: '2020-06-09',
@@ -220,7 +221,7 @@ void main() {
           // act
           final received = await sut.delete(tweet);
           // assert
-          expect(expected, received);
+          expect(received, expected);
         });
       },
     );

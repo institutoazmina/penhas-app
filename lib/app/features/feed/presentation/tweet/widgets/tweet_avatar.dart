@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/domain/states/feed_router_type.dart';
+
+import '../../../domain/entities/tweet_entity.dart';
+import '../../../domain/states/feed_router_type.dart';
 
 class TweetAvatar extends StatelessWidget {
   const TweetAvatar({
@@ -25,7 +26,7 @@ class TweetAvatar extends StatelessWidget {
 extension _PrivateMethod on TweetAvatar {
   Widget avatar() {
     return SvgPicture.network(
-      tweet.avatar!,
+      tweet.avatar,
       //color: DesignSystemColors.darkIndigo,
       height: 36,
     );
@@ -36,6 +37,7 @@ extension _PrivateMethod on TweetAvatar {
   }
 
   Widget authenticatedAvatar() {
+    // ignore: deprecated_member_use
     return FlatButton(
       onPressed: () => showUserProfile(),
       color: Colors.transparent,

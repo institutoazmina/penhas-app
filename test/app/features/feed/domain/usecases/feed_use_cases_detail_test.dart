@@ -39,7 +39,7 @@ void main() {
   });
 
   setUpAll(() {
-    registerFallbackValue(TweetRequestOption());
+    registerFallbackValue(const TweetRequestOption());
     registerFallbackValue(TweetEngageRequestOption(tweetId: ''));
   });
 
@@ -117,9 +117,9 @@ void main() {
           );
           final expected = right(const FeedCache(tweets: []));
           // act
-          final received = await sut.fetchTweetDetail(tweetRequest.id);
+          await sut.fetchTweetDetail(tweetRequest.id);
           // assert
-          expect(received, expected);
+          expect(sut.tweetDetail(tweetRequest.id), emitsThrough(expected));
         },
       );
       test(
@@ -145,9 +145,9 @@ void main() {
             ),
           );
           // act
-          final received = await sut.fetchTweetDetail(tweetRequest.id);
+          await sut.fetchTweetDetail(tweetRequest.id);
           // assert
-          expect(expected, received);
+          expect(sut.tweetDetail(tweetRequest.id), emitsThrough(expected));
         },
       );
     });
@@ -229,7 +229,7 @@ void main() {
                 rows: maxRowsPerRequest,
               ),
             ),
-          );
+          ).called(1);
         },
       );
       test(
@@ -281,9 +281,9 @@ void main() {
             ),
           );
           // act
-          final received = await sut.fetchNewestTweetDetail(tweetRequest.id);
+          await sut.fetchNewestTweetDetail(tweetRequest.id);
           // assert
-          expect(expected, received);
+          expect(sut.tweetDetail(tweetRequest.id), emitsThrough(expected));
         },
       );
       test(
@@ -329,9 +329,9 @@ void main() {
             ),
           );
           // act
-          final received = await sut.fetchNewestTweetDetail(tweetRequest.id);
+          await sut.fetchNewestTweetDetail(tweetRequest.id);
           // assert
-          expect(expected, received);
+          expect(sut.tweetDetail(tweetRequest.id), emitsThrough(expected));
         },
       );
     });
