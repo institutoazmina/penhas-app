@@ -8,6 +8,7 @@ import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entit
 import 'package:penhas/app/features/chat/domain/usecases/get_chat_channel_token_usecase.dart';
 import 'package:penhas/app/features/users/domain/entities/user_detail_entity.dart';
 import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
+import 'package:penhas/app/features/users/domain/usecases/block_user_usecase.dart';
 import 'package:penhas/app/features/users/domain/usecases/report_user_usecase.dart';
 import 'package:penhas/app/features/users/presentation/user_profile_controller.dart';
 import 'package:penhas/app/features/users/presentation/user_profile_state.dart';
@@ -17,6 +18,8 @@ class MockGetChatChannelTokenUseCase extends Mock
 
 class MockReportUserUseCase extends Mock implements ReportUserUseCase {}
 
+class MockBlockUserUseCase extends Mock implements BlockUserUseCase {}
+
 class MockModularNavigator extends Mock implements IModularNavigator {}
 
 void main() {
@@ -25,6 +28,7 @@ void main() {
 
     late GetChatChannelTokenUseCase mockGetChatChannelTokenUseCase;
     late ReportUserUseCase mockReportUserUseCase;
+    late BlockUserUseCase mockBlockUserUseCase;
 
     late IModularNavigator mockNavigator;
     const clientId = 123;
@@ -45,11 +49,13 @@ void main() {
     setUp(() {
       mockGetChatChannelTokenUseCase = MockGetChatChannelTokenUseCase();
       mockReportUserUseCase = MockReportUserUseCase();
+      mockBlockUserUseCase = MockBlockUserUseCase();
 
       controller = UserProfileController(
         person: user,
         getChatChannelToken: mockGetChatChannelTokenUseCase,
         reportUser: mockReportUserUseCase,
+        blockUser: mockBlockUserUseCase,
       );
 
       mockNavigator = Modular.navigatorDelegate = MockModularNavigator();

@@ -85,6 +85,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
   void _handleReaction(UserProfileReaction? reaction) {
     reaction?.when(
       showProfileOptions: _showProfileOptions,
+      showBlockConfirmationDialog: _showBlockConfirmationDialog,
       askReportReasonDialog: _askReportReasonDialog,
       showProgressDialog: _showProgressDialog,
       dismissProgressDialog: _dismissProgressDialog,
@@ -227,6 +228,16 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
 
     if (reason != null) {
       controller.onSendReportPressed(reason);
+    }
+  }
+
+  void _showBlockConfirmationDialog(String message) async {
+    final confirm = await Modular.to.showDialog(
+      builder: (_) => UserBlockConfirmationDialog(message: message),
+    );
+
+    if (confirm == true) {
+      controller.onConfirmBlockPressed();
     }
   }
 

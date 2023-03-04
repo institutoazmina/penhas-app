@@ -26,6 +26,8 @@ class UserProfileReaction with _$UserProfileReaction {
   factory UserProfileReaction.askReportReasonDialog([
     @Default(null) String? reason,
   ]) = _ReactionAskReportReasonDialog;
+  factory UserProfileReaction.showBlockConfirmationDialog(String message) =
+      _ReactionShowBlockConfirmationDialog;
   factory UserProfileReaction.showProgressDialog() =
       _ReactionShowProgressDialog;
   factory UserProfileReaction.dismissProgressDialog() =
@@ -35,4 +37,5 @@ class UserProfileReaction with _$UserProfileReaction {
 @freezed
 class UserProfileSelectedOption with _$UserProfileSelectedOption {
   factory UserProfileSelectedOption.report() = _SelectedOptionReport;
+  factory UserProfileSelectedOption.block() = _SelectedOptionBlock;
 }

@@ -71,6 +71,15 @@ mixin _$UserProfileController on _UserProfileControllerBase, Store {
         .run(() => super.onSendReportPressed(reason));
   }
 
+  final _$onConfirmBlockPressedAsyncAction =
+      AsyncAction('_UserProfileControllerBase.onConfirmBlockPressed');
+
+  @override
+  Future<void> onConfirmBlockPressed() {
+    return _$onConfirmBlockPressedAsyncAction
+        .run(() => super.onConfirmBlockPressed());
+  }
+
   final _$_UserProfileControllerBaseActionController =
       ActionController(name: '_UserProfileControllerBase');
 

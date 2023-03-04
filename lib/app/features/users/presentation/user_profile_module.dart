@@ -13,6 +13,7 @@ class UserProfileModule extends Module {
             person: i.args?.data,
             getChatChannelToken: i(),
             reportUser: i(),
+            blockUser: i(),
           ),
         ),
         Bind.factory(
