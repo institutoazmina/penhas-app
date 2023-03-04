@@ -91,6 +91,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
       showProgressDialog: _showProgressDialog,
       dismissProgressDialog: _dismissProgressDialog,
       showSnackBar: _showSnackBar,
+      navigateBack: _navigateBack,
     );
   }
 
@@ -258,6 +259,8 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
     if (context == null) return;
     Navigator.pop(context);
   }
+
+  void _navigateBack(result) => Navigator.pop(context, result);
 
   void _showSnackBar(String message, bool inMainboardPage) {
     _dismissProgressDialog();

@@ -808,6 +808,12 @@ class _$UserProfileReactionTearOff {
   _ReactionDismissProgressDialog dismissProgressDialog() {
     return _ReactionDismissProgressDialog();
   }
+
+  _ReactionNavigateBack navigateBack([dynamic option]) {
+    return _ReactionNavigateBack(
+      option,
+    );
+  }
 }
 
 /// @nodoc
@@ -824,6 +830,7 @@ mixin _$UserProfileReaction {
     required TResult Function(String message) showBlockConfirmationDialog,
     required TResult Function() showProgressDialog,
     required TResult Function() dismissProgressDialog,
+    required TResult Function(dynamic option) navigateBack,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -834,6 +841,7 @@ mixin _$UserProfileReaction {
     TResult Function(String message)? showBlockConfirmationDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
+    TResult Function(dynamic option)? navigateBack,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -844,6 +852,7 @@ mixin _$UserProfileReaction {
     TResult Function(String message)? showBlockConfirmationDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
+    TResult Function(dynamic option)? navigateBack,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -860,6 +869,7 @@ mixin _$UserProfileReaction {
         showProgressDialog,
     required TResult Function(_ReactionDismissProgressDialog value)
         dismissProgressDialog,
+    required TResult Function(_ReactionNavigateBack value) navigateBack,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -873,6 +883,7 @@ mixin _$UserProfileReaction {
     TResult Function(_ReactionShowProgressDialog value)? showProgressDialog,
     TResult Function(_ReactionDismissProgressDialog value)?
         dismissProgressDialog,
+    TResult Function(_ReactionNavigateBack value)? navigateBack,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -886,6 +897,7 @@ mixin _$UserProfileReaction {
     TResult Function(_ReactionShowProgressDialog value)? showProgressDialog,
     TResult Function(_ReactionDismissProgressDialog value)?
         dismissProgressDialog,
+    TResult Function(_ReactionNavigateBack value)? navigateBack,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -993,6 +1005,7 @@ class _$_ReactionShowSnackBar implements _ReactionShowSnackBar {
     required TResult Function(String message) showBlockConfirmationDialog,
     required TResult Function() showProgressDialog,
     required TResult Function() dismissProgressDialog,
+    required TResult Function(dynamic option) navigateBack,
   }) {
     return showSnackBar(message, inMainboardPage);
   }
@@ -1006,6 +1019,7 @@ class _$_ReactionShowSnackBar implements _ReactionShowSnackBar {
     TResult Function(String message)? showBlockConfirmationDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
+    TResult Function(dynamic option)? navigateBack,
   }) {
     return showSnackBar?.call(message, inMainboardPage);
   }
@@ -1019,6 +1033,7 @@ class _$_ReactionShowSnackBar implements _ReactionShowSnackBar {
     TResult Function(String message)? showBlockConfirmationDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
+    TResult Function(dynamic option)? navigateBack,
     required TResult orElse(),
   }) {
     if (showSnackBar != null) {
@@ -1041,6 +1056,7 @@ class _$_ReactionShowSnackBar implements _ReactionShowSnackBar {
         showProgressDialog,
     required TResult Function(_ReactionDismissProgressDialog value)
         dismissProgressDialog,
+    required TResult Function(_ReactionNavigateBack value) navigateBack,
   }) {
     return showSnackBar(this);
   }
@@ -1057,6 +1073,7 @@ class _$_ReactionShowSnackBar implements _ReactionShowSnackBar {
     TResult Function(_ReactionShowProgressDialog value)? showProgressDialog,
     TResult Function(_ReactionDismissProgressDialog value)?
         dismissProgressDialog,
+    TResult Function(_ReactionNavigateBack value)? navigateBack,
   }) {
     return showSnackBar?.call(this);
   }
@@ -1073,6 +1090,7 @@ class _$_ReactionShowSnackBar implements _ReactionShowSnackBar {
     TResult Function(_ReactionShowProgressDialog value)? showProgressDialog,
     TResult Function(_ReactionDismissProgressDialog value)?
         dismissProgressDialog,
+    TResult Function(_ReactionNavigateBack value)? navigateBack,
     required TResult orElse(),
   }) {
     if (showSnackBar != null) {
@@ -1144,6 +1162,7 @@ class _$_ReactionShowProfileOptions implements _ReactionShowProfileOptions {
     required TResult Function(String message) showBlockConfirmationDialog,
     required TResult Function() showProgressDialog,
     required TResult Function() dismissProgressDialog,
+    required TResult Function(dynamic option) navigateBack,
   }) {
     return showProfileOptions();
   }
@@ -1157,6 +1176,7 @@ class _$_ReactionShowProfileOptions implements _ReactionShowProfileOptions {
     TResult Function(String message)? showBlockConfirmationDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
+    TResult Function(dynamic option)? navigateBack,
   }) {
     return showProfileOptions?.call();
   }
@@ -1170,6 +1190,7 @@ class _$_ReactionShowProfileOptions implements _ReactionShowProfileOptions {
     TResult Function(String message)? showBlockConfirmationDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
+    TResult Function(dynamic option)? navigateBack,
     required TResult orElse(),
   }) {
     if (showProfileOptions != null) {
@@ -1192,6 +1213,7 @@ class _$_ReactionShowProfileOptions implements _ReactionShowProfileOptions {
         showProgressDialog,
     required TResult Function(_ReactionDismissProgressDialog value)
         dismissProgressDialog,
+    required TResult Function(_ReactionNavigateBack value) navigateBack,
   }) {
     return showProfileOptions(this);
   }
@@ -1208,6 +1230,7 @@ class _$_ReactionShowProfileOptions implements _ReactionShowProfileOptions {
     TResult Function(_ReactionShowProgressDialog value)? showProgressDialog,
     TResult Function(_ReactionDismissProgressDialog value)?
         dismissProgressDialog,
+    TResult Function(_ReactionNavigateBack value)? navigateBack,
   }) {
     return showProfileOptions?.call(this);
   }
@@ -1224,6 +1247,7 @@ class _$_ReactionShowProfileOptions implements _ReactionShowProfileOptions {
     TResult Function(_ReactionShowProgressDialog value)? showProgressDialog,
     TResult Function(_ReactionDismissProgressDialog value)?
         dismissProgressDialog,
+    TResult Function(_ReactionNavigateBack value)? navigateBack,
     required TResult orElse(),
   }) {
     if (showProfileOptions != null) {
@@ -1315,6 +1339,7 @@ class _$_ReactionAskReportReasonDialog
     required TResult Function(String message) showBlockConfirmationDialog,
     required TResult Function() showProgressDialog,
     required TResult Function() dismissProgressDialog,
+    required TResult Function(dynamic option) navigateBack,
   }) {
     return askReportReasonDialog(reason);
   }
@@ -1328,6 +1353,7 @@ class _$_ReactionAskReportReasonDialog
     TResult Function(String message)? showBlockConfirmationDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
+    TResult Function(dynamic option)? navigateBack,
   }) {
     return askReportReasonDialog?.call(reason);
   }
@@ -1341,6 +1367,7 @@ class _$_ReactionAskReportReasonDialog
     TResult Function(String message)? showBlockConfirmationDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
+    TResult Function(dynamic option)? navigateBack,
     required TResult orElse(),
   }) {
     if (askReportReasonDialog != null) {
@@ -1363,6 +1390,7 @@ class _$_ReactionAskReportReasonDialog
         showProgressDialog,
     required TResult Function(_ReactionDismissProgressDialog value)
         dismissProgressDialog,
+    required TResult Function(_ReactionNavigateBack value) navigateBack,
   }) {
     return askReportReasonDialog(this);
   }
@@ -1379,6 +1407,7 @@ class _$_ReactionAskReportReasonDialog
     TResult Function(_ReactionShowProgressDialog value)? showProgressDialog,
     TResult Function(_ReactionDismissProgressDialog value)?
         dismissProgressDialog,
+    TResult Function(_ReactionNavigateBack value)? navigateBack,
   }) {
     return askReportReasonDialog?.call(this);
   }
@@ -1395,6 +1424,7 @@ class _$_ReactionAskReportReasonDialog
     TResult Function(_ReactionShowProgressDialog value)? showProgressDialog,
     TResult Function(_ReactionDismissProgressDialog value)?
         dismissProgressDialog,
+    TResult Function(_ReactionNavigateBack value)? navigateBack,
     required TResult orElse(),
   }) {
     if (askReportReasonDialog != null) {
@@ -1492,6 +1522,7 @@ class _$_ReactionShowBlockConfirmationDialog
     required TResult Function(String message) showBlockConfirmationDialog,
     required TResult Function() showProgressDialog,
     required TResult Function() dismissProgressDialog,
+    required TResult Function(dynamic option) navigateBack,
   }) {
     return showBlockConfirmationDialog(message);
   }
@@ -1505,6 +1536,7 @@ class _$_ReactionShowBlockConfirmationDialog
     TResult Function(String message)? showBlockConfirmationDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
+    TResult Function(dynamic option)? navigateBack,
   }) {
     return showBlockConfirmationDialog?.call(message);
   }
@@ -1518,6 +1550,7 @@ class _$_ReactionShowBlockConfirmationDialog
     TResult Function(String message)? showBlockConfirmationDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
+    TResult Function(dynamic option)? navigateBack,
     required TResult orElse(),
   }) {
     if (showBlockConfirmationDialog != null) {
@@ -1540,6 +1573,7 @@ class _$_ReactionShowBlockConfirmationDialog
         showProgressDialog,
     required TResult Function(_ReactionDismissProgressDialog value)
         dismissProgressDialog,
+    required TResult Function(_ReactionNavigateBack value) navigateBack,
   }) {
     return showBlockConfirmationDialog(this);
   }
@@ -1556,6 +1590,7 @@ class _$_ReactionShowBlockConfirmationDialog
     TResult Function(_ReactionShowProgressDialog value)? showProgressDialog,
     TResult Function(_ReactionDismissProgressDialog value)?
         dismissProgressDialog,
+    TResult Function(_ReactionNavigateBack value)? navigateBack,
   }) {
     return showBlockConfirmationDialog?.call(this);
   }
@@ -1572,6 +1607,7 @@ class _$_ReactionShowBlockConfirmationDialog
     TResult Function(_ReactionShowProgressDialog value)? showProgressDialog,
     TResult Function(_ReactionDismissProgressDialog value)?
         dismissProgressDialog,
+    TResult Function(_ReactionNavigateBack value)? navigateBack,
     required TResult orElse(),
   }) {
     if (showBlockConfirmationDialog != null) {
@@ -1644,6 +1680,7 @@ class _$_ReactionShowProgressDialog implements _ReactionShowProgressDialog {
     required TResult Function(String message) showBlockConfirmationDialog,
     required TResult Function() showProgressDialog,
     required TResult Function() dismissProgressDialog,
+    required TResult Function(dynamic option) navigateBack,
   }) {
     return showProgressDialog();
   }
@@ -1657,6 +1694,7 @@ class _$_ReactionShowProgressDialog implements _ReactionShowProgressDialog {
     TResult Function(String message)? showBlockConfirmationDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
+    TResult Function(dynamic option)? navigateBack,
   }) {
     return showProgressDialog?.call();
   }
@@ -1670,6 +1708,7 @@ class _$_ReactionShowProgressDialog implements _ReactionShowProgressDialog {
     TResult Function(String message)? showBlockConfirmationDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
+    TResult Function(dynamic option)? navigateBack,
     required TResult orElse(),
   }) {
     if (showProgressDialog != null) {
@@ -1692,6 +1731,7 @@ class _$_ReactionShowProgressDialog implements _ReactionShowProgressDialog {
         showProgressDialog,
     required TResult Function(_ReactionDismissProgressDialog value)
         dismissProgressDialog,
+    required TResult Function(_ReactionNavigateBack value) navigateBack,
   }) {
     return showProgressDialog(this);
   }
@@ -1708,6 +1748,7 @@ class _$_ReactionShowProgressDialog implements _ReactionShowProgressDialog {
     TResult Function(_ReactionShowProgressDialog value)? showProgressDialog,
     TResult Function(_ReactionDismissProgressDialog value)?
         dismissProgressDialog,
+    TResult Function(_ReactionNavigateBack value)? navigateBack,
   }) {
     return showProgressDialog?.call(this);
   }
@@ -1724,6 +1765,7 @@ class _$_ReactionShowProgressDialog implements _ReactionShowProgressDialog {
     TResult Function(_ReactionShowProgressDialog value)? showProgressDialog,
     TResult Function(_ReactionDismissProgressDialog value)?
         dismissProgressDialog,
+    TResult Function(_ReactionNavigateBack value)? navigateBack,
     required TResult orElse(),
   }) {
     if (showProgressDialog != null) {
@@ -1790,6 +1832,7 @@ class _$_ReactionDismissProgressDialog
     required TResult Function(String message) showBlockConfirmationDialog,
     required TResult Function() showProgressDialog,
     required TResult Function() dismissProgressDialog,
+    required TResult Function(dynamic option) navigateBack,
   }) {
     return dismissProgressDialog();
   }
@@ -1803,6 +1846,7 @@ class _$_ReactionDismissProgressDialog
     TResult Function(String message)? showBlockConfirmationDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
+    TResult Function(dynamic option)? navigateBack,
   }) {
     return dismissProgressDialog?.call();
   }
@@ -1816,6 +1860,7 @@ class _$_ReactionDismissProgressDialog
     TResult Function(String message)? showBlockConfirmationDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
+    TResult Function(dynamic option)? navigateBack,
     required TResult orElse(),
   }) {
     if (dismissProgressDialog != null) {
@@ -1838,6 +1883,7 @@ class _$_ReactionDismissProgressDialog
         showProgressDialog,
     required TResult Function(_ReactionDismissProgressDialog value)
         dismissProgressDialog,
+    required TResult Function(_ReactionNavigateBack value) navigateBack,
   }) {
     return dismissProgressDialog(this);
   }
@@ -1854,6 +1900,7 @@ class _$_ReactionDismissProgressDialog
     TResult Function(_ReactionShowProgressDialog value)? showProgressDialog,
     TResult Function(_ReactionDismissProgressDialog value)?
         dismissProgressDialog,
+    TResult Function(_ReactionNavigateBack value)? navigateBack,
   }) {
     return dismissProgressDialog?.call(this);
   }
@@ -1870,6 +1917,7 @@ class _$_ReactionDismissProgressDialog
     TResult Function(_ReactionShowProgressDialog value)? showProgressDialog,
     TResult Function(_ReactionDismissProgressDialog value)?
         dismissProgressDialog,
+    TResult Function(_ReactionNavigateBack value)? navigateBack,
     required TResult orElse(),
   }) {
     if (dismissProgressDialog != null) {
@@ -1881,6 +1929,183 @@ class _$_ReactionDismissProgressDialog
 
 abstract class _ReactionDismissProgressDialog implements UserProfileReaction {
   factory _ReactionDismissProgressDialog() = _$_ReactionDismissProgressDialog;
+}
+
+/// @nodoc
+abstract class _$ReactionNavigateBackCopyWith<$Res> {
+  factory _$ReactionNavigateBackCopyWith(_ReactionNavigateBack value,
+          $Res Function(_ReactionNavigateBack) then) =
+      __$ReactionNavigateBackCopyWithImpl<$Res>;
+  $Res call({dynamic option});
+}
+
+/// @nodoc
+class __$ReactionNavigateBackCopyWithImpl<$Res>
+    extends _$UserProfileReactionCopyWithImpl<$Res>
+    implements _$ReactionNavigateBackCopyWith<$Res> {
+  __$ReactionNavigateBackCopyWithImpl(
+      _ReactionNavigateBack _value, $Res Function(_ReactionNavigateBack) _then)
+      : super(_value, (v) => _then(v as _ReactionNavigateBack));
+
+  @override
+  _ReactionNavigateBack get _value => super._value as _ReactionNavigateBack;
+
+  @override
+  $Res call({
+    Object? option = freezed,
+  }) {
+    return _then(_ReactionNavigateBack(
+      option == freezed
+          ? _value.option
+          : option // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_ReactionNavigateBack implements _ReactionNavigateBack {
+  _$_ReactionNavigateBack([this.option]);
+
+  @override
+  final dynamic option;
+
+  @override
+  String toString() {
+    return 'UserProfileReaction.navigateBack(option: $option)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _ReactionNavigateBack &&
+            const DeepCollectionEquality().equals(other.option, option));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(option));
+
+  @JsonKey(ignore: true)
+  @override
+  _$ReactionNavigateBackCopyWith<_ReactionNavigateBack> get copyWith =>
+      __$ReactionNavigateBackCopyWithImpl<_ReactionNavigateBack>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String message, bool inMainboardPage)
+        showSnackBar,
+    required TResult Function() showProfileOptions,
+    required TResult Function(String? reason) askReportReasonDialog,
+    required TResult Function(String message) showBlockConfirmationDialog,
+    required TResult Function() showProgressDialog,
+    required TResult Function() dismissProgressDialog,
+    required TResult Function(dynamic option) navigateBack,
+  }) {
+    return navigateBack(option);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String message, bool inMainboardPage)? showSnackBar,
+    TResult Function()? showProfileOptions,
+    TResult Function(String? reason)? askReportReasonDialog,
+    TResult Function(String message)? showBlockConfirmationDialog,
+    TResult Function()? showProgressDialog,
+    TResult Function()? dismissProgressDialog,
+    TResult Function(dynamic option)? navigateBack,
+  }) {
+    return navigateBack?.call(option);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String message, bool inMainboardPage)? showSnackBar,
+    TResult Function()? showProfileOptions,
+    TResult Function(String? reason)? askReportReasonDialog,
+    TResult Function(String message)? showBlockConfirmationDialog,
+    TResult Function()? showProgressDialog,
+    TResult Function()? dismissProgressDialog,
+    TResult Function(dynamic option)? navigateBack,
+    required TResult orElse(),
+  }) {
+    if (navigateBack != null) {
+      return navigateBack(option);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ReactionShowSnackBar value) showSnackBar,
+    required TResult Function(_ReactionShowProfileOptions value)
+        showProfileOptions,
+    required TResult Function(_ReactionAskReportReasonDialog value)
+        askReportReasonDialog,
+    required TResult Function(_ReactionShowBlockConfirmationDialog value)
+        showBlockConfirmationDialog,
+    required TResult Function(_ReactionShowProgressDialog value)
+        showProgressDialog,
+    required TResult Function(_ReactionDismissProgressDialog value)
+        dismissProgressDialog,
+    required TResult Function(_ReactionNavigateBack value) navigateBack,
+  }) {
+    return navigateBack(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_ReactionShowSnackBar value)? showSnackBar,
+    TResult Function(_ReactionShowProfileOptions value)? showProfileOptions,
+    TResult Function(_ReactionAskReportReasonDialog value)?
+        askReportReasonDialog,
+    TResult Function(_ReactionShowBlockConfirmationDialog value)?
+        showBlockConfirmationDialog,
+    TResult Function(_ReactionShowProgressDialog value)? showProgressDialog,
+    TResult Function(_ReactionDismissProgressDialog value)?
+        dismissProgressDialog,
+    TResult Function(_ReactionNavigateBack value)? navigateBack,
+  }) {
+    return navigateBack?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ReactionShowSnackBar value)? showSnackBar,
+    TResult Function(_ReactionShowProfileOptions value)? showProfileOptions,
+    TResult Function(_ReactionAskReportReasonDialog value)?
+        askReportReasonDialog,
+    TResult Function(_ReactionShowBlockConfirmationDialog value)?
+        showBlockConfirmationDialog,
+    TResult Function(_ReactionShowProgressDialog value)? showProgressDialog,
+    TResult Function(_ReactionDismissProgressDialog value)?
+        dismissProgressDialog,
+    TResult Function(_ReactionNavigateBack value)? navigateBack,
+    required TResult orElse(),
+  }) {
+    if (navigateBack != null) {
+      return navigateBack(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ReactionNavigateBack implements UserProfileReaction {
+  factory _ReactionNavigateBack([dynamic option]) = _$_ReactionNavigateBack;
+
+  dynamic get option;
+  @JsonKey(ignore: true)
+  _$ReactionNavigateBackCopyWith<_ReactionNavigateBack> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

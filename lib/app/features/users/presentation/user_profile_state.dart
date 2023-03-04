@@ -34,6 +34,8 @@ class UserProfileReaction with _$UserProfileReaction {
       _ReactionShowProgressDialog;
   factory UserProfileReaction.dismissProgressDialog() =
       _ReactionDismissProgressDialog;
+  factory UserProfileReaction.navigateBack([dynamic option]) =
+      _ReactionNavigateBack;
 }
 
 @freezed
