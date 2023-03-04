@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Corrigido
-- Comportamento ao curtir e comentar tweets
+- Comportamento ao curtir, comentar e excluir tweets
+- Ação de recarregar quando dá erro durante a navegação do feed para o perfil ou chat
 
 ## [3.2.0] - 2023-02-23
 
