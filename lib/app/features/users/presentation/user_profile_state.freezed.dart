@@ -490,8 +490,8 @@ abstract class _ErrorDetails implements UserProfileState {
 class _$UserProfileReactionTearOff {
   const _$UserProfileReactionTearOff();
 
-  _ReactionShowError showError(String message) {
-    return _ReactionShowError(
+  _ReactionShowSnackBar showSnackBar(String message) {
+    return _ReactionShowSnackBar(
       message,
     );
   }
@@ -506,33 +506,33 @@ mixin _$UserProfileReaction {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String message) showError,
+    required TResult Function(String message) showSnackBar,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String message)? showError,
+    TResult Function(String message)? showSnackBar,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String message)? showError,
+    TResult Function(String message)? showSnackBar,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ReactionShowError value) showError,
+    required TResult Function(_ReactionShowSnackBar value) showSnackBar,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ReactionShowError value)? showError,
+    TResult Function(_ReactionShowSnackBar value)? showSnackBar,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ReactionShowError value)? showError,
+    TResult Function(_ReactionShowSnackBar value)? showSnackBar,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -573,31 +573,31 @@ class _$UserProfileReactionCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$ReactionShowErrorCopyWith<$Res>
+abstract class _$ReactionShowSnackBarCopyWith<$Res>
     implements $UserProfileReactionCopyWith<$Res> {
-  factory _$ReactionShowErrorCopyWith(
-          _ReactionShowError value, $Res Function(_ReactionShowError) then) =
-      __$ReactionShowErrorCopyWithImpl<$Res>;
+  factory _$ReactionShowSnackBarCopyWith(_ReactionShowSnackBar value,
+          $Res Function(_ReactionShowSnackBar) then) =
+      __$ReactionShowSnackBarCopyWithImpl<$Res>;
   @override
   $Res call({String message});
 }
 
 /// @nodoc
-class __$ReactionShowErrorCopyWithImpl<$Res>
+class __$ReactionShowSnackBarCopyWithImpl<$Res>
     extends _$UserProfileReactionCopyWithImpl<$Res>
-    implements _$ReactionShowErrorCopyWith<$Res> {
-  __$ReactionShowErrorCopyWithImpl(
-      _ReactionShowError _value, $Res Function(_ReactionShowError) _then)
-      : super(_value, (v) => _then(v as _ReactionShowError));
+    implements _$ReactionShowSnackBarCopyWith<$Res> {
+  __$ReactionShowSnackBarCopyWithImpl(
+      _ReactionShowSnackBar _value, $Res Function(_ReactionShowSnackBar) _then)
+      : super(_value, (v) => _then(v as _ReactionShowSnackBar));
 
   @override
-  _ReactionShowError get _value => super._value as _ReactionShowError;
+  _ReactionShowSnackBar get _value => super._value as _ReactionShowSnackBar;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_ReactionShowError(
+    return _then(_ReactionShowSnackBar(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -608,22 +608,22 @@ class __$ReactionShowErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ReactionShowError implements _ReactionShowError {
-  _$_ReactionShowError(this.message);
+class _$_ReactionShowSnackBar implements _ReactionShowSnackBar {
+  _$_ReactionShowSnackBar(this.message);
 
   @override
   final String message;
 
   @override
   String toString() {
-    return 'UserProfileReaction.showError(message: $message)';
+    return 'UserProfileReaction.showSnackBar(message: $message)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ReactionShowError &&
+            other is _ReactionShowSnackBar &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -633,33 +633,34 @@ class _$_ReactionShowError implements _ReactionShowError {
 
   @JsonKey(ignore: true)
   @override
-  _$ReactionShowErrorCopyWith<_ReactionShowError> get copyWith =>
-      __$ReactionShowErrorCopyWithImpl<_ReactionShowError>(this, _$identity);
+  _$ReactionShowSnackBarCopyWith<_ReactionShowSnackBar> get copyWith =>
+      __$ReactionShowSnackBarCopyWithImpl<_ReactionShowSnackBar>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String message) showError,
+    required TResult Function(String message) showSnackBar,
   }) {
-    return showError(message);
+    return showSnackBar(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String message)? showError,
+    TResult Function(String message)? showSnackBar,
   }) {
-    return showError?.call(message);
+    return showSnackBar?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String message)? showError,
+    TResult Function(String message)? showSnackBar,
     required TResult orElse(),
   }) {
-    if (showError != null) {
-      return showError(message);
+    if (showSnackBar != null) {
+      return showSnackBar(message);
     }
     return orElse();
   }
@@ -667,39 +668,39 @@ class _$_ReactionShowError implements _ReactionShowError {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ReactionShowError value) showError,
+    required TResult Function(_ReactionShowSnackBar value) showSnackBar,
   }) {
-    return showError(this);
+    return showSnackBar(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ReactionShowError value)? showError,
+    TResult Function(_ReactionShowSnackBar value)? showSnackBar,
   }) {
-    return showError?.call(this);
+    return showSnackBar?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ReactionShowError value)? showError,
+    TResult Function(_ReactionShowSnackBar value)? showSnackBar,
     required TResult orElse(),
   }) {
-    if (showError != null) {
-      return showError(this);
+    if (showSnackBar != null) {
+      return showSnackBar(this);
     }
     return orElse();
   }
 }
 
-abstract class _ReactionShowError implements UserProfileReaction {
-  factory _ReactionShowError(String message) = _$_ReactionShowError;
+abstract class _ReactionShowSnackBar implements UserProfileReaction {
+  factory _ReactionShowSnackBar(String message) = _$_ReactionShowSnackBar;
 
   @override
   String get message;
   @override
   @JsonKey(ignore: true)
-  _$ReactionShowErrorCopyWith<_ReactionShowError> get copyWith =>
+  _$ReactionShowSnackBarCopyWith<_ReactionShowSnackBar> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -13,5 +13,6 @@ class UserProfileState with _$UserProfileState {
 
 @freezed
 class UserProfileReaction with _$UserProfileReaction {
-  factory UserProfileReaction.showError(String message) = _ReactionShowError;
+  factory UserProfileReaction.showSnackBar(String message) =
+      _ReactionShowSnackBar;
 }

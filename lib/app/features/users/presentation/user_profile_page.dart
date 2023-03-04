@@ -67,7 +67,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
 
   void _handleReaction(UserProfileReaction? reaction) {
     reaction?.when(
-      showError: _showErrorMessage,
+      showSnackBar: _showSnackBar,
     );
   }
 
@@ -190,7 +190,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
     );
   }
 
-  void _showErrorMessage(String message) {
+  void _showSnackBar(String message) {
     showSnackBar(scaffoldKey: _scaffoldKey, message: message);
   }
 
