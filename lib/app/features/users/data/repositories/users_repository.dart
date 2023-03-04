@@ -86,8 +86,9 @@ class UsersRepository implements IUsersRepository {
   @override
   Future<Either<Failure, void>> block(int clientId) async {
     try {
-      final endPoint = '/profile/$clientId/block';
-      await _apiProvider!.post(path: endPoint);
+      const endPoint = '/profile-block';
+      await _apiProvider!.post(
+          path: endPoint, parameters: {'cliente_id': clientId.toString()});
       return right(null);
     } catch (error) {
       return left(MapExceptionToFailure.map(error));
