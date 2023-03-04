@@ -1,15 +1,15 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/network/api_client.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_exception_to_failure.dart';
-import 'package:penhas/app/features/users/data/models/user_detail_model.dart';
-import 'package:penhas/app/features/users/data/models/user_search_session_model.dart';
-import 'package:penhas/app/features/users/domain/entities/user_detail_entity.dart';
-import 'package:penhas/app/features/users/domain/entities/user_search_options.dart';
-import 'package:penhas/app/features/users/domain/entities/user_search_session_entity.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/network/api_client.dart';
+import '../../../authentication/presentation/shared/map_exception_to_failure.dart';
+import '../models/user_detail_model.dart';
+import '../models/user_search_session_model.dart';
+import '../../domain/entities/user_detail_entity.dart';
+import '../../domain/entities/user_search_options.dart';
+import '../../domain/entities/user_search_session_entity.dart';
+import '../../../../shared/logger/log.dart';
 
 abstract class IUsersRepository {
   Future<Either<Failure, UserDetailEntity>> profileDetail(String clientId);
