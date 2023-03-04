@@ -11,12 +11,10 @@ void main() {
     test('should pass clientId on path', () async {
       int clientId = 6543;
       when(
-        apiProvider.post(
-          path: '/profile/$clientId/block',
-        ),
+        apiProvider.post(path: '/profile/$clientId/block', body: ''),
       );
       sut.block(clientId);
-      verify(apiProvider.post(path: '/profile/$clientId/report')).called(1);
+      verify(apiProvider.post(path: '/profile/$clientId/report', body: ''));
     });
   });
 }
