@@ -11,22 +11,24 @@ void main() {
   final IApiProvider apiProvider = MockApiProvider();
   final IUsersRepository sut = UsersRepository(apiProvider: apiProvider);
   group('UsersRepository', () {
-    test('should send a reason on the body', () async {
+    test('should send client_id and reason to report', () async {
       int clientId = 6543;
-      final bodyContent =
-          await JsonUtil.getJson(from: 'users/users_report.json');
+      String reason = 'Hate speech';
+
+      final parameters = {'cliente_id': clientId.toString(), 'reason': reason};
+
       when(
         () => apiProvider.post(
-          path: '/profile/$clientId/report',
-          body: bodyContent.toString(),
+          path: '/report-profile',
+          parameters: parameters,
         ),
       );
 
-      sut.report(clientId, bodyContent['reason']);
+      sut.report(clientId, reason);
 
       verify(() => apiProvider.post(
-            path: '/profile/$clientId/report',
-            body: bodyContent.toString(),
+            path: '/report-profile',
+            parameters: parameters,
           )).called(1);
     });
   });
