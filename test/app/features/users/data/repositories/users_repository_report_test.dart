@@ -3,8 +3,6 @@ import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/users/data/repositories/users_repository.dart';
 
-import '../../../../../utils/json_util.dart';
-
 class MockApiProvider extends Mock implements IApiProvider {}
 
 void main() {
