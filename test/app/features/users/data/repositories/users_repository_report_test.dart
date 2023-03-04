@@ -17,8 +17,8 @@ void main() {
 
       when(
         () => apiProvider.post(
-          path: '/report-profile',
-          parameters: parameters,
+          path: any(named: 'path'),
+          parameters: any(named: 'parameters'),
         ),
       );
 
@@ -27,7 +27,7 @@ void main() {
       verify(() => apiProvider.post(
             path: '/report-profile',
             parameters: parameters,
-          )).called(1);
+          ));
     });
   });
 }

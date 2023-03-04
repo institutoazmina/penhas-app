@@ -13,8 +13,12 @@ void main() {
       int clientId = 6543;
       final parameters = {'cliente_id': clientId.toString()};
       when(
-        () => apiProvider.post(path: '/profile-block', parameters: parameters),
+        () => apiProvider.post(
+          path: any(named: 'path'),
+          parameters: any(named: 'parameters'),
+        ),
       );
+
       sut.block(clientId);
       verify(() =>
           apiProvider.post(path: '/profile-block', parameters: parameters));
