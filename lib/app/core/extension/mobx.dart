@@ -28,3 +28,7 @@ extension ObservableStreamExt on ObservableStream? {
     }
   }
 }
+
+extension ComposedReactionDisposer on List<ReactionDisposer> {
+  void dispose() => forEach((disposer) => disposer());
+}
