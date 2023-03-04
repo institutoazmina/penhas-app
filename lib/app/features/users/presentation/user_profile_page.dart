@@ -3,12 +3,15 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_tags/flutter_tags.dart';
-import 'package:penhas/app/features/users/domain/entities/user_detail_entity.dart';
-import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
-import 'package:penhas/app/features/users/domain/states/user_profile_state.dart';
-import 'package:penhas/app/features/users/presentation/user_profile_controller.dart';
-import 'package:penhas/app/shared/design_system/button_shape.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+import 'package:mobx/mobx.dart';
+
+import '../../../shared/design_system/button_shape.dart';
+import '../../../shared/design_system/colors.dart';
+import '../../authentication/presentation/shared/snack_bar_handler.dart';
+import '../domain/entities/user_detail_entity.dart';
+import '../domain/entities/user_detail_profile_entity.dart';
+import 'user_profile_controller.dart';
+import 'user_profile_state.dart';
 
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({Key? key}) : super(key: key);
@@ -18,10 +21,27 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState
-    extends ModularState<UserProfilePage, UserProfileController> {
+    extends ModularState<UserProfilePage, UserProfileController>
+    with SnackBarHandler {
+  ReactionDisposer? _disposer;
+  late final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _disposer = reaction((_) => controller.reaction, _handleReaction);
+  }
+
+  @override
+  void dispose() {
+    _disposer?.call();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: DesignSystemColors.systemBackgroundColor,
       appBar: AppBar(
         elevation: 0,
@@ -29,7 +49,7 @@ class _UserProfilePageState
       ),
       body: Observer(
         builder: (_) {
-          return bodyBuilder(controller.currentState);
+          return bodyBuilder(controller.state);
         },
       ),
     );
@@ -45,6 +65,12 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
     );
   }
 
+  void _handleReaction(UserProfileReaction? reaction) {
+    reaction?.when(
+      showError: _showErrorMessage,
+    );
+  }
+
   Widget empty() => Container(color: DesignSystemColors.systemBackgroundColor);
 
   Widget loaded(UserDetailEntity user) {
@@ -53,9 +79,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
       children: [
         buildHeader(user.profile),
         buildContent(user.profile),
-        if (user.isMyself)
-          Container()
-        else
+        if (!user.isMyself)
           Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 70.0,
@@ -63,6 +87,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
             ),
             child: SizedBox(
               height: 44,
+              // ignore: deprecated_member_use
               child: RaisedButton(
                 onPressed: () => controller.openChannel(),
                 elevation: 0,
@@ -163,6 +188,10 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       ),
     );
+  }
+
+  void _showErrorMessage(String message) {
+    showSnackBar(scaffoldKey: _scaffoldKey, message: message);
   }
 
   TextStyle get nameStyle => const TextStyle(

@@ -1,59 +1,62 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entity.dart';
-import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
-import 'package:penhas/app/features/users/domain/entities/user_detail_entity.dart';
-import 'package:penhas/app/features/users/domain/states/user_profile_state.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+
+import '../../../core/error/failures.dart';
+import '../../authentication/presentation/shared/map_failure_message.dart';
+import '../../chat/domain/entities/chat_channel_open_entity.dart';
+import '../../chat/domain/usecases/get_chat_channel_token_usecase.dart';
+import '../domain/entities/user_detail_entity.dart';
+import 'user_profile_state.dart';
 
 part 'user_profile_controller.g.dart';
 
 class UserProfileController extends _UserProfileControllerBase
     with _$UserProfileController {
   UserProfileController({
-    required UserDetailEntity? person,
-    required IChatChannelRepository channelRepository,
-  }) : super(person, channelRepository);
+    required UserDetailEntity person,
+    required GetChatChannelTokenUseCase getChatChannelToken,
+  }) : super(person, getChatChannelToken);
 }
 
-abstract class _UserProfileControllerBase with Store {
-  _UserProfileControllerBase(this._person, this._channelRepository) {
+abstract class _UserProfileControllerBase with Store, MapFailureMessage {
+  _UserProfileControllerBase(
+    this._person,
+    this._getChatChannelToken,
+  ) {
     _init();
   }
 
-  final UserDetailEntity? _person;
-  final IChatChannelRepository _channelRepository;
-
-  void _init() {
-    currentState = UserProfileState.loaded(_person!);
-  }
+  final UserDetailEntity _person;
+  final GetChatChannelTokenUseCase _getChatChannelToken;
 
   @observable
-  UserProfileState currentState = const UserProfileState.initial();
+  UserProfileState state = const UserProfileState.initial();
+
+  @observable
+  UserProfileReaction? reaction;
+
+  void _init() {
+    state = UserProfileState.loaded(_person);
+  }
 
   @action
   Future<void> openChannel() async {
-    final channel = await _channelRepository.openChannel(
-      _person!.profile.clientId.toString(),
-    );
-
-    channel.fold(
-      (failure) => handleFailure(failure),
-      (session) => handleSession(session),
-    );
+    final channel = await _getChatChannelToken(_person.profile.clientId!);
+    reaction = channel.fold(_handleFailure, _handleSuccess);
   }
-}
 
-extension _UserProfileControllerBasePrivate on _UserProfileControllerBase {
-  void handleSession(ChatChannelOpenEntity session) {
+  UserProfileReaction? _handleSuccess(ChatChannelOpenEntity chat) {
     Modular.to.pushReplacementNamed(
-      '/mainboard/chat/${session.token}',
-      arguments: session,
+      '/mainboard/chat/${chat.token}',
+      arguments: chat,
     );
+    return null;
   }
 
-  void handleFailure(Failure failure) {
-    logError(failure);
+  UserProfileReaction? _handleFailure(Failure error) {
+    final errorMessage = mapFailureMessage(error);
+    return errorMessage != null
+        ? UserProfileReaction.showError(errorMessage)
+        : null;
   }
 }

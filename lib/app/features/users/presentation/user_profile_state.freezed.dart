@@ -485,3 +485,221 @@ abstract class _ErrorDetails implements UserProfileState {
   _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+class _$UserProfileReactionTearOff {
+  const _$UserProfileReactionTearOff();
+
+  _ReactionShowError showError(String message) {
+    return _ReactionShowError(
+      message,
+    );
+  }
+}
+
+/// @nodoc
+const $UserProfileReaction = _$UserProfileReactionTearOff();
+
+/// @nodoc
+mixin _$UserProfileReaction {
+  String get message => throw _privateConstructorUsedError;
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String message) showError,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String message)? showError,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String message)? showError,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ReactionShowError value) showError,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_ReactionShowError value)? showError,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ReactionShowError value)? showError,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $UserProfileReactionCopyWith<UserProfileReaction> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UserProfileReactionCopyWith<$Res> {
+  factory $UserProfileReactionCopyWith(
+          UserProfileReaction value, $Res Function(UserProfileReaction) then) =
+      _$UserProfileReactionCopyWithImpl<$Res>;
+  $Res call({String message});
+}
+
+/// @nodoc
+class _$UserProfileReactionCopyWithImpl<$Res>
+    implements $UserProfileReactionCopyWith<$Res> {
+  _$UserProfileReactionCopyWithImpl(this._value, this._then);
+
+  final UserProfileReaction _value;
+  // ignore: unused_field
+  final $Res Function(UserProfileReaction) _then;
+
+  @override
+  $Res call({
+    Object? message = freezed,
+  }) {
+    return _then(_value.copyWith(
+      message: message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$ReactionShowErrorCopyWith<$Res>
+    implements $UserProfileReactionCopyWith<$Res> {
+  factory _$ReactionShowErrorCopyWith(
+          _ReactionShowError value, $Res Function(_ReactionShowError) then) =
+      __$ReactionShowErrorCopyWithImpl<$Res>;
+  @override
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$ReactionShowErrorCopyWithImpl<$Res>
+    extends _$UserProfileReactionCopyWithImpl<$Res>
+    implements _$ReactionShowErrorCopyWith<$Res> {
+  __$ReactionShowErrorCopyWithImpl(
+      _ReactionShowError _value, $Res Function(_ReactionShowError) _then)
+      : super(_value, (v) => _then(v as _ReactionShowError));
+
+  @override
+  _ReactionShowError get _value => super._value as _ReactionShowError;
+
+  @override
+  $Res call({
+    Object? message = freezed,
+  }) {
+    return _then(_ReactionShowError(
+      message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_ReactionShowError implements _ReactionShowError {
+  _$_ReactionShowError(this.message);
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'UserProfileReaction.showError(message: $message)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _ReactionShowError &&
+            const DeepCollectionEquality().equals(other.message, message));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+
+  @JsonKey(ignore: true)
+  @override
+  _$ReactionShowErrorCopyWith<_ReactionShowError> get copyWith =>
+      __$ReactionShowErrorCopyWithImpl<_ReactionShowError>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String message) showError,
+  }) {
+    return showError(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String message)? showError,
+  }) {
+    return showError?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String message)? showError,
+    required TResult orElse(),
+  }) {
+    if (showError != null) {
+      return showError(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ReactionShowError value) showError,
+  }) {
+    return showError(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_ReactionShowError value)? showError,
+  }) {
+    return showError?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ReactionShowError value)? showError,
+    required TResult orElse(),
+  }) {
+    if (showError != null) {
+      return showError(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ReactionShowError implements UserProfileReaction {
+  factory _ReactionShowError(String message) = _$_ReactionShowError;
+
+  @override
+  String get message;
+  @override
+  @JsonKey(ignore: true)
+  _$ReactionShowErrorCopyWith<_ReactionShowError> get copyWith =>
+      throw _privateConstructorUsedError;
+}
