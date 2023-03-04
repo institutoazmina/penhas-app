@@ -17,6 +17,7 @@ abstract class IUsersRepository {
     UserSearchOptions option,
   );
   Future<Either<Failure, void>> report(int clientId, String reason);
+  Future<Either<Failure, void>> block(int clientId);
 }
 
 class UsersRepository implements IUsersRepository {
@@ -76,6 +77,17 @@ class UsersRepository implements IUsersRepository {
       final endPoint = '/profile/$clientId/report';
       final body = {'reason': reason};
       await _apiProvider!.post(path: endPoint, body: body.toString());
+      return right(null);
+    } catch (error) {
+      return left(MapExceptionToFailure.map(error));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> block(int clientId) async {
+    try {
+      final endPoint = '/profile/$clientId/block';
+      await _apiProvider!.post(path: endPoint);
       return right(null);
     } catch (error) {
       return left(MapExceptionToFailure.map(error));
