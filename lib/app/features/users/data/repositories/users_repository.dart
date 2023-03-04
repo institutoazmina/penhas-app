@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
+import '../../../../core/entities/valid_fiel.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/network/api_client.dart';
 import '../../../authentication/presentation/shared/map_exception_to_failure.dart';
@@ -72,24 +73,28 @@ class UsersRepository implements IUsersRepository {
   }
 
   @override
-  Future<Either<Failure, void>> report(int clientId, String reason) async {
+  Future<Either<Failure, ValidField>> report(
+      int clientId, String reason) async {
     try {
       const endPoint = '/report-profile';
       final parameters = {'reason': reason, 'cliente_id': clientId.toString()};
-      await _apiProvider!.post(path: endPoint, parameters: parameters);
-      return right(null);
+      final response = await _apiProvider!
+          .post(path: endPoint, parameters: parameters)
+          .parseBlockOrReport();
+      return right(response);
     } catch (error) {
       return left(MapExceptionToFailure.map(error));
     }
   }
 
   @override
-  Future<Either<Failure, void>> block(int clientId) async {
+  Future<Either<Failure, ValidField>> block(int clientId) async {
     try {
       const endPoint = '/profile-block';
-      await _apiProvider!.post(
-          path: endPoint, parameters: {'cliente_id': clientId.toString()});
-      return right(null);
+      final response = await _apiProvider!.post(
+          path: endPoint,
+          parameters: {'cliente_id': clientId.toString()}).parseBlockOrReport();
+      return right(response);
     } catch (error) {
       return left(MapExceptionToFailure.map(error));
     }
@@ -107,5 +112,13 @@ extension _FutureExtension<T extends String> on Future<T> {
   Future<UserSearchSessionEntity> parseSearchSession() async {
     return then((v) => jsonDecode(v) as Map<String, dynamic>)
         .then((v) => UserSearchSessionModel.fromJson(v));
+  }
+
+  Future<ValidField> parseBlockOrReport() async {
+    return then((data) async {
+      final jsonData = jsonDecode(data) as Map<String, dynamic>;
+      String message = jsonData['message'];
+      return ValidField(message: message);
+    });
   }
 }
