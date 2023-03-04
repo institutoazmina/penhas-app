@@ -1,5 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../domain/usecases/report_user_usecase.dart';
 import 'user_profile_controller.dart';
 import 'user_profile_page.dart';
 
@@ -11,6 +12,9 @@ class UserProfileModule extends Module {
             person: i.args?.data,
             getChatChannelToken: i(),
           ),
+        ),
+        Bind.factory(
+          (i) => ReportUserUseCase(repository: i()),
         ),
       ];
 
