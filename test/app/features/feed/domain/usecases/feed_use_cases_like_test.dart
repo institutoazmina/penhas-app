@@ -26,7 +26,7 @@ void main() {
   });
 
   setUpAll(() {
-    registerFallbackValue(TweetRequestOption());
+    registerFallbackValue(const TweetRequestOption());
     registerFallbackValue(TweetEngageRequestOption(tweetId: ''));
   });
 
@@ -61,6 +61,7 @@ void main() {
         );
         tweetEntity3 = TweetEntity(
           id: 'id_3',
+          parentId: 'id_2',
           userName: 'user_6',
           clientId: 6,
           createdAt: '2020-03-01 00:00:01',
@@ -158,11 +159,11 @@ void main() {
         // act
         final received = await sut.like(tweetEntity3);
         // assert
-        expect(expected, received);
+        expect(received, expected);
       });
     });
     group('unlike()', () {
-      int? maxRowsPerRequet;
+      late int maxRowsPerRequet;
       late TweetSessionEntity firstSessionResponse;
       late TweetEntity tweetEntity1;
       late TweetEntity tweetEntity2;
@@ -185,6 +186,7 @@ void main() {
         );
         tweetEntity3 = TweetEntity(
           id: 'id_3',
+          parentId: 'id_2',
           userName: 'user_6',
           clientId: 6,
           createdAt: '2020-03-01 00:00:01',
@@ -282,7 +284,7 @@ void main() {
         // act
         final received = await sut.unlike(tweetEntity3);
         // assert
-        expect(expected, received);
+        expect(received, expected);
       });
     });
   });

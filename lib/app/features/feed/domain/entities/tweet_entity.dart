@@ -15,21 +15,21 @@ class TweetEntity extends TweetTiles {
     required this.avatar,
     required this.meta,
     this.parentId,
-    this.lastReply,
+    this.lastReply = const [],
   });
 
-  final String? id;
+  final String id;
   final String? parentId;
-  final String? userName;
+  final String userName;
   final int clientId;
-  final String? createdAt;
+  final String createdAt;
   final int totalReply;
   final int totalLikes;
   final bool anonymous;
-  final String? content;
-  final String? avatar;
+  final String content;
+  final String avatar;
   final TweetMeta meta;
-  final List<TweetEntity?>? lastReply;
+  final List<TweetEntity> lastReply;
 
   @override
   List<Object?> get props => [
@@ -59,7 +59,7 @@ class TweetEntity extends TweetTiles {
     String? avatar,
     TweetMeta? meta,
     String? parentId,
-    List<TweetEntity?>? lastReply,
+    List<TweetEntity>? lastReply,
   }) {
     return TweetEntity(
       id: id ?? this.id,

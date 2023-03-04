@@ -1,18 +1,20 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/presentation/detail_tweet/detail_tweet_controller.dart';
-import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_body.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_bottom.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_title.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+
+import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/text_styles.dart';
+import '../../../authentication/presentation/shared/snack_bar_handler.dart';
+import '../../domain/entities/tweet_entity.dart';
+import '../stores/tweet_controller.dart';
+import '../tweet/widgets/tweet_body.dart';
+import '../tweet/widgets/tweet_bottom.dart';
+import '../tweet/widgets/tweet_title.dart';
+import 'detail_tweet_controller.dart';
 
 Color _defaultColor = Colors.white;
 Color _highlightColor = DesignSystemColors.ligthPurple.withOpacity(0.1);
@@ -63,6 +65,7 @@ class _DetailTweetPageState
       d();
     }
     _scrollController.dispose();
+    controller.dispose();
   }
 
   @override
@@ -99,7 +102,7 @@ class _DetailTweetPageState
     }
     return Column(
       children: [
-        ShowParentTweetWidget(widget.tweetController, parentId),
+        _ShowParentTweetWidget(widget.tweetController, parentId),
         Flexible(child: _buildTweetList()),
       ],
     );
@@ -256,7 +259,7 @@ class _ReplyTweetState extends State<_ReplyTweet> {
               TweetBody(content: _tweet.content),
               TweetBottom(tweet: _tweet, controller: controller),
               if (_isComment && _tweet.totalReply > 0)
-                ShowReplyWidget(controller, _tweet),
+                _ShowReplyWidget(controller, _tweet),
             ],
           ),
         ),
@@ -290,8 +293,8 @@ class _ReplyTweetState extends State<_ReplyTweet> {
   }
 }
 
-class ShowReplyWidget extends StatelessWidget {
-  const ShowReplyWidget(this.controller, this.tweet);
+class _ShowReplyWidget extends StatelessWidget {
+  const _ShowReplyWidget(this.controller, this.tweet);
 
   final ITweetController controller;
   final TweetEntity tweet;
@@ -306,8 +309,8 @@ class ShowReplyWidget extends StatelessWidget {
       );
 }
 
-class ShowParentTweetWidget extends StatelessWidget {
-  const ShowParentTweetWidget(this.controller, this.tweetId);
+class _ShowParentTweetWidget extends StatelessWidget {
+  const _ShowParentTweetWidget(this.controller, this.tweetId);
 
   final ITweetController controller;
   final String tweetId;

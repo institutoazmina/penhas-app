@@ -27,7 +27,7 @@ void main() {
   });
 
   setUpAll(() {
-    registerFallbackValue(TweetRequestOption());
+    registerFallbackValue(const TweetRequestOption());
     registerFallbackValue(TweetEngageRequestOption(tweetId: ''));
   });
 
@@ -206,7 +206,7 @@ void main() {
       );
     });
     group('fetchOldestTweet()', () {
-      int? maxRowsPerRequet;
+      late int maxRowsPerRequet;
       late TweetSessionEntity firstSessionResponse;
       late TweetSessionEntity secondSessionResponse;
       late TweetSessionEntity thirdSessionResponse;
@@ -363,12 +363,12 @@ void main() {
           verifyInOrder([
             () => repository.fetch(
                   option: TweetRequestOption(
-                    rows: maxRowsPerRequet!,
+                    rows: maxRowsPerRequet,
                   ),
                 ),
             () => repository.fetch(
                   option: TweetRequestOption(
-                    rows: maxRowsPerRequet!,
+                    rows: maxRowsPerRequet,
                     nextPageToken: '_next_page_request_1_',
                   ),
                 ),
@@ -406,12 +406,12 @@ void main() {
           verifyInOrder([
             () => repository.fetch(
                   option: TweetRequestOption(
-                    rows: maxRowsPerRequet!,
+                    rows: maxRowsPerRequet,
                   ),
                 ),
             () => repository.fetch(
                   option: TweetRequestOption(
-                    rows: maxRowsPerRequet!,
+                    rows: maxRowsPerRequet,
                     nextPageToken: '_next_page_request_1_',
                   ),
                 ),
