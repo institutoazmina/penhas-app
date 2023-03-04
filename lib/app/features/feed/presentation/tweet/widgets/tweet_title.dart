@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../../../../../shared/design_system/text_styles.dart';
+import '../../../../../shared/widgets/bottom_sheet_actions_widget.dart';
 import '../../../domain/entities/tweet_entity.dart';
 import '../../../domain/states/feed_router_type.dart';
 import '../../stores/tweet_controller.dart';
@@ -65,78 +66,16 @@ class TweetTitle extends StatelessWidget {
     return DateTime.parse(utcEnabled).toLocal();
   }
 
-  double fullWidth(BuildContext context) {
-    return MediaQuery.of(context).size.width;
-  }
-
   Future<void> _showTweetAction() async {
     await showModalBottomSheet(
       context: _context,
-      backgroundColor: Colors.transparent,
-      builder: (context) {
-        return Container(
-          padding: const EdgeInsets.only(top: 5),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
-          ),
-          height: 150,
-          child: Column(
-            children: <Widget>[_buildDivider(context), ..._buildAction()],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildDivider(BuildContext context) {
-    return Container(
-      width: fullWidth(context) * .2,
-      height: 5,
-      decoration: BoxDecoration(
-        color: Theme.of(context).dividerColor,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
+      builder: (_) => BottomSheetActionsContentWidget(actions: _buildAction()),
     );
   }
 
   List<Widget> _buildAction() {
-    final List<Widget> actions = [];
-    if (!tweet.anonymous && !tweet.meta.owner) {
-      actions.add(
-        ListTile(
-          leading: SvgPicture.asset(
-            'assets/images/svg/tweet_action/tweet_action_chat.svg',
-          ),
-          title: const Text('Conversar'),
-          onTap: () => _showUserChat(),
-        ),
-      );
-    }
-
-    if (!tweet.meta.owner) {
-      actions.add(
-        ListTile(
-          leading: SvgPicture.asset(
-            'assets/images/svg/tweet_action/tweet_action_report.svg',
-          ),
-          title: const Text('Denunciar'),
-          onTap: () {
-            Navigator.of(_context).pop();
-            controller!.report(tweet);
-          },
-        ),
-      );
-    }
-
-    if (tweet.meta.owner) {
-      actions.insert(
-        0,
+    return [
+      if (tweet.meta.owner)
         ListTile(
           leading: SvgPicture.asset(
             'assets/images/svg/tweet_action/tweet_action_delete.svg',
@@ -148,10 +87,26 @@ class TweetTitle extends StatelessWidget {
                 .whenComplete(() => Navigator.of(_context).pop());
           },
         ),
-      );
-    }
-
-    return actions;
+      if (!tweet.anonymous && !tweet.meta.owner)
+        ListTile(
+          leading: SvgPicture.asset(
+            'assets/images/svg/tweet_action/tweet_action_chat.svg',
+          ),
+          title: const Text('Conversar'),
+          onTap: () => _showUserChat(),
+        ),
+      if (!tweet.meta.owner)
+        ListTile(
+          leading: SvgPicture.asset(
+            'assets/images/svg/tweet_action/tweet_action_report.svg',
+          ),
+          title: const Text('Denunciar'),
+          onTap: () {
+            Navigator.of(_context).pop();
+            controller!.report(tweet);
+          },
+        ),
+    ];
   }
 
   Widget _showAnonymousHeader() {
@@ -162,9 +117,7 @@ class TweetTitle extends StatelessWidget {
           child: Text(tweet.userName, style: kTextStyleFeedTweetTitle),
         ),
         if (isDetail) _buildDetailTime() else _buildTime(),
-        if (controller == null)
-          Container()
-        else
+        if (controller != null)
           IconButton(
             icon: const Icon(Icons.more_vert),
             onPressed: () => _showTweetAction(),
@@ -187,9 +140,7 @@ class TweetTitle extends StatelessWidget {
             child: _buttonTitle(),
           ),
         ),
-        if (controller == null)
-          Container()
-        else
+        if (controller != null)
           IconButton(
             icon: const Icon(Icons.more_vert),
             onPressed: () => _showTweetAction(),
