@@ -15,7 +15,7 @@ void main() {
           await JsonUtil.getJson(from: 'users/users_report.json');
       when(
         apiProvider.post(
-          path: anyNamed('/profile/$clientId/report'),
+          path: '/profile/$clientId/report',
           body: bodyContent.toString(),
         ),
       );
