@@ -5,11 +5,11 @@ import 'package:flutter_modular/flutter_modular.dart';
 import '../../shared/design_system/colors.dart';
 
 extension Dialog on IModularNavigator {
-  Future showDialog({
+  Future<T?> showDialog<T>({
     required WidgetBuilder builder,
     bool barrierDismissible = true,
   }) =>
-      Asuka.showDialog(
+      Asuka.showDialog<T>(
         builder: builder,
         barrierDismissible: barrierDismissible,
         barrierColor: DesignSystemColors.dialogBarrierColor,
