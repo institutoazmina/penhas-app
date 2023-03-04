@@ -1,8 +1,9 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:penhas/app/core/network/api_client.dart';
-import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
-import 'package:penhas/app/features/users/presentation/user_profile_controller.dart';
-import 'package:penhas/app/features/users/presentation/user_profile_page.dart';
+
+import '../../../core/network/api_client.dart';
+import '../../chat/domain/repositories/chat_channel_repository.dart';
+import 'user_profile_controller.dart';
+import 'user_profile_page.dart';
 
 class UserProfileModule extends Module {
   @override
