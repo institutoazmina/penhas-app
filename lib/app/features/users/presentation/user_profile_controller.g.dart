@@ -47,6 +47,31 @@ mixin _$UserProfileController on _UserProfileControllerBase, Store {
     return _$openChannelAsyncAction.run(() => super.openChannel());
   }
 
+  final _$_UserProfileControllerBaseActionController =
+      ActionController(name: '_UserProfileControllerBase');
+
+  @override
+  void onTapMenuOptions() {
+    final _$actionInfo = _$_UserProfileControllerBaseActionController
+        .startAction(name: '_UserProfileControllerBase.onTapMenuOptions');
+    try {
+      return super.onTapMenuOptions();
+    } finally {
+      _$_UserProfileControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void onOptionSelected(UserProfileSelectedOption? option) {
+    final _$actionInfo = _$_UserProfileControllerBaseActionController
+        .startAction(name: '_UserProfileControllerBase.onOptionSelected');
+    try {
+      return super.onOptionSelected(option);
+    } finally {
+      _$_UserProfileControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''

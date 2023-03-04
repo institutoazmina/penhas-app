@@ -15,4 +15,8 @@ class UserProfileState with _$UserProfileState {
 class UserProfileReaction with _$UserProfileReaction {
   factory UserProfileReaction.showSnackBar(String message) =
       _ReactionShowSnackBar;
+  factory UserProfileReaction.showProfileOptions() =
+      _ReactionShowProfileOptions;
 }
+
+class UserProfileSelectedOption {}

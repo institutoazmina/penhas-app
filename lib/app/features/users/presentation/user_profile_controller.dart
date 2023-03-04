@@ -45,6 +45,16 @@ abstract class _UserProfileControllerBase with Store, MapFailureMessage {
     reaction = channel.fold(_handleFailure, _handleChatChannelSuccess);
   }
 
+  @action
+  void onTapMenuOptions() {
+    reaction = UserProfileReaction.showProfileOptions();
+  }
+
+  @action
+  void onOptionSelected(UserProfileSelectedOption? option) {
+    // será implementado em próximos PRs
+  }
+
   UserProfileReaction? _handleChatChannelSuccess(ChatChannelOpenEntity chat) {
     Modular.to.pushReplacementNamed(
       '/mainboard/chat/${chat.token}',
