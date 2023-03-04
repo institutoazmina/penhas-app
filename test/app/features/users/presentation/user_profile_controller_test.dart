@@ -132,6 +132,30 @@ void main() {
           );
         },
       );
+
+      test(
+        'onTapMenuOptions should set reaction to showProfileOptions',
+        () async {
+          // arrange
+          final expected = UserProfileReaction.showProfileOptions();
+
+          // act
+          controller.onTapMenuOptions();
+
+          // assert
+          expect(controller.reaction, expected);
+        },
+      );
+
+      group('onOptionSelected', () {
+        test('should set reaction to null when option is null', () async {
+          // act
+          controller.onOptionSelected(null);
+
+          // assert
+          expect(controller.reaction, isNull);
+        });
+      });
     });
   });
 }
