@@ -23,6 +23,15 @@ class UserProfileReaction with _$UserProfileReaction {
       _ReactionShowSnackBar;
   factory UserProfileReaction.showProfileOptions() =
       _ReactionShowProfileOptions;
+  factory UserProfileReaction.askReportReasonDialog() =
+      _ReactionAskReportReasonDialog;
+  factory UserProfileReaction.showProgressDialog() =
+      _ReactionShowProgressDialog;
+  factory UserProfileReaction.dismissProgressDialog() =
+      _ReactionDismissProgressDialog;
 }
 
-class UserProfileSelectedOption {}
+@freezed
+class UserProfileSelectedOption with _$UserProfileSelectedOption {
+  factory UserProfileSelectedOption.report() = _SelectedOptionReport;
+}

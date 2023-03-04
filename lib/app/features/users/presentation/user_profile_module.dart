@@ -11,6 +11,7 @@ class UserProfileModule extends Module {
           (i) => UserProfileController(
             person: i.args?.data,
             getChatChannelToken: i(),
+            reportUser: i(),
           ),
         ),
         Bind.factory(
