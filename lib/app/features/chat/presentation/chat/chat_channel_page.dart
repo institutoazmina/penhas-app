@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/widgets/bottom_sheet_actions_widget.dart';
 import '../../domain/entities/chat_channel_message.dart';
 import '../../domain/entities/chat_channel_session_entity.dart';
 import '../../domain/entities/chat_user_entity.dart';
@@ -148,52 +149,19 @@ extension _ChatPageStateMethods on _ChatPageState {
     await showModalBottomSheet(
       context: context,
       builder: (context) {
-        return Container(
-          padding: const EdgeInsets.only(top: 5),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
-          ),
-          height: 150,
-          child: Column(
-            children: <Widget>[
-              divider(context),
-              ...buildActions(context, metadata)
-            ],
-          ),
+        return BottomSheetActionsContentWidget(
+          actions: buildActions(context, metadata),
         );
       },
     );
-  }
-
-  Widget divider(BuildContext context) {
-    return Container(
-      width: fullWidth(context) * .2,
-      height: 5,
-      decoration: BoxDecoration(
-        color: Theme.of(context).dividerColor,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
-    );
-  }
-
-  double fullWidth(BuildContext context) {
-    return MediaQuery.of(context).size.width;
   }
 
   List<Widget> buildActions(
     BuildContext context,
     ChatChannelSessionMetadataEntity metadata,
   ) {
-    final List<Widget> actions = [];
-
-    if (metadata.canSendMessage) {
-      actions.add(
+    return [
+      if (metadata.canSendMessage)
         ListTile(
           leading: SvgPicture.asset(
             'assets/images/svg/tweet_action/tweet_action_block.svg',
@@ -204,10 +172,6 @@ extension _ChatPageStateMethods on _ChatPageState {
             controller.blockChat();
           },
         ),
-      );
-    }
-
-    actions.add(
       ListTile(
         leading: SvgPicture.asset(
           'assets/images/svg/tweet_action/tweet_action_delete.svg',
@@ -218,9 +182,7 @@ extension _ChatPageStateMethods on _ChatPageState {
           controller.deleteSession();
         },
       ),
-    );
-
-    return actions;
+    ];
   }
 }
 
