@@ -1,18 +1,16 @@
 import 'dart:developer' as dev;
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
-import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:stack_trace/stack_trace.dart';
+
+import '../../core/error/exceptions.dart';
 
 typedef OnError<T> = T Function(Object exception, StackTrace? stack);
 
-bool isCrashlitycsEnabled = kReleaseMode;
-
 void logWarn(String message) {
   dev.log(message);
-  if (isCrashlitycsEnabled) FirebaseCrashlytics.instance.log(message);
+  FirebaseCrashlytics.instance.log(message);
 }
 
 void logError(Object exception, [StackTrace? stack]) {
@@ -23,7 +21,7 @@ void logError(Object exception, [StackTrace? stack]) {
     error: exception,
     stackTrace: stack,
   );
-  if (isCrashlitycsEnabled && exception is! NonCriticalError) {
+  if (exception is! NonCriticalError) {
     FirebaseCrashlytics.instance.recordError(exception, stack);
   }
 }
