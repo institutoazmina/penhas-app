@@ -11,11 +11,13 @@ void main() {
   group('UsersRepository', () {
     test('should pass clientId on path', () async {
       int clientId = 6543;
+      final parameters = {'cliente_id': clientId.toString()};
       when(
-        () => apiProvider.post(path: '/profile/$clientId/block'),
+        () => apiProvider.post(path: '/profile-block', parameters: parameters),
       );
       sut.block(clientId);
-      verify(() => apiProvider.post(path: '/profile/$clientId/block'));
+      verify(() =>
+          apiProvider.post(path: '/profile-block', parameters: parameters));
     });
   });
 }
