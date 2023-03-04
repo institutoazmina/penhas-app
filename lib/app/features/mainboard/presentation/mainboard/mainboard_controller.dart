@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart' as material;
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../core/entities/valid_fiel.dart';
@@ -63,7 +62,6 @@ abstract class _MainboardControllerBase with Store {
 
   @action
   Future<void> changeAppState(material.AppLifecycleState state) async {
-    Modular.debugPrintModular('state changed to $state');
     switch (state) {
       case material.AppLifecycleState.inactive:
         _inactivityLogoutUseCase.setInactive(DateTime.now());
