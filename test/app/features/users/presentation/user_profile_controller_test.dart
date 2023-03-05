@@ -81,7 +81,7 @@ void main() {
           controller = UserProfileController(
             person: user,
             getChatChannelToken: mockGetChatChannelTokenUseCase,
-            isMenuEnabled: true,
+            reportUser: mockReportUserUseCase,
           );
 
           // assert
@@ -102,7 +102,7 @@ void main() {
           controller = UserProfileController(
             person: user,
             getChatChannelToken: mockGetChatChannelTokenUseCase,
-            isMenuEnabled: true,
+            reportUser: mockReportUserUseCase,
           );
 
           // assert
@@ -212,6 +212,27 @@ void main() {
           expect(controller.reaction, isNull);
         },
       );
+
+      test(
+        'should set reaction to askReportReasonDialog when option is report',
+        () async {
+          // act
+          controller.onOptionSelected(UserProfileSelectedOption.report());
+
+          // assert
+          expect(
+            controller.reaction,
+            UserProfileReaction.askReportReasonDialog(),
+          );
+        },
+      );
+    });
+
+    group('onSendReportPressed', () {
+      // verify call _reportUser
+      // verify reaction == showProgressDialog
+      // verify reaction == dismissProgressDialog
+      // verify reaction == showSnackBar
     });
   });
 }
