@@ -115,7 +115,7 @@ extension _FutureExtension<T extends String> on Future<T> {
         .then((v) => UserSearchSessionModel.fromJson(v));
   }
 
-  Future<ValidField> parseBlockOrReport() async {
+  Future<ValidField> parseValidField() async {
     return then((data) async {
       final jsonData = jsonDecode(data) as Map<String, dynamic>;
       return ValidField.fromJson(jsonData);
