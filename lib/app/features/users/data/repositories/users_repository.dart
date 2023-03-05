@@ -117,8 +117,7 @@ extension _FutureExtension<T extends String> on Future<T> {
   Future<ValidField> parseBlockOrReport() async {
     return then((data) async {
       final jsonData = jsonDecode(data) as Map<String, dynamic>;
-      String message = jsonData['message'];
-      return ValidField(message: message);
+      return ValidField.fromJson(jsonData);
     });
   }
 }
