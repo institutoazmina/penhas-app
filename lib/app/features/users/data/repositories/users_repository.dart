@@ -17,8 +17,8 @@ abstract class IUsersRepository {
   Future<Either<Failure, UserSearchSessionEntity>> search(
     UserSearchOptions option,
   );
-  Future<Either<Failure, ValidField>> report(int clientId, String reason);
-  Future<Either<Failure, ValidField>> block(int clientId);
+  Future<Either<Failure, ValidField>> report(String clientId, String reason);
+  Future<Either<Failure, ValidField>> block(String clientId);
 }
 
 class UsersRepository implements IUsersRepository {
@@ -74,10 +74,10 @@ class UsersRepository implements IUsersRepository {
 
   @override
   Future<Either<Failure, ValidField>> report(
-      int clientId, String reason) async {
+      String clientId, String reason) async {
     try {
       const endPoint = '/report-profile';
-      final parameters = {'reason': reason, 'cliente_id': clientId.toString()};
+      final parameters = {'reason': reason, 'cliente_id': clientId};
       final response = await _apiProvider!
           .post(path: endPoint, parameters: parameters)
           .parseValidField();
@@ -89,12 +89,12 @@ class UsersRepository implements IUsersRepository {
   }
 
   @override
-  Future<Either<Failure, ValidField>> block(int clientId) async {
+  Future<Either<Failure, ValidField>> block(String clientId) async {
     try {
       const endPoint = '/profile-block';
       final response = await _apiProvider!.post(
           path: endPoint,
-          parameters: {'cliente_id': clientId.toString()}).parseValidField();
+          parameters: {'cliente_id': clientId}).parseValidField();
       return right(response);
     } catch (error) {
       return left(MapExceptionToFailure.map(error));

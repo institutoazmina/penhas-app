@@ -10,10 +10,10 @@ void main() {
   final IUsersRepository sut = UsersRepository(apiProvider: apiProvider);
   group('UsersRepository', () {
     test('should send client_id and reason to report', () async {
-      int clientId = 6543;
+      String clientId = '6543';
       String reason = 'Hate speech';
 
-      final parameters = {'cliente_id': clientId.toString(), 'reason': reason};
+      final parameters = {'cliente_id': clientId, 'reason': reason};
 
       when(
         () => apiProvider.post(
