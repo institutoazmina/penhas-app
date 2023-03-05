@@ -80,7 +80,7 @@ class UsersRepository implements IUsersRepository {
       final parameters = {'reason': reason, 'cliente_id': clientId.toString()};
       final response = await _apiProvider!
           .post(path: endPoint, parameters: parameters)
-          .parseBlockOrReport();
+          .parseValidField();
       return right(response);
     } catch (error, stack) {
       logError(error, stack);
@@ -94,7 +94,7 @@ class UsersRepository implements IUsersRepository {
       const endPoint = '/profile-block';
       final response = await _apiProvider!.post(
           path: endPoint,
-          parameters: {'cliente_id': clientId.toString()}).parseBlockOrReport();
+          parameters: {'cliente_id': clientId.toString()}).parseValidField();
       return right(response);
     } catch (error) {
       return left(MapExceptionToFailure.map(error));
@@ -113,12 +113,5 @@ extension _FutureExtension<T extends String> on Future<T> {
   Future<UserSearchSessionEntity> parseSearchSession() async {
     return then((v) => jsonDecode(v) as Map<String, dynamic>)
         .then((v) => UserSearchSessionModel.fromJson(v));
-  }
-
-  Future<ValidField> parseValidField() async {
-    return then((data) async {
-      final jsonData = jsonDecode(data) as Map<String, dynamic>;
-      return ValidField.fromJson(jsonData);
-    });
   }
 }
