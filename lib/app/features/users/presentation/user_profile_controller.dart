@@ -42,10 +42,10 @@ abstract class _UserProfileControllerBase with Store, MapFailureMessage {
   @action
   Future<void> openChannel() async {
     final channel = await _getChatChannelToken(_person.profile.clientId!);
-    reaction = channel.fold(_handleFailure, _handleSuccess);
+    reaction = channel.fold(_handleFailure, _handleChatChannelSuccess);
   }
 
-  UserProfileReaction? _handleSuccess(ChatChannelOpenEntity chat) {
+  UserProfileReaction? _handleChatChannelSuccess(ChatChannelOpenEntity chat) {
     Modular.to.pushReplacementNamed(
       '/mainboard/chat/${chat.token}',
       arguments: chat,
