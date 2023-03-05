@@ -82,7 +82,8 @@ class UsersRepository implements IUsersRepository {
           .post(path: endPoint, parameters: parameters)
           .parseBlockOrReport();
       return right(response);
-    } catch (error) {
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
