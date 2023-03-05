@@ -485,3 +485,222 @@ abstract class _ErrorDetails implements UserProfileState {
   _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+class _$UserProfileReactionTearOff {
+  const _$UserProfileReactionTearOff();
+
+  _ReactionShowSnackBar showSnackBar(String message) {
+    return _ReactionShowSnackBar(
+      message,
+    );
+  }
+}
+
+/// @nodoc
+const $UserProfileReaction = _$UserProfileReactionTearOff();
+
+/// @nodoc
+mixin _$UserProfileReaction {
+  String get message => throw _privateConstructorUsedError;
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String message) showSnackBar,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String message)? showSnackBar,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String message)? showSnackBar,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ReactionShowSnackBar value) showSnackBar,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_ReactionShowSnackBar value)? showSnackBar,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ReactionShowSnackBar value)? showSnackBar,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $UserProfileReactionCopyWith<UserProfileReaction> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UserProfileReactionCopyWith<$Res> {
+  factory $UserProfileReactionCopyWith(
+          UserProfileReaction value, $Res Function(UserProfileReaction) then) =
+      _$UserProfileReactionCopyWithImpl<$Res>;
+  $Res call({String message});
+}
+
+/// @nodoc
+class _$UserProfileReactionCopyWithImpl<$Res>
+    implements $UserProfileReactionCopyWith<$Res> {
+  _$UserProfileReactionCopyWithImpl(this._value, this._then);
+
+  final UserProfileReaction _value;
+  // ignore: unused_field
+  final $Res Function(UserProfileReaction) _then;
+
+  @override
+  $Res call({
+    Object? message = freezed,
+  }) {
+    return _then(_value.copyWith(
+      message: message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$ReactionShowSnackBarCopyWith<$Res>
+    implements $UserProfileReactionCopyWith<$Res> {
+  factory _$ReactionShowSnackBarCopyWith(_ReactionShowSnackBar value,
+          $Res Function(_ReactionShowSnackBar) then) =
+      __$ReactionShowSnackBarCopyWithImpl<$Res>;
+  @override
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$ReactionShowSnackBarCopyWithImpl<$Res>
+    extends _$UserProfileReactionCopyWithImpl<$Res>
+    implements _$ReactionShowSnackBarCopyWith<$Res> {
+  __$ReactionShowSnackBarCopyWithImpl(
+      _ReactionShowSnackBar _value, $Res Function(_ReactionShowSnackBar) _then)
+      : super(_value, (v) => _then(v as _ReactionShowSnackBar));
+
+  @override
+  _ReactionShowSnackBar get _value => super._value as _ReactionShowSnackBar;
+
+  @override
+  $Res call({
+    Object? message = freezed,
+  }) {
+    return _then(_ReactionShowSnackBar(
+      message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_ReactionShowSnackBar implements _ReactionShowSnackBar {
+  _$_ReactionShowSnackBar(this.message);
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'UserProfileReaction.showSnackBar(message: $message)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _ReactionShowSnackBar &&
+            const DeepCollectionEquality().equals(other.message, message));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+
+  @JsonKey(ignore: true)
+  @override
+  _$ReactionShowSnackBarCopyWith<_ReactionShowSnackBar> get copyWith =>
+      __$ReactionShowSnackBarCopyWithImpl<_ReactionShowSnackBar>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String message) showSnackBar,
+  }) {
+    return showSnackBar(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String message)? showSnackBar,
+  }) {
+    return showSnackBar?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String message)? showSnackBar,
+    required TResult orElse(),
+  }) {
+    if (showSnackBar != null) {
+      return showSnackBar(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ReactionShowSnackBar value) showSnackBar,
+  }) {
+    return showSnackBar(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_ReactionShowSnackBar value)? showSnackBar,
+  }) {
+    return showSnackBar?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ReactionShowSnackBar value)? showSnackBar,
+    required TResult orElse(),
+  }) {
+    if (showSnackBar != null) {
+      return showSnackBar(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ReactionShowSnackBar implements UserProfileReaction {
+  factory _ReactionShowSnackBar(String message) = _$_ReactionShowSnackBar;
+
+  @override
+  String get message;
+  @override
+  @JsonKey(ignore: true)
+  _$ReactionShowSnackBarCopyWith<_ReactionShowSnackBar> get copyWith =>
+      throw _privateConstructorUsedError;
+}
