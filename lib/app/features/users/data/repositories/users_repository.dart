@@ -17,8 +17,8 @@ abstract class IUsersRepository {
   Future<Either<Failure, UserSearchSessionEntity>> search(
     UserSearchOptions option,
   );
-  Future<Either<Failure, void>> report(int clientId, String reason);
-  Future<Either<Failure, void>> block(int clientId);
+  Future<Either<Failure, ValidField>> report(int clientId, String reason);
+  Future<Either<Failure, ValidField>> block(int clientId);
 }
 
 class UsersRepository implements IUsersRepository {
