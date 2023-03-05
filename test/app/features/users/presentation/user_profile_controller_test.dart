@@ -53,7 +53,7 @@ void main() {
     });
 
     test(
-      'shoult load initial state',
+      'should load initial state',
       () async {
         expect(controller.state, const UserProfileState.loaded(user));
       },
