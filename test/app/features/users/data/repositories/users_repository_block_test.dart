@@ -10,8 +10,8 @@ void main() {
   final IUsersRepository sut = UsersRepository(apiProvider: apiProvider);
   group('UsersRepository', () {
     test('should pass clientId on path', () async {
-      int clientId = 6543;
-      final parameters = {'cliente_id': clientId.toString()};
+      String clientId = '6543';
+      final parameters = {'cliente_id': clientId};
       when(
         () => apiProvider.post(
           path: any(named: 'path'),
