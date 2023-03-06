@@ -49,7 +49,7 @@ void main() {
           path: any(named: 'path'),
           parameters: any(named: 'parameters'),
         ),
-      );
+      ).thenAnswer((_) async => '{"message": "Sucesso!"}');;
 
       sut.report(clientId, reason);
 
