@@ -23,16 +23,17 @@ void main() {
     late IModularNavigator mockNavigator;
     const clientId = 123;
 
+    const profile = UserDetailProfileEntity(
+      nickname: 'nickname',
+      activity: null,
+      avatar: 'profile.svg',
+      clientId: clientId,
+      miniBio: 'a mini bio',
+      skills: 'many skills',
+    );
     const user = UserDetailEntity(
       isMyself: false,
-      profile: UserDetailProfileEntity(
-        nickname: 'nickname',
-        activity: null,
-        avatar: 'profile.svg',
-        clientId: clientId,
-        miniBio: 'a mini bio',
-        skills: 'many skills',
-      ),
+      profile: profile,
     );
 
     setUp(() {
@@ -52,12 +53,57 @@ void main() {
       ).thenAnswer((_) async => null);
     });
 
-    test(
-      'should load initial state',
-      () async {
-        expect(controller.state, const UserProfileState.loaded(user));
-      },
-    );
+    group('init', () {
+      test(
+        'should load initial state',
+        () async {
+          expect(controller.state, const UserProfileState.loaded(user));
+        },
+      );
+
+      test(
+        'should load hidden menu state',
+        () async {
+          // arrange
+          const user = UserDetailEntity(
+            isMyself: true,
+            profile: profile,
+          );
+
+          // act
+          controller = UserProfileController(
+            person: user,
+            getChatChannelToken: mockGetChatChannelTokenUseCase,
+            isMenuEnabled: true,
+          );
+
+          // assert
+          expect(controller.menuState, const UserMenuState.hidden());
+        },
+      );
+
+      test(
+        'should load visible menu state',
+        () async {
+          // arrange
+          const user = UserDetailEntity(
+            isMyself: false,
+            profile: profile,
+          );
+
+          // act
+          controller = UserProfileController(
+            person: user,
+            getChatChannelToken: mockGetChatChannelTokenUseCase,
+            isMenuEnabled: true,
+          );
+
+          // assert
+          expect(controller.menuState, const UserMenuState.visible());
+        },
+      );
+    });
+
     group('openChannel', () {
       test(
         'should call GetChatChannelTokenUseCase',

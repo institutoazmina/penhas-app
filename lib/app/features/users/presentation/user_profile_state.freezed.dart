@@ -487,6 +487,291 @@ abstract class _ErrorDetails implements UserProfileState {
 }
 
 /// @nodoc
+class _$UserMenuStateTearOff {
+  const _$UserMenuStateTearOff();
+
+  _MenuStateHidden hidden() {
+    return const _MenuStateHidden();
+  }
+
+  _MenuStateVisible visible() {
+    return const _MenuStateVisible();
+  }
+}
+
+/// @nodoc
+const $UserMenuState = _$UserMenuStateTearOff();
+
+/// @nodoc
+mixin _$UserMenuState {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() hidden,
+    required TResult Function() visible,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? hidden,
+    TResult Function()? visible,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? hidden,
+    TResult Function()? visible,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_MenuStateHidden value) hidden,
+    required TResult Function(_MenuStateVisible value) visible,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_MenuStateHidden value)? hidden,
+    TResult Function(_MenuStateVisible value)? visible,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_MenuStateHidden value)? hidden,
+    TResult Function(_MenuStateVisible value)? visible,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UserMenuStateCopyWith<$Res> {
+  factory $UserMenuStateCopyWith(
+          UserMenuState value, $Res Function(UserMenuState) then) =
+      _$UserMenuStateCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$UserMenuStateCopyWithImpl<$Res>
+    implements $UserMenuStateCopyWith<$Res> {
+  _$UserMenuStateCopyWithImpl(this._value, this._then);
+
+  final UserMenuState _value;
+  // ignore: unused_field
+  final $Res Function(UserMenuState) _then;
+}
+
+/// @nodoc
+abstract class _$MenuStateHiddenCopyWith<$Res> {
+  factory _$MenuStateHiddenCopyWith(
+          _MenuStateHidden value, $Res Function(_MenuStateHidden) then) =
+      __$MenuStateHiddenCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$MenuStateHiddenCopyWithImpl<$Res>
+    extends _$UserMenuStateCopyWithImpl<$Res>
+    implements _$MenuStateHiddenCopyWith<$Res> {
+  __$MenuStateHiddenCopyWithImpl(
+      _MenuStateHidden _value, $Res Function(_MenuStateHidden) _then)
+      : super(_value, (v) => _then(v as _MenuStateHidden));
+
+  @override
+  _MenuStateHidden get _value => super._value as _MenuStateHidden;
+}
+
+/// @nodoc
+
+class _$_MenuStateHidden implements _MenuStateHidden {
+  const _$_MenuStateHidden();
+
+  @override
+  String toString() {
+    return 'UserMenuState.hidden()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _MenuStateHidden);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() hidden,
+    required TResult Function() visible,
+  }) {
+    return hidden();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? hidden,
+    TResult Function()? visible,
+  }) {
+    return hidden?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? hidden,
+    TResult Function()? visible,
+    required TResult orElse(),
+  }) {
+    if (hidden != null) {
+      return hidden();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_MenuStateHidden value) hidden,
+    required TResult Function(_MenuStateVisible value) visible,
+  }) {
+    return hidden(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_MenuStateHidden value)? hidden,
+    TResult Function(_MenuStateVisible value)? visible,
+  }) {
+    return hidden?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_MenuStateHidden value)? hidden,
+    TResult Function(_MenuStateVisible value)? visible,
+    required TResult orElse(),
+  }) {
+    if (hidden != null) {
+      return hidden(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _MenuStateHidden implements UserMenuState {
+  const factory _MenuStateHidden() = _$_MenuStateHidden;
+}
+
+/// @nodoc
+abstract class _$MenuStateVisibleCopyWith<$Res> {
+  factory _$MenuStateVisibleCopyWith(
+          _MenuStateVisible value, $Res Function(_MenuStateVisible) then) =
+      __$MenuStateVisibleCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$MenuStateVisibleCopyWithImpl<$Res>
+    extends _$UserMenuStateCopyWithImpl<$Res>
+    implements _$MenuStateVisibleCopyWith<$Res> {
+  __$MenuStateVisibleCopyWithImpl(
+      _MenuStateVisible _value, $Res Function(_MenuStateVisible) _then)
+      : super(_value, (v) => _then(v as _MenuStateVisible));
+
+  @override
+  _MenuStateVisible get _value => super._value as _MenuStateVisible;
+}
+
+/// @nodoc
+
+class _$_MenuStateVisible implements _MenuStateVisible {
+  const _$_MenuStateVisible();
+
+  @override
+  String toString() {
+    return 'UserMenuState.visible()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _MenuStateVisible);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() hidden,
+    required TResult Function() visible,
+  }) {
+    return visible();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? hidden,
+    TResult Function()? visible,
+  }) {
+    return visible?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? hidden,
+    TResult Function()? visible,
+    required TResult orElse(),
+  }) {
+    if (visible != null) {
+      return visible();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_MenuStateHidden value) hidden,
+    required TResult Function(_MenuStateVisible value) visible,
+  }) {
+    return visible(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_MenuStateHidden value)? hidden,
+    TResult Function(_MenuStateVisible value)? visible,
+  }) {
+    return visible?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_MenuStateHidden value)? hidden,
+    TResult Function(_MenuStateVisible value)? visible,
+    required TResult orElse(),
+  }) {
+    if (visible != null) {
+      return visible(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _MenuStateVisible implements UserMenuState {
+  const factory _MenuStateVisible() = _$_MenuStateVisible;
+}
+
+/// @nodoc
 class _$UserProfileReactionTearOff {
   const _$UserProfileReactionTearOff();
 

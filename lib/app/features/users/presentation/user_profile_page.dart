@@ -49,7 +49,7 @@ class _UserProfilePageState
         backgroundColor: DesignSystemColors.easterPurple,
         actions: [
           Observer(
-            builder: (_) => _buildMenuAction(controller.state),
+            builder: (_) => _buildMenuAction(controller.menuState),
           )
         ],
       ),
@@ -71,19 +71,13 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
     );
   }
 
-  Widget _buildMenuAction(UserProfileState state) {
-    final isMenuHidden = state.maybeMap(
-      loaded: (user) => user.person.isMyself,
-      orElse: () => true,
-    );
-
-    if (isMenuHidden) return Container();
-
-    return IconButton(
-      icon: const Icon(Icons.more_vert),
-      onPressed: controller.onTapMenuOptions,
-    );
-  }
+  Widget _buildMenuAction(UserMenuState state) => state.when(
+        visible: () => IconButton(
+          icon: const Icon(Icons.more_vert),
+          onPressed: controller.onTapMenuOptions,
+        ),
+        hidden: () => Container(),
+      );
 
   void _handleReaction(UserProfileReaction? reaction) {
     reaction?.when(

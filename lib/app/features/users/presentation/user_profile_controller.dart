@@ -15,17 +15,20 @@ class UserProfileController extends _UserProfileControllerBase
   UserProfileController({
     required UserDetailEntity person,
     required GetChatChannelTokenUseCase getChatChannelToken,
-  }) : super(person, getChatChannelToken);
+    bool isMenuEnabled = false,
+  }) : super(person, getChatChannelToken, isMenuEnabled);
 }
 
 abstract class _UserProfileControllerBase with Store, MapFailureMessage {
   _UserProfileControllerBase(
     this._person,
     this._getChatChannelToken,
+    this._isMenuEnabled,
   ) {
     _init();
   }
 
+  final bool _isMenuEnabled;
   final UserDetailEntity _person;
   final GetChatChannelTokenUseCase _getChatChannelToken;
 
@@ -33,10 +36,16 @@ abstract class _UserProfileControllerBase with Store, MapFailureMessage {
   UserProfileState state = const UserProfileState.initial();
 
   @observable
+  UserMenuState menuState = const UserMenuState.hidden();
+
+  @observable
   UserProfileReaction? reaction;
 
   void _init() {
     state = UserProfileState.loaded(_person);
+    menuState = _person.isMyself || !_isMenuEnabled
+        ? const UserMenuState.hidden()
+        : const UserMenuState.visible();
   }
 
   @action

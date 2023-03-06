@@ -12,6 +12,12 @@ class UserProfileState with _$UserProfileState {
 }
 
 @freezed
+class UserMenuState with _$UserMenuState {
+  const factory UserMenuState.hidden() = _MenuStateHidden;
+  const factory UserMenuState.visible() = _MenuStateVisible;
+}
+
+@freezed
 class UserProfileReaction with _$UserProfileReaction {
   factory UserProfileReaction.showSnackBar(String message) =
       _ReactionShowSnackBar;
