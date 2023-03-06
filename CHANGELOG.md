@@ -6,8 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Adicionado
+- Funcionalidade para reportar perfil
+
 ### Corrigido
-- Comportamento ao curtir e comentar tweets
+- Comportamento ao curtir, comentar e excluir tweets
 
 ## [3.2.0] - 2023-02-23
 
