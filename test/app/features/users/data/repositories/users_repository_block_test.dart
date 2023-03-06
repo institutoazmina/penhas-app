@@ -79,7 +79,7 @@ void main() {
           message: 'Sucesso!',
         ),
       );
-      expect(expected, response);
+      expect(response, expected);
     });
   });
 }

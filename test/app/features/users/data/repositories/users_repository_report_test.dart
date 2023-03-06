@@ -35,7 +35,8 @@ void main() {
 
   group('UsersRepository', () {
     test('should throw error for client id not found', () async {
-      final response = await JsonUtil.getJson(
+      // arrange
+      final serverMessage = await JsonUtil.getJson(
         from: 'users/users_report_cliente_id_not_found.json',
       );
 
@@ -46,11 +47,13 @@ void main() {
           path: any(named: 'path'),
           parameters: any(named: 'parameters'),
         ),
-      ).thenThrow(response);
+      ).thenThrow(serverMessage);
 
-      final result = await sut.report(clientId, reason);
+      // act
+      final response = await sut.report(clientId, reason);
 
-      expect(result, left(error));
+      // assert
+      expect(response, left(error));
     });
 
     test('should send client_id and reason to report', () async {
@@ -80,7 +83,7 @@ void main() {
           message: 'Sucesso!',
         ),
       );
-      expect(expected, response);
+      expect(response, expected);
     });
   });
 }
