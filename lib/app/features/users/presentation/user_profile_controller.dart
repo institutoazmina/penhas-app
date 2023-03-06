@@ -55,6 +55,7 @@ abstract class _UserProfileControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> openChannel() async {
+    reaction = UserProfileReaction.showProgressDialog();
     final channel = await _getChatChannelToken(_person.profile.clientId!);
     reaction = channel.fold(_handleFailure, _handleChatChannelSuccess);
   }
@@ -113,7 +114,7 @@ abstract class _UserProfileControllerBase with Store, MapFailureMessage {
       '/mainboard/chat/${chat.token}',
       arguments: chat,
     );
-    return null;
+    return UserProfileReaction.dismissProgressDialog();
   }
 
   UserProfileReaction? _handleFailure(Failure error) {

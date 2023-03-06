@@ -140,6 +140,46 @@ void main() {
       );
 
       test(
+        'should set reaction to showProgressDialog',
+        () async {
+          // arrange
+          const chat = ChatChannelOpenEntity(token: '');
+          when(() => mockGetChatChannelTokenUseCase(clientId)).thenAnswer(
+            (_) async => Future.delayed(const Duration(seconds: 1))
+                .then((_) => right(chat)),
+          );
+
+          // act
+          controller.openChannel();
+
+          // assert
+          expect(
+            controller.reaction,
+            UserProfileReaction.showProgressDialog(),
+          );
+        },
+      );
+
+      test(
+        'should set reaction to dismissProgressDialog when success',
+        () async {
+          // arrange
+          const chat = ChatChannelOpenEntity(token: '');
+          when(() => mockGetChatChannelTokenUseCase(clientId))
+              .thenAnswer((_) async => right(chat));
+
+          // act
+          await controller.openChannel();
+
+          // assert
+          expect(
+            controller.reaction,
+            UserProfileReaction.dismissProgressDialog(),
+          );
+        },
+      );
+
+      test(
         'should navigate to chat when success',
         () async {
           // arrange
@@ -158,22 +198,6 @@ void main() {
               arguments: chat,
             ),
           ).called(1);
-        },
-      );
-
-      test(
-        'should set reaction to null when success',
-        () async {
-          // arrange
-          const chat = ChatChannelOpenEntity(token: '');
-          when(() => mockGetChatChannelTokenUseCase(clientId))
-              .thenAnswer((_) async => right(chat));
-
-          // act
-          await controller.openChannel();
-
-          // assert
-          expect(controller.reaction, isNull);
         },
       );
 
