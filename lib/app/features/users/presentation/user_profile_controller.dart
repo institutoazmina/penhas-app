@@ -93,10 +93,15 @@ abstract class _UserProfileControllerBase with Store, MapFailureMessage {
   Future<void> onConfirmBlockPressed() async {
     reaction = UserProfileReaction.showProgressDialog();
     final result = await _blockUser('${_person.profile.clientId}');
+
     reaction = result.fold(
       _handleFailure,
-      (_) => UserProfileReaction.dismissProgressDialog(),
+      (result) => UserProfileReaction.showSnackBar(
+        result.message ?? 'Bloqueado com sucesso',
+      ),
     );
+
+    Modular.to.pop();
   }
 
   UserProfileReaction? _handleChatChannelSuccess(ChatChannelOpenEntity chat) {
