@@ -24,6 +24,21 @@ mixin _$UserProfileController on _UserProfileControllerBase, Store {
     });
   }
 
+  final _$menuStateAtom = Atom(name: '_UserProfileControllerBase.menuState');
+
+  @override
+  UserMenuState get menuState {
+    _$menuStateAtom.reportRead();
+    return super.menuState;
+  }
+
+  @override
+  set menuState(UserMenuState value) {
+    _$menuStateAtom.reportWrite(value, super.menuState, () {
+      super.menuState = value;
+    });
+  }
+
   final _$reactionAtom = Atom(name: '_UserProfileControllerBase.reaction');
 
   @override
@@ -76,6 +91,7 @@ mixin _$UserProfileController on _UserProfileControllerBase, Store {
   String toString() {
     return '''
 state: ${state},
+menuState: ${menuState},
 reaction: ${reaction}
     ''';
   }
