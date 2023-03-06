@@ -47,7 +47,7 @@ void main() {
           path: any(named: 'path'),
           parameters: any(named: 'parameters'),
         ),
-      ).thenAnswer((_) async => '{"message": "Sucesso!"}');;
+      ).thenAnswer((_) async => '{"message": "Sucesso!"}');
 
       sut.block(clientId);
       verify(() =>
