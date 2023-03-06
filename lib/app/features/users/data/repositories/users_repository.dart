@@ -1,21 +1,24 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/network/api_client.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_exception_to_failure.dart';
-import 'package:penhas/app/features/users/data/models/user_detail_model.dart';
-import 'package:penhas/app/features/users/data/models/user_search_session_model.dart';
-import 'package:penhas/app/features/users/domain/entities/user_detail_entity.dart';
-import 'package:penhas/app/features/users/domain/entities/user_search_options.dart';
-import 'package:penhas/app/features/users/domain/entities/user_search_session_entity.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/network/api_client.dart';
+import '../../../authentication/presentation/shared/map_exception_to_failure.dart';
+import '../models/user_detail_model.dart';
+import '../models/user_search_session_model.dart';
+import '../../domain/entities/user_detail_entity.dart';
+import '../../domain/entities/user_search_options.dart';
+import '../../domain/entities/user_search_session_entity.dart';
+import '../../../../shared/logger/log.dart';
 
 abstract class IUsersRepository {
   Future<Either<Failure, UserDetailEntity>> profileDetail(String clientId);
   Future<Either<Failure, UserSearchSessionEntity>> search(
     UserSearchOptions option,
   );
+  Future<Either<Failure, ValidField>> report(String clientId, String reason);
+  Future<Either<Failure, ValidField>> block(String clientId);
 }
 
 class UsersRepository implements IUsersRepository {
@@ -62,6 +65,36 @@ class UsersRepository implements IUsersRepository {
       final response = await _apiProvider!
           .get(path: endPoint, parameters: parameters)
           .parseSearchSession();
+      return right(response);
+    } catch (error, stack) {
+      logError(error, stack);
+      return left(MapExceptionToFailure.map(error));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ValidField>> report(
+      String clientId, String reason) async {
+    try {
+      const endPoint = '/report-profile';
+      final parameters = {'reason': reason, 'cliente_id': clientId};
+      final response = await _apiProvider!
+          .post(path: endPoint, parameters: parameters)
+          .parseValidField();
+      return right(response);
+    } catch (error, stack) {
+      logError(error, stack);
+      return left(MapExceptionToFailure.map(error));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ValidField>> block(String clientId) async {
+    try {
+      const endPoint = '/profile-block';
+      final response = await _apiProvider!.post(
+          path: endPoint,
+          parameters: {'cliente_id': clientId}).parseValidField();
       return right(response);
     } catch (error, stack) {
       logError(error, stack);
