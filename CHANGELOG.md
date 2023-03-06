@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Adicionado
 - Funcionalidade para reportar perfil
+- Funcionalidade para bloquear perfil
 
 ### Corrigido
 - Comportamento ao curtir, comentar e excluir tweets

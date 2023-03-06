@@ -91,7 +91,7 @@ class UsersRepository implements IUsersRepository {
   @override
   Future<Either<Failure, ValidField>> block(String clientId) async {
     try {
-      const endPoint = '/profile-block';
+      const endPoint = '/block-profile';
       final response = await _apiProvider!.post(
           path: endPoint,
           parameters: {'cliente_id': clientId}).parseValidField();

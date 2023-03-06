@@ -6,6 +6,7 @@ import '../../authentication/presentation/shared/map_failure_message.dart';
 import '../../chat/domain/entities/chat_channel_open_entity.dart';
 import '../../chat/domain/usecases/get_chat_channel_token_usecase.dart';
 import '../domain/entities/user_detail_entity.dart';
+import '../domain/usecases/block_user_usecase.dart';
 import '../domain/usecases/report_user_usecase.dart';
 import 'user_profile_state.dart';
 
@@ -17,7 +18,8 @@ class UserProfileController extends _UserProfileControllerBase
     required UserDetailEntity person,
     required GetChatChannelTokenUseCase getChatChannelToken,
     required ReportUserUseCase reportUser,
-  }) : super(person, getChatChannelToken, reportUser);
+    required BlockUserUseCase blockUser,
+  }) : super(person, getChatChannelToken, reportUser, blockUser);
 }
 
 abstract class _UserProfileControllerBase with Store, MapFailureMessage {
@@ -25,12 +27,14 @@ abstract class _UserProfileControllerBase with Store, MapFailureMessage {
     this._person,
     this._getChatChannelToken,
     this._reportUser,
+    this._blockUser,
   ) {
     _init();
   }
 
   final UserDetailEntity _person;
   final GetChatChannelTokenUseCase _getChatChannelToken;
+  final BlockUserUseCase _blockUser;
   final ReportUserUseCase _reportUser;
 
   @observable
@@ -64,6 +68,9 @@ abstract class _UserProfileControllerBase with Store, MapFailureMessage {
   void onOptionSelected(UserProfileSelectedOption? option) {
     reaction = option?.when(
       report: () => UserProfileReaction.askReportReasonDialog(),
+      block: () => UserProfileReaction.showBlockConfirmationDialog(
+        'Deseja realmente bloquear ${_person.profile.nickname}?',
+      ),
     );
   }
 
@@ -80,6 +87,25 @@ abstract class _UserProfileControllerBase with Store, MapFailureMessage {
         result.message ?? 'Reportado com sucesso',
       ),
     );
+  }
+
+  @action
+  Future<void> onConfirmBlockPressed() async {
+    reaction = UserProfileReaction.showProgressDialog();
+    final result = await _blockUser('${_person.profile.clientId}');
+
+    reaction = result.fold(
+      _handleFailure,
+      (result) => UserProfileReaction.showSnackBar(
+        result.message ?? 'Bloqueado com sucesso',
+        inMainboardPage: true,
+      ),
+    );
+
+    if (result.isRight()) {
+      await Future.delayed(const Duration(milliseconds: 300));
+      Modular.to.pop();
+    }
   }
 
   UserProfileReaction? _handleChatChannelSuccess(ChatChannelOpenEntity chat) {

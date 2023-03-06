@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -8,6 +10,7 @@ import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entit
 import 'package:penhas/app/features/chat/domain/usecases/get_chat_channel_token_usecase.dart';
 import 'package:penhas/app/features/users/domain/entities/user_detail_entity.dart';
 import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
+import 'package:penhas/app/features/users/domain/usecases/block_user_usecase.dart';
 import 'package:penhas/app/features/users/domain/usecases/report_user_usecase.dart';
 import 'package:penhas/app/features/users/presentation/user_profile_controller.dart';
 import 'package:penhas/app/features/users/presentation/user_profile_state.dart';
@@ -17,6 +20,8 @@ class MockGetChatChannelTokenUseCase extends Mock
 
 class MockReportUserUseCase extends Mock implements ReportUserUseCase {}
 
+class MockBlockUserUseCase extends Mock implements BlockUserUseCase {}
+
 class MockModularNavigator extends Mock implements IModularNavigator {}
 
 void main() {
@@ -25,6 +30,7 @@ void main() {
 
     late GetChatChannelTokenUseCase mockGetChatChannelTokenUseCase;
     late ReportUserUseCase mockReportUserUseCase;
+    late BlockUserUseCase mockBlockUserUseCase;
 
     late IModularNavigator mockNavigator;
     const clientId = 123;
@@ -45,11 +51,13 @@ void main() {
     setUp(() {
       mockGetChatChannelTokenUseCase = MockGetChatChannelTokenUseCase();
       mockReportUserUseCase = MockReportUserUseCase();
+      mockBlockUserUseCase = MockBlockUserUseCase();
 
       controller = UserProfileController(
         person: user,
         getChatChannelToken: mockGetChatChannelTokenUseCase,
         reportUser: mockReportUserUseCase,
+        blockUser: mockBlockUserUseCase,
       );
 
       mockNavigator = Modular.navigatorDelegate = MockModularNavigator();
@@ -83,6 +91,7 @@ void main() {
             person: user,
             getChatChannelToken: mockGetChatChannelTokenUseCase,
             reportUser: mockReportUserUseCase,
+            blockUser: mockBlockUserUseCase,
           );
 
           // assert
@@ -104,6 +113,7 @@ void main() {
             person: user,
             getChatChannelToken: mockGetChatChannelTokenUseCase,
             reportUser: mockReportUserUseCase,
+            blockUser: mockBlockUserUseCase,
           );
 
           // assert
@@ -227,6 +237,22 @@ void main() {
           );
         },
       );
+
+      test(
+        'should set reaction to showBlockConfirmationDialog when option is block',
+        () async {
+          // act
+          controller.onOptionSelected(UserProfileSelectedOption.block());
+
+          // assert
+          expect(
+            controller.reaction,
+            UserProfileReaction.showBlockConfirmationDialog(
+              'Deseja realmente bloquear ${user.profile.nickname}?',
+            ),
+          );
+        },
+      );
     });
 
     group('onSendReportPressed', () {
@@ -337,6 +363,134 @@ void main() {
             controller.reaction,
             UserProfileReaction.showSnackBar(message),
           );
+        },
+      );
+    });
+
+    group('onConfirmBlockPressed', () {
+      setUp(() {
+        when(() => mockNavigator.pop()).thenAnswer((_) async {});
+      });
+
+      test(
+        'should call BlockUserUseCase',
+        () async {
+          // arrange
+          final completer = Completer<Either<Failure, ValidField>>();
+          when(() => mockBlockUserUseCase('$clientId'))
+              .thenAnswer((_) => completer.future);
+
+          // act
+          controller.onConfirmBlockPressed();
+
+          // assert
+          verify(
+            () => mockBlockUserUseCase('$clientId'),
+          ).called(1);
+        },
+      );
+
+      test(
+        'should set reaction to showProgressDialog',
+        () async {
+          // arrange
+          final completer = Completer<Either<Failure, ValidField>>();
+          when(() => mockBlockUserUseCase('$clientId'))
+              .thenAnswer((_) => completer.future);
+
+          // act
+          controller.onConfirmBlockPressed();
+
+          // assert
+          expect(
+            controller.reaction,
+            UserProfileReaction.showProgressDialog(),
+          );
+        },
+      );
+
+      test(
+        'should set reaction to showSnackBar when success',
+        () async {
+          // arrange
+          const message = 'Bloqueado com sucesso';
+          when(
+            () => mockBlockUserUseCase('$clientId'),
+          ).thenAnswer(
+            (_) async => right(const ValidField(message: message)),
+          );
+
+          // act
+          await controller.onConfirmBlockPressed();
+
+          // assert
+          expect(
+            controller.reaction,
+            UserProfileReaction.showSnackBar(message, inMainboardPage: true),
+          );
+        },
+      );
+
+      test(
+        'should set reaction to showSnackBar when error',
+        () async {
+          // arrange
+          const message = 'Não deixo você bloquear!';
+          when(
+            () => mockBlockUserUseCase('$clientId'),
+          ).thenAnswer(
+            (_) async => left(
+              ServerSideFormFieldValidationFailure(message: message),
+            ),
+          );
+
+          // act
+          await controller.onConfirmBlockPressed();
+
+          // assert
+          expect(
+            controller.reaction,
+            UserProfileReaction.showSnackBar(message),
+          );
+        },
+      );
+
+      test(
+        'should pop navigation when success',
+        () async {
+          // arrange
+          const message = 'Reportado com sucesso';
+          when(
+            () => mockBlockUserUseCase('$clientId'),
+          ).thenAnswer(
+            (_) async => right(const ValidField(message: message)),
+          );
+
+          // act
+          await controller.onConfirmBlockPressed();
+
+          // assert
+          verify(() => mockNavigator.pop()).called(1);
+        },
+      );
+
+      test(
+        'should not pop navigation when failure',
+        () async {
+          // arrange
+          when(
+            () => mockBlockUserUseCase('$clientId'),
+          ).thenAnswer(
+            (_) async => left(
+              ServerSideFormFieldValidationFailure(message: 'message'),
+            ),
+          );
+
+          // act
+          await controller.onConfirmBlockPressed();
+
+          // assert
+          verifyNever(() => mockNavigator.pop());
         },
       );
     });

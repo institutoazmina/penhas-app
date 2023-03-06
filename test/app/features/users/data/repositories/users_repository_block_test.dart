@@ -63,7 +63,7 @@ void main() {
 
       // assert
       verify(() =>
-          apiProvider.post(path: '/profile-block', parameters: parameters));
+          apiProvider.post(path: '/block-profile', parameters: parameters));
     });
 
     test('should receive success message', () async {

@@ -20,6 +20,14 @@ class ProfileOptionsBottomSheet extends StatelessWidget {
           onTap: () =>
               Navigator.pop(context, UserProfileSelectedOption.report()),
         ),
+        ListTile(
+          leading: SvgPicture.asset(
+            'assets/images/svg/tweet_action/tweet_action_block.svg',
+          ),
+          title: const Text('Bloquear'),
+          onTap: () =>
+              Navigator.pop(context, UserProfileSelectedOption.block()),
+        ),
       ]);
 }
 
@@ -71,4 +79,37 @@ class ReportUserDialog extends StatelessWidget {
       ],
     );
   }
+}
+
+class UserBlockConfirmationDialog extends StatelessWidget {
+  const UserBlockConfirmationDialog({
+    Key? key,
+    required this.message,
+  }) : super(key: key);
+
+  final String message;
+
+  @override
+  Widget build(BuildContext context) => AlertDialog(
+        title: const Text(
+          'Bloquear usuário',
+          style: kTextStyleAlertDialogTitle,
+        ),
+        content: Text(message),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        actions: <Widget>[
+          // ignore: deprecated_member_use
+          FlatButton(
+            child: const Text('Sim'),
+            onPressed: () => Navigator.pop(context, true),
+          ),
+          // ignore: deprecated_member_use
+          FlatButton(
+            child: const Text('Não'),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ],
+      );
 }

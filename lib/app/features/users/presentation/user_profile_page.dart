@@ -10,6 +10,7 @@ import '../../../shared/design_system/button_shape.dart';
 import '../../../shared/design_system/colors.dart';
 import '../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../authentication/presentation/shared/snack_bar_handler.dart';
+import '../../mainboard/presentation/mainboard/mainboard_page.dart';
 import '../domain/entities/user_detail_entity.dart';
 import '../domain/entities/user_detail_profile_entity.dart';
 import 'user_profile_controller.dart';
@@ -85,6 +86,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
   void _handleReaction(UserProfileReaction? reaction) {
     reaction?.when(
       showProfileOptions: _showProfileOptions,
+      showBlockConfirmationDialog: _showBlockConfirmationDialog,
       askReportReasonDialog: _askReportReasonDialog,
       showProgressDialog: _showProgressDialog,
       dismissProgressDialog: _dismissProgressDialog,
@@ -230,6 +232,16 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
     }
   }
 
+  void _showBlockConfirmationDialog(String message) async {
+    final confirm = await Modular.to.showDialog(
+      builder: (_) => UserBlockConfirmationDialog(message: message),
+    );
+
+    if (confirm == true) {
+      controller.onConfirmBlockPressed();
+    }
+  }
+
   void _showProgressDialog() {
     Modular.to.showDialog(
       barrierDismissible: false,
@@ -247,9 +259,12 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
     Navigator.pop(context);
   }
 
-  void _showSnackBar(String message) {
+  void _showSnackBar(String message, bool inMainboardPage) {
     _dismissProgressDialog();
-    showSnackBar(scaffoldKey: _scaffoldKey, message: message);
+    showSnackBar(
+      scaffoldKey: inMainboardPage ? MainboardPage.mainBoardKey : _scaffoldKey,
+      message: message,
+    );
   }
 
   TextStyle get nameStyle => const TextStyle(
