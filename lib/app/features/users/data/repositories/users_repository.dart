@@ -96,7 +96,8 @@ class UsersRepository implements IUsersRepository {
           path: endPoint,
           parameters: {'cliente_id': clientId}).parseValidField();
       return right(response);
-    } catch (error) {
+    } catch (error, stack) {
+      logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
   }
