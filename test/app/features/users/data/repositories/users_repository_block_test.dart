@@ -15,7 +15,7 @@ void main() {
   String clientId = '6543';
   final parameters = {'cliente_id': clientId};
 
-  setUpAll(() {
+  setUp(() {
     apiProvider = MockApiProvider();
     sut = UsersRepository(
       apiProvider: apiProvider,
@@ -23,19 +23,6 @@ void main() {
   });
 
   group('UsersRepository', () {
-    test('should send client_id to block', () async {
-      when(
-        () => apiProvider.post(
-          path: any(named: 'path'),
-          parameters: any(named: 'parameters'),
-        ),
-      );
-
-      sut.block(clientId);
-      verify(() =>
-          apiProvider.post(path: '/profile-block', parameters: parameters));
-    });
-
     test('should throw error for invalid client id', () async {
       final response = await JsonUtil.getJson(
         from: 'users/users_block_cliente_id_invalid.json',
@@ -53,6 +40,18 @@ void main() {
       final result = await sut.block(clientId);
 
       expect(result, left(error));
+    });
+    test('should send client_id to block', () async {
+      when(
+        () => apiProvider.post(
+          path: any(named: 'path'),
+          parameters: any(named: 'parameters'),
+        ),
+      );
+
+      sut.block(clientId);
+      verify(() =>
+          apiProvider.post(path: '/profile-block', parameters: parameters));
     });
   });
 }

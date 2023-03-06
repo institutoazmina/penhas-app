@@ -16,7 +16,7 @@ void main() {
   String reason = 'Hate speech';
   final parameters = {'cliente_id': clientId, 'reason': reason};
 
-  setUpAll(() {
+  setUp(() {
     apiProvider = MockApiProvider();
     sut = UsersRepository(
       apiProvider: apiProvider,
@@ -24,22 +24,6 @@ void main() {
   });
 
   group('UsersRepository', () {
-    test('should send client_id and reason to report', () async {
-      when(
-        () => apiProvider.post(
-          path: any(named: 'path'),
-          parameters: any(named: 'parameters'),
-        ),
-      );
-
-      sut.report(clientId, reason);
-
-      verify(() => apiProvider.post(
-            path: '/report-profile',
-            parameters: parameters,
-          ));
-    });
-
     test('should throw error for client id not found', () async {
       final response = await JsonUtil.getJson(
         from: 'users/users_report_cliente_id_not_found.json',
@@ -57,6 +41,22 @@ void main() {
       final result = await sut.report(clientId, reason);
 
       expect(result, left(error));
+    });
+
+    test('should send client_id and reason to report', () async {
+      when(
+        () => apiProvider.post(
+          path: any(named: 'path'),
+          parameters: any(named: 'parameters'),
+        ),
+      );
+
+      sut.report(clientId, reason);
+
+      verify(() => apiProvider.post(
+            path: '/report-profile',
+            parameters: parameters,
+          ));
     });
   });
 }
