@@ -9,8 +9,6 @@ import '../../../../../utils/json_util.dart';
 
 class MockApiProvider extends Mock implements IApiProvider {}
 
-class MockFailure extends Failure {}
-
 void main() {
   late IUsersRepository sut;
   late IApiProvider apiProvider;
