@@ -20,7 +20,10 @@ class UserProfileModule extends Module {
           (i) => ReportUserUseCase(repository: i()),
         ),
         Bind.factory(
-          (i) => BlockUserUseCase(repository: i()),
+          (i) => BlockUserUseCase(
+            repository: i(),
+            feedUseCases: i(),
+          ),
         ),
       ];
 
