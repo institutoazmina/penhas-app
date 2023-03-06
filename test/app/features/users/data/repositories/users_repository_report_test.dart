@@ -72,7 +72,7 @@ void main() {
       _setUpMockPost();
 
       // act
-      final response = sut.report(clientId, reason);
+      final response = await sut.report(clientId, reason);
 
       // assert
       final expected = right(
