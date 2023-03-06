@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/users/data/repositories/users_repository.dart';
@@ -22,9 +23,19 @@ void main() {
     );
   });
 
+  void _setUpMockPost() {
+    when(
+      () => apiProvider.post(
+        path: any(named: 'path'),
+        parameters: any(named: 'parameters'),
+      ),
+    ).thenAnswer((_) async => '{"message": "Sucesso!"}');
+  }
+
   group('UsersRepository', () {
     test('should throw error for invalid client id', () async {
-      final response = await JsonUtil.getJson(
+      // arrange
+      final serverMessage = await JsonUtil.getJson(
         from: 'users/users_block_cliente_id_invalid.json',
       );
 
@@ -35,23 +46,40 @@ void main() {
           path: any(named: 'path'),
           parameters: any(named: 'parameters'),
         ),
-      ).thenThrow(response);
+      ).thenThrow(serverMessage);
 
-      final result = await sut.block(clientId);
+      // act
+      final response = await sut.block(clientId);
 
-      expect(result, left(error));
+      // assert
+      expect(response, left(error));
     });
     test('should send client_id to block', () async {
-      when(
-        () => apiProvider.post(
-          path: any(named: 'path'),
-          parameters: any(named: 'parameters'),
-        ),
-      ).thenAnswer((_) async => '{"message": "Sucesso!"}');
+      // arrange
+      _setUpMockPost();
 
-      sut.block(clientId);
+      // act
+      await sut.block(clientId);
+
+      // assert
       verify(() =>
           apiProvider.post(path: '/profile-block', parameters: parameters));
+    });
+
+    test('should receive success message', () async {
+      // arrange
+      _setUpMockPost();
+
+      // act
+      final response = await sut.block(clientId);
+
+      // assert
+      final expected = right(
+        const ValidField(
+          message: 'Sucesso!',
+        ),
+      );
+      expect(expected, response);
     });
   });
 }

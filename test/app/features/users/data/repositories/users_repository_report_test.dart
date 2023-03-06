@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/users/data/repositories/users_repository.dart';
@@ -23,6 +24,15 @@ void main() {
     );
   });
 
+  void _setUpMockPost() {
+    when(
+      () => apiProvider.post(
+        path: any(named: 'path'),
+        parameters: any(named: 'parameters'),
+      ),
+    ).thenAnswer((_) async => '{"message": "Sucesso!"}');
+  }
+
   group('UsersRepository', () {
     test('should throw error for client id not found', () async {
       final response = await JsonUtil.getJson(
@@ -44,19 +54,33 @@ void main() {
     });
 
     test('should send client_id and reason to report', () async {
-      when(
-        () => apiProvider.post(
-          path: any(named: 'path'),
-          parameters: any(named: 'parameters'),
-        ),
-      ).thenAnswer((_) async => '{"message": "Sucesso!"}');
+      // arrange
+      _setUpMockPost();
 
+      // act
       sut.report(clientId, reason);
 
+      // assert
       verify(() => apiProvider.post(
             path: '/report-profile',
             parameters: parameters,
           ));
+    });
+
+    test('should receive success message', () async {
+      // arrange
+      _setUpMockPost();
+
+      // act
+      final response = sut.report(clientId, reason);
+
+      // assert
+      final expected = right(
+        const ValidField(
+          message: 'Sucesso!',
+        ),
+      );
+      expect(expected, response);
     });
   });
 }
