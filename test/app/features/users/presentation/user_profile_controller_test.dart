@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -374,11 +376,9 @@ void main() {
         'should call BlockUserUseCase',
         () async {
           // arrange
-          when(
-            () => mockBlockUserUseCase('$clientId'),
-          ).thenAnswer(
-            (_) async => right(const ValidField(message: 'message')),
-          );
+          final completer = Completer<Either<Failure, ValidField>>();
+          when(() => mockBlockUserUseCase('$clientId'))
+              .thenAnswer((_) => completer.future);
 
           // act
           controller.onConfirmBlockPressed();
@@ -394,15 +394,9 @@ void main() {
         'should set reaction to showProgressDialog',
         () async {
           // arrange
-          when(
-            () => mockBlockUserUseCase('$clientId'),
-          ).thenAnswer(
-            (_) => Future.delayed(const Duration(seconds: 1)).then(
-              (_) => right(
-                const ValidField(message: 'message'),
-              ),
-            ),
-          );
+          final completer = Completer<Either<Failure, ValidField>>();
+          when(() => mockBlockUserUseCase('$clientId'))
+              .thenAnswer((_) => completer.future);
 
           // act
           controller.onConfirmBlockPressed();
@@ -432,7 +426,7 @@ void main() {
           // assert
           expect(
             controller.reaction,
-            UserProfileReaction.showSnackBar(message),
+            UserProfileReaction.showSnackBar(message, inMainboardPage: true),
           );
         },
       );
@@ -477,6 +471,26 @@ void main() {
 
           // assert
           verify(() => mockNavigator.pop()).called(1);
+        },
+      );
+
+      test(
+        'should not pop navigation when failure',
+        () async {
+          // arrange
+          when(
+            () => mockBlockUserUseCase('$clientId'),
+          ).thenAnswer(
+            (_) async => left(
+              ServerSideFormFieldValidationFailure(message: 'message'),
+            ),
+          );
+
+          // act
+          await controller.onConfirmBlockPressed();
+
+          // assert
+          verifyNever(() => mockNavigator.pop());
         },
       );
     });
