@@ -2,16 +2,20 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entity.dart';
 import 'package:penhas/app/features/chat/domain/usecases/get_chat_channel_token_usecase.dart';
 import 'package:penhas/app/features/users/domain/entities/user_detail_entity.dart';
 import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
+import 'package:penhas/app/features/users/domain/usecases/report_user_usecase.dart';
 import 'package:penhas/app/features/users/presentation/user_profile_controller.dart';
 import 'package:penhas/app/features/users/presentation/user_profile_state.dart';
 
 class MockGetChatChannelTokenUseCase extends Mock
     implements GetChatChannelTokenUseCase {}
+
+class MockReportUserUseCase extends Mock implements ReportUserUseCase {}
 
 class MockModularNavigator extends Mock implements IModularNavigator {}
 
@@ -20,6 +24,8 @@ void main() {
     late UserProfileController controller;
 
     late GetChatChannelTokenUseCase mockGetChatChannelTokenUseCase;
+    late ReportUserUseCase mockReportUserUseCase;
+
     late IModularNavigator mockNavigator;
     const clientId = 123;
 
@@ -38,10 +44,12 @@ void main() {
 
     setUp(() {
       mockGetChatChannelTokenUseCase = MockGetChatChannelTokenUseCase();
+      mockReportUserUseCase = MockReportUserUseCase();
 
       controller = UserProfileController(
         person: user,
         getChatChannelToken: mockGetChatChannelTokenUseCase,
+        reportUser: mockReportUserUseCase,
       );
 
       mockNavigator = Modular.navigatorDelegate = MockModularNavigator();
@@ -74,7 +82,7 @@ void main() {
           controller = UserProfileController(
             person: user,
             getChatChannelToken: mockGetChatChannelTokenUseCase,
-            isMenuEnabled: true,
+            reportUser: mockReportUserUseCase,
           );
 
           // assert
@@ -95,7 +103,7 @@ void main() {
           controller = UserProfileController(
             person: user,
             getChatChannelToken: mockGetChatChannelTokenUseCase,
-            isMenuEnabled: true,
+            reportUser: mockReportUserUseCase,
           );
 
           // assert
@@ -203,6 +211,132 @@ void main() {
 
           // assert
           expect(controller.reaction, isNull);
+        },
+      );
+
+      test(
+        'should set reaction to askReportReasonDialog when option is report',
+        () async {
+          // act
+          controller.onOptionSelected(UserProfileSelectedOption.report());
+
+          // assert
+          expect(
+            controller.reaction,
+            UserProfileReaction.askReportReasonDialog(),
+          );
+        },
+      );
+    });
+
+    group('onSendReportPressed', () {
+      test(
+        'should call ReportUserUseCase',
+        () async {
+          // arrange
+          const reason = 'Hate speech';
+          when(
+            () => mockReportUserUseCase(
+              clientId: '$clientId',
+              reason: reason,
+            ),
+          ).thenAnswer(
+            (_) async => right(const ValidField(message: 'message')),
+          );
+
+          // act
+          controller.onSendReportPressed(reason);
+
+          // assert
+          verify(
+            () => mockReportUserUseCase(
+              clientId: '$clientId',
+              reason: reason,
+            ),
+          ).called(1);
+        },
+      );
+
+      test(
+        'should set reaction to showProgressDialog',
+        () async {
+          // arrange
+          const reason = 'Hate speech';
+          when(
+            () => mockReportUserUseCase(
+              clientId: '$clientId',
+              reason: reason,
+            ),
+          ).thenAnswer(
+            (_) => Future.delayed(const Duration(seconds: 1)).then(
+              (_) => right(
+                const ValidField(message: 'message'),
+              ),
+            ),
+          );
+
+          // act
+          controller.onSendReportPressed(reason);
+
+          // assert
+          expect(
+            controller.reaction,
+            UserProfileReaction.showProgressDialog(),
+          );
+        },
+      );
+
+      test(
+        'should set reaction to showSnackBar when success',
+        () async {
+          // arrange
+          const reason = 'Hate speech';
+          const message = 'Reportado com sucesso';
+          when(
+            () => mockReportUserUseCase(
+              clientId: '$clientId',
+              reason: reason,
+            ),
+          ).thenAnswer(
+            (_) async => right(const ValidField(message: message)),
+          );
+
+          // act
+          await controller.onSendReportPressed(reason);
+
+          // assert
+          expect(
+            controller.reaction,
+            UserProfileReaction.showSnackBar(message),
+          );
+        },
+      );
+
+      test(
+        'should set reaction to showSnackBar when error',
+        () async {
+          // arrange
+          const reason = 'Porque sim!';
+          const message = 'Porque sim não é resposta!';
+          when(
+            () => mockReportUserUseCase(
+              clientId: '$clientId',
+              reason: reason,
+            ),
+          ).thenAnswer(
+            (_) async => left(
+              ServerSideFormFieldValidationFailure(message: message),
+            ),
+          );
+
+          // act
+          await controller.onSendReportPressed(reason);
+
+          // assert
+          expect(
+            controller.reaction,
+            UserProfileReaction.showSnackBar(message),
+          );
         },
       );
     });

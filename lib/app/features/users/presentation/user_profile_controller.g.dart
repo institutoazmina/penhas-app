@@ -62,6 +62,15 @@ mixin _$UserProfileController on _UserProfileControllerBase, Store {
     return _$openChannelAsyncAction.run(() => super.openChannel());
   }
 
+  final _$onSendReportPressedAsyncAction =
+      AsyncAction('_UserProfileControllerBase.onSendReportPressed');
+
+  @override
+  Future<void> onSendReportPressed(String reason) {
+    return _$onSendReportPressedAsyncAction
+        .run(() => super.onSendReportPressed(reason));
+  }
+
   final _$_UserProfileControllerBaseActionController =
       ActionController(name: '_UserProfileControllerBase');
 

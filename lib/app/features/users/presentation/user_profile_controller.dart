@@ -6,6 +6,7 @@ import '../../authentication/presentation/shared/map_failure_message.dart';
 import '../../chat/domain/entities/chat_channel_open_entity.dart';
 import '../../chat/domain/usecases/get_chat_channel_token_usecase.dart';
 import '../domain/entities/user_detail_entity.dart';
+import '../domain/usecases/report_user_usecase.dart';
 import 'user_profile_state.dart';
 
 part 'user_profile_controller.g.dart';
@@ -15,22 +16,22 @@ class UserProfileController extends _UserProfileControllerBase
   UserProfileController({
     required UserDetailEntity person,
     required GetChatChannelTokenUseCase getChatChannelToken,
-    bool isMenuEnabled = false,
-  }) : super(person, getChatChannelToken, isMenuEnabled);
+    required ReportUserUseCase reportUser,
+  }) : super(person, getChatChannelToken, reportUser);
 }
 
 abstract class _UserProfileControllerBase with Store, MapFailureMessage {
   _UserProfileControllerBase(
     this._person,
     this._getChatChannelToken,
-    this._isMenuEnabled,
+    this._reportUser,
   ) {
     _init();
   }
 
-  final bool _isMenuEnabled;
   final UserDetailEntity _person;
   final GetChatChannelTokenUseCase _getChatChannelToken;
+  final ReportUserUseCase _reportUser;
 
   @observable
   UserProfileState state = const UserProfileState.initial();
@@ -43,7 +44,7 @@ abstract class _UserProfileControllerBase with Store, MapFailureMessage {
 
   void _init() {
     state = UserProfileState.loaded(_person);
-    menuState = _person.isMyself || !_isMenuEnabled
+    menuState = _person.isMyself
         ? const UserMenuState.hidden()
         : const UserMenuState.visible();
   }
@@ -61,7 +62,24 @@ abstract class _UserProfileControllerBase with Store, MapFailureMessage {
 
   @action
   void onOptionSelected(UserProfileSelectedOption? option) {
-    // será implementado em próximos PRs
+    reaction = option?.when(
+      report: () => UserProfileReaction.askReportReasonDialog(),
+    );
+  }
+
+  @action
+  Future<void> onSendReportPressed(String reason) async {
+    reaction = UserProfileReaction.showProgressDialog();
+    final result = await _reportUser(
+      clientId: '${_person.profile.clientId}',
+      reason: reason,
+    );
+    reaction = result.fold(
+      _handleFailure,
+      (result) => UserProfileReaction.showSnackBar(
+        result.message ?? 'Reportado com sucesso',
+      ),
+    );
   }
 
   UserProfileReaction? _handleChatChannelSuccess(ChatChannelOpenEntity chat) {
