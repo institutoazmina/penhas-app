@@ -98,10 +98,14 @@ abstract class _UserProfileControllerBase with Store, MapFailureMessage {
       _handleFailure,
       (result) => UserProfileReaction.showSnackBar(
         result.message ?? 'Bloqueado com sucesso',
+        inMainboardPage: true,
       ),
     );
 
-    Modular.to.pop();
+    if (result.isRight()) {
+      await Future.delayed(const Duration(milliseconds: 300));
+      Modular.to.pop();
+    }
   }
 
   UserProfileReaction? _handleChatChannelSuccess(ChatChannelOpenEntity chat) {

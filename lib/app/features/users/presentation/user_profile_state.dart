@@ -19,8 +19,10 @@ class UserMenuState with _$UserMenuState {
 
 @freezed
 class UserProfileReaction with _$UserProfileReaction {
-  factory UserProfileReaction.showSnackBar(String message) =
-      _ReactionShowSnackBar;
+  factory UserProfileReaction.showSnackBar(
+    String message, {
+    @Default(false) bool inMainboardPage,
+  }) = _ReactionShowSnackBar;
   factory UserProfileReaction.showProfileOptions() =
       _ReactionShowProfileOptions;
   factory UserProfileReaction.askReportReasonDialog([
