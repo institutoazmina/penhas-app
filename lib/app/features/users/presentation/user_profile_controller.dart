@@ -63,7 +63,7 @@ abstract class _UserProfileControllerBase with Store, MapFailureMessage {
   @action
   void onOptionSelected(UserProfileSelectedOption? option) {
     reaction = option?.when(
-      report: UserProfileReaction.askReportReasonDialog,
+      report: () => UserProfileReaction.askReportReasonDialog(),
     );
   }
 
@@ -76,7 +76,9 @@ abstract class _UserProfileControllerBase with Store, MapFailureMessage {
     );
     reaction = result.fold(
       _handleFailure,
-      (_) => UserProfileReaction.dismissProgressDialog(),
+      (result) => UserProfileReaction.showSnackBar(
+        result.message ?? 'Reportado com sucesso',
+      ),
     );
   }
 

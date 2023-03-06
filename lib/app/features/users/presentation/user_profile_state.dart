@@ -23,8 +23,9 @@ class UserProfileReaction with _$UserProfileReaction {
       _ReactionShowSnackBar;
   factory UserProfileReaction.showProfileOptions() =
       _ReactionShowProfileOptions;
-  factory UserProfileReaction.askReportReasonDialog() =
-      _ReactionAskReportReasonDialog;
+  factory UserProfileReaction.askReportReasonDialog([
+    @Default(null) String? reason,
+  ]) = _ReactionAskReportReasonDialog;
   factory UserProfileReaction.showProgressDialog() =
       _ReactionShowProgressDialog;
   factory UserProfileReaction.dismissProgressDialog() =

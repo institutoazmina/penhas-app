@@ -24,13 +24,14 @@ class ProfileOptionsBottomSheet extends StatelessWidget {
 }
 
 class ReportUserDialog extends StatelessWidget {
-  const ReportUserDialog({Key? key}) : super(key: key);
+  const ReportUserDialog({Key? key, required this.reason}) : super(key: key);
 
   static final _formKey = GlobalKey<FormState>();
+  final String? reason;
 
   @override
   Widget build(BuildContext context) {
-    final _controller = TextEditingController();
+    final _controller = TextEditingController(text: reason);
 
     return AlertDialog(
       title: const Text('Denunciar', style: kTextStyleAlertDialogTitle),

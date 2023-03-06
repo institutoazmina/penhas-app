@@ -785,8 +785,11 @@ class _$UserProfileReactionTearOff {
     return _ReactionShowProfileOptions();
   }
 
-  _ReactionAskReportReasonDialog askReportReasonDialog() {
-    return _ReactionAskReportReasonDialog();
+  _ReactionAskReportReasonDialog askReportReasonDialog(
+      [String? reason = null]) {
+    return _ReactionAskReportReasonDialog(
+      reason,
+    );
   }
 
   _ReactionShowProgressDialog showProgressDialog() {
@@ -807,7 +810,7 @@ mixin _$UserProfileReaction {
   TResult when<TResult extends Object?>({
     required TResult Function(String message) showSnackBar,
     required TResult Function() showProfileOptions,
-    required TResult Function() askReportReasonDialog,
+    required TResult Function(String? reason) askReportReasonDialog,
     required TResult Function() showProgressDialog,
     required TResult Function() dismissProgressDialog,
   }) =>
@@ -816,7 +819,7 @@ mixin _$UserProfileReaction {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String message)? showSnackBar,
     TResult Function()? showProfileOptions,
-    TResult Function()? askReportReasonDialog,
+    TResult Function(String? reason)? askReportReasonDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
   }) =>
@@ -825,7 +828,7 @@ mixin _$UserProfileReaction {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String message)? showSnackBar,
     TResult Function()? showProfileOptions,
-    TResult Function()? askReportReasonDialog,
+    TResult Function(String? reason)? askReportReasonDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
     required TResult orElse(),
@@ -954,7 +957,7 @@ class _$_ReactionShowSnackBar implements _ReactionShowSnackBar {
   TResult when<TResult extends Object?>({
     required TResult Function(String message) showSnackBar,
     required TResult Function() showProfileOptions,
-    required TResult Function() askReportReasonDialog,
+    required TResult Function(String? reason) askReportReasonDialog,
     required TResult Function() showProgressDialog,
     required TResult Function() dismissProgressDialog,
   }) {
@@ -966,7 +969,7 @@ class _$_ReactionShowSnackBar implements _ReactionShowSnackBar {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String message)? showSnackBar,
     TResult Function()? showProfileOptions,
-    TResult Function()? askReportReasonDialog,
+    TResult Function(String? reason)? askReportReasonDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
   }) {
@@ -978,7 +981,7 @@ class _$_ReactionShowSnackBar implements _ReactionShowSnackBar {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String message)? showSnackBar,
     TResult Function()? showProfileOptions,
-    TResult Function()? askReportReasonDialog,
+    TResult Function(String? reason)? askReportReasonDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
     required TResult orElse(),
@@ -1093,7 +1096,7 @@ class _$_ReactionShowProfileOptions implements _ReactionShowProfileOptions {
   TResult when<TResult extends Object?>({
     required TResult Function(String message) showSnackBar,
     required TResult Function() showProfileOptions,
-    required TResult Function() askReportReasonDialog,
+    required TResult Function(String? reason) askReportReasonDialog,
     required TResult Function() showProgressDialog,
     required TResult Function() dismissProgressDialog,
   }) {
@@ -1105,7 +1108,7 @@ class _$_ReactionShowProfileOptions implements _ReactionShowProfileOptions {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String message)? showSnackBar,
     TResult Function()? showProfileOptions,
-    TResult Function()? askReportReasonDialog,
+    TResult Function(String? reason)? askReportReasonDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
   }) {
@@ -1117,7 +1120,7 @@ class _$_ReactionShowProfileOptions implements _ReactionShowProfileOptions {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String message)? showSnackBar,
     TResult Function()? showProfileOptions,
-    TResult Function()? askReportReasonDialog,
+    TResult Function(String? reason)? askReportReasonDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
     required TResult orElse(),
@@ -1187,6 +1190,7 @@ abstract class _$ReactionAskReportReasonDialogCopyWith<$Res> {
           _ReactionAskReportReasonDialog value,
           $Res Function(_ReactionAskReportReasonDialog) then) =
       __$ReactionAskReportReasonDialogCopyWithImpl<$Res>;
+  $Res call({String? reason});
 }
 
 /// @nodoc
@@ -1201,39 +1205,63 @@ class __$ReactionAskReportReasonDialogCopyWithImpl<$Res>
   @override
   _ReactionAskReportReasonDialog get _value =>
       super._value as _ReactionAskReportReasonDialog;
+
+  @override
+  $Res call({
+    Object? reason = freezed,
+  }) {
+    return _then(_ReactionAskReportReasonDialog(
+      reason == freezed
+          ? _value.reason
+          : reason // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_ReactionAskReportReasonDialog
     implements _ReactionAskReportReasonDialog {
-  _$_ReactionAskReportReasonDialog();
+  _$_ReactionAskReportReasonDialog([this.reason = null]);
+
+  @JsonKey()
+  @override
+  final String? reason;
 
   @override
   String toString() {
-    return 'UserProfileReaction.askReportReasonDialog()';
+    return 'UserProfileReaction.askReportReasonDialog(reason: $reason)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ReactionAskReportReasonDialog);
+            other is _ReactionAskReportReasonDialog &&
+            const DeepCollectionEquality().equals(other.reason, reason));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(reason));
+
+  @JsonKey(ignore: true)
+  @override
+  _$ReactionAskReportReasonDialogCopyWith<_ReactionAskReportReasonDialog>
+      get copyWith => __$ReactionAskReportReasonDialogCopyWithImpl<
+          _ReactionAskReportReasonDialog>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String message) showSnackBar,
     required TResult Function() showProfileOptions,
-    required TResult Function() askReportReasonDialog,
+    required TResult Function(String? reason) askReportReasonDialog,
     required TResult Function() showProgressDialog,
     required TResult Function() dismissProgressDialog,
   }) {
-    return askReportReasonDialog();
+    return askReportReasonDialog(reason);
   }
 
   @override
@@ -1241,11 +1269,11 @@ class _$_ReactionAskReportReasonDialog
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String message)? showSnackBar,
     TResult Function()? showProfileOptions,
-    TResult Function()? askReportReasonDialog,
+    TResult Function(String? reason)? askReportReasonDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
   }) {
-    return askReportReasonDialog?.call();
+    return askReportReasonDialog?.call(reason);
   }
 
   @override
@@ -1253,13 +1281,13 @@ class _$_ReactionAskReportReasonDialog
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String message)? showSnackBar,
     TResult Function()? showProfileOptions,
-    TResult Function()? askReportReasonDialog,
+    TResult Function(String? reason)? askReportReasonDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
     required TResult orElse(),
   }) {
     if (askReportReasonDialog != null) {
-      return askReportReasonDialog();
+      return askReportReasonDialog(reason);
     }
     return orElse();
   }
@@ -1314,7 +1342,13 @@ class _$_ReactionAskReportReasonDialog
 }
 
 abstract class _ReactionAskReportReasonDialog implements UserProfileReaction {
-  factory _ReactionAskReportReasonDialog() = _$_ReactionAskReportReasonDialog;
+  factory _ReactionAskReportReasonDialog([String? reason]) =
+      _$_ReactionAskReportReasonDialog;
+
+  String? get reason;
+  @JsonKey(ignore: true)
+  _$ReactionAskReportReasonDialogCopyWith<_ReactionAskReportReasonDialog>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1363,7 +1397,7 @@ class _$_ReactionShowProgressDialog implements _ReactionShowProgressDialog {
   TResult when<TResult extends Object?>({
     required TResult Function(String message) showSnackBar,
     required TResult Function() showProfileOptions,
-    required TResult Function() askReportReasonDialog,
+    required TResult Function(String? reason) askReportReasonDialog,
     required TResult Function() showProgressDialog,
     required TResult Function() dismissProgressDialog,
   }) {
@@ -1375,7 +1409,7 @@ class _$_ReactionShowProgressDialog implements _ReactionShowProgressDialog {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String message)? showSnackBar,
     TResult Function()? showProfileOptions,
-    TResult Function()? askReportReasonDialog,
+    TResult Function(String? reason)? askReportReasonDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
   }) {
@@ -1387,7 +1421,7 @@ class _$_ReactionShowProgressDialog implements _ReactionShowProgressDialog {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String message)? showSnackBar,
     TResult Function()? showProfileOptions,
-    TResult Function()? askReportReasonDialog,
+    TResult Function(String? reason)? askReportReasonDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
     required TResult orElse(),
@@ -1499,7 +1533,7 @@ class _$_ReactionDismissProgressDialog
   TResult when<TResult extends Object?>({
     required TResult Function(String message) showSnackBar,
     required TResult Function() showProfileOptions,
-    required TResult Function() askReportReasonDialog,
+    required TResult Function(String? reason) askReportReasonDialog,
     required TResult Function() showProgressDialog,
     required TResult Function() dismissProgressDialog,
   }) {
@@ -1511,7 +1545,7 @@ class _$_ReactionDismissProgressDialog
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String message)? showSnackBar,
     TResult Function()? showProfileOptions,
-    TResult Function()? askReportReasonDialog,
+    TResult Function(String? reason)? askReportReasonDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
   }) {
@@ -1523,7 +1557,7 @@ class _$_ReactionDismissProgressDialog
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String message)? showSnackBar,
     TResult Function()? showProfileOptions,
-    TResult Function()? askReportReasonDialog,
+    TResult Function(String? reason)? askReportReasonDialog,
     TResult Function()? showProgressDialog,
     TResult Function()? dismissProgressDialog,
     required TResult orElse(),

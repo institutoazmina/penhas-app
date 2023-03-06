@@ -220,9 +220,9 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
     controller.onOptionSelected(result);
   }
 
-  void _askReportReasonDialog() async {
+  void _askReportReasonDialog(String? initialReason) async {
     final reason = await Modular.to.showDialog(
-      builder: (_) => const ReportUserDialog(),
+      builder: (_) => ReportUserDialog(reason: initialReason),
     );
 
     if (reason != null) {
