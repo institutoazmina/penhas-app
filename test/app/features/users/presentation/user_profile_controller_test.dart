@@ -89,6 +89,7 @@ void main() {
             person: user,
             getChatChannelToken: mockGetChatChannelTokenUseCase,
             reportUser: mockReportUserUseCase,
+            blockUser: mockBlockUserUseCase,
           );
 
           // assert
@@ -110,6 +111,7 @@ void main() {
             person: user,
             getChatChannelToken: mockGetChatChannelTokenUseCase,
             reportUser: mockReportUserUseCase,
+            blockUser: mockBlockUserUseCase,
           );
 
           // assert
@@ -233,6 +235,22 @@ void main() {
           );
         },
       );
+
+      test(
+        'should set reaction to showBlockConfirmationDialog when option is block',
+        () async {
+          // act
+          controller.onOptionSelected(UserProfileSelectedOption.block());
+
+          // assert
+          expect(
+            controller.reaction,
+            UserProfileReaction.showBlockConfirmationDialog(
+              'Deseja realmente bloquear ${user.profile.nickname}?',
+            ),
+          );
+        },
+      );
     });
 
     group('onSendReportPressed', () {
@@ -343,6 +361,122 @@ void main() {
             controller.reaction,
             UserProfileReaction.showSnackBar(message),
           );
+        },
+      );
+    });
+
+    group('onConfirmBlockPressed', () {
+      setUp(() {
+        when(() => mockNavigator.pop()).thenAnswer((_) async {});
+      });
+
+      test(
+        'should call BlockUserUseCase',
+        () async {
+          // arrange
+          when(
+            () => mockBlockUserUseCase('$clientId'),
+          ).thenAnswer(
+            (_) async => right(const ValidField(message: 'message')),
+          );
+
+          // act
+          controller.onConfirmBlockPressed();
+
+          // assert
+          verify(
+            () => mockBlockUserUseCase('$clientId'),
+          ).called(1);
+        },
+      );
+
+      test(
+        'should set reaction to showProgressDialog',
+        () async {
+          // arrange
+          when(
+            () => mockBlockUserUseCase('$clientId'),
+          ).thenAnswer(
+            (_) => Future.delayed(const Duration(seconds: 1)).then(
+              (_) => right(
+                const ValidField(message: 'message'),
+              ),
+            ),
+          );
+
+          // act
+          controller.onConfirmBlockPressed();
+
+          // assert
+          expect(
+            controller.reaction,
+            UserProfileReaction.showProgressDialog(),
+          );
+        },
+      );
+
+      test(
+        'should set reaction to showSnackBar when success',
+        () async {
+          // arrange
+          const message = 'Bloqueado com sucesso';
+          when(
+            () => mockBlockUserUseCase('$clientId'),
+          ).thenAnswer(
+            (_) async => right(const ValidField(message: message)),
+          );
+
+          // act
+          await controller.onConfirmBlockPressed();
+
+          // assert
+          expect(
+            controller.reaction,
+            UserProfileReaction.showSnackBar(message),
+          );
+        },
+      );
+
+      test(
+        'should set reaction to showSnackBar when error',
+        () async {
+          // arrange
+          const message = 'Não deixo você bloquear!';
+          when(
+            () => mockBlockUserUseCase('$clientId'),
+          ).thenAnswer(
+            (_) async => left(
+              ServerSideFormFieldValidationFailure(message: message),
+            ),
+          );
+
+          // act
+          await controller.onConfirmBlockPressed();
+
+          // assert
+          expect(
+            controller.reaction,
+            UserProfileReaction.showSnackBar(message),
+          );
+        },
+      );
+
+      test(
+        'should pop navigation when success',
+        () async {
+          // arrange
+          const message = 'Reportado com sucesso';
+          when(
+            () => mockBlockUserUseCase('$clientId'),
+          ).thenAnswer(
+            (_) async => right(const ValidField(message: message)),
+          );
+
+          // act
+          await controller.onConfirmBlockPressed();
+
+          // assert
+          verify(() => mockNavigator.pop()).called(1);
         },
       );
     });
