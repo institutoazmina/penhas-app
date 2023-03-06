@@ -11,6 +11,7 @@ import '../../authentication/presentation/shared/snack_bar_handler.dart';
 import '../domain/entities/user_detail_entity.dart';
 import '../domain/entities/user_detail_profile_entity.dart';
 import 'user_profile_controller.dart';
+import 'user_profile_dialogs.dart';
 import 'user_profile_state.dart';
 
 class UserProfilePage extends StatefulWidget {
@@ -46,11 +47,16 @@ class _UserProfilePageState
       appBar: AppBar(
         elevation: 0,
         backgroundColor: DesignSystemColors.easterPurple,
+        actions: [
+          Observer(
+            builder: (_) => _buildMenuAction(controller.menuState),
+          )
+        ],
       ),
-      body: Observer(
-        builder: (_) {
-          return bodyBuilder(controller.state);
-        },
+      body: SingleChildScrollView(
+        child: Observer(
+          builder: (_) => bodyBuilder(controller.state),
+        ),
       ),
     );
   }
@@ -65,8 +71,17 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
     );
   }
 
+  Widget _buildMenuAction(UserMenuState state) => state.when(
+        visible: () => IconButton(
+          icon: const Icon(Icons.more_vert),
+          onPressed: controller.onTapMenuOptions,
+        ),
+        hidden: () => Container(),
+      );
+
   void _handleReaction(UserProfileReaction? reaction) {
     reaction?.when(
+      showProfileOptions: _showProfileOptions,
       showSnackBar: _showSnackBar,
     );
   }
@@ -188,6 +203,15 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       ),
     );
+  }
+
+  void _showProfileOptions() async {
+    final result = await showModalBottomSheet(
+      context: context,
+      builder: (_) => const ProfileOptionsBottomSheet(),
+    );
+
+    controller.onOptionSelected(result);
   }
 
   void _showSnackBar(String message) {
