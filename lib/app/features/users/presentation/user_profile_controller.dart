@@ -104,7 +104,6 @@ abstract class _UserProfileControllerBase with Store, MapFailureMessage {
     );
 
     if (result.isRight()) {
-      await Future.delayed(const Duration(milliseconds: 300));
       Modular.to.pop();
     }
   }
