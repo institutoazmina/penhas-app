@@ -21,6 +21,7 @@ import '../../../appstate/domain/usecases/app_state_usecase.dart';
 import '../../../chat/domain/entities/chat_channel_open_entity.dart';
 import '../../../chat/domain/repositories/chat_channel_repository.dart';
 import '../../../chat/domain/usecases/chat_channel_usecase.dart';
+import '../../../chat/domain/usecases/get_chat_channel_token_usecase.dart';
 import '../../../chat/presentation/chat/chat_channel_controller.dart';
 import '../../../chat/presentation/chat/chat_channel_page.dart';
 import '../../../feed/data/datasources/tweet_data_source.dart';
@@ -331,6 +332,9 @@ class MainboardModule extends Module {
                 ChatChannelOpenEntity(token: i.args?.params['token']),
             channelRepository: i.get<IChatChannelRepository>(),
           ),
+        ),
+        Bind.factory(
+          (i) => GetChatChannelTokenUseCase(repository: i()),
         ),
       ];
 

@@ -9,19 +9,33 @@ part of 'user_profile_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$UserProfileController on _UserProfileControllerBase, Store {
-  final _$currentStateAtom =
-      Atom(name: '_UserProfileControllerBase.currentState');
+  final _$stateAtom = Atom(name: '_UserProfileControllerBase.state');
 
   @override
-  UserProfileState get currentState {
-    _$currentStateAtom.reportRead();
-    return super.currentState;
+  UserProfileState get state {
+    _$stateAtom.reportRead();
+    return super.state;
   }
 
   @override
-  set currentState(UserProfileState value) {
-    _$currentStateAtom.reportWrite(value, super.currentState, () {
-      super.currentState = value;
+  set state(UserProfileState value) {
+    _$stateAtom.reportWrite(value, super.state, () {
+      super.state = value;
+    });
+  }
+
+  final _$reactionAtom = Atom(name: '_UserProfileControllerBase.reaction');
+
+  @override
+  UserProfileReaction? get reaction {
+    _$reactionAtom.reportRead();
+    return super.reaction;
+  }
+
+  @override
+  set reaction(UserProfileReaction? value) {
+    _$reactionAtom.reportWrite(value, super.reaction, () {
+      super.reaction = value;
     });
   }
 
@@ -36,7 +50,8 @@ mixin _$UserProfileController on _UserProfileControllerBase, Store {
   @override
   String toString() {
     return '''
-currentState: ${currentState}
+state: ${state},
+reaction: ${reaction}
     ''';
   }
 }
