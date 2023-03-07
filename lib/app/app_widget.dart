@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import 'shared/design_system/theme.dart';
+
 class AppWidget extends StatelessWidget {
+  const AppWidget({Key? key}) : super(key: key);
+
   static FirebaseAnalytics get _analytics => FirebaseAnalytics.instance;
   static FirebaseAnalyticsObserver observer =
       FirebaseAnalyticsObserver(analytics: _analytics);
@@ -15,9 +19,7 @@ class AppWidget extends StatelessWidget {
     return MaterialApp(
       title: 'PenhaS',
       builder: Asuka.builder,
-      theme: ThemeData(
-        textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Lato'),
-      ),
+      theme: AppTheme.of(context),
       localizationsDelegates: const [
         GlobalWidgetsLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

@@ -24,6 +24,21 @@ mixin _$UserProfileController on _UserProfileControllerBase, Store {
     });
   }
 
+  final _$menuStateAtom = Atom(name: '_UserProfileControllerBase.menuState');
+
+  @override
+  UserMenuState get menuState {
+    _$menuStateAtom.reportRead();
+    return super.menuState;
+  }
+
+  @override
+  set menuState(UserMenuState value) {
+    _$menuStateAtom.reportWrite(value, super.menuState, () {
+      super.menuState = value;
+    });
+  }
+
   final _$reactionAtom = Atom(name: '_UserProfileControllerBase.reaction');
 
   @override
@@ -47,10 +62,54 @@ mixin _$UserProfileController on _UserProfileControllerBase, Store {
     return _$openChannelAsyncAction.run(() => super.openChannel());
   }
 
+  final _$onSendReportPressedAsyncAction =
+      AsyncAction('_UserProfileControllerBase.onSendReportPressed');
+
+  @override
+  Future<void> onSendReportPressed(String reason) {
+    return _$onSendReportPressedAsyncAction
+        .run(() => super.onSendReportPressed(reason));
+  }
+
+  final _$onConfirmBlockPressedAsyncAction =
+      AsyncAction('_UserProfileControllerBase.onConfirmBlockPressed');
+
+  @override
+  Future<void> onConfirmBlockPressed() {
+    return _$onConfirmBlockPressedAsyncAction
+        .run(() => super.onConfirmBlockPressed());
+  }
+
+  final _$_UserProfileControllerBaseActionController =
+      ActionController(name: '_UserProfileControllerBase');
+
+  @override
+  void onTapMenuOptions() {
+    final _$actionInfo = _$_UserProfileControllerBaseActionController
+        .startAction(name: '_UserProfileControllerBase.onTapMenuOptions');
+    try {
+      return super.onTapMenuOptions();
+    } finally {
+      _$_UserProfileControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void onOptionSelected(UserProfileSelectedOption? option) {
+    final _$actionInfo = _$_UserProfileControllerBaseActionController
+        .startAction(name: '_UserProfileControllerBase.onOptionSelected');
+    try {
+      return super.onOptionSelected(option);
+    } finally {
+      _$_UserProfileControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
 state: ${state},
+menuState: ${menuState},
 reaction: ${reaction}
     ''';
   }
