@@ -1,7 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:penhas/app/features/zodiac/domain/entities/izodiac.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../shared/design_system/colors.dart';
+import 'izodiac.dart';
 
 class ZodiacSignTaurus implements IZodiac {
   @override
