@@ -6,6 +6,7 @@ import 'package:mobx/mobx.dart';
 import '../../../../core/extension/asuka.dart';
 import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/design_system/text_styles.dart';
+import '../../../../shared/widgets/bottom_sheet_actions_widget.dart';
 import '../../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../../authentication/presentation/shared/snack_bar_handler.dart';
 import '../../domain/entities/audio_entity.dart';
@@ -175,19 +176,22 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
   }
 
   ReactionDisposer _showActionSheet() {
-    return reaction((_) => controller.actionSheetState,
-        (AudioTileAction actionSheetState) {
-      actionSheetState.when(
-        initial: () {},
-        notice: (message) => _showActionNotice(message),
-        actionSheet: (audio) {
-          setState(() {
-            _selectingAudioMenu = audio;
-          });
-          _actionSheet(audio);
-        },
-      );
-    });
+    return reaction(
+      (_) => controller.actionSheetState,
+      (AudioTileAction actionSheetState) {
+        actionSheetState.when(
+          initial: () {},
+          notice: (message) => _showActionNotice(message),
+          actionSheet: (audio) {
+            setState(() {
+              _selectingAudioMenu = audio;
+            });
+            _actionSheet(audio);
+          },
+        );
+      },
+      equals: (_, __) => false,
+    );
   }
 
   ReactionDisposer _showAudioPlayStatus() {
@@ -218,6 +222,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
           borderRadius: BorderRadius.circular(10.0),
         ),
         actions: <Widget>[
+          // ignore: deprecated_member_use
           FlatButton(
             child: const Text('Ok'),
             onPressed: () {
@@ -230,62 +235,29 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
   }
 
   Future<void> _actionSheet(AudioEntity audio) async {
-    final BuildContext _context = _scaffoldKey.currentContext!;
     await showModalBottomSheet(
-      context: _context,
-      backgroundColor: Colors.transparent,
-      builder: (context) {
-        return Container(
-          padding: const EdgeInsets.only(top: 5),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
+      context: context,
+      builder: (context) => BottomSheetActionsContentWidget(
+        actions: [
+          Container(
+            padding: const EdgeInsets.all(16.0),
+            child: const Text(
+              'Para solicitar o download do arquivo de áudio entrar em contato com PenhaS pelo chat ou email penhas@azmina.com.br',
+              style: TextStyle(fontSize: 16.0),
             ),
           ),
-          height: 200,
-          child: Column(
-            children: <Widget>[
-              _buildDivider(),
-              Container(
-                padding: const EdgeInsets.all(16.0),
-                child: const Text(
-                  'Para solicitar o download do arquivo de áudio entrar em contato com PenhaS pelo chat ou email penhas@azmina.com.br',
-                  style: TextStyle(fontSize: 16.0),
-                ),
-              ),
-              ListTile(
-                leading: SvgPicture.asset(
-                  'assets/images/svg/tweet_action/tweet_action_delete.svg',
-                ),
-                title: const Text('Apagar'),
-                onTap: () {
-                  Navigator.of(_context).pop();
-                  controller.delete(audio);
-                },
-              ),
-            ],
+          ListTile(
+            leading: SvgPicture.asset(
+              'assets/images/svg/tweet_action/tweet_action_delete.svg',
+            ),
+            title: const Text('Apagar'),
+            onTap: () {
+              Navigator.of(context).pop();
+              controller.delete(audio);
+            },
           ),
-        );
-      },
-    ).whenComplete(() => setState(() => _selectingAudioMenu = null));
-  }
-
-  double _fullWidth() {
-    return MediaQuery.of(_scaffoldKey.currentContext!).size.width;
-  }
-
-  Widget _buildDivider() {
-    return Container(
-      width: _fullWidth() * .2,
-      height: 5,
-      decoration: BoxDecoration(
-        color: Theme.of(context).dividerColor,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
-        ),
+        ],
       ),
-    );
+    ).whenComplete(() => setState(() => _selectingAudioMenu = null));
   }
 }
