@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Corrigido
 - Crash e lógica do horóscopo
+- Ação de recarregar quando dá erro durante a navegação do feed para o perfil ou chat
 
 ## [3.3.0] - 2023-03-06
 
