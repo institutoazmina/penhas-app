@@ -40,8 +40,8 @@ import '../../../feed/presentation/filter_tweet/filter_tweet_controller.dart';
 import '../../../feed/presentation/filter_tweet/filter_tweet_page.dart';
 import '../../../feed/presentation/reply_tweet/reply_tweet_controller.dart';
 import '../../../feed/presentation/reply_tweet/reply_tweet_page.dart';
-import '../../../feed/presentation/routing_perfil_chat/feed_routing_perfil_chat_controller.dart';
-import '../../../feed/presentation/routing_perfil_chat/feed_routing_perfil_chat_page.dart';
+import '../../../feed/presentation/routing_profile_chat/feed_routing_profile_chat_controller.dart';
+import '../../../feed/presentation/routing_profile_chat/feed_routing_profile_chat_page.dart';
 import '../../../feed/presentation/stores/tweet_controller.dart';
 import '../../../filters/domain/presentation/filter_module.dart';
 import '../../../filters/domain/repositories/filter_skill_repository.dart';
@@ -163,7 +163,7 @@ class MainboardModule extends Module {
         ),
         ChildRoute(
           '/tweet/perfil_chat',
-          child: (context, args) => const FeedRoutingPerfilChatPage(),
+          child: (context, args) => const FeedRoutingProfileChatPage(),
           transition: TransitionType.rightToLeft,
         ),
       ];
@@ -388,7 +388,7 @@ class MainboardModule extends Module {
           ),
         ),
         Bind.factory(
-          (i) => FeedRoutingPerfilChatController(
+          (i) => FeedRoutingProfileChatController(
             usersRepository: i.get<IUsersRepository>(),
             channelRepository: i.get<IChatChannelRepository>(),
             routerType: i.args?.data,

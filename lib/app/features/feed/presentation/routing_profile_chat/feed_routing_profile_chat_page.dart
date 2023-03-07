@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/feed/domain/states/feed_routing_state.dart';
-import 'package:penhas/app/features/feed/presentation/routing_perfil_chat/feed_routing_perfil_chat_controller.dart';
-import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
 
-class FeedRoutingPerfilChatPage extends StatefulWidget {
-  const FeedRoutingPerfilChatPage({Key? key}) : super(key: key);
+import '../../../../shared/design_system/colors.dart';
+import '../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../../support_center/presentation/pages/support_center_general_error.dart';
+import '../../domain/states/feed_routing_state.dart';
+import 'feed_routing_profile_chat_controller.dart';
+
+class FeedRoutingProfileChatPage extends StatefulWidget {
+  const FeedRoutingProfileChatPage({Key? key}) : super(key: key);
 
   @override
-  _FeedRoutingPerfilChatPageState createState() =>
-      _FeedRoutingPerfilChatPageState();
+  _FeedRoutingProfileChatPageState createState() =>
+      _FeedRoutingProfileChatPageState();
 }
 
-class _FeedRoutingPerfilChatPageState extends ModularState<
-    FeedRoutingPerfilChatPage, FeedRoutingPerfilChatController> {
+class _FeedRoutingProfileChatPageState extends ModularState<
+    FeedRoutingProfileChatPage, FeedRoutingProfileChatController> {
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (context) => pageBuilder(controller.routingState));
   }
 }
 
-extension _Bodybuilder on _FeedRoutingPerfilChatPageState {
+extension _Bodybuilder on _FeedRoutingProfileChatPageState {
   Widget pageBuilder(FeedRoutingState state) {
     return state.when(
       initial: (title) => loadingPage(title),

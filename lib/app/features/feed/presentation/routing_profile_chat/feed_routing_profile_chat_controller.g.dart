@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'feed_routing_perfil_chat_controller.dart';
+part of 'feed_routing_profile_chat_controller.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,10 +8,10 @@ part of 'feed_routing_perfil_chat_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$FeedRoutingPerfilChatController
-    on _FeedRoutingPerfilChatControllerBase, Store {
+mixin _$FeedRoutingProfileChatController
+    on _FeedRoutingProfileChatControllerBase, Store {
   final _$routingStateAtom =
-      Atom(name: '_FeedRoutingPerfilChatControllerBase.routingState');
+      Atom(name: '_FeedRoutingProfileChatControllerBase.routingState');
 
   @override
   FeedRoutingState get routingState {
@@ -26,12 +26,19 @@ mixin _$FeedRoutingPerfilChatController
     });
   }
 
-  final _$retryAsyncAction =
-      AsyncAction('_FeedRoutingPerfilChatControllerBase.retry');
+  final _$_FeedRoutingProfileChatControllerBaseActionController =
+      ActionController(name: '_FeedRoutingProfileChatControllerBase');
 
   @override
-  Future<void> retry() {
-    return _$retryAsyncAction.run(() => super.retry());
+  void retry() {
+    final _$actionInfo = _$_FeedRoutingProfileChatControllerBaseActionController
+        .startAction(name: '_FeedRoutingProfileChatControllerBase.retry');
+    try {
+      return super.retry();
+    } finally {
+      _$_FeedRoutingProfileChatControllerBaseActionController
+          .endAction(_$actionInfo);
+    }
   }
 
   @override
