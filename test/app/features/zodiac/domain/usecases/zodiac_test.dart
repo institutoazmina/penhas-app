@@ -22,7 +22,7 @@ void main() {
     });
 
     group('sign', () {
-      group('should return ZodiacSignAries when bithdate is', () {
+      group('should return ZodiacSignAries when birthdate is', () {
         test('03/21', () {
           // arrange
           final birthdate = DateTime.parse('1990-03-21');
@@ -46,7 +46,7 @@ void main() {
         });
       });
 
-      group('should return ZodiacSignTaurus when bithdate is', () {
+      group('should return ZodiacSignTaurus when birthdate is', () {
         test('04/21', () {
           // arrange
           final birthdate = DateTime.parse('1991-04-21');
@@ -81,7 +81,7 @@ void main() {
         });
       });
 
-      group('should return ZodiacSignGemini when bithdate is', () {
+      group('should return ZodiacSignGemini when birthdate is', () {
         test('05/21', () {
           // arrange
           final birthdate = DateTime.parse('1992-05-21');
@@ -105,7 +105,7 @@ void main() {
         });
       });
 
-      group('should return ZodiacSignCancer when bithdate is', () {
+      group('should return ZodiacSignCancer when birthdate is', () {
         test('06/21', () {
           // arrange
           final birthdate = DateTime.parse('1993-06-21');
@@ -129,7 +129,7 @@ void main() {
         });
       });
 
-      group('should return ZodiacSignLeo when bithdate is', () {
+      group('should return ZodiacSignLeo when birthdate is', () {
         test('07/23', () {
           // arrange
           final birthdate = DateTime.parse('1994-07-23');
@@ -153,7 +153,7 @@ void main() {
         });
       });
 
-      group('should return ZodiacSignVirgo when bithdate is', () {
+      group('should return ZodiacSignVirgo when birthdate is', () {
         test('08/23', () {
           // arrange
           final birthdate = DateTime.parse('1995-08-23');
@@ -177,7 +177,7 @@ void main() {
         });
       });
 
-      group('should return ZodiacSignLibra when bithdate is', () {
+      group('should return ZodiacSignLibra when birthdate is', () {
         test('09/23', () {
           // arrange
           final birthdate = DateTime.parse('1996-09-23');
@@ -201,7 +201,7 @@ void main() {
         });
       });
 
-      group('should return ZodiacSignScorpio when bithdate is', () {
+      group('should return ZodiacSignScorpio when birthdate is', () {
         test('10/23', () {
           // arrange
           final birthdate = DateTime.parse('1997-10-23');
@@ -225,7 +225,7 @@ void main() {
         });
       });
 
-      group('should return ZodiacSignSagittarius when bithdate is', () {
+      group('should return ZodiacSignSagittarius when birthdate is', () {
         test('11/22', () {
           // arrange
           final birthdate = DateTime.parse('1998-11-22');
@@ -249,7 +249,7 @@ void main() {
         });
       });
 
-      group('should return ZodiacSignCapricorn when bithdate is', () {
+      group('should return ZodiacSignCapricorn when birthdate is', () {
         test('12/22', () {
           // arrange
           final birthdate = DateTime.parse('1999-12-22');
@@ -273,7 +273,7 @@ void main() {
         });
       });
 
-      group('should return ZodiacSignAquarius when bithdate is', () {
+      group('should return ZodiacSignAquarius when birthdate is', () {
         test('01/21', () {
           // arrange
           final birthdate = DateTime.parse('2000-01-21');
@@ -297,7 +297,7 @@ void main() {
         });
       });
 
-      group('should return ZodiacSignPisces when bithdate is', () {
+      group('should return ZodiacSignPisces when birthdate is', () {
         test('02/20', () {
           // arrange
           final birthdate = DateTime.parse('2000-02-20');
