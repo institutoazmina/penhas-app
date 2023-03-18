@@ -55,7 +55,7 @@ class ApiServerConfigure implements IApiServerConfigure {
       deviceData = _DeviceInfo('Error', '0.0.0', 'Invalid Model');
     }
 
-    return '${deviceData.plataform} ${deviceData.version}/${deviceData.model}';
+    return '${deviceData.platform} ${deviceData.version}/${deviceData.model}';
   }
 
   _DeviceInfo _readAndroidBuildData(AndroidDeviceInfo build) {
@@ -72,9 +72,9 @@ class ApiServerConfigure implements IApiServerConfigure {
 }
 
 class _DeviceInfo {
-  _DeviceInfo(this.plataform, this.version, this.model);
+  _DeviceInfo(this.platform, this.version, this.model);
 
-  final String plataform;
+  final String platform;
   final String version;
   final String model;
 }
