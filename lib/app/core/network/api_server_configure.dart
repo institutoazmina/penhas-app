@@ -1,5 +1,4 @@
 import 'package:device_info/device_info.dart';
-import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
 import 'package:platform/platform.dart';
 
@@ -44,7 +43,7 @@ class ApiServerConfigure implements IApiServerConfigure {
 
   Future<String> _deviceInfo() async {
     final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
-    late _DeviceInfo deviceData;
+    _DeviceInfo deviceData = _DeviceInfo('Error', '0.0.0', 'Invalid Model');
 
     try {
       if (_platform.isAndroid) {
@@ -52,7 +51,7 @@ class ApiServerConfigure implements IApiServerConfigure {
       } else if (_platform.isIOS) {
         deviceData = _readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
       }
-    } on PlatformException {
+    } catch (_) {
       deviceData = _DeviceInfo('Error', '0.0.0', 'Invalid Model');
     }
 
