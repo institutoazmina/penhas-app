@@ -61,11 +61,11 @@ class ApiProvider implements IApiProvider {
     Map<String, String> headers = const {},
     Map<String, String?> parameters = const {},
   }) async {
-    final Uri uriRequest = setupHttpRequest(
+    final Uri uriRequest = _setupHttpRequest(
       path: path,
       queryParameters: parameters,
     );
-    final header = await setupHttpHeader(headers);
+    final header = await _setupHttpHeader(headers);
     return _apiClient
         .get(uriRequest, headers: header)
         .parseError(_networkInfo)
@@ -79,11 +79,11 @@ class ApiProvider implements IApiProvider {
     Map<String, String?> parameters = const {},
     String? body,
   }) async {
-    final Uri uriRequest = setupHttpRequest(
+    final Uri uriRequest = _setupHttpRequest(
       path: path,
       queryParameters: parameters,
     );
-    final header = await setupHttpHeader(headers);
+    final header = await _setupHttpHeader(headers);
     return Client()
         .post(uriRequest, headers: header, body: body)
         .parseError(_networkInfo)
@@ -95,11 +95,11 @@ class ApiProvider implements IApiProvider {
     String? path,
     Map<String, String?> parameters = const {},
   }) async {
-    final Uri uriRequest = setupHttpRequest(
+    final Uri uriRequest = _setupHttpRequest(
       path: path,
       queryParameters: parameters,
     );
-    final header = await setupHttpHeader({});
+    final header = await _setupHttpHeader({});
     return Client()
         .delete(uriRequest, headers: header)
         .parseError(_networkInfo)
@@ -113,11 +113,11 @@ class ApiProvider implements IApiProvider {
     Map<String, String> headers = const {},
     Map<String, String>? fields,
   }) async {
-    final Uri uriRequest = setupHttpRequest(
+    final Uri uriRequest = _setupHttpRequest(
       path: path,
       queryParameters: {},
     );
-    final header = await setupHttpHeader(headers);
+    final header = await _setupHttpHeader(headers);
     final MultipartRequest request = MultipartRequest('POST', uriRequest);
     final cleanedField = fields ?? <String, String>{};
     request
@@ -138,12 +138,12 @@ class ApiProvider implements IApiProvider {
     Map<String, String> headers = const {},
     Map<String, String> fields = const {},
   }) async {
-    final Uri uriRequest = setupHttpRequest(
+    final Uri uriRequest = _setupHttpRequest(
       path: path,
       queryParameters: fields,
     );
 
-    final header = await setupHttpHeader(headers);
+    final header = await _setupHttpHeader(headers);
     return Client()
         .get(uriRequest, headers: header)
         .parseError(_networkInfo)
@@ -153,7 +153,7 @@ class ApiProvider implements IApiProvider {
 }
 
 extension _ApiProvider on ApiProvider {
-  Future<Map<String, String>> setupHttpHeader([
+  Future<Map<String, String>> _setupHttpHeader([
     Map<String, String> headers = const {},
   ]) async {
     final Map<String, String> httpHeaders = {
@@ -170,7 +170,7 @@ extension _ApiProvider on ApiProvider {
     return httpHeaders;
   }
 
-  Uri setupHttpRequest({
+  Uri _setupHttpRequest({
     required String? path,
     Map<String, String?> queryParameters = const {},
   }) {
