@@ -2,10 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart';
-import 'package:penhas/app/core/error/exceptions.dart';
-import 'package:penhas/app/core/network/api_server_configure.dart';
-import 'package:penhas/app/core/network/network_info.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+
+import '../../shared/logger/log.dart';
+import '../error/exceptions.dart';
+import 'api_server_configure.dart';
+import 'network_info.dart';
 
 abstract class IApiProvider {
   Future<String> get({
@@ -45,9 +46,12 @@ class ApiProvider implements IApiProvider {
   ApiProvider({
     required IApiServerConfigure serverConfiguration,
     required INetworkInfo networkInfo,
-  })  : _serverConfiguration = serverConfiguration,
-        _networkInfo = networkInfo;
+    Client? apiClient,
+  })  : _networkInfo = networkInfo,
+        _apiClient = apiClient ?? Client(),
+        _serverConfiguration = serverConfiguration;
 
+  final Client _apiClient;
   final INetworkInfo _networkInfo;
   final IApiServerConfigure _serverConfiguration;
 
@@ -62,7 +66,7 @@ class ApiProvider implements IApiProvider {
       queryParameters: parameters,
     );
     final header = await setupHttpHeader(headers);
-    return Client()
+    return _apiClient
         .get(uriRequest, headers: header)
         .parseError(_networkInfo)
         .then((response) => response.body);
