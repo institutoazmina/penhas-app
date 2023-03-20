@@ -15,8 +15,6 @@ class MockClient extends Mock implements http.Client {}
 
 class MockNetworkInfo extends Mock implements INetworkInfo {}
 
-class MockMultipartFile extends Mock implements http.MultipartFile {}
-
 class MockApiServerConfigure extends Mock implements IApiServerConfigure {}
 
 void main() {
