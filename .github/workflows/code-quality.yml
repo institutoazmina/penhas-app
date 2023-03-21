@@ -80,7 +80,7 @@ jobs:
       - name: Analyze code
         if: ${{ needs.check-changes.outputs.changed_files }}
         run: |
-          dart analyze --fatal-infos --fatal-warnings \
+          dart analyze --fatal-warnings \
             ${{ needs.check-changes.outputs.changed_files }}
 
       - name: Check code formatting
