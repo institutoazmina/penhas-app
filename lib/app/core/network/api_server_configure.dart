@@ -1,8 +1,8 @@
-import 'dart:io';
 import 'package:device_info/device_info.dart';
-import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
-import 'package:penhas/app/core/managers/app_configuration.dart';
+import 'package:platform/platform.dart';
+
+import '../managers/app_configuration.dart';
 
 abstract class IApiServerConfigure {
   Uri get baseUri;
@@ -11,10 +11,14 @@ abstract class IApiServerConfigure {
 }
 
 class ApiServerConfigure implements IApiServerConfigure {
-  ApiServerConfigure({required IAppConfiguration appConfiguration})
-      : _appConfiguration = appConfiguration;
+  ApiServerConfigure({
+    required IAppConfiguration appConfiguration,
+    Platform? platform,
+  })  : _appConfiguration = appConfiguration,
+        _platform = platform ?? const LocalPlatform();
 
   final IAppConfiguration _appConfiguration;
+  final Platform _platform;
 
   @override
   Uri get baseUri => _appConfiguration.penhasServer;
@@ -39,19 +43,19 @@ class ApiServerConfigure implements IApiServerConfigure {
 
   Future<String> _deviceInfo() async {
     final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
-    late _DeviceInfo deviceData;
+    _DeviceInfo deviceData = _DeviceInfo('Error', '0.0.0', 'Invalid Model');
 
     try {
-      if (Platform.isAndroid) {
+      if (_platform.isAndroid) {
         deviceData = _readAndroidBuildData(await deviceInfoPlugin.androidInfo);
-      } else if (Platform.isIOS) {
+      } else if (_platform.isIOS) {
         deviceData = _readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
       }
-    } on PlatformException {
+    } catch (_) {
       deviceData = _DeviceInfo('Error', '0.0.0', 'Invalid Model');
     }
 
-    return '${deviceData.plataform} ${deviceData.version}/${deviceData.model}';
+    return '${deviceData.platform} ${deviceData.version}/${deviceData.model}';
   }
 
   _DeviceInfo _readAndroidBuildData(AndroidDeviceInfo build) {
@@ -68,9 +72,9 @@ class ApiServerConfigure implements IApiServerConfigure {
 }
 
 class _DeviceInfo {
-  _DeviceInfo(this.plataform, this.version, this.model);
+  _DeviceInfo(this.platform, this.version, this.model);
 
-  final String plataform;
+  final String platform;
   final String version;
   final String model;
 }
