@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../../shared/design_system/colors.dart';
+import '../../../../../shared/design_system/text_styles.dart';
+import '../../../domain/entities/tweet_entity.dart';
+import '../../stores/tweet_controller.dart';
 
 class TweetBottom extends StatefulWidget {
   const TweetBottom({
@@ -22,6 +23,9 @@ class _TweetBottomState extends State<TweetBottom> {
   late bool _isLiked;
   late int _likeCount;
 
+  bool get _allowReply => widget.tweet.meta.canReply;
+  bool get _isReplyVisible => _allowReply || widget.tweet.totalReply > 0;
+
   @override
   void initState() {
     super.initState();
@@ -30,12 +34,11 @@ class _TweetBottomState extends State<TweetBottom> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
+  void didUpdateWidget(covariant TweetBottom oldWidget) {
+    _isLiked = widget.tweet.meta.liked;
+    _likeCount = widget.tweet.totalLikes;
+    super.didUpdateWidget(oldWidget);
   }
-
-  bool get _allowReply => widget.tweet.meta.canReply;
-  bool get _isReplyVisible => _allowReply || widget.tweet.totalReply > 0;
 
   @override
   Widget build(BuildContext context) {

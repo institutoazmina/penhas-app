@@ -1,0 +1,78 @@
+name: "Distribute Android Flutter app"
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: "Distribution environment"
+        type: string
+        required: true
+
+    secrets:
+      PENHAS_BASE_URL:
+        required: true
+      ANDROID_BUILD_FILES:
+        required: true
+      FIREBASE_TOKEN:
+        required: false
+      GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64:
+        required: true
+      TESTER_EMAIL:
+        required: false
+
+jobs:
+  distribute:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3.3.0
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: "zulu"
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Retrieve Flutter version from FVM config
+        uses: kuhnroyal/flutter-fvm-config-action@v1
+
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Install Ruby to use Fastlane
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+          bundler-cache: true
+          working-directory: ./android
+
+      - name: Get config files
+        run: base64 -d <<< "${{ secrets.ANDROID_BUILD_FILES }}" | tar xzf -
+
+      - name: Get Google Account credentials
+        run: base64 -d <<< "${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64 }}" > $GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_PATH
+        env:
+          GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_PATH: ${{ runner.temp }}/play-store-api-key.json
+
+      - name: Run lane to distribute
+        uses: maierj/fastlane-action@v3.0.0
+        with:
+          lane: ${{ vars.TARGET_LANE }}
+          options: '{ "tester_email": "${{ secrets.TESTER_EMAIL }}" }'
+          subdirectory: ./android
+        env:
+          FASTLANE_SKIP_UPDATE_CHECK: true
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_PATH: ${{ runner.temp }}/play-store-api-key.json
+          IOS_BUNDLE_ID: ${{ vars.IOS_BUNDLE_ID }}
+          PENHAS_BASE_URL: ${{ secrets.PENHAS_BASE_URL }}

@@ -1,32 +1,48 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_request_option.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
+import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
 import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
+import 'package:penhas/app/features/feed/domain/usecases/tweet_filter_preference.dart';
 
-import '../../../../../utils/helper.mocks.dart';
+class MockTweetRepository extends Mock implements ITweetRepository {}
+
+class MockTweetFilterPreference extends Mock implements TweetFilterPreference {}
 
 void main() {
-  late final MockITweetRepository repository = MockITweetRepository();
-  late final MockTweetFilterPreference filterPreference =
-      MockTweetFilterPreference();
+  late ITweetRepository repository;
+  late TweetFilterPreference filterPreference;
 
   setUp(() {
-    when(filterPreference.categories).thenReturn([]);
-    when(filterPreference.getTags()).thenReturn([]);
+    repository = MockTweetRepository();
+    filterPreference = MockTweetFilterPreference();
+
+    when(() => filterPreference.categories).thenReturn([]);
+    when(() => filterPreference.getTags()).thenReturn([]);
   });
 
-  group('FeedUseCases', () {
-    test('should not hit datasource on instantiate', () async {
-      // act
-      FeedUseCases(repository: repository, filterPreference: filterPreference);
-      // assert
-      verifyNoMoreInteractions(repository);
-    });
-    group('fetchNewestTweet', () {
+  setUpAll(() {
+    registerFallbackValue(const TweetRequestOption());
+    registerFallbackValue(TweetEngageRequestOption(tweetId: ''));
+  });
+
+  group(FeedUseCases, () {
+    test(
+      'do not hit datasource on instantiate',
+      () async {
+        // act
+        FeedUseCases(
+            repository: repository, filterPreference: filterPreference);
+        // assert
+        verifyNoMoreInteractions(repository);
+      },
+    );
+    group('fetchNewestTweet()', () {
       late int maxRowsPerRequet;
       late TweetSessionEntity firstSessionResponse;
       late TweetSessionEntity secondSessionResponse;
@@ -107,81 +123,90 @@ void main() {
           tweets: [],
         );
       });
-      test('should get the newest tweets', () async {
-        // arrange
-        when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(firstSessionResponse));
+      test(
+        'should get the newest tweets',
+        () async {
+          // arrange
+          when(() => repository.fetch(option: any(named: 'option')))
+              .thenAnswer((_) async => right(firstSessionResponse));
 
-        final Either<Failure, FeedCache> expected =
-            right(FeedCache(tweets: firstSessionResponse.tweets));
-        final sut = FeedUseCases(
-          repository: repository,
-          filterPreference: filterPreference,
-        );
-        // act
-        final received = await sut.fetchNewestTweet();
-        // assert
-        expect(expected, received);
-      });
-      test('should do pagination', () async {
-        // arrange
-        final sut = FeedUseCases(
-          repository: repository,
-          filterPreference: filterPreference,
-          maxRows: maxRowsPerRequet,
-        );
-        when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(firstSessionResponse));
-        final expected = right(
-          FeedCache(
-            tweets: [
-              ...secondSessionResponse.tweets.reversed,
-              ...firstSessionResponse.tweets
-            ],
-          ),
-        );
-        await sut.fetchNewestTweet();
-        when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(secondSessionResponse));
-        // act
-        final received = await sut.fetchNewestTweet();
-        // assert
-
-        verify(
-          repository.fetch(
-            option: TweetRequestOption(
-              rows: maxRowsPerRequet,
-              after: (firstSessionResponse.tweets.first as TweetEntity).id,
+          final Either<Failure, FeedCache> expected =
+              right(FeedCache(tweets: firstSessionResponse.tweets));
+          final sut = FeedUseCases(
+            repository: repository,
+            filterPreference: filterPreference,
+          );
+          // act
+          final received = await sut.fetchNewestTweet();
+          // assert
+          expect(expected, received);
+        },
+      );
+      test(
+        'do pagination',
+        () async {
+          // arrange
+          final sut = FeedUseCases(
+            repository: repository,
+            filterPreference: filterPreference,
+            maxRows: maxRowsPerRequet,
+          );
+          when(() => repository.fetch(option: any(named: 'option')))
+              .thenAnswer((_) async => right(firstSessionResponse));
+          final expected = right(
+            FeedCache(
+              tweets: [
+                ...secondSessionResponse.tweets.reversed,
+                ...firstSessionResponse.tweets
+              ],
             ),
-          ),
-        );
-        expect(expected, received);
-      });
-      test('should not update cache if has no more tweets', () async {
-        // arrange
-        final sut = FeedUseCases(
-          repository: repository,
-          filterPreference: filterPreference,
-          maxRows: maxRowsPerRequet,
-        );
+          );
+          await sut.fetchNewestTweet();
+          when(() => repository.fetch(option: any(named: 'option')))
+              .thenAnswer((_) async => right(secondSessionResponse));
+          // act
+          final received = await sut.fetchNewestTweet();
+          // assert
 
-        when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(firstSessionResponse));
-        await sut.fetchNewestTweet();
+          verify(
+            () => repository.fetch(
+              option: TweetRequestOption(
+                rows: maxRowsPerRequet,
+                after: (firstSessionResponse.tweets.first as TweetEntity).id,
+              ),
+            ),
+          ).called(1);
+          expect(expected, received);
+        },
+      );
+      test(
+        'do not update cache if has no more tweets',
+        () async {
+          // arrange
+          final sut = FeedUseCases(
+            repository: repository,
+            filterPreference: filterPreference,
+            maxRows: maxRowsPerRequet,
+          );
 
-        when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(secondSessionResponse));
-        final expected = await sut.fetchNewestTweet();
-        // act
-        when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(thirdSessionResponse));
-        final received = await sut.fetchNewestTweet();
-        // assert
-        expect(expected, received);
-      });
+          when(() => repository.fetch(option: any(named: 'option')))
+              .thenAnswer((_) async => right(firstSessionResponse));
+          await sut.fetchNewestTweet();
+
+          when(() => repository.fetch(option: any(named: 'option')))
+              .thenAnswer((_) async => right(secondSessionResponse));
+          final expected = await sut.fetchNewestTweet();
+          // act
+          when(() => repository.fetch(option: any(named: 'option')))
+              .thenAnswer((_) async => right(thirdSessionResponse));
+          final received = await sut.fetchNewestTweet();
+          // assert
+          expect(expected, received);
+        },
+      );
     });
-    group('fetchOldestTweet', () {
-      int? maxRowsPerRequet;
+    group('fetchOldestTweet()', () {
+      late int maxRowsPerRequet;
       late TweetSessionEntity firstSessionResponse;
       late TweetSessionEntity secondSessionResponse;
       late TweetSessionEntity thirdSessionResponse;
@@ -288,113 +313,113 @@ void main() {
           ],
         );
       });
-      test('should get the newest tweets for first time', () async {
-        // arrange
-        when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(firstSessionResponse));
-
-        final Either<Failure, FeedCache> expected =
-            right(FeedCache(tweets: firstSessionResponse.tweets));
-        final sut = FeedUseCases(
-          repository: repository,
-          filterPreference: filterPreference,
-        );
-        // act
-        final received = await sut.fetchOldestTweet();
-        // assert
-        expect(expected, received);
-      });
-
-      test('should do pagination with the oldest tweets', () async {
-        // arrange
-        final sut = FeedUseCases(
-          repository: repository,
-          filterPreference: filterPreference,
-          maxRows: maxRowsPerRequet,
-        );
-        final expected = right(
-          FeedCache(
-            tweets: [
-              ...firstSessionResponse.tweets,
-              ...secondSessionResponse.tweets,
-            ],
-          ),
-        );
-
-        when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(firstSessionResponse));
-        await sut.fetchNewestTweet();
-
-        when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) async => right(secondSessionResponse));
-        // act
-        final received = await sut.fetchOldestTweet();
-        // assert
-        verifyInOrder([
-          repository.fetch(
-            option: TweetRequestOption(
-              rows: maxRowsPerRequet!,
-            ),
-          ),
-          repository.fetch(
-            option: TweetRequestOption(
-              rows: maxRowsPerRequet!,
-              nextPageToken: '_next_page_request_1_',
-            ),
-          ),
-        ]);
-        expect(expected, received);
-      });
       test(
-          'should do pagination sorted with the oldest tweets when received a TweetSessionOrder.oldestFirst. ',
-          () async {
-        // arrange
-        final sut = FeedUseCases(
-          repository: repository,
-          filterPreference: filterPreference,
-          maxRows: maxRowsPerRequet,
-        );
-        final expected = right(
-          FeedCache(
-            tweets: [
-              ...firstSessionResponse.tweets,
-              ...thirdSessionResponse.tweets.reversed,
-            ],
-          ),
-        );
+        'get the newest tweets for first time',
+        () async {
+          // arrange
+          when(() => repository.fetch(option: any(named: 'option')))
+              .thenAnswer((_) async => right(firstSessionResponse));
 
-        when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) => Future.value(right(firstSessionResponse)));
-        await sut.fetchOldestTweet();
+          final Either<Failure, FeedCache> expected =
+              right(FeedCache(tweets: firstSessionResponse.tweets));
+          final sut = FeedUseCases(
+            repository: repository,
+            filterPreference: filterPreference,
+          );
+          // act
+          final received = await sut.fetchOldestTweet();
+          // assert
+          expect(expected, received);
+        },
+      );
 
-        when(repository.fetch(option: anyNamed('option')))
-            .thenAnswer((_) => Future.value(right(thirdSessionResponse)));
-        // act
-        final received = await sut.fetchOldestTweet();
-        // assert
-        // verify(
-        //   repository.fetch(
-        //       option: TweetRequestOption(
-        //     rows: maxRowsPerRequet,
-        //     nextPageToken: '_next_page_request_1_',
-        //   )),
-        // );
-        verifyInOrder([
-          repository.fetch(
-            option: TweetRequestOption(
-              rows: maxRowsPerRequet!,
+      test(
+        'do pagination with the oldest tweets',
+        () async {
+          // arrange
+          final sut = FeedUseCases(
+            repository: repository,
+            filterPreference: filterPreference,
+            maxRows: maxRowsPerRequet,
+          );
+          final expected = right(
+            FeedCache(
+              tweets: [
+                ...firstSessionResponse.tweets,
+                ...secondSessionResponse.tweets,
+              ],
             ),
-          ),
-          repository.fetch(
-            option: TweetRequestOption(
-              rows: maxRowsPerRequet!,
-              nextPageToken: '_next_page_request_1_',
-            ),
-          ),
-        ]);
+          );
 
-        expect(expected, received);
-      });
+          when(() => repository.fetch(option: any(named: 'option')))
+              .thenAnswer((_) async => right(firstSessionResponse));
+          await sut.fetchNewestTweet();
+
+          when(() => repository.fetch(option: any(named: 'option')))
+              .thenAnswer((_) async => right(secondSessionResponse));
+          // act
+          final received = await sut.fetchOldestTweet();
+          // assert
+          verifyInOrder([
+            () => repository.fetch(
+                  option: TweetRequestOption(
+                    rows: maxRowsPerRequet,
+                  ),
+                ),
+            () => repository.fetch(
+                  option: TweetRequestOption(
+                    rows: maxRowsPerRequet,
+                    nextPageToken: '_next_page_request_1_',
+                  ),
+                ),
+          ]);
+          expect(expected, received);
+        },
+      );
+      test(
+        'do pagination sorted with the oldest tweets when received a TweetSessionOrder.oldestFirst. ',
+        () async {
+          // arrange
+          final sut = FeedUseCases(
+            repository: repository,
+            filterPreference: filterPreference,
+            maxRows: maxRowsPerRequet,
+          );
+          final expected = right(
+            FeedCache(
+              tweets: [
+                ...firstSessionResponse.tweets,
+                ...thirdSessionResponse.tweets.reversed,
+              ],
+            ),
+          );
+
+          when(() => repository.fetch(option: any(named: 'option')))
+              .thenAnswer((_) => Future.value(right(firstSessionResponse)));
+          await sut.fetchOldestTweet();
+
+          when(() => repository.fetch(option: any(named: 'option')))
+              .thenAnswer((_) => Future.value(right(thirdSessionResponse)));
+          // act
+          final received = await sut.fetchOldestTweet();
+          // assert
+          verifyInOrder([
+            () => repository.fetch(
+                  option: TweetRequestOption(
+                    rows: maxRowsPerRequet,
+                  ),
+                ),
+            () => repository.fetch(
+                  option: TweetRequestOption(
+                    rows: maxRowsPerRequet,
+                    nextPageToken: '_next_page_request_1_',
+                  ),
+                ),
+          ]);
+
+          expect(expected, received);
+        },
+      );
     });
   });
 }

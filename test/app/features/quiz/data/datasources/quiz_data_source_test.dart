@@ -1,25 +1,32 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
+import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
 import 'package:penhas/app/features/quiz/data/datasources/quiz_data_source.dart';
 import 'package:penhas/app/features/quiz/domain/entities/quiz_request_entity.dart';
 
-import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
+class MockHttpClient extends Mock implements http.Client {}
+
+class MockApiServerConfigure extends Mock implements IApiServerConfigure {}
+
 void main() {
-  late final MockHttpClient apiClient = MockHttpClient();
-  late final MockIApiServerConfigure serverConfigure =
-      MockIApiServerConfigure();
+  late http.Client apiClient;
   late IQuizDataSource dataSource;
-  QuizRequestEntity? quizRequest;
+  late QuizRequestEntity quizRequest;
+  late IApiServerConfigure serverConfigure;
   late String bodyContent;
-  final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
-  const String sessionToken = 'my_really.long.JWT';
+  late Uri serverEndpoint;
+  const sessionToken = 'my_really.long.JWT';
 
   setUp(() {
+    apiClient = MockHttpClient();
+    serverConfigure = MockApiServerConfigure();
+    serverEndpoint = Uri.https('api.anyserver.io', '/');
+
     dataSource = QuizDataSource(
       apiClient: apiClient,
       serverConfiguration: serverConfigure,
@@ -33,11 +40,14 @@ void main() {
         JsonUtil.getStringSync(from: 'profile/quiz_session_response.json');
 
     // MockApiServerConfigure configuration
-    when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
-    when(serverConfigure.apiToken)
-        .thenAnswer((_) => Future.value(sessionToken));
-    when(serverConfigure.userAgent)
-        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
+    when(() => serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
+    when(() => serverConfigure.apiToken).thenAnswer((_) async => sessionToken);
+    when(() => serverConfigure.userAgent)
+        .thenAnswer((_) async => 'iOS 11.4/Simulator/1.0.0');
+  });
+
+  setUpAll(() {
+    registerFallbackValue(Uri());
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
@@ -49,7 +59,7 @@ void main() {
     };
   }
 
-  Uri _setuHttpRequest() {
+  Uri _setUpHttpRequest() {
     return Uri(
       scheme: serverEndpoint.scheme,
       host: serverEndpoint.host,
@@ -58,17 +68,13 @@ void main() {
     );
   }
 
-  PostExpectation<Future<http.Response>> _mockRequest() {
-    return when(
-      apiClient.post(
-        any,
-        headers: anyNamed('headers'),
-      ),
-    );
-  }
-
   void _setUpMockHttpClientSuccess200() {
-    _mockRequest().thenAnswer(
+    when(
+      () => apiClient.post(
+        any(),
+        headers: any(named: 'headers'),
+      ),
+    ).thenAnswer(
       (_) async => http.Response(
         bodyContent,
         200,
@@ -80,52 +86,64 @@ void main() {
   }
 
   void _setUpMockHttpClientFailedWithHttp({required int code}) {
-    _mockRequest().thenAnswer(
+    when(
+      () => apiClient.post(
+        any(),
+        headers: any(named: 'headers'),
+      ),
+    ).thenAnswer(
       (_) async => http.Response(
-        '{"status": $code, "error":"Some error messsage"}',
+        '{"status": $code, "error":"Some error message"}',
         code,
         headers: {'content-type': 'application/json; charset=utf-8'},
       ),
     );
   }
 
-  group('QuizDataSource', () {
-    test('should perform a POST with X-API-Key and application/json header ',
-        () async {
-      // arrange
-      final headers = await _setUpHttpHeader();
-      final loginUri = _setuHttpRequest();
-      _setUpMockHttpClientSuccess200();
-      // act
-      await dataSource.update(quiz: quizRequest);
-      // assert
-      verify(apiClient.post(loginUri, headers: headers));
-    });
-    test('should get AppStateModel for valid session', () async {
-      // arrange
-      _setUpMockHttpClientSuccess200();
-      final jsonData =
-          await JsonUtil.getJson(from: 'profile/quiz_session_response.json');
-      final expected = AppStateModel.fromJson(jsonData);
-      // act
-      final result = await dataSource.update(quiz: quizRequest);
-      // assert
-      expect(result, expected);
-    });
-    test('should get ApiProviderSessionExpection for invalid session',
-        () async {
-      // arrange
-      final sessionHttpCodeError = [401, 403];
-      for (final httpCode in sessionHttpCodeError) {
-        _setUpMockHttpClientFailedWithHttp(code: httpCode);
+  group(QuizDataSource, () {
+    test(
+      'perform a POST with X-API-Key and application/json header ',
+      () async {
+        // arrange
+        final headers = await _setUpHttpHeader();
+        final loginUri = _setUpHttpRequest();
+        _setUpMockHttpClientSuccess200();
         // act
-        final sut = dataSource.update;
+        await dataSource.update(quiz: quizRequest);
         // assert
-        expect(
-          () => sut(quiz: quizRequest),
-          throwsA(isA<ApiProviderSessionError>()),
-        );
-      }
-    });
+        verify(() => apiClient.post(loginUri, headers: headers));
+      },
+    );
+    test(
+      'get AppStateModel for valid session',
+      () async {
+        // arrange
+        _setUpMockHttpClientSuccess200();
+        final jsonData =
+            await JsonUtil.getJson(from: 'profile/quiz_session_response.json');
+        final expected = AppStateModel.fromJson(jsonData);
+        // act
+        final result = await dataSource.update(quiz: quizRequest);
+        // assert
+        expect(result, expected);
+      },
+    );
+    test(
+      'get ApiProviderSessionError for invalid session',
+      () async {
+        // arrange
+        final sessionHttpCodeError = [401, 403];
+        for (final httpCode in sessionHttpCodeError) {
+          _setUpMockHttpClientFailedWithHttp(code: httpCode);
+          // act
+          final sut = dataSource.update;
+          // assert
+          expect(
+            () => sut(quiz: quizRequest),
+            throwsA(isA<ApiProviderSessionError>()),
+          );
+        }
+      },
+    );
   });
 }

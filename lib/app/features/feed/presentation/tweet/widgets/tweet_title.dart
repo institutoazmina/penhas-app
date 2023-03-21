@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/domain/states/feed_router_type.dart';
-import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
 import 'package:timeago/timeago.dart' as timeago;
+
+import '../../../../../shared/design_system/text_styles.dart';
+import '../../../domain/entities/tweet_entity.dart';
+import '../../../domain/states/feed_router_type.dart';
+import '../../stores/tweet_controller.dart';
 
 class TweetTitle extends StatelessWidget {
   const TweetTitle({
@@ -158,7 +159,7 @@ class TweetTitle extends StatelessWidget {
       children: <Widget>[
         Expanded(
           flex: 2,
-          child: Text(tweet.userName!, style: kTextStyleFeedTweetTitle),
+          child: Text(tweet.userName, style: kTextStyleFeedTweetTitle),
         ),
         if (isDetail) _buildDetailTime() else _buildTime(),
         if (controller == null)
@@ -176,6 +177,7 @@ class TweetTitle extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
+          // ignore: deprecated_member_use
           child: FlatButton(
             onPressed: () => _showUserProfile(),
             color: Colors.transparent,
@@ -200,7 +202,7 @@ class TweetTitle extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(tweet.userName!, style: kTextStyleFeedTweetTitle),
+        Text(tweet.userName, style: kTextStyleFeedTweetTitle),
         if (isDetail) _buildDetailTime() else _buildTime(),
       ],
     );

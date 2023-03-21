@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_page.dart';
-import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart';
-import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_controller.dart';
-import 'package:penhas/app/features/mainboard/presentation/mainboard/pages/mainboard_app_bar_page.dart';
-import 'package:penhas/app/features/mainboard/presentation/mainboard/pages/mainboard_body_page.dart';
-import 'package:penhas/app/features/mainboard/presentation/mainboard/pages/mainboard_bottom_navigation_page.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../shared/design_system/colors.dart';
+import '../../../main_menu/presentation/penhas_drawer_page.dart';
+import '../../domain/states/mainboard_state.dart';
+import 'mainboard_controller.dart';
+import 'pages/mainboard_app_bar_page.dart';
+import 'pages/mainboard_body_page.dart';
+import 'pages/mainboard_bottom_navigation_page.dart';
 
 class MainboardPage extends StatefulWidget {
   const MainboardPage({Key? key, this.title = 'Mainboard'}) : super(key: key);
 
+  static final mainBoardKey = GlobalKey<ScaffoldState>();
   final String title;
 
   @override
@@ -86,9 +88,12 @@ extension _SecurityModeBuilder on _MainboardPageState {
       ),
       drawer: const PenhasDrawerPage(),
       backgroundColor: Colors.white,
-      body: MainboardBodyPage(
-        pages: controller.mainboardStore.pages,
-        pageController: controller.mainboardStore.pageController,
+      body: Scaffold(
+        key: MainboardPage.mainBoardKey,
+        body: MainboardBodyPage(
+          pages: controller.mainboardStore.pages,
+          pageController: controller.mainboardStore.pageController,
+        ),
       ),
       floatingActionButton: _buildFab(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -109,9 +114,12 @@ extension _SecurityModeBuilder on _MainboardPageState {
       ),
       drawer: const PenhasDrawerPage(),
       backgroundColor: Colors.white,
-      body: MainboardBodyPage(
-        pages: controller.mainboardStore.pages,
-        pageController: controller.mainboardStore.pageController,
+      body: Scaffold(
+        key: MainboardPage.mainBoardKey,
+        body: MainboardBodyPage(
+          pages: controller.mainboardStore.pages,
+          pageController: controller.mainboardStore.pageController,
+        ),
       ),
       bottomNavigationBar: MainboardBottomNavigationPage(
         currentPage: controller.mainboardStore.selectedPage,

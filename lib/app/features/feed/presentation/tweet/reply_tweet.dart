@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_avatar.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_body.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_bottom.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_title.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/text_styles.dart';
+import '../../domain/entities/tweet_entity.dart';
+import '../stores/tweet_controller.dart';
+import 'widgets/tweet_avatar.dart';
+import 'widgets/tweet_body.dart';
+import 'widgets/tweet_bottom.dart';
+import 'widgets/tweet_title.dart';
 
 class ReplyTweet extends StatelessWidget {
   const ReplyTweet({
@@ -98,10 +99,10 @@ class ReplyTweet extends StatelessWidget {
   }
 
   List<Widget> _expandeRepliedTweeters(BuildContext context) {
-    return tweet.lastReply!
+    return tweet.lastReply
         .map(
           (e) => _RepliedTweet(
-            repliedTweet: e!,
+            repliedTweet: e,
             parentTweet: tweet,
             controller: controller,
           ),
@@ -120,6 +121,7 @@ class ReplyTweet extends StatelessWidget {
                   color: DesignSystemColors.warnGrey,
                 ),
               ),
+              // ignore: deprecated_member_use
               FlatButton(
                 onPressed: () => controller.detail(tweet),
                 color: Colors.white,

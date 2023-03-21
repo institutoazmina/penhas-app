@@ -56,6 +56,13 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
   ObservableSet<Marker> placeMarkers = ObservableSet<Marker>();
 
   @observable
+  LatLngBounds latLngBounds = LatLngBounds(
+      northeast: const LatLng(0, 0), southwest: const LatLng(0, 0));
+
+  @observable
+  bool useLatLngBounds = false;
+
+  @observable
   LatLng initialPosition = const LatLng(-15.793889, -47.882778);
 
   @observable
@@ -91,7 +98,7 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
     _fetchRequest = _fetchRequest.copyWith(
       keywords: validKeyWords.isEmpty ? '' : validKeyWords,
     );
-    await loadSupportCenter(_fetchRequest);
+    await reloadSupportCenter(_fetchRequest);
   }
 
   @action
@@ -144,17 +151,9 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
 
     if (granted) {
       final currentLocation = await _supportCenterUseCase.currentLocation();
-
       if (currentLocation == null) return;
       final latLng = currentLocation.toLatLng();
-
-      if (_fetchRequest.locationToken != null) {
-        _fetchRequest = _fetchRequest.copyWith(
-          locationToken: currentLocation.locationToken,
-        );
-        await loadSupportCenter(_fetchRequest);
-      }
-      
+      await loadSupportCenter(_fetchRequest);
       callback(latLng);
     }
   }
@@ -215,7 +214,7 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     final categories = _tags.map((e) => e.id).toList();
     _fetchRequest = _fetchRequest.copyWith(categories: categories);
     categoriesSelected = _tags.length;
-
+    useLatLngBounds = true;
     await loadSupportCenter(_fetchRequest);
   }
 
@@ -239,18 +238,23 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
 
     final Either<Failure, SupportCenterPlaceSessionEntity> result =
         await _loadSupportCenter!;
-
     result.fold(
       (failure) => handleStateError(failure),
       (places) => handleLoadSupportCenterSuccess(places),
     );
   }
 
+  Future<void> reloadSupportCenter(
+      SupportCenterFetchRequest fetchRequest) async {
+    useLatLngBounds = true;
+    await loadSupportCenter(_fetchRequest);
+  }
+
   Future<void> handleLoadSupportCenterSuccess(
-    SupportCenterPlaceSessionEntity session,
-  ) async {
+      SupportCenterPlaceSessionEntity session) async {
     state = const SupportCenterState.loaded();
     currentPlaceSession = session;
+
     initialPosition = LatLng(session.latitude!, session.longitude!);
 
     final Iterable<SupportCenterPlaceEntity> filteredPlaces = session.places
@@ -264,6 +268,9 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     }
 
     placeMarkers = Set<Marker>.from(places).asObservable();
+
+    var markersPosition = placeMarkers.map((e) => e.position).toList();
+    latLngBounds = boundfromLatLng(markersPosition);
   }
 
   void handleStateError(Failure f) {
@@ -273,6 +280,30 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     }
 
     state = SupportCenterState.error(mapFailureMessage(f)!);
+  }
+
+  boundfromLatLng(List<LatLng> markersLatLngList) {
+    LatLngBounds brasilBounds = LatLngBounds(
+        northeast: const LatLng(5.24448639569, -34.7299934555),
+        southwest: const LatLng(-33.7683777809, -73.9872354804));
+
+    if (markersLatLngList.isNotEmpty) {
+      double? x0, x1, y0, y1;
+      for (LatLng latLng in markersLatLngList) {
+        if (x0 == null) {
+          x0 = x1 = latLng.latitude;
+          y0 = y1 = latLng.longitude;
+        } else {
+          if (latLng.latitude > x1!) x1 = latLng.latitude;
+          if (latLng.latitude < x0) x0 = latLng.latitude;
+          if (latLng.longitude > y1!) y1 = latLng.longitude;
+          if (latLng.longitude < y0!) y0 = latLng.longitude;
+        }
+      }
+      return LatLngBounds(
+          northeast: LatLng(x1!, y1!), southwest: LatLng(x0!, y0!));
+    }
+    return brasilBounds;
   }
 
   Marker buildMarker(SupportCenterPlaceEntity place) {

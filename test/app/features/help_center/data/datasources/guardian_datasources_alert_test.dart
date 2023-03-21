@@ -1,34 +1,45 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/help_center/data/datasources/guardian_data_source.dart';
 import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
 
-import '../../../../../utils/helper.mocks.dart';
 import '../../../../../utils/json_util.dart';
 
+class MockHttpClient extends Mock implements http.Client {}
+
+class MockApiServerConfigure extends Mock implements IApiServerConfigure {}
+
 void main() {
-  late final MockHttpClient apiClient = MockHttpClient();
-  late final MockIApiServerConfigure serverConfigure =
-      MockIApiServerConfigure();
+  late Uri serverEndpoint;
+  late http.Client apiClient;
+  late IApiServerConfigure serverConfigure;
   late IGuardianDataSource dataSource;
-  final Uri serverEndpoint = Uri.https('api.anyserver.io', '/');
-  const String sessionToken = 'my_really.long.JWT';
+  const sessionToken = 'my_really.long.JWT';
 
   setUp(() {
+    apiClient = MockHttpClient();
+    serverConfigure = MockApiServerConfigure();
+    serverEndpoint = Uri.https('api.anyserver.io', '/');
     dataSource = GuardianDataSource(
       apiClient: apiClient,
       serverConfiguration: serverConfigure,
     );
 
     // MockApiServerConfigure configuration
-    when(serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
-    when(serverConfigure.apiToken)
-        .thenAnswer((_) => Future.value(sessionToken));
-    when(serverConfigure.userAgent)
-        .thenAnswer((_) => Future.value('iOS 11.4/Simulator/1.0.0'));
+    when(() => serverConfigure.baseUri).thenAnswer((_) => serverEndpoint);
+    when(() => serverConfigure.apiToken).thenAnswer((_) async => sessionToken);
+    when(() => serverConfigure.userAgent)
+        .thenAnswer((_) async => 'iOS 11.4/Simulator/1.0.0');
+  });
+
+  setUpAll(() {
+    registerFallbackValue(Uri());
   });
 
   Future<Map<String, String>> _setUpHttpHeader() async {
@@ -40,7 +51,7 @@ void main() {
     };
   }
 
-  Uri _setuHttpRequest(String path, Map<String, String> queryParameters) {
+  Uri _setUpHttpRequest(String path, Map<String, String> queryParameters) {
     return Uri(
       scheme: serverEndpoint.scheme,
       host: serverEndpoint.host,
@@ -49,18 +60,14 @@ void main() {
     );
   }
 
-  PostExpectation<Future<http.Response>> _mockPostRequest() {
-    return when(
-      apiClient.post(
-        any,
-        headers: anyNamed('headers'),
-        body: anyNamed('body'),
-      ),
-    );
-  }
-
   void _setUpMockPostHttpClientSuccess200(String? bodyContent) {
-    _mockPostRequest().thenAnswer(
+    when(
+      () => apiClient.post(
+        any(),
+        headers: any(named: 'headers'),
+        body: any(named: 'body'),
+      ),
+    ).thenAnswer(
       (_) async => http.Response(
         bodyContent!,
         200,
@@ -72,7 +79,13 @@ void main() {
   }
 
   void _setUpMockPostHttpClientSuccess400(String bodyContent) {
-    _mockPostRequest().thenAnswer(
+    when(
+      () => apiClient.post(
+        any(),
+        headers: any(named: 'headers'),
+        body: any(named: 'body'),
+      ),
+    ).thenAnswer(
       (_) async => http.Response(
         bodyContent,
         400,
@@ -84,13 +97,13 @@ void main() {
   }
 
   group(
-    'GuardianDataSource',
+    GuardianDataSource,
     () {
-      String? bodyContent;
-      UserLocationEntity? userLocation;
+      late String bodyContent;
+      late UserLocationEntity userLocation;
 
       setUp(() {
-        userLocation = const UserLocationEntity(latitude: 1.0, longitude: -1.0);
+        userLocation = UserLocationEntity(latitude: 1.0, longitude: -1.0);
         bodyContent = JsonUtil.getStringSync(
           from: 'help_center/guardian_alert_warning.json',
         );
@@ -98,24 +111,24 @@ void main() {
 
       group('alert()', () {
         test(
-          'should perform a POST with X-API-Key',
+          'perform a POST with X-API-Key',
           () async {
             // arrange
             const endPointPath = '/me/guardioes/alert';
             final headers = await _setUpHttpHeader();
-            final request = _setuHttpRequest(endPointPath, {
-              'gps_lat': '${userLocation!.latitude}',
-              'gps_long': '${userLocation!.longitude}'
+            final request = _setUpHttpRequest(endPointPath, {
+              'gps_lat': '${userLocation.latitude}',
+              'gps_long': '${userLocation.longitude}'
             });
             _setUpMockPostHttpClientSuccess200(bodyContent);
             // act
             await dataSource.alert(userLocation);
             // assert
-            verify(apiClient.post(request, headers: headers));
+            verify(() => apiClient.post(request, headers: headers)).called(1);
           },
         );
         test(
-          'should get a valid session for a successful request',
+          'get a valid session for a successful request',
           () async {
             // arrange
             _setUpMockPostHttpClientSuccess200(bodyContent);
@@ -125,14 +138,14 @@ void main() {
                   'Não há guardiões cadastrado! Nenhum alerta foi enviado.',
             );
             // act
-            final received = await dataSource.alert(userLocation);
+            final actual = await dataSource.alert(userLocation);
             // assert
-            expect(received, expected);
+            expect(actual, expected);
           },
         );
 
         test(
-          'should get a GuardianAlertGpsFailure for a invalid gps data on the request',
+          'get a GuardianAlertGpsFailure for a invalid gps data on the request',
           () async {
             // arrange
             final bodyWithError = JsonUtil.getStringSync(

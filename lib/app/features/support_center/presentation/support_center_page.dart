@@ -4,14 +4,14 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/features/support_center/domain/states/support_center_state.dart';
-import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
-import 'package:penhas/app/features/support_center/presentation/pages/support_center_gps_error.dart';
-import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_filter.dart';
-import 'package:penhas/app/features/support_center/presentation/support_center_controller.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+import '../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../authentication/presentation/shared/snack_bar_handler.dart';
+import '../domain/states/support_center_state.dart';
+import 'pages/support_center_general_error.dart';
+import 'pages/support_center_gps_error.dart';
+import 'pages/support_center_input_filter.dart';
+import 'support_center_controller.dart';
+import '../../../shared/design_system/colors.dart';
 
 class SupportCenterPage extends StatefulWidget {
   const SupportCenterPage({Key? key}) : super(key: key);
@@ -86,31 +86,38 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
 
   Widget loadedSupportCenterPage() {
     final initialPosition = controller.initialPosition;
-    mapController?.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          tilt: 75.0,
-          zoom: 12.0,
-          bearing: 15.0,
-          target: initialPosition,
+    if (controller.useLatLngBounds) {
+      mapController?.animateCamera(
+        CameraUpdate.newLatLngBounds(controller.latLngBounds, 10),
+      );
+    } else {
+      mapController?.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            tilt: 75.0,
+            zoom: 12.0,
+            bearing: 15.0,
+            target: initialPosition,
+          ),
         ),
-      ),
-    );
+      );
+    }
     return PageProgressIndicator(
       progressState: controller.progressState,
       progressMessage: 'Carregando',
       child: Stack(
         children: [
-          GoogleMap(
-            initialCameraPosition:
-                CameraPosition(target: initialPosition),
-            myLocationEnabled: true,
-            markers: controller.placeMarkers,
-            myLocationButtonEnabled: false,
-            zoomControlsEnabled: false,
-            onMapCreated: (GoogleMapController controller) {
-              mapController = controller;
-            },
+          Padding(
+            padding: const EdgeInsets.only(top: 120),
+            child: GoogleMap(
+                initialCameraPosition: CameraPosition(target: initialPosition),
+                myLocationEnabled: true,
+                markers: controller.placeMarkers,
+                myLocationButtonEnabled: false,
+                zoomControlsEnabled: false,
+                onMapCreated: (GoogleMapController controller) {
+                  mapController = controller;
+                }),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

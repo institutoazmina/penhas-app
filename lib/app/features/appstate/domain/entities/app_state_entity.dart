@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
+
+import 'user_profile_entity.dart';
 
 enum QuizMessageType {
   from,
@@ -84,11 +85,6 @@ class QuizSessionEntity extends Equatable {
 
   @override
   List<Object?> get props => [currentMessage, sessionId, isFinished, endScreen];
-
-  @override
-  String toString() {
-    return 'QuizSessionEntity{currentMessage: ${currentMessage.toString()}, sessionId: $sessionId, endScreen: ${endScreen.toString()}, isFinished: ${isFinished.toString()} }';
-  }
 }
 
 @immutable
@@ -114,11 +110,6 @@ class QuizMessageEntity extends Equatable {
   @override
   List<dynamic> get props =>
       [content, style, action, type, ref, options, buttonLabel];
-
-  @override
-  String toString() {
-    return 'QuizMessageEntity{content: ${content.toString()}, type: ${type.toString()}, style: ${style.toString()}, action: ${action.toString()}, ref: $ref}, buttonLabel: ${buttonLabel.toString()}, options: ${options.toString()}';
-  }
 }
 
 class QuizMessageMultiplechoicesOptions extends Equatable {
@@ -132,11 +123,6 @@ class QuizMessageMultiplechoicesOptions extends Equatable {
 
   @override
   List<Object?> get props => [display, index!];
-
-  @override
-  String toString() {
-    return 'QuizMessageMultiplechoicesOptions{index: ${index.toString()}, display: ${display.toString()}}';
-  }
 }
 
 @immutable

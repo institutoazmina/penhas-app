@@ -11,7 +11,7 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 3.1.0+59
+version: 3.3.1+62
 publish_to: none
 
 environment:
@@ -54,7 +54,7 @@ dependencies:
       ref: null-safety
   flutter_widget_from_html: ^0.8.3+1
   freezed_annotation: ^1.1.0
-  geolocator: ^8.0.0
+  geolocator: ^9.0.2
   google_maps_flutter: ^2.1.1
   map_launcher: ^2.1.1
   mask_text_input_formatter: ^2.0.0
@@ -109,11 +109,13 @@ dev_dependencies:
       url: https://github.com/ride4sun/flutter_launcher_name
       ref: "cd516a8e7483bfc7971ec9ac8f2d589e68247441"
   freezed: ^1.1.0
-  mobx_codegen: ^2.0.4
+  mobx_codegen: 2.0.4
   mockito: 5.0.16
   lint: ^1.8.1
   mocktail: ^0.3.0
   flutter_lints: ^1.0.4
+  plugin_platform_interface: ^2.0.0
+  geolocator_platform_interface: ^4.0.3
 
 flutter_icons:
   ios: true

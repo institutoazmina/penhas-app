@@ -1,25 +1,26 @@
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/exceptions.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/network/network_info.dart';
-import 'package:penhas/app/features/authentication/data/datasources/change_password_data_source.dart';
-import 'package:penhas/app/features/authentication/domain/entities/reset_password_response_entity.dart';
-import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/network/network_info.dart';
+import '../../../../shared/logger/log.dart';
+import '../../domain/entities/reset_password_response_entity.dart';
+import '../../domain/repositories/i_reset_password_repository.dart';
+import '../../domain/usecases/email_address.dart';
+import '../../domain/usecases/sign_up_password.dart';
+import '../datasources/change_password_data_source.dart';
 
 class ChangePasswordRepository
     implements IResetPasswordRepository, IChangePasswordRepository {
   ChangePasswordRepository({
-    required IChangePasswordDataSource? changePasswordDataSource,
-    required INetworkInfo? networkInfo,
+    required IChangePasswordDataSource changePasswordDataSource,
+    required INetworkInfo networkInfo,
   })  : _networkInfo = networkInfo,
         _dataSource = changePasswordDataSource;
 
-  final IChangePasswordDataSource? _dataSource;
-  final INetworkInfo? _networkInfo;
+  final IChangePasswordDataSource _dataSource;
+  final INetworkInfo _networkInfo;
 
   @override
   Future<Either<Failure, ResetPasswordResponseEntity>> request({
@@ -27,7 +28,7 @@ class ChangePasswordRepository
   }) async {
     try {
       final ResetPasswordResponseEntity result =
-          await _dataSource!.request(emailAddress: emailAddress);
+          await _dataSource.request(emailAddress: emailAddress);
       return right(result);
     } catch (e, stack) {
       logError(e, stack);
@@ -43,7 +44,7 @@ class ChangePasswordRepository
     String? resetToken,
   }) async {
     try {
-      await _dataSource!.reset(
+      await _dataSource.reset(
         emailAddress: emailAddress,
         password: password,
         resetToken: resetToken,
@@ -57,7 +58,7 @@ class ChangePasswordRepository
   }
 
   Future<Failure> _handleError(Object error) async {
-    if (await _networkInfo!.isConnected == false) {
+    if (await _networkInfo.isConnected == false) {
       return InternetConnectionFailure();
     }
 
@@ -79,7 +80,7 @@ class ChangePasswordRepository
     String? resetToken,
   }) async {
     try {
-      await _dataSource!.validToken(
+      await _dataSource.validToken(
         emailAddress: emailAddress,
         resetToken: resetToken,
       );

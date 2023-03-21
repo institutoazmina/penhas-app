@@ -15,21 +15,21 @@ class TweetEntity extends TweetTiles {
     required this.avatar,
     required this.meta,
     this.parentId,
-    this.lastReply,
+    this.lastReply = const [],
   });
 
-  final String? id;
+  final String id;
   final String? parentId;
-  final String? userName;
+  final String userName;
   final int clientId;
-  final String? createdAt;
+  final String createdAt;
   final int totalReply;
   final int totalLikes;
   final bool anonymous;
-  final String? content;
-  final String? avatar;
+  final String content;
+  final String avatar;
   final TweetMeta meta;
-  final List<TweetEntity?>? lastReply;
+  final List<TweetEntity> lastReply;
 
   @override
   List<Object?> get props => [
@@ -47,11 +47,6 @@ class TweetEntity extends TweetTiles {
         lastReply,
       ];
 
-  @override
-  String toString() {
-    return 'TweetEntity{id: ${id.toString()}, parentId: $parentId, name: ${userName.toString()}, clientId: ${clientId.toString()}, createdAt: ${createdAt.toString()}, totalReply: ${totalReply.toString()}, totalLikes: ${totalLikes.toString()}, anonymous: ${anonymous.toString()}, content: ${content.toString()}, avatar: ${avatar.toString()}, meta: ${meta.toString()}, lastReplay: ${lastReply.toString()}}';
-  }
-
   TweetEntity copyWith({
     String? id,
     String? userName,
@@ -64,7 +59,7 @@ class TweetEntity extends TweetTiles {
     String? avatar,
     TweetMeta? meta,
     String? parentId,
-    List<TweetEntity?>? lastReply,
+    List<TweetEntity>? lastReply,
   }) {
     return TweetEntity(
       id: id ?? this.id,
@@ -96,11 +91,6 @@ class TweetMeta extends Equatable {
 
   @override
   List<Object?> get props => [liked, owner, canReply];
-
-  @override
-  String toString() {
-    return 'TweetMeta {liked: ${liked.toString()}, owner: ${owner.toString()}, canReply: $canReply';
-  }
 }
 
 class TweetNewsGroupEntity extends TweetTiles {

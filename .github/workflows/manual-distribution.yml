@@ -1,0 +1,45 @@
+name: "Manual app distribution"
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: "Build target platform"
+        options:
+          - all
+          - android
+          - ios
+        type: choice
+        required: true
+      environment:
+        description: "Distribution environment"
+        type: environment
+        required: true
+
+jobs:
+
+  distribute-android:
+    if: ${{ github.event.inputs.platform == 'android' || github.event.inputs.platform == 'all' }}
+    uses: ./.github/workflows/distribute-flutter-android.yml
+    with:
+      environment: ${{ github.event.inputs.environment }}
+    secrets:
+      ANDROID_BUILD_FILES: ${{ secrets.ANDROID_BUILD_FILES }}
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_B64 }}
+      PENHAS_BASE_URL: ${{ secrets.PENHAS_BASE_URL }}
+
+  distribute-ios:
+    if: ${{ github.event.inputs.platform == 'ios' || github.event.inputs.platform == 'all' }}
+    uses: ./.github/workflows/distribute-flutter-ios.yml
+    with:
+      environment: ${{ github.event.inputs.environment }}
+    secrets:
+      APPLE_API_KEY_B64: ${{ secrets.APPLE_API_KEY_B64 }}
+      APPLE_ID: ${{ secrets.APPLE_ID }}
+      CERTIFICATE_CONTENT: ${{ secrets.CERTIFICATE_CONTENT }}
+      CERTIFICATE_PWD: ${{ secrets.CERTIFICATE_PWD }}
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      IOS_BUILD_FILES: ${{ secrets.IOS_BUILD_FILES }}
+      KEYCHAIN_PWD: ${{ secrets.KEYCHAIN_PWD }}
+      PENHAS_BASE_URL: ${{ secrets.PENHAS_BASE_URL }}
