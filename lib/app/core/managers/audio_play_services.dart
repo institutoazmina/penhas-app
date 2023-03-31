@@ -4,10 +4,11 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:logger/logger.dart' show Level;
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/managers/audio_sync_manager.dart';
-import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+
+import '../../features/help_center/domain/entities/audio_entity.dart';
+import '../../shared/logger/log.dart';
+import '../error/failures.dart';
+import 'audio_sync_manager.dart';
 
 typedef OnFinished = void Function();
 
@@ -16,19 +17,22 @@ abstract class IAudioPlayServices {
     AudioEntity audio, {
     OnFinished? onFinished,
   });
-  void dispose();
+
+  Future<void> dispose();
 }
 
 class AudioPlayServices implements IAudioPlayServices {
-  AudioPlayServices({required IAudioSyncManager audioSyncManager})
-      : _audioSyncManager = audioSyncManager;
+  AudioPlayServices({
+    required IAudioSyncManager audioSyncManager,
+    FlutterSoundPlayer? player,
+  })  : _audioSyncManager = audioSyncManager,
+        _playerModule = player ?? FlutterSoundPlayer(logLevel: Level.warning);
 
-  final _audioCodec = Codec.aacADTS;
-  late final FlutterSoundPlayer _playerModule =
-      FlutterSoundPlayer(logLevel: Level.warning);
-
+  final FlutterSoundPlayer _playerModule;
   final IAudioSyncManager _audioSyncManager;
   StreamSubscription? _playerSubscription;
+
+  final _audioCodec = Codec.aacADTS;
 
   @override
   Future<Either<Failure, AudioEntity>> start(
@@ -36,20 +40,18 @@ class AudioPlayServices implements IAudioPlayServices {
     OnFinished? onFinished,
   }) async {
     final file = await _audioSyncManager.cache(audio);
-    file.fold((l) {}, (file) => play(file, onFinished));
+    file.fold((l) {}, (file) => _play(file, onFinished));
     return file.map((e) => audio);
   }
 
   @override
-  void dispose() {
-    cancelPlayerSubscriptions();
-    releaseAudioSession();
+  Future<void> dispose() async {
+    _cancelPlayerSubscriptions();
+    await _releaseAudioSession();
   }
-}
 
-extension _AudioPlayServicesPrivate on AudioPlayServices {
-  Future<void> play(File file, OnFinished? onFinished) async {
-    await setupPlayEnviroment();
+  Future<void> _play(File file, OnFinished? onFinished) async {
+    await _setupPlayEnvironment();
     await _playerModule
         .setSubscriptionDuration(const Duration(milliseconds: 100));
 
@@ -60,8 +62,8 @@ extension _AudioPlayServicesPrivate on AudioPlayServices {
     );
   }
 
-  Future<void> setupPlayEnviroment() async {
-    await releaseAudioSession();
+  Future<void> _setupPlayEnvironment() async {
+    await _releaseAudioSession();
     await _playerModule.openPlayer();
 
     _playerSubscription = _playerModule.onProgress?.listen((e) {
@@ -69,7 +71,7 @@ extension _AudioPlayServicesPrivate on AudioPlayServices {
     });
   }
 
-  Future<void> releaseAudioSession() async {
+  Future<void> _releaseAudioSession() async {
     try {
       if (!_playerModule.isStopped) {
         await _playerModule.stopPlayer();
@@ -80,7 +82,7 @@ extension _AudioPlayServicesPrivate on AudioPlayServices {
     }
   }
 
-  void cancelPlayerSubscriptions() {
+  void _cancelPlayerSubscriptions() {
     _playerSubscription?.cancel();
     _playerSubscription = null;
   }
