@@ -8,8 +8,8 @@ import '../../../core/managers/modules_sevices.dart';
 import '../../authentication/presentation/shared/map_failure_message.dart';
 import '../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../help_center/domain/usecases/security_mode_action_feature.dart';
-import '../domain/entities/tweet_entity.dart';
 import '../domain/states/feed_security_state.dart';
+import '../domain/states/feed_state.dart';
 import '../domain/usecases/feed_use_cases.dart';
 
 part 'feed_controller.g.dart';
@@ -38,7 +38,7 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
   ObservableFuture<Either<Failure, FeedCache>>? _reloadProgress;
 
   @observable
-  ObservableList<TweetTiles?> listTweets = ObservableList<TweetTiles>();
+  FeedState state = const FeedState.initial();
 
   @observable
   String? errorMessage;
@@ -80,10 +80,9 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
     _fetchProgress = ObservableFuture(useCase.fetchNewestTweet());
 
     final Either<Failure, FeedCache> response = await _fetchProgress!;
-    response.fold(
-      (failure) => errorMessage = mapFailureMessage(failure),
-      (_) {}, // é atualizado via stream no _registerDataSource
-    );
+    response.fold(_handleFailure, (_) {
+      // a lista é atualizada via stream no _registerDataSource
+    });
   }
 
   @action
@@ -97,9 +96,9 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
 
     final Either<Failure, FeedCache> response = await _fetchProgress!;
 
-    response.fold(
-      (failure) => errorMessage = mapFailureMessage(failure),
-      (_) {}, // é atualizado via stream no _registerDataSource
+    errorMessage = response.fold(
+      mapFailureMessage,
+      (_) => null,
     );
   }
 
@@ -110,13 +109,25 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
       return;
     }
 
+    if (state.isError) {
+      state = const FeedState.initial();
+    }
     _reloadProgress = ObservableFuture(useCase.reloadTweetFeed());
 
     final Either<Failure, FeedCache> response = await _reloadProgress!;
-    response.fold(
-      (failure) => errorMessage = mapFailureMessage(failure),
-      (_) {}, // é atualizado via stream no _registerDataSource
-    );
+
+    response.fold(_handleFailure, (_) {
+      // a lista é atualizada via stream no _registerDataSource
+    });
+  }
+
+  void _handleFailure(Failure failure) {
+    final failureMessage = mapFailureMessage(failure);
+    if (!state.isInitial) {
+      errorMessage = failureMessage;
+    } else {
+      state = FeedState.error(failureMessage!);
+    }
   }
 
   @action
@@ -127,7 +138,7 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
   void _registerDataSource() {
     _streamCache = useCase
         .tweetList()
-        .listen((cache) => listTweets = cache.tweets.asObservable());
+        .listen((cache) => state = FeedState.loaded(cache.tweets));
   }
 
   Future<void> _setupSecurityState() async {

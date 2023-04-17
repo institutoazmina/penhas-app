@@ -55,18 +55,18 @@ mixin _$FeedController on _FeedControllerBase, Store {
     });
   }
 
-  final _$listTweetsAtom = Atom(name: '_FeedControllerBase.listTweets');
+  final _$stateAtom = Atom(name: '_FeedControllerBase.state');
 
   @override
-  ObservableList<TweetTiles?> get listTweets {
-    _$listTweetsAtom.reportRead();
-    return super.listTweets;
+  FeedState get state {
+    _$stateAtom.reportRead();
+    return super.state;
   }
 
   @override
-  set listTweets(ObservableList<TweetTiles?> value) {
-    _$listTweetsAtom.reportWrite(value, super.listTweets, () {
-      super.listTweets = value;
+  set state(FeedState value) {
+    _$stateAtom.reportWrite(value, super.state, () {
+      super.state = value;
     });
   }
 
@@ -140,7 +140,7 @@ mixin _$FeedController on _FeedControllerBase, Store {
   @override
   String toString() {
     return '''
-listTweets: ${listTweets},
+state: ${state},
 errorMessage: ${errorMessage},
 securityState: ${securityState},
 reloadState: ${reloadState},

@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/domain/states/feed_security_state.dart';
-import 'package:penhas/app/features/feed/presentation/feed_controller.dart';
-import 'package:penhas/app/features/feed/presentation/pages/feed_category_filter.dart';
-import 'package:penhas/app/features/feed/presentation/pages/feed_tags_filter.dart';
-import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/tweet.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_group_news.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_related_news.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../shared/design_system/colors.dart';
+import '../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../authentication/presentation/shared/snack_bar_handler.dart';
+import '../../support_center/presentation/pages/support_center_general_error.dart';
+import '../domain/entities/tweet_entity.dart';
+import '../domain/states/feed_security_state.dart';
+import 'feed_controller.dart';
+import 'pages/feed_category_filter.dart';
+import 'pages/feed_tags_filter.dart';
+import 'stores/tweet_controller.dart';
+import 'tweet/tweet.dart';
+import 'tweet/widgets/tweet_group_news.dart';
+import 'tweet/widgets/tweet_related_news.dart';
 
 class FeedPage extends StatefulWidget {
   const FeedPage({
@@ -92,7 +94,11 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
                       child: _buildFiltersButton(controller.securityState),
                     ),
                     Expanded(
-                      child: _buildRefreshIndicator(),
+                      child: controller.state.when(
+                        initial: _buildRefreshIndicator,
+                        loaded: _buildRefreshIndicator,
+                        error: _buildErrorState,
+                      ),
                     ),
                   ],
                 ),
@@ -104,19 +110,16 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
     );
   }
 
-  RefreshIndicator _buildRefreshIndicator() {
+  RefreshIndicator _buildRefreshIndicator([List<TweetTiles> items = const []]) {
     return RefreshIndicator(
       key: _refreshIndicatorKey,
       onRefresh: _onRefresh,
       notificationPredicate: _handleScrollNotification,
       child: ListView.builder(
-        itemCount: controller.listTweets.length,
+        itemCount: items.length,
         controller: _scrollController,
         itemBuilder: (context, index) {
-          return _buildTweetItem(
-            controller.listTweets[index],
-            context,
-          );
+          return _buildTweetItem(items[index], context);
         },
       ),
     );
@@ -196,5 +199,12 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
         _currentState = status;
       });
     });
+  }
+
+  Widget _buildErrorState(String message) {
+    return SupportCenterGeneralError(
+      message: message,
+      onPressed: controller.reloadFeed,
+    );
   }
 }
