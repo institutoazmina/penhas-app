@@ -12,6 +12,6 @@ class FeedState with _$FeedState {
 }
 
 extension FeedStateExt on FeedState {
-  bool get isInitial => maybeWhen(initial: () => true, orElse: () => false);
-  bool get isError => maybeWhen(error: (_) => true, orElse: () => false);
+  bool get isEmpty =>
+      maybeWhen(loaded: (items) => items, orElse: () => []).isEmpty;
 }

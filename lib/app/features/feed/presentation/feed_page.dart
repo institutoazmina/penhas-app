@@ -77,7 +77,7 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
     );
   }
 
-  Observer _bodyBuilder() {
+  Widget _bodyBuilder() {
     return Observer(
       builder: (_) {
         return PageProgressIndicator(
@@ -87,20 +87,10 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
             child: Container(
               color: DesignSystemColors.systemBackgroundColor,
               child: SafeArea(
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20.0),
-                      child: _buildFiltersButton(controller.securityState),
-                    ),
-                    Expanded(
-                      child: controller.state.when(
-                        initial: _buildRefreshIndicator,
-                        loaded: _buildRefreshIndicator,
-                        error: _buildErrorState,
-                      ),
-                    ),
-                  ],
+                child: controller.state.when(
+                  initial: _buildInitialState,
+                  loaded: _buildLoadedState,
+                  error: _buildErrorState,
                 ),
               ),
             ),
@@ -110,7 +100,27 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
     );
   }
 
-  RefreshIndicator _buildRefreshIndicator([List<TweetTiles> items = const []]) {
+  Widget _buildInitialState() {
+    return const Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  Widget _buildLoadedState(List<TweetTiles> items) {
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20.0),
+          child: _buildFiltersButton(controller.securityState),
+        ),
+        Expanded(
+          child: _buildRefreshIndicator(items),
+        ),
+      ],
+    );
+  }
+
+  RefreshIndicator _buildRefreshIndicator(List<TweetTiles> items) {
     return RefreshIndicator(
       key: _refreshIndicatorKey,
       onRefresh: _onRefresh,
@@ -204,7 +214,7 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
   Widget _buildErrorState(String message) {
     return SupportCenterGeneralError(
       message: message,
-      onPressed: controller.reloadFeed,
+      onPressed: controller.fetchNextPage,
     );
   }
 }

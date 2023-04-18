@@ -76,6 +76,9 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
     if (fetchState == PageProgressState.loading) {
       return;
     }
+    if (state.isEmpty) {
+      state = const FeedState.initial();
+    }
 
     _fetchProgress = ObservableFuture(useCase.fetchNewestTweet());
 
@@ -109,9 +112,6 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
       return;
     }
 
-    if (state.isError) {
-      state = const FeedState.initial();
-    }
     _reloadProgress = ObservableFuture(useCase.reloadTweetFeed());
 
     final Either<Failure, FeedCache> response = await _reloadProgress!;
@@ -123,10 +123,11 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
 
   void _handleFailure(Failure failure) {
     final failureMessage = mapFailureMessage(failure);
-    if (!state.isInitial) {
-      errorMessage = failureMessage;
-    } else {
+
+    if (state.isEmpty) {
       state = FeedState.error(failureMessage!);
+    } else {
+      errorMessage = failureMessage;
     }
   }
 
@@ -139,6 +140,7 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
     _streamCache = useCase
         .tweetList()
         .listen((cache) => state = FeedState.loaded(cache.tweets));
+    fetchNextPage();
   }
 
   Future<void> _setupSecurityState() async {
