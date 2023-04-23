@@ -1,16 +1,17 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/managers/location_services.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
-import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
-import 'package:penhas/app/features/help_center/domain/entities/guardian_session_entity.dart';
-import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
-import 'package:penhas/app/features/help_center/domain/states/new_guardian_state.dart';
-import 'package:penhas/app/features/help_center/presentation/widget/request_location_permission_content_widget.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../../../core/managers/location_services.dart';
+import '../../../authentication/presentation/shared/map_failure_message.dart';
+import '../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../data/models/alert_model.dart';
+import '../../data/repositories/guardian_repository.dart';
+import '../../domain/entities/guardian_session_entity.dart';
+import '../../domain/states/guardian_alert_state.dart';
+import '../../domain/states/new_guardian_state.dart';
+import '../widget/request_location_permission_content_widget.dart';
 
 part 'new_guardian_controller.g.dart';
 
@@ -153,7 +154,7 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
   }
 
   void _handleLoadPageError(Failure failure) {
-    final message = mapFailureMessage(failure)!;
+    final message = mapFailureMessage(failure);
     currentState = NewGuardianState.error(message);
   }
 

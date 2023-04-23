@@ -1,13 +1,14 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
-import 'package:penhas/app/features/help_center/domain/entities/guardian_session_entity.dart';
-import 'package:penhas/app/features/help_center/domain/entities/guardian_tile_entity.dart';
-import 'package:penhas/app/features/help_center/domain/states/guardian_state.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../../authentication/presentation/shared/map_failure_message.dart';
+import '../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../data/repositories/guardian_repository.dart';
+import '../../domain/entities/guardian_session_entity.dart';
+import '../../domain/entities/guardian_tile_entity.dart';
+import '../../domain/states/guardian_state.dart';
 
 part 'guardians_controller.g.dart';
 
@@ -111,7 +112,7 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
   }
 
   void _handleLoadPageError(Failure failure) {
-    final message = mapFailureMessage(failure)!;
+    final message = mapFailureMessage(failure);
     currentState = GuardianState.error(message);
   }
 

@@ -3,20 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
-import 'package:penhas/app/features/filters/states/filter_action_observer.dart';
-import 'package:penhas/app/features/support_center/domain/entities/geolocation_entity.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_fetch_request.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_metadata_entity.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
-import 'package:penhas/app/features/support_center/domain/states/support_center_state.dart';
-import 'package:penhas/app/features/support_center/domain/usecases/support_center_usecase.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+
+import '../../../core/error/failures.dart';
+import '../../../shared/design_system/colors.dart';
+import '../../../shared/logger/log.dart';
+import '../../authentication/presentation/shared/map_failure_message.dart';
+import '../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../filters/domain/entities/filter_tag_entity.dart';
+import '../../filters/states/filter_action_observer.dart';
+import '../domain/entities/geolocation_entity.dart';
+import '../domain/entities/support_center_fetch_request.dart';
+import '../domain/entities/support_center_metadata_entity.dart';
+import '../domain/entities/support_center_place_entity.dart';
+import '../domain/entities/support_center_place_session_entity.dart';
+import '../domain/states/support_center_state.dart';
+import '../domain/usecases/support_center_usecase.dart';
 
 part 'support_center_controller.g.dart';
 
@@ -279,7 +280,7 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
       return;
     }
 
-    state = SupportCenterState.error(mapFailureMessage(f)!);
+    state = SupportCenterState.error(mapFailureMessage(f));
   }
 
   boundfromLatLng(List<LatLng> markersLatLngList) {
