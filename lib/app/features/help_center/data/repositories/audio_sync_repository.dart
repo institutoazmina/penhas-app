@@ -1,15 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:crypto/crypto.dart';
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/network/api_client.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_exception_to_failure.dart';
-import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/network/api_client.dart';
+import '../../../../shared/logger/log.dart';
+import '../../../authentication/presentation/shared/map_exception_to_failure.dart';
+import '../../domain/entities/audio_entity.dart';
 
 abstract class IAudioSyncRepository {
   Future<Either<Failure, ValidField>> upload(AudioData audio);
