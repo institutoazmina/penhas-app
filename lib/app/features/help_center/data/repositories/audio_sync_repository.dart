@@ -90,7 +90,7 @@ class AudioSyncRepository implements IAudioSyncRepository {
   }
 }
 
-extension _FileExtention on File {
+extension _FileExtension on File {
   String get name {
     return path.split(Platform.pathSeparator).last;
   }
