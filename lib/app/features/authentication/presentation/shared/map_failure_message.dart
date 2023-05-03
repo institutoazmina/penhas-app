@@ -7,7 +7,7 @@ mixin MapFailureMessage {
   final String serverFailure =
       'O servidor está com problema neste momento, tente novamente.';
   final String genericFailure =
-      'Oops.. ocorreu um erro inesperado, tente novamentetarde.';
+      'Oops.. ocorreu um erro inesperado, tente novamente mais tarde.';
 
   String mapFailureMessage(Failure failure) {
     var message = genericFailure;
