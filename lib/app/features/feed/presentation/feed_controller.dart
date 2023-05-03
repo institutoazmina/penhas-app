@@ -3,105 +3,64 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../../core/entities/failure_or.dart';
 import '../../../core/error/failures.dart';
-import '../../../core/managers/modules_sevices.dart';
+import '../../../core/extension/mobx.dart';
 import '../../authentication/presentation/shared/map_failure_message.dart';
 import '../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../help_center/domain/usecases/security_mode_action_feature.dart';
-import '../domain/entities/tweet_entity.dart';
 import '../domain/states/feed_security_state.dart';
+import '../domain/states/feed_state.dart';
 import '../domain/usecases/feed_use_cases.dart';
 
 part 'feed_controller.g.dart';
 
-class FeedController extends _FeedControllerBase with _$FeedController {
-  FeedController({
-    required FeedUseCases useCase,
-    required IAppModulesServices modulesServices,
-  }) : super(useCase, modulesServices);
-}
+typedef TFeed = FailureOr<FeedCache>;
+typedef _FetchSource = Future<TFeed> Function();
+
+class FeedController = _FeedControllerBase with _$FeedController;
 
 abstract class _FeedControllerBase with Store, MapFailureMessage {
-  _FeedControllerBase(this.useCase, this._modulesServices) {
+  _FeedControllerBase({
+    required FeedUseCases useCase,
+    required SecurityModeActionFeature securityModeActionFeature,
+  })  : _useCase = useCase,
+        _securityModeActionFeature = securityModeActionFeature {
     _registerDataSource();
     _setupSecurityState();
   }
 
-  final FeedUseCases useCase;
-  StreamSubscription? _streamCache;
-  final IAppModulesServices _modulesServices;
+  final FeedUseCases _useCase;
+  final SecurityModeActionFeature _securityModeActionFeature;
 
   @observable
-  ObservableFuture<Either<Failure, FeedCache>>? _fetchProgress;
-
-  @observable
-  ObservableFuture<Either<Failure, FeedCache>>? _reloadProgress;
-
-  @observable
-  ObservableList<TweetTiles?> listTweets = ObservableList<TweetTiles>();
-
-  @observable
-  String? errorMessage;
+  FeedState state = const FeedState.initial();
 
   @observable
   FeedSecurityState securityState = const FeedSecurityState.disable();
 
   @computed
-  PageProgressState get reloadState {
-    if (_reloadProgress == null ||
-        _reloadProgress!.status == FutureStatus.rejected) {
-      return PageProgressState.initial;
-    }
-
-    return _reloadProgress!.status == FutureStatus.pending
-        ? PageProgressState.loading
-        : PageProgressState.loaded;
-  }
+  PageProgressState get fetchState => _fetchProgress.state;
 
   @computed
-  PageProgressState get fetchState {
-    if (_fetchProgress == null ||
-        _fetchProgress!.status == FutureStatus.rejected) {
-      return PageProgressState.initial;
-    }
+  PageProgressState get reloadState => _reloadProgress.state;
 
-    return _fetchProgress!.status == FutureStatus.pending
-        ? PageProgressState.loading
-        : PageProgressState.loaded;
-  }
+  @observable
+  String? errorMessage;
 
-  @action
-  Future<void> fetchNextPage() async {
-    errorMessage = '';
-    if (fetchState == PageProgressState.loading) {
-      return;
-    }
+  @observable
+  ObservableFuture<TFeed>? _fetchProgress;
 
-    _fetchProgress = ObservableFuture(useCase.fetchNewestTweet());
+  @observable
+  ObservableFuture<TFeed>? _reloadProgress;
 
-    final Either<Failure, FeedCache> response = await _fetchProgress!;
-    response.fold(
-      (failure) => errorMessage = mapFailureMessage(failure),
-      (_) {}, // é atualizado via stream no _registerDataSource
-    );
-  }
+  StreamSubscription? _streamCache;
 
   @action
-  Future<void> fetchOldestPage() async {
-    errorMessage = '';
-    if (fetchState == PageProgressState.loading) {
-      return;
-    }
+  Future<void> fetchNextPage() => _fetch(_useCase.fetchNewestTweet);
 
-    _fetchProgress = ObservableFuture(useCase.fetchOldestTweet());
-
-    final Either<Failure, FeedCache> response = await _fetchProgress!;
-
-    response.fold(
-      (failure) => errorMessage = mapFailureMessage(failure),
-      (_) {}, // é atualizado via stream no _registerDataSource
-    );
-  }
+  @action
+  Future<void> fetchOldestPage() => _fetch(_useCase.fetchOldestTweet);
 
   @action
   Future<void> reloadFeed() async {
@@ -110,36 +69,59 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
       return;
     }
 
-    _reloadProgress = ObservableFuture(useCase.reloadTweetFeed());
+    _reloadProgress = ObservableFuture(_useCase.reloadTweetFeed());
 
-    final Either<Failure, FeedCache> response = await _reloadProgress!;
-    response.fold(
-      (failure) => errorMessage = mapFailureMessage(failure),
-      (_) {}, // é atualizado via stream no _registerDataSource
-    );
+    final response = await _reloadProgress!;
+
+    response.fold(_handleFailure, (_) {
+      // a lista é atualizada via stream no _registerDataSource
+    });
   }
 
   @action
-  void dispose() {
-    _cancelDataSource();
+  Future<void> dispose() async {
+    await _streamCache?.cancel();
+    _streamCache = null;
+  }
+
+  Future<void> _fetch(_FetchSource source) async {
+    errorMessage = '';
+    if (fetchState == PageProgressState.loading) {
+      return;
+    }
+    if (state.isEmpty) {
+      state = const FeedState.initial();
+    }
+
+    _fetchProgress = ObservableFuture(source());
+
+    final response = await _fetchProgress!;
+    response.fold(_handleFailure, (_) {
+      // a lista é atualizada via stream no _registerDataSource
+    });
+  }
+
+  void _handleFailure(Failure failure) {
+    final failureMessage = mapFailureMessage(failure);
+
+    if (state.isEmpty) {
+      state = FeedState.error(failureMessage!);
+    } else {
+      errorMessage = failureMessage;
+    }
   }
 
   void _registerDataSource() {
-    _streamCache = useCase
+    _streamCache = _useCase
         .tweetList()
-        .listen((cache) => listTweets = cache.tweets.asObservable());
+        .listen((cache) => state = FeedState.loaded(cache.tweets));
+
+    fetchNextPage();
   }
 
   Future<void> _setupSecurityState() async {
-    securityState =
-        await SecurityModeActionFeature(modulesServices: _modulesServices)
-                .isEnabled
-            ? const FeedSecurityState.enable()
-            : const FeedSecurityState.disable();
-  }
-
-  void _cancelDataSource() {
-    _streamCache?.cancel();
-    _streamCache = null;
+    securityState = await _securityModeActionFeature.isEnabled
+        ? const FeedSecurityState.enable()
+        : const FeedSecurityState.disable();
   }
 }
