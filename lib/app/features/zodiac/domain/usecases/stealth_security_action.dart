@@ -8,6 +8,7 @@ import '../../../help_center/data/repositories/guardian_repository.dart';
 import '../../../help_center/domain/entities/audio_record_duration_entity.dart';
 import '../../../help_center/domain/usecases/security_mode_action_feature.dart';
 import '../../../../shared/logger/log.dart';
+import '../../../help_center/presentation/widget/request_location_permission_content_widget.dart';
 
 class StealthSecurityAction {
   StealthSecurityAction({
@@ -64,9 +65,21 @@ class StealthSecurityAction {
   }
 
   Future<UserLocationEntity> _getCurrentLocatin() async {
-    return _locationService
-        .currentLocation()
-        .then((v) => v.getOrElse(() => const UserLocationEntity())!);
+    await _locationService.requestPermission(
+      title: 'O guardião precisa da sua localização',
+      description: RequestLocationPermissionContentWidget(),
+    );
+
+    final hasPermission = await hasLocationPermission();
+    
+    if (hasPermission) {
+      return _locationService.currentLocation().then((v) {
+        debugPrint(v.toString());
+        return v.getOrElse(() => const UserLocationEntity())!;
+      });
+    }
+
+    return const UserLocationEntity();
   }
 
   Future<void> _triggerGuardian(UserLocationEntity location) async {
@@ -102,5 +115,11 @@ class StealthSecurityAction {
         _audioServices.rotate();
       },
     );
+  }
+}
+
+extension _PrivateMethods on StealthSecurityAction {
+  Future<bool> hasLocationPermission() {
+    return _locationService.isPermissionGranted();
   }
 }
