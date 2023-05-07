@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
 import '../../../../core/entities/user_location.dart';
 import '../../../../core/managers/audio_record_services.dart';
 import '../../../../core/managers/location_services.dart';
@@ -73,7 +72,6 @@ class StealthSecurityAction {
 
     if (hasPermission) {
       return _locationService.currentLocation().then((v) {
-        debugPrint(v.toString());
         return v.getOrElse(() => const UserLocationEntity())!;
       });
     }
