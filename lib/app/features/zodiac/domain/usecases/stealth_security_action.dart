@@ -35,7 +35,7 @@ class StealthSecurityAction {
   Future<void> start() async {
     _streamController ??= StreamController.broadcast();
 
-    return _getCurrentLocatin()
+    return _getCurrentLocation()
         .then((location) => _triggerGuardian(location))
         .then((_) => _startAudioRecord())
         .then((_) => _streamController!.add(true));
@@ -62,7 +62,7 @@ class StealthSecurityAction {
     }
   }
 
-  Future<UserLocationEntity> _getCurrentLocatin() async {
+  Future<UserLocationEntity> _getCurrentLocation() async {
     await _locationService.requestPermission(
       title: 'O guardião precisa da sua localização',
       description: RequestLocationPermissionContentWidget(),
