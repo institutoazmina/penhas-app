@@ -24,12 +24,11 @@ abstract class ILocationServices {
 }
 
 class LocationServices implements ILocationServices {
+  GeolocatorWrapper geolocatorWrapper = GeolocatorWrapper();
   @override
   Future<Either<LocationFailure, UserLocationEntity?>> currentLocation() async {
     if (await Permission.location.isGranted) {
-      final position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-      );
+      final position = await geolocatorWrapper.getCurrentPosition();
 
       return right(
         UserLocationEntity(
@@ -253,5 +252,13 @@ extension PermissionStatusMap on PermissionStatus {
       case PermissionStatus.limited:
         return const LocationPermissionState.undefined();
     }
+  }
+}
+
+class GeolocatorWrapper {
+  Future<Position> getCurrentPosition() {
+    return Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
   }
 }
