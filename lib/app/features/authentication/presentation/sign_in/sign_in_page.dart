@@ -3,20 +3,21 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/input_box_style.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/login_button.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/password_text_input.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_controller.dart';
-import 'package:penhas/app/shared/design_system/button_shape.dart';
-import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
-import 'package:penhas/app/shared/design_system/link_button.dart';
-import 'package:penhas/app/shared/design_system/logo.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
-import 'package:penhas/app/shared/navigation/navigator.dart';
-import 'package:penhas/app/shared/navigation/route.dart';
+
+import '../../../../shared/design_system/button_shape.dart';
+import '../../../../shared/design_system/linear_gradient_design_system.dart';
+import '../../../../shared/design_system/link_button.dart';
+import '../../../../shared/design_system/logo.dart';
+import '../../../../shared/design_system/text_styles.dart';
+import '../../../../shared/navigation/app_route.dart';
+import '../../../../shared/navigation/navigator.dart';
+import '../shared/input_box_style.dart';
+import '../shared/login_button.dart';
+import '../shared/page_progress_indicator.dart';
+import '../shared/password_text_input.dart';
+import '../shared/single_text_input.dart';
+import '../shared/snack_bar_handler.dart';
+import 'sign_in_controller.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key, this.title = 'Authentication'}) : super(key: key);
