@@ -1,11 +1,12 @@
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
-import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
-import 'package:penhas/app/features/quiz/domain/entities/quiz_request_entity.dart';
-import 'package:penhas/app/features/quiz/domain/repositories/i_quiz_repository.dart';
-import 'package:penhas/app/shared/navigation/navigator.dart';
-import 'package:penhas/app/shared/navigation/route.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../../../shared/navigation/app_route.dart';
+import '../../../../shared/navigation/navigator.dart';
+import '../../../appstate/domain/entities/app_state_entity.dart';
+import '../../../appstate/domain/usecases/app_state_usecase.dart';
+import '../../domain/entities/quiz_request_entity.dart';
+import '../../domain/repositories/i_quiz_repository.dart';
 
 part 'quiz_controller.g.dart';
 

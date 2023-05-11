@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:penhas/app/shared/logger/log.dart';
-import 'package:penhas/app/shared/navigation/route.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../logger/log.dart';
+import 'app_route.dart';
 
 class AppNavigator {
   static void popAndPush(AppRoute route) {

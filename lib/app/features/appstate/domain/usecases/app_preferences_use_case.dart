@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/managers/local_store.dart';
-import 'package:penhas/app/features/appstate/domain/entities/app_preferences_entity.dart';
-import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
-import 'package:penhas/app/shared/navigation/route.dart';
+
+import '../../../../core/managers/local_store.dart';
+import '../../../../shared/navigation/app_route.dart';
+import '../entities/app_preferences_entity.dart';
+import '../entities/user_profile_entity.dart';
 
 class InactivityLogoutUseCase {
   InactivityLogoutUseCase({

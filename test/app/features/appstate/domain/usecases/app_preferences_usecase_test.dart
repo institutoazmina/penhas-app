@@ -6,7 +6,7 @@ import 'package:penhas/app/features/appstate/data/model/user_profile_model.dart'
 import 'package:penhas/app/features/appstate/domain/entities/app_preferences_entity.dart';
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_preferences_use_case.dart';
-import 'package:penhas/app/shared/navigation/route.dart';
+import 'package:penhas/app/shared/navigation/app_route.dart';
 
 void main() {
   late InactivityLogoutUseCase useCase;
