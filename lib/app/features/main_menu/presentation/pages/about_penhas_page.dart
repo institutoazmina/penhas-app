@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/navigation/navigator.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/navigation/app_navigator.dart';
+
 class AboutPenhasPage extends StatelessWidget {
-  const AboutPenhasPage({Key? key,
+  const AboutPenhasPage({
+    Key? key,
     required this.baseUrl,
   }) : super(key: key);
 

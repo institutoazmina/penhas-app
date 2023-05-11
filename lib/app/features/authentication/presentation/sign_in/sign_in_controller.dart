@@ -3,8 +3,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../core/error/failures.dart';
+import '../../../../shared/navigation/app_navigator.dart';
 import '../../../../shared/navigation/app_route.dart';
-import '../../../../shared/navigation/navigator.dart';
 import '../../../appstate/domain/usecases/app_state_usecase.dart';
 import '../../domain/entities/session_entity.dart';
 import '../../domain/repositories/i_authentication_repository.dart';

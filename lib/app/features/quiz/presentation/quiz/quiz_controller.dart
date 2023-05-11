@@ -1,8 +1,8 @@
 import 'package:mobx/mobx.dart';
 
 import '../../../../core/error/failures.dart';
+import '../../../../shared/navigation/app_navigator.dart';
 import '../../../../shared/navigation/app_route.dart';
-import '../../../../shared/navigation/navigator.dart';
 import '../../../appstate/domain/entities/app_state_entity.dart';
 import '../../../appstate/domain/usecases/app_state_usecase.dart';
 import '../../domain/entities/quiz_request_entity.dart';
