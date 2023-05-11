@@ -26,20 +26,27 @@ class AppNavigator {
     AppRoute route, {
     required String removeUntil,
   }) async {
-    await popUntil(material.ModalRoute.withName(removeUntil)).then(
-      (lastPath) async {
-        if (route.path == lastPath) {
-          return null;
-        }
-        if (removeUntil != lastPath) {
-          return Modular.to.pushReplacementNamed(
-            route.path,
-            arguments: route.args,
-          );
-        }
-        return Modular.to.pushNamed(route.path, arguments: route.args);
-      },
-    ).catchError(catchErrorLogger);
+    try {
+      final lastPath =
+          await popUntil(material.ModalRoute.withName(removeUntil));
+
+      if (route.path == lastPath) {
+        return Future.value();
+      }
+
+      if (removeUntil != lastPath) {
+        await Modular.to.pushReplacementNamed(
+          route.path,
+          arguments: route.args,
+        );
+
+        return Future.value();
+      }
+
+      await Modular.to.pushNamed(route.path, arguments: route.args);
+    } catch (error, stack) {
+      logError(error, stack);
+    }
   }
 
   static Future<String?> popUntil(material.RoutePredicate predicate) async {
