@@ -6,8 +6,8 @@ import 'package:mobx/mobx.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/managers/local_store.dart';
+import '../../../../shared/navigation/app_navigator.dart';
 import '../../../../shared/navigation/app_route.dart';
-import '../../../../shared/navigation/navigator.dart';
 import '../../../appstate/domain/entities/user_profile_entity.dart';
 import '../../../zodiac/domain/entities/izodiac.dart';
 import '../../../zodiac/domain/entities/zodiac_sign_aquarius.dart';
