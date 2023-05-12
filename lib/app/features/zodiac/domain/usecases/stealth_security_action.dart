@@ -6,7 +6,8 @@ import '../../../help_center/data/repositories/guardian_repository.dart';
 import '../../../help_center/domain/entities/audio_record_duration_entity.dart';
 import '../../../help_center/domain/usecases/security_mode_action_feature.dart';
 import '../../../../shared/logger/log.dart';
-import '../../../help_center/presentation/widget/request_location_permission_content_widget.dart';
+import '../../presentation/widgets/request_location_permission_content_widget.dart';
+
 
 class StealthSecurityAction {
   StealthSecurityAction({
