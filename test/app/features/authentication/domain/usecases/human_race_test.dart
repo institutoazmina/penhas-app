@@ -1,77 +1,35 @@
-enum HumanRace {
-  brown,
-  black,
-  yellow,
-  indigenous,
-  white,
-  notDeclared,
-}
+import 'package:flutter_test/flutter_test.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/human_race.dart';
 
-extension EnumHumanRace on HumanRace {
-  String get rawValue {
-    switch (this) {
-      case HumanRace.white:
-        return 'branco';
-      case HumanRace.brown:
-        return 'pardo';
-      case HumanRace.black:
-        return 'preto';
-      case HumanRace.indigenous:
-        return 'indigena';
-      case HumanRace.yellow:
-        return 'amarelo';
-      case HumanRace.notDeclared:
-        return 'nao_declarado';
-      default:
-        return 'nao_declarado';
-    }
-  }
+void main() {
+  group(HumanRace, () {
+    test('return correct rawValue for each human race', () {
+      expect(HumanRace.white.rawValue, 'branco');
+      expect(HumanRace.brown.rawValue, 'pardo');
+      expect(HumanRace.black.rawValue, 'preto');
+      expect(HumanRace.indigenous.rawValue, 'indigena');
+      expect(HumanRace.yellow.rawValue, 'amarelo');
+      expect(HumanRace.notDeclared.rawValue, 'nao_declarado');
+    });
 
-  String get label {
-    String? label;
-    switch (this) {
-      case HumanRace.white:
-        label = 'Branca';
-        break;
-      case HumanRace.brown:
-        label = 'Parda';
-        break;
-      case HumanRace.black:
-        label = 'Preta';
-        break;
-      case HumanRace.indigenous:
-        label = 'Índigena';
-        break;
-      case HumanRace.yellow:
-        label = 'Amarela';
-        break;
-      case HumanRace.notDeclared:
-        label = 'Não declarado';
-        break;
-    }
+    test('return correct label for each human race', () {
+      expect(HumanRace.white.label, 'Branca');
+      expect(HumanRace.brown.label, 'Parda');
+      expect(HumanRace.black.label, 'Preta');
+      expect(HumanRace.indigenous.label, 'Índigena');
+      expect(HumanRace.yellow.label, 'Amarela');
+      expect(HumanRace.notDeclared.label, 'Não declarado');
+    });
 
-    return label;
-  }
-
-  static HumanRace map(String? code) {
-    if (code == null) {
-      return HumanRace.notDeclared;
-    }
-
-    if (code.toLowerCase() == 'branco') {
-      return HumanRace.white;
-    } else if (code.toLowerCase() == 'pardo') {
-      return HumanRace.brown;
-    } else if (code.toLowerCase() == 'preto') {
-      return HumanRace.black;
-    } else if (code.toLowerCase() == 'indigena') {
-      return HumanRace.indigenous;
-    } else if (code.toLowerCase() == 'amarelo') {
-      return HumanRace.yellow;
-    } else if (code.toLowerCase() == 'nao_declarado') {
-      return HumanRace.notDeclared;
-    } else {
-      return HumanRace.notDeclared;
-    }
-  }
+    test('correctly map human race from string code', () {
+      expect(EnumHumanRace.map('branco'), HumanRace.white);
+      expect(EnumHumanRace.map('pardo'), HumanRace.brown);
+      expect(EnumHumanRace.map('preto'), HumanRace.black);
+      expect(EnumHumanRace.map('indigena'), HumanRace.indigenous);
+      expect(EnumHumanRace.map('amarelo'), HumanRace.yellow);
+      expect(EnumHumanRace.map('nao_declarado'), HumanRace.notDeclared);
+      expect(EnumHumanRace.map('unknown_code'), HumanRace.notDeclared);
+      expect(EnumHumanRace.map(null), HumanRace.notDeclared);
+    });
+  });
 }
