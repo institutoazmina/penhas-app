@@ -5,44 +5,86 @@ import 'package:penhas/app/features/authentication/domain/usecases/birthday.dart
 
 void main() {
   group(
-    'Birthday',
+    Birthday,
     () {
       test(
-        'should get BirthdayInvalidFailure for null value',
+        'returns invalid Birthday when constructed with null',
         () {
-          final result = Birthday(null).value;
-
-          expect(result, left(BirthdayInvalidFailure()));
+          // act
+          final expected = Birthday(null);
+          // assert
+          expect(expected.isValid, false);
+          expect(expected.mapFailure, 'Data de nascimento inválida');
+          expect(expected.value, left(BirthdayInvalidFailure()));
         },
       );
       test(
-        'should get BirthdayInvalidFailure for empty value',
+        'returns invalid Birthday when constructed with invalid date string',
         () {
-          final result = Birthday('').value;
-
-          expect(result, left(BirthdayInvalidFailure()));
-        },
-      );
-
-      test(
-        'should get value from a valid birthday',
-        () {
-          const testValue = '01/01/1994';
-          final result = Birthday(testValue).value;
-
-          expect(result, right('1994-01-01'));
+          // arrange
+          const dateString = '';
+          // act
+          final expected = Birthday(dateString);
+          // assert
+          expect(expected.isValid, false);
+          expect(expected.mapFailure, 'Data de nascimento inválida');
+          expect(expected.value, left(BirthdayInvalidFailure()));
         },
       );
 
       test(
-        'should get value from a valid birthday from Datetime',
+        'constructs a Birthday with valid date string',
         () {
-          final testValue = DateTime.utc(1994);
-          final result = Birthday.datetime(testValue).value;
-
-          expect(result, right('1994-01-01'));
+          // arrange
+          const dateString = '01/01/1994';
+          // act
+          final expected = Birthday(dateString);
+          // assert
+          expect(expected.isValid, true);
+          expect(expected.rawValue, '1994-01-01');
+          expect(expected.value, right('1994-01-01'));
+          expect(expected.mapFailure, '');
         },
       );
+
+      test(
+        'constructs a Birthday with valid DateTime',
+        () {
+          // arrange
+          final testValue = DateTime.utc(1994, 1, 1);
+          // act
+          final expected = Birthday.datetime(testValue);
+          // assert
+          expect(expected.isValid, true);
+          expect(expected.rawValue, '1994-01-01');
+          expect(expected.value, right('1994-01-01'));
+          expect(expected.mapFailure, '');
+        },
+      );
+
+      test(
+        'return true for equal Birthdays',
+        () {
+          // arrange
+          final testValue = DateTime.utc(1994, 1, 1);
+          // act
+          final expected = Birthday.datetime(testValue);
+          final expected2 = Birthday.datetime(testValue);
+          // assert
+          expect(expected == expected2, true);
+        },
+      );
+
+      test('return false for different Birthdays', () {
+        // arrange
+        final testValue = DateTime.utc(1994, 1, 1);
+        final testValue2 = DateTime.utc(1994, 1, 2);
+        // act
+        final expected = Birthday.datetime(testValue);
+        final expected2 = Birthday.datetime(testValue2);
+        // assert
+        expect(expected == expected2, false);
+      });
     },
   );
 }
