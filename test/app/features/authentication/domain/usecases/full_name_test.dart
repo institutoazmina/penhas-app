@@ -2,70 +2,79 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/full_name.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
 
 void main() {
   group(
-    'Fullname',
+    Fullname,
     () {
-      test(
-        'should get FullnameInvalidFailure for null value',
-        () {
-          final result = Fullname(null).value;
+      test('constructs a FullName with a valid full name', () {
+        // arrange
+        const name = 'Maria da Penha Maia Fernandes';
+        // act
+        final result = Fullname(name);
+        // assert
+        expect(result.rawValue, equals('Maria da Penha Maia Fernandes'));
+        expect(result.isValid, isTrue);
+        expect(result.value, right(name));
+      });
 
-          expect(result, left(FullnameInvalidFailure()));
+      test(
+        'return a FullnameInvalidFailure when input is null',
+        () {
+          // arrange
+          const input = null;
+          // act
+          final result = Fullname(input);
+          // assert
+          expect(result.isValid, isFalse);
+          expect(result.value, left(FullnameInvalidFailure()));
+          expect(result.mapFailure, 'Nome inválido para o sistema');
         },
       );
       test(
-        'should get FullnameInvalidFailure for empty value',
+        'return a FullnameInvalidFailure when input is empty',
         () {
-          final result = Fullname('').value;
-
-          expect(result, left(FullnameInvalidFailure()));
+          // arrange
+          const input = '';
+          // act
+          final result = Fullname(input);
+          // assert
+          expect(result.isValid, isFalse);
+          expect(result.value, left(FullnameInvalidFailure()));
+          expect(result.mapFailure, 'Nome inválido para o sistema');
         },
       );
+      test('trim whitespace from input', () {
+        // arrange
+        const name = '       Maria da Penha Maia Fernandes     ';
+        // act
+        final result = Fullname(name);
+        // assert
+        expect(result.rawValue, equals('Maria da Penha Maia Fernandes'));
+        expect(result.isValid, isTrue);
+        expect(result.value, right('Maria da Penha Maia Fernandes'));
+      });
 
-      test(
-        'should get value from a valid fullname',
-        () {
-          const testValue = 'Maria da Penha Maia Fernandes';
-          final result = Fullname(testValue).value;
+      test('return true for equal FullName', () {
+        // arrange
+        const name = '       Maria da Penha Maia Fernandes     ';
+        // act
+        final result = Fullname(name);
+        final result2 = Fullname(name);
+        // assert
+        expect(result == result2, isTrue);
+      });
 
-          expect(result, right(testValue));
-        },
-      );
-    },
-  );
-
-  group(
-    'Nickname',
-    () {
-      test(
-        'should get NicknameInvalidFailure for null value',
-        () {
-          final result = Nickname(null).value;
-
-          expect(result, left(NicknameInvalidFailure()));
-        },
-      );
-      test(
-        'should get NicknameInvalidFailure for empty value',
-        () {
-          final result = Nickname('').value;
-
-          expect(result, left(NicknameInvalidFailure()));
-        },
-      );
-
-      test(
-        'should get value from a valid nickname',
-        () {
-          const testValue = 'penha';
-          final result = Nickname(testValue).value;
-
-          expect(result, right(testValue));
-        },
-      );
+      test('return false for different FullName', () {
+        // arrange
+        const name = 'Maria One';
+        const name2 = 'Maria Two';
+        // act
+        final result = Fullname(name);
+        final result2 = Fullname(name2);
+        // assert
+        expect(result == result2, isFalse);
+      });
     },
   );
 }
