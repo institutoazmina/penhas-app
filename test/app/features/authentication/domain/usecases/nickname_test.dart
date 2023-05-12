@@ -52,6 +52,27 @@ void main() {
         expect(result.mapFailure, '');
         expect(result.value, right('penha'));
       });
+
+      test('return true for equals Nicknames', () {
+        // arrange
+        const input = 'penha';
+        // act
+        final nickname1 = Nickname(input);
+        final nickname2 = Nickname(input);
+        // assert
+        expect(nickname1 == nickname2, isTrue);
+      });
+
+      test('return false for different Nicknames', () {
+        // arrange
+        const input1 = 'penha';
+        const input2 = 'penha2';
+        // act
+        final nickname1 = Nickname(input1);
+        final nickname2 = Nickname(input2);
+        // assert
+        expect(nickname1 == nickname2, isFalse);
+      });
     },
   );
 }
