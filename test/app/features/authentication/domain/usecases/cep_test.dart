@@ -5,34 +5,71 @@ import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
 
 void main() {
   group(
-    'Cep',
+    Cep,
     () {
+      test('constructs a Cep with valid string', () {
+        // arrange
+        const cepString = '63024-370';
+        // act
+        final cep = Cep(cepString);
+        // assert
+        expect(cep.isValid, true);
+        expect(cep.rawValue, '63024370');
+        expect(cep.mapFailure, '');
+      });
+
+      test('constructs a Cep with valid string without hyphen', () {
+        // arrange
+        const cepString = '63024370';
+        // act
+        final cep = Cep(cepString);
+        // assert
+        expect(cep.isValid, true);
+        expect(cep.rawValue, '63024370');
+        expect(cep.mapFailure, '');
+      });
+
       test(
-        'should get CepInvalidFailure for null value',
-        () {
-          final result = Cep(null).value;
+          'returns invalid Cep when constructed with string with less than 8 digits',
+          () {
+        // arrange
+        const cepString = '6302437';
+        // act
+        final cep = Cep(cepString);
+        // assert
+        expect(cep.isValid, false);
+        expect(cep.mapFailure, 'CEP inválido');
+        expect(cep.value, left(CepInvalidFailure()));
+      });
 
-          expect(result, left(CepInvalidFailure()));
-        },
-      );
-      test(
-        'should get CepInvalidFailure for empty value',
-        () {
-          final result = Cep('').value;
+      test('returns invalid Cep when constructed with null', () {
+        final cep = Cep(null);
 
-          expect(result, left(CepInvalidFailure()));
-        },
-      );
+        expect(cep.isValid, false);
+        expect(cep.mapFailure, 'CEP inválido');
+        expect(cep.value, left(CepInvalidFailure()));
+      });
 
-      test(
-        'should get value from a valid cep',
-        () {
-          const testValue = '63024-370';
-          final result = Cep(testValue).value;
+      test('return true for equals Ceps', () {
+        // arrange
+        const cepString = '63024-370';
+        // act
+        final cep1 = Cep(cepString);
+        final cep2 = Cep(cepString);
+        // assert
+        expect(cep1 == cep2, true);
+      });
 
-          expect(result, right('63024370'));
-        },
-      );
+      test('return false for different Ceps', () {
+        // arrange
+        const cepString1 = '63024-370';
+        const cepString2 = '63024-371';
+        // act
+        final cep1 = Cep(cepString1);
+        final cep2 = Cep(cepString2);
+        // assert
+        expect(cep1 == cep2, false);
+      });
     },
   );
 }
