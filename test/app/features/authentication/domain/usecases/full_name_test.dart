@@ -16,6 +16,7 @@ void main() {
         expect(result.rawValue, equals('Maria da Penha Maia Fernandes'));
         expect(result.isValid, isTrue);
         expect(result.value, right(name));
+        expect(result.mapFailure, '');
       });
 
       test(
