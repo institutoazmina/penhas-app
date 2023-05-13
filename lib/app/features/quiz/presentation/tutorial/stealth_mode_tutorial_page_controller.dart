@@ -1,7 +1,7 @@
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/managers/location_services.dart';
-import 'package:penhas/app/features/help_center/presentation/widget/request_location_permission_content_widget.dart';
-import 'package:penhas/app/features/quiz/presentation/tutorial/stealth_mode_tutorial_state.dart';
+import '../../../../core/managers/location_services.dart';
+import '../../../../shared/widgets/request_location_permission_content_widget.dart';
+import 'stealth_mode_tutorial_state.dart';
 part 'stealth_mode_tutorial_page_controller.g.dart';
 
 class StealthModeTutorialPageController
@@ -33,7 +33,7 @@ abstract class _StealthModeTutorialPageControllerBase with Store {
   void requestLocationPermission() {
     _locationService.requestPermission(
       title: 'O guardião precisa da sua localização',
-      description: RequestLocationPermissionContentWidget(),
+      description: const RequestLocationPermissionContentWidget(),
     );
   }
 }
