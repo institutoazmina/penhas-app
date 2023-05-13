@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../shared/design_system/text_styles.dart';
+import '../design_system/text_styles.dart';
 
 class RequestLocationPermissionContentWidget extends StatelessWidget {
   const RequestLocationPermissionContentWidget({Key? key}) : super(key: key);

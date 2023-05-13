@@ -2,11 +2,11 @@ import 'dart:async';
 import '../../../../core/entities/user_location.dart';
 import '../../../../core/managers/audio_record_services.dart';
 import '../../../../core/managers/location_services.dart';
+import '../../../../shared/widgets/request_location_permission_content_widget.dart';
 import '../../../help_center/data/repositories/guardian_repository.dart';
 import '../../../help_center/domain/entities/audio_record_duration_entity.dart';
 import '../../../help_center/domain/usecases/security_mode_action_feature.dart';
 import '../../../../shared/logger/log.dart';
-import '../../presentation/widgets/request_location_permission_content_widget.dart';
 
 
 class StealthSecurityAction {
@@ -66,7 +66,7 @@ class StealthSecurityAction {
   Future<UserLocationEntity> _getCurrentLocation() async {
     await _locationService.requestPermission(
       title: 'O guardião precisa da sua localização',
-      description: RequestLocationPermissionContentWidget(),
+      description: const RequestLocationPermissionContentWidget(),
     );
 
     final hasPermission = await hasLocationPermission();
