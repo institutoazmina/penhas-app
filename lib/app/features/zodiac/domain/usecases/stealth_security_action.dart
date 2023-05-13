@@ -8,7 +8,6 @@ import '../../../help_center/domain/entities/audio_record_duration_entity.dart';
 import '../../../help_center/domain/usecases/security_mode_action_feature.dart';
 import '../../../../shared/logger/log.dart';
 
-
 class StealthSecurityAction {
   StealthSecurityAction({
     required ILocationServices locationService,
