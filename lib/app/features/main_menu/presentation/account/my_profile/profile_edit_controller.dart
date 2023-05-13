@@ -1,18 +1,19 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
-import 'package:penhas/app/features/appstate/domain/entities/update_user_profile_entity.dart';
-import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
-import 'package:penhas/app/features/filters/domain/repositories/filter_skill_repository.dart';
-import 'package:penhas/app/features/filters/states/filter_action_observer.dart';
-import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
-import 'package:penhas/app/features/main_menu/domain/states/profile_edit_state.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+
+import '../../../../../core/error/failures.dart';
+import '../../../../../shared/logger/log.dart';
+import '../../../../appstate/domain/entities/app_state_entity.dart';
+import '../../../../appstate/domain/entities/update_user_profile_entity.dart';
+import '../../../../appstate/domain/usecases/app_state_usecase.dart';
+import '../../../../authentication/presentation/shared/map_failure_message.dart';
+import '../../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../../../filters/domain/entities/filter_tag_entity.dart';
+import '../../../../filters/domain/repositories/filter_skill_repository.dart';
+import '../../../../filters/states/filter_action_observer.dart';
+import '../../../../help_center/domain/usecases/security_mode_action_feature.dart';
+import '../../../domain/states/profile_edit_state.dart';
 
 part 'profile_edit_controller.g.dart';
 
@@ -171,7 +172,7 @@ extension _PrivateMethod on _ProfileEditControllerBase {
   }
 
   void handleLoadPageError(Failure failure) {
-    final message = mapFailureMessage(failure)!;
+    final message = mapFailureMessage(failure);
     state = ProfileEditState.error(message);
   }
 

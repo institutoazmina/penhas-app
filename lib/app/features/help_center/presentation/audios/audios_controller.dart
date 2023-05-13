@@ -1,16 +1,17 @@
 import 'package:dartz/dartz.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/managers/audio_play_services.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/help_center/data/repositories/audios_repository.dart';
-import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
-import 'package:penhas/app/features/help_center/domain/entities/audio_play_tile_entity.dart';
-import 'package:penhas/app/features/help_center/domain/states/audio_playing.dart';
-import 'package:penhas/app/features/help_center/domain/states/audio_tile_action.dart';
-import 'package:penhas/app/features/help_center/domain/states/audios_state.dart';
+
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/managers/audio_play_services.dart';
+import '../../../authentication/presentation/shared/map_failure_message.dart';
+import '../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../data/repositories/audios_repository.dart';
+import '../../domain/entities/audio_entity.dart';
+import '../../domain/entities/audio_play_tile_entity.dart';
+import '../../domain/states/audio_playing.dart';
+import '../../domain/states/audio_tile_action.dart';
+import '../../domain/states/audios_state.dart';
 
 part 'audios_controller.g.dart';
 
@@ -106,7 +107,7 @@ extension _AudiosControllerBasePrivate on _AudiosControllerBase {
   }
 
   void handleLoadPageError(Failure failure) {
-    final message = mapFailureMessage(failure)!;
+    final message = mapFailureMessage(failure);
     currentState = AudiosState.error(message);
   }
 

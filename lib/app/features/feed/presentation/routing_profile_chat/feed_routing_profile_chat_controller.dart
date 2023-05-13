@@ -87,7 +87,7 @@ abstract class _FeedRoutingProfileChatControllerBase
   void _handleFailure(Failure failure) {
     routingState = FeedRoutingState.error(
       _getPageTitle(),
-      mapFailureMessage(failure)!,
+      mapFailureMessage(failure),
     );
   }
 }
