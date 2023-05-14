@@ -50,6 +50,14 @@ void main() {
         expect(cep.value, left(CepInvalidFailure()));
       });
 
+      test('returns invalid Cep when constructed with letters', () {
+        final cep = Cep('63024-37a');
+
+        expect(cep.isValid, false);
+        expect(cep.mapFailure, 'CEP inválido');
+        expect(cep.value, left(CepInvalidFailure()));
+      });
+
       test('return true for equals Ceps', () {
         // arrange
         const cepString = '63024-370';
