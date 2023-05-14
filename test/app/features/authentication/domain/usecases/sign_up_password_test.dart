@@ -34,6 +34,7 @@ void main() {
           expect(result.value, left(EmptyRule()));
           expect(result.isValid, false);
           expect(result.rawValue, null);
+          expect(result.mapFailure, '');
         },
       );
       test(
@@ -110,6 +111,7 @@ void main() {
           expect(result.value, right(validPassword));
           expect(result.isValid, true);
           expect(result.rawValue, validPassword);
+          expect(result.mapFailure, '');
         },
       );
       test(
@@ -123,6 +125,7 @@ void main() {
           expect(result.value, right(validPassword));
           expect(result.isValid, true);
           expect(result.rawValue, validPassword);
+          expect(result.mapFailure, '');
         },
       );
       test('return true for equals SignUpPassword', () {
