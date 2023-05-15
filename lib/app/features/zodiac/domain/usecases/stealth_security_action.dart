@@ -36,11 +36,7 @@ class StealthSecurityAction {
     _streamController ??= StreamController.broadcast();
 
     return _getCurrentLocation()
-        .then((location) {
-          if (location != null) {
-            _triggerGuardian(location);
-          }
-        })
+        .then((location) => _triggerGuardian(location))
         .then((_) => _startAudioRecord())
         .then((_) => _streamController!.add(true));
   }
