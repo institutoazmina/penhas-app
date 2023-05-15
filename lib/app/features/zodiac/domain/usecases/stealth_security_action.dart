@@ -72,12 +72,10 @@ class StealthSecurityAction {
 
     if (hasPermission) {
       return _locationService.currentLocation().then((location) {
-        try {
-          return formatCoordinates(location as UserLocationEntity);
-        } catch (e, stack) {
-          logError(e, stack);
+        return location.fold((l) {
+          logError(l);
           return const UserLocationEntity();
-        }
+        }, (r) => formatCoordinates(r));
       });
     }
 
@@ -125,10 +123,13 @@ extension _PrivateMethods on StealthSecurityAction {
     return _locationService.isPermissionGranted();
   }
 
-  UserLocationEntity formatCoordinates(UserLocationEntity location) {
-    return UserLocationEntity(
-        accuracy: location.accuracy,
-        latitude: double.parse(location.latitude.toStringAsFixed(7)),
-        longitude: double.parse(location.latitude.toStringAsFixed(7)));
+  UserLocationEntity formatCoordinates(UserLocationEntity? location) {
+    if (location != null) {
+      return UserLocationEntity(
+          accuracy: location.accuracy,
+          latitude: double.parse(location.latitude.toStringAsFixed(7)),
+          longitude: double.parse(location.longitude.toStringAsFixed(7)));
+    }
+    return const UserLocationEntity();
   }
 }
