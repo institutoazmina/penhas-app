@@ -36,7 +36,11 @@ class StealthSecurityAction {
     _streamController ??= StreamController.broadcast();
 
     return _getCurrentLocation()
-        .then((location) => _triggerGuardian(location))
+        .then((location) {
+          if (location != null) {
+            _triggerGuardian(location);
+          }
+        })
         .then((_) => _startAudioRecord())
         .then((_) => _streamController!.add(true));
   }
@@ -71,14 +75,13 @@ class StealthSecurityAction {
     final hasPermission = await hasLocationPermission();
 
     if (hasPermission) {
-      return _locationService.currentLocation().then((v) {
-        if (v is LocationFailure) {
+      return _locationService.currentLocation().then((location) {
+        try {
+          return formatCoordinates(location as UserLocationEntity);
+        } catch (e, stack) {
+          logError(e, stack);
           return const UserLocationEntity();
-        } else if (v is UserLocationEntity) {
-          return formatCoordinates(v as UserLocationEntity);
         }
-
-        return const UserLocationEntity();
       });
     }
 
