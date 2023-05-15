@@ -72,7 +72,13 @@ class StealthSecurityAction {
 
     if (hasPermission) {
       return _locationService.currentLocation().then((v) {
-        return v.getOrElse(() => const UserLocationEntity())!;
+        if (v is LocationFailure) {
+          return const UserLocationEntity();
+        } else if (v is UserLocationEntity) {
+          return formatCoordinates(v as UserLocationEntity);
+        }
+
+        return const UserLocationEntity();
       });
     }
 
@@ -118,5 +124,12 @@ class StealthSecurityAction {
 extension _PrivateMethods on StealthSecurityAction {
   Future<bool> hasLocationPermission() {
     return _locationService.isPermissionGranted();
+  }
+
+  UserLocationEntity formatCoordinates(UserLocationEntity location) {
+    return UserLocationEntity(
+        accuracy: location.accuracy,
+        latitude: double.parse(location.latitude.toStringAsFixed(7)),
+        longitude: double.parse(location.latitude.toStringAsFixed(7)));
   }
 }
