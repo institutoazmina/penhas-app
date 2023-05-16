@@ -1,4 +1,4 @@
-import 'package:penhas/app/features/chat/domain/entities/chat_message_entity.dart';
+import 'chat_message_entity.dart';
 
 enum ChatChannelMessageType { warning, text }
 

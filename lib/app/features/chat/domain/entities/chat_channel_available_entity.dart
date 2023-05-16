@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-import 'package:penhas/app/features/chat/domain/entities/chat_assistant_entity.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_entity.dart';
+import 'chat_assistant_entity.dart';
+import 'chat_channel_entity.dart';
 
 class ChatChannelAvailableEntity extends Equatable {
   const ChatChannelAvailableEntity({

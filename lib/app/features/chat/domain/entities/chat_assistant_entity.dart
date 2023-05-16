@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
+
+import '../../../appstate/domain/entities/app_state_entity.dart';
 
 class ChatAssistantEntity extends Equatable {
   const ChatAssistantEntity({
