@@ -64,7 +64,7 @@ class ChatChannelUseCase with MapFailureMessage {
 
     _currentSession = null;
     final option = ChatChannelRequest(token: _channelToken);
-    syncChannelSession(parameters: option, insertWarrningMessage: true);
+    syncChannelSession(parameters: option, insertWarningMessage: true);
   }
 
   Future<void> sentMessage(String message) async {
@@ -103,14 +103,14 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
       const Duration(milliseconds: 200),
       () async {
         if (channel.session == null) {
-          syncChannelSession(
+          await syncChannelSession(
             parameters: ChatChannelRequest(
               token: channel.token,
             ),
-            insertWarrningMessage: true,
+            insertWarningMessage: true,
           );
         } else {
-          handleSession(channel.session!, insertWarrningMessage: true);
+          handleSession(channel.session!, insertWarningMessage: true);
         }
       },
     );
@@ -120,14 +120,14 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
 
   Future<void> syncChannelSession({
     required ChatChannelRequest parameters,
-    required bool insertWarrningMessage,
+    required bool insertWarningMessage,
   }) async {
     final result = await _channelRepository.getMessages(parameters);
 
     result.fold(
       (failure) => handleFailure(failure),
       (session) =>
-          handleSession(session, insertWarrningMessage: insertWarrningMessage),
+          handleSession(session, insertWarningMessage: insertWarningMessage),
     );
   }
 
@@ -141,9 +141,21 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
     logError(failure);
   }
 
+  bool _hasWarningMessage(
+    bool insertWarningMessage,
+    ChatChannelSessionEntity session,
+  ) {
+    if (!insertWarningMessage) {
+      return false;
+    }
+
+    return session.metadata?.headerWarning != null &&
+        session.metadata!.headerWarning!.isNotEmpty;
+  }
+
   void handleSession(
     ChatChannelSessionEntity session, {
-    required bool insertWarrningMessage,
+    required bool insertWarningMessage,
   }) {
     final List<ChatChannelMessage> messages = [];
 
@@ -153,11 +165,9 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
 
     if (_currentSession?.metadata != session.metadata) {
       _streamController
-          .add(ChatChannelUseCaseEvent.updateMetada(session.metadata!));
+          .add(ChatChannelUseCaseEvent.updateMetadata(session.metadata!));
 
-      if (insertWarrningMessage &&
-          (session.metadata!.headerWarning != null ||
-              session.metadata!.headerWarning!.isNotEmpty)) {
+      if (_hasWarningMessage(insertWarningMessage, session)) {
         messages.add(
           ChatChannelMessage(
             type: ChatChannelMessageType.warning,
@@ -195,6 +205,7 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
 
     _messageCache.clear();
     _messageCache.addAll(messages);
+
     _streamController
         .add(ChatChannelUseCaseEvent.updateMessage(_messageCache.toList()));
   }
@@ -249,14 +260,14 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
     final metadata = ChatChannelSessionMetadataEntity(
       canSendMessage: !isToBlock,
       didBlocked: isToBlock,
-      headerMessage: _currentSession!.metadata!.headerMessage,
-      headerWarning: _currentSession!.metadata!.headerWarning,
-      isBlockable: _currentSession!.metadata!.isBlockable,
-      lastMessageEtag: _currentSession!.metadata!.lastMessageEtag,
+      headerMessage: _currentSession?.metadata?.headerMessage,
+      headerWarning: _currentSession?.metadata?.headerWarning,
+      isBlockable: _currentSession?.metadata?.isBlockable ?? false,
+      lastMessageEtag: _currentSession?.metadata?.lastMessageEtag,
     );
 
     _streamController.add(
-      ChatChannelUseCaseEvent.updateMetada(metadata),
+      ChatChannelUseCaseEvent.updateMetadata(metadata),
     );
   }
 
@@ -275,6 +286,6 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
 
   Future<void> syncChannel() async {
     final option = ChatChannelRequest(token: _channelToken);
-    await syncChannelSession(parameters: option, insertWarrningMessage: false);
+    await syncChannelSession(parameters: option, insertWarningMessage: false);
   }
 }
