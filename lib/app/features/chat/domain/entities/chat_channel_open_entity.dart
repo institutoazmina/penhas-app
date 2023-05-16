@@ -12,9 +12,6 @@ class ChatChannelOpenEntity extends Equatable {
   final ChatChannelSessionEntity? session;
 
   @override
-  bool get stringify => true;
-
-  @override
   List<Object?> get props => [
         token,
         session,

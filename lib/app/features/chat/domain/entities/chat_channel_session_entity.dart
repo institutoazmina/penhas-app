@@ -22,9 +22,6 @@ class ChatChannelSessionEntity extends Equatable {
   final ChatUserEntity? user;
 
   @override
-  bool get stringify => true;
-
-  @override
   List<Object?> get props => [
         hasMore,
         newer,
@@ -62,9 +59,6 @@ class ChatChannelSessionMetadataEntity extends Equatable {
   final String? headerWarning;
   final bool isBlockable;
   final String? lastMessageEtag;
-
-  @override
-  bool get stringify => true;
 
   @override
   List<Object?> get props => [

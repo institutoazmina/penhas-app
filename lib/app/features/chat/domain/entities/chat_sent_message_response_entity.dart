@@ -22,9 +22,6 @@ class ChatSentMessageResponseEntity extends Equatable {
   final String? currentMessageEtag;
 
   @override
-  bool get stringify => true;
-
-  @override
   List<Object?> get props => [
         id!,
         lastMessageEtag!,

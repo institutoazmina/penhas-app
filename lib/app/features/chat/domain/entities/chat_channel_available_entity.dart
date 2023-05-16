@@ -19,9 +19,6 @@ class ChatChannelAvailableEntity extends Equatable {
   final ChatAssistantEntity? assistant;
 
   @override
-  bool get stringify => true;
-
-  @override
   List<Object?> get props => [
         hasMore,
         nextPage,

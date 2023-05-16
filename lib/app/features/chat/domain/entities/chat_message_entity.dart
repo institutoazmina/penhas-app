@@ -14,9 +14,6 @@ class ChatMessageEntity extends Equatable {
   final DateTime time;
 
   @override
-  bool get stringify => true;
-
-  @override
   List<Object?> get props => [
         id!,
         isMe,

@@ -16,9 +16,6 @@ class ChatAssistantEntity extends Equatable {
   final QuizSessionEntity? quizSession;
 
   @override
-  bool get stringify => true;
-
-  @override
   List<Object?> get props => [
         title,
         subtitle,
