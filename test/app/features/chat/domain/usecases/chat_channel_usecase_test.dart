@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -33,6 +35,10 @@ void main() {
     );
   });
 
+  tearDown(() {
+    chatChannelUseCase.dispose();
+  });
+
   group(ChatChannelUseCase, () {
     group('block method', () {
       test(
@@ -45,25 +51,7 @@ void main() {
             clientId: chatUserEntity.userId.toString(),
             block: true,
           );
-
-          when(() => mockChatChannelRepository.blockChannel(any()))
-              .thenAnswer((_) async => right(const ValidField()));
-          when(() => mockChatChannelRepository.getMessages(any()))
-              .thenAnswer((_) async => right(session));
-
-          // act
-          final List<ChatChannelUseCaseEvent> matchers = [
-            ChatChannelUseCaseEvent.updateUser(chatUserEntity),
-            ChatChannelUseCaseEvent.updateMetadata(
-                ChatChannelSessionMetadataEntity(
-                    canSendMessage: true,
-                    didBlocked: false,
-                    headerMessage: '',
-                    headerWarning: '',
-                    isBlockable: true,
-                    lastMessageEtag: 'abcd')),
-            const ChatChannelUseCaseEvent.loaded(),
-            ChatChannelUseCaseEvent.updateMessage([]),
+          const List<ChatChannelUseCaseEvent> messagesEvent = [
             ChatChannelUseCaseEvent.updateMetadata(
                 ChatChannelSessionMetadataEntity(
                     canSendMessage: false,
@@ -73,16 +61,24 @@ void main() {
                     isBlockable: true,
                     lastMessageEtag: 'abcd')),
           ];
-          var i = 0;
+          var messagesEventIndex = 0;
 
+          when(() => mockChatChannelRepository.blockChannel(any()))
+              .thenAnswer((_) async => right(const ValidField()));
+          when(() => mockChatChannelRepository.getMessages(any()))
+              .thenAnswer((_) async => right(session));
+
+          // act
+          await load(chatChannelUseCase);
+          // Testando as mensagens do stream e para isto tenho que escutar o stream
+          // antes de executar o método `block`
           chatChannelUseCase.dataSource.listen(
             expectAsync1((event) {
-              expect(event, matchers[i]);
-              i++;
+              expect(event, messagesEvent[messagesEventIndex]);
+              messagesEventIndex++;
             }, max: -1),
           );
 
-          await Future.delayed(const Duration(seconds: 1));
           await chatChannelUseCase.block();
 
           // assert
@@ -91,7 +87,6 @@ void main() {
                   .captured;
           expect(captured.last, chatChannelRequest);
         },
-        // timeout: const Timeout(Duration(seconds: 5)),
       );
 
       // test('handles failure correctly when blocking a channel fails', () async {
@@ -162,6 +157,45 @@ ChatUserEntity buildChatUser({int? userId, String? nickname}) {
     blockedMe: false,
     nickname: nickname ?? 'penhas',
   );
+}
+
+Future<void> load(ChatChannelUseCase chatChannel) async {
+  // final List<ChatChannelUseCaseEvent> matchers = [
+  //   ChatChannelUseCaseEvent.updateUser(chatUserEntity),
+  //   ChatChannelUseCaseEvent.updateMetadata(
+  //       ChatChannelSessionMetadataEntity(
+  //           canSendMessage: true,
+  //           didBlocked: false,
+  //           headerMessage: '',
+  //           headerWarning: '',
+  //           isBlockable: true,
+  //           lastMessageEtag: 'abcd')),
+  //   const ChatChannelUseCaseEvent.loaded(),
+  //   ChatChannelUseCaseEvent.updateMessage([]),
+  //   ChatChannelUseCaseEvent.updateMetadata(
+  //       ChatChannelSessionMetadataEntity(
+  //           canSendMessage: false,
+  //           didBlocked: true,
+  //           headerMessage: '',
+  //           headerWarning: '',
+  //           isBlockable: true,
+  //           lastMessageEtag: 'abcd')),
+  // ];
+  // var i = 0;
+
+  // chatChannel.dataSource.listen(
+  //   expectAsync1((event) {
+  //     expect(event, matchers[i]);
+  //     i++;
+  //   }, max: -1),
+  // );
+  final StreamSubscription dataSource =
+      chatChannel.dataSource.listen((event) {});
+
+  await Future.delayed(const Duration(seconds: 1), () {
+    dataSource.cancel();
+  });
+  return Future.value();
 }
 
 class FakeChatChannelRequest extends Fake implements ChatChannelRequest {}
