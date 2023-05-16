@@ -105,7 +105,7 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
     final failureMessage = mapFailureMessage(failure);
 
     if (state.isEmpty) {
-      state = FeedState.error(failureMessage!);
+      state = FeedState.error(failureMessage);
     } else {
       errorMessage = failureMessage;
     }
