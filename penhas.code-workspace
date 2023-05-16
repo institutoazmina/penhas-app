@@ -17,7 +17,9 @@
 			"editor.inlayHints.enabled": "offUnlessPressed",
 		},
 		"cSpell.words": [
+			"Blockable",
 			"datasources",
+			"Etag",
 			"mocktail",
 			"penhas",
 			"usecases"
