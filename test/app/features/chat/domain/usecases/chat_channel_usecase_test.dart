@@ -106,7 +106,7 @@ void main() {
         // act
         // Testando as mensagens do stream e para isto tenho que escutar o stream
         // antes de executar o método `block`.
-        // Não quero que o stream emita nenhum evento, por isso o `count: 0, max: 0`.
+        // Não quero que o stream emita evento, por isso o `count: 0, max: 0`.
         chatChannelUseCase.dataSource.listen(
           expectAsync1((event) {}, count: 0, max: 0),
         );
@@ -118,9 +118,83 @@ void main() {
       });
     });
 
-    // test('initializes with correct state', () async {
-    //   // Add your expectations and verifications here
-    // });
+    group('unblock method', () {
+      test(
+        'unblock a channel',
+        () async {
+          // arrange
+          final chatChannelRequest = ChatChannelRequest(
+            token: channelToken,
+            clientId: chatUserEntity.userId.toString(),
+            block: false,
+          );
+          const List<ChatChannelUseCaseEvent> messagesEvent = [
+            ChatChannelUseCaseEvent.updateMetadata(
+                ChatChannelSessionMetadataEntity(
+                    canSendMessage: true,
+                    didBlocked: false,
+                    headerMessage: '',
+                    headerWarning: '',
+                    isBlockable: true,
+                    lastMessageEtag: 'abcd')),
+          ];
+          var messagesEventIndex = 0;
+
+          when(() => mockChatChannelRepository.blockChannel(any()))
+              .thenAnswer((_) async => right(const ValidField()));
+
+          await load(
+            chatChannelUseCase,
+            user: chatUserEntity,
+            repository: mockChatChannelRepository,
+          );
+          // act
+          // Testando as mensagens do stream e para isto tenho que escutar o stream
+          // antes de executar o método `block`.
+          // Se ocorrer algum alteração no stream, o teste falhará
+          chatChannelUseCase.dataSource.listen(
+            expectAsync1((event) {
+              expect(event, messagesEvent[messagesEventIndex]);
+              messagesEventIndex++;
+            }, max: messagesEvent.length),
+          );
+
+          await chatChannelUseCase.unblock();
+
+          // assert
+          final captured =
+              verify(() => mockChatChannelRepository.blockChannel(captureAny()))
+                  .captured;
+          expect(captured.last, chatChannelRequest);
+        },
+        timeout: const Timeout(Duration(seconds: 2)),
+      );
+
+      test('handles failure correctly when unblocking a channel fails',
+          () async {
+        // arrange
+        var failure = InternetConnectionFailure(); // fill in as needed
+        when(() => mockChatChannelRepository.blockChannel(any()))
+            .thenAnswer((_) async => Left(failure));
+        await load(
+          chatChannelUseCase,
+          user: chatUserEntity,
+          repository: mockChatChannelRepository,
+        );
+        // act
+        // Testando as mensagens do stream e para isto tenho que escutar o stream
+        // antes de executar o método `block`.
+        // Não quero que o stream emita evento, por isso o `count: 0, max: 0`.
+        chatChannelUseCase.dataSource.listen(
+          expectAsync1((event) {}, count: 0, max: 0),
+        );
+
+        await chatChannelUseCase.unblock();
+
+        // assert
+        verify(() => mockChatChannelRepository.blockChannel(any()));
+      });
+    });
 
     // test('sentMessage sends a message', () async {
     //   // arrange
