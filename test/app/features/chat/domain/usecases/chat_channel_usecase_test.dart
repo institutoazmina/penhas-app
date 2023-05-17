@@ -7,9 +7,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_channel_message.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_request.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_session_entity.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_message_entity.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_sent_message_response_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
 import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
 import 'package:penhas/app/features/chat/domain/states/chat_channel_usecase_event.dart';
@@ -278,25 +281,55 @@ void main() {
       });
     });
 
-    // test('sentMessage sends a message', () async {
-    //   // arrange
-    //   when(() => mockChatChannelRepository.sentMessage(any())).thenAnswer(
-    //     (_) async => const Right(
-    //       ChatSentMessageResponseEntity(
-    //         id: 123,
-    //         currentMessageEtag: 'efgh',
-    //         lastMessageEtag: 'abcd',
-    //       ),
-    //     ),
-    //   ); // fill in as needed
-    //   // act
-    //   await chatChannelUseCase.sentMessage('Test message');
-    //   // assert
-    //   verify(() => mockChatChannelRepository.sentMessage(any()));
-    //   // dd your expectations and verifications here
-    // });
+    group('sentMessage method', () {
+      test('sends a message', () async {
+        // arrange
+        List<ChatChannelUseCaseEvent> messagesEvent = [
+          ChatChannelUseCaseEvent.updateMessage([
+            ChatChannelMessage(
+                content: ChatMessageEntity(
+                  id: 123,
+                  isMe: true,
+                  message: 'Test message',
+                  time: DateTime.now(),
+                ),
+                type: ChatChannelMessageType.text),
+          ]),
+        ];
+        var messagesEventIndex = 0;
 
-    // Add more tests for all your methods
+        when(() => mockChatChannelRepository.sentMessage(any())).thenAnswer(
+          (_) async => right(
+            ChatSentMessageResponseEntity(
+              id: 123,
+              currentMessageEtag: 'efgh',
+              lastMessageEtag: 'abcd',
+            ),
+          ),
+        ); // fill in as needed
+        await load(
+          chatChannelUseCase,
+          user: chatUserEntity,
+          repository: mockChatChannelRepository,
+        );
+        // act
+        // Testando as mensagens do stream e para isto tenho que escutar o stream
+        // antes de executar o método `block`.
+        // Se ocorrer algum alteração no stream, o teste falhará
+        chatChannelUseCase.dataSource.listen(
+          expectAsync1((actualEvent) {
+            final expectedEvent = messagesEvent[messagesEventIndex];
+            expect(actualEvent, expectedEvent);
+
+            messagesEventIndex++;
+          }, max: messagesEvent.length),
+        );
+
+        await chatChannelUseCase.sentMessage('Test message');
+        // assert
+        verify(() => mockChatChannelRepository.sentMessage(any()));
+      });
+    });
   });
 }
 
