@@ -391,35 +391,6 @@ Future<void> load(
   required ChatUserEntity user,
   required IChatChannelRepository repository,
 }) async {
-  // final List<ChatChannelUseCaseEvent> matchers = [
-  //   ChatChannelUseCaseEvent.updateUser(chatUserEntity),
-  //   ChatChannelUseCaseEvent.updateMetadata(
-  //       ChatChannelSessionMetadataEntity(
-  //           canSendMessage: true,
-  //           didBlocked: false,
-  //           headerMessage: '',
-  //           headerWarning: '',
-  //           isBlockable: true,
-  //           lastMessageEtag: 'abcd')),
-  //   const ChatChannelUseCaseEvent.loaded(),
-  //   ChatChannelUseCaseEvent.updateMessage([]),
-  //   ChatChannelUseCaseEvent.updateMetadata(
-  //       ChatChannelSessionMetadataEntity(
-  //           canSendMessage: false,
-  //           didBlocked: true,
-  //           headerMessage: '',
-  //           headerWarning: '',
-  //           isBlockable: true,
-  //           lastMessageEtag: 'abcd')),
-  // ];
-  // var i = 0;
-
-  // chatChannel.dataSource.listen(
-  //   expectAsync1((event) {
-  //     expect(event, matchers[i]);
-  //     i++;
-  //   }, max: -1),
-  // );
   // assert
   final session = buildChatChannelSession(user);
   final StreamSubscription dataSource =
