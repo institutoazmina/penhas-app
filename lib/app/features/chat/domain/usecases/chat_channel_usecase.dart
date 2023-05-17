@@ -53,18 +53,8 @@ class ChatChannelUseCase with MapFailureMessage {
 
     response.fold(
       (failure) => handleFailure(failure),
-      (session) => updateFromDeletedAction(),
+      (session) => _updateFromDeletedAction(),
     );
-  }
-
-  Future<void> updateFromDeletedAction() async {
-    _messageCache.clear();
-    _streamController
-        .add(ChatChannelUseCaseEvent.updateMessage(_messageCache.toList()));
-
-    _currentSession = null;
-    final option = ChatChannelRequest(token: _channelToken);
-    syncChannelSession(parameters: option, insertWarningMessage: true);
   }
 
   Future<void> sentMessage(String message) async {
@@ -116,6 +106,16 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
     );
 
     setupPollingSync();
+  }
+
+  Future<void> _updateFromDeletedAction() async {
+    _messageCache.clear();
+    _streamController
+        .add(ChatChannelUseCaseEvent.updateMessage(_messageCache.toList()));
+
+    _currentSession = null;
+    final option = ChatChannelRequest(token: _channelToken);
+    syncChannelSession(parameters: option, insertWarningMessage: true);
   }
 
   Future<void> syncChannelSession({
