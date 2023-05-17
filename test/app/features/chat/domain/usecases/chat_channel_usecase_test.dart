@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
+import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_request.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_session_entity.dart';
@@ -45,7 +46,6 @@ void main() {
         'blocks a channel',
         () async {
           // arrange
-          final session = buildChatChannelSession(chatUserEntity);
           final chatChannelRequest = ChatChannelRequest(
             token: channelToken,
             clientId: chatUserEntity.userId.toString(),
@@ -65,18 +65,21 @@ void main() {
 
           when(() => mockChatChannelRepository.blockChannel(any()))
               .thenAnswer((_) async => right(const ValidField()));
-          when(() => mockChatChannelRepository.getMessages(any()))
-              .thenAnswer((_) async => right(session));
 
+          await load(
+            chatChannelUseCase,
+            user: chatUserEntity,
+            repository: mockChatChannelRepository,
+          );
           // act
-          await load(chatChannelUseCase);
           // Testando as mensagens do stream e para isto tenho que escutar o stream
-          // antes de executar o método `block`
+          // antes de executar o método `block`.
+          // Se ocorrer algum alteração no stream, o teste falhará
           chatChannelUseCase.dataSource.listen(
             expectAsync1((event) {
               expect(event, messagesEvent[messagesEventIndex]);
               messagesEventIndex++;
-            }, max: -1),
+            }, max: messagesEvent.length),
           );
 
           await chatChannelUseCase.block();
@@ -87,21 +90,32 @@ void main() {
                   .captured;
           expect(captured.last, chatChannelRequest);
         },
+        timeout: const Timeout(Duration(seconds: 2)),
       );
 
-      // test('handles failure correctly when blocking a channel fails', () async {
-      //   // arrange
-      //   var failure = Failure(); // fill in as needed
-      //   when(() => mockChatChannelRepository.blockChannel(any()))
-      //       .thenAnswer((_) async => Left(failure));
+      test('handles failure correctly when blocking a channel fails', () async {
+        // arrange
+        var failure = InternetConnectionFailure(); // fill in as needed
+        when(() => mockChatChannelRepository.blockChannel(any()))
+            .thenAnswer((_) async => Left(failure));
+        await load(
+          chatChannelUseCase,
+          user: chatUserEntity,
+          repository: mockChatChannelRepository,
+        );
+        // act
+        // Testando as mensagens do stream e para isto tenho que escutar o stream
+        // antes de executar o método `block`.
+        // Não quero que o stream emita nenhum evento, por isso o `count: 0, max: 0`.
+        chatChannelUseCase.dataSource.listen(
+          expectAsync1((event) {}, count: 0, max: 0),
+        );
 
-      //   // act
-      //   await chatChannelUseCase.block();
+        await chatChannelUseCase.block();
 
-      //   // assert
-      //   verify(() => mockChatChannelRepository.blockChannel(any()));
-      //   // You can also add more assertions here to check if the state of the chatChannelUseCase has changed as expected.
-      // });
+        // assert
+        verify(() => mockChatChannelRepository.blockChannel(any()));
+      });
     });
 
     // test('initializes with correct state', () async {
@@ -159,7 +173,11 @@ ChatUserEntity buildChatUser({int? userId, String? nickname}) {
   );
 }
 
-Future<void> load(ChatChannelUseCase chatChannel) async {
+Future<void> load(
+  ChatChannelUseCase chatChannel, {
+  required ChatUserEntity user,
+  required IChatChannelRepository repository,
+}) async {
   // final List<ChatChannelUseCaseEvent> matchers = [
   //   ChatChannelUseCaseEvent.updateUser(chatUserEntity),
   //   ChatChannelUseCaseEvent.updateMetadata(
@@ -189,9 +207,14 @@ Future<void> load(ChatChannelUseCase chatChannel) async {
   //     i++;
   //   }, max: -1),
   // );
+  // assert
+  final session = buildChatChannelSession(user);
   final StreamSubscription dataSource =
       chatChannel.dataSource.listen((event) {});
+  when(() => repository.getMessages(any()))
+      .thenAnswer((_) async => right(session));
 
+  // act
   await Future.delayed(const Duration(seconds: 1), () {
     dataSource.cancel();
   });
