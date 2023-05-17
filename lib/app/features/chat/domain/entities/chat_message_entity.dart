@@ -15,9 +15,8 @@ class ChatMessageEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id!,
+        id,
         isMe,
-        message!,
-        time,
+        message,
       ];
 }
