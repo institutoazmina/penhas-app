@@ -329,6 +329,30 @@ void main() {
         // assert
         verify(() => mockChatChannelRepository.sentMessage(any()));
       });
+
+      test('handles failure correctly when send message fails', () async {
+        // arrange
+        var failure = InternetConnectionFailure(); // fill in as needed
+        when(() => mockChatChannelRepository.sentMessage(any()))
+            .thenAnswer((_) async => Left(failure));
+        await load(
+          chatChannelUseCase,
+          user: chatUserEntity,
+          repository: mockChatChannelRepository,
+        );
+        // act
+        // Testando as mensagens do stream e para isto tenho que escutar o stream
+        // antes de executar o método `block`.
+        // Não quero que o stream emita evento, por isso o `count: 0, max: 0`.
+        chatChannelUseCase.dataSource.listen(
+          expectAsync1((event) {}, count: 0, max: 0),
+        );
+
+        await chatChannelUseCase.sentMessage('Test message');
+
+        // assert
+        verify(() => mockChatChannelRepository.sentMessage(any()));
+      });
     });
   });
 }
