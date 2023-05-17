@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
@@ -193,6 +195,86 @@ void main() {
 
         // assert
         verify(() => mockChatChannelRepository.blockChannel(any()));
+      });
+    });
+
+    group('delete method', () {
+      test(
+        'delete a channel',
+        () async {
+          // arrange
+          final session = buildChatChannelSession(chatUserEntity);
+          final chatChannelRequest = ChatChannelRequest(token: channelToken);
+          List<ChatChannelUseCaseEvent> messagesEvent = [
+            ChatChannelUseCaseEvent.updateMessage([]),
+            ChatChannelUseCaseEvent.updateUser(chatUserEntity),
+            ChatChannelUseCaseEvent.updateMetadata(
+                ChatChannelSessionMetadataEntity(
+                    canSendMessage: true,
+                    didBlocked: false,
+                    headerMessage: '',
+                    headerWarning: '',
+                    isBlockable: true,
+                    lastMessageEtag: 'abcd')),
+            ChatChannelUseCaseEvent.loaded()
+          ];
+          var messagesEventIndex = 0;
+
+          when(() => mockChatChannelRepository.deleteChannel(any()))
+              .thenAnswer((_) async => right(const ValidField()));
+          when(() => mockChatChannelRepository.getMessages(any()))
+              .thenAnswer((_) async => right(session));
+
+          await load(
+            chatChannelUseCase,
+            user: chatUserEntity,
+            repository: mockChatChannelRepository,
+          );
+          // act
+          // Testando as mensagens do stream e para isto tenho que escutar o stream
+          // antes de executar o método `block`.
+          // Se ocorrer algum alteração no stream, o teste falhará
+          chatChannelUseCase.dataSource.listen(
+            expectAsync1((event) {
+              expect(event, messagesEvent[messagesEventIndex]);
+              messagesEventIndex++;
+            }, max: messagesEvent.length),
+          );
+
+          await chatChannelUseCase.delete();
+
+          // assert
+          final captured = verify(
+                  () => mockChatChannelRepository.deleteChannel(captureAny()))
+              .captured;
+          expect(captured.last, chatChannelRequest);
+        },
+        timeout: const Timeout(Duration(seconds: 2)),
+      );
+
+      test('handles failure correctly when unblocking a channel fails',
+          () async {
+        // arrange
+        var failure = InternetConnectionFailure(); // fill in as needed
+        when(() => mockChatChannelRepository.deleteChannel(any()))
+            .thenAnswer((_) async => Left(failure));
+        await load(
+          chatChannelUseCase,
+          user: chatUserEntity,
+          repository: mockChatChannelRepository,
+        );
+        // act
+        // Testando as mensagens do stream e para isto tenho que escutar o stream
+        // antes de executar o método `block`.
+        // Não quero que o stream emita evento, por isso o `count: 0, max: 0`.
+        chatChannelUseCase.dataSource.listen(
+          expectAsync1((event) {}, count: 0, max: 0),
+        );
+
+        await chatChannelUseCase.delete();
+
+        // assert
+        verify(() => mockChatChannelRepository.deleteChannel(any()));
       });
     });
 
