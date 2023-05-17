@@ -23,7 +23,7 @@ class ChatChannelUseCase with MapFailureMessage {
   }
 
   final IChatChannelRepository _channelRepository;
-  final Duration _pollingSyncInterval = const Duration(seconds: 60);
+
   Timer? _syncTimer;
   String? _channelToken;
   String? _lastMessageEtag;
@@ -271,6 +271,8 @@ class ChatChannelUseCase with MapFailureMessage {
   }
 
   void _setupPollingSync() {
+    const _pollingSyncInterval = Duration(seconds: 60);
+
     if (_syncTimer != null) {
       return;
     }
