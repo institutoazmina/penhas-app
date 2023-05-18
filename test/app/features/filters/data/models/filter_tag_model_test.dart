@@ -1,36 +1,50 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter_test/flutter_test.dart';
-import 'package:penhas/app/features/filters/data/models/filter_skills_model.dart';
 import 'package:penhas/app/features/filters/data/models/filter_tag_model.dart';
 
-import '../../../../../utils/json_util.dart';
-
 void main() {
-  String? jsonFile;
-  List<FilterTagModel>? filterTags;
+  group(FilterTagModel, () {
+    test('fromJson correctly creates FilterTagModel', () {
+      final Map<String, dynamic> jsonData = {
+        'value': 'testId',
+        'label': 'testLabel',
+        'default': 1,
+      };
 
-  setUp(() {
-    jsonFile = 'filters/filter_skills.json';
-    filterTags = [
-      const FilterTagModel(id: '1', label: 'Escuta acolhedora', isSelected: false),
-      const FilterTagModel(id: '2', label: 'Psicologia', isSelected: false),
-      const FilterTagModel(id: '3', label: 'Abrigo', isSelected: false),
-      const FilterTagModel(id: '4', label: 'Apoio jurídico', isSelected: false),
-      const FilterTagModel(id: '5', label: 'Finanças pessoais', isSelected: false),
-      const FilterTagModel(id: '6', label: 'Saúde e bem estar', isSelected: false),
-      const FilterTagModel(id: '8', label: 'Segurança digital', isSelected: false),
-      const FilterTagModel(id: '9', label: 'Segurança pessoal', isSelected: false),
-    ];
-  });
+      final expectedModel = FilterTagModel(
+        id: 'testId',
+        label: 'testLabel',
+        isSelected: true,
+      );
 
-  group('FilterSkillsModel', () {
-    test('should return a valid model with a valid JSON', () async {
-      // arrange
-      final jsonData = await JsonUtil.getJson(from: jsonFile);
-      final actual = FilterSkillsModel(skills: filterTags);
-      // act
-      final matcher = FilterSkillsModel.fromJson(jsonData);
-      // assert
-      expect(actual, matcher);
+      final resultModel = FilterTagModel.fromJson(jsonData);
+
+      expect(resultModel, equals(expectedModel));
+    });
+
+    test('fromJson correctly handles null values', () {
+      final Map<String, dynamic> jsonData = {
+        'id': 'testId',
+        'title': 'testLabel',
+        'default': 0,
+      };
+
+      final expectedModel = FilterTagModel(
+        id: 'testId',
+        label: 'testLabel',
+        isSelected: false,
+      );
+
+      final resultModel = FilterTagModel.fromJson(jsonData);
+
+      expect(resultModel, equals(expectedModel));
+    });
+
+    test('fromJson returns null when argument is null', () {
+      final resultModel = FilterTagModel.fromJson(null);
+
+      expect(resultModel, isNull);
     });
   });
 }
