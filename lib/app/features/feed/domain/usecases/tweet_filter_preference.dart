@@ -6,15 +6,15 @@ import 'package:penhas/app/features/feed/domain/entities/tweet_filter_session_en
 
 class TweetFilterPreference {
   TweetFilterPreference({
-    required ITweetFilterPreferenceRepository? repository,
+    required ITweetFilterPreferenceRepository repository,
   }) : _repository = repository;
 
-  final ITweetFilterPreferenceRepository? _repository;
+  final ITweetFilterPreferenceRepository _repository;
   List<String> _currentTags = [];
   List<String> categories = [];
 
   Future<Either<Failure, TweetFilterSessionEntity>> retreive() async {
-    final serverResponse = await _repository!.retreive();
+    final serverResponse = await _repository.retreive();
 
     return serverResponse.fold(
       (failure) => left(failure),
