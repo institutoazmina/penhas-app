@@ -2,6 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
+import 'package:penhas/app/core/error/exceptions.dart';
+import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/extension/either.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart';
@@ -55,6 +57,21 @@ void main() {
           // assert
           expect(receivedSession.get(), expectedSession);
         });
+
+        test('map error from data source', () async {
+          // arrange
+          const apiProviderException = ApiProviderException(
+            bodyContent: {'error': 'expired_jwt'},
+          );
+          when(() => networkInfo.isConnected).thenAnswer((_) async => false);
+          when(() => dataSource.fetch(option: any(named: 'option')))
+              .thenThrow(apiProviderException);
+          // act
+          final receivedSession =
+              await repository.fetch(option: const TweetRequestOption());
+          // assert
+          expect(receivedSession, left(InternetConnectionFailure()));
+        });
       },
     );
     group('create()', () {
@@ -90,6 +107,20 @@ void main() {
           expect(received, expected);
         },
       );
+      test('map erro from data source', () async {
+        // arrange
+        const apiProviderException = ApiProviderException(
+          bodyContent: {'error': 'expired_jwt'},
+        );
+        when(() => networkInfo.isConnected).thenAnswer((_) async => false);
+        when(() => dataSource.create(option: any(named: 'option')))
+            .thenThrow(apiProviderException);
+        // act
+        final receivedSession = await repository.create(
+            option: TweetCreateRequestOption(message: 'Mensagem 1'));
+        // assert
+        expect(receivedSession, left(InternetConnectionFailure()));
+      });
     });
     group('delete', () {
       setUp(() {
@@ -110,6 +141,20 @@ void main() {
           expect(received, expected);
         },
       );
+      test('map error from data source', () async {
+        // arrange
+        const apiProviderException = ApiProviderException(
+          bodyContent: {'error': 'expired_jwt'},
+        );
+        when(() => networkInfo.isConnected).thenAnswer((_) async => false);
+        when(() => dataSource.delete(option: any(named: 'option')))
+            .thenThrow(apiProviderException);
+        // act
+        final receivedSession = await repository.delete(
+            option: TweetEngageRequestOption(tweetId: '200528T2055370004'));
+        // assert
+        expect(receivedSession, left(InternetConnectionFailure()));
+      });
     });
     group('like()', () {
       setUp(() async {
@@ -147,6 +192,20 @@ void main() {
           expect(received, expected);
         },
       );
+      test('map error from data source', () async {
+        // arrange
+        const apiProviderException = ApiProviderException(
+          bodyContent: {'error': 'expired_jwt'},
+        );
+        when(() => networkInfo.isConnected).thenAnswer((_) async => false);
+        when(() => dataSource.like(option: any(named: 'option')))
+            .thenThrow(apiProviderException);
+        // act
+        final receivedSession = await repository.like(
+            option: TweetEngageRequestOption(tweetId: '200528T2055370004'));
+        // assert
+        expect(receivedSession, left(InternetConnectionFailure()));
+      });
     });
     group('reply()', () {
       setUp(() async {
@@ -185,6 +244,23 @@ void main() {
           expect(received, expected);
         },
       );
+
+      test('map error from data source', () async {
+        // arrange
+        const apiProviderException = ApiProviderException(
+          bodyContent: {'error': 'expired_jwt'},
+        );
+        when(() => networkInfo.isConnected).thenAnswer((_) async => false);
+        when(() => dataSource.reply(option: any(named: 'option')))
+            .thenThrow(apiProviderException);
+        // act
+        final receivedSession = await repository.reply(
+            option: TweetEngageRequestOption(
+          tweetId: '200528T2055370004',
+        ));
+        // assert
+        expect(receivedSession, left(InternetConnectionFailure()));
+      });
     });
     group('current()', () {
       setUp(() async {
@@ -232,6 +308,21 @@ void main() {
           expect(received, expected);
         },
       );
+
+      test('map error from data source', () async {
+        // arrange
+        const apiProviderException = ApiProviderException(
+          bodyContent: {'error': 'expired_jwt'},
+        );
+        when(() => networkInfo.isConnected).thenAnswer((_) async => false);
+        when(() => dataSource.current(option: any(named: 'option')))
+            .thenThrow(apiProviderException);
+        // act
+        final receivedSession = await repository.current(
+            option: TweetEngageRequestOption(tweetId: '200528T2055370004'));
+        // assert
+        expect(receivedSession, left(InternetConnectionFailure()));
+      });
     });
 
     group(
@@ -245,7 +336,7 @@ void main() {
           // arrange
           final requestOption = TweetEngageRequestOption(
             tweetId: '200528T2055370004',
-            message: 'esse tweet me ofende pq XPTO',
+            message: 'informação agressiva',
           );
           final expected = right(const ValidField());
           // act
@@ -253,7 +344,114 @@ void main() {
           // assert
           expect(received, expected);
         });
+
+        test('map error from data source', () async {
+          // arrange
+          const apiProviderException = ApiProviderException(
+            bodyContent: {'error': 'expired_jwt'},
+          );
+          when(() => networkInfo.isConnected).thenAnswer((_) async => false);
+          when(() => dataSource.report(option: any(named: 'option')))
+              .thenThrow(apiProviderException);
+          // act
+          final receivedSession = await repository.report(
+              option: TweetEngageRequestOption(tweetId: '200528T2055370004'));
+          // assert
+          expect(receivedSession, left(InternetConnectionFailure()));
+        });
       },
     );
+
+    group('mapping error', () {
+      late TweetEngageRequestOption requestOption;
+      setUp(() {
+        requestOption = TweetEngageRequestOption(tweetId: '200528T2055370004');
+      });
+
+      test(
+          'return an InternetConnectionFailure when the network is disconnected',
+          () async {
+        // arrange
+        const apiProviderException = ApiProviderException(
+          bodyContent: {'error': 'expired_jwt'},
+        );
+        when(() => networkInfo.isConnected).thenAnswer((_) async => false);
+        when(() => dataSource.report(option: any(named: 'option')))
+            .thenThrow(apiProviderException);
+        // act
+        final receivedSession = await repository.report(option: requestOption);
+        // assert
+        expect(receivedSession, left(InternetConnectionFailure()));
+      });
+
+      test('return a ServerFailure when the session is invalid', () async {
+        // arrange
+        const apiProviderException = ApiProviderException(
+          bodyContent: {'error': 'expired_jwt'},
+        );
+        when(() => networkInfo.isConnected).thenAnswer((_) async => true);
+        when(() => dataSource.report(option: any(named: 'option')))
+            .thenThrow(apiProviderException);
+        // act
+        final receivedSession = await repository.report(option: requestOption);
+        // assert
+        expect(receivedSession, left(ServerSideSessionFailed()));
+      });
+
+      test(
+          'return a ServerSideFormFieldValidationFailure when got server error',
+          () async {
+        // arrange
+        const apiProviderException = ApiProviderException(
+          bodyContent: {
+            'error': 'invalid_form',
+            'field': 'name',
+            'reason': 'invalid',
+            'message': 'Nome inválido',
+          },
+        );
+        when(() => networkInfo.isConnected).thenAnswer((_) async => true);
+        when(() => dataSource.report(option: any(named: 'option')))
+            .thenThrow(apiProviderException);
+        // act
+        final receivedSession = await repository.report(option: requestOption);
+        // assert
+        expect(
+          receivedSession,
+          left(
+            ServerSideFormFieldValidationFailure(
+              error: 'invalid_form',
+              field: 'name',
+              reason: 'invalid',
+              message: 'Nome inválido',
+            ),
+          ),
+        );
+      });
+
+      test('return a ServerSideSessionFailed when got server error', () async {
+        // arrange
+        final apiProviderException = ApiProviderSessionError();
+        when(() => networkInfo.isConnected).thenAnswer((_) async => true);
+        when(() => dataSource.report(option: any(named: 'option')))
+            .thenThrow(apiProviderException);
+        // act
+        final receivedSession = await repository.report(option: requestOption);
+        // assert
+        expect(receivedSession, left(ServerSideSessionFailed()));
+      });
+
+      test('return a ServerFailure for a not mapped error', () async {
+        // arrange
+        final apiProviderException = NetworkServerException();
+        when(() => networkInfo.isConnected).thenAnswer((_) async => true);
+        when(() => dataSource.report(option: any(named: 'option')))
+            .thenThrow(apiProviderException);
+        // act
+        final receivedSession = await repository.report(option: requestOption);
+        // assert
+        expect(receivedSession, left(ServerFailure()));
+      });
+    });
   });
 }

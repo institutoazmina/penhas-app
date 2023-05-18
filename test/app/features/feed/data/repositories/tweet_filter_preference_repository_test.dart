@@ -43,7 +43,7 @@ void main() {
           .thenAnswer((_) => Future.value(sessionModel));
     });
     group('retrieve()', () {
-      test('should retrieve tweets from a valid session', () async {
+      test('retrieve tweets from a valid session', () async {
         // arrange
         final TweetFilterSessionEntity? expectedSession = sessionModel;
         // act
