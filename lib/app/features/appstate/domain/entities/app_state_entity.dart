@@ -157,8 +157,5 @@ class AppStateModuleEntity extends Equatable {
   final String meta;
 
   @override
-  bool get stringify => true;
-
-  @override
   List<Object?> get props => [code, meta];
 }
