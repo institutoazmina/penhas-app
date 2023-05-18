@@ -22,11 +22,19 @@ void main() {
 
     test('copyWith creates a new instance with the same and/or updated values',
         () {
-      final tagEntity =
-          FilterTagEntity(id: id, label: label, isSelected: isSelected);
+      // act
+      final tagEntity = FilterTagEntity(
+        id: id,
+        label: label,
+        isSelected: isSelected,
+      );
       final copiedTagEntity = tagEntity.copyWith(
-          id: newId, label: newLabel, isSelected: newIsSelected);
+        id: newId,
+        label: newLabel,
+        isSelected: newIsSelected,
+      );
 
+      // assert
       // The old and new instances are not equal
       expect(tagEntity == copiedTagEntity, false);
 
@@ -34,6 +42,13 @@ void main() {
       expect(copiedTagEntity.id, newId);
       expect(copiedTagEntity.label, newLabel);
       expect(copiedTagEntity.isSelected, newIsSelected);
+
+      // Default values have been copied correctly
+      final copiedDefaultTagEntity =
+          tagEntity.copyWith(id: null, label: null, isSelected: null);
+      expect(copiedDefaultTagEntity.id, id);
+      expect(copiedDefaultTagEntity.label, label);
+      expect(copiedDefaultTagEntity.isSelected, isSelected);
     });
   });
 }
