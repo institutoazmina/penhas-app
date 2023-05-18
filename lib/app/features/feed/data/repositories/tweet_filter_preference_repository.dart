@@ -1,10 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/error/exceptions.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/network/network_info.dart';
-import 'package:penhas/app/features/feed/data/datasources/tweet_filter_preference_data_source.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_filter_session_entity.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/network/network_info.dart';
+import '../../../../shared/logger/log.dart';
+import '../../domain/entities/tweet_filter_session_entity.dart';
+import '../datasources/tweet_filter_preference_data_source.dart';
 
 abstract class ITweetFilterPreferenceRepository {
   Future<Either<Failure, TweetFilterSessionEntity>> retrieve();
@@ -14,17 +15,17 @@ class TweetFilterPreferenceRepository
     implements ITweetFilterPreferenceRepository {
   TweetFilterPreferenceRepository({
     required INetworkInfo networkInfo,
-    required ITweetFilterPreferenceDataSource? dataSource,
+    required ITweetFilterPreferenceDataSource dataSource,
   })  : _dataSource = dataSource,
         _networkInfo = networkInfo;
 
   final INetworkInfo _networkInfo;
-  final ITweetFilterPreferenceDataSource? _dataSource;
+  final ITweetFilterPreferenceDataSource _dataSource;
 
   @override
   Future<Either<Failure, TweetFilterSessionEntity>> retrieve() async {
     try {
-      final result = await _dataSource!.fetch();
+      final result = await _dataSource.fetch();
       return right(result);
     } catch (e, stack) {
       logError(e, stack);

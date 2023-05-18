@@ -1,8 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/feed/data/repositories/tweet_filter_preference_repository.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_filter_session_entity.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../data/repositories/tweet_filter_preference_repository.dart';
+import '../entities/tweet_filter_session_entity.dart';
 
 class TweetFilterPreference {
   TweetFilterPreference({
