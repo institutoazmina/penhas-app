@@ -7,7 +7,7 @@ import 'package:penhas/app/features/feed/domain/entities/tweet_filter_session_en
 import 'package:penhas/app/shared/logger/log.dart';
 
 abstract class ITweetFilterPreferenceRepository {
-  Future<Either<Failure, TweetFilterSessionEntity>> retreive();
+  Future<Either<Failure, TweetFilterSessionEntity>> retrieve();
 }
 
 class TweetFilterPreferenceRepository
@@ -22,7 +22,7 @@ class TweetFilterPreferenceRepository
   final ITweetFilterPreferenceDataSource? _dataSource;
 
   @override
-  Future<Either<Failure, TweetFilterSessionEntity>> retreive() async {
+  Future<Either<Failure, TweetFilterSessionEntity>> retrieve() async {
     try {
       final result = await _dataSource!.fetch();
       return right(result);
@@ -43,10 +43,11 @@ class TweetFilterPreferenceRepository
       }
 
       return ServerSideFormFieldValidationFailure(
-          error: error.bodyContent['error'],
-          field: error.bodyContent['field'],
-          reason: error.bodyContent['reason'],
-          message: error.bodyContent['message'],);
+        error: error.bodyContent['error'],
+        field: error.bodyContent['field'],
+        reason: error.bodyContent['reason'],
+        message: error.bodyContent['message'],
+      );
     }
 
     if (error is ApiProviderSessionError) {

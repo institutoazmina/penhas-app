@@ -13,8 +13,8 @@ class TweetFilterPreference {
   List<String> _currentTags = [];
   List<String> categories = [];
 
-  Future<Either<Failure, TweetFilterSessionEntity>> retreive() async {
-    final serverResponse = await _repository.retreive();
+  Future<Either<Failure, TweetFilterSessionEntity>> retrieve() async {
+    final serverResponse = await _repository.retrieve();
 
     return serverResponse.fold(
       (failure) => left(failure),
