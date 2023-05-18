@@ -45,7 +45,7 @@ void main() {
         // arrange
         final TweetFilterSessionEntity? expectedSession = sessionModel;
         // act
-        final receivedSession = await sut.retreive();
+        final receivedSession = await sut.retrieve();
         // assert
         expect(receivedSession, right(expectedSession));
       });

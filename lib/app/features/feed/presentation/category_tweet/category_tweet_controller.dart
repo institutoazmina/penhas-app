@@ -53,7 +53,7 @@ abstract class _CategoryTweetControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> getCategories() async {
-    _progress = ObservableFuture(useCase.retreive());
+    _progress = ObservableFuture(useCase.retrieve());
 
     final Either<Failure, TweetFilterSessionEntity> response = await _progress!;
     response.fold(
