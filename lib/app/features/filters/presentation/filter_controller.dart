@@ -1,9 +1,10 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
-import 'package:penhas/app/features/filters/states/filter_action_observer.dart';
-import 'package:penhas/app/features/filters/states/filter_state.dart';
+
+import '../../authentication/presentation/shared/map_failure_message.dart';
+import '../domain/entities/filter_tag_entity.dart';
+import '../states/filter_action_observer.dart';
+import '../states/filter_state.dart';
 
 part 'filter_controller.g.dart';
 
