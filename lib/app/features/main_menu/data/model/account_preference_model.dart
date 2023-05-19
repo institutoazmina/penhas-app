@@ -1,4 +1,4 @@
-import 'package:penhas/app/features/main_menu/domain/entities/account_preference_entity.dart';
+import '../../domain/entities/account_preference_entity.dart';
 
 class AccountPreferenceModel extends AccountPreferenceEntity {
   const AccountPreferenceModel({
