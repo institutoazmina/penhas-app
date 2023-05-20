@@ -1,14 +1,15 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
-import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
-import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
-import 'package:penhas/app/features/support_center/domain/states/support_center_add_state.dart';
-import 'package:penhas/app/features/support_center/domain/usecases/support_center_usecase.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../../authentication/presentation/shared/map_failure_message.dart';
+import '../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../../filters/domain/entities/filter_tag_entity.dart';
+import '../../../help_center/data/models/alert_model.dart';
+import '../../../help_center/domain/states/guardian_alert_state.dart';
+import '../../domain/states/support_center_add_state.dart';
+import '../../domain/usecases/support_center_usecase.dart';
 
 part 'support_center_add_controller.g.dart';
 
@@ -102,10 +103,10 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @observable
   String coverageError = '';
-  
+
   @observable
   String cepError = '';
-  
+
   @observable
   String emailError = '';
 
@@ -208,11 +209,11 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @action
   String checkPhone(String currentPhone, String ddd) {
-    if (ddd.isNotEmpty){
-      if(currentPhone.isEmpty) {
+    if (ddd.isNotEmpty) {
+      if (currentPhone.isEmpty) {
         return 'Telefone é um campo obrigatório';
       }
-    } 
+    }
     if (currentPhone.isNotEmpty && currentPhone.length < 8) {
       return 'Confira o formato';
     }
@@ -241,7 +242,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  void setNumber(String number) {    
+  void setNumber(String number) {
     numberError = number.isNotEmpty ? '' : 'Número é campo obrigatório';
     _number = number;
   }
@@ -296,7 +297,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
     if (_ddd2.length == 1) {
       ddd2Error = 'Confira o formato.';
     }
-    
+
     phone1Error = checkPhone(_phone1, _ddd1);
 
     phone2Error = checkPhone(_phone2, _ddd2);
@@ -365,7 +366,7 @@ extension _Private on _SupportCenterAddControllerBase {
   }
 
   void handleCategoriesError(Failure failure) {
-    state = SupportCenterAddState.error(mapFailureMessage(failure)!);
+    state = SupportCenterAddState.error(mapFailureMessage(failure));
   }
 
   void handleCategoriesSuccess(List<FilterTagEntity> categories) {

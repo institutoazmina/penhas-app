@@ -9,13 +9,6 @@ part of 'feed_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$FeedController on _FeedControllerBase, Store {
-  Computed<PageProgressState>? _$reloadStateComputed;
-
-  @override
-  PageProgressState get reloadState => (_$reloadStateComputed ??=
-          Computed<PageProgressState>(() => super.reloadState,
-              name: '_FeedControllerBase.reloadState'))
-      .value;
   Computed<PageProgressState>? _$fetchStateComputed;
 
   @override
@@ -23,6 +16,58 @@ mixin _$FeedController on _FeedControllerBase, Store {
           Computed<PageProgressState>(() => super.fetchState,
               name: '_FeedControllerBase.fetchState'))
       .value;
+  Computed<PageProgressState>? _$reloadStateComputed;
+
+  @override
+  PageProgressState get reloadState => (_$reloadStateComputed ??=
+          Computed<PageProgressState>(() => super.reloadState,
+              name: '_FeedControllerBase.reloadState'))
+      .value;
+
+  final _$stateAtom = Atom(name: '_FeedControllerBase.state');
+
+  @override
+  FeedState get state {
+    _$stateAtom.reportRead();
+    return super.state;
+  }
+
+  @override
+  set state(FeedState value) {
+    _$stateAtom.reportWrite(value, super.state, () {
+      super.state = value;
+    });
+  }
+
+  final _$securityStateAtom = Atom(name: '_FeedControllerBase.securityState');
+
+  @override
+  FeedSecurityState get securityState {
+    _$securityStateAtom.reportRead();
+    return super.securityState;
+  }
+
+  @override
+  set securityState(FeedSecurityState value) {
+    _$securityStateAtom.reportWrite(value, super.securityState, () {
+      super.securityState = value;
+    });
+  }
+
+  final _$errorMessageAtom = Atom(name: '_FeedControllerBase.errorMessage');
+
+  @override
+  String? get errorMessage {
+    _$errorMessageAtom.reportRead();
+    return super.errorMessage;
+  }
+
+  @override
+  set errorMessage(String? value) {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
+      super.errorMessage = value;
+    });
+  }
 
   final _$_fetchProgressAtom = Atom(name: '_FeedControllerBase._fetchProgress');
 
@@ -55,67 +100,6 @@ mixin _$FeedController on _FeedControllerBase, Store {
     });
   }
 
-  final _$listTweetsAtom = Atom(name: '_FeedControllerBase.listTweets');
-
-  @override
-  ObservableList<TweetTiles?> get listTweets {
-    _$listTweetsAtom.reportRead();
-    return super.listTweets;
-  }
-
-  @override
-  set listTweets(ObservableList<TweetTiles?> value) {
-    _$listTweetsAtom.reportWrite(value, super.listTweets, () {
-      super.listTweets = value;
-    });
-  }
-
-  final _$errorMessageAtom = Atom(name: '_FeedControllerBase.errorMessage');
-
-  @override
-  String? get errorMessage {
-    _$errorMessageAtom.reportRead();
-    return super.errorMessage;
-  }
-
-  @override
-  set errorMessage(String? value) {
-    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
-      super.errorMessage = value;
-    });
-  }
-
-  final _$securityStateAtom = Atom(name: '_FeedControllerBase.securityState');
-
-  @override
-  FeedSecurityState get securityState {
-    _$securityStateAtom.reportRead();
-    return super.securityState;
-  }
-
-  @override
-  set securityState(FeedSecurityState value) {
-    _$securityStateAtom.reportWrite(value, super.securityState, () {
-      super.securityState = value;
-    });
-  }
-
-  final _$fetchNextPageAsyncAction =
-      AsyncAction('_FeedControllerBase.fetchNextPage');
-
-  @override
-  Future<void> fetchNextPage() {
-    return _$fetchNextPageAsyncAction.run(() => super.fetchNextPage());
-  }
-
-  final _$fetchOldestPageAsyncAction =
-      AsyncAction('_FeedControllerBase.fetchOldestPage');
-
-  @override
-  Future<void> fetchOldestPage() {
-    return _$fetchOldestPageAsyncAction.run(() => super.fetchOldestPage());
-  }
-
   final _$reloadFeedAsyncAction = AsyncAction('_FeedControllerBase.reloadFeed');
 
   @override
@@ -123,15 +107,33 @@ mixin _$FeedController on _FeedControllerBase, Store {
     return _$reloadFeedAsyncAction.run(() => super.reloadFeed());
   }
 
+  final _$disposeAsyncAction = AsyncAction('_FeedControllerBase.dispose');
+
+  @override
+  Future<void> dispose() {
+    return _$disposeAsyncAction.run(() => super.dispose());
+  }
+
   final _$_FeedControllerBaseActionController =
       ActionController(name: '_FeedControllerBase');
 
   @override
-  void dispose() {
+  Future<void> fetchNextPage() {
     final _$actionInfo = _$_FeedControllerBaseActionController.startAction(
-        name: '_FeedControllerBase.dispose');
+        name: '_FeedControllerBase.fetchNextPage');
     try {
-      return super.dispose();
+      return super.fetchNextPage();
+    } finally {
+      _$_FeedControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  Future<void> fetchOldestPage() {
+    final _$actionInfo = _$_FeedControllerBaseActionController.startAction(
+        name: '_FeedControllerBase.fetchOldestPage');
+    try {
+      return super.fetchOldestPage();
     } finally {
       _$_FeedControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -140,11 +142,11 @@ mixin _$FeedController on _FeedControllerBase, Store {
   @override
   String toString() {
     return '''
-listTweets: ${listTweets},
-errorMessage: ${errorMessage},
+state: ${state},
 securityState: ${securityState},
-reloadState: ${reloadState},
-fetchState: ${fetchState}
+errorMessage: ${errorMessage},
+fetchState: ${fetchState},
+reloadState: ${reloadState}
     ''';
   }
 }

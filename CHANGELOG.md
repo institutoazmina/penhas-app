@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Modificado
+- Remove configurações do .vscode
+
+### Corrigido
+- Tratamento de erro no carregamento do feed
+
 ## [3.3.1] - 2023-03-10
 
 ### Corrigido

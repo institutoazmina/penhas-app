@@ -1,11 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/main_menu/domain/entities/account_preference_entity.dart';
-import 'package:penhas/app/features/main_menu/domain/repositories/user_profile_repository.dart';
-import 'package:penhas/app/features/main_menu/domain/states/account_preference_state.dart';
+
+import '../../../../../core/error/failures.dart';
+import '../../../../authentication/presentation/shared/map_failure_message.dart';
+import '../../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../../domain/entities/account_preference_entity.dart';
+import '../../../domain/repositories/user_profile_repository.dart';
+import '../../../domain/states/account_preference_state.dart';
 
 part 'account_preference_controller.g.dart';
 
@@ -77,7 +78,7 @@ extension _MethodPrivate on _AccountPreferenceControllerBase {
   }
 
   void handleError(Failure failure) {
-    final message = mapFailureMessage(failure)!;
+    final message = mapFailureMessage(failure);
     state = AccountPreferenceState.error(message);
   }
 

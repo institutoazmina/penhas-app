@@ -1,17 +1,18 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_main_tile_entity.dart';
-import 'package:penhas/app/features/chat/domain/states/chat_main_talks_state.dart';
-import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
-import 'package:penhas/app/features/filters/domain/repositories/filter_skill_repository.dart';
-import 'package:penhas/app/features/filters/states/filter_action_observer.dart';
-import 'package:penhas/app/features/users/data/repositories/users_repository.dart';
-import 'package:penhas/app/features/users/domain/entities/user_detail_entity.dart';
-import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
-import 'package:penhas/app/features/users/domain/entities/user_search_options.dart';
-import 'package:penhas/app/features/users/domain/entities/user_search_session_entity.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../../authentication/presentation/shared/map_failure_message.dart';
+import '../../../filters/domain/entities/filter_tag_entity.dart';
+import '../../../filters/domain/repositories/filter_skill_repository.dart';
+import '../../../filters/states/filter_action_observer.dart';
+import '../../../users/data/repositories/users_repository.dart';
+import '../../../users/domain/entities/user_detail_entity.dart';
+import '../../../users/domain/entities/user_detail_profile_entity.dart';
+import '../../../users/domain/entities/user_search_options.dart';
+import '../../../users/domain/entities/user_search_session_entity.dart';
+import '../../domain/entities/chat_main_tile_entity.dart';
+import '../../domain/states/chat_main_talks_state.dart';
 
 part 'chat_main_people_controller.g.dart';
 
@@ -101,12 +102,12 @@ extension _ChatMainPeopleControllerBasePrivate
   }
 
   void handleLoadPageError(Failure failure) {
-    final message = mapFailureMessage(failure)!;
+    final message = mapFailureMessage(failure);
     currentState = ChatMainTalksState.error(message);
   }
 
   void handleFilterError(Failure failure) {
-    final message = mapFailureMessage(failure)!;
+    final message = mapFailureMessage(failure);
     currentState = ChatMainTalksState.error(message);
   }
 

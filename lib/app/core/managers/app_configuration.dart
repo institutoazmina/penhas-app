@@ -1,8 +1,9 @@
 import 'dart:convert';
 
-import 'package:penhas/app/core/data/authorization_status.dart';
-import 'package:penhas/app/core/storage/i_local_storage.dart';
-import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
+import '../../features/appstate/domain/entities/app_state_entity.dart';
+import '../../shared/logger/log.dart';
+import '../data/authorization_status.dart';
+import '../storage/i_local_storage.dart';
 
 const String _apiBaseUrl = String.fromEnvironment(
   'PENHAS_BASE_URL',
@@ -42,7 +43,12 @@ class AppConfiguration implements IAppConfiguration {
 
   @override
   Future<AuthorizationStatus> get authorizationStatus async {
-    final value = await apiToken;
+    var value = '';
+    try {
+      value = await apiToken;
+    } catch (e, stack) {
+      logError(e, stack);
+    }
     return value.isEmpty
         ? AuthorizationStatus.anonymous
         : AuthorizationStatus.authenticated;
