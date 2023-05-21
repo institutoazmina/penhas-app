@@ -13,7 +13,4 @@ class QuizRequestEntity extends Equatable {
 
   @override
   List<Object?> get props => [sessionId!, options];
-
-  @override
-  bool get stringify => true;
 }
