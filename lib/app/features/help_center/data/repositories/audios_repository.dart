@@ -1,16 +1,16 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/network/api_client.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_exception_to_failure.dart';
-import 'package:penhas/app/features/help_center/data/models/audio_model.dart';
-import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/network/api_client.dart';
+import '../../../authentication/presentation/shared/map_exception_to_failure.dart';
+import '../models/audio_model.dart';
+import '../../domain/entities/audio_entity.dart';
+import '../../../../shared/logger/log.dart';
 
 abstract class IAudiosRepository {
-  Future<Either<Failure, List<AudioEntity>?>> fetch();
+  Future<Either<Failure, Map<String, dynamic>?>> fetch();
   Future<Either<Failure, ValidField>> delete(AudioEntity audio);
   Future<Either<Failure, ValidField>> requestAccess(AudioEntity audio);
 }
@@ -23,7 +23,7 @@ class AudiosRepository implements IAudiosRepository {
   final IApiProvider? _apiProvider;
 
   @override
-  Future<Either<Failure, List<AudioEntity>?>> fetch() async {
+  Future<Either<Failure, Map<String, dynamic>?>> fetch() async {
     final endPoint = ['me', 'audios'].join('/');
 
     try {
@@ -65,10 +65,18 @@ class AudiosRepository implements IAudiosRepository {
 }
 
 extension _FutureExtension<T extends String> on Future<T> {
-  Future<List<AudioEntity>> parseAudios() async {
+  Future<Map<String, dynamic>> parseAudios() async {
     return then((data) async {
       final jsonData = jsonDecode(data) as Map<String, dynamic>?;
-      return AudioModel.fromJson(jsonData);
+      final message = jsonData != null && jsonData.containsKey('message')
+          ? jsonData['message']
+          : '';
+
+      final response = {
+        'message': message,
+        'audioList': AudioModel.fromJson(jsonData)
+      };
+      return response;
     });
   }
 }

@@ -7,6 +7,6 @@ part 'audios_state.freezed.dart';
 @freezed
 class AudiosState with _$AudiosState {
   const factory AudiosState.initial() = _Initial;
-  const factory AudiosState.loaded(List<AudioPlayTileEntity> audios) = _Loaded;
+  const factory AudiosState.loaded(Map<String, dynamic> audioAndMessage) = _Loaded;
   const factory AudiosState.error(String message) = _ErrorDetails;
 }

@@ -28,14 +28,14 @@ mixin _$AudiosController on _AudiosControllerBase, Store {
       Atom(name: '_AudiosControllerBase._fetchProgress');
 
   @override
-  ObservableFuture<Either<Failure, List<AudioEntity>?>>? get _fetchProgress {
+  ObservableFuture<Either<Failure, Map<String, dynamic>?>>? get _fetchProgress {
     _$_fetchProgressAtom.reportRead();
     return super._fetchProgress;
   }
 
   @override
   set _fetchProgress(
-      ObservableFuture<Either<Failure, List<AudioEntity>?>>? value) {
+      ObservableFuture<Either<Failure, Map<String, dynamic>?>>? value) {
     _$_fetchProgressAtom.reportWrite(value, super._fetchProgress, () {
       super._fetchProgress = value;
     });

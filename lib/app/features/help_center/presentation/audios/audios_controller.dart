@@ -29,7 +29,7 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
   final IAudiosRepository _audiosRepository;
 
   @observable
-  ObservableFuture<Either<Failure, List<AudioEntity>?>>? _fetchProgress;
+  ObservableFuture<Either<Failure, Map<String, dynamic>?>>? _fetchProgress;
 
   @observable
   ObservableFuture<Either<Failure, ValidField>>? _updateProgress;
@@ -75,7 +75,8 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
     errorMessage = '';
     _fetchProgress = ObservableFuture(_audiosRepository.fetch());
 
-    final Either<Failure, List<AudioEntity>?> response = await _fetchProgress!;
+    final Either<Failure, Map<String, dynamic>?> response =
+        await _fetchProgress!;
 
     response.fold(
       (failure) => handleLoadPageError(failure),
@@ -101,9 +102,11 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
 }
 
 extension _AudiosControllerBasePrivate on _AudiosControllerBase {
-  void handleLoadSession(List<AudioEntity> session) {
-    final audios = session.map((e) => buildTile(e)).toList();
-    currentState = AudiosState.loaded(audios);
+  void handleLoadSession(Map<String, dynamic> session) {
+    final List<AudioPlayTileEntity> audios =
+        session['audioList'].map((e) => buildTile(e)).toList();
+    final loadedSesion = {'message': session['message'], 'audioList': audios};
+    currentState = AudiosState.loaded(loadedSesion);
   }
 
   void handleLoadPageError(Failure failure) {

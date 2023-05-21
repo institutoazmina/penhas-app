@@ -493,8 +493,8 @@ class MockIApiProvider extends _i1.Mock implements _i31.IApiProvider {
   @override
   _i19.Future<String> get(
           {String? path,
-          Map<String, String>? headers = const {},
-          Map<String, String?>? parameters = const {}}) =>
+          Map<String, String>? headers,
+          Map<String, String?>? parameters}) =>
       (super.noSuchMethod(
           Invocation.method(#get, [],
               {#path: path, #headers: headers, #parameters: parameters}),
@@ -502,8 +502,8 @@ class MockIApiProvider extends _i1.Mock implements _i31.IApiProvider {
   @override
   _i19.Future<String> post(
           {String? path,
-          Map<String, String>? headers = const {},
-          Map<String, String?>? parameters = const {},
+          Map<String, String>? headers,
+          Map<String, String?>? parameters,
           String? body}) =>
       (super.noSuchMethod(
           Invocation.method(#post, [], {
@@ -515,7 +515,7 @@ class MockIApiProvider extends _i1.Mock implements _i31.IApiProvider {
           returnValue: Future<String>.value('')) as _i19.Future<String>);
   @override
   _i19.Future<String> delete(
-          {String? path, Map<String, String?>? parameters = const {}}) =>
+          {String? path, Map<String, String?>? parameters}) =>
       (super.noSuchMethod(
           Invocation.method(
               #delete, [], {#path: path, #parameters: parameters}),
@@ -524,7 +524,7 @@ class MockIApiProvider extends _i1.Mock implements _i31.IApiProvider {
   _i19.Future<String> upload(
           {String? path,
           _i14.MultipartFile? file,
-          Map<String, String>? headers = const {},
+          Map<String, String>? headers,
           Map<String, String>? fields}) =>
       (super.noSuchMethod(
           Invocation.method(#upload, [],
@@ -534,8 +534,8 @@ class MockIApiProvider extends _i1.Mock implements _i31.IApiProvider {
   _i19.Future<String> download(
           {String? path,
           _i32.File? file,
-          Map<String, String>? headers = const {},
-          Map<String, String>? fields = const {}}) =>
+          Map<String, String>? headers,
+          Map<String, String>? fields}) =>
       (super.noSuchMethod(
           Invocation.method(#download, [],
               {#path: path, #file: file, #headers: headers, #fields: fields}),
