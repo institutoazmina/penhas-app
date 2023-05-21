@@ -13,13 +13,13 @@ abstract class IQuizDataSource {
 
 class QuizDataSource implements IQuizDataSource {
   QuizDataSource({
-    required http.Client? apiClient,
+    required http.Client apiClient,
     required serverConfiguration,
   })  : _apiClient = apiClient,
         _serverConfiguration = serverConfiguration;
 
-  final http.Client? _apiClient;
-  final IApiServerConfigure? _serverConfiguration;
+  final http.Client _apiClient;
+  final IApiServerConfigure _serverConfiguration;
   final Set<int> _successfulResponse = {200};
   final Set<int> _invalidSessionCode = {401, 403};
 
@@ -35,7 +35,7 @@ class QuizDataSource implements IQuizDataSource {
     final httpRequest =
         await _setupHttpRequest(queryParameters: queryParameters);
 
-    final response = await _apiClient!.post(httpRequest, headers: httpHeader);
+    final response = await _apiClient.post(httpRequest, headers: httpHeader);
     if (_successfulResponse.contains(response.statusCode)) {
       return AppStateModel.fromJson(json.decode(response.body));
     } else if (_invalidSessionCode.contains(response.statusCode)) {
@@ -46,8 +46,8 @@ class QuizDataSource implements IQuizDataSource {
   }
 
   Future<Map<String, String>> _setupHttpHeader() async {
-    final userAgent = await _serverConfiguration!.userAgent;
-    final apiToken = await _serverConfiguration!.apiToken;
+    final userAgent = await _serverConfiguration.userAgent;
+    final apiToken = await _serverConfiguration.apiToken;
     return {
       'X-Api-Key': apiToken ?? '',
       'User-Agent': userAgent,
@@ -58,7 +58,7 @@ class QuizDataSource implements IQuizDataSource {
   Future<Uri> _setupHttpRequest({
     required Map<String, String> queryParameters,
   }) async {
-    return _serverConfiguration!.baseUri.replace(
+    return _serverConfiguration.baseUri.replace(
       path: '/me/quiz',
       queryParameters: queryParameters,
     );
