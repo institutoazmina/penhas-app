@@ -1,12 +1,13 @@
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/error/exceptions.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/network/network_info.dart';
-import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
-import 'package:penhas/app/features/quiz/data/datasources/quiz_data_source.dart';
-import 'package:penhas/app/features/quiz/domain/entities/quiz_request_entity.dart';
-import 'package:penhas/app/features/quiz/domain/repositories/i_quiz_repository.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/network/network_info.dart';
+import '../../../../shared/logger/log.dart';
+import '../../../appstate/domain/entities/app_state_entity.dart';
+import '../../domain/entities/quiz_request_entity.dart';
+import '../../domain/repositories/i_quiz_repository.dart';
+import '../datasources/quiz_data_source.dart';
 
 class QuizRepository implements IQuizRepository {
   QuizRepository({
