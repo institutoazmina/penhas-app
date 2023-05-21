@@ -12,19 +12,19 @@ import '../datasources/quiz_data_source.dart';
 class QuizRepository implements IQuizRepository {
   QuizRepository({
     required INetworkInfo networkInfo,
-    required IQuizDataSource? dataSource,
+    required IQuizDataSource dataSource,
   })  : _dataSource = dataSource,
         _networkInfo = networkInfo;
 
   final INetworkInfo _networkInfo;
-  final IQuizDataSource? _dataSource;
+  final IQuizDataSource _dataSource;
 
   @override
   Future<Either<Failure, AppStateEntity>> update({
     required QuizRequestEntity? quiz,
   }) async {
     try {
-      final appState = await _dataSource!.update(quiz: quiz);
+      final appState = await _dataSource.update(quiz: quiz);
       return right(appState);
     } catch (e, stack) {
       logError(e, stack);
