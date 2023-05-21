@@ -1,9 +1,11 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
-import 'package:penhas/app/core/error/exceptions.dart';
-import 'package:penhas/app/core/network/api_server_configure.dart';
-import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
-import 'package:penhas/app/features/quiz/domain/entities/quiz_request_entity.dart';
+
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/network/api_server_configure.dart';
+import '../../../appstate/data/model/app_state_model.dart';
+import '../../domain/entities/quiz_request_entity.dart';
 
 abstract class IQuizDataSource {
   Future<AppStateModel> update({required QuizRequestEntity? quiz});
