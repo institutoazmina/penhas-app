@@ -72,7 +72,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
         path: endPoint,
         parameters: parameters,
       );
-      return right(parseMetadata(bodyResponse));
+      return right(_parseMetadata(bodyResponse));
     } catch (error, stack) {
       logError(error, stack);
       return left(MapExceptionToFailure.map(error));
@@ -91,42 +91,11 @@ class SupportCenterRepository implements ISupportCenterRepository {
         path: endPoint,
         parameters: parameters,
       );
-      return right(parseSupportCenter(bodyResponse));
+      return right(_parseSupportCenter(bodyResponse));
     } catch (error, stack) {
       logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
-  }
-
-  Map<String, String?> _parseRequestOptions(
-      SupportCenterFetchRequest? options) {
-    final parameters = <String, String?>{
-      'projeto': 'Penhas',
-      'full_list': '1',
-    };
-
-    if (options == null) {
-      return parameters;
-    }
-
-    if (options.locationToken != null) {
-      parameters['location_token'] = options.locationToken;
-    } else if (options.userLocation != null) {
-      parameters['latitude'] = options.userLocation!.latitude.toString();
-      parameters['longitude'] = options.userLocation!.longitude.toString();
-    }
-
-    if (options.categories != null && options.categories!.isNotEmpty) {
-      parameters['categorias'] = options.categories!.join(',');
-    }
-
-    parameters['keywords'] =
-        (options.keywords == null || options.keywords!.isEmpty)
-            ? null
-            : options.keywords;
-    parameters['next_page'] = options.nextPage;
-
-    return parameters;
   }
 
   @override
@@ -139,7 +108,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
     try {
       final bodyResponse =
           await _apiProvider.get(path: endPoint, parameters: parameters);
-      return right(parseGeoFromCep(bodyResponse));
+      return right(_parseGeoFromCep(bodyResponse));
     } catch (error, stack) {
       logError(error, stack);
       return left(MapExceptionToFailure.map(error));
@@ -196,7 +165,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
         path: endPoint,
         body: bodyContent,
       );
-      return right(parseAddSuggestion(response));
+      return right(_parseAddSuggestion(response));
     } catch (error, stack) {
       logError(error, stack);
       return left(MapExceptionToFailure.map(error));
@@ -211,7 +180,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
 
     try {
       final response = await _apiProvider.get(path: endPoint);
-      return right(parseDetail(response));
+      return right(_parseDetail(response));
     } catch (error, stack) {
       logError(error, stack);
       return left(MapExceptionToFailure.map(error));
@@ -239,30 +208,61 @@ class SupportCenterRepository implements ISupportCenterRepository {
       return left(MapExceptionToFailure.map(error));
     }
   }
-}
 
-extension SupportCenterRepositoryPrivate on SupportCenterRepository {
-  SupportCenterMetadataEntity parseMetadata(String body) {
+  // Métodos privados
+
+  Map<String, String?> _parseRequestOptions(
+      SupportCenterFetchRequest? options) {
+    final parameters = <String, String?>{
+      'projeto': 'Penhas',
+      'full_list': '1',
+    };
+
+    if (options == null) {
+      return parameters;
+    }
+
+    if (options.locationToken != null) {
+      parameters['location_token'] = options.locationToken;
+    } else if (options.userLocation != null) {
+      parameters['latitude'] = options.userLocation!.latitude.toString();
+      parameters['longitude'] = options.userLocation!.longitude.toString();
+    }
+
+    if (options.categories != null && options.categories!.isNotEmpty) {
+      parameters['categorias'] = options.categories!.join(',');
+    }
+
+    parameters['keywords'] =
+        (options.keywords == null || options.keywords!.isEmpty)
+            ? null
+            : options.keywords;
+    parameters['next_page'] = options.nextPage;
+
+    return parameters;
+  }
+
+  SupportCenterMetadataEntity _parseMetadata(String body) {
     final jsonData = jsonDecode(body) as Map<String, dynamic>;
     return SupportCenterMetadataModel.fromJson(jsonData);
   }
 
-  SupportCenterPlaceSessionEntity parseSupportCenter(String body) {
+  SupportCenterPlaceSessionEntity _parseSupportCenter(String body) {
     final jsonData = jsonDecode(body) as Map<String, dynamic>;
     return SupportCenterPlaceSessionModel.fromJson(jsonData);
   }
 
-  GeolocationEntity parseGeoFromCep(String body) {
+  GeolocationEntity _parseGeoFromCep(String body) {
     final jsonData = jsonDecode(body) as Map<String, dynamic>;
     return GeoLocationModel.fromJson(jsonData);
   }
 
-  AlertModel parseAddSuggestion(String body) {
+  AlertModel _parseAddSuggestion(String body) {
     final jsonData = jsonDecode(body) as Map<String, dynamic>;
     return AlertModel.fromJson(jsonData);
   }
 
-  SupportCenterPlaceDetailEntity parseDetail(String body) {
+  SupportCenterPlaceDetailEntity _parseDetail(String body) {
     final jsonData = jsonDecode(body) as Map<String, dynamic>;
     return SupportCenterPlaceDetailModel.fromJson(jsonData);
   }
