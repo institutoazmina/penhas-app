@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
+
+import '../../../filters/domain/entities/filter_tag_entity.dart';
 
 class SupportCenterMetadataEntity extends Equatable {
   const SupportCenterMetadataEntity({
