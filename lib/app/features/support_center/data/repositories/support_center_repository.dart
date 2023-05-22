@@ -1,22 +1,23 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/network/api_client.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_exception_to_failure.dart';
-import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
-import 'package:penhas/app/features/support_center/data/models/geolocation_model.dart';
-import 'package:penhas/app/features/support_center/data/models/support_center_metadata_model.dart';
-import 'package:penhas/app/features/support_center/data/models/support_center_place_detail_model.dart';
-import 'package:penhas/app/features/support_center/data/models/support_center_place_session_model.dart';
-import 'package:penhas/app/features/support_center/domain/entities/geolocation_entity.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_fetch_request.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_metadata_entity.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_detail_entity.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/network/api_client.dart';
+import '../../../../shared/logger/log.dart';
+import '../../../authentication/presentation/shared/map_exception_to_failure.dart';
+import '../../../help_center/data/models/alert_model.dart';
+import '../../domain/entities/geolocation_entity.dart';
+import '../../domain/entities/support_center_fetch_request.dart';
+import '../../domain/entities/support_center_metadata_entity.dart';
+import '../../domain/entities/support_center_place_detail_entity.dart';
+import '../../domain/entities/support_center_place_entity.dart';
+import '../../domain/entities/support_center_place_session_entity.dart';
+import '../models/geolocation_model.dart';
+import '../models/support_center_metadata_model.dart';
+import '../models/support_center_place_detail_model.dart';
+import '../models/support_center_place_session_model.dart';
 
 abstract class ISupportCenterRepository {
   Future<Either<Failure, SupportCenterMetadataEntity?>> metadata();
