@@ -1,17 +1,22 @@
-import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+import '../../domain/entities/audio_entity.dart';
+import '../../../../shared/logger/log.dart';
 
 class AudioModel {
-  static List<AudioEntity> fromJson(Map<String, dynamic>? json) {
-    if (json == null || json.isEmpty || json['rows'] == null) {
-      return List.empty();
-    }
+  const AudioModel({required this.audioList, required this.message});
 
+  final List<AudioEntity> audioList;
+  final String message;
+
+  factory AudioModel.fromJson(Map<String, dynamic>? json) {
+    final message = json!['message'] ?? '';
     final rows = json['rows'] as List<dynamic>;
-    return rows
+
+    final audioList = rows
         .map((e) => e as Map<String, dynamic>)
         .map((e) => _AudioModelParseData.parseEntity(e))
         .toList();
+
+    return AudioModel(audioList: audioList, message: message);
   }
 }
 

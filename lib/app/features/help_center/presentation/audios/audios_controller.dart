@@ -6,6 +6,7 @@ import '../../../../core/error/failures.dart';
 import '../../../../core/managers/audio_play_services.dart';
 import '../../../authentication/presentation/shared/map_failure_message.dart';
 import '../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../data/models/audio_model.dart';
 import '../../data/repositories/audios_repository.dart';
 import '../../domain/entities/audio_entity.dart';
 import '../../domain/entities/audio_play_tile_entity.dart';
@@ -29,7 +30,7 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
   final IAudiosRepository _audiosRepository;
 
   @observable
-  ObservableFuture<Either<Failure, Map<String, dynamic>?>>? _fetchProgress;
+  ObservableFuture<Either<Failure, AudioModel>>? _fetchProgress;
 
   @observable
   ObservableFuture<Either<Failure, ValidField>>? _updateProgress;
@@ -75,12 +76,11 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
     errorMessage = '';
     _fetchProgress = ObservableFuture(_audiosRepository.fetch());
 
-    final Either<Failure, Map<String, dynamic>?> response =
-        await _fetchProgress!;
+    final Either<Failure, AudioModel> response = await _fetchProgress!;
 
     response.fold(
       (failure) => handleLoadPageError(failure),
-      (session) => handleLoadSession(session!),
+      (session) => handleLoadSession(session),
     );
   }
 
@@ -102,11 +102,11 @@ abstract class _AudiosControllerBase with Store, MapFailureMessage {
 }
 
 extension _AudiosControllerBasePrivate on _AudiosControllerBase {
-  void handleLoadSession(Map<String, dynamic> session) {
+  void handleLoadSession(AudioModel session) {
     final List<AudioPlayTileEntity> audios =
-        session['audioList'].map((e) => buildTile(e)).toList();
-    final loadedSesion = {'message': session['message'], 'audioList': audios};
-    currentState = AudiosState.loaded(loadedSesion);
+        session.audioList.map((e) => buildTile(e)).toList();
+
+    currentState = AudiosState.loaded(audios, session.message);
   }
 
   void handleLoadPageError(Failure failure) {

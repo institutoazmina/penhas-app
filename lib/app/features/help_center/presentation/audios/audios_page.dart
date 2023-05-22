@@ -91,7 +91,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
   Widget _buildBody(AudiosState state) {
     return state.when(
       initial: () => _empty(),
-      loaded: (tiles) => _buildInputScreen(tiles['audioList']),
+      loaded: (tiles, message) => _buildInputScreen(tiles, message),
       error: (message) => GuardianErrorPage(
         message: message,
         onPressed: controller.loadPage,
@@ -99,46 +99,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
     );
   }
 
-  //List<AudioPlayTileEntity>
-  
-
-  // Widget _buildAudioList(List<AudioPlayTileEntity> tiles) {
-  //   return Container(
-  //     color: Colors.white,
-  //     child: Padding(
-  //       padding: const EdgeInsets.only(top: 22),
-  //       child: RefreshIndicator(
-  //         key: _refreshIndicatorKey,
-  //         onRefresh: () async => controller.loadPage(),
-  //         child: ListView.builder(
-  //           itemCount: tiles.length,
-  //           itemBuilder: (context, index) {
-  //             final audio = tiles[index];
-  //             final isPlaying = audio.audio == _playingAudio;
-  //             final backgroundColor = _selectingAudioMenu == audio.audio
-  //                 ? DesignSystemColors.blueyGrey
-  //                 : Colors.transparent;
-
-  //             return AudioPlayWidget(
-  //               audioPlay: tiles[index],
-  //               isPlaying: isPlaying,
-  //               backgroundColor: backgroundColor,
-  //             );
-  //           },
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // Widget _buildInputScreen(Map<String, dynamic> audioAndMessage) {
-  //   final tiles = audioAndMessage['audioList'] as List<AudioPlayTileEntity>;
-  //   return _buildAudioList(tiles);
-  // }
-
-
-
-  Widget _buildInputScreen(List<AudioPlayTileEntity>tiles) {
+  Widget _buildInputScreen(List<AudioPlayTileEntity> tiles, String message) {
     return Container(
       color: Colors.white,
       child: Padding(

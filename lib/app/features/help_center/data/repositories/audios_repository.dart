@@ -10,7 +10,7 @@ import '../../domain/entities/audio_entity.dart';
 import '../../../../shared/logger/log.dart';
 
 abstract class IAudiosRepository {
-  Future<Either<Failure, Map<String, dynamic>?>> fetch();
+  Future<Either<Failure, AudioModel>> fetch();
   Future<Either<Failure, ValidField>> delete(AudioEntity audio);
   Future<Either<Failure, ValidField>> requestAccess(AudioEntity audio);
 }
@@ -23,7 +23,7 @@ class AudiosRepository implements IAudiosRepository {
   final IApiProvider? _apiProvider;
 
   @override
-  Future<Either<Failure, Map<String, dynamic>?>> fetch() async {
+  Future<Either<Failure, AudioModel>> fetch() async {
     final endPoint = ['me', 'audios'].join('/');
 
     try {
@@ -64,19 +64,16 @@ class AudiosRepository implements IAudiosRepository {
   }
 }
 
+class AudioResponse {
+  late final List<AudioEntity> audioList;
+  late final String message;
+}
+
 extension _FutureExtension<T extends String> on Future<T> {
-  Future<Map<String, dynamic>> parseAudios() async {
+  Future<AudioModel> parseAudios() async {
     return then((data) async {
       final jsonData = jsonDecode(data) as Map<String, dynamic>?;
-      final message = jsonData != null && jsonData.containsKey('message')
-          ? jsonData['message']
-          : '';
-
-      final response = {
-        'message': message,
-        'audioList': AudioModel.fromJson(jsonData)
-      };
-      return response;
+      return AudioModel.fromJson(jsonData);
     });
   }
 }
