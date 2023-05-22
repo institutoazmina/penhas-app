@@ -1,4 +1,4 @@
-import 'package:penhas/app/core/managers/modules_sevices.dart';
+import '../../../../core/managers/modules_sevices.dart';
 
 class SupportCenterToggleFeature {
   SupportCenterToggleFeature({required IAppModulesServices modulesServices})

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_detail_entity.dart';
+
+import '../entities/support_center_place_detail_entity.dart';
 
 part 'support_center_show_state.freezed.dart';
 

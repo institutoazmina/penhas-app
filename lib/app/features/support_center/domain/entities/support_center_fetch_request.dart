@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:penhas/app/core/entities/user_location.dart';
+
+import '../../../../core/entities/user_location.dart';
 
 class SupportCenterFetchRequest extends Equatable {
   const SupportCenterFetchRequest({

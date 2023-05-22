@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
+
+import 'support_center_place_entity.dart';
 
 class SupportCenterPlaceSessionEntity extends Equatable {
   const SupportCenterPlaceSessionEntity({
