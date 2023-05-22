@@ -56,10 +56,10 @@ abstract class ISupportCenterRepository {
 
 class SupportCenterRepository implements ISupportCenterRepository {
   SupportCenterRepository({
-    required IApiProvider? apiProvider,
+    required IApiProvider apiProvider,
   }) : _apiProvider = apiProvider;
 
-  final IApiProvider? _apiProvider;
+  final IApiProvider _apiProvider;
 
   @override
   Future<Either<Failure, SupportCenterMetadataEntity?>> metadata() async {
@@ -67,7 +67,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
     final Map<String, String> parameters = {'projeto': 'Penhas'};
 
     try {
-      final bodyResponse = await _apiProvider!.get(
+      final bodyResponse = await _apiProvider.get(
         path: endPoint,
         parameters: parameters,
       );
@@ -86,7 +86,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
 
     try {
       final parameters = _parseRequestOptions(options);
-      final bodyResponse = await _apiProvider!.get(
+      final bodyResponse = await _apiProvider.get(
         path: endPoint,
         parameters: parameters,
       );
@@ -137,7 +137,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
 
     try {
       final bodyResponse =
-          await _apiProvider!.get(path: endPoint, parameters: parameters);
+          await _apiProvider.get(path: endPoint, parameters: parameters);
       return right(parseGeoFromCep(bodyResponse));
     } catch (error, stack) {
       logError(error, stack);
@@ -191,7 +191,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
     ].join('&');
 
     try {
-      final response = await _apiProvider!.post(
+      final response = await _apiProvider.post(
         path: endPoint,
         body: bodyContent,
       );
@@ -209,7 +209,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
     final endPoint = ['me', 'pontos-de-apoio', placeEntity!.id].join('/');
 
     try {
-      final response = await _apiProvider!.get(path: endPoint);
+      final response = await _apiProvider.get(path: endPoint);
       return right(parseDetail(response));
     } catch (error, stack) {
       logError(error, stack);
@@ -228,7 +228,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
     parameters['rating'] = rate.toInt().toString();
 
     try {
-      await _apiProvider!.post(
+      await _apiProvider.post(
         path: endPoint,
         parameters: parameters,
       );
