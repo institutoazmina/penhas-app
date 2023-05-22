@@ -84,8 +84,31 @@ class SupportCenterRepository implements ISupportCenterRepository {
   ) async {
     const endPoint = 'me/pontos-de-apoio';
 
-    final Map<String, String?> parameters = <String, String?>{};
-    if (options!.locationToken != null) {
+    try {
+      final parameters = _parseRequestOptions(options);
+      final bodyResponse = await _apiProvider!.get(
+        path: endPoint,
+        parameters: parameters,
+      );
+      return right(parseSupportCenter(bodyResponse));
+    } catch (error, stack) {
+      logError(error, stack);
+      return left(MapExceptionToFailure.map(error));
+    }
+  }
+
+  Map<String, String?> _parseRequestOptions(
+      SupportCenterFetchRequest? options) {
+    final parameters = <String, String?>{
+      'projeto': 'Penhas',
+      'full_list': '1',
+    };
+
+    if (options == null) {
+      return parameters;
+    }
+
+    if (options.locationToken != null) {
       parameters['location_token'] = options.locationToken;
     } else if (options.userLocation != null) {
       parameters['latitude'] = options.userLocation!.latitude.toString();
@@ -101,17 +124,8 @@ class SupportCenterRepository implements ISupportCenterRepository {
             ? null
             : options.keywords;
     parameters['next_page'] = options.nextPage;
-    parameters['projeto'] = 'Penhas';
-    parameters['full_list'] = '1';
 
-    try {
-      final bodyResponse =
-          await _apiProvider!.get(path: endPoint, parameters: parameters);
-      return right(parseSupportCenter(bodyResponse));
-    } catch (error, stack) {
-      logError(error, stack);
-      return left(MapExceptionToFailure.map(error));
-    }
+    return parameters;
   }
 
   @override
