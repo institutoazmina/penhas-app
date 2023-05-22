@@ -12,8 +12,5 @@ class SupportCenterMetadataEntity extends Equatable {
   final List<FilterTagEntity>? projects;
 
   @override
-  bool get stringify => true;
-
-  @override
   List<Object?> get props => [categories, projects];
 }

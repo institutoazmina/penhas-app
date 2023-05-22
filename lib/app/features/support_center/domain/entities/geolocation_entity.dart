@@ -15,9 +15,6 @@ class GeolocationEntity extends Equatable {
   final UserLocationEntity? userLocation;
 
   @override
-  bool get stringify => true;
-
-  @override
   List<Object?> get props => [label, locationToken, userLocation];
 
   LatLng toLatLng() => LatLng(userLocation!.latitude, userLocation!.longitude);
