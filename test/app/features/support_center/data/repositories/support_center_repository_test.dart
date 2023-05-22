@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -29,26 +31,46 @@ void main() {
   );
 
   group(SupportCenterRepository, () {
-    test(
-      'metadata return valid objects from server',
-      () async {
-        // arrange
-        const jsonFile = 'support_center/support_center_meta_data.json';
-        final jsonData = await JsonUtil.getJson(from: jsonFile);
-        final actual = right(SupportCenterMetadataModel.fromJson(jsonData));
-        when(
-          () => apiProvider.get(
-            path: any(named: 'path'),
-            headers: any(named: 'headers'),
-            parameters: any(named: 'parameters'),
-          ),
-        ).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
-        // act
-        final matcher = await sut.metadata();
-        // assert
-        expect(actual, matcher);
-      },
-    );
+    group('metadata', () {
+      test(
+        'return valid objects from server',
+        () async {
+          // arrange
+          const jsonFile = 'support_center/support_center_meta_data.json';
+          final jsonData = await JsonUtil.getJson(from: jsonFile);
+          final actual = right(SupportCenterMetadataModel.fromJson(jsonData));
+          when(
+            () => apiProvider.get(
+              path: any(named: 'path'),
+              headers: any(named: 'headers'),
+              parameters: any(named: 'parameters'),
+            ),
+          ).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
+          // act
+          final matcher = await sut.metadata();
+          // assert
+          expect(actual, matcher);
+        },
+      );
+      test(
+        'map Exception to a Failure',
+        () async {
+          // arrange
+          final actual = left(ServerFailure());
+          when(
+            () => apiProvider.get(
+              path: any(named: 'path'),
+              headers: any(named: 'headers'),
+              parameters: any(named: 'parameters'),
+            ),
+          ).thenThrow(Exception());
+          // act
+          final matcher = await sut.metadata();
+          // assert
+          expect(actual, matcher);
+        },
+      );
+    });
     group('fetch', () {
       test(
         'get GpsFailure for invalid gps information',
