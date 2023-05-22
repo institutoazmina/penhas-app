@@ -19,9 +19,6 @@ class SupportCenterFetchRequest extends Equatable {
   final int? rows;
 
   @override
-  bool get stringify => true;
-
-  @override
   List<Object?> get props => [
         userLocation,
         locationToken,
