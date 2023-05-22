@@ -1,14 +1,14 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/support_center/data/models/geolocation_model.dart';
 import 'package:penhas/app/features/support_center/data/models/support_center_metadata_model.dart';
-import 'package:penhas/app/features/support_center/data/models/support_center_place_session_model.dart';
 import 'package:penhas/app/features/support_center/data/repositories/support_center_repository.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_fetch_request.dart';
 
@@ -95,13 +95,16 @@ void main() {
       );
 
       test(
-        'get a valid session from successful return',
+        'check the default parameters for a empty SupportCenterFetchRequest class',
         () async {
           // arrange
           const jsonFile = 'support_center/support_center_list_of_place.json';
-          final jsonData = await JsonUtil.getJson(from: jsonFile);
-          final actual =
-              right(SupportCenterPlaceSessionModel.fromJson(jsonData));
+          final defaultParameters = <String, String?>{
+            'keywords': null,
+            'next_page': null,
+            'projeto': 'Penhas',
+            'full_list': '1'
+          };
           when(
             () => apiProvider.get(
               path: any(named: 'path'),
@@ -110,11 +113,55 @@ void main() {
             ),
           ).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
           // act
-          final matcher = await sut.fetch(fetchRequest);
+          await sut.fetch(fetchRequest);
           // assert
-          expect(actual, matcher);
+          verify(() => apiProvider.get(
+              path: 'me/pontos-de-apoio',
+              headers: any(named: 'headers'),
+              parameters: defaultParameters));
         },
       );
+
+      test(
+        'build request with SupportCenterFetchRequest parameters',
+        () async {
+          // arrange
+          const jsonFile = 'support_center/support_center_list_of_place.json';
+          final defaultParameters = <String, String?>{
+            'latitude': '42.4242',
+            'longitude': '-42.4242',
+            'categorias': 'a,b',
+            'keywords': 'keyword',
+            'next_page': '2',
+            'projeto': 'Penhas',
+            'full_list': '1'
+          };
+          when(
+            () => apiProvider.get(
+              path: any(named: 'path'),
+              headers: any(named: 'headers'),
+              parameters: any(named: 'parameters'),
+            ),
+          ).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
+          // act
+          await sut.fetch(SupportCenterFetchRequest(
+            userLocation: UserLocationEntity(
+              latitude: 42.4242,
+              longitude: -42.4242,
+            ),
+            // locationToken: 'token',
+            categories: ['a', 'b'],
+            keywords: 'keyword',
+            nextPage: '2',
+          ));
+          // assert
+          verify(() => apiProvider.get(
+              path: 'me/pontos-de-apoio',
+              headers: any(named: 'headers'),
+              parameters: defaultParameters));
+        },
+      );
+      test('build request with request parameters', () {});
     });
     group('mapGeoFromCep', () {
       test(
