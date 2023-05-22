@@ -14,8 +14,5 @@ class SupportCenterPlaceDetailEntity extends Equatable {
   final SupportCenterPlaceEntity? place;
 
   @override
-  bool get stringify => true;
-
-  @override
   List<Object?> get props => [maximumRate, ratedByClient, place];
 }
