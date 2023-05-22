@@ -100,6 +100,11 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
   }
 
   Widget _buildInputScreen(List<AudioPlayTileEntity> tiles, String message) {
+    return _buildListElements(tiles, message);
+  }
+
+
+  Widget _buildListElements(List<AudioPlayTileEntity> tiles, String message) {
     return Container(
       color: Colors.white,
       child: Padding(
