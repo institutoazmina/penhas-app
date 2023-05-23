@@ -313,6 +313,25 @@ void main() {
             .called(1);
         expect(matcher, equals(actual));
       });
+      test(
+        'map Exception to a Failure',
+        () async {
+          // arrange
+          final actual = left(ServerFailure());
+          final place = FakeSupportCenterPlaceEntity();
+          when(
+            () => apiProvider.get(
+              path: any(named: 'path'),
+              headers: any(named: 'headers'),
+              parameters: any(named: 'parameters'),
+            ),
+          ).thenThrow(Exception());
+          // act
+          final matcher = await sut.detail(place);
+          // assert
+          expect(actual, matcher);
+        },
+      );
     });
   });
 }
