@@ -10,12 +10,23 @@ import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
 import 'package:penhas/app/features/support_center/data/models/geolocation_model.dart';
 import 'package:penhas/app/features/support_center/data/models/support_center_metadata_model.dart';
+import 'package:penhas/app/features/support_center/data/models/support_center_place_detail_model.dart';
 import 'package:penhas/app/features/support_center/data/repositories/support_center_repository.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_fetch_request.dart';
+import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
 
 import '../../../../../utils/json_util.dart';
 
 class MockApiProvider extends Mock implements IApiProvider {}
+
+// class MockSupportCenterPlaceEntity extends Mock
+// implements SupportCenterPlaceEntity {}
+
+class FakeSupportCenterPlaceEntity extends Fake
+    implements SupportCenterPlaceEntity {
+  @override
+  String get id => '1';
+}
 
 void main() {
   late IApiProvider apiProvider;
@@ -208,7 +219,6 @@ void main() {
         },
       );
     });
-
     group('suggestion', () {
       test('returns AlertModel on success', () async {
         // arrange
@@ -286,6 +296,23 @@ void main() {
           expect(actual, matcher);
         },
       );
+    });
+
+    group('detail', () {
+      test('returns SupportCenterPlaceDetailEntity on success', () async {
+        // arrange
+        final jsonFile = 'support_center/support_center_place_detail.json';
+        final jsonData = await JsonUtil.getJson(from: jsonFile);
+        final place = FakeSupportCenterPlaceEntity();
+        final actual = right(SupportCenterPlaceDetailModel.fromJson(jsonData));
+        when(() => apiProvider.get(path: any(named: 'path')))
+            .thenAnswer((_) => JsonUtil.getString(from: jsonFile));
+        final matcher = await sut.detail(place);
+        // assert
+        verify(() => apiProvider.get(path: 'me/pontos-de-apoio/${place.id}'))
+            .called(1);
+        expect(matcher, equals(actual));
+      });
     });
   });
 }
