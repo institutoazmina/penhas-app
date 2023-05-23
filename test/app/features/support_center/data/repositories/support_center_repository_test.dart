@@ -211,7 +211,7 @@ void main() {
 
     group('suggestion', () {
       test('returns AlertModel on success', () async {
-        // Arrange
+        // arrange
         final jsonFile = 'support_center/alert_model_response.json';
         final jsonData = await JsonUtil.getJson(from: jsonFile);
         final actual = right(AlertModel.fromJson(jsonData));
@@ -220,52 +220,30 @@ void main() {
               body: any(named: 'body'),
             )).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
 
-        final mockSuggestion = {
-          'name': 'John',
-          'email': 'john@example.com',
-          'address': '123 Street',
-          'category': 'Category',
-          'observation': 'Observation',
-          'cep': '12345',
-          'coverage': 'Coverage',
-          'complement': 'Complement',
-          'neighborhood': 'Neighborhood',
-          'city': 'City',
-          'uf': 'UF',
-          'number': 'Number',
-          'hour': 'Hour',
-          'ddd1': 'DDD1',
-          'phone1': 'Phone1',
-          'ddd2': 'DDD2',
-          'phone2': 'Phone2',
-          'hasWhatsapp': 'HasWhatsapp',
-          'is24h': 'Is24h',
-        };
-
-        // Act
+        // act
         final result = await sut.suggestion(
-          name: mockSuggestion['name'],
-          email: mockSuggestion['email'],
-          address: mockSuggestion['address'],
-          category: mockSuggestion['category']!,
-          observation: mockSuggestion['observation'],
-          cep: mockSuggestion['cep'],
-          coverage: mockSuggestion['coverage'],
-          complement: mockSuggestion['complement'],
-          neighborhood: mockSuggestion['neighborhood'],
-          city: mockSuggestion['city'],
-          uf: mockSuggestion['uf'],
-          number: mockSuggestion['number'],
-          hour: mockSuggestion['hour'],
-          ddd1: mockSuggestion['ddd1'],
-          phone1: mockSuggestion['phone1'],
-          ddd2: mockSuggestion['ddd2'],
-          phone2: mockSuggestion['phone2'],
-          is24h: mockSuggestion['is24h'],
-          hasWhatsapp: mockSuggestion['hasWhatsapp'],
+          name: 'John',
+          email: 'john@example.com',
+          address: '123 Street',
+          category: 'Category',
+          observation: 'Observation',
+          cep: '12345',
+          coverage: 'Coverage',
+          complement: 'Complement',
+          neighborhood: 'Neighborhood',
+          city: 'City',
+          uf: 'UF',
+          number: 'Number',
+          hour: 'Hour',
+          ddd1: 'DDD1',
+          phone1: 'Phone1',
+          ddd2: 'DDD2',
+          phone2: 'Phone2',
+          is24h: 'Is24h',
+          hasWhatsapp: 'HasWhatsapp',
         );
 
-        // Assert
+        // assert
         verify(() => apiProvider.post(
               path: '/me/sugerir-pontos-de-apoio-completo',
               body:
@@ -273,6 +251,41 @@ void main() {
             )).called(1);
         expect(result, equals(actual));
       });
+      test(
+        'map Exception to a Failure',
+        () async {
+          // arrange
+          final actual = left(ServerFailure());
+          when(() => apiProvider.post(
+                path: any(named: 'path'),
+                body: any(named: 'body'),
+              )).thenThrow(Exception());
+          // act
+          final matcher = await sut.suggestion(
+            name: 'John',
+            email: 'john@example.com',
+            address: '123 Street',
+            category: 'Category',
+            observation: 'Observation',
+            cep: '12345',
+            coverage: 'Coverage',
+            complement: 'Complement',
+            neighborhood: 'Neighborhood',
+            city: 'City',
+            uf: 'UF',
+            number: 'Number',
+            hour: 'Hour',
+            ddd1: 'DDD1',
+            phone1: 'Phone1',
+            ddd2: 'DDD2',
+            phone2: 'Phone2',
+            is24h: 'Is24h',
+            hasWhatsapp: 'HasWhatsapp',
+          );
+          // assert
+          expect(actual, matcher);
+        },
+      );
     });
   });
 }
