@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_const_declarations
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -7,6 +7,7 @@ import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/api_client.dart';
+import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
 import 'package:penhas/app/features/support_center/data/models/geolocation_model.dart';
 import 'package:penhas/app/features/support_center/data/models/support_center_metadata_model.dart';
 import 'package:penhas/app/features/support_center/data/repositories/support_center_repository.dart';
@@ -206,6 +207,72 @@ void main() {
           expect(actual, matcher);
         },
       );
+    });
+
+    group('suggestion', () {
+      test('returns AlertModel on success', () async {
+        // Arrange
+        final jsonFile = 'support_center/alert_model_response.json';
+        final jsonData = await JsonUtil.getJson(from: jsonFile);
+        final actual = right(AlertModel.fromJson(jsonData));
+        when(() => apiProvider.post(
+              path: any(named: 'path'),
+              body: any(named: 'body'),
+            )).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
+
+        final mockSuggestion = {
+          'name': 'John',
+          'email': 'john@example.com',
+          'address': '123 Street',
+          'category': 'Category',
+          'observation': 'Observation',
+          'cep': '12345',
+          'coverage': 'Coverage',
+          'complement': 'Complement',
+          'neighborhood': 'Neighborhood',
+          'city': 'City',
+          'uf': 'UF',
+          'number': 'Number',
+          'hour': 'Hour',
+          'ddd1': 'DDD1',
+          'phone1': 'Phone1',
+          'ddd2': 'DDD2',
+          'phone2': 'Phone2',
+          'hasWhatsapp': 'HasWhatsapp',
+          'is24h': 'Is24h',
+        };
+
+        // Act
+        final result = await sut.suggestion(
+          name: mockSuggestion['name'],
+          email: mockSuggestion['email'],
+          address: mockSuggestion['address'],
+          category: mockSuggestion['category']!,
+          observation: mockSuggestion['observation'],
+          cep: mockSuggestion['cep'],
+          coverage: mockSuggestion['coverage'],
+          complement: mockSuggestion['complement'],
+          neighborhood: mockSuggestion['neighborhood'],
+          city: mockSuggestion['city'],
+          uf: mockSuggestion['uf'],
+          number: mockSuggestion['number'],
+          hour: mockSuggestion['hour'],
+          ddd1: mockSuggestion['ddd1'],
+          phone1: mockSuggestion['phone1'],
+          ddd2: mockSuggestion['ddd2'],
+          phone2: mockSuggestion['phone2'],
+          is24h: mockSuggestion['is24h'],
+          hasWhatsapp: mockSuggestion['hasWhatsapp'],
+        );
+
+        // Assert
+        verify(() => apiProvider.post(
+              path: '/me/sugerir-pontos-de-apoio-completo',
+              body:
+                  'nome=John&categoria=Category&nome_logradouro=123%20Street&observacao=Observation&cep=12345&abrangencia=Coverage&complemento=Complement&bairro=Neighborhood&municipio=City&uf=UF&email=john%40example.com&numero=Number&horario=Hour&ddd1=DDD1&telefone1=Phone1&ddd2=DDD2&telefone2=Phone2&is24h=Is24h&hasWhatsapp=HasWhatsapp',
+            )).called(1);
+        expect(result, equals(actual));
+      });
     });
   });
 }
