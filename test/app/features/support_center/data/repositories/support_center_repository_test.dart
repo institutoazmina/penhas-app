@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/user_location.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/api_client.dart';
@@ -16,17 +17,6 @@ import 'package:penhas/app/features/support_center/domain/entities/support_cente
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
 
 import '../../../../../utils/json_util.dart';
-
-class MockApiProvider extends Mock implements IApiProvider {}
-
-// class MockSupportCenterPlaceEntity extends Mock
-// implements SupportCenterPlaceEntity {}
-
-class FakeSupportCenterPlaceEntity extends Fake
-    implements SupportCenterPlaceEntity {
-  @override
-  String get id => '1';
-}
 
 void main() {
   late IApiProvider apiProvider;
@@ -333,5 +323,54 @@ void main() {
         },
       );
     });
+
+    group('rate', () {
+      test('returns ValidField on success', () async {
+        // arrange
+        final jsonFile = 'support_center/support_center_place_detail.json';
+        final place = FakeSupportCenterPlaceEntity();
+        final actual = right(ValidField());
+        when(() => apiProvider.post(
+              path: any(named: 'path'),
+              parameters: any(named: 'parameters'),
+            )).thenAnswer((_) => JsonUtil.getString(from: jsonFile));
+        final matcher = await sut.rate(place, 2.49);
+        // assert
+        verify(() => apiProvider.post(
+            path: 'me/avaliar-pontos-de-apoio',
+            parameters: {'ponto_apoio_id': '1', 'rating': '2'})).called(1);
+        expect(matcher, equals(actual));
+      });
+      test(
+        'map Exception to a Failure',
+        () async {
+          // arrange
+          final actual = left(ServerFailure());
+          final place = FakeSupportCenterPlaceEntity();
+          when(
+            () => apiProvider.post(
+              path: any(named: 'path'),
+              headers: any(named: 'headers'),
+              parameters: any(named: 'parameters'),
+            ),
+          ).thenThrow(Exception());
+          // act
+          final matcher = await sut.rate(place, 2.99);
+          // assert
+          verify(() => apiProvider.post(
+              path: 'me/avaliar-pontos-de-apoio',
+              parameters: {'ponto_apoio_id': '1', 'rating': '2'})).called(1);
+          expect(actual, matcher);
+        },
+      );
+    });
   });
+}
+
+class MockApiProvider extends Mock implements IApiProvider {}
+
+class FakeSupportCenterPlaceEntity extends Fake
+    implements SupportCenterPlaceEntity {
+  @override
+  String get id => '1';
 }
