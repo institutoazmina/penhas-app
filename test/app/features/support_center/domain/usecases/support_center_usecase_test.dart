@@ -1,10 +1,12 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_const_declarations
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
+import 'package:penhas/app/core/states/location_permission_state.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
 import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
 import 'package:penhas/app/features/support_center/data/repositories/support_center_repository.dart';
@@ -101,6 +103,46 @@ void main() {
         final expected = await sut.mapGeoFromCep(cep);
         // assert
         expect(right(actual), expected);
+      });
+    });
+
+    group('askForLocationPermission', () {
+      test('returns true when permission is granted', () async {
+        // arrange
+        final title = 'Permission Title';
+        final description = Text('Permission Description');
+
+        when(() => locationServices.requestPermission(
+              title: title,
+              description: description,
+            )).thenAnswer((_) async => LocationPermissionState.granted());
+        // arrange
+        final expected = await sut.askForLocationPermission(title, description);
+        // assert
+        verify(() => locationServices.requestPermission(
+              title: title,
+              description: description,
+            )).called(1);
+        expect(expected, isTrue);
+      });
+
+      test('returns false when permission is not granted', () async {
+        // arrange
+        final title = 'Permission Title';
+        final description = Text('Permission Description');
+
+        when(() => locationServices.requestPermission(
+              title: title,
+              description: description,
+            )).thenAnswer((_) async => LocationPermissionState.denied());
+        // arrange
+        final expected = await sut.askForLocationPermission(title, description);
+        // assert
+        verify(() => locationServices.requestPermission(
+              title: title,
+              description: description,
+            )).called(1);
+        expect(expected, isFalse);
       });
     });
   });
