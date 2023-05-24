@@ -135,7 +135,7 @@ class SupportCenterUseCase {
 
   Future<GeolocationEntity?> currentLocation() async {
     UserLocationEntity? geoLocation;
-    final hasPermission = await hasLocationPermission();
+    final hasPermission = await _hasLocationPermission();
 
     if (hasPermission) {
       geoLocation = await _locationService.currentLocation().then(
@@ -156,10 +156,8 @@ class SupportCenterUseCase {
 
     return null;
   }
-}
 
-extension _PrivateMethods on SupportCenterUseCase {
-  Future<bool> hasLocationPermission() {
+  Future<bool> _hasLocationPermission() {
     return _locationService.isPermissionGranted();
   }
 }
