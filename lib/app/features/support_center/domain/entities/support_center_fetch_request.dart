@@ -43,7 +43,7 @@ class SupportCenterFetchRequest extends Equatable {
       categories: categories ?? this.categories,
       keywords: keywords ?? this.keywords,
       nextPage: nextPage ?? this.nextPage,
-      rows: rows ?? rows,
+      rows: rows ?? this.rows,
     );
   }
 }
