@@ -40,5 +40,17 @@ void main() {
           .called(1);
       expect(result, isFalse);
     });
+
+    test('isEnabled returns false when modulesServices crashed', () async {
+      // arrange
+      when(() => modulesServices.isEnabled(any())).thenThrow(Exception());
+      // act
+      final result = await sut.isEnabled;
+      // assert
+      verify(() =>
+              modulesServices.isEnabled(SupportCenterToggleFeature.featureCode))
+          .called(1);
+      expect(result, isFalse);
+    });
   });
 }
