@@ -61,14 +61,15 @@ class SupportCenterUseCase {
     String title,
     Widget description,
   ) async {
-    return _locationService
-        .requestPermission(title: title, description: description)
-        .then(
-          (value) => value.maybeWhen(
-            granted: () => true,
-            orElse: () => false,
-          ),
-        );
+    final permission = await _locationService.requestPermission(
+      title: title,
+      description: description,
+    );
+
+    return permission.maybeWhen(
+      granted: () => true,
+      orElse: () => false,
+    );
   }
 
   bool updatedGeoLocation(GeolocationEntity? selectedGeoLocation) {
