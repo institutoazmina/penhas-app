@@ -5,8 +5,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
 import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
 import 'package:penhas/app/features/support_center/data/repositories/support_center_repository.dart';
+import 'package:penhas/app/features/support_center/domain/entities/geolocation_entity.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_fetch_request.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_metadata_entity.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
@@ -73,12 +75,32 @@ void main() {
         when(() => supportCenterRepository.fetch(any()))
             .thenAnswer((_) async => right(_buildSupportPlace()));
         // act
-        final matcher = await sut.fetch(request);
+        final expected = await sut.fetch(request);
         // assert
         verify(() => locationServices.currentLocation()).called(1);
         verify(() => supportCenterRepository.fetch(any())).called(1);
 
-        expect(actual, matcher);
+        expect(actual, expected);
+      });
+    });
+
+    group('mapGeoFromCep', () {
+      test('get GeolocationEntity on success', () async {
+        // arrange
+        final cep = Cep('123456789');
+        final actual = GeolocationEntity(
+          label: 'Label',
+          locationToken: 'location_token',
+        );
+        when(() => supportCenterRepository.mapGeoFromCep(any()))
+            .thenAnswer((_) async => right(GeolocationEntity(
+                  label: 'Label',
+                  locationToken: 'location_token',
+                )));
+        // act
+        final expected = await sut.mapGeoFromCep(cep);
+        // assert
+        expect(right(actual), expected);
       });
     });
   });
