@@ -100,9 +100,14 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
   }
 
   Widget _buildInputScreen(List<AudioPlayTileEntity> tiles, String message) {
-    return _buildListElements(tiles, message);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _buildListElements(tiles, message),        
+      ],
+    );
+    // return _buildListElements(tiles, message);
   }
-
 
   Widget _buildListElements(List<AudioPlayTileEntity> tiles, String message) {
     return Container(
@@ -113,6 +118,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
           key: _refreshIndicatorKey,
           onRefresh: () async => controller.loadPage(),
           child: ListView.builder(
+            shrinkWrap: true,
             itemCount: tiles.length,
             itemBuilder: (context, index) {
               final audio = tiles[index];
