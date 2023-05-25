@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:penhas/app/shared/widgets/request_location_permission_content_widget.dart';
 import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/states/location_permission_state.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
@@ -9,7 +10,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
-import 'package:penhas/app/features/help_center/presentation/widget/request_location_permission_content_widget.dart';
+
 
 class MockAudioServices extends Mock implements IAudioRecordServices {}
 
@@ -78,7 +79,7 @@ void main() {
 
       when(() => locationServices.requestPermission(
               title: 'title',
-              description: RequestLocationPermissionContentWidget()))
+              description: const RequestLocationPermissionContentWidget()))
           .thenAnswer((_) async => const LocationPermissionState.granted());
 
       // when(() => locationServices.isPermissionGranted())

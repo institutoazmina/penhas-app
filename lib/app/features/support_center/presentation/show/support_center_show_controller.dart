@@ -1,10 +1,11 @@
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_detail_entity.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
-import 'package:penhas/app/features/support_center/domain/states/support_center_show_state.dart';
-import 'package:penhas/app/features/support_center/domain/usecases/support_center_usecase.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../../authentication/presentation/shared/map_failure_message.dart';
+import '../../domain/entities/support_center_place_detail_entity.dart';
+import '../../domain/entities/support_center_place_entity.dart';
+import '../../domain/states/support_center_show_state.dart';
+import '../../domain/usecases/support_center_usecase.dart';
 
 part 'support_center_show_controller.g.dart';
 
@@ -48,11 +49,12 @@ extension _PrivateMethods on _SupportCenterShowControllerBase {
   }
 
   Future<void> handleLoadDetailSuccess(
-      SupportCenterPlaceDetailEntity detail,) async {
+    SupportCenterPlaceDetailEntity detail,
+  ) async {
     state = SupportCenterShowState.loaded(detail);
   }
 
   void handleStateError(Failure f) {
-    state = SupportCenterShowState.error(mapFailureMessage(f)!);
+    state = SupportCenterShowState.error(mapFailureMessage(f));
   }
 }

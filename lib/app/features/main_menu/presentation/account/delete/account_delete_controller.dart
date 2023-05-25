@@ -2,13 +2,14 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/managers/app_configuration.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/main_menu/domain/repositories/user_profile_repository.dart';
-import 'package:penhas/app/features/main_menu/domain/states/profile_delete_state.dart';
+
+import '../../../../../core/entities/valid_fiel.dart';
+import '../../../../../core/error/failures.dart';
+import '../../../../../core/managers/app_configuration.dart';
+import '../../../../authentication/presentation/shared/map_failure_message.dart';
+import '../../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../../domain/repositories/user_profile_repository.dart';
+import '../../../domain/states/profile_delete_state.dart';
 
 part 'account_delete_controller.g.dart';
 
@@ -77,7 +78,7 @@ extension _PrivateMethods on _AccountDeleteControllerBase {
   }
 
   void handleLoadPageError(Failure failure) {
-    final message = mapFailureMessage(failure)!;
+    final message = mapFailureMessage(failure);
     state = ProfileDeleteState.error(message);
   }
 

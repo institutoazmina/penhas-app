@@ -1,17 +1,17 @@
 import 'dart:async';
 import 'dart:collection';
 
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_message.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entity.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_request.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_session_entity.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_message_entity.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_sent_message_response_entity.dart';
-import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
-import 'package:penhas/app/features/chat/domain/states/chat_channel_usecase_event.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../shared/logger/log.dart';
+import '../../../authentication/presentation/shared/map_failure_message.dart';
+import '../entities/chat_channel_message.dart';
+import '../entities/chat_channel_open_entity.dart';
+import '../entities/chat_channel_request.dart';
+import '../entities/chat_channel_session_entity.dart';
+import '../entities/chat_message_entity.dart';
+import '../entities/chat_sent_message_response_entity.dart';
+import '../repositories/chat_channel_repository.dart';
+import '../states/chat_channel_usecase_event.dart';
 
 class ChatChannelUseCase with MapFailureMessage {
   ChatChannelUseCase({
@@ -134,7 +134,7 @@ extension ChatChannelUseCasePrivateMethods on ChatChannelUseCase {
   Future<void> handleFailure(Failure failure) async {
     final message = mapFailureMessage(failure);
     if (_currentEvent == const ChatChannelUseCaseEvent.initial()) {
-      _currentEvent = ChatChannelUseCaseEvent.errorOnLoading(message!);
+      _currentEvent = ChatChannelUseCaseEvent.errorOnLoading(message);
       _streamController.add(_currentEvent);
     }
 

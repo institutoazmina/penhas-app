@@ -1,16 +1,16 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_available_entity.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_entity.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entity.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_main_tile_entity.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
 
-import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
-import 'package:penhas/app/features/chat/domain/states/chat_main_talks_state.dart';
+import '../../../../core/error/failures.dart';
+import '../../../authentication/presentation/shared/map_failure_message.dart';
+import '../../domain/entities/chat_channel_available_entity.dart';
+import '../../domain/entities/chat_channel_entity.dart';
+import '../../domain/entities/chat_channel_open_entity.dart';
+import '../../domain/entities/chat_main_tile_entity.dart';
+import '../../domain/entities/chat_user_entity.dart';
+import '../../domain/repositories/chat_channel_repository.dart';
+import '../../domain/states/chat_main_talks_state.dart';
 
 part 'chat_main_talks_controller.g.dart';
 
@@ -145,7 +145,7 @@ extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
   }
 
   void handleLoadPageError(Failure failure) {
-    final message = mapFailureMessage(failure)!;
+    final message = mapFailureMessage(failure);
     currentState = ChatMainTalksState.error(message);
   }
 }
