@@ -145,6 +145,50 @@ void main() {
         expect(expected, isFalse);
       });
     });
+
+    group('currentLocation', () {
+      test('return current location when permission is granted', () async {
+        // arrange
+        final userLocation = UserLocationEntity(
+          latitude: 42.4242,
+          longitude: -42.4242,
+        );
+        when(() => locationServices.isPermissionGranted())
+            .thenAnswer((_) async => true);
+        when(() => locationServices.currentLocation())
+            .thenAnswer((_) async => Right(userLocation));
+        // act
+        final expected = await sut.currentLocation();
+        // assert
+        expect(expected?.userLocation, equals(userLocation));
+        verify(() => locationServices.isPermissionGranted()).called(1);
+        verify(() => locationServices.currentLocation()).called(1);
+      });
+    });
+    test('return null when permission is not granted without cache', () async {
+      // arrange
+      when(() => locationServices.isPermissionGranted())
+          .thenAnswer((_) async => false);
+      // act
+      final expected = await sut.currentLocation();
+      // assert
+      expect(expected, equals(null));
+      verify(() => locationServices.isPermissionGranted()).called(1);
+      verifyNever(() => locationServices.currentLocation());
+    });
+
+    test('return cached when permission is not granted with cache', () async {
+      // arrange
+      when(() => locationServices.isPermissionGranted())
+          .thenAnswer((_) async => false);
+      sut.updatedGeoLocation(GeolocationEntity(locationToken: '123'));
+      // act
+      final expected = await sut.currentLocation();
+      // assert
+      expect(expected, equals(GeolocationEntity(locationToken: '123')));
+      verify(() => locationServices.isPermissionGranted()).called(1);
+      verifyNever(() => locationServices.currentLocation());
+    });
   });
 }
 
