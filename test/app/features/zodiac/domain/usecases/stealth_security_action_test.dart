@@ -82,8 +82,6 @@ void main() {
               description: const RequestLocationPermissionContentWidget()))
           .thenAnswer((_) async => const LocationPermissionState.granted());
 
-      // when(() => locationServices.isPermissionGranted())
-      //     .thenAnswer((_) async => true);
       when(() => geolocatorWrapper.getCurrentPosition())
           .thenAnswer((_) async => position);
 

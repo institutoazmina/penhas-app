@@ -36,8 +36,6 @@ abstract class IAudioRecordServices {
   Stream<AudioActivity> get onProgress;
 
   Future<void> dispose();
-
-  Future<bool> isPermissionGranted();
 }
 
 class AudioRecordServices implements IAudioRecordServices {
@@ -81,9 +79,6 @@ class AudioRecordServices implements IAudioRecordServices {
       requestPermission();
     }
   }
-
-  @override
-  Future<bool> isPermissionGranted() => Permission.microphone.isGranted;
 
   @override
   Future<void> stop() async {
