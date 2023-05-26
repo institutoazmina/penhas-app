@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-
 import '../../../../core/error/failures.dart';
 import '../../../../core/managers/location_services.dart';
 import '../../../authentication/presentation/shared/map_failure_message.dart';
@@ -11,7 +10,8 @@ import '../../data/repositories/guardian_repository.dart';
 import '../../domain/entities/guardian_session_entity.dart';
 import '../../domain/states/guardian_alert_state.dart';
 import '../../domain/states/new_guardian_state.dart';
-import '../widget/request_location_permission_content_widget.dart';
+
+import '../../../../shared/widgets/request_location_permission_content_widget.dart';
 
 part 'new_guardian_controller.g.dart';
 
@@ -172,7 +172,7 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
     await _locationService
         .requestPermission(
           title: 'O guardião precisa da sua localização',
-          description: RequestLocationPermissionContentWidget(),
+          description: const RequestLocationPermissionContentWidget(),
         )
         .then((value) => Modular.to.pop(true));
   }

@@ -1,9 +1,10 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
-import 'package:penhas/app/shared/navigation/navigator.dart';
+
+import '../../../../../shared/design_system/colors.dart';
+import '../../../../../shared/design_system/text_styles.dart';
+import '../../../../../shared/navigation/app_navigator.dart';
+import '../../../domain/entities/tweet_entity.dart';
 
 class TweetGroupNews extends StatefulWidget {
   const TweetGroupNews({Key? key, required TweetNewsGroupEntity group})

@@ -1,12 +1,12 @@
 import 'dart:async';
-
-import 'package:penhas/app/core/entities/user_location.dart';
-import 'package:penhas/app/core/managers/audio_record_services.dart';
-import 'package:penhas/app/core/managers/location_services.dart';
-import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
-import 'package:penhas/app/features/help_center/domain/entities/audio_record_duration_entity.dart';
-import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+import '../../../../core/entities/user_location.dart';
+import '../../../../core/managers/audio_record_services.dart';
+import '../../../../core/managers/location_services.dart';
+import '../../../../shared/widgets/request_location_permission_content_widget.dart';
+import '../../../help_center/data/repositories/guardian_repository.dart';
+import '../../../help_center/domain/entities/audio_record_duration_entity.dart';
+import '../../../help_center/domain/usecases/security_mode_action_feature.dart';
+import '../../../../shared/logger/log.dart';
 
 class StealthSecurityAction {
   StealthSecurityAction({
@@ -35,7 +35,7 @@ class StealthSecurityAction {
   Future<void> start() async {
     _streamController ??= StreamController.broadcast();
 
-    return _getCurrentLocatin()
+    return _getCurrentLocation()
         .then((location) => _triggerGuardian(location))
         .then((_) => _startAudioRecord())
         .then((_) => _streamController!.add(true));
@@ -62,10 +62,24 @@ class StealthSecurityAction {
     }
   }
 
-  Future<UserLocationEntity> _getCurrentLocatin() async {
-    return _locationService
-        .currentLocation()
-        .then((v) => v.getOrElse(() => const UserLocationEntity())!);
+  Future<UserLocationEntity> _getCurrentLocation() async {
+    await _locationService.requestPermission(
+      title: 'O guardião precisa da sua localização',
+      description: const RequestLocationPermissionContentWidget(),
+    );
+
+    final hasPermission = await hasLocationPermission();
+
+    if (hasPermission) {
+      return _locationService.currentLocation().then((location) {
+        return location.fold((l) {
+          logError(l);
+          return const UserLocationEntity();
+        }, (r) => formatCoordinates(r));
+      });
+    }
+
+    return const UserLocationEntity();
   }
 
   Future<void> _triggerGuardian(UserLocationEntity location) async {
@@ -101,5 +115,21 @@ class StealthSecurityAction {
         _audioServices.rotate();
       },
     );
+  }
+}
+
+extension _PrivateMethods on StealthSecurityAction {
+  Future<bool> hasLocationPermission() {
+    return _locationService.isPermissionGranted();
+  }
+
+  UserLocationEntity formatCoordinates(UserLocationEntity? location) {
+    if (location != null) {
+      return UserLocationEntity(
+          accuracy: location.accuracy,
+          latitude: double.parse(location.latitude.toStringAsFixed(7)),
+          longitude: double.parse(location.longitude.toStringAsFixed(7)));
+    }
+    return const UserLocationEntity();
   }
 }

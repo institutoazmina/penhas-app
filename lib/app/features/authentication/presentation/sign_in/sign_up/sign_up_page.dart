@@ -5,16 +5,17 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/input_box_style.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/sign_up_controller.dart';
-import 'package:penhas/app/shared/design_system/button_shape.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
-import 'package:penhas/app/shared/navigation/navigator.dart';
+
+import '../../../../../shared/design_system/button_shape.dart';
+import '../../../../../shared/design_system/colors.dart';
+import '../../../../../shared/design_system/linear_gradient_design_system.dart';
+import '../../../../../shared/design_system/text_styles.dart';
+import '../../../../../shared/navigation/app_navigator.dart';
+import '../../shared/input_box_style.dart';
+import '../../shared/page_progress_indicator.dart';
+import '../../shared/single_text_input.dart';
+import '../../shared/snack_bar_handler.dart';
+import 'sign_up_controller.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key, this.title = 'SignUp'}) : super(key: key);
