@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:penhas/app/core/entities/user_location.dart';
-import 'package:penhas/app/core/managers/audio_record_services.dart';
-import 'package:penhas/app/core/managers/location_services.dart';
-import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
-import 'package:penhas/app/features/help_center/domain/entities/audio_record_duration_entity.dart';
-import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+import '../../../../core/entities/user_location.dart';
+import '../../../../core/managers/audio_record_services.dart';
+import '../../../../core/managers/location_services.dart';
+import '../../../../shared/logger/log.dart';
+import '../../../help_center/data/repositories/guardian_repository.dart';
+import '../../../help_center/domain/entities/audio_record_duration_entity.dart';
+import '../../../help_center/domain/usecases/security_mode_action_feature.dart';
 
 class StealthSecurityAction {
   StealthSecurityAction({
@@ -35,7 +35,7 @@ class StealthSecurityAction {
   Future<void> start() async {
     _streamController ??= StreamController.broadcast();
 
-    return _getCurrentLocation()
+    return await _getCurrentLocation()
         .then((location) => _triggerGuardian(location))
         .then((_) => _startAudioRecord())
         .then((_) => _streamController!.add(true));
