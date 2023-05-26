@@ -21,7 +21,4 @@ class UserSearchSessionEntity extends Equatable {
         nextPage,
         users,
       ];
-
-  @override
-  bool get stringify => true;
 }
