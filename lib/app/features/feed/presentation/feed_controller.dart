@@ -11,9 +11,8 @@ import '../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../help_center/domain/usecases/security_mode_action_feature.dart';
 import '../domain/states/feed_security_state.dart';
 import '../domain/states/feed_state.dart';
-import '../domain/usecases/escape_manual_toggle.dart';
+import '../domain/usecases/compose_tweet_fab_toggle.dart';
 import '../domain/usecases/feed_use_cases.dart';
-import '../domain/usecases/tweet_toggle_feature.dart';
 
 part 'feed_controller.g.dart';
 
@@ -26,12 +25,10 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
   _FeedControllerBase({
     required FeedUseCases useCase,
     required SecurityModeActionFeature securityModeActionFeature,
-    required EscapeManualToggleFeature escapeManualToggleFeature,
-    required TweetToggleFeature tweetToggleFeature,
+    required ComposeTweetFabToggleFeature composeTweetFabToggleFeature,
   })  : _useCase = useCase,
         _securityModeActionFeature = securityModeActionFeature,
-        _escapeManualToggleFeature = escapeManualToggleFeature,
-        _tweetToggleFeature = tweetToggleFeature {
+        _composeTweetFabToggleFeature = composeTweetFabToggleFeature {
     _registerDataSource();
     _setupSecurityState();
     _setupFabPublish();
@@ -39,8 +36,7 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
 
   final FeedUseCases _useCase;
   final SecurityModeActionFeature _securityModeActionFeature;
-  final EscapeManualToggleFeature _escapeManualToggleFeature;
-  final TweetToggleFeature _tweetToggleFeature;
+  final ComposeTweetFabToggleFeature _composeTweetFabToggleFeature;
 
   @observable
   FeedState state = const FeedState.initial();
@@ -138,7 +134,6 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
   }
 
   Future<void> _setupFabPublish() async {
-    isPublishFabEnabled = await _escapeManualToggleFeature.isEnabled &&
-        await _tweetToggleFeature.isEnabled;
+    isPublishFabEnabled = await _composeTweetFabToggleFeature.isEnabled;
   }
 }
