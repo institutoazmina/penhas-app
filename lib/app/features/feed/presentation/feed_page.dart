@@ -74,6 +74,7 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
     return Scaffold(
       key: _scaffoldKey,
       body: _bodyBuilder(),
+      floatingActionButton: _buildFabButton(),
     );
   }
 
@@ -196,6 +197,20 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
       ),
     );
   }
+
+  Widget _buildFabButton() => Observer(builder: (_) {
+        if (!controller.isPublishFabEnabled) return Container();
+
+        return FloatingActionButton(
+          heroTag: 'publish',
+          backgroundColor: DesignSystemColors.ligthPurple,
+          tooltip: 'Publicar',
+          onPressed: () {
+            Modular.to.pushNamed('/mainboard/compose');
+          },
+          child: const Icon(Icons.chat_bubble_outline),
+        );
+      });
 
   ReactionDisposer _showErrorMessage() {
     return reaction((_) => controller.errorMessage, (String? message) {

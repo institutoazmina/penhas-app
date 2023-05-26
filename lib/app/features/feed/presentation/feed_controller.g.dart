@@ -39,6 +39,22 @@ mixin _$FeedController on _FeedControllerBase, Store {
     });
   }
 
+  final _$isPublishFabEnabledAtom =
+      Atom(name: '_FeedControllerBase.isPublishFabEnabled');
+
+  @override
+  bool get isPublishFabEnabled {
+    _$isPublishFabEnabledAtom.reportRead();
+    return super.isPublishFabEnabled;
+  }
+
+  @override
+  set isPublishFabEnabled(bool value) {
+    _$isPublishFabEnabledAtom.reportWrite(value, super.isPublishFabEnabled, () {
+      super.isPublishFabEnabled = value;
+    });
+  }
+
   final _$securityStateAtom = Atom(name: '_FeedControllerBase.securityState');
 
   @override
@@ -143,6 +159,7 @@ mixin _$FeedController on _FeedControllerBase, Store {
   String toString() {
     return '''
 state: ${state},
+isPublishFabEnabled: ${isPublishFabEnabled},
 securityState: ${securityState},
 errorMessage: ${errorMessage},
 fetchState: ${fetchState},

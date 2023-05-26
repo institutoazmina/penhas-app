@@ -9,7 +9,9 @@ import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/states/feed_security_state.dart';
 import 'package:penhas/app/features/feed/domain/states/feed_state.dart';
+import 'package:penhas/app/features/feed/domain/usecases/escape_manual_toggle.dart';
 import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
+import 'package:penhas/app/features/feed/domain/usecases/tweet_toggle_feature.dart';
 import 'package:penhas/app/features/feed/presentation/feed_controller.dart';
 import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
 
@@ -22,12 +24,19 @@ class MockSecurityModeActionFeature extends Mock
 
 class MockTweet extends Mock implements TweetTiles {}
 
+class MockEscapeManualToggleFeature extends Mock
+    implements EscapeManualToggleFeature {}
+
+class MockTweetToggleFeature extends Mock implements TweetToggleFeature {}
+
 void main() {
   group(FeedController, () {
     late FeedController controller;
 
     late FeedUseCases mockFeedUseCases;
     late SecurityModeActionFeature mockSecurityModeActionFeature;
+    late EscapeManualToggleFeature mockEscapeManualToggleFeature;
+    late TweetToggleFeature mockTweetToggleFeature;
 
     late StreamController<FeedCache> feedCacheStreamCtrl;
     late Completer<TFeed> fetchNewestTweetCompleter;
@@ -36,6 +45,8 @@ void main() {
     setUp(() {
       mockFeedUseCases = MockFeedUseCases();
       mockSecurityModeActionFeature = MockSecurityModeActionFeature();
+      mockEscapeManualToggleFeature = MockEscapeManualToggleFeature();
+      mockTweetToggleFeature = MockTweetToggleFeature();
 
       feedCacheStreamCtrl = StreamController.broadcast();
       fetchNewestTweetCompleter = Completer();
@@ -51,6 +62,8 @@ void main() {
       controller = FeedController(
         useCase: mockFeedUseCases,
         securityModeActionFeature: mockSecurityModeActionFeature,
+        escapeManualToggleFeature: mockEscapeManualToggleFeature,
+        tweetToggleFeature: mockTweetToggleFeature,
       );
     });
 
@@ -124,6 +137,8 @@ void main() {
         controller = FeedController(
           useCase: mockFeedUseCases,
           securityModeActionFeature: mockSecurityModeActionFeature,
+          escapeManualToggleFeature: mockEscapeManualToggleFeature,
+          tweetToggleFeature: mockTweetToggleFeature,
         );
       });
 
