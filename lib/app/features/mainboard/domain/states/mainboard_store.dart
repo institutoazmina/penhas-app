@@ -68,9 +68,11 @@ extension _Methods on _MainboardStoreBase {
       authorizedPages.add(const MainboardState.feed());
     }
 
-    if (await EscapeManualToggleFeature(modulesServices: _modulesServices).isEnabled) {
+    if (await EscapeManualToggleFeature(modulesServices: _modulesServices)
+        .isEnabled) {
       authorizedPages.add(const MainboardState.escapeManual());
-    } else if (await TweetToggleFeature(modulesServices: _modulesServices).isEnabled) {
+    } else if (await TweetToggleFeature(modulesServices: _modulesServices)
+        .isEnabled) {
       authorizedPages.add(const MainboardState.compose());
     }
 
