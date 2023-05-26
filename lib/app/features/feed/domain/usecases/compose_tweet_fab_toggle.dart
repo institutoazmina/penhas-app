@@ -1,16 +1,12 @@
-import '../../../../core/managers/modules_sevices.dart';
 import 'escape_manual_toggle.dart';
 import 'tweet_toggle_feature.dart';
 
 class ComposeTweetFabToggleFeature {
   ComposeTweetFabToggleFeature({
-    required IAppModulesServices modulesServices,
-  })  : _escapeManualToggleFeature = EscapeManualToggleFeature(
-          modulesServices: modulesServices,
-        ),
-        _tweetToggleFeature = TweetToggleFeature(
-          modulesServices: modulesServices,
-        );
+    required EscapeManualToggleFeature escapeManualToggleFeature,
+    required TweetToggleFeature tweetToggleFeature,
+  })  : _escapeManualToggleFeature = escapeManualToggleFeature,
+        _tweetToggleFeature = tweetToggleFeature;
 
   final EscapeManualToggleFeature _escapeManualToggleFeature;
   final TweetToggleFeature _tweetToggleFeature;
