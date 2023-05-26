@@ -47,24 +47,59 @@ void main() {
     );
   });
 
+  void _configureMock() {
+    when(() => locationServices.currentLocation())
+        .thenAnswer((_) async => right(UserLocationEntity()));
+    when(() => guardianRepository.alert(any())).thenAnswer(
+        (_) async => right(AlertModel(title: 'title', message: 'message')));
+    when(() => audioServices.start()).thenAnswer((_) async => {});
+    when(() => featureToggle.audioDuration)
+        .thenAnswer((_) async => AudioRecordDurationEntity(30, 300));
+  }
+
   group(StealthSecurityAction, () {
-    group('start()', () {
-      test('trigger guardian and start audio recording', () async {
+    test(
+      'start() trigger guardian and start audio recording',
+      () async {
         // arrange
-        when(() => locationServices.currentLocation())
-            .thenAnswer((_) async => right(UserLocationEntity()));
-        when(() => guardianRepository.alert(any())).thenAnswer(
-            (_) async => right(AlertModel(title: 'title', message: 'message')));
-        when(() => audioServices.start()).thenAnswer((_) async => {});
-        when(() => featureToggle.audioDuration)
-            .thenAnswer((_) async => AudioRecordDurationEntity(30, 300));
+        _configureMock();
         // act
         await stealthSecurityAction.start();
         // assert
         verify(() => locationServices.currentLocation()).called(1);
         verify(() => guardianRepository.alert(any())).called(1);
         verify(() => audioServices.start()).called(1);
-      });
-    });
+      },
+    );
+
+    test(
+      'stop() stop recording and cancel timer',
+      () async {
+        // arrange
+        _configureMock();
+        when(() => audioServices.stop()).thenAnswer((_) async => {});
+        // act
+        await stealthSecurityAction.start();
+        await stealthSecurityAction.stop();
+        // assert
+        verify(() => audioServices.stop()).called(1);
+      },
+    );
+
+    test(
+      'dispose() stop recording and dispose services',
+      () async {
+        // arrange
+        _configureMock();
+        when(() => audioServices.stop()).thenAnswer((_) async => {});
+        when(() => audioServices.dispose()).thenAnswer((_) async => {});
+        // act
+        await stealthSecurityAction.start();
+        await stealthSecurityAction.dispose();
+        // assert
+        verify(() => audioServices.stop()).called(1);
+        verify(() => audioServices.dispose()).called(1);
+      },
+    );
   });
 }
