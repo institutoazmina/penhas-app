@@ -21,13 +21,13 @@ void main() {
       sut = Zodiac();
     });
 
-    group('pickEigthRandonSign', () {
+    group('pickEightRandomSign', () {
       test('exclude the current signs from random sign list', () {
         // arrange
         final birthday = DateTime.parse('1990-03-21');
         final currentSign = sut.sign(birthday);
         // act
-        final result = sut.pickEigthRandonSign(birthday);
+        final result = sut.pickEightRandomSign(birthday);
         // assert
         expect(result.contains(currentSign), isFalse);
       });

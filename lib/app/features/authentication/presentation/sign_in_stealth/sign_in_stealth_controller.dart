@@ -64,7 +64,7 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
 
     final zodiac = Zodiac();
     sign = zodiac.sign(profile.birthdate);
-    signList = zodiac.pickEigthRandonSign(profile.birthdate).asObservable();
+    signList = zodiac.pickEightRandomSign(profile.birthdate).asObservable();
 
     _registerDataSource();
   }

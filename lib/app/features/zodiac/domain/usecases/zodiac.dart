@@ -39,7 +39,7 @@ class Zodiac {
     }
   }
 
-  List<IZodiac> pickEigthRandonSign(DateTime birthday) {
+  List<IZodiac> pickEightRandomSign(DateTime birthday) {
     final currentSign = sign(birthday);
     final signs = _signNames;
     signs.removeWhere((e) => e.name == currentSign.name);

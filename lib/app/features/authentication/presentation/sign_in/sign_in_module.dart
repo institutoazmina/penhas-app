@@ -220,7 +220,7 @@ class SignInModule extends Module {
         Bind.factory(
           (i) => StealthSecurityAction(
             audioServices: i.get<IAudioRecordServices>(),
-            featureToogle: i.get<SecurityModeActionFeature>(),
+            featureToggle: i.get<SecurityModeActionFeature>(),
             locationService: i.get<ILocationServices>(),
             guardianRepository: i.get<IGuardianRepository>(),
           ),
