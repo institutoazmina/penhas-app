@@ -199,7 +199,7 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
   }
 
   Widget _buildFabButton() => Observer(builder: (_) {
-        if (!controller.isPublishFabEnabled) return Container();
+        if (!controller.isComposeTweetFabVisible) return Container();
 
         return FloatingActionButton(
           heroTag: 'publish',

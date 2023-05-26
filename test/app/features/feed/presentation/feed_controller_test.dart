@@ -37,6 +37,7 @@ void main() {
     late StreamController<FeedCache> feedCacheStreamCtrl;
     late Completer<TFeed> fetchNewestTweetCompleter;
     late Completer<bool> securityModeActionFeatureCompleter;
+    late Completer<bool> composeTweetFabToggleFeatureCompleter;
 
     setUp(() {
       mockFeedUseCases = MockFeedUseCases();
@@ -46,11 +47,14 @@ void main() {
       feedCacheStreamCtrl = StreamController.broadcast();
       fetchNewestTweetCompleter = Completer();
       securityModeActionFeatureCompleter = Completer();
+      composeTweetFabToggleFeatureCompleter = Completer();
 
       when(() => mockFeedUseCases.fetchNewestTweet())
           .thenAnswer((_) => fetchNewestTweetCompleter.future);
       when(() => mockSecurityModeActionFeature.isEnabled)
           .thenAnswer((_) => securityModeActionFeatureCompleter.future);
+      when(() => mockComposeTweetFabToggleFeature.isEnabled)
+          .thenAnswer((_) => composeTweetFabToggleFeatureCompleter.future);
       when(() => mockFeedUseCases.tweetList())
           .thenAnswer((_) => feedCacheStreamCtrl.stream);
 
@@ -310,6 +314,37 @@ void main() {
 
         // assert
         expect(feedCacheStreamCtrl.hasListener, isFalse);
+      },
+    );
+
+    test(
+      'should call ComposeTweetFabToogle.isEnabled on initialization',
+      () async {
+        // assert
+        verify(() => mockComposeTweetFabToggleFeature.isEnabled).called(1);
+        verifyNoMoreInteractions(mockComposeTweetFabToggleFeature);
+      },
+    );
+
+    test(
+      'should set isComposeTweetFabVisible to true when ComposeTweetFabToogle.isEnabled is true',
+      () async {
+        // act
+        await composeTweetFabToggleFeatureCompleter.completeAndWait(true);
+
+        // assert
+        expect(controller.isComposeTweetFabVisible, isTrue);
+      },
+    );
+
+    test(
+      'should set isComposeTweetFabVisible to false when ComposeTweetFabToogle.isEnabled is false',
+      () async {
+        // act
+        await composeTweetFabToggleFeatureCompleter.completeAndWait(false);
+
+        // assert
+        expect(controller.isComposeTweetFabVisible, isFalse);
       },
     );
   });

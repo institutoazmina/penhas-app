@@ -42,7 +42,7 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
   FeedState state = const FeedState.initial();
 
   @observable
-  bool isPublishFabEnabled = false;
+  bool isComposeTweetFabVisible = false;
 
   @observable
   FeedSecurityState securityState = const FeedSecurityState.disable();
@@ -134,6 +134,6 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
   }
 
   Future<void> _setupFabPublish() async {
-    isPublishFabEnabled = await _composeTweetFabToggleFeature.isEnabled;
+    isComposeTweetFabVisible = await _composeTweetFabToggleFeature.isEnabled;
   }
 }
