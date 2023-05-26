@@ -29,18 +29,18 @@ class Zodiac {
     ZodiacSignCapricorn(),
   ];
 
-  IZodiac sign(DateTime birthdate) {
+  IZodiac sign(DateTime birthday) {
     final signDays = [0, 21, 20, 21, 21, 21, 21, 23, 23, 23, 23, 22, 22];
 
-    if (birthdate.day < signDays[birthdate.month]) {
-      return _signNames[birthdate.month - 1];
+    if (birthday.day < signDays[birthday.month]) {
+      return _signNames[birthday.month - 1];
     } else {
-      return _signNames[birthdate.month];
+      return _signNames[birthday.month];
     }
   }
 
-  List<IZodiac> pickEigthRandonSign(DateTime birthdate) {
-    final currentSign = sign(birthdate);
+  List<IZodiac> pickEigthRandonSign(DateTime birthday) {
+    final currentSign = sign(birthday);
     final signs = _signNames;
     signs.removeWhere((e) => e.name == currentSign.name);
     signs.shuffle();
