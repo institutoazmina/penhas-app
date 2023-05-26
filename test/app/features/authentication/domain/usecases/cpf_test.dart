@@ -5,34 +5,52 @@ import 'package:penhas/app/features/authentication/domain/usecases/cpf.dart';
 
 void main() {
   group(
-    'Cpf',
+    Cpf,
     () {
+      test('constructs a Cpf with valid string', () {
+        // arrange
+        const cpfString = '529.982.247-25';
+        // act
+        final cpf = Cpf(cpfString);
+        // assert
+        expect(cpf.isValid, true);
+        expect(cpf.rawValue, '52998224725');
+        expect(cpf.mapFailure, '');
+      });
       test(
-        'should get CpfInvalidFailure for null value',
+        'returns invalid Cpf when constructed with empty value',
         () {
-          final result = Cpf('').value;
-
-          expect(result, left(CpfInvalidFailure()));
+          // arrange
+          const cpfString = '';
+          // act
+          final cpf = Cpf(cpfString);
+          // assert
+          expect(cpf.isValid, false);
+          expect(cpf.mapFailure, 'CPF inválido');
+          expect(cpf.value, left(CpfInvalidFailure()));
         },
       );
-      test(
-        'should get CpfInvalidFailure for empty value',
-        () {
-          final result = Cpf('').value;
 
-          expect(result, left(CpfInvalidFailure()));
-        },
-      );
+      test('return true for equal Cpf', () {
+        // arrange
+        const cpfString = '529.982.247-25';
+        // act
+        final cpf = Cpf(cpfString);
+        final cpf2 = Cpf(cpfString);
+        // assert
+        expect(cpf == cpf2, true);
+      });
 
-      test(
-        'should get value from a valid cpf',
-        () {
-          const testValue = '236.932.813-43';
-          final result = Cpf(testValue).value;
-
-          expect(result, right('23693281343'));
-        },
-      );
+      test('return false for different Cpf', () {
+        // arrange
+        const cpfString = '529.982.247-25';
+        const cpfString2 = '529.982.247-26';
+        // act
+        final cpf = Cpf(cpfString);
+        final cpf2 = Cpf(cpfString2);
+        // assert
+        expect(cpf == cpf2, false);
+      });
     },
   );
 }
