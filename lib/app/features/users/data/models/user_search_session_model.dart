@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
-import 'package:penhas/app/features/users/data/models/user_detail_profile_model.dart';
-import 'package:penhas/app/features/users/domain/entities/user_search_session_entity.dart';
+
+import '../../domain/entities/user_search_session_entity.dart';
+import 'user_detail_profile_model.dart';
 
 class UserSearchSessionModel extends UserSearchSessionEntity {
   const UserSearchSessionModel({
