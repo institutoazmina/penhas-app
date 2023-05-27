@@ -3,14 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/managers/modules_sevices.dart';
-import 'package:penhas/app/features/appstate/domain/usecases/app_preferences_use_case.dart';
-import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
-import 'package:penhas/app/features/mainboard/domain/states/mainboard_security_state.dart';
-import 'package:penhas/app/features/mainboard/domain/states/mainboard_store.dart';
-import 'package:penhas/app/features/notification/data/repositories/notification_repository.dart';
-import 'package:penhas/app/shared/navigation/navigator.dart';
+
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/managers/modules_sevices.dart';
+import '../../../../shared/navigation/app_navigator.dart';
+import '../../../appstate/domain/usecases/app_preferences_use_case.dart';
+import '../../../help_center/domain/usecases/security_mode_action_feature.dart';
+import '../../../notification/data/repositories/notification_repository.dart';
+import '../../domain/states/mainboard_security_state.dart';
+import '../../domain/states/mainboard_store.dart';
 
 part 'mainboard_controller.g.dart';
 

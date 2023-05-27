@@ -1,14 +1,15 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/data/authorization_status.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/managers/app_configuration.dart';
-import 'package:penhas/app/core/managers/local_store.dart';
-import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
-import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
-import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
-import 'package:penhas/app/shared/navigation/navigator.dart';
-import 'package:penhas/app/shared/navigation/route.dart';
+
+import '../../core/data/authorization_status.dart';
+import '../../core/error/failures.dart';
+import '../../core/managers/app_configuration.dart';
+import '../../core/managers/local_store.dart';
+import '../../shared/navigation/app_navigator.dart';
+import '../../shared/navigation/app_route.dart';
+import '../appstate/domain/entities/app_state_entity.dart';
+import '../appstate/domain/entities/user_profile_entity.dart';
+import '../appstate/domain/usecases/app_state_usecase.dart';
 
 part 'splash_controller.g.dart';
 
