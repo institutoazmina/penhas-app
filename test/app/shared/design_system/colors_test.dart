@@ -21,5 +21,10 @@ void main() {
       expect(DesignSystemColors.hexColor(hexColor), expectedColor);
       expect(DesignSystemColors.hexColor(hexColorWithoutHash), expectedColor);
     });
+
+    test('return a Exceptions for an invalid hexColor', () {
+      expect(() => DesignSystemColors.hexColor('invalid_hex'),
+          throwsA(isA<Exception>()));
+    });
   });
 }
