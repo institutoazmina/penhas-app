@@ -110,7 +110,13 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
             child: ListView(
               shrinkWrap: true,
               children: [
-                Text(message),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    message,
+                    style: const TextStyle(fontSize: 16.0),
+                  ),
+                ),
                 ..._buildListElements(tiles).toList(),
               ],
             )),
