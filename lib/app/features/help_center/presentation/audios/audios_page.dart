@@ -100,42 +100,38 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
   }
 
   Widget _buildInputScreen(List<AudioPlayTileEntity> tiles, String message) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _buildListElements(tiles, message),        
-      ],
-    );
-    // return _buildListElements(tiles, message);
-  }
-
-  Widget _buildListElements(List<AudioPlayTileEntity> tiles, String message) {
     return Container(
       color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.only(top: 22),
         child: RefreshIndicator(
-          key: _refreshIndicatorKey,
-          onRefresh: () async => controller.loadPage(),
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: tiles.length,
-            itemBuilder: (context, index) {
-              final audio = tiles[index];
-              final isPlaying = audio.audio == _playingAudio;
-              final backgroundColor = _selectingAudioMenu == audio.audio
-                  ? DesignSystemColors.blueyGrey
-                  : Colors.transparent;
-
-              return AudioPlayWidget(
-                audioPlay: tiles[index],
-                isPlaying: isPlaying,
-                backgroundColor: backgroundColor,
-              );
-            },
-          ),
-        ),
+            key: _refreshIndicatorKey,
+            onRefresh: () async => controller.loadPage(),
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                Text(message),
+                ..._buildListElements(tiles).toList(),
+              ],
+            )),
       ),
+    );
+  }
+
+  Iterable<AudioPlayWidget> _buildListElements(
+      List<AudioPlayTileEntity> tiles) {
+    return tiles.map(
+      (audio) {
+        final isPlaying = audio.audio == _playingAudio;
+        final backgroundColor = _selectingAudioMenu == audio.audio
+            ? DesignSystemColors.blueyGrey
+            : Colors.transparent;
+        return AudioPlayWidget(
+          audioPlay: audio,
+          isPlaying: isPlaying,
+          backgroundColor: backgroundColor,
+        );
+      },
     );
   }
 
