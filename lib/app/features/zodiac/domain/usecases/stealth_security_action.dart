@@ -4,6 +4,7 @@ import '../../../../core/entities/user_location.dart';
 import '../../../../core/managers/audio_record_services.dart';
 import '../../../../core/managers/location_services.dart';
 import '../../../../shared/logger/log.dart';
+import '../../../../shared/widgets/request_location_permission_content_widget.dart';
 import '../../../help_center/data/repositories/guardian_repository.dart';
 import '../../../help_center/domain/entities/audio_record_duration_entity.dart';
 import '../../../help_center/domain/usecases/security_mode_action_feature.dart';
@@ -63,9 +64,22 @@ class StealthSecurityAction {
   }
 
   Future<UserLocationEntity> _getCurrentLocation() async {
-    return _locationService
-        .currentLocation()
-        .then((v) => v.getOrElse(() => const UserLocationEntity())!);
+    final hasPermission = await _hasLocationPermission();
+
+    if (hasPermission) {
+      return _parseCurrentLocation();
+    }
+
+    return const UserLocationEntity();
+  }
+
+  Future<UserLocationEntity> _parseCurrentLocation() async {
+    final location = await _locationService.currentLocation();
+
+    return location.fold((l) {
+      logError(l);
+      return const UserLocationEntity();
+    }, (r) => _formatCoordinates(r));
   }
 
   Future<void> _triggerGuardian(UserLocationEntity location) async {
@@ -100,5 +114,24 @@ class StealthSecurityAction {
         _audioServices.rotate();
       },
     );
+  }
+
+  Future<bool> _hasLocationPermission() async {
+    await _locationService.requestPermission(
+      title: 'O guardião precisa da sua localização',
+      description: const RequestLocationPermissionContentWidget(),
+    );
+
+    return _locationService.isPermissionGranted();
+  }
+
+  UserLocationEntity _formatCoordinates(UserLocationEntity? location) {
+    if (location != null) {
+      return UserLocationEntity(
+          accuracy: location.accuracy,
+          latitude: double.parse(location.latitude.toStringAsFixed(7)),
+          longitude: double.parse(location.longitude.toStringAsFixed(7)));
+    }
+    return const UserLocationEntity();
   }
 }

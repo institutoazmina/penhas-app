@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
+import 'package:penhas/app/core/states/location_permission_state.dart';
 import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_record_duration_entity.dart';
@@ -23,14 +25,22 @@ class MockSecurityModeActionFeature extends Mock
 
 class FakeUserLocationEntity extends Fake implements UserLocationEntity {}
 
+class FakeWidget extends Fake implements StatelessWidget {
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return super.toString();
+  }
+}
+
 void main() {
-  late MockLocationServices locationServices;
-  late MockAudioRecordServices audioServices;
-  late MockGuardianRepository guardianRepository;
-  late MockSecurityModeActionFeature featureToggle;
+  late ILocationServices locationServices;
+  late IAudioRecordServices audioServices;
+  late IGuardianRepository guardianRepository;
+  late SecurityModeActionFeature featureToggle;
   late StealthSecurityAction stealthSecurityAction;
 
   setUpAll(() {
+    registerFallbackValue(FakeWidget());
     registerFallbackValue(FakeUserLocationEntity());
   });
 
@@ -50,6 +60,13 @@ void main() {
   void _configureMock() {
     when(() => locationServices.currentLocation())
         .thenAnswer((_) async => right(UserLocationEntity()));
+    when(() => locationServices.requestPermission(
+            title: any(named: 'title'), description: any(named: 'description')))
+        .thenAnswer((_) async => LocationPermissionState.denied());
+
+    when(() => locationServices.isPermissionGranted())
+        .thenAnswer((_) async => true);
+
     when(() => guardianRepository.alert(any())).thenAnswer(
         (_) async => right(AlertModel(title: 'title', message: 'message')));
     when(() => audioServices.start()).thenAnswer((_) async => {});
