@@ -1,0 +1,23 @@
+---
+name: Code Metrics check
+
+on:
+  - pull_request
+
+jobs:
+  dart-code-metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run Code Metrics
+        uses: dart-code-checker/dart-code-metrics-action@v4.0.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          folders: "android, bin, fastlane, ios, lib"
+          pull_request_comment: true
+          fatal_warnings: true
+          fatal_performance: true
+          fatal_style: true
+          check_unused_files: true
+          check_unused_files_folders: "android, bin, fastlane, ios, lib"
