@@ -107,8 +107,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
         child: RefreshIndicator(
             key: _refreshIndicatorKey,
             onRefresh: () async => controller.loadPage(),
-            child: ListView(
-              shrinkWrap: true,
+            child: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -117,7 +116,17 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
                     style: const TextStyle(fontSize: 16.0),
                   ),
                 ),
-                ..._buildListElements(tiles).toList(),
+                Expanded(
+                  child: Scrollbar(
+                    isAlwaysShown: true,
+                    child: ListView(
+                      shrinkWrap: true,
+                      children: [
+                        ..._buildListElements(tiles).toList(),
+                      ],
+                    ),
+                  ),
+                )
               ],
             )),
       ),
