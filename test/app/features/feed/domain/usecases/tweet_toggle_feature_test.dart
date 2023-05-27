@@ -16,31 +16,37 @@ void main() {
   group(TweetToggleFeature, () {
     group('isEnabled', () {
       test('returns true when feature with featureCode is present', () async {
+        // arrange
         when(() => modulesServices.feature(name: any(named: 'name')))
             .thenAnswer((_) async => FakeAppStateModuleEntity());
-
+        // act
         final result = await feature.isEnabled;
-
+        // assert
+        verify(() => modulesServices.feature(name: 'tweets'));
         expect(result, isTrue);
       });
 
       test('returns false when feature with featureCode is not present',
           () async {
+        // arrange
         when(() => modulesServices.feature(name: any(named: 'name')))
             .thenAnswer((_) async => null);
-
+        // act
         final result = await feature.isEnabled;
-
+        // assert
+        verify(() => modulesServices.feature(name: 'tweets'));
         expect(result, isFalse);
       });
 
       test('returns false when feature crash', () async {
+        // arrange
         when(() => modulesServices.feature(name: any(named: 'name')))
             .thenThrow(Exception());
-
+        // act
         final result = await feature.isEnabled;
-
-        expect(result, false);
+        // assert
+        verify(() => modulesServices.feature(name: 'tweets'));
+        expect(result, isFalse);
       });
     });
   });
