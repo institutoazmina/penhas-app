@@ -2,7 +2,8 @@
 name: Code Metrics check
 
 on:
-  - pull_request
+  - pull_request:
+      types: [opened, synchronize]
 
 jobs:
   dart-code-metrics:
