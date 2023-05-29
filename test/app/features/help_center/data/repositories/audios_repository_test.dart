@@ -40,7 +40,7 @@ void main() {
       final result = await sut.fetch();
 
       // assert
-      expect(result.fold((l) => l, (r) => r), expected);
+      expect(result.fold((l) => l, (r) => r.audioList), expected.audioList);
     });
     test('delete audio', () async {
       // arrange

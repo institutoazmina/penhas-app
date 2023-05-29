@@ -4,9 +4,6 @@ import '../../../../shared/logger/log.dart';
 class AudioModel {
   const AudioModel({required this.audioList, required this.message});
 
-  final List<AudioEntity> audioList;
-  final String message;
-
   factory AudioModel.fromJson(Map<String, dynamic>? json) {
     final message = json!['message'] ?? '';
     final rows = json['rows'] as List<dynamic>;
@@ -18,6 +15,9 @@ class AudioModel {
 
     return AudioModel(audioList: audioList, message: message);
   }
+
+  final List<AudioEntity> audioList;
+  final String message;
 }
 
 class _AudioModelParseData {
