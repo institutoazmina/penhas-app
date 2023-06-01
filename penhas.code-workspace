@@ -22,6 +22,7 @@
 			"datasources",
 			"etag",
 			"Etag",
+			"mainboard",
 			"mocktail",
 			"penhas",
 			"usecases"

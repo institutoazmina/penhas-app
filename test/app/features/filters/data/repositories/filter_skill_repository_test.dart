@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/filters/data/models/filter_skills_model.dart';
-import 'package:penhas/app/features/filters/domain/repositories/filter_skill_repository.dart';
+import 'package:penhas/app/features/filters/data/repositories/filter_skill_repository.dart';
 
 import '../../../../../utils/json_util.dart';
 

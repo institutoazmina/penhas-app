@@ -1,8 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:penhas/app/features/filters/data/models/filter_tag_model.dart';
-import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
+
+import '../../domain/entities/filter_tag_entity.dart';
+import 'filter_tag_model.dart';
 
 @immutable
 class FilterSkillsModel extends Equatable {
@@ -24,7 +25,4 @@ class FilterSkillsModel extends Equatable {
 
   @override
   List<dynamic> get props => [skills];
-
-  @override
-  bool get stringify => true;
 }
