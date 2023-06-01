@@ -16,7 +16,7 @@
 import 'package:flutter/widgets.dart';
 
 class DesignSystemLogo {
-  DesignSystemLogo._();
+  DesignSystemLogo._(); // coverage:ignore-line
 
   static const _kFontFam = 'DesignSystemLogo';
 
