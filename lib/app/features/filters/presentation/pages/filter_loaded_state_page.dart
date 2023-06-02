@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/flutter_tags.dart';
-import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
-import 'package:penhas/app/shared/design_system/button_shape.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../shared/design_system/button_shape.dart';
+import '../../../../shared/design_system/colors.dart';
+import '../../domain/entities/filter_tag_entity.dart';
 
 class FilterLoadedStatePage extends StatelessWidget {
   FilterLoadedStatePage({
@@ -127,14 +128,16 @@ extension _FilterLoadedStatePageMethods on FilterLoadedStatePage {
         elevation: 0,
         color: DesignSystemColors.ligthPurple,
         shape: kButtonShapeOutlinePurple,
-        child: const Text('Aplicar filtro',
-            style: TextStyle(
-              fontFamily: 'Lato',
-              fontWeight: FontWeight.bold,
-              fontSize: 14.0,
-              color: Colors.white,
-              letterSpacing: 0.45,
-            ),),
+        child: const Text(
+          'Aplicar filtro',
+          style: TextStyle(
+            fontFamily: 'Lato',
+            fontWeight: FontWeight.bold,
+            fontSize: 14.0,
+            color: Colors.white,
+            letterSpacing: 0.45,
+          ),
+        ),
       ),
     );
   }
