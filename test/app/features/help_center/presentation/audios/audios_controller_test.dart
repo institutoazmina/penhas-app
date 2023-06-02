@@ -54,7 +54,7 @@ void main() {
       await sut.delete(audioReference);
 
       // assert
-      verify(sut.loadPage).called(1);
+      verify(() => audiosRepository.delete(audioReference)).called(1);
     });
   });
 }
