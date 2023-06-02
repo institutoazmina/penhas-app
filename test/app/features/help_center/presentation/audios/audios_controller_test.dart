@@ -44,7 +44,7 @@ void main() {
         isRequested: true,
       );
 
-      when(() => audiosRepository.delete(audioReference)).thenAnswer(
+      when(() => audiosRepository.delete(any())).thenAnswer(
           (_) async => right(const ValidField(message: '')));
 
       when(() => audiosRepository.fetch())
