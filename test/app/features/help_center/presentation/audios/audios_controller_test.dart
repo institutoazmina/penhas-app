@@ -14,6 +14,8 @@ class MockAudioPlayServices extends Mock implements IAudioPlayServices {}
 
 class MockAudiosRepository extends Mock implements IAudiosRepository {}
 
+class AudioEntityFake extends Fake implements AudioEntity {}
+
 void main() {
   late MockAudiosRepository audiosRepository;
   late MockAudioPlayServices audioPlayServices;
@@ -24,6 +26,7 @@ void main() {
 
   group(AudiosController, () {
     setUp(() {
+      registerFallbackValue(AudioEntityFake());
       audioPlayServices = MockAudioPlayServices();
       audiosRepository = MockAudiosRepository();
       sut = AudiosController(
@@ -44,8 +47,8 @@ void main() {
         isRequested: true,
       );
 
-      when(() => audiosRepository.delete(any())).thenAnswer(
-          (_) async => right(const ValidField(message: '')));
+      when(() => audiosRepository.delete(any()))
+          .thenAnswer((_) async => right(const ValidField(message: '')));
 
       when(() => audiosRepository.fetch())
           .thenAnswer((_) async => right(AudioModel.fromJson(jsonData)));
