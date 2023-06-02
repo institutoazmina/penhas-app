@@ -3,6 +3,10 @@ on:
   pull_request:
     types: [opened, synchronize]
 
+env:
+  flutter-version: ${{ env.FLUTTER_VERSION }}
+  channel: ${{ env.FLUTTER_CHANNEL }}
+
 name: Code coverage workflow
 
 jobs:
