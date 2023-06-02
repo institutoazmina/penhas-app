@@ -1,6 +1,10 @@
 ---
 name: Code Metrics check
 
+env:
+  flutter-version: ${{ env.FLUTTER_VERSION }}
+  channel: ${{ env.FLUTTER_CHANNEL }}
+
 on:
   - pull_request:
       types: [opened, synchronize]
