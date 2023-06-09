@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Modificado
 - Remove configurações do .vscode
+- Adiciona mensagem sobre quantidade de áudios gravados
 
 ### Corrigido
 - Tratamento de erro no carregamento do feed
