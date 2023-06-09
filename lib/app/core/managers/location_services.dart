@@ -28,7 +28,9 @@ class LocationServices implements ILocationServices {
   @override
   Future<Either<LocationFailure, UserLocationEntity?>> currentLocation() async {
     if (await Permission.location.isGranted) {
-      final position = await geolocatorWrapper.getCurrentPosition();
+      final position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
 
       return right(
         UserLocationEntity(

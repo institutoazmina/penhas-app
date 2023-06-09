@@ -1,48 +1,43 @@
-import 'dart:async';
+import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:penhas/app/shared/widgets/request_location_permission_content_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:penhas/app/core/entities/user_location.dart';
-import 'package:penhas/app/core/states/location_permission_state.dart';
+import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
 import 'package:penhas/app/features/zodiac/domain/usecases/stealth_security_action.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/core/managers/audio_record_services.dart';
 import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
-
+import 'package:permission_handler_platform_interface/permission_handler_platform_interface.dart';
+import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockAudioServices extends Mock implements IAudioRecordServices {}
-
-class MockLocationServices extends Mock implements ILocationServices {}
 
 class MockGuardianRepository extends Mock implements IGuardianRepository {}
 
 class MockFeatureToggle extends Mock implements SecurityModeActionFeature {}
 
-class MockGeolocatorWrapper extends Mock implements GeolocatorWrapper {}
-
-class MockStreamController extends Mock implements StreamController {}
+class UserLocationEntityFake extends Fake implements UserLocationEntity {}
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  late StealthSecurityAction sut;
   late ILocationServices locationServices;
   late IAudioRecordServices audioRecordServices;
   late IGuardianRepository guardianRepository;
   late SecurityModeActionFeature featureToggle;
   group(StealthSecurityAction, () {
-    late StealthSecurityAction sut;
-    late UserLocationEntity userLocation;
-    late GeolocatorWrapper geolocatorWrapper;
-
     setUp(() {
-      locationServices = MockLocationServices();
+      registerFallbackValue(UserLocationEntityFake());
+      GeolocatorPlatform.instance = MockGeolocatorPlatform();
+      PermissionHandlerPlatform.instance = MockPermissionHandlerPlatform();
+      locationServices = LocationServices();
       audioRecordServices = MockAudioServices();
       guardianRepository = MockGuardianRepository();
       featureToggle = MockFeatureToggle();
-      geolocatorWrapper = MockGeolocatorWrapper();
-      userLocation = const UserLocationEntity(latitude: 1.0, longitude: -1.0);
 
-      
       sut = StealthSecurityAction(
           locationService: locationServices,
           audioServices: audioRecordServices,
@@ -64,27 +59,26 @@ void main() {
 
     test('should get user location', () async {
       // arrange
-      final position = Position(
-          latitude: 1.0,
-          longitude: -1.0,
-          accuracy: 1.0,
-          altitude: 1.0,
-          timestamp: DateTime.now(),
-          speed: 1.0,
-          speedAccuracy: 1.0,
-          heading: 1.0);
+      final mockPermissionHandlerPlatform = PermissionHandlerPlatform.instance;
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
 
-      when(locationServices.permissionStatus)
-          .thenAnswer((_) async => const LocationPermissionState.granted());
+      when((() => mockPermissionHandlerPlatform
+              .checkPermissionStatus(Permission.locationWhenInUse)))
+          .thenAnswer((_) async => PermissionStatus.granted);
 
-      when(() => locationServices.requestPermission(
-              title: 'title',
-              description: const RequestLocationPermissionContentWidget()))
-          .thenAnswer((_) async => const LocationPermissionState.granted());
+      when((() => mockPermissionHandlerPlatform
+              .checkPermissionStatus(Permission.location)))
+          .thenAnswer((_) async => PermissionStatus.granted);
 
-      when(() => geolocatorWrapper.getCurrentPosition())
-          .thenAnswer((_) async => position);
+      when(() => guardianRepository.alert(any()))
+          .thenAnswer((_) async => right(const AlertModel(
+                title: 'Alerta enviado!',
+                message:
+                    'Não há guardiões cadastrado! Nenhum alerta foi enviado.',
+              )));
 
+      final result = await locationServices.currentLocation();
+      debugPrint(result.toString());
       // act
       await sut.start();
       // assert
@@ -100,3 +94,31 @@ void main() {
     */
   });
 }
+
+class MockGeolocatorPlatform extends Mock
+    with
+        // ignore: prefer_mixin
+        MockPlatformInterfaceMixin
+    implements
+        GeolocatorPlatform {
+  @override
+  Future<Position> getCurrentPosition(
+      {LocationSettings? locationSettings}) async {
+    return Position(
+        longitude: -0.01,
+        latitude: .01,
+        timestamp: DateTime(2023, 2, 3, 9, 20),
+        accuracy: 0.1,
+        altitude: 100.01,
+        heading: 1.1,
+        speed: 12.0,
+        speedAccuracy: 0.0);
+  }
+}
+
+class MockPermissionHandlerPlatform extends Mock
+    with
+        // ignore: prefer_mixin
+        MockPlatformInterfaceMixin
+    implements
+        PermissionHandlerPlatform {}
