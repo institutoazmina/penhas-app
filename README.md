@@ -54,6 +54,16 @@ Para rodar os testes automatizados:
 fvm flutter test
 ```
 
+Para gerar relatório em html da cobertura dos testes execute
+
+```
+genhtml coverage/lcov.info -o coverage/html
+```
+
+O arquivo gerado estará disponível em `coverage/html/index.html`.
+Para executar o comando é preciso ter o pacote [lcov](https://wiki.documentfoundation.org/Development/Lcov) instalado
+
+
 ## Iniciar app pelo VS Code
 
 Para iniciar o app utilizando o vs code adicione os seguintes arquivos dentro da pasta `.vscode`
