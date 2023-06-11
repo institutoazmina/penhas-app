@@ -115,6 +115,9 @@ dev_dependencies:
   flutter_lints: ^1.0.4
   plugin_platform_interface: ^2.0.0
   geolocator_platform_interface: ^4.0.3
+  # snapshot test
+  alchemist: ^0.3.3
+  golden_toolkit: ^0.13.0
 
 flutter_icons:
   ios: true
@@ -223,8 +226,6 @@ flutter:
     - family: DesignSystemLogo
       fonts:
         - asset: assets/fonts/ds/DesignSystemLogo.ttf
-    #       - asset: fonts/Schyler-Italic.ttf
-    #         style: italic
     - family: Lato
       fonts:
         - asset: assets/fonts/lato/Lato-Black.ttf
