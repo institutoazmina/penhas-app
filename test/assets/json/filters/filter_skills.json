@@ -3,34 +3,6 @@
     {
       "id": 1,
       "skill": "Escuta acolhedora"
-    },
-    {
-      "id": 2,
-      "skill": "Psicologia"
-    },
-    {
-      "id": 3,
-      "skill": "Abrigo"
-    },
-    {
-      "id": 4,
-      "skill": "Apoio jurídico"
-    },
-    {
-      "id": 5,
-      "skill": "Finanças pessoais"
-    },
-    {
-      "id": 6,
-      "skill": "Saúde e bem estar"
-    },
-    {
-      "id": 8,
-      "skill": "Segurança digital"
-    },
-    {
-      "id": 9,
-      "skill": "Segurança pessoal"
     }
   ]
 }

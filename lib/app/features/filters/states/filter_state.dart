@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
+
+import '../domain/entities/filter_tag_entity.dart';
 
 part 'filter_state.freezed.dart';
 
