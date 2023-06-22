@@ -15,7 +15,7 @@ import '../../../../../utils/aditional_bind_module.dart';
 void main() {
   late AudiosController mockController;
 
-  setUp(() {
+  setUpAll(() {
     mockController = _MockAudiosController();
     when(() => mockController.loadPage()).thenAnswer((_) => Future.value());
 
@@ -48,10 +48,15 @@ void main() {
   testWidgets('Audios Page With State Loaded', (tester) async {
     
     // arrange
-
     initializeDateFormatting();
+
+    const audioDuration = '1m30s';
+    const message = 'Você tem 1 áudio gravado';
+    const description = 'Toque no ícone para solicitar o audio';
+
+
     AudioEntity audioReference = AudioEntity(
-      audioDuration: '123456',
+      audioDuration: audioDuration,
       canPlay: true,
       createdAt: DateTime(2023, 2, 3, 14, 44),
       id: '123',
@@ -59,19 +64,22 @@ void main() {
       isRequested: true,
     );
 
-    List<AudioPlayTileEntity> audios = [
+    List<AudioPlayTileEntity> audiosList = [
       AudioPlayTileEntity(
         audio: audioReference,
-        description: 'Você tem 1 áudio gravado',
+        description: description,
         onPlayAudio: (audioReference) {},
         onActionSheet: (audioReference) {},
       )
     ];
 
     when(() => mockController.currentState)
-        .thenReturn(AudiosState.loaded(audios, 'Message'));
+        .thenReturn(AudiosState.loaded(audiosList, message));
 
-    final message = find.text('Você tem 1 áudio gravado');
+    final messageWidget = find.text(message);
+    final audioDurationWidget = find.text(audioDuration);
+    final audioDescriptionWidget = find.text(description);
+
 
     // act
     await tester.pumpWidget(
@@ -81,7 +89,10 @@ void main() {
     );
 
     // assert
-    expect(message, findsOneWidget);
+    expect(messageWidget, findsOneWidget);
+    expect(audioDurationWidget, findsOneWidget);
+    expect(audioDescriptionWidget, findsOneWidget);
+
   });
 }
 
