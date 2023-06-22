@@ -79,8 +79,7 @@ void main() {
     final messageWidget = find.text(message);
     final audioDurationWidget = find.text(audioDuration);
     final audioDescriptionWidget = find.text(description);
-    final audioDateWidget = find.text(DateFormat.yMd('pt_BR')
-                              .format(date));
+    final audioDateWidget = find.text(DateFormat.yMd('pt_BR').format(date));
 
     // act
     await tester.pumpWidget(
@@ -93,7 +92,7 @@ void main() {
     expect(messageWidget, findsOneWidget);
     expect(audioDurationWidget, findsOneWidget);
     expect(audioDescriptionWidget, findsOneWidget);
-    expect(audioDateWidget, findsOneWidget);    
+    expect(audioDateWidget, findsOneWidget);
   });
 
   testWidgets('Audios Page With State Error', (tester) async {
@@ -106,14 +105,13 @@ void main() {
     final messageWidget = find.text(messageError);
 
     //act
-     await tester.pumpWidget(
+    await tester.pumpWidget(
       const MaterialApp(
         home: AudiosPage(),
       ),
     );
     // assert
     expect(messageWidget, findsOneWidget);
-
   });
 }
 
