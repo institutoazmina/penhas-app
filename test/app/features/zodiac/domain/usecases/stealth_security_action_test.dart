@@ -61,7 +61,7 @@ void main() {
           .thenAnswer((_) async => right(const AlertModel(
                 title: 'Alerta enviado!',
                 message:
-                    'Não há guardiões cadastrado! Nenhum alerta foi enviado.',
+                    'Não há guardiões cadastrados! Nenhum alerta foi enviado.',
               )));
       when(() => featureToggle.audioDuration)
           .thenAnswer((_) async => const AudioRecordDurationEntity(3, 4));
