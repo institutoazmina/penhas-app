@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
 import 'package:penhas/app/features/help_center/domain/entities/audio_play_tile_entity.dart';
@@ -52,11 +53,12 @@ void main() {
     const audioDuration = '1m30s';
     const message = 'Você tem 1 áudio gravado';
     const description = 'Toque no ícone para solicitar o áudio';
+    DateTime date = DateTime(2023, 2, 3, 14, 44);
 
     AudioEntity audioReference = AudioEntity(
       audioDuration: audioDuration,
       canPlay: true,
-      createdAt: DateTime(2023, 2, 3, 14, 44),
+      createdAt: date,
       id: '123',
       isRequestGranted: true,
       isRequested: true,
@@ -77,6 +79,8 @@ void main() {
     final messageWidget = find.text(message);
     final audioDurationWidget = find.text(audioDuration);
     final audioDescriptionWidget = find.text(description);
+    final audioDateWidget = find.text(DateFormat.yMd('pt_BR')
+                              .format(date));
 
     // act
     await tester.pumpWidget(
@@ -89,6 +93,7 @@ void main() {
     expect(messageWidget, findsOneWidget);
     expect(audioDurationWidget, findsOneWidget);
     expect(audioDescriptionWidget, findsOneWidget);
+    expect(audioDateWidget, findsOneWidget);    
   });
 
   testWidgets('Audios Page With State Error', (tester) async {
