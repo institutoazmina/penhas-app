@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
 import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
+import 'package:penhas/app/features/help_center/domain/entities/audio_record_duration_entity.dart';
 import 'package:penhas/app/features/zodiac/domain/usecases/stealth_security_action.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
@@ -45,18 +46,6 @@ void main() {
           featureToogle: featureToggle);
     });
 
-/*
-  test('should record user message', () async {
-      // arrange
-      when(() => audioRecordServices.isPermissionGranted())
-            .thenAnswer((_) async => true);
-      // act
-      final matcher = await sut.start();
-      // assert
-      // expect(actual, matcher);
-    });
-    */
-
     test('should get user location', () async {
       // arrange
       final mockPermissionHandlerPlatform = PermissionHandlerPlatform.instance;
@@ -65,33 +54,26 @@ void main() {
       when((() => mockPermissionHandlerPlatform
               .checkPermissionStatus(Permission.locationWhenInUse)))
           .thenAnswer((_) async => PermissionStatus.granted);
-
       when((() => mockPermissionHandlerPlatform
               .checkPermissionStatus(Permission.location)))
           .thenAnswer((_) async => PermissionStatus.granted);
-
       when(() => guardianRepository.alert(any()))
           .thenAnswer((_) async => right(const AlertModel(
                 title: 'Alerta enviado!',
                 message:
                     'Não há guardiões cadastrado! Nenhum alerta foi enviado.',
               )));
+      when(() => featureToggle.audioDuration)
+          .thenAnswer((_) async => const AudioRecordDurationEntity(3, 4));
+      when(() => audioRecordServices.start()).thenAnswer((_) async => {});
 
-      final result = await locationServices.currentLocation();
-      debugPrint(result.toString());
       // act
       await sut.start();
+
       // assert
       // expect(actual, matcher);
+      // verify(sut.getCurrentLocation).called(1);
     });
-
-    /*
-    test('should send sms to guardian', () {
-      // arrange
-      // act
-      // assert
-    });
-    */
   });
 }
 
