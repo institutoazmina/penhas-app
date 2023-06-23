@@ -1,0 +1,8 @@
+---
+version: "2"
+
+plugins:
+  dart:
+    enabled: true
+exclude_patterns:
+  - "test/"

@@ -1,13 +1,14 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/network/api_client.dart';
-import 'package:penhas/app/core/network/api_server_configure.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_exception_to_failure.dart';
-import 'package:penhas/app/features/main_menu/data/model/account_preference_model.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/network/api_client.dart';
+import '../../../../core/network/api_server_configure.dart';
+import '../../../../shared/logger/log.dart';
+import '../../../authentication/presentation/shared/map_exception_to_failure.dart';
+import '../../data/model/account_preference_model.dart';
 
 abstract class IUserProfileRepository {
   Future<Either<Failure, ValidField>> stealthMode({required bool toggle});
@@ -106,7 +107,6 @@ class UserProfileRepository implements IUserProfileRepository {
     required String? token,
   }) async {
     const endPoint = '/reactivate';
-
     final parameters = {
       'app_version': await _serverConfiguration.userAgent,
       'api_key': token,

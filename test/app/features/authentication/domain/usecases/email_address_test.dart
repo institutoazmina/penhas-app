@@ -4,46 +4,69 @@ import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 
 void main() {
-  group(
-    'EmailAddress',
-    () {
-      test(
-        'should get EmailAddressInvalidFailure for null email address',
-        () {
-          final result = EmailAddress(null).value;
+  group(EmailAddress, () {
+    test('constructs an EmailAddress with valid email', () {
+      // arrange
+      const emailString = 'test@example.com';
+      // act
+      final emailAddress = EmailAddress(emailString);
+      // assert
+      expect(emailAddress.isValid, true);
+      expect(emailAddress.rawValue, emailString);
+      expect(emailAddress.mapFailure, '');
+    });
 
-          expect(result, left(EmailAddressInvalidFailure()));
-        },
-      );
-      test(
-        'should get EmailAddressInvalidFailure for empty email address',
+    test('returns invalid EmailAddress when constructed with invalid email',
         () {
-          final result = EmailAddress('').value;
+      // arrange
+      const emailString = 'invalid_email';
+      // act
+      final emailAddress = EmailAddress(emailString);
+      // assert
+      expect(emailAddress.isValid, false);
+      expect(emailAddress.mapFailure, 'Endereço de email inválido');
+      expect(emailAddress.value, left(EmailAddressInvalidFailure()));
+    });
 
-          expect(result, left(EmailAddressInvalidFailure()));
-        },
-      );
-      test(
-        'should get EmailAddressInvalidFailure for invalid email address',
-        () {
-          final result = EmailAddress('ola_mundo');
+    test('returns invalid EmailAddress when constructed with empty email', () {
+      // arrange
+      const emailString = '';
+      // act
+      final emailAddress = EmailAddress(emailString);
+      // assert
+      expect(emailAddress.isValid, false);
+      expect(emailAddress.mapFailure, 'Endereço de email inválido');
+      expect(emailAddress.value, left(EmailAddressInvalidFailure()));
+    });
 
-          expect(result.value, left(EmailAddressInvalidFailure()));
-          expect(result.isValid, false);
-          expect(result.rawValue, '');
-        },
-      );
-      test(
-        'should get value from a valid email address',
-        () {
-          const validEmailAddress = 'test@g.com';
-          final result = EmailAddress(validEmailAddress);
+    test('returns invalid EmailAddress when constructed with null', () {
+      // act
+      final emailAddress = EmailAddress(null);
+      // assert
+      expect(emailAddress.isValid, false);
+      expect(emailAddress.mapFailure, 'Endereço de email inválido');
+      expect(emailAddress.value, left(EmailAddressInvalidFailure()));
+    });
 
-          expect(result.value, right(validEmailAddress));
-          expect(result.isValid, true);
-          expect(result.rawValue, validEmailAddress);
-        },
-      );
-    },
-  );
+    test('return true for equal EmailAddress', () {
+      // arrange
+      const emailString = 'test@g.com';
+      // act
+      final emailAddress = EmailAddress(emailString);
+      final emailAddress2 = EmailAddress(emailString);
+      // assert
+      expect(emailAddress == emailAddress2, true);
+    });
+
+    test('return false for different EmailAddress', () {
+      // arrange
+      const emailString = 'test@g.com';
+      const emailString2 = 'test2@g.com';
+      // act
+      final emailAddress = EmailAddress(emailString);
+      final emailAddress2 = EmailAddress(emailString2);
+      // assert
+      expect(emailAddress == emailAddress2, false);
+    });
+  });
 }
