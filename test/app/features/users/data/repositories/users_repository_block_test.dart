@@ -32,54 +32,57 @@ void main() {
     ).thenAnswer((_) async => '{"message": "Sucesso!"}');
   }
 
-  group('UsersRepository', () {
-    test('should throw error for invalid client id', () async {
-      // arrange
-      final serverMessage = await JsonUtil.getJson(
-        from: 'users/users_block_cliente_id_invalid.json',
-      );
+  group(UsersRepository, () {
+    group('block', () {
+      test('apiProvider exception return Failure', () async {
+        // arrange
+        final expected = left(ServerFailure());
+        final serverMessage = await JsonUtil.getJson(
+          from: 'users/users_block_cliente_id_invalid.json',
+        );
 
-      final error = ServerFailure();
+        when(
+          () => apiProvider.post(
+            path: any(named: 'path'),
+            parameters: any(named: 'parameters'),
+          ),
+        ).thenThrow(serverMessage);
 
-      when(
-        () => apiProvider.post(
-          path: any(named: 'path'),
-          parameters: any(named: 'parameters'),
-        ),
-      ).thenThrow(serverMessage);
+        // act
+        final actual = await sut.block(clientId);
 
-      // act
-      final response = await sut.block(clientId);
+        // assert
+        expect(actual, expected);
+      });
+      test('send client_id to block', () async {
+        // arrange
+        _setUpMockPost();
 
-      // assert
-      expect(response, left(error));
-    });
-    test('should send client_id to block', () async {
-      // arrange
-      _setUpMockPost();
+        // act
+        await sut.block(clientId);
 
-      // act
-      await sut.block(clientId);
+        // assert
+        verify(() => apiProvider.post(
+              path: '/block-profile',
+              parameters: parameters,
+            ));
+      });
 
-      // assert
-      verify(() =>
-          apiProvider.post(path: '/block-profile', parameters: parameters));
-    });
+      test('receive success message for a valid client id', () async {
+        // arrange
+        _setUpMockPost();
 
-    test('should receive success message', () async {
-      // arrange
-      _setUpMockPost();
+        // act
+        final expected = await sut.block(clientId);
 
-      // act
-      final response = await sut.block(clientId);
-
-      // assert
-      final expected = right(
-        const ValidField(
-          message: 'Sucesso!',
-        ),
-      );
-      expect(response, expected);
+        // assert
+        final actual = right(
+          const ValidField(
+            message: 'Sucesso!',
+          ),
+        );
+        expect(actual, expected);
+      });
     });
   });
 }

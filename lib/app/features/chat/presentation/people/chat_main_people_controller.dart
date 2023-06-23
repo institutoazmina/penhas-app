@@ -3,8 +3,8 @@ import 'package:mobx/mobx.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../authentication/presentation/shared/map_failure_message.dart';
+import '../../../filters/data/repositories/filter_skill_repository.dart';
 import '../../../filters/domain/entities/filter_tag_entity.dart';
-import '../../../filters/domain/repositories/filter_skill_repository.dart';
 import '../../../filters/states/filter_action_observer.dart';
 import '../../../users/data/repositories/users_repository.dart';
 import '../../../users/domain/entities/user_detail_entity.dart';
