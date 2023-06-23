@@ -1,13 +1,9 @@
 ---
 name: Code Metrics check
 
-env:
-  flutter-version: ${{ env.FLUTTER_VERSION }}
-  channel: ${{ env.FLUTTER_CHANNEL }}
-
 on:
-  - pull_request:
-      types: [opened, synchronize]
+  pull_request:
+    types: [opened, synchronize]
 
 jobs:
   dart-code-metrics:
@@ -15,14 +11,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Run Code Metrics
         uses: dart-code-checker/dart-code-metrics-action@v4.0.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          folders: "android, bin, fastlane, ios, lib"
-          pull_request_comment: true
-          fatal_warnings: true
-          fatal_performance: true
-          fatal_style: true
           check_unused_files: true
           check_unused_files_folders: "android, bin, fastlane, ios, lib"
+          fatal_performance: true
+          fatal_style: true
+          fatal_warnings: true
+          folders: "android, bin, fastlane, ios, lib"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pull_request_comment: true

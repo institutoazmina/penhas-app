@@ -3,10 +3,6 @@ on:
   pull_request:
     types: [opened, synchronize]
 
-env:
-  flutter-version: ${{ env.FLUTTER_VERSION }}
-  channel: ${{ env.FLUTTER_CHANNEL }}
-
 name: Code coverage workflow
 
 jobs:
@@ -14,12 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+
+      - name: Retrieve Flutter version from FVM config
+        uses: kuhnroyal/flutter-fvm-config-action@v1
+
       - uses: actions/setup-java@v1
         with:
           java-version: "12.x"
       - uses: subosito/flutter-action@v1
         with:
-          channel: "stable"
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
       - uses: stelynx/dart-full-coverage@v1.1.1
         with:
           package: egakcap
