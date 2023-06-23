@@ -37,7 +37,7 @@ class UserProfileRepository implements IUserProfileRepository {
   Future<Either<Failure, ValidField>> stealthMode({
     required bool toggle,
   }) async {
-    final endPoint = ['me', 'modo-camuflado-toggle'].join('/');
+    const endPoint = '/me/modo-camuflado-toggle';
     final parameters = {'active': toggle ? '1' : '0'};
 
     try {
@@ -55,7 +55,7 @@ class UserProfileRepository implements IUserProfileRepository {
   Future<Either<Failure, ValidField>> anonymousMode({
     required bool toggle,
   }) async {
-    final endPoint = ['me', 'modo-anonimo-toggle'].join('/');
+    const endPoint = '/me/modo-anonimo-toggle';
     final parameters = {'active': toggle ? '1' : '0'};
 
     try {
@@ -91,7 +91,7 @@ class UserProfileRepository implements IUserProfileRepository {
 
   @override
   Future<Either<Failure, ValidField>> deleteNotice() async {
-    final endPoint = ['me', 'delete-text'].join('/');
+    const endPoint = '/me/delete-text';
 
     try {
       final response = await _apiProvider.get(path: endPoint).parseValidField();
