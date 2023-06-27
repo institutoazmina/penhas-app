@@ -51,7 +51,7 @@ void main() {
         () async {
           // arrange
           _setUpMockPost();
-          final endPoint = '/me/modo-camuflado-toggle';
+          const endPoint = 'me/modo-camuflado-toggle';
           final parameters = {'active': '1'};
           // act
           await sut.stealthMode(toggle: true);
@@ -88,10 +88,10 @@ void main() {
       });
     });
     group('anonymous mode', () {
-      test('hit endpoint /me/modo-anonimo-toggle', () async {
+      test('hit endpoint me/modo-anonimo-toggle', () async {
         // arrange
         _setUpMockPost();
-        final endPoint = '/me/modo-anonimo-toggle';
+        const endPoint = 'me/modo-anonimo-toggle';
         final parameters = {'active': '1'};
         // act
         await sut.anonymousMode(toggle: true);
@@ -173,9 +173,9 @@ void main() {
       });
     });
     group('deleteNotice method', () {
-      test('hit endpoint /me/delete-text', () async {
+      test('hit endpoint me/delete-text', () async {
         // arrange
-        final endPoint = '/me/delete-text';
+        const endPoint = 'me/delete-text';
         when(() => apiProvider.get(path: any(named: 'path')))
             .thenAnswer((_) async => Future.value(''));
         // act
