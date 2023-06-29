@@ -26,7 +26,7 @@ jobs:
           package: egakcap
           ignore: "*_state.dart, do_not_import_me.dart"
       - run: flutter pub get
-      - run: flutter packages pub run build_runner build
+      #- run: flutter packages pub run build_runner build
       - run: flutter build aot
       - run: flutter analyze
       - run: flutter test --coverage .
