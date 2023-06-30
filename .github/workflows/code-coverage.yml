@@ -21,10 +21,20 @@ jobs:
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: ${{ env.FLUTTER_CHANNEL }}
+
+      - name: Setup Firebase Options
+        run: |
+          tee lib/firebase_options.dart <<EOF
+          class DefaultFirebaseOptions {
+            static const currentPlatform = null;
+          }
+          EOF
+
       - uses: stelynx/dart-full-coverage@v1.1.1
         with:
           package: penhas
           ignore: "*_state.dart, do_not_import_me.dart"
+
       - run: flutter pub get
 #       - run: flutter packages pub run build_runner build
 #       - run: flutter build aot
