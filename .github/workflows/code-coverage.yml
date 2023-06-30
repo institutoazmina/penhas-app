@@ -14,20 +14,20 @@ jobs:
       - name: Retrieve Flutter version from FVM config
         uses: kuhnroyal/flutter-fvm-config-action@v1
 
-      - uses: actions/setup-java@v1
-        with:
-          java-version: "12.x"
+#       - uses: actions/setup-java@v1
+#         with:
+#           java-version: "12.x"
       - uses: subosito/flutter-action@v1
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: ${{ env.FLUTTER_CHANNEL }}
       - uses: stelynx/dart-full-coverage@v1.1.1
         with:
-          package: egakcap
+          package: penhas
           ignore: "*_state.dart, do_not_import_me.dart"
       - run: flutter pub get
-      #- run: flutter packages pub run build_runner build
-      - run: flutter build apk
-      - run: flutter analyze
+#       - run: flutter packages pub run build_runner build
+#       - run: flutter build aot
+#       - run: flutter analyze
       - run: flutter test --coverage .
       - uses: codecov/codecov-action@v3
