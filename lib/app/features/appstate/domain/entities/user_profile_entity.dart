@@ -46,7 +46,4 @@ class UserProfileEntity extends Equatable {
         anonymousModeEnabled,
         birthdate,
       ];
-
-  @override
-  bool get stringify => true;
 }
