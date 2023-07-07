@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../core/error/failures.dart';
@@ -29,7 +30,8 @@ abstract class _QuizControllerBase with Store {
     this._appStateUseCase,
     this._repository,
   ) {
-    final reversedCurrent = _quizSession.currentMessage!.reversed.toList();
+    final reversedCurrent =
+        _quizSession.currentMessage?.reversed.toList() ?? [];
     _sessionId = _quizSession.sessionId;
 
     messages.addAll(reversedCurrent);
@@ -164,9 +166,9 @@ abstract class _QuizControllerBase with Store {
   }
 
   void _parseUserReply(List<QuizMessageEntity> messages) {
-    userReplyMessage = messages.firstWhere(
-      (e) => e.type != QuizMessageType.displayText,
-    );
+    userReplyMessage = messages.firstWhereOrNull(
+          (e) => e.type != QuizMessageType.displayText,
+        );
   }
 
   Future<void> _sendUserInteraction(QuizRequestEntity request) async {
