@@ -94,13 +94,12 @@ class _QuizPageState extends ModularState<QuizPage, QuizController>
     return AppBar(
       elevation: 0.0,
       backgroundColor: DesignSystemColors.ligthPurple,
-      title: const Center(
-        child: SizedBox(
-          width: 39.0,
-          height: 18.0,
-          child: Image(
-            image: AssetImage('assets/images/penhas_symbol/penhas_symbol.png'),
-          ),
+      centerTitle: true,
+      title: const SizedBox(
+        width: 39.0,
+        height: 18.0,
+        child: Image(
+          image: AssetImage('assets/images/penhas_symbol/penhas_symbol.png'),
         ),
       ),
     );
