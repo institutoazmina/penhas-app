@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../shared/design_system/colors.dart';
+import '../../../authentication/presentation/shared/snack_bar_handler.dart';
 import 'quiz_controller.dart';
 import 'widgets/quiz_message_widget.dart';
 import 'widgets/quiz_user_reply_widget.dart';
@@ -17,7 +18,8 @@ class QuizPage extends StatefulWidget {
   _QuizPageState createState() => _QuizPageState();
 }
 
-class _QuizPageState extends ModularState<QuizPage, QuizController> {
+class _QuizPageState extends ModularState<QuizPage, QuizController>
+    with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -30,10 +32,9 @@ class _QuizPageState extends ModularState<QuizPage, QuizController> {
           return;
         }
 
-        _scaffoldKey.currentState?.showSnackBar(
-          SnackBar(
-            content: Text(message),
-          ),
+        showSnackBar(
+          scaffoldKey: _scaffoldKey,
+          message: message,
         );
       }),
     ];
