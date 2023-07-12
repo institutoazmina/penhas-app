@@ -24,39 +24,40 @@ class ZodiacModule extends WidgetModule {
             userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
             securityAction: i.get<StealthSecurityAction>(),
           ),
-                  ),
+        ),
         Bind.factory(
           (i) => StealthSecurityAction(
-              audioServices: i.get<IAudioRecordServices>(),
-              featureToogle: i.get<SecurityModeActionFeature>(),
-              locationService: i.get<ILocationServices>(),
-              guardianRepository: i.get<IGuardianRepository>(),),
-                  ),
+            audioServices: i.get<IAudioRecordServices>(),
+            featureToggle: i.get<SecurityModeActionFeature>(),
+            locationService: i.get<ILocationServices>(),
+            guardianRepository: i.get<IGuardianRepository>(),
+          ),
+        ),
         Bind.factory<SecurityModeActionFeature>(
           (i) => SecurityModeActionFeature(
             modulesServices: i.get<IAppModulesServices>(),
           ),
-                  ),
+        ),
         Bind.factory<IGuardianRepository>(
           (i) => GuardianRepository(
             dataSource: i.get<IGuardianDataSource>(),
             networkInfo: i.get<INetworkInfo>(),
           ),
-                  ),
+        ),
         Bind.factory<ILocationServices>(
           (i) => LocationServices(),
-                  ),
+        ),
         Bind.factory<IGuardianDataSource>(
           (i) => GuardianDataSource(
             apiClient: i.get<http.Client>(),
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
-                  ),
+        ),
         Bind.factory<IAudioRecordServices>(
           (i) => AudioRecordServices(
             audioSyncManager: i.get<IAudioSyncManager>(),
           ),
-                  ),
+        ),
       ];
 
   @override

@@ -37,7 +37,7 @@ abstract class _ZodiacControllerBase with Store {
     final _userProfile = await _userProfileStore.retrieve();
     sign = zodiac.sign(_userProfile.birthdate);
     signList =
-        zodiac.pickEigthRandonSign(_userProfile.birthdate).asObservable();
+        zodiac.pickEightRandomSign(_userProfile.birthdate).asObservable();
 
     _registerDataSource();
   }
