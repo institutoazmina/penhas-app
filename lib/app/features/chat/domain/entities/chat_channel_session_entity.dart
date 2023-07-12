@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_message_entity.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
+
+import 'chat_message_entity.dart';
+import 'chat_user_entity.dart';
 
 class ChatChannelSessionEntity extends Equatable {
   const ChatChannelSessionEntity({
@@ -19,9 +20,6 @@ class ChatChannelSessionEntity extends Equatable {
   final List<ChatMessageEntity>? messages;
   final ChatChannelSessionMetadataEntity? metadata;
   final ChatUserEntity? user;
-
-  @override
-  bool get stringify => true;
 
   @override
   List<Object?> get props => [
@@ -61,9 +59,6 @@ class ChatChannelSessionMetadataEntity extends Equatable {
   final String? headerWarning;
   final bool isBlockable;
   final String? lastMessageEtag;
-
-  @override
-  bool get stringify => true;
 
   @override
   List<Object?> get props => [

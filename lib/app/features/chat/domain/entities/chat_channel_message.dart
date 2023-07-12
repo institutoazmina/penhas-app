@@ -1,13 +1,23 @@
-import 'package:penhas/app/features/chat/domain/entities/chat_message_entity.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+
+import 'chat_message_entity.dart';
 
 enum ChatChannelMessageType { warning, text }
 
-class ChatChannelMessage {
-  ChatChannelMessage({
+@immutable
+class ChatChannelMessage extends Equatable {
+  const ChatChannelMessage({
     required this.content,
     required this.type,
   });
 
   final ChatMessageEntity content;
   final ChatChannelMessageType type;
+
+  @override
+  List<Object?> get props => [
+        content,
+        type,
+      ];
 }

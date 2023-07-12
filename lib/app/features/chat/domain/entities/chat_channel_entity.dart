@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
+
+import 'chat_user_entity.dart';
 
 class ChatChannelEntity extends Equatable {
   const ChatChannelEntity({
@@ -13,9 +14,6 @@ class ChatChannelEntity extends Equatable {
   final DateTime? lastMessageTime;
   final bool? lastMessageIsMime;
   final ChatUserEntity user;
-
-  @override
-  bool get stringify => true;
 
   @override
   List<Object?> get props => [
