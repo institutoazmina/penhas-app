@@ -33,57 +33,56 @@ void main() {
     ).thenAnswer((_) async => '{"message": "Sucesso!"}');
   }
 
-  group('UsersRepository', () {
-    test('should throw error for client id not found', () async {
-      // arrange
-      final serverMessage = await JsonUtil.getJson(
-        from: 'users/users_report_cliente_id_not_found.json',
-      );
+  group(UsersRepository, () {
+    group('report', () {
+      test('apiProvider exception return Failure', () async {
+        // arrange
+        final expected = left(ServerFailure());
+        final serverMessage = await JsonUtil.getJson(
+          from: 'users/users_report_cliente_id_not_found.json',
+        );
 
-      final error = ServerFailure();
+        when(
+          () => apiProvider.post(
+            path: any(named: 'path'),
+            parameters: any(named: 'parameters'),
+          ),
+        ).thenThrow(serverMessage);
 
-      when(
-        () => apiProvider.post(
-          path: any(named: 'path'),
-          parameters: any(named: 'parameters'),
-        ),
-      ).thenThrow(serverMessage);
+        // act
+        final actual = await sut.report(clientId, reason);
 
-      // act
-      final response = await sut.report(clientId, reason);
+        // assert
+        expect(actual, expected);
+      });
 
-      // assert
-      expect(response, left(error));
-    });
+      test('send client_id and reason to report', () async {
+        // arrange
+        _setUpMockPost();
 
-    test('should send client_id and reason to report', () async {
-      // arrange
-      _setUpMockPost();
+        // act
+        sut.report(clientId, reason);
 
-      // act
-      sut.report(clientId, reason);
+        // assert
+        verify(() => apiProvider.post(
+              path: '/report-profile',
+              parameters: parameters,
+            ));
+      });
 
-      // assert
-      verify(() => apiProvider.post(
-            path: '/report-profile',
-            parameters: parameters,
-          ));
-    });
+      test('receive success message', () async {
+        // arrange
+        _setUpMockPost();
+        final expected = right(
+          const ValidField(message: 'Sucesso!'),
+        );
 
-    test('should receive success message', () async {
-      // arrange
-      _setUpMockPost();
+        // act
+        final actual = await sut.report(clientId, reason);
 
-      // act
-      final response = await sut.report(clientId, reason);
-
-      // assert
-      final expected = right(
-        const ValidField(
-          message: 'Sucesso!',
-        ),
-      );
-      expect(response, expected);
+        // assert
+        expect(actual, expected);
+      });
     });
   });
 }
