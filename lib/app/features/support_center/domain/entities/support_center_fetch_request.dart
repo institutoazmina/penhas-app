@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:penhas/app/core/entities/user_location.dart';
+
+import '../../../../core/entities/user_location.dart';
 
 class SupportCenterFetchRequest extends Equatable {
   const SupportCenterFetchRequest({
@@ -17,9 +18,6 @@ class SupportCenterFetchRequest extends Equatable {
   final String? keywords;
   final String? nextPage;
   final int? rows;
-
-  @override
-  bool get stringify => true;
 
   @override
   List<Object?> get props => [
@@ -45,7 +43,7 @@ class SupportCenterFetchRequest extends Equatable {
       categories: categories ?? this.categories,
       keywords: keywords ?? this.keywords,
       nextPage: nextPage ?? this.nextPage,
-      rows: rows ?? rows,
+      rows: rows ?? this.rows,
     );
   }
 }

@@ -1,20 +1,21 @@
 import 'package:collection/collection.dart';
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/feed/data/repositories/tweet_filter_preference_repository.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_filter_session_entity.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../data/repositories/tweet_filter_preference_repository.dart';
+import '../entities/tweet_filter_session_entity.dart';
 
 class TweetFilterPreference {
   TweetFilterPreference({
-    required ITweetFilterPreferenceRepository? repository,
+    required ITweetFilterPreferenceRepository repository,
   }) : _repository = repository;
 
-  final ITweetFilterPreferenceRepository? _repository;
+  final ITweetFilterPreferenceRepository _repository;
   List<String> _currentTags = [];
   List<String> categories = [];
 
-  Future<Either<Failure, TweetFilterSessionEntity>> retreive() async {
-    final serverResponse = await _repository!.retreive();
+  Future<Either<Failure, TweetFilterSessionEntity>> retrieve() async {
+    final serverResponse = await _repository.retrieve();
 
     return serverResponse.fold(
       (failure) => left(failure),

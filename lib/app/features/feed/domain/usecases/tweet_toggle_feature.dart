@@ -1,4 +1,4 @@
-import 'package:penhas/app/core/managers/modules_sevices.dart';
+import '../../../../core/managers/modules_sevices.dart';
 
 class TweetToggleFeature {
   TweetToggleFeature({required IAppModulesServices modulesServices})
@@ -10,8 +10,12 @@ class TweetToggleFeature {
   Future<bool> get isEnabled => _isEnabled();
 
   Future<bool> _isEnabled() async {
-    final module =
-        await _modulesServices.feature(name: TweetToggleFeature.featureCode);
-    return module != null;
+    try {
+      final module =
+          await _modulesServices.feature(name: TweetToggleFeature.featureCode);
+      return module != null;
+    } catch (e) {
+      return false;
+    }
   }
 }

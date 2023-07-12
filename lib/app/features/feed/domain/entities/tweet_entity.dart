@@ -101,9 +101,6 @@ class TweetNewsGroupEntity extends TweetTiles {
 
   @override
   List<dynamic> get props => [header, news];
-
-  @override
-  bool get stringify => true;
 }
 
 class TweetNewsEntity extends TweetTiles {
@@ -123,9 +120,6 @@ class TweetNewsEntity extends TweetTiles {
 
   @override
   List<Object?> get props => [date, newsUri, imageUri, source, title];
-
-  @override
-  bool get stringify => true;
 }
 
 class TweetRelatedNewsEntity extends TweetTiles {
@@ -136,7 +130,4 @@ class TweetRelatedNewsEntity extends TweetTiles {
 
   @override
   List<Object?> get props => [header, news];
-
-  @override
-  bool get stringify => true;
 }

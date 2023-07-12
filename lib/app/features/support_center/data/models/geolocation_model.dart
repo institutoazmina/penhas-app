@@ -1,5 +1,5 @@
-import 'package:penhas/app/core/entities/user_location.dart';
-import 'package:penhas/app/features/support_center/domain/entities/geolocation_entity.dart';
+import '../../../../core/entities/user_location.dart';
+import '../../domain/entities/geolocation_entity.dart';
 
 class GeoLocationModel extends GeolocationEntity {
   const GeoLocationModel({
