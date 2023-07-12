@@ -1,12 +1,14 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/exceptions.dart';
-import 'package:penhas/app/core/network/api_server_configure.dart';
-import 'package:penhas/app/features/feed/data/models/tweet_model.dart';
-import 'package:penhas/app/features/feed/data/models/tweet_session_model.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_request_option.dart';
+
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/network/api_server_configure.dart';
+import '../../domain/entities/tweet_engage_request_option.dart';
+import '../../domain/entities/tweet_request_option.dart';
+import '../models/tweet_model.dart';
+import '../models/tweet_session_model.dart';
 
 abstract class ITweetDataSource {
   Future<TweetSessionModel> fetch({required TweetRequestOption? option});

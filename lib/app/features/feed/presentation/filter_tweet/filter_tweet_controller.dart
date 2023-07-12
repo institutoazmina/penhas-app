@@ -1,11 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_filter_session_entity.dart';
-import 'package:penhas/app/features/feed/domain/usecases/tweet_filter_preference.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../../authentication/presentation/shared/map_failure_message.dart';
+import '../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../domain/entities/tweet_filter_session_entity.dart';
+import '../../domain/usecases/tweet_filter_preference.dart';
 
 part 'filter_tweet_controller.g.dart';
 
@@ -43,7 +44,7 @@ abstract class _FilterTweetControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> getTags() async {
-    _progress = ObservableFuture(useCase.retreive());
+    _progress = ObservableFuture(useCase.retrieve());
 
     final Either<Failure, TweetFilterSessionEntity> response = await _progress!;
     response.fold(

@@ -28,7 +28,4 @@ class UserDetailProfileEntity extends Equatable {
         skills,
         activity,
       ];
-
-  @override
-  bool get stringify => true;
 }

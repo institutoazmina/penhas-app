@@ -1,0 +1,6 @@
+{
+  "error": "error_invalid_action",
+  "message": "Ocorreu erro ao realizar a ação.",
+  "field": "invalid_field",
+  "reason": "invalid"
+}

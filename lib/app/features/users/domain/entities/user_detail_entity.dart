@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
+
+import 'user_detail_profile_entity.dart';
 
 @immutable
 class UserDetailEntity extends Equatable {
@@ -14,7 +15,4 @@ class UserDetailEntity extends Equatable {
 
   @override
   List<Object?> get props => [isMyself, profile];
-
-  @override
-  bool get stringify => true;
 }
