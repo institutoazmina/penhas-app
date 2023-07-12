@@ -31,8 +31,8 @@ class _$ChatChannelUseCaseEventTearOff {
     );
   }
 
-  _UpdateMetada updateMetada(ChatChannelSessionMetadataEntity metadata) {
-    return _UpdateMetada(
+  _UpdateMetadata updateMetadata(ChatChannelSessionMetadataEntity metadata) {
+    return _UpdateMetadata(
       metadata,
     );
   }
@@ -61,7 +61,7 @@ mixin _$ChatChannelUseCaseEvent {
     required TResult Function() loaded,
     required TResult Function(ChatUserEntity user) updateUser,
     required TResult Function(ChatChannelSessionMetadataEntity metadata)
-        updateMetada,
+        updateMetadata,
     required TResult Function(List<ChatChannelMessage> messages) updateMessage,
     required TResult Function(String message) errorOnLoading,
   }) =>
@@ -71,7 +71,7 @@ mixin _$ChatChannelUseCaseEvent {
     TResult Function()? initial,
     TResult Function()? loaded,
     TResult Function(ChatUserEntity user)? updateUser,
-    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetada,
+    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetadata,
     TResult Function(List<ChatChannelMessage> messages)? updateMessage,
     TResult Function(String message)? errorOnLoading,
   }) =>
@@ -81,7 +81,7 @@ mixin _$ChatChannelUseCaseEvent {
     TResult Function()? initial,
     TResult Function()? loaded,
     TResult Function(ChatUserEntity user)? updateUser,
-    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetada,
+    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetadata,
     TResult Function(List<ChatChannelMessage> messages)? updateMessage,
     TResult Function(String message)? errorOnLoading,
     required TResult orElse(),
@@ -92,7 +92,7 @@ mixin _$ChatChannelUseCaseEvent {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_UpdateUser value) updateUser,
-    required TResult Function(_UpdateMetada value) updateMetada,
+    required TResult Function(_UpdateMetadata value) updateMetadata,
     required TResult Function(_UpdateMessage value) updateMessage,
     required TResult Function(_ErrorOnLoading value) errorOnLoading,
   }) =>
@@ -102,7 +102,7 @@ mixin _$ChatChannelUseCaseEvent {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UpdateMetada value)? updateMetada,
+    TResult Function(_UpdateMetadata value)? updateMetadata,
     TResult Function(_UpdateMessage value)? updateMessage,
     TResult Function(_ErrorOnLoading value)? errorOnLoading,
   }) =>
@@ -112,7 +112,7 @@ mixin _$ChatChannelUseCaseEvent {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UpdateMetada value)? updateMetada,
+    TResult Function(_UpdateMetadata value)? updateMetadata,
     TResult Function(_UpdateMessage value)? updateMessage,
     TResult Function(_ErrorOnLoading value)? errorOnLoading,
     required TResult orElse(),
@@ -187,7 +187,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
     required TResult Function() loaded,
     required TResult Function(ChatUserEntity user) updateUser,
     required TResult Function(ChatChannelSessionMetadataEntity metadata)
-        updateMetada,
+        updateMetadata,
     required TResult Function(List<ChatChannelMessage> messages) updateMessage,
     required TResult Function(String message) errorOnLoading,
   }) {
@@ -200,7 +200,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
     TResult Function()? initial,
     TResult Function()? loaded,
     TResult Function(ChatUserEntity user)? updateUser,
-    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetada,
+    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetadata,
     TResult Function(List<ChatChannelMessage> messages)? updateMessage,
     TResult Function(String message)? errorOnLoading,
   }) {
@@ -213,7 +213,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
     TResult Function()? initial,
     TResult Function()? loaded,
     TResult Function(ChatUserEntity user)? updateUser,
-    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetada,
+    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetadata,
     TResult Function(List<ChatChannelMessage> messages)? updateMessage,
     TResult Function(String message)? errorOnLoading,
     required TResult orElse(),
@@ -230,7 +230,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_UpdateUser value) updateUser,
-    required TResult Function(_UpdateMetada value) updateMetada,
+    required TResult Function(_UpdateMetadata value) updateMetadata,
     required TResult Function(_UpdateMessage value) updateMessage,
     required TResult Function(_ErrorOnLoading value) errorOnLoading,
   }) {
@@ -243,7 +243,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UpdateMetada value)? updateMetada,
+    TResult Function(_UpdateMetadata value)? updateMetadata,
     TResult Function(_UpdateMessage value)? updateMessage,
     TResult Function(_ErrorOnLoading value)? errorOnLoading,
   }) {
@@ -256,7 +256,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UpdateMetada value)? updateMetada,
+    TResult Function(_UpdateMetadata value)? updateMetadata,
     TResult Function(_UpdateMessage value)? updateMessage,
     TResult Function(_ErrorOnLoading value)? errorOnLoading,
     required TResult orElse(),
@@ -322,7 +322,7 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
     required TResult Function() loaded,
     required TResult Function(ChatUserEntity user) updateUser,
     required TResult Function(ChatChannelSessionMetadataEntity metadata)
-        updateMetada,
+        updateMetadata,
     required TResult Function(List<ChatChannelMessage> messages) updateMessage,
     required TResult Function(String message) errorOnLoading,
   }) {
@@ -335,7 +335,7 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
     TResult Function()? initial,
     TResult Function()? loaded,
     TResult Function(ChatUserEntity user)? updateUser,
-    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetada,
+    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetadata,
     TResult Function(List<ChatChannelMessage> messages)? updateMessage,
     TResult Function(String message)? errorOnLoading,
   }) {
@@ -348,7 +348,7 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
     TResult Function()? initial,
     TResult Function()? loaded,
     TResult Function(ChatUserEntity user)? updateUser,
-    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetada,
+    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetadata,
     TResult Function(List<ChatChannelMessage> messages)? updateMessage,
     TResult Function(String message)? errorOnLoading,
     required TResult orElse(),
@@ -365,7 +365,7 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_UpdateUser value) updateUser,
-    required TResult Function(_UpdateMetada value) updateMetada,
+    required TResult Function(_UpdateMetadata value) updateMetadata,
     required TResult Function(_UpdateMessage value) updateMessage,
     required TResult Function(_ErrorOnLoading value) errorOnLoading,
   }) {
@@ -378,7 +378,7 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UpdateMetada value)? updateMetada,
+    TResult Function(_UpdateMetadata value)? updateMetadata,
     TResult Function(_UpdateMessage value)? updateMessage,
     TResult Function(_ErrorOnLoading value)? errorOnLoading,
   }) {
@@ -391,7 +391,7 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UpdateMetada value)? updateMetada,
+    TResult Function(_UpdateMetadata value)? updateMetadata,
     TResult Function(_UpdateMessage value)? updateMessage,
     TResult Function(_ErrorOnLoading value)? errorOnLoading,
     required TResult orElse(),
@@ -484,7 +484,7 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
     required TResult Function() loaded,
     required TResult Function(ChatUserEntity user) updateUser,
     required TResult Function(ChatChannelSessionMetadataEntity metadata)
-        updateMetada,
+        updateMetadata,
     required TResult Function(List<ChatChannelMessage> messages) updateMessage,
     required TResult Function(String message) errorOnLoading,
   }) {
@@ -497,7 +497,7 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
     TResult Function()? initial,
     TResult Function()? loaded,
     TResult Function(ChatUserEntity user)? updateUser,
-    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetada,
+    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetadata,
     TResult Function(List<ChatChannelMessage> messages)? updateMessage,
     TResult Function(String message)? errorOnLoading,
   }) {
@@ -510,7 +510,7 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
     TResult Function()? initial,
     TResult Function()? loaded,
     TResult Function(ChatUserEntity user)? updateUser,
-    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetada,
+    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetadata,
     TResult Function(List<ChatChannelMessage> messages)? updateMessage,
     TResult Function(String message)? errorOnLoading,
     required TResult orElse(),
@@ -527,7 +527,7 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_UpdateUser value) updateUser,
-    required TResult Function(_UpdateMetada value) updateMetada,
+    required TResult Function(_UpdateMetadata value) updateMetadata,
     required TResult Function(_UpdateMessage value) updateMessage,
     required TResult Function(_ErrorOnLoading value) errorOnLoading,
   }) {
@@ -540,7 +540,7 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UpdateMetada value)? updateMetada,
+    TResult Function(_UpdateMetadata value)? updateMetadata,
     TResult Function(_UpdateMessage value)? updateMessage,
     TResult Function(_ErrorOnLoading value)? errorOnLoading,
   }) {
@@ -553,7 +553,7 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UpdateMetada value)? updateMetada,
+    TResult Function(_UpdateMetadata value)? updateMetadata,
     TResult Function(_UpdateMessage value)? updateMessage,
     TResult Function(_ErrorOnLoading value)? errorOnLoading,
     required TResult orElse(),
@@ -575,29 +575,29 @@ abstract class _UpdateUser implements ChatChannelUseCaseEvent {
 }
 
 /// @nodoc
-abstract class _$UpdateMetadaCopyWith<$Res> {
-  factory _$UpdateMetadaCopyWith(
-          _UpdateMetada value, $Res Function(_UpdateMetada) then) =
-      __$UpdateMetadaCopyWithImpl<$Res>;
+abstract class _$UpdateMetadataCopyWith<$Res> {
+  factory _$UpdateMetadataCopyWith(
+          _UpdateMetadata value, $Res Function(_UpdateMetadata) then) =
+      __$UpdateMetadataCopyWithImpl<$Res>;
   $Res call({ChatChannelSessionMetadataEntity metadata});
 }
 
 /// @nodoc
-class __$UpdateMetadaCopyWithImpl<$Res>
+class __$UpdateMetadataCopyWithImpl<$Res>
     extends _$ChatChannelUseCaseEventCopyWithImpl<$Res>
-    implements _$UpdateMetadaCopyWith<$Res> {
-  __$UpdateMetadaCopyWithImpl(
-      _UpdateMetada _value, $Res Function(_UpdateMetada) _then)
-      : super(_value, (v) => _then(v as _UpdateMetada));
+    implements _$UpdateMetadataCopyWith<$Res> {
+  __$UpdateMetadataCopyWithImpl(
+      _UpdateMetadata _value, $Res Function(_UpdateMetadata) _then)
+      : super(_value, (v) => _then(v as _UpdateMetadata));
 
   @override
-  _UpdateMetada get _value => super._value as _UpdateMetada;
+  _UpdateMetadata get _value => super._value as _UpdateMetadata;
 
   @override
   $Res call({
     Object? metadata = freezed,
   }) {
-    return _then(_UpdateMetada(
+    return _then(_UpdateMetadata(
       metadata == freezed
           ? _value.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
@@ -608,22 +608,25 @@ class __$UpdateMetadaCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
-  const _$_UpdateMetada(this.metadata);
+class _$_UpdateMetadata
+    with DiagnosticableTreeMixin
+    implements _UpdateMetadata {
+  const _$_UpdateMetadata(this.metadata);
 
   @override
   final ChatChannelSessionMetadataEntity metadata;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatChannelUseCaseEvent.updateMetada(metadata: $metadata)';
+    return 'ChatChannelUseCaseEvent.updateMetadata(metadata: $metadata)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ChatChannelUseCaseEvent.updateMetada'))
+      ..add(
+          DiagnosticsProperty('type', 'ChatChannelUseCaseEvent.updateMetadata'))
       ..add(DiagnosticsProperty('metadata', metadata));
   }
 
@@ -631,7 +634,7 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _UpdateMetada &&
+            other is _UpdateMetadata &&
             const DeepCollectionEquality().equals(other.metadata, metadata));
   }
 
@@ -641,8 +644,8 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
 
   @JsonKey(ignore: true)
   @override
-  _$UpdateMetadaCopyWith<_UpdateMetada> get copyWith =>
-      __$UpdateMetadaCopyWithImpl<_UpdateMetada>(this, _$identity);
+  _$UpdateMetadataCopyWith<_UpdateMetadata> get copyWith =>
+      __$UpdateMetadataCopyWithImpl<_UpdateMetadata>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -651,11 +654,11 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
     required TResult Function() loaded,
     required TResult Function(ChatUserEntity user) updateUser,
     required TResult Function(ChatChannelSessionMetadataEntity metadata)
-        updateMetada,
+        updateMetadata,
     required TResult Function(List<ChatChannelMessage> messages) updateMessage,
     required TResult Function(String message) errorOnLoading,
   }) {
-    return updateMetada(metadata);
+    return updateMetadata(metadata);
   }
 
   @override
@@ -664,11 +667,11 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
     TResult Function()? initial,
     TResult Function()? loaded,
     TResult Function(ChatUserEntity user)? updateUser,
-    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetada,
+    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetadata,
     TResult Function(List<ChatChannelMessage> messages)? updateMessage,
     TResult Function(String message)? errorOnLoading,
   }) {
-    return updateMetada?.call(metadata);
+    return updateMetadata?.call(metadata);
   }
 
   @override
@@ -677,13 +680,13 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
     TResult Function()? initial,
     TResult Function()? loaded,
     TResult Function(ChatUserEntity user)? updateUser,
-    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetada,
+    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetadata,
     TResult Function(List<ChatChannelMessage> messages)? updateMessage,
     TResult Function(String message)? errorOnLoading,
     required TResult orElse(),
   }) {
-    if (updateMetada != null) {
-      return updateMetada(metadata);
+    if (updateMetadata != null) {
+      return updateMetadata(metadata);
     }
     return orElse();
   }
@@ -694,11 +697,11 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_UpdateUser value) updateUser,
-    required TResult Function(_UpdateMetada value) updateMetada,
+    required TResult Function(_UpdateMetadata value) updateMetadata,
     required TResult Function(_UpdateMessage value) updateMessage,
     required TResult Function(_ErrorOnLoading value) errorOnLoading,
   }) {
-    return updateMetada(this);
+    return updateMetadata(this);
   }
 
   @override
@@ -707,11 +710,11 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UpdateMetada value)? updateMetada,
+    TResult Function(_UpdateMetadata value)? updateMetadata,
     TResult Function(_UpdateMessage value)? updateMessage,
     TResult Function(_ErrorOnLoading value)? errorOnLoading,
   }) {
-    return updateMetada?.call(this);
+    return updateMetadata?.call(this);
   }
 
   @override
@@ -720,25 +723,25 @@ class _$_UpdateMetada with DiagnosticableTreeMixin implements _UpdateMetada {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UpdateMetada value)? updateMetada,
+    TResult Function(_UpdateMetadata value)? updateMetadata,
     TResult Function(_UpdateMessage value)? updateMessage,
     TResult Function(_ErrorOnLoading value)? errorOnLoading,
     required TResult orElse(),
   }) {
-    if (updateMetada != null) {
-      return updateMetada(this);
+    if (updateMetadata != null) {
+      return updateMetadata(this);
     }
     return orElse();
   }
 }
 
-abstract class _UpdateMetada implements ChatChannelUseCaseEvent {
-  const factory _UpdateMetada(ChatChannelSessionMetadataEntity metadata) =
-      _$_UpdateMetada;
+abstract class _UpdateMetadata implements ChatChannelUseCaseEvent {
+  const factory _UpdateMetadata(ChatChannelSessionMetadataEntity metadata) =
+      _$_UpdateMetadata;
 
   ChatChannelSessionMetadataEntity get metadata;
   @JsonKey(ignore: true)
-  _$UpdateMetadaCopyWith<_UpdateMetada> get copyWith =>
+  _$UpdateMetadataCopyWith<_UpdateMetadata> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -820,7 +823,7 @@ class _$_UpdateMessage with DiagnosticableTreeMixin implements _UpdateMessage {
     required TResult Function() loaded,
     required TResult Function(ChatUserEntity user) updateUser,
     required TResult Function(ChatChannelSessionMetadataEntity metadata)
-        updateMetada,
+        updateMetadata,
     required TResult Function(List<ChatChannelMessage> messages) updateMessage,
     required TResult Function(String message) errorOnLoading,
   }) {
@@ -833,7 +836,7 @@ class _$_UpdateMessage with DiagnosticableTreeMixin implements _UpdateMessage {
     TResult Function()? initial,
     TResult Function()? loaded,
     TResult Function(ChatUserEntity user)? updateUser,
-    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetada,
+    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetadata,
     TResult Function(List<ChatChannelMessage> messages)? updateMessage,
     TResult Function(String message)? errorOnLoading,
   }) {
@@ -846,7 +849,7 @@ class _$_UpdateMessage with DiagnosticableTreeMixin implements _UpdateMessage {
     TResult Function()? initial,
     TResult Function()? loaded,
     TResult Function(ChatUserEntity user)? updateUser,
-    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetada,
+    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetadata,
     TResult Function(List<ChatChannelMessage> messages)? updateMessage,
     TResult Function(String message)? errorOnLoading,
     required TResult orElse(),
@@ -863,7 +866,7 @@ class _$_UpdateMessage with DiagnosticableTreeMixin implements _UpdateMessage {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_UpdateUser value) updateUser,
-    required TResult Function(_UpdateMetada value) updateMetada,
+    required TResult Function(_UpdateMetadata value) updateMetadata,
     required TResult Function(_UpdateMessage value) updateMessage,
     required TResult Function(_ErrorOnLoading value) errorOnLoading,
   }) {
@@ -876,7 +879,7 @@ class _$_UpdateMessage with DiagnosticableTreeMixin implements _UpdateMessage {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UpdateMetada value)? updateMetada,
+    TResult Function(_UpdateMetadata value)? updateMetadata,
     TResult Function(_UpdateMessage value)? updateMessage,
     TResult Function(_ErrorOnLoading value)? errorOnLoading,
   }) {
@@ -889,7 +892,7 @@ class _$_UpdateMessage with DiagnosticableTreeMixin implements _UpdateMessage {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UpdateMetada value)? updateMetada,
+    TResult Function(_UpdateMetadata value)? updateMetadata,
     TResult Function(_UpdateMessage value)? updateMessage,
     TResult Function(_ErrorOnLoading value)? errorOnLoading,
     required TResult orElse(),
@@ -991,7 +994,7 @@ class _$_ErrorOnLoading
     required TResult Function() loaded,
     required TResult Function(ChatUserEntity user) updateUser,
     required TResult Function(ChatChannelSessionMetadataEntity metadata)
-        updateMetada,
+        updateMetadata,
     required TResult Function(List<ChatChannelMessage> messages) updateMessage,
     required TResult Function(String message) errorOnLoading,
   }) {
@@ -1004,7 +1007,7 @@ class _$_ErrorOnLoading
     TResult Function()? initial,
     TResult Function()? loaded,
     TResult Function(ChatUserEntity user)? updateUser,
-    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetada,
+    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetadata,
     TResult Function(List<ChatChannelMessage> messages)? updateMessage,
     TResult Function(String message)? errorOnLoading,
   }) {
@@ -1017,7 +1020,7 @@ class _$_ErrorOnLoading
     TResult Function()? initial,
     TResult Function()? loaded,
     TResult Function(ChatUserEntity user)? updateUser,
-    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetada,
+    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetadata,
     TResult Function(List<ChatChannelMessage> messages)? updateMessage,
     TResult Function(String message)? errorOnLoading,
     required TResult orElse(),
@@ -1034,7 +1037,7 @@ class _$_ErrorOnLoading
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_UpdateUser value) updateUser,
-    required TResult Function(_UpdateMetada value) updateMetada,
+    required TResult Function(_UpdateMetadata value) updateMetadata,
     required TResult Function(_UpdateMessage value) updateMessage,
     required TResult Function(_ErrorOnLoading value) errorOnLoading,
   }) {
@@ -1047,7 +1050,7 @@ class _$_ErrorOnLoading
     TResult Function(_Initial value)? initial,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UpdateMetada value)? updateMetada,
+    TResult Function(_UpdateMetadata value)? updateMetadata,
     TResult Function(_UpdateMessage value)? updateMessage,
     TResult Function(_ErrorOnLoading value)? errorOnLoading,
   }) {
@@ -1060,7 +1063,7 @@ class _$_ErrorOnLoading
     TResult Function(_Initial value)? initial,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UpdateMetada value)? updateMetada,
+    TResult Function(_UpdateMetadata value)? updateMetadata,
     TResult Function(_UpdateMessage value)? updateMessage,
     TResult Function(_ErrorOnLoading value)? errorOnLoading,
     required TResult orElse(),

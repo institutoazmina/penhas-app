@@ -24,9 +24,6 @@ class ChatUserEntity extends Equatable {
   final bool blockedMe;
 
   @override
-  bool get stringify => true;
-
-  @override
   List<Object?> get props => [
         activity,
         nickname,
