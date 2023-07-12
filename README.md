@@ -54,3 +54,75 @@ Para rodar os testes automatizados:
 fvm flutter test
 ```
 
+Para gerar relatório em html da cobertura dos testes execute
+
+```
+genhtml coverage/lcov.info -o coverage/html
+```
+
+O arquivo gerado estará disponível em `coverage/html/index.html`.
+Para executar o comando é preciso ter o pacote [lcov](https://wiki.documentfoundation.org/Development/Lcov) instalado.
+
+No VS Code, Também é possível instalar a extensão [Coverage Gutters](https://marketplace.visualstudio.com/items?itemName=ryanluker.vscode-coverage-gutters), do [ryanluker](https://github.com/ryanluker/vscode-coverage-gutters) e a [Flutter Coverage](https://marketplace.visualstudio.com/items?itemName=Flutterando.flutter-coverage), do Fluterando.
+
+
+
+
+## Iniciar app pelo VS Code
+
+Para iniciar o app utilizando o vs code adicione os seguintes arquivos dentro da pasta `.vscode`
+
+```
+- launch.json
+- settings.json
+```
+
+Aponte sua configuração para o sdk utilizado pelo fvm em `settings.json`. Geralmente elas ficam na pasta `.fvm/`:
+
+```
+{
+    "dart.flutterSdkPath": ".fvm/flutter_sdk",
+    "search.exclude": {
+      "**/.fvm": true
+    },
+    "files.watcherExclude": {
+      "**/.fvm": true
+    }
+  }
+```
+
+E em `launch.json` adicione 
+
+```
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Flutter",
+      "request": "launch",
+      "type": "dart",
+      "program": "./lib/main.dart"
+    }
+  ]
+}
+```
+
+Caso queira iniciar o app apontando para um ambiente diferente, isso pode ser feito utilizando o argumento `PENHAS_BASE_URL`. A configuração do arquivo ficaria como abaixo, substituindo `<URL_DO_AMBIENTE>` pela url a ser utilizada.
+
+
+```
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Flutter",
+      "request": "launch",
+      "type": "dart",
+      "program": "./lib/main.dart",
+      "args": ["--dart-define=PENHAS_BASE_URL=<URL_DO_AMBIENTE>"]
+    }
+  ]
+}
+```
+
+      

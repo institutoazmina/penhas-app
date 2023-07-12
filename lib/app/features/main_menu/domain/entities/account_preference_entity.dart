@@ -14,9 +14,6 @@ class AccountPreferenceEntity extends Equatable {
   final bool value;
 
   @override
-  bool get stringify => true;
-
-  @override
   List<Object?> get props => [
         key,
         label,
@@ -29,9 +26,6 @@ class AccountPreferenceSessionEntity extends Equatable {
   const AccountPreferenceSessionEntity({required this.preferences});
 
   final List<AccountPreferenceEntity> preferences;
-
-  @override
-  bool get stringify => true;
 
   @override
   List<Object?> get props => [preferences];

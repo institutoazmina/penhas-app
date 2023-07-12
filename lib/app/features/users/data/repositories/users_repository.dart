@@ -1,16 +1,17 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
+
 import '../../../../core/entities/valid_fiel.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/network/api_client.dart';
+import '../../../../shared/logger/log.dart';
 import '../../../authentication/presentation/shared/map_exception_to_failure.dart';
-import '../models/user_detail_model.dart';
-import '../models/user_search_session_model.dart';
 import '../../domain/entities/user_detail_entity.dart';
 import '../../domain/entities/user_search_options.dart';
 import '../../domain/entities/user_search_session_entity.dart';
-import '../../../../shared/logger/log.dart';
+import '../models/user_detail_model.dart';
+import '../models/user_search_session_model.dart';
 
 abstract class IUsersRepository {
   Future<Either<Failure, UserDetailEntity>> profileDetail(String clientId);
@@ -22,11 +23,10 @@ abstract class IUsersRepository {
 }
 
 class UsersRepository implements IUsersRepository {
-  UsersRepository({
-    required IApiProvider? apiProvider,
-  }) : _apiProvider = apiProvider;
+  UsersRepository({required IApiProvider apiProvider})
+      : _apiProvider = apiProvider;
 
-  final IApiProvider? _apiProvider;
+  final IApiProvider _apiProvider;
 
   @override
   Future<Either<Failure, UserDetailEntity>> profileDetail(
@@ -36,7 +36,7 @@ class UsersRepository implements IUsersRepository {
     final parameters = {'cliente_id': clientId};
 
     try {
-      final response = await _apiProvider!
+      final response = await _apiProvider
           .get(path: endPoint, parameters: parameters)
           .parseDetail();
       return right(response);
@@ -62,7 +62,7 @@ class UsersRepository implements IUsersRepository {
     };
 
     try {
-      final response = await _apiProvider!
+      final response = await _apiProvider
           .get(path: endPoint, parameters: parameters)
           .parseSearchSession();
       return right(response);
@@ -78,7 +78,7 @@ class UsersRepository implements IUsersRepository {
     try {
       const endPoint = '/report-profile';
       final parameters = {'reason': reason, 'cliente_id': clientId};
-      final response = await _apiProvider!
+      final response = await _apiProvider
           .post(path: endPoint, parameters: parameters)
           .parseValidField();
       return right(response);
@@ -92,7 +92,7 @@ class UsersRepository implements IUsersRepository {
   Future<Either<Failure, ValidField>> block(String clientId) async {
     try {
       const endPoint = '/block-profile';
-      final response = await _apiProvider!.post(
+      final response = await _apiProvider.post(
           path: endPoint,
           parameters: {'cliente_id': clientId}).parseValidField();
       return right(response);

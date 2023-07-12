@@ -1,19 +1,20 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/entities/user_location.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/managers/app_configuration.dart';
-import 'package:penhas/app/core/managers/audio_record_services.dart';
-import 'package:penhas/app/core/managers/location_services.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
-import 'package:penhas/app/features/help_center/data/repositories/guardian_repository.dart';
-import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
-import 'package:penhas/app/features/help_center/domain/states/help_center_state.dart';
-import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
-import 'package:penhas/app/features/help_center/presentation/widget/request_location_permission_content_widget.dart';
+import '../../../core/entities/user_location.dart';
+import '../../../core/error/failures.dart';
+import '../../../core/managers/app_configuration.dart';
+import '../../../core/managers/audio_record_services.dart';
+import '../../../core/managers/location_services.dart';
+import '../../authentication/presentation/shared/map_failure_message.dart';
+import '../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../data/models/alert_model.dart';
+import '../data/repositories/guardian_repository.dart';
+import '../domain/states/guardian_alert_state.dart';
+import '../domain/states/help_center_state.dart';
+import '../domain/usecases/security_mode_action_feature.dart';
+
+import '../../../shared/widgets/request_location_permission_content_widget.dart';
 
 part 'help_center_controller.g.dart';
 
@@ -97,7 +98,7 @@ abstract class _HelpCenterControllerBase with Store, MapFailureMessage {
     _locationService
         .requestPermission(
       title: 'O guardião precisa da sua localização',
-      description: RequestLocationPermissionContentWidget(),
+      description: const RequestLocationPermissionContentWidget(),
     )
         .then((value) {
       errorMessage = '';

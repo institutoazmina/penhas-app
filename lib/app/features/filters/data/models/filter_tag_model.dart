@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
-import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
+
+import '../../domain/entities/filter_tag_entity.dart';
 
 @immutable
 class FilterTagModel extends FilterTagEntity {
@@ -14,7 +15,9 @@ class FilterTagModel extends FilterTagEntity {
 
     return FilterTagModel(
       id: jsonData['value'] as String? ?? "${jsonData['id']}",
-      label: jsonData['label'] as String? ?? jsonData['title'] as String? ?? jsonData['skill'] as String?,
+      label: jsonData['label'] as String? ??
+          jsonData['title'] as String? ??
+          jsonData['skill'] as String?,
       isSelected: jsonData['default'] == 1,
     );
   }

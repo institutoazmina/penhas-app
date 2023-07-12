@@ -1,15 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:crypto/crypto.dart';
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/network/api_client.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_exception_to_failure.dart';
-import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/network/api_client.dart';
+import '../../../../shared/logger/log.dart';
+import '../../../authentication/presentation/shared/map_exception_to_failure.dart';
+import '../../domain/entities/audio_entity.dart';
 
 abstract class IAudioSyncRepository {
   Future<Either<Failure, ValidField>> upload(AudioData audio);
@@ -32,10 +34,10 @@ class AudioData {
 
 class AudioSyncRepository implements IAudioSyncRepository {
   AudioSyncRepository({
-    required IApiProvider? apiProvider,
+    required IApiProvider apiProvider,
   }) : _apiProvider = apiProvider;
 
-  final IApiProvider? _apiProvider;
+  final IApiProvider _apiProvider;
 
   @override
   Future<Either<Failure, ValidField>> upload(AudioData audio) async {
@@ -57,7 +59,7 @@ class AudioSyncRepository implements IAudioSyncRepository {
     };
 
     try {
-      final result = await _apiProvider!
+      final result = await _apiProvider
           .upload(path: '/me/audios', file: fileData, fields: fields)
           .parseAPI();
       return right(result);
@@ -75,7 +77,7 @@ class AudioSyncRepository implements IAudioSyncRepository {
     final endPoint = ['me', 'audios', audio.id, 'download'].join('/');
     final fields = {'audio_sequences': 'all'};
     try {
-      await _apiProvider!.download(
+      await _apiProvider.download(
         path: endPoint,
         file: file,
         fields: fields,
@@ -88,7 +90,7 @@ class AudioSyncRepository implements IAudioSyncRepository {
   }
 }
 
-extension _FileExtention on File {
+extension _FileExtension on File {
   String get name {
     return path.split(Platform.pathSeparator).last;
   }
