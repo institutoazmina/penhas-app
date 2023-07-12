@@ -129,7 +129,7 @@ void main() {
       },
     );
     test(
-      'get ApiProviderSessionError for invalid session',
+      'throw ApiProviderSessionError for invalid session',
       () async {
         // arrange
         final sessionHttpCodeError = [401, 403];
@@ -139,11 +139,38 @@ void main() {
           final sut = dataSource.update;
           // assert
           expect(
-            () => sut(quiz: quizRequest),
+            () async => sut(quiz: quizRequest),
             throwsA(isA<ApiProviderSessionError>()),
           );
         }
       },
     );
+    test('throw ApiProviderException from a server error', () async {
+      // arrange
+      _setUpMockHttpClientFailedWithHttp(code: 500);
+      // act
+      final sut = dataSource.update;
+      // assert
+      expect(
+        () async => sut(quiz: quizRequest),
+        throwsA(isA<ApiProviderException>()),
+      );
+    });
+    test('propagates exception from drivers', () async {
+      // arrange
+      when(
+        () => apiClient.post(
+          any(),
+          headers: any(named: 'headers'),
+        ),
+      ).thenThrow(Exception());
+      // act
+      final sut = dataSource.update;
+      // assert
+      expect(
+        () async => await sut(quiz: quizRequest),
+        throwsA(isA<Exception>()),
+      );
+    });
   });
 }

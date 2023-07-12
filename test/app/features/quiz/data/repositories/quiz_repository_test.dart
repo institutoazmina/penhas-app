@@ -87,5 +87,57 @@ void main() {
         expect(received.fold((l) => l, (r) => r), ServerSideSessionFailed());
       },
     );
+
+    test(
+      'with internet off return InternetConnectionFailure',
+      () async {
+        // arrange
+        when(() => networkInfo.isConnected).thenAnswer((_) async => false);
+        // act
+        final received = await quizRepository.update(quiz: quizRequest);
+        // assert
+        expect(received.fold((l) => l, (r) => r), InternetConnectionFailure());
+      },
+    );
+
+    test(
+      'return ServerSideFormFieldValidationFailure for server error',
+      () async {
+        // arrange
+        final expected = ServerSideFormFieldValidationFailure(
+          error: 'server_error',
+          message: 'message_error',
+          field: 'field_error',
+          reason: 'reason_error',
+        );
+        when(() => dataSource.update(quiz: any(named: 'quiz'))).thenThrow(
+          const ApiProviderException(
+            bodyContent: {
+              'error': 'server_error',
+              'message': 'message_error',
+              'field': 'field_error',
+              'reason': 'reason_error',
+            },
+          ),
+        );
+        // act
+        final received = await quizRepository.update(quiz: quizRequest);
+        // assert
+        expect(received.fold((l) => l, (r) => r), expected);
+      },
+    );
+
+    test(
+      'return ServerFailure for a not mapped error',
+      () async {
+        // arrange
+        when(() => dataSource.update(quiz: any(named: 'quiz')))
+            .thenThrow(Exception());
+        // act
+        final received = await quizRepository.update(quiz: quizRequest);
+        // assert
+        expect(received.fold((l) => l, (r) => r), ServerFailure());
+      },
+    );
   });
 }
