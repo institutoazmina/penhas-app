@@ -6,16 +6,16 @@ mixin SnackBarHandler {
   void showSnackBar({
     required GlobalKey<ScaffoldState> scaffoldKey,
     required String? message,
-    Duration duration = _defaultSnackBarDuration,
+    Duration? duration,
   }) {
     if (message == null || message.isEmpty) {
       return;
     }
 
-    ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(
+    scaffoldKey.currentState?.showSnackBar(
       SnackBar(
         content: Text(message),
-        duration: duration,
+        duration: duration ?? _defaultSnackBarDuration,
       ),
     );
   }
