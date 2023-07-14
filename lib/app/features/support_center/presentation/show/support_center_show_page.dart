@@ -8,6 +8,7 @@ import 'package:map_launcher/map_launcher.dart';
 import '../../../../shared/design_system/button_shape.dart';
 import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/logger/log.dart';
+import '../../../../shared/widgets/bottom_sheet_actions_widget.dart';
 import '../../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../domain/entities/support_center_place_detail_entity.dart';
 import '../../domain/states/support_center_show_state.dart';
@@ -122,6 +123,7 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
               child: HtmlWidget(
                 detail.place!.htmlContent!,
+                // ignore: deprecated_member_use
                 webViewJs: false,
                 textStyle: htmlContentTextStyle,
               ),
@@ -139,6 +141,7 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
                     color: DesignSystemColors.systemBackgroundColor,
                     child: SizedBox(
                       height: 44,
+                      // ignore: deprecated_member_use
                       child: RaisedButton(
                         onPressed: () async => openMapsSheet(context, detail),
                         elevation: 0,
@@ -167,10 +170,6 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
 }
 
 extension _Maps on _SupportCenterShowPageState {
-  double fullWidth(BuildContext context) {
-    return MediaQuery.of(context).size.width;
-  }
-
   Future<void> openMapsSheet(
     BuildContext context,
     SupportCenterPlaceDetailEntity detail,
@@ -180,67 +179,18 @@ extension _Maps on _SupportCenterShowPageState {
       final title = detail.place!.name;
       final availableMaps = await MapLauncher.installedMaps;
 
-      showModalBottomSheet(
+      await showModalBottomSheet(
         context: context,
-        backgroundColor: Colors.white,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
-        ),
-        isDismissible: true,
-        builder: (BuildContext context) {
-          return SafeArea(
-            child: Container(
-              constraints: const BoxConstraints(minHeight: 120),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal:
-                          (fullWidth(context) - fullWidth(context) * .2) / 2,
-                      vertical: 12,
-                    ),
-                    child: Container(
-                      height: 5,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).dividerColor,
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SingleChildScrollView(
-                    child: Wrap(
-                      children: <Widget>[
-                        for (var map in availableMaps)
-                          ListTile(
-                            onTap: () => map.showMarker(
-                              coords: coords,
-                              title: title!,
-                            ),
-                            title: Text(
-                              map.mapName,
-                              style: mapTitleTextStyle,
-                            ),
-                            leading: SvgPicture.asset(
-                              map.icon,
-                              height: 30.0,
-                              width: 30.0,
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                ],
+        builder: (_) => BottomSheetActionsContentWidget(
+          actions: [
+            for (var map in availableMaps)
+              ListTile(
+                onTap: () => map.showMarker(coords: coords, title: title!),
+                title: Text(map.mapName, style: mapTitleTextStyle),
+                leading: SvgPicture.asset(map.icon, height: 30.0, width: 30.0),
               ),
-            ),
-          );
-        },
+          ],
+        ),
       );
     } catch (e, stack) {
       logError(e, stack);
