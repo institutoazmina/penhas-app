@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../../shared/design_system/colors.dart';
+import '../../../../authentication/presentation/shared/page_progress_indicator.dart';
 
 class ChatChannelInitialPage extends StatelessWidget {
   const ChatChannelInitialPage({

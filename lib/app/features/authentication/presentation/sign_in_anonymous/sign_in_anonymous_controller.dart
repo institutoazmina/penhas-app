@@ -1,16 +1,17 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/managers/local_store.dart';
-import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
-import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
-import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../../../core/managers/local_store.dart';
+import '../../../appstate/domain/entities/user_profile_entity.dart';
+import '../../domain/entities/session_entity.dart';
+import '../../domain/repositories/i_authentication_repository.dart';
+import '../../domain/usecases/email_address.dart';
+import '../../domain/usecases/password_validator.dart';
+import '../../domain/usecases/sign_in_password.dart';
+import '../shared/map_failure_message.dart';
+import '../shared/page_progress_indicator.dart';
 
 part 'sign_in_anonymous_controller.g.dart';
 

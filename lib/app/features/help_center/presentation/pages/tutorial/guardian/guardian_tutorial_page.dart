@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:penhas/app/core/pages/tutorial_page_view_widget.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../../../core/pages/tutorial_page_view_widget.dart';
+import '../../../../../../shared/design_system/colors.dart';
 
 class GuardianTutorialPage extends StatefulWidget {
   const GuardianTutorialPage({Key? key}) : super(key: key);

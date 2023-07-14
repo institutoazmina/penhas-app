@@ -1,6 +1,8 @@
 import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+
+import '../../shared/logger/log.dart';
 
 class ValidField extends Equatable {
   const ValidField({this.message});

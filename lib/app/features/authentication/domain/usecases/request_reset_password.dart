@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/domain/entities/reset_password_response_entity.dart';
-import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
+
+import '../../../../core/error/failures.dart';
+import '../entities/reset_password_response_entity.dart';
+import '../repositories/i_reset_password_repository.dart';
+import 'email_address.dart';
 
 class RequestResetPassword {
   factory RequestResetPassword({

@@ -1,9 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/domain/entities/reset_password_response_entity.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
+
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/error/failures.dart';
+import '../entities/reset_password_response_entity.dart';
+import '../usecases/email_address.dart';
+import '../usecases/sign_up_password.dart';
 
 abstract class IResetPasswordRepository {
   Future<Either<Failure, ResetPasswordResponseEntity>> request({

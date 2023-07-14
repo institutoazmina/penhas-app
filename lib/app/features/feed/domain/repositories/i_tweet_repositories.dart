@@ -1,10 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_request_option.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
+
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/error/failures.dart';
+import '../entities/tweet_engage_request_option.dart';
+import '../entities/tweet_entity.dart';
+import '../entities/tweet_request_option.dart';
+import '../entities/tweet_session_entity.dart';
 
 abstract class ITweetRepository {
   Future<Either<Failure, TweetSessionEntity>> fetch({

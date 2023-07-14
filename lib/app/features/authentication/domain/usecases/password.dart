@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/map_validator_failure.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
+
+import 'map_validator_failure.dart';
+import 'password_validator.dart';
 
 @immutable
 abstract class Password extends Equatable with MapValidatorFailure {

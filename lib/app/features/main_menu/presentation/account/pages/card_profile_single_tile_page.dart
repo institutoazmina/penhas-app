@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_header_edit_page.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../../shared/design_system/colors.dart';
+import 'card_profile_header_edit_page.dart';
 
 class CardProfileSingleTilePage extends StatelessWidget {
   const CardProfileSingleTilePage({

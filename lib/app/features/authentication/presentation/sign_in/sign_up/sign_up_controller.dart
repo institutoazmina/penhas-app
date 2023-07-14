@@ -1,16 +1,17 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/birthday.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/cpf.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/full_name.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
+
+import '../../../../../core/entities/valid_fiel.dart';
+import '../../../../../core/error/failures.dart';
+import '../../../domain/repositories/i_user_register_repository.dart';
+import '../../../domain/usecases/birthday.dart';
+import '../../../domain/usecases/cep.dart';
+import '../../../domain/usecases/cpf.dart';
+import '../../../domain/usecases/full_name.dart';
+import '../../shared/map_failure_message.dart';
+import '../../shared/page_progress_indicator.dart';
+import '../../shared/user_register_form_field_model.dart';
 
 part 'sign_up_controller.g.dart';
 

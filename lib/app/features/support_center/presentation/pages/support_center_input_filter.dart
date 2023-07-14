@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:penhas/app/core/extension/asuka.dart';
-import 'package:penhas/app/features/support_center/presentation/pages/support_center_help_alert.dart';
-import 'package:penhas/app/shared/design_system/button_shape.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../core/extension/asuka.dart';
+import '../../../../shared/design_system/button_shape.dart';
+import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/text_styles.dart';
+import 'support_center_help_alert.dart';
 
 class SupportCenterInputFilter extends StatelessWidget {
   SupportCenterInputFilter({

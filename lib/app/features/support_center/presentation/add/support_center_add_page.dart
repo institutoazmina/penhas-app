@@ -4,21 +4,22 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/extension/asuka.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
-import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
-import 'package:penhas/app/features/support_center/domain/states/support_center_add_state.dart';
-import 'package:penhas/app/features/support_center/presentation/add/support_center_add_controller.dart';
-import 'package:penhas/app/features/support_center/presentation/pages/support_center_dropdown_input.dart';
-import 'package:penhas/app/features/support_center/presentation/pages/support_center_input.dart';
-import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_cep.dart';
-import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_ddd.dart';
-import 'package:penhas/app/features/support_center/presentation/pages/support_center_input_phone.dart';
-import 'package:penhas/app/shared/design_system/button_shape.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../core/extension/asuka.dart';
+import '../../../../shared/design_system/button_shape.dart';
+import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/text_styles.dart';
+import '../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../../authentication/presentation/shared/snack_bar_handler.dart';
+import '../../../filters/domain/entities/filter_tag_entity.dart';
+import '../../../help_center/domain/states/guardian_alert_state.dart';
+import '../../domain/states/support_center_add_state.dart';
+import '../pages/support_center_dropdown_input.dart';
+import '../pages/support_center_input.dart';
+import '../pages/support_center_input_cep.dart';
+import '../pages/support_center_input_ddd.dart';
+import '../pages/support_center_input_phone.dart';
+import 'support_center_add_controller.dart';
 
 class SupportCenterAddPage extends StatefulWidget {
   const SupportCenterAddPage({Key? key}) : super(key: key);

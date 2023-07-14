@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:penhas/app/core/error/exceptions.dart';
-import 'package:penhas/app/core/error/failures.dart';
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/failures.dart';
 
 class MapExceptionToFailure {
   static Failure map(Object error) {

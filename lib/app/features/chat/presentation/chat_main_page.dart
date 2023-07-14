@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_tab_item.dart';
-import 'package:penhas/app/features/chat/presentation/chat_main_controller.dart';
-import 'package:penhas/app/features/chat/presentation/people/chat_main_people_page.dart';
-import 'package:penhas/app/features/chat/presentation/talk/chat_main_talks_page.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../shared/design_system/colors.dart';
+import '../domain/entities/chat_tab_item.dart';
+import 'chat_main_controller.dart';
+import 'people/chat_main_people_page.dart';
+import 'talk/chat_main_talks_page.dart';
 
 class ChatMainPage extends StatefulWidget {
   const ChatMainPage({Key? key}) : super(key: key);

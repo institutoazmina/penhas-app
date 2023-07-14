@@ -1,16 +1,17 @@
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/birthday.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/cpf.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/full_name.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/genre.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/human_race.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
+
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/error/failures.dart';
+import '../entities/session_entity.dart';
+import '../usecases/birthday.dart';
+import '../usecases/cep.dart';
+import '../usecases/cpf.dart';
+import '../usecases/email_address.dart';
+import '../usecases/full_name.dart';
+import '../usecases/genre.dart';
+import '../usecases/human_race.dart';
+import '../usecases/nickname.dart';
+import '../usecases/sign_up_password.dart';
 
 abstract class IUserRegisterRepository {
   Future<Either<Failure, SessionEntity>> signup({

@@ -1,7 +1,8 @@
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_tab_item.dart';
-import 'package:penhas/app/features/chat/domain/states/chat_main_security_state.dart';
-import 'package:penhas/app/features/chat/domain/usecases/chat_toggle_feature.dart';
+
+import '../domain/entities/chat_tab_item.dart';
+import '../domain/states/chat_main_security_state.dart';
+import '../domain/usecases/chat_toggle_feature.dart';
 
 part 'chat_main_controller.g.dart';
 

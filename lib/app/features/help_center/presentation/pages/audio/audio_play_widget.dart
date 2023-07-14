@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:penhas/app/features/help_center/domain/entities/audio_play_tile_entity.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../../shared/design_system/colors.dart';
+import '../../../../../shared/design_system/text_styles.dart';
+import '../../../domain/entities/audio_play_tile_entity.dart';
 
 class AudioPlayWidget extends StatelessWidget {
   const AudioPlayWidget(

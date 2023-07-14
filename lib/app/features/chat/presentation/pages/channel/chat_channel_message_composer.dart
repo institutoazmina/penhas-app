@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/chat/presentation/chat/chat_channel_compose_type.dart';
-import 'package:penhas/app/shared/design_system/button_shape.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../../shared/design_system/button_shape.dart';
+import '../../../../../shared/design_system/colors.dart';
+import '../../chat/chat_channel_compose_type.dart';
 
 class ChatChannelMessageComposer extends StatefulWidget {
   const ChatChannelMessageComposer({

@@ -1,12 +1,13 @@
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/managers/app_configuration.dart';
-import 'package:penhas/app/core/managers/local_store.dart';
-import 'package:penhas/app/core/managers/modules_sevices.dart';
-import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
-import 'package:penhas/app/features/appstate/domain/entities/update_user_profile_entity.dart';
-import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
-import 'package:penhas/app/features/appstate/domain/repositories/i_app_state_repository.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../../../core/managers/app_configuration.dart';
+import '../../../../core/managers/local_store.dart';
+import '../../../../core/managers/modules_sevices.dart';
+import '../entities/app_state_entity.dart';
+import '../entities/update_user_profile_entity.dart';
+import '../entities/user_profile_entity.dart';
+import '../repositories/i_app_state_repository.dart';
 
 class AppStateUseCase {
   AppStateUseCase({

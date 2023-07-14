@@ -2,11 +2,12 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../../authentication/presentation/shared/map_failure_message.dart';
+import '../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../domain/entities/tweet_entity.dart';
+import '../../domain/usecases/feed_use_cases.dart';
 
 part 'reply_tweet_controller.g.dart';
 

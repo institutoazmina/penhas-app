@@ -1,7 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
+
+import 'password.dart';
+import 'password_validator.dart';
 
 @immutable
 class SignUpPassword extends Password {

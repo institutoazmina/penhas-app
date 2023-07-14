@@ -1,8 +1,10 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
-import 'package:penhas/app/core/error/exceptions.dart';
-import 'package:penhas/app/core/network/api_server_configure.dart';
-import 'package:penhas/app/features/feed/data/models/tweet_filter_session_model.dart';
+
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/network/api_server_configure.dart';
+import '../models/tweet_filter_session_model.dart';
 
 abstract class ITweetFilterPreferenceDataSource {
   Future<TweetFilterSessionModel> fetch();

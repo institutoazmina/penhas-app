@@ -1,6 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:synchronized/extension.dart';
+
+import 'i_local_storage.dart';
 
 class SecureLocalStorage implements ILocalStorage {
   factory SecureLocalStorage({

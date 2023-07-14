@@ -1,8 +1,9 @@
 import 'dart:async';
 
-import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:synchronized/extension.dart';
+
+import 'i_local_storage.dart';
 
 class LocalStorageSharedPreferences implements ILocalStorage {
   factory LocalStorageSharedPreferences({

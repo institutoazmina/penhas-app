@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/flutter_tags.dart';
-import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
-import 'package:penhas/app/shared/design_system/button_shape.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../../../../shared/design_system/button_shape.dart';
+import '../../../../../../../shared/design_system/colors.dart';
+import '../../../../../../filters/domain/entities/filter_tag_entity.dart';
 
 class ProfilSkillLoadedStatePage extends StatelessWidget {
   ProfilSkillLoadedStatePage({

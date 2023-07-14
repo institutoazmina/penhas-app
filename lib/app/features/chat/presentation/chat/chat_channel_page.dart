@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_message.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_session_entity.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
-import 'package:penhas/app/features/chat/domain/states/chat_channel_state.dart';
-import 'package:penhas/app/features/chat/presentation/chat/chat_channel_controller.dart';
-import 'package:penhas/app/features/chat/presentation/pages/channel/chat_channel_error_page.dart';
-import 'package:penhas/app/features/chat/presentation/pages/channel/chat_channel_initial_page.dart';
-import 'package:penhas/app/features/chat/presentation/pages/channel/chat_channel_message_composer.dart';
-import 'package:penhas/app/features/chat/presentation/pages/channel/chat_channel_message_page.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../shared/design_system/colors.dart';
+import '../../domain/entities/chat_channel_message.dart';
+import '../../domain/entities/chat_channel_session_entity.dart';
+import '../../domain/entities/chat_user_entity.dart';
+import '../../domain/states/chat_channel_state.dart';
+import '../pages/channel/chat_channel_error_page.dart';
+import '../pages/channel/chat_channel_initial_page.dart';
+import '../pages/channel/chat_channel_message_composer.dart';
+import '../pages/channel/chat_channel_message_page.dart';
+import 'chat_channel_controller.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);
