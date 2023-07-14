@@ -30,13 +30,14 @@ void main() {
         guards: [
           GuardianEntity(
             meta: GuardianSessionMeta(
-                canEdit: true,
-                canDelete: true,
-                canResend: false,
-                deleteWarning: '',
-                description: 'Guardiões que recebem seus pedidos de socorro.',
-                header: 'Guardiões',
-                status: GuardianStatus.accepted,),
+              canEdit: true,
+              canDelete: true,
+              canResend: false,
+              deleteWarning: '',
+              description: 'Guardiões que recebem seus pedidos de socorro.',
+              header: 'Guardiões',
+              status: GuardianStatus.accepted,
+            ),
             contacts: [
               GuardianContactEntity(
                 id: 172,
@@ -48,13 +49,14 @@ void main() {
           ),
           GuardianEntity(
             meta: GuardianSessionMeta(
-                canEdit: true,
-                canDelete: true,
-                canResend: false,
-                deleteWarning: '',
-                description: 'Guardiões que ainda não aceitaram seu convite.',
-                header: 'Pendentes',
-                status: GuardianStatus.pending,),
+              canEdit: true,
+              canDelete: true,
+              canResend: false,
+              deleteWarning: '',
+              description: 'Guardiões que ainda não aceitaram seu convite.',
+              header: 'Pendentes',
+              status: GuardianStatus.pending,
+            ),
             contacts: [],
           )
         ],

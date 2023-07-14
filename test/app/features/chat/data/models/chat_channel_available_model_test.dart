@@ -76,9 +76,10 @@ void main() {
           quizSession: QuizSessionEntity(
             currentMessage: [
               QuizMessageEntity(
-                  content: 'Deseja responder o questionário novamente?',
-                  type: QuizMessageType.yesno,
-                  ref: 'reset_questionnaire',)
+                content: 'Deseja responder o questionário novamente?',
+                type: QuizMessageType.yesno,
+                ref: 'reset_questionnaire',
+              )
             ],
             sessionId: 'Ada24',
             isFinished: false,
@@ -119,9 +120,10 @@ void main() {
           quizSession: QuizSessionEntity(
             currentMessage: [
               QuizMessageEntity(
-                  content: 'Deseja responder o questionário novamente?',
-                  type: QuizMessageType.yesno,
-                  ref: 'reset_questionnaire',)
+                content: 'Deseja responder o questionário novamente?',
+                type: QuizMessageType.yesno,
+                ref: 'reset_questionnaire',
+              ),
             ],
             sessionId: 'Ada24',
             isFinished: false,

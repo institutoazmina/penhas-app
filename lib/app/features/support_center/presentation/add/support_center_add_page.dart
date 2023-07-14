@@ -51,7 +51,7 @@ class _SupportCenterAddPageState
           builder: (_) {
             return buildBody(context, controller.state);
           },
-        ), 
+        ),
       ),
     );
   }
@@ -299,10 +299,9 @@ extension _BuildWidget on _SupportCenterAddPageState {
     );
   }
 
-  bool isNotValid(){
-
+  bool isNotValid() {
     final List<String> errorTextList = [
-      controller.addressError, 
+      controller.addressError,
       controller.cityError,
       controller.categoryError,
       controller.cepError,
@@ -317,9 +316,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
     ];
 
     return errorTextList.any((e) => e.isNotEmpty);
-
   }
-
 
   Widget buildPlaceAction() {
     return Container(
@@ -350,7 +347,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
               child: RaisedButton(
                 onPressed: () async {
                   controller.savePlace();
-                  if(isNotValid()){
+                  if (isNotValid()) {
                     _scrollController.animateTo(
                       0.0,
                       curve: Curves.easeOut,

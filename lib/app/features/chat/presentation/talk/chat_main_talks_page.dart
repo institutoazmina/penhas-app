@@ -49,9 +49,10 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
 
   Widget loading() {
     return PageProgressIndicator(
-        progressMessage: 'Carregando...',
-        progressState: PageProgressState.loading,
-        child: Container(color: DesignSystemColors.systemBackgroundColor),);
+      progressMessage: 'Carregando...',
+      progressState: PageProgressState.loading,
+      child: Container(color: DesignSystemColors.systemBackgroundColor),
+    );
   }
 
   Widget loaded(List<ChatMainTileEntity> tiles) {
@@ -147,9 +148,10 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
 
 extension _ChatMainTalksPageTextStyle on _ChatMainTalksPageState {
   TextStyle get talksDividerTitleTextStyle => const TextStyle(
-      fontFamily: 'Lato',
-      fontSize: 16.0,
-      letterSpacing: 0.5,
-      color: DesignSystemColors.darkIndigoThree,
-      fontWeight: FontWeight.bold,);
+        fontFamily: 'Lato',
+        fontSize: 16.0,
+        letterSpacing: 0.5,
+        color: DesignSystemColors.darkIndigoThree,
+        fontWeight: FontWeight.bold,
+      );
 }

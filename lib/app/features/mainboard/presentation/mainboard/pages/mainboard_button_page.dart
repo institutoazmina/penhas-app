@@ -53,8 +53,9 @@ class MainboarButtonPage extends StatelessWidget {
     }
 
     final assetColor = selected.maybeWhen(
-        helpCenter: () => DesignSystemColors.white,
-        orElse: () => DesignSystemColors.buttonBarIconColor,);
+      helpCenter: () => DesignSystemColors.white,
+      orElse: () => DesignSystemColors.buttonBarIconColor,
+    );
 
     return SvgPicture.asset(asset, color: assetColor);
   }

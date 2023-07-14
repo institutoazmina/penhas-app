@@ -30,7 +30,8 @@ class HelpCenterActionGuardian extends StatelessWidget {
                 height: 41,
                 width: 49,
                 child: SvgPicture.asset(
-                    'assets/images/svg/help_center/help_center_guardian.svg',),
+                  'assets/images/svg/help_center/help_center_guardian.svg',
+                ),
               ),
             ),
             const Padding(

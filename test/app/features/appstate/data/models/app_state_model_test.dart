@@ -24,13 +24,12 @@ void main() {
     test('should be a subclass of AppStateEntity', () async {
       // arrange
       const session = QuizSessionEntity(
-          currentMessage: [],
-          sessionId: '1',
-          endScreen: 'home',
-          isFinished: false,);
-      const appMode = AppStateModeEntity(
-        
+        currentMessage: [],
+        sessionId: '1',
+        endScreen: 'home',
+        isFinished: false,
       );
+      const appMode = AppStateModeEntity();
       final List<AppStateModuleEntity> modes = [];
       // act
       appStateModel = AppStateModel(session, userProfile, appMode, modes);
@@ -96,17 +95,22 @@ void main() {
     List<QuizMessageEntity> _currentMessageWithMultipleChoices() {
       return [
         const QuizMessageEntity(
-            content:
-                'Que tal nos contar um pouco como você acha que pode ajudar outras mulheres? Suas opções ficarão visíveis para as outras usuárias',
-            type: QuizMessageType.multipleChoices,
-            ref: 'MC7',
-            options: [
-              QuizMessageMultiplechoicesOptions(
-                  index: '0', display: 'Escuta acolhedora',),
-              QuizMessageMultiplechoicesOptions(
-                  index: '1', display: 'Psicologia',),
-              QuizMessageMultiplechoicesOptions(index: '2', display: 'Abrigo'),
-            ],),
+          content:
+              'Que tal nos contar um pouco como você acha que pode ajudar outras mulheres? Suas opções ficarão visíveis para as outras usuárias',
+          type: QuizMessageType.multipleChoices,
+          ref: 'MC7',
+          options: [
+            QuizMessageMultiplechoicesOptions(
+              index: '0',
+              display: 'Escuta acolhedora',
+            ),
+            QuizMessageMultiplechoicesOptions(
+              index: '1',
+              display: 'Psicologia',
+            ),
+            QuizMessageMultiplechoicesOptions(index: '2', display: 'Abrigo'),
+          ],
+        ),
       ];
     }
 
@@ -151,7 +155,10 @@ void main() {
     List<AppStateModuleEntity> _currentModules() {
       return [
         const AppStateModuleEntity(code: 'modo_anonimo', meta: '{}'),
-        const AppStateModuleEntity(code: 'modo_seguranca', meta: '{"numero":"000"}'),
+        const AppStateModuleEntity(
+          code: 'modo_seguranca',
+          meta: '{"numero":"000"}',
+        ),
         const AppStateModuleEntity(code: 'modo_camuflado', meta: '{}'),
       ];
     }
@@ -189,7 +196,8 @@ void main() {
         () async {
       // arrange
       final jsonData = await JsonUtil.getJson(
-          from: 'profile/quiz_session_response_with_previous_message.json',);
+        from: 'profile/quiz_session_response_with_previous_message.json',
+      );
       final List<QuizMessageEntity> currentMessage =
           _currentMessageWithPrevious();
       final QuizSessionEntity quizSession = QuizSessionEntity(
@@ -198,9 +206,7 @@ void main() {
         endScreen: null,
         isFinished: false,
       );
-      const appMode = AppStateModeEntity(
-        
-      );
+      const appMode = AppStateModeEntity();
       final modules = _currentModules();
       final userProfile = UserProfileModel(
         nickname: 'maria',
@@ -228,7 +234,8 @@ void main() {
         () async {
       // arrange
       final jsonData = await JsonUtil.getJson(
-          from: 'profile/quiz_session_resonse_multiple_choices.json',);
+        from: 'profile/quiz_session_resonse_multiple_choices.json',
+      );
       final List<QuizMessageEntity> currentMessage =
           _currentMessageWithMultipleChoices();
       final QuizSessionEntity quizSession = QuizSessionEntity(
@@ -237,9 +244,7 @@ void main() {
         endScreen: null,
         isFinished: false,
       );
-      const appMode = AppStateModeEntity(
-        
-      );
+      const appMode = AppStateModeEntity();
       final modules = _currentModules();
       final userProfile = UserProfileModel(
         nickname: 'maria',
@@ -266,7 +271,8 @@ void main() {
     test('should return a valid model with JSON with showTutorial', () async {
       // arrange
       final jsonData = await JsonUtil.getJson(
-          from: 'profile/quiz_session_response_stealth_mode.json',);
+        from: 'profile/quiz_session_response_stealth_mode.json',
+      );
       final List<QuizMessageEntity> currentMessage =
           _currentMessageWithTutorialStealth();
       final QuizSessionEntity quizSession = QuizSessionEntity(
@@ -294,7 +300,8 @@ void main() {
     test('should return a valid model with JSON with single button', () async {
       // arrange
       final jsonData = await JsonUtil.getJson(
-          from: 'profile/quiz_session_response_button_fim.json',);
+        from: 'profile/quiz_session_response_button_fim.json',
+      );
       final List<QuizMessageEntity> currentMessage =
           _currentMessageWithSingleButton();
       final QuizSessionEntity quizSession = QuizSessionEntity(
@@ -303,9 +310,7 @@ void main() {
         endScreen: 'home',
         isFinished: true,
       );
-      const appMode = AppStateModeEntity(
-        
-      );
+      const appMode = AppStateModeEntity();
       final modules = _currentModules();
       final AppStateEntity expected = AppStateModel(
         quizSession,
