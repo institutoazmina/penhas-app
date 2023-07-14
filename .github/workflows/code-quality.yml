@@ -61,14 +61,6 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Setup Firebase Options
-        run: |
-          tee lib/firebase_options.dart <<EOF
-          class DefaultFirebaseOptions {
-            static const currentPlatform = null;
-          }
-          EOF
-
       - name: Analyze code
         if: ${{ needs.check-changes.outputs.changed_files }}
         run: |
@@ -99,14 +91,6 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
-
-      - name: Setup Firebase Options
-        run: |
-          tee lib/firebase_options.dart <<EOF
-          class DefaultFirebaseOptions {
-            static const currentPlatform = null;
-          }
-          EOF
 
       - uses: stelynx/dart-full-coverage@v1.1.1
         with:

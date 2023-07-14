@@ -10,13 +10,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'app/app_module.dart';
 import 'app/app_widget.dart';
-import 'firebase_options.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp();
 
   // Pass all uncaught errors from the framework to Crashlytics.
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
