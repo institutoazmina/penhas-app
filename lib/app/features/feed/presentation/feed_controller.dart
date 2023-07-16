@@ -11,6 +11,7 @@ import '../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../help_center/domain/usecases/security_mode_action_feature.dart';
 import '../domain/states/feed_security_state.dart';
 import '../domain/states/feed_state.dart';
+import '../domain/usecases/compose_tweet_fab_toggle.dart';
 import '../domain/usecases/feed_use_cases.dart';
 
 part 'feed_controller.g.dart';
@@ -24,17 +25,24 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
   _FeedControllerBase({
     required FeedUseCases useCase,
     required SecurityModeActionFeature securityModeActionFeature,
+    required ComposeTweetFabToggleFeature composeTweetFabToggleFeature,
   })  : _useCase = useCase,
-        _securityModeActionFeature = securityModeActionFeature {
+        _securityModeActionFeature = securityModeActionFeature,
+        _composeTweetFabToggleFeature = composeTweetFabToggleFeature {
     _registerDataSource();
     _setupSecurityState();
+    _setupFabPublish();
   }
 
   final FeedUseCases _useCase;
   final SecurityModeActionFeature _securityModeActionFeature;
+  final ComposeTweetFabToggleFeature _composeTweetFabToggleFeature;
 
   @observable
   FeedState state = const FeedState.initial();
+
+  @observable
+  bool isComposeTweetFabVisible = false;
 
   @observable
   FeedSecurityState securityState = const FeedSecurityState.disable();
@@ -123,5 +131,9 @@ abstract class _FeedControllerBase with Store, MapFailureMessage {
     securityState = await _securityModeActionFeature.isEnabled
         ? const FeedSecurityState.enable()
         : const FeedSecurityState.disable();
+  }
+
+  Future<void> _setupFabPublish() async {
+    isComposeTweetFabVisible = await _composeTweetFabToggleFeature.isEnabled;
   }
 }
