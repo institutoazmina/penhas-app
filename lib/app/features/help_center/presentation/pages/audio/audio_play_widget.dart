@@ -5,12 +5,12 @@ import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:penhas/app/shared/design_system/text_styles.dart';
 
 class AudioPlayWidget extends StatelessWidget {
-  const AudioPlayWidget(
-      {Key? key,
-      required this.audioPlay,
-      required this.isPlaying,
-      required this.backgroundColor,})
-      : super(key: key);
+  const AudioPlayWidget({
+    Key? key,
+    required this.audioPlay,
+    required this.isPlaying,
+    required this.backgroundColor,
+  }) : super(key: key);
 
   final AudioPlayTileEntity audioPlay;
   final bool isPlaying;

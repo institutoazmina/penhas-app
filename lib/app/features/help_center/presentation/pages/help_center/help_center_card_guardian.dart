@@ -33,9 +33,10 @@ class HelpCenterCardGuardian extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-                color: Colors.black.withOpacity(0.5),
-                offset: const Offset(0.0, 2.0),
-                blurRadius: 4.0,)
+              color: Colors.black.withOpacity(0.5),
+              offset: const Offset(0.0, 2.0),
+              blurRadius: 4.0,
+            )
           ],
         ),
         child: Padding(
@@ -66,8 +67,9 @@ class HelpCenterCardGuardian extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(top: 6, bottom: 12),
                 child: Text(
-                    'Seus contatos de confiança para dispara pedidos de socorro.',
-                    style: kTextStyleRegisterSubtitleLabelStyle,),
+                  'Seus contatos de confiança para dispara pedidos de socorro.',
+                  style: kTextStyleRegisterSubtitleLabelStyle,
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,8 +82,10 @@ class HelpCenterCardGuardian extends StatelessWidget {
                         backgroundColor: DesignSystemColors.cobaltTwo,
                         onPressed: create,
                         shape: kButtonShapeOutlineWhite,
-                        child: const Text('Novo guardião',
-                            style: kTextStyleHelpCenterButtonLabel,),
+                        child: const Text(
+                          'Novo guardião',
+                          style: kTextStyleHelpCenterButtonLabel,
+                        ),
                       ),
                     ),
                   ),
@@ -92,14 +96,15 @@ class HelpCenterCardGuardian extends StatelessWidget {
                     child: SizedBox(
                       height: 40,
                       child: FloatingActionButton(
-                          heroTag: 'guardian_2',
-                          backgroundColor: DesignSystemColors.easterPurple,
-                          onPressed: manager,
-                          shape: kButtonShapeOutlinePurple,
-                          child: const Text(
-                            'Meus guardiões',
-                            style: kTextStyleHelpCenterButtonLabel,
-                          ),),
+                        heroTag: 'guardian_2',
+                        backgroundColor: DesignSystemColors.easterPurple,
+                        onPressed: manager,
+                        shape: kButtonShapeOutlinePurple,
+                        child: const Text(
+                          'Meus guardiões',
+                          style: kTextStyleHelpCenterButtonLabel,
+                        ),
+                      ),
                     ),
                   ),
                 ],

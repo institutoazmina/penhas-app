@@ -12,7 +12,7 @@ class ChatPeopleFilterCard extends StatelessWidget {
 
   final int totalOfFilter;
   final void Function() onPressed;
-  
+
   @override
   Widget build(BuildContext context) {
     final filterTitle =

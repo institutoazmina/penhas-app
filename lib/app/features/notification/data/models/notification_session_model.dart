@@ -15,9 +15,7 @@ class NotificationSessionModel extends NotificationSessionEntity {
     final hasMore = jsonData['has_more'] == 1;
     final nextPage = jsonData['next_page'];
     final List jsonRows = jsonData['rows'];
-    final notifications = jsonRows
-        .map((e) => _Parse.fromJson(e))
-        .toList();
+    final notifications = jsonRows.map((e) => _Parse.fromJson(e)).toList();
 
     return NotificationSessionModel(
       hasMore: hasMore,

@@ -84,8 +84,10 @@ extension _Dialog on CardProfileNamePage {
         title: const Text('Editar'),
         content: TextFormField(
           controller: _controller,
-          decoration:
-              const InputDecoration(hintText: 'Digite o novo nome', filled: true),
+          decoration: const InputDecoration(
+            hintText: 'Digite o novo nome',
+            filled: true,
+          ),
         ),
         actions: <Widget>[
           FlatButton(
