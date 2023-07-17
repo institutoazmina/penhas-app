@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_detail_entity.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../shared/design_system/colors.dart';
+import '../../domain/entities/support_center_place_detail_entity.dart';
 
 class SupportCenterRateDescription extends StatelessWidget {
   const SupportCenterRateDescription({

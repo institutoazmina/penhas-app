@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:penhas/app/core/extension/asuka.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
+
+import '../../../../core/extension/asuka.dart';
+import '../../domain/entities/tweet_entity.dart';
+import '../../domain/usecases/feed_use_cases.dart';
 
 abstract class ITweetController {
   Future<void> like(TweetEntity tweet);

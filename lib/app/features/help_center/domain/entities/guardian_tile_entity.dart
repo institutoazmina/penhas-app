@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import 'package:penhas/app/features/help_center/domain/entities/guardian_session_entity.dart';
+import 'guardian_session_entity.dart';
 
 abstract class GuardianTileEntity extends Equatable {}
 

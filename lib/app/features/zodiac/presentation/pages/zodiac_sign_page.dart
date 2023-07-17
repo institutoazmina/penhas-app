@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/zodiac/domain/entities/izodiac.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../shared/design_system/text_styles.dart';
+import '../../domain/entities/izodiac.dart';
 
 class ZodiacSignPage extends StatelessWidget {
   const ZodiacSignPage({

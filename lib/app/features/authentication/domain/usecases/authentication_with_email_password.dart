@@ -1,10 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/managers/app_configuration.dart';
-import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
-import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../../../core/managers/app_configuration.dart';
+import '../entities/session_entity.dart';
+import '../repositories/i_authentication_repository.dart';
+import 'email_address.dart';
+import 'sign_in_password.dart';
 
 class AuthenticationWithEmailAndPassword {
   AuthenticationWithEmailAndPassword({

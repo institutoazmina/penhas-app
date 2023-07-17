@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/core/pages/tutorial_scale_route.dart';
-import 'package:penhas/app/features/help_center/presentation/pages/tutorial/guardian/guardian_tutorial_page.dart';
-import 'package:penhas/app/shared/design_system/button_shape.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../../core/pages/tutorial_scale_route.dart';
+import '../../../../../shared/design_system/button_shape.dart';
+import '../../../../../shared/design_system/colors.dart';
+import '../../../../../shared/design_system/text_styles.dart';
+import '../tutorial/guardian/guardian_tutorial_page.dart';
 
 class HelpCenterCardGuardian extends StatelessWidget {
   const HelpCenterCardGuardian({

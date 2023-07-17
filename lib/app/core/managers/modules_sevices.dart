@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart' show IterableExtension;
-import 'package:penhas/app/core/storage/i_local_storage.dart';
-import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
+
+import '../../features/appstate/domain/entities/app_state_entity.dart';
+import '../storage/i_local_storage.dart';
 
 abstract class IAppModulesServices {
   Future<void> save(List<AppStateModuleEntity> modules);

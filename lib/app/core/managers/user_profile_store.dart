@@ -1,7 +1,7 @@
-import 'package:penhas/app/core/managers/local_store.dart';
-import 'package:penhas/app/core/storage/i_local_storage.dart';
-import 'package:penhas/app/features/appstate/data/model/user_profile_model.dart';
-import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
+import '../../features/appstate/data/model/user_profile_model.dart';
+import '../../features/appstate/domain/entities/user_profile_entity.dart';
+import '../storage/i_local_storage.dart';
+import 'local_store.dart';
 
 typedef TimeProvider = DateTime Function();
 

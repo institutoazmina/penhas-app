@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
-import 'package:penhas/app/features/quiz/presentation/quiz/quiz_typedef.dart';
-import 'package:penhas/app/shared/design_system/button_shape.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../shared/design_system/button_shape.dart';
+import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/text_styles.dart';
+import '../../../appstate/domain/entities/app_state_entity.dart';
+import 'quiz_typedef.dart';
 
 class QuizMultipleChoicesWidget extends StatefulWidget {
   const QuizMultipleChoicesWidget({

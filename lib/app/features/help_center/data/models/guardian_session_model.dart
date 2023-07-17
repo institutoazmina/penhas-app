@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
-import 'package:penhas/app/features/help_center/domain/entities/guardian_session_entity.dart';
+
+import '../../domain/entities/guardian_session_entity.dart';
 
 class GuardianSessionModel extends GuardianSessioEntity {
   const GuardianSessionModel({

@@ -2,11 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:penhas/app/core/managers/audio_record_services.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/features/help_center/presentation/pages/audio/audio_record_controller.dart';
-import 'package:penhas/app/features/help_center/presentation/pages/audio/sound_record_widget.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../../core/managers/audio_record_services.dart';
+import '../../../../../shared/design_system/colors.dart';
+import '../../../../authentication/presentation/shared/snack_bar_handler.dart';
+import 'audio_record_controller.dart';
+import 'sound_record_widget.dart';
 
 class AudioRecordPage extends StatefulWidget {
   const AudioRecordPage({Key? key}) : super(key: key);

@@ -1,4 +1,4 @@
-import 'package:penhas/app/features/chat/domain/entities/chat_message_entity.dart';
+import '../../domain/entities/chat_message_entity.dart';
 
 class ChatMessageModel extends ChatMessageEntity {
   const ChatMessageModel({

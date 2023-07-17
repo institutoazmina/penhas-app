@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_main_tile_entity.dart';
+
+import '../entities/chat_main_tile_entity.dart';
 
 part 'chat_main_talks_state.freezed.dart';
 

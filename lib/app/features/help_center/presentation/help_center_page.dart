@@ -4,19 +4,20 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/extension/asuka.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
-import 'package:penhas/app/features/help_center/domain/states/help_center_state.dart';
-import 'package:penhas/app/features/help_center/presentation/help_center_controller.dart';
-import 'package:penhas/app/features/help_center/presentation/pages/help_center/help_center_action_guardian.dart';
-import 'package:penhas/app/features/help_center/presentation/pages/help_center/help_center_action_police.dart';
-import 'package:penhas/app/features/help_center/presentation/pages/help_center/help_center_action_record.dart';
-import 'package:penhas/app/features/help_center/presentation/pages/help_center/help_center_card_guardian.dart';
-import 'package:penhas/app/features/help_center/presentation/pages/help_center/help_center_card_record.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../core/extension/asuka.dart';
+import '../../../shared/design_system/colors.dart';
+import '../../../shared/design_system/text_styles.dart';
+import '../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../authentication/presentation/shared/snack_bar_handler.dart';
+import '../domain/states/guardian_alert_state.dart';
+import '../domain/states/help_center_state.dart';
+import 'help_center_controller.dart';
+import 'pages/help_center/help_center_action_guardian.dart';
+import 'pages/help_center/help_center_action_police.dart';
+import 'pages/help_center/help_center_action_record.dart';
+import 'pages/help_center/help_center_card_guardian.dart';
+import 'pages/help_center/help_center_card_record.dart';
 
 class HelpCenterPage extends StatefulWidget {
   const HelpCenterPage({Key? key, this.title = 'HelpCenter'}) : super(key: key);

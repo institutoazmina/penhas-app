@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/features/main_menu/domain/states/profile_edit_state.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/my_profile/profile_edit_controller.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_bio_page.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_email_page.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_name_page.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_password_page.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_race_page.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_single_tile_page.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_skill_page.dart';
-import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../../shared/design_system/colors.dart';
+import '../../../../appstate/domain/entities/user_profile_entity.dart';
+import '../../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../../../authentication/presentation/shared/snack_bar_handler.dart';
+import '../../../../support_center/presentation/pages/support_center_general_error.dart';
+import '../../../domain/states/profile_edit_state.dart';
+import '../pages/card_profile_bio_page.dart';
+import '../pages/card_profile_email_page.dart';
+import '../pages/card_profile_name_page.dart';
+import '../pages/card_profile_password_page.dart';
+import '../pages/card_profile_race_page.dart';
+import '../pages/card_profile_single_tile_page.dart';
+import '../pages/card_profile_skill_page.dart';
+import 'profile_edit_controller.dart';
 
 class ProfileEditPage extends StatefulWidget {
   const ProfileEditPage({Key? key}) : super(key: key);

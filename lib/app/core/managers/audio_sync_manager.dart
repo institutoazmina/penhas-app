@@ -6,10 +6,11 @@ import 'package:collection/collection.dart' show IterableExtension;
 import 'package:dartz/dartz.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/help_center/data/repositories/audio_sync_repository.dart';
-import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+
+import '../../features/help_center/data/repositories/audio_sync_repository.dart';
+import '../../features/help_center/domain/entities/audio_entity.dart';
+import '../../shared/logger/log.dart';
+import '../error/failures.dart';
 
 abstract class IAudioSyncManager {
   Future<String> audioFile({

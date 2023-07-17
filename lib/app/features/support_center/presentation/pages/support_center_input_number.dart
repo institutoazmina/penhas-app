@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../shared/design_system/colors.dart';
 
 class SupportCenterInputNumber extends StatelessWidget {
   const SupportCenterInputNumber({

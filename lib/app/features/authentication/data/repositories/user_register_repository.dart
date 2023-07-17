@@ -1,22 +1,23 @@
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/exceptions.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/managers/app_configuration.dart';
-import 'package:penhas/app/core/network/network_info.dart';
-import 'package:penhas/app/features/authentication/data/datasources/user_register_data_source.dart';
-import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
-import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/birthday.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/cpf.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/full_name.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/genre.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/human_race.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/managers/app_configuration.dart';
+import '../../../../core/network/network_info.dart';
+import '../../../../shared/logger/log.dart';
+import '../../domain/entities/session_entity.dart';
+import '../../domain/repositories/i_user_register_repository.dart';
+import '../../domain/usecases/birthday.dart';
+import '../../domain/usecases/cep.dart';
+import '../../domain/usecases/cpf.dart';
+import '../../domain/usecases/email_address.dart';
+import '../../domain/usecases/full_name.dart';
+import '../../domain/usecases/genre.dart';
+import '../../domain/usecases/human_race.dart';
+import '../../domain/usecases/nickname.dart';
+import '../../domain/usecases/sign_up_password.dart';
+import '../datasources/user_register_data_source.dart';
 
 class UserRegisterRepository implements IUserRegisterRepository {
   UserRegisterRepository({

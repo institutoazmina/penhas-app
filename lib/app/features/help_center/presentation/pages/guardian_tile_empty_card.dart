@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:penhas/app/features/help_center/domain/entities/guardian_tile_entity.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/text_styles.dart';
+import '../../domain/entities/guardian_tile_entity.dart';
 
 class GuardianTileEmptyCard extends StatelessWidget {
   const GuardianTileEmptyCard({Key? key, required this.card}) : super(key: key);

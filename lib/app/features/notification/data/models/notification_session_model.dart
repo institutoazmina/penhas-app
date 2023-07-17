@@ -1,4 +1,4 @@
-import 'package:penhas/app/features/notification/domain/entities/notification_session_entity.dart';
+import '../../domain/entities/notification_session_entity.dart';
 
 class NotificationSessionModel extends NotificationSessionEntity {
   const NotificationSessionModel({

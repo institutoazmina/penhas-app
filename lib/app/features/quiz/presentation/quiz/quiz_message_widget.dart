@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../shared/design_system/colors.dart';
+import '../../../appstate/domain/entities/app_state_entity.dart';
 
 class QuizMessageWidget extends StatelessWidget {
   const QuizMessageWidget({

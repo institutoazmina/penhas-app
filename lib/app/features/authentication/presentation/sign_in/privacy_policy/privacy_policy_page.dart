@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import '../../../../../shared/design_system/colors.dart';
 
 class PrivacyPolicyPage extends StatelessWidget {
   const PrivacyPolicyPage({

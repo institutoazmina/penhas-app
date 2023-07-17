@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import 'colors.dart';
 
 const kButtonShapeFilled = RoundedRectangleBorder(
   borderRadius: BorderRadius.all(Radius.circular(20.0)),

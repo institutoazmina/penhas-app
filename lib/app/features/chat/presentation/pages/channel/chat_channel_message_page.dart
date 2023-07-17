@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_message.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../../shared/design_system/colors.dart';
+import '../../../domain/entities/chat_channel_message.dart';
 
 class ChatChannelMessagePage extends StatelessWidget {
   const ChatChannelMessagePage({

@@ -1,7 +1,7 @@
-import 'package:penhas/app/core/managers/local_store.dart';
-import 'package:penhas/app/core/storage/i_local_storage.dart';
-import 'package:penhas/app/features/appstate/data/model/app_preferences_model.dart';
-import 'package:penhas/app/features/appstate/domain/entities/app_preferences_entity.dart';
+import '../../features/appstate/data/model/app_preferences_model.dart';
+import '../../features/appstate/domain/entities/app_preferences_entity.dart';
+import '../storage/i_local_storage.dart';
+import 'local_store.dart';
 
 class AppPreferencesStore extends LocalStore<AppPreferencesEntity> {
   AppPreferencesStore({required ILocalStorage storage})
