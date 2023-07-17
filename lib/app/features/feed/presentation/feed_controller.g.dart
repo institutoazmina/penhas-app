@@ -39,6 +39,23 @@ mixin _$FeedController on _FeedControllerBase, Store {
     });
   }
 
+  final _$isComposeTweetFabVisibleAtom =
+      Atom(name: '_FeedControllerBase.isComposeTweetFabVisible');
+
+  @override
+  bool get isComposeTweetFabVisible {
+    _$isComposeTweetFabVisibleAtom.reportRead();
+    return super.isComposeTweetFabVisible;
+  }
+
+  @override
+  set isComposeTweetFabVisible(bool value) {
+    _$isComposeTweetFabVisibleAtom
+        .reportWrite(value, super.isComposeTweetFabVisible, () {
+      super.isComposeTweetFabVisible = value;
+    });
+  }
+
   final _$securityStateAtom = Atom(name: '_FeedControllerBase.securityState');
 
   @override
@@ -143,6 +160,7 @@ mixin _$FeedController on _FeedControllerBase, Store {
   String toString() {
     return '''
 state: ${state},
+isComposeTweetFabVisible: ${isComposeTweetFabVisible},
 securityState: ${securityState},
 errorMessage: ${errorMessage},
 fetchState: ${fetchState},

@@ -7,6 +7,7 @@ part 'mainboard_state.freezed.dart';
 class MainboardState with _$MainboardState {
   const factory MainboardState.chat() = _Chat;
   const factory MainboardState.feed() = _Feed;
+  const factory MainboardState.escapeManual() = _EscapeManual;
   const factory MainboardState.compose() = _Compose;
   const factory MainboardState.supportPoint() = _SupportPoint;
   const factory MainboardState.helpCenter() = _HelpCenter;
@@ -17,6 +18,8 @@ class MainboardState with _$MainboardState {
         return const MainboardState.feed();
       case 'chat':
         return const MainboardState.chat();
+      case 'escapemanual':
+        return const MainboardState.escapeManual();
       case 'compose':
         return const MainboardState.compose();
       case 'supportpoint':

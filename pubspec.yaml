@@ -145,6 +145,8 @@ flutter:
     - assets/images/svg/bottom_bar/compose_tweet.svg
     - assets/images/svg/bottom_bar/compose_tweet_selected.svg
     - assets/images/svg/bottom_bar/emergency_controll.svg
+    - assets/images/svg/bottom_bar/escape_manual.svg
+    - assets/images/svg/bottom_bar/escape_manual_selected.svg
     - assets/images/svg/bottom_bar/feed.svg
     - assets/images/svg/bottom_bar/feed_selected.svg
     - assets/images/svg/bottom_bar/support_point.svg

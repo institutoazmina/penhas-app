@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
+import 'package:penhas/app/features/feed/domain/usecases/escape_manual_toggle.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_store.dart';
 
@@ -37,7 +38,9 @@ void main() {
       expect(result, equals(expectedPage));
     });
 
-    test('setupProgress initializes with the correct pages', () async {
+    test(
+        'setupProgress initializes with the correct pages when mf feature is disabled',
+        () async {
       // arrange
       const expectedPages = [
         MainboardState.feed(),
@@ -46,6 +49,8 @@ void main() {
         MainboardState.chat(),
         MainboardState.supportPoint(),
       ];
+      when(() => mockServices.isEnabled(EscapeManualToggleFeature.featureCode))
+          .thenAnswer((_) async => false);
       // act
       await store.setupProgress;
       final result = store.pages;
@@ -56,6 +61,39 @@ void main() {
           expectedPages.indexOf(const MainboardState.feed()),
         ),
       ).called(1);
+    });
+
+    test(
+        'setupProgress initializes with the correct pages when all features is enabled',
+        () async {
+      // arrange
+      const expectedPages = [
+        MainboardState.feed(),
+        MainboardState.escapeManual(),
+        MainboardState.helpCenter(),
+        MainboardState.chat(),
+        MainboardState.supportPoint(),
+      ];
+      when(() => mockServices.isEnabled(any())).thenAnswer((_) async => true);
+      // act
+      await store.setupProgress;
+      final result = store.pages;
+      // assert
+      expect(result, equals(expectedPages));
+    });
+
+    test('setupProgress initializes with no pages when all features is enabled',
+        () async {
+      // arrange
+      when(() => mockServices.isEnabled(any())).thenAnswer((_) async => false);
+      when(() => mockServices.feature(name: any(named: 'name')))
+          .thenAnswer((_) async => null);
+      // act
+      await store.setupProgress;
+      final result = store.pages;
+      // assert
+      expect(result, isEmpty);
+      verify(() => pageController.jumpToPage(-1)).called(1);
     });
 
     test('jumps to the correct page when changePage is called', () async {

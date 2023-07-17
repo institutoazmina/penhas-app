@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../../shared/design_system/colors.dart';
+import '../../../domain/states/mainboard_state.dart';
 
 class MainboarButtonPage extends StatelessWidget {
   const MainboarButtonPage({
@@ -34,18 +35,20 @@ class MainboarButtonPage extends StatelessWidget {
     String asset;
     const String rootPath = 'assets/images/svg/bottom_bar';
 
-    asset = current.when(
-      chat: () => '$rootPath/chat.svg',
-      feed: () => '$rootPath/feed.svg',
-      compose: () => '$rootPath/compose_tweet.svg',
-      supportPoint: () => '$rootPath/support_point.svg',
-      helpCenter: () => '$rootPath/emergency_controll.svg',
-    );
-
-    if (current == selected) {
+    if (current != selected) {
+      asset = current.when(
+        chat: () => '$rootPath/chat.svg',
+        feed: () => '$rootPath/feed.svg',
+        escapeManual: () => '$rootPath/escape_manual.svg',
+        compose: () => '$rootPath/compose_tweet.svg',
+        supportPoint: () => '$rootPath/support_point.svg',
+        helpCenter: () => '$rootPath/emergency_controll.svg',
+      );
+    } else {
       asset = current.when(
         chat: () => '$rootPath/chat_selected.svg',
         feed: () => '$rootPath/feed_selected.svg',
+        escapeManual: () => '$rootPath/escape_manual_selected.svg',
         compose: () => '$rootPath/compose_tweet_selected.svg',
         supportPoint: () => '$rootPath/support_point_selected.svg',
         helpCenter: () => '$rootPath/emergency_controll.svg',
@@ -57,6 +60,12 @@ class MainboarButtonPage extends StatelessWidget {
       orElse: () => DesignSystemColors.buttonBarIconColor,
     );
 
-    return SvgPicture.asset(asset, color: assetColor);
+    return SvgPicture.asset(
+      asset,
+      color: assetColor,
+      width: 24,
+      height: 24,
+      fit: BoxFit.contain,
+    );
   }
 }
