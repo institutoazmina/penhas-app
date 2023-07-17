@@ -33,7 +33,8 @@ class AuthenticationWithEmailAndPassword {
   }
 
   Future<Either<Failure, SessionEntity>> _saveAthenticationToken(
-      SessionEntity session,) async {
+    SessionEntity session,
+  ) async {
     await _appConfiguration!.saveApiToken(token: session.sessionToken);
     return Future.value(right(session));
   }

@@ -15,8 +15,9 @@ class SupportCenterRateDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool hasRate = detail.place!.rate!.contains('n/a');
     return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20.0),
-        child: hasRate ? _withoutRate() : _withRate(),);
+      padding: const EdgeInsets.symmetric(vertical: 20.0),
+      child: hasRate ? _withoutRate() : _withRate(),
+    );
   }
 
   Widget _withoutRate() {
@@ -52,14 +53,16 @@ class SupportCenterRateDescription extends StatelessWidget {
 
 extension _TextStyle on SupportCenterRateDescription {
   TextStyle get rateDescriptionTextStyle => const TextStyle(
-      color: DesignSystemColors.darkIndigoThree,
-      fontFamily: 'Lato',
-      letterSpacing: 0.45,
-      fontSize: 14.0,
-      fontWeight: FontWeight.normal,);
+        color: DesignSystemColors.darkIndigoThree,
+        fontFamily: 'Lato',
+        letterSpacing: 0.45,
+        fontSize: 14.0,
+        fontWeight: FontWeight.normal,
+      );
   TextStyle get rateValueTextStyle => const TextStyle(
-      color: DesignSystemColors.darkIndigoThree,
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      fontWeight: FontWeight.bold,);
+        color: DesignSystemColors.darkIndigoThree,
+        fontFamily: 'Lato',
+        fontSize: 14.0,
+        fontWeight: FontWeight.bold,
+      );
 }

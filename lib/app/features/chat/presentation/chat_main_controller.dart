@@ -34,7 +34,8 @@ abstract class _ChatMainControllerBase with Store {
   }
 
   @observable
-  ChatMainSecurityState securityState = const ChatMainSecurityState.onlySupport();
+  ChatMainSecurityState securityState =
+      const ChatMainSecurityState.onlySupport();
 
   @observable
   ObservableList<ChatTabItem> tabItems = ObservableList<ChatTabItem>();

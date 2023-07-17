@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class SupportCenterCheckbox extends StatefulWidget {
   const SupportCenterCheckbox({Key? key}) : super(key: key);
 

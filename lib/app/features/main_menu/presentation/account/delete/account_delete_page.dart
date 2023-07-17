@@ -90,7 +90,6 @@ extension _PageBuilder on _AccountDeletePageState {
   }
 
   Widget bodyLoaded(String bodyMessage) {
-
     return SafeArea(
       child: PageProgressIndicator(
         progressMessage: 'Processando...',
@@ -133,14 +132,17 @@ extension _PageBuilder on _AccountDeletePageState {
                       border: const OutlineInputBorder(),
                       labelText: 'Digite a senha atual',
                       labelStyle: labelTextStyle,
-                      contentPadding:
-                          const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
+                      contentPadding: const EdgeInsetsDirectional.only(
+                        end: 8.0,
+                        start: 8.0,
+                      ),
                       suffixIcon: IconButton(
                         icon: Icon(
-                            _isPasswordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            color: DesignSystemColors.easterPurple,),
+                          _isPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: DesignSystemColors.easterPurple,
+                        ),
                         onPressed: _togglePassword,
                       ),
                     ),

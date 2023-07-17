@@ -27,10 +27,11 @@ class MapExceptionToFailure {
       }
 
       return ServerSideFormFieldValidationFailure(
-          error: error.bodyContent['error'],
-          field: error.bodyContent['field'],
-          reason: error.bodyContent['reason'],
-          message: error.bodyContent['message'],);
+        error: error.bodyContent['error'],
+        field: error.bodyContent['field'],
+        reason: error.bodyContent['reason'],
+        message: error.bodyContent['message'],
+      );
     }
 
     return ServerFailure();

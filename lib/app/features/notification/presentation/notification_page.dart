@@ -54,7 +54,12 @@ extension _PageStateBuilder on _NotificationState {
 
   Widget buildEmptyState() {
     return const SafeArea(
-      child: Center(child: Text('Você não tem notificações', style: kTextEmptyList,),),
+      child: Center(
+        child: Text(
+          'Você não tem notificações',
+          style: kTextEmptyList,
+        ),
+      ),
     );
   }
 

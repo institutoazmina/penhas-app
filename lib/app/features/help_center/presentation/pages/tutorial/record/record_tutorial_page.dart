@@ -28,19 +28,22 @@ class _RecordTutorialPageState extends State<RecordTutorialPage> {
       description:
           'As gravações ficam salvas em ambiente seguro e você poder acessá-las a qualquer momento em "Minhas gravações".',
       bodyWidget: Image(
-          image: AssetImage(
-              'assets/images/tutorial_record_2/tutorial_record_2.png',),
-          width: 270,
-          height: 300,
-          fit: BoxFit.fitWidth,
-          alignment: FractionalOffset.bottomCenter,),
+        image: AssetImage(
+          'assets/images/tutorial_record_2/tutorial_record_2.png',
+        ),
+        width: 270,
+        height: 300,
+        fit: BoxFit.fitWidth,
+        alignment: FractionalOffset.bottomCenter,
+      ),
     ),
     const TutorialPageViewWidget(
       description:
           'Se estiver com modo camuflado ativo e se encontrar em situação de emergência, abra app, clique e segure no símbolo roxo de signo em destaque, até que ele troque de cor. Isso enviará um alerta para seus guardiões e durante 15 minutos um áudio será gravado.',
       bodyWidget: Image(
-        image:
-            AssetImage('assets/images/tutorial_guardian_2/tutorial_guardian_2.png'),
+        image: AssetImage(
+          'assets/images/tutorial_guardian_2/tutorial_guardian_2.png',
+        ),
         width: 270,
         height: 300,
         fit: BoxFit.fitWidth,
@@ -68,14 +71,15 @@ class _RecordTutorialPageState extends State<RecordTutorialPage> {
     return Scaffold(
       backgroundColor: DesignSystemColors.charcoalGrey,
       appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          leading: IconButton(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            icon: const Icon(Icons.cancel),
-            onPressed: () => Navigator.of(context).pop(),
-          ),),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        leading: IconButton(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          icon: const Icon(Icons.cancel),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(
@@ -99,7 +103,10 @@ class _RecordTutorialPageState extends State<RecordTutorialPage> {
               const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.only(
-                    left: 12.0, right: 12.0, bottom: 12.0,),
+                  left: 12.0,
+                  right: 12.0,
+                  bottom: 12.0,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -170,8 +177,9 @@ class _RecordTutorialPageState extends State<RecordTutorialPage> {
       height: 10.0,
       width: isActive ? 24.0 : 10.0,
       decoration: BoxDecoration(
-          color: isActive ? Colors.white : DesignSystemColors.blueyGrey,
-          borderRadius: const BorderRadius.all(Radius.circular(12)),),
+        color: isActive ? Colors.white : DesignSystemColors.blueyGrey,
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
+      ),
     );
   }
 }

@@ -157,7 +157,9 @@ void main() {
       return [
         const AppStateModuleEntity(code: 'modo_anonimo', meta: '{}'),
         const AppStateModuleEntity(
-            code: 'modo_seguranca', meta: '{"numero":"000"}'),
+          code: 'modo_seguranca',
+          meta: '{"numero":"000"}',
+        ),
         const AppStateModuleEntity(code: 'modo_camuflado', meta: '{}'),
       ];
     }

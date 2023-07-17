@@ -14,7 +14,6 @@ class SupportCenterInputPhone extends StatelessWidget {
   final String hintText;
   final String errorText;
   final ValueChanged<String> onChanged;
-  
 
   @override
   Widget build(BuildContext context) {

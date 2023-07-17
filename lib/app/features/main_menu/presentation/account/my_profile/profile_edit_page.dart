@@ -69,8 +69,10 @@ extension _PageBuilder on _ProfileEditPageState {
   Widget bodyBuilder(ProfileEditState state) {
     return state.when(
       initial: () => bodyLoading(),
-      loaded: (profile, securityModeFeatureEnabled) => bodyLoaded(profile,
-          securityModeFeatureEnabled: securityModeFeatureEnabled,),
+      loaded: (profile, securityModeFeatureEnabled) => bodyLoaded(
+        profile,
+        securityModeFeatureEnabled: securityModeFeatureEnabled,
+      ),
       error: (msg) => SupportCenterGeneralError(
         message: msg,
         onPressed: controller.retry,

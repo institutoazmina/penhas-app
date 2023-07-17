@@ -36,10 +36,11 @@ class QuizModule extends Module {
         ),
         Bind.factory<ILocationServices>(
           (i) => LocationServices(),
-                  ),
+        ),
         Bind.factory<StealthModeTutorialPageController>(
           (i) => StealthModeTutorialPageController(
-              locationService: i.get<ILocationServices>(),),
+            locationService: i.get<ILocationServices>(),
+          ),
         ),
       ];
 

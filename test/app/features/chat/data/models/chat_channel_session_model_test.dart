@@ -30,25 +30,26 @@ void main() {
       const jsonFile = 'chat/chat_read_channel_empty.json';
       final jsonData = await JsonUtil.getJson(from: jsonFile);
       const actual = ChatChannelSessionModel(
-          hasMore: false,
-          newer: null,
-          older: null,
-          messages: [],
-          metadata: ChatChannelSessionMetadataModel(
-            canSendMessage: true,
-            didBlocked: false,
-            headerMessage: '',
-            headerWarning: '',
-            isBlockable: true,
-            lastMessageEtag: '4df2ae',
-          ),
-          user: ChatUserModel(
-            blockedMe: false,
-            activity: 'há pouco tempo',
-            nickname: 'Julia',
-            avatar: 'https://api.example.com/avatar/padrao.svg',
-            userId: 3191,
-          ),);
+        hasMore: false,
+        newer: null,
+        older: null,
+        messages: [],
+        metadata: ChatChannelSessionMetadataModel(
+          canSendMessage: true,
+          didBlocked: false,
+          headerMessage: '',
+          headerWarning: '',
+          isBlockable: true,
+          lastMessageEtag: '4df2ae',
+        ),
+        user: ChatUserModel(
+          blockedMe: false,
+          activity: 'há pouco tempo',
+          nickname: 'Julia',
+          avatar: 'https://api.example.com/avatar/padrao.svg',
+          userId: 3191,
+        ),
+      );
       // act
       final matcher = ChatChannelSessionModel.fromJson(jsonData);
       // assert
@@ -59,32 +60,33 @@ void main() {
       const jsonFile = 'chat/chat_read_channel.json';
       final jsonData = await JsonUtil.getJson(from: jsonFile);
       final actual = ChatChannelSessionModel(
-          hasMore: false,
-          newer: '--my-pagination-token--',
-          older: '--my-older-pagination-token--',
-          messages: [
-            ChatMessageModel(
-              id: 172,
-              isMe: true,
-              message: 'Ola mundo!',
-              time: DateTime.parse('2020-10-04T09:30:54Z'),
-            )
-          ],
-          metadata: const ChatChannelSessionMetadataModel(
-            canSendMessage: true,
-            didBlocked: false,
-            headerMessage: 'Minha mensagem',
-            headerWarning: 'Meu alerta',
-            isBlockable: true,
-            lastMessageEtag: '4a295f',
+        hasMore: false,
+        newer: '--my-pagination-token--',
+        older: '--my-older-pagination-token--',
+        messages: [
+          ChatMessageModel(
+            id: 172,
+            isMe: true,
+            message: 'Ola mundo!',
+            time: DateTime.parse('2020-10-04T09:30:54Z'),
           ),
-          user: const ChatUserModel(
-            blockedMe: false,
-            activity: 'há pouco tempo',
-            nickname: 'Julia',
-            avatar: 'https://api.example.com/avatar/padrao.svg',
-            userId: 3191,
-          ),);
+        ],
+        metadata: const ChatChannelSessionMetadataModel(
+          canSendMessage: true,
+          didBlocked: false,
+          headerMessage: 'Minha mensagem',
+          headerWarning: 'Meu alerta',
+          isBlockable: true,
+          lastMessageEtag: '4a295f',
+        ),
+        user: const ChatUserModel(
+          blockedMe: false,
+          activity: 'há pouco tempo',
+          nickname: 'Julia',
+          avatar: 'https://api.example.com/avatar/padrao.svg',
+          userId: 3191,
+        ),
+      );
       // act
       final matcher = ChatChannelSessionModel.fromJson(jsonData);
       // assert

@@ -21,9 +21,9 @@ class LocalStorageSharedPreferences implements ILocalStorage {
 
   @override
   Future<void> delete(String key) => synchronized(() async {
-    final preferences = await _preferences.future;
-    await preferences.remove(key);
-  });
+        final preferences = await _preferences.future;
+        await preferences.remove(key);
+      });
 
   @override
   Future<bool> hasKey(String key) =>

@@ -10,7 +10,7 @@ class ZodiacSignPage extends StatelessWidget {
   }) : super(key: key);
 
   final IZodiac sign;
-  
+
   @override
   Widget build(BuildContext context) {
     return Column(

@@ -11,7 +11,7 @@ class HelpCenterActionRecord extends StatelessWidget {
   }) : super(key: key);
 
   final VoidCallback onPressed;
-  
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -31,7 +31,8 @@ class HelpCenterActionRecord extends StatelessWidget {
                 height: 41,
                 width: 49,
                 child: SvgPicture.asset(
-                    'assets/images/svg/help_center/help_center_record.svg',),
+                  'assets/images/svg/help_center/help_center_record.svg',
+                ),
               ),
             ),
             const Padding(
