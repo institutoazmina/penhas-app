@@ -30,6 +30,7 @@ class MainboardBodyPage extends StatelessWidget {
     return state.when(
       chat: () => ChatMainModule(),
       feed: () => FeedModule(),
+      escapeManual: () => Container(),
       compose: () => const ComposeTweetPage(),
       supportPoint: () => SupportCenterModule(),
       helpCenter: () => HelpCenterModule(),

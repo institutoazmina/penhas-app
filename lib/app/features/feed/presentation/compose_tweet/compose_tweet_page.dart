@@ -13,10 +13,14 @@ import '../../../authentication/presentation/shared/snack_bar_handler.dart';
 import 'compose_tweet_controller.dart';
 
 class ComposeTweetPage extends StatefulWidget {
-  const ComposeTweetPage({Key? key, this.title = 'ComposeTweet'})
-      : super(key: key);
+  const ComposeTweetPage({
+    Key? key,
+    this.title = 'Publicar',
+    this.showAppBar = false,
+  }) : super(key: key);
 
   final String title;
+  final bool showAppBar;
 
   @override
   _ComposeTweetPageState createState() => _ComposeTweetPageState();
@@ -69,6 +73,12 @@ class _ComposeTweetPageState
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      appBar: widget.showAppBar
+          ? AppBar(
+              title: Text(widget.title),
+              backgroundColor: DesignSystemColors.ligthPurple,
+            )
+          : null,
       body: SizedBox.expand(
         child: Container(
           color: DesignSystemColors.systemBackgroundColor,

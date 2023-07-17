@@ -34,6 +34,7 @@ import '../../../feed/domain/usecases/tweet_filter_preference.dart';
 import '../../../feed/presentation/category_tweet/category_tweet_controller.dart';
 import '../../../feed/presentation/category_tweet/category_tweet_page.dart';
 import '../../../feed/presentation/compose_tweet/compose_tweet_controller.dart';
+import '../../../feed/presentation/compose_tweet/compose_tweet_page.dart';
 import '../../../feed/presentation/detail_tweet/detail_tweet_controller.dart';
 import '../../../feed/presentation/detail_tweet/detail_tweet_page.dart';
 import '../../../feed/presentation/filter_tweet/filter_tweet_controller.dart';
@@ -142,6 +143,11 @@ class MainboardModule extends Module {
         ChildRoute(
           '/reply',
           child: (_, args) => const ReplyTweetPage(),
+          transition: TransitionType.rightToLeft,
+        ),
+        ChildRoute(
+          '/compose',
+          child: (_, args) => const ComposeTweetPage(showAppBar: true),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(

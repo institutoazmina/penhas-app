@@ -50,7 +50,6 @@ class QuizUserReplayWidget extends StatelessWidget {
           options: message.options,
           onPressed: onActionReplay,
         );
-      case QuizMessageType.from:
       case QuizMessageType.forceReload:
       case QuizMessageType.displayText:
       case QuizMessageType.displayTextResponse:
