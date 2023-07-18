@@ -121,8 +121,8 @@ class QuizMessageModel extends QuizMessageEntity {
 
 class QuizMessageChoiceOptionModel extends QuizMessageChoiceOption {
   const QuizMessageChoiceOptionModel({
-    required String? display,
-    required String? index,
+    required String display,
+    required String index,
   }) : super(display: display, index: index);
 
   factory QuizMessageChoiceOptionModel.fromJson(Map<String, dynamic> jsonData) {

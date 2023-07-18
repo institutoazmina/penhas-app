@@ -110,11 +110,11 @@ class QuizMessageChoiceOption extends Equatable {
     required this.index,
   });
 
-  final String? display;
-  final String? index;
+  final String display;
+  final String index;
 
   @override
-  List<Object?> get props => [display, index!];
+  List<Object?> get props => [display, index];
 }
 
 @immutable

@@ -106,7 +106,7 @@ class _QuizMultipleChoicesWidgetState extends State<QuizMultipleChoicesWidget> {
       child: CheckboxListTile(
         onChanged: (v) => _onItemCheckedChange(option.index, v == true),
         value: checked,
-        title: Text(option.display!),
+        title: Text(option.display),
         controlAffinity: ListTileControlAffinity.leading,
       ),
     );
