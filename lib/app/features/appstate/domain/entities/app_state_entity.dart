@@ -11,6 +11,7 @@ enum QuizMessageType {
   showHelpTutorial,
   forceReload,
   multipleChoices,
+  singleChoice,
   displayTextResponse,
 }
 
@@ -29,6 +30,9 @@ extension QuizMessageTypeExtension on List<QuizMessageType> {
         return QuizMessageType.displayTextResponse;
       case 'multiplechoices':
         return QuizMessageType.multipleChoices;
+      case 'onlychoice':
+      case 'singlechoice':
+        return QuizMessageType.singleChoice;
       default:
         return QuizMessageType.displayText;
     }

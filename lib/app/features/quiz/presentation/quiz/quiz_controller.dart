@@ -97,6 +97,7 @@ abstract class _QuizControllerBase with Store {
       case QuizMessageType.showStealthTutorial:
         return _replyButtonTutorialUserInteraction(reply, messageRemoved);
       case QuizMessageType.multipleChoices:
+      case QuizMessageType.singleChoice:
         return _replyMultiChoicesInteracton(reply, messageRemoved);
       case QuizMessageType.button:
         return _replySingleButton(reply, messageRemoved);
@@ -167,8 +168,8 @@ abstract class _QuizControllerBase with Store {
 
   void _parseUserReply(List<QuizMessageEntity> messages) {
     userReplyMessage = messages.firstWhereOrNull(
-          (e) => e.type != QuizMessageType.displayText,
-        );
+      (e) => e.type != QuizMessageType.displayText,
+    );
   }
 
   Future<void> _sendUserInteraction(QuizRequestEntity request) async {
