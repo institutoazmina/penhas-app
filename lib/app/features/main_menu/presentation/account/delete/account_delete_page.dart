@@ -6,6 +6,7 @@ import 'package:mobx/mobx.dart';
 
 import '../../../../../shared/design_system/button_shape.dart';
 import '../../../../../shared/design_system/colors.dart';
+import '../../../../../shared/widgets/no_webview_js_wiget_factory.dart';
 import '../../../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../../../authentication/presentation/shared/snack_bar_handler.dart';
 import '../../../../support_center/presentation/pages/support_center_general_error.dart';
@@ -111,6 +112,7 @@ extension _PageBuilder on _AccountDeletePageState {
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
                   child: HtmlWidget(
                     bodyMessage,
+                    factoryBuilder: () => NoWebviewJsWidgetFactory(),
                   ),
                 ),
                 Padding(

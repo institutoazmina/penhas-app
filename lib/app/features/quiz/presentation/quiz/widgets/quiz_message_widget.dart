@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 import '../../../../../shared/design_system/colors.dart';
+import '../../../../../shared/widgets/no_webview_js_wiget_factory.dart';
 import '../../../../appstate/domain/entities/app_state_entity.dart';
 
 class QuizMessageWidget extends StatelessWidget {
@@ -62,6 +63,7 @@ class QuizMessageWidget extends StatelessWidget {
           child: HtmlWidget(
             message.content!,
             textStyle: TextStyle(fontSize: 15.0, color: textColor),
+            factoryBuilder: () => NoWebviewJsWidgetFactory(),
           ),
         ),
       ),

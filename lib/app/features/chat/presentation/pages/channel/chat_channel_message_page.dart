@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 import '../../../../../shared/design_system/colors.dart';
+import '../../../../../shared/widgets/no_webview_js_wiget_factory.dart';
 import '../../../domain/entities/chat_channel_message.dart';
 
 class ChatChannelMessagePage extends StatelessWidget {
@@ -64,6 +65,7 @@ class ChatChannelMessagePage extends StatelessWidget {
           child: HtmlWidget(
             content.content.message!,
             textStyle: TextStyle(fontSize: 15.0, color: textColor),
+            factoryBuilder: () => NoWebviewJsWidgetFactory(),
           ),
         ),
       ),
