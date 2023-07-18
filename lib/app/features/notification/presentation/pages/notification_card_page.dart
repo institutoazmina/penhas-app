@@ -5,6 +5,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/widgets/no_webview_js_wiget_factory.dart';
 import '../../domain/entities/notification_session_entity.dart';
 
 class NotificationCardPage extends StatelessWidget {
@@ -72,8 +73,8 @@ class NotificationCardPage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 12.0),
       child: HtmlWidget(
         notification.content!,
-        webViewJs: false,
         textStyle: contentTextStyle,
+        factoryBuilder: () => NoWebviewJsWidgetFactory(),
       ),
     );
   }

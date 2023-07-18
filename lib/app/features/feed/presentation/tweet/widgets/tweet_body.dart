@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 import '../../../../../shared/design_system/text_styles.dart';
+import '../../../../../shared/widgets/no_webview_js_wiget_factory.dart';
 
 class TweetBody extends StatelessWidget {
   const TweetBody({
@@ -16,8 +17,8 @@ class TweetBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final htmlBody = HtmlWidget(
       bodyContent!,
-      webViewJs: false,
       textStyle: kTextStyleFeedTweetBody,
+      factoryBuilder: () => NoWebviewJsWidgetFactory(),
     );
 
     return Padding(

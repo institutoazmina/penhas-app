@@ -9,6 +9,7 @@ import '../../../../shared/design_system/button_shape.dart';
 import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/logger/log.dart';
 import '../../../../shared/widgets/bottom_sheet_actions_widget.dart';
+import '../../../../shared/widgets/no_webview_js_wiget_factory.dart';
 import '../../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../domain/entities/support_center_place_detail_entity.dart';
 import '../../domain/states/support_center_show_state.dart';
@@ -123,9 +124,8 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
               child: HtmlWidget(
                 detail.place!.htmlContent!,
-                // ignore: deprecated_member_use
-                webViewJs: false,
                 textStyle: htmlContentTextStyle,
+                factoryBuilder: () => NoWebviewJsWidgetFactory(),
               ),
             ),
             Row(
