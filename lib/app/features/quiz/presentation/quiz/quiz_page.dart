@@ -75,7 +75,7 @@ class _QuizPageState extends ModularState<QuizPage, QuizController>
 
                 return QuizUserReplayWidget(
                   message: message,
-                  onActionReplay: controller.onActionReply,
+                  onActionReply: controller.onActionReply,
                 );
               },
             )
