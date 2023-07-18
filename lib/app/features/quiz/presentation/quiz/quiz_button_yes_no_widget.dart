@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../../shared/design_system/colors.dart';
 import 'quiz_typedef.dart';
 
-class QuiZButtonYesNoWidget extends StatelessWidget {
-  const QuiZButtonYesNoWidget({
+class QuizButtonYesNoWidget extends StatelessWidget {
+  const QuizButtonYesNoWidget({
     Key? key,
     required this.reference,
     required this.onPressed,

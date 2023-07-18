@@ -6,7 +6,7 @@ import 'package:mobx/mobx.dart';
 import '../../../../shared/design_system/colors.dart';
 import 'quiz_controller.dart';
 import 'quiz_message_widget.dart';
-import 'quiz_user_replay_widget.dart';
+import 'quiz_user_reply_widget.dart';
 
 class QuizPage extends StatefulWidget {
   const QuizPage({Key? key, this.title = 'Quiz'}) : super(key: key);
@@ -69,9 +69,9 @@ class _QuizPageState extends ModularState<QuizPage, QuizController> {
             ),
             Observer(
               builder: (_) {
-                return QuizUserReplayWidget(
+                return QuizUserReplyWidget(
                   message: controller.userReplyMessage!,
-                  onActionReplay: controller.onActionReply,
+                  onActionReply: controller.onActionReply,
                 );
               },
             )

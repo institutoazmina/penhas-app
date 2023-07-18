@@ -9,53 +9,53 @@ import 'quiz_single_button.dart';
 import 'quiz_single_choice_widget.dart';
 import 'quiz_typedef.dart';
 
-class QuizUserReplayWidget extends StatelessWidget {
-  const QuizUserReplayWidget({
+class QuizUserReplyWidget extends StatelessWidget {
+  const QuizUserReplyWidget({
     Key? key,
     required this.message,
-    required this.onActionReplay,
+    required this.onActionReply,
   }) : super(key: key);
 
   final QuizMessageEntity message;
-  final UserReaction onActionReplay;
+  final UserReaction onActionReply;
 
   @override
   Widget build(BuildContext context) {
     switch (message.type) {
       case QuizMessageType.yesno:
-        return QuiZButtonYesNoWidget(
+        return QuizButtonYesNoWidget(
           reference: message.ref,
-          onPressed: onActionReplay,
+          onPressed: onActionReply,
         );
       case QuizMessageType.showHelpTutorial:
         return QuizShowHelpTutorialWidget(
           reference: message.ref,
-          onPressed: onActionReplay,
+          onPressed: onActionReply,
           buttonLabel: message.buttonLabel,
         );
       case QuizMessageType.showStealthTutorial:
         return QuizShowStealthTutorialWidget(
           reference: message.ref,
-          onPressed: onActionReplay,
+          onPressed: onActionReply,
           buttonLabel: message.buttonLabel,
         );
       case QuizMessageType.button:
         return QuizSingleButtonWidget(
           reference: message.ref,
-          onPressed: onActionReplay,
+          onPressed: onActionReply,
           buttonLabel: message.buttonLabel,
         );
       case QuizMessageType.multipleChoices:
         return QuizMultipleChoicesWidget(
           reference: message.ref,
           options: message.options,
-          onPressed: onActionReplay,
+          onPressed: onActionReply,
         );
       case QuizMessageType.singleChoice:
         return QuizSingleChoiceWidget(
           reference: message.ref,
           options: message.options!,
-          onPressed: onActionReplay,
+          onPressed: onActionReply,
         );
       case QuizMessageType.forceReload:
       case QuizMessageType.displayText:
