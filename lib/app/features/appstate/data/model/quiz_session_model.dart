@@ -21,7 +21,7 @@ class QuizSessionModel extends QuizSessionEntity {
     final isFinished = jsonData['finished'] == 1;
 
     return QuizSessionModel(
-      sessionId: "${jsonData['session_id']}",
+      sessionId: "${jsonData['session_id']!}",
       currentMessage: messages,
       endScreen: jsonData['end_screen'],
       isFinished: isFinished,

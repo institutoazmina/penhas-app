@@ -29,7 +29,7 @@ class EscapeManualDatasource implements IEscapeManualDatasource {
         parameters: {'session_id': sessionId},
       ).then(jsonDecode);
 
-      final quizSession = QuizSessionModel.fromJson(response);
+      final quizSession = QuizSessionModel.fromJson(response['quiz_session']);
       return right(quizSession);
     } catch (error, stack) {
       logError(error, stack);
