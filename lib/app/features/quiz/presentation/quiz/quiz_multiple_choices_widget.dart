@@ -16,7 +16,7 @@ class QuizMultipleChoicesWidget extends StatefulWidget {
 
   final String reference;
   final UserReaction onPressed;
-  final List<QuizMessageMultiplechoicesOptions>? options;
+  final List<QuizMessageChoiceOption>? options;
 
   @override
   _QuizMultipleChoicesWidgetState createState() =>
@@ -98,7 +98,7 @@ class _QuizMultipleChoicesWidgetState extends State<QuizMultipleChoicesWidget> {
     widget.onPressed(response);
   }
 
-  Widget _buildItem(QuizMessageMultiplechoicesOptions option) {
+  Widget _buildItem(QuizMessageChoiceOption option) {
     final checked = _selectedValues.contains(option.index);
 
     return SizedBox(

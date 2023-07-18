@@ -101,15 +101,15 @@ void main() {
           type: QuizMessageType.multipleChoices,
           ref: 'MC7',
           options: [
-            MultiplechoicesOptionModel(
+            QuizMessageChoiceOptionModel(
               index: '0',
               display: 'Escuta acolhedora',
             ),
-            MultiplechoicesOptionModel(
+            QuizMessageChoiceOptionModel(
               index: '1',
               display: 'Psicologia',
             ),
-            MultiplechoicesOptionModel(index: '2', display: 'Abrigo'),
+            QuizMessageChoiceOptionModel(index: '2', display: 'Abrigo'),
           ],
         ),
       ];
