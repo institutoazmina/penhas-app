@@ -6,6 +6,7 @@ import 'quiz_multiple_choices_widget.dart';
 import 'quiz_show_help_tutorial_widget.dart';
 import 'quiz_show_stealth_tutorial_widget.dart';
 import 'quiz_single_button.dart';
+import 'quiz_single_choice_widget.dart';
 import 'quiz_typedef.dart';
 
 class QuizUserReplayWidget extends StatelessWidget {
@@ -48,6 +49,12 @@ class QuizUserReplayWidget extends StatelessWidget {
         return QuizMultipleChoicesWidget(
           reference: message.ref,
           options: message.options,
+          onPressed: onActionReplay,
+        );
+      case QuizMessageType.singleChoice:
+        return QuizSingleChoiceWidget(
+          reference: message.ref,
+          options: message.options!,
           onPressed: onActionReplay,
         );
       case QuizMessageType.forceReload:
