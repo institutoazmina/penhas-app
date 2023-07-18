@@ -97,15 +97,15 @@ class QuizMessageEntity extends Equatable {
   final String? style;
   final String? action;
   final String? buttonLabel;
-  final List<QuizMessageMultiplechoicesOptions>? options;
+  final List<QuizMessageChoiceOption>? options;
 
   @override
   List<dynamic> get props =>
       [content, style, action, type, ref, options, buttonLabel];
 }
 
-class QuizMessageMultiplechoicesOptions extends Equatable {
-  const QuizMessageMultiplechoicesOptions({
+class QuizMessageChoiceOption extends Equatable {
+  const QuizMessageChoiceOption({
     required this.display,
     required this.index,
   });

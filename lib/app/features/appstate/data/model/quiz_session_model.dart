@@ -73,7 +73,7 @@ class QuizMessageModel extends QuizMessageEntity {
     String? style,
     String? action,
     String? buttonLabel,
-    List<QuizMessageMultiplechoicesOptions>? options,
+    List<QuizMessageChoiceOption>? options,
   }) : super(
           content: content,
           type: type,
@@ -86,7 +86,7 @@ class QuizMessageModel extends QuizMessageEntity {
 
   factory QuizMessageModel.fromJson(Map<String, dynamic> jsonData) {
     final QuizMessageType type = _parseMessageType(jsonData);
-    final List<MultiplechoicesOptionModel>? options =
+    final List<QuizMessageChoiceOptionModel>? options =
         _parseOptions(jsonData['options'] ?? []);
 
     return QuizMessageModel(
@@ -113,20 +113,20 @@ class QuizMessageModel extends QuizMessageEntity {
     }
   }
 
-  static List<MultiplechoicesOptionModel>? _parseOptions(List<dynamic> data) {
+  static List<QuizMessageChoiceOptionModel>? _parseOptions(List<dynamic> data) {
     if (data.isEmpty) return null;
-    return data.map((e) => MultiplechoicesOptionModel.fromJson(e)).toList();
+    return data.map((e) => QuizMessageChoiceOptionModel.fromJson(e)).toList();
   }
 }
 
-class MultiplechoicesOptionModel extends QuizMessageMultiplechoicesOptions {
-  const MultiplechoicesOptionModel({
+class QuizMessageChoiceOptionModel extends QuizMessageChoiceOption {
+  const QuizMessageChoiceOptionModel({
     required String? display,
     required String? index,
   }) : super(display: display, index: index);
 
-  factory MultiplechoicesOptionModel.fromJson(Map<String, dynamic> jsonData) {
-    return MultiplechoicesOptionModel(
+  factory QuizMessageChoiceOptionModel.fromJson(Map<String, dynamic> jsonData) {
+    return QuizMessageChoiceOptionModel(
       display: jsonData['display'],
       index: '${jsonData['index']}',
     );
