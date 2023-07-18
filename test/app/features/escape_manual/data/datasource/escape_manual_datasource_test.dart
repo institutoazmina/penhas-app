@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/appstate/data/model/quiz_session_model.dart';
 import 'package:penhas/app/features/escape_manual/data/datasource/escape_manual_datasource.dart';
@@ -47,6 +48,7 @@ void main() {
               parameters: {'session_id': 'MF1234'},
             ),
           ).called(1);
+          verifyNoMoreInteractions(mockApiProvider);
         },
       );
       test(
@@ -69,6 +71,26 @@ void main() {
 
           // assert
           expect(result, right(expectedQuiz));
+        },
+      );
+
+      test(
+        'should return left with failure when apiProvider post throws',
+        () async {
+          // arrange
+          when(
+            () => mockApiProvider.post(
+              path: any(named: 'path'),
+              parameters: any(named: 'parameters'),
+            ),
+          ).thenThrow(Exception());
+
+          // act
+          final result = await sut.start('MF1234');
+
+          // assert
+          expect(result.isLeft(), isTrue);
+          expect(result.fold((l) => l, (r) => r), isA<Failure>());
         },
       );
     });
@@ -100,6 +122,7 @@ void main() {
               },
             ),
           ).called(1);
+          verifyNoMoreInteractions(mockApiProvider);
         },
       );
 
@@ -133,6 +156,26 @@ void main() {
 
           // assert
           expect(result, right(expectedEscapeManual));
+        },
+      );
+
+      test(
+        'should return left with failure when apiProvider get throws',
+        () async {
+          // arrange
+          when(
+            () => mockApiProvider.get(
+              path: any(named: 'path'),
+              parameters: any(named: 'parameters'),
+            ),
+          ).thenThrow(Exception());
+
+          // act
+          final result = await sut.fetch();
+
+          // assert
+          expect(result.isLeft(), isTrue);
+          expect(result.fold((l) => l, (r) => r), isA<Failure>());
         },
       );
     });
