@@ -5,6 +5,7 @@ import 'user_profile_entity.dart';
 
 enum QuizMessageType {
   button,
+  horizontalButtons,
   yesno,
   displayText,
   showStealthTutorial,
@@ -24,6 +25,9 @@ extension QuizMessageTypeExtension on List<QuizMessageType> {
         return QuizMessageType.showStealthTutorial;
       case 'yesno':
         return QuizMessageType.yesno;
+      case 'yesnomaybe':
+      case 'horizontal_buttons':
+        return QuizMessageType.horizontalButtons;
       case 'displaytext':
         return QuizMessageType.displayText;
       case 'display_response':

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../appstate/domain/entities/app_state_entity.dart';
 import 'quiz_button_yes_no_widget.dart';
+import 'quiz_horizontal_buttons.dart';
 import 'quiz_multiple_choices_widget.dart';
 import 'quiz_show_help_tutorial_widget.dart';
 import 'quiz_show_stealth_tutorial_widget.dart';
@@ -25,6 +26,12 @@ class QuizUserReplyWidget extends StatelessWidget {
       case QuizMessageType.yesno:
         return QuizButtonYesNoWidget(
           reference: message.ref,
+          onPressed: onActionReply,
+        );
+      case QuizMessageType.horizontalButtons:
+        return QuizHorizontalButtonsWidget(
+          reference: message.ref,
+          options: message.options!,
           onPressed: onActionReply,
         );
       case QuizMessageType.showHelpTutorial:
