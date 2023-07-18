@@ -19,11 +19,11 @@ void main() {
     mockRepository = MockTweetFilterPreferenceRepository();
 
     response = TweetFilterSessionEntity(
-      categories: [
+      categories: const [
         TweetFilterEntity(id: '1', isSelected: true, label: 'C 1'),
         TweetFilterEntity(id: '2', isSelected: false, label: 'C 2'),
       ],
-      tags: [
+      tags: const [
         TweetFilterEntity(id: '1', isSelected: false, label: 'Tag - 1'),
         TweetFilterEntity(id: '2', isSelected: false, label: 'Tag - 2'),
         TweetFilterEntity(id: '3', isSelected: false, label: 'Tag - 3')

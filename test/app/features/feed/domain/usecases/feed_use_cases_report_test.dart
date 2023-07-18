@@ -23,7 +23,7 @@ void main() {
   });
 
   setUpAll(() {
-    registerFallbackValue(TweetRequestOption());
+    registerFallbackValue(const TweetRequestOption());
     registerFallbackValue(TweetEngageRequestOption(tweetId: ''));
   });
 

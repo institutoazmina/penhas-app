@@ -105,7 +105,7 @@ void main() {
           'should return server failure when the call to remote server is unsuccessful',
           () async {
             // arrange
-            _mockSignInErrorWith(exception: ApiProviderException());
+            _mockSignInErrorWith(exception: const ApiProviderException());
             // act
             final result = await repository.signInWithEmailAndPassword(
               emailAddress: email,

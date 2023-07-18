@@ -33,7 +33,8 @@ void main() {
 
     emailAddress = EmailAddress('valid@email.com');
     password = SignInPassword('_myStr0ngP@ssw0rd', PasswordValidator());
-    successSession = SessionEntity(sessionToken: 'my_strong_session_token');
+    successSession =
+        const SessionEntity(sessionToken: 'my_strong_session_token');
   });
 
   group(AuthenticationWithEmailAndPassword, () {
