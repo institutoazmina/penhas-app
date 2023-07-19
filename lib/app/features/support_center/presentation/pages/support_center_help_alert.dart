@@ -4,6 +4,8 @@ import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/design_system/text_styles.dart';
 
 class SupportCenterHelpAlert extends StatelessWidget {
+  const SupportCenterHelpAlert({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(

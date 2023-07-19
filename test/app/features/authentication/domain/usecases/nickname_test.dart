@@ -32,7 +32,7 @@ void main() {
 
       test('return a NicknameInvalidFailure when input is empty', () {
         // arrange
-        final input = '';
+        const input = '';
         // act
         final result = Nickname(input);
         // assert

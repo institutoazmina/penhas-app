@@ -58,7 +58,7 @@ void main() {
                 password: password,
                 resetToken: resetToken,
               ),
-            ).thenAnswer((_) async => ValidField());
+            ).thenAnswer((_) async => const ValidField());
             // act
             final result = await sut.reset(
               emailAddress: emailAddress,
@@ -66,7 +66,7 @@ void main() {
               resetToken: resetToken,
             );
             // assert
-            expect(result, right(ValidField()));
+            expect(result, right(const ValidField()));
           },
         );
         test(
@@ -168,14 +168,14 @@ void main() {
                 emailAddress: emailAddress,
                 resetToken: resetToken,
               ),
-            ).thenAnswer((_) async => ValidField());
+            ).thenAnswer((_) async => const ValidField());
             // act
             final result = await sut.validToken(
               emailAddress: emailAddress,
               resetToken: resetToken,
             );
             // assert
-            expect(result, right(ValidField()));
+            expect(result, right(const ValidField()));
           },
         );
         test(
