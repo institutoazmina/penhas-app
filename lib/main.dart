@@ -10,9 +10,11 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'app/app_module.dart';
 import 'app/app_widget.dart';
+import 'app/shared/logger/log.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  initLogger();
   await Firebase.initializeApp();
 
   // Pass all uncaught errors from the framework to Crashlytics.
@@ -33,7 +35,6 @@ Future main() async {
         ),
       );
     },
-    (error, stack) =>
-        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true),
+    (error, stack) => logger.shout('App error', error, stack),
   );
 }
