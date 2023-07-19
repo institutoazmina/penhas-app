@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../appstate/domain/entities/app_state_entity.dart';
+import '../../../../appstate/domain/entities/app_state_entity.dart';
+import '../quiz_typedef.dart';
 import 'quiz_button_yes_no_widget.dart';
 import 'quiz_horizontal_buttons.dart';
 import 'quiz_multiple_choices_widget.dart';
@@ -8,7 +9,6 @@ import 'quiz_show_help_tutorial_widget.dart';
 import 'quiz_show_stealth_tutorial_widget.dart';
 import 'quiz_single_button.dart';
 import 'quiz_single_choice_widget.dart';
-import 'quiz_typedef.dart';
 
 class QuizUserReplyWidget extends StatelessWidget {
   const QuizUserReplyWidget({

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../shared/design_system/colors.dart';
-import 'quiz_typedef.dart';
+import '../../../../../shared/design_system/colors.dart';
+import '../quiz_typedef.dart';
 
 class QuizButtonYesNoWidget extends StatelessWidget {
   const QuizButtonYesNoWidget({

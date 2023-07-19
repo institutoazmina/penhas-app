@@ -5,8 +5,8 @@ import 'package:mobx/mobx.dart';
 
 import '../../../../shared/design_system/colors.dart';
 import 'quiz_controller.dart';
-import 'quiz_message_widget.dart';
-import 'quiz_user_reply_widget.dart';
+import 'widgets/quiz_message_widget.dart';
+import 'widgets/quiz_user_reply_widget.dart';
 
 class QuizPage extends StatefulWidget {
   const QuizPage({Key? key, this.title = 'Quiz'}) : super(key: key);

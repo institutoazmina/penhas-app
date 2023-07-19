@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../shared/design_system/colors.dart';
-import '../../../appstate/domain/entities/app_state_entity.dart';
-import 'quiz_typedef.dart';
+import '../../../../../shared/design_system/colors.dart';
+import '../../../../appstate/domain/entities/app_state_entity.dart';
+import '../quiz_typedef.dart';
 
 class QuizHorizontalButtonsWidget extends StatelessWidget {
   const QuizHorizontalButtonsWidget._({

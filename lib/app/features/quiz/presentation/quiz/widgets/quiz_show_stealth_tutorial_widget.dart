@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/pages/tutorial_scale_route.dart';
-import '../../../../shared/design_system/button_shape.dart';
-import '../../../../shared/design_system/colors.dart';
-import '../../../../shared/design_system/text_styles.dart';
-import '../../../help_center/presentation/pages/tutorial/guardian/guardian_tutorial_page.dart';
-import 'quiz_typedef.dart';
+import '../../../../../core/pages/tutorial_scale_route.dart';
+import '../../../../../shared/design_system/button_shape.dart';
+import '../../../../../shared/design_system/colors.dart';
+import '../../../../../shared/design_system/text_styles.dart';
+import '../../tutorial/stealth_mode_tutorial_page.dart';
+import '../quiz_typedef.dart';
 
-class QuizShowHelpTutorialWidget extends StatelessWidget {
-  const QuizShowHelpTutorialWidget({
+class QuizShowStealthTutorialWidget extends StatelessWidget {
+  const QuizShowStealthTutorialWidget({
     Key? key,
     required this.reference,
     required this.onPressed,
@@ -38,7 +38,7 @@ class QuizShowHelpTutorialWidget extends StatelessWidget {
         onPressed: () async {
           await Navigator.push(
             context,
-            TutorialScaleRoute(page: const GuardianTutorialPage()),
+            TutorialScaleRoute(page: const StealthModeTutorialPage()),
           ).then(
             (value) => onPressed({reference: value ? '1' : '0'}),
           );

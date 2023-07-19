@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../../../../shared/design_system/button_shape.dart';
-import '../../../../shared/design_system/colors.dart';
-import '../../../../shared/design_system/text_styles.dart';
-import '../../../appstate/domain/entities/app_state_entity.dart';
-import 'quiz_typedef.dart';
+import '../../../../../shared/design_system/button_shape.dart';
+import '../../../../../shared/design_system/colors.dart';
+import '../../../../../shared/design_system/text_styles.dart';
+import '../../../../appstate/domain/entities/app_state_entity.dart';
+import '../quiz_typedef.dart';
 
-class QuizSingleChoiceWidget extends StatefulWidget {
-  const QuizSingleChoiceWidget({
+class QuizMultipleChoicesWidget extends StatefulWidget {
+  const QuizMultipleChoicesWidget({
     Key? key,
     required this.reference,
     required this.onPressed,
@@ -16,14 +16,20 @@ class QuizSingleChoiceWidget extends StatefulWidget {
 
   final String reference;
   final UserReaction onPressed;
-  final List<QuizMessageChoiceOption> options;
+  final List<QuizMessageChoiceOption>? options;
 
   @override
-  _QuizSingleChoiceWidgetState createState() => _QuizSingleChoiceWidgetState();
+  _QuizMultipleChoicesWidgetState createState() =>
+      _QuizMultipleChoicesWidgetState();
 }
 
-class _QuizSingleChoiceWidgetState extends State<QuizSingleChoiceWidget> {
-  String? _selectedValue;
+class _QuizMultipleChoicesWidgetState extends State<QuizMultipleChoicesWidget> {
+  final _selectedValues = [];
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +56,8 @@ class _QuizSingleChoiceWidgetState extends State<QuizSingleChoiceWidget> {
                     ListTileTheme(
                       contentPadding: EdgeInsets.zero,
                       child: ListBody(
-                        children: widget.options.map(_buildItem).toList(),
+                        children:
+                            widget.options!.map((e) => _buildItem(e)).toList(),
                       ),
                     ),
                   ],
@@ -68,7 +75,7 @@ class _QuizSingleChoiceWidgetState extends State<QuizSingleChoiceWidget> {
                     shape: kButtonShapeFilled,
                     color: DesignSystemColors.ligthPurple,
                     onPressed:
-                        _selectedValue != null ? () => _onSavePressed() : null,
+                        _selectedValues.isEmpty ? null : () => _onSavePressed(),
                     child: const Text(
                       'Enviar',
                       style: kTextStyleDefaultFilledButtonLabel,
@@ -85,29 +92,33 @@ class _QuizSingleChoiceWidgetState extends State<QuizSingleChoiceWidget> {
 
   void _onSavePressed() {
     final response = {
-      widget.reference: _selectedValue!,
+      widget.reference: _selectedValues.join(','),
     };
 
     widget.onPressed(response);
   }
 
   Widget _buildItem(QuizMessageChoiceOption option) {
+    final checked = _selectedValues.contains(option.index);
+
     return SizedBox(
       height: 44.0,
-      child: RadioListTile(
-        onChanged: (v) => _onItemCheckedChange(option.index, v == option.index),
+      child: CheckboxListTile(
+        onChanged: (v) => _onItemCheckedChange(option.index, v == true),
+        value: checked,
         title: Text(option.display),
-        value: option.index,
-        groupValue: _selectedValue,
         controlAffinity: ListTileControlAffinity.leading,
       ),
     );
   }
 
-  void _onItemCheckedChange(String? itemValue, bool isChecked) {
-    if (!isChecked) return;
+  void _onItemCheckedChange(String? itemValue, bool checked) {
     setState(() {
-      _selectedValue = itemValue;
+      if (checked) {
+        _selectedValues.add(itemValue);
+      } else {
+        _selectedValues.remove(itemValue);
+      }
     });
   }
 }
