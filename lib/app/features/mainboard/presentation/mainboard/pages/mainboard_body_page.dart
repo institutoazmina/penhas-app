@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../chat/presentation/chat_main_module.dart';
+import '../../../../escape_manual/escape_manual_module.dart';
 import '../../../../feed/presentation/compose_tweet/compose_tweet_page.dart';
 import '../../../../feed/presentation/feed_module.dart';
 import '../../../../help_center/presentation/help_center_module.dart';
@@ -30,7 +31,7 @@ class MainboardBodyPage extends StatelessWidget {
     return state.when(
       chat: () => ChatMainModule(),
       feed: () => FeedModule(),
-      escapeManual: () => Container(),
+      escapeManual: () => EscapeManualModule(),
       compose: () => const ComposeTweetPage(),
       supportPoint: () => SupportCenterModule(),
       helpCenter: () => HelpCenterModule(),
