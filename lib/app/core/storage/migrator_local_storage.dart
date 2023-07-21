@@ -1,6 +1,6 @@
-import 'package:penhas/app/core/storage/i_local_storage.dart';
-import 'package:penhas/app/core/storage/local_storage_shared_preferences.dart';
-import 'package:penhas/app/core/storage/secure_local_storage.dart';
+import 'i_local_storage.dart';
+import 'local_storage_shared_preferences.dart';
+import 'secure_local_storage.dart';
 
 class MigratorLocalStorage implements ILocalStorage {
   MigratorLocalStorage({

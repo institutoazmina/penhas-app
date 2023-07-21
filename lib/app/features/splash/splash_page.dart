@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:penhas/app/features/splash/splash_controller.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../shared/design_system/colors.dart';
+import 'splash_controller.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key, this.title = 'Splash'}) : super(key: key);

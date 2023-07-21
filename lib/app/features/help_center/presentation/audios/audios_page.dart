@@ -4,6 +4,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
 import '../../../../core/extension/asuka.dart';
+import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/text_styles.dart';
 import '../../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../../authentication/presentation/shared/snack_bar_handler.dart';
 import '../../domain/entities/audio_entity.dart';
@@ -14,8 +16,6 @@ import '../../domain/states/audios_state.dart';
 import 'audios_controller.dart';
 import '../pages/audio/audio_play_widget.dart';
 import '../pages/guardian_error_page.dart';
-import '../../../../shared/design_system/colors.dart';
-import '../../../../shared/design_system/text_styles.dart';
 
 class AudiosPage extends StatefulWidget {
   const AudiosPage({Key? key, this.title = 'Audios'}) : super(key: key);

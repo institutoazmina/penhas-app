@@ -1,12 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
-import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart';
-import 'package:penhas/app/features/mainboard/domain/states/mainboard_store.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../../authentication/presentation/shared/map_failure_message.dart';
+import '../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../../mainboard/domain/states/mainboard_state.dart';
+import '../../../mainboard/domain/states/mainboard_store.dart';
+import '../../domain/usecases/feed_use_cases.dart';
 
 part 'compose_tweet_controller.g.dart';
 

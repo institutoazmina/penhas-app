@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import 'colors.dart';
 
 const kLinearGradientDesignSystem = BoxDecoration(
   gradient: LinearGradient(

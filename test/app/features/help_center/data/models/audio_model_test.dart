@@ -29,7 +29,7 @@ void main() {
           canPlay: false,
           isRequested: true,
           isRequestGranted: false,
-        )
+        ),
       ];
 
       final actual =

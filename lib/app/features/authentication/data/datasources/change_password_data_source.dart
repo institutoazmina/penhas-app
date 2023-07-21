@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:http/http.dart' as http;
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/exceptions.dart';
-import 'package:penhas/app/core/network/api_server_configure.dart';
-import 'package:penhas/app/features/authentication/data/models/password_reset_response_model.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
+
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/network/api_server_configure.dart';
+import '../../domain/usecases/email_address.dart';
+import '../../domain/usecases/sign_up_password.dart';
+import '../models/password_reset_response_model.dart';
 
 abstract class IChangePasswordDataSource {
   Future<ValidField> reset({

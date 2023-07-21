@@ -2,15 +2,16 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
-import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
+
+import '../../../../../../../core/error/failures.dart';
+import '../../../../../domain/entities/session_entity.dart';
+import '../../../../../domain/repositories/i_user_register_repository.dart';
+import '../../../../../domain/usecases/email_address.dart';
+import '../../../../../domain/usecases/password_validator.dart';
+import '../../../../../domain/usecases/sign_up_password.dart';
+import '../../../../shared/map_failure_message.dart';
+import '../../../../shared/page_progress_indicator.dart';
+import '../../../../shared/user_register_form_field_model.dart';
 
 part 'sign_up_three_controller.g.dart';
 

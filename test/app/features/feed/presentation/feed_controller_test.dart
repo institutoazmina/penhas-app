@@ -9,6 +9,7 @@ import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/states/feed_security_state.dart';
 import 'package:penhas/app/features/feed/domain/states/feed_state.dart';
+import 'package:penhas/app/features/feed/domain/usecases/compose_tweet_fab_toggle.dart';
 import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
 import 'package:penhas/app/features/feed/presentation/feed_controller.dart';
 import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
@@ -22,35 +23,45 @@ class MockSecurityModeActionFeature extends Mock
 
 class MockTweet extends Mock implements TweetTiles {}
 
+class MockComposeTweetFabToggleFeature extends Mock
+    implements ComposeTweetFabToggleFeature {}
+
 void main() {
   group(FeedController, () {
     late FeedController controller;
 
     late FeedUseCases mockFeedUseCases;
     late SecurityModeActionFeature mockSecurityModeActionFeature;
+    late MockComposeTweetFabToggleFeature mockComposeTweetFabToggleFeature;
 
     late StreamController<FeedCache> feedCacheStreamCtrl;
     late Completer<TFeed> fetchNewestTweetCompleter;
     late Completer<bool> securityModeActionFeatureCompleter;
+    late Completer<bool> composeTweetFabToggleFeatureCompleter;
 
     setUp(() {
       mockFeedUseCases = MockFeedUseCases();
       mockSecurityModeActionFeature = MockSecurityModeActionFeature();
+      mockComposeTweetFabToggleFeature = MockComposeTweetFabToggleFeature();
 
       feedCacheStreamCtrl = StreamController.broadcast();
       fetchNewestTweetCompleter = Completer();
       securityModeActionFeatureCompleter = Completer();
+      composeTweetFabToggleFeatureCompleter = Completer();
 
       when(() => mockFeedUseCases.fetchNewestTweet())
           .thenAnswer((_) => fetchNewestTweetCompleter.future);
       when(() => mockSecurityModeActionFeature.isEnabled)
           .thenAnswer((_) => securityModeActionFeatureCompleter.future);
+      when(() => mockComposeTweetFabToggleFeature.isEnabled)
+          .thenAnswer((_) => composeTweetFabToggleFeatureCompleter.future);
       when(() => mockFeedUseCases.tweetList())
           .thenAnswer((_) => feedCacheStreamCtrl.stream);
 
       controller = FeedController(
         useCase: mockFeedUseCases,
         securityModeActionFeature: mockSecurityModeActionFeature,
+        composeTweetFabToggleFeature: mockComposeTweetFabToggleFeature,
       );
     });
 
@@ -124,6 +135,7 @@ void main() {
         controller = FeedController(
           useCase: mockFeedUseCases,
           securityModeActionFeature: mockSecurityModeActionFeature,
+          composeTweetFabToggleFeature: mockComposeTweetFabToggleFeature,
         );
       });
 
@@ -302,6 +314,37 @@ void main() {
 
         // assert
         expect(feedCacheStreamCtrl.hasListener, isFalse);
+      },
+    );
+
+    test(
+      'should call ComposeTweetFabToogle.isEnabled on initialization',
+      () async {
+        // assert
+        verify(() => mockComposeTweetFabToggleFeature.isEnabled).called(1);
+        verifyNoMoreInteractions(mockComposeTweetFabToggleFeature);
+      },
+    );
+
+    test(
+      'should set isComposeTweetFabVisible to true when ComposeTweetFabToogle.isEnabled is true',
+      () async {
+        // act
+        await composeTweetFabToggleFeatureCompleter.completeAndWait(true);
+
+        // assert
+        expect(controller.isComposeTweetFabVisible, isTrue);
+      },
+    );
+
+    test(
+      'should set isComposeTweetFabVisible to false when ComposeTweetFabToogle.isEnabled is false',
+      () async {
+        // act
+        await composeTweetFabToggleFeatureCompleter.completeAndWait(false);
+
+        // assert
+        expect(controller.isComposeTweetFabVisible, isFalse);
       },
     );
   });

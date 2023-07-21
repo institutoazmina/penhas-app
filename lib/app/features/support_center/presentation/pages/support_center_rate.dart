@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_detail_entity.dart';
-import 'package:penhas/app/features/support_center/presentation/pages/support_center_rate_description.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
+
+import '../../../../shared/design_system/colors.dart';
+import '../../domain/entities/support_center_place_detail_entity.dart';
+import 'support_center_rate_description.dart';
 
 class SupportCenterRate extends StatelessWidget {
   const SupportCenterRate({

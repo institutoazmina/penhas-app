@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/core/managers/audio_record_services.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../../core/managers/audio_record_services.dart';
+import '../../../../../shared/design_system/colors.dart';
 
 class SoundRecordWidget extends StatefulWidget {
   const SoundRecordWidget({Key? key, this.audioActivity, this.onPressed})

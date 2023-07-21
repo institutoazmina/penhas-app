@@ -12,8 +12,8 @@ void main() {
     jsonFile = 'users/users_detail.json';
   });
 
-  group('UserDetailModel', () {
-    test('should be a subclass of UserDetailEntity', () async {
+  group(UserDetailModel, () {
+    test('is a subclass of UserDetailEntity', () async {
       // arrange
       const model = UserDetailModel(
         isMyself: false,
@@ -22,7 +22,7 @@ void main() {
       // assert
       expect(model, isA<UserDetailEntity>());
     });
-    test('should return a valid model with a valid JSON', () async {
+    test('return a valid model with a valid JSON', () async {
       // arrange
       final jsonData = await JsonUtil.getJson(from: jsonFile);
       const profile = UserDetailProfileModel(

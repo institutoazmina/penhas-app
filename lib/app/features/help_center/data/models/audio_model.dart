@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
-
-import '../../domain/entities/audio_entity.dart';
 import '../../../../shared/logger/log.dart';
+import '../../domain/entities/audio_entity.dart';
 
 class AudioModel extends Equatable {
   const AudioModel({required this.audioList, required this.message});

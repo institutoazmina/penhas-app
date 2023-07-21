@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:penhas/app/core/managers/modules_sevices.dart';
-import 'package:penhas/app/features/help_center/domain/entities/audio_record_duration_entity.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+import '../../../../core/managers/modules_sevices.dart';
+import '../../../../shared/logger/log.dart';
+import '../entities/audio_record_duration_entity.dart';
 
 class SecurityModeActionFeature {
   SecurityModeActionFeature({required IAppModulesServices modulesServices})

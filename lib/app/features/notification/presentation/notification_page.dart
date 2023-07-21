@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/features/notification/domain/entities/notification_session_entity.dart';
-import 'package:penhas/app/features/notification/domain/states/notification_state.dart';
-import 'package:penhas/app/features/notification/presentation/notification_controller.dart';
-import 'package:penhas/app/features/notification/presentation/pages/notification_card_page.dart';
-import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../shared/design_system/colors.dart';
+import '../../../shared/design_system/text_styles.dart';
+import '../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../authentication/presentation/shared/snack_bar_handler.dart';
+import '../../support_center/presentation/pages/support_center_general_error.dart';
+import '../domain/entities/notification_session_entity.dart';
+import '../domain/states/notification_state.dart';
+import 'notification_controller.dart';
+import 'pages/notification_card_page.dart';
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({Key? key}) : super(key: key);
@@ -53,7 +54,12 @@ extension _PageStateBuilder on _NotificationState {
 
   Widget buildEmptyState() {
     return const SafeArea(
-      child: Center(child: Text('Você não tem notificações', style: kTextEmptyList,),),
+      child: Center(
+        child: Text(
+          'Você não tem notificações',
+          style: kTextEmptyList,
+        ),
+      ),
     );
   }
 

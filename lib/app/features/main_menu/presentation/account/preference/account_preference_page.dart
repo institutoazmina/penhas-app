@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/features/main_menu/domain/entities/account_preference_entity.dart';
-import 'package:penhas/app/features/main_menu/domain/states/account_preference_state.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/preference/account_preference_controller.dart';
-import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../../shared/design_system/colors.dart';
+import '../../../../../shared/design_system/text_styles.dart';
+import '../../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../../../authentication/presentation/shared/snack_bar_handler.dart';
+import '../../../../support_center/presentation/pages/support_center_general_error.dart';
+import '../../../domain/entities/account_preference_entity.dart';
+import '../../../domain/states/account_preference_state.dart';
+import 'account_preference_controller.dart';
 
 class AccountPreferencePage extends StatefulWidget {
   const AccountPreferencePage({Key? key}) : super(key: key);

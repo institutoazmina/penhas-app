@@ -1,7 +1,9 @@
 import 'package:mobx/mobx.dart';
+
 import '../../../../core/managers/location_services.dart';
 import '../../../../shared/widgets/request_location_permission_content_widget.dart';
 import 'stealth_mode_tutorial_state.dart';
+
 part 'stealth_mode_tutorial_page_controller.g.dart';
 
 class StealthModeTutorialPageController

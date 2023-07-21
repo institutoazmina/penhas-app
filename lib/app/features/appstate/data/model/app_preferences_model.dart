@@ -1,4 +1,4 @@
-import 'package:penhas/app/features/appstate/domain/entities/app_preferences_entity.dart';
+import '../../domain/entities/app_preferences_entity.dart';
 
 class AppPreferencesModel extends AppPreferencesEntity {
   const AppPreferencesModel({

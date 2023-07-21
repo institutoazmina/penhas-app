@@ -2,10 +2,11 @@ import 'dart:async';
 
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/managers/audio_record_services.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/help_center/domain/entities/audio_record_duration_entity.dart';
-import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
+
+import '../../../../../core/managers/audio_record_services.dart';
+import '../../../../authentication/presentation/shared/map_failure_message.dart';
+import '../../../domain/entities/audio_record_duration_entity.dart';
+import '../../../domain/usecases/security_mode_action_feature.dart';
 
 part 'audio_record_controller.g.dart';
 

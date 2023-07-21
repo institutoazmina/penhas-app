@@ -1,10 +1,11 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/managers/app_configuration.dart';
-import 'package:penhas/app/core/managers/modules_sevices.dart';
-import 'package:penhas/app/core/states/security_toggle_state.dart';
-import 'package:penhas/app/features/help_center/domain/usecases/security_mode_action_feature.dart';
-import 'package:penhas/app/features/main_menu/domain/usecases/user_profile.dart';
+
+import '../../../core/managers/app_configuration.dart';
+import '../../../core/managers/modules_sevices.dart';
+import '../../../core/states/security_toggle_state.dart';
+import '../../help_center/domain/usecases/security_mode_action_feature.dart';
+import '../domain/usecases/user_profile.dart';
 
 part 'penhas_drawer_controller.g.dart';
 

@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:penhas/app/features/appstate/data/model/quiz_session_model.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/chat/data/models/chat_assistant_model.dart';
 import 'package:penhas/app/features/chat/data/models/chat_channel_available_model.dart';
@@ -73,12 +74,13 @@ void main() {
           avatar: null,
           title: 'Assistente PenhaS',
           subtitle: 'Entenda se você está em situação de violência',
-          quizSession: QuizSessionEntity(
+          quizSession: QuizSessionModel(
             currentMessage: [
-              QuizMessageEntity(
-                  content: 'Deseja responder o questionário novamente?',
-                  type: QuizMessageType.yesno,
-                  ref: 'reset_questionnaire',)
+              QuizMessageModel(
+                content: 'Deseja responder o questionário novamente?',
+                type: QuizMessageType.yesno,
+                ref: 'reset_questionnaire',
+              ),
             ],
             sessionId: 'Ada24',
             isFinished: false,
@@ -116,12 +118,13 @@ void main() {
           avatar: null,
           title: 'Assistente PenhaS',
           subtitle: 'Entenda se você está em situação de violência',
-          quizSession: QuizSessionEntity(
+          quizSession: QuizSessionModel(
             currentMessage: [
-              QuizMessageEntity(
-                  content: 'Deseja responder o questionário novamente?',
-                  type: QuizMessageType.yesno,
-                  ref: 'reset_questionnaire',)
+              QuizMessageModel(
+                content: 'Deseja responder o questionário novamente?',
+                type: QuizMessageType.yesno,
+                ref: 'reset_questionnaire',
+              ),
             ],
             sessionId: 'Ada24',
             isFinished: false,

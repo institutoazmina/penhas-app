@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_main_tile_entity.dart';
-import 'package:penhas/app/features/chat/domain/states/chat_main_talks_state.dart';
-import 'package:penhas/app/features/chat/presentation/pages/chat_people_card.dart';
-import 'package:penhas/app/features/chat/presentation/pages/chat_people_filter_card.dart';
-import 'package:penhas/app/features/chat/presentation/people/chat_main_people_controller.dart';
-import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../shared/design_system/colors.dart';
+import '../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../../support_center/presentation/pages/support_center_general_error.dart';
+import '../../domain/entities/chat_main_tile_entity.dart';
+import '../../domain/states/chat_main_talks_state.dart';
+import '../pages/chat_people_card.dart';
+import '../pages/chat_people_filter_card.dart';
+import 'chat_main_people_controller.dart';
 
 class ChatMainPeoplePage extends StatefulWidget {
   const ChatMainPeoplePage({Key? key}) : super(key: key);

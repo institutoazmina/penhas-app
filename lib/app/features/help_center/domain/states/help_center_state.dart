@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
+
+import 'guardian_alert_state.dart';
 
 part 'help_center_state.freezed.dart';
 

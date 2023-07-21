@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
+import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_filter_preference_data_source.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_filter_session_model.dart';
@@ -75,6 +76,27 @@ void main() {
     );
   }
 
+  void _setUpMockHttpClientError(int statusCode) {
+    final bodyContent = JsonUtil.getStringSync(
+      from: 'feed/invalid_request.json',
+    );
+
+    when(
+      () => apiClient.get(
+        any(),
+        headers: any(named: 'headers'),
+      ),
+    ).thenAnswer(
+      (_) async => http.Response(
+        bodyContent,
+        statusCode,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+        },
+      ),
+    );
+  }
+
   group(TweetFilterPreferenceDataSource, () {
     late String bodyContent;
 
@@ -107,6 +129,28 @@ void main() {
         final received = await dataSource.fetch();
         // assert
         expect(expected, received);
+      });
+
+      test('throw an ApiProviderSessionError for an invalid session', () async {
+        // arrange
+        _setUpMockHttpClientError(401);
+
+        // assert
+        expect(
+          () async => await dataSource.fetch(),
+          throwsA(isA<ApiProviderSessionError>()),
+        );
+      });
+
+      test('throw an ApiProviderException for an invalid session', () async {
+        // arrange
+        _setUpMockHttpClientError(501);
+
+        // assert
+        expect(
+          () async => await dataSource.fetch(),
+          throwsA(isA<ApiProviderException>()),
+        );
       });
     });
   });

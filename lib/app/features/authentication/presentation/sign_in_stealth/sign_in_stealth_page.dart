@@ -3,15 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/login_button.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/password_text_input.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/features/authentication/presentation/sign_in_stealth/sign_in_stealth_controller.dart';
-import 'package:penhas/app/features/zodiac/presentation/pages/zodiac_action_button.dart';
-import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
-import 'package:penhas/app/shared/design_system/logo.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../shared/design_system/linear_gradient_design_system.dart';
+import '../../../../shared/design_system/logo.dart';
+import '../../../../shared/design_system/text_styles.dart';
+import '../../../zodiac/presentation/pages/zodiac_action_button.dart';
+import '../shared/login_button.dart';
+import '../shared/page_progress_indicator.dart';
+import '../shared/password_text_input.dart';
+import '../shared/snack_bar_handler.dart';
+import 'sign_in_stealth_controller.dart';
 
 class SignInStealthPage extends StatefulWidget {
   const SignInStealthPage({Key? key, this.title = 'Authentication'})

@@ -1,6 +1,6 @@
 enum ChatTabItem {
   people,
-  talks
+  talks,
 }
 
 extension ChatTabTitle on ChatTabItem {

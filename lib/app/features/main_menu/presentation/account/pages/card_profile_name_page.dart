@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:penhas/app/core/extension/asuka.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/pages/card_profile_header_edit_page.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../../core/extension/asuka.dart';
+import '../../../../../shared/design_system/colors.dart';
+import 'card_profile_header_edit_page.dart';
 
 class CardProfileNamePage extends StatelessWidget {
   const CardProfileNamePage({
@@ -84,8 +85,10 @@ extension _Dialog on CardProfileNamePage {
         title: const Text('Editar'),
         content: TextFormField(
           controller: _controller,
-          decoration:
-              const InputDecoration(hintText: 'Digite o novo nome', filled: true),
+          decoration: const InputDecoration(
+            hintText: 'Digite o novo nome',
+            filled: true,
+          ),
         ),
         actions: <Widget>[
           FlatButton(

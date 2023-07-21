@@ -21,301 +21,263 @@ void main() {
       sut = Zodiac();
     });
 
+    group('pickEightRandomSign', () {
+      test('exclude the current signs from random sign list', () {
+        // arrange
+        final birthday = DateTime.parse('1990-03-21');
+        final currentSign = sut.sign(birthday);
+        // act
+        final result = sut.pickEightRandomSign(birthday);
+        // assert
+        expect(result.contains(currentSign), isFalse);
+      });
+    });
+
     group('sign', () {
-      group('should return ZodiacSignAries when birthdate is', () {
+      group('return ZodiacSignAries when birthday is', () {
         test('03/21', () {
           // arrange
-          final birthdate = DateTime.parse('1990-03-21');
-
+          final birthday = DateTime.parse('1990-03-21');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignAries>());
         });
 
         test('04/20', () {
           // arrange
-          final birthdate = DateTime.parse('1990-04-20');
-
+          final birthday = DateTime.parse('1990-04-20');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignAries>());
         });
       });
 
-      group('should return ZodiacSignTaurus when birthdate is', () {
+      group('return ZodiacSignTaurus when birthday is', () {
         test('04/21', () {
           // arrange
-          final birthdate = DateTime.parse('1991-04-21');
-
+          final birthday = DateTime.parse('1991-04-21');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignTaurus>());
         });
 
         test('05/03', () {
           // arrange
-          final birthdate = DateTime.parse('1991-05-03');
-
+          final birthday = DateTime.parse('1991-05-03');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignTaurus>());
         });
 
         test('05/20', () {
           // arrange
-          final birthdate = DateTime.parse('1991-05-20');
-
+          final birthday = DateTime.parse('1991-05-20');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignTaurus>());
         });
       });
 
-      group('should return ZodiacSignGemini when birthdate is', () {
+      group('return ZodiacSignGemini when birthday is', () {
         test('05/21', () {
           // arrange
-          final birthdate = DateTime.parse('1992-05-21');
-
+          final birthday = DateTime.parse('1992-05-21');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignGemini>());
         });
 
         test('06/20', () {
           // arrange
-          final birthdate = DateTime.parse('1992-06-20');
-
+          final birthday = DateTime.parse('1992-06-20');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignGemini>());
         });
       });
 
-      group('should return ZodiacSignCancer when birthdate is', () {
+      group('return ZodiacSignCancer when birthday is', () {
         test('06/21', () {
           // arrange
-          final birthdate = DateTime.parse('1993-06-21');
-
+          final birthday = DateTime.parse('1993-06-21');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignCancer>());
         });
 
         test('07/22', () {
           // arrange
-          final birthdate = DateTime.parse('1993-07-22');
-
+          final birthday = DateTime.parse('1993-07-22');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignCancer>());
         });
       });
 
-      group('should return ZodiacSignLeo when birthdate is', () {
+      group('return ZodiacSignLeo when birthday is', () {
         test('07/23', () {
           // arrange
-          final birthdate = DateTime.parse('1994-07-23');
-
+          final birthday = DateTime.parse('1994-07-23');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignLeo>());
         });
 
         test('08/22', () {
           // arrange
-          final birthdate = DateTime.parse('1994-08-22');
-
+          final birthday = DateTime.parse('1994-08-22');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignLeo>());
         });
       });
 
-      group('should return ZodiacSignVirgo when birthdate is', () {
+      group('return ZodiacSignVirgo when birthday is', () {
         test('08/23', () {
           // arrange
-          final birthdate = DateTime.parse('1995-08-23');
-
+          final birthday = DateTime.parse('1995-08-23');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignVirgo>());
         });
 
         test('09/22', () {
           // arrange
-          final birthdate = DateTime.parse('1995-09-22');
-
+          final birthday = DateTime.parse('1995-09-22');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignVirgo>());
         });
       });
 
-      group('should return ZodiacSignLibra when birthdate is', () {
+      group('return ZodiacSignLibra when birthday is', () {
         test('09/23', () {
           // arrange
-          final birthdate = DateTime.parse('1996-09-23');
-
+          final birthday = DateTime.parse('1996-09-23');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignLibra>());
         });
 
         test('10/22', () {
           // arrange
-          final birthdate = DateTime.parse('1996-10-22');
-
+          final birthday = DateTime.parse('1996-10-22');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignLibra>());
         });
       });
 
-      group('should return ZodiacSignScorpio when birthdate is', () {
+      group('return ZodiacSignScorpio when birthday is', () {
         test('10/23', () {
           // arrange
-          final birthdate = DateTime.parse('1997-10-23');
-
+          final birthday = DateTime.parse('1997-10-23');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignScorpio>());
         });
 
         test('11/21', () {
           // arrange
-          final birthdate = DateTime.parse('1997-11-21');
-
+          final birthday = DateTime.parse('1997-11-21');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignScorpio>());
         });
       });
 
-      group('should return ZodiacSignSagittarius when birthdate is', () {
+      group('return ZodiacSignSagittarius when birthday is', () {
         test('11/22', () {
           // arrange
-          final birthdate = DateTime.parse('1998-11-22');
-
+          final birthday = DateTime.parse('1998-11-22');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignSagittarius>());
         });
 
         test('12/21', () {
           // arrange
-          final birthdate = DateTime.parse('1998-12-21');
-
+          final birthday = DateTime.parse('1998-12-21');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignSagittarius>());
         });
       });
 
-      group('should return ZodiacSignCapricorn when birthdate is', () {
+      group('return ZodiacSignCapricorn when birthday is', () {
         test('12/22', () {
           // arrange
-          final birthdate = DateTime.parse('1999-12-22');
-
+          final birthday = DateTime.parse('1999-12-22');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignCapricorn>());
         });
 
         test('01/20', () {
           // arrange
-          final birthdate = DateTime.parse('1999-01-20');
-
+          final birthday = DateTime.parse('1999-01-20');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignCapricorn>());
         });
       });
 
-      group('should return ZodiacSignAquarius when birthdate is', () {
+      group('return ZodiacSignAquarius when birthday is', () {
         test('01/21', () {
           // arrange
-          final birthdate = DateTime.parse('2000-01-21');
-
+          final birthday = DateTime.parse('2000-01-21');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignAquarius>());
         });
 
         test('02/19', () {
           // arrange
-          final birthdate = DateTime.parse('2000-02-19');
-
+          final birthday = DateTime.parse('2000-02-19');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignAquarius>());
         });
       });
 
-      group('should return ZodiacSignPisces when birthdate is', () {
+      group('return ZodiacSignPisces when birthday is', () {
         test('02/20', () {
           // arrange
-          final birthdate = DateTime.parse('2000-02-20');
-
+          final birthday = DateTime.parse('2000-02-20');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignPisces>());
         });
 
         test('03/20', () {
           // arrange
-          final birthdate = DateTime.parse('2000-03-20');
-
+          final birthday = DateTime.parse('2000-03-20');
           // act
-          final result = sut.sign(birthdate);
-
+          final result = sut.sign(birthday);
           // assert
           expect(result, isA<ZodiacSignPisces>());
         });

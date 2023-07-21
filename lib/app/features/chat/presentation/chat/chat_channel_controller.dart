@@ -2,14 +2,15 @@ import 'dart:async';
 
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_message.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_session_entity.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
-import 'package:penhas/app/features/chat/domain/states/chat_channel_state.dart';
-import 'package:penhas/app/features/chat/domain/states/chat_channel_usecase_event.dart';
-import 'package:penhas/app/features/chat/domain/usecases/chat_channel_usecase.dart';
-import 'package:penhas/app/features/chat/presentation/chat/chat_channel_compose_type.dart';
+
+import '../../../authentication/presentation/shared/map_failure_message.dart';
+import '../../domain/entities/chat_channel_message.dart';
+import '../../domain/entities/chat_channel_session_entity.dart';
+import '../../domain/entities/chat_user_entity.dart';
+import '../../domain/states/chat_channel_state.dart';
+import '../../domain/states/chat_channel_usecase_event.dart';
+import '../../domain/usecases/chat_channel_usecase.dart';
+import 'chat_channel_compose_type.dart';
 
 part 'chat_channel_controller.g.dart';
 
@@ -87,7 +88,7 @@ extension _ChatChannelControllerBasePrivate on _ChatChannelControllerBase {
   void parseStream(ChatChannelUseCaseEvent event) {
     event.when(
       updateUser: (u) => user = u,
-      updateMetada: (m) => metadata = m,
+      updateMetadata: (m) => metadata = m,
       initial: () => currentState = const ChatChannelState.initial(),
       loaded: () => currentState = const ChatChannelState.loaded(),
       errorOnLoading: (m) => currentState = ChatChannelState.error(m),

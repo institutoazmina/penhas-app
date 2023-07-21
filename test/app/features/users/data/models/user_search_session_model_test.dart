@@ -8,8 +8,8 @@ import '../../../../../utils/json_util.dart';
 void main() {
   const String jsonFile = 'users/users_search.json';
 
-  group('UserSearchSessionModel', () {
-    test('should be a subclass of UserDetailEntity', () async {
+  group(UserSearchSessionModel, () {
+    test('is a subclass of UserDetailEntity', () async {
       // arrange
       const model = UserSearchSessionModel(
         hasMore: false,
@@ -19,7 +19,7 @@ void main() {
       // assert
       expect(model, isA<UserSearchSessionEntity>());
     });
-    test('should return a valid model with a valid JSON', () async {
+    test('return a valid model with a valid JSON', () async {
       // arrange
       final jsonData = await JsonUtil.getJson(from: jsonFile);
       const avatar = 'https://api.example.com/avatar/padrao.svg';
@@ -78,7 +78,7 @@ void main() {
       expect(actual, matcher);
     });
 
-    test('should return empty model with a empty JSON', () async {
+    test('return empty model with a empty JSON', () async {
       // arrange
       const jsonFileEmpty = 'users/users_search_empty.json';
       final jsonData = await JsonUtil.getJson(from: jsonFileEmpty);

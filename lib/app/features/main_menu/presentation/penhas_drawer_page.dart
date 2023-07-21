@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:penhas/app/core/pages/tutorial_scale_route.dart';
-import 'package:penhas/app/core/states/security_toggle_state.dart';
-import 'package:penhas/app/features/main_menu/presentation/pages/penhas_drawer_header_page.dart';
-import 'package:penhas/app/features/main_menu/presentation/pages/penhas_drawer_toogle_page.dart';
-import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_controller.dart';
-import 'package:penhas/app/features/quiz/presentation/tutorial/stealth_mode_tutorial_page.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../core/pages/tutorial_scale_route.dart';
+import '../../../core/states/security_toggle_state.dart';
+import '../../../shared/design_system/colors.dart';
+import '../../../shared/design_system/text_styles.dart';
+import '../../quiz/presentation/tutorial/stealth_mode_tutorial_page.dart';
+import 'pages/penhas_drawer_header_page.dart';
+import 'pages/penhas_drawer_toogle_page.dart';
+import 'penhas_drawer_controller.dart';
 
 class PenhasDrawerPage extends StatefulWidget {
   const PenhasDrawerPage({Key? key, this.title = 'Penhas Drawer'})

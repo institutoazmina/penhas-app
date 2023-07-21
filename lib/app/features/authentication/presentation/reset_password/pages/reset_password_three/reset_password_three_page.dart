@@ -4,14 +4,15 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/features/authentication/presentation/reset_password/pages/reset_password_three/reset_password_three_controller.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/password_text_input.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/shared/design_system/button_shape.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/linear_gradient_design_system.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../../../shared/design_system/button_shape.dart';
+import '../../../../../../shared/design_system/colors.dart';
+import '../../../../../../shared/design_system/linear_gradient_design_system.dart';
+import '../../../../../../shared/design_system/text_styles.dart';
+import '../../../shared/page_progress_indicator.dart';
+import '../../../shared/password_text_input.dart';
+import '../../../shared/snack_bar_handler.dart';
+import 'reset_password_three_controller.dart';
 
 class ResetPasswordThreePage extends StatefulWidget {
   const ResetPasswordThreePage({Key? key, this.title = 'ResetPasswordThree'})

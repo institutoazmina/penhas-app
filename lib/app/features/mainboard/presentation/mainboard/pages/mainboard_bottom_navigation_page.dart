@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart';
-import 'package:penhas/app/features/mainboard/presentation/mainboard/pages/mainboard_button_page.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../../shared/design_system/colors.dart';
+import '../../../domain/states/mainboard_state.dart';
+import 'mainboard_button_page.dart';
 
 class MainboardBottomNavigationPage extends StatelessWidget {
   const MainboardBottomNavigationPage({

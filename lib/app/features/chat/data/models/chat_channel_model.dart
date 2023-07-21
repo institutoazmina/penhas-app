@@ -1,5 +1,5 @@
-import 'package:penhas/app/features/chat/data/models/chat_user_model.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_entity.dart';
+import '../../domain/entities/chat_channel_entity.dart';
+import 'chat_user_model.dart';
 
 class ChatChannelModel extends ChatChannelEntity {
   const ChatChannelModel({

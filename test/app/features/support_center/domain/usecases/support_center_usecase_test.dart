@@ -1,12 +1,21 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_const_declarations
+
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:penhas/app/core/entities/user_location.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
-import 'package:penhas/app/features/support_center/data/models/support_center_metadata_model.dart';
+import 'package:penhas/app/core/states/location_permission_state.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
+import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
 import 'package:penhas/app/features/support_center/data/repositories/support_center_repository.dart';
+import 'package:penhas/app/features/support_center/domain/entities/geolocation_entity.dart';
+import 'package:penhas/app/features/support_center/domain/entities/support_center_fetch_request.dart';
+import 'package:penhas/app/features/support_center/domain/entities/support_center_metadata_entity.dart';
+import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
+import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
 import 'package:penhas/app/features/support_center/domain/usecases/support_center_usecase.dart';
-
-import '../../../../../utils/json_util.dart';
 
 class MockSupportCenterRepository extends Mock
     implements ISupportCenterRepository {}
@@ -32,26 +41,20 @@ void main() {
     group('metadata', () {
       test('hit repository for first access', () async {
         // arrange
-        const jsonFile = 'support_center/support_center_meta_data.json';
-        final jsonData = await JsonUtil.getJson(from: jsonFile);
-
+        final actual = right(_buildSupportMetadata());
         when(() => supportCenterRepository.metadata()).thenAnswer(
-          (_) async => right(
-            SupportCenterMetadataModel.fromJson(jsonData),
-          ),
+          (_) async => right(_buildSupportMetadata()),
         );
         // act
-        await sut.metadata();
+        final expected = await sut.metadata();
         // assert
         verify(() => supportCenterRepository.metadata()).called(1);
+        expect(actual, expected);
       });
 
       test('avoid hit repository twice', () async {
-        const jsonFile = 'support_center/support_center_meta_data.json';
-        final jsonData = await JsonUtil.getJson(from: jsonFile);
-
         when(() => supportCenterRepository.metadata()).thenAnswer(
-          (_) async => right(SupportCenterMetadataModel.fromJson(jsonData)),
+          (_) async => right(_buildSupportMetadata()),
         );
         await sut.metadata();
         // act
@@ -60,5 +63,179 @@ void main() {
         verify(() => supportCenterRepository.metadata()).called(1);
       });
     });
+
+    group('fetch', () {
+      test('fetches SupportCenterPlaceSessionEntity successfully', () async {
+        // arrange
+        final request = SupportCenterFetchRequest();
+        final actual = right(_buildSupportPlace());
+
+        when(() => locationServices.isPermissionGranted())
+            .thenAnswer((_) async => true);
+        when(() => locationServices.currentLocation()).thenAnswer((_) async =>
+            right(UserLocationEntity(latitude: 1.0, longitude: 1.0)));
+        when(() => supportCenterRepository.fetch(any()))
+            .thenAnswer((_) async => right(_buildSupportPlace()));
+        // act
+        final expected = await sut.fetch(request);
+        // assert
+        verify(() => locationServices.currentLocation()).called(1);
+        verify(() => supportCenterRepository.fetch(any())).called(1);
+
+        expect(actual, expected);
+      });
+    });
+
+    group('mapGeoFromCep', () {
+      test('get GeolocationEntity on success', () async {
+        // arrange
+        final cep = Cep('123456789');
+        final actual = GeolocationEntity(
+          label: 'Label',
+          locationToken: 'location_token',
+        );
+        when(() => supportCenterRepository.mapGeoFromCep(any()))
+            .thenAnswer((_) async => right(GeolocationEntity(
+                  label: 'Label',
+                  locationToken: 'location_token',
+                )));
+        // act
+        final expected = await sut.mapGeoFromCep(cep);
+        // assert
+        expect(right(actual), expected);
+      });
+    });
+
+    group('askForLocationPermission', () {
+      test('returns true when permission is granted', () async {
+        // arrange
+        final title = 'Permission Title';
+        final description = Text('Permission Description');
+
+        when(() => locationServices.requestPermission(
+              title: title,
+              description: description,
+            )).thenAnswer((_) async => LocationPermissionState.granted());
+        // arrange
+        final expected = await sut.askForLocationPermission(title, description);
+        // assert
+        verify(() => locationServices.requestPermission(
+              title: title,
+              description: description,
+            )).called(1);
+        expect(expected, isTrue);
+      });
+
+      test('returns false when permission is not granted', () async {
+        // arrange
+        final title = 'Permission Title';
+        final description = Text('Permission Description');
+
+        when(() => locationServices.requestPermission(
+              title: title,
+              description: description,
+            )).thenAnswer((_) async => LocationPermissionState.denied());
+        // arrange
+        final expected = await sut.askForLocationPermission(title, description);
+        // assert
+        verify(() => locationServices.requestPermission(
+              title: title,
+              description: description,
+            )).called(1);
+        expect(expected, isFalse);
+      });
+    });
+
+    group('currentLocation', () {
+      test('return current location when permission is granted', () async {
+        // arrange
+        final userLocation = UserLocationEntity(
+          latitude: 42.4242,
+          longitude: -42.4242,
+        );
+        when(() => locationServices.isPermissionGranted())
+            .thenAnswer((_) async => true);
+        when(() => locationServices.currentLocation())
+            .thenAnswer((_) async => Right(userLocation));
+        // act
+        final expected = await sut.currentLocation();
+        // assert
+        expect(expected?.userLocation, equals(userLocation));
+        verify(() => locationServices.isPermissionGranted()).called(1);
+        verify(() => locationServices.currentLocation()).called(1);
+      });
+    });
+    test('return null when permission is not granted without cache', () async {
+      // arrange
+      when(() => locationServices.isPermissionGranted())
+          .thenAnswer((_) async => false);
+      // act
+      final expected = await sut.currentLocation();
+      // assert
+      expect(expected, equals(null));
+      verify(() => locationServices.isPermissionGranted()).called(1);
+      verifyNever(() => locationServices.currentLocation());
+    });
+
+    test('return cached when permission is not granted with cache', () async {
+      // arrange
+      when(() => locationServices.isPermissionGranted())
+          .thenAnswer((_) async => false);
+      sut.updatedGeoLocation(GeolocationEntity(locationToken: '123'));
+      // act
+      final expected = await sut.currentLocation();
+      // assert
+      expect(expected, equals(GeolocationEntity(locationToken: '123')));
+      verify(() => locationServices.isPermissionGranted()).called(1);
+      verifyNever(() => locationServices.currentLocation());
+    });
   });
+}
+
+SupportCenterMetadataEntity _buildSupportMetadata() {
+  return SupportCenterMetadataEntity(
+    projects: [
+      FilterTagEntity(id: '3', label: 'MAMU', isSelected: false),
+      FilterTagEntity(id: '2', label: 'Mapa Delegacia', isSelected: false),
+      FilterTagEntity(id: '1', label: 'Penhas', isSelected: false)
+    ],
+    categories: [
+      FilterTagEntity(
+          id: '8', label: 'Casa da Mulher Brasileira', isSelected: false),
+      FilterTagEntity(
+          id: '1', label: 'Centros de Atendimento', isSelected: false),
+      FilterTagEntity(
+          id: '6', label: 'Centros de atendimento à mulher', isSelected: false)
+    ],
+  );
+}
+
+SupportCenterPlaceSessionEntity _buildSupportPlace() {
+  return SupportCenterPlaceSessionEntity(
+    hasMore: false,
+    latitude: 1.0,
+    longitude: 1.0,
+    maximumRate: 2,
+    nextPage: '',
+    places: [
+      SupportCenterPlaceEntity(
+        id: '1',
+        rate: null,
+        ratedByClient: 2,
+        distance: null,
+        latitude: 2.0,
+        longitude: 2.0,
+        name: 'Place Name',
+        uf: 'UF',
+        fullStreet: 'Full Street',
+        category: SupportCenterPlaceCategoryEntity(
+          color: '000000',
+          id: 3,
+          name: 'Categoria',
+        ),
+        typeOfPlace: null,
+        htmlContent: null,
+      )
+    ],
+  );
 }

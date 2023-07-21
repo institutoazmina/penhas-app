@@ -1,15 +1,16 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:http/http.dart' as http;
-import 'package:penhas/app/core/managers/location_services.dart';
-import 'package:penhas/app/core/network/api_server_configure.dart';
-import 'package:penhas/app/core/network/network_info.dart';
-import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
-import 'package:penhas/app/features/quiz/data/datasources/quiz_data_source.dart';
-import 'package:penhas/app/features/quiz/data/repositories/quiz_repository.dart';
-import 'package:penhas/app/features/quiz/domain/repositories/i_quiz_repository.dart';
-import 'package:penhas/app/features/quiz/presentation/quiz/quiz_controller.dart';
-import 'package:penhas/app/features/quiz/presentation/quiz/quiz_page.dart';
-import 'package:penhas/app/features/quiz/presentation/tutorial/stealth_mode_tutorial_page_controller.dart';
+
+import '../../../../core/managers/location_services.dart';
+import '../../../../core/network/api_server_configure.dart';
+import '../../../../core/network/network_info.dart';
+import '../../../appstate/domain/usecases/app_state_usecase.dart';
+import '../../data/datasources/quiz_data_source.dart';
+import '../../data/repositories/quiz_repository.dart';
+import '../../domain/repositories/i_quiz_repository.dart';
+import '../tutorial/stealth_mode_tutorial_page_controller.dart';
+import 'quiz_controller.dart';
+import 'quiz_page.dart';
 
 class QuizModule extends Module {
   @override
@@ -35,10 +36,11 @@ class QuizModule extends Module {
         ),
         Bind.factory<ILocationServices>(
           (i) => LocationServices(),
-                  ),
+        ),
         Bind.factory<StealthModeTutorialPageController>(
           (i) => StealthModeTutorialPageController(
-              locationService: i.get<ILocationServices>(),),
+            locationService: i.get<ILocationServices>(),
+          ),
         ),
       ];
 

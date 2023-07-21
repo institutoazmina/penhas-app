@@ -18,9 +18,6 @@ class ChatChannelRequest extends Equatable {
   final bool? block;
 
   @override
-  bool get stringify => true;
-
-  @override
   List<Object?> get props => [
         token,
         pagination,

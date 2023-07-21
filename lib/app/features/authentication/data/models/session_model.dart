@@ -1,4 +1,4 @@
-import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
+import '../../domain/entities/session_entity.dart';
 
 class SessionModel extends SessionEntity {
   const SessionModel({

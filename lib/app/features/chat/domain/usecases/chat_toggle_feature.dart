@@ -1,4 +1,4 @@
-import 'package:penhas/app/core/managers/modules_sevices.dart';
+import '../../../../core/managers/modules_sevices.dart';
 
 class ChatPrivateToggleFeature {
   ChatPrivateToggleFeature({required IAppModulesServices modulesServices})
@@ -10,9 +10,14 @@ class ChatPrivateToggleFeature {
   Future<bool> get isEnabled => _isEnabled();
 
   Future<bool> _isEnabled() async {
-    final module = await _modulesServices.feature(
-        name: ChatPrivateToggleFeature.featureCode,);
-    return module != null;
+    try {
+      final module = await _modulesServices.feature(
+        name: ChatPrivateToggleFeature.featureCode,
+      );
+      return module != null;
+    } catch (e) {
+      return false;
+    }
   }
 }
 
@@ -26,8 +31,13 @@ class ChatSupportToggleFeature {
   Future<bool> get isEnabled => _isEnabled();
 
   Future<bool> _isEnabled() async {
-    final module = await _modulesServices.feature(
-        name: ChatSupportToggleFeature.featureCode,);
-    return module != null;
+    try {
+      final module = await _modulesServices.feature(
+        name: ChatSupportToggleFeature.featureCode,
+      );
+      return module != null;
+    } catch (e) {
+      return false;
+    }
   }
 }

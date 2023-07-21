@@ -13,9 +13,6 @@ class TweetFilterSessionEntity extends Equatable {
 
   @override
   List<Object?> get props => [categories, tags];
-
-  @override
-  bool get stringify => true;
 }
 
 @immutable
@@ -32,9 +29,6 @@ class TweetFilterEntity extends Equatable {
 
   @override
   List<Object?> get props => [id, label!, isSelected];
-
-  @override
-  bool get stringify => true;
 
   TweetFilterEntity copyWith({String? id, String? label, bool? isSelected}) {
     return TweetFilterEntity(

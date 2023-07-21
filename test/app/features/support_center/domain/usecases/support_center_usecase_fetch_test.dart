@@ -31,8 +31,8 @@ void main() {
     group('fetch', () {
       test('get GPSFailure for invalid gps information', () async {
         // arrange
-        final fetchRequest = SupportCenterFetchRequest();
-        final gpsFailure =
+        const fetchRequest = SupportCenterFetchRequest();
+        const gpsFailure =
             'Não foi possível encontrar sua localização através do CEP 01203-777, tente novamente mais tarde ou ative a localização';
         final actual = left(
           GpsFailure(gpsFailure),

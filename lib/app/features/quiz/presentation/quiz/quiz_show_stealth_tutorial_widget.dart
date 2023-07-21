@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/core/pages/tutorial_scale_route.dart';
-import 'package:penhas/app/features/quiz/presentation/quiz/quiz_typedef.dart';
-import 'package:penhas/app/features/quiz/presentation/tutorial/stealth_mode_tutorial_page.dart';
-import 'package:penhas/app/shared/design_system/button_shape.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../core/pages/tutorial_scale_route.dart';
+import '../../../../shared/design_system/button_shape.dart';
+import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/text_styles.dart';
+import '../tutorial/stealth_mode_tutorial_page.dart';
+import 'quiz_typedef.dart';
 
 class QuizShowStealthTutorialWidget extends StatelessWidget {
   const QuizShowStealthTutorialWidget({

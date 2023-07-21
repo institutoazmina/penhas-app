@@ -88,7 +88,7 @@ void main() {
       });
     });
     group('anonymous mode', () {
-      test('hit endpoint /me/modo-anonimo-toggle', () async {
+      test('hit endpoint me/modo-anonimo-toggle', () async {
         // arrange
         _setUpMockPost();
         const endPoint = '/me/modo-anonimo-toggle';
@@ -173,7 +173,7 @@ void main() {
       });
     });
     group('deleteNotice method', () {
-      test('hit endpoint /me/delete-text', () async {
+      test('hit endpoint me/delete-text', () async {
         // arrange
         const endPoint = '/me/delete-text';
         when(() => apiProvider.get(path: any(named: 'path')))

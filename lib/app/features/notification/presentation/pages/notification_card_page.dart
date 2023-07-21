@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:penhas/app/features/notification/domain/entities/notification_session_entity.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
 import 'package:timeago/timeago.dart' as timeago;
+
+import '../../../../shared/design_system/colors.dart';
+import '../../domain/entities/notification_session_entity.dart';
 
 class NotificationCardPage extends StatelessWidget {
   const NotificationCardPage({Key? key, required this.notification})

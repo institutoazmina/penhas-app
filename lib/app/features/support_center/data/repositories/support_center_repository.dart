@@ -1,22 +1,23 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/network/api_client.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_exception_to_failure.dart';
-import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
-import 'package:penhas/app/features/support_center/data/models/geolocation_model.dart';
-import 'package:penhas/app/features/support_center/data/models/support_center_metadata_model.dart';
-import 'package:penhas/app/features/support_center/data/models/support_center_place_detail_model.dart';
-import 'package:penhas/app/features/support_center/data/models/support_center_place_session_model.dart';
-import 'package:penhas/app/features/support_center/domain/entities/geolocation_entity.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_fetch_request.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_metadata_entity.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_detail_entity.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/network/api_client.dart';
+import '../../../../shared/logger/log.dart';
+import '../../../authentication/presentation/shared/map_exception_to_failure.dart';
+import '../../../help_center/data/models/alert_model.dart';
+import '../../domain/entities/geolocation_entity.dart';
+import '../../domain/entities/support_center_fetch_request.dart';
+import '../../domain/entities/support_center_metadata_entity.dart';
+import '../../domain/entities/support_center_place_detail_entity.dart';
+import '../../domain/entities/support_center_place_entity.dart';
+import '../../domain/entities/support_center_place_session_entity.dart';
+import '../models/geolocation_model.dart';
+import '../models/support_center_metadata_model.dart';
+import '../models/support_center_place_detail_model.dart';
+import '../models/support_center_place_session_model.dart';
 
 abstract class ISupportCenterRepository {
   Future<Either<Failure, SupportCenterMetadataEntity?>> metadata();
@@ -56,10 +57,10 @@ abstract class ISupportCenterRepository {
 
 class SupportCenterRepository implements ISupportCenterRepository {
   SupportCenterRepository({
-    required IApiProvider? apiProvider,
+    required IApiProvider apiProvider,
   }) : _apiProvider = apiProvider;
 
-  final IApiProvider? _apiProvider;
+  final IApiProvider _apiProvider;
 
   @override
   Future<Either<Failure, SupportCenterMetadataEntity?>> metadata() async {
@@ -67,11 +68,11 @@ class SupportCenterRepository implements ISupportCenterRepository {
     final Map<String, String> parameters = {'projeto': 'Penhas'};
 
     try {
-      final bodyResponse = await _apiProvider!.get(
+      final bodyResponse = await _apiProvider.get(
         path: endPoint,
         parameters: parameters,
       );
-      return right(parseMetadata(bodyResponse));
+      return right(_parseMetadata(bodyResponse));
     } catch (error, stack) {
       logError(error, stack);
       return left(MapExceptionToFailure.map(error));
@@ -84,30 +85,13 @@ class SupportCenterRepository implements ISupportCenterRepository {
   ) async {
     const endPoint = 'me/pontos-de-apoio';
 
-    final Map<String, String?> parameters = <String, String?>{};
-    if (options!.locationToken != null) {
-      parameters['location_token'] = options.locationToken;
-    } else if (options.userLocation != null) {
-      parameters['latitude'] = options.userLocation!.latitude.toString();
-      parameters['longitude'] = options.userLocation!.longitude.toString();
-    }
-
-    if (options.categories != null && options.categories!.isNotEmpty) {
-      parameters['categorias'] = options.categories!.join(',');
-    }
-
-    parameters['keywords'] =
-        (options.keywords == null || options.keywords!.isEmpty)
-            ? null
-            : options.keywords;
-    parameters['next_page'] = options.nextPage;
-    parameters['projeto'] = 'Penhas';
-    parameters['full_list'] = '1';
-
     try {
-      final bodyResponse =
-          await _apiProvider!.get(path: endPoint, parameters: parameters);
-      return right(parseSupportCenter(bodyResponse));
+      final parameters = _parseRequestOptions(options);
+      final bodyResponse = await _apiProvider.get(
+        path: endPoint,
+        parameters: parameters,
+      );
+      return right(_parseSupportCenter(bodyResponse));
     } catch (error, stack) {
       logError(error, stack);
       return left(MapExceptionToFailure.map(error));
@@ -123,8 +107,8 @@ class SupportCenterRepository implements ISupportCenterRepository {
 
     try {
       final bodyResponse =
-          await _apiProvider!.get(path: endPoint, parameters: parameters);
-      return right(parseGeoFromCep(bodyResponse));
+          await _apiProvider.get(path: endPoint, parameters: parameters);
+      return right(_parseGeoFromCep(bodyResponse));
     } catch (error, stack) {
       logError(error, stack);
       return left(MapExceptionToFailure.map(error));
@@ -177,11 +161,11 @@ class SupportCenterRepository implements ISupportCenterRepository {
     ].join('&');
 
     try {
-      final response = await _apiProvider!.post(
+      final response = await _apiProvider.post(
         path: endPoint,
         body: bodyContent,
       );
-      return right(parseAddSuggestion(response));
+      return right(_parseAddSuggestion(response));
     } catch (error, stack) {
       logError(error, stack);
       return left(MapExceptionToFailure.map(error));
@@ -195,8 +179,8 @@ class SupportCenterRepository implements ISupportCenterRepository {
     final endPoint = ['me', 'pontos-de-apoio', placeEntity!.id].join('/');
 
     try {
-      final response = await _apiProvider!.get(path: endPoint);
-      return right(parseDetail(response));
+      final response = await _apiProvider.get(path: endPoint);
+      return right(_parseDetail(response));
     } catch (error, stack) {
       logError(error, stack);
       return left(MapExceptionToFailure.map(error));
@@ -214,7 +198,7 @@ class SupportCenterRepository implements ISupportCenterRepository {
     parameters['rating'] = rate.toInt().toString();
 
     try {
-      await _apiProvider!.post(
+      await _apiProvider.post(
         path: endPoint,
         parameters: parameters,
       );
@@ -224,30 +208,61 @@ class SupportCenterRepository implements ISupportCenterRepository {
       return left(MapExceptionToFailure.map(error));
     }
   }
-}
 
-extension SupportCenterRepositoryPrivate on SupportCenterRepository {
-  SupportCenterMetadataEntity parseMetadata(String body) {
+  // Métodos privados
+
+  Map<String, String?> _parseRequestOptions(
+      SupportCenterFetchRequest? options) {
+    final parameters = <String, String?>{
+      'projeto': 'Penhas',
+      'full_list': '1',
+    };
+
+    if (options == null) {
+      return parameters;
+    }
+
+    if (options.locationToken != null) {
+      parameters['location_token'] = options.locationToken;
+    } else if (options.userLocation != null) {
+      parameters['latitude'] = options.userLocation!.latitude.toString();
+      parameters['longitude'] = options.userLocation!.longitude.toString();
+    }
+
+    if (options.categories != null && options.categories!.isNotEmpty) {
+      parameters['categorias'] = options.categories!.join(',');
+    }
+
+    parameters['keywords'] =
+        (options.keywords == null || options.keywords!.isEmpty)
+            ? null
+            : options.keywords;
+    parameters['next_page'] = options.nextPage;
+
+    return parameters;
+  }
+
+  SupportCenterMetadataEntity _parseMetadata(String body) {
     final jsonData = jsonDecode(body) as Map<String, dynamic>;
     return SupportCenterMetadataModel.fromJson(jsonData);
   }
 
-  SupportCenterPlaceSessionEntity parseSupportCenter(String body) {
+  SupportCenterPlaceSessionEntity _parseSupportCenter(String body) {
     final jsonData = jsonDecode(body) as Map<String, dynamic>;
     return SupportCenterPlaceSessionModel.fromJson(jsonData);
   }
 
-  GeolocationEntity parseGeoFromCep(String body) {
+  GeolocationEntity _parseGeoFromCep(String body) {
     final jsonData = jsonDecode(body) as Map<String, dynamic>;
     return GeoLocationModel.fromJson(jsonData);
   }
 
-  AlertModel parseAddSuggestion(String body) {
+  AlertModel _parseAddSuggestion(String body) {
     final jsonData = jsonDecode(body) as Map<String, dynamic>;
     return AlertModel.fromJson(jsonData);
   }
 
-  SupportCenterPlaceDetailEntity parseDetail(String body) {
+  SupportCenterPlaceDetailEntity _parseDetail(String body) {
     final jsonData = jsonDecode(body) as Map<String, dynamic>;
     return SupportCenterPlaceDetailModel.fromJson(jsonData);
   }
