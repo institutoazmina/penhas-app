@@ -9,7 +9,6 @@ import '../models/audio_model.dart';
 import '../../domain/entities/audio_entity.dart';
 import '../../../../shared/logger/log.dart';
 
-
 abstract class IAudiosRepository {
   Future<Either<Failure, AudioModel>> fetch();
   Future<Either<Failure, ValidField>> delete(AudioEntity audio);
