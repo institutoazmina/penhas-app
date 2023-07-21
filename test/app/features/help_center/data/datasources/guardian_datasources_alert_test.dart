@@ -135,7 +135,7 @@ void main() {
             const expected = AlertModel(
               title: 'Alerta enviado!',
               message:
-                  'Não há guardiões cadastrado! Nenhum alerta foi enviado.',
+                  'Não há guardiões cadastrados! Nenhum alerta foi enviado.',
             );
             // act
             final actual = await dataSource.alert(userLocation);
