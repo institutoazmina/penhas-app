@@ -11,13 +11,17 @@ class MockLocalStorage extends Mock implements ILocalStorage {}
 void main() {
   late String appModuleKey;
   late IAppModulesServices sut;
-  final ILocalStorage storage = MockLocalStorage();
+  late ILocalStorage storage;
 
   String _convert(List<AppStateModuleEntity> modules) {
     final objects =
         modules.map((e) => {'code': e.code, 'meta': e.meta}).toList();
     return jsonEncode(objects);
   }
+
+  setUp(() {
+    storage = MockLocalStorage();
+  });
 
   group(AppModulesServices, () {
     setUp(() {

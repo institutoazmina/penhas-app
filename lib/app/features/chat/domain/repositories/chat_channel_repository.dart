@@ -5,6 +5,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/entities/valid_fiel.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/network/api_client.dart';
+import '../../../../shared/logger/log.dart';
 import '../../../authentication/presentation/shared/map_exception_to_failure.dart';
 import '../../data/models/chat_channel_available_model.dart';
 import '../../data/models/chat_channel_open_model.dart';
@@ -14,7 +15,6 @@ import '../entities/chat_channel_open_entity.dart';
 import '../entities/chat_channel_request.dart';
 import '../entities/chat_channel_session_entity.dart';
 import '../entities/chat_sent_message_response_entity.dart';
-import '../../../../shared/logger/log.dart';
 
 abstract class IChatChannelRepository {
   Future<Either<Failure, ChatChannelAvailableEntity>> listChannel();

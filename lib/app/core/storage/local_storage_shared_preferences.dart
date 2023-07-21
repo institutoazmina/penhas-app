@@ -1,8 +1,9 @@
 import 'dart:async';
 
-import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:synchronized/extension.dart';
+
+import 'i_local_storage.dart';
 
 class LocalStorageSharedPreferences implements ILocalStorage {
   factory LocalStorageSharedPreferences({
@@ -20,9 +21,9 @@ class LocalStorageSharedPreferences implements ILocalStorage {
 
   @override
   Future<void> delete(String key) => synchronized(() async {
-    final preferences = await _preferences.future;
-    await preferences.remove(key);
-  });
+        final preferences = await _preferences.future;
+        await preferences.remove(key);
+      });
 
   @override
   Future<bool> hasKey(String key) =>

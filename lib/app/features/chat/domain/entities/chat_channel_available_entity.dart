@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-import 'package:penhas/app/features/chat/domain/entities/chat_assistant_entity.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_entity.dart';
+import 'chat_assistant_entity.dart';
+import 'chat_channel_entity.dart';
 
 class ChatChannelAvailableEntity extends Equatable {
   const ChatChannelAvailableEntity({
@@ -17,9 +17,6 @@ class ChatChannelAvailableEntity extends Equatable {
   final List<ChatChannelEntity>? channels;
   final ChatChannelEntity? support;
   final ChatAssistantEntity? assistant;
-
-  @override
-  bool get stringify => true;
 
   @override
   List<Object?> get props => [

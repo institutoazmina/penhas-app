@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../shared/design_system/text_styles.dart';
 
 class PassordInputField extends StatefulWidget {
   const PassordInputField({
@@ -35,10 +36,10 @@ class _PassordInputFieldState extends State<PassordInputField> {
       autocorrect: false,
       obscureText: !_isPasswordVisible,
       decoration: InputDecoration(
-        enabledBorder:
-            const OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
-        focusedBorder:
-            const OutlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
+        enabledBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white70)),
+        focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white70)),
         border: const OutlineInputBorder(),
         labelText: widget.labelText,
         labelStyle: kTextStyleDefaultTextFieldLabelStyle,
@@ -48,8 +49,9 @@ class _PassordInputFieldState extends State<PassordInputField> {
         contentPadding: const EdgeInsetsDirectional.only(end: 8.0, start: 8.0),
         suffixIcon: IconButton(
           icon: Icon(
-              _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-              color: Colors.white70,),
+            _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+            color: Colors.white70,
+          ),
           onPressed: _togglePassword,
         ),
       ),

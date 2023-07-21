@@ -2,9 +2,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
+import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
+
+import '../../../../../utils/json_util.dart';
 
 class MockHttpClient extends Mock implements http.Client {}
 
@@ -75,6 +78,27 @@ void main() {
     );
   }
 
+  void _setUpMockHttpClientError(int statusCode) {
+    final bodyContent = JsonUtil.getStringSync(
+      from: 'feed/invalid_request.json',
+    );
+
+    when(
+      () => apiClient.delete(
+        any(),
+        headers: any(named: 'headers'),
+      ),
+    ).thenAnswer(
+      (_) async => http.Response(
+        bodyContent,
+        statusCode,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+        },
+      ),
+    );
+  }
+
   group(TweetDataSource, () {
     group('delete()', () {
       TweetEngageRequestOption? requestOption;
@@ -111,6 +135,28 @@ void main() {
           expect(expected, received);
         },
       );
+
+      test('throw an ApiProviderSessionError for an invalid session', () async {
+        // arrange
+        _setUpMockHttpClientError(401);
+
+        // assert
+        expect(
+          () async => await dataSource.delete(option: requestOption),
+          throwsA(isA<ApiProviderSessionError>()),
+        );
+      });
+
+      test('throw an ApiProviderException for an invalid session', () async {
+        // arrange
+        _setUpMockHttpClientError(501);
+
+        // assert
+        expect(
+          () async => await dataSource.delete(option: requestOption),
+          throwsA(isA<ApiProviderException>()),
+        );
+      });
     });
   });
 }

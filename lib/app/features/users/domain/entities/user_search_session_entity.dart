@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
+
+import 'user_detail_profile_entity.dart';
 
 @immutable
 class UserSearchSessionEntity extends Equatable {
@@ -20,7 +21,4 @@ class UserSearchSessionEntity extends Equatable {
         nextPage,
         users,
       ];
-
-  @override
-  bool get stringify => true;
 }

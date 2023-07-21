@@ -6,11 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Adicionado
+- Menu para o manual de fuga
+- Botão flutuante para criar publicação
+
 ### Modificado
 - Remove configurações do .vscode
+- Adiciona instruções para geração de cobertura de testes em ambiente local
 
 ### Corrigido
 - Tratamento de erro no carregamento do feed
+- Erro ao enviar localização quando acionado o botão de emergência
 
 ## [3.3.1] - 2023-03-10
 

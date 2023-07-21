@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_main_tile_entity.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../shared/design_system/colors.dart';
+import '../../domain/entities/chat_main_tile_entity.dart';
 
 class ChatAssistantCard extends StatelessWidget {
   const ChatAssistantCard({

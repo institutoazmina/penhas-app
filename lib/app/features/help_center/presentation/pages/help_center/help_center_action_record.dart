@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../../shared/design_system/colors.dart';
+import '../../../../../shared/design_system/text_styles.dart';
 
 class HelpCenterActionRecord extends StatelessWidget {
   const HelpCenterActionRecord({
@@ -10,7 +11,7 @@ class HelpCenterActionRecord extends StatelessWidget {
   }) : super(key: key);
 
   final VoidCallback onPressed;
-  
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -30,7 +31,8 @@ class HelpCenterActionRecord extends StatelessWidget {
                 height: 41,
                 width: 49,
                 child: SvgPicture.asset(
-                    'assets/images/svg/help_center/help_center_record.svg',),
+                  'assets/images/svg/help_center/help_center_record.svg',
+                ),
               ),
             ),
             const Padding(

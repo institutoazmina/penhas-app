@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:penhas/app/features/main_menu/domain/entities/account_preference_entity.dart';
+
+import '../entities/account_preference_entity.dart';
 
 part 'account_preference_state.freezed.dart';
 

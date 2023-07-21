@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/map_validator_failure.dart';
+
+import '../../../../core/error/failures.dart';
+import 'map_validator_failure.dart';
 
 @immutable
 class Fullname extends Equatable with MapValidatorFailure {

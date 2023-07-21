@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/core/states/security_toggle_state.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../core/states/security_toggle_state.dart';
+import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/text_styles.dart';
 
 class PenhasDrawerTooglePage extends StatelessWidget {
   const PenhasDrawerTooglePage({

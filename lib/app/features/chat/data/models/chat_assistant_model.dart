@@ -1,6 +1,6 @@
-import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
-import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_assistant_entity.dart';
+import '../../../appstate/data/model/app_state_model.dart';
+import '../../../appstate/domain/entities/app_state_entity.dart';
+import '../../domain/entities/chat_assistant_entity.dart';
 
 class ChatAssistantModel extends ChatAssistantEntity {
   const ChatAssistantModel({

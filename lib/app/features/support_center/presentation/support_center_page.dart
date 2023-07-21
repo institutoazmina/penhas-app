@@ -4,6 +4,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
+
+import '../../../shared/design_system/colors.dart';
 import '../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../authentication/presentation/shared/snack_bar_handler.dart';
 import '../domain/states/support_center_state.dart';
@@ -11,7 +13,6 @@ import 'pages/support_center_general_error.dart';
 import 'pages/support_center_gps_error.dart';
 import 'pages/support_center_input_filter.dart';
 import 'support_center_controller.dart';
-import '../../../shared/design_system/colors.dart';
 
 class SupportCenterPage extends StatefulWidget {
   const SupportCenterPage({Key? key}) : super(key: key);

@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/features/help_center/domain/entities/guardian_tile_entity.dart';
-import 'package:penhas/app/features/help_center/domain/states/guardian_state.dart';
-import 'package:penhas/app/features/help_center/presentation/guardians/guardians_controller.dart';
-import 'package:penhas/app/features/help_center/presentation/pages/guardian_error_page.dart';
-import 'package:penhas/app/features/help_center/presentation/pages/guardian_tile_action_card.dart';
-import 'package:penhas/app/features/help_center/presentation/pages/guardian_tile_description.dart';
-import 'package:penhas/app/features/help_center/presentation/pages/guardian_tile_empty_card.dart';
-import 'package:penhas/app/features/help_center/presentation/pages/guardian_tile_header.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../shared/design_system/colors.dart';
+import '../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../../authentication/presentation/shared/snack_bar_handler.dart';
+import '../../domain/entities/guardian_tile_entity.dart';
+import '../../domain/states/guardian_state.dart';
+import '../pages/guardian_error_page.dart';
+import '../pages/guardian_tile_action_card.dart';
+import '../pages/guardian_tile_description.dart';
+import '../pages/guardian_tile_empty_card.dart';
+import '../pages/guardian_tile_header.dart';
+import 'guardians_controller.dart';
 
 class GuardiansPage extends StatefulWidget {
   const GuardiansPage({Key? key, this.title = 'Guardians'}) : super(key: key);

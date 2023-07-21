@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/core/pages/tutorial_scale_route.dart';
-import 'package:penhas/app/features/help_center/presentation/pages/tutorial/guardian/guardian_tutorial_page.dart';
-import 'package:penhas/app/shared/design_system/button_shape.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../../core/pages/tutorial_scale_route.dart';
+import '../../../../../shared/design_system/button_shape.dart';
+import '../../../../../shared/design_system/colors.dart';
+import '../../../../../shared/design_system/text_styles.dart';
+import '../tutorial/guardian/guardian_tutorial_page.dart';
 
 class HelpCenterCardGuardian extends StatelessWidget {
   const HelpCenterCardGuardian({
@@ -33,9 +34,10 @@ class HelpCenterCardGuardian extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-                color: Colors.black.withOpacity(0.5),
-                offset: const Offset(0.0, 2.0),
-                blurRadius: 4.0,)
+              color: Colors.black.withOpacity(0.5),
+              offset: const Offset(0.0, 2.0),
+              blurRadius: 4.0,
+            )
           ],
         ),
         child: Padding(
@@ -66,8 +68,9 @@ class HelpCenterCardGuardian extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(top: 6, bottom: 12),
                 child: Text(
-                    'Seus contatos de confiança para dispara pedidos de socorro.',
-                    style: kTextStyleRegisterSubtitleLabelStyle,),
+                  'Seus contatos de confiança para dispara pedidos de socorro.',
+                  style: kTextStyleRegisterSubtitleLabelStyle,
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,8 +83,10 @@ class HelpCenterCardGuardian extends StatelessWidget {
                         backgroundColor: DesignSystemColors.cobaltTwo,
                         onPressed: create,
                         shape: kButtonShapeOutlineWhite,
-                        child: const Text('Novo guardião',
-                            style: kTextStyleHelpCenterButtonLabel,),
+                        child: const Text(
+                          'Novo guardião',
+                          style: kTextStyleHelpCenterButtonLabel,
+                        ),
                       ),
                     ),
                   ),
@@ -92,14 +97,15 @@ class HelpCenterCardGuardian extends StatelessWidget {
                     child: SizedBox(
                       height: 40,
                       child: FloatingActionButton(
-                          heroTag: 'guardian_2',
-                          backgroundColor: DesignSystemColors.easterPurple,
-                          onPressed: manager,
-                          shape: kButtonShapeOutlinePurple,
-                          child: const Text(
-                            'Meus guardiões',
-                            style: kTextStyleHelpCenterButtonLabel,
-                          ),),
+                        heroTag: 'guardian_2',
+                        backgroundColor: DesignSystemColors.easterPurple,
+                        onPressed: manager,
+                        shape: kButtonShapeOutlinePurple,
+                        child: const Text(
+                          'Meus guardiões',
+                          style: kTextStyleHelpCenterButtonLabel,
+                        ),
+                      ),
                     ),
                   ),
                 ],

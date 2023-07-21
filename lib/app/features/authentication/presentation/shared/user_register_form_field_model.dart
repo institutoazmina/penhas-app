@@ -1,12 +1,12 @@
-import 'package:penhas/app/features/authentication/domain/usecases/birthday.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/cpf.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/full_name.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/genre.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/human_race.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
+import '../../domain/usecases/birthday.dart';
+import '../../domain/usecases/cep.dart';
+import '../../domain/usecases/cpf.dart';
+import '../../domain/usecases/email_address.dart';
+import '../../domain/usecases/full_name.dart';
+import '../../domain/usecases/genre.dart';
+import '../../domain/usecases/human_race.dart';
+import '../../domain/usecases/nickname.dart';
+import '../../domain/usecases/sign_up_password.dart';
 
 class UserRegisterFormFieldModel {
   Fullname? fullname;
@@ -48,5 +48,7 @@ class UserRegisterFormFieldModel {
   }
 
   String get validatePasswordConfirmation =>
-      password!.rawValue == passwordConfirmation ? '' : 'As senhas não são iguais';
+      password!.rawValue == passwordConfirmation
+          ? ''
+          : 'As senhas não são iguais';
 }

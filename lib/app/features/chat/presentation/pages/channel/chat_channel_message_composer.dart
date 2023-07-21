@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/chat/presentation/chat/chat_channel_compose_type.dart';
-import 'package:penhas/app/shared/design_system/button_shape.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../../shared/design_system/button_shape.dart';
+import '../../../../../shared/design_system/colors.dart';
+import '../../chat/chat_channel_compose_type.dart';
 
 class ChatChannelMessageComposer extends StatefulWidget {
   const ChatChannelMessageComposer({
@@ -59,8 +60,9 @@ class _ChatChannelMessageComposerState
             child: TextField(
               maxLines: null,
               expands: true,
-              decoration:
-                  const InputDecoration.collapsed(hintText: 'Digite uma mensagem'),
+              decoration: const InputDecoration.collapsed(
+                hintText: 'Digite uma mensagem',
+              ),
               textCapitalization: TextCapitalization.sentences,
               controller: _textController,
               onSubmitted: (t) => _submitMessageAction(context),
@@ -111,13 +113,14 @@ class _ChatChannelMessageComposerState
       child: Row(
         children: [
           Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-              child: Center(
-                child: Text(
-                  'Você está bloqueado para utilizar este chat',
-                  style: blockedStyle,
-                ),
-              ),),
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+            child: Center(
+              child: Text(
+                'Você está bloqueado para utilizar este chat',
+                style: blockedStyle,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -137,16 +140,18 @@ class _ChatChannelMessageComposerState
 extension _ChatChannelMessageComposerStatePrivate
     on _ChatChannelMessageComposerState {
   TextStyle get buttomTitleStyle => const TextStyle(
-      fontFamily: 'Lato',
-      fontSize: 12.0,
-      letterSpacing: 0.4,
-      color: DesignSystemColors.white,
-      fontWeight: FontWeight.bold,);
+        fontFamily: 'Lato',
+        fontSize: 12.0,
+        letterSpacing: 0.4,
+        color: DesignSystemColors.white,
+        fontWeight: FontWeight.bold,
+      );
 
   TextStyle get blockedStyle => const TextStyle(
-      fontFamily: 'Lato',
-      fontSize: 16.0,
-      letterSpacing: 0.5,
-      color: DesignSystemColors.blueyGrey,
-      fontWeight: FontWeight.bold,);
+        fontFamily: 'Lato',
+        fontSize: 16.0,
+        letterSpacing: 0.5,
+        color: DesignSystemColors.blueyGrey,
+        fontWeight: FontWeight.bold,
+      );
 }

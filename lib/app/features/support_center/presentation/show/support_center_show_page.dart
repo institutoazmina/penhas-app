@@ -4,16 +4,17 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:map_launcher/map_launcher.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_detail_entity.dart';
-import 'package:penhas/app/features/support_center/domain/states/support_center_show_state.dart';
-import 'package:penhas/app/features/support_center/presentation/pages/support_center_detail_map.dart';
-import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
-import 'package:penhas/app/features/support_center/presentation/pages/support_center_rate.dart';
-import 'package:penhas/app/features/support_center/presentation/show/support_center_show_controller.dart';
-import 'package:penhas/app/shared/design_system/button_shape.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+
+import '../../../../shared/design_system/button_shape.dart';
+import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/logger/log.dart';
+import '../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../domain/entities/support_center_place_detail_entity.dart';
+import '../../domain/states/support_center_show_state.dart';
+import '../pages/support_center_detail_map.dart';
+import '../pages/support_center_general_error.dart';
+import '../pages/support_center_rate.dart';
+import 'support_center_show_controller.dart';
 
 class SupportCenterShowPage extends StatefulWidget {
   const SupportCenterShowPage({Key? key}) : super(key: key);

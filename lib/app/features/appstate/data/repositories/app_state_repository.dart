@@ -1,12 +1,13 @@
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/error/exceptions.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/network/network_info.dart';
-import 'package:penhas/app/features/appstate/data/datasources/app_state_data_source.dart';
-import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
-import 'package:penhas/app/features/appstate/domain/entities/update_user_profile_entity.dart';
-import 'package:penhas/app/features/appstate/domain/repositories/i_app_state_repository.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/network/network_info.dart';
+import '../../../../shared/logger/log.dart';
+import '../../domain/entities/app_state_entity.dart';
+import '../../domain/entities/update_user_profile_entity.dart';
+import '../../domain/repositories/i_app_state_repository.dart';
+import '../datasources/app_state_data_source.dart';
 
 class AppStateRepository implements IAppStateRepository {
   AppStateRepository({

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_entity.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../shared/design_system/colors.dart';
+import '../../domain/entities/chat_channel_entity.dart';
 
 class ChatChannelCard extends StatelessWidget {
   const ChatChannelCard({

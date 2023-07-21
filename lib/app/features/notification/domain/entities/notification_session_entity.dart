@@ -17,9 +17,6 @@ class NotificationSessionEntity extends Equatable {
         nextPage,
         notifications,
       ];
-
-  @override
-  bool get stringify => true;
 }
 
 class NotificationEntity extends Equatable {
@@ -48,7 +45,4 @@ class NotificationEntity extends Equatable {
         title,
         route,
       ];
-
-  @override
-  bool get stringify => true;
 }

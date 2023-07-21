@@ -4,7 +4,6 @@ import 'package:meta/meta.dart';
 import 'user_profile_entity.dart';
 
 enum QuizMessageType {
-  from,
   button,
   yesno,
   displayText,
@@ -15,31 +14,24 @@ enum QuizMessageType {
   displayTextResponse,
 }
 
-extension QuizMessageTypeExtension on QuizMessageType {
-  QuizMessageType operator [](String key) {
-    var type = QuizMessageType.displayText;
+extension QuizMessageTypeExtension on List<QuizMessageType> {
+  QuizMessageType byName(String key) {
     switch (key.toLowerCase()) {
       case 'button':
-        type = QuizMessageType.button;
-        break;
+        return QuizMessageType.button;
       case 'show_tutorial':
-        type = QuizMessageType.showStealthTutorial;
-        break;
+        return QuizMessageType.showStealthTutorial;
       case 'yesno':
-        type = QuizMessageType.yesno;
-        break;
+        return QuizMessageType.yesno;
       case 'displaytext':
-        type = QuizMessageType.displayText;
-        break;
+        return QuizMessageType.displayText;
       case 'display_response':
-        type = QuizMessageType.displayTextResponse;
-        break;
+        return QuizMessageType.displayTextResponse;
       case 'multiplechoices':
-        type = QuizMessageType.multipleChoices;
-        break;
+        return QuizMessageType.multipleChoices;
+      default:
+        return QuizMessageType.displayText;
     }
-
-    return type;
   }
 }
 
@@ -155,9 +147,6 @@ class AppStateModuleEntity extends Equatable {
 
   final String code;
   final String meta;
-
-  @override
-  bool get stringify => true;
 
   @override
   List<Object?> get props => [code, meta];

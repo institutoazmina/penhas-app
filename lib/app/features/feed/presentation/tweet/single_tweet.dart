@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/presentation/stores/tweet_controller.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_avatar.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_body.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_bottom.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_title.dart';
+
+import '../../domain/entities/tweet_entity.dart';
+import '../stores/tweet_controller.dart';
+import 'widgets/tweet_avatar.dart';
+import 'widgets/tweet_body.dart';
+import 'widgets/tweet_bottom.dart';
+import 'widgets/tweet_title.dart';
 
 class SingleTweet extends StatelessWidget {
   const SingleTweet({

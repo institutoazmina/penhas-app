@@ -1,5 +1,5 @@
-import 'package:penhas/app/features/help_center/domain/entities/audio_entity.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+import '../../../../shared/logger/log.dart';
+import '../../domain/entities/audio_entity.dart';
 
 class AudioModel {
   static List<AudioEntity> fromJson(Map<String, dynamic>? json) {

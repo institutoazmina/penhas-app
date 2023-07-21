@@ -24,7 +24,4 @@ class TweetRequestOption extends Equatable {
   @override
   List<Object?> get props =>
       [rows, after, before, parent, replyTo, nextPageToken, category, tags];
-
-  @override
-  bool get stringify => true;
 }

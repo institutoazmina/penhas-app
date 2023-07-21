@@ -1,10 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
+
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/error/failures.dart';
+import '../repositories/i_reset_password_repository.dart';
+import 'email_address.dart';
+import 'sign_up_password.dart';
 
 @immutable
 class ChangePassword {

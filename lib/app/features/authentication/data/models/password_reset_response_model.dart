@@ -1,4 +1,4 @@
-import 'package:penhas/app/features/authentication/domain/entities/reset_password_response_entity.dart';
+import '../../domain/entities/reset_password_response_entity.dart';
 
 class PasswordResetResponseModel extends ResetPasswordResponseEntity {
   const PasswordResetResponseModel({
