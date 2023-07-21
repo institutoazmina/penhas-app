@@ -34,6 +34,7 @@ import '../../../feed/domain/usecases/tweet_filter_preference.dart';
 import '../../../feed/presentation/category_tweet/category_tweet_controller.dart';
 import '../../../feed/presentation/category_tweet/category_tweet_page.dart';
 import '../../../feed/presentation/compose_tweet/compose_tweet_controller.dart';
+import '../../../feed/presentation/compose_tweet/compose_tweet_navigator.dart';
 import '../../../feed/presentation/compose_tweet/compose_tweet_page.dart';
 import '../../../feed/presentation/detail_tweet/detail_tweet_controller.dart';
 import '../../../feed/presentation/detail_tweet/detail_tweet_page.dart';
@@ -361,7 +362,7 @@ class MainboardModule extends Module {
         Bind.factory(
           (i) => ComposeTweetController(
             useCase: i.get<FeedUseCases>(),
-            mainboardStore: i.get<MainboardStore>(),
+            navigator: i.get<ComposeTweetNavigator>(),
           ),
         ),
         Bind.factory(
@@ -386,6 +387,12 @@ class MainboardModule extends Module {
         Bind.factory(
           (i) => FilterTweetController(
             useCase: i.get<TweetFilterPreference>(),
+          ),
+        ),
+        Bind.factory(
+          (i) => ComposeTweetNavigator(
+            currentUri: i.args?.uri,
+            mainboardStore: i.get<MainboardStore>(),
           ),
         ),
         Bind.factory<IUsersRepository>(

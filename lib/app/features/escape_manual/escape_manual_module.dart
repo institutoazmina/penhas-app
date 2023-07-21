@@ -7,12 +7,13 @@ import 'domain/get_escape_manual.dart';
 import 'domain/repository/escape_manual_repository.dart';
 import 'domain/start_escape_manual.dart';
 import 'presentation/escape_manual_controller.dart';
+import 'presentation/escape_manual_page.dart';
 
 class EscapeManualModule extends WidgetModule {
   EscapeManualModule({Key? key}) : super(key: key);
 
   @override
-  Widget get view => Container();
+  Widget get view => const EscapeManualPage();
 
   @override
   final List<Bind<Object>> binds = [
