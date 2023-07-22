@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../../../../shared/design_system/button_shape.dart';
-import '../../../../shared/design_system/colors.dart';
-import '../../../../shared/design_system/text_styles.dart';
-import 'quiz_typedef.dart';
+import '../../../../../core/pages/tutorial_scale_route.dart';
+import '../../../../../shared/design_system/button_shape.dart';
+import '../../../../../shared/design_system/colors.dart';
+import '../../../../../shared/design_system/text_styles.dart';
+import '../../../../help_center/presentation/pages/tutorial/guardian/guardian_tutorial_page.dart';
+import '../quiz_typedef.dart';
 
-class QuizSingleButtonWidget extends StatelessWidget {
-  const QuizSingleButtonWidget({
+class QuizShowHelpTutorialWidget extends StatelessWidget {
+  const QuizShowHelpTutorialWidget({
     Key? key,
     required this.reference,
     required this.onPressed,
@@ -33,7 +35,14 @@ class QuizSingleButtonWidget extends StatelessWidget {
       child: RaisedButton(
         color: DesignSystemColors.ligthPurple,
         elevation: 0.0,
-        onPressed: () => onPressed({reference: '1'}),
+        onPressed: () async {
+          await Navigator.push(
+            context,
+            TutorialScaleRoute(page: const GuardianTutorialPage()),
+          ).then(
+            (value) => onPressed({reference: value ? '1' : '0'}),
+          );
+        },
         shape: kButtonShapeFilled,
         child: Text(
           buttonLabel!,

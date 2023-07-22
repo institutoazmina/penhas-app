@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../../shared/design_system/button_shape.dart';
-import '../../../../shared/design_system/colors.dart';
-import '../../../../shared/design_system/text_styles.dart';
-import '../../../appstate/domain/entities/app_state_entity.dart';
-import 'quiz_typedef.dart';
+import '../../../../../shared/design_system/button_shape.dart';
+import '../../../../../shared/design_system/colors.dart';
+import '../../../../../shared/design_system/text_styles.dart';
+import '../../../../appstate/domain/entities/app_state_entity.dart';
+import '../quiz_typedef.dart';
 
 class QuizMultipleChoicesWidget extends StatefulWidget {
   const QuizMultipleChoicesWidget({
@@ -16,7 +16,7 @@ class QuizMultipleChoicesWidget extends StatefulWidget {
 
   final String reference;
   final UserReaction onPressed;
-  final List<QuizMessageMultiplechoicesOptions>? options;
+  final List<QuizMessageChoiceOption>? options;
 
   @override
   _QuizMultipleChoicesWidgetState createState() =>
@@ -98,7 +98,7 @@ class _QuizMultipleChoicesWidgetState extends State<QuizMultipleChoicesWidget> {
     widget.onPressed(response);
   }
 
-  Widget _buildItem(QuizMessageMultiplechoicesOptions option) {
+  Widget _buildItem(QuizMessageChoiceOption option) {
     final checked = _selectedValues.contains(option.index);
 
     return SizedBox(
@@ -106,7 +106,7 @@ class _QuizMultipleChoicesWidgetState extends State<QuizMultipleChoicesWidget> {
       child: CheckboxListTile(
         onChanged: (v) => _onItemCheckedChange(option.index, v == true),
         value: checked,
-        title: Text(option.display!),
+        title: Text(option.display),
         controlAffinity: ListTileControlAffinity.leading,
       ),
     );

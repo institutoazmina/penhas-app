@@ -5,12 +5,14 @@ import 'user_profile_entity.dart';
 
 enum QuizMessageType {
   button,
+  horizontalButtons,
   yesno,
   displayText,
   showStealthTutorial,
   showHelpTutorial,
   forceReload,
   multipleChoices,
+  singleChoice,
   displayTextResponse,
 }
 
@@ -23,12 +25,18 @@ extension QuizMessageTypeExtension on List<QuizMessageType> {
         return QuizMessageType.showStealthTutorial;
       case 'yesno':
         return QuizMessageType.yesno;
+      case 'yesnomaybe':
+      case 'horizontal_buttons':
+        return QuizMessageType.horizontalButtons;
       case 'displaytext':
         return QuizMessageType.displayText;
       case 'display_response':
         return QuizMessageType.displayTextResponse;
       case 'multiplechoices':
         return QuizMessageType.multipleChoices;
+      case 'onlychoice':
+      case 'singlechoice':
+        return QuizMessageType.singleChoice;
       default:
         return QuizMessageType.displayText;
     }
@@ -97,24 +105,24 @@ class QuizMessageEntity extends Equatable {
   final String? style;
   final String? action;
   final String? buttonLabel;
-  final List<QuizMessageMultiplechoicesOptions>? options;
+  final List<QuizMessageChoiceOption>? options;
 
   @override
   List<dynamic> get props =>
       [content, style, action, type, ref, options, buttonLabel];
 }
 
-class QuizMessageMultiplechoicesOptions extends Equatable {
-  const QuizMessageMultiplechoicesOptions({
+class QuizMessageChoiceOption extends Equatable {
+  const QuizMessageChoiceOption({
     required this.display,
     required this.index,
   });
 
-  final String? display;
-  final String? index;
+  final String display;
+  final String index;
 
   @override
-  List<Object?> get props => [display, index!];
+  List<Object?> get props => [display, index];
 }
 
 @immutable
