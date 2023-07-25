@@ -1174,6 +1174,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.7"
+  rxdart_ext:
+    dependency: transitive
+    description:
+      name: rxdart_ext
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.3"
   scroll_to_index:
     dependency: "direct main"
     description:
@@ -1321,6 +1328,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
+  sqlbrite:
+    dependency: "direct main"
+    description:
+      name: sqlbrite
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.0"
   stack_trace:
     dependency: "direct main"
     description:

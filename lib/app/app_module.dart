@@ -13,6 +13,7 @@ import 'core/network/api_client.dart';
 import 'core/network/api_server_configure.dart';
 import 'core/network/network_info.dart';
 import 'core/storage/cache_storage.dart';
+import 'core/storage/db.dart';
 import 'core/storage/i_local_storage.dart';
 import 'core/storage/impl/hive_cache_storage.dart';
 import 'core/storage/impl/hive_persistent_storage.dart';
@@ -75,6 +76,7 @@ class AppModule extends Module {
             networkInfo: i.get<INetworkInfo>(),
           ),
         ),
+        Bind.singleton((i) => DbProvider()),
         Bind.factory<DataConnectionChecker>((i) => DataConnectionChecker()),
         Bind.factory<IUserProfileRepository>(
           (i) => UserProfileRepository(
