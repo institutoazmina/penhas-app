@@ -1,18 +1,26 @@
+import 'package:equatable/equatable.dart';
 import '../../../../shared/logger/log.dart';
 import '../../domain/entities/audio_entity.dart';
 
-class AudioModel {
-  static List<AudioEntity> fromJson(Map<String, dynamic>? json) {
-    if (json == null || json.isEmpty || json['rows'] == null) {
-      return List.empty();
-    }
+class AudioModel extends Equatable {
+  const AudioModel({required this.audioList, required this.message});
 
-    final rows = json['rows'] as List<dynamic>;
-    return rows
+  factory AudioModel.fromJson(Map<String, dynamic>? json) {
+    final message = json?['message'] as String? ?? '';
+    final rows = json?['rows'] as List<dynamic>? ?? [];
+
+    final audioList = rows
         .map((e) => e as Map<String, dynamic>)
         .map((e) => _AudioModelParseData.parseEntity(e))
         .toList();
+
+    return AudioModel(audioList: audioList, message: message);
   }
+
+  final List<AudioEntity> audioList;
+  final String message;
+  @override
+  List<Object?> get props => [audioList, message];
 }
 
 class _AudioModelParseData {

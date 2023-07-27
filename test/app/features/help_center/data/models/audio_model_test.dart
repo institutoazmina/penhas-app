@@ -12,7 +12,8 @@ void main() {
         () async {
       // arrange
       final jsonData = await JsonUtil.getJson(from: 'audios/audios_fetch.json');
-      final actual = [
+
+      final audioList = [
         AudioEntity(
           id: 'c6711926-0ca8-47fd-bed3-5a803c422904',
           audioDuration: '0m55s',
@@ -30,10 +31,15 @@ void main() {
           isRequestGranted: false,
         ),
       ];
+
+      final actual =
+          AudioModel(audioList: audioList, message: jsonData['message']);
+
       // act
       final matcher = AudioModel.fromJson(jsonData);
       // assert
-      expect(actual, matcher);
+      expect(actual.audioList, matcher.audioList);
+      expect(actual.message, matcher.message);
     });
   });
 }

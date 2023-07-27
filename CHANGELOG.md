@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Modificado
 - Remove configurações do .vscode
+- Adiciona mensagem sobre quantidade de áudios gravados
 - Adiciona instruções para geração de cobertura de testes em ambiente local
 
 ### Corrigido

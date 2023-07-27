@@ -3,7 +3,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
-
 import '../../../../core/extension/asuka.dart';
 import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/design_system/text_styles.dart';
@@ -14,9 +13,9 @@ import '../../domain/entities/audio_play_tile_entity.dart';
 import '../../domain/states/audio_playing.dart';
 import '../../domain/states/audio_tile_action.dart';
 import '../../domain/states/audios_state.dart';
+import 'audios_controller.dart';
 import '../pages/audio/audio_play_widget.dart';
 import '../pages/guardian_error_page.dart';
-import 'audios_controller.dart';
 
 class AudiosPage extends StatefulWidget {
   const AudiosPage({Key? key, this.title = 'Audios'}) : super(key: key);
@@ -92,7 +91,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
   Widget _buildBody(AudiosState state) {
     return state.when(
       initial: () => _empty(),
-      loaded: (tiles) => _buildInputScreen(tiles),
+      loaded: (tiles, message) => _buildInputScreen(tiles, message),
       error: (message) => GuardianErrorPage(
         message: message,
         onPressed: controller.loadPage,
@@ -100,32 +99,54 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
     );
   }
 
-  Widget _buildInputScreen(List<AudioPlayTileEntity> tiles) {
+  Widget _buildInputScreen(List<AudioPlayTileEntity> tiles, String message) {
     return Container(
       color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.only(top: 22),
         child: RefreshIndicator(
-          key: _refreshIndicatorKey,
-          onRefresh: () async => controller.loadPage(),
-          child: ListView.builder(
-            itemCount: tiles.length,
-            itemBuilder: (context, index) {
-              final audio = tiles[index];
-              final isPlaying = audio.audio == _playingAudio;
-              final backgroundColor = _selectingAudioMenu == audio.audio
-                  ? DesignSystemColors.blueyGrey
-                  : Colors.transparent;
-
-              return AudioPlayWidget(
-                audioPlay: tiles[index],
-                isPlaying: isPlaying,
-                backgroundColor: backgroundColor,
-              );
-            },
-          ),
-        ),
+            key: _refreshIndicatorKey,
+            onRefresh: () async => controller.loadPage(),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    message,
+                    style: const TextStyle(fontSize: 16.0),
+                  ),
+                ),
+                Expanded(
+                  child: Scrollbar(
+                    isAlwaysShown: true,
+                    child: ListView(
+                      shrinkWrap: true,
+                      children: [
+                        ..._buildListElements(tiles).toList(),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            )),
       ),
+    );
+  }
+
+  Iterable<AudioPlayWidget> _buildListElements(
+      List<AudioPlayTileEntity> tiles) {
+    return tiles.map(
+      (audio) {
+        final isPlaying = audio.audio == _playingAudio;
+        final backgroundColor = _selectingAudioMenu == audio.audio
+            ? DesignSystemColors.blueyGrey
+            : Colors.transparent;
+        return AudioPlayWidget(
+          audioPlay: audio,
+          isPlaying: isPlaying,
+          backgroundColor: backgroundColor,
+        );
+      },
     );
   }
 
