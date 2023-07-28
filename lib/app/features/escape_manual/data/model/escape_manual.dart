@@ -1,46 +1,57 @@
-import '../../../appstate/data/model/quiz_session_model.dart';
+import 'package:collection/collection.dart';
+
 import '../../domain/entity/escape_manual.dart';
 
-class EscapeManualModel extends EscapeManualEntity {
-  const EscapeManualModel({
-    required EscapeManualAssistantModel assistant,
-  }) : super(assistant: assistant);
+class EscapeManualTasksSectionModel extends EscapeManualTasksSectionEntity {
+  const EscapeManualTasksSectionModel({
+    required String title,
+    required Iterable<EscapeManualTaskModel> tasks,
+  }) : super(title: title, tasks: tasks);
 
-  factory EscapeManualModel.fromJson(Map<String, dynamic> json) {
-    return EscapeManualModel(
-      assistant: EscapeManualAssistantModel.fromJson(json['mf_assistant']),
-    );
-  }
+  static Iterable<EscapeManualTasksSectionModel> fromList(
+    Iterable<EscapeManualTaskModel> models,
+  ) =>
+      models.groupListsBy((el) => el.group).entries.map(
+            (el) => EscapeManualTasksSectionModel(
+              title: el.key,
+              tasks: el.value,
+            ),
+          );
 }
 
-class EscapeManualAssistantModel extends EscapeManualAssistantEntity {
-  const EscapeManualAssistantModel({
-    required String explanation,
-    required EscapeManualAssistantActionModel action,
+class EscapeManualTaskModel extends EscapeManualTaskEntity {
+  const EscapeManualTaskModel({
+    required String id,
+    required String type,
+    required String group,
+    required String title,
+    required String description,
+    required bool isEditable,
+    required String? userInputValue,
+    required bool isDone,
+    required int updatedAt,
   }) : super(
-          explanation: explanation,
-          action: action,
+          id: id,
+          type: type,
+          group: group,
+          title: title,
+          description: description,
+          isEditable: isEditable,
+          userInputValue: userInputValue,
+          isDone: isDone,
+          updatedAt: updatedAt,
         );
 
-  factory EscapeManualAssistantModel.fromJson(Map<String, dynamic> json) {
-    return EscapeManualAssistantModel(
-      explanation: json['subtitle'],
-      action: EscapeManualAssistantActionModel.fromJson(json),
-    );
-  }
-}
-
-class EscapeManualAssistantActionModel
-    extends EscapeManualAssistantActionEntity {
-  const EscapeManualAssistantActionModel({
-    required String text,
-    required QuizSessionModel quizSession,
-  }) : super(text: text, quizSession: quizSession);
-
-  factory EscapeManualAssistantActionModel.fromJson(Map<String, dynamic> json) {
-    return EscapeManualAssistantActionModel(
-      text: json['title'],
-      quizSession: QuizSessionModel.fromJson(json['quiz_session']),
-    );
-  }
+  factory EscapeManualTaskModel.fromEntity(EscapeManualTaskEntity task) =>
+      EscapeManualTaskModel(
+        id: task.id,
+        type: task.type,
+        group: task.group,
+        title: task.title,
+        description: task.description,
+        isEditable: task.isEditable,
+        userInputValue: task.userInputValue,
+        isDone: task.isDone,
+        updatedAt: task.updatedAt,
+      );
 }
