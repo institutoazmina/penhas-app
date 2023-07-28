@@ -2,20 +2,26 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DbProvider {
-  Future<Database> get database async => _database ??= await _getDatabase();
+  DbProvider({
+    this.dbPath,
+  });
+
+  final String? dbPath;
+
   Database? _database;
+
+  Future<Database> get database async => _database ??= await _getDatabase(
+        dbPath ?? join(await getDatabasesPath(), 'penhas.db'),
+      );
 }
 
-Future<Database> _getDatabase() async {
-  final dbPath = join(await getDatabasesPath(), 'penhas.db');
-  return openDatabase(
-    dbPath,
-    version: _migrationsUp.length,
-    onCreate: (db, version) => _migrateUp(db, 0, version),
-    onUpgrade: _migrateUp,
-    onDowngrade: _migrateDown,
-  );
-}
+Future<Database> _getDatabase(String dbPath) => openDatabase(
+      dbPath,
+      version: _migrationsUp.length,
+      onCreate: (db, version) => _migrateUp(db, 0, version),
+      onUpgrade: _migrateUp,
+      onDowngrade: _migrateDown,
+    );
 
 Future<void> _migrateUp(Database db, int oldVersion, int newVersion) async {
   final migrations = _migrationsUp.sublist(oldVersion, newVersion);
@@ -44,17 +50,16 @@ Future<void> _migrate(Database db, Iterable<String> migrations) async {
 List<String> get _migrationsUp => [
       '''
       CREATE TABLE escape_manual_tasks(
-        id INTEGER PRIMARY KEY,
-        title TEXT,
-        description TEXT,
-        category TEXT,
-        type TEXT,
-        user_input_value TEXT,
-        is_editable INTEGER,
-        status TEXT CHECK(
-          status IN ('TODO', 'TODO_PENDING', 'DONE', 'DONE_PENDING', 'DELETE_PENDING')
-        )
-        updated_at TIMESTAMP
+        'id' INTEGER PRIMARY KEY,
+        'title' TEXT NOT NULL,
+        'description' TEXT NOT NULL,
+        'group' TEXT NOT NULL,
+        'type' TEXT NOT NULL,
+        'user_input_value' TEXT,
+        'is_editable' INTEGER NOT NULL,
+        'is_done' INTEGER DEFAULT 0 NOT NULL,
+        'is_removed' INTEGER DEFAULT 0 NOT NULL,
+        'updated_at' TIMESTAMP
       )
       ''',
     ];
