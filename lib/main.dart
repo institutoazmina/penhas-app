@@ -6,9 +6,10 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:penhas/app/app_module.dart';
-import 'package:penhas/app/app_widget.dart';
-import 'package:penhas/firebase_options.dart';
+
+import 'app/app_module.dart';
+import 'app/app_widget.dart';
+import 'firebase_options.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +30,7 @@ Future main() async {
       runApp(
         ModularApp(
           module: AppModule(),
-          child: AppWidget(),
+          child: const AppWidget(),
         ),
       );
     },

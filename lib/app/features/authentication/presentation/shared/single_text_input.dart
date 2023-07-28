@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../shared/design_system/text_styles.dart';
 
 class SingleTextInput extends StatelessWidget {
   const SingleTextInput({

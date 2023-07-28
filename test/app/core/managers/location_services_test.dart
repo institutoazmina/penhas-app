@@ -88,12 +88,13 @@ void main() {
       () async {
         // arrange
         final permissionMap = {
-          PermissionStatus.denied: LocationPermissionState.denied(),
-          PermissionStatus.granted: LocationPermissionState.granted(),
-          PermissionStatus.restricted: LocationPermissionState.restricted(),
+          PermissionStatus.denied: const LocationPermissionState.denied(),
+          PermissionStatus.granted: const LocationPermissionState.granted(),
+          PermissionStatus.restricted:
+              const LocationPermissionState.restricted(),
           PermissionStatus.permanentlyDenied:
-              LocationPermissionState.permanentlyDenied(),
-          PermissionStatus.limited: LocationPermissionState.undefined(),
+              const LocationPermissionState.permanentlyDenied(),
+          PermissionStatus.limited: const LocationPermissionState.undefined(),
         };
 
         permissionMap.forEach((key, value) async {
@@ -160,7 +161,7 @@ void main() {
           description: Container(),
         );
 
-        expect(result, LocationPermissionState.granted());
+        expect(result, const LocationPermissionState.granted());
       },
     );
 
@@ -181,7 +182,7 @@ void main() {
           description: Container(),
         );
 
-        expect(result, LocationPermissionState.restricted());
+        expect(result, const LocationPermissionState.restricted());
       },
     );
   });

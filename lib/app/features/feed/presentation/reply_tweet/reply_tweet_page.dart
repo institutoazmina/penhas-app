@@ -4,15 +4,16 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/features/feed/presentation/reply_tweet/reply_tweet_controller.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_avatar.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_body.dart';
-import 'package:penhas/app/features/feed/presentation/tweet/widgets/tweet_title.dart';
-import 'package:penhas/app/shared/design_system/button_shape.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../shared/design_system/button_shape.dart';
+import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/text_styles.dart';
+import '../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../../authentication/presentation/shared/snack_bar_handler.dart';
+import '../tweet/widgets/tweet_avatar.dart';
+import '../tweet/widgets/tweet_body.dart';
+import '../tweet/widgets/tweet_title.dart';
+import 'reply_tweet_controller.dart';
 
 class ReplyTweetPage extends StatefulWidget {
   const ReplyTweetPage({Key? key, this.title = 'ReplyTweet'}) : super(key: key);

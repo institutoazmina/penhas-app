@@ -2,8 +2,9 @@ import 'package:dartz/dartz.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/map_validator_failure.dart';
+
+import '../../../../core/error/failures.dart';
+import 'map_validator_failure.dart';
 
 @immutable
 class EmailAddress extends Equatable with MapValidatorFailure {

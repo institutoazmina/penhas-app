@@ -54,6 +54,20 @@ Para rodar os testes automatizados:
 fvm flutter test
 ```
 
+Para gerar relatório em html da cobertura dos testes execute
+
+```
+genhtml coverage/lcov.info -o coverage/html
+```
+
+O arquivo gerado estará disponível em `coverage/html/index.html`.
+Para executar o comando é preciso ter o pacote [lcov](https://wiki.documentfoundation.org/Development/Lcov) instalado.
+
+No VS Code, Também é possível instalar a extensão [Coverage Gutters](https://marketplace.visualstudio.com/items?itemName=ryanluker.vscode-coverage-gutters), do [ryanluker](https://github.com/ryanluker/vscode-coverage-gutters) e a [Flutter Coverage](https://marketplace.visualstudio.com/items?itemName=Flutterando.flutter-coverage), do Fluterando.
+
+
+
+
 ## Iniciar app pelo VS Code
 
 Para iniciar o app utilizando o vs code adicione os seguintes arquivos dentro da pasta `.vscode`

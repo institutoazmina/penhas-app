@@ -1,14 +1,15 @@
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/error/exceptions.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/managers/app_configuration.dart';
-import 'package:penhas/app/core/network/network_info.dart';
-import 'package:penhas/app/features/authentication/data/datasources/authentication_data_source.dart';
-import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
-import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
-import 'package:penhas/app/shared/logger/log.dart';
+
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/managers/app_configuration.dart';
+import '../../../../core/network/network_info.dart';
+import '../../../../shared/logger/log.dart';
+import '../../domain/entities/session_entity.dart';
+import '../../domain/repositories/i_authentication_repository.dart';
+import '../../domain/usecases/email_address.dart';
+import '../../domain/usecases/sign_in_password.dart';
+import '../datasources/authentication_data_source.dart';
 
 class AuthenticationRepository implements IAuthenticationRepository {
   AuthenticationRepository({

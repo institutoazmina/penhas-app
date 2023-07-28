@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/features/filters/states/filter_state.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/my_profile/skill/pages/profile_skill_initial_state_page.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/my_profile/skill/pages/profile_skill_loaded_state_page.dart';
-import 'package:penhas/app/features/main_menu/presentation/account/my_profile/skill/profile_skill_controller.dart';
+
+import '../../../../../authentication/presentation/shared/snack_bar_handler.dart';
+import '../../../../../filters/states/filter_state.dart';
+import 'pages/profile_skill_initial_state_page.dart';
+import 'pages/profile_skill_loaded_state_page.dart';
+import 'profile_skill_controller.dart';
 
 class ProfileSkillPage extends StatefulWidget {
   const ProfileSkillPage({Key? key}) : super(key: key);

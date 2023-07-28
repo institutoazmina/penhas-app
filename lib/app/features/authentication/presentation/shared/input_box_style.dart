@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/text_styles.dart';
 
 String? _normalizeHitText(String? text) {
   if (text == null || text.isEmpty) {

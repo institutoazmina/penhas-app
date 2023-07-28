@@ -4,18 +4,19 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/extension/asuka.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/input_box_style.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/snack_bar_handler.dart';
-import 'package:penhas/app/features/help_center/domain/states/guardian_alert_state.dart';
-import 'package:penhas/app/features/help_center/domain/states/new_guardian_state.dart';
-import 'package:penhas/app/features/help_center/presentation/new_guardian/new_guardian_controller.dart';
-import 'package:penhas/app/features/help_center/presentation/pages/guardian_error_page.dart';
-import 'package:penhas/app/features/help_center/presentation/pages/guardian_rate_limit_page.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../core/extension/asuka.dart';
+import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/text_styles.dart';
+import '../../../authentication/presentation/shared/input_box_style.dart';
+import '../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../../authentication/presentation/shared/single_text_input.dart';
+import '../../../authentication/presentation/shared/snack_bar_handler.dart';
+import '../../domain/states/guardian_alert_state.dart';
+import '../../domain/states/new_guardian_state.dart';
+import '../pages/guardian_error_page.dart';
+import '../pages/guardian_rate_limit_page.dart';
+import 'new_guardian_controller.dart';
 
 class NewGuardianPage extends StatefulWidget {
   const NewGuardianPage({Key? key, this.title = 'NewGuardian'})

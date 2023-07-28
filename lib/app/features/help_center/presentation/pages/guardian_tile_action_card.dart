@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:penhas/app/core/extension/asuka.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/input_box_style.dart';
-import 'package:penhas/app/features/help_center/domain/entities/guardian_tile_entity.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../core/extension/asuka.dart';
+import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/text_styles.dart';
+import '../../../authentication/presentation/shared/input_box_style.dart';
+import '../../domain/entities/guardian_tile_entity.dart';
 
 class GuardianTileActionCard extends StatelessWidget {
   const GuardianTileActionCard({

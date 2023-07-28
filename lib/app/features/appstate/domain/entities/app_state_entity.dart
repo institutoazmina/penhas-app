@@ -4,42 +4,42 @@ import 'package:meta/meta.dart';
 import 'user_profile_entity.dart';
 
 enum QuizMessageType {
-  from,
   button,
+  horizontalButtons,
   yesno,
   displayText,
   showStealthTutorial,
   showHelpTutorial,
   forceReload,
   multipleChoices,
+  singleChoice,
   displayTextResponse,
 }
 
-extension QuizMessageTypeExtension on QuizMessageType {
-  QuizMessageType operator [](String key) {
-    var type = QuizMessageType.displayText;
+extension QuizMessageTypeExtension on List<QuizMessageType> {
+  QuizMessageType byName(String key) {
     switch (key.toLowerCase()) {
       case 'button':
-        type = QuizMessageType.button;
-        break;
+        return QuizMessageType.button;
       case 'show_tutorial':
-        type = QuizMessageType.showStealthTutorial;
-        break;
+        return QuizMessageType.showStealthTutorial;
       case 'yesno':
-        type = QuizMessageType.yesno;
-        break;
+        return QuizMessageType.yesno;
+      case 'yesnomaybe':
+      case 'horizontal_buttons':
+        return QuizMessageType.horizontalButtons;
       case 'displaytext':
-        type = QuizMessageType.displayText;
-        break;
+        return QuizMessageType.displayText;
       case 'display_response':
-        type = QuizMessageType.displayTextResponse;
-        break;
+        return QuizMessageType.displayTextResponse;
       case 'multiplechoices':
-        type = QuizMessageType.multipleChoices;
-        break;
+        return QuizMessageType.multipleChoices;
+      case 'onlychoice':
+      case 'singlechoice':
+        return QuizMessageType.singleChoice;
+      default:
+        return QuizMessageType.displayText;
     }
-
-    return type;
   }
 }
 
@@ -105,24 +105,24 @@ class QuizMessageEntity extends Equatable {
   final String? style;
   final String? action;
   final String? buttonLabel;
-  final List<QuizMessageMultiplechoicesOptions>? options;
+  final List<QuizMessageChoiceOption>? options;
 
   @override
   List<dynamic> get props =>
       [content, style, action, type, ref, options, buttonLabel];
 }
 
-class QuizMessageMultiplechoicesOptions extends Equatable {
-  const QuizMessageMultiplechoicesOptions({
+class QuizMessageChoiceOption extends Equatable {
+  const QuizMessageChoiceOption({
     required this.display,
     required this.index,
   });
 
-  final String? display;
-  final String? index;
+  final String display;
+  final String index;
 
   @override
-  List<Object?> get props => [display, index!];
+  List<Object?> get props => [display, index];
 }
 
 @immutable
@@ -155,9 +155,6 @@ class AppStateModuleEntity extends Equatable {
 
   final String code;
   final String meta;
-
-  @override
-  bool get stringify => true;
 
   @override
   List<Object?> get props => [code, meta];

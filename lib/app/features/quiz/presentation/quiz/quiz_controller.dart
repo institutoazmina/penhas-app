@@ -95,7 +95,9 @@ abstract class _QuizControllerBase with Store {
       case QuizMessageType.showStealthTutorial:
         return _replyButtonTutorialUserInteraction(reply, messageRemoved);
       case QuizMessageType.multipleChoices:
-        return _replyMultiChoicesInteracton(reply, messageRemoved);
+      case QuizMessageType.singleChoice:
+      case QuizMessageType.horizontalButtons:
+        return _replyChoicesInteraction(reply, messageRemoved);
       case QuizMessageType.button:
         return _replySingleButton(reply, messageRemoved);
       default:
@@ -146,7 +148,7 @@ abstract class _QuizControllerBase with Store {
     return newMessage;
   }
 
-  QuizMessageEntity _replyMultiChoicesInteracton(
+  QuizMessageEntity _replyChoicesInteraction(
     Map<String, String> reply,
     QuizMessageEntity messageRemoved,
   ) {

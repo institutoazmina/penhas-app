@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/shared/design_system/button_shape.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../shared/design_system/button_shape.dart';
+import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/text_styles.dart';
 
 class ChatPeopleFilterCard extends StatelessWidget {
   const ChatPeopleFilterCard({
@@ -12,7 +13,7 @@ class ChatPeopleFilterCard extends StatelessWidget {
 
   final int totalOfFilter;
   final void Function() onPressed;
-  
+
   @override
   Widget build(BuildContext context) {
     final filterTitle =

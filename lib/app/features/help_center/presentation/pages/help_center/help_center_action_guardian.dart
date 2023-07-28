@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../../shared/design_system/colors.dart';
+import '../../../../../shared/design_system/text_styles.dart';
 
 class HelpCenterActionGuardian extends StatelessWidget {
   const HelpCenterActionGuardian({
@@ -30,7 +31,8 @@ class HelpCenterActionGuardian extends StatelessWidget {
                 height: 41,
                 width: 49,
                 child: SvgPicture.asset(
-                    'assets/images/svg/help_center/help_center_guardian.svg',),
+                  'assets/images/svg/help_center/help_center_guardian.svg',
+                ),
               ),
             ),
             const Padding(

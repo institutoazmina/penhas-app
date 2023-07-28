@@ -64,9 +64,6 @@ class SupportCenterPlaceEntity extends Equatable {
   final SupportCenterPlaceCategoryEntity category;
 
   @override
-  bool get stringify => true;
-
-  @override
   List<Object?> get props => [
         id,
         rate,

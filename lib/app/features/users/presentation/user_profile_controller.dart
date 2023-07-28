@@ -118,8 +118,6 @@ abstract class _UserProfileControllerBase with Store, MapFailureMessage {
 
   UserProfileReaction? _handleFailure(Failure error) {
     final errorMessage = mapFailureMessage(error);
-    return errorMessage != null
-        ? UserProfileReaction.showSnackBar(errorMessage)
-        : null;
+    return UserProfileReaction.showSnackBar(errorMessage);
   }
 }

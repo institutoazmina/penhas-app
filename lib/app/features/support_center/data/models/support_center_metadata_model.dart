@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
-import 'package:penhas/app/features/filters/data/models/filter_tag_model.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_metadata_entity.dart';
+
+import '../../../filters/data/models/filter_tag_model.dart';
+import '../../domain/entities/support_center_metadata_entity.dart';
 
 class SupportCenterMetadataModel extends SupportCenterMetadataEntity {
   const SupportCenterMetadataModel({

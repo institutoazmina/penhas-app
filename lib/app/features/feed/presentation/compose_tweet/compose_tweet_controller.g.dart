@@ -65,33 +65,17 @@ mixin _$ComposeTweetController on _ComposeTweetControllerBase, Store {
     });
   }
 
-  final _$editingControllerAtom =
-      Atom(name: '_ComposeTweetControllerBase.editingController');
-
-  @override
-  TextEditingController get editingController {
-    _$editingControllerAtom.reportRead();
-    return super.editingController;
-  }
-
-  @override
-  set editingController(TextEditingController value) {
-    _$editingControllerAtom.reportWrite(value, super.editingController, () {
-      super.editingController = value;
-    });
-  }
-
   final _$errorMessageAtom =
       Atom(name: '_ComposeTweetControllerBase.errorMessage');
 
   @override
-  String? get errorMessage {
+  String get errorMessage {
     _$errorMessageAtom.reportRead();
     return super.errorMessage;
   }
 
   @override
-  set errorMessage(String? value) {
+  set errorMessage(String value) {
     _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
       super.errorMessage = value;
     });
@@ -125,7 +109,6 @@ mixin _$ComposeTweetController on _ComposeTweetControllerBase, Store {
     return '''
 isAnonymousMode: ${isAnonymousMode},
 isEnableCreateButton: ${isEnableCreateButton},
-editingController: ${editingController},
 errorMessage: ${errorMessage},
 currentState: ${currentState}
     ''';

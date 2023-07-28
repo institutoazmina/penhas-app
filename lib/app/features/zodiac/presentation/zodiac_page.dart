@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:penhas/app/features/zodiac/presentation/pages/zodiac_action_button.dart';
-import 'package:penhas/app/features/zodiac/presentation/pages/zodiac_felling_page.dart';
-import 'package:penhas/app/features/zodiac/presentation/pages/zodiac_rulling_page.dart';
-import 'package:penhas/app/features/zodiac/presentation/pages/zodiac_sign_page.dart';
-import 'package:penhas/app/features/zodiac/presentation/zodiac_controller.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
-import 'package:penhas/app/shared/design_system/logo.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../shared/design_system/colors.dart';
+import '../../../shared/design_system/logo.dart';
+import '../../../shared/design_system/text_styles.dart';
+import 'pages/zodiac_action_button.dart';
+import 'pages/zodiac_felling_page.dart';
+import 'pages/zodiac_rulling_page.dart';
+import 'pages/zodiac_sign_page.dart';
+import 'zodiac_controller.dart';
 
 class ZodiacPage extends StatefulWidget {
   const ZodiacPage({

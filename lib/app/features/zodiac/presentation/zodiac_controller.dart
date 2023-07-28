@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/managers/local_store.dart';
-import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
-import 'package:penhas/app/features/zodiac/domain/entities/izodiac.dart';
-import 'package:penhas/app/features/zodiac/domain/entities/zodiac_sign_aquarius.dart';
-import 'package:penhas/app/features/zodiac/domain/usecases/stealth_security_action.dart';
-import 'package:penhas/app/features/zodiac/domain/usecases/zodiac.dart';
+
+import '../../../core/managers/local_store.dart';
+import '../../appstate/domain/entities/user_profile_entity.dart';
+import '../domain/entities/izodiac.dart';
+import '../domain/entities/zodiac_sign_aquarius.dart';
+import '../domain/usecases/stealth_security_action.dart';
+import '../domain/usecases/zodiac.dart';
 
 part 'zodiac_controller.g.dart';
 
@@ -37,7 +38,7 @@ abstract class _ZodiacControllerBase with Store {
     final _userProfile = await _userProfileStore.retrieve();
     sign = zodiac.sign(_userProfile.birthdate);
     signList =
-        zodiac.pickEigthRandonSign(_userProfile.birthdate).asObservable();
+        zodiac.pickEightRandomSign(_userProfile.birthdate).asObservable();
 
     _registerDataSource();
   }

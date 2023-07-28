@@ -1,7 +1,8 @@
 import 'package:collection/collection.dart';
-import 'package:penhas/app/features/feed/data/models/tweet_model.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
+
+import '../../domain/entities/tweet_entity.dart';
+import '../../domain/entities/tweet_session_entity.dart';
+import 'tweet_model.dart';
 
 class TweetSessionModel extends TweetSessionEntity {
   const TweetSessionModel(

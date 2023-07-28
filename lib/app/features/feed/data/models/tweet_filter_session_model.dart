@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_filter_session_entity.dart';
+
+import '../../domain/entities/tweet_filter_session_entity.dart';
 
 class TweetFilterSessionModel extends TweetFilterSessionEntity {
   const TweetFilterSessionModel({

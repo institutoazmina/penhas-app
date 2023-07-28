@@ -1,16 +1,17 @@
 import 'package:dartz/dartz.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/birthday.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/cpf.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/full_name.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/genre.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/human_race.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
+
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/error/failures.dart';
+import '../repositories/i_user_register_repository.dart';
+import 'birthday.dart';
+import 'cep.dart';
+import 'cpf.dart';
+import 'email_address.dart';
+import 'full_name.dart';
+import 'genre.dart';
+import 'human_race.dart';
+import 'nickname.dart';
+import 'sign_up_password.dart';
 
 class CheckRegisterField {
   CheckRegisterField(this.repository);

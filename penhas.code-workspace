@@ -17,8 +17,11 @@
 			"editor.inlayHints.enabled": "offUnlessPressed",
 		},
 		"cSpell.words": [
+			"Blockable",
 			"dartz",
 			"datasources",
+			"etag",
+			"Etag",
 			"mainboard",
 			"mocktail",
 			"penhas",

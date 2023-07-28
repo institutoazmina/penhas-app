@@ -1,18 +1,19 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/widgets.dart';
-import 'package:penhas/app/core/entities/user_location.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/managers/location_services.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
-import 'package:penhas/app/features/help_center/data/models/alert_model.dart';
-import 'package:penhas/app/features/support_center/data/repositories/support_center_repository.dart';
-import 'package:penhas/app/features/support_center/domain/entities/geolocation_entity.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_fetch_request.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_metadata_entity.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_detail_entity.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
+
+import '../../../../core/entities/user_location.dart';
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/managers/location_services.dart';
+import '../../../authentication/domain/usecases/cep.dart';
+import '../../../help_center/data/models/alert_model.dart';
+import '../../data/repositories/support_center_repository.dart';
+import '../entities/geolocation_entity.dart';
+import '../entities/support_center_fetch_request.dart';
+import '../entities/support_center_metadata_entity.dart';
+import '../entities/support_center_place_detail_entity.dart';
+import '../entities/support_center_place_entity.dart';
+import '../entities/support_center_place_session_entity.dart';
 
 class SupportCenterUseCase {
   SupportCenterUseCase({
@@ -60,14 +61,15 @@ class SupportCenterUseCase {
     String title,
     Widget description,
   ) async {
-    return _locationService
-        .requestPermission(title: title, description: description)
-        .then(
-          (value) => value.maybeWhen(
-            granted: () => true,
-            orElse: () => false,
-          ),
-        );
+    final permission = await _locationService.requestPermission(
+      title: title,
+      description: description,
+    );
+
+    return permission.maybeWhen(
+      granted: () => true,
+      orElse: () => false,
+    );
   }
 
   bool updatedGeoLocation(GeolocationEntity? selectedGeoLocation) {
@@ -134,7 +136,7 @@ class SupportCenterUseCase {
 
   Future<GeolocationEntity?> currentLocation() async {
     UserLocationEntity? geoLocation;
-    final hasPermission = await hasLocationPermission();
+    final hasPermission = await _hasLocationPermission();
 
     if (hasPermission) {
       geoLocation = await _locationService.currentLocation().then(
@@ -155,10 +157,8 @@ class SupportCenterUseCase {
 
     return null;
   }
-}
 
-extension _PrivateMethods on SupportCenterUseCase {
-  Future<bool> hasLocationPermission() {
+  Future<bool> _hasLocationPermission() {
     return _locationService.isPermissionGranted();
   }
 }

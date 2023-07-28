@@ -1,30 +1,34 @@
+import 'dart:async';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/feed/domain/usecases/feed_use_cases.dart';
-import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart';
-import 'package:penhas/app/features/mainboard/domain/states/mainboard_store.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../../authentication/presentation/shared/map_failure_message.dart';
+import '../../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../../domain/usecases/feed_use_cases.dart';
+import 'compose_tweet_navigator.dart';
 
 part 'compose_tweet_controller.g.dart';
 
-class ComposeTweetController extends _ComposeTweetControllerBase
-    with _$ComposeTweetController {
-  ComposeTweetController({
-    required FeedUseCases useCase,
-    required MainboardStore mainboardStore,
-  }) : super(useCase, mainboardStore);
-}
+const _tweetContentLimitSize = 2200;
+
+class ComposeTweetController = _ComposeTweetControllerBase
+    with _$ComposeTweetController;
 
 abstract class _ComposeTweetControllerBase with Store, MapFailureMessage {
-  _ComposeTweetControllerBase(this.useCase, this.mainboardStore);
+  _ComposeTweetControllerBase({
+    required this.useCase,
+    required this.navigator,
+    TextEditingController? textEditingController,
+  }) : editingController = textEditingController ?? TextEditingController();
 
   final FeedUseCases useCase;
-  final MainboardStore mainboardStore;
-  final _tweetContentLimitSize = 2200;
-  String? tweetContent;
+  final ComposeTweetNavigator navigator;
+  final TextEditingController editingController;
+
+  String _tweetContent = '';
 
   @observable
   ObservableFuture<Either<Failure, FeedCache>>? _progress;
@@ -36,10 +40,7 @@ abstract class _ComposeTweetControllerBase with Store, MapFailureMessage {
   bool isEnableCreateButton = false;
 
   @observable
-  TextEditingController editingController = TextEditingController();
-
-  @observable
-  String? errorMessage = '';
+  String errorMessage = '';
 
   @computed
   PageProgressState get currentState {
@@ -55,7 +56,7 @@ abstract class _ComposeTweetControllerBase with Store, MapFailureMessage {
   @action
   void setTweetContent(String content) {
     isEnableCreateButton = content.isNotEmpty;
-    tweetContent = content;
+    _tweetContent = content;
   }
 
   @action
@@ -65,9 +66,9 @@ abstract class _ComposeTweetControllerBase with Store, MapFailureMessage {
       return;
     }
 
-    final content = tweetContent!.length > _tweetContentLimitSize
-        ? tweetContent!.substring(0, _tweetContentLimitSize - 1)
-        : tweetContent;
+    final content = _tweetContent.length > _tweetContentLimitSize
+        ? _tweetContent.substring(0, _tweetContentLimitSize)
+        : _tweetContent;
 
     _progress = ObservableFuture(
       useCase.create(content),
@@ -82,6 +83,6 @@ abstract class _ComposeTweetControllerBase with Store, MapFailureMessage {
 
   void _updatedTweet() {
     editingController.clear();
-    mainboardStore.changePage(to: const MainboardState.feed());
+    navigator.navigateToFeed();
   }
 }

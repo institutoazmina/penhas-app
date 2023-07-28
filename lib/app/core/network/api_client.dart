@@ -189,7 +189,11 @@ extension _ApiProvider on ApiProvider {
 
     final statusCode = response.statusCode;
     if (successfulResponse.contains(statusCode)) {
-      return response as Response;
+      if (response is StreamedResponse) {
+        return Response.fromStream(response);
+      } else {
+        return response as Response;
+      }
     }
 
     // Tratamento dos códigos com erro

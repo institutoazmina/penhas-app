@@ -1,12 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
+
+import '../../../../../../core/entities/valid_fiel.dart';
+import '../../../../../../core/error/failures.dart';
+import '../../../../domain/repositories/i_reset_password_repository.dart';
+import '../../../shared/map_failure_message.dart';
+import '../../../shared/page_progress_indicator.dart';
+import '../../../shared/user_register_form_field_model.dart';
 
 part 'reset_password_two_controller.g.dart';
 

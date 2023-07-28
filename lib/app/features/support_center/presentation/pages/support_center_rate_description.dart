@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:penhas/app/features/support_center/domain/entities/support_center_place_detail_entity.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../shared/design_system/colors.dart';
+import '../../domain/entities/support_center_place_detail_entity.dart';
 
 class SupportCenterRateDescription extends StatelessWidget {
   const SupportCenterRateDescription({
@@ -14,8 +15,9 @@ class SupportCenterRateDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool hasRate = detail.place!.rate!.contains('n/a');
     return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20.0),
-        child: hasRate ? _withoutRate() : _withRate(),);
+      padding: const EdgeInsets.symmetric(vertical: 20.0),
+      child: hasRate ? _withoutRate() : _withRate(),
+    );
   }
 
   Widget _withoutRate() {
@@ -51,14 +53,16 @@ class SupportCenterRateDescription extends StatelessWidget {
 
 extension _TextStyle on SupportCenterRateDescription {
   TextStyle get rateDescriptionTextStyle => const TextStyle(
-      color: DesignSystemColors.darkIndigoThree,
-      fontFamily: 'Lato',
-      letterSpacing: 0.45,
-      fontSize: 14.0,
-      fontWeight: FontWeight.normal,);
+        color: DesignSystemColors.darkIndigoThree,
+        fontFamily: 'Lato',
+        letterSpacing: 0.45,
+        fontSize: 14.0,
+        fontWeight: FontWeight.normal,
+      );
   TextStyle get rateValueTextStyle => const TextStyle(
-      color: DesignSystemColors.darkIndigoThree,
-      fontFamily: 'Lato',
-      fontSize: 14.0,
-      fontWeight: FontWeight.bold,);
+        color: DesignSystemColors.darkIndigoThree,
+        fontFamily: 'Lato',
+        fontSize: 14.0,
+        fontWeight: FontWeight.bold,
+      );
 }

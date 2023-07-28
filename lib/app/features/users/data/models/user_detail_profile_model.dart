@@ -1,4 +1,4 @@
-import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
+import '../../domain/entities/user_detail_profile_entity.dart';
 
 class UserDetailProfileModel extends UserDetailProfileEntity {
   const UserDetailProfileModel({

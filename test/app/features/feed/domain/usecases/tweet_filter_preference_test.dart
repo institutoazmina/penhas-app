@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -17,11 +19,11 @@ void main() {
     mockRepository = MockTweetFilterPreferenceRepository();
 
     response = TweetFilterSessionEntity(
-      categories: [
+      categories: const [
         TweetFilterEntity(id: '1', isSelected: true, label: 'C 1'),
         TweetFilterEntity(id: '2', isSelected: false, label: 'C 2'),
       ],
-      tags: [
+      tags: const [
         TweetFilterEntity(id: '1', isSelected: false, label: 'Tag - 1'),
         TweetFilterEntity(id: '2', isSelected: false, label: 'Tag - 2'),
         TweetFilterEntity(id: '3', isSelected: false, label: 'Tag - 3')
@@ -38,7 +40,7 @@ void main() {
       'retrieve tag and categories list from server',
       () async {
         // arrange
-        when(() => mockRepository.retreive())
+        when(() => mockRepository.retrieve())
             .thenAnswer((_) async => right(response));
 
         final expected = right(
@@ -55,7 +57,7 @@ void main() {
           ),
         );
         // act
-        final received = await sut.retreive();
+        final received = await sut.retrieve();
         // assert
         expect(received, expected);
       },
@@ -65,7 +67,7 @@ void main() {
       'retrieve updated tag and categories list from server',
       () async {
         // arrange
-        when(() => mockRepository.retreive())
+        when(() => mockRepository.retrieve())
             .thenAnswer((_) async => right(response));
         final expected = right(
           const TweetFilterSessionEntity(
@@ -84,7 +86,7 @@ void main() {
         sut.categories = ['2'];
         sut.saveTags(['2', '3']);
 
-        final received = await sut.retreive();
+        final received = await sut.retrieve();
         // assert
         expect(received, expected);
       },

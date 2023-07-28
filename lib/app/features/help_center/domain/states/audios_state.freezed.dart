@@ -21,9 +21,10 @@ class _$AudiosStateTearOff {
     return const _Initial();
   }
 
-  _Loaded loaded(List<AudioPlayTileEntity> audios) {
+  _Loaded loaded(List<AudioPlayTileEntity> audios, String message) {
     return _Loaded(
       audios,
+      message,
     );
   }
 
@@ -42,21 +43,22 @@ mixin _$AudiosState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<AudioPlayTileEntity> audios) loaded,
+    required TResult Function(List<AudioPlayTileEntity> audios, String message)
+        loaded,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<AudioPlayTileEntity> audios)? loaded,
+    TResult Function(List<AudioPlayTileEntity> audios, String message)? loaded,
     TResult Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<AudioPlayTileEntity> audios)? loaded,
+    TResult Function(List<AudioPlayTileEntity> audios, String message)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -146,7 +148,8 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<AudioPlayTileEntity> audios) loaded,
+    required TResult Function(List<AudioPlayTileEntity> audios, String message)
+        loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -156,7 +159,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<AudioPlayTileEntity> audios)? loaded,
+    TResult Function(List<AudioPlayTileEntity> audios, String message)? loaded,
     TResult Function(String message)? error,
   }) {
     return initial?.call();
@@ -166,7 +169,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<AudioPlayTileEntity> audios)? loaded,
+    TResult Function(List<AudioPlayTileEntity> audios, String message)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -219,7 +222,7 @@ abstract class _Initial implements AudiosState {
 abstract class _$LoadedCopyWith<$Res> {
   factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
       __$LoadedCopyWithImpl<$Res>;
-  $Res call({List<AudioPlayTileEntity> audios});
+  $Res call({List<AudioPlayTileEntity> audios, String message});
 }
 
 /// @nodoc
@@ -234,12 +237,17 @@ class __$LoadedCopyWithImpl<$Res> extends _$AudiosStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? audios = freezed,
+    Object? message = freezed,
   }) {
     return _then(_Loaded(
       audios == freezed
           ? _value.audios
           : audios // ignore: cast_nullable_to_non_nullable
               as List<AudioPlayTileEntity>,
+      message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -247,14 +255,16 @@ class __$LoadedCopyWithImpl<$Res> extends _$AudiosStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
-  const _$_Loaded(this.audios);
+  const _$_Loaded(this.audios, this.message);
 
   @override
   final List<AudioPlayTileEntity> audios;
+  @override
+  final String message;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AudiosState.loaded(audios: $audios)';
+    return 'AudiosState.loaded(audios: $audios, message: $message)';
   }
 
   @override
@@ -262,7 +272,8 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'AudiosState.loaded'))
-      ..add(DiagnosticsProperty('audios', audios));
+      ..add(DiagnosticsProperty('audios', audios))
+      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
@@ -270,12 +281,15 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Loaded &&
-            const DeepCollectionEquality().equals(other.audios, audios));
+            const DeepCollectionEquality().equals(other.audios, audios) &&
+            const DeepCollectionEquality().equals(other.message, message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(audios));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(audios),
+      const DeepCollectionEquality().hash(message));
 
   @JsonKey(ignore: true)
   @override
@@ -286,32 +300,33 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<AudioPlayTileEntity> audios) loaded,
+    required TResult Function(List<AudioPlayTileEntity> audios, String message)
+        loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded(audios);
+    return loaded(audios, message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<AudioPlayTileEntity> audios)? loaded,
+    TResult Function(List<AudioPlayTileEntity> audios, String message)? loaded,
     TResult Function(String message)? error,
   }) {
-    return loaded?.call(audios);
+    return loaded?.call(audios, message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<AudioPlayTileEntity> audios)? loaded,
+    TResult Function(List<AudioPlayTileEntity> audios, String message)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(audios);
+      return loaded(audios, message);
     }
     return orElse();
   }
@@ -352,9 +367,11 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 }
 
 abstract class _Loaded implements AudiosState {
-  const factory _Loaded(List<AudioPlayTileEntity> audios) = _$_Loaded;
+  const factory _Loaded(List<AudioPlayTileEntity> audios, String message) =
+      _$_Loaded;
 
   List<AudioPlayTileEntity> get audios;
+  String get message;
   @JsonKey(ignore: true)
   _$LoadedCopyWith<_Loaded> get copyWith => throw _privateConstructorUsedError;
 }
@@ -432,7 +449,8 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<AudioPlayTileEntity> audios) loaded,
+    required TResult Function(List<AudioPlayTileEntity> audios, String message)
+        loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -442,7 +460,7 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<AudioPlayTileEntity> audios)? loaded,
+    TResult Function(List<AudioPlayTileEntity> audios, String message)? loaded,
     TResult Function(String message)? error,
   }) {
     return error?.call(message);
@@ -452,7 +470,7 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<AudioPlayTileEntity> audios)? loaded,
+    TResult Function(List<AudioPlayTileEntity> audios, String message)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

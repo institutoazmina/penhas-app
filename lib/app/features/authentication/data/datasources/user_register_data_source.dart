@@ -1,19 +1,21 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:http/http.dart' as http;
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/exceptions.dart';
-import 'package:penhas/app/core/network/api_server_configure.dart';
-import 'package:penhas/app/features/authentication/data/models/session_model.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/birthday.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/cep.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/cpf.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/full_name.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/genre.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/human_race.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
+
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/network/api_server_configure.dart';
+import '../../domain/usecases/birthday.dart';
+import '../../domain/usecases/cep.dart';
+import '../../domain/usecases/cpf.dart';
+import '../../domain/usecases/email_address.dart';
+import '../../domain/usecases/full_name.dart';
+import '../../domain/usecases/genre.dart';
+import '../../domain/usecases/human_race.dart';
+import '../../domain/usecases/nickname.dart';
+import '../../domain/usecases/sign_up_password.dart';
+import '../models/session_model.dart';
 
 abstract class IUserRegisterDataSource {
   Future<SessionModel> register({

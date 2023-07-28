@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:penhas/app/core/storage/i_local_storage.dart';
+import '../storage/i_local_storage.dart';
 
 abstract class LocalStore<T> {
   LocalStore(this._key, this._storage);

@@ -1,12 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/managers/app_configuration.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/map_failure_message.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
-import 'package:penhas/app/features/main_menu/domain/repositories/user_profile_repository.dart';
+
+import '../../../../core/entities/valid_fiel.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/managers/app_configuration.dart';
+import '../../../main_menu/domain/repositories/user_profile_repository.dart';
+import '../shared/map_failure_message.dart';
+import '../shared/page_progress_indicator.dart';
 
 part 'deleted_account_controller.g.dart';
 

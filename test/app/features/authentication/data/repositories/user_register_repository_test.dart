@@ -218,7 +218,8 @@ void main() {
           'return valid SessionEntity for valid fields',
           () async {
             // arrange
-            dataSourceRegisterReturn(SessionModel(sessionToken: sessionToken));
+            dataSourceRegisterReturn(
+                const SessionModel(sessionToken: sessionToken));
             // act
             final result = await executeUserSignUp();
             // assert
@@ -263,7 +264,7 @@ void main() {
           'return InternetConnectionFailure',
           () async {
             // arrange
-            dataSourceRegisterWithException(ApiProviderException());
+            dataSourceRegisterWithException(const ApiProviderException());
             // act
             final result = await executeUserSignUp();
             // assert
@@ -321,7 +322,7 @@ void main() {
           'return InternetConnectionFailure',
           () async {
             // arrange
-            dataSourceCheckFieldWithException(ApiProviderException());
+            dataSourceCheckFieldWithException(const ApiProviderException());
             // act
             final result = await executeUserCheckField();
             // assert

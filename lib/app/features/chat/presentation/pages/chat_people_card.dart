@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
-import 'package:penhas/app/shared/design_system/colors.dart';
+
+import '../../../../shared/design_system/colors.dart';
+import '../../../users/domain/entities/user_detail_profile_entity.dart';
 
 class ChatPeopleCard extends StatelessWidget {
   const ChatPeopleCard({

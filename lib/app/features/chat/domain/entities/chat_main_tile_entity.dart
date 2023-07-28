@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
-import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
-import 'package:penhas/app/features/chat/domain/entities/chat_channel_entity.dart';
-import 'package:penhas/app/features/users/domain/entities/user_detail_profile_entity.dart';
+
+import '../../../appstate/domain/entities/app_state_entity.dart';
+import '../../../users/domain/entities/user_detail_profile_entity.dart';
+import 'chat_channel_entity.dart';
 
 abstract class ChatMainTileEntity extends Equatable {}
 

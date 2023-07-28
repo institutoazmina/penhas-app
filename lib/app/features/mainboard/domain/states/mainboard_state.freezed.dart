@@ -25,6 +25,10 @@ class _$MainboardStateTearOff {
     return const _Feed();
   }
 
+  _EscapeManual escapeManual() {
+    return const _EscapeManual();
+  }
+
   _Compose compose() {
     return const _Compose();
   }
@@ -47,6 +51,7 @@ mixin _$MainboardState {
   TResult when<TResult extends Object?>({
     required TResult Function() chat,
     required TResult Function() feed,
+    required TResult Function() escapeManual,
     required TResult Function() compose,
     required TResult Function() supportPoint,
     required TResult Function() helpCenter,
@@ -56,6 +61,7 @@ mixin _$MainboardState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? chat,
     TResult Function()? feed,
+    TResult Function()? escapeManual,
     TResult Function()? compose,
     TResult Function()? supportPoint,
     TResult Function()? helpCenter,
@@ -65,6 +71,7 @@ mixin _$MainboardState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? chat,
     TResult Function()? feed,
+    TResult Function()? escapeManual,
     TResult Function()? compose,
     TResult Function()? supportPoint,
     TResult Function()? helpCenter,
@@ -75,6 +82,7 @@ mixin _$MainboardState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Chat value) chat,
     required TResult Function(_Feed value) feed,
+    required TResult Function(_EscapeManual value) escapeManual,
     required TResult Function(_Compose value) compose,
     required TResult Function(_SupportPoint value) supportPoint,
     required TResult Function(_HelpCenter value) helpCenter,
@@ -84,6 +92,7 @@ mixin _$MainboardState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Chat value)? chat,
     TResult Function(_Feed value)? feed,
+    TResult Function(_EscapeManual value)? escapeManual,
     TResult Function(_Compose value)? compose,
     TResult Function(_SupportPoint value)? supportPoint,
     TResult Function(_HelpCenter value)? helpCenter,
@@ -93,6 +102,7 @@ mixin _$MainboardState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Chat value)? chat,
     TResult Function(_Feed value)? feed,
+    TResult Function(_EscapeManual value)? escapeManual,
     TResult Function(_Compose value)? compose,
     TResult Function(_SupportPoint value)? supportPoint,
     TResult Function(_HelpCenter value)? helpCenter,
@@ -164,6 +174,7 @@ class _$_Chat with DiagnosticableTreeMixin implements _Chat {
   TResult when<TResult extends Object?>({
     required TResult Function() chat,
     required TResult Function() feed,
+    required TResult Function() escapeManual,
     required TResult Function() compose,
     required TResult Function() supportPoint,
     required TResult Function() helpCenter,
@@ -176,6 +187,7 @@ class _$_Chat with DiagnosticableTreeMixin implements _Chat {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? chat,
     TResult Function()? feed,
+    TResult Function()? escapeManual,
     TResult Function()? compose,
     TResult Function()? supportPoint,
     TResult Function()? helpCenter,
@@ -188,6 +200,7 @@ class _$_Chat with DiagnosticableTreeMixin implements _Chat {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? chat,
     TResult Function()? feed,
+    TResult Function()? escapeManual,
     TResult Function()? compose,
     TResult Function()? supportPoint,
     TResult Function()? helpCenter,
@@ -204,6 +217,7 @@ class _$_Chat with DiagnosticableTreeMixin implements _Chat {
   TResult map<TResult extends Object?>({
     required TResult Function(_Chat value) chat,
     required TResult Function(_Feed value) feed,
+    required TResult Function(_EscapeManual value) escapeManual,
     required TResult Function(_Compose value) compose,
     required TResult Function(_SupportPoint value) supportPoint,
     required TResult Function(_HelpCenter value) helpCenter,
@@ -216,6 +230,7 @@ class _$_Chat with DiagnosticableTreeMixin implements _Chat {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Chat value)? chat,
     TResult Function(_Feed value)? feed,
+    TResult Function(_EscapeManual value)? escapeManual,
     TResult Function(_Compose value)? compose,
     TResult Function(_SupportPoint value)? supportPoint,
     TResult Function(_HelpCenter value)? helpCenter,
@@ -228,6 +243,7 @@ class _$_Chat with DiagnosticableTreeMixin implements _Chat {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Chat value)? chat,
     TResult Function(_Feed value)? feed,
+    TResult Function(_EscapeManual value)? escapeManual,
     TResult Function(_Compose value)? compose,
     TResult Function(_SupportPoint value)? supportPoint,
     TResult Function(_HelpCenter value)? helpCenter,
@@ -290,6 +306,7 @@ class _$_Feed with DiagnosticableTreeMixin implements _Feed {
   TResult when<TResult extends Object?>({
     required TResult Function() chat,
     required TResult Function() feed,
+    required TResult Function() escapeManual,
     required TResult Function() compose,
     required TResult Function() supportPoint,
     required TResult Function() helpCenter,
@@ -302,6 +319,7 @@ class _$_Feed with DiagnosticableTreeMixin implements _Feed {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? chat,
     TResult Function()? feed,
+    TResult Function()? escapeManual,
     TResult Function()? compose,
     TResult Function()? supportPoint,
     TResult Function()? helpCenter,
@@ -314,6 +332,7 @@ class _$_Feed with DiagnosticableTreeMixin implements _Feed {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? chat,
     TResult Function()? feed,
+    TResult Function()? escapeManual,
     TResult Function()? compose,
     TResult Function()? supportPoint,
     TResult Function()? helpCenter,
@@ -330,6 +349,7 @@ class _$_Feed with DiagnosticableTreeMixin implements _Feed {
   TResult map<TResult extends Object?>({
     required TResult Function(_Chat value) chat,
     required TResult Function(_Feed value) feed,
+    required TResult Function(_EscapeManual value) escapeManual,
     required TResult Function(_Compose value) compose,
     required TResult Function(_SupportPoint value) supportPoint,
     required TResult Function(_HelpCenter value) helpCenter,
@@ -342,6 +362,7 @@ class _$_Feed with DiagnosticableTreeMixin implements _Feed {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Chat value)? chat,
     TResult Function(_Feed value)? feed,
+    TResult Function(_EscapeManual value)? escapeManual,
     TResult Function(_Compose value)? compose,
     TResult Function(_SupportPoint value)? supportPoint,
     TResult Function(_HelpCenter value)? helpCenter,
@@ -354,6 +375,7 @@ class _$_Feed with DiagnosticableTreeMixin implements _Feed {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Chat value)? chat,
     TResult Function(_Feed value)? feed,
+    TResult Function(_EscapeManual value)? escapeManual,
     TResult Function(_Compose value)? compose,
     TResult Function(_SupportPoint value)? supportPoint,
     TResult Function(_HelpCenter value)? helpCenter,
@@ -368,6 +390,141 @@ class _$_Feed with DiagnosticableTreeMixin implements _Feed {
 
 abstract class _Feed implements MainboardState {
   const factory _Feed() = _$_Feed;
+}
+
+/// @nodoc
+abstract class _$EscapeManualCopyWith<$Res> {
+  factory _$EscapeManualCopyWith(
+          _EscapeManual value, $Res Function(_EscapeManual) then) =
+      __$EscapeManualCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$EscapeManualCopyWithImpl<$Res>
+    extends _$MainboardStateCopyWithImpl<$Res>
+    implements _$EscapeManualCopyWith<$Res> {
+  __$EscapeManualCopyWithImpl(
+      _EscapeManual _value, $Res Function(_EscapeManual) _then)
+      : super(_value, (v) => _then(v as _EscapeManual));
+
+  @override
+  _EscapeManual get _value => super._value as _EscapeManual;
+}
+
+/// @nodoc
+
+class _$_EscapeManual with DiagnosticableTreeMixin implements _EscapeManual {
+  const _$_EscapeManual();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'MainboardState.escapeManual()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'MainboardState.escapeManual'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _EscapeManual);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() chat,
+    required TResult Function() feed,
+    required TResult Function() escapeManual,
+    required TResult Function() compose,
+    required TResult Function() supportPoint,
+    required TResult Function() helpCenter,
+  }) {
+    return escapeManual();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? chat,
+    TResult Function()? feed,
+    TResult Function()? escapeManual,
+    TResult Function()? compose,
+    TResult Function()? supportPoint,
+    TResult Function()? helpCenter,
+  }) {
+    return escapeManual?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? chat,
+    TResult Function()? feed,
+    TResult Function()? escapeManual,
+    TResult Function()? compose,
+    TResult Function()? supportPoint,
+    TResult Function()? helpCenter,
+    required TResult orElse(),
+  }) {
+    if (escapeManual != null) {
+      return escapeManual();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Chat value) chat,
+    required TResult Function(_Feed value) feed,
+    required TResult Function(_EscapeManual value) escapeManual,
+    required TResult Function(_Compose value) compose,
+    required TResult Function(_SupportPoint value) supportPoint,
+    required TResult Function(_HelpCenter value) helpCenter,
+  }) {
+    return escapeManual(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Chat value)? chat,
+    TResult Function(_Feed value)? feed,
+    TResult Function(_EscapeManual value)? escapeManual,
+    TResult Function(_Compose value)? compose,
+    TResult Function(_SupportPoint value)? supportPoint,
+    TResult Function(_HelpCenter value)? helpCenter,
+  }) {
+    return escapeManual?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Chat value)? chat,
+    TResult Function(_Feed value)? feed,
+    TResult Function(_EscapeManual value)? escapeManual,
+    TResult Function(_Compose value)? compose,
+    TResult Function(_SupportPoint value)? supportPoint,
+    TResult Function(_HelpCenter value)? helpCenter,
+    required TResult orElse(),
+  }) {
+    if (escapeManual != null) {
+      return escapeManual(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EscapeManual implements MainboardState {
+  const factory _EscapeManual() = _$_EscapeManual;
 }
 
 /// @nodoc
@@ -416,6 +573,7 @@ class _$_Compose with DiagnosticableTreeMixin implements _Compose {
   TResult when<TResult extends Object?>({
     required TResult Function() chat,
     required TResult Function() feed,
+    required TResult Function() escapeManual,
     required TResult Function() compose,
     required TResult Function() supportPoint,
     required TResult Function() helpCenter,
@@ -428,6 +586,7 @@ class _$_Compose with DiagnosticableTreeMixin implements _Compose {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? chat,
     TResult Function()? feed,
+    TResult Function()? escapeManual,
     TResult Function()? compose,
     TResult Function()? supportPoint,
     TResult Function()? helpCenter,
@@ -440,6 +599,7 @@ class _$_Compose with DiagnosticableTreeMixin implements _Compose {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? chat,
     TResult Function()? feed,
+    TResult Function()? escapeManual,
     TResult Function()? compose,
     TResult Function()? supportPoint,
     TResult Function()? helpCenter,
@@ -456,6 +616,7 @@ class _$_Compose with DiagnosticableTreeMixin implements _Compose {
   TResult map<TResult extends Object?>({
     required TResult Function(_Chat value) chat,
     required TResult Function(_Feed value) feed,
+    required TResult Function(_EscapeManual value) escapeManual,
     required TResult Function(_Compose value) compose,
     required TResult Function(_SupportPoint value) supportPoint,
     required TResult Function(_HelpCenter value) helpCenter,
@@ -468,6 +629,7 @@ class _$_Compose with DiagnosticableTreeMixin implements _Compose {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Chat value)? chat,
     TResult Function(_Feed value)? feed,
+    TResult Function(_EscapeManual value)? escapeManual,
     TResult Function(_Compose value)? compose,
     TResult Function(_SupportPoint value)? supportPoint,
     TResult Function(_HelpCenter value)? helpCenter,
@@ -480,6 +642,7 @@ class _$_Compose with DiagnosticableTreeMixin implements _Compose {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Chat value)? chat,
     TResult Function(_Feed value)? feed,
+    TResult Function(_EscapeManual value)? escapeManual,
     TResult Function(_Compose value)? compose,
     TResult Function(_SupportPoint value)? supportPoint,
     TResult Function(_HelpCenter value)? helpCenter,
@@ -545,6 +708,7 @@ class _$_SupportPoint with DiagnosticableTreeMixin implements _SupportPoint {
   TResult when<TResult extends Object?>({
     required TResult Function() chat,
     required TResult Function() feed,
+    required TResult Function() escapeManual,
     required TResult Function() compose,
     required TResult Function() supportPoint,
     required TResult Function() helpCenter,
@@ -557,6 +721,7 @@ class _$_SupportPoint with DiagnosticableTreeMixin implements _SupportPoint {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? chat,
     TResult Function()? feed,
+    TResult Function()? escapeManual,
     TResult Function()? compose,
     TResult Function()? supportPoint,
     TResult Function()? helpCenter,
@@ -569,6 +734,7 @@ class _$_SupportPoint with DiagnosticableTreeMixin implements _SupportPoint {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? chat,
     TResult Function()? feed,
+    TResult Function()? escapeManual,
     TResult Function()? compose,
     TResult Function()? supportPoint,
     TResult Function()? helpCenter,
@@ -585,6 +751,7 @@ class _$_SupportPoint with DiagnosticableTreeMixin implements _SupportPoint {
   TResult map<TResult extends Object?>({
     required TResult Function(_Chat value) chat,
     required TResult Function(_Feed value) feed,
+    required TResult Function(_EscapeManual value) escapeManual,
     required TResult Function(_Compose value) compose,
     required TResult Function(_SupportPoint value) supportPoint,
     required TResult Function(_HelpCenter value) helpCenter,
@@ -597,6 +764,7 @@ class _$_SupportPoint with DiagnosticableTreeMixin implements _SupportPoint {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Chat value)? chat,
     TResult Function(_Feed value)? feed,
+    TResult Function(_EscapeManual value)? escapeManual,
     TResult Function(_Compose value)? compose,
     TResult Function(_SupportPoint value)? supportPoint,
     TResult Function(_HelpCenter value)? helpCenter,
@@ -609,6 +777,7 @@ class _$_SupportPoint with DiagnosticableTreeMixin implements _SupportPoint {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Chat value)? chat,
     TResult Function(_Feed value)? feed,
+    TResult Function(_EscapeManual value)? escapeManual,
     TResult Function(_Compose value)? compose,
     TResult Function(_SupportPoint value)? supportPoint,
     TResult Function(_HelpCenter value)? helpCenter,
@@ -673,6 +842,7 @@ class _$_HelpCenter with DiagnosticableTreeMixin implements _HelpCenter {
   TResult when<TResult extends Object?>({
     required TResult Function() chat,
     required TResult Function() feed,
+    required TResult Function() escapeManual,
     required TResult Function() compose,
     required TResult Function() supportPoint,
     required TResult Function() helpCenter,
@@ -685,6 +855,7 @@ class _$_HelpCenter with DiagnosticableTreeMixin implements _HelpCenter {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? chat,
     TResult Function()? feed,
+    TResult Function()? escapeManual,
     TResult Function()? compose,
     TResult Function()? supportPoint,
     TResult Function()? helpCenter,
@@ -697,6 +868,7 @@ class _$_HelpCenter with DiagnosticableTreeMixin implements _HelpCenter {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? chat,
     TResult Function()? feed,
+    TResult Function()? escapeManual,
     TResult Function()? compose,
     TResult Function()? supportPoint,
     TResult Function()? helpCenter,
@@ -713,6 +885,7 @@ class _$_HelpCenter with DiagnosticableTreeMixin implements _HelpCenter {
   TResult map<TResult extends Object?>({
     required TResult Function(_Chat value) chat,
     required TResult Function(_Feed value) feed,
+    required TResult Function(_EscapeManual value) escapeManual,
     required TResult Function(_Compose value) compose,
     required TResult Function(_SupportPoint value) supportPoint,
     required TResult Function(_HelpCenter value) helpCenter,
@@ -725,6 +898,7 @@ class _$_HelpCenter with DiagnosticableTreeMixin implements _HelpCenter {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Chat value)? chat,
     TResult Function(_Feed value)? feed,
+    TResult Function(_EscapeManual value)? escapeManual,
     TResult Function(_Compose value)? compose,
     TResult Function(_SupportPoint value)? supportPoint,
     TResult Function(_HelpCenter value)? helpCenter,
@@ -737,6 +911,7 @@ class _$_HelpCenter with DiagnosticableTreeMixin implements _HelpCenter {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Chat value)? chat,
     TResult Function(_Feed value)? feed,
+    TResult Function(_EscapeManual value)? escapeManual,
     TResult Function(_Compose value)? compose,
     TResult Function(_SupportPoint value)? supportPoint,
     TResult Function(_HelpCenter value)? helpCenter,

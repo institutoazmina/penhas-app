@@ -21,25 +21,26 @@ void main() {
       const jsonFile = 'notification/notification_session.json';
       final jsonData = await JsonUtil.getJson(from: jsonFile);
       final actual = NotificationSessionModel(
-          hasMore: false,
-          nextPage: null,
-          notifications: [
-            NotificationEntity(
-              content: 'Seja bem vindo ao mundo!',
-              icon: 'http://elasv2-api.appcivico.com/i/0.svg',
-              name: 'PenhaS',
-              time: DateTime.parse('2020-11-15T22:54:36Z'),
-              title: 'curtiu sua publicação',
-            ),
-            NotificationEntity(
-              content:
-                  '❝lol❞ na publicação the most popular is not only for you but you are a very popular choice and it can also make a lot ea…',
-              icon: 'http://elasv2-api.appcivico.com/i/0.svg',
-              name: 'PenhaS',
-              time: DateTime.parse('2020-11-15T22:54:26Z'),
-              title: 'comentou sua publicação',
-            )
-          ],);
+        hasMore: false,
+        nextPage: null,
+        notifications: [
+          NotificationEntity(
+            content: 'Seja bem vindo ao mundo!',
+            icon: 'http://elasv2-api.appcivico.com/i/0.svg',
+            name: 'PenhaS',
+            time: DateTime.parse('2020-11-15T22:54:36Z'),
+            title: 'curtiu sua publicação',
+          ),
+          NotificationEntity(
+            content:
+                '❝lol❞ na publicação the most popular is not only for you but you are a very popular choice and it can also make a lot ea…',
+            icon: 'http://elasv2-api.appcivico.com/i/0.svg',
+            name: 'PenhaS',
+            time: DateTime.parse('2020-11-15T22:54:26Z'),
+            title: 'comentou sua publicação',
+          )
+        ],
+      );
       // act
       final matcher = NotificationSessionModel.fromJson(jsonData);
       // assert

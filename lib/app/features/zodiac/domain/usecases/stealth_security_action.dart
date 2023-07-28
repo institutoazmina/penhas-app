@@ -1,32 +1,33 @@
 import 'dart:async';
+
 import '../../../../core/entities/user_location.dart';
 import '../../../../core/managers/audio_record_services.dart';
 import '../../../../core/managers/location_services.dart';
+import '../../../../shared/logger/log.dart';
 import '../../../../shared/widgets/request_location_permission_content_widget.dart';
 import '../../../help_center/data/repositories/guardian_repository.dart';
 import '../../../help_center/domain/entities/audio_record_duration_entity.dart';
 import '../../../help_center/domain/usecases/security_mode_action_feature.dart';
-import '../../../../shared/logger/log.dart';
 
 class StealthSecurityAction {
   StealthSecurityAction({
     required ILocationServices locationService,
     required IAudioRecordServices audioServices,
     required IGuardianRepository guardianRepository,
-    required SecurityModeActionFeature featureToogle,
+    required SecurityModeActionFeature featureToggle,
   })  : _audioServices = audioServices,
-        _featureToogle = featureToogle,
+        _featureToggle = featureToggle,
         _locationService = locationService,
         _guardianRepository = guardianRepository;
 
   final ILocationServices _locationService;
   final IAudioRecordServices _audioServices;
   final IGuardianRepository _guardianRepository;
-  final SecurityModeActionFeature _featureToogle;
+  final SecurityModeActionFeature _featureToggle;
 
   bool _recording = true;
   Timer? _rotateAudioTimer;
-  int _currentRecordDurantion = 0;
+  int _currentRecordDuration = 0;
   AudioRecordDurationEntity? _audioDurationEntity;
   StreamController<bool>? _streamController = StreamController.broadcast();
 
@@ -35,7 +36,7 @@ class StealthSecurityAction {
   Future<void> start() async {
     _streamController ??= StreamController.broadcast();
 
-    return _getCurrentLocation()
+    return await _getCurrentLocation()
         .then((location) => _triggerGuardian(location))
         .then((_) => _startAudioRecord())
         .then((_) => _streamController!.add(true));
@@ -63,23 +64,22 @@ class StealthSecurityAction {
   }
 
   Future<UserLocationEntity> _getCurrentLocation() async {
-    await _locationService.requestPermission(
-      title: 'O guardião precisa da sua localização',
-      description: const RequestLocationPermissionContentWidget(),
-    );
-
-    final hasPermission = await hasLocationPermission();
+    final hasPermission = await _hasLocationPermission();
 
     if (hasPermission) {
-      return _locationService.currentLocation().then((location) {
-        return location.fold((l) {
-          logError(l);
-          return const UserLocationEntity();
-        }, (r) => formatCoordinates(r));
-      });
+      return _parseCurrentLocation();
     }
 
     return const UserLocationEntity();
+  }
+
+  Future<UserLocationEntity> _parseCurrentLocation() async {
+    final location = await _locationService.currentLocation();
+
+    return location.fold((l) {
+      logError(l);
+      return const UserLocationEntity();
+    }, (r) => _formatCoordinates(r));
   }
 
   Future<void> _triggerGuardian(UserLocationEntity location) async {
@@ -87,7 +87,7 @@ class StealthSecurityAction {
   }
 
   Future<void> _startAudioRecord() async {
-    _audioDurationEntity ??= await _featureToogle.audioDuration;
+    _audioDurationEntity ??= await _featureToggle.audioDuration;
 
     _setRotateTimer();
     return _audioServices.start();
@@ -103,10 +103,9 @@ class StealthSecurityAction {
           return;
         }
 
-        _currentRecordDurantion += _audioDurationEntity!.audioEachDuration;
+        _currentRecordDuration += _audioDurationEntity!.audioEachDuration;
 
-        if (_currentRecordDurantion >=
-            _audioDurationEntity!.audioFullDuration) {
+        if (_currentRecordDuration >= _audioDurationEntity!.audioFullDuration) {
           timer.cancel();
           _streamController!.add(false);
           _recording = false;
@@ -116,14 +115,17 @@ class StealthSecurityAction {
       },
     );
   }
-}
 
-extension _PrivateMethods on StealthSecurityAction {
-  Future<bool> hasLocationPermission() {
+  Future<bool> _hasLocationPermission() async {
+    await _locationService.requestPermission(
+      title: 'O guardião precisa da sua localização',
+      description: const RequestLocationPermissionContentWidget(),
+    );
+
     return _locationService.isPermissionGranted();
   }
 
-  UserLocationEntity formatCoordinates(UserLocationEntity? location) {
+  UserLocationEntity _formatCoordinates(UserLocationEntity? location) {
     if (location != null) {
       return UserLocationEntity(
           accuracy: location.accuracy,

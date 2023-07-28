@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:penhas/app/shared/design_system/text_styles.dart';
+
+import '../../../../../shared/design_system/text_styles.dart';
 
 class TweetBody extends StatelessWidget {
   const TweetBody({
