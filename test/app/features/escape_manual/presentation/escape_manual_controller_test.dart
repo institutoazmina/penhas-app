@@ -11,6 +11,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/page_prog
 import 'package:penhas/app/features/escape_manual/domain/entity/escape_manual.dart';
 import 'package:penhas/app/features/escape_manual/domain/get_escape_manual.dart';
 import 'package:penhas/app/features/escape_manual/domain/start_escape_manual.dart';
+import 'package:penhas/app/features/escape_manual/domain/update_escape_manual_task.dart';
 import 'package:penhas/app/features/escape_manual/presentation/escape_manual_controller.dart';
 import 'package:penhas/app/features/escape_manual/presentation/escape_manual_state.dart';
 
@@ -19,12 +20,14 @@ void main() {
 
   late GetEscapeManualUseCase mockGetEscapeManual;
   late StartEscapeManualUseCase mockStartEscapeManual;
+  late UpdateEscapeManualTaskUseCase mockUpdateEscapeManualTask;
 
   late Completer<Either<Failure, EscapeManualEntity>> getEscapeManualCompleter;
 
   setUp(() {
     mockGetEscapeManual = GetEscapeManualUseCaseMock();
     mockStartEscapeManual = StartEscapeManualUseCaseMock();
+    mockUpdateEscapeManualTask = UpdateEscapeManualTaskUseCaseMock();
     getEscapeManualCompleter = Completer();
 
     when(() => mockGetEscapeManual())
@@ -33,6 +36,7 @@ void main() {
     sut = EscapeManualController(
       getEscapeManual: mockGetEscapeManual,
       startEscapeManual: mockStartEscapeManual,
+      updateTask: mockUpdateEscapeManualTask,
     );
   });
 
@@ -181,7 +185,7 @@ void main() {
 
       setUp(() {
         startEscapeManualCompleter = Completer();
-        Modular.navigatorDelegate = mockNavigator = MockModularNavigate();
+        Modular.navigatorDelegate = mockNavigator = ModularNavigateMock();
 
         when(() => mockStartEscapeManual(any()))
             .thenAnswer((_) async => startEscapeManualCompleter.future);
@@ -256,7 +260,7 @@ void main() {
         'should emit showSnackbar reaction when failed',
         () async {
           // arrange
-          final onReactionMock = MockOnEscapeManualReaction();
+          final onReactionMock = OnEscapeManualReactionMock();
           final failure = ServerFailure();
           startEscapeManualCompleter.complete(left(failure));
           sut.onReaction(onReactionMock);
@@ -284,11 +288,14 @@ class GetEscapeManualUseCaseMock extends Mock
 class StartEscapeManualUseCaseMock extends Mock
     implements StartEscapeManualUseCase {}
 
-class MockModularNavigate extends Mock implements IModularNavigator {}
+class UpdateEscapeManualTaskUseCaseMock extends Mock
+    implements UpdateEscapeManualTaskUseCase {}
+
+class ModularNavigateMock extends Mock implements IModularNavigator {}
 
 abstract class IOnEscapeManualReaction {
   void call(EscapeManualReaction? reaction);
 }
 
-class MockOnEscapeManualReaction extends Mock
+class OnEscapeManualReactionMock extends Mock
     implements IOnEscapeManualReaction {}

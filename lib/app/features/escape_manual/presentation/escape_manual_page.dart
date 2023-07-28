@@ -175,7 +175,8 @@ class _TaskWidget extends StatefulWidget {
   State<_TaskWidget> createState() => _TaskWidgetState();
 }
 
-class _TaskWidgetState extends State<_TaskWidget> {
+class _TaskWidgetState
+    extends ModularState<_TaskWidget, EscapeManualController> {
   EscapeManualTaskEntity get task => widget.task;
 
   late bool isChecked = task.isDone;
@@ -196,6 +197,7 @@ class _TaskWidgetState extends State<_TaskWidget> {
 
   void _onChanged(bool? value) {
     final isDone = value ?? false;
+    controller.updateTask(task.copyWith(isDone: isDone));
 
     setState(() {
       isChecked = isDone;

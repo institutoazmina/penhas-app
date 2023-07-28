@@ -10,6 +10,7 @@ import '../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../domain/entity/escape_manual.dart';
 import '../domain/get_escape_manual.dart';
 import '../domain/start_escape_manual.dart';
+import '../domain/update_escape_manual_task.dart';
 import 'escape_manual_state.dart';
 
 part 'escape_manual_controller.g.dart';
@@ -23,8 +24,10 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
   _EscapeManualControllerBase({
     required GetEscapeManualUseCase getEscapeManual,
     required StartEscapeManualUseCase startEscapeManual,
+    required UpdateEscapeManualTaskUseCase updateTask,
   })  : _getEscapeManual = getEscapeManual,
-        _startEscapeManual = startEscapeManual;
+        _startEscapeManual = startEscapeManual,
+        _updateTask = updateTask;
 
   @observable
   EscapeManualState state = const EscapeManualState.initial();
@@ -37,12 +40,14 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
 
   final GetEscapeManualUseCase _getEscapeManual;
   final StartEscapeManualUseCase _startEscapeManual;
+  final UpdateEscapeManualTaskUseCase _updateTask;
 
   @observable
   ObservableFuture? _pageProgress;
 
   late ObservableFuture<Either<Failure, EscapeManualEntity>> _loadProgress;
   late ObservableFuture<Either<Failure, QuizSessionEntity>> _startProgress;
+  late ObservableFuture<Either<Failure, void>> _updateProgress;
 
   @action
   Future<void> load() async {
@@ -51,7 +56,7 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
     _pageProgress = _loadProgress = ObservableFuture(_getEscapeManual());
     final result = await _loadProgress;
 
-    state = result.fold(_handleLoadFailure, _handleLoadSuccess);
+    state = result.fold(_handleErrorAsState, _handleLoadSuccess);
   }
 
   @action
@@ -63,16 +68,21 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
     );
 
     final result = await _startProgress;
-    result.fold(_handleOpenAssistantFailure, _handleOpenAssistant);
+    result.fold(_handleErrorAsReaction, _handleOpenAssistant);
+  }
+
+  @action
+  Future<void> updateTask(EscapeManualTaskEntity task) async {
+    _pageProgress = _updateProgress = ObservableFuture(
+      _updateTask(task),
+    );
+
+    final result = await _updateProgress;
+    result.fold(_handleErrorAsReaction, (_) {});
   }
 
   ReactionDisposer onReaction(OnEscapeManualReaction fn) {
     return reaction((_) => _reaction, fn);
-  }
-
-  EscapeManualState _handleLoadFailure(Failure failure) {
-    var errorMessage = mapFailureMessage(failure);
-    return EscapeManualState.error(errorMessage);
   }
 
   EscapeManualState _handleLoadSuccess(EscapeManualEntity screen) {
@@ -88,7 +98,12 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
         .then((_) => load());
   }
 
-  void _handleOpenAssistantFailure(Failure failure) {
+  EscapeManualState _handleErrorAsState(Failure failure) {
+    var errorMessage = mapFailureMessage(failure);
+    return EscapeManualState.error(errorMessage);
+  }
+
+  void _handleErrorAsReaction(Failure failure) {
     var errorMessage = mapFailureMessage(failure);
     _reaction = EscapeManualReaction.showSnackbar(errorMessage);
   }
