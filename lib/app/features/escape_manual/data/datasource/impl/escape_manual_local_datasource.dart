@@ -50,6 +50,17 @@ class EscapeManualLocalDatasource implements IEscapeManualLocalDatasource {
     );
   }
 
+  @override
+  Future<void> removeTask(EscapeManualTaskModel task) async {
+    final db = await _dbProvider.database;
+    await db.update(
+      'escape_manual_tasks',
+      {'is_removed': 1},
+      where: 'id = ?',
+      whereArgs: [task.id],
+    );
+  }
+
   Future<void> upInsert(DatabaseExecutor db, EscapeManualTaskModel task) async {
     await db.insert(
       'escape_manual_tasks',

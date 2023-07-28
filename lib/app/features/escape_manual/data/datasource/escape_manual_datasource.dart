@@ -12,4 +12,5 @@ abstract class IEscapeManualLocalDatasource {
   Future<Iterable<EscapeManualTaskModel>> fetchTasks();
   Future<void> saveTask(EscapeManualTaskModel escapeManual);
   Future<void> saveAllTasks(Iterable<EscapeManualTaskModel> items);
+  Future<void> removeTask(EscapeManualTaskModel task);
 }

@@ -61,4 +61,17 @@ class EscapeManualRepository implements IEscapeManualRepository {
       return left(MapExceptionToFailure.map(error));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> removeTask(EscapeManualTaskEntity task) async {
+    try {
+      final result = await _localDatasource.removeTask(
+        EscapeManualTaskModel.fromEntity(task),
+      );
+      return right(result);
+    } catch (error, stack) {
+      logError(error, stack);
+      return left(MapExceptionToFailure.map(error));
+    }
+  }
 }

@@ -86,6 +86,22 @@ mixin _$EscapeManualController on _EscapeManualControllerBase, Store {
     return _$updateTaskAsyncAction.run(() => super.updateTask(task));
   }
 
+  final _$deleteTaskAsyncAction =
+      AsyncAction('_EscapeManualControllerBase.deleteTask');
+
+  @override
+  Future<void> deleteTask(EscapeManualTaskEntity task) {
+    return _$deleteTaskAsyncAction.run(() => super.deleteTask(task));
+  }
+
+  final _$editTaskAsyncAction =
+      AsyncAction('_EscapeManualControllerBase.editTask');
+
+  @override
+  Future<void> editTask(EscapeManualTaskEntity task) {
+    return _$editTaskAsyncAction.run(() => super.editTask(task));
+  }
+
   @override
   String toString() {
     return '''

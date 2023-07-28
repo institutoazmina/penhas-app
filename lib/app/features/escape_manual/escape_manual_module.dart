@@ -5,6 +5,7 @@ import 'data/datasource/escape_manual_datasource.dart';
 import 'data/datasource/impl/escape_manual_local_datasource.dart';
 import 'data/datasource/impl/escape_manual_remote_datasource.dart';
 import 'data/repository/escape_manual_repository.dart';
+import 'domain/delete_escape_manual_task.dart';
 import 'domain/get_escape_manual.dart';
 import 'domain/repository/escape_manual_repository.dart';
 import 'domain/start_escape_manual.dart';
@@ -25,6 +26,7 @@ class EscapeManualModule extends WidgetModule {
         getEscapeManual: i.get(),
         startEscapeManual: i.get(),
         updateTask: i.get(),
+        deleteTask: i.get(),
       ),
     ),
     Bind.factory(
@@ -34,6 +36,11 @@ class EscapeManualModule extends WidgetModule {
     ),
     Bind.factory(
       (i) => StartEscapeManualUseCase(
+        repository: i.get(),
+      ),
+    ),
+    Bind.factory(
+      (i) => DeleteEscapeManualTaskUseCase(
         repository: i.get(),
       ),
     ),
