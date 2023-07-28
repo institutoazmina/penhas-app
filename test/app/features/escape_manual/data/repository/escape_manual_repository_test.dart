@@ -3,20 +3,23 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/features/appstate/data/model/quiz_session_model.dart';
 import 'package:penhas/app/features/escape_manual/data/datasource/escape_manual_datasource.dart';
-import 'package:penhas/app/features/escape_manual/data/model/escape_manual.dart';
+import 'package:penhas/app/features/escape_manual/data/model/escape_manual_remote.dart';
 import 'package:penhas/app/features/escape_manual/data/repository/escape_manual_repository.dart';
 import 'package:penhas/app/features/escape_manual/domain/repository/escape_manual_repository.dart';
 
 void main() {
   late IEscapeManualRepository sut;
 
-  late IEscapeManualDatasource mockDatasource;
+  late IEscapeManualRemoteDatasource mockRemoteDatasource;
+  late IEscapeManualLocalDatasource mockLocalDatasource;
 
   setUp(() {
-    mockDatasource = MockEscapeManualDatasource();
+    mockRemoteDatasource = MockEscapeManualRemoteDatasource();
+    mockLocalDatasource = MockEscapeManualLocalDatasource();
 
     sut = EscapeManualRepository(
-      datasource: mockDatasource,
+      remoteDatasource: mockRemoteDatasource,
+      localDatasource: mockLocalDatasource,
     );
   });
 
@@ -26,25 +29,23 @@ void main() {
         'should call datasource fetch',
         () async {
           // arrange
-          const escapeManual = EscapeManualModel(
-            assistant: EscapeManualAssistantModel(
-              explanation: 'explanation',
-              action: EscapeManualAssistantActionModel(
-                text: 'text',
-                quizSession: QuizSessionModel(
-                  sessionId: 'sessionId',
-                ),
+          const escapeManual = EscapeManualRemoteModel(
+            assistant: EscapeManualAssistantRemoteModel(
+              title: 'text',
+              subtitle: 'explanation',
+              quizSession: QuizSessionModel(
+                sessionId: 'sessionId',
               ),
             ),
           );
-          when(() => mockDatasource.fetch())
-              .thenAnswer((_) async => right(escapeManual));
+          when(() => mockRemoteDatasource.fetch())
+              .thenAnswer((_) async => escapeManual);
 
           // act
           await sut.fetch();
 
           // assert
-          verify(() => mockDatasource.fetch()).called(1);
+          verify(() => mockRemoteDatasource.fetch()).called(1);
         },
       );
 
@@ -52,19 +53,17 @@ void main() {
         'should return datasource fetch',
         () async {
           // arrange
-          const escapeManual = EscapeManualModel(
-            assistant: EscapeManualAssistantModel(
-              explanation: 'explanation',
-              action: EscapeManualAssistantActionModel(
-                text: 'text',
-                quizSession: QuizSessionModel(
-                  sessionId: 'sessionId',
-                ),
+          const escapeManual = EscapeManualRemoteModel(
+            assistant: EscapeManualAssistantRemoteModel(
+              title: 'text',
+              subtitle: 'explanation',
+              quizSession: QuizSessionModel(
+                sessionId: 'sessionId',
               ),
             ),
           );
-          when(() => mockDatasource.fetch())
-              .thenAnswer((_) async => right(escapeManual));
+          when(() => mockRemoteDatasource.fetch())
+              .thenAnswer((_) async => escapeManual);
 
           // act
           final result = await sut.fetch();
@@ -83,14 +82,14 @@ void main() {
           const quizSession = QuizSessionModel(
             sessionId: 'sessionId',
           );
-          when(() => mockDatasource.start(any()))
-              .thenAnswer((_) async => right(quizSession));
+          when(() => mockRemoteDatasource.start(any()))
+              .thenAnswer((_) async => quizSession);
 
           // act
           await sut.start('MF1234');
 
           // assert
-          verify(() => mockDatasource.start('MF1234')).called(1);
+          verify(() => mockRemoteDatasource.start('MF1234')).called(1);
         },
       );
 
@@ -101,8 +100,8 @@ void main() {
           const quizSession = QuizSessionModel(
             sessionId: 'sessionId',
           );
-          when(() => mockDatasource.start(any()))
-              .thenAnswer((_) async => right(quizSession));
+          when(() => mockRemoteDatasource.start(any()))
+              .thenAnswer((_) async => quizSession);
 
           // act
           final result = await sut.start('MF1234');
@@ -115,5 +114,8 @@ void main() {
   });
 }
 
-class MockEscapeManualDatasource extends Mock
-    implements IEscapeManualDatasource {}
+class MockEscapeManualRemoteDatasource extends Mock
+    implements IEscapeManualRemoteDatasource {}
+
+class MockEscapeManualLocalDatasource extends Mock
+    implements IEscapeManualLocalDatasource {}
