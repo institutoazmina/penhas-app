@@ -14,7 +14,9 @@ class EscapeManualLocalDatasource implements IEscapeManualLocalDatasource {
 
   @override
   Future<int> lastChangeAt() async {
-    final db = await _dbProvider.database;
+
+    final db = await _dbProvider.getDataBase(dbPass: 'hardcoded');
+
     final result = await db.rawQuery(
       '''
       SELECT COALESCE(MAX(updated_at), 0) as last_change_at

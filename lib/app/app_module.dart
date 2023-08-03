@@ -72,7 +72,7 @@ class AppModule extends Module {
             networkInfo: i.get<INetworkInfo>(),
           ),
         ),
-        Bind.singleton((i) => DbProvider()),
+        Bind.singleton((i) => DbProvider(dbPass: '')),
         Bind.factory((i) => DataConnectionChecker()),
         Bind.factory<IUserProfileRepository>(
           (i) => UserProfileRepository(
