@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../core/managers/app_configuration.dart';
 import 'data/datasource/escape_manual_datasource.dart';
 import 'data/datasource/impl/escape_manual_local_datasource.dart';
 import 'data/datasource/impl/escape_manual_remote_datasource.dart';
@@ -58,6 +59,7 @@ class EscapeManualModule extends WidgetModule {
     Bind.factory<IEscapeManualLocalDatasource>(
       (i) => EscapeManualLocalDatasource(
         dbProvider: i.get(),
+        appConfiguration: i.get<IAppConfiguration>(),
       ),
     ),
     Bind.factory<IEscapeManualRemoteDatasource>(

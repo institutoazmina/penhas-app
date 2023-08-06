@@ -1,21 +1,25 @@
 import 'package:sqflite/sqflite.dart';
 
+import '../../../../../core/managers/app_configuration.dart';
 import '../../../../../core/storage/db.dart';
 import '../../model/escape_manual.dart';
 import '../../model/escape_manual_local.dart';
 import '../escape_manual_datasource.dart';
 
 class EscapeManualLocalDatasource implements IEscapeManualLocalDatasource {
-  EscapeManualLocalDatasource({
-    required DbProvider dbProvider,
-  }) : _dbProvider = dbProvider;
+  EscapeManualLocalDatasource(
+      {required DbProvider dbProvider,
+      required IAppConfiguration appConfiguration})
+      : _dbProvider = dbProvider,
+        _appConfiguration = appConfiguration;
 
   final DbProvider _dbProvider;
+  final IAppConfiguration _appConfiguration;
 
   @override
   Future<int> lastChangeAt() async {
-
-    final db = await _dbProvider.getDataBase(dbPass: 'hardcoded');
+    final db = await _dbProvider.getDataBase(
+        dbPass: await _appConfiguration.localPass);
 
     final result = await db.rawQuery(
       '''

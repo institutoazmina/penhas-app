@@ -37,6 +37,7 @@ class AuthenticationRepository implements IAuthenticationRepository {
 
       if (!result.deletedScheduled) {
         await _appConfiguration.saveApiToken(token: result.sessionToken);
+        await _appConfiguration.savePassword(pass: password.rawValue);
       }
 
       return right(result);

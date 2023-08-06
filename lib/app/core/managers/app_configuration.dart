@@ -13,7 +13,11 @@ const String _apiBaseUrl = String.fromEnvironment(
 abstract class IAppConfiguration {
   Future<String> get apiToken;
 
+  Future<String> get localPass;
+
   Future<void> saveApiToken({required String? token});
+
+  Future<void> savePassword({required String? pass});
 
   Future<void> saveAppModes(AppStateModeEntity appMode);
 
@@ -35,11 +39,17 @@ class AppConfiguration implements IAppConfiguration {
 
   final _tokenKey = 'br.com.penhas.tokenServer';
   final _appModes = 'br.com.penhas.appConfigurationModes';
+  final _localPass = 'br.com.penhas.localPassword';
+
   final ILocalStorage _storage;
 
   @override
   Future<String> get apiToken =>
       _storage.get(_tokenKey).then((data) => data ?? '');
+
+  @override
+  Future<String> get localPass =>
+      _storage.get(_localPass).then((data) => data ?? '');
 
   @override
   Future<AuthorizationStatus> get authorizationStatus async {
@@ -64,8 +74,15 @@ class AppConfiguration implements IAppConfiguration {
   }
 
   @override
+  Future<void> savePassword({required String? pass}) async {
+    await _storage.put(_localPass, pass);
+    return;
+  }
+
+  @override
   Future<void> logout() async {
     await _storage.delete(_tokenKey);
+    await _storage.delete(_localPass);
     return;
   }
 
