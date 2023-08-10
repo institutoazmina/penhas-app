@@ -212,5 +212,11 @@ ios/Runner/GoogleService-Info.plist
 ios/firebase_app_id_file.json
 lib/firebase_options.dart
 
+# Test related
+**/test/full_coverage_test.dart
+**/goldens/macos
+**/goldens/linux
+**/goldens/windows
+
 # Ignore coverage-related files
 /coverage/
