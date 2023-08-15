@@ -6,6 +6,8 @@ import 'package:penhas/app/features/authentication/domain/usecases/email_address
 import 'package:penhas/app/features/authentication/domain/usecases/full_name.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/genre.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/nickname.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
 
 void main() {
@@ -91,6 +93,23 @@ void main() {
         /// valid value
         model.nickname = Nickname('nickname');
         expect(model.validateNickname, equals(''));
+      },
+    );
+
+    test(
+      'validatePasswordConfirmation returns expected value',
+      () {
+        const password = 'V3ry_str0ng_P4ssw0rd';
+        // null value
+        model.password = SignUpPassword(password, PasswordValidator());
+        model.passwordConfirmation = null;
+        expect(model.validatePasswordConfirmation,
+            equals('As senhas não são iguais'));
+
+        // valid value
+        model.password = SignUpPassword(password, PasswordValidator());
+        model.passwordConfirmation = password;
+        expect(model.validatePasswordConfirmation, equals(''));
       },
     );
 
