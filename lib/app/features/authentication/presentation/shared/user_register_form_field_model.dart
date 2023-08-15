@@ -44,7 +44,9 @@ class UserRegisterFormFieldModel {
       return '';
     }
 
-    return socialName == null ? Fullname('').mapFailure : fullname!.mapFailure;
+    return socialName == null
+        ? Fullname('').mapFailure
+        : socialName!.mapFailure;
   }
 
   String get validatePasswordConfirmation =>
