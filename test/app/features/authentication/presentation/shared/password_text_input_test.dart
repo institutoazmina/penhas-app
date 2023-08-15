@@ -7,6 +7,56 @@ import '../../../../../utils/golden_tests.dart';
 
 void main() {
   group(PassordInputField, () {
+    testWidgets('widget test', (WidgetTester tester) async {
+      // Build the PassordInputField widget.
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: PassordInputField(
+            onChanged: (val) {},
+            labelText: 'Password',
+            errorText: '',
+            hintText: 'Enter password',
+          ),
+        ),
+      ));
+
+      expect(
+        find.byType(PassordInputField),
+        findsOneWidget,
+        reason: 'PassordInputField should be present',
+      );
+
+      var textField = tester.widget<TextField>(find.byType(TextField));
+      expect(
+        textField.obscureText,
+        true,
+        reason: 'The password should be obscured at first',
+      );
+
+      expect(
+        find.byIcon(Icons.visibility_off),
+        findsOneWidget,
+        reason: 'The visibility toggle button should be visible with icon off',
+      );
+
+      // Tap the visibility toggle button.
+      await tester.tap(find.byIcon(Icons.visibility_off));
+      await tester.pump();
+
+      textField = tester.widget<TextField>(find.byType(TextField));
+      expect(
+        textField.obscureText,
+        false,
+        reason: 'The password should be visible',
+      );
+
+      expect(
+        find.byIcon(Icons.visibility),
+        findsOneWidget,
+        reason: 'The visibility toggle button should be visible with icon on',
+      );
+    });
+
     group(
       'golden tests',
       () {
