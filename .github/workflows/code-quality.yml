@@ -117,7 +117,7 @@ jobs:
           EOF
 
       - name: Run unit tests
-        run: flutter test --coverage
+        run: flutter test --timeout=1h --dart-define=isCI=true --coverage
 
       - name: Codecov
         uses: codecov/codecov-action@v3

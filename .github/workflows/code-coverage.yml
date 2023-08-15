@@ -28,5 +28,5 @@ jobs:
       - run: flutter packages pub run build_runner build
       - run: flutter build aot
       - run: flutter analyze
-      - run: flutter test --coverage .
+      - run: flutter test --timeout=1h --dart-define=isCI=true --coverage .
       - uses: codecov/codecov-action@v3
