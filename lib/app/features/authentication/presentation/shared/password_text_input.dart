@@ -6,6 +6,7 @@ class PassordInputField extends StatefulWidget {
   const PassordInputField({
     Key? key,
     this.style = kTextStyleDefaultTextFieldLabelStyle,
+    this.isAutofocus = false,
     required this.onChanged,
     required this.labelText,
     required this.errorText,
@@ -17,6 +18,7 @@ class PassordInputField extends StatefulWidget {
   final String labelText;
   final String errorText;
   final String hintText;
+  final bool isAutofocus;
 
   @override
   _PassordInputFieldState createState() => _PassordInputFieldState();
@@ -31,6 +33,7 @@ class _PassordInputFieldState extends State<PassordInputField> {
   Widget build(BuildContext context) {
     return TextField(
       style: widget.style,
+      autofocus: widget.isAutofocus,
       onChanged: widget.onChanged,
       keyboardType: TextInputType.text,
       autocorrect: false,
