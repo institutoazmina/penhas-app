@@ -82,6 +82,10 @@ void main() {
             when(() => appConfiguration.saveApiToken(
                     token: sessionModel.sessionToken))
                 .thenAnswer((invocation) => Future.value());
+
+            when(() => appConfiguration.savePassword(pass: '_myStrongP4ss@rd'))
+                .thenAnswer((invocation) => Future.value());
+
             // act
             final result = await repository.signInWithEmailAndPassword(
               emailAddress: email,
@@ -97,6 +101,8 @@ void main() {
 
             verify(() => appConfiguration.saveApiToken(
                 token: sessionModel.sessionToken)).called(1);
+
+            verify(() => appConfiguration.savePassword(pass: '_myStrongP4ss@rd')).called(1);
 
             expect(result, right(sessionEntity));
           },
