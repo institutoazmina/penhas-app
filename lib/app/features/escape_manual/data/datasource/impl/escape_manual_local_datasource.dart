@@ -19,7 +19,7 @@ class EscapeManualLocalDatasource implements IEscapeManualLocalDatasource {
   @override
   Future<int> lastChangeAt() async {
     final db = await _dbProvider.getDataBase(
-        dbPass: await _appConfiguration.localPass);
+        dbPass: await _appConfiguration.offlineHash);
 
     final result = await db.rawQuery(
       '''

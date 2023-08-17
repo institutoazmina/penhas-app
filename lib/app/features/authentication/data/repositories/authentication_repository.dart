@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/exceptions.dart';
@@ -37,7 +40,8 @@ class AuthenticationRepository implements IAuthenticationRepository {
 
       if (!result.deletedScheduled) {
         await _appConfiguration.saveApiToken(token: result.sessionToken);
-        await _appConfiguration.savePassword(pass: password.rawValue);
+        final hash = await _createsHash(token: result.sessionToken ?? '');
+        await _appConfiguration.saveHash(hash: hash);
       }
 
       return right(result);
@@ -45,6 +49,12 @@ class AuthenticationRepository implements IAuthenticationRepository {
       logError(error, stack);
       return _handleError(error);
     }
+  }
+
+  Future<String> _createsHash({required String token}) async{
+    var bytes = utf8.encode(token);
+    var digest = sha256.convert(bytes);
+    return digest.toString();
   }
 
   Future<Either<Failure, SessionEntity>> _handleError(Object error) async {
