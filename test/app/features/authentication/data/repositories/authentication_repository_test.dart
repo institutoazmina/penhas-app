@@ -1,4 +1,6 @@
 import 'package:dartz/dartz.dart';
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
@@ -78,12 +80,16 @@ void main() {
           'return valid SessionEntity for valid user/password',
           () async {
             // arrange
+
+            var bytes = utf8.encode(sessionModel.sessionToken.toString());
+            var digest = sha256.convert(bytes);
+
             _mockSignInSuccessResponseWith(session: sessionModel);
             when(() => appConfiguration.saveApiToken(
                     token: sessionModel.sessionToken))
                 .thenAnswer((invocation) => Future.value());
 
-            when(() => appConfiguration.savePassword(pass: '_myStrongP4ss@rd'))
+            when(() => appConfiguration.saveHash(hash: digest.toString()))
                 .thenAnswer((invocation) => Future.value());
 
             // act
