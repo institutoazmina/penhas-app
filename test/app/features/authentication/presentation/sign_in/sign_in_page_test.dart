@@ -277,7 +277,7 @@ void main() {
 
         await tester.pumpWidget(_loadSignInPage());
 
-        // Tap the LoginButton
+        // Tap the sign up button
         await tester.tap(find.text('Cadastrar'));
         await tester.pump();
 
@@ -296,7 +296,7 @@ void main() {
 
         await tester.pumpWidget(_loadSignInPage());
 
-        // Tap the LoginButton
+        // Tap the Reset password button
         await tester.tap(find.text('Esqueci minha senha'));
         await tester.pump();
 
@@ -316,7 +316,7 @@ void main() {
 
         await tester.pumpWidget(_loadSignInPage());
 
-        // Tap the LoginButton
+        // Tap the Terms of use button
         await tester.tap(find.text('Termos de uso'));
         await tester.pump();
 
@@ -324,6 +324,34 @@ void main() {
             .called(1);
       },
     );
+
+    testWidgets(
+      'privacy policy redirect page',
+      (WidgetTester tester) async {
+        when(
+          () => modularNavigator.pushNamed(any(),
+              arguments: any(named: 'arguments')),
+        ).thenAnswer((_) => Future.value());
+
+        await tester.pumpWidget(_loadSignInPage());
+        final expectedWidget = find.text('Política de privacidade');
+
+        // Tap the Privacy button
+        await tester.dragUntilVisible(
+          expectedWidget,
+          find.byType(SingleChildScrollView),
+          const Offset(-250, 0),
+        );
+
+        await tester.tap(expectedWidget);
+        await tester.pump();
+
+        verify(() =>
+                modularNavigator.pushNamed('/authentication/privacy_policy'))
+            .called(1);
+      },
+    );
+
     group('golden tests', () {
       screenshotTest(
         'looks as expected',
