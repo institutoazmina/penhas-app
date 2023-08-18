@@ -33,7 +33,7 @@ class AuthenticationRepository implements IAuthenticationRepository {
   }) async {
     try {
       if (await _networkInfo.isConnected == false) {
-        return _logInOffline(password: password.toString());
+        return _loginOffline(password: password.toString());
       }
 
       final result = await _dataSource.signInWithEmailAndPassword(
@@ -58,7 +58,7 @@ class AuthenticationRepository implements IAuthenticationRepository {
     return digest.toString();
   }
 
-  _logInOffline({required String password}) async {
+  _loginOffline({required String password}) async {
     var currentHash = await _appConfiguration.offlineHash;
     var sessionToken = await _appConfiguration.apiToken;
     final newHash = await _createsHash(password: password);
