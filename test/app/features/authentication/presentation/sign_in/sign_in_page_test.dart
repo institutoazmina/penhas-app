@@ -18,6 +18,8 @@ import 'package:penhas/app/features/authentication/presentation/shared/single_te
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_page.dart';
 
+import '../../../../../utils/golden_tests.dart';
+
 class MockAuthenticationRepository extends Mock
     implements IAuthenticationRepository {}
 
@@ -155,11 +157,20 @@ void main() {
         expect(decoration?.errorText, 'Endereço de email inválido');
       },
     );
+
+    group('golden tests', () {
+      screenshotTest(
+        'looks as expected',
+        fileName: 'sign_in_page',
+        pageBuilder: _loadSignInPage,
+      );
+    });
   });
 }
 
 Widget _loadSignInPage() {
   return const MaterialApp(
+    debugShowCheckedModeBanner: false,
     home: Scaffold(
       body: SignInPage(),
     ),
