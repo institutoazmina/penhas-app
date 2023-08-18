@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/app_module.dart';
+import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
@@ -157,6 +158,30 @@ void main() {
         expect(decoration?.errorText, 'Endereço de email inválido');
       },
     );
+
+    testWidgets('show error for invalid login', (WidgetTester tester) async {
+      const errorMessage =
+          'O servidor está com problema neste momento, tente novamente.';
+
+      when(() => passwordValidator.validate(any(), any()))
+          .thenAnswer((i) => dartz.right(validPassword));
+      when(
+        () => authenticationRepository.signInWithEmailAndPassword(
+          emailAddress: any(named: 'emailAddress'),
+          password: any(named: 'password'),
+        ),
+      ).thenAnswer((i) async => dartz.left(ServerFailure()));
+
+      await tester.pumpWidget(_loadSignInPage());
+
+      // Tap the LoginButton
+      expect(find.text(errorMessage), findsNothing);
+      await tester.enterText(find.byType(SingleTextInput), validEmail);
+      await tester.enterText(find.byType(PassordInputField), validPassword);
+      await tester.tap(find.byType(LoginButton));
+      await tester.pump();
+      expect(find.text(errorMessage), findsOneWidget);
+    });
 
     group('golden tests', () {
       screenshotTest(
