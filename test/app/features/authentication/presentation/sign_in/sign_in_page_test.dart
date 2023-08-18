@@ -9,6 +9,7 @@ import 'package:penhas/app/app_module.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
+import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
@@ -36,12 +37,15 @@ class FakeEmailAddress extends Fake implements EmailAddress {}
 
 class FakeSignInPassword extends Fake implements SignInPassword {}
 
+class ModularNavigateMock extends Mock implements IModularNavigator {}
+
 void main() {
   late IAuthenticationRepository authenticationRepository;
   late PasswordValidator passwordValidator;
   late AppStateUseCase appStateUseCase;
   late String validPassword;
   late String validEmail;
+  late IModularNavigator modularNavigator;
 
   setUpAll(() {
     registerFallbackValue(FakeEmailAddress());
@@ -54,6 +58,9 @@ void main() {
     appStateUseCase = MockAppStateUseCase();
     validPassword = 'myStr0ngP4ssw0rd';
     validEmail = 'my@email.com';
+    modularNavigator = ModularNavigateMock();
+
+    Modular.navigatorDelegate = modularNavigator;
 
     initModules([
       AppModule(),
@@ -181,6 +188,38 @@ void main() {
       await tester.tap(find.byType(LoginButton));
       await tester.pump();
       expect(find.text(errorMessage), findsOneWidget);
+    });
+
+    testWidgets('deleted account redirect page', (WidgetTester tester) async {
+      const sessionToken = 'sessionToken';
+      when(() => passwordValidator.validate(any(), any()))
+          .thenAnswer((i) => dartz.right(validPassword));
+      when(
+        () => authenticationRepository.signInWithEmailAndPassword(
+          emailAddress: any(named: 'emailAddress'),
+          password: any(named: 'password'),
+        ),
+      ).thenAnswer(
+        (i) async => dartz.right(const SessionEntity(
+            sessionToken: sessionToken, deletedScheduled: true)),
+      );
+      when(
+        () => modularNavigator.pushNamed(any(),
+            arguments: any(named: 'arguments')),
+      ).thenAnswer((_) => Future.value());
+
+      await tester.pumpWidget(_loadSignInPage());
+
+      // Tap the LoginButton
+      await tester.enterText(find.byType(SingleTextInput), validEmail);
+      await tester.enterText(find.byType(PassordInputField), validPassword);
+      await tester.tap(find.byType(LoginButton));
+      await tester.pump();
+
+      verify(() => modularNavigator.pushNamed(
+            '/accountDeleted',
+            arguments: sessionToken,
+          )).called(1);
     });
 
     group('golden tests', () {
