@@ -8,6 +8,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/app_module.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/storage/i_local_storage.dart';
+import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
@@ -37,7 +38,9 @@ class FakeEmailAddress extends Fake implements EmailAddress {}
 
 class FakeSignInPassword extends Fake implements SignInPassword {}
 
-class ModularNavigateMock extends Mock implements IModularNavigator {}
+class MockModularNavigate extends Mock implements IModularNavigator {}
+
+class FakeAppStateEntity extends Fake implements AppStateEntity {}
 
 void main() {
   late IAuthenticationRepository authenticationRepository;
@@ -58,7 +61,7 @@ void main() {
     appStateUseCase = MockAppStateUseCase();
     validPassword = 'myStr0ngP4ssw0rd';
     validEmail = 'my@email.com';
-    modularNavigator = ModularNavigateMock();
+    modularNavigator = MockModularNavigate();
 
     Modular.navigatorDelegate = modularNavigator;
 
@@ -166,62 +169,103 @@ void main() {
       },
     );
 
-    testWidgets('show error for invalid login', (WidgetTester tester) async {
-      const errorMessage =
-          'O servidor está com problema neste momento, tente novamente.';
+    testWidgets(
+      'show error for invalid login',
+      (WidgetTester tester) async {
+        const errorMessage =
+            'O servidor está com problema neste momento, tente novamente.';
 
-      when(() => passwordValidator.validate(any(), any()))
-          .thenAnswer((i) => dartz.right(validPassword));
-      when(
-        () => authenticationRepository.signInWithEmailAndPassword(
-          emailAddress: any(named: 'emailAddress'),
-          password: any(named: 'password'),
-        ),
-      ).thenAnswer((i) async => dartz.left(ServerFailure()));
+        when(() => passwordValidator.validate(any(), any()))
+            .thenAnswer((i) => dartz.right(validPassword));
+        when(
+          () => authenticationRepository.signInWithEmailAndPassword(
+            emailAddress: any(named: 'emailAddress'),
+            password: any(named: 'password'),
+          ),
+        ).thenAnswer((i) async => dartz.left(ServerFailure()));
 
-      await tester.pumpWidget(_loadSignInPage());
+        await tester.pumpWidget(_loadSignInPage());
 
-      // Tap the LoginButton
-      expect(find.text(errorMessage), findsNothing);
-      await tester.enterText(find.byType(SingleTextInput), validEmail);
-      await tester.enterText(find.byType(PassordInputField), validPassword);
-      await tester.tap(find.byType(LoginButton));
-      await tester.pump();
-      expect(find.text(errorMessage), findsOneWidget);
-    });
+        // Tap the LoginButton
+        expect(find.text(errorMessage), findsNothing);
+        await tester.enterText(find.byType(SingleTextInput), validEmail);
+        await tester.enterText(find.byType(PassordInputField), validPassword);
+        await tester.tap(find.byType(LoginButton));
+        await tester.pump();
+        expect(find.text(errorMessage), findsOneWidget);
+      },
+    );
 
-    testWidgets('deleted account redirect page', (WidgetTester tester) async {
-      const sessionToken = 'sessionToken';
-      when(() => passwordValidator.validate(any(), any()))
-          .thenAnswer((i) => dartz.right(validPassword));
-      when(
-        () => authenticationRepository.signInWithEmailAndPassword(
-          emailAddress: any(named: 'emailAddress'),
-          password: any(named: 'password'),
-        ),
-      ).thenAnswer(
-        (i) async => dartz.right(const SessionEntity(
-            sessionToken: sessionToken, deletedScheduled: true)),
-      );
-      when(
-        () => modularNavigator.pushNamed(any(),
-            arguments: any(named: 'arguments')),
-      ).thenAnswer((_) => Future.value());
+    testWidgets(
+      'deleted account redirect page',
+      (WidgetTester tester) async {
+        const sessionToken = 'sessionToken';
+        when(() => passwordValidator.validate(any(), any()))
+            .thenAnswer((i) => dartz.right(validPassword));
+        when(
+          () => authenticationRepository.signInWithEmailAndPassword(
+            emailAddress: any(named: 'emailAddress'),
+            password: any(named: 'password'),
+          ),
+        ).thenAnswer(
+          (i) async => dartz.right(const SessionEntity(
+              sessionToken: sessionToken, deletedScheduled: true)),
+        );
+        when(
+          () => modularNavigator.pushNamed(any(),
+              arguments: any(named: 'arguments')),
+        ).thenAnswer((_) => Future.value());
 
-      await tester.pumpWidget(_loadSignInPage());
+        await tester.pumpWidget(_loadSignInPage());
 
-      // Tap the LoginButton
-      await tester.enterText(find.byType(SingleTextInput), validEmail);
-      await tester.enterText(find.byType(PassordInputField), validPassword);
-      await tester.tap(find.byType(LoginButton));
-      await tester.pump();
+        // Tap the LoginButton
+        await tester.enterText(find.byType(SingleTextInput), validEmail);
+        await tester.enterText(find.byType(PassordInputField), validPassword);
+        await tester.tap(find.byType(LoginButton));
+        await tester.pump();
 
-      verify(() => modularNavigator.pushNamed(
-            '/accountDeleted',
-            arguments: sessionToken,
-          )).called(1);
-    });
+        verify(() => modularNavigator.pushNamed(
+              '/accountDeleted',
+              arguments: sessionToken,
+            )).called(1);
+      },
+    );
 
+    testWidgets(
+      'success login redirect page',
+      (WidgetTester tester) async {
+        const sessionToken = 'sessionToken';
+        when(() => passwordValidator.validate(any(), any()))
+            .thenAnswer((i) => dartz.right(validPassword));
+        when(
+          () => authenticationRepository.signInWithEmailAndPassword(
+            emailAddress: any(named: 'emailAddress'),
+            password: any(named: 'password'),
+          ),
+        ).thenAnswer(
+          (i) async =>
+              dartz.right(const SessionEntity(sessionToken: sessionToken)),
+        );
+        when(() => appStateUseCase.check())
+            .thenAnswer((i) async => dartz.right(FakeAppStateEntity()));
+
+        when(
+          () => modularNavigator.popAndPushNamed(any(),
+              arguments: any(named: 'arguments')),
+        ).thenAnswer((_) => Future.value());
+
+        await tester.pumpWidget(_loadSignInPage());
+
+        // Tap the LoginButton
+        await tester.enterText(find.byType(SingleTextInput), validEmail);
+        await tester.enterText(find.byType(PassordInputField), validPassword);
+        await tester.tap(find.byType(LoginButton));
+        await tester.pump();
+
+        verify(() => modularNavigator.popAndPushNamed('/mainboard',
+            arguments: {'page': 'feed'})).called(1);
+      },
+    );
     group('golden tests', () {
       screenshotTest(
         'looks as expected',
