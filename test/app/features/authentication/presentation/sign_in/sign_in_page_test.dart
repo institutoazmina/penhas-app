@@ -266,6 +266,26 @@ void main() {
             arguments: {'page': 'feed'})).called(1);
       },
     );
+
+    testWidgets(
+      'sign up redirect page',
+      (WidgetTester tester) async {
+        when(
+          () => modularNavigator.pushNamed(any(),
+              arguments: any(named: 'arguments')),
+        ).thenAnswer((_) => Future.value());
+
+        await tester.pumpWidget(_loadSignInPage());
+
+        // Tap the LoginButton
+        await tester.tap(find.text('Cadastrar'));
+        await tester.pump();
+
+        verify(() => modularNavigator.pushNamed('/authentication/signup'))
+            .called(1);
+      },
+    );
+
     group('golden tests', () {
       screenshotTest(
         'looks as expected',
