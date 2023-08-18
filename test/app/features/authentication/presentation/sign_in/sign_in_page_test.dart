@@ -138,6 +138,23 @@ void main() {
         expect(find.text(errorMessage), findsOneWidget);
       },
     );
+
+    testWidgets(
+      'displays error text for invalid email input',
+      (WidgetTester tester) async {
+        await tester.pumpWidget(_loadSignInPage());
+
+        // Update email with a invalid email
+        await tester.enterText(find.byType(SingleTextInput), 'invalidEmail');
+        await tester.pump();
+
+        // Fetching the TextField's
+        TextField textField = tester
+            .widget(find.byKey(const Key('singleTextInput'))) as TextField;
+        InputDecoration? decoration = textField.decoration;
+        expect(decoration?.errorText, 'Endereço de email inválido');
+      },
+    );
   });
 }
 
