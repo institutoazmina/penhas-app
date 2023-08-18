@@ -1,8 +1,6 @@
 import 'dart:convert';
-
 import 'package:crypto/crypto.dart';
 import 'package:dartz/dartz.dart';
-
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/managers/app_configuration.dart';
@@ -13,6 +11,7 @@ import '../../domain/repositories/i_authentication_repository.dart';
 import '../../domain/usecases/email_address.dart';
 import '../../domain/usecases/sign_in_password.dart';
 import '../datasources/authentication_data_source.dart';
+import '../models/session_model.dart';
 
 class AuthenticationRepository implements IAuthenticationRepository {
   AuthenticationRepository({
@@ -33,15 +32,17 @@ class AuthenticationRepository implements IAuthenticationRepository {
     required SignInPassword password,
   }) async {
     try {
+      if (await _networkInfo.isConnected == false) {
+        return _logInOffline(password: password.toString());
+      }
+
       final result = await _dataSource.signInWithEmailAndPassword(
         emailAddress: emailAddress,
         password: password,
       );
 
       if (!result.deletedScheduled) {
-        await _appConfiguration.saveApiToken(token: result.sessionToken);
-        final hash = await _createsHash(token: result.sessionToken ?? '');
-        await _appConfiguration.saveHash(hash: hash);
+        _saveUserData(result: result, password: password.toString());
       }
 
       return right(result);
@@ -51,10 +52,29 @@ class AuthenticationRepository implements IAuthenticationRepository {
     }
   }
 
-  Future<String> _createsHash({required String token}) async{
-    var bytes = utf8.encode(token);
+  Future<String> _createsHash({required String password}) async {
+    var bytes = utf8.encode(password);
     var digest = sha256.convert(bytes);
     return digest.toString();
+  }
+
+  _logInOffline({required String password}) async {
+    var currentHash = await _appConfiguration.offlineHash;
+    var sessionToken = await _appConfiguration.apiToken;
+    final newHash = await _createsHash(password: password);
+    final isCorrectPassword = currentHash.toString() == newHash.toString();
+    if (isCorrectPassword) {
+      var result =
+          await _dataSource.signInWithOfflineHash(sessionToken: sessionToken);
+      return right(result);
+    }
+  }
+
+  _saveUserData(
+      {required SessionModel result, required String password}) async {
+    await _appConfiguration.saveApiToken(token: result.sessionToken);
+    final hash = await _createsHash(password: password);
+    await _appConfiguration.saveHash(hash: hash);
   }
 
   Future<Either<Failure, SessionEntity>> _handleError(Object error) async {
