@@ -80,7 +80,6 @@ void main() {
           'return valid SessionEntity for valid user/password',
           () async {
             // arrange
-
             var bytes = utf8.encode(sessionModel.sessionToken.toString());
             var digest = sha256.convert(bytes);
 
@@ -97,6 +96,7 @@ void main() {
               emailAddress: email,
               password: password,
             );
+
             // assert
             verify(
               () => dataSource.signInWithEmailAndPassword(

@@ -18,6 +18,7 @@ abstract class IAuthenticationDataSource {
     required EmailAddress emailAddress,
     required SignInPassword password,
   });
+  Future<SessionModel> signInWithOfflineHash({required String sessionToken});
 }
 
 class AuthenticationDataSource implements IAuthenticationDataSource {
@@ -28,6 +29,12 @@ class AuthenticationDataSource implements IAuthenticationDataSource {
 
   final http.Client apiClient;
   final IApiServerConfigure serverConfiguration;
+
+  @override
+  Future<SessionModel> signInWithOfflineHash(
+      {required String sessionToken}) async {
+    return SessionModel.fromJson({sessionToken: sessionToken});
+  }
 
   @override
   Future<SessionModel> signInWithEmailAndPassword({
