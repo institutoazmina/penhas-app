@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:http/http.dart' as http;
-
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/api_server_configure.dart';
 import '../../../../shared/logger/log.dart';
@@ -33,7 +31,7 @@ class AuthenticationDataSource implements IAuthenticationDataSource {
   @override
   Future<SessionModel> signInWithOfflineHash(
       {required String sessionToken}) async {
-    return SessionModel.fromJson({sessionToken: sessionToken});
+    return SessionModel(sessionToken: sessionToken);
   }
 
   @override

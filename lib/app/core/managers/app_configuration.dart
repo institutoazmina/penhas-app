@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import '../../features/appstate/domain/entities/app_state_entity.dart';
 import '../../shared/logger/log.dart';
 import '../data/authorization_status.dart';
@@ -82,7 +81,6 @@ class AppConfiguration implements IAppConfiguration {
   @override
   Future<void> logout() async {
     await _storage.delete(_tokenKey);
-    await _storage.delete(_offlineHash);
     return;
   }
 

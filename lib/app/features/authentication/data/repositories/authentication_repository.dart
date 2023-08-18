@@ -33,7 +33,10 @@ class AuthenticationRepository implements IAuthenticationRepository {
   }) async {
     try {
       if (await _networkInfo.isConnected == false) {
-        return _loginOffline(password: password.toString());
+        final session = await _loginOffline(password: password.toString());
+        if(session !=null){
+          return right(session);
+        }
       }
 
       final result = await _dataSource.signInWithEmailAndPassword(
@@ -58,16 +61,17 @@ class AuthenticationRepository implements IAuthenticationRepository {
     return digest.toString();
   }
 
-  _loginOffline({required String password}) async {
+  Future<SessionModel?> _loginOffline({required String password}) async {
     var currentHash = await _appConfiguration.offlineHash;
     var sessionToken = await _appConfiguration.apiToken;
     final newHash = await _createsHash(password: password);
     final isCorrectPassword = currentHash.toString() == newHash.toString();
     if (isCorrectPassword) {
       var result =
-          await _dataSource.signInWithOfflineHash(sessionToken: sessionToken);
-      return right(result);
+          _dataSource.signInWithOfflineHash(sessionToken: sessionToken);
+      return result;
     }
+    return null;
   }
 
   _saveUserData(
