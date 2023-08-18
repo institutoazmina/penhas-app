@@ -27,6 +27,7 @@ class SingleTextInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      key: const Key('singleTextInput'),
       style: _style,
       keyboardType: _keyboardType,
       inputFormatters: _inputFormatter == null ? null : [_inputFormatter!],
