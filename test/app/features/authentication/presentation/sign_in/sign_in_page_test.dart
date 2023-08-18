@@ -286,6 +286,44 @@ void main() {
       },
     );
 
+    testWidgets(
+      'reset password redirect page',
+      (WidgetTester tester) async {
+        when(
+          () => modularNavigator.pushNamed(any(),
+              arguments: any(named: 'arguments')),
+        ).thenAnswer((_) => Future.value());
+
+        await tester.pumpWidget(_loadSignInPage());
+
+        // Tap the LoginButton
+        await tester.tap(find.text('Esqueci minha senha'));
+        await tester.pump();
+
+        verify(() =>
+                modularNavigator.pushNamed('/authentication/reset_password'))
+            .called(1);
+      },
+    );
+
+    testWidgets(
+      'terms of use redirect page',
+      (WidgetTester tester) async {
+        when(
+          () => modularNavigator.pushNamed(any(),
+              arguments: any(named: 'arguments')),
+        ).thenAnswer((_) => Future.value());
+
+        await tester.pumpWidget(_loadSignInPage());
+
+        // Tap the LoginButton
+        await tester.tap(find.text('Termos de uso'));
+        await tester.pump();
+
+        verify(() => modularNavigator.pushNamed('/authentication/terms_of_use'))
+            .called(1);
+      },
+    );
     group('golden tests', () {
       screenshotTest(
         'looks as expected',
