@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
 import 'package:penhas/app/features/authentication/presentation/reset_password/reset_password_page.dart';
+import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 
 import '../../../../../utils/golden_tests.dart';
@@ -25,11 +26,22 @@ void main() {
   );
 
   group(ResetPasswordPage, () {
-    testWidgets('ResetPasswordPage has title', (tester) async {
-      //  await tester.pumpWidget(buildTestableWidget(ResetPasswordPage(title: 'ResetPassword')));
-      //  final titleFinder = find.text('ResetPassword');
-      //  expect(titleFinder, findsOneWidget);
-    });
+    testWidgets(
+      'displays error text for invalid email input',
+      (tester) async {
+        await tester.pumpWidget(_loadPage());
+
+        // Update email with a invalid email
+        await tester.enterText(find.byType(SingleTextInput), 'invalidEmail');
+        await tester.pump();
+
+        // Fetching the TextField's
+        TextField textField = tester
+            .widget(find.byKey(const Key('singleTextInput'))) as TextField;
+        InputDecoration? decoration = textField.decoration;
+        expect(decoration?.errorText, 'Endereço de email inválido');
+      },
+    );
 
     group('golden test', () {
       screenshotTest(
