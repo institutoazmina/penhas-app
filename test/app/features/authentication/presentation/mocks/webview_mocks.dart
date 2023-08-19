@@ -2,6 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
+class WebViewMocks {
+  static late WebViewPlatform webViewPlatform;
+  static late WebViewPlatformController webViewPlatformController;
+  static late MockWebViewCookieManagerPlatform webViewCookieManagerPlatform;
+
+  static void init() {
+    _initMocks();
+    _initFallbacks();
+  }
+
+  static void _initMocks() {
+    webViewPlatform = MockWebViewPlatform();
+    webViewPlatformController = MockWebViewPlatformController();
+    webViewCookieManagerPlatform = MockWebViewCookieManagerPlatform();
+  }
+
+  static void _initFallbacks() {
+    registerFallbackValue(FakeBuildContext());
+    registerFallbackValue(FakeCreationParams());
+    registerFallbackValue(FakeWebViewPlatformCallbacksHandler());
+    registerFallbackValue(FakeJavascriptChannelRegistry());
+    registerFallbackValue(FakeWebSettings());
+  }
+}
+
 class MockWebViewPlatform extends Mock implements WebViewPlatform {}
 
 class MockWebViewPlatformController extends Mock
@@ -42,7 +67,7 @@ class TestPlatformWebView extends StatefulWidget {
     this.onWebViewPlatformCreated,
   }) : super(key: key);
 
-  final MockWebViewPlatformController mockWebViewPlatformController;
+  final WebViewPlatformController mockWebViewPlatformController;
   final WebViewPlatformCreatedCallback? onWebViewPlatformCreated;
 
   @override
