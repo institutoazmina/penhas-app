@@ -6,7 +6,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
 import '../../../../../../utils/golden_tests.dart';
-import '../tools/webview_mocks.dart';
+import '../../tools/webview_mocks.dart';
 
 void main() {
   late MockWebViewPlatform mockWebViewPlatform;
