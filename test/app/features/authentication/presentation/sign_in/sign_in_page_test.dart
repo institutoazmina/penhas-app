@@ -3,18 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/app_module.dart';
 import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/storage/i_local_storage.dart';
-import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/login_button.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/password_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
@@ -22,43 +17,19 @@ import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_page.dart';
 
 import '../../../../../utils/golden_tests.dart';
-
-class MockAuthenticationRepository extends Mock
-    implements IAuthenticationRepository {}
-
-class MockPasswordValidator extends Mock implements PasswordValidator {}
-
-class MockAppStateUseCase extends Mock implements AppStateUseCase {}
-
-class MockHttpClient extends Mock implements http.Client {}
-
-class MockILocalStorage extends Mock implements ILocalStorage {}
-
-class FakeEmailAddress extends Fake implements EmailAddress {}
-
-class FakeSignInPassword extends Fake implements SignInPassword {}
-
-class MockModularNavigate extends Mock implements IModularNavigator {}
-
-class FakeAppStateEntity extends Fake implements AppStateEntity {}
+import '../mocks/app_modules_mock.dart';
+import '../mocks/authentication_modules_mock.dart';
 
 void main() {
-  late IAuthenticationRepository authenticationRepository;
-  late PasswordValidator passwordValidator;
-  late AppStateUseCase appStateUseCase;
   late String validPassword;
   late String validEmail;
+
   late IModularNavigator modularNavigator;
 
-  setUpAll(() {
-    registerFallbackValue(FakeEmailAddress());
-    registerFallbackValue(FakeSignInPassword());
-  });
-
   setUp(() {
-    authenticationRepository = MockAuthenticationRepository();
-    passwordValidator = MockPasswordValidator();
-    appStateUseCase = MockAppStateUseCase();
+    AppModulesMock.init();
+    AuthenticationModulesMock.init();
+
     validPassword = 'myStr0ngP4ssw0rd';
     validEmail = 'my@email.com';
     modularNavigator = MockModularNavigate();
@@ -69,9 +40,11 @@ void main() {
       AppModule(),
       SignInModule()
     ], replaceBinds: [
-      Bind<IAuthenticationRepository>((i) => authenticationRepository),
-      Bind<PasswordValidator>((i) => passwordValidator),
-      Bind<AppStateUseCase>((i) => appStateUseCase),
+      Bind<IAuthenticationRepository>(
+          (i) => AuthenticationModulesMock.authenticationRepository),
+      Bind<PasswordValidator>(
+          (i) => AuthenticationModulesMock.passwordValidator),
+      Bind<AppStateUseCase>((i) => AppModulesMock.appStateUseCase),
     ]);
   });
 
@@ -116,8 +89,8 @@ void main() {
         const errorMessage =
             'E-mail e senha precisam estarem corretos para continuar.';
 
-        when(() => passwordValidator.validate(any(), any()))
-            .thenAnswer((i) => dartz.right(validPassword));
+        when(() => AuthenticationModulesMock.passwordValidator.validate(
+            any(), any())).thenAnswer((i) => dartz.right(validPassword));
 
         await tester.pumpWidget(_loadSignInPage());
 
@@ -137,8 +110,8 @@ void main() {
         const errorMessage =
             'E-mail e senha precisam estarem corretos para continuar.';
 
-        when(() => passwordValidator.validate(any(), any()))
-            .thenAnswer((i) => dartz.left(EmptyRule()));
+        when(() => AuthenticationModulesMock.passwordValidator
+            .validate(any(), any())).thenAnswer((i) => dartz.left(EmptyRule()));
 
         await tester.pumpWidget(_loadSignInPage());
 
@@ -175,10 +148,11 @@ void main() {
         const errorMessage =
             'O servidor está com problema neste momento, tente novamente.';
 
-        when(() => passwordValidator.validate(any(), any()))
-            .thenAnswer((i) => dartz.right(validPassword));
+        when(() => AuthenticationModulesMock.passwordValidator.validate(
+            any(), any())).thenAnswer((i) => dartz.right(validPassword));
         when(
-          () => authenticationRepository.signInWithEmailAndPassword(
+          () => AuthenticationModulesMock.authenticationRepository
+              .signInWithEmailAndPassword(
             emailAddress: any(named: 'emailAddress'),
             password: any(named: 'password'),
           ),
@@ -200,10 +174,11 @@ void main() {
       'deleted account redirect page',
       (WidgetTester tester) async {
         const sessionToken = 'sessionToken';
-        when(() => passwordValidator.validate(any(), any()))
-            .thenAnswer((i) => dartz.right(validPassword));
+        when(() => AuthenticationModulesMock.passwordValidator.validate(
+            any(), any())).thenAnswer((i) => dartz.right(validPassword));
         when(
-          () => authenticationRepository.signInWithEmailAndPassword(
+          () => AuthenticationModulesMock.authenticationRepository
+              .signInWithEmailAndPassword(
             emailAddress: any(named: 'emailAddress'),
             password: any(named: 'password'),
           ),
@@ -235,10 +210,11 @@ void main() {
       'success login redirect page',
       (WidgetTester tester) async {
         const sessionToken = 'sessionToken';
-        when(() => passwordValidator.validate(any(), any()))
-            .thenAnswer((i) => dartz.right(validPassword));
+        when(() => AuthenticationModulesMock.passwordValidator.validate(
+            any(), any())).thenAnswer((i) => dartz.right(validPassword));
         when(
-          () => authenticationRepository.signInWithEmailAndPassword(
+          () => AuthenticationModulesMock.authenticationRepository
+              .signInWithEmailAndPassword(
             emailAddress: any(named: 'emailAddress'),
             password: any(named: 'password'),
           ),
@@ -246,7 +222,7 @@ void main() {
           (i) async =>
               dartz.right(const SessionEntity(sessionToken: sessionToken)),
         );
-        when(() => appStateUseCase.check())
+        when(() => AppModulesMock.appStateUseCase.check())
             .thenAnswer((i) async => dartz.right(FakeAppStateEntity()));
 
         when(
@@ -361,6 +337,8 @@ void main() {
     });
   });
 }
+
+class MockModularNavigate extends Mock implements IModularNavigator {}
 
 Widget _loadSignInPage() {
   return const MaterialApp(
