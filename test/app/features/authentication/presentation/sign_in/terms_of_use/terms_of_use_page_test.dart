@@ -6,27 +6,14 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
 import '../../../../../../utils/golden_tests.dart';
-import '../../tools/webview_mocks.dart';
+import '../../mocks/webview_mocks.dart';
 
 void main() {
-  late MockWebViewPlatform mockWebViewPlatform;
-  late MockWebViewPlatformController mockWebViewPlatformController;
-  late MockWebViewCookieManagerPlatform mockWebViewCookieManagerPlatform;
-
-  setUpAll(() {
-    registerFallbackValue(FakeBuildContext());
-    registerFallbackValue(FakeCreationParams());
-    registerFallbackValue(FakeWebViewPlatformCallbacksHandler());
-    registerFallbackValue(FakeJavascriptChannelRegistry());
-    registerFallbackValue(FakeWebSettings());
-  });
-
   setUp(() {
     // configure webview mock
-    mockWebViewPlatformController = MockWebViewPlatformController();
-    mockWebViewPlatform = MockWebViewPlatform();
-    mockWebViewCookieManagerPlatform = MockWebViewCookieManagerPlatform();
-    when(() => mockWebViewPlatform.build(
+    WebViewMocks.init();
+
+    when(() => WebViewMocks.webViewPlatform.build(
           context: any(named: 'context'),
           creationParams: any(named: 'creationParams'),
           webViewPlatformCallbacksHandler:
@@ -39,19 +26,20 @@ void main() {
           invocation.namedArguments[const Symbol('onWebViewPlatformCreated')]
               as WebViewPlatformCreatedCallback;
       return TestPlatformWebView(
-        mockWebViewPlatformController: mockWebViewPlatformController,
+        mockWebViewPlatformController: WebViewMocks.webViewPlatformController,
         onWebViewPlatformCreated: onWebViewPlatformCreated,
       );
     });
-    when(() => mockWebViewPlatformController.updateSettings(any()))
+    when(() => WebViewMocks.webViewPlatformController.updateSettings(any()))
         .thenAnswer((i) => Future.value());
 
-    WebView.platform = mockWebViewPlatform;
-    WebViewCookieManagerPlatform.instance = mockWebViewCookieManagerPlatform;
+    WebView.platform = WebViewMocks.webViewPlatform;
+    WebViewCookieManagerPlatform.instance =
+        WebViewMocks.webViewCookieManagerPlatform;
   });
 
   tearDown(() {
-    mockWebViewCookieManagerPlatform.reset();
+    WebViewMocks.webViewCookieManagerPlatform.reset();
   });
 
   group(TermsOfUsePage, () {
