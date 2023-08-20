@@ -7,26 +7,24 @@ import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/app_module.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/managers/app_configuration.dart';
+import 'package:penhas/app/features/authentication/presentation/deleted_account/deleted_account_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/deleted_account/deleted_account_page.dart';
-import 'package:penhas/app/features/main_menu/domain/repositories/user_profile_repository.dart';
 
 import '../../../../../utils/golden_tests.dart';
 import '../mocks/app_modules_mock.dart';
 
-class MockModularNavigate extends Mock implements IModularNavigator {}
-
 void main() {
-  late IModularNavigator modularNavigator;
-
   setUp(() {
     AppModulesMock.init();
-    modularNavigator = MockModularNavigate();
-    Modular.navigatorDelegate = modularNavigator;
 
     initModule(AppModule(), replaceBinds: [
-      Bind<IAppConfiguration>((i) => AppModulesMock.appConfiguration),
-      Bind<IUserProfileRepository>((i) => AppModulesMock.userProfileRepository),
+      Bind<DeletedAccountController>(
+        (i) => DeletedAccountController(
+          profileRepository: AppModulesMock.userProfileRepository,
+          appConfiguration: AppModulesMock.appConfiguration,
+          sessionToken: '',
+        ),
+      ),
     ]);
   });
 
@@ -66,7 +64,7 @@ void main() {
               .saveApiToken(token: any(named: 'token')),
         ).thenAnswer((i) => Future.value());
         when(
-          () => modularNavigator.pushReplacementNamed(any()),
+          () => AppModulesMock.modularNavigator.pushReplacementNamed(any()),
         ).thenAnswer((_) => Future.value());
 
         await tester.pumpWidget(_loadPage());
@@ -75,7 +73,8 @@ void main() {
         await tester.tap(find.text('Reativar Conta'));
         await tester.pump();
 
-        verify(() => modularNavigator.pushReplacementNamed('/')).called(1);
+        verify(() => AppModulesMock.modularNavigator.pushReplacementNamed('/'))
+            .called(1);
       },
     );
 
