@@ -20,13 +20,9 @@ import '../mocks/app_modules_mock.dart';
 import '../mocks/authentication_modules_mock.dart';
 
 void main() {
-  late IModularNavigator modularNavigator;
-
   setUp(() {
     AppModulesMock.init();
     AuthenticationModulesMock.init();
-    modularNavigator = MockModularNavigate();
-    Modular.navigatorDelegate = modularNavigator;
 
     final userProfileEntity = UserProfileEntity(
       fullName: 'fullName',
@@ -122,8 +118,8 @@ void main() {
             .thenAnswer((i) async => dartz.right(FakeAppStateEntity()));
 
         when(
-          () => modularNavigator.pushReplacementNamed(any(),
-              arguments: any(named: 'arguments')),
+          () => AppModulesMock.modularNavigator
+              .pushReplacementNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
         await tester.pumpWidget(_loadPage());
@@ -133,8 +129,8 @@ void main() {
         await tester.tap(find.byType(LoginButton));
         await tester.pump();
 
-        verify(() => modularNavigator.pushReplacementNamed('/mainboard'))
-            .called(1);
+        verify(() => AppModulesMock.modularNavigator
+            .pushReplacementNamed('/mainboard')).called(1);
       },
     );
 
@@ -142,8 +138,8 @@ void main() {
       'reset password redirect page',
       (WidgetTester tester) async {
         when(
-          () => modularNavigator.pushNamed(any(),
-              arguments: any(named: 'arguments')),
+          () => AppModulesMock.modularNavigator
+              .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
         await tester.pumpWidget(_loadPage());
@@ -152,9 +148,8 @@ void main() {
         await tester.tap(find.text('Esqueci minha senha'));
         await tester.pump();
 
-        verify(() =>
-                modularNavigator.pushNamed('/authentication/reset_password'))
-            .called(1);
+        verify(() => AppModulesMock.modularNavigator
+            .pushNamed('/authentication/reset_password')).called(1);
       },
     );
 
@@ -162,8 +157,8 @@ void main() {
       'change account redirect page',
       (WidgetTester tester) async {
         when(
-          () => modularNavigator.pushNamed(any(),
-              arguments: any(named: 'arguments')),
+          () => AppModulesMock.modularNavigator
+              .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
         await tester.pumpWidget(_loadPage());
@@ -172,7 +167,9 @@ void main() {
         await tester.tap(find.text('Acessar outra conta'));
         await tester.pump();
 
-        verify(() => modularNavigator.pushNamed('/authentication')).called(1);
+        verify(() =>
+                AppModulesMock.modularNavigator.pushNamed('/authentication'))
+            .called(1);
       },
     );
 
@@ -185,8 +182,6 @@ void main() {
     });
   });
 }
-
-class MockModularNavigate extends Mock implements IModularNavigator {}
 
 Widget _loadPage() {
   return const MaterialApp(
