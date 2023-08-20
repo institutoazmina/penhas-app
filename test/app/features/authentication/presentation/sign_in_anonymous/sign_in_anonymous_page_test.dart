@@ -5,14 +5,13 @@ import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/app_module.dart';
-import 'package:penhas/app/core/managers/local_store.dart';
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
-import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/login_button.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/password_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
+import 'package:penhas/app/features/authentication/presentation/sign_in_anonymous/sign_in_anonymous_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in_anonymous/sign_in_anonymous_page.dart';
 
 import '../../../../../utils/golden_tests.dart';
@@ -43,16 +42,14 @@ void main() {
       (i) async => userProfileEntity,
     );
 
-    initModules([
-      AppModule(),
-      SignInModule()
-    ], replaceBinds: [
-      Bind<IAuthenticationRepository>(
-          (i) => AuthenticationModulesMock.authenticationRepository),
-      Bind<PasswordValidator>(
-          (i) => AuthenticationModulesMock.passwordValidator),
-      Bind<LocalStore<UserProfileEntity>>(
-          (i) => AppModulesMock.userProfileStore),
+    initModule(SignInModule(), replaceBinds: [
+      Bind<SignInAnonymousController>(
+        (i) => SignInAnonymousController(
+          repository: AuthenticationModulesMock.authenticationRepository,
+          userProfileStore: AppModulesMock.userProfileStore,
+          passwordValidator: AuthenticationModulesMock.passwordValidator,
+        ),
+      ),
     ]);
   });
 
