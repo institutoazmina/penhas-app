@@ -12,18 +12,26 @@ import '../../../../../utils/golden_tests.dart';
 import '../mocks/authentication_modules_mock.dart';
 
 void main() {
+  late IModularNavigator modularNavigator;
+
   setUp(() {
     AuthenticationModulesMock.init();
+    modularNavigator = MockModularNavigate();
+    Modular.navigatorDelegate = modularNavigator;
+
+    initModule(
+      SignInModule(),
+      replaceBinds: [
+        Bind<IResetPasswordRepository>(
+          (i) => AuthenticationModulesMock.resetPasswordRepository,
+        ),
+      ],
+    );
   });
 
-  initModule(
-    SignInModule(),
-    replaceBinds: [
-      Bind<IResetPasswordRepository>(
-        (i) => AuthenticationModulesMock.resetPasswordRepository,
-      ),
-    ],
-  );
+  tearDown(() {
+    Modular.removeModule(SignInModule());
+  });
 
   group(ResetPasswordPage, () {
     testWidgets(
@@ -33,6 +41,25 @@ void main() {
 
         // Update email with a invalid email
         await tester.enterText(find.byType(SingleTextInput), 'invalidEmail');
+        await tester.pump();
+
+        // Fetching the TextField's
+        TextField textField = tester
+            .widget(find.byKey(const Key('singleTextInput'))) as TextField;
+        InputDecoration? decoration = textField.decoration;
+        expect(decoration?.errorText, 'Endereço de email inválido');
+      },
+    );
+
+    testWidgets(
+      'do not forward for invalid email',
+      (tester) async {
+        // when(()=> );
+
+        //
+        await tester.pumpWidget(_loadPage());
+        await tester.tap(find.text('Próximo'));
+
         await tester.pump();
 
         // Fetching the TextField's
