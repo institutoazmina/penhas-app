@@ -35,6 +35,21 @@ void main() {
   });
 
   group(ResetPasswordTwoPage, () {
+    testWidgets(
+      'show error for empty token when tap button',
+      (tester) async {
+        const errorMessage = 'Precisa digitar o código enviado';
+
+        await tester.pumpWidget(_loadPage());
+
+        // Tap the LoginButton
+        expect(find.text(errorMessage), findsNothing);
+        await tester.tap(find.text('Próximo'));
+        await tester.pump();
+        expect(find.text(errorMessage), findsOneWidget);
+      },
+    );
+
     group('golden test', () {
       screenshotTest(
         'looks as expected',
