@@ -12,15 +12,13 @@ import 'package:penhas/app/features/authentication/presentation/shared/single_te
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 
 import '../../../../../utils/golden_tests.dart';
+import '../mocks/app_modules_mock.dart';
 import '../mocks/authentication_modules_mock.dart';
 
 void main() {
-  late IModularNavigator modularNavigator;
-
   setUp(() {
+    AppModulesMock.init();
     AuthenticationModulesMock.init();
-    modularNavigator = MockModularNavigate();
-    Modular.navigatorDelegate = modularNavigator;
 
     initModule(
       SignInModule(),
@@ -97,8 +95,8 @@ void main() {
                 .request(emailAddress: any(named: 'emailAddress')))
             .thenAnswer(
                 (i) async => dartz.right(FakeResetPasswordResponseEntity()));
-        when(() => modularNavigator.pushNamed(any(),
-                arguments: any(named: 'arguments')))
+        when(() => AppModulesMock.modularNavigator
+                .pushNamed(any(), arguments: any(named: 'arguments')))
             .thenAnswer((i) => Future.value());
 
         await tester.pumpWidget(_loadPage());
@@ -108,7 +106,7 @@ void main() {
         await tester.tap(find.text('Próximo'));
         await tester.pump();
 
-        verify(() => modularNavigator.pushNamed(
+        verify(() => AppModulesMock.modularNavigator.pushNamed(
             '/authentication/reset_password/step2',
             arguments: any(named: 'arguments'))).called(1);
       },
@@ -123,8 +121,6 @@ void main() {
     });
   });
 }
-
-class MockModularNavigate extends Mock implements IModularNavigator {}
 
 class FakeResetPasswordResponseEntity extends Fake
     implements ResetPasswordResponseEntity {}
