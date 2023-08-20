@@ -5,6 +5,7 @@ import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/features/authentication/domain/entities/reset_password_response_entity.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
 import 'package:penhas/app/features/authentication/presentation/reset_password/reset_password_page.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
@@ -89,6 +90,35 @@ void main() {
       },
     );
 
+    testWidgets(
+      'forward for valid email',
+      (WidgetTester tester) async {
+        when(() => AuthenticationModulesMock.resetPasswordRepository
+                .request(emailAddress: any(named: 'emailAddress')))
+            .thenAnswer(
+                (i) async => dartz.right(FakeResetPasswordResponseEntity()));
+        when(() => modularNavigator.pushNamed(any(),
+                arguments: any(named: 'arguments')))
+            .thenAnswer((i) => Future.value());
+
+        await tester.pumpWidget(_loadPage());
+
+        // Tap the LoginButton
+        await tester.enterText(find.byType(SingleTextInput), 'valid@email.com');
+        await tester.tap(find.text('Próximo'));
+        await tester.pump();
+
+        verify(() => modularNavigator.pushNamed(
+            '/authentication/reset_password/step2',
+            arguments: any(named: 'arguments'))).called(1);
+      },
+    );
+
+    //     Modular.to.pushNamed(
+    //   '/authentication/reset_password/step2',
+    //   arguments: _userRegisterModel,
+    // );
+
     group('golden test', () {
       screenshotTest(
         'looks as expected',
@@ -100,6 +130,9 @@ void main() {
 }
 
 class MockModularNavigate extends Mock implements IModularNavigator {}
+
+class FakeResetPasswordResponseEntity extends Fake
+    implements ResetPasswordResponseEntity {}
 
 Widget _loadPage() {
   return const MaterialApp(
