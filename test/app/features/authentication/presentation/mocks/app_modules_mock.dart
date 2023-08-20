@@ -1,3 +1,4 @@
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/managers/local_store.dart';
@@ -10,6 +11,7 @@ class AppModulesMock {
   static late IUserProfileRepository userProfileRepository;
   static late AppStateUseCase appStateUseCase;
   static late LocalStore<UserProfileEntity> userProfileStore;
+  static late IModularNavigator modularNavigator;
 
   static void init() {
     _initMocks();
@@ -20,6 +22,9 @@ class AppModulesMock {
     appConfiguration = MockAppConfiguration();
     userProfileRepository = MockUserProfileRepository();
     userProfileStore = MockUserProfileStore();
+
+    modularNavigator = MockModularNavigate();
+    Modular.navigatorDelegate = modularNavigator;
   }
 }
 
@@ -36,3 +41,5 @@ class MockAppStateUseCase extends Mock implements AppStateUseCase {}
 
 class MockUserProfileStore extends Mock
     implements LocalStore<UserProfileEntity> {}
+
+class MockModularNavigate extends Mock implements IModularNavigator {}
