@@ -139,6 +139,7 @@ class _ResetPasswordTwoPageState
     String? onError,
   }) {
     return TextFormField(
+      key: const Key('reset_password_token'),
       onChanged: onChanged,
       keyboardType: keyboardType,
       autofocus: true,
