@@ -6,13 +6,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/app_module.dart';
 import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
-import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/login_button.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/password_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
+import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_page.dart';
 
@@ -31,16 +30,17 @@ void main() {
     validPassword = 'myStr0ngP4ssw0rd';
     validEmail = 'my@email.com';
 
-    initModules([
-      AppModule(),
-      SignInModule()
-    ], replaceBinds: [
-      Bind<IAuthenticationRepository>(
-          (i) => AuthenticationModulesMock.authenticationRepository),
-      Bind<PasswordValidator>(
-          (i) => AuthenticationModulesMock.passwordValidator),
-      Bind<AppStateUseCase>((i) => AppModulesMock.appStateUseCase),
-    ]);
+    initModule(
+      SignInModule(),
+      replaceBinds: [
+        Bind<SignInController>(
+          (i) => SignInController(
+              AuthenticationModulesMock.authenticationRepository,
+              AuthenticationModulesMock.passwordValidator,
+              AppModulesMock.appStateUseCase),
+        ),
+      ],
+    );
   });
 
   tearDown(() {
