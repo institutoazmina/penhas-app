@@ -1,7 +1,10 @@
+import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/reset_password/pages/reset_password_two/reset_password_two_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/reset_password/pages/reset_password_two/reset_password_two_page.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
@@ -44,6 +47,31 @@ void main() {
 
         // Tap the LoginButton
         expect(find.text(errorMessage), findsNothing);
+        await tester.tap(find.text('Próximo'));
+        await tester.pump();
+        expect(find.text(errorMessage), findsOneWidget);
+      },
+    );
+
+    testWidgets(
+      'show error for server side error',
+      (tester) async {
+        const errorMessage =
+            'O servidor está com problema neste momento, tente novamente.';
+        const tokenInput = Key('reset_password_token');
+
+        when(
+          () => AuthenticationModulesMock.changePasswordRepository.validToken(
+            emailAddress: any(named: 'emailAddress'),
+            resetToken: any(named: 'resetToken'),
+          ),
+        ).thenAnswer((i) async => dartz.left(ServerFailure()));
+
+        await tester.pumpWidget(_loadPage());
+
+        // Tap the LoginButton
+        expect(find.text(errorMessage), findsNothing);
+        await tester.enterText(find.byKey(tokenInput), '123456');
         await tester.tap(find.text('Próximo'));
         await tester.pump();
         expect(find.text(errorMessage), findsOneWidget);
