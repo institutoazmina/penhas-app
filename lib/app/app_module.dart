@@ -71,14 +71,14 @@ class AppModule extends Module {
             networkInfo: i.get<INetworkInfo>(),
           ),
         ),
-        Bind.factory((i) => DataConnectionChecker()),
+        Bind.factory<DataConnectionChecker>((i) => DataConnectionChecker()),
         Bind.factory<IUserProfileRepository>(
           (i) => UserProfileRepository(
             apiProvider: i.get<IApiProvider>(),
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
-        Bind.factory(
+        Bind.factory<DeletedAccountController>(
           (i) => DeletedAccountController(
             profileRepository: i.get<IUserProfileRepository>(),
             appConfiguration: i.get<IAppConfiguration>(),
