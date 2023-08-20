@@ -10,6 +10,7 @@ class AuthenticationModulesMock {
   static late IAuthenticationRepository authenticationRepository;
   static late PasswordValidator passwordValidator;
   static late IResetPasswordRepository resetPasswordRepository;
+  static late IChangePasswordRepository changePasswordRepository;
 
   static void init() {
     _initMocks();
@@ -20,6 +21,7 @@ class AuthenticationModulesMock {
     passwordValidator = MockPasswordValidator();
     authenticationRepository = MockAuthenticationRepository();
     resetPasswordRepository = MockResetPasswordRepository();
+    changePasswordRepository = MockChangePasswordRepository();
   }
 
   static void _initFallbacks() {
@@ -38,6 +40,9 @@ class MockPasswordValidator extends Mock implements PasswordValidator {}
 
 class MockResetPasswordRepository extends Mock
     implements IResetPasswordRepository {}
+
+class MockChangePasswordRepository extends Mock
+    implements IChangePasswordRepository {}
 
 ///
 /// Fakes
