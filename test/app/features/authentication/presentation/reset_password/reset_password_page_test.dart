@@ -114,15 +114,10 @@ void main() {
       },
     );
 
-    //     Modular.to.pushNamed(
-    //   '/authentication/reset_password/step2',
-    //   arguments: _userRegisterModel,
-    // );
-
     group('golden test', () {
       screenshotTest(
         'looks as expected',
-        fileName: 'reset_password_page',
+        fileName: 'reset_password_page_step_1',
         pageBuilder: _loadPage,
       );
     });
