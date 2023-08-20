@@ -24,17 +24,12 @@ void main() {
   late String validPassword;
   late String validEmail;
 
-  late IModularNavigator modularNavigator;
-
   setUp(() {
     AppModulesMock.init();
     AuthenticationModulesMock.init();
 
     validPassword = 'myStr0ngP4ssw0rd';
     validEmail = 'my@email.com';
-    modularNavigator = MockModularNavigate();
-
-    Modular.navigatorDelegate = modularNavigator;
 
     initModules([
       AppModule(),
@@ -187,8 +182,8 @@ void main() {
               sessionToken: sessionToken, deletedScheduled: true)),
         );
         when(
-          () => modularNavigator.pushNamed(any(),
-              arguments: any(named: 'arguments')),
+          () => AppModulesMock.modularNavigator
+              .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
         await tester.pumpWidget(_loadSignInPage());
@@ -199,7 +194,7 @@ void main() {
         await tester.tap(find.byType(LoginButton));
         await tester.pump();
 
-        verify(() => modularNavigator.pushNamed(
+        verify(() => AppModulesMock.modularNavigator.pushNamed(
               '/accountDeleted',
               arguments: sessionToken,
             )).called(1);
@@ -226,8 +221,8 @@ void main() {
             .thenAnswer((i) async => dartz.right(FakeAppStateEntity()));
 
         when(
-          () => modularNavigator.popAndPushNamed(any(),
-              arguments: any(named: 'arguments')),
+          () => AppModulesMock.modularNavigator
+              .popAndPushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
         await tester.pumpWidget(_loadSignInPage());
@@ -238,8 +233,9 @@ void main() {
         await tester.tap(find.byType(LoginButton));
         await tester.pump();
 
-        verify(() => modularNavigator.popAndPushNamed('/mainboard',
-            arguments: {'page': 'feed'})).called(1);
+        verify(() => AppModulesMock.modularNavigator
+                .popAndPushNamed('/mainboard', arguments: {'page': 'feed'}))
+            .called(1);
       },
     );
 
@@ -247,8 +243,8 @@ void main() {
       'sign up redirect page',
       (WidgetTester tester) async {
         when(
-          () => modularNavigator.pushNamed(any(),
-              arguments: any(named: 'arguments')),
+          () => AppModulesMock.modularNavigator
+              .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
         await tester.pumpWidget(_loadSignInPage());
@@ -257,8 +253,8 @@ void main() {
         await tester.tap(find.text('Cadastrar'));
         await tester.pump();
 
-        verify(() => modularNavigator.pushNamed('/authentication/signup'))
-            .called(1);
+        verify(() => AppModulesMock.modularNavigator
+            .pushNamed('/authentication/signup')).called(1);
       },
     );
 
@@ -266,8 +262,8 @@ void main() {
       'reset password redirect page',
       (WidgetTester tester) async {
         when(
-          () => modularNavigator.pushNamed(any(),
-              arguments: any(named: 'arguments')),
+          () => AppModulesMock.modularNavigator
+              .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
         await tester.pumpWidget(_loadSignInPage());
@@ -276,9 +272,8 @@ void main() {
         await tester.tap(find.text('Esqueci minha senha'));
         await tester.pump();
 
-        verify(() =>
-                modularNavigator.pushNamed('/authentication/reset_password'))
-            .called(1);
+        verify(() => AppModulesMock.modularNavigator
+            .pushNamed('/authentication/reset_password')).called(1);
       },
     );
 
@@ -286,8 +281,8 @@ void main() {
       'terms of use redirect page',
       (WidgetTester tester) async {
         when(
-          () => modularNavigator.pushNamed(any(),
-              arguments: any(named: 'arguments')),
+          () => AppModulesMock.modularNavigator
+              .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
         await tester.pumpWidget(_loadSignInPage());
@@ -296,8 +291,8 @@ void main() {
         await tester.tap(find.text('Termos de uso'));
         await tester.pump();
 
-        verify(() => modularNavigator.pushNamed('/authentication/terms_of_use'))
-            .called(1);
+        verify(() => AppModulesMock.modularNavigator
+            .pushNamed('/authentication/terms_of_use')).called(1);
       },
     );
 
@@ -305,8 +300,8 @@ void main() {
       'privacy policy redirect page',
       (WidgetTester tester) async {
         when(
-          () => modularNavigator.pushNamed(any(),
-              arguments: any(named: 'arguments')),
+          () => AppModulesMock.modularNavigator
+              .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
         await tester.pumpWidget(_loadSignInPage());
@@ -322,9 +317,8 @@ void main() {
         await tester.tap(expectedWidget);
         await tester.pump();
 
-        verify(() =>
-                modularNavigator.pushNamed('/authentication/privacy_policy'))
-            .called(1);
+        verify(() => AppModulesMock.modularNavigator
+            .pushNamed('/authentication/privacy_policy')).called(1);
       },
     );
 
@@ -337,8 +331,6 @@ void main() {
     });
   });
 }
-
-class MockModularNavigate extends Mock implements IModularNavigator {}
 
 Widget _loadSignInPage() {
   return const MaterialApp(
