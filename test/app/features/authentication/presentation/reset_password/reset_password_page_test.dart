@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/domain/entities/reset_password_response_entity.dart';
-import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
+import 'package:penhas/app/features/authentication/presentation/reset_password/reset_password_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/reset_password/reset_password_page.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
@@ -23,8 +23,9 @@ void main() {
     initModule(
       SignInModule(),
       replaceBinds: [
-        Bind<IResetPasswordRepository>(
-          (i) => AuthenticationModulesMock.resetPasswordRepository,
+        Bind<ResetPasswordController>(
+          (i) => ResetPasswordController(
+              AuthenticationModulesMock.resetPasswordRepository),
         ),
       ],
     );
