@@ -34,6 +34,17 @@ void main() {
   });
 
   group(ResetPasswordThreePage, () {
+    testWidgets(
+      'show screen widgets',
+      (tester) async {
+        await tester.pumpWidget(_loadPage());
+
+        // check if necessary widgets are present
+        expect(find.text('Senha'), findsOneWidget);
+        expect(find.text('Confirmação de senha'), findsOneWidget);
+        expect(find.text('Salvar'), findsOneWidget);
+      },
+    );
     group('golden test', () {
       screenshotTest(
         'looks as expected',
