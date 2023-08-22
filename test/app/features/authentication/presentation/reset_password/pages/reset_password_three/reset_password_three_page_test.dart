@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/presentation/reset_password/pages/reset_password_three/reset_password_three_controller.dart';
@@ -109,6 +110,34 @@ void main() {
         await iTapText(tester, text: 'Salvar');
         await iSeeText(
             'O servidor está com problema neste momento, tente novamente.');
+      },
+    );
+
+    testWidgets(
+      'forward for a successfully password reset',
+      (tester) async {
+        when(() => AuthenticationModulesMock.passwordValidator
+            .validate(any(), any())).thenAnswer((i) => dartz.right('password'));
+
+        when(() => AuthenticationModulesMock.changePasswordRepository.reset(
+              emailAddress: any(named: 'emailAddress'),
+              password: any(named: 'password'),
+              resetToken: any(named: 'resetToken'),
+            )).thenAnswer((i) async => dartz.right(const ValidField()));
+
+        when(() => AppModulesMock.modularNavigator.pushNamedAndRemoveUntil(
+            any(), any())).thenAnswer((i) => Future.value());
+
+        // Capture server side error message
+        await theAppIsRunning(tester, const ResetPasswordThreePage());
+        await iEnterIntoPasswordField(tester,
+            text: 'Senha', password: 'password');
+        await iEnterIntoPasswordField(tester,
+            text: 'Confirmação de senha', password: 'password');
+        await iTapText(tester, text: 'Salvar');
+
+        verify(() => AppModulesMock.modularNavigator
+            .pushNamedAndRemoveUntil('/authentication', any())).called(1);
       },
     );
 
