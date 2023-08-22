@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/presentation/reset_password/pages/reset_password_three/reset_password_three_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/reset_password/pages/reset_password_three/reset_password_three_page.dart';
@@ -84,6 +85,30 @@ void main() {
             text: 'Confirmação de senha', password: 'p4ssw0rd');
         await iSeePasswordFieldErrorMessage(tester,
             text: 'Confirmação de senha', message: 'As senhas não são iguais');
+      },
+    );
+
+    testWidgets(
+      'show error mensagem form server side error when reset password',
+      (tester) async {
+        when(() => AuthenticationModulesMock.passwordValidator
+            .validate(any(), any())).thenAnswer((i) => dartz.right('password'));
+
+        when(() => AuthenticationModulesMock.changePasswordRepository.reset(
+              emailAddress: any(named: 'emailAddress'),
+              password: any(named: 'password'),
+              resetToken: any(named: 'resetToken'),
+            )).thenAnswer((i) async => dartz.left(ServerFailure()));
+
+        // Capture server side error message
+        await theAppIsRunning(tester, const ResetPasswordThreePage());
+        await iEnterIntoPasswordField(tester,
+            text: 'Senha', password: 'password');
+        await iEnterIntoPasswordField(tester,
+            text: 'Confirmação de senha', password: 'password');
+        await iTapText(tester, text: 'Salvar');
+        await iSeeText(
+            'O servidor está com problema neste momento, tente novamente.');
       },
     );
 

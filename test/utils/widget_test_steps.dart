@@ -38,6 +38,11 @@ Future<void> theAppIsRunning(WidgetTester tester, Widget widget) async {
   );
 }
 
+Future<void> iTapText(WidgetTester tester, {required String text}) async {
+  await tester.tap(find.text(text));
+  await tester.pump();
+}
+
 Future<void> iSeePasswordField({
   String? text,
   Key? key,
