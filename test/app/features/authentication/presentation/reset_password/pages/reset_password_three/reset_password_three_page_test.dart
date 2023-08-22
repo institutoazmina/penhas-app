@@ -33,6 +33,10 @@ void main() {
     );
   });
 
+  tearDown(() {
+    Modular.removeModule(SignInModule());
+  });
+
   group(ResetPasswordThreePage, () {
     testWidgets(
       'show screen widgets',
