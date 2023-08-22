@@ -21,6 +21,7 @@ void main() {
     AppModulesMock.init();
     AuthenticationModulesMock.init();
     userRegisterFormField = UserRegisterFormFieldModel();
+    userRegisterFormField.token = 'token';
 
     initModule(
       SignInModule(),
@@ -66,6 +67,23 @@ void main() {
         await iEnterIntoPasswordField(tester, text: 'Senha', password: '1');
         await iSeePasswordFieldErrorMessage(tester,
             text: 'Senha', message: 'Senha precisa ter no mínimo 8 caracteres');
+      },
+    );
+
+    testWidgets(
+      'show error message if password field and password confirmation field are different',
+      (tester) async {
+        when(() => AuthenticationModulesMock.passwordValidator
+            .validate(any(), any())).thenAnswer((i) => dartz.right('password'));
+
+        // Input a invalid password
+        await theAppIsRunning(tester, const ResetPasswordThreePage());
+        await iEnterIntoPasswordField(tester,
+            text: 'Senha', password: 'password');
+        await iEnterIntoPasswordField(tester,
+            text: 'Confirmação de senha', password: 'p4ssw0rd');
+        await iSeePasswordFieldErrorMessage(tester,
+            text: 'Confirmação de senha', message: 'As senhas não são iguais');
       },
     );
 
