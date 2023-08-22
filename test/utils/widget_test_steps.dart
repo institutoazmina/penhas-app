@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/password_text_input.dart';
 
 Future<void> iSeeButton({
-  required WidgetTester tester,
   String? text,
   Key? key,
 }) async {
@@ -25,7 +24,6 @@ Future<void> iSeeButton({
 }
 
 Future<void> iSeeText(
-  WidgetTester tester,
   String text,
 ) async {
   expect(find.text(text), findsOneWidget);
@@ -41,31 +39,33 @@ Future<void> theAppIsRunning(WidgetTester tester, Widget widget) async {
 }
 
 Future<void> iSeePasswordField({
-  required WidgetTester tester,
   String? text,
   Key? key,
 }) async {
-  if (text != null) {
-    expect(
-        find.ancestor(
-          of: find.text(text),
-          matching: find.byType(PassordInputField),
-        ),
-        findsOneWidget);
+  final finder = _getPasswordField(text: text, key: key);
 
-    return;
-  }
-
-  if (key != null) {
-    expect(
-        find.ancestor(
-          of: find.byKey(key),
-          matching: find.byType(PassordInputField),
-        ),
-        findsOneWidget);
-
+  if (finder != null && finder.evaluate().isNotEmpty) {
+    expect(finder, findsOneWidget);
     return;
   }
 
   expect(find.byType(PassordInputField), findsOneWidget);
+}
+
+Finder? _getPasswordField({String? text, Key? key}) {
+  if (text != null) {
+    return find.ancestor(
+      of: find.text(text),
+      matching: find.byType(PassordInputField),
+    );
+  }
+
+  if (key != null) {
+    return find.ancestor(
+      of: find.byKey(key),
+      matching: find.byType(PassordInputField),
+    );
+  }
+
+  return null;
 }

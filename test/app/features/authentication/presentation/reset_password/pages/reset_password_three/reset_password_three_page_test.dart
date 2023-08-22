@@ -40,13 +40,14 @@ void main() {
         await theAppIsRunning(tester, const ResetPasswordThreePage());
 
         // check that required widgets are present
-        iSeeText(tester, 'Configure uma nova senha');
-        iSeeText(tester, 'Crie uma senha diferente das anteriores');
-        iSeePasswordField(tester: tester, text: 'Senha');
-        iSeePasswordField(tester: tester, text: 'Confirmação de senha');
-        iSeeButton(tester: tester, text: 'Salvar');
+        await iSeeText('Configure uma nova senha');
+        await iSeeText('Crie uma senha diferente das anteriores');
+        await iSeePasswordField(text: 'Senha');
+        await iSeePasswordField(text: 'Confirmação de senha');
+        await iSeeButton(text: 'Salvar');
       },
     );
+
     group('golden test', () {
       screenshotTest(
         'looks as expected',
