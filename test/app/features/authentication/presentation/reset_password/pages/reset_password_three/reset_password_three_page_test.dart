@@ -1,6 +1,9 @@
+import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/presentation/reset_password/pages/reset_password_three/reset_password_three_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/reset_password/pages/reset_password_three/reset_password_three_page.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
@@ -49,6 +52,20 @@ void main() {
         await iSeePasswordField(text: 'Senha');
         await iSeePasswordField(text: 'Confirmação de senha');
         await iSeeButton(text: 'Salvar');
+      },
+    );
+
+    testWidgets(
+      'invalid password shows hint message',
+      (tester) async {
+        when(() => AuthenticationModulesMock.passwordValidator.validate(
+            any(), any())).thenAnswer((i) => dartz.left(MinLengthRule()));
+
+        // Input a invalid password
+        await theAppIsRunning(tester, const ResetPasswordThreePage());
+        await iEnterIntoPasswordField(tester, text: 'Senha', password: '1');
+        await iSeePasswordFieldErrorMessage(tester,
+            text: 'Senha', message: 'Senha precisa ter no mínimo 8 caracteres');
       },
     );
 
