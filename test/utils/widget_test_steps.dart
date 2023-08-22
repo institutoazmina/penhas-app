@@ -52,6 +52,43 @@ Future<void> iSeePasswordField({
   expect(find.byType(PassordInputField), findsOneWidget);
 }
 
+Future<void> iEnterIntoPasswordField(
+  WidgetTester tester, {
+  String? text,
+  Key? key,
+  required String password,
+}) async {
+  Finder? finder = _getPasswordField(text: text, key: key);
+
+  if (finder == null) {
+    fail('did not find the PasswordInputField to enter the value $password');
+  }
+
+  await tester.enterText(finder, password);
+  await tester.pump();
+}
+
+Future<void> iSeePasswordFieldErrorMessage(
+  WidgetTester tester, {
+  String? text,
+  Key? key,
+  required String message,
+}) async {
+  Finder? finder = _getPasswordField(text: text, key: key);
+
+  if (finder == null) {
+    fail('did not find the PasswordInputField');
+  }
+
+  final textFieldFinder = find.descendant(
+    of: finder,
+    matching: find.byType(TextField),
+  );
+
+  TextField textField = tester.widget(textFieldFinder) as TextField;
+  expect(textField.decoration?.errorText, message);
+}
+
 Finder? _getPasswordField({String? text, Key? key}) {
   if (text != null) {
     return find.ancestor(
