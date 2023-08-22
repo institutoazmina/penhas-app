@@ -62,7 +62,7 @@ abstract class _ResetPasswordThreeControllerBase with Store, MapFailureMessage {
     _userRegisterModel!.password = SignUpPassword(password, _passwordValidator);
     warningPassword = _userRegisterModel!.password!.mapFailure;
     warningConfirmationPassword =
-        _userRegisterModel!.passwordConfirmation!.isEmpty
+        (_userRegisterModel!.passwordConfirmation ?? '').isEmpty
             ? ''
             : _userRegisterModel!.validatePasswordConfirmation;
   }
@@ -71,7 +71,7 @@ abstract class _ResetPasswordThreeControllerBase with Store, MapFailureMessage {
   void setConfirmationPassword(String password) {
     _userRegisterModel!.passwordConfirmation = password;
     warningConfirmationPassword =
-        _userRegisterModel!.passwordConfirmation!.isEmpty
+        (_userRegisterModel!.passwordConfirmation ?? '').isEmpty
             ? ''
             : _userRegisterModel!.validatePasswordConfirmation;
   }
