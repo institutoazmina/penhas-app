@@ -2,15 +2,19 @@ import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
+import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
+import 'package:penhas/app/features/zodiac/domain/usecases/stealth_security_action.dart';
 
 class AuthenticationModulesMock {
   static late IAuthenticationRepository authenticationRepository;
   static late PasswordValidator passwordValidator;
   static late IResetPasswordRepository resetPasswordRepository;
   static late IChangePasswordRepository changePasswordRepository;
+  static late StealthSecurityAction securityAction;
+  static late IUserRegisterRepository userRegisterRepository;
 
   static void init() {
     _initMocks();
@@ -22,6 +26,8 @@ class AuthenticationModulesMock {
     authenticationRepository = MockAuthenticationRepository();
     resetPasswordRepository = MockResetPasswordRepository();
     changePasswordRepository = MockChangePasswordRepository();
+    securityAction = MockStealthSecurityAction();
+    userRegisterRepository = MockUserRegisterRepository();
   }
 
   static void _initFallbacks() {
@@ -43,6 +49,11 @@ class MockResetPasswordRepository extends Mock
 
 class MockChangePasswordRepository extends Mock
     implements IChangePasswordRepository {}
+
+class MockStealthSecurityAction extends Mock implements StealthSecurityAction {}
+
+class MockUserRegisterRepository extends Mock
+    implements IUserRegisterRepository {}
 
 ///
 /// Fakes
