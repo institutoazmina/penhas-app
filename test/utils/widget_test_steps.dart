@@ -39,6 +39,12 @@ Future<void> iSeeText(
   expect(find.text(text), findsOneWidget);
 }
 
+Future<void> iDontSeeText(
+  String text,
+) async {
+  expect(find.text(text), findsNothing);
+}
+
 Future<void> iTapText(WidgetTester tester, {required String text}) async {
   await tester.tap(find.text(text));
   await tester.pump();
@@ -166,4 +172,32 @@ Finder? _getType(Type type, {String? text, Key? key}) {
   }
 
   return null;
+}
+
+Future<void> iSeeWidget(Type type, {String? text, Key? key}) async {
+  final finder = _getType(SingleTextInput, text: text, key: key);
+
+  if (finder != null && finder.evaluate().isNotEmpty) {
+    expect(finder, findsOneWidget);
+    return;
+  }
+
+  expect(find.byType(type), findsOneWidget);
+}
+
+Future<void> iEnterIntoWidgetInput(
+  WidgetTester tester, {
+  required type,
+  String? text,
+  Key? key,
+  required String value,
+}) async {
+  final finder = _getType(type, text: text, key: key);
+
+  if (finder == null) {
+    fail('did not find the $type to enter the value $value');
+  }
+
+  await tester.enterText(finder, value);
+  await tester.pump();
 }
