@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/privacy_policy/privacy_policy_page.dart';
@@ -47,10 +46,7 @@ void main() {
       screenshotTest(
         'looks as expected',
         fileName: 'privacy_policy_page',
-        pageBuilder: () => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: PrivacyPolicyPage(baseUrl: Uri()),
-        ),
+        pageBuilder: () => PrivacyPolicyPage(baseUrl: Uri()),
       );
     });
   });
