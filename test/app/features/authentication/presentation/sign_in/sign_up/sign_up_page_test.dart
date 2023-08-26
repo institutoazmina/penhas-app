@@ -51,6 +51,20 @@ void main() {
         },
       );
 
+      testWidgets('shows warning message on invalid widget value',
+          (tester) async {
+        await theAppIsRunning(tester, const SignUpPage());
+        await iTapText(tester, text: 'Próximo');
+        await iSeeSingleTextInputErrorMessage(tester,
+            text: 'Nome completo', message: 'Nome inválido para o sistema');
+        await iSeeSingleTextInputErrorMessage(tester,
+            text: 'Data de nascimento', message: 'Data de nascimento inválida');
+        await iSeeSingleTextInputErrorMessage(tester,
+            key: cpfKey, message: 'CPF inválido');
+        await iSeeSingleTextInputErrorMessage(tester,
+            key: cepKey, message: 'CEP inválido');
+      });
+
       screenshotTest(
         'looks as expected',
         fileName: 'sign_up_step_1_page',
