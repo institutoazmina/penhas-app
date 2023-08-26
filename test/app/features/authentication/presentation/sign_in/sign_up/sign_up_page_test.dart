@@ -30,7 +30,7 @@ void main() {
     () {
       screenshotTest(
         'looks as expected',
-        fileName: 'sign_up_page',
+        fileName: 'sign_up_step_1_page',
         pageBuilder: () => const SignUpPage(),
       );
     },
