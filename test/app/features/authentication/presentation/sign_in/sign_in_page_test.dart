@@ -4,18 +4,15 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:penhas/app/app_module.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/login_button.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/password_text_input.dart';
-import 'package:penhas/app/features/authentication/presentation/shared/single_text_input.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_page.dart';
 
 import '../../../../../utils/golden_tests.dart';
+import '../../../../../utils/widget_test_steps.dart';
 import '../mocks/app_modules_mock.dart';
 import '../mocks/authentication_modules_mock.dart';
 
@@ -45,21 +42,21 @@ void main() {
 
   tearDown(() {
     Modular.removeModule(SignInModule());
-    Modular.removeModule(AppModule());
   });
 
   group(SignInPage, () {
     testWidgets(
       'show screen widgets',
       (WidgetTester tester) async {
-        await tester.pumpWidget(_loadSignInPage());
+        await theAppIsRunning(tester, const SignInPage());
 
         // check if necessary widgets are present
-        expect(find.text('E-mail'), findsOneWidget);
-        expect(find.text('Senha'), findsOneWidget);
-        expect(find.text('Esqueci minha senha'), findsOneWidget);
-        expect(find.text('Termos de uso'), findsOneWidget);
-        expect(find.text('Política de privacidade'), findsOneWidget);
+        await iSeeSingleTextInput(text: 'E-mail');
+        await iSeePasswordField(text: 'Senha');
+        await iSeeButton(text: 'Entrar');
+        await iSeeButton(text: 'Esqueci minha senha');
+        await iSeeButton(text: 'Termos de uso');
+        await iSeeButton(text: 'Política de privacidade');
       },
     );
 
@@ -68,18 +65,16 @@ void main() {
       (WidgetTester tester) async {
         const errorMessage =
             'E-mail e senha precisam estarem corretos para continuar.';
-        await tester.pumpWidget(_loadSignInPage());
 
-        // Tap the LoginButton
-        expect(find.text(errorMessage), findsNothing);
-        await tester.tap(find.byType(LoginButton));
-        await tester.pump();
-        expect(find.text(errorMessage), findsOneWidget);
+        await theAppIsRunning(tester, const SignInPage());
+        await iDontSeeText(errorMessage);
+        await iTapText(tester, text: 'Entrar');
+        await iSeeText(errorMessage);
       },
     );
 
     testWidgets(
-      'invalid email and valid password show a message error when tap LoginButton',
+      'invalid email and valid password show a message error when tapping LoginButton',
       (WidgetTester tester) async {
         const errorMessage =
             'E-mail e senha precisam estarem corretos para continuar.';
@@ -87,20 +82,19 @@ void main() {
         when(() => AuthenticationModulesMock.passwordValidator.validate(
             any(), any())).thenAnswer((i) => dartz.right(validPassword));
 
-        await tester.pumpWidget(_loadSignInPage());
-
-        // Tap the LoginButton
-        expect(find.text(errorMessage), findsNothing);
-        await tester.enterText(find.byType(SingleTextInput), 'my_mail');
-        await tester.enterText(find.byType(PassordInputField), validPassword);
-        await tester.tap(find.byType(LoginButton));
-        await tester.pump();
-        expect(find.text(errorMessage), findsOneWidget);
+        await theAppIsRunning(tester, const SignInPage());
+        await iDontSeeText(errorMessage);
+        await iEnterIntoSingleTextInput(tester,
+            text: 'E-mail', value: 'my_mail');
+        await iEnterIntoPasswordField(tester,
+            text: 'Senha', password: validPassword);
+        await iTapText(tester, text: 'Entrar');
+        await iSeeText(errorMessage);
       },
     );
 
     testWidgets(
-      'valid email and invalid password show a message error when tap LoginButton',
+      'valid email and invalid password show a message error when tapping LoginButton',
       (WidgetTester tester) async {
         const errorMessage =
             'E-mail e senha precisam estarem corretos para continuar.';
@@ -108,37 +102,31 @@ void main() {
         when(() => AuthenticationModulesMock.passwordValidator
             .validate(any(), any())).thenAnswer((i) => dartz.left(EmptyRule()));
 
-        await tester.pumpWidget(_loadSignInPage());
-
-        // Tap the LoginButton
-        expect(find.text(errorMessage), findsNothing);
-        await tester.enterText(find.byType(SingleTextInput), validEmail);
-        await tester.enterText(find.byType(PassordInputField), validPassword);
-        await tester.tap(find.byType(LoginButton));
-        await tester.pump();
-        expect(find.text(errorMessage), findsOneWidget);
+        await theAppIsRunning(tester, const SignInPage());
+        await iDontSeeText(errorMessage);
+        await iEnterIntoSingleTextInput(tester,
+            text: 'E-mail', value: validEmail);
+        await iEnterIntoPasswordField(tester,
+            text: 'Senha', password: validPassword);
+        await iTapText(tester, text: 'Entrar');
+        await iSeeText(errorMessage);
       },
     );
 
     testWidgets(
       'displays error text for invalid email input',
       (WidgetTester tester) async {
-        await tester.pumpWidget(_loadSignInPage());
-
+        await theAppIsRunning(tester, const SignInPage());
         // Update email with a invalid email
-        await tester.enterText(find.byType(SingleTextInput), 'invalidEmail');
-        await tester.pump();
-
-        // Fetching the TextField's
-        TextField textField = tester
-            .widget(find.byKey(const Key('singleTextInput'))) as TextField;
-        InputDecoration? decoration = textField.decoration;
-        expect(decoration?.errorText, 'Endereço de email inválido');
+        await iEnterIntoSingleTextInput(tester,
+            text: 'E-mail', value: 'invalidEmail');
+        await iSeeSingleTextInputErrorMessage(tester,
+            text: 'E-mail', message: 'Endereço de email inválido');
       },
     );
 
     testWidgets(
-      'show error for invalid login',
+      'shows error for invalid login',
       (WidgetTester tester) async {
         const errorMessage =
             'O servidor está com problema neste momento, tente novamente.';
@@ -153,15 +141,14 @@ void main() {
           ),
         ).thenAnswer((i) async => dartz.left(ServerFailure()));
 
-        await tester.pumpWidget(_loadSignInPage());
-
-        // Tap the LoginButton
-        expect(find.text(errorMessage), findsNothing);
-        await tester.enterText(find.byType(SingleTextInput), validEmail);
-        await tester.enterText(find.byType(PassordInputField), validPassword);
-        await tester.tap(find.byType(LoginButton));
-        await tester.pump();
-        expect(find.text(errorMessage), findsOneWidget);
+        await theAppIsRunning(tester, const SignInPage());
+        await iDontSeeText(errorMessage);
+        await iEnterIntoSingleTextInput(tester,
+            text: 'E-mail', value: validEmail);
+        await iEnterIntoPasswordField(tester,
+            text: 'Senha', password: validPassword);
+        await iTapText(tester, text: 'Entrar');
+        await iSeeText(errorMessage);
       },
     );
 
@@ -186,13 +173,12 @@ void main() {
               .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
-        await tester.pumpWidget(_loadSignInPage());
-
-        // Tap the LoginButton
-        await tester.enterText(find.byType(SingleTextInput), validEmail);
-        await tester.enterText(find.byType(PassordInputField), validPassword);
-        await tester.tap(find.byType(LoginButton));
-        await tester.pump();
+        await theAppIsRunning(tester, const SignInPage());
+        await iEnterIntoSingleTextInput(tester,
+            text: 'E-mail', value: validEmail);
+        await iEnterIntoPasswordField(tester,
+            text: 'Senha', password: validPassword);
+        await iTapText(tester, text: 'Entrar');
 
         verify(() => AppModulesMock.modularNavigator.pushNamed(
               '/accountDeleted',
@@ -225,13 +211,12 @@ void main() {
               .popAndPushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
-        await tester.pumpWidget(_loadSignInPage());
-
-        // Tap the LoginButton
-        await tester.enterText(find.byType(SingleTextInput), validEmail);
-        await tester.enterText(find.byType(PassordInputField), validPassword);
-        await tester.tap(find.byType(LoginButton));
-        await tester.pump();
+        await theAppIsRunning(tester, const SignInPage());
+        await iEnterIntoSingleTextInput(tester,
+            text: 'E-mail', value: validEmail);
+        await iEnterIntoPasswordField(tester,
+            text: 'Senha', password: validPassword);
+        await iTapText(tester, text: 'Entrar');
 
         verify(() => AppModulesMock.modularNavigator
                 .popAndPushNamed('/mainboard', arguments: {'page': 'feed'}))
@@ -247,11 +232,8 @@ void main() {
               .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
-        await tester.pumpWidget(_loadSignInPage());
-
-        // Tap the sign up button
-        await tester.tap(find.text('Cadastrar'));
-        await tester.pump();
+        await theAppIsRunning(tester, const SignInPage());
+        await iTapText(tester, text: 'Cadastrar');
 
         verify(() => AppModulesMock.modularNavigator
             .pushNamed('/authentication/signup')).called(1);
@@ -266,11 +248,8 @@ void main() {
               .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
-        await tester.pumpWidget(_loadSignInPage());
-
-        // Tap the Reset password button
-        await tester.tap(find.text('Esqueci minha senha'));
-        await tester.pump();
+        await theAppIsRunning(tester, const SignInPage());
+        await iTapText(tester, text: 'Esqueci minha senha');
 
         verify(() => AppModulesMock.modularNavigator
             .pushNamed('/authentication/reset_password')).called(1);
@@ -285,11 +264,8 @@ void main() {
               .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
-        await tester.pumpWidget(_loadSignInPage());
-
-        // Tap the Terms of use button
-        await tester.tap(find.text('Termos de uso'));
-        await tester.pump();
+        await theAppIsRunning(tester, const SignInPage());
+        await iTapText(tester, text: 'Termos de uso');
 
         verify(() => AppModulesMock.modularNavigator
             .pushNamed('/authentication/terms_of_use')).called(1);
@@ -304,16 +280,15 @@ void main() {
               .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
-        await tester.pumpWidget(_loadSignInPage());
+        await theAppIsRunning(tester, const SignInPage());
         final expectedWidget = find.text('Política de privacidade');
-
-        // Tap the Privacy button
+        // Find the widget
         await tester.dragUntilVisible(
           expectedWidget,
           find.byType(SingleChildScrollView),
           const Offset(-250, 0),
         );
-
+        // Tap the Privacy button
         await tester.tap(expectedWidget);
         await tester.pump();
 
@@ -326,17 +301,8 @@ void main() {
       screenshotTest(
         'looks as expected',
         fileName: 'sign_in_page',
-        pageBuilder: _loadSignInPage,
+        pageBuilder: () => const SignInPage(),
       );
     });
   });
-}
-
-Widget _loadSignInPage() {
-  return const MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: Scaffold(
-      body: SignInPage(),
-    ),
-  );
 }
