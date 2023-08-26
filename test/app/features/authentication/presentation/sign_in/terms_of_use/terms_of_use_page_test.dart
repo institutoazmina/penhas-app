@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/terms_of_use/terms_of_use_page.dart';
@@ -46,11 +45,8 @@ void main() {
     group('golden test', () {
       screenshotTest(
         'looks as expected',
-        fileName: 'privacy_policy_page',
-        pageBuilder: () => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: TermsOfUsePage(baseUrl: Uri()),
-        ),
+        fileName: 'terms_of_use_page',
+        pageBuilder: () => TermsOfUsePage(baseUrl: Uri()),
       );
     });
   });
