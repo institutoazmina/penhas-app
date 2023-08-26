@@ -45,7 +45,7 @@ void main() {
 
   group(ResetPasswordThreePage, () {
     testWidgets(
-      'show screen widgets',
+      'shows screen widgets',
       (tester) async {
         await theAppIsRunning(tester, const ResetPasswordThreePage());
 
@@ -73,7 +73,7 @@ void main() {
     );
 
     testWidgets(
-      'show error message if password field and password confirmation field are different',
+      'shows error message if password field and password confirmation field are different',
       (tester) async {
         when(() => AuthenticationModulesMock.passwordValidator
             .validate(any(), any())).thenAnswer((i) => dartz.right('password'));
@@ -90,7 +90,7 @@ void main() {
     );
 
     testWidgets(
-      'show error mensagem form server side error when reset password',
+      'shows error mensagem form server side error when reset password',
       (tester) async {
         when(() => AuthenticationModulesMock.passwordValidator
             .validate(any(), any())).thenAnswer((i) => dartz.right('password'));
