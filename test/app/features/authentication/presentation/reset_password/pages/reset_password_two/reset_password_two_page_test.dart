@@ -12,16 +12,19 @@ import 'package:penhas/app/features/authentication/presentation/shared/user_regi
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 
 import '../../../../../../../utils/golden_tests.dart';
+import '../../../../../../../utils/widget_test_steps.dart';
 import '../../../mocks/app_modules_mock.dart';
 import '../../../mocks/authentication_modules_mock.dart';
 
 void main() {
   late UserRegisterFormFieldModel userRegisterFormField;
+  late Key tokenInputKey;
 
   setUp(() {
     AppModulesMock.init();
     AuthenticationModulesMock.init();
     userRegisterFormField = UserRegisterFormFieldModel();
+    tokenInputKey = const Key('reset_password_token');
 
     initModule(
       SignInModule(),
@@ -41,27 +44,31 @@ void main() {
   });
 
   group(ResetPasswordTwoPage, () {
+    testWidgets('shows screen widgets', (tester) async {
+      await theAppIsRunning(tester, const ResetPasswordTwoPage());
+      await iSeeText('Verifique seu e-mail');
+      await iSeeText(
+          'Por favor, digite o código de verificação que enviamos para o e-mail de recuperação.');
+      await iSeeWidget(TextFormField, key: tokenInputKey);
+      await iSeeButton(text: 'Próximo');
+    });
     testWidgets(
-      'show error for empty token when tap button',
+      'shows error for empty token when tap button',
       (tester) async {
         const errorMessage = 'Precisa digitar o código enviado';
 
-        await tester.pumpWidget(_loadPage());
-
-        // Tap the LoginButton
-        expect(find.text(errorMessage), findsNothing);
-        await tester.tap(find.text('Próximo'));
-        await tester.pump();
-        expect(find.text(errorMessage), findsOneWidget);
+        await theAppIsRunning(tester, const ResetPasswordTwoPage());
+        await iDontSeeText(errorMessage);
+        await iTapText(tester, text: 'Próximo');
+        await iSeeText(errorMessage);
       },
     );
 
     testWidgets(
-      'show error for server side error',
+      'shows error for server side error',
       (tester) async {
         const errorMessage =
             'O servidor está com problema neste momento, tente novamente.';
-        const tokenInput = Key('reset_password_token');
 
         when(
           () => AuthenticationModulesMock.changePasswordRepository.validToken(
@@ -70,22 +77,18 @@ void main() {
           ),
         ).thenAnswer((i) async => dartz.left(ServerFailure()));
 
-        await tester.pumpWidget(_loadPage());
-
-        // Tap the LoginButton
-        expect(find.text(errorMessage), findsNothing);
-        await tester.enterText(find.byKey(tokenInput), '123456');
-        await tester.tap(find.text('Próximo'));
-        await tester.pump();
-        expect(find.text(errorMessage), findsOneWidget);
+        await theAppIsRunning(tester, const ResetPasswordTwoPage());
+        await iDontSeeText(errorMessage);
+        await iEnterIntoWidgetInput(tester,
+            type: TextFormField, key: tokenInputKey, value: '123456');
+        await iTapText(tester, text: 'Próximo');
+        await iSeeText(errorMessage);
       },
     );
 
     testWidgets(
       'forward to next step for valid token',
       (tester) async {
-        const tokenInput = Key('reset_password_token');
-
         when(
           () => AuthenticationModulesMock.changePasswordRepository.validToken(
             emailAddress: any(named: 'emailAddress'),
@@ -98,12 +101,10 @@ void main() {
               .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((i) => Future.value());
 
-        await tester.pumpWidget(_loadPage());
-
-        // Tap the LoginButton
-        await tester.enterText(find.byKey(tokenInput), '123456');
-        await tester.tap(find.text('Próximo'));
-        await tester.pump();
+        await theAppIsRunning(tester, const ResetPasswordTwoPage());
+        await iEnterIntoWidgetInput(tester,
+            type: TextFormField, key: tokenInputKey, value: '123456');
+        await iTapText(tester, text: 'Próximo');
 
         verify(() => AppModulesMock.modularNavigator.pushNamed(
             '/authentication/reset_password/step3',
@@ -114,15 +115,8 @@ void main() {
       screenshotTest(
         'looks as expected',
         fileName: 'reset_password_page_step_2',
-        pageBuilder: _loadPage,
+        pageBuilder: () => const ResetPasswordTwoPage(),
       );
     });
   });
-}
-
-Widget _loadPage() {
-  return const MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: ResetPasswordTwoPage(),
-  );
 }
