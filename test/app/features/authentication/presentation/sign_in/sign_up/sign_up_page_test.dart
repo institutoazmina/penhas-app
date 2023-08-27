@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
@@ -11,6 +10,7 @@ import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/sign_up_page.dart';
 
 import '../../../../../../utils/golden_tests.dart';
+import '../../../../../../utils/mocktail_extension.dart';
 import '../../../../../../utils/widget_test_steps.dart';
 import '../../mocks/app_modules_mock.dart';
 import '../../mocks/authentication_modules_mock.dart';
@@ -70,84 +70,89 @@ void main() {
             key: cepKey, message: 'CEP inválido');
       });
 
-      testWidgets('displays a server-side error message', (tester) async {
-        when(
-          () => AuthenticationModulesMock.userRegisterRepository.checkField(
-            birthday: any(named: 'birthday'),
-            cpf: any(named: 'cpf'),
-            fullname: any(named: 'fullname'),
-            cep: any(named: 'cep'),
-          ),
-        ).thenAnswer((_) async => dartz.left(ServerFailure()));
+      testWidgets(
+        'displays a server-side error message',
+        (tester) async {
+          when(
+            () => AuthenticationModulesMock.userRegisterRepository.checkField(
+              birthday: any(named: 'birthday'),
+              cpf: any(named: 'cpf'),
+              fullname: any(named: 'fullname'),
+              cep: any(named: 'cep'),
+            ),
+          ).thenFailure((_) => ServerFailure());
 
-        await theAppIsRunning(tester, const SignUpPage());
-        await iEnterIntoSingleTextInput(
-          tester,
-          text: 'Nome completo',
-          value: 'Full Name',
-        );
-        await iEnterIntoSingleTextInput(
-          tester,
-          text: 'Data de nascimento',
-          value: '01/01/2000',
-        );
-        await iEnterIntoSingleTextInput(
-          tester,
-          key: cpfKey,
-          value: '248.744.831-86',
-        );
-        await iEnterIntoSingleTextInput(
-          tester,
-          key: cepKey,
-          value: '01302-000',
-        );
-        await iTapText(tester, text: 'Próximo');
-        await iSeeText(
-            'O servidor está com problema neste momento, tente novamente.');
-      });
+          await theAppIsRunning(tester, const SignUpPage());
+          await iEnterIntoSingleTextInput(
+            tester,
+            text: 'Nome completo',
+            value: 'Full Name',
+          );
+          await iEnterIntoSingleTextInput(
+            tester,
+            text: 'Data de nascimento',
+            value: '01/01/2000',
+          );
+          await iEnterIntoSingleTextInput(
+            tester,
+            key: cpfKey,
+            value: '248.744.831-86',
+          );
+          await iEnterIntoSingleTextInput(
+            tester,
+            key: cepKey,
+            value: '01302-000',
+          );
+          await iTapText(tester, text: 'Próximo');
+          await iSeeText(
+              'O servidor está com problema neste momento, tente novamente.');
+        },
+      );
 
-      testWidgets('forward to the next step for valid form widgets',
-          (tester) async {
-        when(
-          () => AuthenticationModulesMock.userRegisterRepository.checkField(
-            birthday: any(named: 'birthday'),
-            cpf: any(named: 'cpf'),
-            fullname: any(named: 'fullname'),
-            cep: any(named: 'cep'),
-          ),
-        ).thenAnswer((_) async => dartz.right(const ValidField()));
+      testWidgets(
+        'forward to the next step for valid form widgets',
+        (tester) async {
+          when(
+            () => AuthenticationModulesMock.userRegisterRepository.checkField(
+              birthday: any(named: 'birthday'),
+              cpf: any(named: 'cpf'),
+              fullname: any(named: 'fullname'),
+              cep: any(named: 'cep'),
+            ),
+          ).thenSuccess((_) => const ValidField());
 
-        when(() => AppModulesMock.modularNavigator
-                .pushNamed(any(), arguments: any(named: 'arguments')))
-            .thenAnswer((i) => Future.value());
+          when(() => AppModulesMock.modularNavigator
+                  .pushNamed(any(), arguments: any(named: 'arguments')))
+              .thenAnswer((i) => Future.value());
 
-        await theAppIsRunning(tester, const SignUpPage());
-        await iEnterIntoSingleTextInput(
-          tester,
-          text: 'Nome completo',
-          value: 'Full Name',
-        );
-        await iEnterIntoSingleTextInput(
-          tester,
-          text: 'Data de nascimento',
-          value: '01/01/2000',
-        );
-        await iEnterIntoSingleTextInput(
-          tester,
-          key: cpfKey,
-          value: '248.744.831-86',
-        );
-        await iEnterIntoSingleTextInput(
-          tester,
-          key: cepKey,
-          value: '01302-000',
-        );
-        await iTapText(tester, text: 'Próximo');
+          await theAppIsRunning(tester, const SignUpPage());
+          await iEnterIntoSingleTextInput(
+            tester,
+            text: 'Nome completo',
+            value: 'Full Name',
+          );
+          await iEnterIntoSingleTextInput(
+            tester,
+            text: 'Data de nascimento',
+            value: '01/01/2000',
+          );
+          await iEnterIntoSingleTextInput(
+            tester,
+            key: cpfKey,
+            value: '248.744.831-86',
+          );
+          await iEnterIntoSingleTextInput(
+            tester,
+            key: cepKey,
+            value: '01302-000',
+          );
+          await iTapText(tester, text: 'Próximo');
 
-        verify(() => AppModulesMock.modularNavigator.pushNamed(
-            '/authentication/signup/step2',
-            arguments: any(named: 'arguments'))).called(1);
-      });
+          verify(() => AppModulesMock.modularNavigator.pushNamed(
+              '/authentication/signup/step2',
+              arguments: any(named: 'arguments'))).called(1);
+        },
+      );
       screenshotTest(
         'looks as expected',
         fileName: 'sign_up_step_1_page',
