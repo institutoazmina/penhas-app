@@ -1,8 +1,8 @@
-import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:penhas/app/core/extension/either.dart';
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
@@ -11,6 +11,7 @@ import 'package:penhas/app/features/authentication/presentation/sign_in_anonymou
 import 'package:penhas/app/features/authentication/presentation/sign_in_anonymous/sign_in_anonymous_page.dart';
 
 import '../../../../../utils/golden_tests.dart';
+import '../../../../../utils/mocktail_extension.dart';
 import '../../../../../utils/widget_test_steps.dart';
 import '../mocks/app_modules_mock.dart';
 import '../mocks/authentication_modules_mock.dart';
@@ -70,13 +71,13 @@ void main() {
 
     testWidgets(
       'invalid password shows a message error when tapping LoginButton',
-      (WidgetTester tester) async {
+      (tester) async {
         const validPassword = 'myStr0ngP4ssw0rd';
         const errorMessage =
             'E-mail e senha precisam estarem corretos para continuar.';
 
         when(() => AuthenticationModulesMock.passwordValidator
-            .validate(any(), any())).thenAnswer((i) => dartz.left(EmptyRule()));
+            .validate(any(), any())).thenAnswer((i) => failure(EmptyRule()));
 
         await theAppIsRunning(tester, const SignInAnonymousPage());
         await iDontSeeText(errorMessage);
@@ -89,25 +90,21 @@ void main() {
 
     testWidgets(
       'success login redirect page',
-      (WidgetTester tester) async {
+      (tester) async {
         const sessionToken = 'sessionToken';
         const validPassword = 'myStr0ngP4ssw0rd';
 
-        when(() => AuthenticationModulesMock.passwordValidator.validate(
-            any(), any())).thenAnswer((i) => dartz.right(validPassword));
+        when(() => AuthenticationModulesMock.passwordValidator
+            .validate(any(), any())).thenAnswer((i) => success(validPassword));
         when(
           () => AuthenticationModulesMock.authenticationRepository
               .signInWithEmailAndPassword(
             emailAddress: any(named: 'emailAddress'),
             password: any(named: 'password'),
           ),
-        ).thenAnswer(
-          (i) async =>
-              dartz.right(const SessionEntity(sessionToken: sessionToken)),
-        );
+        ).thenSuccess((_) => const SessionEntity(sessionToken: sessionToken));
         when(() => AppModulesMock.appStateUseCase.check())
-            .thenAnswer((i) async => dartz.right(FakeAppStateEntity()));
-
+            .thenSuccess((_) => FakeAppStateEntity());
         when(
           () => AppModulesMock.modularNavigator
               .pushReplacementNamed(any(), arguments: any(named: 'arguments')),
@@ -125,7 +122,7 @@ void main() {
 
     testWidgets(
       'reset password button redirect page',
-      (WidgetTester tester) async {
+      (tester) async {
         when(
           () => AppModulesMock.modularNavigator
               .pushNamed(any(), arguments: any(named: 'arguments')),
@@ -141,7 +138,7 @@ void main() {
 
     testWidgets(
       'change account button redirect page',
-      (WidgetTester tester) async {
+      (tester) async {
         when(
           () => AppModulesMock.modularNavigator
               .pushNamed(any(), arguments: any(named: 'arguments')),

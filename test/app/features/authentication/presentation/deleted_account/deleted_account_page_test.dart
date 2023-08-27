@@ -9,7 +9,7 @@ import 'package:penhas/app/features/authentication/presentation/deleted_account/
 import 'package:penhas/app/features/authentication/presentation/deleted_account/deleted_account_page.dart';
 
 import '../../../../../utils/golden_tests.dart';
-import '../../../../../utils/test_utils.dart';
+import '../../../../../utils/mocktail_extension.dart';
 import '../../../../../utils/widget_test_steps.dart';
 import '../mocks/app_modules_mock.dart';
 
