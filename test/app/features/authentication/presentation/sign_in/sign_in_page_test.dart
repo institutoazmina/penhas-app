@@ -1,10 +1,10 @@
-import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/extension/either.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_controller.dart';
@@ -12,6 +12,7 @@ import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_page.dart';
 
 import '../../../../../utils/golden_tests.dart';
+import '../../../../../utils/mocktail_extension.dart';
 import '../../../../../utils/widget_test_steps.dart';
 import '../mocks/app_modules_mock.dart';
 import '../mocks/authentication_modules_mock.dart';
@@ -46,8 +47,8 @@ void main() {
 
   group(SignInPage, () {
     testWidgets(
-      'show screen widgets',
-      (WidgetTester tester) async {
+      'shows screen widgets',
+      (tester) async {
         await theAppIsRunning(tester, const SignInPage());
 
         // check if necessary widgets are present
@@ -62,7 +63,7 @@ void main() {
 
     testWidgets(
       'empty email and empty password show a message error',
-      (WidgetTester tester) async {
+      (tester) async {
         const errorMessage =
             'E-mail e senha precisam estarem corretos para continuar.';
 
@@ -75,12 +76,12 @@ void main() {
 
     testWidgets(
       'invalid email and valid password show a message error when tapping LoginButton',
-      (WidgetTester tester) async {
+      (tester) async {
         const errorMessage =
             'E-mail e senha precisam estarem corretos para continuar.';
 
-        when(() => AuthenticationModulesMock.passwordValidator.validate(
-            any(), any())).thenAnswer((i) => dartz.right(validPassword));
+        when(() => AuthenticationModulesMock.passwordValidator
+            .validate(any(), any())).thenAnswer((_) => success(validPassword));
 
         await theAppIsRunning(tester, const SignInPage());
         await iDontSeeText(errorMessage);
@@ -95,12 +96,12 @@ void main() {
 
     testWidgets(
       'valid email and invalid password show a message error when tapping LoginButton',
-      (WidgetTester tester) async {
+      (tester) async {
         const errorMessage =
             'E-mail e senha precisam estarem corretos para continuar.';
 
         when(() => AuthenticationModulesMock.passwordValidator
-            .validate(any(), any())).thenAnswer((i) => dartz.left(EmptyRule()));
+            .validate(any(), any())).thenAnswer((_) => failure(EmptyRule()));
 
         await theAppIsRunning(tester, const SignInPage());
         await iDontSeeText(errorMessage);
@@ -115,7 +116,7 @@ void main() {
 
     testWidgets(
       'displays error text for invalid email input',
-      (WidgetTester tester) async {
+      (tester) async {
         await theAppIsRunning(tester, const SignInPage());
         // Update email with a invalid email
         await iEnterIntoSingleTextInput(tester,
@@ -126,20 +127,20 @@ void main() {
     );
 
     testWidgets(
-      'shows error for invalid login',
-      (WidgetTester tester) async {
+      'shows an error for an invalid login',
+      (tester) async {
         const errorMessage =
             'O servidor está com problema neste momento, tente novamente.';
 
-        when(() => AuthenticationModulesMock.passwordValidator.validate(
-            any(), any())).thenAnswer((i) => dartz.right(validPassword));
+        when(() => AuthenticationModulesMock.passwordValidator
+            .validate(any(), any())).thenAnswer((_) => success(validPassword));
         when(
           () => AuthenticationModulesMock.authenticationRepository
               .signInWithEmailAndPassword(
             emailAddress: any(named: 'emailAddress'),
             password: any(named: 'password'),
           ),
-        ).thenAnswer((i) async => dartz.left(ServerFailure()));
+        ).thenFailure((i) => ServerFailure());
 
         await theAppIsRunning(tester, const SignInPage());
         await iDontSeeText(errorMessage);
@@ -153,21 +154,21 @@ void main() {
     );
 
     testWidgets(
-      'deleted account redirect page',
-      (WidgetTester tester) async {
+      'deleted the account redirect page',
+      (tester) async {
         const sessionToken = 'sessionToken';
-        when(() => AuthenticationModulesMock.passwordValidator.validate(
-            any(), any())).thenAnswer((i) => dartz.right(validPassword));
+        when(() => AuthenticationModulesMock.passwordValidator
+            .validate(any(), any())).thenAnswer((_) => success(validPassword));
         when(
           () => AuthenticationModulesMock.authenticationRepository
               .signInWithEmailAndPassword(
             emailAddress: any(named: 'emailAddress'),
             password: any(named: 'password'),
           ),
-        ).thenAnswer(
-          (i) async => dartz.right(const SessionEntity(
-              sessionToken: sessionToken, deletedScheduled: true)),
-        );
+        ).thenSuccess((_) => const SessionEntity(
+              sessionToken: sessionToken,
+              deletedScheduled: true,
+            ));
         when(
           () => AppModulesMock.modularNavigator
               .pushNamed(any(), arguments: any(named: 'arguments')),
@@ -189,23 +190,19 @@ void main() {
 
     testWidgets(
       'success login redirect page',
-      (WidgetTester tester) async {
+      (tester) async {
         const sessionToken = 'sessionToken';
-        when(() => AuthenticationModulesMock.passwordValidator.validate(
-            any(), any())).thenAnswer((i) => dartz.right(validPassword));
+        when(() => AuthenticationModulesMock.passwordValidator
+            .validate(any(), any())).thenAnswer((_) => success(validPassword));
         when(
           () => AuthenticationModulesMock.authenticationRepository
               .signInWithEmailAndPassword(
             emailAddress: any(named: 'emailAddress'),
             password: any(named: 'password'),
           ),
-        ).thenAnswer(
-          (i) async =>
-              dartz.right(const SessionEntity(sessionToken: sessionToken)),
-        );
+        ).thenSuccess((_) => const SessionEntity(sessionToken: sessionToken));
         when(() => AppModulesMock.appStateUseCase.check())
-            .thenAnswer((i) async => dartz.right(FakeAppStateEntity()));
-
+            .thenSuccess((_) => FakeAppStateEntity());
         when(
           () => AppModulesMock.modularNavigator
               .popAndPushNamed(any(), arguments: any(named: 'arguments')),
@@ -225,8 +222,8 @@ void main() {
     );
 
     testWidgets(
-      'sign up redirect page',
-      (WidgetTester tester) async {
+      'sign-up redirect page',
+      (tester) async {
         when(
           () => AppModulesMock.modularNavigator
               .pushNamed(any(), arguments: any(named: 'arguments')),
@@ -242,7 +239,7 @@ void main() {
 
     testWidgets(
       'reset password redirect page',
-      (WidgetTester tester) async {
+      (tester) async {
         when(
           () => AppModulesMock.modularNavigator
               .pushNamed(any(), arguments: any(named: 'arguments')),
@@ -258,7 +255,7 @@ void main() {
 
     testWidgets(
       'terms of use redirect page',
-      (WidgetTester tester) async {
+      (tester) async {
         when(
           () => AppModulesMock.modularNavigator
               .pushNamed(any(), arguments: any(named: 'arguments')),
@@ -274,7 +271,7 @@ void main() {
 
     testWidgets(
       'privacy policy redirect page',
-      (WidgetTester tester) async {
+      (tester) async {
         when(
           () => AppModulesMock.modularNavigator
               .pushNamed(any(), arguments: any(named: 'arguments')),
@@ -297,12 +294,15 @@ void main() {
       },
     );
 
-    group('golden tests', () {
-      screenshotTest(
-        'looks as expected',
-        fileName: 'sign_in_page',
-        pageBuilder: () => const SignInPage(),
-      );
-    });
+    group(
+      'golden tests',
+      () {
+        screenshotTest(
+          'looks as expected',
+          fileName: 'sign_in_page',
+          pageBuilder: () => const SignInPage(),
+        );
+      },
+    );
   });
 }
