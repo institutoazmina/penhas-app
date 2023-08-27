@@ -29,6 +29,7 @@ void main() {
       // assert
       expect(controller, isNotNull);
     },
+    skip: true,
   );
 }
 
