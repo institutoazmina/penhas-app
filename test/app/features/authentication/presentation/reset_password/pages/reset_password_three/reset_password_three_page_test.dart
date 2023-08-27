@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/extension/either.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/presentation/reset_password/pages/reset_password_three/reset_password_three_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/reset_password/pages/reset_password_three/reset_password_three_page.dart';
@@ -12,6 +13,7 @@ import 'package:penhas/app/features/authentication/presentation/shared/user_regi
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 
 import '../../../../../../../utils/golden_tests.dart';
+import '../../../../../../../utils/mocktail_extension.dart';
 import '../../../../../../../utils/widget_test_steps.dart';
 import '../../../mocks/app_modules_mock.dart';
 import '../../../mocks/authentication_modules_mock.dart';
@@ -62,7 +64,7 @@ void main() {
       'invalid password shows hint message',
       (tester) async {
         when(() => AuthenticationModulesMock.passwordValidator.validate(
-            any(), any())).thenAnswer((i) => dartz.left(MinLengthRule()));
+            any(), any())).thenAnswer((i) => failure(MinLengthRule()));
 
         // Input a invalid password
         await theAppIsRunning(tester, const ResetPasswordThreePage());
@@ -73,10 +75,10 @@ void main() {
     );
 
     testWidgets(
-      'shows error message if password field and password confirmation field are different',
+      'shows an error message if the password field and password confirmation field are different',
       (tester) async {
         when(() => AuthenticationModulesMock.passwordValidator
-            .validate(any(), any())).thenAnswer((i) => dartz.right('password'));
+            .validate(any(), any())).thenAnswer((i) => success('password'));
 
         // Input a invalid password
         await theAppIsRunning(tester, const ResetPasswordThreePage());
@@ -90,16 +92,16 @@ void main() {
     );
 
     testWidgets(
-      'shows error mensagem form server side error when reset password',
+      'shows an error message from server side error when resetting the password',
       (tester) async {
         when(() => AuthenticationModulesMock.passwordValidator
-            .validate(any(), any())).thenAnswer((i) => dartz.right('password'));
+            .validate(any(), any())).thenAnswer((i) => success('password'));
 
         when(() => AuthenticationModulesMock.changePasswordRepository.reset(
               emailAddress: any(named: 'emailAddress'),
               password: any(named: 'password'),
               resetToken: any(named: 'resetToken'),
-            )).thenAnswer((i) async => dartz.left(ServerFailure()));
+            )).thenFailure((_) => ServerFailure());
 
         // Capture server side error message
         await theAppIsRunning(tester, const ResetPasswordThreePage());
@@ -114,7 +116,7 @@ void main() {
     );
 
     testWidgets(
-      'forward for a successfully password reset',
+      'forward for a successful password reset',
       (tester) async {
         when(() => AuthenticationModulesMock.passwordValidator
             .validate(any(), any())).thenAnswer((i) => dartz.right('password'));
@@ -123,7 +125,7 @@ void main() {
               emailAddress: any(named: 'emailAddress'),
               password: any(named: 'password'),
               resetToken: any(named: 'resetToken'),
-            )).thenAnswer((i) async => dartz.right(const ValidField()));
+            )).thenSuccess((_) => const ValidField());
 
         when(() => AppModulesMock.modularNavigator.pushNamedAndRemoveUntil(
             any(), any())).thenAnswer((i) => Future.value());
