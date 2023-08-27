@@ -1,5 +1,3 @@
-import 'package:dartz/dartz.dart' as dartz;
-import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -11,6 +9,8 @@ import 'package:penhas/app/features/authentication/presentation/deleted_account/
 import 'package:penhas/app/features/authentication/presentation/deleted_account/deleted_account_page.dart';
 
 import '../../../../../utils/golden_tests.dart';
+import '../../../../../utils/test_utils.dart';
+import '../../../../../utils/widget_test_steps.dart';
 import '../mocks/app_modules_mock.dart';
 
 void main() {
@@ -34,7 +34,17 @@ void main() {
 
   group(DeletedAccountPage, () {
     testWidgets(
-      'show error message when failure to recovery the account',
+      'shows screen widgets',
+      (tester) async {
+        await theAppIsRunning(tester, const DeletedAccountPage());
+        await iSeeText('Deseja reativar?');
+        await iSeeText(
+            'Esta conta está marcada para ser excluída.\n\nVocê pode interromper este processo agora reativando a conta.');
+        await iSeeButton(text: 'Reativar Conta');
+      },
+    );
+    testWidgets(
+      'shows an error message when failure to recover the account',
       (tester) async {
         const errorMessage =
             'O servidor está com problema neste momento, tente novamente.';
@@ -42,13 +52,11 @@ void main() {
         when(
           () => AppModulesMock.userProfileRepository
               .reactivate(token: any(named: 'token')),
-        ).thenAnswer((i) async => dartz.left(ServerFailure()));
-        await tester.pumpWidget(_loadPage());
+        ).thenFailure((_) => ServerFailure());
 
-        // Tap the button
-        await tester.tap(find.text('Reativar Conta'));
-        await tester.pump();
-        expect(find.text(errorMessage), findsOneWidget);
+        await theAppIsRunning(tester, const DeletedAccountPage());
+        await iTapText(tester, text: 'Reativar Conta');
+        await iSeeText(errorMessage);
       },
     );
 
@@ -58,7 +66,8 @@ void main() {
         when(
           () => AppModulesMock.userProfileRepository
               .reactivate(token: any(named: 'token')),
-        ).thenAnswer((i) async => dartz.right(const ValidField()));
+        ).thenSuccess((_) => const ValidField());
+
         when(
           () => AppModulesMock.appConfiguration
               .saveApiToken(token: any(named: 'token')),
@@ -67,11 +76,8 @@ void main() {
           () => AppModulesMock.modularNavigator.pushReplacementNamed(any()),
         ).thenAnswer((_) => Future.value());
 
-        await tester.pumpWidget(_loadPage());
-
-        // Tap the button
-        await tester.tap(find.text('Reativar Conta'));
-        await tester.pump();
+        await theAppIsRunning(tester, const DeletedAccountPage());
+        await iTapText(tester, text: 'Reativar Conta');
 
         verify(() => AppModulesMock.modularNavigator.pushReplacementNamed('/'))
             .called(1);
@@ -82,15 +88,8 @@ void main() {
       screenshotTest(
         'looks as expected',
         fileName: 'deleted_account_page',
-        pageBuilder: _loadPage,
+        pageBuilder: () => const DeletedAccountPage(),
       );
     });
   });
-}
-
-Widget _loadPage() {
-  return const MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: DeletedAccountPage(),
-  );
 }
