@@ -208,17 +208,27 @@ Future<void> iTapDropdownFormItem<T>(
   String? text,
   Key? key,
 }) async {
-  final finder = _getType(DropdownButtonFormField<T>, text: text, key: key);
+  final foundDropdownFormField =
+      _getType(DropdownButtonFormField<T>, text: text, key: key);
 
-  if (finder == null || finder.evaluate().isEmpty) {
+  if (foundDropdownFormField == null ||
+      foundDropdownFormField.evaluate().isEmpty) {
     fail('did not find the DropdownButtonFormField to tapping the value $item');
   }
 
-  final tappingElement = find.descendant(
-    of: finder,
-    matching: find.text(item),
+  // Open the dropdown
+  await tester.tap(foundDropdownFormField);
+  await tester.pumpAndSettle();
+
+  final dropdownItem = find.text(item);
+  final hasElementOnTheDropdownFormField = find.descendant(
+    of: foundDropdownFormField,
+    matching: dropdownItem,
   );
 
-  await tester.tap(tappingElement, warnIfMissed: false);
+  expect(hasElementOnTheDropdownFormField, findsOneWidget);
+
+  // Select the dropdown item
+  await tester.tap(dropdownItem.last);
   await tester.pumpAndSettle();
 }

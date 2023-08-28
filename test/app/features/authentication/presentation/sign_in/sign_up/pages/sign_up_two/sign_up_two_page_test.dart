@@ -58,7 +58,6 @@ void main() {
       'checks the genre list',
       (tester) async {
         await theAppIsRunning(tester, const SignUpTwoPage());
-
         final genreList = [
           'Feminino',
           'Masculino',
@@ -72,7 +71,32 @@ void main() {
           await iTapDropdownFormItem<String>(
             tester,
             key: genreDropdownList,
-            item: 'Feminino',
+            item: genre,
+          );
+        }
+      },
+    );
+
+    testWidgets(
+      'checks the race list',
+      (tester) async {
+        await theAppIsRunning(tester, const SignUpTwoPage());
+
+        final raceList = [
+          'Branca',
+          'Parda',
+          'Preta',
+          'Indígena',
+          'Amarela',
+          'Não declarado'
+        ];
+
+        for (final race in raceList) {
+          await iSeeWidget(DropdownButtonFormField<String>, text: race);
+          await iTapDropdownFormItem<String>(
+            tester,
+            key: raceDropdownList,
+            item: race,
           );
         }
       },
@@ -85,3 +109,21 @@ void main() {
     );
   });
 }
+
+/*
+  const Device(
+    name: 'iPhone Pro Max',
+    size: Size(428, 926),
+    safeArea: EdgeInsets.only(top: 47, bottom: 34),
+  ),
+
+
+  SizedBox(
+              height: device.size.height,
+              width: device.size.width,
+              child: MaterialApp(
+                home: builder(),
+                debugShowCheckedModeBanner: false,
+              ),
+            ),
+*/
