@@ -40,7 +40,7 @@ extension EnumHumanRace on HumanRace {
         label = 'Preta';
         break;
       case HumanRace.indigenous:
-        label = 'Índigena';
+        label = 'Indígena';
         break;
       case HumanRace.yellow:
         label = 'Amarela';
