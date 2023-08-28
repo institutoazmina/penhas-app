@@ -26,7 +26,7 @@ void main() {
     );
 
     test(
-      'when Fullname is not null validateFullName returns empty string',
+      'when Fullname is not null validateFullName returns an empty string',
       () {
         model.fullname = Fullname('valid name');
         expect(model.validateFullName, equals(''));
@@ -42,7 +42,7 @@ void main() {
     );
 
     test(
-      'when Email is not null validateEmailAddress returns empty string',
+      'when Email is not null validateEmailAddress returns an empty string',
       () {
         model.emailAddress = EmailAddress('f@g.com');
         expect(model.validateEmailAddress, equals(''));
@@ -73,11 +73,11 @@ void main() {
       expect(model.validateCpf, equals(''));
     });
 
-    test('when CEP is null validateCep return error message', () {
+    test('when CEP is null validateCep returns an error message', () {
       expect(model.validateCep, equals('CEP inválido'));
     });
 
-    test('when CEP is not null validateCep return empty string', () {
+    test('when CEP is not null validateCep returns an empty string', () {
       model.cep = Cep('12345678');
       expect(model.validateCep, equals(''));
     });
@@ -95,7 +95,9 @@ void main() {
         expect(model.validateNickname, equals(''));
       },
     );
-
+    test('null password and null passwordConfirmation do not crash', () {
+      expect(model.validatePasswordConfirmation, equals(''));
+    });
     test(
       'validatePasswordConfirmation returns expected value',
       () {

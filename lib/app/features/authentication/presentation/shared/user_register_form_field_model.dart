@@ -50,7 +50,7 @@ class UserRegisterFormFieldModel {
   }
 
   String get validatePasswordConfirmation =>
-      password!.rawValue == passwordConfirmation
+      password?.rawValue == passwordConfirmation
           ? ''
           : 'As senhas não são iguais';
 }
