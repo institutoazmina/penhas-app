@@ -3,12 +3,14 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/pages/sign_up_two/sign_up_two_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/pages/sign_up_two/sign_up_two_page.dart';
 
 import '../../../../../../../../utils/golden_tests.dart';
+import '../../../../../../../../utils/mocktail_extension.dart';
 import '../../../../../../../../utils/widget_test_steps.dart';
 import '../../../../mocks/app_modules_mock.dart';
 import '../../../../mocks/authentication_modules_mock.dart';
@@ -122,6 +124,50 @@ void main() {
       },
     );
 
+    testWidgets(
+      'shows error for server-side error',
+      (tester) async {
+        when(() => AuthenticationModulesMock.userRegisterRepository.checkField(
+              birthday: any(named: 'birthday'),
+              cpf: any(named: 'cpf'),
+              fullname: any(named: 'fullname'),
+              cep: any(named: 'cep'),
+              nickName: any(named: 'nickName'),
+              genre: any(named: 'genre'),
+              race: any(named: 'race'),
+            )).thenFailure((_) => ServerFailure());
+
+        await theAppIsRunning(tester, const SignUpTwoPage());
+        await iEnterIntoSingleTextInput(
+          tester,
+          text: 'Apelido',
+          value: 'nickname',
+        );
+
+        await iTapDropdownFormItem<String>(
+          tester,
+          key: genreDropdownList,
+          item: 'Mulher Trans',
+        );
+
+        await iEnterIntoSingleTextInput(
+          tester,
+          text: 'Nome social',
+          value: 'Social Name',
+        );
+
+        await iTapDropdownFormItem<String>(
+          tester,
+          key: raceDropdownList,
+          item: 'Não declarado',
+        );
+
+        await iTapText(tester, text: 'Próximo');
+        await iSeeText(
+            'O servidor está com problema neste momento, tente novamente.');
+      },
+    );
+
     screenshotTest(
       'looks as expected',
       fileName: 'sign_up_step_2_page',
@@ -129,21 +175,3 @@ void main() {
     );
   });
 }
-
-/*
-  const Device(
-    name: 'iPhone Pro Max',
-    size: Size(428, 926),
-    safeArea: EdgeInsets.only(top: 47, bottom: 34),
-  ),
-
-
-  SizedBox(
-              height: device.size.height,
-              width: device.size.width,
-              child: MaterialApp(
-                home: builder(),
-                debugShowCheckedModeBanner: false,
-              ),
-            ),
-*/
