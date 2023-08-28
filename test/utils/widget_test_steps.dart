@@ -175,7 +175,7 @@ Finder? _getType(Type type, {String? text, Key? key}) {
 }
 
 Future<void> iSeeWidget(Type type, {String? text, Key? key}) async {
-  final finder = _getType(SingleTextInput, text: text, key: key);
+  final finder = _getType(type, text: text, key: key);
 
   if (finder != null && finder.evaluate().isNotEmpty) {
     expect(finder, findsOneWidget);
