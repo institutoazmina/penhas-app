@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
@@ -165,6 +166,59 @@ void main() {
         await iTapText(tester, text: 'Próximo');
         await iSeeText(
             'O servidor está com problema neste momento, tente novamente.');
+      },
+    );
+
+    testWidgets(
+      'success validation forward to the next page',
+      (tester) async {
+        when(() => AuthenticationModulesMock.userRegisterRepository.checkField(
+              birthday: any(named: 'birthday'),
+              cpf: any(named: 'cpf'),
+              fullname: any(named: 'fullname'),
+              cep: any(named: 'cep'),
+              nickName: any(named: 'nickName'),
+              genre: any(named: 'genre'),
+              race: any(named: 'race'),
+            )).thenSuccess((_) => const ValidField());
+        when(
+          () => AppModulesMock.modularNavigator.pushNamed(
+              '/authentication/signup/step3',
+              arguments: any(named: 'arguments')),
+        ).thenAnswer((_) => Future.value());
+
+        await theAppIsRunning(tester, const SignUpTwoPage());
+        await iEnterIntoSingleTextInput(
+          tester,
+          text: 'Apelido',
+          value: 'nickname',
+        );
+
+        await iTapDropdownFormItem<String>(
+          tester,
+          key: genreDropdownList,
+          item: 'Mulher Trans',
+        );
+
+        await iEnterIntoSingleTextInput(
+          tester,
+          text: 'Nome social',
+          value: 'Social Name',
+        );
+
+        await iTapDropdownFormItem<String>(
+          tester,
+          key: raceDropdownList,
+          item: 'Não declarado',
+        );
+
+        await iTapText(tester, text: 'Próximo');
+
+        verify(
+          () => AppModulesMock.modularNavigator.pushNamed(
+              '/authentication/signup/step3',
+              arguments: any(named: 'arguments')),
+        ).called(1);
       },
     );
 
