@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/pages/sign_up_two/sign_up_two_controller.dart';
@@ -99,6 +100,25 @@ void main() {
             item: race,
           );
         }
+      },
+    );
+
+    testWidgets(
+      'does not forward for any invalid field',
+      (tester) async {
+        await theAppIsRunning(tester, const SignUpTwoPage());
+        await iTapText(tester, text: 'Próximo');
+        await iSeeSingleTextInputErrorMessage(
+          tester,
+          text: 'Apelido',
+          message: 'Apelido inválido para o sistema',
+        );
+
+        verifyNever(
+          () => AppModulesMock.modularNavigator.pushNamed(
+              '/authentication/signup/step3',
+              arguments: any(named: 'arguments')),
+        );
       },
     );
 
