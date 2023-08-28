@@ -87,6 +87,7 @@ class _SignUpTwoPageState
                           return _buildDropdownList(
                             context: context,
                             labelText: 'Gênero',
+                            keyIdentification: const Key('genreDropdownList'),
                             onError: controller.warningGenre,
                             onChange: controller.setGenre,
                             currentValue: controller.currentGenre,
@@ -100,6 +101,7 @@ class _SignUpTwoPageState
                           return _buildDropdownList(
                             context: context,
                             labelText: 'Raça',
+                            keyIdentification: const Key('raceDropdownList'),
                             onError: controller.warningRace,
                             onChange: controller.setRace,
                             currentValue: controller.currentRace,
@@ -151,6 +153,7 @@ class _SignUpTwoPageState
   Widget _buildDropdownList<T>({
     required BuildContext context,
     required String labelText,
+    required Key keyIdentification,
     required String? onError,
     required onChange,
     required T currentValue,
@@ -160,6 +163,7 @@ class _SignUpTwoPageState
       data: Theme.of(context)
           .copyWith(canvasColor: const Color.fromRGBO(141, 146, 157, 1)),
       child: DropdownButtonFormField(
+        key: keyIdentification,
         decoration: InputDecoration(
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white70),
