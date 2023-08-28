@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -119,7 +118,7 @@ void main() {
       'forward for a successful password reset',
       (tester) async {
         when(() => AuthenticationModulesMock.passwordValidator
-            .validate(any(), any())).thenAnswer((i) => dartz.right('password'));
+            .validate(any(), any())).thenAnswer((i) => success('password'));
 
         when(() => AuthenticationModulesMock.changePasswordRepository.reset(
               emailAddress: any(named: 'emailAddress'),
