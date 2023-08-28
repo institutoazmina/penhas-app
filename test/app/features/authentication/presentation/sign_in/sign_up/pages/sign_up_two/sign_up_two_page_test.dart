@@ -54,6 +54,30 @@ void main() {
       },
     );
 
+    testWidgets(
+      'checks the genre list',
+      (tester) async {
+        await theAppIsRunning(tester, const SignUpTwoPage());
+
+        final genreList = [
+          'Feminino',
+          'Masculino',
+          'Homem Trans',
+          'Mulher Trans',
+          'Outro'
+        ];
+
+        for (final genre in genreList) {
+          await iSeeWidget(DropdownButtonFormField<String>, text: genre);
+          await iTapDropdownFormItem<String>(
+            tester,
+            key: genreDropdownList,
+            item: 'Feminino',
+          );
+        }
+      },
+    );
+
     screenshotTest(
       'looks as expected',
       fileName: 'sign_up_step_2_page',

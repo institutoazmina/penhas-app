@@ -201,3 +201,24 @@ Future<void> iEnterIntoWidgetInput(
   await tester.enterText(finder, value);
   await tester.pump();
 }
+
+Future<void> iTapDropdownFormItem<T>(
+  WidgetTester tester, {
+  required String item,
+  String? text,
+  Key? key,
+}) async {
+  final finder = _getType(DropdownButtonFormField<T>, text: text, key: key);
+
+  if (finder == null || finder.evaluate().isEmpty) {
+    fail('did not find the DropdownButtonFormField to tapping the value $item');
+  }
+
+  final tappingElement = find.descendant(
+    of: finder,
+    matching: find.text(item),
+  );
+
+  await tester.tap(tappingElement, warnIfMissed: false);
+  await tester.pumpAndSettle();
+}
