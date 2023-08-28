@@ -1,6 +1,9 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:penhas/app/core/extension/either.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/pages/sign_up_three/sign_up_three_controller.dart';
@@ -48,6 +51,38 @@ void main() {
         await iSeePasswordField(text: 'Senha');
         await iSeePasswordField(text: 'Confirmação de senha');
         await iSeeButton(text: 'Cadastrar');
+      },
+    );
+
+    testWidgets(
+      'shows a warning message for invalid form fields',
+      (tester) async {
+        when(() => AuthenticationModulesMock.passwordValidator.validate(
+            any(), any())).thenAnswer((_) => failure(MinLengthRule()));
+
+        await theAppIsRunning(tester, const SignUpThreePage());
+        await iEnterIntoPasswordField(
+          tester,
+          text: 'Confirmação de senha',
+          password: '1',
+        );
+        await iTapText(tester, text: 'Cadastrar');
+
+        iSeeSingleTextInputErrorMessage(
+          tester,
+          text: 'E-mail',
+          message: 'Endereço de email inválido',
+        );
+        iSeePasswordFieldErrorMessage(
+          tester,
+          text: 'Senha',
+          message: 'Senha precisa ter no mínimo 8 caracteres',
+        );
+        iSeePasswordFieldErrorMessage(
+          tester,
+          text: 'Confirmação de senha',
+          message: 'As senhas não são iguais',
+        );
       },
     );
     screenshotTest(
