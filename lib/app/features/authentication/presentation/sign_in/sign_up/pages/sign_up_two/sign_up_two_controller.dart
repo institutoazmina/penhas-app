@@ -176,7 +176,7 @@ abstract class _SignUpTwoControllerBase with Store, MapFailureMessage {
 
     final Either<Failure, ValidField> response = await _progress!;
     response.fold(
-      (failure) => mapFailureMessage(failure),
+      (failure) => errorMessage = mapFailureMessage(failure),
       (session) => _forwardToStep3(),
     );
   }
