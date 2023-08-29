@@ -3,6 +3,7 @@ import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/extension/either.dart';
+import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
@@ -10,6 +11,7 @@ import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/pages/sign_up_three/sign_up_three_page.dart';
 
 import '../../../../../../../../utils/golden_tests.dart';
+import '../../../../../../../../utils/mocktail_extension.dart';
 import '../../../../../../../../utils/widget_test_steps.dart';
 import '../../../../mocks/app_modules_mock.dart';
 import '../../../../mocks/authentication_modules_mock.dart';
@@ -85,6 +87,55 @@ void main() {
         );
       },
     );
+
+    testWidgets(
+      'successfully finish the user creation',
+      (tester) async {
+        const password = 'Str0ngP4ssw0rd';
+
+        when(() => AuthenticationModulesMock.passwordValidator
+            .validate(any(), any())).thenAnswer((_) => success(password));
+        when(
+          () => AuthenticationModulesMock.userRegisterRepository.signup(
+              emailAddress: any(named: 'emailAddress'),
+              password: any(named: 'password'),
+              cep: any(named: 'cep'),
+              cpf: any(named: 'cpf'),
+              fullname: any(named: 'fullname'),
+              socialName: any(named: 'socialName'),
+              nickName: any(named: 'nickName'),
+              birthday: any(named: 'birthday'),
+              genre: any(named: 'genre'),
+              race: any(named: 'race')),
+        ).thenSuccess((_) => FakeSessionEntity());
+        when(
+          () => AppModulesMock.modularNavigator
+              .pushNamedAndRemoveUntil(any(), any()),
+        ).thenAnswer((_) => Future.value());
+
+        await theAppIsRunning(tester, const SignUpThreePage());
+
+        await iEnterIntoSingleTextInput(
+          tester,
+          text: 'E-mail',
+          value: 'e@mail.com',
+        );
+        await iEnterIntoPasswordField(
+          tester,
+          text: 'Senha',
+          password: password,
+        );
+        await iEnterIntoPasswordField(
+          tester,
+          text: 'Confirmação de senha',
+          password: password,
+        );
+
+        await iTapText(tester, text: 'Cadastrar');
+        verify(() => AppModulesMock.modularNavigator
+            .pushNamedAndRemoveUntil('/', any())).called(1);
+      },
+    );
     screenshotTest(
       'looks as expected',
       fileName: 'sign_up_step_3_page',
@@ -92,3 +143,5 @@ void main() {
     );
   });
 }
+
+class FakeSessionEntity extends Fake implements SessionEntity {}
