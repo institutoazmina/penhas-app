@@ -2,6 +2,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/extension/either.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
@@ -85,6 +86,51 @@ void main() {
           text: 'Confirmação de senha',
           message: 'As senhas não são iguais',
         );
+      },
+    );
+
+    testWidgets(
+      'shows server-side error message',
+      (tester) async {
+        const password = 'Str0ngP4ssw0rd';
+
+        when(() => AuthenticationModulesMock.passwordValidator
+            .validate(any(), any())).thenAnswer((_) => success(password));
+        when(
+          () => AuthenticationModulesMock.userRegisterRepository.signup(
+              emailAddress: any(named: 'emailAddress'),
+              password: any(named: 'password'),
+              cep: any(named: 'cep'),
+              cpf: any(named: 'cpf'),
+              fullname: any(named: 'fullname'),
+              socialName: any(named: 'socialName'),
+              nickName: any(named: 'nickName'),
+              birthday: any(named: 'birthday'),
+              genre: any(named: 'genre'),
+              race: any(named: 'race')),
+        ).thenFailure((_) => ServerFailure());
+
+        await theAppIsRunning(tester, const SignUpThreePage());
+
+        await iEnterIntoSingleTextInput(
+          tester,
+          text: 'E-mail',
+          value: 'e@mail.com',
+        );
+        await iEnterIntoPasswordField(
+          tester,
+          text: 'Senha',
+          password: password,
+        );
+        await iEnterIntoPasswordField(
+          tester,
+          text: 'Confirmação de senha',
+          password: password,
+        );
+        await iTapText(tester, text: 'Cadastrar');
+
+        await iSeeText(
+            'O servidor está com problema neste momento, tente novamente.');
       },
     );
 
