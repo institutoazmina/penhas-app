@@ -5,7 +5,9 @@ import 'i_local_storage.dart';
 
 class SecureLocalStorage implements ILocalStorage {
   factory SecureLocalStorage({
-    FlutterSecureStorage storage = const FlutterSecureStorage(),
+    FlutterSecureStorage storage = const FlutterSecureStorage(
+      aOptions: AndroidOptions(resetOnError: true),
+    ),
   }) =>
       SecureLocalStorage._(storage, {});
 
