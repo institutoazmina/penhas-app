@@ -54,7 +54,6 @@ void main() {
           ),
         );
       },
-      skip: true,
     );
   });
 }
