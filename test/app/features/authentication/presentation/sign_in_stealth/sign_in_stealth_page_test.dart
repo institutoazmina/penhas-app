@@ -166,10 +166,15 @@ void main() {
         },
       );
 
-      screenshotTest(
-        'looks as expected',
-        fileName: 'sign_in_stealth_page',
-        pageBuilder: () => const SignInStealthPage(),
+      group(
+        'golden test',
+        () {
+          screenshotTest(
+            'looks as expected',
+            fileName: 'sign_in_stealth_page',
+            pageBuilder: () => const SignInStealthPage(),
+          );
+        },
       );
     },
   );
