@@ -10,26 +10,31 @@ import 'package:penhas/app/features/escape_manual/presentation/escape_manual_con
 void main() {
   setUp(() {
     initModules(
-      [AppModule(), EscapeManualModule()],
+      [
+        AppModule(),
+        EscapeManualModule(),
+      ],
       replaceBinds: [
         Bind<IApiProvider>((i) => ApiProviderMock()),
       ],
     );
   });
 
-  group(EscapeManualModule, () {
-    test(
-      'should have EscapeManualController instance',
-      () {
-        // act
-        final controller = Modular.get<EscapeManualController>();
+  group(
+    EscapeManualModule,
+    () {
+      test(
+        'should have EscapeManualController instance',
+        () {
+          // act
+          final controller = Modular.get<EscapeManualController>();
 
-        // assert
-        expect(controller, isNotNull);
-      },
-      skip: true,
-    );
-  });
+          // assert
+          expect(controller, isNotNull);
+        },
+      );
+    },
+  );
 }
 
 class ApiProviderMock extends Mock implements IApiProvider {}
