@@ -125,6 +125,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
 
   SingleTextInput _buildCep() {
     return SingleTextInput(
+      key: const Key('sign_up_cep'),
       inputFormatter: _maskCep,
       onChanged: controller.setCep,
       keyboardType: TextInputType.number,
@@ -168,6 +169,7 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
 
   SingleTextInput _buildCpf() {
     return SingleTextInput(
+      key: const Key('sign_up_cpf'),
       inputFormatter: _maskCpf,
       onChanged: controller.setCpf,
       keyboardType: TextInputType.number,

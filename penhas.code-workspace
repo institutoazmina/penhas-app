@@ -20,12 +20,28 @@
 			"Blockable",
 			"dartz",
 			"datasources",
+			"Dont",
 			"etag",
 			"Etag",
 			"mainboard",
 			"mocktail",
 			"penhas",
 			"usecases"
+		]
+	},
+	
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Golden",
+				"request": "launch",
+				"type": "dart",
+				"codeLens": {
+					"for": ["run-test", "run-test-file"]
+				},
+				"args": ["--update-goldens"]
+			}
 		]
 	}
 }

@@ -112,11 +112,12 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
 
   @action
   Future<void> signInWithEmailAndPasswordPressed() async {
+    errorMessage = '';
+
     if (!_emailAddress.isValid || !_password!.isValid) {
       errorMessage = _invalidFieldsToProceedLogin;
       return;
     }
-    errorMessage = '';
 
     _progress = ObservableFuture(
       _repository.signInWithEmailAndPassword(

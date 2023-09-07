@@ -98,7 +98,7 @@ extension _MethodPrivate on _DeletedAccountPageState {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 30.0),
                 child: Text(
-                  'Esta conta está marcada para ser excluída.\n\nVocê pode intererromper este processo agora reativando a conta.',
+                  'Esta conta está marcada para ser excluída.\n\nVocê pode interromper este processo agora reativando a conta.',
                   style: labelTextStyle,
                 ),
               ),

@@ -124,10 +124,10 @@ abstract class _SignUpThreeControllerBase with Store, MapFailureMessage {
       warningEmail = _userRegisterModel.validateEmailAddress;
     }
 
-    isValid = _userRegisterModel.password!.isValid;
-
-    if (!isValid) {
-      warningPassword = _userRegisterModel.password!.mapFailure;
+    if ((_userRegisterModel.password?.isValid ?? false) == false) {
+      isValid = false;
+      warningPassword = _userRegisterModel.password?.mapFailure ??
+          SignUpPassword('', _passwordValidator).mapFailure;
     }
 
     if (_userRegisterModel.validatePasswordConfirmation.isNotEmpty) {

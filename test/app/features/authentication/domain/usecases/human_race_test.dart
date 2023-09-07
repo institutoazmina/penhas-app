@@ -16,7 +16,7 @@ void main() {
       expect(HumanRace.white.label, 'Branca');
       expect(HumanRace.brown.label, 'Parda');
       expect(HumanRace.black.label, 'Preta');
-      expect(HumanRace.indigenous.label, 'Índigena');
+      expect(HumanRace.indigenous.label, 'Indígena');
       expect(HumanRace.yellow.label, 'Amarela');
       expect(HumanRace.notDeclared.label, 'Não declarado');
     });

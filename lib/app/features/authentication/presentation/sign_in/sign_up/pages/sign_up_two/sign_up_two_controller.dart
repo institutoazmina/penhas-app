@@ -55,7 +55,7 @@ class SignUpTwoController extends _SignUpTwoControllerBase
         label = 'Masculino';
         break;
       case Genre.transBoy:
-        label = 'Homen Trans';
+        label = 'Homem Trans';
         break;
       case Genre.transGirl:
         label = 'Mulher Trans';
@@ -176,7 +176,7 @@ abstract class _SignUpTwoControllerBase with Store, MapFailureMessage {
 
     final Either<Failure, ValidField> response = await _progress!;
     response.fold(
-      (failure) => mapFailureMessage(failure),
+      (failure) => errorMessage = mapFailureMessage(failure),
       (session) => _forwardToStep3(),
     );
   }

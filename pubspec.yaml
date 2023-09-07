@@ -36,9 +36,10 @@ dependencies:
   device_info: ^2.0.3
   email_validator: ^2.0.1
   equatable: ^2.0.3
-  firebase_analytics: ^9.3.0
-  firebase_core: ^1.20.1
-  firebase_crashlytics: ^2.8.7
+  firebase_analytics: '9.3.1'
+  firebase_core: '1.24.0'
+  firebase_crashlytics: '2.9.0'
+  firebase_core_platform_interface: '4.5.1'
   flutter_mobx: ^2.0.5
   flutter_modular:
     git:
@@ -63,6 +64,7 @@ dependencies:
   path: ^1.8.0
   path_provider: ^2.0.8
   permission_handler: ^8.3.0
+  permission_handler_platform_interface: 3.7.0
   provider: ^6.0.1
   shared_preferences: ^2.0.11
   smooth_star_rating:

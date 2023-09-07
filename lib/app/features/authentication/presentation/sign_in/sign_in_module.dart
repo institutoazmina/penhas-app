@@ -52,7 +52,7 @@ class SignInModule extends Module {
   List<Bind> get binds => [
         ..._interfaces,
         // Sign-In
-        Bind.factory(
+        Bind.factory<SignInController>(
           (i) => SignInController(
             i.get<IAuthenticationRepository>(),
             i.get<PasswordValidator>(),
@@ -164,14 +164,16 @@ class SignInModule extends Module {
 
   List<Bind> get _signUp => [
         // Sign-Up
-        Bind.factory((i) => SignUpController(i.get<IUserRegisterRepository>())),
-        Bind.factory(
+        Bind.factory<SignUpController>(
+          (i) => SignUpController(i.get<IUserRegisterRepository>()),
+        ),
+        Bind.factory<SignUpTwoController>(
           (i) => SignUpTwoController(
             i.get<IUserRegisterRepository>(),
             i.args?.data,
           ),
         ),
-        Bind.factory(
+        Bind.factory<SignUpThreeController>(
           (i) => SignUpThreeController(
             i.get<IUserRegisterRepository>(),
             i.args?.data!,
@@ -181,16 +183,16 @@ class SignInModule extends Module {
       ];
 
   List<Bind> get _resetPassword => [
-        Bind.factory(
+        Bind.factory<ResetPasswordController>(
           (i) => ResetPasswordController(i.get<IResetPasswordRepository>()),
         ),
-        Bind.factory(
+        Bind.factory<ResetPasswordTwoController>(
           (i) => ResetPasswordTwoController(
             i.get<IChangePasswordRepository>(),
             i.args?.data,
           ),
         ),
-        Bind.factory(
+        Bind.factory<ResetPasswordThreeController>(
           (i) => ResetPasswordThreeController(
             i.get<IChangePasswordRepository>(),
             i.args?.data,
@@ -200,7 +202,7 @@ class SignInModule extends Module {
       ];
 
   List<Bind> get _signInAnonymous => [
-        Bind.factory(
+        Bind.factory<SignInAnonymousController>(
           (i) => SignInAnonymousController(
             repository: i.get<IAuthenticationRepository>(),
             userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
@@ -210,7 +212,7 @@ class SignInModule extends Module {
       ];
 
   List<Bind> get _signInStealth => [
-        Bind.factory(
+        Bind.factory<SignInStealthController>(
           (i) => SignInStealthController(
             repository: i.get<IAuthenticationRepository>(),
             userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
@@ -218,7 +220,7 @@ class SignInModule extends Module {
             passwordValidator: i.get<PasswordValidator>(),
           ),
         ),
-        Bind.factory(
+        Bind.factory<StealthSecurityAction>(
           (i) => StealthSecurityAction(
             audioServices: i.get<IAudioRecordServices>(),
             featureToggle: i.get<SecurityModeActionFeature>(),
