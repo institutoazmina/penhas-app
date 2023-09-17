@@ -10,7 +10,7 @@ import 'splash_page.dart';
 class SplashModule extends Module {
   @override
   List<Bind> get binds => [
-        Bind.factory(
+        Bind.factory<SplashController>(
           (i) => SplashController(
             appConfiguration: i.get<IAppConfiguration>(),
             appStateUseCase: i.get<AppStateUseCase>(),
