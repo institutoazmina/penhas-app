@@ -14,24 +14,8 @@ import '../../../utils/widget_test_steps.dart';
 import '../authentication/presentation/mocks/app_modules_mock.dart';
 
 void main() {
-  late UserProfileEntity userProfileEntity;
-
   setUp(() {
     AppModulesMock.init();
-    userProfileEntity = UserProfileEntity(
-      fullName: 'fullName',
-      nickname: 'nickname',
-      email: 'email@testing.com',
-      birthdate: DateTime(1970),
-      genre: 'genre',
-      minibio: 'minibio',
-      race: 'race',
-      avatar: 'avatar',
-      skill: const ['skill1', 'skill2'],
-      stealthModeEnabled: true,
-      anonymousModeEnabled: true,
-      jaFoiVitimaDeViolencia: false,
-    );
 
     initModule(
       SplashModule(),
@@ -95,8 +79,9 @@ void main() {
             when(() => AppModulesMock.appStateUseCase.check())
                 .thenFailure((_) => ServerFailure());
 
-            when(() => AppModulesMock.userProfileStore.retrieve())
-                .thenAnswer((_) async => userProfileEntity);
+            when(() => AppModulesMock.userProfileStore.retrieve()).thenAnswer(
+              (_) async => FakeUserProfileEntity.stealth(),
+            );
 
             when(() =>
                     AppModulesMock.modularNavigator.pushReplacementNamed(any()))
@@ -107,7 +92,55 @@ void main() {
                 .pushReplacementNamed('/authentication/stealth')).called(1);
           },
         );
+
+        testWidgets(
+          'for unmapped error and in anonymous mode forward to `anonymousModeEnabled`',
+          (tester) async {
+            when(() => AppModulesMock.appConfiguration.authorizationStatus)
+                .thenAnswer((i) async => AuthorizationStatus.authenticated);
+
+            when(() => AppModulesMock.appStateUseCase.check())
+                .thenFailure((_) => ServerFailure());
+
+            when(() => AppModulesMock.userProfileStore.retrieve()).thenAnswer(
+              (_) async => FakeUserProfileEntity.anonymous(),
+            );
+
+            when(() =>
+                    AppModulesMock.modularNavigator.pushReplacementNamed(any()))
+                .thenAnswer((i) => Future.value());
+
+            await theAppIsRunning(tester, const SplashPage());
+            verify(() => AppModulesMock.modularNavigator
+                    .pushReplacementNamed('/authentication/sign_in_stealth'))
+                .called(1);
+          },
+        );
       });
     },
   );
+}
+
+class FakeUserProfileEntity extends Fake implements UserProfileEntity {
+  FakeUserProfileEntity({
+    bool stealthModeEnabled = false,
+    bool anonymousModeEnabled = false,
+  })  : _stealthModeEnabled = stealthModeEnabled,
+        _anonymousModeEnabled = anonymousModeEnabled;
+
+  factory FakeUserProfileEntity.stealth() {
+    return FakeUserProfileEntity(stealthModeEnabled: true);
+  }
+
+  factory FakeUserProfileEntity.anonymous() =>
+      FakeUserProfileEntity(anonymousModeEnabled: true);
+
+  final bool _stealthModeEnabled;
+  final bool _anonymousModeEnabled;
+
+  @override
+  bool get stealthModeEnabled => _stealthModeEnabled;
+
+  @override
+  bool get anonymousModeEnabled => _anonymousModeEnabled;
 }
