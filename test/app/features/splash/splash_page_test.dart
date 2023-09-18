@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/data/authorization_status.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/splash/splash_controller.dart';
 import 'package:penhas/app/features/splash/splash_module.dart';
@@ -140,6 +141,26 @@ void main() {
                 .called(1);
           },
         );
+
+        testWidgets(
+          'goes to a quiz session for a pending quiz',
+          (tester) async {
+            when(() => AppModulesMock.appConfiguration.authorizationStatus)
+                .thenAnswer((i) async => AuthorizationStatus.authenticated);
+
+            when(() => AppModulesMock.appStateUseCase.check())
+                .thenSuccess((_) => FakeAppStateEntity.quiz());
+
+            when(() => AppModulesMock.modularNavigator
+                    .popAndPushNamed(any(), arguments: any(named: 'arguments')))
+                .thenAnswer((i) => Future.value());
+
+            await theAppIsRunning(tester, const SplashPage());
+            verify(() => AppModulesMock.modularNavigator.popAndPushNamed(
+                '/quiz',
+                arguments: any(named: 'arguments'))).called(1);
+          },
+        );
       });
     },
   );
@@ -167,4 +188,22 @@ class FakeUserProfileEntity extends Fake implements UserProfileEntity {
 
   @override
   bool get anonymousModeEnabled => _anonymousModeEnabled;
+}
+
+class FakeQuizSessionEntity extends Fake implements QuizSessionEntity {
+  @override
+  bool get isFinished => false;
+}
+
+class FakeAppStateEntity extends Fake implements AppStateEntity {
+  FakeAppStateEntity({QuizSessionEntity? quizSessionEntity})
+      : _quizSessionEntity = quizSessionEntity;
+
+  factory FakeAppStateEntity.quiz() =>
+      FakeAppStateEntity(quizSessionEntity: FakeQuizSessionEntity());
+
+  final QuizSessionEntity? _quizSessionEntity;
+
+  @override
+  QuizSessionEntity? get quizSession => _quizSessionEntity;
 }
