@@ -116,6 +116,30 @@ void main() {
                 .called(1);
           },
         );
+
+        testWidgets(
+          'for unmapped error and not in security mode forward to `feed`',
+          (tester) async {
+            when(() => AppModulesMock.appConfiguration.authorizationStatus)
+                .thenAnswer((i) async => AuthorizationStatus.authenticated);
+
+            when(() => AppModulesMock.appStateUseCase.check())
+                .thenFailure((_) => ServerFailure());
+
+            when(() => AppModulesMock.userProfileStore.retrieve()).thenAnswer(
+              (_) async => FakeUserProfileEntity(),
+            );
+
+            when(() => AppModulesMock.modularNavigator
+                    .popAndPushNamed(any(), arguments: any(named: 'arguments')))
+                .thenAnswer((i) => Future.value());
+
+            await theAppIsRunning(tester, const SplashPage());
+            verify(() => AppModulesMock.modularNavigator
+                    .popAndPushNamed('/mainboard', arguments: {'page': 'feed'}))
+                .called(1);
+          },
+        );
       });
     },
   );
