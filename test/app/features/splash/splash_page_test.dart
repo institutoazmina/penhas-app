@@ -14,9 +14,11 @@ import '../../../utils/widget_test_steps.dart';
 import '../authentication/presentation/mocks/app_modules_mock.dart';
 
 void main() {
+  late UserProfileEntity userProfileEntity;
+
   setUp(() {
     AppModulesMock.init();
-    final userProfileEntity = UserProfileEntity(
+    userProfileEntity = UserProfileEntity(
       fullName: 'fullName',
       nickname: 'nickname',
       email: 'email@testing.com',
@@ -67,22 +69,45 @@ void main() {
         },
       );
 
-      testWidgets(
-        'in authenticated states forward to `authentication` in ServerFailure',
-        (tester) async {
-          when(() => AppModulesMock.appConfiguration.authorizationStatus)
-              .thenAnswer((i) async => AuthorizationStatus.authenticated);
-          when(() => AppModulesMock.appStateUseCase.check())
-              .thenFailure((_) => ServerSideSessionFailed());
-          when(() =>
-                  AppModulesMock.modularNavigator.pushReplacementNamed(any()))
-              .thenAnswer((i) => Future.value());
+      group('in authenticated states', () {
+        testWidgets(
+          'with ServerSideSessionFailed forward to `authentication`',
+          (tester) async {
+            when(() => AppModulesMock.appConfiguration.authorizationStatus)
+                .thenAnswer((i) async => AuthorizationStatus.authenticated);
+            when(() => AppModulesMock.appStateUseCase.check())
+                .thenFailure((_) => ServerSideSessionFailed());
+            when(() =>
+                    AppModulesMock.modularNavigator.pushReplacementNamed(any()))
+                .thenAnswer((i) => Future.value());
 
-          await theAppIsRunning(tester, const SplashPage());
-          verify(() => AppModulesMock.modularNavigator
-              .pushReplacementNamed('/authentication')).called(1);
-        },
-      );
+            await theAppIsRunning(tester, const SplashPage());
+            verify(() => AppModulesMock.modularNavigator
+                .pushReplacementNamed('/authentication')).called(1);
+          },
+        );
+        testWidgets(
+          'for unmapped error and in stealth mode forward to `stealthModeEnabled`',
+          (tester) async {
+            when(() => AppModulesMock.appConfiguration.authorizationStatus)
+                .thenAnswer((i) async => AuthorizationStatus.authenticated);
+
+            when(() => AppModulesMock.appStateUseCase.check())
+                .thenFailure((_) => ServerFailure());
+
+            when(() => AppModulesMock.userProfileStore.retrieve())
+                .thenAnswer((_) async => userProfileEntity);
+
+            when(() =>
+                    AppModulesMock.modularNavigator.pushReplacementNamed(any()))
+                .thenAnswer((i) => Future.value());
+
+            await theAppIsRunning(tester, const SplashPage());
+            verify(() => AppModulesMock.modularNavigator
+                .pushReplacementNamed('/authentication/stealth')).called(1);
+          },
+        );
+      });
     },
   );
 }
