@@ -58,6 +58,12 @@ void main() {
     ).thenThrow(exception);
   }
 
+  String _createsHash({required String password}) {
+    var bytes = utf8.encode(password);
+    var digest = sha256.convert(bytes);
+    return digest.toString();
+  }
+
   group(AuthenticationRepository, () {
     group('SigIn', () {
       Map<String, dynamic> loginSuccessJson;
@@ -80,9 +86,7 @@ void main() {
           'return valid SessionEntity for valid user/password',
           () async {
             // arrange
-            var bytes = utf8.encode(password.toString());
-            var digest = sha256.convert(bytes);
-            var hash = digest.toString();
+            var hash = _createsHash(password: password.toString());
             _mockSignInSuccessResponseWith(session: sessionModel);
             when(() => appConfiguration.saveApiToken(
                     token: sessionModel.sessionToken))
@@ -169,24 +173,30 @@ void main() {
         });
 
         test(
-          'return InternetConnectionFailure',
+          'login offline',
           () async {
+            
+            var hash = _createsHash(password: password.toString());
+
             // arrange
             _mockSignInErrorWith(exception: const ApiProviderException());
+            when(() => appConfiguration.apiToken).thenAnswer(
+                (invocation) async => sessionModel.sessionToken as String);
+            when(() => appConfiguration.offlineHash)
+                .thenAnswer((invocation) async => hash);
+
             // act
             final result = await repository.signInWithEmailAndPassword(
               emailAddress: email,
               password: password,
             );
-            // assert
-            verify(
-              () => dataSource.signInWithEmailAndPassword(
-                emailAddress: email,
-                password: password,
-              ),
-            ).called(1);
-            verify(() => networkInfo.isConnected).called(1);
+
+            verify(() => dataSource.signInWithOfflineHash(
+                sessionToken: sessionModel.sessionToken as String));
+
+            verify(() => networkInfo.isConnected).called(2);
             expect(result, left(InternetConnectionFailure()));
+
           },
         );
       });
