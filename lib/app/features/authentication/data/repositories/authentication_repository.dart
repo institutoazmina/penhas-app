@@ -34,7 +34,7 @@ class AuthenticationRepository implements IAuthenticationRepository {
     try {
       if (await _networkInfo.isConnected == false) {
         final session = await _loginOffline(password: password.toString());
-        if(session !=null){
+        if (session != null) {
           return right(session);
         }
       }
@@ -45,7 +45,7 @@ class AuthenticationRepository implements IAuthenticationRepository {
       );
 
       if (!result.deletedScheduled) {
-        _saveUserData(result: result, password: password.toString());
+       await _saveUserData(result: result, password: password.toString());
       }
 
       return right(result);
@@ -55,7 +55,7 @@ class AuthenticationRepository implements IAuthenticationRepository {
     }
   }
 
-  Future<String> _createsHash({required String password}) async {
+  String _createsHash({required String password}) {
     var bytes = utf8.encode(password);
     var digest = sha256.convert(bytes);
     return digest.toString();
@@ -64,7 +64,7 @@ class AuthenticationRepository implements IAuthenticationRepository {
   Future<SessionModel?> _loginOffline({required String password}) async {
     var currentHash = await _appConfiguration.offlineHash;
     var sessionToken = await _appConfiguration.apiToken;
-    final newHash = await _createsHash(password: password);
+    final newHash = _createsHash(password: password);
     final isCorrectPassword = currentHash.toString() == newHash.toString();
     if (isCorrectPassword) {
       var result =
@@ -77,7 +77,7 @@ class AuthenticationRepository implements IAuthenticationRepository {
   _saveUserData(
       {required SessionModel result, required String password}) async {
     await _appConfiguration.saveApiToken(token: result.sessionToken);
-    final hash = await _createsHash(password: password);
+    final hash = _createsHash(password: password);
     await _appConfiguration.saveHash(hash: hash);
   }
 

@@ -80,15 +80,15 @@ void main() {
           'return valid SessionEntity for valid user/password',
           () async {
             // arrange
-            var bytes = utf8.encode(sessionModel.sessionToken.toString());
+            var bytes = utf8.encode(password.toString());
             var digest = sha256.convert(bytes);
-
+            var hash = digest.toString();
             _mockSignInSuccessResponseWith(session: sessionModel);
             when(() => appConfiguration.saveApiToken(
                     token: sessionModel.sessionToken))
                 .thenAnswer((invocation) => Future.value());
 
-            when(() => appConfiguration.saveHash(hash: digest.toString()))
+            when(() => appConfiguration.saveHash(hash: hash))
                 .thenAnswer((invocation) => Future.value());
 
             // act
@@ -108,7 +108,7 @@ void main() {
             verify(() => appConfiguration.saveApiToken(
                 token: sessionModel.sessionToken)).called(1);
 
-            verify(() => appConfiguration.saveHash(hash: '_myStrongP4ss@rd')).called(1);
+            verify(() => appConfiguration.saveHash(hash: hash)).called(1);
 
             expect(result, right(sessionEntity));
           },
