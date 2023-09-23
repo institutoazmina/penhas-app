@@ -175,7 +175,6 @@ void main() {
         test(
           'login offline',
           () async {
-            
             var hash = _createsHash(password: password.toString());
 
             // arrange
@@ -196,7 +195,6 @@ void main() {
 
             verify(() => networkInfo.isConnected).called(2);
             expect(result, left(InternetConnectionFailure()));
-
           },
         );
       });

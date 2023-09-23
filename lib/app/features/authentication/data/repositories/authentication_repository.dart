@@ -45,7 +45,7 @@ class AuthenticationRepository implements IAuthenticationRepository {
       );
 
       if (!result.deletedScheduled) {
-       await _saveUserData(result: result, password: password.toString());
+        await _saveUserData(result: result, password: password.toString());
       }
 
       return right(result);
