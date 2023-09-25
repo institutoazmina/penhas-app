@@ -307,7 +307,7 @@ void main() {
           _currentMessageWithSingleButton();
       final QuizSessionEntity quizSession = QuizSessionModel(
         currentMessage: currentMessage,
-        sessionId: '310',
+        sessionId: '',
         endScreen: 'home',
         isFinished: true,
       );
