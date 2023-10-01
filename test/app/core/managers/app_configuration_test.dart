@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/data/authorization_status.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
+import 'package:penhas/app/core/remoteconfig/i_remote_config.dart';
 import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 
@@ -14,10 +15,13 @@ void main() {
 
     late ILocalStorage localStorage;
     late IAppConfiguration appConfiguration;
+    late IRemoteConfig remoteConfig;
 
     setUp(() {
       localStorage = LocalStorageMock();
-      appConfiguration = AppConfiguration(storage: localStorage);
+      remoteConfig = RemoteConfigMock();
+      appConfiguration =
+          AppConfiguration(storage: localStorage, remoteConfig: remoteConfig);
     });
 
     test(
@@ -139,3 +143,5 @@ void main() {
 }
 
 class LocalStorageMock extends Mock implements ILocalStorage {}
+
+class RemoteConfigMock extends Mock implements IRemoteConfig {}

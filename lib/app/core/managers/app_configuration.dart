@@ -1,4 +1,5 @@
 import 'dart:convert';
+import '../remoteconfig/i_remote_config.dart';
 import '../../features/appstate/domain/entities/app_state_entity.dart';
 import '../../shared/logger/log.dart';
 import '../data/authorization_status.dart';
@@ -33,6 +34,7 @@ class AppConfiguration implements IAppConfiguration {
   AppConfiguration({
     String apiBaseUrl = _apiBaseUrl,
     required ILocalStorage storage,
+    required IRemoteConfig remoteConfig,
   })  : penhasServer = Uri.parse(apiBaseUrl),
         _storage = storage;
 
