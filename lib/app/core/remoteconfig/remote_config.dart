@@ -1,44 +1,50 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 
+import '../../shared/logger/log.dart';
 import 'i_remote_config.dart';
 
 class RemoteConfig implements IRemoteConfig {
   final remoteConfig = FirebaseRemoteConfig.instance;
 
   @override
-  Future<void> fetch() async {
-    await remoteConfig.fetch();
+  Future<void> initialize() async {
+    try {
+      await setConfigSettings();
+      await activate();
+      fetch();
+    } catch (e, stack) {
+      logError(e, stack);
+    }
   }
 
-  @override
+  void fetch() async {
+    try {
+      await remoteConfig.fetch();
+    } catch (e, stack) {
+      logError(e, stack);
+    }
+  }
+
   Future<void> setConfigSettings() async {
     await remoteConfig.setConfigSettings(RemoteConfigSettings(
       fetchTimeout: const Duration(minutes: 1),
-      minimumFetchInterval: const Duration(hours: 1),
+      minimumFetchInterval: const Duration(minutes: 1),
     ));
   }
 
-  @override
   Future<void> activate() async {
     await remoteConfig.activate();
   }
 
-  @override
   Future<void> setDefaults() async {
+    // TODO: use default templates
     await remoteConfig.setDefaults(const {
       'feature_login_offline': false,
     });
   }
 
   @override
-  Map<String, RemoteConfigValue> getAll() {
-    return remoteConfig.getAll();
+  bool getBool(String key) {
+    return remoteConfig.getBool(key);
   }
-
-  @override
-  RemoteConfigValue getValue(String key) {
-    return remoteConfig.getValue(key);
-  }
-
-
 }

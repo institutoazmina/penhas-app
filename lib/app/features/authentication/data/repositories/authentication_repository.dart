@@ -32,13 +32,6 @@ class AuthenticationRepository implements IAuthenticationRepository {
     required SignInPassword password,
   }) async {
     try {
-      if (await _networkInfo.isConnected == false) {
-        final session = await _loginOffline(password: password.toString());
-        if (session != null) {
-          return right(session);
-        }
-      }
-
       final result = await _dataSource.signInWithEmailAndPassword(
         emailAddress: emailAddress,
         password: password,
@@ -49,6 +42,28 @@ class AuthenticationRepository implements IAuthenticationRepository {
       }
 
       return right(result);
+    } catch (error, stack) {
+      logError(error, stack);
+      return _handleError(error);
+    }
+  }
+
+  @override
+  Future<Either<Failure, SessionEntity>> signInOffline({
+    required EmailAddress emailAddress,
+    required SignInPassword password,
+  }) async {
+    try {
+      if (await _networkInfo.isConnected == false) {
+        final session = await _loginOffline(password: password.toString());
+        if (session != null) {
+          return right(session);
+        }
+      }
+      return signInWithEmailAndPassword(
+        emailAddress: emailAddress,
+        password: password,
+      );
     } catch (error, stack) {
       logError(error, stack);
       return _handleError(error);

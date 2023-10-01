@@ -7,7 +7,7 @@ import '../../../../shared/navigation/app_navigator.dart';
 import '../../../../shared/navigation/app_route.dart';
 import '../../../appstate/domain/usecases/app_state_usecase.dart';
 import '../../domain/entities/session_entity.dart';
-import '../../domain/repositories/i_authentication_repository.dart';
+import '../../domain/usecases/authenticate_user.dart';
 import '../../domain/usecases/email_address.dart';
 import '../../domain/usecases/password_validator.dart';
 import '../../domain/usecases/sign_in_password.dart';
@@ -16,28 +16,24 @@ import '../shared/page_progress_indicator.dart';
 
 part 'sign_in_controller.g.dart';
 
-class SignInController extends _SignInControllerBase with _$SignInController {
-  SignInController(
-    IAuthenticationRepository? repository,
-    PasswordValidator passwordValidator,
-    AppStateUseCase? appStateUseCase,
-  ) : super(repository, passwordValidator, appStateUseCase);
-}
+class SignInController = _SignInControllerBase with _$SignInController;
 
 abstract class _SignInControllerBase with Store, MapFailureMessage {
-  _SignInControllerBase(
-    this.repository,
-    this._passwordValidator,
-    this._appStateUseCase,
-  ) {
-    _password = SignInPassword('', _passwordValidator);
+  _SignInControllerBase({
+    required AuthenticateUser autenticateUser,
+    required PasswordValidator passwordValidator,
+    required AppStateUseCase appStateUseCase,
+  })  : _appStateUseCase = appStateUseCase,
+        _passwordValidator = passwordValidator,
+        _autenticateUser = autenticateUser {
+   _password = SignInPassword('', _passwordValidator);
   }
 
   final String _invalidFieldsToProceedLogin =
       'E-mail e senha precisam estarem corretos para continuar.';
-  final IAuthenticationRepository? repository;
+  final AuthenticateUser _autenticateUser;
   final PasswordValidator _passwordValidator;
-  final AppStateUseCase? _appStateUseCase;
+  final AppStateUseCase _appStateUseCase;
   EmailAddress _emailAddress = EmailAddress('');
   late SignInPassword _password;
 
@@ -86,8 +82,8 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
     errorMessage = '';
 
     _progress = ObservableFuture(
-      repository!.signInWithEmailAndPassword(
-        emailAddress: _emailAddress,
+      _autenticateUser(
+        email: _emailAddress,
         password: _password,
       ),
     );
@@ -114,7 +110,7 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
     if (session.deletedScheduled) {
       Modular.to.pushNamed('/accountDeleted', arguments: session.sessionToken);
     } else {
-      final appState = await _appStateUseCase!.check();
+      final appState = await _appStateUseCase.check();
       appState.fold(
         (failure) => errorMessage = mapFailureMessage(failure),
         (_) => AppNavigator.popAndPush(AppRoute('/mainboard?page=feed')),

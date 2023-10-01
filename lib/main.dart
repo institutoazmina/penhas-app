@@ -10,6 +10,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'app/app_module.dart';
 import 'app/app_widget.dart';
+import 'app/core/remoteconfig/remote_config.dart';
 import 'firebase_options.dart';
 
 Future main() async {
@@ -29,6 +30,7 @@ Future main() async {
   runZonedGuarded(
     () async {
       await Hive.initFlutter();
+      await _initRemoteConfig();
       runApp(
         ModularApp(
           module: AppModule(),
@@ -39,4 +41,9 @@ Future main() async {
     (error, stack) =>
         FirebaseCrashlytics.instance.recordError(error, stack, fatal: true),
   );
+}
+
+Future<void> _initRemoteConfig() async{
+  RemoteConfig remoteConfig = RemoteConfig();
+  await remoteConfig.initialize();
 }

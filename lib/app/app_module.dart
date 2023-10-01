@@ -14,6 +14,7 @@ import 'core/network/api_server_configure.dart';
 import 'core/network/network_info.dart';
 import 'core/storage/cache_storage.dart';
 import 'core/remoteconfig/i_remote_config.dart';
+import 'core/remoteconfig/remote_config.dart';
 import 'core/storage/i_local_storage.dart';
 import 'core/storage/impl/hive_cache_storage.dart';
 import 'core/storage/local_storage_shared_preferences.dart';
@@ -90,9 +91,8 @@ class AppModule extends Module {
         ),
         Bind.factory<IAppConfiguration>(
           (i) => AppConfiguration(
-            storage: i.get<ILocalStorage>(),
-            remoteConfig: i.get<IRemoteConfig>()
-          ),
+              storage: i.get<ILocalStorage>(),
+              remoteConfig: i.get<IRemoteConfig>()),
         ),
         Bind.factory<LocalStore<UserProfileEntity>>(
           (i) => UserProfileStore(
@@ -132,6 +132,7 @@ class AppModule extends Module {
             apiProvider: i.get<IApiProvider>(),
           ),
         ),
+        Bind.lazySingleton<IRemoteConfig>((i) => RemoteConfig())
       ];
 
   @override
