@@ -117,7 +117,7 @@ class _$_Enable with DiagnosticableTreeMixin implements _Enable {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'FeedSecurityState.enable'));
+    properties.add(DiagnosticsProperty('type', 'FeedSecurityState.enable'));
   }
 
   @override
@@ -225,7 +225,7 @@ class _$_Disable with DiagnosticableTreeMixin implements _Disable {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'FeedSecurityState.disable'));
+    properties.add(DiagnosticsProperty('type', 'FeedSecurityState.disable'));
   }
 
   @override

@@ -119,7 +119,7 @@ class _$_Enable with DiagnosticableTreeMixin implements _Enable {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'MainboardSecurityState.enable'));
+        .add(DiagnosticsProperty('type', 'MainboardSecurityState.enable'));
   }
 
   @override
@@ -229,7 +229,7 @@ class _$_Disable with DiagnosticableTreeMixin implements _Disable {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'MainboardSecurityState.disable'));
+        .add(DiagnosticsProperty('type', 'MainboardSecurityState.disable'));
   }
 
   @override

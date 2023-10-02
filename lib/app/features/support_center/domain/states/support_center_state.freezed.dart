@@ -131,7 +131,7 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'SupportCenterState.loaded'));
+    properties.add(DiagnosticsProperty('type', 'SupportCenterState.loaded'));
   }
 
   @override

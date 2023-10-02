@@ -141,7 +141,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'NewGuardianState.initial'));
+    properties.add(DiagnosticsProperty('type', 'NewGuardianState.initial'));
   }
 
   @override
@@ -261,7 +261,7 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'NewGuardianState.loaded'));
+    properties.add(DiagnosticsProperty('type', 'NewGuardianState.loaded'));
   }
 
   @override

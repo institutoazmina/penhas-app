@@ -141,7 +141,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'NotificationState.initial'));
+    properties.add(DiagnosticsProperty('type', 'NotificationState.initial'));
   }
 
   @override
@@ -412,7 +412,7 @@ class _$_Empty with DiagnosticableTreeMixin implements _Empty {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'NotificationState.empty'));
+    properties.add(DiagnosticsProperty('type', 'NotificationState.empty'));
   }
 
   @override

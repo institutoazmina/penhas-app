@@ -148,8 +148,7 @@ class _$_Granted with DiagnosticableTreeMixin implements _Granted {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AudioPermissionState.granted'));
+    properties.add(DiagnosticsProperty('type', 'AudioPermissionState.granted'));
   }
 
   @override
@@ -276,7 +275,7 @@ class _$_Denied with DiagnosticableTreeMixin implements _Denied {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'AudioPermissionState.denied'));
+    properties.add(DiagnosticsProperty('type', 'AudioPermissionState.denied'));
   }
 
   @override
@@ -407,9 +406,8 @@ class _$_PermanentlyDenied
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty(
-          'type', 'AudioPermissionState.permanentlyDenied'));
+    properties.add(
+        DiagnosticsProperty('type', 'AudioPermissionState.permanentlyDenied'));
   }
 
   @override
@@ -539,7 +537,7 @@ class _$_Restricted with DiagnosticableTreeMixin implements _Restricted {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'AudioPermissionState.restricted'));
+        .add(DiagnosticsProperty('type', 'AudioPermissionState.restricted'));
   }
 
   @override
@@ -668,7 +666,7 @@ class _$_Undefined with DiagnosticableTreeMixin implements _Undefined {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'AudioPermissionState.undefined'));
+        .add(DiagnosticsProperty('type', 'AudioPermissionState.undefined'));
   }
 
   @override

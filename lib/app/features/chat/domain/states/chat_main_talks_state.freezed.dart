@@ -142,7 +142,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'ChatMainTalksState.initial'));
+    properties.add(DiagnosticsProperty('type', 'ChatMainTalksState.initial'));
   }
 
   @override
@@ -263,7 +263,7 @@ class _$_Loading with DiagnosticableTreeMixin implements _Loading {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'ChatMainTalksState.loading'));
+    properties.add(DiagnosticsProperty('type', 'ChatMainTalksState.loading'));
   }
 
   @override
