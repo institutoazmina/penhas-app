@@ -5,6 +5,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/extension/either.dart';
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/authenticate_user.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in_anonymous/sign_in_anonymous_controller.dart';
@@ -43,11 +44,16 @@ void main() {
     initModule(SignInModule(), replaceBinds: [
       Bind<SignInAnonymousController>(
         (i) => SignInAnonymousController(
-          repository: AuthenticationModulesMock.authenticationRepository,
-          userProfileStore: AppModulesMock.userProfileStore,
+          authenticateAnonymousUserUseCase:
+              AuthenticationModulesMock.authenticateAnonymousUserUseCase,
           passwordValidator: AuthenticationModulesMock.passwordValidator,
+          userProfileStore: AppModulesMock.userProfileStore,
         ),
       ),
+      Bind<AuthenticateAnonymousUserUseCase>((i) =>
+          AuthenticateAnonymousUserUseCase(
+              authenticationRepository: i.get(),
+              loginOfflineToggleFeature: i.get())),
     ]);
   });
 
@@ -103,6 +109,14 @@ void main() {
             password: any(named: 'password'),
           ),
         ).thenSuccess((_) => const SessionEntity(sessionToken: sessionToken));
+
+        when(
+          () => AuthenticationModulesMock.authenticateAnonymousUserUseCase(
+              email: any(named: 'email'), password: any(named: 'password')),
+        ).thenSuccess((_) => const SessionEntity(
+              sessionToken: sessionToken,
+            ));
+
         when(() => AppModulesMock.appStateUseCase.check())
             .thenSuccess((_) => FakeAppStateEntity());
         when(
