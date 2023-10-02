@@ -221,8 +221,14 @@ void main() {
           ),
         ).thenSuccess((_) => const SessionEntity(sessionToken: sessionToken));
 
+        when(
+          () => AuthenticationModulesMock.autenticateUserUseCase(
+              email: any(named: 'email'), password: any(named: 'password')),
+        ).thenSuccess((_) => const SessionEntity(sessionToken: sessionToken));
+
         when(() => AppModulesMock.appStateUseCase.check())
             .thenSuccess((_) => FakeAppStateEntity());
+
         when(
           () => AppModulesMock.modularNavigator
               .popAndPushNamed(any(), arguments: any(named: 'arguments')),
