@@ -201,7 +201,7 @@ class SignInModule extends Module {
   List<Bind> get _signIn => [
         Bind.factory<SignInController>(
           (i) => SignInController(
-            autenticateUserUseCase: i.get<AuthenticateUserUseCase>(),
+            authenticateUserUseCase: i.get<AuthenticateUserUseCase>(),
             appStateUseCase: i.get<AppStateUseCase>(),
             passwordValidator: i.get<PasswordValidator>(),
           ),

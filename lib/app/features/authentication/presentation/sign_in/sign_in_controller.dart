@@ -20,10 +20,10 @@ class SignInController = _SignInControllerBase with _$SignInController;
 
 abstract class _SignInControllerBase with Store, MapFailureMessage {
   _SignInControllerBase({
-    required AuthenticateUserUseCase autenticateUserUseCase,
+    required AuthenticateUserUseCase authenticateUserUseCase,
     required PasswordValidator passwordValidator,
     required AppStateUseCase appStateUseCase,
-  })  : _authenticateUser = autenticateUserUseCase,
+  })  : _authenticateUser = authenticateUserUseCase,
         _appStateUseCase = appStateUseCase,
         _passwordValidator = passwordValidator {
     _password = SignInPassword('', _passwordValidator);

@@ -34,8 +34,8 @@ void main() {
       replaceBinds: [
         Bind<SignInController>(
           (i) => SignInController(
-              autenticateUserUseCase:
-                  AuthenticationModulesMock.autenticateUserUseCase,
+              authenticateUserUseCase:
+                  AuthenticationModulesMock.authenticateUserUseCase,
               passwordValidator: AuthenticationModulesMock.passwordValidator,
               appStateUseCase: AppModulesMock.appStateUseCase),
         ),
@@ -148,7 +148,7 @@ void main() {
         ).thenFailure((i) => ServerFailure());
 
         when(
-          () => AuthenticationModulesMock.autenticateUserUseCase(
+          () => AuthenticationModulesMock.authenticateUserUseCase(
               email: any(named: 'email'), password: any(named: 'password')),
         ).thenFailure((i) => ServerFailure());
 
@@ -181,7 +181,7 @@ void main() {
             ));
 
         when(
-          () => AuthenticationModulesMock.autenticateUserUseCase(
+          () => AuthenticationModulesMock.authenticateUserUseCase(
               email: any(named: 'email'), password: any(named: 'password')),
         ).thenSuccess((_) => const SessionEntity(
               sessionToken: sessionToken,
@@ -222,7 +222,7 @@ void main() {
         ).thenSuccess((_) => const SessionEntity(sessionToken: sessionToken));
 
         when(
-          () => AuthenticationModulesMock.autenticateUserUseCase(
+          () => AuthenticationModulesMock.authenticateUserUseCase(
               email: any(named: 'email'), password: any(named: 'password')),
         ).thenSuccess((_) => const SessionEntity(sessionToken: sessionToken));
 

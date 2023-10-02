@@ -16,7 +16,7 @@ class AuthenticationModulesMock {
   static late IChangePasswordRepository changePasswordRepository;
   static late StealthSecurityAction securityAction;
   static late IUserRegisterRepository userRegisterRepository;
-  static late AuthenticateUserUseCase autenticateUserUseCase;
+  static late AuthenticateUserUseCase authenticateUserUseCase;
   static late AuthenticateAnonymousUserUseCase authenticateAnonymousUserUseCase;
   static late AuthenticateStealthUserUseCase authenticateStealthUserUseCase;
 
@@ -33,7 +33,7 @@ class AuthenticationModulesMock {
     securityAction = MockStealthSecurityAction();
     userRegisterRepository = MockUserRegisterRepository();
 
-    autenticateUserUseCase = MockAuthenticateUserUseCase();
+    authenticateUserUseCase = MockAuthenticateUserUseCase();
     authenticateAnonymousUserUseCase = MockAuthenticateAnonymousUserUseCase();
     authenticateStealthUserUseCase = MockAuthenticateStealthUserUseCase();
   }
