@@ -7,8 +7,8 @@ import '../repositories/i_authentication_repository.dart';
 import 'email_address.dart';
 import 'sign_in_password.dart';
 
-class AuthenticateUser {
-  AuthenticateUser({
+class AuthenticateUserUseCase {
+  AuthenticateUserUseCase({
     required IAuthenticationRepository authenticationRepository,
   }) : _repository = authenticationRepository;
 
@@ -56,16 +56,16 @@ abstract class AuthenticateUserWithOfflineSupport {
   }
 }
 
-class AuthenticateStealthUser extends AuthenticateUserWithOfflineSupport {
-  AuthenticateStealthUser(
+class AuthenticateStealthUserUseCase extends AuthenticateUserWithOfflineSupport {
+  AuthenticateStealthUserUseCase(
       {required IAuthenticationRepository authenticationRepository,
       required LoginOfflineToggleFeature loginOfflineToggleFeature})
       : super(authenticationRepository, loginOfflineToggleFeature);
 }
 
-class AuthenticateAnonymousUser
+class AuthenticateAnonymousUserUseCase
     extends AuthenticateUserWithOfflineSupport {
-  AuthenticateAnonymousUser(
+  AuthenticateAnonymousUserUseCase(
       {required IAuthenticationRepository authenticationRepository,
       required LoginOfflineToggleFeature loginOfflineToggleFeature})
       : super(authenticationRepository, loginOfflineToggleFeature);

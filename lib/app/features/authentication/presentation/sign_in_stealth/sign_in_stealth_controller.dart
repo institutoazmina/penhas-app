@@ -28,11 +28,11 @@ class SignInStealthController = _SignInStealthController
 
 abstract class _SignInStealthController with Store, MapFailureMessage {
   _SignInStealthController(
-      {required AuthenticateStealthUser authenticateUser,
+      {required AuthenticateStealthUserUseCase authenticateStealthUserUseCase,
       required LocalStore<UserProfileEntity> userProfileStore,
       required StealthSecurityAction securityAction,
       required PasswordValidator passwordValidator})
-      : _authenticateUser = authenticateUser,
+      : _authenticateStealthUserUseCase = authenticateStealthUserUseCase,
         _userProfileStore = userProfileStore,
         _securityAction = securityAction,
         _passwordValidator = passwordValidator {
@@ -43,7 +43,7 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
   final String _invalidFieldsToProceedLogin =
       'E-mail e senha precisam estarem corretos para continuar.';
   final LocalStore<UserProfileEntity> _userProfileStore;
-  final AuthenticateStealthUser _authenticateUser;
+  final AuthenticateStealthUserUseCase _authenticateStealthUserUseCase;
   final StealthSecurityAction _securityAction;
   final PasswordValidator _passwordValidator;
 
@@ -116,7 +116,7 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
     }
 
     _progress = ObservableFuture(
-      _authenticateUser(
+      _authenticateStealthUserUseCase(
         email: _emailAddress,
         password: _password!,
       ),

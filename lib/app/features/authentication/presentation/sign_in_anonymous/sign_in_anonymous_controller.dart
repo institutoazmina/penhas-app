@@ -20,10 +20,10 @@ class SignInAnonymousController = _SignInAnonymousController
 
 abstract class _SignInAnonymousController with Store, MapFailureMessage {
   _SignInAnonymousController({
-    required AuthenticateAnonymousUser authenticateAnonymousUser,
+    required AuthenticateAnonymousUserUseCase authenticateAnonymousUserUseCase,
     required LocalStore<UserProfileEntity> userProfileStore,
     required PasswordValidator passwordValidator,
-  })  : _authenticateAnonymousUser = authenticateAnonymousUser,
+  })  : _authenticateAnonymousUserUseCase = authenticateAnonymousUserUseCase,
         _userProfileStore = userProfileStore,
         _passwordValidator = passwordValidator {
     _init();
@@ -34,7 +34,7 @@ abstract class _SignInAnonymousController with Store, MapFailureMessage {
       'E-mail e senha precisam estarem corretos para continuar.';
   final LocalStore<UserProfileEntity> _userProfileStore;
   final PasswordValidator _passwordValidator;
-  final AuthenticateAnonymousUser _authenticateAnonymousUser;
+  final AuthenticateAnonymousUserUseCase _authenticateAnonymousUserUseCase;
 
 
   EmailAddress _emailAddress = EmailAddress('');
@@ -88,7 +88,7 @@ abstract class _SignInAnonymousController with Store, MapFailureMessage {
     errorMessage = '';
 
     _progress = ObservableFuture(
-      _authenticateAnonymousUser(
+      _authenticateAnonymousUserUseCase(
         email: _emailAddress,
         password: _password,
       ),

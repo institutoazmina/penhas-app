@@ -201,25 +201,25 @@ class SignInModule extends Module {
   List<Bind> get _signIn => [
         Bind.factory<SignInController>(
           (i) => SignInController(
-            autenticateUser: i.get<AuthenticateUser>(),
+            autenticateUserUseCase: i.get<AuthenticateUserUseCase>(),
             appStateUseCase: i.get<AppStateUseCase>(),
             passwordValidator: i.get<PasswordValidator>(),
           ),
         ),
-        Bind.factory<AuthenticateUser>(
-            (i) => AuthenticateUser(authenticationRepository: i.get()))
+        Bind.factory<AuthenticateUserUseCase>(
+            (i) => AuthenticateUserUseCase(authenticationRepository: i.get()))
       ];
 
   List<Bind> get _signInAnonymous => [
         Bind.factory<SignInAnonymousController>(
           (i) => SignInAnonymousController(
-            authenticateAnonymousUser: i.get<AuthenticateAnonymousUser>(),
+            authenticateAnonymousUserUseCase: i.get<AuthenticateAnonymousUserUseCase>(),
             userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
             passwordValidator: i.get<PasswordValidator>(),
           ),
         ),
-        Bind.factory<AuthenticateAnonymousUser>((i) =>
-            AuthenticateAnonymousUser(
+        Bind.factory<AuthenticateAnonymousUserUseCase>((i) =>
+            AuthenticateAnonymousUserUseCase(
                 authenticationRepository: i.get(),
                 loginOfflineToggleFeature: i.get()))
       ];
@@ -227,13 +227,13 @@ class SignInModule extends Module {
   List<Bind> get _signInStealth => [
         Bind.factory<SignInStealthController>(
           (i) => SignInStealthController(
-            authenticateUser: i.get<AuthenticateStealthUser>(),
+            authenticateStealthUserUseCase: i.get<AuthenticateStealthUserUseCase>(),
             userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
             securityAction: i.get<StealthSecurityAction>(),
             passwordValidator: i.get<PasswordValidator>(),
           ),
         ),
-        Bind.factory<AuthenticateStealthUser>((i) => AuthenticateStealthUser(
+        Bind.factory<AuthenticateStealthUserUseCase>((i) => AuthenticateStealthUserUseCase(
             authenticationRepository: i.get(),
             loginOfflineToggleFeature: i.get())),
         Bind.factory<StealthSecurityAction>(
