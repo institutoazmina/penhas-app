@@ -181,11 +181,12 @@ void main() {
             _mockSignInErrorWith(exception: const ApiProviderException());
             when(() => appConfiguration.apiToken).thenAnswer(
                 (invocation) async => sessionModel.sessionToken as String);
+
             when(() => appConfiguration.offlineHash)
                 .thenAnswer((invocation) async => hash);
 
             // act
-            final result = await repository.signInWithEmailAndPassword(
+            final result = await repository.signInOffline(
               emailAddress: email,
               password: password,
             );

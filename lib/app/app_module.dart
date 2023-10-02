@@ -90,9 +90,7 @@ class AppModule extends Module {
           ),
         ),
         Bind.factory<IAppConfiguration>(
-          (i) => AppConfiguration(
-              storage: i.get<ILocalStorage>(),
-              remoteConfig: i.get<IRemoteConfig>()),
+          (i) => AppConfiguration(storage: i.get<ILocalStorage>()),
         ),
         Bind.factory<LocalStore<UserProfileEntity>>(
           (i) => UserProfileStore(
