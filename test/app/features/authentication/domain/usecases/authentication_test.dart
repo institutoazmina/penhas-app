@@ -18,7 +18,7 @@ class MockAuthenticationRepository extends Mock
 void main() {
   late MockAppConfiguration mockAppConfiguration;
   late MockAuthenticationRepository mockAuthenticationRepository;
-  late AuthenticationWithEmailAndPassword useCase;
+  late AuthenticateUserUseCase useCase;
   late SessionEntity successSession;
   late EmailAddress emailAddress;
   late SignInPassword password;
@@ -26,9 +26,8 @@ void main() {
   setUp(() {
     mockAppConfiguration = MockAppConfiguration();
     mockAuthenticationRepository = MockAuthenticationRepository();
-    useCase = AuthenticationWithEmailAndPassword(
-      authenticationRepository: mockAuthenticationRepository,
-      appConfiguration: mockAppConfiguration,
+    useCase = AuthenticateUserUseCase(
+      authenticationRepository: mockAuthenticationRepository
     );
 
     emailAddress = EmailAddress('valid@email.com');
@@ -37,7 +36,7 @@ void main() {
         const SessionEntity(sessionToken: 'my_strong_session_token');
   });
 
-  group(AuthenticationWithEmailAndPassword, () {
+  group(AuthenticateUserUseCase, () {
     group('authentication with email and password', () {
       test('should get success response', () async {
         // arrange
