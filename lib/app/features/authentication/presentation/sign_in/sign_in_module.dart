@@ -58,8 +58,7 @@ class SignInModule extends Module {
         ..._resetPassword,
         ..._signInAnonymous,
         ..._signInStealth,
-        Bind.factory<LoginOfflineToggleFeature>(
-            (i) => LoginOfflineToggleFeature(remoteConfig: i.get()))
+        ..._logginOfflineToggle
       ];
 
   @override
@@ -223,6 +222,11 @@ class SignInModule extends Module {
             AuthenticateAnonymousUserUseCase(
                 authenticationRepository: i.get(),
                 loginOfflineToggleFeature: i.get()))
+      ];
+
+  List<Bind> get _logginOfflineToggle => [
+        Bind.factory<LoginOfflineToggleFeature>(
+            (i) => LoginOfflineToggleFeature(remoteConfig: i.get()))
       ];
 
   List<Bind> get _signInStealth => [
