@@ -36,7 +36,6 @@ abstract class _SignInAnonymousController with Store, MapFailureMessage {
   final PasswordValidator _passwordValidator;
   final AuthenticateAnonymousUserUseCase _authenticateUser;
 
-
   EmailAddress _emailAddress = EmailAddress('');
   late SignInPassword _password;
 

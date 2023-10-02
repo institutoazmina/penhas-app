@@ -27,8 +27,7 @@ void main() {
     mockAppConfiguration = MockAppConfiguration();
     mockAuthenticationRepository = MockAuthenticationRepository();
     useCase = AuthenticateUserUseCase(
-      authenticationRepository: mockAuthenticationRepository
-    );
+        authenticationRepository: mockAuthenticationRepository);
 
     emailAddress = EmailAddress('valid@email.com');
     password = SignInPassword('_myStr0ngP@ssw0rd', PasswordValidator());

@@ -56,7 +56,8 @@ abstract class AuthenticateUserWithOfflineSupport {
   }
 }
 
-class AuthenticateStealthUserUseCase extends AuthenticateUserWithOfflineSupport {
+class AuthenticateStealthUserUseCase
+    extends AuthenticateUserWithOfflineSupport {
   AuthenticateStealthUserUseCase(
       {required IAuthenticationRepository authenticationRepository,
       required LoginOfflineToggleFeature loginOfflineToggleFeature})

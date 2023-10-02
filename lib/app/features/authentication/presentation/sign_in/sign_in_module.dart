@@ -213,7 +213,8 @@ class SignInModule extends Module {
   List<Bind> get _signInAnonymous => [
         Bind.factory<SignInAnonymousController>(
           (i) => SignInAnonymousController(
-            authenticateAnonymousUserUseCase: i.get<AuthenticateAnonymousUserUseCase>(),
+            authenticateAnonymousUserUseCase:
+                i.get<AuthenticateAnonymousUserUseCase>(),
             userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
             passwordValidator: i.get<PasswordValidator>(),
           ),
@@ -227,15 +228,17 @@ class SignInModule extends Module {
   List<Bind> get _signInStealth => [
         Bind.factory<SignInStealthController>(
           (i) => SignInStealthController(
-            authenticateStealthUserUseCase: i.get<AuthenticateStealthUserUseCase>(),
+            authenticateStealthUserUseCase:
+                i.get<AuthenticateStealthUserUseCase>(),
             userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
             securityAction: i.get<StealthSecurityAction>(),
             passwordValidator: i.get<PasswordValidator>(),
           ),
         ),
-        Bind.factory<AuthenticateStealthUserUseCase>((i) => AuthenticateStealthUserUseCase(
-            authenticationRepository: i.get(),
-            loginOfflineToggleFeature: i.get())),
+        Bind.factory<AuthenticateStealthUserUseCase>((i) =>
+            AuthenticateStealthUserUseCase(
+                authenticationRepository: i.get(),
+                loginOfflineToggleFeature: i.get())),
         Bind.factory<StealthSecurityAction>(
           (i) => StealthSecurityAction(
             audioServices: i.get<IAudioRecordServices>(),

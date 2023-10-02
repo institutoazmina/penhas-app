@@ -3,21 +3,13 @@ import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/remoteconfig/remote_config.dart';
 
 void main() {
-
-  setUp(() {
-  });
+  setUp(() {});
 
   group(RemoteConfig, () {
-    setUp(() {
-      
-    });
+    setUp(() {});
     test(
       'get the default config',
-      () async {
-      
-      },
+      () async {},
     );
-
-   
   });
 }

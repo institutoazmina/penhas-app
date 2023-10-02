@@ -43,7 +43,7 @@ Future main() async {
   );
 }
 
-Future<void> _initRemoteConfig() async{
+Future<void> _initRemoteConfig() async {
   RemoteConfig remoteConfig = RemoteConfig();
   await remoteConfig.initialize();
 }
