@@ -25,13 +25,13 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
     required AppStateUseCase appStateUseCase,
   })  : _appStateUseCase = appStateUseCase,
         _passwordValidator = passwordValidator,
-        _autenticateUserUseCase = autenticateUserUseCase {
+        _authenticateUser = autenticateUserUseCase {
    _password = SignInPassword('', _passwordValidator);
   }
 
   final String _invalidFieldsToProceedLogin =
       'E-mail e senha precisam estarem corretos para continuar.';
-  final AuthenticateUserUseCase _autenticateUserUseCase;
+  final AuthenticateUserUseCase _authenticateUser;
   final PasswordValidator _passwordValidator;
   final AppStateUseCase _appStateUseCase;
   EmailAddress _emailAddress = EmailAddress('');
@@ -82,7 +82,7 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
     errorMessage = '';
 
     _progress = ObservableFuture(
-      _autenticateUserUseCase(
+      _authenticateUser(
         email: _emailAddress,
         password: _password,
       ),
