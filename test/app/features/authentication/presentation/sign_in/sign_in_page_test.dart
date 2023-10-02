@@ -6,6 +6,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/extension/either.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/authenticate_user.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
@@ -33,10 +34,13 @@ void main() {
       replaceBinds: [
         Bind<SignInController>(
           (i) => SignInController(
-              AuthenticationModulesMock.authenticationRepository,
-              AuthenticationModulesMock.passwordValidator,
-              AppModulesMock.appStateUseCase),
+              autenticateUserUseCase:
+                  AuthenticationModulesMock.autenticateUserUseCase,
+              passwordValidator: AuthenticationModulesMock.passwordValidator,
+              appStateUseCase: AppModulesMock.appStateUseCase),
         ),
+        Bind<AuthenticateUserUseCase>(
+            (i) => AuthenticateUserUseCase(authenticationRepository: i.get()))
       ],
     );
   });
@@ -134,12 +138,18 @@ void main() {
 
         when(() => AuthenticationModulesMock.passwordValidator
             .validate(any(), any())).thenAnswer((_) => success(validPassword));
+
         when(
           () => AuthenticationModulesMock.authenticationRepository
               .signInWithEmailAndPassword(
             emailAddress: any(named: 'emailAddress'),
             password: any(named: 'password'),
           ),
+        ).thenFailure((i) => ServerFailure());
+
+        when(
+          () => AuthenticationModulesMock.autenticateUserUseCase(
+              email: any(named: 'email'), password: any(named: 'password')),
         ).thenFailure((i) => ServerFailure());
 
         await theAppIsRunning(tester, const SignInPage());
@@ -169,6 +179,15 @@ void main() {
               sessionToken: sessionToken,
               deletedScheduled: true,
             ));
+
+        when(
+          () => AuthenticationModulesMock.autenticateUserUseCase(
+              email: any(named: 'email'), password: any(named: 'password')),
+        ).thenSuccess((_) => const SessionEntity(
+              sessionToken: sessionToken,
+              deletedScheduled: true,
+            ));
+
         when(
           () => AppModulesMock.modularNavigator
               .pushNamed(any(), arguments: any(named: 'arguments')),
@@ -201,6 +220,7 @@ void main() {
             password: any(named: 'password'),
           ),
         ).thenSuccess((_) => const SessionEntity(sessionToken: sessionToken));
+
         when(() => AppModulesMock.appStateUseCase.check())
             .thenSuccess((_) => FakeAppStateEntity());
         when(

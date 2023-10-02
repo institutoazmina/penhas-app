@@ -3,6 +3,7 @@ import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.da
 import 'package:penhas/app/features/authentication/domain/repositories/i_authentication_repository.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
 import 'package:penhas/app/features/authentication/domain/repositories/i_user_register_repository.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/authenticate_user.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/sign_in_password.dart';
@@ -15,6 +16,9 @@ class AuthenticationModulesMock {
   static late IChangePasswordRepository changePasswordRepository;
   static late StealthSecurityAction securityAction;
   static late IUserRegisterRepository userRegisterRepository;
+  static late AuthenticateUserUseCase autenticateUserUseCase;
+  static late AuthenticateAnonymousUserUseCase authenticateAnonymousUserUseCase;
+  static late AuthenticateStealthUserUseCase authenticateStealthUserUseCase;
 
   static void init() {
     _initMocks();
@@ -28,6 +32,10 @@ class AuthenticationModulesMock {
     changePasswordRepository = MockChangePasswordRepository();
     securityAction = MockStealthSecurityAction();
     userRegisterRepository = MockUserRegisterRepository();
+
+    autenticateUserUseCase = MockAuthenticateUserUseCase();
+    authenticateAnonymousUserUseCase = MockAuthenticateAnonymousUserUseCase();
+    authenticateStealthUserUseCase = MockAuthenticateStealthUserUseCase();
   }
 
   static void _initFallbacks() {
@@ -54,6 +62,15 @@ class MockStealthSecurityAction extends Mock implements StealthSecurityAction {}
 
 class MockUserRegisterRepository extends Mock
     implements IUserRegisterRepository {}
+
+class MockAuthenticateUserUseCase extends Mock
+    implements AuthenticateUserUseCase {}
+
+class MockAuthenticateStealthUserUseCase extends Mock
+    implements AuthenticateStealthUserUseCase {}
+
+class MockAuthenticateAnonymousUserUseCase extends Mock
+    implements AuthenticateAnonymousUserUseCase {}
 
 ///
 /// Fakes

@@ -23,10 +23,10 @@ abstract class _SignInControllerBase with Store, MapFailureMessage {
     required AuthenticateUserUseCase autenticateUserUseCase,
     required PasswordValidator passwordValidator,
     required AppStateUseCase appStateUseCase,
-  })  : _appStateUseCase = appStateUseCase,
-        _passwordValidator = passwordValidator,
-        _authenticateUser = autenticateUserUseCase {
-   _password = SignInPassword('', _passwordValidator);
+  })  : _authenticateUser = autenticateUserUseCase,
+        _appStateUseCase = appStateUseCase,
+        _passwordValidator = passwordValidator {
+    _password = SignInPassword('', _passwordValidator);
   }
 
   final String _invalidFieldsToProceedLogin =
