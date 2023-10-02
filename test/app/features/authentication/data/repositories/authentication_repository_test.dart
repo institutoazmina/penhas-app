@@ -58,8 +58,9 @@ void main() {
     ).thenThrow(exception);
   }
 
-  String _createsHash({required String password}) {
-    var bytes = utf8.encode(password);
+  String _createsHash(
+      {required SignInPassword password, required EmailAddress email}) {
+    var bytes = utf8.encode(password.toString() + email.toString());
     var digest = sha256.convert(bytes);
     return digest.toString();
   }
@@ -86,7 +87,8 @@ void main() {
           'return valid SessionEntity for valid user/password',
           () async {
             // arrange
-            var hash = _createsHash(password: password.toString());
+            var hash = _createsHash(password: password, email: email);
+
             _mockSignInSuccessResponseWith(session: sessionModel);
             when(() => appConfiguration.saveApiToken(
                     token: sessionModel.sessionToken))
@@ -175,7 +177,7 @@ void main() {
         test(
           'login offline',
           () async {
-            var hash = _createsHash(password: password.toString());
+            var hash = _createsHash(password: password, email: email);
 
             // arrange
             _mockSignInErrorWith(exception: const ApiProviderException());

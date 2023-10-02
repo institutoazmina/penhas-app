@@ -38,7 +38,8 @@ class AuthenticationRepository implements IAuthenticationRepository {
       );
 
       if (!result.deletedScheduled) {
-        await _saveUserData(result: result, password: password.toString());
+        await _saveUserData(
+            result: result, password: password, email: emailAddress);
       }
 
       return right(result);
@@ -55,7 +56,8 @@ class AuthenticationRepository implements IAuthenticationRepository {
   }) async {
     try {
       if (await _networkInfo.isConnected == false) {
-        final session = await _loginOffline(password: password.toString());
+        final session =
+            await _loginOffline(password: password, email: emailAddress);
         if (session != null) {
           return right(session);
         }
@@ -70,16 +72,20 @@ class AuthenticationRepository implements IAuthenticationRepository {
     }
   }
 
-  String _createsHash({required String password}) {
-    var bytes = utf8.encode(password);
+  String _createsHash(
+      {required EmailAddress email, required SignInPassword password}) {
+    var bytes = utf8.encode(password.toString() + email.toString());
     var digest = sha256.convert(bytes);
     return digest.toString();
   }
 
-  Future<SessionModel?> _loginOffline({required String password}) async {
+  Future<SessionModel?> _loginOffline({
+    required EmailAddress email,
+    required SignInPassword password,
+  }) async {
     var currentHash = await _appConfiguration.offlineHash;
     var sessionToken = await _appConfiguration.apiToken;
-    final newHash = _createsHash(password: password);
+    final newHash = _createsHash(password: password, email: email);
     final isCorrectPassword = currentHash.toString() == newHash.toString();
     if (isCorrectPassword) {
       var result =
@@ -90,9 +96,11 @@ class AuthenticationRepository implements IAuthenticationRepository {
   }
 
   _saveUserData(
-      {required SessionModel result, required String password}) async {
+      {required SessionModel result,
+      required EmailAddress email,
+      required SignInPassword password}) async {
     await _appConfiguration.saveApiToken(token: result.sessionToken);
-    final hash = _createsHash(password: password);
+    final hash = _createsHash(password: password, email: email);
     await _appConfiguration.saveHash(hash: hash);
   }
 
