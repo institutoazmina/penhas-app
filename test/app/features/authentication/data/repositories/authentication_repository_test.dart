@@ -7,6 +7,7 @@ import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/network/network_info.dart';
+import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:penhas/app/features/authentication/data/datasources/authentication_data_source.dart';
 import 'package:penhas/app/features/authentication/data/models/session_model.dart';
 import 'package:penhas/app/features/authentication/data/repositories/authentication_repository.dart';
@@ -25,6 +26,7 @@ void main() {
   late IAppConfiguration appConfiguration;
   late MockAuthenticationDataSource dataSource;
   late IAuthenticationRepository repository;
+  late ILocalStorage localStorage;
 
   setUp(() {
     email = EmailAddress('test@g.com');
@@ -32,6 +34,7 @@ void main() {
     networkInfo = MockNetworkInfo();
     appConfiguration = MockAppConfiguration();
     dataSource = MockAuthenticationDataSource();
+    localStorage = MockLocalStorage();
 
     repository = AuthenticationRepository(
       appConfiguration: appConfiguration,
@@ -201,6 +204,31 @@ void main() {
             expect(result, left(InternetConnectionFailure()));
           },
         );
+
+        test(
+          'cant login offline',
+          () async {
+            // arrange
+            _mockSignInErrorWith(exception: const ApiProviderException());
+
+            when(() => localStorage.get('br.com.penhas.offlineHash'))
+                .thenAnswer((_) async {
+              return;
+            });
+
+            when(() => appConfiguration.apiToken).thenAnswer(
+                (invocation) async => sessionModel.sessionToken as String);
+            // act
+            final result = await repository.signInOffline(
+              emailAddress: email,
+              password: password,
+            );
+
+            //assert
+            verify(() => networkInfo.isConnected).called(2);
+            expect(result, left(InternetConnectionFailure()));
+          },
+        );
       });
     });
   });
@@ -212,3 +240,5 @@ class MockAuthenticationDataSource extends Mock
 class MockAppConfiguration extends Mock implements IAppConfiguration {}
 
 class MockNetworkInfo extends Mock implements INetworkInfo {}
+
+class MockLocalStorage extends Mock implements ILocalStorage {}
