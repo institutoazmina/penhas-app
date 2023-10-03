@@ -169,16 +169,6 @@ void main() {
         const sessionToken = 'sessionToken';
         when(() => AuthenticationModulesMock.passwordValidator
             .validate(any(), any())).thenAnswer((_) => success(validPassword));
-        when(
-          () => AuthenticationModulesMock.authenticationRepository
-              .signInWithEmailAndPassword(
-            emailAddress: any(named: 'emailAddress'),
-            password: any(named: 'password'),
-          ),
-        ).thenSuccess((_) => const SessionEntity(
-              sessionToken: sessionToken,
-              deletedScheduled: true,
-            ));
 
         when(
           () => AuthenticationModulesMock.authenticateUserUseCase(
@@ -204,6 +194,38 @@ void main() {
               '/accountDeleted',
               arguments: sessionToken,
             )).called(1);
+      },
+    );
+
+    testWidgets(
+      'error trying redirect page',
+      (tester) async {
+        const sessionToken = 'sessionToken';
+        when(() => AuthenticationModulesMock.passwordValidator
+            .validate(any(), any())).thenAnswer((_) => success(validPassword));
+
+        when(
+          () => AuthenticationModulesMock.authenticateUserUseCase(
+              email: any(named: 'email'), password: any(named: 'password')),
+        ).thenSuccess((_) => const SessionEntity(
+              sessionToken: sessionToken,
+              deletedScheduled: false,
+            ));
+
+        when(() => AppModulesMock.appStateUseCase.check())
+            .thenFailure((i) => ServerFailure());
+
+        await theAppIsRunning(tester, const SignInPage());
+        await iEnterIntoSingleTextInput(tester,
+            text: 'E-mail', value: validEmail);
+        await iEnterIntoPasswordField(tester,
+            text: 'Senha', password: validPassword);
+        await iTapText(tester, text: 'Entrar');
+
+        verifyNever(() => AppModulesMock.modularNavigator.pushNamed(
+              '/accountDeleted',
+              arguments: sessionToken,
+            ));
       },
     );
 
