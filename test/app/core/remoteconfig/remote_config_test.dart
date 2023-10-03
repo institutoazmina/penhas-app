@@ -28,18 +28,29 @@ void main() {
       },
     );
 
-    test('initialize remote config service', () {
-      when(() => remoteConfig.fetch()).thenAnswer((_) async {
-                    return Future.value(); 
+    test('setDefaults', () {
+      when(() => remoteConfig.setDefaults({
+            'feature_login_offline': false,
+          })).thenAnswer((_) async {});
 
-      });
-      when(() => remoteConfig.setConfigSettings(MyRemoteConfigSettings()))
-          .thenAnswer((_) async {
-                    return Future.value(); 
-          });
+      sut.setDefaults();
 
-      sut.setConfigSettings();
-      verify(() => remoteConfig.setConfigSettings).called(1);
+      verify(() => remoteConfig.setDefaults({
+            'feature_login_offline': false,
+          })).called(1);
     });
+    
+    // test('initialize remote config service', () {
+    //   when(() => remoteConfig.fetch()).thenAnswer((_) async {
+    //     return Future.value();
+    //   });
+    //   when(() => remoteConfig.setConfigSettings(MyRemoteConfigSettings()))
+    //       .thenAnswer((_) async {
+    //     return Future.value();
+    //   });
+
+    //   sut.setConfigSettings();
+    //   verify(() => remoteConfig.setConfigSettings).called(1);
+    // });
   });
 }

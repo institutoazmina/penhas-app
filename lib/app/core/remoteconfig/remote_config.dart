@@ -40,7 +40,7 @@ class RemoteConfigService implements IRemoteConfigService {
   }
 
   Future<void> setDefaults() async {
-    await _remoteConfig.setDefaults(const {
+    await _remoteConfig.setDefaults({
       'feature_login_offline': false,
     });
   }
