@@ -71,7 +71,7 @@ void main() {
       verify(() => remoteConfig.activate()).called(1);
     });
 
-     test('fetch', () async {
+    test('fetch', () async {
       when(() => remoteConfig.setDefaults(any())).thenAnswer((_) async => {});
       when(() => remoteConfig.setConfigSettings(any()))
           .thenAnswer((_) async => {});
