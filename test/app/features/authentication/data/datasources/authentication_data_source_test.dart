@@ -149,6 +149,21 @@ void main() {
         ),
       );
     });
+
+    test('should return SessionModel when sign in with offline hash', () async {
+      // arrange
+      final jsonData =
+          await JsonUtil.getJson(from: 'authentication/login_success.json');
+      final sessionModel = SessionModel.fromJson(jsonData);
+
+      // act
+      final result = await dataSource.signInWithOfflineHash(
+        sessionToken: jsonData['session'],
+      );
+
+      // assert
+      expect(result, sessionModel);
+    });
   });
 }
 
