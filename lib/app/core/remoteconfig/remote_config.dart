@@ -12,15 +12,16 @@ class RemoteConfigService implements IRemoteConfigService {
   @override
   Future<void> initialize() async {
     try {
-      await setConfigSettings();
-      await activate();
-      fetch();
+      await _setDefaults();
+      await _setConfigSettings();
+      await _activate();
+      _fetch();
     } catch (e, stack) {
       logError(e, stack);
     }
   }
 
-  void fetch() async {
+  void _fetch() async {
     try {
       await _remoteConfig.fetch();
     } catch (e, stack) {
@@ -28,18 +29,18 @@ class RemoteConfigService implements IRemoteConfigService {
     }
   }
 
-  Future<void> setConfigSettings() async {
+  Future<void> _setConfigSettings() async {
     await _remoteConfig.setConfigSettings(RemoteConfigSettings(
       fetchTimeout: const Duration(minutes: 1),
       minimumFetchInterval: const Duration(hours: 1),
     ));
   }
 
-  Future<void> activate() async {
+  Future<void> _activate() async {
     await _remoteConfig.activate();
   }
 
-  Future<void> setDefaults() async {
+  Future<void> _setDefaults() async {
     await _remoteConfig.setDefaults({
       'feature_login_offline': false,
     });

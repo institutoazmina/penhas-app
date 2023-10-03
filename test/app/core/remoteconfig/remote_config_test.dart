@@ -32,34 +32,53 @@ void main() {
       },
     );
 
-    test('setDefaults', () {
+    test('setDefaults', () async {
       when(() => remoteConfig.setDefaults({
             'feature_login_offline': false,
           })).thenAnswer((_) async {});
 
-      sut.setDefaults();
+      await sut.initialize();
 
       verify(() => remoteConfig.setDefaults({
             'feature_login_offline': false,
           })).called(1);
     });
 
-    test('fetch', () {
-      when(() => remoteConfig.fetch()).thenAnswer((_) async {});
-
-      sut.fetch();
-      verify(() => remoteConfig.fetch()).called(1);
-    });
-
-    test('initialize', () {
+    test('activate', () async {
+      when(() => remoteConfig.setDefaults(any())).thenAnswer((_) async {});
       when(() => remoteConfig.setConfigSettings(any()))
           .thenAnswer((_) async {});
 
-      when(() => remoteConfig.activate()).thenAnswer((_) async {
-        return true;
-      });
-      when(() => remoteConfig.fetch()).thenAnswer((_) async {});
-      sut.initialize();
+      await sut.initialize();
+
+      final verifyResult =
+          verify(() => remoteConfig.setConfigSettings(captureAny()));
+      verifyResult.called(1);
+
+      var resultConfig = verifyResult.captured.last;
+      expect(resultConfig.fetchTimeout, const Duration(minutes: 1));
+      expect(resultConfig.minimumFetchInterval, const Duration(hours: 1));
+    });
+
+    test('activate', () async {
+      when(() => remoteConfig.setDefaults(any())).thenAnswer((_) async => {});
+      when(() => remoteConfig.setConfigSettings(any()))
+          .thenAnswer((_) async => {});
+
+      when(() => remoteConfig.activate()).thenAnswer((_) async => true);
+
+      await sut.initialize();
+      verify(() => remoteConfig.activate()).called(1);
+    });
+
+     test('fetch', () async {
+      when(() => remoteConfig.setDefaults(any())).thenAnswer((_) async => {});
+      when(() => remoteConfig.setConfigSettings(any()))
+          .thenAnswer((_) async => {});
+      when(() => remoteConfig.activate()).thenAnswer((_) async => true);
+      when(() => remoteConfig.fetch()).thenAnswer((_) async => {});
+
+      await sut.initialize();
       verify(() => remoteConfig.fetch()).called(1);
     });
   });
