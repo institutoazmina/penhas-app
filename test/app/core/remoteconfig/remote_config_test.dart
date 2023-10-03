@@ -10,6 +10,10 @@ class MyRemoteConfigSettings extends Fake implements RemoteConfigSettings {}
 void main() {
   late MockFirebaseRemoteConfig remoteConfig;
   late RemoteConfigService sut;
+  RemoteConfigSettings myRemoteConfigSettings = RemoteConfigSettings(
+    fetchTimeout: const Duration(minutes: 1),
+    minimumFetchInterval: const Duration(hours: 1),
+  );
 
   setUp(() {
     remoteConfig = MockFirebaseRemoteConfig();
@@ -19,7 +23,7 @@ void main() {
 
   group(RemoteConfigService, () {
     test(
-      'get bool values',
+      'getBool',
       () {
         const expected = false;
         when(() => remoteConfig.getBool('any_key')).thenReturn(expected);
@@ -39,18 +43,24 @@ void main() {
             'feature_login_offline': false,
           })).called(1);
     });
-    
-    // test('initialize remote config service', () {
-    //   when(() => remoteConfig.fetch()).thenAnswer((_) async {
-    //     return Future.value();
-    //   });
-    //   when(() => remoteConfig.setConfigSettings(MyRemoteConfigSettings()))
-    //       .thenAnswer((_) async {
-    //     return Future.value();
-    //   });
 
-    //   sut.setConfigSettings();
-    //   verify(() => remoteConfig.setConfigSettings).called(1);
-    // });
+    test('fetch', () {
+      when(() => remoteConfig.fetch()).thenAnswer((_) async {});
+
+      sut.fetch();
+      verify(() => remoteConfig.fetch()).called(1);
+    });
+
+    test('initialize', () {
+      when(() => remoteConfig.setConfigSettings(any()))
+          .thenAnswer((_) async {});
+
+      when(() => remoteConfig.activate()).thenAnswer((_) async {
+        return true;
+      });
+      when(() => remoteConfig.fetch()).thenAnswer((_) async {});
+      sut.initialize();
+      verify(() => remoteConfig.fetch()).called(1);
+    });
   });
 }
