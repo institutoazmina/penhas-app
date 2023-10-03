@@ -69,6 +69,23 @@ void main() {
     );
 
     test(
+      'catch error on `authorizationStatus`',
+      () async {
+        // arrange
+        when(() => localStorage.get(apiTokenKey)).thenAnswer((_) async {
+          throw ('Some error');
+        });
+
+        // act
+        final actualAuthorizationStatus =
+            await appConfiguration.authorizationStatus;
+
+        // assert
+        expect(actualAuthorizationStatus, AuthorizationStatus.anonymous);
+      },
+    );
+
+    test(
       'when app mode is null `appMode` should be default',
       () async {
         // arrange
