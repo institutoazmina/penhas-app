@@ -193,8 +193,9 @@ void main() {
               password: password,
             );
 
+            //assert
             verify(() => dataSource.signInWithOfflineHash(
-                sessionToken: sessionModel.sessionToken as String));
+                sessionToken: sessionModel.sessionToken as String)).called(1);
 
             verify(() => networkInfo.isConnected).called(2);
             expect(result, left(InternetConnectionFailure()));
