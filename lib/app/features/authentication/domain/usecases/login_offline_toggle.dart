@@ -2,10 +2,10 @@ import '../../../../core/remoteconfig/i_remote_config.dart';
 
 class LoginOfflineToggleFeature {
   LoginOfflineToggleFeature({
-    required IRemoteConfig remoteConfig,
+    required IRemoteConfigService remoteConfig,
   }) : _remoteConfig = remoteConfig;
 
-  final IRemoteConfig _remoteConfig;
+  final IRemoteConfigService _remoteConfig;
   static const String featureCode = 'feature_login_offline';
 
   bool get isEnabled => _isEnabled();

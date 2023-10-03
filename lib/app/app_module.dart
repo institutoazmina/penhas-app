@@ -1,4 +1,5 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -130,7 +131,8 @@ class AppModule extends Module {
             apiProvider: i.get<IApiProvider>(),
           ),
         ),
-        Bind.lazySingleton<IRemoteConfig>((i) => RemoteConfig())
+        Bind.lazySingleton<IRemoteConfigService>((i) =>
+            RemoteConfigService(remoteConfig: i.get<FirebaseRemoteConfig>()))
       ];
 
   @override

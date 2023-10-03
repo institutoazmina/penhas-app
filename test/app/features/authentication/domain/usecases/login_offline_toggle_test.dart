@@ -3,7 +3,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/remoteconfig/i_remote_config.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/login_offline_toggle.dart';
 
-class MockRemoteConfig extends Mock implements IRemoteConfig {}
+class MockRemoteConfig extends Mock implements IRemoteConfigService {}
 
 void main() {
   late MockRemoteConfig remoteConfig;
@@ -23,7 +23,8 @@ void main() {
       expect(result, true);
     });
     test('raises error and return false', () {
-       when(() => remoteConfig.getBool('feature_login_offline')).thenThrow(Error());
+      when(() => remoteConfig.getBool('feature_login_offline'))
+          .thenThrow(Error());
 
       final result = sut.isEnabled;
       expect(result, false);
