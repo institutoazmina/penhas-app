@@ -6,7 +6,7 @@ import '../../../appstate/data/model/quiz_session_model.dart';
 
 part 'escape_manual_remote.g.dart';
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class EscapeManualRemoteModel extends Equatable {
   const EscapeManualRemoteModel({
     required this.assistant,
@@ -28,9 +28,11 @@ class EscapeManualRemoteModel extends Equatable {
 
   @override
   List<Object?> get props => [assistant, tasks.toList(), removedTasks.toList()];
+
+  Map<String, dynamic> toJson() => _$EscapeManualRemoteModelToJson(this);
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class EscapeManualAssistantRemoteModel extends Equatable {
   const EscapeManualAssistantRemoteModel({
     required this.title,
@@ -54,9 +56,12 @@ class EscapeManualAssistantRemoteModel extends Equatable {
 
   @override
   List<Object?> get props => [title, subtitle, quizSession];
+
+  Map<String, Object?> toJson() =>
+      _$EscapeManualAssistantRemoteModelToJson(this);
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class EscapeManualTaskRemoteModel extends Equatable {
   const EscapeManualTaskRemoteModel({
     required this.id,
@@ -116,4 +121,6 @@ class EscapeManualTaskRemoteModel extends Equatable {
         userInputValue,
         updatedAt,
       ];
+
+  Map<String, Object?> toJson() => _$EscapeManualTaskRemoteModelToJson(this);
 }
