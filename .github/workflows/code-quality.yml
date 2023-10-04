@@ -2,13 +2,6 @@ on:
   push:
     branches: [ 'main' ]
   pull_request:
-    branches: [ 'main' ]
-    paths:
-      - '**.dart'
-      - '**/pubspec.*'
-      - '*.yaml'
-      - assets/**
-      - .fvm/fvm_config.json
 
 name: Code checks workflow
 
@@ -37,7 +30,6 @@ jobs:
           files_ignore: |
             **/*.g.dart
             **/*.freezed.dart
-            **/*.mocks.dart
 
       - id: added-and-modified-files
         name: Get all added and modified files
