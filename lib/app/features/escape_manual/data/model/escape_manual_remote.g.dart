@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'escape_manual.dart';
+part of 'escape_manual_remote.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 import '../../../../core/extension/json_serializer.dart';
 import '../../../appstate/data/model/quiz_session_model.dart';
 
-part 'escape_manual.g.dart';
+part 'escape_manual_remote.g.dart';
 
 @JsonSerializable(createToJson: false)
 class EscapeManualRemoteModel extends Equatable {

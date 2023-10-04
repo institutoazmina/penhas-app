@@ -34,11 +34,11 @@ class EscapeManualModule extends WidgetModule {
     ),
     Bind.factory<IEscapeManualRepository>(
       (i) => EscapeManualRepository(
-        datasource: i.get(),
+        remoteDatasource: i.get(),
       ),
     ),
-    Bind.factory<IEscapeManualDatasource>(
-      (i) => EscapeManualDatasource(
+    Bind.factory<IEscapeManualRemoteDatasource>(
+      (i) => EscapeManualRemoteDatasource(
         apiProvider: i.get(),
       ),
     ),
