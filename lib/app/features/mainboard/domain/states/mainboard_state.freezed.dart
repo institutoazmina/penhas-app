@@ -157,7 +157,7 @@ class _$_Chat with DiagnosticableTreeMixin implements _Chat {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'MainboardState.chat'));
+    properties.add(DiagnosticsProperty('type', 'MainboardState.chat'));
   }
 
   @override
@@ -289,7 +289,7 @@ class _$_Feed with DiagnosticableTreeMixin implements _Feed {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'MainboardState.feed'));
+    properties.add(DiagnosticsProperty('type', 'MainboardState.feed'));
   }
 
   @override
@@ -424,7 +424,7 @@ class _$_EscapeManual with DiagnosticableTreeMixin implements _EscapeManual {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'MainboardState.escapeManual'));
+    properties.add(DiagnosticsProperty('type', 'MainboardState.escapeManual'));
   }
 
   @override
@@ -556,7 +556,7 @@ class _$_Compose with DiagnosticableTreeMixin implements _Compose {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'MainboardState.compose'));
+    properties.add(DiagnosticsProperty('type', 'MainboardState.compose'));
   }
 
   @override
@@ -691,7 +691,7 @@ class _$_SupportPoint with DiagnosticableTreeMixin implements _SupportPoint {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'MainboardState.supportPoint'));
+    properties.add(DiagnosticsProperty('type', 'MainboardState.supportPoint'));
   }
 
   @override
@@ -825,7 +825,7 @@ class _$_HelpCenter with DiagnosticableTreeMixin implements _HelpCenter {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'MainboardState.helpCenter'));
+    properties.add(DiagnosticsProperty('type', 'MainboardState.helpCenter'));
   }
 
   @override

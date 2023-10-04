@@ -131,7 +131,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'GuardianState.initial'));
+    properties.add(DiagnosticsProperty('type', 'GuardianState.initial'));
   }
 
   @override

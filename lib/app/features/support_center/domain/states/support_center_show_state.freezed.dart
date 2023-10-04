@@ -133,7 +133,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'SupportCenterShowState.initial'));
+        .add(DiagnosticsProperty('type', 'SupportCenterShowState.initial'));
   }
 
   @override

@@ -121,7 +121,7 @@ class _$_OnlySupport with DiagnosticableTreeMixin implements _OnlySupport {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ChatMainSecurityState.onlySupport'));
+        .add(DiagnosticsProperty('type', 'ChatMainSecurityState.onlySupport'));
   }
 
   @override
@@ -234,9 +234,8 @@ class _$_SupportAndPrivate
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty(
-          'type', 'ChatMainSecurityState.supportAndPrivate'));
+    properties.add(
+        DiagnosticsProperty('type', 'ChatMainSecurityState.supportAndPrivate'));
   }
 
   @override

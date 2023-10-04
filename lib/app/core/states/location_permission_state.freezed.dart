@@ -149,7 +149,7 @@ class _$_Granted with DiagnosticableTreeMixin implements _Granted {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'LocationPermissionState.granted'));
+        .add(DiagnosticsProperty('type', 'LocationPermissionState.granted'));
   }
 
   @override
@@ -277,7 +277,7 @@ class _$_Denied with DiagnosticableTreeMixin implements _Denied {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'LocationPermissionState.denied'));
+        .add(DiagnosticsProperty('type', 'LocationPermissionState.denied'));
   }
 
   @override
@@ -408,9 +408,8 @@ class _$_PermanentlyDenied
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty(
-          'type', 'LocationPermissionState.permanentlyDenied'));
+    properties.add(DiagnosticsProperty(
+        'type', 'LocationPermissionState.permanentlyDenied'));
   }
 
   @override
@@ -540,7 +539,7 @@ class _$_Restricted with DiagnosticableTreeMixin implements _Restricted {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'LocationPermissionState.restricted'));
+        .add(DiagnosticsProperty('type', 'LocationPermissionState.restricted'));
   }
 
   @override
@@ -669,7 +668,7 @@ class _$_Undefined with DiagnosticableTreeMixin implements _Undefined {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'LocationPermissionState.undefined'));
+        .add(DiagnosticsProperty('type', 'LocationPermissionState.undefined'));
   }
 
   @override

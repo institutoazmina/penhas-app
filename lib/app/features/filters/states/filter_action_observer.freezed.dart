@@ -120,7 +120,7 @@ class _$_Reset with DiagnosticableTreeMixin implements _Reset {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'FilterActionObserver.reset'));
+    properties.add(DiagnosticsProperty('type', 'FilterActionObserver.reset'));
   }
 
   @override
