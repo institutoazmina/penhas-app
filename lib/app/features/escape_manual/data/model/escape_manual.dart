@@ -1,46 +1,82 @@
+import 'package:equatable/equatable.dart';
+
 import '../../../appstate/data/model/quiz_session_model.dart';
-import '../../domain/entity/escape_manual.dart';
 
-class EscapeManualModel extends EscapeManualEntity {
-  const EscapeManualModel({
-    required EscapeManualAssistantModel assistant,
-  }) : super(assistant: assistant);
+class EscapeManualRemoteModel extends Equatable {
+  const EscapeManualRemoteModel({
+    required this.assistant,
+    this.tasks = const [],
+    this.removedTasks = const [],
+  });
 
-  factory EscapeManualModel.fromJson(Map<String, dynamic> json) {
-    return EscapeManualModel(
-      assistant: EscapeManualAssistantModel.fromJson(json['mf_assistant']),
-    );
-  }
+  final EscapeManualAssistantRemoteModel assistant;
+
+  final Iterable<EscapeManualTaskRemoteModel> tasks;
+
+  final Iterable<String> removedTasks;
+
+  @override
+  List<Object?> get props => [assistant, tasks.toList(), removedTasks.toList()];
 }
 
-class EscapeManualAssistantModel extends EscapeManualAssistantEntity {
-  const EscapeManualAssistantModel({
-    required String explanation,
-    required EscapeManualAssistantActionModel action,
-  }) : super(
-          explanation: explanation,
-          action: action,
-        );
+class EscapeManualAssistantRemoteModel extends Equatable {
+  const EscapeManualAssistantRemoteModel({
+    required this.title,
+    required this.subtitle,
+    required this.quizSession,
+  });
 
-  factory EscapeManualAssistantModel.fromJson(Map<String, dynamic> json) {
-    return EscapeManualAssistantModel(
-      explanation: json['subtitle'],
-      action: EscapeManualAssistantActionModel.fromJson(json),
-    );
-  }
+  final String title;
+
+  final String? subtitle;
+
+  final QuizSessionModel quizSession;
+
+  @override
+  List<Object?> get props => [title, subtitle, quizSession];
 }
 
-class EscapeManualAssistantActionModel
-    extends EscapeManualAssistantActionEntity {
-  const EscapeManualAssistantActionModel({
-    required String text,
-    required QuizSessionModel quizSession,
-  }) : super(text: text, quizSession: quizSession);
+class EscapeManualTaskRemoteModel extends Equatable {
+  const EscapeManualTaskRemoteModel({
+    required this.id,
+    required this.type,
+    required this.group,
+    this.title,
+    required this.description,
+    this.isDone = false,
+    this.isEditable = false,
+    this.userInputValue,
+    required this.updatedAt,
+  });
 
-  factory EscapeManualAssistantActionModel.fromJson(Map<String, dynamic> json) {
-    return EscapeManualAssistantActionModel(
-      text: json['title'],
-      quizSession: QuizSessionModel.fromJson(json['quiz_session']),
-    );
-  }
+  final String id;
+
+  final String type;
+
+  final String group;
+
+  final String? title;
+
+  final String description;
+
+  final String? userInputValue;
+
+  final bool isEditable;
+
+  final bool isDone;
+
+  final DateTime updatedAt;
+
+  @override
+  List<Object?> get props => [
+        id,
+        type,
+        group,
+        title,
+        description,
+        isDone,
+        isEditable,
+        userInputValue,
+        updatedAt,
+      ];
 }
