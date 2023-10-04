@@ -1,5 +1,55 @@
 import 'package:penhas/app/features/appstate/data/model/quiz_session_model.dart';
 import 'package:penhas/app/features/escape_manual/data/model/escape_manual.dart';
+import 'package:penhas/app/features/escape_manual/domain/entity/escape_manual.dart';
+
+final escapeManualModelFixture = EscapeManualRemoteModel(
+  assistant: const EscapeManualAssistantRemoteModel(
+    title: 'text',
+    subtitle: 'explanation',
+    quizSession: QuizSessionModel(
+      sessionId: 'sessionId',
+    ),
+  ),
+  tasks: [
+    EscapeManualTaskRemoteModel(
+      id: 'id',
+      type: 'type',
+      group: 'group',
+      title: 'title',
+      description: 'description',
+      isEditable: true,
+      userInputValue: 'userInputValue',
+      updatedAt: DateTime.now(),
+    ),
+  ],
+);
+
+const escapeManualEntityFixture = EscapeManualEntity(
+  assistant: EscapeManualAssistantEntity(
+    explanation: 'explanation',
+    action: EscapeManualAssistantActionEntity(
+      text: 'text',
+      quizSession: QuizSessionModel(
+        sessionId: 'sessionId',
+      ),
+    ),
+  ),
+  sections: [
+    EscapeManualTasksSectionEntity(
+      title: 'group',
+      tasks: [
+        EscapeManualTaskEntity(
+          id: 'id',
+          type: 'type',
+          description: 'description',
+          isDone: false,
+          isEditable: true,
+          userInputValue: 'userInputValue',
+        ),
+      ],
+    ),
+  ],
+);
 
 final escapeManualRemoteModelFixture = EscapeManualRemoteModel(
   assistant: const EscapeManualAssistantRemoteModel(
