@@ -116,6 +116,11 @@ jobs:
           }
           EOF
 
+      - uses: stelynx/dart-full-coverage@v1.1.1
+        with:
+          package: egakcap
+          ignore: "*_state.dart, do_not_import_me.dart"
+
       - name: Run unit tests
         run: flutter test --timeout=1h --dart-define=isCI=true --coverage
 
