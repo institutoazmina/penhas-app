@@ -1,21 +1,24 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/appstate/data/model/quiz_session_model.dart';
-import 'package:penhas/app/features/escape_manual/data/datasource/escape_manual_datasource.dart';
+import 'package:penhas/app/features/escape_manual/data/datasource/impl/escape_manual_remote_datasource.dart';
 import 'package:penhas/app/features/escape_manual/data/model/escape_manual.dart';
 
 import '../../../../../utils/json_util.dart';
+import '../model/escape_manual_fixtures.dart';
 
 void main() {
   late IEscapeManualDatasource sut;
 
   late IApiProvider mockApiProvider;
 
+  setUpAll(() {
+    registerFallbackValue(_FakeEscapeManualRemoteModel());
+  });
+
   setUp(() {
-    mockApiProvider = MockApiProvider();
+    mockApiProvider = _MockApiProvider();
 
     sut = EscapeManualDatasource(
       apiProvider: mockApiProvider,
@@ -70,12 +73,12 @@ void main() {
           final result = await sut.start('MF1234');
 
           // assert
-          expect(result, right(expectedQuiz));
+          expect(result, expectedQuiz);
         },
       );
 
       test(
-        'should return left with failure when apiProvider post throws',
+        'should throws a exception when apiProvider post throws',
         () async {
           // arrange
           when(
@@ -85,12 +88,11 @@ void main() {
             ),
           ).thenThrow(Exception());
 
-          // act
-          final result = await sut.start('MF1234');
-
-          // assert
-          expect(result.isLeft(), isTrue);
-          expect(result.fold((l) => l, (r) => r), isA<Failure>());
+          // act // assert
+          expectLater(
+            () async => sut.start('MF1234'),
+            throwsA(isA<Exception>()),
+          );
         },
       );
     });
@@ -133,17 +135,8 @@ void main() {
           final response = JsonUtil.getStringSync(
             from: 'escape_manual/escape_manual_response.json',
           );
-          const expectedEscapeManual = EscapeManualModel(
-            assistant: EscapeManualAssistantModel(
-              explanation: 'Explanation',
-              action: EscapeManualAssistantActionModel(
-                text: 'action button',
-                quizSession: QuizSessionModel(
-                  sessionId: 'MF1234',
-                ),
-              ),
-            ),
-          );
+          final expectedEscapeManual = escapeManualRemoteModelFixture;
+
           when(
             () => mockApiProvider.get(
               path: any(named: 'path'),
@@ -155,12 +148,12 @@ void main() {
           final result = await sut.fetch();
 
           // assert
-          expect(result, right(expectedEscapeManual));
+          expect(result, equals(expectedEscapeManual));
         },
       );
 
       test(
-        'should return left with failure when apiProvider get throws',
+        'should throws a failure when apiProvider get throws',
         () async {
           // arrange
           when(
@@ -170,16 +163,18 @@ void main() {
             ),
           ).thenThrow(Exception());
 
-          // act
-          final result = await sut.fetch();
-
-          // assert
-          expect(result.isLeft(), isTrue);
-          expect(result.fold((l) => l, (r) => r), isA<Failure>());
+          // act // assert
+          expectLater(
+            sut.fetch,
+            throwsA(isA<Exception>()),
+          );
         },
       );
     });
   });
 }
 
-class MockApiProvider extends Mock implements IApiProvider {}
+class _MockApiProvider extends Mock implements IApiProvider {}
+
+class _FakeEscapeManualRemoteModel extends Fake
+    implements EscapeManualRemoteModel {}
