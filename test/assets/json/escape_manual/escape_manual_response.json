@@ -5,5 +5,62 @@
         "quiz_session": {
             "session_id": "MF1234"
         }
-    }
+    },
+    "tarefas": [
+        {
+            "agrupador": "Itens Básicos",
+            "atualizado_em": 1689701023,
+            "campo_livre": null,
+            "checkbox_feito": 0,
+            "descricao": "Organize uma mochila com roupas. Se achar que a mochila levantará suspeita, separe em sacolas plásticas algumas mudas de roupa. Você pode ir separando as peças de roupas no decorrer dos dias para não levantar suspeitas.",
+            "eh_customizada": 0,
+            "id": 71,
+            "tipo": "checkbox",
+            "titulo": ""
+        },
+        {
+            "agrupador": "Itens Básicos",
+            "atualizado_em": 1689701023,
+            "campo_livre": null,
+            "checkbox_feito": 0,
+            "descricao": "Ponha na mochila medicamentos básicos e de uso contínuo",
+            "eh_customizada": 0,
+            "id": 72,
+            "tipo": "checkbox",
+            "titulo": ""
+        },
+        {
+            "agrupador": "Passos para fuga",
+            "atualizado_em": 1689701023,
+            "campo_livre": null,
+            "checkbox_feito": 0,
+            "descricao": "Cadastre-se e/ou verifique se o seu Cadastro Único (CadÚnico) está ativo.",
+            "eh_customizada": 1,
+            "id": 73,
+            "tipo": "checkbox",
+            "titulo": ""
+        },
+        {
+            "agrupador": "Segurança pessoal",
+            "atualizado_em": 1689701025,
+            "campo_livre": null,
+            "checkbox_feito": 0,
+            "descricao": "Busque o Centro de Referência de Assistência Social (CRAS).",
+            "eh_customizada": 0,
+            "id": 75,
+            "tipo": "checkbox",
+            "titulo": ""
+        },
+        {
+            "agrupador": "Passos para fuga",
+            "atualizado_em": 1689701025,
+            "campo_livre": null,
+            "checkbox_feito": 0,
+            "descricao": "Leve ao CRAS toda documentação necessária, tanto sua, quanto das crianças, se houver.",
+            "eh_customizada": 0,
+            "id": 76,
+            "tipo": "checkbox",
+            "titulo": ""
+        }
+    ]
 }

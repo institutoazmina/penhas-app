@@ -5,12 +5,14 @@ import '../../../appstate/domain/entities/app_state_entity.dart';
 class EscapeManualEntity extends Equatable {
   const EscapeManualEntity({
     required this.assistant,
+    this.sections = const [],
   });
 
   final EscapeManualAssistantEntity assistant;
+  final List<EscapeManualTasksSectionEntity> sections;
 
   @override
-  List<Object?> get props => [assistant];
+  List<Object?> get props => [assistant, sections];
 }
 
 class EscapeManualAssistantEntity extends Equatable {
@@ -37,4 +39,45 @@ class EscapeManualAssistantActionEntity extends Equatable {
 
   @override
   List<Object?> get props => [text, quizSession];
+}
+
+class EscapeManualTasksSectionEntity extends Equatable {
+  const EscapeManualTasksSectionEntity({
+    required this.title,
+    required this.tasks,
+  });
+
+  final String title;
+  final List<EscapeManualTaskEntity> tasks;
+
+  @override
+  List<Object?> get props => [title, tasks];
+}
+
+class EscapeManualTaskEntity extends Equatable {
+  const EscapeManualTaskEntity({
+    required this.id,
+    required this.type,
+    required this.description,
+    required this.isEditable,
+    required this.userInputValue,
+    required this.isDone,
+  });
+
+  final String id;
+  final String type;
+  final String description;
+  final bool isEditable;
+  final String? userInputValue;
+  final bool isDone;
+
+  @override
+  List<Object?> get props => [
+        id,
+        type,
+        description,
+        isEditable,
+        userInputValue,
+        isDone,
+      ];
 }
