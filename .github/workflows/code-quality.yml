@@ -110,8 +110,8 @@ jobs:
 
       - uses: stelynx/dart-full-coverage@v1.1.1
         with:
-          package: egakcap
-          ignore: "*_state.dart, do_not_import_me.dart"
+          package: penhas
+          ignore: "*.freezed.dart,*.g.dart"
 
       - name: Run unit tests
         run: flutter test --timeout=1h --dart-define=isCI=true --coverage
