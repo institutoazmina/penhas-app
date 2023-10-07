@@ -8,9 +8,9 @@ part 'escape_manual_state.freezed.dart';
 class EscapeManualState with _$EscapeManualState {
   const factory EscapeManualState.initial() = _InitialState;
 
-  const factory EscapeManualState.loaded({
-    required EscapeManualEntity screen,
-  }) = _LoadedState;
+  const factory EscapeManualState.loaded(
+    EscapeManualEntity data,
+  ) = _LoadedState;
 
   const factory EscapeManualState.error(String message) = _ErrorState;
 }

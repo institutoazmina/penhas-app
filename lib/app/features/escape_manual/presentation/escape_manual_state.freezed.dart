@@ -21,9 +21,9 @@ class _$EscapeManualStateTearOff {
     return const _InitialState();
   }
 
-  _LoadedState loaded({required EscapeManualEntity screen}) {
+  _LoadedState loaded(EscapeManualEntity data) {
     return _LoadedState(
-      screen: screen,
+      data,
     );
   }
 
@@ -42,21 +42,21 @@ mixin _$EscapeManualState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(EscapeManualEntity screen) loaded,
+    required TResult Function(EscapeManualEntity data) loaded,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(EscapeManualEntity screen)? loaded,
+    TResult Function(EscapeManualEntity data)? loaded,
     TResult Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(EscapeManualEntity screen)? loaded,
+    TResult Function(EscapeManualEntity data)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -144,7 +144,7 @@ class _$_InitialState implements _InitialState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(EscapeManualEntity screen) loaded,
+    required TResult Function(EscapeManualEntity data) loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -154,7 +154,7 @@ class _$_InitialState implements _InitialState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(EscapeManualEntity screen)? loaded,
+    TResult Function(EscapeManualEntity data)? loaded,
     TResult Function(String message)? error,
   }) {
     return initial?.call();
@@ -164,7 +164,7 @@ class _$_InitialState implements _InitialState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(EscapeManualEntity screen)? loaded,
+    TResult Function(EscapeManualEntity data)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -218,7 +218,7 @@ abstract class _$LoadedStateCopyWith<$Res> {
   factory _$LoadedStateCopyWith(
           _LoadedState value, $Res Function(_LoadedState) then) =
       __$LoadedStateCopyWithImpl<$Res>;
-  $Res call({EscapeManualEntity screen});
+  $Res call({EscapeManualEntity data});
 }
 
 /// @nodoc
@@ -234,12 +234,12 @@ class __$LoadedStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? screen = freezed,
+    Object? data = freezed,
   }) {
     return _then(_LoadedState(
-      screen: screen == freezed
-          ? _value.screen
-          : screen // ignore: cast_nullable_to_non_nullable
+      data == freezed
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
               as EscapeManualEntity,
     ));
   }
@@ -248,14 +248,14 @@ class __$LoadedStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadedState implements _LoadedState {
-  const _$_LoadedState({required this.screen});
+  const _$_LoadedState(this.data);
 
   @override
-  final EscapeManualEntity screen;
+  final EscapeManualEntity data;
 
   @override
   String toString() {
-    return 'EscapeManualState.loaded(screen: $screen)';
+    return 'EscapeManualState.loaded(data: $data)';
   }
 
   @override
@@ -263,12 +263,12 @@ class _$_LoadedState implements _LoadedState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _LoadedState &&
-            const DeepCollectionEquality().equals(other.screen, screen));
+            const DeepCollectionEquality().equals(other.data, data));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(screen));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
 
   @JsonKey(ignore: true)
   @override
@@ -279,32 +279,32 @@ class _$_LoadedState implements _LoadedState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(EscapeManualEntity screen) loaded,
+    required TResult Function(EscapeManualEntity data) loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded(screen);
+    return loaded(data);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(EscapeManualEntity screen)? loaded,
+    TResult Function(EscapeManualEntity data)? loaded,
     TResult Function(String message)? error,
   }) {
-    return loaded?.call(screen);
+    return loaded?.call(data);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(EscapeManualEntity screen)? loaded,
+    TResult Function(EscapeManualEntity data)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(screen);
+      return loaded(data);
     }
     return orElse();
   }
@@ -345,10 +345,9 @@ class _$_LoadedState implements _LoadedState {
 }
 
 abstract class _LoadedState implements EscapeManualState {
-  const factory _LoadedState({required EscapeManualEntity screen}) =
-      _$_LoadedState;
+  const factory _LoadedState(EscapeManualEntity data) = _$_LoadedState;
 
-  EscapeManualEntity get screen;
+  EscapeManualEntity get data;
   @JsonKey(ignore: true)
   _$LoadedStateCopyWith<_LoadedState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -420,7 +419,7 @@ class _$_ErrorState implements _ErrorState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(EscapeManualEntity screen) loaded,
+    required TResult Function(EscapeManualEntity data) loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -430,7 +429,7 @@ class _$_ErrorState implements _ErrorState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(EscapeManualEntity screen)? loaded,
+    TResult Function(EscapeManualEntity data)? loaded,
     TResult Function(String message)? error,
   }) {
     return error?.call(message);
@@ -440,7 +439,7 @@ class _$_ErrorState implements _ErrorState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(EscapeManualEntity screen)? loaded,
+    TResult Function(EscapeManualEntity data)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
