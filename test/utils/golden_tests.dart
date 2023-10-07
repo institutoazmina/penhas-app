@@ -32,6 +32,7 @@ Future<void> screenshotTest(
   required String fileName,
   FutureOr<void> Function()? setUp,
   required Widget Function() pageBuilder,
+  PumpAction? pumpBeforeTest,
   List<Device>? devices,
   bool skip = false,
   List<String> tags = const ['golden'],
@@ -53,6 +54,7 @@ Future<void> screenshotTest(
     tags: tags,
     skip: skip,
     pumpBeforeTest: (tester) async {
+      await pumpBeforeTest?.call(tester);
       // first round of pre-caching for images that are available immediately
       await mockNetworkImages(() => precacheImages(tester));
       // this will allow all the UI to properly settle before caching images
