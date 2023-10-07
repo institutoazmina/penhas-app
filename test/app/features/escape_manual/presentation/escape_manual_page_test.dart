@@ -13,6 +13,8 @@ import 'package:penhas/app/features/escape_manual/presentation/escape_manual_pag
 import 'package:penhas/app/features/escape_manual/presentation/escape_manual_state.dart';
 
 import '../../../../utils/aditional_bind_module.dart';
+import '../../../../utils/golden_tests.dart';
+import '../../../../utils/widget_tester_ext.dart';
 
 void main() {
   enableWarnWhenNoObservables = false;
@@ -105,38 +107,6 @@ void main() {
     );
 
     testWidgets(
-      'should populate load state',
-      (tester) async {
-        // arrange
-        when(() => mockController.state).thenReturn(
-          const EscapeManualState.loaded(
-            screen: EscapeManualEntity(
-              assistant: EscapeManualAssistantEntity(
-                explanation: 'explanation',
-                action: EscapeManualAssistantActionEntity(
-                  text: 'button',
-                  quizSession: QuizSessionEntity(
-                    currentMessage: null,
-                    sessionId: 'session id',
-                    isFinished: false,
-                    endScreen: null,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-
-        // act
-        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
-
-        // assert
-        expect(find.text('explanation'), findsOneWidget);
-        expect(find.widgetWithText(OutlinedButton, 'button'), findsOneWidget);
-      },
-    );
-
-    testWidgets(
       'should call controller openAssistant when button is pressed',
       (tester) async {
         // arrange
@@ -152,7 +122,7 @@ void main() {
 
         when(() => mockController.state).thenAnswer(
           (_) => const EscapeManualState.loaded(
-            screen: EscapeManualEntity(
+            EscapeManualEntity(
               assistant: EscapeManualAssistantEntity(
                 explanation: 'explanation',
                 action: assistantAction,
@@ -174,21 +144,6 @@ void main() {
     );
 
     testWidgets(
-      'should show error message when state is error',
-      (tester) async {
-        // arrange
-        when(() => mockController.state)
-            .thenReturn(const EscapeManualState.error('error message'));
-
-        // act
-        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
-
-        // assert
-        expect(find.text('error message'), findsOneWidget);
-      },
-    );
-
-    testWidgets(
       'should show call controller load when state is error and button is pressed',
       (tester) async {
         // arrange
@@ -205,25 +160,68 @@ void main() {
       },
     );
 
-    testWidgets(
-      'should show call snackbar message when reaction is showSnackbar',
-      (tester) async {
-        // arrange
-        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
+    group('goldens', () {
+      screenshotTest(
+        'should populate load state',
+        fileName: 'escape_manual_page_loaded',
+        setUp: () {
+          when(() => mockController.state).thenReturn(
+            EscapeManualState.loaded(escapeManualEntity),
+          );
+        },
+        pageBuilder: () => const EscapeManualPage(),
+      );
 
-        final capturedOnReaction =
-            verify(() => mockController.onReaction(captureAny())).captured.last;
+      screenshotTest(
+        'should show tasks after open section',
+        fileName: 'escape_manual_page_sections',
+        setUp: () {
+          when(() => mockController.state).thenReturn(
+            EscapeManualState.loaded(escapeManualEntity),
+          );
+        },
+        pageBuilder: () => const EscapeManualPage(),
+        pumpBeforeTest: (tester) async {
+          await tester.tapAll(
+            find.widgetWithText(ExpansionTile, 'Section 1'),
+          );
+        },
+      );
 
-        // act
-        capturedOnReaction
-            .call(const EscapeManualReaction.showSnackbar('message'));
+      screenshotTest(
+        'should show error message when state is error',
+        fileName: 'escape_manual_page_error',
+        setUp: () {
+          when(() => mockController.state)
+              .thenReturn(const EscapeManualState.error('error message'));
+        },
+        pageBuilder: () => const EscapeManualPage(),
+      );
 
-        await tester.pump();
-
-        // assert
-        expect(find.text('message'), findsOneWidget);
-      },
-    );
+      screenshotTest(
+        'should show call snackbar message when reaction is showSnackbar',
+        fileName: 'escape_manual_page_reaction_error',
+        setUp: () {
+          when(() => mockController.state).thenReturn(
+            EscapeManualState.loaded(escapeManualEntity),
+          );
+          when(() => mockController.onReaction(any())).thenAnswer(
+            (invocation) {
+              final onReaction = invocation.positionalArguments[0];
+              final reaction = () async {
+                await Future.delayed(const Duration(microseconds: 1));
+                onReaction(
+                  const EscapeManualReaction.showSnackbar('error message'),
+                );
+              };
+              reaction();
+              return _MockReactionDisposer();
+            },
+          );
+        },
+        pageBuilder: () => const EscapeManualPage(),
+      );
+    });
   });
 }
 
@@ -231,3 +229,35 @@ class _MockEscapeManualController extends Mock
     implements EscapeManualController {}
 
 class _MockReactionDisposer extends Mock implements mobx.ReactionDisposer {}
+
+EscapeManualEntity get escapeManualEntity => EscapeManualEntity(
+      assistant: EscapeManualAssistantEntity(
+        explanation: 'Explanation text',
+        action: EscapeManualAssistantActionEntity(
+          text: 'Action text',
+          quizSession: QuizSessionEntity(
+            sessionId: 'session id',
+            currentMessage: null,
+            isFinished: false,
+            endScreen: null,
+          ),
+        ),
+      ),
+      sections: List.generate(
+        10,
+        (index) => EscapeManualTasksSectionEntity(
+          title: 'Section $index',
+          tasks: List.generate(
+            5,
+            (index) => EscapeManualTaskEntity(
+              id: '${index}',
+              type: 'checkbox',
+              description: 'Description $index',
+              isDone: index == 2,
+              isEditable: index == 4,
+              userInputValue: null,
+            ),
+          ),
+        ),
+      ),
+    );
