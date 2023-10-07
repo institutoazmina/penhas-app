@@ -75,8 +75,8 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
     return EscapeManualState.error(errorMessage);
   }
 
-  EscapeManualState _handleLoadSuccess(EscapeManualEntity screen) {
-    return EscapeManualState.loaded(screen: screen);
+  EscapeManualState _handleLoadSuccess(EscapeManualEntity data) {
+    return EscapeManualState.loaded(data);
   }
 
   void _handleOpenAssistant(QuizSessionEntity quizSession) {

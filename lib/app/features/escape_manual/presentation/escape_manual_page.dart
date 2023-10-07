@@ -53,8 +53,8 @@ class _EscapeManualPageState
           progressState: controller.progressState,
           child: controller.state.when(
             initial: () => _InitialStateWidget(),
-            loaded: (screen) => _LoadedStateWidget(
-              screen: screen,
+            loaded: (data) => _LoadedStateWidget(
+              escapeManual: data,
               openAssistantPressed: controller.openAssistant,
             ),
             error: (message) => _ErrorStateWidget(
@@ -91,17 +91,17 @@ class _ErrorStateWidget extends SupportCenterGeneralError {
 
 class _LoadedStateWidget extends StatelessWidget {
   const _LoadedStateWidget({
-    required this.screen,
+    required this.escapeManual,
     required this.openAssistantPressed,
   });
 
-  final EscapeManualEntity screen;
+  final EscapeManualEntity escapeManual;
   final OpenAssistantPressed openAssistantPressed;
 
   @override
   Widget build(BuildContext context) {
-    final assistant = screen.assistant;
-    final sections = screen.sections.toList();
+    final assistant = escapeManual.assistant;
+    final sections = escapeManual.sections.toList();
     final textTheme = Theme.of(context).textTheme;
 
     return SingleChildScrollView(

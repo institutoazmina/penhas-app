@@ -134,7 +134,7 @@ void main() {
           // assert
           expect(
             sut.state,
-            const EscapeManualState.loaded(screen: escapeManual),
+            const EscapeManualState.loaded(escapeManual),
           );
         },
       );
