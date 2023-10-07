@@ -29,7 +29,7 @@ void main() {
   });
 
   setUp(() {
-    mockController = EscapeManualControllerMock();
+    mockController = _MockEscapeManualController();
 
     when(() => mockController.load()).thenAnswer((_) => Future.value());
     when(() => mockController.state)
@@ -37,7 +37,7 @@ void main() {
     when(() => mockController.progressState)
         .thenReturn(PageProgressState.initial);
     when(() => mockController.onReaction(any()))
-        .thenAnswer((invocation) => ReactionDisposerMock());
+        .thenAnswer((invocation) => _MockReactionDisposer());
   });
 
   tearDownAll(() {
@@ -227,7 +227,7 @@ void main() {
   });
 }
 
-class EscapeManualControllerMock extends Mock
+class _MockEscapeManualController extends Mock
     implements EscapeManualController {}
 
-class ReactionDisposerMock extends Mock implements mobx.ReactionDisposer {}
+class _MockReactionDisposer extends Mock implements mobx.ReactionDisposer {}

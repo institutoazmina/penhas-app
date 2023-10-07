@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../shared/design_system/button_shape.dart';
@@ -67,7 +68,6 @@ class _EscapeManualPageState
   }
 
   void _onReaction(EscapeManualReaction? reaction) {
-    Modular.debugPrintModular('coisou: $reaction');
     reaction?.when(
       showSnackbar: (message) => showSnackBar(
         scaffoldKey: _scaffoldKey,
@@ -101,22 +101,28 @@ class _LoadedStateWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final assistant = screen.assistant;
+    final sections = screen.sections.toList();
+    final textTheme = Theme.of(context).textTheme;
 
-    var textTheme = Theme.of(context).textTheme;
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 40),
-        child: Column(
-          children: [
-            Text(
+      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 40),
+            child: Text(
               assistant.explanation,
               style: textTheme.bodyLarge?.copyWith(
                 fontSize: 16,
                 color: DesignSystemColors.darkIndigoThree,
               ),
             ),
-            const SizedBox(height: 16),
-            OutlinedButton(
+          ),
+          const SizedBox(height: 16),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 40),
+            child: OutlinedButton(
               onPressed: () {
                 openAssistantPressed(assistant.action);
               },
@@ -131,9 +137,77 @@ class _LoadedStateWidget extends StatelessWidget {
                 shape: kButtonShapeOutlineWhite,
               ),
             ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 16),
+          ListView.builder(
+            primary: false,
+            shrinkWrap: true,
+            itemCount: sections.length,
+            itemBuilder: (context, index) {
+              final section = sections[index];
+              return _SectionTasksWidget(section);
+            },
+          ),
+        ],
       ),
     );
+  }
+}
+
+class _SectionTasksWidget extends StatelessWidget {
+  const _SectionTasksWidget(this.section);
+
+  final EscapeManualTasksSectionEntity section;
+
+  @override
+  Widget build(BuildContext context) {
+    return ExpansionTile(
+      childrenPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
+      title: Text(
+        section.title,
+        textAlign: TextAlign.start,
+      ),
+      children: section.tasks
+          .map((task) => _TaskWidget(task, key: Key('task-${task.id}')))
+          .toList(),
+    );
+  }
+}
+
+class _TaskWidget extends StatefulWidget {
+  const _TaskWidget(this.task, {Key? key}) : super(key: key);
+
+  final EscapeManualTaskEntity task;
+
+  @override
+  State<_TaskWidget> createState() => _TaskWidgetState();
+}
+
+class _TaskWidgetState
+    extends ModularState<_TaskWidget, EscapeManualController> {
+  EscapeManualTaskEntity get task => widget.task;
+
+  late bool isChecked = task.isDone;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTileTheme(
+      horizontalTitleGap: 4,
+      child: CheckboxListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        title: HtmlWidget(task.description),
+        value: isChecked,
+        controlAffinity: ListTileControlAffinity.leading,
+        onChanged: _onChanged,
+      ),
+    );
+  }
+
+  void _onChanged(bool? value) {
+    final isDone = value ?? false;
+
+    setState(() {
+      isChecked = isDone;
+    });
   }
 }
