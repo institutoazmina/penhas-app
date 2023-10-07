@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:meta/meta.dart';
 import 'package:mocktail_image_network/mocktail_image_network.dart';
-import 'package:penhas/app/shared/design_system/theme.dart';
 
 import 'durations.dart';
 import 'golden_test_widget_app.dart';
@@ -89,12 +88,7 @@ Future<void> widgetScreenshotTest(
 
       return DefaultAssetBundle(
         bundle: TestAssetBundle(),
-        child: Builder(
-          builder: (context) => Theme(
-            data: AppTheme.of(context),
-            child: Builder(builder: widgetBuilder),
-          ),
-        ),
+        child: Builder(builder: widgetBuilder),
       );
     },
     pumpBeforeTest: (tester) async {
