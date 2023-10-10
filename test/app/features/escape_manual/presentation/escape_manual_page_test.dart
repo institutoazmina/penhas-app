@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:mobx/mobx.dart' as mobx;
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
@@ -189,6 +190,31 @@ void main() {
       );
 
       screenshotTest(
+        'should check task with opened section',
+        fileName: 'escape_manual_page_task_check',
+        setUp: () {
+          when(() => mockController.state).thenReturn(
+            EscapeManualState.loaded(escapeManualEntity),
+          );
+        },
+        pageBuilder: () => const EscapeManualPage(),
+        pumpBeforeTest: (tester) async {
+          await tester.tapAll(
+            find.widgetWithText(ExpansionTile, 'Section 1'),
+          );
+          await tester.pumpAndSettle();
+          await tester.tapAll(
+            find.byWidgetPredicate((widget) =>
+            widget is CheckboxListTile &&
+                (widget.title as HtmlWidget?)
+                    ?.html
+                    .contains('Task #1 of section 1') ==
+                    true),
+          );
+        },
+      );
+
+      screenshotTest(
         'should show error message when state is error',
         fileName: 'escape_manual_page_error',
         setUp: () {
@@ -245,16 +271,16 @@ EscapeManualEntity get escapeManualEntity => EscapeManualEntity(
       ),
       sections: List.generate(
         10,
-        (index) => EscapeManualTasksSectionEntity(
-          title: 'Section $index',
+        (section) => EscapeManualTasksSectionEntity(
+          title: 'Section $section',
           tasks: List.generate(
             5,
-            (index) => EscapeManualTaskEntity(
-              id: '${index}',
+            (task) => EscapeManualTaskEntity(
+              id: '${task}',
               type: 'checkbox',
-              description: 'Description $index',
-              isDone: index == 2,
-              isEditable: index == 4,
+              description: 'Task #${task} of section ${section}',
+              isDone: task == 2,
+              isEditable: task == 4,
               userInputValue: null,
             ),
           ),
