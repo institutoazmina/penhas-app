@@ -205,10 +205,10 @@ void main() {
           await tester.pumpAndSettle();
           await tester.tapAll(
             find.byWidgetPredicate((widget) =>
-            widget is CheckboxListTile &&
+                widget is CheckboxListTile &&
                 (widget.title as HtmlWidget?)
-                    ?.html
-                    .contains('Task #1 of section 1') ==
+                        ?.html
+                        .contains('Task #1 of section 1') ==
                     true),
           );
         },
