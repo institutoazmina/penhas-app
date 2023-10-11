@@ -41,7 +41,7 @@ void main() {
               .thenAnswer((_) async => escapeManual);
 
           // act
-          await sut.fetch();
+          await sut.fetch().drain();
 
           // assert
           verify(() => mockRemoteDatasource.fetch()).called(1);
@@ -58,11 +58,11 @@ void main() {
           when(() => mockRemoteDatasource.fetch())
               .thenAnswer((_) async => escapeManualModel);
 
-          // act
-          final result = await sut.fetch();
-
-          // assert
-          expect(result, right(expectedEscapeManual));
+          // act / assert
+          expectLater(
+            sut.fetch(),
+            emits(expectedEscapeManual),
+          );
         },
       );
 
@@ -72,12 +72,11 @@ void main() {
           // arrange
           when(() => mockRemoteDatasource.fetch()).thenThrow(Exception());
 
-          // act
-          final result = await sut.fetch();
-
-          // assert
-          expect(result.isLeft(), isTrue);
-          expect(result.fold(id, id), isA<Failure>());
+          // act / assert
+          expectLater(
+            sut.fetch(),
+            emitsError(isA<ServerFailure>()),
+          );
         },
       );
     });

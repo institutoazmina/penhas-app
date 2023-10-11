@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
@@ -41,17 +43,30 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
   @observable
   ObservableFuture? _pageProgress;
 
-  late ObservableFuture<Either<Failure, EscapeManualEntity>> _loadProgress;
+  StreamSubscription? _subscription;
+
+  ObservableStream<EscapeManualEntity>? _loadProgress;
   late ObservableFuture<Either<Failure, QuizSessionEntity>> _startProgress;
 
   @action
   Future<void> load() async {
-    if (progressState == PageProgressState.loading) return;
+    if (progressState == PageProgressState.loading ||
+        _loadProgress.state == PageProgressState.loading) return;
 
-    _pageProgress = _loadProgress = ObservableFuture(_getEscapeManual());
-    final result = await _loadProgress;
+    _subscription?.cancel();
 
-    state = result.fold(_handleLoadFailure, _handleLoadSuccess);
+    _loadProgress = ObservableStream(
+      _getEscapeManual(),
+      cancelOnError: true,
+    ).asBroadcastStream();
+
+    _pageProgress = _loadProgress?.first;
+
+    _subscription = _loadProgress?.listen(
+      (el) => state = _handleLoadSuccess(el),
+      onError: (e) => state = _handleLoadFailure(e),
+      cancelOnError: true,
+    );
   }
 
   @action
@@ -68,6 +83,12 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
 
   ReactionDisposer onReaction(OnEscapeManualReaction fn) {
     return reaction((_) => _reaction, fn);
+  }
+
+  Future<void> dispose() async {
+    await _subscription?.cancel();
+    _loadProgress?.close();
+    _subscription = null;
   }
 
   EscapeManualState _handleLoadFailure(Failure failure) {

@@ -1,9 +1,7 @@
 import 'dart:async';
 
-import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/escape_manual/domain/entity/escape_manual.dart';
 import 'package:penhas/app/features/escape_manual/domain/get_escape_manual.dart';
@@ -27,9 +25,9 @@ void main() {
       'should call repository fetch',
       () async {
         // arrange
-        final completer = Completer<Either<Failure, EscapeManualEntity>>();
+        final completer = Completer<EscapeManualEntity>();
         when(() => mockEscapeManualRepository.fetch())
-            .thenAnswer((_) async => completer.future);
+            .thenAnswer((_) => Stream.fromFuture(completer.future));
 
         // act
         sut();
@@ -59,13 +57,13 @@ void main() {
         );
 
         when(() => mockEscapeManualRepository.fetch())
-            .thenAnswer((_) async => right(escapeManual));
+            .thenAnswer((_) => Stream.value(escapeManual));
 
-        // act
-        final result = await sut();
-
-        // assert
-        expect(result, right(escapeManual));
+        // act / assert
+        expectLater(
+          sut(),
+          emits(escapeManual),
+        );
       },
     );
   });
