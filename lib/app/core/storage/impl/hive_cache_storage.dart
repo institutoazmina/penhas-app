@@ -13,18 +13,20 @@ class HiveCacheStorage extends ICacheStorage with HiveStorage {
   HiveCacheStorage({
     String name = cacheBoxName,
     required ILocalStorage encryptionKeyStorage,
+    HiveInterface? hive,
     Box? box,
   })  : _name = name,
         _encryptionKeyStorage = encryptionKeyStorage,
+        _hive = hive ?? Hive,
         _box = box;
 
   final String _name;
   final ILocalStorage _encryptionKeyStorage;
-
+  final HiveInterface _hive;
   Box? _box;
 
   @override
-  Future<Box> get box async => _box ??= await Hive.openSecureBox(
+  Future<Box> get box async => _box ??= await _hive.openSecureBox(
         _name,
         encryptionKeyStorage: _encryptionKeyStorage,
         path: (await getTemporaryDirectory()).path,

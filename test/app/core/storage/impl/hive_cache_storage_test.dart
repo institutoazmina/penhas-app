@@ -1,9 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
+import 'package:penhas/app/core/extension/hive.dart';
 import 'package:penhas/app/core/storage/cache_storage.dart';
 import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:penhas/app/core/storage/impl/hive_cache_storage.dart';
+import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 void main() {
   group(HiveCacheStorage, () {
@@ -11,16 +13,52 @@ void main() {
 
     late ILocalStorage mockLocalStorage;
     late Box mockBox;
+    late HiveInterface mockHive;
 
     setUp(() {
+      PathProviderPlatform.instance = _MockPathProviderPlatform();
       mockLocalStorage = _MockLocalStorage();
       mockBox = _MockBox();
+      mockHive = _MockHive();
 
       sut = HiveCacheStorage(
         encryptionKeyStorage: mockLocalStorage,
-        box: mockBox,
+        hive: mockHive,
       );
+
+      when(() => mockLocalStorage.get(any())).thenAnswer(
+        (_) async => 'Hki-NPifsJbbCGou0I9Z8VNyo3RKlFwP_LHnWBAu1NY=',
+      );
+
+      when(
+        () => mockHive.openBox(
+          any(),
+          path: any(named: 'path'),
+          encryptionCipher: any(named: 'encryptionCipher'),
+        ),
+      ).thenAnswer((_) async => mockBox);
     });
+
+    test(
+      'should not open box if it already exists',
+      () async {
+        // arrange
+        final sut = HiveCacheStorage(
+          encryptionKeyStorage: mockLocalStorage,
+          box: _MockBox(),
+        );
+
+        // act
+        await sut.box;
+
+        // assert
+        verifyNever(() => mockHive.openBox(
+              any(),
+              path: any(named: 'path'),
+              encryptionCipher: any(named: 'encryptionCipher'),
+            ));
+      },
+    );
 
     test(
       'get should call box.get',
@@ -104,3 +142,12 @@ void main() {
 class _MockLocalStorage extends Mock implements ILocalStorage {}
 
 class _MockBox extends Mock implements Box {}
+
+class _MockHive extends Mock implements HiveInterface {}
+
+class _MockPathProviderPlatform extends Mock
+    with MockPlatformInterfaceMixin
+    implements PathProviderPlatform {
+  @override
+  Future<String?> getTemporaryPath() async => '/tmp';
+}
