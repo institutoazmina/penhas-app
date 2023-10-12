@@ -69,7 +69,7 @@ EscapeManualTaskRemoteModel _$EscapeManualTaskRemoteModelFromJson(
       isEditable: json['eh_customizada'] == null
           ? false
           : const JsonBoolConverter().fromJson(json['eh_customizada']),
-      userInputValue: json['campo_livre'] as String?,
+      userInputValue: json['campo_livre'],
       updatedAt: const JsonSecondsFromEpochConverter()
           .fromJson(json['atualizado_em'] as int),
     );

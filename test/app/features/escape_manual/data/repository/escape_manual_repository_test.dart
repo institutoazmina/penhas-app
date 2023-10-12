@@ -28,7 +28,7 @@ void main() {
         'should call datasource fetch',
         () async {
           // arrange
-          const escapeManual = EscapeManualRemoteModel(
+          final escapeManual = EscapeManualRemoteModel(
             assistant: EscapeManualAssistantRemoteModel(
               title: 'text',
               subtitle: 'explanation',
