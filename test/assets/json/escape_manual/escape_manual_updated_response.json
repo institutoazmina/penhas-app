@@ -1,0 +1,36 @@
+{
+    "mf_assistant": {
+        "subtitle": "New explanation",
+        "title": "new action button",
+        "quiz_session": {
+            "session_id": "session id"
+        }
+    },
+    "tarefas": [
+        {
+            "agrupador": "Itens Básicos",
+            "atualizado_em": 1696116772,
+            "campo_livre": null,
+            "checkbox_feito": 1,
+            "descricao": "Ponha na mochila medicamentos básicos e de uso contínuo",
+            "eh_customizada": 0,
+            "id": 72,
+            "tipo": "checkbox",
+            "titulo": ""
+        },
+        {
+            "agrupador": "Passos para fuga",
+            "atualizado_em": 1696116772,
+            "campo_livre": "campo livre",
+            "checkbox_feito": 0,
+            "descricao": "Cadastre-se e/ou verifique se o seu Cadastro Único (CadÚnico) está ativo.",
+            "eh_customizada": 1,
+            "id": 73,
+            "tipo": "checkbox",
+            "titulo": ""
+        }
+    ],
+    "tarefas_removidas": [
+        71
+    ]
+}
