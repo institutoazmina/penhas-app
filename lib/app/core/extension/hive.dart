@@ -43,10 +43,9 @@ extension _EncryptionKeyStorage on ILocalStorage {
 
   Future<List<int>> create(HiveInterface hive) async {
     final encryptionKeyUint8List = hive.generateSecureKey();
-    await put(
-      hiveKey,
-      base64UrlEncode(encryptionKeyUint8List),
-    );
+    final encryptionKeyString = base64Url.encode(encryptionKeyUint8List);
+
+    await put(hiveKey, encryptionKeyString);
 
     return encryptionKeyUint8List;
   }
