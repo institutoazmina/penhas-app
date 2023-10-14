@@ -3,13 +3,13 @@ import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/features/appstate/data/model/quiz_session_model.dart';
 import 'package:penhas/app/features/escape_manual/data/datasource/impl/escape_manual_remote_datasource.dart';
-import 'package:penhas/app/features/escape_manual/data/model/escape_manual.dart';
+import 'package:penhas/app/features/escape_manual/data/model/escape_manual_remote.dart';
 
-import '../../../../../utils/json_util.dart';
-import '../model/escape_manual_fixtures.dart';
+import '../../../../../../utils/json_util.dart';
+import '../../model/escape_manual_fixtures.dart';
 
 void main() {
-  late IEscapeManualDatasource sut;
+  late IEscapeManualRemoteDatasource sut;
 
   late IApiProvider mockApiProvider;
 
@@ -20,12 +20,12 @@ void main() {
   setUp(() {
     mockApiProvider = _MockApiProvider();
 
-    sut = EscapeManualDatasource(
+    sut = EscapeManualRemoteDatasource(
       apiProvider: mockApiProvider,
     );
   });
 
-  group(EscapeManualDatasource, () {
+  group(EscapeManualRemoteDatasource, () {
     group('start', () {
       test(
         'should call apiProvider post',

@@ -16,15 +16,15 @@ export '../../domain/repository/escape_manual_repository.dart'
 
 class EscapeManualRepository implements IEscapeManualRepository {
   EscapeManualRepository({
-    required IEscapeManualDatasource datasource,
-  }) : _datasource = datasource;
+    required IEscapeManualRemoteDatasource remoteDatasource,
+  }) : _remoteDatasource = remoteDatasource;
 
-  final IEscapeManualDatasource _datasource;
+  final IEscapeManualRemoteDatasource _remoteDatasource;
 
   @override
   Future<Either<Failure, QuizSessionEntity>> start(String sessionId) async {
     try {
-      final quizSession = await _datasource.start(sessionId);
+      final quizSession = await _remoteDatasource.start(sessionId);
       return right(quizSession);
     } catch (error, stack) {
       logError(error, stack);
@@ -35,7 +35,7 @@ class EscapeManualRepository implements IEscapeManualRepository {
   @override
   Future<Either<Failure, EscapeManualEntity>> fetch() async {
     try {
-      final response = await _datasource.fetch();
+      final response = await _remoteDatasource.fetch();
 
       return right(response.asEntity);
     } catch (error, stack) {

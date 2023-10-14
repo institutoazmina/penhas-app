@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import '../../../../../core/network/api_client.dart';
 import '../../../../appstate/data/model/quiz_session_model.dart';
-import '../../model/escape_manual.dart';
+import '../../model/escape_manual_remote.dart';
 import '../escape_manual_datasource.dart';
 
-export '../escape_manual_datasource.dart' show IEscapeManualDatasource;
+export '../escape_manual_datasource.dart' show IEscapeManualRemoteDatasource;
 
-class EscapeManualDatasource implements IEscapeManualDatasource {
-  EscapeManualDatasource({
+class EscapeManualRemoteDatasource implements IEscapeManualRemoteDatasource {
+  EscapeManualRemoteDatasource({
     required IApiProvider apiProvider,
   }) : _apiProvider = apiProvider;
 

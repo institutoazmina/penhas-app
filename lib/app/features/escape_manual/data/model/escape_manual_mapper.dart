@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 
 import '../../domain/entity/escape_manual.dart';
-import 'escape_manual.dart';
+import 'escape_manual_remote.dart';
 
 extension EscapeManualRemoteMapper on EscapeManualRemoteModel {
   /// Maps a [EscapeManualRemoteModel] to a [EscapeManualEntity].

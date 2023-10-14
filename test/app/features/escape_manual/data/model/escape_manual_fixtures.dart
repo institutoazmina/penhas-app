@@ -1,5 +1,5 @@
 import 'package:penhas/app/features/appstate/data/model/quiz_session_model.dart';
-import 'package:penhas/app/features/escape_manual/data/model/escape_manual.dart';
+import 'package:penhas/app/features/escape_manual/data/model/escape_manual_remote.dart';
 import 'package:penhas/app/features/escape_manual/domain/entity/escape_manual.dart';
 
 final escapeManualModelFixture = EscapeManualRemoteModel(
