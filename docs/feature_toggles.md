@@ -14,8 +14,5 @@ Mais informações:
 
 - [Feature Toggles (aka Feature Flags)](https://martinfowler.com/articles/feature-toggles.html)
 - [Firebase Remote Config loading Strategies](https://firebase.google.com/docs/remote-config/loading)
-- [
-Entender a Configuração remota em tempo real
-](https://firebase.google.com/docs/remote-config/real-time?hl=pt-br)
-- [Introdução à Configuração remota do Firebase
-](https://firebase.google.com/docs/remote-config/get-started?hl=pt-br)
+- [Entender a Configuração remota em tempo real](https://firebase.google.com/docs/remote-config/real-time?hl=pt-br)
+- [Introdução à Configuração remota do Firebase](https://firebase.google.com/docs/remote-config/get-started?hl=pt-br)
