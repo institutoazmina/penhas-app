@@ -113,7 +113,7 @@ dev_dependencies:
       url: https://github.com/ride4sun/flutter_launcher_name
       ref: "cd516a8e7483bfc7971ec9ac8f2d589e68247441"
   freezed: ^1.1.0
-  mobx_codegen: 2.0.4
+  mobx_codegen: ^2.0.4
   lint: ^1.8.1
   mocktail: ^0.3.0
   mocktail_image_network: ^0.3.1
