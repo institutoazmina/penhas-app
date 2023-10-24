@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:mobx/mobx.dart';
 
@@ -140,7 +141,8 @@ class _LoadedStateWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          ListView.builder(
+          const _TaskDivider(),
+          ListView.separated(
             primary: false,
             shrinkWrap: true,
             itemCount: sections.length,
@@ -148,7 +150,9 @@ class _LoadedStateWidget extends StatelessWidget {
               final section = sections[index];
               return _SectionTasksWidget(section);
             },
+            separatorBuilder: (context, index) => const _TaskDivider(),
           ),
+          const _TaskDivider(),
         ],
       ),
     );
@@ -179,13 +183,17 @@ class _SectionTasksWidget extends StatelessWidget {
           ),
           Text(
             '$qtyDoneTasks/${section.tasks.length}',
-            style: Theme.of(context).textTheme.caption,
+            style: Theme.of(context).textTheme.caption?.copyWith(
+                  color: DesignSystemColors.brownishGrey,
+                ),
           ),
         ],
       ),
-      children: section.tasks
-          .map((task) => _TaskWidget(task, key: Key('task-${task.id}')))
-          .toList(),
+      children: [
+        const _TaskDivider(),
+        ...section.tasks
+            .map((task) => _TaskWidget(task, key: Key('task-${task.id}'))),
+      ].toList(),
     );
   }
 }
@@ -207,21 +215,32 @@ class _TaskWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return ListTileTheme(
       horizontalTitleGap: 4,
       child: CheckboxListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        title: HtmlWidget(task.description),
+        title: HtmlWidget(
+          task.description,
+          textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                fontSize: 16,
+                color: DesignSystemColors.darkIndigoThree,
+              ),
+        ),
         value: isChecked,
         controlAffinity: ListTileControlAffinity.leading,
         onChanged: _onChanged,
         secondary: PopupMenuButton(
           icon: const Icon(Icons.more_vert),
           offset: const Offset(0, 40),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
           itemBuilder: (context) => [
             _TaskActionWidget(
-              icon: Icons.delete,
               text: 'Apagar',
+              icon: 'assets/images/svg/actions/delete.svg',
+              size: theme.iconTheme.size,
               onTap: () => controller.deleteTask(task),
             ),
           ],
@@ -242,18 +261,38 @@ class _TaskWidgetState
 
 class _TaskActionWidget extends PopupMenuItem {
   _TaskActionWidget({
-    required IconData icon,
+    required String icon,
     required String text,
     required VoidCallback onTap,
+    double? size,
   }) : super(
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, size: 18),
+              SvgPicture.asset(
+                icon,
+                color: DesignSystemColors.darkIndigoThree,
+                height: size,
+                width: size,
+              ),
               const SizedBox(width: 8),
-              Text(text),
+              Text(
+                text,
+                style: const TextStyle(
+                  fontSize: 18,
+                  color: DesignSystemColors.darkIndigoThree,
+                ),
+              ),
             ],
           ),
           onTap: onTap,
+        );
+}
+
+class _TaskDivider extends Divider {
+  const _TaskDivider()
+      : super(
+          height: 1,
+          color: DesignSystemColors.blueyGrey,
         );
 }

@@ -241,7 +241,7 @@ void main() {
               final reaction = () async {
                 await Future.delayed(const Duration(microseconds: 1));
                 onReaction(
-                  const EscapeManualReaction.showSnackbar('error message'),
+                  const EscapeManualReaction.showSnackBar('error message'),
                 );
               };
               reaction();
