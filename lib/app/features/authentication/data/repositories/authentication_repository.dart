@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
+import 'package:crypt/crypt.dart';
 import 'package:dartz/dartz.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
@@ -72,11 +73,10 @@ class AuthenticationRepository implements IAuthenticationRepository {
     }
   }
 
-  String _createsHash(
+  Crypt _createsHash(
       {required EmailAddress email, required SignInPassword password}) {
-    var bytes = utf8.encode(password.toString() + email.toString());
-    var digest = sha256.convert(bytes);
-    return digest.toString();
+    final hash = Crypt.sha256(password, salt: email);
+    return hash;
   }
 
   Future<SessionModel?> _loginOffline({
@@ -86,7 +86,7 @@ class AuthenticationRepository implements IAuthenticationRepository {
     var currentHash = await _appConfiguration.offlineHash;
     var sessionToken = await _appConfiguration.apiToken;
     final newHash = _createsHash(password: password, email: email);
-    final isCorrectPassword = currentHash.toString() == newHash.toString();
+    final isCorrectPassword = currentHash == newHash;
     if (isCorrectPassword) {
       var result =
           _dataSource.signInWithOfflineHash(sessionToken: sessionToken);
@@ -101,7 +101,7 @@ class AuthenticationRepository implements IAuthenticationRepository {
       required SignInPassword password}) async {
     await _appConfiguration.saveApiToken(token: result.sessionToken);
     final hash = _createsHash(password: password, email: email);
-    await _appConfiguration.saveHash(hash: hash);
+    await _appConfiguration.saveHash(hash: hash.toString());
   }
 
   Future<Either<Failure, SessionEntity>> _handleError(Object error) async {
