@@ -13,13 +13,19 @@ void main() {
   late IEscapeManualRepository sut;
 
   late IEscapeManualRemoteDatasource mockRemoteDatasource;
+  late IEscapeManualLocalDatasource mockLocalDatasource;
 
   setUp(() {
     mockRemoteDatasource = _MockEscapeManualRemoteDatasource();
+    mockLocalDatasource = _MockEscapeManualLocalDatasource();
 
     sut = EscapeManualRepository(
+      localDatasource: mockLocalDatasource,
       remoteDatasource: mockRemoteDatasource,
     );
+
+    when(() => mockLocalDatasource.clearBefore(any()))
+        .thenAnswer((_) => Future.value());
   });
 
   group(EscapeManualRepository, () {
@@ -39,6 +45,8 @@ void main() {
           );
           when(() => mockRemoteDatasource.fetch())
               .thenAnswer((_) async => escapeManual);
+          when(() => mockLocalDatasource.fetchTasks())
+              .thenAnswer((_) => Stream.value([]));
 
           // act
           await sut.fetch().drain();
@@ -49,14 +57,37 @@ void main() {
       );
 
       test(
-        'should return datasource fetch',
+        'should return remote datasource result when local datasource is empty',
         () async {
           // arrange
           final escapeManualModel = escapeManualModelFixture;
-          const expectedEscapeManual = escapeManualEntityFixture;
+          final expectedEscapeManual = escapeManualEntityFixture;
 
           when(() => mockRemoteDatasource.fetch())
               .thenAnswer((_) async => escapeManualModel);
+          when(() => mockLocalDatasource.fetchTasks())
+              .thenAnswer((_) => Stream.value([]));
+
+          // act / assert
+          expectLater(
+            sut.fetch(),
+            emits(expectedEscapeManual),
+          );
+        },
+      );
+
+      test(
+        'should return merged datasource result when local datasource is not empty',
+        () async {
+          // arrange
+          final escapeManualModel = escapeManualModelFixture;
+          final expectedEscapeManual = updatedEscapeManualEntityFixture;
+
+          when(() => mockRemoteDatasource.fetch())
+              .thenAnswer((_) async => escapeManualModel);
+          when(() => mockLocalDatasource.fetchTasks()).thenAnswer(
+            (_) => Stream.value(escapeManualLocalModelsFixture),
+          );
 
           // act / assert
           expectLater(
@@ -135,6 +166,9 @@ void main() {
     });
   });
 }
+
+class _MockEscapeManualLocalDatasource extends Mock
+    implements IEscapeManualLocalDatasource {}
 
 class _MockEscapeManualRemoteDatasource extends Mock
     implements IEscapeManualRemoteDatasource {}

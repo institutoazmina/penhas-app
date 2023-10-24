@@ -37,6 +37,7 @@ class EscapeManualModule extends WidgetModule {
     ),
     Bind.factory<IEscapeManualRepository>(
       (i) => EscapeManualRepository(
+        localDatasource: i.get(),
         remoteDatasource: i.get(),
       ),
     ),

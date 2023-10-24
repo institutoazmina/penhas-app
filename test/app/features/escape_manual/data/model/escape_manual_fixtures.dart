@@ -1,6 +1,18 @@
 import 'package:penhas/app/features/appstate/data/model/quiz_session_model.dart';
+import 'package:penhas/app/features/escape_manual/data/model/escape_manual_local.dart';
 import 'package:penhas/app/features/escape_manual/data/model/escape_manual_remote.dart';
 import 'package:penhas/app/features/escape_manual/domain/entity/escape_manual.dart';
+
+final escapeManualLocalModelsFixture = [
+  EscapeManualTaskLocalModel(
+    id: '1',
+    isDone: true,
+  ),
+  EscapeManualTaskLocalModel(
+    id: '3',
+    isRemoved: true,
+  ),
+];
 
 final escapeManualModelFixture = EscapeManualRemoteModel(
   assistant: const EscapeManualAssistantRemoteModel(
@@ -12,19 +24,39 @@ final escapeManualModelFixture = EscapeManualRemoteModel(
   ),
   tasks: [
     EscapeManualTaskRemoteModel(
-      id: 'id',
-      type: 'type',
+      id: '1',
+      type: 'checkbox',
       group: 'group',
       title: 'title',
       description: 'description',
-      isEditable: true,
+      isEditable: false,
+      isDone: false,
       userInputValue: 'userInputValue',
+      updatedAt: DateTime.now(),
+    ),
+    EscapeManualTaskRemoteModel(
+      id: '2',
+      type: 'checkbox_contact',
+      group: 'group 2',
+      title: 'title',
+      description: 'description',
+      isEditable: true,
+      isDone: true,
+      updatedAt: DateTime.now(),
+    ),
+    EscapeManualTaskRemoteModel(
+      id: '3',
+      type: 'checkbox',
+      group: 'group',
+      title: 'title',
+      description: 'description',
+      userInputValue: null,
       updatedAt: DateTime.now(),
     ),
   ],
 );
 
-const escapeManualEntityFixture = EscapeManualEntity(
+final escapeManualEntityFixture = EscapeManualEntity(
   assistant: EscapeManualAssistantEntity(
     explanation: 'explanation',
     action: EscapeManualAssistantActionEntity(
@@ -39,12 +71,73 @@ const escapeManualEntityFixture = EscapeManualEntity(
       title: 'group',
       tasks: [
         EscapeManualTaskEntity(
-          id: 'id',
-          type: 'type',
+          id: '1',
+          type: 'checkbox',
           description: 'description',
+          isEditable: false,
           isDone: false,
-          isEditable: true,
           userInputValue: 'userInputValue',
+        ),
+        EscapeManualTaskEntity(
+          id: '3',
+          type: 'checkbox',
+          description: 'description',
+          userInputValue: null,
+          isDone: false,
+          isEditable: false,
+        ),
+      ],
+    ),
+    EscapeManualTasksSectionEntity(
+      title: 'group 2',
+      tasks: [
+        EscapeManualTaskEntity(
+          id: '2',
+          type: 'checkbox_contact',
+          description: 'description',
+          isEditable: true,
+          isDone: true,
+          userInputValue: null,
+        ),
+      ],
+    ),
+  ],
+);
+
+final updatedEscapeManualEntityFixture = EscapeManualEntity(
+  assistant: EscapeManualAssistantEntity(
+    explanation: 'explanation',
+    action: EscapeManualAssistantActionEntity(
+      text: 'text',
+      quizSession: QuizSessionModel(
+        sessionId: 'sessionId',
+      ),
+    ),
+  ),
+  sections: [
+    EscapeManualTasksSectionEntity(
+      title: 'group',
+      tasks: [
+        EscapeManualTaskEntity(
+          id: '1',
+          type: 'checkbox',
+          description: 'description',
+          isEditable: false,
+          isDone: true,
+          userInputValue: 'userInputValue',
+        ),
+      ],
+    ),
+    EscapeManualTasksSectionEntity(
+      title: 'group 2',
+      tasks: [
+        EscapeManualTaskEntity(
+          id: '2',
+          type: 'checkbox_contact',
+          description: 'description',
+          isEditable: true,
+          isDone: true,
+          userInputValue: null,
         ),
       ],
     ),
