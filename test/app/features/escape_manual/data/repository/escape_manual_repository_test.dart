@@ -4,6 +4,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/appstate/data/model/quiz_session_model.dart';
 import 'package:penhas/app/features/escape_manual/data/datasource/escape_manual_datasource.dart';
+import 'package:penhas/app/features/escape_manual/data/model/escape_manual_local.dart';
 import 'package:penhas/app/features/escape_manual/data/model/escape_manual_remote.dart';
 import 'package:penhas/app/features/escape_manual/data/repository/escape_manual_repository.dart';
 
@@ -14,6 +15,10 @@ void main() {
 
   late IEscapeManualRemoteDatasource mockRemoteDatasource;
   late IEscapeManualLocalDatasource mockLocalDatasource;
+
+  setUpAll(() {
+    registerFallbackValue(_FakeEscapeManualTaskLocalModel());
+  });
 
   setUp(() {
     mockRemoteDatasource = _MockEscapeManualRemoteDatasource();
@@ -164,6 +169,46 @@ void main() {
         },
       );
     });
+
+    group('updateTask', () {
+      test(
+        'should call datasource updateTask',
+        () async {
+          // arrange
+          final task = escapeManualTaskEntityFixture;
+          final localTask = EscapeManualTaskLocalModel(
+            id: task.id,
+            isDone: task.isDone,
+          );
+          when(() => mockLocalDatasource.saveTask(any()))
+              .thenAnswer((_) async => unit);
+
+          // act
+          final result = await sut.updateTask(task);
+
+          // assert
+          expect(result.isRight(), isTrue);
+          verify(() => mockLocalDatasource.saveTask(localTask)).called(1);
+        },
+      );
+
+      test(
+        'should return failure when datasource updateTask throws',
+        () async {
+          // arrange
+          final task = escapeManualTaskEntityFixture;
+          when(() => mockLocalDatasource.saveTask(any()))
+              .thenThrow(Exception());
+
+          // act
+          final result = await sut.updateTask(task);
+
+          // assert
+          expect(result.isLeft(), isTrue);
+          expect(result.fold(id, (_) {}), isA<Failure>());
+        },
+      );
+    });
   });
 }
 
@@ -172,3 +217,6 @@ class _MockEscapeManualLocalDatasource extends Mock
 
 class _MockEscapeManualRemoteDatasource extends Mock
     implements IEscapeManualRemoteDatasource {}
+
+class _FakeEscapeManualTaskLocalModel extends Fake
+    implements EscapeManualTaskLocalModel {}

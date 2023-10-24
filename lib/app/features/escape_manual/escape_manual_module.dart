@@ -8,6 +8,7 @@ import 'data/datastore/escape_manual_persistent_store.dart';
 import 'data/repository/escape_manual_repository.dart';
 import 'domain/get_escape_manual.dart';
 import 'domain/start_escape_manual.dart';
+import 'domain/update_escape_manual_task.dart';
 import 'presentation/escape_manual_controller.dart';
 import 'presentation/escape_manual_page.dart';
 
@@ -32,6 +33,11 @@ class EscapeManualModule extends WidgetModule {
     ),
     Bind.factory(
       (i) => StartEscapeManualUseCase(
+        repository: i.get(),
+      ),
+    ),
+    Bind.factory<UpdateEscapeManualTaskUseCase>(
+      (i) => UpdateEscapeManualTaskUseCase(
         repository: i.get(),
       ),
     ),

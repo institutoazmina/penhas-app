@@ -241,3 +241,12 @@ final updatedEscapeManualRemoteModelFixture = EscapeManualRemoteModel(
     ),
   ],
 );
+
+final escapeManualTaskEntityFixture = EscapeManualTaskEntity(
+  id: '1',
+  type: 'checkbox',
+  description: 'description',
+  isEditable: false,
+  isDone: true,
+  userInputValue: null,
+);
