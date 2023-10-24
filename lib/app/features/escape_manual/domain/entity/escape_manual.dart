@@ -13,6 +13,14 @@ class EscapeManualEntity extends Equatable {
 
   @override
   List<Object?> get props => [assistant, sections];
+
+  EscapeManualEntity copyWith({
+    List<EscapeManualTasksSectionEntity>? sections,
+  }) =>
+      EscapeManualEntity(
+        assistant: assistant,
+        sections: sections ?? this.sections,
+      );
 }
 
 class EscapeManualAssistantEntity extends Equatable {
@@ -52,6 +60,14 @@ class EscapeManualTasksSectionEntity extends Equatable {
 
   @override
   List<Object?> get props => [title, tasks];
+
+  EscapeManualTasksSectionEntity copyWith({
+    List<EscapeManualTaskEntity>? tasks,
+  }) =>
+      EscapeManualTasksSectionEntity(
+        title: title,
+        tasks: tasks ?? this.tasks,
+      );
 }
 
 class EscapeManualTaskEntity extends Equatable {
