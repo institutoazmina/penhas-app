@@ -12,7 +12,9 @@ import 'core/managers/user_profile_store.dart';
 import 'core/network/api_client.dart';
 import 'core/network/api_server_configure.dart';
 import 'core/network/network_info.dart';
+import 'core/storage/cache_storage.dart';
 import 'core/storage/i_local_storage.dart';
+import 'core/storage/impl/hive_cache_storage.dart';
 import 'core/storage/local_storage_shared_preferences.dart';
 import 'core/storage/migrator_local_storage.dart';
 import 'core/storage/secure_local_storage.dart';
@@ -111,6 +113,11 @@ class AppModule extends Module {
               preferences: SharedPreferences.getInstance(),
             ),
             secureLocalStorage: SecureLocalStorage(),
+          ),
+        ),
+        Bind.lazySingleton<ICacheStorage>(
+          (i) => HiveCacheStorage(
+            encryptionKeyStorage: i.get(),
           ),
         ),
         Bind.lazySingleton<IAudioSyncManager>(
