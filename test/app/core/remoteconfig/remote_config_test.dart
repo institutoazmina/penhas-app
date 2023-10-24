@@ -10,10 +10,6 @@ class MyRemoteConfigSettings extends Fake implements RemoteConfigSettings {}
 void main() {
   late MockFirebaseRemoteConfig remoteConfig;
   late RemoteConfigService sut;
-  RemoteConfigSettings myRemoteConfigSettings = RemoteConfigSettings(
-    fetchTimeout: const Duration(minutes: 1),
-    minimumFetchInterval: const Duration(hours: 1),
-  );
 
   setUp(() {
     remoteConfig = MockFirebaseRemoteConfig();

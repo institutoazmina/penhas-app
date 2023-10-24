@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'package:crypto/crypto.dart';
 import 'package:crypt/crypt.dart';
 import 'package:dartz/dartz.dart';
 import '../../../../core/error/exceptions.dart';
@@ -75,7 +73,7 @@ class AuthenticationRepository implements IAuthenticationRepository {
 
   Crypt _createsHash(
       {required EmailAddress email, required SignInPassword password}) {
-    final hash = Crypt.sha256(password, salt: email);
+    final hash = Crypt.sha256(password.rawValue!, salt: email.rawValue);
     return hash;
   }
 
@@ -86,7 +84,7 @@ class AuthenticationRepository implements IAuthenticationRepository {
     var currentHash = await _appConfiguration.offlineHash;
     var sessionToken = await _appConfiguration.apiToken;
     final newHash = _createsHash(password: password, email: email);
-    final isCorrectPassword = currentHash == newHash;
+    final isCorrectPassword = Crypt(currentHash) == newHash;
     if (isCorrectPassword) {
       var result =
           _dataSource.signInWithOfflineHash(sessionToken: sessionToken);
