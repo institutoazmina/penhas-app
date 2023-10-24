@@ -9,26 +9,20 @@ mixin MapFailureMessage {
   final String genericFailure =
       'Oops.. ocorreu um erro inesperado, tente novamente mais tarde.';
 
-  String mapFailureMessage(Failure failure) {
-    var message = genericFailure;
-
+  String mapFailureMessage(failure) {
     switch (failure.runtimeType) {
       case InternetConnectionFailure:
-        message = internetConnectionFailure;
-        break;
+        return internetConnectionFailure;
       case ServerFailure:
-        message = serverFailure;
-        break;
+        return serverFailure;
       case ServerSideFormFieldValidationFailure:
-        message = mapServerSideValidationFailure(
+        return mapServerSideValidationFailure(
           failure as ServerSideFormFieldValidationFailure,
         );
-        break;
       default:
         logError(failure);
+        return genericFailure;
     }
-
-    return message;
   }
 
   String mapServerSideValidationFailure(

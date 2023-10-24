@@ -34,7 +34,7 @@ class EscapeManualRepository implements IEscapeManualRepository {
   /// [sessionId] is the id of the session to start
   /// Returns a [QuizSessionEntity] if success otherwise a [Failure]
   @override
-  Future<Either<Failure, QuizSessionEntity>> start(String sessionId) async {
+  QuizSessionResult start(String sessionId) async {
     try {
       final quizSession = await _remoteDatasource.start(sessionId);
       return right(quizSession);
@@ -42,6 +42,11 @@ class EscapeManualRepository implements IEscapeManualRepository {
       logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
+  }
+
+  @override
+  QuizSessionResult resume(QuizSessionEntity quizSession) async {
+    return right(quizSession);
   }
 
   /// Fetch the escape manual

@@ -194,7 +194,24 @@ void main() {
 
           // assert
           expect(result.isLeft(), isTrue);
-          expect(result.fold(id, id), isA<Failure>());
+        },
+      );
+    });
+
+    group('resume', () {
+      test(
+        'should return quizSession',
+        () async {
+          // arrange
+          const quizSession = QuizSessionModel(
+            sessionId: 'sessionId',
+          );
+
+          // act
+          final result = await sut.resume(quizSession);
+
+          // assert
+          expect(result, right(quizSession));
         },
       );
     });

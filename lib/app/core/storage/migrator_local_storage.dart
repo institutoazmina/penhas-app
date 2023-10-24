@@ -27,8 +27,8 @@ class MigratorLocalStorage implements ILocalStorage {
 
   @override
   Future<void> put(String key, String? value) => Future.wait([
-        _sharedPreferencesStorage.delete(key),
         _secureLocalStorage.put(key, value),
+        _sharedPreferencesStorage.delete(key),
       ]);
 
   @override
@@ -39,10 +39,14 @@ class MigratorLocalStorage implements ILocalStorage {
 
   Future<String?> _migrateFromPreferencesIfNeeded(String key) async {
     final value = await _sharedPreferencesStorage.get(key);
+
+    if (value == null) return null;
+
     await Future.wait([
       _secureLocalStorage.put(key, value),
       _sharedPreferencesStorage.delete(key),
     ]);
+
     return value;
   }
 }

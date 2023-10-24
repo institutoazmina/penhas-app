@@ -11,11 +11,15 @@ void main() {
   late IEscapeManualRepository mockEscapeManualRepository;
 
   setUp(() {
-    mockEscapeManualRepository = MockEscapeManualRepository();
+    mockEscapeManualRepository = _MockEscapeManualRepository();
 
     sut = StartEscapeManualUseCase(
       repository: mockEscapeManualRepository,
     );
+  });
+
+  setUpAll(() {
+    registerFallbackValue(_FakeQuizSessionEntity());
   });
 
   group(StartEscapeManualUseCase, () {
@@ -41,7 +45,7 @@ void main() {
     );
 
     test(
-      'shoult not call repository start when sessionId not starts with MF',
+      'shoult call repository resume when sessionId not starts with MF',
       () async {
         // arrange
         const quizSession = QuizSessionEntity(
@@ -50,12 +54,14 @@ void main() {
           isFinished: false,
           endScreen: null,
         );
+        when(() => mockEscapeManualRepository.resume(any()))
+            .thenAnswer((_) async => right(quizSession));
 
         // act
         await sut(quizSession);
 
         // assert
-        verifyZeroInteractions(mockEscapeManualRepository);
+        verify(() => mockEscapeManualRepository.resume(quizSession)).called(1);
       },
     );
 
@@ -88,7 +94,7 @@ void main() {
     );
 
     test(
-      'should return same quizSession when sessionId not starts with MF',
+      'should return repository resume when sessionId not starts with MF',
       () async {
         // arrange
         const quizSession = QuizSessionEntity(
@@ -97,9 +103,18 @@ void main() {
           isFinished: false,
           endScreen: null,
         );
+        when(() => mockEscapeManualRepository.resume(any()))
+            .thenAnswer((_) async => right(quizSession));
 
         // act
-        final result = await sut(quizSession);
+        final result = await sut(
+          const QuizSessionEntity(
+            currentMessage: [],
+            sessionId: '4321',
+            isFinished: false,
+            endScreen: null,
+          ),
+        );
 
         // assert
         expect(result, equals(right(quizSession)));
@@ -108,5 +123,7 @@ void main() {
   });
 }
 
-class MockEscapeManualRepository extends Mock
+class _MockEscapeManualRepository extends Mock
     implements IEscapeManualRepository {}
+
+class _FakeQuizSessionEntity extends Fake implements QuizSessionEntity {}

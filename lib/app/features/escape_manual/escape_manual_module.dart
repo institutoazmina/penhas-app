@@ -55,7 +55,7 @@ class EscapeManualModule extends WidgetModule {
         repository: i.get(),
       ),
     ),
-    Bind.factory(
+    Bind.factory<StartEscapeManualUseCase>(
       (i) => StartEscapeManualUseCase(
         repository: i.get(),
       ),
