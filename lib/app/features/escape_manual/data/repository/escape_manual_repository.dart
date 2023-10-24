@@ -82,6 +82,20 @@ class EscapeManualRepository implements IEscapeManualRepository {
     }
   }
 
+  /// Remove a task from the escape manual locally
+  @override
+  VoidResult removeTask(EscapeManualTaskEntity task) async {
+    try {
+      final result = await _localDatasource.removeTask(
+        EscapeManualTaskLocalModel.fromEntity(task),
+      );
+      return right(result);
+    } catch (error, stack) {
+      logError(error, stack);
+      return left(MapExceptionToFailure.map(error));
+    }
+  }
+
   /// Apply local changes to the remote data
   /// if local task is newer than remote task
   /// or ignore the task if it was removed locally

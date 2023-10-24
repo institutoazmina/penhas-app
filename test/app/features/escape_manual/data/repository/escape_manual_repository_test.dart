@@ -209,6 +209,46 @@ void main() {
         },
       );
     });
+
+    group('removeTask', () {
+      test(
+        'should call datasource removeTask',
+        () async {
+          // arrange
+          final task = escapeManualTaskEntityFixture;
+          final localTask = EscapeManualTaskLocalModel(
+            id: task.id,
+            isDone: task.isDone,
+          );
+          when(() => mockLocalDatasource.removeTask(any()))
+              .thenAnswer((_) async => unit);
+
+          // act
+          final result = await sut.removeTask(task);
+
+          // assert
+          expect(result.isRight(), isTrue);
+          verify(() => mockLocalDatasource.removeTask(localTask)).called(1);
+        },
+      );
+
+      test(
+        'should return failure when datasource removeTask throws',
+        () async {
+          // arrange
+          final task = escapeManualTaskEntityFixture;
+          when(() => mockLocalDatasource.removeTask(any()))
+              .thenThrow(Exception());
+
+          // act
+          final result = await sut.removeTask(task);
+
+          // assert
+          expect(result.isLeft(), isTrue);
+          expect(result.fold(id, (_) {}), isA<Failure>());
+        },
+      );
+    });
   });
 }
 

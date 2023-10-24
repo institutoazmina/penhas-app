@@ -10,4 +10,5 @@ abstract class IEscapeManualRepository {
   Future<Either<Failure, QuizSessionEntity>> start(String sessionId);
   Stream<EscapeManualEntity> fetch();
   VoidResult updateTask(EscapeManualTaskEntity task);
+  VoidResult removeTask(EscapeManualTaskEntity task);
 }
