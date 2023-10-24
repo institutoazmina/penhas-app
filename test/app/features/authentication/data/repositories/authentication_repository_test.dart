@@ -1,6 +1,5 @@
+import 'package:crypt/crypt.dart';
 import 'package:dartz/dartz.dart';
-import 'dart:convert';
-import 'package:crypto/crypto.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
@@ -27,6 +26,7 @@ void main() {
   late MockAuthenticationDataSource dataSource;
   late IAuthenticationRepository repository;
   late ILocalStorage localStorage;
+  late Crypt hash;
 
   setUp(() {
     email = EmailAddress('test@g.com');
@@ -35,6 +35,7 @@ void main() {
     appConfiguration = MockAppConfiguration();
     dataSource = MockAuthenticationDataSource();
     localStorage = MockLocalStorage();
+    hash = Crypt.sha256(password.rawValue!, salt: email.rawValue);
 
     repository = AuthenticationRepository(
       appConfiguration: appConfiguration,
@@ -61,13 +62,6 @@ void main() {
     ).thenThrow(exception);
   }
 
-  String _createsHash(
-      {required SignInPassword password, required EmailAddress email}) {
-    var bytes = utf8.encode(password.toString() + email.toString());
-    var digest = sha256.convert(bytes);
-    return digest.toString();
-  }
-
   group(AuthenticationRepository, () {
     group('SigIn', () {
       Map<String, dynamic> loginSuccessJson;
@@ -90,14 +84,12 @@ void main() {
           'return valid SessionEntity for valid user/password',
           () async {
             // arrange
-            var hash = _createsHash(password: password, email: email);
-
             _mockSignInSuccessResponseWith(session: sessionModel);
             when(() => appConfiguration.saveApiToken(
                     token: sessionModel.sessionToken))
                 .thenAnswer((invocation) => Future.value());
 
-            when(() => appConfiguration.saveHash(hash: hash))
+            when(() => appConfiguration.saveHash(hash: hash.toString()))
                 .thenAnswer((invocation) => Future.value());
 
             // act
@@ -117,7 +109,8 @@ void main() {
             verify(() => appConfiguration.saveApiToken(
                 token: sessionModel.sessionToken)).called(1);
 
-            verify(() => appConfiguration.saveHash(hash: hash)).called(1);
+            verify(() => appConfiguration.saveHash(hash: hash.toString()))
+                .called(1);
 
             expect(result, right(sessionEntity));
           },
@@ -180,15 +173,13 @@ void main() {
         test(
           'login offline',
           () async {
-            var hash = _createsHash(password: password, email: email);
-
             // arrange
             _mockSignInErrorWith(exception: const ApiProviderException());
             when(() => appConfiguration.apiToken).thenAnswer(
                 (invocation) async => sessionModel.sessionToken as String);
 
             when(() => appConfiguration.offlineHash)
-                .thenAnswer((invocation) async => hash);
+                .thenAnswer((invocation) async => hash.toString());
 
             // act
             final result = await repository.signInOffline(
