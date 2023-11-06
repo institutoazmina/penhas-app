@@ -197,7 +197,7 @@ void main() {
         );
 
         test(
-          'cant login offline',
+          'cant login offline when hasnt stored token',
           () async {
             // arrange
             _mockSignInErrorWith(exception: const ApiProviderException());
