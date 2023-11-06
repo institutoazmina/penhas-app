@@ -19,11 +19,14 @@ void main() {
 
   group(RemoteConfigService, () {
     test(
-      'getBool',
+      'getBool should call remote config getBool',
       () {
         const expected = false;
-        when(() => remoteConfig.getBool('any_key')).thenReturn(expected);
+        when(() => remoteConfig.getBool(any())).thenReturn(expected);
+
         final result = sut.getBool('any_key');
+
+        verify(() => remoteConfig.getBool('any_key')).called(1);
         expect(result, expected);
       },
     );
