@@ -15,7 +15,7 @@ import 'core/network/network_info.dart';
 import 'core/storage/cache_storage.dart';
 import 'core/storage/i_local_storage.dart';
 import 'core/storage/impl/hive_cache_storage.dart';
-import 'core/storage/impl/hive_persistent_storage_factory.dart';
+import 'core/storage/impl/hive_persistent_storage.dart';
 import 'core/storage/local_storage_shared_preferences.dart';
 import 'core/storage/migrator_local_storage.dart';
 import 'core/storage/persistent_storage.dart';
