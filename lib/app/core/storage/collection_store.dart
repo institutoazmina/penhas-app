@@ -12,26 +12,11 @@ abstract class ICollectionStore<T> {
   Future<void> removeAll(Iterable<String> keys);
 }
 
-mixin CollectionStore<T> on ICollectionStore<T> {
+mixin SerializableCollectionStore<T> on ICollectionStore<T> {
   IPersistentStorageFactory get storageFactory;
 
   late final IPersistentStorage storage = storageFactory.create(name);
 
-  @override
-  Future<Iterable<T>> all() => storage.all();
-
-  @override
-  Stream<Iterable<T>> watchAll() => storage.watchAll();
-
-  @override
-  Future<void> put(String key, T value) => storage.put(key, value);
-
-  @override
-  Future<void> removeAll(Iterable<String> keys) => storage.removeAll(keys);
-}
-
-mixin SerializableCollectionStore<T> on ICollectionStore<T>
-    implements CollectionStore<T> {
   T deserialize(String source);
 
   String serialize(T object);
@@ -46,4 +31,7 @@ mixin SerializableCollectionStore<T> on ICollectionStore<T>
 
   @override
   Future<void> put(String key, T value) => storage.put(key, serialize(value));
+
+  @override
+  Future<void> removeAll(Iterable<String> keys) => storage.removeAll(keys);
 }

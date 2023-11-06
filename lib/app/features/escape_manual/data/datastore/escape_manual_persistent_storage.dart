@@ -6,7 +6,7 @@ import '../model/escape_manual_local.dart';
 
 class EscapeManualTasksStore
     extends ICollectionStore<EscapeManualTaskLocalModel>
-    with CollectionStore, SerializableCollectionStore {
+    with SerializableCollectionStore {
   EscapeManualTasksStore({
     required this.storageFactory,
   });
