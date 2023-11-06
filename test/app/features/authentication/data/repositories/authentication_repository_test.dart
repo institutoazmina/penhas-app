@@ -203,9 +203,7 @@ void main() {
             _mockSignInErrorWith(exception: const ApiProviderException());
 
             when(() => localStorage.get('br.com.penhas.offlineHash'))
-                .thenAnswer((_) async {
-              return;
-            });
+                .thenAnswer((_) async => null);
 
             when(() => appConfiguration.apiToken).thenAnswer(
                 (invocation) async => sessionModel.sessionToken as String);
