@@ -171,7 +171,7 @@ void main() {
         });
 
         test(
-          'login offline',
+          'should login offline successful',
           () async {
             // arrange
             _mockSignInErrorWith(exception: const ApiProviderException());
