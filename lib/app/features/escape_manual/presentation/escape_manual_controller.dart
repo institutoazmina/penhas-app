@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../core/error/failures.dart';
@@ -43,7 +44,8 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
   @observable
   ObservableFuture? _pageProgress;
 
-  StreamSubscription? _subscription;
+  @visibleForTesting
+  StreamSubscription? subscription;
 
   ObservableStream<EscapeManualEntity>? _loadProgress;
   late ObservableFuture<Either<Failure, QuizSessionEntity>> _startProgress;
@@ -53,7 +55,7 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
     if (progressState == PageProgressState.loading ||
         _loadProgress.state == PageProgressState.loading) return;
 
-    _subscription?.cancel();
+    subscription?.cancel();
 
     _loadProgress = ObservableStream(
       _getEscapeManual(),
@@ -62,7 +64,7 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
 
     _pageProgress = _loadProgress?.first;
 
-    _subscription = _loadProgress?.listen(
+    subscription = _loadProgress?.listen(
       (el) => state = _handleLoadSuccess(el),
       onError: (e) => state = _handleLoadFailure(e),
       cancelOnError: true,
@@ -86,9 +88,9 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
   }
 
   Future<void> dispose() async {
-    await _subscription?.cancel();
+    await subscription?.cancel();
     _loadProgress?.close();
-    _subscription = null;
+    subscription = null;
   }
 
   EscapeManualState _handleLoadFailure(Failure failure) {

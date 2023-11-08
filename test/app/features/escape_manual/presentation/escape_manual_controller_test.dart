@@ -45,6 +45,17 @@ void main() {
       },
     );
 
+    test('dispose should cancel subscription', () async {
+      // arrange
+      await sut.load();
+
+      // act
+      await sut.dispose();
+
+      // assert
+      expect(sut.subscription, null);
+    });
+
     group('load', () {
       test(
         'should call getEscapeManual',
