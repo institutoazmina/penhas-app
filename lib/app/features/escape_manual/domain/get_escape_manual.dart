@@ -1,6 +1,3 @@
-import 'package:dartz/dartz.dart';
-
-import '../../../core/error/failures.dart';
 import 'entity/escape_manual.dart';
 import 'repository/escape_manual_repository.dart';
 
@@ -11,5 +8,5 @@ class GetEscapeManualUseCase {
 
   final IEscapeManualRepository _repository;
 
-  Future<Either<Failure, EscapeManualEntity>> call() => _repository.fetch();
+  Stream<EscapeManualEntity> call() => _repository.fetch();
 }

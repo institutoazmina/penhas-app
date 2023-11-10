@@ -33,14 +33,14 @@ class EscapeManualRepository implements IEscapeManualRepository {
   }
 
   @override
-  Future<Either<Failure, EscapeManualEntity>> fetch() async {
+  Stream<EscapeManualEntity> fetch() async* {
     try {
       final response = await _remoteDatasource.fetch();
 
-      return right(response.asEntity);
+      yield response.asEntity;
     } catch (error, stack) {
       logError(error, stack);
-      return left(MapExceptionToFailure.map(error));
+      throw MapExceptionToFailure.map(error);
     }
   }
 }

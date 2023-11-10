@@ -40,6 +40,7 @@ class _EscapeManualPageState
   @override
   void dispose() {
     _disposer?.call();
+    controller.dispose();
     super.dispose();
   }
 

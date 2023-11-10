@@ -20,15 +20,15 @@ void main() {
   late GetEscapeManualUseCase mockGetEscapeManual;
   late StartEscapeManualUseCase mockStartEscapeManual;
 
-  late Completer<Either<Failure, EscapeManualEntity>> getEscapeManualCompleter;
+  late Completer<EscapeManualEntity> getEscapeManualCompleter;
 
   setUp(() {
-    mockGetEscapeManual = GetEscapeManualUseCaseMock();
-    mockStartEscapeManual = StartEscapeManualUseCaseMock();
+    mockGetEscapeManual = _MockGetEscapeManualUseCase();
+    mockStartEscapeManual = _MockStartEscapeManualUseCase();
     getEscapeManualCompleter = Completer();
 
     when(() => mockGetEscapeManual())
-        .thenAnswer((_) async => getEscapeManualCompleter.future);
+        .thenAnswer((_) => Stream.fromFuture(getEscapeManualCompleter.future));
 
     sut = EscapeManualController(
       getEscapeManual: mockGetEscapeManual,
@@ -44,6 +44,17 @@ void main() {
         expect(sut.state, const EscapeManualState.initial());
       },
     );
+
+    test('dispose should cancel subscription', () async {
+      // arrange
+      await sut.load();
+
+      // act
+      await sut.dispose();
+
+      // assert
+      expect(sut.subscription, null);
+    });
 
     group('load', () {
       test(
@@ -100,7 +111,7 @@ void main() {
           );
 
           // act
-          getEscapeManualCompleter.complete(right(escapeManual));
+          getEscapeManualCompleter.complete(escapeManual);
           await sut.load();
 
           // assert
@@ -128,7 +139,7 @@ void main() {
           );
 
           // act
-          getEscapeManualCompleter.complete(right(escapeManual));
+          getEscapeManualCompleter.complete(escapeManual);
           await sut.load();
 
           // assert
@@ -144,7 +155,7 @@ void main() {
         () async {
           // arrange
           final failure = ServerFailure();
-          getEscapeManualCompleter.complete(left(failure));
+          getEscapeManualCompleter.completeError(failure);
 
           // act
           await sut.load();
@@ -181,7 +192,7 @@ void main() {
 
       setUp(() {
         startEscapeManualCompleter = Completer();
-        Modular.navigatorDelegate = mockNavigator = MockModularNavigate();
+        Modular.navigatorDelegate = mockNavigator = _MockModularNavigate();
 
         when(() => mockStartEscapeManual(any()))
             .thenAnswer((_) async => startEscapeManualCompleter.future);
@@ -256,7 +267,7 @@ void main() {
         'should emit showSnackbar reaction when failed',
         () async {
           // arrange
-          final onReactionMock = MockOnEscapeManualReaction();
+          final onReactionMock = _MockOnEscapeManualReaction();
           final failure = ServerFailure();
           startEscapeManualCompleter.complete(left(failure));
           sut.onReaction(onReactionMock);
@@ -278,17 +289,17 @@ void main() {
   });
 }
 
-class GetEscapeManualUseCaseMock extends Mock
+class _MockGetEscapeManualUseCase extends Mock
     implements GetEscapeManualUseCase {}
 
-class StartEscapeManualUseCaseMock extends Mock
+class _MockStartEscapeManualUseCase extends Mock
     implements StartEscapeManualUseCase {}
 
-class MockModularNavigate extends Mock implements IModularNavigator {}
+class _MockModularNavigate extends Mock implements IModularNavigator {}
 
-abstract class IOnEscapeManualReaction {
+abstract class _IOnEscapeManualReaction {
   void call(EscapeManualReaction? reaction);
 }
 
-class MockOnEscapeManualReaction extends Mock
-    implements IOnEscapeManualReaction {}
+class _MockOnEscapeManualReaction extends Mock
+    implements _IOnEscapeManualReaction {}

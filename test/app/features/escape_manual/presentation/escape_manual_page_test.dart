@@ -41,6 +41,8 @@ void main() {
         .thenReturn(PageProgressState.initial);
     when(() => mockController.onReaction(any()))
         .thenAnswer((invocation) => _MockReactionDisposer());
+
+    when(() => mockController.dispose()).thenAnswer((_) async {});
   });
 
   tearDownAll(() {
