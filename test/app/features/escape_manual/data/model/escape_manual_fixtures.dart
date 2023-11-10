@@ -102,3 +102,82 @@ final escapeManualRemoteModelFixture = EscapeManualRemoteModel(
     ),
   ],
 );
+
+final latestEscapeManualRemoteModelFixture = EscapeManualRemoteModel(
+  assistant: const EscapeManualAssistantRemoteModel(
+    title: 'new action button',
+    subtitle: 'New explanation',
+    quizSession: QuizSessionModel(
+      sessionId: 'session id',
+    ),
+  ),
+  tasks: [
+    EscapeManualTaskRemoteModel(
+      id: '72',
+      type: 'checkbox',
+      group: 'Itens Básicos',
+      description: 'Ponha na mochila medicamentos básicos e de uso contínuo',
+      isDone: true,
+      updatedAt: DateTime.fromMillisecondsSinceEpoch(1696116772000),
+    ),
+    EscapeManualTaskRemoteModel(
+      id: '73',
+      type: 'checkbox',
+      group: 'Passos para fuga',
+      description:
+          'Cadastre-se e/ou verifique se o seu Cadastro Único (CadÚnico) está ativo.',
+      isEditable: true,
+      updatedAt: DateTime.fromMillisecondsSinceEpoch(1696116772000),
+      userInputValue: 'campo livre',
+    ),
+  ],
+  removedTasks: const [
+    '71',
+  ],
+);
+
+final updatedEscapeManualRemoteModelFixture = EscapeManualRemoteModel(
+  assistant: const EscapeManualAssistantRemoteModel(
+    title: 'new action button',
+    subtitle: 'New explanation',
+    quizSession: QuizSessionModel(
+      sessionId: 'session id',
+    ),
+  ),
+  tasks: [
+    EscapeManualTaskRemoteModel(
+      id: '72',
+      type: 'checkbox',
+      group: 'Itens Básicos',
+      description: 'Ponha na mochila medicamentos básicos e de uso contínuo',
+      isDone: true,
+      updatedAt: DateTime.fromMillisecondsSinceEpoch(1696116772000),
+    ),
+    EscapeManualTaskRemoteModel(
+      id: '73',
+      type: 'checkbox',
+      group: 'Passos para fuga',
+      description:
+          'Cadastre-se e/ou verifique se o seu Cadastro Único (CadÚnico) está ativo.',
+      isEditable: true,
+      updatedAt: DateTime.fromMillisecondsSinceEpoch(1696116772000),
+      userInputValue: 'campo livre',
+    ),
+    EscapeManualTaskRemoteModel(
+      id: '75',
+      type: 'checkbox',
+      group: 'Segurança pessoal',
+      description:
+          'Busque o Centro de Referência de Assistência Social (CRAS).',
+      updatedAt: DateTime.fromMillisecondsSinceEpoch(1689701025000),
+    ),
+    EscapeManualTaskRemoteModel(
+      id: '76',
+      type: 'checkbox',
+      group: 'Passos para fuga',
+      description:
+          'Leve ao CRAS toda documentação necessária, tanto sua, quanto das crianças, se houver.',
+      updatedAt: DateTime.fromMillisecondsSinceEpoch(1689701025000),
+    ),
+  ],
+);
