@@ -25,74 +25,38 @@ void main() {
 
   group(EscapeManualCacheStore, () {
     test(
-      'get should call storage.get',
+      'retrieve should return storage.get value deserialized',
       () async {
         // arrange
+        final expected = escapeManualRemoteModelFixture;
+        final cached = JsonUtil.getStringSync(
+          from: 'escape_manual/escape_manual_response.json',
+        );
         when(() => mockCacheStorage.getString(any()))
-            .thenAnswer((_) async => null);
+            .thenAnswer((_) async => cached);
 
         // act
-        await sut.retrieve();
+        final actual = await sut.retrieve();
 
         // assert
-        verify(
-          () => mockCacheStorage.getString(cacheKey),
-        ).called(1);
+        expect(actual, equals(expected));
+        verify(() => mockCacheStorage.getString(cacheKey)).called(1);
         verifyNoMoreInteractions(mockCacheStorage);
       },
     );
 
     test(
-      'save should call storage.get',
+      'save should call storage.put with serialized data',
       () async {
         // arrange
-        when(() => mockCacheStorage.getString(any()))
-            .thenAnswer((_) async => null);
-        when(() => mockCacheStorage.putString(any(), any()))
-            .thenAnswer((_) async {});
-
-        // act
-        await sut.save(escapeManualRemoteModelFixture);
-
-        // assert
-        verify(() => mockCacheStorage.getString(cacheKey)).called(1);
-      },
-    );
-
-    test(
-      'save should call storage.put',
-      () async {
-        // arrange
-        when(() => mockCacheStorage.getString(any()))
-            .thenAnswer((_) async => null);
-        when(() => mockCacheStorage.putString(any(), any()))
-            .thenAnswer((_) async {});
-
-        // act
-        await sut.save(escapeManualRemoteModelFixture);
-
-        // assert
-        verify(() => mockCacheStorage.putString(cacheKey, any())).called(1);
-      },
-    );
-
-    test(
-      'save should call storage.put with updated data',
-      () async {
-        // arrange
-        final cached = JsonUtil.getStringSync(
-          from: 'escape_manual/escape_manual_response.json',
-        );
         final expectedSavedData =
             jsonEncode(updatedEscapeManualRemoteModelFixture);
 
-        when(() => mockCacheStorage.getString(any()))
-            .thenAnswer((_) async => cached);
         when(() => mockCacheStorage.putString(any(), any()))
             .thenAnswer((_) async {});
 
         // act
-        await sut.save(latestEscapeManualRemoteModelFixture);
+        await sut.save(updatedEscapeManualRemoteModelFixture);
 
         // assert
         final verificationResult = verify(
@@ -100,28 +64,6 @@ void main() {
         );
         verificationResult.called(1);
         expect(verificationResult.captured.first, equals(expectedSavedData));
-      },
-    );
-
-    test(
-      'save should return updated data',
-      () async {
-        // arrange
-        final cached = JsonUtil.getStringSync(
-          from: 'escape_manual/escape_manual_response.json',
-        );
-        final expectedSavedData = updatedEscapeManualRemoteModelFixture;
-
-        when(() => mockCacheStorage.getString(any()))
-            .thenAnswer((_) async => cached);
-        when(() => mockCacheStorage.putString(any(), any()))
-            .thenAnswer((_) async {});
-
-        // act
-        final result = await sut.save(latestEscapeManualRemoteModelFixture);
-
-        // assert
-        expect(result, equals(expectedSavedData));
       },
     );
 

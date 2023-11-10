@@ -5,7 +5,7 @@ abstract class IObjectStore<T> {
 
   Future<T?> retrieve();
 
-  Future<T> save(T value);
+  Future<void> save(T value);
 
   Future<void> delete();
 }
@@ -25,10 +25,9 @@ mixin SerializableObjectStore<T> on IObjectStore<T> {
   }
 
   @override
-  Future<T> save(T value) async {
+  Future<void> save(T value) async {
     final data = serialize(value);
     await storage.put(name, data);
-    return value;
   }
 
   @override
