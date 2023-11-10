@@ -5,9 +5,9 @@ import '../../../../core/storage/cache_storage.dart';
 import '../../../../core/storage/object_store.dart';
 import '../model/escape_manual_remote.dart';
 
-class EscapeManualCacheStorage extends IObjectStore<EscapeManualRemoteModel>
+class EscapeManualCacheStore extends IObjectStore<EscapeManualRemoteModel>
     with SerializableObjectStore<EscapeManualRemoteModel> {
-  EscapeManualCacheStorage({
+  EscapeManualCacheStore({
     required this.storage,
   });
 

@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/storage/cache_storage.dart';
 import 'package:penhas/app/core/storage/object_store.dart';
-import 'package:penhas/app/features/escape_manual/data/datastore/escape_manual_cache_storage.dart';
+import 'package:penhas/app/features/escape_manual/data/datastore/escape_manual_cache_store.dart';
 import 'package:penhas/app/features/escape_manual/data/model/escape_manual_remote.dart';
 
 import '../../../../../utils/json_util.dart';
@@ -20,10 +20,10 @@ void main() {
   setUp(() {
     mockCacheStorage = _MockLocalStorage();
 
-    sut = EscapeManualCacheStorage(storage: mockCacheStorage);
+    sut = EscapeManualCacheStore(storage: mockCacheStorage);
   });
 
-  group(EscapeManualCacheStorage, () {
+  group(EscapeManualCacheStore, () {
     test(
       'get should call storage.get',
       () async {
