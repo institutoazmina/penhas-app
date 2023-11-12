@@ -107,7 +107,7 @@ void main() {
     group('fetch', () {
       setUp(() {
         when(() => mockCacheStorage.save(any()))
-            .thenAnswer((i) async => i.positionalArguments.first);
+            .thenAnswer((_) async => Future.value());
       });
 
       group('given empty cache', () {
@@ -226,11 +226,7 @@ void main() {
             );
             final cachedData =
                 EscapeManualRemoteModel.fromJson(jsonDecode(response));
-            final lastModifiedAt = cachedData.lastModifiedAt;
-            final expectedLastModifiedAt =
-                (lastModifiedAt.millisecondsSinceEpoch ~/
-                        Duration.millisecondsPerSecond) +
-                    1;
+            const expectedLastModifiedAt = 1689701026;
 
             when(() => mockCacheStorage.retrieve())
                 .thenAnswer((_) async => cachedData);
@@ -256,20 +252,19 @@ void main() {
             verifyNoMoreInteractions(mockApiProvider);
           },
         );
+
         test(
           'should return updated cache',
           () async {
             // arrange
             final response = JsonUtil.getStringSync(
-              from: 'escape_manual/escape_manual_updated_response.json',
+              from: 'escape_manual/escape_manual_latest_response.json',
             );
 
             final expectedEscapeManual = updatedEscapeManualRemoteModelFixture;
 
             when(() => mockCacheStorage.retrieve())
                 .thenAnswer((_) async => escapeManualRemoteModelFixture);
-            when(() => mockCacheStorage.save(any()))
-                .thenAnswer((_) async => updatedEscapeManualRemoteModelFixture);
 
             when(
               () => mockApiProvider.get(
@@ -283,6 +278,34 @@ void main() {
 
             // assert
             expect(result, equals(expectedEscapeManual));
+          },
+        );
+
+        test(
+          'should save updated cache',
+          () async {
+            // arrange
+            final response = JsonUtil.getStringSync(
+              from: 'escape_manual/escape_manual_latest_response.json',
+            );
+
+            final expectedEscapeManual = updatedEscapeManualRemoteModelFixture;
+
+            when(() => mockCacheStorage.retrieve())
+                .thenAnswer((_) async => escapeManualRemoteModelFixture);
+
+            when(
+              () => mockApiProvider.get(
+                path: any(named: 'path'),
+                parameters: any(named: 'parameters'),
+              ),
+            ).thenAnswer((_) async => response);
+
+            // act
+            await sut.fetch();
+
+            // assert
+            verify(() => mockCacheStorage.save(expectedEscapeManual)).called(1);
           },
         );
 
