@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/storage/collection_store.dart';
 import 'package:penhas/app/core/storage/persistent_storage.dart';
-import 'package:penhas/app/features/escape_manual/data/datastore/escape_manual_persistent_storage.dart';
+import 'package:penhas/app/features/escape_manual/data/datastore/escape_manual_persistent_store.dart';
 import 'package:penhas/app/features/escape_manual/data/model/escape_manual_local.dart';
 
 void main() {

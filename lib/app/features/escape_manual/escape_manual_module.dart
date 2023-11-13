@@ -1,8 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import 'data/datasource/impl/escape_manual_local_datasource.dart';
 import 'data/datasource/impl/escape_manual_remote_datasource.dart';
 import 'data/datastore/escape_manual_cache_store.dart';
+import 'data/datastore/escape_manual_persistent_store.dart';
 import 'data/repository/escape_manual_repository.dart';
 import 'domain/get_escape_manual.dart';
 import 'domain/start_escape_manual.dart';
@@ -43,6 +45,13 @@ class EscapeManualModule extends WidgetModule {
         apiProvider: i.get(),
         cacheStorage: EscapeManualCacheStore(
           storage: i.get(),
+        ),
+      ),
+    ),
+    Bind.factory<IEscapeManualLocalDatasource>(
+      (i) => EscapeManualLocalDatasource(
+        store: EscapeManualTasksStore(
+          storageFactory: i.get(),
         ),
       ),
     ),
