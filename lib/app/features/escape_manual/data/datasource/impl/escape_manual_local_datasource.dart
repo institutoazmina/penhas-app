@@ -16,4 +16,9 @@ class EscapeManualLocalDatasource implements IEscapeManualLocalDatasource {
   @override
   Stream<Iterable<EscapeManualTaskLocalModel>> fetchTasks() =>
       _store.watchAll();
+
+  @override
+  Future<void> saveTask(EscapeManualTaskLocalModel task) async {
+    await _store.put(task.id, task);
+  }
 }
