@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import '../../../../../core/extension/iterable.dart';
 import '../../../../../core/storage/collection_store.dart';
 import '../../model/escape_manual_local.dart';
 import '../escape_manual_datasource.dart';
@@ -25,5 +26,18 @@ class EscapeManualLocalDatasource implements IEscapeManualLocalDatasource {
   @override
   Future<void> removeTask(EscapeManualTaskLocalModel task) async {
     await saveTask(task.copyWith(isRemoved: true));
+  }
+
+  @override
+  Future<void> clearBefore(DateTime date) async {
+    var tasks = await _store.all();
+    final keys = tasks.mapNotNull((task) {
+      if (task.updatedAt?.isBefore(date) == true) {
+        return task.id;
+      }
+      return null;
+    });
+
+    await _store.removeAll(keys);
   }
 }
