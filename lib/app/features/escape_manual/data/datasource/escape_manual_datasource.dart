@@ -18,4 +18,8 @@ abstract class IEscapeManualLocalDatasource extends IEscapeManualDatasource {
 
   /// Delete the task logically from the local database
   Future<void> removeTask(EscapeManualTaskLocalModel task);
+
+  /// Removes all tasks before the given date from the local database
+  /// This is used to clear the local database after the tasks have been synced with the server
+  Future<void> clearBefore(DateTime date);
 }
