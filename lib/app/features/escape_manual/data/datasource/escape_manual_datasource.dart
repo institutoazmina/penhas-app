@@ -12,4 +12,7 @@ abstract class IEscapeManualRemoteDatasource extends IEscapeManualDatasource {
 abstract class IEscapeManualLocalDatasource extends IEscapeManualDatasource {
   /// Retrieves the tasks not synced with the server from the local database
   Stream<Iterable<EscapeManualTaskLocalModel>> fetchTasks();
+
+  /// Saves the task to the local database to be synced with the server later
+  Future<void> saveTask(EscapeManualTaskLocalModel task);
 }
