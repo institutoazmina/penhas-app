@@ -21,4 +21,9 @@ class EscapeManualLocalDatasource implements IEscapeManualLocalDatasource {
   Future<void> saveTask(EscapeManualTaskLocalModel task) async {
     await _store.put(task.id, task);
   }
+
+  @override
+  Future<void> removeTask(EscapeManualTaskLocalModel task) async {
+    await saveTask(task.copyWith(isRemoved: true));
+  }
 }

@@ -15,4 +15,7 @@ abstract class IEscapeManualLocalDatasource extends IEscapeManualDatasource {
 
   /// Saves the task to the local database to be synced with the server later
   Future<void> saveTask(EscapeManualTaskLocalModel task);
+
+  /// Delete the task logically from the local database
+  Future<void> removeTask(EscapeManualTaskLocalModel task);
 }
