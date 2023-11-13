@@ -30,7 +30,7 @@ class EscapeManualLocalDatasource implements IEscapeManualLocalDatasource {
 
   @override
   Future<void> clearBefore(DateTime date) async {
-    var tasks = await _store.all();
+    final tasks = await _store.all();
     final keys = tasks.mapNotNull((task) {
       if (task.updatedAt?.isBefore(date) == true) {
         return task.id;
