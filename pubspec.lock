@@ -463,7 +463,7 @@ packages:
     description:
       path: flutter_modular
       ref: improvements
-      resolved-ref: "65f4c5d29e4ca8a1fb71237b87d71655758c6fe8"
+      resolved-ref: "73fa319c100018633482ff395352f8ddbfadbd7e"
       url: "https://github.com/pedrox-hs/modular.git"
     source: git
     version: "3.4.1+1"
