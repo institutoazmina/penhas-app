@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../../../core/extension/date_time.dart';
 import '../../../../core/extension/json_serializer.dart';
 import '../../../appstate/data/model/quiz_session_model.dart';
 
@@ -9,7 +8,8 @@ part 'escape_manual_remote.g.dart';
 
 @JsonSerializable()
 class EscapeManualRemoteModel extends Equatable {
-  EscapeManualRemoteModel({
+  const EscapeManualRemoteModel({
+    required this.lastModifiedAt,
     required this.assistant,
     this.tasks = const [],
     this.removedTasks = const [],
@@ -27,21 +27,23 @@ class EscapeManualRemoteModel extends Equatable {
   @JsonKey(name: 'tarefas_removidas', fromJson: FromJson.parseAsStringList)
   final Iterable<String> removedTasks;
 
-  late final DateTime lastModifiedAt = tasks.fold<DateTime>(
-    DateTimeExt.epoch,
-    (acc, cur) => acc > cur.updatedAt ? acc : cur.updatedAt,
-  );
+  @JsonKey(name: 'consultado_em')
+  @JsonSecondsFromEpochConverter()
+  final DateTime lastModifiedAt;
 
   @override
-  List<Object?> get props => [assistant, tasks.toList(), removedTasks.toList()];
+  List<Object?> get props =>
+      [lastModifiedAt, assistant, tasks.toList(), removedTasks.toList()];
 
   Map<String, dynamic> toJson() => _$EscapeManualRemoteModelToJson(this);
 
   EscapeManualRemoteModel copyWith({
+    DateTime? lastModifiedAt,
     EscapeManualAssistantRemoteModel? assistant,
     Iterable<EscapeManualTaskRemoteModel>? tasks,
   }) =>
       EscapeManualRemoteModel(
+        lastModifiedAt: lastModifiedAt ?? this.lastModifiedAt,
         assistant: assistant ?? this.assistant,
         tasks: tasks ?? this.tasks,
       );

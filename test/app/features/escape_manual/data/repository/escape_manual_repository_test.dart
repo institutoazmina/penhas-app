@@ -40,6 +40,7 @@ void main() {
         () async {
           // arrange
           final escapeManual = EscapeManualRemoteModel(
+            lastModifiedAt: DateTime.now(),
             assistant: EscapeManualAssistantRemoteModel(
               title: 'text',
               subtitle: 'explanation',

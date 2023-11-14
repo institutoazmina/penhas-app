@@ -34,13 +34,13 @@ class EscapeManualRemoteDatasource implements IEscapeManualRemoteDatasource {
   @override
   Future<EscapeManualRemoteModel> fetch() async {
     final cached = await _cacheStorage.retrieve();
-    final lastChangeAt = cached?.lastModifiedAt.secondsSinceEpoch ?? -1;
+    final lastChangeAt = cached?.lastModifiedAt.secondsSinceEpoch ?? 0;
 
     try {
       final response = await _apiProvider.get(
         path: '/me/tarefas',
         parameters: {
-          'modificado_apos': '${lastChangeAt + 1}',
+          'modificado_apos': '$lastChangeAt',
         },
       ).then(jsonDecode);
 
@@ -77,6 +77,7 @@ class EscapeManualRemoteDatasource implements IEscapeManualRemoteDatasource {
         .whereType<EscapeManualTaskRemoteModel>();
 
     return cached.copyWith(
+      lastModifiedAt: newer.lastModifiedAt,
       assistant: newer.assistant,
       tasks: updatedTasks + changedTasks.values,
     );
