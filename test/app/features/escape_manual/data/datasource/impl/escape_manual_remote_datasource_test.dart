@@ -310,7 +310,7 @@ void main() {
         );
 
         test(
-          'should returns cached data when apiProvider get throws',
+          'should return cached data when apiProvider get throws',
           () async {
             // arrange
             final expectedEscapeManual = escapeManualRemoteModelFixture;
