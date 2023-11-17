@@ -77,4 +77,16 @@ class EscapeManualTaskEntity extends Equatable {
         userInputValue,
         isDone,
       ];
+
+  EscapeManualTaskEntity copyWith({
+    String? userInputValue,
+    bool? isDone,
+  }) =>
+      EscapeManualTaskEntity(
+        id: id,
+        type: type,
+        description: description,
+        userInputValue: userInputValue ?? this.userInputValue,
+        isDone: isDone ?? this.isDone,
+      );
 }

@@ -162,11 +162,26 @@ class _SectionTasksWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final qtyDoneTasks = section.tasks.where((task) => task.isDone).length;
+
     return ExpansionTile(
       childrenPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
-      title: Text(
-        section.title,
-        textAlign: TextAlign.start,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            section.title,
+            textAlign: TextAlign.start,
+            style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: DesignSystemColors.darkIndigoThree,
+                ),
+          ),
+          Text(
+            '$qtyDoneTasks/${section.tasks.length}',
+            style: Theme.of(context).textTheme.caption,
+          ),
+        ],
       ),
       children: section.tasks
           .map((task) => _TaskWidget(task, key: Key('task-${task.id}')))
@@ -206,6 +221,7 @@ class _TaskWidgetState
 
   void _onChanged(bool? value) {
     final isDone = value ?? false;
+    controller.updateTask(task.copyWith(isDone: isDone));
 
     setState(() {
       isChecked = isDone;

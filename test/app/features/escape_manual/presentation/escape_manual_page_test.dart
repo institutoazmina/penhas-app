@@ -29,6 +29,7 @@ void main() {
 
   setUpAll(() {
     initModule(module);
+    registerFallbackValue(_FakeEscapeManualTaskEntity());
   });
 
   setUp(() {
@@ -43,6 +44,7 @@ void main() {
         .thenAnswer((invocation) => _MockReactionDisposer());
 
     when(() => mockController.dispose()).thenAnswer((_) async {});
+    when(() => mockController.updateTask(any())).thenAnswer((_) async {});
   });
 
   tearDownAll(() {
@@ -257,6 +259,9 @@ class _MockEscapeManualController extends Mock
     implements EscapeManualController {}
 
 class _MockReactionDisposer extends Mock implements mobx.ReactionDisposer {}
+
+class _FakeEscapeManualTaskEntity extends Fake
+    implements EscapeManualTaskEntity {}
 
 EscapeManualEntity get escapeManualEntity => EscapeManualEntity(
       assistant: EscapeManualAssistantEntity(

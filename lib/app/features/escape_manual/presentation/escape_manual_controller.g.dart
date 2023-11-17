@@ -78,6 +78,14 @@ mixin _$EscapeManualController on _EscapeManualControllerBase, Store {
     return _$openAssistantAsyncAction.run(() => super.openAssistant(action));
   }
 
+  final _$updateTaskAsyncAction =
+      AsyncAction('_EscapeManualControllerBase.updateTask');
+
+  @override
+  Future<void> updateTask(EscapeManualTaskEntity task) {
+    return _$updateTaskAsyncAction.run(() => super.updateTask(task));
+  }
+
   @override
   String toString() {
     return '''

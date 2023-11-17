@@ -13,6 +13,7 @@ import '../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../domain/entity/escape_manual.dart';
 import '../domain/get_escape_manual.dart';
 import '../domain/start_escape_manual.dart';
+import '../domain/update_escape_manual_task.dart';
 import 'escape_manual_state.dart';
 
 part 'escape_manual_controller.g.dart';
@@ -26,8 +27,10 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
   _EscapeManualControllerBase({
     required GetEscapeManualUseCase getEscapeManual,
     required StartEscapeManualUseCase startEscapeManual,
+    required UpdateEscapeManualTaskUseCase updateTask,
   })  : _getEscapeManual = getEscapeManual,
-        _startEscapeManual = startEscapeManual;
+        _startEscapeManual = startEscapeManual,
+        _updateTask = updateTask;
 
   @observable
   EscapeManualState state = const EscapeManualState.initial();
@@ -40,6 +43,7 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
 
   final GetEscapeManualUseCase _getEscapeManual;
   final StartEscapeManualUseCase _startEscapeManual;
+  final UpdateEscapeManualTaskUseCase _updateTask;
 
   @observable
   ObservableFuture? _pageProgress;
@@ -80,7 +84,18 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
     );
 
     final result = await _startProgress;
-    result.fold(_handleOpenAssistantFailure, _handleOpenAssistant);
+    result.fold(_handleErrorAsReaction, _handleOpenAssistant);
+  }
+
+  @action
+  Future<void> updateTask(EscapeManualTaskEntity task) async {
+    final ObservableFuture<Either<Failure, void>> updateProgress;
+    _pageProgress = updateProgress = ObservableFuture(
+      _updateTask(task),
+    );
+
+    final result = await updateProgress;
+    result.fold(_handleErrorAsReaction, (_) {});
   }
 
   ReactionDisposer onReaction(OnEscapeManualReaction fn) {
@@ -111,8 +126,8 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
         .then((_) => load());
   }
 
-  void _handleOpenAssistantFailure(Failure failure) {
-    var errorMessage = mapFailureMessage(failure);
+  void _handleErrorAsReaction(failure) {
+    final errorMessage = mapFailureMessage(failure);
     _reaction = EscapeManualReaction.showSnackbar(errorMessage);
   }
 }
