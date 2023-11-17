@@ -215,6 +215,17 @@ class _TaskWidgetState
         value: isChecked,
         controlAffinity: ListTileControlAffinity.leading,
         onChanged: _onChanged,
+        secondary: PopupMenuButton(
+          icon: const Icon(Icons.more_vert),
+          offset: const Offset(0, 40),
+          itemBuilder: (context) => [
+            _TaskActionWidget(
+              icon: Icons.delete,
+              text: 'Apagar',
+              onTap: () => controller.deleteTask(task),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -227,4 +238,22 @@ class _TaskWidgetState
       isChecked = isDone;
     });
   }
+}
+
+class _TaskActionWidget extends PopupMenuItem {
+  _TaskActionWidget({
+    required IconData icon,
+    required String text,
+    required VoidCallback onTap,
+  }) : super(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, size: 18),
+              const SizedBox(width: 8),
+              Text(text),
+            ],
+          ),
+          onTap: onTap,
+        );
 }

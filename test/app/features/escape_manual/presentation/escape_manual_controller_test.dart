@@ -8,6 +8,7 @@ import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/appstate/data/model/quiz_session_model.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
+import 'package:penhas/app/features/escape_manual/domain/delete_escape_manual_task.dart';
 import 'package:penhas/app/features/escape_manual/domain/entity/escape_manual.dart';
 import 'package:penhas/app/features/escape_manual/domain/get_escape_manual.dart';
 import 'package:penhas/app/features/escape_manual/domain/start_escape_manual.dart';
@@ -21,6 +22,7 @@ void main() {
   late GetEscapeManualUseCase mockGetEscapeManual;
   late StartEscapeManualUseCase mockStartEscapeManual;
   late UpdateEscapeManualTaskUseCase mockUpdateEscapeManualTask;
+  late DeleteEscapeManualTaskUseCase mockDeleteEscapeManualTask;
 
   late Completer<EscapeManualEntity> getEscapeManualCompleter;
 
@@ -28,6 +30,8 @@ void main() {
     mockGetEscapeManual = _MockGetEscapeManualUseCase();
     mockStartEscapeManual = _MockStartEscapeManualUseCase();
     mockUpdateEscapeManualTask = _MockUpdateEscapeManualTaskUseCase();
+    mockDeleteEscapeManualTask = _MockDeleteEscapeManualTaskUseCase();
+
     getEscapeManualCompleter = Completer();
 
     when(() => mockGetEscapeManual())
@@ -37,6 +41,7 @@ void main() {
       getEscapeManual: mockGetEscapeManual,
       startEscapeManual: mockStartEscapeManual,
       updateTask: mockUpdateEscapeManualTask,
+      deleteTask: mockDeleteEscapeManualTask,
     );
   });
 
@@ -301,6 +306,9 @@ class _MockStartEscapeManualUseCase extends Mock
 
 class _MockUpdateEscapeManualTaskUseCase extends Mock
     implements UpdateEscapeManualTaskUseCase {}
+
+class _MockDeleteEscapeManualTaskUseCase extends Mock
+    implements DeleteEscapeManualTaskUseCase {}
 
 class _MockModularNavigate extends Mock implements IModularNavigator {}
 

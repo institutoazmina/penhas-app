@@ -10,6 +10,7 @@ import '../../../core/extension/mobx.dart';
 import '../../appstate/domain/entities/app_state_entity.dart';
 import '../../authentication/presentation/shared/map_failure_message.dart';
 import '../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../domain/delete_escape_manual_task.dart';
 import '../domain/entity/escape_manual.dart';
 import '../domain/get_escape_manual.dart';
 import '../domain/start_escape_manual.dart';
@@ -28,9 +29,11 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
     required GetEscapeManualUseCase getEscapeManual,
     required StartEscapeManualUseCase startEscapeManual,
     required UpdateEscapeManualTaskUseCase updateTask,
+    required DeleteEscapeManualTaskUseCase deleteTask,
   })  : _getEscapeManual = getEscapeManual,
         _startEscapeManual = startEscapeManual,
-        _updateTask = updateTask;
+        _updateTask = updateTask,
+        _deleteTask = deleteTask;
 
   @observable
   EscapeManualState state = const EscapeManualState.initial();
@@ -44,6 +47,7 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
   final GetEscapeManualUseCase _getEscapeManual;
   final StartEscapeManualUseCase _startEscapeManual;
   final UpdateEscapeManualTaskUseCase _updateTask;
+  final DeleteEscapeManualTaskUseCase _deleteTask;
 
   @observable
   ObservableFuture? _pageProgress;
@@ -95,6 +99,17 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
     );
 
     final result = await updateProgress;
+    result.fold(_handleErrorAsReaction, (_) {});
+  }
+
+  @action
+  Future<void> deleteTask(EscapeManualTaskEntity task) async {
+    final ObservableFuture<Either<Failure, void>> deleteProgress;
+    _pageProgress = deleteProgress = ObservableFuture(
+      _deleteTask(task),
+    );
+
+    final result = await deleteProgress;
     result.fold(_handleErrorAsReaction, (_) {});
   }
 

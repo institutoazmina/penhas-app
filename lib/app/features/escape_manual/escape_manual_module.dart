@@ -26,6 +26,7 @@ class EscapeManualModule extends WidgetModule {
         getEscapeManual: i.get(),
         startEscapeManual: i.get(),
         updateTask: i.get(),
+        deleteTask: i.get(),
       ),
     ),
     Bind.factory(
