@@ -6,6 +6,11 @@ skip_docs
 
 default_platform(:ios)
 
+xcodes(
+  version: '14.2',
+  select_for_current_build_only: true,
+)
+
 profile_type_edirock = 'ad-hoc' # Firebase
 profile_type_store = 'app-store'
 

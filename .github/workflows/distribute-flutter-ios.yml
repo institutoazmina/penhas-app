@@ -37,8 +37,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3.3.0
 
-      - name: Select Xcode version
-        run: sudo xcode-select -s /Applications/Xcode_14.2.app
+      - name: Install xcodes
+        run: |
+          brew install xcodesorg/made/xcodes
 
       - name: Retrieve Flutter version from FVM config
         uses: kuhnroyal/flutter-fvm-config-action@v1
