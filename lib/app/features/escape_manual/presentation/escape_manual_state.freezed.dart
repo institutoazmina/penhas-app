@@ -497,7 +497,7 @@ abstract class _ErrorState implements EscapeManualState {
 class _$EscapeManualReactionTearOff {
   const _$EscapeManualReactionTearOff();
 
-  _ShowSnackbarReaction showSnackbar(String message) {
+  _ShowSnackbarReaction showSnackBar(String message) {
     return _ShowSnackbarReaction(
       message,
     );
@@ -513,33 +513,33 @@ mixin _$EscapeManualReaction {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String message) showSnackbar,
+    required TResult Function(String message) showSnackBar,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String message)? showSnackbar,
+    TResult Function(String message)? showSnackBar,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String message)? showSnackbar,
+    TResult Function(String message)? showSnackBar,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ShowSnackbarReaction value) showSnackbar,
+    required TResult Function(_ShowSnackbarReaction value) showSnackBar,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ShowSnackbarReaction value)? showSnackbar,
+    TResult Function(_ShowSnackbarReaction value)? showSnackBar,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ShowSnackbarReaction value)? showSnackbar,
+    TResult Function(_ShowSnackbarReaction value)? showSnackBar,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -623,7 +623,7 @@ class _$_ShowSnackbarReaction implements _ShowSnackbarReaction {
 
   @override
   String toString() {
-    return 'EscapeManualReaction.showSnackbar(message: $message)';
+    return 'EscapeManualReaction.showSnackBar(message: $message)';
   }
 
   @override
@@ -647,27 +647,27 @@ class _$_ShowSnackbarReaction implements _ShowSnackbarReaction {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String message) showSnackbar,
+    required TResult Function(String message) showSnackBar,
   }) {
-    return showSnackbar(message);
+    return showSnackBar(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String message)? showSnackbar,
+    TResult Function(String message)? showSnackBar,
   }) {
-    return showSnackbar?.call(message);
+    return showSnackBar?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String message)? showSnackbar,
+    TResult Function(String message)? showSnackBar,
     required TResult orElse(),
   }) {
-    if (showSnackbar != null) {
-      return showSnackbar(message);
+    if (showSnackBar != null) {
+      return showSnackBar(message);
     }
     return orElse();
   }
@@ -675,27 +675,27 @@ class _$_ShowSnackbarReaction implements _ShowSnackbarReaction {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ShowSnackbarReaction value) showSnackbar,
+    required TResult Function(_ShowSnackbarReaction value) showSnackBar,
   }) {
-    return showSnackbar(this);
+    return showSnackBar(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ShowSnackbarReaction value)? showSnackbar,
+    TResult Function(_ShowSnackbarReaction value)? showSnackBar,
   }) {
-    return showSnackbar?.call(this);
+    return showSnackBar?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ShowSnackbarReaction value)? showSnackbar,
+    TResult Function(_ShowSnackbarReaction value)? showSnackBar,
     required TResult orElse(),
   }) {
-    if (showSnackbar != null) {
-      return showSnackbar(this);
+    if (showSnackBar != null) {
+      return showSnackBar(this);
     }
     return orElse();
   }

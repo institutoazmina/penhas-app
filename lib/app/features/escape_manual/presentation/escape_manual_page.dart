@@ -71,7 +71,7 @@ class _EscapeManualPageState
 
   void _onReaction(EscapeManualReaction? reaction) {
     reaction?.when(
-      showSnackbar: (message) => showSnackBar(
+      showSnackBar: (message) => showSnackBar(
         scaffoldKey: _scaffoldKey,
         message: message,
       ),

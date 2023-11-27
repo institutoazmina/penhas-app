@@ -143,6 +143,6 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
 
   void _handleErrorAsReaction(failure) {
     final errorMessage = mapFailureMessage(failure);
-    _reaction = EscapeManualReaction.showSnackbar(errorMessage);
+    _reaction = EscapeManualReaction.showSnackBar(errorMessage);
   }
 }

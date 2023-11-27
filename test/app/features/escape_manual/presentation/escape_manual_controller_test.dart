@@ -287,7 +287,7 @@ void main() {
           // assert
           verify(
             () => onReactionMock.call(
-              const EscapeManualReaction.showSnackbar(
+              const EscapeManualReaction.showSnackBar(
                 'O servidor está com problema neste momento, tente novamente.',
               ),
             ),
