@@ -30,7 +30,7 @@ final escapeManualModelFixture = EscapeManualRemoteModel(
       title: 'title',
       description: 'description',
       isDone: false,
-      userInputValue: 'userInputValue',
+      userInputValue: null,
       updatedAt: DateTime.now(),
     ),
     EscapeManualTaskRemoteModel(
@@ -73,7 +73,7 @@ final escapeManualEntityFixture = EscapeManualEntity(
           type: 'checkbox',
           description: 'description',
           isDone: false,
-          userInputValue: 'userInputValue',
+          userInputValue: null,
         ),
         EscapeManualTaskEntity(
           id: '3',
@@ -118,7 +118,7 @@ final updatedEscapeManualEntityFixture = EscapeManualEntity(
           type: 'checkbox',
           description: 'description',
           isDone: true,
-          userInputValue: 'userInputValue',
+          userInputValue: null,
         ),
       ],
     ),
