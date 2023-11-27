@@ -66,9 +66,6 @@ EscapeManualTaskRemoteModel _$EscapeManualTaskRemoteModelFromJson(
       isDone: json['checkbox_feito'] == null
           ? false
           : const JsonBoolConverter().fromJson(json['checkbox_feito']),
-      isEditable: json['eh_customizada'] == null
-          ? false
-          : const JsonBoolConverter().fromJson(json['eh_customizada']),
       userInputValue: json['campo_livre'],
       updatedAt: const JsonSecondsFromEpochConverter()
           .fromJson(json['atualizado_em'] as int),
@@ -92,8 +89,6 @@ Map<String, dynamic> _$EscapeManualTaskRemoteModelToJson(
       'titulo', const JsonEmptyStringToNullConverter().toJson(instance.title));
   val['descricao'] = instance.description;
   writeNotNull('campo_livre', instance.userInputValue);
-  writeNotNull(
-      'eh_customizada', const JsonBoolConverter().toJson(instance.isEditable));
   writeNotNull(
       'checkbox_feito', const JsonBoolConverter().toJson(instance.isDone));
   writeNotNull('atualizado_em',

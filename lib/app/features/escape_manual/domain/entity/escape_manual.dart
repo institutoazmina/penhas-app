@@ -59,7 +59,6 @@ class EscapeManualTaskEntity extends Equatable {
     required this.id,
     required this.type,
     required this.description,
-    required this.isEditable,
     required this.userInputValue,
     required this.isDone,
   });
@@ -67,7 +66,6 @@ class EscapeManualTaskEntity extends Equatable {
   final String id;
   final String type;
   final String description;
-  final bool isEditable;
   final String? userInputValue;
   final bool isDone;
 
@@ -76,7 +74,6 @@ class EscapeManualTaskEntity extends Equatable {
         id,
         type,
         description,
-        isEditable,
         userInputValue,
         isDone,
       ];
