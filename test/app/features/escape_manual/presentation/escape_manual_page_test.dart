@@ -282,7 +282,6 @@ EscapeManualEntity get escapeManualEntity => EscapeManualEntity(
               type: 'checkbox',
               description: 'Task #${task} of section ${section}',
               isDone: task == 2,
-              isEditable: task == 4,
               userInputValue: null,
             ),
           ),

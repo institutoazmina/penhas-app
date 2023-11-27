@@ -6,8 +6,10 @@ import 'data/datasource/impl/escape_manual_remote_datasource.dart';
 import 'data/datastore/escape_manual_cache_store.dart';
 import 'data/datastore/escape_manual_persistent_store.dart';
 import 'data/repository/escape_manual_repository.dart';
+import 'domain/delete_escape_manual_task.dart';
 import 'domain/get_escape_manual.dart';
 import 'domain/start_escape_manual.dart';
+import 'domain/update_escape_manual_task.dart';
 import 'presentation/escape_manual_controller.dart';
 import 'presentation/escape_manual_page.dart';
 
@@ -35,8 +37,19 @@ class EscapeManualModule extends WidgetModule {
         repository: i.get(),
       ),
     ),
+    Bind.factory<UpdateEscapeManualTaskUseCase>(
+      (i) => UpdateEscapeManualTaskUseCase(
+        repository: i.get(),
+      ),
+    ),
+    Bind.factory<DeleteEscapeManualTaskUseCase>(
+      (i) => DeleteEscapeManualTaskUseCase(
+        repository: i.get(),
+      ),
+    ),
     Bind.factory<IEscapeManualRepository>(
       (i) => EscapeManualRepository(
+        localDatasource: i.get(),
         remoteDatasource: i.get(),
       ),
     ),

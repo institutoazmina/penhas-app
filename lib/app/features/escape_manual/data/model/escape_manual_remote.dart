@@ -85,7 +85,6 @@ class EscapeManualTaskRemoteModel extends Equatable {
     this.title,
     required this.description,
     this.isDone = false,
-    this.isEditable = false,
     this.userInputValue,
     required this.updatedAt,
   });
@@ -112,10 +111,6 @@ class EscapeManualTaskRemoteModel extends Equatable {
   @JsonKey(name: 'campo_livre')
   final dynamic userInputValue;
 
-  @JsonKey(name: 'eh_customizada')
-  @JsonBoolConverter()
-  final bool isEditable;
-
   @JsonKey(name: 'checkbox_feito')
   @JsonBoolConverter()
   final bool isDone;
@@ -132,7 +127,6 @@ class EscapeManualTaskRemoteModel extends Equatable {
         title,
         description,
         isDone,
-        isEditable,
         userInputValue,
         updatedAt,
       ];
@@ -149,7 +143,6 @@ class EscapeManualTaskRemoteModel extends Equatable {
         group: group,
         title: title,
         description: description,
-        isEditable: isEditable,
         userInputValue: userInputValue ?? this.userInputValue,
         isDone: isDone ?? this.isDone,
         updatedAt: updatedAt,

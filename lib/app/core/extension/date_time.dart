@@ -13,5 +13,7 @@ extension DateTimeExt on DateTime {
         isUtc: isUtc,
       );
 
+  operator <(DateTime other) => isBefore(other);
+
   operator >(DateTime other) => isAfter(other);
 }

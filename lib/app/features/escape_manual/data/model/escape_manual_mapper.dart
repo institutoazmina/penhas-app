@@ -47,7 +47,6 @@ extension EscapeManualTaskRemoteMapper on EscapeManualTaskRemoteModel {
         id: id,
         type: type,
         description: description,
-        isEditable: isEditable == true,
         userInputValue: userInputValue,
         isDone: isDone == true,
       );
