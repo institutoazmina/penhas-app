@@ -9,6 +9,8 @@ part of 'escape_manual_remote.dart';
 EscapeManualRemoteModel _$EscapeManualRemoteModelFromJson(
         Map<String, dynamic> json) =>
     EscapeManualRemoteModel(
+      lastModifiedAt: const JsonSecondsFromEpochConverter()
+          .fromJson(json['consultado_em'] as int),
       assistant: EscapeManualAssistantRemoteModel.fromJson(
           json['mf_assistant'] as Map<String, dynamic>),
       tasks: (json['tarefas'] as List<dynamic>?)?.map((e) =>
@@ -21,12 +23,23 @@ EscapeManualRemoteModel _$EscapeManualRemoteModelFromJson(
     );
 
 Map<String, dynamic> _$EscapeManualRemoteModelToJson(
-        EscapeManualRemoteModel instance) =>
-    <String, dynamic>{
-      'mf_assistant': instance.assistant,
-      'tarefas': instance.tasks.toList(),
-      'tarefas_removidas': instance.removedTasks.toList(),
-    };
+    EscapeManualRemoteModel instance) {
+  final val = <String, dynamic>{
+    'mf_assistant': instance.assistant,
+    'tarefas': instance.tasks.toList(),
+    'tarefas_removidas': instance.removedTasks.toList(),
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('consultado_em',
+      const JsonSecondsFromEpochConverter().toJson(instance.lastModifiedAt));
+  return val;
+}
 
 EscapeManualAssistantRemoteModel _$EscapeManualAssistantRemoteModelFromJson(
         Map<String, dynamic> json) =>

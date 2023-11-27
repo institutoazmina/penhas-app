@@ -15,6 +15,7 @@ final escapeManualLocalModelsFixture = [
 ];
 
 final escapeManualModelFixture = EscapeManualRemoteModel(
+  lastModifiedAt: DateTime.fromMillisecondsSinceEpoch(1699916213000),
   assistant: const EscapeManualAssistantRemoteModel(
     title: 'text',
     subtitle: 'explanation',
@@ -138,6 +139,7 @@ final updatedEscapeManualEntityFixture = EscapeManualEntity(
 );
 
 final escapeManualRemoteModelFixture = EscapeManualRemoteModel(
+  lastModifiedAt: DateTime.fromMillisecondsSinceEpoch(1699916213000),
   assistant: const EscapeManualAssistantRemoteModel(
     title: 'action button',
     subtitle: 'Explanation',
@@ -189,6 +191,7 @@ final escapeManualRemoteModelFixture = EscapeManualRemoteModel(
 );
 
 final updatedEscapeManualRemoteModelFixture = EscapeManualRemoteModel(
+  lastModifiedAt: DateTime.fromMillisecondsSinceEpoch(1699916697000),
   assistant: const EscapeManualAssistantRemoteModel(
     title: 'new action button',
     subtitle: 'New explanation',
