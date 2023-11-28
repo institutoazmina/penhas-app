@@ -5,7 +5,7 @@ import '../../../appstate/domain/entities/app_state_entity.dart';
 class EscapeManualEntity extends Equatable {
   const EscapeManualEntity({
     required this.assistant,
-    this.sections = const [],
+    required this.sections,
   });
 
   final EscapeManualAssistantEntity assistant;
