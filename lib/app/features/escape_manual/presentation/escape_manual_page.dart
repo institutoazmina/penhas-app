@@ -141,7 +141,7 @@ class _LoadedStateWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          const _TaskDivider(),
+          const _Divider(),
           ListView.separated(
             primary: false,
             shrinkWrap: true,
@@ -150,9 +150,9 @@ class _LoadedStateWidget extends StatelessWidget {
               final section = sections[index];
               return _SectionTasksWidget(section);
             },
-            separatorBuilder: (context, index) => const _TaskDivider(),
+            separatorBuilder: (context, index) => const _Divider(),
           ),
-          const _TaskDivider(),
+          const _Divider(),
         ],
       ),
     );
@@ -190,7 +190,7 @@ class _SectionTasksWidget extends StatelessWidget {
         ],
       ),
       children: [
-        const _TaskDivider(),
+        const _Divider(),
         ...section.tasks.map(
           (task) => _TaskWidget(
             task,
@@ -293,10 +293,6 @@ class _TaskActionWidget extends PopupMenuItem {
         );
 }
 
-class _TaskDivider extends Divider {
-  const _TaskDivider()
-      : super(
-          height: 1,
-          color: DesignSystemColors.blueyGrey,
-        );
+class _Divider extends Divider {
+  const _Divider() : super(height: 1, color: DesignSystemColors.blueyGrey);
 }
