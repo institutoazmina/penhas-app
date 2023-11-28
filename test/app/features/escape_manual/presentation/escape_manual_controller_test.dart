@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -117,6 +118,7 @@ void main() {
                 ),
               ),
             ),
+            sections: [],
           );
 
           // act
@@ -145,6 +147,7 @@ void main() {
                 ),
               ),
             ),
+            sections: [],
           );
 
           // act
@@ -180,6 +183,166 @@ void main() {
       );
     });
 
+    group('updateTask', () {
+      final task = EscapeManualTaskEntity(
+        id: 'id',
+        type: 'type',
+        description: 'description',
+        userInputValue: null,
+        isDone: Random().nextBool(),
+      );
+
+      late Completer<Either<Failure, void>> updateTaskCompleter;
+
+      setUp(() {
+        updateTaskCompleter = Completer();
+
+        registerFallbackValue(_FakeEscapeManualTaskEntity());
+
+        when(() => mockUpdateEscapeManualTask(any()))
+            .thenAnswer((_) async => updateTaskCompleter.future);
+      });
+
+      test(
+        'should call updateTask',
+        () async {
+          // act
+          sut.updateTask(task);
+
+          // assert
+          verify(() => mockUpdateEscapeManualTask(task)).called(1);
+        },
+      );
+
+      test(
+        'should change progress state to loading',
+        () async {
+          // act
+          sut.updateTask(task);
+
+          // assert
+          expect(sut.progressState, PageProgressState.loading);
+        },
+      );
+
+      test(
+        'should change progress state to loaded when success',
+        () async {
+          // arrange
+          updateTaskCompleter.complete(right(unit));
+
+          // act
+          await sut.updateTask(task);
+
+          // assert
+          expect(sut.progressState, PageProgressState.loaded);
+        },
+      );
+
+      test(
+        'should emit showSnackBar reaction when failed',
+        () async {
+          // arrange
+          final onReactionMock = _MockOnEscapeManualReaction();
+          final failure = ServerFailure();
+          updateTaskCompleter.complete(left(failure));
+          sut.onReaction(onReactionMock);
+
+          // act
+          await sut.updateTask(task);
+
+          // assert
+          verify(
+            () => onReactionMock.call(
+              const EscapeManualReaction.showSnackBar(
+                'O servidor está com problema neste momento, tente novamente.',
+              ),
+            ),
+          ).called(1);
+        },
+      );
+    });
+
+    group('deleteTask', () {
+      final task = EscapeManualTaskEntity(
+        id: 'id',
+        type: 'type',
+        description: 'description',
+        userInputValue: null,
+        isDone: Random().nextBool(),
+      );
+
+      late Completer<Either<Failure, void>> deleteTaskCompleter;
+
+      setUp(() {
+        deleteTaskCompleter = Completer();
+
+        registerFallbackValue(_FakeEscapeManualTaskEntity());
+
+        when(() => mockDeleteEscapeManualTask(any()))
+            .thenAnswer((_) async => deleteTaskCompleter.future);
+      });
+
+      test(
+        'should call deleteTask',
+        () async {
+          // act
+          sut.deleteTask(task);
+
+          // assert
+          verify(() => mockDeleteEscapeManualTask(task)).called(1);
+        },
+      );
+
+      test(
+        'should change progress state to loading',
+        () async {
+          // act
+          sut.deleteTask(task);
+
+          // assert
+          expect(sut.progressState, PageProgressState.loading);
+        },
+      );
+
+      test(
+        'should change progress state to loaded when success',
+        () async {
+          // arrange
+          deleteTaskCompleter.complete(right(unit));
+
+          // act
+          await sut.deleteTask(task);
+
+          // assert
+          expect(sut.progressState, PageProgressState.loaded);
+        },
+      );
+
+      test(
+        'should emit showSnackBar reaction when failed',
+        () async {
+          // arrange
+          final onReactionMock = _MockOnEscapeManualReaction();
+          final failure = ServerFailure();
+          deleteTaskCompleter.complete(left(failure));
+          sut.onReaction(onReactionMock);
+
+          // act
+          await sut.deleteTask(task);
+
+          // assert
+          verify(
+            () => onReactionMock.call(
+              const EscapeManualReaction.showSnackBar(
+                'O servidor está com problema neste momento, tente novamente.',
+              ),
+            ),
+          ).called(1);
+        },
+      );
+    });
+
     group('openAssistant', () {
       const assistantAction = EscapeManualAssistantActionEntity(
         text: 'button text',
@@ -196,7 +359,7 @@ void main() {
       late IModularNavigator mockNavigator;
 
       setUpAll(() {
-        registerFallbackValue(const QuizSessionModel(sessionId: 'session_id'));
+        registerFallbackValue(_FakeQuizSessionModel());
       });
 
       setUp(() {
@@ -312,9 +475,14 @@ class _MockDeleteEscapeManualTaskUseCase extends Mock
 
 class _MockModularNavigate extends Mock implements IModularNavigator {}
 
+class _MockOnEscapeManualReaction extends Mock
+    implements _IOnEscapeManualReaction {}
+
+class _FakeEscapeManualTaskEntity extends Fake
+    implements EscapeManualTaskEntity {}
+
+class _FakeQuizSessionModel extends Fake implements QuizSessionModel {}
+
 abstract class _IOnEscapeManualReaction {
   void call(EscapeManualReaction? reaction);
 }
-
-class _MockOnEscapeManualReaction extends Mock
-    implements _IOnEscapeManualReaction {}
