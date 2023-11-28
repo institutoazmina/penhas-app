@@ -3,7 +3,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:mobx/mobx.dart' as mobx;
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
@@ -132,6 +131,7 @@ void main() {
                 explanation: 'explanation',
                 action: assistantAction,
               ),
+              sections: [],
             ),
           ),
         );
@@ -162,6 +162,96 @@ void main() {
 
         // assert
         verify(() => mockController.load()).called(1);
+      },
+    );
+
+    testWidgets(
+      'should call controller updateTask with done task when checkbox is pressed',
+      (tester) async {
+        // arrange
+        final expectedTask =
+            escapeManualEntity.sections[1].tasks[1].copyWith(isDone: true);
+        when(() => mockController.state)
+            .thenReturn(EscapeManualState.loaded(escapeManualEntity));
+        when(() => mockController.updateTask(any()))
+            .thenAnswer((_) => Future.value());
+        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
+
+        // act
+        await tester.tapAll(
+          find.widgetWithText(ExpansionTile, 'Section 1'),
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(
+          find.descendant(
+            of: find.byKey(Key('escape-manual-task-1-1')),
+            matching: find.byType(Checkbox),
+          ),
+        );
+
+        // assert
+        verify(() => mockController.updateTask(expectedTask)).called(1);
+      },
+    );
+
+    testWidgets(
+      'should call controller updateTask with not done task when checkbox is pressed',
+      (tester) async {
+        // arrange
+        final expectedTask =
+            escapeManualEntity.sections[1].tasks[2].copyWith(isDone: false);
+        when(() => mockController.state)
+            .thenReturn(EscapeManualState.loaded(escapeManualEntity));
+        when(() => mockController.updateTask(any()))
+            .thenAnswer((_) => Future.value());
+        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
+
+        // act
+        await tester.tapAll(
+          find.widgetWithText(ExpansionTile, 'Section 1'),
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(
+          find.descendant(
+            of: find.byKey(Key('escape-manual-task-1-2')),
+            matching: find.byType(Checkbox),
+          ),
+        );
+
+        // assert
+        verify(() => mockController.updateTask(expectedTask)).called(1);
+      },
+    );
+
+    testWidgets(
+      'should call controller deleteTask when delete button is pressed',
+      (tester) async {
+        // arrange
+        final expectedTask = escapeManualEntity.sections[1].tasks[1];
+        when(() => mockController.state)
+            .thenReturn(EscapeManualState.loaded(escapeManualEntity));
+        when(() => mockController.deleteTask(any()))
+            .thenAnswer((_) => Future.value());
+        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
+
+        // act
+        await tester.tapAll(
+          find.widgetWithText(ExpansionTile, 'Section 1'),
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(
+          find.descendant(
+            of: find.byKey(Key('escape-manual-task-1-1')),
+            matching: find.byType(PopupMenuButton),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(
+          find.textContaining('Apagar'),
+        );
+
+        // assert
+        verify(() => mockController.deleteTask(expectedTask)).called(1);
       },
     );
 
@@ -208,12 +298,33 @@ void main() {
           );
           await tester.pumpAndSettle();
           await tester.tapAll(
-            find.byWidgetPredicate((widget) =>
-                widget is CheckboxListTile &&
-                (widget.title as HtmlWidget?)
-                        ?.html
-                        .contains('Task #1 of section 1') ==
-                    true),
+            find.descendant(
+              of: find.byKey(Key('escape-manual-task-1-1')),
+              matching: find.byType(Checkbox),
+            ),
+          );
+        },
+      );
+
+      screenshotTest(
+        'should show task options menu',
+        fileName: 'escape_manual_page_task_options',
+        setUp: () {
+          when(() => mockController.state).thenReturn(
+            EscapeManualState.loaded(escapeManualEntity),
+          );
+        },
+        pageBuilder: () => const EscapeManualPage(),
+        pumpBeforeTest: (tester) async {
+          await tester.tapAll(
+            find.widgetWithText(ExpansionTile, 'Section 1'),
+          );
+          await tester.pumpAndSettle();
+          await tester.tapAll(
+            find.descendant(
+              of: find.byKey(Key('escape-manual-task-1-1')),
+              matching: find.byType(PopupMenuButton),
+            ),
           );
         },
       );
@@ -283,7 +394,7 @@ EscapeManualEntity get escapeManualEntity => EscapeManualEntity(
           tasks: List.generate(
             5,
             (task) => EscapeManualTaskEntity(
-              id: '${task}',
+              id: '${section}-${task}',
               type: 'checkbox',
               description: 'Task #${task} of section ${section}',
               isDone: task == 2,

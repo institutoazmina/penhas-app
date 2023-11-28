@@ -191,8 +191,12 @@ class _SectionTasksWidget extends StatelessWidget {
       ),
       children: [
         const _TaskDivider(),
-        ...section.tasks
-            .map((task) => _TaskWidget(task, key: Key('task-${task.id}'))),
+        ...section.tasks.map(
+          (task) => _TaskWidget(
+            task,
+            key: Key('escape-manual-task-${task.id}'),
+          ),
+        ),
       ].toList(),
     );
   }
