@@ -17,6 +17,6 @@ class EscapeManualState with _$EscapeManualState {
 
 @freezed
 class EscapeManualReaction with _$EscapeManualReaction {
-  const factory EscapeManualReaction.showSnackbar(String message) =
+  const factory EscapeManualReaction.showSnackBar(String message) =
       _ShowSnackbarReaction;
 }

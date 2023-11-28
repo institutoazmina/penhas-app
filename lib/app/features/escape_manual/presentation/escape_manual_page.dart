@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:mobx/mobx.dart';
 
@@ -70,7 +71,7 @@ class _EscapeManualPageState
 
   void _onReaction(EscapeManualReaction? reaction) {
     reaction?.when(
-      showSnackbar: (message) => showSnackBar(
+      showSnackBar: (message) => showSnackBar(
         scaffoldKey: _scaffoldKey,
         message: message,
       ),
@@ -140,7 +141,8 @@ class _LoadedStateWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          ListView.builder(
+          const _Divider(),
+          ListView.separated(
             primary: false,
             shrinkWrap: true,
             itemCount: sections.length,
@@ -148,7 +150,9 @@ class _LoadedStateWidget extends StatelessWidget {
               final section = sections[index];
               return _SectionTasksWidget(section);
             },
+            separatorBuilder: (context, index) => const _Divider(),
           ),
+          const _Divider(),
         ],
       ),
     );
@@ -162,15 +166,38 @@ class _SectionTasksWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final qtyDoneTasks = section.tasks.where((task) => task.isDone).length;
+
     return ExpansionTile(
       childrenPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
-      title: Text(
-        section.title,
-        textAlign: TextAlign.start,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            section.title,
+            textAlign: TextAlign.start,
+            style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: DesignSystemColors.darkIndigoThree,
+                ),
+          ),
+          Text(
+            '$qtyDoneTasks/${section.tasks.length}',
+            style: Theme.of(context).textTheme.caption?.copyWith(
+                  color: DesignSystemColors.brownishGrey,
+                ),
+          ),
+        ],
       ),
-      children: section.tasks
-          .map((task) => _TaskWidget(task, key: Key('task-${task.id}')))
-          .toList(),
+      children: [
+        const _Divider(),
+        ...section.tasks.map(
+          (task) => _TaskWidget(
+            task,
+            key: Key('escape-manual-task-${task.id}'),
+          ),
+        ),
+      ].toList(),
     );
   }
 }
@@ -192,23 +219,80 @@ class _TaskWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return ListTileTheme(
       horizontalTitleGap: 4,
       child: CheckboxListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        title: HtmlWidget(task.description),
+        title: HtmlWidget(
+          task.description,
+          textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                fontSize: 16,
+                color: DesignSystemColors.darkIndigoThree,
+              ),
+        ),
         value: isChecked,
         controlAffinity: ListTileControlAffinity.leading,
         onChanged: _onChanged,
+        secondary: PopupMenuButton(
+          icon: const Icon(Icons.more_vert),
+          offset: const Offset(0, 40),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          itemBuilder: (context) => [
+            _TaskActionWidget(
+              text: 'Apagar',
+              icon: 'assets/images/svg/actions/delete.svg',
+              size: theme.iconTheme.size,
+              onTap: () => controller.deleteTask(task),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   void _onChanged(bool? value) {
     final isDone = value ?? false;
+    controller.updateTask(task.copyWith(isDone: isDone));
 
     setState(() {
       isChecked = isDone;
     });
   }
+}
+
+class _TaskActionWidget extends PopupMenuItem {
+  _TaskActionWidget({
+    required String icon,
+    required String text,
+    required VoidCallback onTap,
+    double? size,
+  }) : super(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SvgPicture.asset(
+                icon,
+                color: DesignSystemColors.darkIndigoThree,
+                height: size,
+                width: size,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                text,
+                style: const TextStyle(
+                  fontSize: 18,
+                  color: DesignSystemColors.darkIndigoThree,
+                ),
+              ),
+            ],
+          ),
+          onTap: onTap,
+        );
+}
+
+class _Divider extends Divider {
+  const _Divider() : super(height: 1, color: DesignSystemColors.blueyGrey);
 }

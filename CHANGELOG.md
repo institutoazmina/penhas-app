@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Adicionado
+- Manual de fuga (check e remoção)
+- Funcionamento offline do manual de fuga
+
 ## [3.4.0] - 2023-09-26
 
 ### Adicionado

@@ -180,6 +180,8 @@ flutter:
     - assets/images/svg/help_center/guardians/guardians_edit.svg
     - assets/images/svg/help_center/guardians/guardians_sent_invite.svg
     - assets/images/svg/help_center/guardians/guardians_alert.svg
+    # Actions
+    - assets/images/svg/actions/delete.svg
     # Zodiac
     - assets/images/zodiac/svg/constelation_aquarius.svg
     - assets/images/zodiac/svg/constelation_aries.svg
