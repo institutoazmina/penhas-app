@@ -54,6 +54,7 @@ void main() {
               ),
             ),
           ),
+          sections: [],
         );
 
         when(() => mockEscapeManualRepository.fetch())
@@ -66,8 +67,117 @@ void main() {
         );
       },
     );
+
+    test(
+      'should sort tasks',
+      () async {
+        // arrange
+        final escapeManual = EscapeManualEntity(
+          assistant: EscapeManualAssistantEntity(
+            explanation: 'explanation',
+            action: EscapeManualAssistantActionEntity(
+              text: 'text',
+              quizSession: QuizSessionEntity(
+                currentMessage: [],
+                sessionId: 'sessionId',
+                isFinished: false,
+                endScreen: null,
+              ),
+            ),
+          ),
+          sections: [
+            EscapeManualTasksSectionEntity(
+              title: 'Section I',
+              tasks: unsortedTasks,
+            ),
+          ],
+        );
+        final expectedEscapeManual = escapeManual.copyWith(
+          sections: [
+            EscapeManualTasksSectionEntity(
+              title: 'Section I',
+              tasks: sortedTasks,
+            ),
+          ],
+        );
+
+        when(() => mockEscapeManualRepository.fetch())
+            .thenAnswer((_) => Stream.value(escapeManual));
+
+        // act
+        sut();
+
+        // assert
+        expectLater(
+          sut(),
+          emits(expectedEscapeManual),
+        );
+      },
+    );
   });
 }
+
+final unsortedTasks = [
+  EscapeManualTaskEntity(
+    id: '1',
+    type: 'checkbox',
+    description: 'description',
+    userInputValue: null,
+    isDone: false,
+  ),
+  EscapeManualTaskEntity(
+    id: '2',
+    type: 'checkbox',
+    description: 'description',
+    userInputValue: null,
+    isDone: true,
+  ),
+  EscapeManualTaskEntity(
+    id: '3',
+    type: 'checkbox',
+    description: 'description',
+    userInputValue: null,
+    isDone: false,
+  ),
+  EscapeManualTaskEntity(
+    id: '4',
+    type: 'checkbox',
+    description: 'description',
+    userInputValue: null,
+    isDone: true,
+  ),
+];
+
+final sortedTasks = [
+  EscapeManualTaskEntity(
+    id: '1',
+    type: 'checkbox',
+    description: 'description',
+    userInputValue: null,
+    isDone: false,
+  ),
+  EscapeManualTaskEntity(
+    id: '3',
+    type: 'checkbox',
+    description: 'description',
+    userInputValue: null,
+    isDone: false,
+  ),
+  EscapeManualTaskEntity(
+    id: '2',
+    type: 'checkbox',
+    description: 'description',
+    userInputValue: null,
+    isDone: true,
+  ),
+  EscapeManualTaskEntity(
+    id: '4',
+    type: 'checkbox',
+    description: 'description',
+    userInputValue: null,
+    isDone: true,
+  ),
+];
 
 class MockEscapeManualRepository extends Mock
     implements IEscapeManualRepository {}
