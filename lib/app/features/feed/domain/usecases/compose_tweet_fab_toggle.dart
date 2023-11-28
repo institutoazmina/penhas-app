@@ -1,4 +1,4 @@
-import 'escape_manual_toggle.dart';
+import '../../../escape_manual/domain/escape_manual_toggle.dart';
 import 'tweet_toggle_feature.dart';
 
 class ComposeTweetFabToggleFeature {

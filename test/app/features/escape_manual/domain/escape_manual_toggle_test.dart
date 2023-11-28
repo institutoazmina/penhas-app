@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
-import 'package:penhas/app/features/feed/domain/usecases/escape_manual_toggle.dart';
+import 'package:penhas/app/features/escape_manual/domain/escape_manual_toggle.dart';
 
 class MockAppModulesServices extends Mock implements IAppModulesServices {}
 

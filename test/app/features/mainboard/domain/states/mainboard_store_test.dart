@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
-import 'package:penhas/app/features/feed/domain/usecases/escape_manual_toggle.dart';
+import 'package:penhas/app/features/escape_manual/domain/escape_manual_toggle.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_store.dart';
 

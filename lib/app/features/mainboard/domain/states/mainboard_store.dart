@@ -3,7 +3,7 @@ import 'package:mobx/mobx.dart';
 
 import '../../../../core/managers/modules_sevices.dart';
 import '../../../chat/domain/usecases/chat_toggle_feature.dart';
-import '../../../feed/domain/usecases/escape_manual_toggle.dart';
+import '../../../escape_manual/domain/escape_manual_toggle.dart';
 import '../../../feed/domain/usecases/feed_toggle_feature.dart';
 import '../../../feed/domain/usecases/tweet_toggle_feature.dart';
 import '../../../help_center/domain/usecases/security_mode_action_feature.dart';
