@@ -1,7 +1,6 @@
 import 'dart:developer' as dev;
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 import 'package:stack_trace/stack_trace.dart';
 
@@ -9,7 +8,8 @@ import '../../core/error/exceptions.dart';
 
 typedef OnError<T> = T Function(Object exception, StackTrace? stack);
 
-bool isCrashlitycsEnabled = kReleaseMode;
+const bool isCrashlitycsEnabled =
+    String.fromEnvironment('PENHAS_BASE_URL') != '';
 
 void logWarn(String message) {
   dev.log(message);
