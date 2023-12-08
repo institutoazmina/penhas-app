@@ -4,7 +4,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'core/extension/modular.dart';
 import 'core/managers/app_configuration.dart';
 import 'core/managers/app_preferences_store.dart';
 import 'core/managers/audio_sync_manager.dart';
@@ -161,7 +160,6 @@ class AppModule extends Module {
           '/accountDeleted',
           child: (context, args) => const DeletedAccountPage(),
           transition: TransitionType.rightToLeft,
-        ),
-        ...Modular.widgetRoutes,
+        )
       ];
 }
