@@ -238,17 +238,22 @@ class _TaskWidgetState
           opacity: task.isDone ? 0.5 : 1,
           child: CheckboxListTile(
             contentPadding: const EdgeInsets.all(8),
-            title: HtmlWidget(
-              task.description,
-              textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontSize: 16,
-                    color: DesignSystemColors.darkIndigoThree,
-                  ),
+            title: Semantics(
+              label: task.description,
+              excludeSemantics: true,
+              child: HtmlWidget(
+                task.description,
+                textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontSize: 16,
+                      color: DesignSystemColors.darkIndigoThree,
+                    ),
+              ),
             ),
             value: isChecked,
             controlAffinity: ListTileControlAffinity.leading,
             onChanged: _onChanged,
             secondary: PopupMenuButton(
+              tooltip: 'Mais opções',
               icon: const Icon(
                 Icons.more_vert,
                 color: DesignSystemColors.darkIndigoThree,
