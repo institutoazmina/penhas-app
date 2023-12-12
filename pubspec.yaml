@@ -184,6 +184,7 @@ flutter:
     # Actions
     - assets/images/svg/actions/delete.svg
     - assets/images/svg/actions/edit.svg
+    - assets/images/svg/actions/close.svg
     # Zodiac
     - assets/images/zodiac/svg/constelation_aquarius.svg
     - assets/images/zodiac/svg/constelation_aries.svg

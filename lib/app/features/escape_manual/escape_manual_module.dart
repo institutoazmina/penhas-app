@@ -7,9 +7,12 @@ import 'data/datastore/escape_manual_cache_store.dart';
 import 'data/datastore/escape_manual_persistent_store.dart';
 import 'data/repository/escape_manual_repository.dart';
 import 'domain/delete_escape_manual_task.dart';
+import 'domain/escape_manual_toggle.dart';
 import 'domain/get_escape_manual.dart';
 import 'domain/start_escape_manual.dart';
 import 'domain/update_escape_manual_task.dart';
+import 'presentation/edit/edit_trusted_contacts_controller.dart';
+import 'presentation/edit/edit_trusted_contacts_page.dart';
 import 'presentation/escape_manual_controller.dart';
 import 'presentation/escape_manual_page.dart';
 
@@ -20,6 +23,14 @@ class EscapeManualModule extends WidgetModule {
   Widget get view => const EscapeManualPage();
 
   @override
+  List<ModularRoute> get routes => [
+        ChildRoute(
+          '/edit/trusted_contacts',
+          child: (_, __) => const EditTrustedContactsPage(),
+        )
+      ];
+
+  @override
   final List<Bind<Object>> binds = [
     Bind.factory(
       (i) => EscapeManualController(
@@ -27,6 +38,14 @@ class EscapeManualModule extends WidgetModule {
         startEscapeManual: i.get(),
         updateTask: i.get(),
         deleteTask: i.get(),
+      ),
+    ),
+    Bind.factory(
+      (i) => EditTrustedContactsController(
+        contacts: i.args?.data,
+        escapeManualToggleFeature: EscapeManualToggleFeature(
+          modulesServices: i(),
+        ),
       ),
     ),
     Bind.factory<GetEscapeManualUseCase>(

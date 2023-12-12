@@ -1,5 +1,8 @@
 import 'package:equatable/equatable.dart';
 
+const contactNameMaxLength = 50;
+const contactPhoneMaxLength = 20;
+
 class ContactEntity extends Equatable {
   const ContactEntity({
     required this.id,
