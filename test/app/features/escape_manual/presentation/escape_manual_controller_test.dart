@@ -183,6 +183,92 @@ void main() {
       );
     });
 
+    group('editTask', () {
+      final task = EscapeManualContactsTaskEntity(
+        id: 'id',
+        description: 'description',
+        value: [],
+        isDone: Random().nextBool(),
+      );
+
+      late IModularNavigator mockNavigator;
+
+      setUp(() {
+        mockNavigator = _MockModularNavigator();
+        Modular.navigatorDelegate = mockNavigator;
+
+        registerFallbackValue(_FakeEscapeManualEditableTaskEntity());
+
+        when(() => mockUpdateEscapeManualTask(any()))
+            .thenAnswer((_) async => right(unit));
+      });
+
+      test(
+        'should navigate to /edit/trusted_contacts screen',
+        () async {
+          // arrange
+          when(
+            () => mockNavigator.pushNamed<List<ContactEntity>>(
+              '/edit/trusted_contacts',
+              arguments: any(named: 'arguments'),
+            ),
+          ).thenAnswer((_) async => []);
+
+          // act
+          await sut.editTask(task);
+
+          // assert
+          verify(
+            () => mockNavigator.pushNamed<List<ContactEntity>>(
+              '/edit/trusted_contacts',
+              arguments: task.value,
+            ),
+          ).called(1);
+        },
+      );
+
+      test(
+        'should not call UpdateEscapeManualTask if value is not changed',
+        () async {
+          // arrange
+          when(
+            () => mockNavigator.pushNamed<List<ContactEntity>>(
+              '/edit/trusted_contacts',
+              arguments: any(named: 'arguments'),
+            ),
+          ).thenAnswer((_) async => []);
+
+          // act
+          await sut.editTask(task);
+
+          // assert
+          verifyNever(() => mockUpdateEscapeManualTask(any()));
+        },
+      );
+
+      test(
+        'should call UpdateEscapeManualTask if value is changed',
+        () async {
+          // arrange
+          final updatedTask = task.copyWith(value: [
+            ContactEntity(id: 1, name: 'name', phone: '11 11111-1111'),
+          ]);
+          when(
+            () => mockNavigator.pushNamed<List<ContactEntity>>(
+              '/edit/trusted_contacts',
+              arguments: any(named: 'arguments'),
+            ),
+          ).thenAnswer((_) async => updatedTask.value);
+
+          // act
+          await sut.editTask(task);
+
+          // assert
+          verify(() => mockUpdateEscapeManualTask(updatedTask)).called(1);
+        },
+      );
+    });
+
     group('updateTask', () {
       final task = EscapeManualContactsTaskEntity(
         id: 'id',
@@ -475,8 +561,13 @@ class _MockModularNavigate extends Mock implements IModularNavigator {}
 class _MockOnEscapeManualReaction extends Mock
     implements _IOnEscapeManualReaction {}
 
+class _MockModularNavigator extends Mock implements IModularNavigator {}
+
 class _FakeEscapeManualTaskEntity extends Fake
     implements EscapeManualTaskEntity {}
+
+class _FakeEscapeManualEditableTaskEntity extends Fake
+    implements EscapeManualEditableTaskEntity {}
 
 class _FakeQuizSessionModel extends Fake implements QuizSessionModel {}
 

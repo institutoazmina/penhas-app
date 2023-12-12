@@ -258,6 +258,15 @@ class _TaskWidgetState
                 borderRadius: BorderRadius.circular(10),
               ),
               itemBuilder: (context) => [
+                if (task is EscapeManualEditableTaskEntity)
+                  _TaskActionWidget(
+                    text: 'Editar',
+                    icon: 'assets/images/svg/actions/edit.svg',
+                    size: theme.iconTheme.size,
+                    onTap: () => controller.editTask(
+                      task as EscapeManualEditableTaskEntity,
+                    ),
+                  ),
                 _TaskActionWidget(
                   text: 'Apagar',
                   icon: 'assets/images/svg/actions/delete.svg',
