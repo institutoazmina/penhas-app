@@ -22,12 +22,40 @@
         {
             "agrupador": "Passos para fuga",
             "atualizado_em": 1696116772,
-            "campo_livre": "campo livre",
+            "campo_livre": null,
             "checkbox_feito": 0,
             "descricao": "Cadastre-se e/ou verifique se o seu Cadastro Único (CadÚnico) está ativo.",
             "eh_customizada": 1,
             "id": 73,
             "tipo": "checkbox",
+            "titulo": ""
+        },
+        {
+            "agrupador": "Passos para fuga",
+            "atualizado_em": 1689701025,
+            "campo_livre": null,
+            "checkbox_feito": 0,
+            "descricao": "Leve ao CRAS toda documentação necessária, tanto sua, quanto das crianças, se houver.",
+            "eh_customizada": 0,
+            "id": 76,
+            "tipo": "checkbox",
+            "titulo": ""
+        },
+        {
+            "agrupador": "Contatos",
+            "atualizado_em": 1696116772,
+            "campo_livre": [
+                {
+                    "id": 1,
+                    "name": "Contact name",
+                    "phone": "(11) 99999-9999"
+                }
+            ],
+            "checkbox_feito": 0,
+            "descricao": "Informe os contatos de pessoas de confiança.",
+            "eh_customizada": 1,
+            "id": 101,
+            "tipo": "checkbox_contato",
             "titulo": ""
         }
     ],

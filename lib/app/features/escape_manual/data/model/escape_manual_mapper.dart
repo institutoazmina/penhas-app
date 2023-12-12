@@ -1,6 +1,8 @@
 import 'package:collection/collection.dart';
 
+import '../../../../shared/logger/log.dart';
 import '../../domain/entity/escape_manual.dart';
+import 'escape_manual_local.dart';
 import 'escape_manual_remote.dart';
 
 extension EscapeManualRemoteMapper on EscapeManualRemoteModel {
@@ -35,7 +37,9 @@ extension EscapeManualTasksSectionMapper
           .map(
             (el) => EscapeManualTasksSectionEntity(
               title: el.key,
-              tasks: el.value.map((el) => el.asEntity).toList(),
+              tasks: el.value
+                  .map<EscapeManualTaskEntity>((el) => el.asEntity)
+                  .toList(),
             ),
           )
           .toList();
@@ -43,11 +47,81 @@ extension EscapeManualTasksSectionMapper
 
 extension EscapeManualTaskRemoteMapper on EscapeManualTaskRemoteModel {
   /// Maps a [EscapeManualTaskRemoteModel] to a [EscapeManualTaskEntity].
-  EscapeManualTaskEntity get asEntity => EscapeManualTaskEntity(
+  EscapeManualTaskEntity get asEntity {
+    if (type == EscapeManualTaskType.contacts) {
+      return EscapeManualContactsTaskEntity(
         id: id,
-        type: type,
         description: description,
-        userInputValue: userInputValue,
-        isDone: isDone == true,
+        isDone: isDone,
+        value: userInputValue,
       );
+    }
+
+    assert(type != EscapeManualTaskType.unknown);
+    return EscapeManualDefaultTaskEntity(
+      id: id,
+      description: description,
+      isDone: isDone,
+    );
+  }
+}
+
+extension EscapeManualTaskEntityMapper on EscapeManualTaskEntity {
+  EscapeManualTaskType get type {
+    if (this is EscapeManualContactsTaskEntity) {
+      return EscapeManualTaskType.contacts;
+    }
+    assert(this is EscapeManualDefaultTaskEntity);
+    return EscapeManualTaskType.normal;
+  }
+
+  EscapeManualTaskLocalModel get asLocalModel {
+    final entity = this;
+
+    return EscapeManualTaskLocalModel(
+      id: entity.id,
+      type: entity.type,
+      value: _readTaskValue(entity),
+      isDone: entity.isDone,
+    );
+  }
+}
+
+extension ContactEntityMapper on ContactEntity {
+  ContactModel get asModel => ContactModel(
+        id: id,
+        name: name,
+        phone: phone,
+      );
+}
+
+Map<String, dynamic> readUserInputValue(Map map, String key) =>
+    <String, dynamic>{
+      'type': map['type'] ?? map['tipo'],
+      'value': map[key],
+    };
+
+dynamic userInputValueFromJson(Map<String, dynamic> json) {
+  final value = json['value'];
+
+  if (value == null) return null;
+  final type = json['type'] as String;
+
+  switch (type) {
+    case escapeManualTaskTypeContacts:
+      return ContactModel.fromJsonList(value);
+    // coverage:ignore-start
+    default: // track if this happens
+      logError('Invalid value "$value" for type "$type"');
+      return null;
+    // coverage:ignore-end
+  }
+}
+
+Object? _readTaskValue(EscapeManualTaskEntity entity) {
+  if (entity is EscapeManualContactsTaskEntity) {
+    return entity.value?.map((e) => e.asModel).toList();
+  }
+  assert(entity is EscapeManualDefaultTaskEntity);
+  return null;
 }

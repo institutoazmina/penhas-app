@@ -170,7 +170,7 @@ void main() {
       (tester) async {
         // arrange
         final expectedTask =
-            escapeManualEntity.sections[1].tasks[1].copyWith(isDone: true);
+            escapeManualEntity.sections[1].tasks[4].copyWith(isDone: true);
         when(() => mockController.state)
             .thenReturn(EscapeManualState.loaded(escapeManualEntity));
         when(() => mockController.updateTask(any()))
@@ -184,7 +184,7 @@ void main() {
         await tester.pumpAndSettle();
         await tester.tap(
           find.descendant(
-            of: find.byKey(Key('escape-manual-task-1-1')),
+            of: find.byKey(Key('escape-manual-task-1-4')),
             matching: find.byType(Checkbox),
           ),
         );
@@ -393,13 +393,16 @@ EscapeManualEntity get escapeManualEntity => EscapeManualEntity(
           title: 'Section $section',
           tasks: List.generate(
             5,
-            (task) => EscapeManualTaskEntity(
-              id: '${section}-${task}',
-              type: 'checkbox',
-              description: 'Task #${task} of section ${section}',
-              isDone: task == 2,
-              userInputValue: null,
-            ),
+            (task) => task != 4
+                ? EscapeManualDefaultTaskEntity(
+                    id: '${section}-${task}',
+                    description: 'Task #${task} of section ${section}',
+                    isDone: task == 2,
+                  )
+                : EscapeManualContactsTaskEntity(
+                    id: '${section}-${task}',
+                    description: 'Task #${task} of section ${section}',
+                  ),
           ),
         ),
       ),

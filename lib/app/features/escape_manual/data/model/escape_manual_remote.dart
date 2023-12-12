@@ -3,6 +3,13 @@ import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../core/extension/json_serializer.dart';
 import '../../../appstate/data/model/quiz_session_model.dart';
+import 'contact.dart';
+import 'escape_manual_mapper.dart'
+    show readUserInputValue, userInputValueFromJson;
+import 'escape_manual_task_type.dart';
+
+export 'contact.dart';
+export 'escape_manual_task_type.dart';
 
 part 'escape_manual_remote.g.dart';
 
@@ -89,7 +96,13 @@ class EscapeManualTaskRemoteModel extends Equatable {
     this.isDone = false,
     this.userInputValue,
     required this.updatedAt,
-  });
+  })  : assert(type != EscapeManualTaskType.unknown),
+        assert(
+          type == EscapeManualTaskType.contacts
+              ? userInputValue is List<ContactEntity>?
+              : true,
+          'Invalid userInputValue: $userInputValue', // coverage:ignore-line
+        );
 
   factory EscapeManualTaskRemoteModel.fromJson(Map<String, dynamic> json) =>
       _$EscapeManualTaskRemoteModelFromJson(json);
@@ -98,7 +111,7 @@ class EscapeManualTaskRemoteModel extends Equatable {
   final String id;
 
   @JsonKey(name: 'tipo')
-  final String type;
+  final EscapeManualTaskType type;
 
   @JsonKey(name: 'agrupador')
   final String group;
@@ -110,7 +123,11 @@ class EscapeManualTaskRemoteModel extends Equatable {
   @JsonKey(name: 'descricao')
   final String description;
 
-  @JsonKey(name: 'campo_livre')
+  @JsonKey(
+    name: 'campo_livre',
+    readValue: readUserInputValue,
+    fromJson: userInputValueFromJson,
+  )
   final dynamic userInputValue;
 
   @JsonKey(name: 'checkbox_feito')

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/storage/collection_store.dart';
@@ -42,8 +44,8 @@ void main() {
         // arrange
         when(() => mockStorage.all<String>()).thenAnswer(
           (_) async => [
-            '{"id":"id 0","isDone":false,"isRemoved":true,"updatedAt":"2023-11-06T18:29:33.000"}',
-            '{"id":"id 1","isDone":true,"isRemoved":false,"updatedAt":"2023-11-06T18:34:24.000"}',
+            '{"id":"id 0","type":"checkbox","isDone":false,"isRemoved":true,"updatedAt":"2023-11-06T18:29:33.000"}',
+            '{"id":"id 1","type":"checkbox_contato","isDone":true,"isRemoved":false,"updatedAt":"2023-11-06T18:34:24.000"}',
           ],
         );
 
@@ -62,6 +64,7 @@ void main() {
             ),
             EscapeManualTaskLocalModel(
               id: 'id 1',
+              type: EscapeManualTaskType.contacts,
               isDone: true,
               isRemoved: false,
               updatedAt: DateTime(2023, 11, 06, 18, 34, 24),
@@ -79,8 +82,8 @@ void main() {
         when(() => mockStorage.watchAll<String>()).thenAnswer(
           (_) => Stream.fromIterable([
             [
-              '{"id":"id 0","isDone":false,"isRemoved":true,"updatedAt":"2023-11-06T18:47:08.000"}',
-              '{"id":"id 1","isDone":true,"isRemoved":false,"updatedAt":"2023-11-06T18:48:10.000"}',
+              '{"id":"id 0","type":"checkbox_contato","isDone":false,"isRemoved":true,"updatedAt":"2023-11-06T18:47:08.000"}',
+              '{"id":"id 1","type":"checkbox","isDone":true,"isRemoved":false,"updatedAt":"2023-11-06T18:48:10.000"}',
             ],
           ]),
         );
@@ -91,6 +94,7 @@ void main() {
           emits([
             EscapeManualTaskLocalModel(
               id: 'id 0',
+              type: EscapeManualTaskType.contacts,
               isDone: false,
               isRemoved: true,
               updatedAt: DateTime(2023, 11, 06, 18, 47, 08),
@@ -114,6 +118,13 @@ void main() {
         final taskId = 'some id key';
         when(() => mockStorage.put(any(), any<String>()))
             .thenAnswer((_) => Future.value());
+        final expected = {
+          "id": "some id key",
+          "type": "checkbox",
+          "isDone": false,
+          "isRemoved": false,
+          "updatedAt": "2023-11-06T18:29:33.000",
+        };
 
         // act
         await sut.put(
@@ -130,10 +141,7 @@ void main() {
         final verifier =
             verify(() => mockStorage.put(taskId, captureAny<String>()));
         verifier.called(1);
-        expect(
-          verifier.captured.single,
-          '{"id":"some id key","isDone":false,"isRemoved":false,"updatedAt":"2023-11-06T18:29:33.000"}',
-        );
+        expect(jsonDecode(verifier.captured.single), expected);
       },
     );
 

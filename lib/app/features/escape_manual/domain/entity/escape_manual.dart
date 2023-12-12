@@ -1,6 +1,9 @@
 import 'package:equatable/equatable.dart';
 
 import '../../../appstate/domain/entities/app_state_entity.dart';
+import 'escape_manual_task.dart';
+
+export 'escape_manual_task.dart';
 
 class EscapeManualEntity extends Equatable {
   const EscapeManualEntity({
@@ -67,41 +70,5 @@ class EscapeManualTasksSectionEntity extends Equatable {
       EscapeManualTasksSectionEntity(
         title: title,
         tasks: tasks,
-      );
-}
-
-class EscapeManualTaskEntity extends Equatable {
-  const EscapeManualTaskEntity({
-    required this.id,
-    required this.type,
-    required this.description,
-    required this.userInputValue,
-    required this.isDone,
-  });
-
-  final String id;
-  final String type;
-  final String description;
-  final String? userInputValue;
-  final bool isDone;
-
-  @override
-  List<Object?> get props => [
-        id,
-        type,
-        description,
-        userInputValue,
-        isDone,
-      ];
-
-  EscapeManualTaskEntity copyWith({
-    required bool isDone,
-  }) =>
-      EscapeManualTaskEntity(
-        id: id,
-        type: type,
-        description: description,
-        userInputValue: userInputValue,
-        isDone: isDone,
       );
 }
