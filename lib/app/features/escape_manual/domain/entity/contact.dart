@@ -13,4 +13,14 @@ class ContactEntity extends Equatable {
 
   @override
   List<Object?> get props => [id, name, phone];
+
+  ContactEntity copyWith({
+    required String name,
+    required String phone,
+  }) =>
+      ContactEntity(
+        id: id,
+        name: name,
+        phone: phone,
+      );
 }
