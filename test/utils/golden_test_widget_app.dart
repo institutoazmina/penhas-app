@@ -1,6 +1,7 @@
 import 'package:alchemist/alchemist.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
+import 'package:penhas/app/shared/design_system/theme.dart';
 
 class GoldenTestWidgetApp extends StatelessWidget {
   const GoldenTestWidgetApp({
@@ -31,6 +32,7 @@ class GoldenTestWidgetApp extends StatelessWidget {
               height: device.size.height,
               width: device.size.width,
               child: MaterialApp(
+                theme: AppTheme.of(context),
                 home: builder(),
                 debugShowCheckedModeBanner: false,
               ),
