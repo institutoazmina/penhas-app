@@ -220,34 +220,53 @@ class _TaskWidgetState
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return ListTileTheme(
-      horizontalTitleGap: 4,
-      child: CheckboxListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        title: HtmlWidget(
-          task.description,
-          textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                fontSize: 16,
+    return Theme(
+      data: theme.copyWith(
+        checkboxTheme: theme.checkboxTheme.copyWith(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4),
+          ),
+          side: const BorderSide(
+            color: Color.fromRGBO(216, 216, 216, 1),
+            width: 2,
+          ),
+        ),
+      ),
+      child: ListTileTheme(
+        horizontalTitleGap: 4,
+        child: Opacity(
+          opacity: task.isDone ? 0.5 : 1,
+          child: CheckboxListTile(
+            contentPadding: const EdgeInsets.all(8),
+            title: HtmlWidget(
+              task.description,
+              textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontSize: 16,
+                    color: DesignSystemColors.darkIndigoThree,
+                  ),
+            ),
+            value: isChecked,
+            controlAffinity: ListTileControlAffinity.leading,
+            onChanged: _onChanged,
+            secondary: PopupMenuButton(
+              icon: const Icon(
+                Icons.more_vert,
                 color: DesignSystemColors.darkIndigoThree,
               ),
-        ),
-        value: isChecked,
-        controlAffinity: ListTileControlAffinity.leading,
-        onChanged: _onChanged,
-        secondary: PopupMenuButton(
-          icon: const Icon(Icons.more_vert),
-          offset: const Offset(0, 40),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          itemBuilder: (context) => [
-            _TaskActionWidget(
-              text: 'Apagar',
-              icon: 'assets/images/svg/actions/delete.svg',
-              size: theme.iconTheme.size,
-              onTap: () => controller.deleteTask(task),
+              offset: const Offset(0, 40),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              itemBuilder: (context) => [
+                _TaskActionWidget(
+                  text: 'Apagar',
+                  icon: 'assets/images/svg/actions/delete.svg',
+                  size: theme.iconTheme.size,
+                  onTap: () => controller.deleteTask(task),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

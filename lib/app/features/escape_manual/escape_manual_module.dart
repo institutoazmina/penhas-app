@@ -29,7 +29,7 @@ class EscapeManualModule extends WidgetModule {
         deleteTask: i.get(),
       ),
     ),
-    Bind.factory(
+    Bind.factory<GetEscapeManualUseCase>(
       (i) => GetEscapeManualUseCase(
         repository: i.get(),
       ),

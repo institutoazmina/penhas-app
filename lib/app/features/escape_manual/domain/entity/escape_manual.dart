@@ -5,7 +5,7 @@ import '../../../appstate/domain/entities/app_state_entity.dart';
 class EscapeManualEntity extends Equatable {
   const EscapeManualEntity({
     required this.assistant,
-    this.sections = const [],
+    required this.sections,
   });
 
   final EscapeManualAssistantEntity assistant;
@@ -13,6 +13,14 @@ class EscapeManualEntity extends Equatable {
 
   @override
   List<Object?> get props => [assistant, sections];
+
+  EscapeManualEntity copyWith({
+    required List<EscapeManualTasksSectionEntity> sections,
+  }) =>
+      EscapeManualEntity(
+        assistant: assistant,
+        sections: sections,
+      );
 }
 
 class EscapeManualAssistantEntity extends Equatable {
@@ -52,6 +60,14 @@ class EscapeManualTasksSectionEntity extends Equatable {
 
   @override
   List<Object?> get props => [title, tasks];
+
+  EscapeManualTasksSectionEntity copyWith({
+    required List<EscapeManualTaskEntity> tasks,
+  }) =>
+      EscapeManualTasksSectionEntity(
+        title: title,
+        tasks: tasks,
+      );
 }
 
 class EscapeManualTaskEntity extends Equatable {
