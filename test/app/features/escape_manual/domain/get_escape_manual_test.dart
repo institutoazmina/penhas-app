@@ -118,63 +118,47 @@ void main() {
 }
 
 final unsortedTasks = [
-  EscapeManualTaskEntity(
+  EscapeManualDefaultTaskEntity(
     id: '1',
-    type: 'checkbox',
     description: 'description',
-    userInputValue: null,
     isDone: false,
   ),
-  EscapeManualTaskEntity(
+  EscapeManualDefaultTaskEntity(
     id: '2',
-    type: 'checkbox',
     description: 'description',
-    userInputValue: null,
     isDone: true,
   ),
-  EscapeManualTaskEntity(
+  EscapeManualDefaultTaskEntity(
     id: '3',
-    type: 'checkbox',
     description: 'description',
-    userInputValue: null,
     isDone: false,
   ),
-  EscapeManualTaskEntity(
+  EscapeManualDefaultTaskEntity(
     id: '4',
-    type: 'checkbox',
     description: 'description',
-    userInputValue: null,
     isDone: true,
   ),
 ];
 
 final sortedTasks = [
-  EscapeManualTaskEntity(
+  EscapeManualDefaultTaskEntity(
     id: '1',
-    type: 'checkbox',
     description: 'description',
-    userInputValue: null,
     isDone: false,
   ),
-  EscapeManualTaskEntity(
+  EscapeManualDefaultTaskEntity(
     id: '3',
-    type: 'checkbox',
     description: 'description',
-    userInputValue: null,
     isDone: false,
   ),
-  EscapeManualTaskEntity(
+  EscapeManualDefaultTaskEntity(
     id: '2',
-    type: 'checkbox',
     description: 'description',
-    userInputValue: null,
     isDone: true,
   ),
-  EscapeManualTaskEntity(
+  EscapeManualDefaultTaskEntity(
     id: '4',
-    type: 'checkbox',
     description: 'description',
-    userInputValue: null,
     isDone: true,
   ),
 ];
