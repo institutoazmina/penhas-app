@@ -72,9 +72,7 @@ class EscapeManualRepository implements IEscapeManualRepository {
   @override
   VoidResult updateTask(EscapeManualTaskEntity task) async {
     try {
-      final result = await _localDatasource.saveTask(
-        EscapeManualTaskLocalModel.fromEntity(task),
-      );
+      final result = await _localDatasource.saveTask(task.asLocalModel);
       return right(result);
     } catch (error, stack) {
       logError(error, stack);
@@ -86,9 +84,7 @@ class EscapeManualRepository implements IEscapeManualRepository {
   @override
   VoidResult removeTask(EscapeManualTaskEntity task) async {
     try {
-      final result = await _localDatasource.removeTask(
-        EscapeManualTaskLocalModel.fromEntity(task),
-      );
+      final result = await _localDatasource.removeTask(task.asLocalModel);
       return right(result);
     } catch (error, stack) {
       logError(error, stack);
@@ -120,6 +116,7 @@ class EscapeManualRepository implements IEscapeManualRepository {
 
       return remoteTask.copyWith(
         isDone: localTask.isDone,
+        userInputValue: localTask.value,
       );
     });
 

@@ -176,10 +176,12 @@ void main() {
         'should call datasource updateTask',
         () async {
           // arrange
-          final task = escapeManualTaskEntityFixture;
+          final task = escapeManualEditableTaskEntityFixture;
           final localTask = EscapeManualTaskLocalModel(
             id: task.id,
+            type: EscapeManualTaskType.contacts,
             isDone: task.isDone,
+            value: task.value,
           );
           when(() => mockLocalDatasource.saveTask(any()))
               .thenAnswer((_) async => unit);
@@ -197,7 +199,7 @@ void main() {
         'should return failure when datasource updateTask throws',
         () async {
           // arrange
-          final task = escapeManualTaskEntityFixture;
+          final task = escapeManualEditableTaskEntityFixture;
           when(() => mockLocalDatasource.saveTask(any()))
               .thenThrow(Exception());
 

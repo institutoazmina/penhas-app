@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../escape_manual/domain/escape_manual_toggle.dart';
 import '../domain/usecases/compose_tweet_fab_toggle.dart';
-import '../domain/usecases/escape_manual_toggle.dart';
 import '../domain/usecases/tweet_toggle_feature.dart';
 import 'feed_controller.dart';
 import 'feed_page.dart';

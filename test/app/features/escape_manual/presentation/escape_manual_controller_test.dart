@@ -184,11 +184,10 @@ void main() {
     });
 
     group('updateTask', () {
-      final task = EscapeManualTaskEntity(
+      final task = EscapeManualContactsTaskEntity(
         id: 'id',
-        type: 'type',
         description: 'description',
-        userInputValue: null,
+        value: null,
         isDone: Random().nextBool(),
       );
 
@@ -264,11 +263,9 @@ void main() {
     });
 
     group('deleteTask', () {
-      final task = EscapeManualTaskEntity(
+      final task = EscapeManualDefaultTaskEntity(
         id: 'id',
-        type: 'type',
         description: 'description',
-        userInputValue: null,
         isDone: Random().nextBool(),
       );
 

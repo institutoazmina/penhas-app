@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:penhas/app/features/escape_manual/domain/escape_manual_toggle.dart';
 import 'package:penhas/app/features/feed/domain/usecases/compose_tweet_fab_toggle.dart';
-import 'package:penhas/app/features/feed/domain/usecases/escape_manual_toggle.dart';
 import 'package:penhas/app/features/feed/domain/usecases/tweet_toggle_feature.dart';
 
 class MockEscapeManualToggleFeature extends Mock

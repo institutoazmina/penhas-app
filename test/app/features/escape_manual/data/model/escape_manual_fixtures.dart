@@ -9,7 +9,20 @@ final escapeManualLocalModelsFixture = [
     isDone: true,
   ),
   EscapeManualTaskLocalModel(
+    id: '2',
+    type: EscapeManualTaskType.contacts,
+    value: [
+      ContactModel(
+        id: 1,
+        name: 'Contact name',
+        phone: '(00) 00000-0000',
+      ),
+    ],
+  ),
+  EscapeManualTaskLocalModel(
     id: '3',
+    type: EscapeManualTaskType.contacts,
+    value: <ContactModel>[],
     isRemoved: true,
   ),
 ];
@@ -26,7 +39,7 @@ final escapeManualModelFixture = EscapeManualRemoteModel(
   tasks: [
     EscapeManualTaskRemoteModel(
       id: '1',
-      type: 'checkbox',
+      type: EscapeManualTaskType.normal,
       group: 'group',
       title: 'title',
       description: 'description',
@@ -36,7 +49,7 @@ final escapeManualModelFixture = EscapeManualRemoteModel(
     ),
     EscapeManualTaskRemoteModel(
       id: '2',
-      type: 'checkbox_contact',
+      type: EscapeManualTaskType.contacts,
       group: 'group 2',
       title: 'title',
       description: 'description',
@@ -45,11 +58,18 @@ final escapeManualModelFixture = EscapeManualRemoteModel(
     ),
     EscapeManualTaskRemoteModel(
       id: '3',
-      type: 'checkbox',
+      type: EscapeManualTaskType.contacts,
       group: 'group',
       title: 'title',
       description: 'description',
-      userInputValue: null,
+      isDone: true,
+      userInputValue: [
+        ContactModel(
+          id: 1,
+          name: 'Other contact name',
+          phone: '(11) 99999-9999',
+        ),
+      ],
       updatedAt: DateTime.now(),
     ),
   ],
@@ -69,31 +89,33 @@ final escapeManualEntityFixture = EscapeManualEntity(
     EscapeManualTasksSectionEntity(
       title: 'group',
       tasks: [
-        EscapeManualTaskEntity(
+        EscapeManualDefaultTaskEntity(
           id: '1',
-          type: 'checkbox',
           description: 'description',
           isDone: false,
-          userInputValue: null,
         ),
-        EscapeManualTaskEntity(
+        EscapeManualContactsTaskEntity(
           id: '3',
-          type: 'checkbox',
           description: 'description',
-          userInputValue: null,
-          isDone: false,
+          isDone: true,
+          value: <ContactEntity>[
+            ContactModel(
+              id: 1,
+              name: 'Other contact name',
+              phone: '(11) 99999-9999',
+            ),
+          ],
         ),
       ],
     ),
     EscapeManualTasksSectionEntity(
       title: 'group 2',
       tasks: [
-        EscapeManualTaskEntity(
+        EscapeManualContactsTaskEntity(
           id: '2',
-          type: 'checkbox_contact',
           description: 'description',
           isDone: true,
-          userInputValue: null,
+          value: null,
         ),
       ],
     ),
@@ -114,24 +136,27 @@ final updatedEscapeManualEntityFixture = EscapeManualEntity(
     EscapeManualTasksSectionEntity(
       title: 'group',
       tasks: [
-        EscapeManualTaskEntity(
+        EscapeManualDefaultTaskEntity(
           id: '1',
-          type: 'checkbox',
           description: 'description',
           isDone: true,
-          userInputValue: null,
         ),
       ],
     ),
     EscapeManualTasksSectionEntity(
       title: 'group 2',
       tasks: [
-        EscapeManualTaskEntity(
+        EscapeManualContactsTaskEntity(
           id: '2',
-          type: 'checkbox_contact',
           description: 'description',
-          isDone: true,
-          userInputValue: null,
+          isDone: false,
+          value: <ContactEntity>[
+            ContactModel(
+              id: 1,
+              name: 'Contact name',
+              phone: '(00) 00000-0000',
+            ),
+          ],
         ),
       ],
     ),
@@ -150,7 +175,7 @@ final escapeManualRemoteModelFixture = EscapeManualRemoteModel(
   tasks: [
     EscapeManualTaskRemoteModel(
       id: '71',
-      type: 'checkbox',
+      type: EscapeManualTaskType.normal,
       group: 'Itens Básicos',
       description:
           'Organize uma mochila com roupas. Se achar que a mochila levantará suspeita, separe em sacolas plásticas algumas mudas de roupa. Você pode ir separando as peças de roupas no decorrer dos dias para não levantar suspeitas.',
@@ -158,14 +183,14 @@ final escapeManualRemoteModelFixture = EscapeManualRemoteModel(
     ),
     EscapeManualTaskRemoteModel(
       id: '72',
-      type: 'checkbox',
+      type: EscapeManualTaskType.normal,
       group: 'Itens Básicos',
       description: 'Ponha na mochila medicamentos básicos e de uso contínuo',
       updatedAt: DateTime.fromMillisecondsSinceEpoch(1689701023000),
     ),
     EscapeManualTaskRemoteModel(
       id: '73',
-      type: 'checkbox',
+      type: EscapeManualTaskType.normal,
       group: 'Passos para fuga',
       description:
           'Cadastre-se e/ou verifique se o seu Cadastro Único (CadÚnico) está ativo.',
@@ -173,19 +198,19 @@ final escapeManualRemoteModelFixture = EscapeManualRemoteModel(
     ),
     EscapeManualTaskRemoteModel(
       id: '75',
-      type: 'checkbox',
+      type: EscapeManualTaskType.normal,
       group: 'Segurança pessoal',
       description:
           'Busque o Centro de Referência de Assistência Social (CRAS).',
       updatedAt: DateTime.fromMillisecondsSinceEpoch(1689701025000),
     ),
     EscapeManualTaskRemoteModel(
-      id: '76',
-      type: 'checkbox',
-      group: 'Passos para fuga',
-      description:
-          'Leve ao CRAS toda documentação necessária, tanto sua, quanto das crianças, se houver.',
+      id: '101',
+      type: EscapeManualTaskType.contacts,
+      group: 'Contatos',
+      description: 'Informe os contatos de pessoas de confiança.',
       updatedAt: DateTime.fromMillisecondsSinceEpoch(1689701025000),
+      userInputValue: null,
     ),
   ],
 );
@@ -202,7 +227,7 @@ final updatedEscapeManualRemoteModelFixture = EscapeManualRemoteModel(
   tasks: [
     EscapeManualTaskRemoteModel(
       id: '72',
-      type: 'checkbox',
+      type: EscapeManualTaskType.normal,
       group: 'Itens Básicos',
       description: 'Ponha na mochila medicamentos básicos e de uso contínuo',
       isDone: true,
@@ -210,24 +235,38 @@ final updatedEscapeManualRemoteModelFixture = EscapeManualRemoteModel(
     ),
     EscapeManualTaskRemoteModel(
       id: '73',
-      type: 'checkbox',
+      type: EscapeManualTaskType.normal,
       group: 'Passos para fuga',
       description:
           'Cadastre-se e/ou verifique se o seu Cadastro Único (CadÚnico) está ativo.',
       updatedAt: DateTime.fromMillisecondsSinceEpoch(1696116772000),
-      userInputValue: 'campo livre',
+      userInputValue: null,
     ),
     EscapeManualTaskRemoteModel(
       id: '75',
-      type: 'checkbox',
+      type: EscapeManualTaskType.normal,
       group: 'Segurança pessoal',
       description:
           'Busque o Centro de Referência de Assistência Social (CRAS).',
       updatedAt: DateTime.fromMillisecondsSinceEpoch(1689701025000),
     ),
     EscapeManualTaskRemoteModel(
+      id: '101',
+      type: EscapeManualTaskType.contacts,
+      group: 'Contatos',
+      description: 'Informe os contatos de pessoas de confiança.',
+      updatedAt: DateTime.fromMillisecondsSinceEpoch(1696116772000),
+      userInputValue: [
+        ContactModel(
+          id: 1,
+          name: 'Contact name',
+          phone: '(11) 99999-9999',
+        ),
+      ],
+    ),
+    EscapeManualTaskRemoteModel(
       id: '76',
-      type: 'checkbox',
+      type: EscapeManualTaskType.normal,
       group: 'Passos para fuga',
       description:
           'Leve ao CRAS toda documentação necessária, tanto sua, quanto das crianças, se houver.',
@@ -236,10 +275,23 @@ final updatedEscapeManualRemoteModelFixture = EscapeManualRemoteModel(
   ],
 );
 
-final escapeManualTaskEntityFixture = EscapeManualTaskEntity(
+final EscapeManualTaskEntity escapeManualTaskEntityFixture =
+    EscapeManualDefaultTaskEntity(
   id: '1',
-  type: 'checkbox',
   description: 'description',
   isDone: true,
-  userInputValue: null,
+);
+
+final EscapeManualEditableTaskEntity escapeManualEditableTaskEntityFixture =
+    EscapeManualContactsTaskEntity(
+  id: '1',
+  description: 'description',
+  isDone: true,
+  value: <ContactEntity>[
+    ContactModel(
+      id: 1,
+      name: 'Contact name',
+      phone: '(00) 00000-0000',
+    ),
+  ],
 );

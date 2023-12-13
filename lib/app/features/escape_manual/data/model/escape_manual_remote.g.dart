@@ -71,7 +71,7 @@ EscapeManualTaskRemoteModel _$EscapeManualTaskRemoteModelFromJson(
         Map<String, dynamic> json) =>
     EscapeManualTaskRemoteModel(
       id: FromJson.parseAsString(json['id']),
-      type: json['tipo'] as String,
+      type: $enumDecode(_$EscapeManualTaskTypeEnumMap, json['tipo']),
       group: json['agrupador'] as String,
       title: const JsonEmptyStringToNullConverter()
           .fromJson(json['titulo'] as String?),
@@ -79,7 +79,8 @@ EscapeManualTaskRemoteModel _$EscapeManualTaskRemoteModelFromJson(
       isDone: json['checkbox_feito'] == null
           ? false
           : const JsonBoolConverter().fromJson(json['checkbox_feito']),
-      userInputValue: json['campo_livre'],
+      userInputValue: userInputValueFromJson(
+          readUserInputValue(json, 'campo_livre') as Map<String, dynamic>),
       updatedAt: const JsonSecondsFromEpochConverter()
           .fromJson(json['atualizado_em'] as int),
     );
@@ -88,7 +89,7 @@ Map<String, dynamic> _$EscapeManualTaskRemoteModelToJson(
     EscapeManualTaskRemoteModel instance) {
   final val = <String, dynamic>{
     'id': instance.id,
-    'tipo': instance.type,
+    'tipo': _$EscapeManualTaskTypeEnumMap[instance.type]!,
     'agrupador': instance.group,
   };
 
@@ -108,3 +109,9 @@ Map<String, dynamic> _$EscapeManualTaskRemoteModelToJson(
       const JsonSecondsFromEpochConverter().toJson(instance.updatedAt));
   return val;
 }
+
+const _$EscapeManualTaskTypeEnumMap = {
+  EscapeManualTaskType.normal: 'checkbox',
+  EscapeManualTaskType.contacts: 'checkbox_contato',
+  EscapeManualTaskType.unknown: 'unknown',
+};

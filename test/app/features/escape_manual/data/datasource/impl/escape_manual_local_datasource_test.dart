@@ -24,7 +24,10 @@ void main() {
       // arrange
       final tasks = [
         EscapeManualTaskLocalModel(id: '1'),
-        EscapeManualTaskLocalModel(id: '2'),
+        EscapeManualTaskLocalModel(
+          id: '2',
+          type: EscapeManualTaskType.contacts,
+        ),
       ];
       when(() => mockStore.watchAll()).thenAnswer(
         (_) => Stream.fromIterable([tasks]),
@@ -39,6 +42,7 @@ void main() {
       // arrange
       final task = EscapeManualTaskLocalModel(
         id: 'id',
+        type: EscapeManualTaskType.contacts,
         updatedAt: DateTime.now(),
         isDone: Random().nextBool(),
         isRemoved: Random().nextBool(),
@@ -77,13 +81,17 @@ void main() {
         ),
         EscapeManualTaskLocalModel(
           id: '1',
+          type: EscapeManualTaskType.contacts,
           updatedAt: DateTime(2023, 11, 13, 13, 57, 59),
         ),
         EscapeManualTaskLocalModel(
           id: '2',
           updatedAt: DateTime(2023, 11, 13, 13, 58, 0),
         ),
-        EscapeManualTaskLocalModel(id: '3'),
+        EscapeManualTaskLocalModel(
+          id: '3',
+          type: EscapeManualTaskType.contacts,
+        ),
         EscapeManualTaskLocalModel(id: '4'),
       ];
 
