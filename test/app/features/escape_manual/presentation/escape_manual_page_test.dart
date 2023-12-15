@@ -289,6 +289,36 @@ void main() {
       },
     );
 
+    testWidgets(
+      'should call controller callTo when call button is pressed',
+      (tester) async {
+        // arrange
+        final task = escapeManualEntity.sections[1].tasks[4]
+            as EscapeManualContactsTaskEntity;
+        final expectedContact = task.value![1];
+        when(() => mockController.state)
+            .thenReturn(EscapeManualState.loaded(escapeManualEntity));
+        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
+
+        // act
+        await tester.tap(
+          find.widgetWithText(ExpansionTile, 'Section 1'),
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(
+          find
+              .descendant(
+                of: find.byKey(Key('escape-manual-task-1-4')),
+                matching: find.textContaining('Ligar'),
+              )
+              .first,
+        );
+
+        // assert
+        verify(() => mockController.callTo(expectedContact)).called(1);
+      },
+    );
+
     group('goldens', () {
       screenshotTest(
         'should populate load state',
