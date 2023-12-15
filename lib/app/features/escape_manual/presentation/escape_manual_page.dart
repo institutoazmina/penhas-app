@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -16,6 +17,10 @@ import 'escape_manual_state.dart';
 
 typedef OpenAssistantPressed = void Function(
   EscapeManualAssistantActionEntity action,
+);
+
+typedef OnCallButtonPressed = void Function(
+  ContactEntity contact,
 );
 
 class EscapeManualPage extends StatefulWidget {
@@ -249,6 +254,12 @@ class _TaskWidgetState
                     ),
               ),
             ),
+            subtitle: task is EscapeManualContactsTaskEntity
+                ? _TrustedContactsWidget(
+                    task as EscapeManualContactsTaskEntity,
+                    onCallButtonPressed: controller.callTo,
+                  )
+                : null,
             value: isChecked,
             controlAffinity: ListTileControlAffinity.leading,
             onChanged: _onChanged,
@@ -328,4 +339,87 @@ class _TaskActionWidget extends PopupMenuItem {
 
 class _Divider extends Divider {
   const _Divider() : super(height: 1, color: DesignSystemColors.blueyGrey);
+}
+
+class _TrustedContactsWidget extends StatelessWidget {
+  const _TrustedContactsWidget(
+    this.task, {
+    Key? key,
+    required this.onCallButtonPressed,
+  }) : super(key: key);
+
+  final EscapeManualContactsTaskEntity task;
+  final OnCallButtonPressed onCallButtonPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    if (task.value?.isNotEmpty != true) {
+      return const SizedBox.shrink();
+    }
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: task.value!
+          .sorted((a, b) => a.id.compareTo(b.id))
+          .map(
+            (contact) => _ContactWidget(
+              contact,
+              onCallButtonPressed: onCallButtonPressed,
+            ),
+          )
+          .toList(),
+    );
+  }
+}
+
+class _ContactWidget extends StatelessWidget {
+  const _ContactWidget(
+    this.contact, {
+    Key? key,
+    required this.onCallButtonPressed,
+  }) : super(key: key);
+
+  final ContactEntity contact;
+  final OnCallButtonPressed onCallButtonPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            contact.phone,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: DesignSystemColors.darkIndigoThree,
+                  fontSize: 16,
+                ),
+          ),
+          const SizedBox(width: 8),
+          TextButton.icon(
+              icon: const Icon(
+                Icons.phone_outlined,
+                size: 14,
+              ),
+              label: const Text('Ligar'),
+              onPressed: () => onCallButtonPressed(contact),
+              style: TextButton.styleFrom(
+                primary: DesignSystemColors.white,
+                backgroundColor: DesignSystemColors.darkIndigoThree,
+                textStyle: Theme.of(context).textTheme.button?.copyWith(
+                      fontSize: 14,
+                    ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+              )),
+        ],
+      ),
+    );
+  }
 }

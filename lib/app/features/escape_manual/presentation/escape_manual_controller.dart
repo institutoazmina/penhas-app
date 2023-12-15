@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../core/error/failures.dart';
 import '../../../core/extension/mobx.dart';
@@ -124,6 +125,10 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
       final updated = task.copyWith(value: newValue);
       await updateTask(updated);
     }
+  }
+
+  void callTo(ContactEntity contact) {
+    launchUrlString('tel:${contact.phone}');
   }
 
   ReactionDisposer onReaction(OnEscapeManualReaction fn) {

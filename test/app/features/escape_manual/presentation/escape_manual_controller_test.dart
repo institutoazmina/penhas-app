@@ -16,6 +16,8 @@ import 'package:penhas/app/features/escape_manual/domain/start_escape_manual.dar
 import 'package:penhas/app/features/escape_manual/domain/update_escape_manual_task.dart';
 import 'package:penhas/app/features/escape_manual/presentation/escape_manual_controller.dart';
 import 'package:penhas/app/features/escape_manual/presentation/escape_manual_state.dart';
+import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:url_launcher_platform_interface/url_launcher_platform_interface.dart';
 
 void main() {
   late EscapeManualController sut;
@@ -541,6 +543,42 @@ void main() {
         },
       );
     });
+
+    group('callTo', () {
+      late UrlLauncherPlatform mockUrlLauncher;
+
+      setUp(() {
+        mockUrlLauncher = _MockUrlLauncher();
+        UrlLauncherPlatform.instance = mockUrlLauncher;
+
+        registerFallbackValue(_FakeLaunchOptions());
+      });
+
+      test(
+        'should call launchUrlString with correct url',
+        () async {
+          // arrange
+          const contact = ContactEntity(
+            id: 1,
+            name: 'name',
+            phone: '11 11111-1111',
+          );
+          when(() => mockUrlLauncher.launchUrl(any(), any()))
+              .thenAnswer((_) => Future.value(true));
+
+          // act
+          sut.callTo(contact);
+
+          // assert
+          verify(
+            () => mockUrlLauncher.launchUrl(
+              'tel:${contact.phone}',
+              any(),
+            ),
+          ).called(1);
+        },
+      );
+    });
   });
 }
 
@@ -558,6 +596,10 @@ class _MockDeleteEscapeManualTaskUseCase extends Mock
 
 class _MockModularNavigate extends Mock implements IModularNavigator {}
 
+class _MockUrlLauncher extends Mock
+    with MockPlatformInterfaceMixin
+    implements UrlLauncherPlatform {}
+
 class _MockOnEscapeManualReaction extends Mock
     implements _IOnEscapeManualReaction {}
 
@@ -570,6 +612,8 @@ class _FakeEscapeManualEditableTaskEntity extends Fake
     implements EscapeManualEditableTaskEntity {}
 
 class _FakeQuizSessionModel extends Fake implements QuizSessionModel {}
+
+class _FakeLaunchOptions extends Fake implements LaunchOptions {}
 
 abstract class _IOnEscapeManualReaction {
   void call(EscapeManualReaction? reaction);
