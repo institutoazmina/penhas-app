@@ -76,6 +76,7 @@ dependencies:
   url_launcher: ^6.1.7
   uuid: ^3.0.5
   webview_flutter: ^3.0.0
+  workmanager: ^0.4.1
 
 dev_dependencies:
   flutter_test:
@@ -127,6 +128,10 @@ dependency_overrides:
     git:
       url: https://github.com/bhavin-concetto/smoothratingbar.git
       ref: "eb02312f9adc6a40e2488050fb2e58852a163bb8"
+  workmanager:
+    git:
+      url: https://github.com/pedrox-hs/flutter_workmanager.git
+      ref: main
 
 flutter_icons:
   ios: true

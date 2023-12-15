@@ -1643,6 +1643,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.5.2"
+  workmanager:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: main
+      resolved-ref: "789793533e4d44e6cd8aaf92a422b494a49f2fbf"
+      url: "https://github.com/pedrox-hs/flutter_workmanager.git"
+    source: git
+    version: "0.5.2"
   xdg_directories:
     dependency: transitive
     description:
