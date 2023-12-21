@@ -116,7 +116,7 @@ class EscapeManualRepository implements IEscapeManualRepository {
 
       return remoteTask.copyWith(
         isDone: localTask.isDone,
-        userInputValue: localTask.value,
+        value: localTask.value,
       );
     });
 

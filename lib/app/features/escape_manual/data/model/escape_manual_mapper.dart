@@ -53,7 +53,7 @@ extension EscapeManualTaskRemoteMapper on EscapeManualTaskRemoteModel {
         id: id,
         description: description,
         isDone: isDone,
-        value: userInputValue,
+        value: value,
       );
     }
 

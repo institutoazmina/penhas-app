@@ -94,14 +94,14 @@ class EscapeManualTaskRemoteModel extends Equatable {
     this.title,
     required this.description,
     this.isDone = false,
-    this.userInputValue,
+    this.value,
     required this.updatedAt,
   })  : assert(type != EscapeManualTaskType.unknown),
         assert(
           type == EscapeManualTaskType.contacts
-              ? userInputValue is List<ContactEntity>?
+              ? value is List<ContactEntity>?
               : true,
-          'Invalid userInputValue: $userInputValue', // coverage:ignore-line
+          'Invalid value: $value', // coverage:ignore-line
         );
 
   factory EscapeManualTaskRemoteModel.fromJson(Map<String, dynamic> json) =>
@@ -128,7 +128,7 @@ class EscapeManualTaskRemoteModel extends Equatable {
     readValue: readUserInputValue,
     fromJson: userInputValueFromJson,
   )
-  final dynamic userInputValue;
+  final dynamic value;
 
   @JsonKey(name: 'checkbox_feito')
   @JsonBoolConverter()
@@ -146,14 +146,14 @@ class EscapeManualTaskRemoteModel extends Equatable {
         title,
         description,
         isDone,
-        userInputValue,
+        value,
         updatedAt,
       ];
 
   Map<String, Object?> toJson() => _$EscapeManualTaskRemoteModelToJson(this);
 
   EscapeManualTaskRemoteModel copyWith({
-    dynamic userInputValue,
+    dynamic value,
     bool? isDone,
   }) =>
       EscapeManualTaskRemoteModel(
@@ -162,7 +162,7 @@ class EscapeManualTaskRemoteModel extends Equatable {
         group: group,
         title: title,
         description: description,
-        userInputValue: userInputValue ?? this.userInputValue,
+        value: value ?? this.value,
         isDone: isDone ?? this.isDone,
         updatedAt: updatedAt,
       );
