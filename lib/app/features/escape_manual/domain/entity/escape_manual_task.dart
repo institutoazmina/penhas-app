@@ -23,7 +23,7 @@ abstract class EscapeManualTaskEntity extends Equatable {
       ];
 
   EscapeManualTaskEntity copyWith({
-    required bool isDone,
+    bool? isDone,
   });
 }
 
@@ -50,7 +50,7 @@ abstract class EscapeManualEditableTaskEntity<T extends Object>
 
   @override
   EscapeManualTaskEntity copyWith({
-    required bool isDone,
+    bool? isDone,
     T? value,
   });
 }
@@ -68,12 +68,12 @@ class EscapeManualDefaultTaskEntity extends EscapeManualTaskEntity {
 
   @override
   EscapeManualTaskEntity copyWith({
-    required bool isDone,
+    bool? isDone,
   }) =>
       EscapeManualDefaultTaskEntity(
         id: id,
         description: description,
-        isDone: isDone,
+        isDone: isDone ?? this.isDone,
       );
 }
 
@@ -93,13 +93,13 @@ class EscapeManualContactsTaskEntity
 
   @override
   EscapeManualContactsTaskEntity copyWith({
-    required bool isDone,
+    bool? isDone,
     List<ContactEntity>? value,
   }) =>
       EscapeManualContactsTaskEntity(
         id: id,
         description: description,
         value: value ?? this.value,
-        isDone: isDone,
+        isDone: isDone ?? this.isDone,
       );
 }

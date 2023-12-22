@@ -26,6 +26,7 @@ void main() {
   setUpAll(() {
     initModule(module);
     registerFallbackValue(_FakeEscapeManualTaskEntity());
+    registerFallbackValue(_FakeEscapeManualContactsTaskEntity());
   });
 
   setUp(() {
@@ -252,6 +253,72 @@ void main() {
       },
     );
 
+    testWidgets(
+      'should call controller editTask when edit button is pressed',
+      (tester) async {
+        // arrange
+        final expectedTask = escapeManualEntity.sections[1].tasks[4];
+        when(() => mockController.state)
+            .thenReturn(EscapeManualState.loaded(escapeManualEntity));
+        when(() => mockController.editTask(any()))
+            .thenAnswer((_) => Future.value());
+        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
+
+        // act
+        await tester.tapAll(
+          find.widgetWithText(ExpansionTile, 'Section 1'),
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(
+          find.descendant(
+            of: find.byKey(Key('escape-manual-task-1-4')),
+            matching: find.byType(PopupMenuButton),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(
+          find.textContaining('Editar'),
+        );
+
+        // assert
+        verify(
+          () => mockController.editTask(
+            expectedTask as EscapeManualContactsTaskEntity,
+          ),
+        ).called(1);
+      },
+    );
+
+    testWidgets(
+      'should call controller callTo when call button is pressed',
+      (tester) async {
+        // arrange
+        final task = escapeManualEntity.sections[1].tasks[4]
+            as EscapeManualContactsTaskEntity;
+        final expectedContact = task.value![1];
+        when(() => mockController.state)
+            .thenReturn(EscapeManualState.loaded(escapeManualEntity));
+        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
+
+        // act
+        await tester.tap(
+          find.widgetWithText(ExpansionTile, 'Section 1'),
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(
+          find
+              .descendant(
+                of: find.byKey(Key('escape-manual-task-1-4')),
+                matching: find.textContaining('Ligar'),
+              )
+              .first,
+        );
+
+        // assert
+        verify(() => mockController.callTo(expectedContact)).called(1);
+      },
+    );
+
     group('goldens', () {
       screenshotTest(
         'should populate load state',
@@ -327,6 +394,29 @@ void main() {
       );
 
       screenshotTest(
+        'should show task options menu with edit option',
+        fileName: 'escape_manual_page_task_options_edit',
+        setUp: () {
+          when(() => mockController.state).thenReturn(
+            EscapeManualState.loaded(escapeManualEntity),
+          );
+        },
+        pageBuilder: () => const EscapeManualPage(),
+        pumpBeforeTest: (tester) async {
+          await tester.tapAll(
+            find.widgetWithText(ExpansionTile, 'Section 1'),
+          );
+          await tester.pumpAndSettle();
+          await tester.tapAll(
+            find.descendant(
+              of: find.byKey(Key('escape-manual-task-1-4')),
+              matching: find.byType(PopupMenuButton),
+            ),
+          );
+        },
+      );
+
+      screenshotTest(
         'should show error message when state is error',
         fileName: 'escape_manual_page_error',
         setUp: () {
@@ -371,6 +461,9 @@ class _MockReactionDisposer extends Mock implements mobx.ReactionDisposer {}
 class _FakeEscapeManualTaskEntity extends Fake
     implements EscapeManualTaskEntity {}
 
+class _FakeEscapeManualContactsTaskEntity extends Fake
+    implements EscapeManualContactsTaskEntity {}
+
 EscapeManualEntity get escapeManualEntity => EscapeManualEntity(
       assistant: EscapeManualAssistantEntity(
         explanation: 'Explanation text',
@@ -399,6 +492,18 @@ EscapeManualEntity get escapeManualEntity => EscapeManualEntity(
                 : EscapeManualContactsTaskEntity(
                     id: '${section}-${task}',
                     description: 'Task #${task} of section ${section}',
+                    value: [
+                      ContactEntity(
+                        id: 2,
+                        name: 'Contact name 2',
+                        phone: '(11) 22222-2222',
+                      ),
+                      ContactEntity(
+                        id: 1,
+                        name: 'Contact name',
+                        phone: '(11) 1111-1111',
+                      ),
+                    ],
                   ),
           ),
         ),

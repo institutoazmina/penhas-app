@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../core/error/failures.dart';
 import '../../../core/extension/mobx.dart';
@@ -111,6 +112,23 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
 
     final result = await deleteProgress;
     result.fold(_handleErrorAsReaction, (_) {});
+  }
+
+  Future<void> editTask(EscapeManualEditableTaskEntity task) async {
+    final newValue = await Modular.to.pushNamed<List<ContactEntity>>(
+      '/edit/trusted_contacts',
+      arguments: task.value,
+    );
+
+    if (newValue != null &&
+        !listEquals(newValue, task.value as List<ContactEntity>?)) {
+      final updated = task.copyWith(value: newValue);
+      await updateTask(updated);
+    }
+  }
+
+  void callTo(ContactEntity contact) {
+    launchUrlString('tel:${contact.phone}');
   }
 
   ReactionDisposer onReaction(OnEscapeManualReaction fn) {
