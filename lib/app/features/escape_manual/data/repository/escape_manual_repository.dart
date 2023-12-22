@@ -56,7 +56,10 @@ class EscapeManualRepository implements IEscapeManualRepository {
     try {
       final response = await _remoteDatasource.fetch();
 
-      await _localDatasource.clearBefore(response.lastModifiedAt);
+      await _localDatasource.removeWhere(
+        isBefore: response.lastModifiedAt,
+        orIdNotIn: response.tasks.map((el) => el.id).toList(),
+      );
 
       final iterator = StreamIterator(
         _localDatasource.fetchTasks().distinct(),

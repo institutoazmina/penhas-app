@@ -39,10 +39,16 @@ class EscapeManualLocalDatasource implements IEscapeManualLocalDatasource {
   }
 
   @override
-  Future<void> clearBefore(DateTime date) async {
+  Future<void> removeWhere({
+    required DateTime isBefore,
+    required List<String> orIdNotIn,
+  }) async {
     final tasks = await _store.all();
     final keys = tasks.mapNotNull((task) {
-      if (task.updatedAt?.isBefore(date) == true) {
+      if (task.updatedAt?.isBefore(isBefore) == true) {
+        return task.id;
+      }
+      if (!orIdNotIn.contains(task.id)) {
         return task.id;
       }
       return null;

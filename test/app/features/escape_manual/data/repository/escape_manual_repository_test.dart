@@ -29,8 +29,12 @@ void main() {
       remoteDatasource: mockRemoteDatasource,
     );
 
-    when(() => mockLocalDatasource.clearBefore(any()))
-        .thenAnswer((_) => Future.value());
+    when(
+      () => mockLocalDatasource.removeWhere(
+        isBefore: any(named: 'isBefore'),
+        orIdNotIn: any(named: 'orIdNotIn'),
+      ),
+    ).thenAnswer((_) => Future.value());
   });
 
   group(EscapeManualRepository, () {

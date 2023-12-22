@@ -23,10 +23,10 @@ import 'send_pending_escape_manual_task.dart';
 
 part 'escape_manual_controller.g.dart';
 
+typedef OnEscapeManualReaction = void Function(EscapeManualReaction? reaction);
+
 class EscapeManualController = _EscapeManualControllerBase
     with _$EscapeManualController;
-
-typedef OnEscapeManualReaction = void Function(EscapeManualReaction? reaction);
 
 abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
   _EscapeManualControllerBase({
@@ -63,7 +63,6 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
   StreamSubscription? subscription;
 
   ObservableStream<EscapeManualEntity>? _loadProgress;
-  late ObservableFuture<Either<Failure, QuizSessionEntity>> _startProgress;
 
   @action
   Future<void> load() async {
@@ -81,7 +80,7 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
 
     subscription = _loadProgress?.listen(
       (el) => state = _handleLoadSuccess(el),
-      onError: (e) => state = _handleLoadFailure(e),
+      onError: (e) => state = _handleErrorAsState(e),
       cancelOnError: true,
     );
   }
@@ -90,12 +89,17 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
   Future<void> openAssistant(EscapeManualAssistantActionEntity action) async {
     if (progressState == PageProgressState.loading) return;
 
-    _pageProgress = _startProgress = ObservableFuture(
+    final ObservableFuture<Either<Failure, QuizSessionEntity>> startProgress;
+    _pageProgress = startProgress = ObservableFuture(
       _startEscapeManual(action.quizSession),
     );
 
-    final result = await _startProgress;
-    result.fold(_handleErrorAsReaction, _handleOpenAssistant);
+    final result = await startProgress;
+
+    result.fold((failure) {
+      final errorMessage = mapFailureMessage(failure);
+      _reaction = EscapeManualReaction.showSnackBar(errorMessage);
+    }, _handleOpenAssistant);
   }
 
   @action
@@ -137,8 +141,8 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
     subscription = null;
   }
 
-  EscapeManualState _handleLoadFailure(Failure failure) {
-    var errorMessage = mapFailureMessage(failure);
+  EscapeManualState _handleErrorAsState(failure) {
+    final errorMessage = mapFailureMessage(failure);
     return EscapeManualState.error(errorMessage);
   }
 
@@ -153,11 +157,6 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
           arguments: quizSession,
         )
         .then((_) => load());
-  }
-
-  void _handleErrorAsReaction(failure) {
-    final errorMessage = mapFailureMessage(failure);
-    _reaction = EscapeManualReaction.showSnackBar(errorMessage);
   }
 
   void _onSaveTaskFailed(e) {

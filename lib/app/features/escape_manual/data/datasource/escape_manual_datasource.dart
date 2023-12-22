@@ -30,6 +30,10 @@ abstract class IEscapeManualLocalDatasource extends IEscapeManualDatasource {
   Stream<Iterable<EscapeManualTaskModel>> fetchTasks();
 
   /// Removes all tasks before the given date from the local database
+  /// and all tasks that are not in the given list
   /// This is used to clear the local database after the tasks have been synced with the server
-  Future<void> clearBefore(DateTime date);
+  Future<void> removeWhere({
+    required DateTime isBefore,
+    required List<String> orIdNotIn,
+  });
 }

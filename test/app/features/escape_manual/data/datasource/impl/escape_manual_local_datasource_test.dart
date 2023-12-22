@@ -123,7 +123,10 @@ void main() {
       when(() => mockStore.removeAll(any())).thenAnswer((_) => Future.value());
 
       // act
-      await sut.clearBefore(DateTime(2023, 11, 13, 13, 58, 0));
+      await sut.removeWhere(
+        isBefore: DateTime(2023, 11, 13, 13, 58, 0),
+        orIdNotIn: tasks.map((e) => e.id).toList(),
+      );
 
       // assert
       verify(() => mockStore.removeAll(['0', '1'])).called(1);
