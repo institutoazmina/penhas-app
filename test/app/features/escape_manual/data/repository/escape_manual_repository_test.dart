@@ -104,6 +104,30 @@ void main() {
       );
 
       test(
+        'should return result once when local datasource emits the same data twice',
+        () async {
+          // arrange
+          final escapeManualModel = escapeManualModelFixture;
+          final expectedEscapeManual = updatedEscapeManualEntityFixture;
+
+          when(() => mockRemoteDatasource.fetch())
+              .thenAnswer((_) async => escapeManualModel);
+          when(() => mockLocalDatasource.fetchTasks()).thenAnswer(
+            (_) => Stream.fromIterable([
+              escapeManualLocalModelsFixture,
+              escapeManualLocalModelsFixture,
+            ]),
+          );
+
+          // act / assert
+          expectLater(
+            sut.fetch(),
+            emitsInOrder([expectedEscapeManual, emitsDone]),
+          );
+        },
+      );
+
+      test(
         'should return failure when datasource fetch throws',
         () async {
           // arrange
@@ -173,7 +197,7 @@ void main() {
 
     group('updateTask', () {
       test(
-        'should call datasource updateTask',
+        'should call datasources updateTask',
         () async {
           // arrange
           final task = escapeManualEditableTaskEntityFixture;
@@ -183,20 +207,30 @@ void main() {
             isDone: task.isDone,
             value: task.value,
           );
-          when(() => mockLocalDatasource.saveTask(any()))
-              .thenAnswer((_) async => unit);
+          when(() => mockLocalDatasource.saveTask(any())).thenAnswer(
+            (invocation) async => invocation.positionalArguments[0],
+          );
+          when(() => mockRemoteDatasource.saveTask(any())).thenAnswer(
+            (invocation) async => invocation.positionalArguments[0],
+          );
 
           // act
           final result = await sut.updateTask(task);
 
           // assert
           expect(result.isRight(), isTrue);
-          verify(() => mockLocalDatasource.saveTask(localTask)).called(1);
+          verifyInOrder([
+            () => mockLocalDatasource.saveTask(localTask),
+            () => mockRemoteDatasource.saveTask(localTask),
+            () => mockLocalDatasource.saveTask(localTask),
+          ]);
+          verifyNoMoreInteractions(mockLocalDatasource);
+          verifyNoMoreInteractions(mockRemoteDatasource);
         },
       );
 
       test(
-        'should return failure when datasource updateTask throws',
+        'should return failure when local datasource updateTask throws',
         () async {
           // arrange
           final task = escapeManualEditableTaskEntityFixture;
@@ -209,38 +243,78 @@ void main() {
           // assert
           expect(result.isLeft(), isTrue);
           expect(result.fold(id, (_) {}), isA<Failure>());
+          verify(() => mockLocalDatasource.saveTask(any())).called(1);
+          verifyNoMoreInteractions(mockLocalDatasource);
+          verifyNoMoreInteractions(mockRemoteDatasource);
+        },
+      );
+
+      test(
+        'should return failure when remote datasource updateTask throws',
+        () async {
+          // arrange
+          final task = escapeManualEditableTaskEntityFixture;
+          when(() => mockLocalDatasource.saveTask(any())).thenAnswer(
+            (invocation) async => invocation.positionalArguments[0],
+          );
+          when(() => mockRemoteDatasource.saveTask(any()))
+              .thenThrow(Exception());
+
+          // act
+          final result = await sut.updateTask(task);
+
+          // assert
+          expect(result.isLeft(), isTrue);
+          expect(result.fold(id, (_) {}), isA<Failure>());
+          verifyInOrder([
+            () => mockLocalDatasource.saveTask(any()),
+            () => mockRemoteDatasource.saveTask(any()),
+          ]);
+          verifyNoMoreInteractions(mockLocalDatasource);
+          verifyNoMoreInteractions(mockRemoteDatasource);
         },
       );
     });
 
     group('removeTask', () {
       test(
-        'should call datasource removeTask',
+        'should call datasources saveTask with isRemoved true',
         () async {
           // arrange
           final task = escapeManualTaskEntityFixture;
           final localTask = EscapeManualTaskLocalModel(
             id: task.id,
             isDone: task.isDone,
+            isRemoved: true,
           );
-          when(() => mockLocalDatasource.removeTask(any()))
-              .thenAnswer((_) async => unit);
+          when(() => mockLocalDatasource.saveTask(any())).thenAnswer(
+            (invocation) async => invocation.positionalArguments[0],
+          );
+          when(() => mockRemoteDatasource.saveTask(any())).thenAnswer(
+            (invocation) async => invocation.positionalArguments[0],
+          );
 
           // act
           final result = await sut.removeTask(task);
 
           // assert
           expect(result.isRight(), isTrue);
-          verify(() => mockLocalDatasource.removeTask(localTask)).called(1);
+          verifyInOrder([
+            () => mockLocalDatasource.saveTask(localTask),
+            () => mockRemoteDatasource.saveTask(localTask),
+            () => mockLocalDatasource.saveTask(localTask),
+          ]);
+          verifyNoMoreInteractions(mockLocalDatasource);
+          verifyNoMoreInteractions(mockRemoteDatasource);
         },
       );
 
       test(
-        'should return failure when datasource removeTask throws',
+        'should return failure when local datasource saveTask throws',
         () async {
           // arrange
           final task = escapeManualTaskEntityFixture;
-          when(() => mockLocalDatasource.removeTask(any()))
+          when(() => mockLocalDatasource.saveTask(any()))
               .thenThrow(Exception());
 
           // act
@@ -249,6 +323,36 @@ void main() {
           // assert
           expect(result.isLeft(), isTrue);
           expect(result.fold(id, (_) {}), isA<Failure>());
+          verify(() => mockLocalDatasource.saveTask(any())).called(1);
+          verifyNoMoreInteractions(mockLocalDatasource);
+          verifyNoMoreInteractions(mockRemoteDatasource);
+        },
+      );
+
+      test(
+        'should return failure when remote datasource saveTask throws',
+        () async {
+          // arrange
+          final task = escapeManualTaskEntityFixture;
+          when(() => mockLocalDatasource.saveTask(any())).thenAnswer(
+            (invocation) async => invocation.positionalArguments[0],
+          );
+          when(() => mockRemoteDatasource.saveTask(any()))
+              .thenThrow(Exception());
+
+          // act
+          final result = await sut.removeTask(task);
+
+          // assert
+          expect(result.isLeft(), isTrue);
+          expect(result.fold(id, (_) {}), isA<Failure>());
+          expect(result.fold(id, (_) {}), isA<Failure>());
+          verifyInOrder([
+            () => mockLocalDatasource.saveTask(any()),
+            () => mockRemoteDatasource.saveTask(any()),
+          ]);
+          verifyNoMoreInteractions(mockLocalDatasource);
+          verifyNoMoreInteractions(mockRemoteDatasource);
         },
       );
     });
