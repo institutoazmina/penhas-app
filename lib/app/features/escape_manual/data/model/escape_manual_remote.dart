@@ -6,6 +6,7 @@ import '../../../appstate/data/model/quiz_session_model.dart';
 import 'contact.dart';
 import 'escape_manual_mapper.dart'
     show readUserInputValue, userInputValueFromJson;
+import 'escape_manual_task.dart';
 import 'escape_manual_task_type.dart';
 
 export 'contact.dart';
@@ -86,7 +87,7 @@ class EscapeManualAssistantRemoteModel extends Equatable {
 }
 
 @JsonSerializable()
-class EscapeManualTaskRemoteModel extends Equatable {
+class EscapeManualTaskRemoteModel extends EscapeManualTaskModel {
   const EscapeManualTaskRemoteModel({
     required this.id,
     required this.type,
@@ -96,6 +97,7 @@ class EscapeManualTaskRemoteModel extends Equatable {
     this.isDone = false,
     this.value,
     required this.updatedAt,
+    this.isRemoved = false,
   })  : assert(type != EscapeManualTaskType.unknown),
         assert(
           type == EscapeManualTaskType.contacts
@@ -107,9 +109,11 @@ class EscapeManualTaskRemoteModel extends Equatable {
   factory EscapeManualTaskRemoteModel.fromJson(Map<String, dynamic> json) =>
       _$EscapeManualTaskRemoteModelFromJson(json);
 
+  @override
   @JsonKey(fromJson: FromJson.parseAsString)
   final String id;
 
+  @override
   @JsonKey(name: 'tipo')
   final EscapeManualTaskType type;
 
@@ -123,6 +127,7 @@ class EscapeManualTaskRemoteModel extends Equatable {
   @JsonKey(name: 'descricao')
   final String description;
 
+  @override
   @JsonKey(
     name: 'campo_livre',
     readValue: readUserInputValue,
@@ -130,31 +135,36 @@ class EscapeManualTaskRemoteModel extends Equatable {
   )
   final dynamic value;
 
+  @override
   @JsonKey(name: 'checkbox_feito')
   @JsonBoolConverter()
   final bool isDone;
 
+  @override
   @JsonKey(name: 'atualizado_em')
   @JsonSecondsFromEpochConverter()
   final DateTime updatedAt;
 
   @override
+  final bool isRemoved;
+
+  @override
   List<Object?> get props => [
-        id,
-        type,
+        ...super.props,
         group,
         title,
         description,
-        isDone,
-        value,
-        updatedAt,
       ];
 
+  @override
   Map<String, Object?> toJson() => _$EscapeManualTaskRemoteModelToJson(this);
 
+  @override
   EscapeManualTaskRemoteModel copyWith({
     dynamic value,
     bool? isDone,
+    bool? isRemoved,
+    DateTime? updatedAt,
   }) =>
       EscapeManualTaskRemoteModel(
         id: id,
@@ -164,6 +174,7 @@ class EscapeManualTaskRemoteModel extends Equatable {
         description: description,
         value: value ?? this.value,
         isDone: isDone ?? this.isDone,
-        updatedAt: updatedAt,
+        isRemoved: isRemoved ?? this.isRemoved,
+        updatedAt: updatedAt ?? this.updatedAt,
       );
 }

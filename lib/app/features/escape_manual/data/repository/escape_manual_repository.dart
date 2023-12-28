@@ -11,9 +11,9 @@ import '../../../authentication/presentation/shared/map_exception_to_failure.dar
 import '../../domain/entity/escape_manual.dart';
 import '../../domain/repository/escape_manual_repository.dart';
 import '../datasource/escape_manual_datasource.dart';
-import '../model/escape_manual_local.dart';
 import '../model/escape_manual_mapper.dart';
 import '../model/escape_manual_remote.dart';
+import '../model/escape_manual_task.dart';
 
 export '../../domain/repository/escape_manual_repository.dart'
     show IEscapeManualRepository;
@@ -98,9 +98,9 @@ class EscapeManualRepository implements IEscapeManualRepository {
   /// and return the updated remote data
   EscapeManualEntity _updateFromLocal(
     EscapeManualRemoteModel remote,
-    Iterable<EscapeManualTaskLocalModel> localTasks,
+    Iterable<EscapeManualTaskModel> localTasks,
   ) {
-    final tasksMap = Map<String, EscapeManualTaskLocalModel>.fromIterable(
+    final tasksMap = Map<String, EscapeManualTaskModel>.fromIterable(
       localTasks,
       key: (el) => '${el.id}',
     );

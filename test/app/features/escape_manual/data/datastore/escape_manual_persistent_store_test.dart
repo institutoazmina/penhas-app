@@ -6,10 +6,11 @@ import 'package:penhas/app/core/storage/collection_store.dart';
 import 'package:penhas/app/core/storage/persistent_storage.dart';
 import 'package:penhas/app/features/escape_manual/data/datastore/escape_manual_persistent_store.dart';
 import 'package:penhas/app/features/escape_manual/data/model/escape_manual_local.dart';
+import 'package:penhas/app/features/escape_manual/data/model/escape_manual_task.dart';
 
 void main() {
   group(EscapeManualTasksStore, () {
-    late ICollectionStore<EscapeManualTaskLocalModel> sut;
+    late ICollectionStore<EscapeManualTaskModel> sut;
 
     late IPersistentStorageFactory mockStorageFactory;
     late IPersistentStorage mockStorage;
