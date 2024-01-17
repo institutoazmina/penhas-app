@@ -80,7 +80,10 @@ class AppConfiguration implements IAppConfiguration {
 
   @override
   Future<void> logout() async {
-    await _storage.delete(_tokenKey);
+    await Future.wait([
+      _storage.delete(_tokenKey),
+      _storage.delete(_offlineHash),
+    ]);
     return;
   }
 
