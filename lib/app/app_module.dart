@@ -18,8 +18,10 @@ import 'core/remoteconfig/i_remote_config.dart';
 import 'core/remoteconfig/remote_config.dart';
 import 'core/storage/i_local_storage.dart';
 import 'core/storage/impl/hive_cache_storage.dart';
+import 'core/storage/impl/hive_persistent_storage.dart';
 import 'core/storage/local_storage_shared_preferences.dart';
 import 'core/storage/migrator_local_storage.dart';
+import 'core/storage/persistent_storage.dart';
 import 'core/storage/secure_local_storage.dart';
 import 'features/appstate/data/datasources/app_state_data_source.dart';
 import 'features/appstate/data/repositories/app_state_repository.dart';
@@ -118,6 +120,11 @@ class AppModule extends Module {
         ),
         Bind.lazySingleton<ICacheStorage>(
           (i) => HiveCacheStorage(
+            encryptionKeyStorage: i.get(),
+          ),
+        ),
+        Bind.lazySingleton<IPersistentStorageFactory>(
+          (i) => HivePersistentStorageFactory(
             encryptionKeyStorage: i.get(),
           ),
         ),

@@ -1,15 +1,21 @@
+import 'dart:async';
+
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../core/error/failures.dart';
 import '../../../core/extension/mobx.dart';
 import '../../appstate/domain/entities/app_state_entity.dart';
 import '../../authentication/presentation/shared/map_failure_message.dart';
 import '../../authentication/presentation/shared/page_progress_indicator.dart';
+import '../domain/delete_escape_manual_task.dart';
 import '../domain/entity/escape_manual.dart';
 import '../domain/get_escape_manual.dart';
 import '../domain/start_escape_manual.dart';
+import '../domain/update_escape_manual_task.dart';
 import 'escape_manual_state.dart';
 
 part 'escape_manual_controller.g.dart';
@@ -23,8 +29,12 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
   _EscapeManualControllerBase({
     required GetEscapeManualUseCase getEscapeManual,
     required StartEscapeManualUseCase startEscapeManual,
+    required UpdateEscapeManualTaskUseCase updateTask,
+    required DeleteEscapeManualTaskUseCase deleteTask,
   })  : _getEscapeManual = getEscapeManual,
-        _startEscapeManual = startEscapeManual;
+        _startEscapeManual = startEscapeManual,
+        _updateTask = updateTask,
+        _deleteTask = deleteTask;
 
   @observable
   EscapeManualState state = const EscapeManualState.initial();
@@ -37,21 +47,37 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
 
   final GetEscapeManualUseCase _getEscapeManual;
   final StartEscapeManualUseCase _startEscapeManual;
+  final UpdateEscapeManualTaskUseCase _updateTask;
+  final DeleteEscapeManualTaskUseCase _deleteTask;
 
   @observable
   ObservableFuture? _pageProgress;
 
-  late ObservableFuture<Either<Failure, EscapeManualEntity>> _loadProgress;
+  @visibleForTesting
+  StreamSubscription? subscription;
+
+  ObservableStream<EscapeManualEntity>? _loadProgress;
   late ObservableFuture<Either<Failure, QuizSessionEntity>> _startProgress;
 
   @action
   Future<void> load() async {
-    if (progressState == PageProgressState.loading) return;
+    if (progressState == PageProgressState.loading ||
+        _loadProgress.state == PageProgressState.loading) return;
 
-    _pageProgress = _loadProgress = ObservableFuture(_getEscapeManual());
-    final result = await _loadProgress;
+    subscription?.cancel();
 
-    state = result.fold(_handleLoadFailure, _handleLoadSuccess);
+    _loadProgress = ObservableStream(
+      _getEscapeManual(),
+      cancelOnError: true,
+    ).asBroadcastStream();
+
+    _pageProgress = _loadProgress?.first;
+
+    subscription = _loadProgress?.listen(
+      (el) => state = _handleLoadSuccess(el),
+      onError: (e) => state = _handleLoadFailure(e),
+      cancelOnError: true,
+    );
   }
 
   @action
@@ -63,11 +89,56 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
     );
 
     final result = await _startProgress;
-    result.fold(_handleOpenAssistantFailure, _handleOpenAssistant);
+    result.fold(_handleErrorAsReaction, _handleOpenAssistant);
+  }
+
+  @action
+  Future<void> updateTask(EscapeManualTaskEntity task) async {
+    final ObservableFuture<Either<Failure, void>> updateProgress;
+    _pageProgress = updateProgress = ObservableFuture(
+      _updateTask(task),
+    );
+
+    final result = await updateProgress;
+    result.fold(_handleErrorAsReaction, (_) {});
+  }
+
+  @action
+  Future<void> deleteTask(EscapeManualTaskEntity task) async {
+    final ObservableFuture<Either<Failure, void>> deleteProgress;
+    _pageProgress = deleteProgress = ObservableFuture(
+      _deleteTask(task),
+    );
+
+    final result = await deleteProgress;
+    result.fold(_handleErrorAsReaction, (_) {});
+  }
+
+  Future<void> editTask(EscapeManualEditableTaskEntity task) async {
+    final newValue = await Modular.to.pushNamed<List<ContactEntity>>(
+      '/edit/trusted_contacts',
+      arguments: task.value,
+    );
+
+    if (newValue != null &&
+        !listEquals(newValue, task.value as List<ContactEntity>?)) {
+      final updated = task.copyWith(value: newValue);
+      await updateTask(updated);
+    }
+  }
+
+  void callTo(ContactEntity contact) {
+    launchUrlString('tel:${contact.phone}');
   }
 
   ReactionDisposer onReaction(OnEscapeManualReaction fn) {
     return reaction((_) => _reaction, fn);
+  }
+
+  Future<void> dispose() async {
+    await subscription?.cancel();
+    _loadProgress?.close();
+    subscription = null;
   }
 
   EscapeManualState _handleLoadFailure(Failure failure) {
@@ -88,8 +159,8 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
         .then((_) => load());
   }
 
-  void _handleOpenAssistantFailure(Failure failure) {
-    var errorMessage = mapFailureMessage(failure);
-    _reaction = EscapeManualReaction.showSnackbar(errorMessage);
+  void _handleErrorAsReaction(failure) {
+    final errorMessage = mapFailureMessage(failure);
+    _reaction = EscapeManualReaction.showSnackBar(errorMessage);
   }
 }

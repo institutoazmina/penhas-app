@@ -63,6 +63,16 @@ class QuizSessionModel extends QuizSessionEntity {
       )
     ];
   }
+
+  Map<String, Object?> toJson() => {
+        'session_id': sessionId,
+        'current_msgs': currentMessage
+            ?.whereType<QuizMessageModel>()
+            .map((e) => e.toJson())
+            .toList(),
+        'finished': isFinished ? 1 : 0,
+        'end_screen': endScreen,
+      };
 }
 
 class QuizMessageModel extends QuizMessageEntity {
@@ -128,6 +138,19 @@ class QuizMessageModel extends QuizMessageEntity {
     if (data.isEmpty) return null;
     return data.map((e) => QuizMessageChoiceOptionModel.fromJson(e)).toList();
   }
+
+  Map<String, Object?> toJson() => {
+        'content': content,
+        'type': type.name,
+        'ref': ref,
+        'style': style,
+        'action': action,
+        'label': buttonLabel,
+        'options': options
+            ?.whereType<QuizMessageChoiceOptionModel>()
+            .map((e) => e.toJson())
+            .toList(),
+      };
 }
 
 class QuizMessageChoiceOptionModel extends QuizMessageChoiceOption {
@@ -142,4 +165,9 @@ class QuizMessageChoiceOptionModel extends QuizMessageChoiceOption {
       index: '${jsonData['index']}',
     );
   }
+
+  Map<String, Object?> toJson() => {
+        'display': display,
+        'index': index,
+      };
 }

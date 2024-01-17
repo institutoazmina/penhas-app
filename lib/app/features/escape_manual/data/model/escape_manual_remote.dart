@@ -3,12 +3,20 @@ import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../core/extension/json_serializer.dart';
 import '../../../appstate/data/model/quiz_session_model.dart';
+import 'contact.dart';
+import 'escape_manual_mapper.dart'
+    show readUserInputValue, userInputValueFromJson;
+import 'escape_manual_task_type.dart';
+
+export 'contact.dart';
+export 'escape_manual_task_type.dart';
 
 part 'escape_manual_remote.g.dart';
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class EscapeManualRemoteModel extends Equatable {
   const EscapeManualRemoteModel({
+    required this.lastModifiedAt,
     required this.assistant,
     this.tasks = const [],
     this.removedTasks = const [],
@@ -26,11 +34,29 @@ class EscapeManualRemoteModel extends Equatable {
   @JsonKey(name: 'tarefas_removidas', fromJson: FromJson.parseAsStringList)
   final Iterable<String> removedTasks;
 
+  @JsonKey(name: 'consultado_em')
+  @JsonSecondsFromEpochConverter()
+  final DateTime lastModifiedAt;
+
   @override
-  List<Object?> get props => [assistant, tasks.toList(), removedTasks.toList()];
+  List<Object?> get props =>
+      [lastModifiedAt, assistant, tasks.toList(), removedTasks.toList()];
+
+  Map<String, dynamic> toJson() => _$EscapeManualRemoteModelToJson(this);
+
+  EscapeManualRemoteModel copyWith({
+    DateTime? lastModifiedAt,
+    EscapeManualAssistantRemoteModel? assistant,
+    Iterable<EscapeManualTaskRemoteModel>? tasks,
+  }) =>
+      EscapeManualRemoteModel(
+        lastModifiedAt: lastModifiedAt ?? this.lastModifiedAt,
+        assistant: assistant ?? this.assistant,
+        tasks: tasks ?? this.tasks,
+      );
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class EscapeManualAssistantRemoteModel extends Equatable {
   const EscapeManualAssistantRemoteModel({
     required this.title,
@@ -54,9 +80,12 @@ class EscapeManualAssistantRemoteModel extends Equatable {
 
   @override
   List<Object?> get props => [title, subtitle, quizSession];
+
+  Map<String, Object?> toJson() =>
+      _$EscapeManualAssistantRemoteModelToJson(this);
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class EscapeManualTaskRemoteModel extends Equatable {
   const EscapeManualTaskRemoteModel({
     required this.id,
@@ -65,10 +94,15 @@ class EscapeManualTaskRemoteModel extends Equatable {
     this.title,
     required this.description,
     this.isDone = false,
-    this.isEditable = false,
     this.userInputValue,
     required this.updatedAt,
-  });
+  })  : assert(type != EscapeManualTaskType.unknown),
+        assert(
+          type == EscapeManualTaskType.contacts
+              ? userInputValue is List<ContactEntity>?
+              : true,
+          'Invalid userInputValue: $userInputValue', // coverage:ignore-line
+        );
 
   factory EscapeManualTaskRemoteModel.fromJson(Map<String, dynamic> json) =>
       _$EscapeManualTaskRemoteModelFromJson(json);
@@ -77,7 +111,7 @@ class EscapeManualTaskRemoteModel extends Equatable {
   final String id;
 
   @JsonKey(name: 'tipo')
-  final String type;
+  final EscapeManualTaskType type;
 
   @JsonKey(name: 'agrupador')
   final String group;
@@ -89,12 +123,12 @@ class EscapeManualTaskRemoteModel extends Equatable {
   @JsonKey(name: 'descricao')
   final String description;
 
-  @JsonKey(name: 'campo_livre')
-  final String? userInputValue;
-
-  @JsonKey(name: 'eh_customizada')
-  @JsonBoolConverter()
-  final bool isEditable;
+  @JsonKey(
+    name: 'campo_livre',
+    readValue: readUserInputValue,
+    fromJson: userInputValueFromJson,
+  )
+  final dynamic userInputValue;
 
   @JsonKey(name: 'checkbox_feito')
   @JsonBoolConverter()
@@ -112,8 +146,24 @@ class EscapeManualTaskRemoteModel extends Equatable {
         title,
         description,
         isDone,
-        isEditable,
         userInputValue,
         updatedAt,
       ];
+
+  Map<String, Object?> toJson() => _$EscapeManualTaskRemoteModelToJson(this);
+
+  EscapeManualTaskRemoteModel copyWith({
+    dynamic userInputValue,
+    bool? isDone,
+  }) =>
+      EscapeManualTaskRemoteModel(
+        id: id,
+        type: type,
+        group: group,
+        title: title,
+        description: description,
+        userInputValue: userInputValue ?? this.userInputValue,
+        isDone: isDone ?? this.isDone,
+        updatedAt: updatedAt,
+      );
 }

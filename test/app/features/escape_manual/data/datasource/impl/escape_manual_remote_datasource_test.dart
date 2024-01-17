@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/network/api_client.dart';
+import 'package:penhas/app/core/storage/object_store.dart';
 import 'package:penhas/app/features/appstate/data/model/quiz_session_model.dart';
 import 'package:penhas/app/features/escape_manual/data/datasource/impl/escape_manual_remote_datasource.dart';
 import 'package:penhas/app/features/escape_manual/data/model/escape_manual_remote.dart';
@@ -12,6 +15,7 @@ void main() {
   late IEscapeManualRemoteDatasource sut;
 
   late IApiProvider mockApiProvider;
+  late IObjectStore<EscapeManualRemoteModel> mockCacheStorage;
 
   setUpAll(() {
     registerFallbackValue(_FakeEscapeManualRemoteModel());
@@ -19,9 +23,11 @@ void main() {
 
   setUp(() {
     mockApiProvider = _MockApiProvider();
+    mockCacheStorage = _MockEscapeManualStorage();
 
     sut = EscapeManualRemoteDatasource(
       apiProvider: mockApiProvider,
+      cacheStorage: mockCacheStorage,
     );
   });
 
@@ -54,6 +60,7 @@ void main() {
           verifyNoMoreInteractions(mockApiProvider);
         },
       );
+
       test(
         'should return apiProvider post',
         () async {
@@ -98,83 +105,240 @@ void main() {
     });
 
     group('fetch', () {
-      test(
-        'should call apiProvider get',
-        () async {
-          // arrange
-          final response = JsonUtil.getStringSync(
-            from: 'escape_manual/escape_manual_response.json',
-          );
-          when(
-            () => mockApiProvider.get(
-              path: any(named: 'path'),
-              parameters: any(named: 'parameters'),
-            ),
-          ).thenAnswer((_) async => response);
+      setUp(() {
+        when(() => mockCacheStorage.save(any()))
+            .thenAnswer((_) async => Future.value());
+      });
 
-          // act
-          await sut.fetch();
+      group('given empty cache', () {
+        setUp(() {
+          when(() => mockCacheStorage.retrieve()).thenAnswer((_) async => null);
+        });
 
-          // assert
-          verify(
-            () => mockApiProvider.get(
-              path: '/me/tarefas',
-              parameters: {
-                'modificado_apos': '0',
-              },
-            ),
-          ).called(1);
-          verifyNoMoreInteractions(mockApiProvider);
-        },
-      );
+        test(
+          'should call apiProvider get',
+          () async {
+            // arrange
+            final response = JsonUtil.getStringSync(
+              from: 'escape_manual/escape_manual_response.json',
+            );
+            when(
+              () => mockApiProvider.get(
+                path: any(named: 'path'),
+                parameters: any(named: 'parameters'),
+              ),
+            ).thenAnswer((_) async => response);
 
-      test(
-        'should return apiProvider get',
-        () async {
-          // arrange
-          final response = JsonUtil.getStringSync(
-            from: 'escape_manual/escape_manual_response.json',
-          );
-          final expectedEscapeManual = escapeManualRemoteModelFixture;
+            // act
+            await sut.fetch();
 
-          when(
-            () => mockApiProvider.get(
-              path: any(named: 'path'),
-              parameters: any(named: 'parameters'),
-            ),
-          ).thenAnswer((_) async => response);
+            // assert
+            verify(
+              () => mockApiProvider.get(
+                path: '/me/tarefas',
+                parameters: {
+                  'modificado_apos': '0',
+                },
+              ),
+            ).called(1);
+            verifyNoMoreInteractions(mockApiProvider);
+          },
+        );
 
-          // act
-          final result = await sut.fetch();
+        test(
+          'should call cacheStorage',
+          () async {
+            // arrange
+            final response = JsonUtil.getStringSync(
+              from: 'escape_manual/escape_manual_response.json',
+            );
+            final expectedCachedData =
+                EscapeManualRemoteModel.fromJson(jsonDecode(response));
+            when(
+              () => mockApiProvider.get(
+                path: any(named: 'path'),
+                parameters: any(named: 'parameters'),
+              ),
+            ).thenAnswer((_) async => response);
 
-          // assert
-          expect(result, equals(expectedEscapeManual));
-        },
-      );
+            // act
+            await sut.fetch();
 
-      test(
-        'should throws a failure when apiProvider get throws',
-        () async {
-          // arrange
-          when(
-            () => mockApiProvider.get(
-              path: any(named: 'path'),
-              parameters: any(named: 'parameters'),
-            ),
-          ).thenThrow(Exception());
+            // assert
+            verify(() => mockCacheStorage.save(expectedCachedData)).called(1);
+            verify(() => mockCacheStorage.retrieve()).called(1);
 
-          // act // assert
-          expectLater(
-            sut.fetch,
-            throwsA(isA<Exception>()),
-          );
-        },
-      );
+            verifyNoMoreInteractions(mockCacheStorage);
+          },
+        );
+
+        test(
+          'should return apiProvider get',
+          () async {
+            // arrange
+            final response = JsonUtil.getStringSync(
+              from: 'escape_manual/escape_manual_response.json',
+            );
+            final expectedEscapeManual = escapeManualRemoteModelFixture;
+
+            when(
+              () => mockApiProvider.get(
+                path: any(named: 'path'),
+                parameters: any(named: 'parameters'),
+              ),
+            ).thenAnswer((_) async => response);
+
+            // act
+            final result = await sut.fetch();
+
+            // assert
+            expect(result, equals(expectedEscapeManual));
+          },
+        );
+
+        test(
+          'should throws a failure when apiProvider get throws',
+          () async {
+            // arrange
+            when(
+              () => mockApiProvider.get(
+                path: any(named: 'path'),
+                parameters: any(named: 'parameters'),
+              ),
+            ).thenThrow(Exception());
+
+            // act // assert
+            expectLater(
+              sut.fetch,
+              throwsA(isA<Exception>()),
+            );
+          },
+        );
+      });
+
+      group('given not empty cache', () {
+        test(
+          'should call apiProvider get',
+          () async {
+            // arrange
+            final response = JsonUtil.getStringSync(
+              from: 'escape_manual/escape_manual_response.json',
+            );
+            final cachedData =
+                EscapeManualRemoteModel.fromJson(jsonDecode(response));
+            const expectedLastModifiedAt = 1699916213;
+
+            when(() => mockCacheStorage.retrieve())
+                .thenAnswer((_) async => cachedData);
+            when(
+              () => mockApiProvider.get(
+                path: any(named: 'path'),
+                parameters: any(named: 'parameters'),
+              ),
+            ).thenAnswer((_) async => response);
+
+            // act
+            await sut.fetch();
+
+            // assert
+            verify(
+              () => mockApiProvider.get(
+                path: '/me/tarefas',
+                parameters: {
+                  'modificado_apos': '$expectedLastModifiedAt',
+                },
+              ),
+            ).called(1);
+            verifyNoMoreInteractions(mockApiProvider);
+          },
+        );
+
+        test(
+          'should return updated cache',
+          () async {
+            // arrange
+            final response = JsonUtil.getStringSync(
+              from: 'escape_manual/escape_manual_latest_response.json',
+            );
+
+            final expectedEscapeManual = updatedEscapeManualRemoteModelFixture;
+
+            when(() => mockCacheStorage.retrieve())
+                .thenAnswer((_) async => escapeManualRemoteModelFixture);
+
+            when(
+              () => mockApiProvider.get(
+                path: any(named: 'path'),
+                parameters: any(named: 'parameters'),
+              ),
+            ).thenAnswer((_) async => response);
+
+            // act
+            final result = await sut.fetch();
+
+            // assert
+            expect(result, equals(expectedEscapeManual));
+          },
+        );
+
+        test(
+          'should save updated cache',
+          () async {
+            // arrange
+            final response = JsonUtil.getStringSync(
+              from: 'escape_manual/escape_manual_latest_response.json',
+            );
+
+            final expectedEscapeManual = updatedEscapeManualRemoteModelFixture;
+
+            when(() => mockCacheStorage.retrieve())
+                .thenAnswer((_) async => escapeManualRemoteModelFixture);
+
+            when(
+              () => mockApiProvider.get(
+                path: any(named: 'path'),
+                parameters: any(named: 'parameters'),
+              ),
+            ).thenAnswer((_) async => response);
+
+            // act
+            await sut.fetch();
+
+            // assert
+            verify(() => mockCacheStorage.save(expectedEscapeManual)).called(1);
+          },
+        );
+
+        test(
+          'should return cached data when apiProvider get throws',
+          () async {
+            // arrange
+            final expectedEscapeManual = escapeManualRemoteModelFixture;
+            when(() => mockCacheStorage.retrieve())
+                .thenAnswer((_) async => escapeManualRemoteModelFixture);
+            when(
+              () => mockApiProvider.get(
+                path: any(named: 'path'),
+                parameters: any(named: 'parameters'),
+              ),
+            ).thenThrow(Exception());
+
+            // act
+            final result = await sut.fetch();
+
+            // assert
+            expect(result, equals(expectedEscapeManual));
+          },
+        );
+      });
     });
   });
 }
 
 class _MockApiProvider extends Mock implements IApiProvider {}
+
+class _MockEscapeManualStorage extends Mock
+    implements IObjectStore<EscapeManualRemoteModel> {}
 
 class _FakeEscapeManualRemoteModel extends Fake
     implements EscapeManualRemoteModel {}

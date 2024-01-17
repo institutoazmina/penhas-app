@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -8,31 +9,42 @@ import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/appstate/data/model/quiz_session_model.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
+import 'package:penhas/app/features/escape_manual/domain/delete_escape_manual_task.dart';
 import 'package:penhas/app/features/escape_manual/domain/entity/escape_manual.dart';
 import 'package:penhas/app/features/escape_manual/domain/get_escape_manual.dart';
 import 'package:penhas/app/features/escape_manual/domain/start_escape_manual.dart';
+import 'package:penhas/app/features/escape_manual/domain/update_escape_manual_task.dart';
 import 'package:penhas/app/features/escape_manual/presentation/escape_manual_controller.dart';
 import 'package:penhas/app/features/escape_manual/presentation/escape_manual_state.dart';
+import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:url_launcher_platform_interface/url_launcher_platform_interface.dart';
 
 void main() {
   late EscapeManualController sut;
 
   late GetEscapeManualUseCase mockGetEscapeManual;
   late StartEscapeManualUseCase mockStartEscapeManual;
+  late UpdateEscapeManualTaskUseCase mockUpdateEscapeManualTask;
+  late DeleteEscapeManualTaskUseCase mockDeleteEscapeManualTask;
 
-  late Completer<Either<Failure, EscapeManualEntity>> getEscapeManualCompleter;
+  late Completer<EscapeManualEntity> getEscapeManualCompleter;
 
   setUp(() {
-    mockGetEscapeManual = GetEscapeManualUseCaseMock();
-    mockStartEscapeManual = StartEscapeManualUseCaseMock();
+    mockGetEscapeManual = _MockGetEscapeManualUseCase();
+    mockStartEscapeManual = _MockStartEscapeManualUseCase();
+    mockUpdateEscapeManualTask = _MockUpdateEscapeManualTaskUseCase();
+    mockDeleteEscapeManualTask = _MockDeleteEscapeManualTaskUseCase();
+
     getEscapeManualCompleter = Completer();
 
     when(() => mockGetEscapeManual())
-        .thenAnswer((_) async => getEscapeManualCompleter.future);
+        .thenAnswer((_) => Stream.fromFuture(getEscapeManualCompleter.future));
 
     sut = EscapeManualController(
       getEscapeManual: mockGetEscapeManual,
       startEscapeManual: mockStartEscapeManual,
+      updateTask: mockUpdateEscapeManualTask,
+      deleteTask: mockDeleteEscapeManualTask,
     );
   });
 
@@ -44,6 +56,17 @@ void main() {
         expect(sut.state, const EscapeManualState.initial());
       },
     );
+
+    test('dispose should cancel subscription', () async {
+      // arrange
+      await sut.load();
+
+      // act
+      await sut.dispose();
+
+      // assert
+      expect(sut.subscription, null);
+    });
 
     group('load', () {
       test(
@@ -97,10 +120,11 @@ void main() {
                 ),
               ),
             ),
+            sections: [],
           );
 
           // act
-          getEscapeManualCompleter.complete(right(escapeManual));
+          getEscapeManualCompleter.complete(escapeManual);
           await sut.load();
 
           // assert
@@ -125,10 +149,11 @@ void main() {
                 ),
               ),
             ),
+            sections: [],
           );
 
           // act
-          getEscapeManualCompleter.complete(right(escapeManual));
+          getEscapeManualCompleter.complete(escapeManual);
           await sut.load();
 
           // assert
@@ -144,7 +169,7 @@ void main() {
         () async {
           // arrange
           final failure = ServerFailure();
-          getEscapeManualCompleter.complete(left(failure));
+          getEscapeManualCompleter.completeError(failure);
 
           // act
           await sut.load();
@@ -156,6 +181,249 @@ void main() {
               'O servidor está com problema neste momento, tente novamente.',
             ),
           );
+        },
+      );
+    });
+
+    group('editTask', () {
+      final task = EscapeManualContactsTaskEntity(
+        id: 'id',
+        description: 'description',
+        value: [],
+        isDone: Random().nextBool(),
+      );
+
+      late IModularNavigator mockNavigator;
+
+      setUp(() {
+        mockNavigator = _MockModularNavigator();
+        Modular.navigatorDelegate = mockNavigator;
+
+        registerFallbackValue(_FakeEscapeManualEditableTaskEntity());
+
+        when(() => mockUpdateEscapeManualTask(any()))
+            .thenAnswer((_) async => right(unit));
+      });
+
+      test(
+        'should navigate to /edit/trusted_contacts screen',
+        () async {
+          // arrange
+          when(
+            () => mockNavigator.pushNamed<List<ContactEntity>>(
+              '/edit/trusted_contacts',
+              arguments: any(named: 'arguments'),
+            ),
+          ).thenAnswer((_) async => []);
+
+          // act
+          await sut.editTask(task);
+
+          // assert
+          verify(
+            () => mockNavigator.pushNamed<List<ContactEntity>>(
+              '/edit/trusted_contacts',
+              arguments: task.value,
+            ),
+          ).called(1);
+        },
+      );
+
+      test(
+        'should not call UpdateEscapeManualTask if value is not changed',
+        () async {
+          // arrange
+          when(
+            () => mockNavigator.pushNamed<List<ContactEntity>>(
+              '/edit/trusted_contacts',
+              arguments: any(named: 'arguments'),
+            ),
+          ).thenAnswer((_) async => []);
+
+          // act
+          await sut.editTask(task);
+
+          // assert
+          verifyNever(() => mockUpdateEscapeManualTask(any()));
+        },
+      );
+
+      test(
+        'should call UpdateEscapeManualTask if value is changed',
+        () async {
+          // arrange
+          final updatedTask = task.copyWith(value: [
+            ContactEntity(id: 1, name: 'name', phone: '11 11111-1111'),
+          ]);
+          when(
+            () => mockNavigator.pushNamed<List<ContactEntity>>(
+              '/edit/trusted_contacts',
+              arguments: any(named: 'arguments'),
+            ),
+          ).thenAnswer((_) async => updatedTask.value);
+
+          // act
+          await sut.editTask(task);
+
+          // assert
+          verify(() => mockUpdateEscapeManualTask(updatedTask)).called(1);
+        },
+      );
+    });
+
+    group('updateTask', () {
+      final task = EscapeManualContactsTaskEntity(
+        id: 'id',
+        description: 'description',
+        value: null,
+        isDone: Random().nextBool(),
+      );
+
+      late Completer<Either<Failure, void>> updateTaskCompleter;
+
+      setUp(() {
+        updateTaskCompleter = Completer();
+
+        registerFallbackValue(_FakeEscapeManualTaskEntity());
+
+        when(() => mockUpdateEscapeManualTask(any()))
+            .thenAnswer((_) async => updateTaskCompleter.future);
+      });
+
+      test(
+        'should call updateTask',
+        () async {
+          // act
+          sut.updateTask(task);
+
+          // assert
+          verify(() => mockUpdateEscapeManualTask(task)).called(1);
+        },
+      );
+
+      test(
+        'should change progress state to loading',
+        () async {
+          // act
+          sut.updateTask(task);
+
+          // assert
+          expect(sut.progressState, PageProgressState.loading);
+        },
+      );
+
+      test(
+        'should change progress state to loaded when success',
+        () async {
+          // arrange
+          updateTaskCompleter.complete(right(unit));
+
+          // act
+          await sut.updateTask(task);
+
+          // assert
+          expect(sut.progressState, PageProgressState.loaded);
+        },
+      );
+
+      test(
+        'should emit showSnackBar reaction when failed',
+        () async {
+          // arrange
+          final onReactionMock = _MockOnEscapeManualReaction();
+          final failure = ServerFailure();
+          updateTaskCompleter.complete(left(failure));
+          sut.onReaction(onReactionMock);
+
+          // act
+          await sut.updateTask(task);
+
+          // assert
+          verify(
+            () => onReactionMock.call(
+              const EscapeManualReaction.showSnackBar(
+                'O servidor está com problema neste momento, tente novamente.',
+              ),
+            ),
+          ).called(1);
+        },
+      );
+    });
+
+    group('deleteTask', () {
+      final task = EscapeManualDefaultTaskEntity(
+        id: 'id',
+        description: 'description',
+        isDone: Random().nextBool(),
+      );
+
+      late Completer<Either<Failure, void>> deleteTaskCompleter;
+
+      setUp(() {
+        deleteTaskCompleter = Completer();
+
+        registerFallbackValue(_FakeEscapeManualTaskEntity());
+
+        when(() => mockDeleteEscapeManualTask(any()))
+            .thenAnswer((_) async => deleteTaskCompleter.future);
+      });
+
+      test(
+        'should call deleteTask',
+        () async {
+          // act
+          sut.deleteTask(task);
+
+          // assert
+          verify(() => mockDeleteEscapeManualTask(task)).called(1);
+        },
+      );
+
+      test(
+        'should change progress state to loading',
+        () async {
+          // act
+          sut.deleteTask(task);
+
+          // assert
+          expect(sut.progressState, PageProgressState.loading);
+        },
+      );
+
+      test(
+        'should change progress state to loaded when success',
+        () async {
+          // arrange
+          deleteTaskCompleter.complete(right(unit));
+
+          // act
+          await sut.deleteTask(task);
+
+          // assert
+          expect(sut.progressState, PageProgressState.loaded);
+        },
+      );
+
+      test(
+        'should emit showSnackBar reaction when failed',
+        () async {
+          // arrange
+          final onReactionMock = _MockOnEscapeManualReaction();
+          final failure = ServerFailure();
+          deleteTaskCompleter.complete(left(failure));
+          sut.onReaction(onReactionMock);
+
+          // act
+          await sut.deleteTask(task);
+
+          // assert
+          verify(
+            () => onReactionMock.call(
+              const EscapeManualReaction.showSnackBar(
+                'O servidor está com problema neste momento, tente novamente.',
+              ),
+            ),
+          ).called(1);
         },
       );
     });
@@ -176,12 +444,12 @@ void main() {
       late IModularNavigator mockNavigator;
 
       setUpAll(() {
-        registerFallbackValue(const QuizSessionModel(sessionId: 'session_id'));
+        registerFallbackValue(_FakeQuizSessionModel());
       });
 
       setUp(() {
         startEscapeManualCompleter = Completer();
-        Modular.navigatorDelegate = mockNavigator = MockModularNavigate();
+        Modular.navigatorDelegate = mockNavigator = _MockModularNavigate();
 
         when(() => mockStartEscapeManual(any()))
             .thenAnswer((_) async => startEscapeManualCompleter.future);
@@ -256,7 +524,7 @@ void main() {
         'should emit showSnackbar reaction when failed',
         () async {
           // arrange
-          final onReactionMock = MockOnEscapeManualReaction();
+          final onReactionMock = _MockOnEscapeManualReaction();
           final failure = ServerFailure();
           startEscapeManualCompleter.complete(left(failure));
           sut.onReaction(onReactionMock);
@@ -267,9 +535,45 @@ void main() {
           // assert
           verify(
             () => onReactionMock.call(
-              const EscapeManualReaction.showSnackbar(
+              const EscapeManualReaction.showSnackBar(
                 'O servidor está com problema neste momento, tente novamente.',
               ),
+            ),
+          ).called(1);
+        },
+      );
+    });
+
+    group('callTo', () {
+      late UrlLauncherPlatform mockUrlLauncher;
+
+      setUp(() {
+        mockUrlLauncher = _MockUrlLauncher();
+        UrlLauncherPlatform.instance = mockUrlLauncher;
+
+        registerFallbackValue(_FakeLaunchOptions());
+      });
+
+      test(
+        'should call launchUrlString with correct url',
+        () async {
+          // arrange
+          const contact = ContactEntity(
+            id: 1,
+            name: 'name',
+            phone: '11 11111-1111',
+          );
+          when(() => mockUrlLauncher.launchUrl(any(), any()))
+              .thenAnswer((_) => Future.value(true));
+
+          // act
+          sut.callTo(contact);
+
+          // assert
+          verify(
+            () => mockUrlLauncher.launchUrl(
+              'tel:${contact.phone}',
+              any(),
             ),
           ).called(1);
         },
@@ -278,17 +582,39 @@ void main() {
   });
 }
 
-class GetEscapeManualUseCaseMock extends Mock
+class _MockGetEscapeManualUseCase extends Mock
     implements GetEscapeManualUseCase {}
 
-class StartEscapeManualUseCaseMock extends Mock
+class _MockStartEscapeManualUseCase extends Mock
     implements StartEscapeManualUseCase {}
 
-class MockModularNavigate extends Mock implements IModularNavigator {}
+class _MockUpdateEscapeManualTaskUseCase extends Mock
+    implements UpdateEscapeManualTaskUseCase {}
 
-abstract class IOnEscapeManualReaction {
+class _MockDeleteEscapeManualTaskUseCase extends Mock
+    implements DeleteEscapeManualTaskUseCase {}
+
+class _MockModularNavigate extends Mock implements IModularNavigator {}
+
+class _MockUrlLauncher extends Mock
+    with MockPlatformInterfaceMixin
+    implements UrlLauncherPlatform {}
+
+class _MockOnEscapeManualReaction extends Mock
+    implements _IOnEscapeManualReaction {}
+
+class _MockModularNavigator extends Mock implements IModularNavigator {}
+
+class _FakeEscapeManualTaskEntity extends Fake
+    implements EscapeManualTaskEntity {}
+
+class _FakeEscapeManualEditableTaskEntity extends Fake
+    implements EscapeManualEditableTaskEntity {}
+
+class _FakeQuizSessionModel extends Fake implements QuizSessionModel {}
+
+class _FakeLaunchOptions extends Fake implements LaunchOptions {}
+
+abstract class _IOnEscapeManualReaction {
   void call(EscapeManualReaction? reaction);
 }
-
-class MockOnEscapeManualReaction extends Mock
-    implements IOnEscapeManualReaction {}

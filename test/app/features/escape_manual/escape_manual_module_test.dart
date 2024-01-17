@@ -1,40 +1,37 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:penhas/app/app_module.dart';
 import 'package:penhas/app/core/network/api_client.dart';
+import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:penhas/app/features/escape_manual/escape_manual_module.dart';
-import 'package:penhas/app/features/escape_manual/presentation/escape_manual_controller.dart';
+import 'package:penhas/app/features/escape_manual/presentation/escape_manual_page.dart';
+
+import '../../../utils/module_testing.dart';
 
 void main() {
-  setUp(() {
-    initModules(
-      [
-        AppModule(),
-        EscapeManualModule(),
-      ],
-      replaceBinds: [
-        Bind<IApiProvider>((i) => ApiProviderMock()),
-      ],
+  group(EscapeManualModule, () {
+    testWidgets(
+      'should start with EscapeManualPage widget',
+      (tester) async {
+        // arrange
+        await tester.pumpWidget(
+          buildTestableApp(
+            home: EscapeManualModule(),
+            overrides: [
+              Bind<IApiProvider>((i) => _MockApiProvider()),
+              Bind<ILocalStorage>((i) => _MockLocalStorage()),
+            ],
+          ),
+        );
+        await tester.pump();
+
+        // assert
+        expect(find.byType(EscapeManualPage), findsOneWidget);
+      },
     );
   });
-
-  group(
-    EscapeManualModule,
-    () {
-      test(
-        'should have EscapeManualController instance',
-        () {
-          // act
-          final controller = Modular.get<EscapeManualController>();
-
-          // assert
-          expect(controller, isNotNull);
-        },
-      );
-    },
-  );
 }
 
-class ApiProviderMock extends Mock implements IApiProvider {}
+class _MockApiProvider extends Mock implements IApiProvider {}
+
+class _MockLocalStorage extends Mock implements ILocalStorage {}

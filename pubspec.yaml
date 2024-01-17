@@ -15,50 +15,51 @@ version: 3.4.0+63
 publish_to: none
 
 environment:
-  sdk: '>=2.15.0 <3.0.0'
+  sdk: '>=2.16.2 <3.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  asuka: ^2.0.1+3
   badges: ^2.0.2
-  cpfcnpj:
-    git:
-      url: https://github.com/erickhaendel/dart-cpfcnpj.git
-      ref: "6258774d3de58ee9122f2b6047ebb0c5b833df19"
+  collection: ^1.15.0
+  cpfcnpj: ^1.0.3
+  crypt: ^4.3.1
+  crypto: ^3.0.1
   cupertino_icons: ^1.0.4
   dartz: ^0.10.1
-  data_connection_checker:
-    git:
-      url: https://github.com/uSlashVlad/data_connection_checker.git
-      ref: "1b983aa377d9984ab18292d5ff33768e284e93d6"
+  data_connection_checker: ^0.4.0-nullsafety
   device_info: ^2.0.3
   email_validator: ^2.0.1
   equatable: ^2.0.3
   firebase_analytics: '9.3.1'
   firebase_core: '1.24.0'
-  firebase_crashlytics: '2.9.0'
   firebase_core_platform_interface: '4.5.1'
+  firebase_crashlytics: '2.9.0'
+  firebase_remote_config: ^2.0.20
   flutter_mobx: ^2.0.5
-  flutter_modular:
-    git:
-      url: https://github.com/pedrox-hs/modular.git
-      path: flutter_modular
-      ref: improvements
+  flutter_modular: ^3.4.1+1
   flutter_phone_direct_caller: ^2.1.0
+  flutter_secure_storage: ^6.1.0
   flutter_sound: ^9.2.13
   flutter_svg: ^1.0.3
-  flutter_tags:
-    git:
-      url: https://github.com/pedrox-hs/flutter_tags.git
-      ref: null-safety
+  flutter_tags: ^1.0.0-nullsafety.1
   flutter_widget_from_html: ^0.8.3+1
   freezed_annotation: ^1.1.0
   geolocator: ^9.0.2
   google_maps_flutter: ^2.1.1
+  hive_flutter: ^1.1.0
+  http: ^0.13.4
+  http_parser: ^4.0.0
+  intl: ^0.17.0
+  json_annotation: ^4.6.0
+  logger: ^1.1.0
+  logging: ^1.0.2
   map_launcher: ^2.1.1
   mask_text_input_formatter: ^2.0.0
+  meta: ^1.7.0
   mobx: ^2.0.5
   package_info: ^2.0.2
   path: ^1.8.0
@@ -66,66 +67,66 @@ dependencies:
   permission_handler: ^8.3.0
   permission_handler_platform_interface: 3.7.0
   provider: ^6.0.1
+  scroll_to_index: ^2.1.1
   shared_preferences: ^2.0.11
-  smooth_star_rating:
-    git:
-      url: https://github.com/bhavin-concetto/smoothratingbar.git
-      ref: "eb02312f9adc6a40e2488050fb2e58852a163bb8"
+  smooth_star_rating: ^1.1.1
+  stack_trace: ^1.10.0
+  synchronized: ^3.0.0+3
   timeago: ^3.1.0
   url_launcher: ^6.1.7
   uuid: ^3.0.5
   webview_flutter: ^3.0.0
-  collection: ^1.15.0
-  asuka: ^2.0.1+3
-  stack_trace: ^1.10.0
-  logging: ^1.0.2
-  http: ^0.13.4
-  intl: ^0.17.0
-  meta: ^1.7.0
-  crypto: ^3.0.1
-  crypt: ^4.3.1
-  http_parser: ^4.0.0
-  logger: ^1.1.0
-  scroll_to_index: ^2.1.1
-  flutter_secure_storage: ^6.1.0
-  synchronized: ^3.0.0+3
-  json_annotation: ^4.6.0
-  hive_flutter: ^1.1.0
-  firebase_remote_config: ^2.0.20
-
-dependency_overrides:
-  flutter_modular:
-    git:
-      url: https://github.com/pedrox-hs/modular.git
-      path: flutter_modular
-      ref: improvements
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  alchemist: ^0.3.3 # snapshot test
   build_runner: ^2.1.5
-  flutter_modular_test:
-    git:
-      url: https://github.com/pedrox-hs/modular.git
-      path: flutter_modular_test
-      ref: improvements
   flutter_launcher_icons: ^0.9.2
+  flutter_launcher_name: ^0.0.2
+  flutter_lints: ^1.0.4
+  flutter_modular_test: ^1.0.1
+  freezed: ^1.1.0
+  geolocator_platform_interface: ^4.0.3
+  golden_toolkit: ^0.13.0 # snapshot test
+  json_serializable: ^6.3.1
+  lint: ^1.8.1
+  mobx_codegen: ^2.0.4
+  mocktail: ^0.3.0
+  mocktail_image_network: ^0.3.1
+  plugin_platform_interface: ^2.0.0
+
+dependency_overrides:
+  cpfcnpj:
+    git:
+      url: https://github.com/erickhaendel/dart-cpfcnpj.git
+      ref: "6258774d3de58ee9122f2b6047ebb0c5b833df19"
+  data_connection_checker:
+    git:
+      url: https://github.com/uSlashVlad/data_connection_checker.git
+      ref: "1b983aa377d9984ab18292d5ff33768e284e93d6"
   flutter_launcher_name:
     git:
       url: https://github.com/ride4sun/flutter_launcher_name
       ref: "cd516a8e7483bfc7971ec9ac8f2d589e68247441"
-  freezed: ^1.1.0
-  mobx_codegen: 2.0.4
-  lint: ^1.8.1
-  mocktail: ^0.3.0
-  mocktail_image_network: ^0.3.1
-  flutter_lints: ^1.0.4
-  plugin_platform_interface: ^2.0.0
-  geolocator_platform_interface: ^4.0.3
-  # snapshot test
-  alchemist: ^0.3.3
-  golden_toolkit: ^0.13.0
-  json_serializable: ^6.3.1
+  flutter_modular:
+    git:
+      url: https://github.com/pedrox-hs/modular.git
+      path: flutter_modular
+      ref: backward-compatibility
+  flutter_modular_test:
+    git:
+      url: https://github.com/pedrox-hs/modular.git
+      path: flutter_modular_test
+      ref: backward-compatibility
+  flutter_tags:
+    git:
+      url: https://github.com/pedrox-hs/flutter_tags.git
+      ref: null-safety
+  smooth_star_rating:
+    git:
+      url: https://github.com/bhavin-concetto/smoothratingbar.git
+      ref: "eb02312f9adc6a40e2488050fb2e58852a163bb8"
 
 flutter_icons:
   ios: true
@@ -182,6 +183,9 @@ flutter:
     - assets/images/svg/help_center/guardians/guardians_edit.svg
     - assets/images/svg/help_center/guardians/guardians_sent_invite.svg
     - assets/images/svg/help_center/guardians/guardians_alert.svg
+    # Actions
+    - assets/images/svg/actions/delete.svg
+    - assets/images/svg/actions/edit.svg
     # Zodiac
     - assets/images/zodiac/svg/constelation_aquarius.svg
     - assets/images/zodiac/svg/constelation_aries.svg
