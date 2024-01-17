@@ -138,8 +138,11 @@ class AppModule extends Module {
             apiProvider: i.get<IApiProvider>(),
           ),
         ),
-        Bind.lazySingleton<IRemoteConfigService>((i) =>
-            RemoteConfigService(remoteConfig: i.get<FirebaseRemoteConfig>()))
+        Bind.lazySingleton<IRemoteConfigService>(
+          (i) => RemoteConfigService(
+            remoteConfig: FirebaseRemoteConfig.instance,
+          ),
+        )
       ];
 
   @override
