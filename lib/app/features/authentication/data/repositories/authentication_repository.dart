@@ -1,5 +1,6 @@
 import 'package:crypt/crypt.dart';
 import 'package:dartz/dartz.dart';
+
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/managers/app_configuration.dart';
@@ -71,8 +72,10 @@ class AuthenticationRepository implements IAuthenticationRepository {
     }
   }
 
-  Crypt _createsHash(
-      {required EmailAddress email, required SignInPassword password}) {
+  Crypt _createsHash({
+    required EmailAddress email,
+    required SignInPassword password,
+  }) {
     final hash = Crypt.sha256(password.rawValue!, salt: email.rawValue);
     return hash;
   }
@@ -81,22 +84,24 @@ class AuthenticationRepository implements IAuthenticationRepository {
     required EmailAddress email,
     required SignInPassword password,
   }) async {
-    var currentHash = await _appConfiguration.offlineHash;
-    var sessionToken = await _appConfiguration.apiToken;
+    final currentHash = await _appConfiguration.offlineHash;
+    final sessionToken = await _appConfiguration.apiToken;
     final newHash = _createsHash(password: password, email: email);
+
     final isCorrectPassword = Crypt(currentHash) == newHash;
-    if (isCorrectPassword) {
-      var result =
-          _dataSource.signInWithOfflineHash(sessionToken: sessionToken);
-      return result;
-    }
-    return null;
+    if (!isCorrectPassword) return null;
+
+    final session = await _dataSource.signInWithOfflineHash(
+      sessionToken: sessionToken,
+    );
+    return session;
   }
 
-  _saveUserData(
-      {required SessionModel result,
-      required EmailAddress email,
-      required SignInPassword password}) async {
+  _saveUserData({
+    required SessionModel result,
+    required EmailAddress email,
+    required SignInPassword password,
+  }) async {
     await _appConfiguration.saveApiToken(token: result.sessionToken);
     final hash = _createsHash(password: password, email: email);
     await _appConfiguration.saveHash(hash: hash.toString());

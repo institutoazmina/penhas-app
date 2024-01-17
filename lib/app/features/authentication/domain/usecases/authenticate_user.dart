@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'login_offline_toggle.dart';
 
 import '../../../../core/error/failures.dart';
 import '../entities/session_entity.dart';
 import '../repositories/i_authentication_repository.dart';
 import 'email_address.dart';
+import 'login_offline_toggle.dart';
 import 'sign_in_password.dart';
 
 class AuthenticateUserUseCase {
@@ -58,16 +58,16 @@ abstract class AuthenticateUserWithOfflineSupport {
 
 class AuthenticateStealthUserUseCase
     extends AuthenticateUserWithOfflineSupport {
-  AuthenticateStealthUserUseCase(
-      {required IAuthenticationRepository authenticationRepository,
-      required LoginOfflineToggleFeature loginOfflineToggleFeature})
-      : super(authenticationRepository, loginOfflineToggleFeature);
+  AuthenticateStealthUserUseCase({
+    required IAuthenticationRepository authenticationRepository,
+    required LoginOfflineToggleFeature loginOfflineToggleFeature,
+  }) : super(authenticationRepository, loginOfflineToggleFeature);
 }
 
 class AuthenticateAnonymousUserUseCase
     extends AuthenticateUserWithOfflineSupport {
-  AuthenticateAnonymousUserUseCase(
-      {required IAuthenticationRepository authenticationRepository,
-      required LoginOfflineToggleFeature loginOfflineToggleFeature})
-      : super(authenticationRepository, loginOfflineToggleFeature);
+  AuthenticateAnonymousUserUseCase({
+    required IAuthenticationRepository authenticationRepository,
+    required LoginOfflineToggleFeature loginOfflineToggleFeature,
+  }) : super(authenticationRepository, loginOfflineToggleFeature);
 }

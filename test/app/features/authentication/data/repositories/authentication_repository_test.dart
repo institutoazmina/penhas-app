@@ -75,94 +75,126 @@ void main() {
         sessionEntity = sessionModel;
       });
 
-      group('device is online', () {
+      group('when device is online', () {
         setUp(() {
           when(() => networkInfo.isConnected).thenAnswer((_) async => true);
         });
 
-        test(
-          'return valid SessionEntity for valid user/password',
-          () async {
-            // arrange
-            _mockSignInSuccessResponseWith(session: sessionModel);
-            when(() => appConfiguration.saveApiToken(
-                    token: sessionModel.sessionToken))
-                .thenAnswer((invocation) => Future.value());
-
-            when(() => appConfiguration.saveHash(hash: hash.toString()))
-                .thenAnswer((invocation) => Future.value());
-
-            // act
-            final result = await repository.signInWithEmailAndPassword(
-              emailAddress: email,
-              password: password,
-            );
-
-            // assert
-            verify(
-              () => dataSource.signInWithEmailAndPassword(
+        final authenticationMethods = {
+          'signInWithEmailAndPassword': ({
+            required EmailAddress emailAddress,
+            required SignInPassword password,
+          }) =>
+              repository.signInWithEmailAndPassword(
                 emailAddress: email,
                 password: password,
               ),
-            ).called(1);
-
-            verify(() => appConfiguration.saveApiToken(
-                token: sessionModel.sessionToken)).called(1);
-
-            verify(() => appConfiguration.saveHash(hash: hash.toString()))
-                .called(1);
-
-            expect(result, right(sessionEntity));
-          },
-        );
-        test(
-          'should return server failure when the call to remote server is unsuccessful',
-          () async {
-            // arrange
-            _mockSignInErrorWith(exception: const ApiProviderException());
-            // act
-            final result = await repository.signInWithEmailAndPassword(
-              emailAddress: email,
-              password: password,
-            );
-            // assert
-            expect(result, left(ServerSideFormFieldValidationFailure()));
-          },
-        );
-        test(
-          'return login failure for unsuccessful user validation',
-          () async {
-            // arrange
-            final bodyContent = await JsonUtil.getJson(
-                from: 'authentication/login_failure.json');
-
-            _mockSignInErrorWith(
-                exception: ApiProviderException(bodyContent: bodyContent));
-            // act
-            final result = await repository.signInWithEmailAndPassword(
-              emailAddress: email,
-              password: password,
-            );
-            // assert
-            verify(
-              () => dataSource.signInWithEmailAndPassword(
+          'signInOffline': ({
+            required EmailAddress emailAddress,
+            required SignInPassword password,
+          }) =>
+              repository.signInOffline(
                 emailAddress: email,
                 password: password,
               ),
-            ).called(1);
-            expect(
-              result,
-              left(
-                ServerSideFormFieldValidationFailure(
-                  error: 'wrongpassword',
-                  field: 'password',
-                  reason: 'invalid',
-                  message: 'E-mail ou senha inválida.',
-                ),
-              ),
+        };
+
+        for (final authenticationMethod in authenticationMethods.entries) {
+          final methodName = authenticationMethod.key;
+          final authenticate = authenticationMethod.value;
+
+          group(methodName, () {
+            test(
+              'should return valid SessionEntity for valid user/password',
+              () async {
+                // arrange
+                _mockSignInSuccessResponseWith(session: sessionModel);
+                when(() => appConfiguration.saveApiToken(
+                        token: sessionModel.sessionToken))
+                    .thenAnswer((invocation) => Future.value());
+
+                when(() => appConfiguration.saveHash(hash: hash.toString()))
+                    .thenAnswer((invocation) => Future.value());
+
+                // act
+                final result = await authenticate(
+                  emailAddress: email,
+                  password: password,
+                );
+
+                // assert
+                verify(
+                  () => dataSource.signInWithEmailAndPassword(
+                    emailAddress: email,
+                    password: password,
+                  ),
+                ).called(1);
+
+                verify(() => appConfiguration.saveApiToken(
+                    token: sessionModel.sessionToken)).called(1);
+
+                verify(() => appConfiguration.saveHash(hash: hash.toString()))
+                    .called(1);
+
+                expect(result, right(sessionEntity));
+              },
             );
-          },
-        );
+
+            test(
+              'should return server failure when the call to remote server is unsuccessful',
+              () async {
+                // arrange
+                _mockSignInErrorWith(exception: NetworkServerException());
+
+                // act
+                final result = await authenticate(
+                  emailAddress: email,
+                  password: password,
+                );
+
+                // assert
+                expect(result, left(ServerFailure()));
+              },
+            );
+
+            test(
+              'should return login failure for unsuccessful user validation',
+              () async {
+                // arrange
+                final bodyContent = await JsonUtil.getJson(
+                  from: 'authentication/login_failure.json',
+                );
+
+                _mockSignInErrorWith(
+                  exception: ApiProviderException(bodyContent: bodyContent),
+                );
+                // act
+                final result = await authenticate(
+                  emailAddress: email,
+                  password: password,
+                );
+                // assert
+                verify(
+                  () => dataSource.signInWithEmailAndPassword(
+                    emailAddress: email,
+                    password: password,
+                  ),
+                ).called(1);
+                expect(
+                  result,
+                  left(
+                    ServerSideFormFieldValidationFailure(
+                      error: 'wrongpassword',
+                      field: 'password',
+                      reason: 'invalid',
+                      message: 'E-mail ou senha inválida.',
+                    ),
+                  ),
+                );
+              },
+            );
+          });
+        }
       });
 
       group('device is offline', () {
@@ -171,15 +203,19 @@ void main() {
         });
 
         test(
-          'should login offline successful',
+          'should login successful',
           () async {
             // arrange
             _mockSignInErrorWith(exception: const ApiProviderException());
-            when(() => appConfiguration.apiToken).thenAnswer(
-                (invocation) async => sessionModel.sessionToken as String);
-
+            when(() => appConfiguration.apiToken)
+                .thenAnswer((invocation) async => sessionModel.sessionToken!);
             when(() => appConfiguration.offlineHash)
                 .thenAnswer((invocation) async => hash.toString());
+            when(
+              () => dataSource.signInWithOfflineHash(
+                sessionToken: any(named: 'sessionToken'),
+              ),
+            ).thenAnswer((invocation) async => sessionModel);
 
             // act
             final result = await repository.signInOffline(
@@ -188,11 +224,14 @@ void main() {
             );
 
             //assert
-            verify(() => dataSource.signInWithOfflineHash(
-                sessionToken: sessionModel.sessionToken as String)).called(1);
+            verify(
+              () => dataSource.signInWithOfflineHash(
+                sessionToken: sessionModel.sessionToken!,
+              ),
+            ).called(1);
 
-            verify(() => networkInfo.isConnected).called(2);
-            expect(result, left(InternetConnectionFailure()));
+            verify(() => networkInfo.isConnected).called(1);
+            expect(result, right(sessionModel));
           },
         );
 
