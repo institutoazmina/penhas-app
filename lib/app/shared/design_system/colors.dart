@@ -26,6 +26,7 @@ class DesignSystemColors {
   static const bluishPurple = Color.fromRGBO(129, 51, 255, 1);
   static const systemBackgroundColor = Color.fromRGBO(248, 248, 248, 1);
   static const splashColor = Color.fromARGB(16, 0, 0, 0);
+  static const shadowColor = Color.fromARGB(25, 0, 0, 0);
   static const dialogBarrierColor = Colors.black54;
 
   static Color hexColor(String value) {
