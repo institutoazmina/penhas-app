@@ -6,10 +6,12 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'app/app_module.dart';
 import 'app/app_widget.dart';
+import 'app/core/remoteconfig/remote_config.dart';
 import 'firebase_options.dart';
 
 Future main() async {
@@ -29,6 +31,7 @@ Future main() async {
   runZonedGuarded(
     () async {
       await Hive.initFlutter();
+      await _initRemoteConfig();
       runApp(
         ModularApp(
           module: AppModule(),
@@ -39,4 +42,10 @@ Future main() async {
     (error, stack) =>
         FirebaseCrashlytics.instance.recordError(error, stack, fatal: true),
   );
+}
+
+Future<void> _initRemoteConfig() async {
+  RemoteConfigService remoteConfig =
+      RemoteConfigService(remoteConfig: FirebaseRemoteConfig.instance);
+  await remoteConfig.initialize();
 }

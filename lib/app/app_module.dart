@@ -1,4 +1,5 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +14,8 @@ import 'core/network/api_client.dart';
 import 'core/network/api_server_configure.dart';
 import 'core/network/network_info.dart';
 import 'core/storage/cache_storage.dart';
+import 'core/remoteconfig/i_remote_config.dart';
+import 'core/remoteconfig/remote_config.dart';
 import 'core/storage/i_local_storage.dart';
 import 'core/storage/impl/hive_cache_storage.dart';
 import 'core/storage/impl/hive_persistent_storage.dart';
@@ -90,9 +93,7 @@ class AppModule extends Module {
           ),
         ),
         Bind.factory<IAppConfiguration>(
-          (i) => AppConfiguration(
-            storage: i.get<ILocalStorage>(),
-          ),
+          (i) => AppConfiguration(storage: i.get<ILocalStorage>()),
         ),
         Bind.factory<LocalStore<UserProfileEntity>>(
           (i) => UserProfileStore(
@@ -137,6 +138,11 @@ class AppModule extends Module {
             apiProvider: i.get<IApiProvider>(),
           ),
         ),
+        Bind.lazySingleton<IRemoteConfigService>(
+          (i) => RemoteConfigService(
+            remoteConfig: FirebaseRemoteConfig.instance,
+          ),
+        )
       ];
 
   @override

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import '../../features/appstate/domain/entities/app_state_entity.dart';
 import '../../shared/logger/log.dart';
 import '../data/authorization_status.dart';
@@ -13,7 +12,11 @@ const String _apiBaseUrl = String.fromEnvironment(
 abstract class IAppConfiguration {
   Future<String> get apiToken;
 
+  Future<String> get offlineHash;
+
   Future<void> saveApiToken({required String? token});
+
+  Future<void> saveHash({required String? hash});
 
   Future<void> saveAppModes(AppStateModeEntity appMode);
 
@@ -35,11 +38,17 @@ class AppConfiguration implements IAppConfiguration {
 
   final _tokenKey = 'br.com.penhas.tokenServer';
   final _appModes = 'br.com.penhas.appConfigurationModes';
+  final _offlineHash = 'br.com.penhas.offlineHash';
+
   final ILocalStorage _storage;
 
   @override
   Future<String> get apiToken =>
       _storage.get(_tokenKey).then((data) => data ?? '');
+
+  @override
+  Future<String> get offlineHash =>
+      _storage.get(_offlineHash).then((data) => data ?? '');
 
   @override
   Future<AuthorizationStatus> get authorizationStatus async {
@@ -64,8 +73,17 @@ class AppConfiguration implements IAppConfiguration {
   }
 
   @override
+  Future<void> saveHash({required String? hash}) async {
+    await _storage.put(_offlineHash, hash);
+    return;
+  }
+
+  @override
   Future<void> logout() async {
-    await _storage.delete(_tokenKey);
+    await Future.wait([
+      _storage.delete(_tokenKey),
+      _storage.delete(_offlineHash),
+    ]);
     return;
   }
 

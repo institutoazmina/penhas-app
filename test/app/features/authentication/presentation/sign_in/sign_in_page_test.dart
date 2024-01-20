@@ -6,6 +6,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/extension/either.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/authenticate_user.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
@@ -33,10 +34,13 @@ void main() {
       replaceBinds: [
         Bind<SignInController>(
           (i) => SignInController(
-              AuthenticationModulesMock.authenticationRepository,
-              AuthenticationModulesMock.passwordValidator,
-              AppModulesMock.appStateUseCase),
+              authenticateUserUseCase:
+                  AuthenticationModulesMock.authenticateUserUseCase,
+              passwordValidator: AuthenticationModulesMock.passwordValidator,
+              appStateUseCase: AppModulesMock.appStateUseCase),
         ),
+        Bind<AuthenticateUserUseCase>(
+            (i) => AuthenticateUserUseCase(authenticationRepository: i.get()))
       ],
     );
   });
@@ -134,12 +138,18 @@ void main() {
 
         when(() => AuthenticationModulesMock.passwordValidator
             .validate(any(), any())).thenAnswer((_) => success(validPassword));
+
         when(
           () => AuthenticationModulesMock.authenticationRepository
               .signInWithEmailAndPassword(
             emailAddress: any(named: 'emailAddress'),
             password: any(named: 'password'),
           ),
+        ).thenFailure((i) => ServerFailure());
+
+        when(
+          () => AuthenticationModulesMock.authenticateUserUseCase(
+              email: any(named: 'email'), password: any(named: 'password')),
         ).thenFailure((i) => ServerFailure());
 
         await theAppIsRunning(tester, const SignInPage());
@@ -159,16 +169,15 @@ void main() {
         const sessionToken = 'sessionToken';
         when(() => AuthenticationModulesMock.passwordValidator
             .validate(any(), any())).thenAnswer((_) => success(validPassword));
+
         when(
-          () => AuthenticationModulesMock.authenticationRepository
-              .signInWithEmailAndPassword(
-            emailAddress: any(named: 'emailAddress'),
-            password: any(named: 'password'),
-          ),
+          () => AuthenticationModulesMock.authenticateUserUseCase(
+              email: any(named: 'email'), password: any(named: 'password')),
         ).thenSuccess((_) => const SessionEntity(
               sessionToken: sessionToken,
               deletedScheduled: true,
             ));
+
         when(
           () => AppModulesMock.modularNavigator
               .pushNamed(any(), arguments: any(named: 'arguments')),
@@ -189,6 +198,38 @@ void main() {
     );
 
     testWidgets(
+      'error trying redirect page',
+      (tester) async {
+        const sessionToken = 'sessionToken';
+        when(() => AuthenticationModulesMock.passwordValidator
+            .validate(any(), any())).thenAnswer((_) => success(validPassword));
+
+        when(
+          () => AuthenticationModulesMock.authenticateUserUseCase(
+              email: any(named: 'email'), password: any(named: 'password')),
+        ).thenSuccess((_) => const SessionEntity(
+              sessionToken: sessionToken,
+              deletedScheduled: false,
+            ));
+
+        when(() => AppModulesMock.appStateUseCase.check())
+            .thenFailure((i) => ServerFailure());
+
+        await theAppIsRunning(tester, const SignInPage());
+        await iEnterIntoSingleTextInput(tester,
+            text: 'E-mail', value: validEmail);
+        await iEnterIntoPasswordField(tester,
+            text: 'Senha', password: validPassword);
+        await iTapText(tester, text: 'Entrar');
+
+        verifyNever(() => AppModulesMock.modularNavigator.pushNamed(
+              '/accountDeleted',
+              arguments: sessionToken,
+            ));
+      },
+    );
+
+    testWidgets(
       'success login redirect page',
       (tester) async {
         const sessionToken = 'sessionToken';
@@ -201,8 +242,15 @@ void main() {
             password: any(named: 'password'),
           ),
         ).thenSuccess((_) => const SessionEntity(sessionToken: sessionToken));
+
+        when(
+          () => AuthenticationModulesMock.authenticateUserUseCase(
+              email: any(named: 'email'), password: any(named: 'password')),
+        ).thenSuccess((_) => const SessionEntity(sessionToken: sessionToken));
+
         when(() => AppModulesMock.appStateUseCase.check())
             .thenSuccess((_) => FakeAppStateEntity());
+
         when(
           () => AppModulesMock.modularNavigator
               .popAndPushNamed(any(), arguments: any(named: 'arguments')),

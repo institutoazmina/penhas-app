@@ -25,6 +25,8 @@ import '../../data/repositories/user_register_repository.dart';
 import '../../domain/repositories/i_authentication_repository.dart';
 import '../../domain/repositories/i_reset_password_repository.dart';
 import '../../domain/repositories/i_user_register_repository.dart';
+import '../../domain/usecases/authenticate_user.dart';
+import '../../domain/usecases/login_offline_toggle.dart';
 import '../../domain/usecases/password_validator.dart';
 import '../reset_password/pages/reset_password_three/reset_password_three_controller.dart';
 import '../reset_password/pages/reset_password_three/reset_password_three_page.dart';
@@ -51,18 +53,12 @@ class SignInModule extends Module {
   @override
   List<Bind> get binds => [
         ..._interfaces,
-        // Sign-In
-        Bind.factory<SignInController>(
-          (i) => SignInController(
-            i.get<IAuthenticationRepository>(),
-            i.get<PasswordValidator>(),
-            i.get<AppStateUseCase>(),
-          ),
-        ),
+        ..._signIn,
         ..._signUp,
         ..._resetPassword,
         ..._signInAnonymous,
         ..._signInStealth,
+        ..._logginOfflineToggle
       ];
 
   @override
@@ -201,25 +197,52 @@ class SignInModule extends Module {
         ),
       ];
 
+  List<Bind> get _signIn => [
+        Bind.factory<SignInController>(
+          (i) => SignInController(
+            authenticateUserUseCase: i.get<AuthenticateUserUseCase>(),
+            appStateUseCase: i.get<AppStateUseCase>(),
+            passwordValidator: i.get<PasswordValidator>(),
+          ),
+        ),
+        Bind.factory<AuthenticateUserUseCase>(
+            (i) => AuthenticateUserUseCase(authenticationRepository: i.get()))
+      ];
+
   List<Bind> get _signInAnonymous => [
         Bind.factory<SignInAnonymousController>(
           (i) => SignInAnonymousController(
-            repository: i.get<IAuthenticationRepository>(),
+            authenticateAnonymousUserUseCase:
+                i.get<AuthenticateAnonymousUserUseCase>(),
             userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
             passwordValidator: i.get<PasswordValidator>(),
           ),
-        )
+        ),
+        Bind.factory<AuthenticateAnonymousUserUseCase>((i) =>
+            AuthenticateAnonymousUserUseCase(
+                authenticationRepository: i.get(),
+                loginOfflineToggleFeature: i.get()))
+      ];
+
+  List<Bind> get _logginOfflineToggle => [
+        Bind.factory<LoginOfflineToggleFeature>(
+            (i) => LoginOfflineToggleFeature(remoteConfig: i.get()))
       ];
 
   List<Bind> get _signInStealth => [
         Bind.factory<SignInStealthController>(
           (i) => SignInStealthController(
-            repository: i.get<IAuthenticationRepository>(),
+            authenticateStealthUserUseCase:
+                i.get<AuthenticateStealthUserUseCase>(),
             userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
             securityAction: i.get<StealthSecurityAction>(),
             passwordValidator: i.get<PasswordValidator>(),
           ),
         ),
+        Bind.factory<AuthenticateStealthUserUseCase>((i) =>
+            AuthenticateStealthUserUseCase(
+                authenticationRepository: i.get(),
+                loginOfflineToggleFeature: i.get())),
         Bind.factory<StealthSecurityAction>(
           (i) => StealthSecurityAction(
             audioServices: i.get<IAudioRecordServices>(),

@@ -14,7 +14,7 @@ import '../../../zodiac/domain/entities/zodiac_sign_aquarius.dart';
 import '../../../zodiac/domain/usecases/stealth_security_action.dart';
 import '../../../zodiac/domain/usecases/zodiac.dart';
 import '../../domain/entities/session_entity.dart';
-import '../../domain/repositories/i_authentication_repository.dart';
+import '../../domain/usecases/authenticate_user.dart';
 import '../../domain/usecases/email_address.dart';
 import '../../domain/usecases/password_validator.dart';
 import '../../domain/usecases/sign_in_password.dart';
@@ -23,23 +23,19 @@ import '../shared/page_progress_indicator.dart';
 
 part 'sign_in_stealth_controller.g.dart';
 
-class SignInStealthController extends _SignInStealthController
-    with _$SignInStealthController {
-  SignInStealthController({
-    required IAuthenticationRepository repository,
-    required LocalStore<UserProfileEntity> userProfileStore,
-    required StealthSecurityAction securityAction,
-    required PasswordValidator passwordValidator,
-  }) : super(repository, userProfileStore, securityAction, passwordValidator);
-}
+class SignInStealthController = _SignInStealthController
+    with _$SignInStealthController;
 
 abstract class _SignInStealthController with Store, MapFailureMessage {
   _SignInStealthController(
-    this._repository,
-    this._userProfileStore,
-    this._securityAction,
-    this._passwordValidator,
-  ) {
+      {required AuthenticateStealthUserUseCase authenticateStealthUserUseCase,
+      required LocalStore<UserProfileEntity> userProfileStore,
+      required StealthSecurityAction securityAction,
+      required PasswordValidator passwordValidator})
+      : _authenticateUser = authenticateStealthUserUseCase,
+        _userProfileStore = userProfileStore,
+        _securityAction = securityAction,
+        _passwordValidator = passwordValidator {
     _init();
     _password = SignInPassword('', _passwordValidator);
   }
@@ -47,7 +43,7 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
   final String _invalidFieldsToProceedLogin =
       'E-mail e senha precisam estarem corretos para continuar.';
   final LocalStore<UserProfileEntity> _userProfileStore;
-  final IAuthenticationRepository _repository;
+  final AuthenticateStealthUserUseCase _authenticateUser;
   final StealthSecurityAction _securityAction;
   final PasswordValidator _passwordValidator;
 
@@ -120,8 +116,8 @@ abstract class _SignInStealthController with Store, MapFailureMessage {
     }
 
     _progress = ObservableFuture(
-      _repository.signInWithEmailAndPassword(
-        emailAddress: _emailAddress,
+      _authenticateUser(
+        email: _emailAddress,
         password: _password!,
       ),
     );

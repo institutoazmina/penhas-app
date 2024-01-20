@@ -6,6 +6,7 @@ import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/extension/either.dart';
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/authenticate_user.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in_stealth/sign_in_stealth_controller.dart';
@@ -49,12 +50,17 @@ void main() {
     initModule(SignInModule(), replaceBinds: [
       Bind<SignInStealthController>(
         (i) => SignInStealthController(
-          repository: AuthenticationModulesMock.authenticationRepository,
+          authenticateStealthUserUseCase:
+              AuthenticationModulesMock.authenticateStealthUserUseCase,
+          passwordValidator: AuthenticationModulesMock.passwordValidator,
           userProfileStore: AppModulesMock.userProfileStore,
           securityAction: AuthenticationModulesMock.securityAction,
-          passwordValidator: AuthenticationModulesMock.passwordValidator,
         ),
       ),
+      Bind<AuthenticateStealthUserUseCase>((i) =>
+          AuthenticateStealthUserUseCase(
+              authenticationRepository: i.get(),
+              loginOfflineToggleFeature: i.get())),
     ]);
   });
 
@@ -102,6 +108,13 @@ void main() {
                     password: any(named: 'password')),
           ).thenFailure((_) => ServerFailure());
 
+          when(
+            () => AuthenticationModulesMock.authenticateStealthUserUseCase(
+              email: any(named: 'email'),
+              password: any(named: 'password'),
+            ),
+          ).thenFailure((i) => ServerFailure());
+
           await theAppIsRunning(tester, const SignInStealthPage());
 
           await iEnterIntoPasswordField(tester,
@@ -116,6 +129,7 @@ void main() {
       testWidgets(
         'valid password login into app',
         (tester) async {
+          const sessionToken = 'sessionToken';
           const password = 'P4ssw0rd';
           when(() => AuthenticationModulesMock.passwordValidator
               .validate(any(), any())).thenAnswer((_) => success(password));
@@ -126,6 +140,13 @@ void main() {
                     password: any(named: 'password')),
           ).thenSuccess((_) => FakeSessionEntity());
           when(() => AppModulesMock.modularNavigator.canPop()).thenReturn(true);
+
+          when(
+            () => AuthenticationModulesMock.authenticateStealthUserUseCase(
+                email: any(named: 'email'), password: any(named: 'password')),
+          ).thenSuccess((_) => const SessionEntity(
+                sessionToken: sessionToken,
+              ));
 
           await theAppIsRunning(tester, const SignInStealthPage());
 

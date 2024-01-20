@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:http/http.dart' as http;
-
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/api_server_configure.dart';
 import '../../../../shared/logger/log.dart';
@@ -18,6 +16,7 @@ abstract class IAuthenticationDataSource {
     required EmailAddress emailAddress,
     required SignInPassword password,
   });
+  Future<SessionModel> signInWithOfflineHash({required String sessionToken});
 }
 
 class AuthenticationDataSource implements IAuthenticationDataSource {
@@ -28,6 +27,12 @@ class AuthenticationDataSource implements IAuthenticationDataSource {
 
   final http.Client apiClient;
   final IApiServerConfigure serverConfiguration;
+
+  @override
+  Future<SessionModel> signInWithOfflineHash(
+      {required String sessionToken}) async {
+    return SessionModel(sessionToken: sessionToken);
+  }
 
   @override
   Future<SessionModel> signInWithEmailAndPassword({

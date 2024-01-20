@@ -1,3 +1,4 @@
+import 'package:crypt/crypt.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/exceptions.dart';
@@ -10,6 +11,7 @@ import '../../domain/repositories/i_authentication_repository.dart';
 import '../../domain/usecases/email_address.dart';
 import '../../domain/usecases/sign_in_password.dart';
 import '../datasources/authentication_data_source.dart';
+import '../models/session_model.dart';
 
 class AuthenticationRepository implements IAuthenticationRepository {
   AuthenticationRepository({
@@ -36,7 +38,8 @@ class AuthenticationRepository implements IAuthenticationRepository {
       );
 
       if (!result.deletedScheduled) {
-        await _appConfiguration.saveApiToken(token: result.sessionToken);
+        await _saveUserData(
+            result: result, password: password, email: emailAddress);
       }
 
       return right(result);
@@ -44,6 +47,64 @@ class AuthenticationRepository implements IAuthenticationRepository {
       logError(error, stack);
       return _handleError(error);
     }
+  }
+
+  @override
+  Future<Either<Failure, SessionEntity>> signInOffline({
+    required EmailAddress emailAddress,
+    required SignInPassword password,
+  }) async {
+    try {
+      if (await _networkInfo.isConnected == false) {
+        final session =
+            await _loginOffline(password: password, email: emailAddress);
+        if (session != null) {
+          return right(session);
+        }
+      }
+      return signInWithEmailAndPassword(
+        emailAddress: emailAddress,
+        password: password,
+      );
+    } catch (error, stack) {
+      logError(error, stack);
+      return _handleError(error);
+    }
+  }
+
+  Crypt _createsHash({
+    required EmailAddress email,
+    required SignInPassword password,
+  }) {
+    final hash = Crypt.sha256(password.rawValue!, salt: email.rawValue);
+    return hash;
+  }
+
+  Future<SessionModel?> _loginOffline({
+    required EmailAddress email,
+    required SignInPassword password,
+  }) async {
+    final currentHash = await _appConfiguration.offlineHash;
+    final sessionToken = await _appConfiguration.apiToken;
+    final newHash = _createsHash(password: password, email: email);
+
+    final isCorrectPassword = Crypt(currentHash) == newHash;
+    if (!isCorrectPassword) return null;
+
+    final session = await _dataSource.signInWithOfflineHash(
+      sessionToken: sessionToken,
+    );
+    return session;
+  }
+
+  _saveUserData({
+    required SessionModel result,
+    required EmailAddress email,
+    required SignInPassword password,
+  }) async {
+    await _appConfiguration.saveApiToken(token: result.sessionToken);
+    final hash = _createsHash(password: password, email: email);
+    await _appConfiguration.saveHash(hash: hash.toString());
   }
 
   Future<Either<Failure, SessionEntity>> _handleError(Object error) async {

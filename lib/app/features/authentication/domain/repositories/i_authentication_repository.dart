@@ -10,4 +10,9 @@ abstract class IAuthenticationRepository {
     required EmailAddress emailAddress,
     required SignInPassword password,
   });
+
+  Future<Either<Failure, SessionEntity>> signInOffline({
+    required EmailAddress emailAddress,
+    required SignInPassword password,
+  });
 }

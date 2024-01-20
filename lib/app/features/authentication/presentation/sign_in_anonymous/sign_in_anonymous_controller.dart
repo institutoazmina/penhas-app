@@ -6,7 +6,7 @@ import '../../../../core/error/failures.dart';
 import '../../../../core/managers/local_store.dart';
 import '../../../appstate/domain/entities/user_profile_entity.dart';
 import '../../domain/entities/session_entity.dart';
-import '../../domain/repositories/i_authentication_repository.dart';
+import '../../domain/usecases/authenticate_user.dart';
 import '../../domain/usecases/email_address.dart';
 import '../../domain/usecases/password_validator.dart';
 import '../../domain/usecases/sign_in_password.dart';
@@ -15,21 +15,17 @@ import '../shared/page_progress_indicator.dart';
 
 part 'sign_in_anonymous_controller.g.dart';
 
-class SignInAnonymousController extends _SignInAnonymousController
-    with _$SignInAnonymousController {
-  SignInAnonymousController({
-    required IAuthenticationRepository repository,
-    required LocalStore<UserProfileEntity> userProfileStore,
-    required PasswordValidator passwordValidator,
-  }) : super(repository, userProfileStore, passwordValidator);
-}
+class SignInAnonymousController = _SignInAnonymousController
+    with _$SignInAnonymousController;
 
 abstract class _SignInAnonymousController with Store, MapFailureMessage {
-  _SignInAnonymousController(
-    this._repository,
-    this._userProfileStore,
-    this._passwordValidator,
-  ) {
+  _SignInAnonymousController({
+    required AuthenticateAnonymousUserUseCase authenticateAnonymousUserUseCase,
+    required LocalStore<UserProfileEntity> userProfileStore,
+    required PasswordValidator passwordValidator,
+  })  : _authenticateUser = authenticateAnonymousUserUseCase,
+        _userProfileStore = userProfileStore,
+        _passwordValidator = passwordValidator {
     _init();
     _password = SignInPassword('', _passwordValidator);
   }
@@ -37,8 +33,8 @@ abstract class _SignInAnonymousController with Store, MapFailureMessage {
   final String _invalidFieldsToProceedLogin =
       'E-mail e senha precisam estarem corretos para continuar.';
   final LocalStore<UserProfileEntity> _userProfileStore;
-  final IAuthenticationRepository _repository;
   final PasswordValidator _passwordValidator;
+  final AuthenticateAnonymousUserUseCase _authenticateUser;
 
   EmailAddress _emailAddress = EmailAddress('');
   late SignInPassword _password;
@@ -91,8 +87,8 @@ abstract class _SignInAnonymousController with Store, MapFailureMessage {
     errorMessage = '';
 
     _progress = ObservableFuture(
-      _repository.signInWithEmailAndPassword(
-        emailAddress: _emailAddress,
+      _authenticateUser(
+        email: _emailAddress,
         password: _password,
       ),
     );

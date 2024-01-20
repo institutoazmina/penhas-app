@@ -8,8 +8,9 @@ import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 
 void main() {
-  group('AppConfigurationTest', () {
+  group(AppConfiguration, () {
     const apiTokenKey = 'br.com.penhas.tokenServer';
+    const offlineHashKey = 'br.com.penhas.offlineHash';
     const appModeKey = 'br.com.penhas.appConfigurationModes';
 
     late ILocalStorage localStorage;
@@ -65,6 +66,55 @@ void main() {
 
         // assert
         expect(actualAuthorizationStatus, AuthorizationStatus.authenticated);
+      },
+    );
+
+    test(
+      'catch error on `authorizationStatus`',
+      () async {
+        // arrange
+        when(() => localStorage.get(apiTokenKey)).thenAnswer((_) async {
+          throw ('Some error');
+        });
+
+        // act
+        final actualAuthorizationStatus =
+            await appConfiguration.authorizationStatus;
+
+        // assert
+        expect(actualAuthorizationStatus, AuthorizationStatus.anonymous);
+      },
+    );
+
+    test(
+      'should retrieve offlineHash from storage',
+      () async {
+        // arrange
+        const expectedOfflineHash = 'mocked offline hash';
+
+        when(() => localStorage.get(offlineHashKey))
+            .thenAnswer((_) async => expectedOfflineHash);
+
+        // act
+        final actualOfflineHash = await appConfiguration.offlineHash;
+
+        // assert
+        expect(actualOfflineHash, expectedOfflineHash);
+      },
+    );
+
+    test(
+      'should return empty string when offlineHash is null',
+      () async {
+        // arrange
+        when(() => localStorage.get(offlineHashKey))
+            .thenAnswer((_) async => null);
+
+        // act
+        final actualOfflineHash = await appConfiguration.offlineHash;
+
+        // assert
+        expect(actualOfflineHash, '');
       },
     );
 
@@ -133,6 +183,39 @@ void main() {
 
         // assert
         verify(() => localStorage.put(appModeKey, expectedAppMode)).called(1);
+      },
+    );
+
+    test(
+      '`saveHash` should put value to storage',
+      () async {
+        // arrange
+        const hash = 'hash to be saved';
+
+        when(() => localStorage.put(any(), any()))
+            .thenAnswer((_) => Future.value());
+
+        // act
+        await appConfiguration.saveHash(hash: hash);
+
+        // assert
+        verify(() => localStorage.put(offlineHashKey, hash)).called(1);
+      },
+    );
+
+    test(
+      '`logout` should delete api token and offline hash from storage',
+      () async {
+        // arrange
+        when(() => localStorage.delete(any()))
+            .thenAnswer((_) => Future.value());
+
+        // act
+        await appConfiguration.logout();
+
+        // assert
+        verify(() => localStorage.delete(apiTokenKey)).called(1);
+        verify(() => localStorage.delete(offlineHashKey)).called(1);
       },
     );
   });

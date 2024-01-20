@@ -26,6 +26,7 @@ dependencies:
   badges: ^2.0.2
   collection: ^1.15.0
   cpfcnpj: ^1.0.3
+  crypt: ^4.3.1
   crypto: ^3.0.1
   cupertino_icons: ^1.0.4
   dartz: ^0.10.1
@@ -37,6 +38,7 @@ dependencies:
   firebase_core: '1.24.0'
   firebase_core_platform_interface: '4.5.1'
   firebase_crashlytics: '2.9.0'
+  firebase_remote_config: ^2.0.20
   flutter_mobx: ^2.0.5
   flutter_modular: ^3.4.1+1
   flutter_phone_direct_caller: ^2.1.0
