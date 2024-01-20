@@ -7,6 +7,7 @@ import '../../../../../core/storage/object_store.dart';
 import '../../../../../shared/logger/log.dart';
 import '../../../../appstate/data/model/quiz_session_model.dart';
 import '../../model/escape_manual_remote.dart';
+import '../../model/escape_manual_task.dart';
 import '../escape_manual_datasource.dart';
 
 export '../escape_manual_datasource.dart' show IEscapeManualRemoteDatasource;
@@ -59,6 +60,22 @@ class EscapeManualRemoteDatasource implements IEscapeManualRemoteDatasource {
     }
   }
 
+  @override
+  Future<EscapeManualTaskModel> saveTask(EscapeManualTaskModel task) async {
+    final response = await _apiProvider.request(
+      method: 'POST',
+      path: '/me/tarefas/batch',
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode([task.asRequest]),
+    );
+
+    final updatedAt = DateTimeExt.fromHttpFormat(response.headers['date']!);
+
+    return task.copyWith(
+      updatedAt: updatedAt,
+    );
+  }
+
   Future<EscapeManualRemoteModel> _incrementalCache({
     required EscapeManualRemoteModel? cached,
     required EscapeManualRemoteModel newer,
@@ -82,4 +99,13 @@ class EscapeManualRemoteDatasource implements IEscapeManualRemoteDatasource {
       tasks: updatedTasks + changedTasks.values,
     );
   }
+}
+
+extension _EscapeManualTaskModelExt on EscapeManualTaskModel {
+  Map<String, dynamic> get asRequest => {
+        'id': id,
+        'checkbox_feito': isDone ? 1 : 0,
+        'campo_livre': value,
+        'remove': isRemoved ? 1 : 0,
+      };
 }

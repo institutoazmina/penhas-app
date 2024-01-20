@@ -13,6 +13,8 @@ class MockFile extends Mock implements File {}
 
 class MockClient extends Mock implements http.Client {}
 
+class FakeRequest extends Fake implements http.BaseRequest {}
+
 class MockNetworkInfo extends Mock implements INetworkInfo {}
 
 class MockApiServerConfigure extends Mock implements IApiServerConfigure {}
@@ -26,6 +28,7 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(Uri());
+    registerFallbackValue(FakeRequest());
   });
 
   setUp(() {
@@ -65,8 +68,10 @@ void main() {
       );
       // act
       await sut.get(path: path, headers: headers, parameters: parameters);
-      final captured = verify(() => apiClient.get(captureAny(),
-          headers: captureAny(named: 'headers'))).captured;
+      final captured = verify(
+        () =>
+            apiClient.get(captureAny(), headers: captureAny(named: 'headers')),
+      ).captured;
       // assert
       expect(
         captured.first,
@@ -147,6 +152,102 @@ void main() {
       expect(
         () async => await sut.get(path: path),
         throwsA(isA<Exception>()),
+      );
+    });
+
+    test(
+      'should throw ApiProviderException when bad request',
+      () async {
+        // arrange
+        const String path = 'some_path';
+        when(
+          () => apiClient.send(any()),
+        ).thenAnswer(
+          (_) async =>
+              http.StreamedResponse(http.ByteStream.fromBytes([]), 400),
+        );
+        when(() => networkInfo.isConnected).thenAnswer((_) async => true);
+
+        final sut = ApiProvider(
+          serverConfiguration: serverConfiguration,
+          networkInfo: networkInfo,
+          apiClient: apiClient,
+        );
+
+        // act / assert
+        expect(
+          () async => await sut.request(method: 'GET', path: path),
+          throwsA(isA<ApiProviderException>()),
+        );
+      },
+    );
+
+    group('request', () {
+      test(
+        'should call httpClient.send',
+        () async {
+          // arrange
+          final path = 'some_path';
+          final method = 'post';
+          final headers = <String, String>{'key1': 'value1'};
+          final parameters = <String, String>{'param1': 'value1'};
+          final requestBody = '{"key": "value"}';
+          final response = http.StreamedResponse(
+            Stream.value('{"key": "value"}'.codeUnits),
+            200,
+          );
+          when(() => apiClient.send(any())).thenAnswer((_) async => response);
+
+          final sut = ApiProvider(
+            serverConfiguration: serverConfiguration,
+            networkInfo: networkInfo,
+            apiClient: apiClient,
+          );
+
+          // act
+          await sut.request(
+            method: method,
+            path: path,
+            headers: headers,
+            parameters: parameters,
+            body: requestBody,
+          );
+
+          // assert
+          final verifier = verify(() => apiClient.send(captureAny()));
+          final captured = verifier.captured.first as http.Request;
+          verifier.called(1);
+          expect(captured.method, method);
+          expect(captured.body, requestBody);
+        },
+      );
+
+      test(
+        'return the response body',
+        () async {
+          // arrange
+          final path = 'some_path';
+          final method = 'get';
+          final expected = '{"key": "value"}';
+          final response = http.StreamedResponse(
+            http.ByteStream.fromBytes(utf8.encode(expected)),
+            200,
+          );
+          when(() => apiClient.send(any())).thenAnswer((_) async => response);
+
+          final sut = ApiProvider(
+            serverConfiguration: serverConfiguration,
+            networkInfo: networkInfo,
+            apiClient: apiClient,
+          );
+
+          // act
+          final actual = await sut.request(method: method, path: path);
+
+          // assert
+          expect(actual.body, expected);
+          expect(actual.statusCode, response.statusCode);
+        },
       );
     });
 
@@ -263,6 +364,33 @@ void main() {
         expect(result, '{"message": "Ok"}');
         verify(() => mockFile.writeAsBytesSync(utf8.encode(fileContent)))
             .called(1);
+      });
+    });
+
+    group('upload', () {
+      test('should return response content', () async {
+        // arrange
+        final expected = 'SUCCESS!';
+        when(() => apiClient.send(any())).thenAnswer(
+          (_) async => http.StreamedResponse(
+            http.ByteStream.fromBytes(utf8.encode(expected)),
+            200,
+          ),
+        );
+        final sut = ApiProvider(
+          serverConfiguration: serverConfiguration,
+          networkInfo: networkInfo,
+          apiClient: apiClient,
+        );
+
+        // act
+        final actual = await sut.upload(
+          path: '/path',
+          file: http.MultipartFile.fromString('file', 'content'),
+        );
+
+        // assert
+        expect(actual, expected);
       });
     });
   });

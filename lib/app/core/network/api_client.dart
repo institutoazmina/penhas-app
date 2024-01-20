@@ -8,7 +8,17 @@ import '../error/exceptions.dart';
 import 'api_server_configure.dart';
 import 'network_info.dart';
 
+export 'package:http/http.dart' show Response;
+
 abstract class IApiProvider {
+  Future<Response> request({
+    required String method,
+    required String path,
+    Map<String, String> headers,
+    Map<String, String?> parameters,
+    String body,
+  });
+
   Future<String> get({
     required String path,
     Map<String, String> headers,
@@ -48,12 +58,35 @@ class ApiProvider implements IApiProvider {
     required INetworkInfo networkInfo,
     Client? apiClient,
   })  : _networkInfo = networkInfo,
-        _apiClient = apiClient ?? Client(),
+        _apiClient = apiClient ?? Client(), // coverage:ignore-line
         _serverConfiguration = serverConfiguration;
 
   final Client _apiClient;
   final INetworkInfo _networkInfo;
   final IApiServerConfigure _serverConfiguration;
+
+  @override
+  Future<Response> request({
+    required String method,
+    required String path,
+    Map<String, String> headers = const {},
+    Map<String, String?> parameters = const {},
+    String body = '',
+  }) async {
+    final Uri uriRequest = _setupHttpRequest(
+      path: path,
+      queryParameters: parameters,
+    );
+    final header = await _setupHttpHeader(headers);
+
+    final response = await _apiClient.send(
+      Request(method, uriRequest)
+        ..body = body
+        ..headers.addAll(header),
+    );
+
+    return await _parseResponse(response);
+  }
 
   @override
   Future<String> get({
@@ -125,9 +158,10 @@ class ApiProvider implements IApiProvider {
       ..fields.addAll(fields)
       ..files.add(file);
 
-    final response = await request.send();
-    await _parseResponse(response);
-    return response.stream.bytesToString();
+    final response = await _apiClient.upload(request);
+    final parsed = await _parseResponse(response);
+
+    return parsed.body;
   }
 
   @override
@@ -224,4 +258,9 @@ extension _ApiProvider on ApiProvider {
       throw ApiProviderException(bodyContent: bodyContent);
     }
   }
+}
+
+extension _HttpClientX on Client {
+  Future<StreamedResponse> upload(MultipartRequest request) =>
+      runWithClient(() => request.send(), () => this);
 }

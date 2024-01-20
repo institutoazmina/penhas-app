@@ -2,30 +2,25 @@ import 'dart:async';
 
 import '../../../../../core/extension/iterable.dart';
 import '../../../../../core/storage/collection_store.dart';
-import '../../model/escape_manual_local.dart';
+import '../../model/escape_manual_task.dart';
 import '../escape_manual_datasource.dart';
 
 export '../escape_manual_datasource.dart' show IEscapeManualLocalDatasource;
 
 class EscapeManualLocalDatasource implements IEscapeManualLocalDatasource {
   EscapeManualLocalDatasource({
-    required ICollectionStore<EscapeManualTaskLocalModel> store,
+    required ICollectionStore<EscapeManualTaskModel> store,
   }) : _store = store;
 
-  final ICollectionStore<EscapeManualTaskLocalModel> _store;
+  final ICollectionStore<EscapeManualTaskModel> _store;
 
   @override
-  Stream<Iterable<EscapeManualTaskLocalModel>> fetchTasks() =>
-      _store.watchAll();
+  Stream<Iterable<EscapeManualTaskModel>> fetchTasks() => _store.watchAll();
 
   @override
-  Future<void> saveTask(EscapeManualTaskLocalModel task) async {
+  Future<EscapeManualTaskModel> saveTask(EscapeManualTaskModel task) async {
     await _store.put(task.id, task);
-  }
-
-  @override
-  Future<void> removeTask(EscapeManualTaskLocalModel task) async {
-    await saveTask(task.copyWith(isRemoved: true));
+    return task;
   }
 
   @override

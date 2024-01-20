@@ -14,6 +14,7 @@ import '../datasource/escape_manual_datasource.dart';
 import '../model/escape_manual_local.dart';
 import '../model/escape_manual_mapper.dart';
 import '../model/escape_manual_remote.dart';
+import '../model/escape_manual_task.dart';
 
 export '../../domain/repository/escape_manual_repository.dart'
     show IEscapeManualRepository;
@@ -57,7 +58,9 @@ class EscapeManualRepository implements IEscapeManualRepository {
 
       await _localDatasource.clearBefore(response.lastModifiedAt);
 
-      final iterator = StreamIterator(_localDatasource.fetchTasks());
+      final iterator = StreamIterator(
+        _localDatasource.fetchTasks().distinct(),
+      );
 
       while (await iterator.moveNext()) {
         yield _updateFromLocal(response, iterator.current);
@@ -70,27 +73,14 @@ class EscapeManualRepository implements IEscapeManualRepository {
 
   /// Update a task from the escape manual locally
   @override
-  VoidResult updateTask(EscapeManualTaskEntity task) async {
-    try {
-      final result = await _localDatasource.saveTask(task.asLocalModel);
-      return right(result);
-    } catch (error, stack) {
-      logError(error, stack);
-      return left(MapExceptionToFailure.map(error));
-    }
-  }
+  VoidResult updateTask(EscapeManualTaskEntity task) =>
+      _saveInAllDataSources(task.asLocalModel);
 
   /// Remove a task from the escape manual locally
   @override
-  VoidResult removeTask(EscapeManualTaskEntity task) async {
-    try {
-      final result = await _localDatasource.removeTask(task.asLocalModel);
-      return right(result);
-    } catch (error, stack) {
-      logError(error, stack);
-      return left(MapExceptionToFailure.map(error));
-    }
-  }
+  VoidResult removeTask(EscapeManualTaskEntity task) => _saveInAllDataSources(
+        task.asLocalModel.copyWith(isRemoved: true),
+      );
 
   /// Apply local changes to the remote data
   /// if local task is newer than remote task
@@ -98,9 +88,9 @@ class EscapeManualRepository implements IEscapeManualRepository {
   /// and return the updated remote data
   EscapeManualEntity _updateFromLocal(
     EscapeManualRemoteModel remote,
-    Iterable<EscapeManualTaskLocalModel> localTasks,
+    Iterable<EscapeManualTaskModel> localTasks,
   ) {
-    final tasksMap = Map<String, EscapeManualTaskLocalModel>.fromIterable(
+    final tasksMap = Map<String, EscapeManualTaskModel>.fromIterable(
       localTasks,
       key: (el) => '${el.id}',
     );
@@ -116,10 +106,32 @@ class EscapeManualRepository implements IEscapeManualRepository {
 
       return remoteTask.copyWith(
         isDone: localTask.isDone,
-        userInputValue: localTask.value,
+        value: localTask.value,
       );
     });
 
     return remote.copyWith(tasks: tasks).asEntity;
+  }
+
+  /// Save a task in all datasources
+  VoidResult _saveInAllDataSources(
+    EscapeManualTaskLocalModel model,
+  ) async {
+    try {
+      final results = await Future.wait([
+        // save in local datasource first to prevent losing data
+        _localDatasource.saveTask(model),
+        // save in remote datasource
+        _remoteDatasource.saveTask(model),
+      ]);
+
+      // update local task from remote task containing the updatedAt
+      await _localDatasource.saveTask(results[1]);
+
+      return right(null);
+    } catch (error, stack) {
+      logError(error, stack);
+      return left(MapExceptionToFailure.map(error));
+    }
   }
 }

@@ -44,7 +44,7 @@ final escapeManualModelFixture = EscapeManualRemoteModel(
       title: 'title',
       description: 'description',
       isDone: false,
-      userInputValue: null,
+      value: null,
       updatedAt: DateTime.now(),
     ),
     EscapeManualTaskRemoteModel(
@@ -63,7 +63,7 @@ final escapeManualModelFixture = EscapeManualRemoteModel(
       title: 'title',
       description: 'description',
       isDone: true,
-      userInputValue: [
+      value: [
         ContactModel(
           id: 1,
           name: 'Other contact name',
@@ -210,7 +210,7 @@ final escapeManualRemoteModelFixture = EscapeManualRemoteModel(
       group: 'Contatos',
       description: 'Informe os contatos de pessoas de confiança.',
       updatedAt: DateTime.fromMillisecondsSinceEpoch(1689701025000),
-      userInputValue: null,
+      value: null,
     ),
   ],
 );
@@ -240,7 +240,7 @@ final updatedEscapeManualRemoteModelFixture = EscapeManualRemoteModel(
       description:
           'Cadastre-se e/ou verifique se o seu Cadastro Único (CadÚnico) está ativo.',
       updatedAt: DateTime.fromMillisecondsSinceEpoch(1696116772000),
-      userInputValue: null,
+      value: null,
     ),
     EscapeManualTaskRemoteModel(
       id: '75',
@@ -256,7 +256,7 @@ final updatedEscapeManualRemoteModelFixture = EscapeManualRemoteModel(
       group: 'Contatos',
       description: 'Informe os contatos de pessoas de confiança.',
       updatedAt: DateTime.fromMillisecondsSinceEpoch(1696116772000),
-      userInputValue: [
+      value: [
         ContactModel(
           id: 1,
           name: 'Contact name',

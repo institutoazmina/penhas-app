@@ -1,10 +1,10 @@
-import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../core/extension/json_serializer.dart';
 import '../../domain/entity/escape_manual.dart';
 import 'escape_manual_mapper.dart'
     show readUserInputValue, userInputValueFromJson;
+import 'escape_manual_task.dart';
 import 'escape_manual_task_type.dart';
 
 export 'contact.dart';
@@ -13,7 +13,7 @@ export 'escape_manual_task_type.dart';
 part 'escape_manual_local.g.dart';
 
 @JsonSerializable()
-class EscapeManualTaskLocalModel extends Equatable {
+class EscapeManualTaskLocalModel extends EscapeManualTaskModel {
   const EscapeManualTaskLocalModel({
     required this.id,
     this.type = EscapeManualTaskType.normal,
@@ -31,36 +31,41 @@ class EscapeManualTaskLocalModel extends Equatable {
   factory EscapeManualTaskLocalModel.fromJson(Map<String, dynamic> map) =>
       _$EscapeManualTaskLocalModelFromJson(map);
 
+  @override
   @JsonKey(fromJson: FromJson.parseAsString)
   final String id;
 
+  @override
   @JsonKey(
-    defaultValue: EscapeManualTaskType.normal,
     unknownEnumValue: EscapeManualTaskType.unknown,
   )
   final EscapeManualTaskType type;
 
+  @override
   @JsonKey(
     readValue: readUserInputValue,
     fromJson: userInputValueFromJson,
   )
   final dynamic value;
 
+  @override
   @JsonKey()
   final bool isDone;
 
+  @override
   @JsonKey()
   final bool isRemoved;
 
+  @override
   @JsonKey()
   final DateTime? updatedAt;
 
   @override
-  List<Object?> get props => [id, type, value, isDone, isRemoved, updatedAt];
-
   Map<String, dynamic> toJson() => _$EscapeManualTaskLocalModelToJson(this);
 
+  @override
   EscapeManualTaskLocalModel copyWith({
+    dynamic value,
     bool? isDone,
     bool? isRemoved,
     DateTime? updatedAt,
@@ -68,7 +73,7 @@ class EscapeManualTaskLocalModel extends Equatable {
       EscapeManualTaskLocalModel(
         id: id,
         type: type,
-        value: value,
+        value: value ?? this.value,
         isDone: isDone ?? this.isDone,
         isRemoved: isRemoved ?? this.isRemoved,
         updatedAt: updatedAt ?? this.updatedAt,

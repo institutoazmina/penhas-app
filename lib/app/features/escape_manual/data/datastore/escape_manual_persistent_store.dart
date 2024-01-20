@@ -3,9 +3,9 @@ import 'dart:convert';
 import '../../../../core/storage/collection_store.dart';
 import '../../../../core/storage/persistent_storage.dart';
 import '../model/escape_manual_local.dart';
+import '../model/escape_manual_task.dart';
 
-class EscapeManualTasksStore
-    extends ICollectionStore<EscapeManualTaskLocalModel>
+class EscapeManualTasksStore extends ICollectionStore<EscapeManualTaskModel>
     with SerializableCollectionStore {
   EscapeManualTasksStore({
     required this.storageFactory,
@@ -18,10 +18,9 @@ class EscapeManualTasksStore
   final IPersistentStorageFactory storageFactory;
 
   @override
-  EscapeManualTaskLocalModel deserialize(String source) =>
+  EscapeManualTaskModel deserialize(String source) =>
       EscapeManualTaskLocalModel.fromJson(jsonDecode(source));
 
   @override
-  String serialize(EscapeManualTaskLocalModel object) =>
-      jsonEncode(object.toJson());
+  String serialize(EscapeManualTaskModel object) => jsonEncode(object.toJson());
 }

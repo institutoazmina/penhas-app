@@ -50,26 +50,11 @@ void main() {
       when(() => mockStore.put(any(), any())).thenAnswer((_) => Future.value());
 
       // act
-      await sut.saveTask(task);
+      final actual = await sut.saveTask(task);
 
       // assert
       verify(() => mockStore.put(task.id, task)).called(1);
-    });
-
-    test('should call store put with isRemoved true', () async {
-      // arrange
-      final task = EscapeManualTaskLocalModel(
-        id: 'id',
-        updatedAt: DateTime.now(),
-      );
-      when(() => mockStore.put(any(), any())).thenAnswer((_) => Future.value());
-
-      // act
-      await sut.removeTask(task);
-
-      // assert
-      verify(() => mockStore.put(task.id, task.copyWith(isRemoved: true)))
-          .called(1);
+      expect(actual, task);
     });
 
     test('should call store removeAll', () async {
