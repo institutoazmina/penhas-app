@@ -6,6 +6,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/managers/background_task_manager.dart';
 import 'package:penhas/app/features/appstate/data/model/quiz_session_model.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/page_progress_indicator.dart';
@@ -16,6 +17,7 @@ import 'package:penhas/app/features/escape_manual/domain/start_escape_manual.dar
 import 'package:penhas/app/features/escape_manual/domain/update_escape_manual_task.dart';
 import 'package:penhas/app/features/escape_manual/presentation/escape_manual_controller.dart';
 import 'package:penhas/app/features/escape_manual/presentation/escape_manual_state.dart';
+import 'package:penhas/app/features/escape_manual/presentation/send_pending_escape_manual_task.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:url_launcher_platform_interface/url_launcher_platform_interface.dart';
 
@@ -26,6 +28,7 @@ void main() {
   late StartEscapeManualUseCase mockStartEscapeManual;
   late UpdateEscapeManualTaskUseCase mockUpdateEscapeManualTask;
   late DeleteEscapeManualTaskUseCase mockDeleteEscapeManualTask;
+  late IBackgroundTaskManager mockBackgroundTaskManager;
 
   late Completer<EscapeManualEntity> getEscapeManualCompleter;
 
@@ -34,6 +37,7 @@ void main() {
     mockStartEscapeManual = _MockStartEscapeManualUseCase();
     mockUpdateEscapeManualTask = _MockUpdateEscapeManualTaskUseCase();
     mockDeleteEscapeManualTask = _MockDeleteEscapeManualTaskUseCase();
+    mockBackgroundTaskManager = _MockBackgroundTaskManager();
 
     getEscapeManualCompleter = Completer();
 
@@ -45,6 +49,7 @@ void main() {
       startEscapeManual: mockStartEscapeManual,
       updateTask: mockUpdateEscapeManualTask,
       deleteTask: mockDeleteEscapeManualTask,
+      backgroundTaskManager: mockBackgroundTaskManager,
     );
   });
 
@@ -302,48 +307,21 @@ void main() {
       );
 
       test(
-        'should change progress state to loading',
-        () async {
-          // act
-          sut.updateTask(task);
-
-          // assert
-          expect(sut.progressState, PageProgressState.loading);
-        },
-      );
-
-      test(
-        'should change progress state to loaded when success',
+        'should schedule task when failed',
         () async {
           // arrange
-          updateTaskCompleter.complete(right(unit));
-
-          // act
-          await sut.updateTask(task);
-
-          // assert
-          expect(sut.progressState, PageProgressState.loaded);
-        },
-      );
-
-      test(
-        'should emit showSnackBar reaction when failed',
-        () async {
-          // arrange
-          final onReactionMock = _MockOnEscapeManualReaction();
           final failure = ServerFailure();
           updateTaskCompleter.complete(left(failure));
-          sut.onReaction(onReactionMock);
+          when(() => mockBackgroundTaskManager.schedule(any()))
+              .thenAnswer((_) => Future.value());
 
           // act
           await sut.updateTask(task);
 
           // assert
           verify(
-            () => onReactionMock.call(
-              const EscapeManualReaction.showSnackBar(
-                'O servidor está com problema neste momento, tente novamente.',
-              ),
+            () => mockBackgroundTaskManager.schedule(
+              sendPendingEscapeManualTask,
             ),
           ).called(1);
         },
@@ -380,48 +358,21 @@ void main() {
       );
 
       test(
-        'should change progress state to loading',
-        () async {
-          // act
-          sut.deleteTask(task);
-
-          // assert
-          expect(sut.progressState, PageProgressState.loading);
-        },
-      );
-
-      test(
-        'should change progress state to loaded when success',
-        () async {
-          // arrange
-          deleteTaskCompleter.complete(right(unit));
-
-          // act
-          await sut.deleteTask(task);
-
-          // assert
-          expect(sut.progressState, PageProgressState.loaded);
-        },
-      );
-
-      test(
         'should emit showSnackBar reaction when failed',
         () async {
           // arrange
-          final onReactionMock = _MockOnEscapeManualReaction();
           final failure = ServerFailure();
           deleteTaskCompleter.complete(left(failure));
-          sut.onReaction(onReactionMock);
+          when(() => mockBackgroundTaskManager.schedule(any()))
+              .thenAnswer((_) => Future.value());
 
           // act
           await sut.deleteTask(task);
 
           // assert
           verify(
-            () => onReactionMock.call(
-              const EscapeManualReaction.showSnackBar(
-                'O servidor está com problema neste momento, tente novamente.',
-              ),
+            () => mockBackgroundTaskManager.schedule(
+              sendPendingEscapeManualTask,
             ),
           ).called(1);
         },
@@ -604,6 +555,9 @@ class _MockOnEscapeManualReaction extends Mock
     implements _IOnEscapeManualReaction {}
 
 class _MockModularNavigator extends Mock implements IModularNavigator {}
+
+class _MockBackgroundTaskManager extends Mock
+    implements IBackgroundTaskManager {}
 
 class _FakeEscapeManualTaskEntity extends Fake
     implements EscapeManualTaskEntity {}
