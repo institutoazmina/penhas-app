@@ -112,7 +112,7 @@ abstract class _QuizControllerBase with Store {
     return QuizMessageEntity(
       ref: messageRemoved.ref,
       content: messageRemoved.buttonLabel,
-      type: QuizMessageType.displayText,
+      type: QuizMessageType.displayTextResponse,
     );
   }
 
