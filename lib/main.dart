@@ -50,6 +50,7 @@ void callbackDispatcher() {
 }
 
 void _runGuardedWithCrashlytics(FutureOr<void> Function() callback) async {
+  _ProxyHttpOverrides.register();
   WidgetsFlutterBinding.ensureInitialized();
   await _initializeFirebase();
 
@@ -98,4 +99,24 @@ void _registerRequiredPlugins() {
     PathProviderIOS.registerWith();
     SharedPreferencesIOS.registerWith();
   }
+}
+
+class _ProxyHttpOverrides extends HttpOverrides {
+  static const String _devHost = 'dev-penhas-api.appcivico.com';
+
+  static void register() {
+    HttpOverrides.global = _ProxyHttpOverrides();
+  }
+
+  static bool allowBadDevCertificateCallback(
+    X509Certificate cert,
+    String host,
+    int port,
+  ) =>
+      host == _devHost;
+
+  @override
+  HttpClient createHttpClient(SecurityContext? context) =>
+      super.createHttpClient(context)
+        ..badCertificateCallback = allowBadDevCertificateCallback;
 }
