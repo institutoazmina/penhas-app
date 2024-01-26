@@ -34,7 +34,9 @@ class _EscapeManualPageState
     extends ModularState<EscapeManualPage, EscapeManualController>
     with SnackBarHandler {
   ReactionDisposer? _disposer;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(
+    debugLabel: 'escape-manual-scaffold-key',
+  );
 
   @override
   void didChangeDependencies() {

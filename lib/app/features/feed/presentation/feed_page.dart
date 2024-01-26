@@ -36,9 +36,12 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
   List<ReactionDisposer>? _disposers;
 
   final _scrollController = ScrollController();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(
+    debugLabel: 'feed-scaffold-key',
+  );
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey(
+    debugLabel: 'feed-refresh-indicator-key',
+  );
 
   PageProgressState _currentState = PageProgressState.initial;
 

@@ -28,9 +28,12 @@ class _GuardiansPageState
     extends ModularState<GuardiansPage, GuardiansController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(
+    debugLabel: 'guardians-scaffold-key',
+  );
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey(
+    debugLabel: 'guardians-refresh-indicator-key',
+  );
 
   PageProgressState _loadState = PageProgressState.initial;
 

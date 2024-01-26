@@ -31,7 +31,9 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends ModularState<SignInPage, SignInController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(
+    debugLabel: 'sign-in-scaffold-key',
+  );
   PageProgressState _currentState = PageProgressState.initial;
 
   @override

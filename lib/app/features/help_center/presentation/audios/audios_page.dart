@@ -29,9 +29,12 @@ class AudiosPage extends StatefulWidget {
 class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(
+    debugLabel: 'audios-scaffold-key',
+  );
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey(
+    debugLabel: 'audios-refresh-indicator-key',
+  );
 
   PageProgressState _loadState = PageProgressState.initial;
   AudioEntity? _playingAudio;

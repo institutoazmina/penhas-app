@@ -32,7 +32,9 @@ class _NewGuardianPageState
     extends ModularState<NewGuardianPage, NewGuardianController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(
+    debugLabel: 'new-guardian-scaffold-key',
+  );
 
   PageProgressState _loadState = PageProgressState.initial;
 

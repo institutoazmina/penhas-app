@@ -28,8 +28,12 @@ class _UserProfilePageState
     extends ModularState<UserProfilePage, UserProfileController>
     with SnackBarHandler {
   ReactionDisposer? _disposer;
-  late final _scaffoldKey = GlobalKey<ScaffoldState>();
-  late final _progressDialogKey = GlobalKey();
+  late final _scaffoldKey = GlobalKey<ScaffoldState>(
+    debugLabel: 'user-profile-scaffold-key',
+  );
+  late final _progressDialogKey = GlobalKey(
+    debugLabel: 'user-profile-progress-dialog-key',
+  );
 
   @override
   void initState() {

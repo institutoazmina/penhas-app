@@ -25,7 +25,9 @@ class _AccountDeletePageState
   bool _isPasswordVisible = false;
   final textController = TextEditingController();
   List<ReactionDisposer>? _disposers;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(
+    debugLabel: 'account-delete-scaffold-key',
+  );
 
   @override
   void didChangeDependencies() {

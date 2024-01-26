@@ -34,7 +34,9 @@ class ProfileOptionsBottomSheet extends StatelessWidget {
 class ReportUserDialog extends StatelessWidget {
   const ReportUserDialog({Key? key, required this.reason}) : super(key: key);
 
-  static final _formKey = GlobalKey<FormState>();
+  static final _formKey = GlobalKey<FormState>(
+    debugLabel: 'report-user-form-key',
+  );
   final String? reason;
 
   @override

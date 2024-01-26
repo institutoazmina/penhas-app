@@ -17,7 +17,9 @@ class ProfilSkillLoadedStatePage extends StatelessWidget {
   final void Function(List<FilterTagEntity>) onAplyFilterAction;
   final List<FilterTagEntity> tags;
 
-  final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
+  final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>(
+    debugLabel: 'filter-tweet-tag-state-key',
+  );
 
   @override
   Widget build(BuildContext context) {

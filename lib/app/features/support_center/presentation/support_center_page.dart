@@ -25,7 +25,9 @@ class _SupportCenterPageState
     extends ModularState<SupportCenterPage, SupportCenterController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(
+    debugLabel: 'support-center-scaffold-key',
+  );
   GoogleMapController? mapController;
 
   @override

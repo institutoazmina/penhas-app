@@ -20,7 +20,9 @@ class _DeletedAccountPageState
     extends ModularState<DeletedAccountPage, DeletedAccountController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(
+    debugLabel: 'deleted-account-scaffold-key',
+  );
 
   @override
   void didChangeDependencies() {

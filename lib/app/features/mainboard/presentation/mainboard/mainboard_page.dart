@@ -14,7 +14,9 @@ import 'pages/mainboard_bottom_navigation_page.dart';
 class MainboardPage extends StatefulWidget {
   const MainboardPage({Key? key, this.title = 'Mainboard'}) : super(key: key);
 
-  static final mainBoardKey = GlobalKey<ScaffoldState>();
+  static final mainBoardKey = GlobalKey<ScaffoldState>(
+    debugLabel: 'main-board-scaffold-key',
+  );
   final String title;
 
   @override

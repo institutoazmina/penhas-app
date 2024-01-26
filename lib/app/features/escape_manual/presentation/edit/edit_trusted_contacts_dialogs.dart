@@ -54,7 +54,9 @@ class UpdateContactDialog extends StatefulWidget {
 }
 
 class _UpdateContactDialogState extends State<UpdateContactDialog> {
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>(
+    debugLabel: 'update-contact-form-key',
+  );
 
   late final _nameController = TextEditingController(text: widget.contact.name);
   late final _phoneController =

@@ -32,7 +32,9 @@ class _SupportCenterAddPageState
     extends ModularState<SupportCenterAddPage, SupportCenterAddController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(
+    debugLabel: 'support-center-add-scaffold-key',
+  );
 
   final _scrollController = ScrollController();
 

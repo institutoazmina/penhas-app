@@ -22,8 +22,12 @@ class _FilterTweetPageState
     extends ModularState<FilterTweetPage, FilterTweetController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>(
+    debugLabel: 'filter-tweet-tag-state-key',
+  );
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(
+    debugLabel: 'filter-tweet-scaffold-key',
+  );
 
   PageProgressState _currentState = PageProgressState.initial;
 

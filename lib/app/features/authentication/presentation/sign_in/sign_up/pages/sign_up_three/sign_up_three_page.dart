@@ -29,7 +29,9 @@ class _SignUpThreePageState
     extends ModularState<SignUpThreePage, SignUpThreeController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(
+    debugLabel: 'sign-up-three-scaffold-key',
+  );
   PageProgressState _currentState = PageProgressState.initial;
 
   @override

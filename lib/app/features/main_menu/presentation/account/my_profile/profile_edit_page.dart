@@ -29,7 +29,9 @@ class _ProfileEditPageState
     extends ModularState<ProfileEditPage, ProfileEditController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(
+    debugLabel: 'profile-edit-scaffold-key',
+  );
 
   @override
   void didChangeDependencies() {

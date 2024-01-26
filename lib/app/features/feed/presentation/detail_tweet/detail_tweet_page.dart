@@ -38,9 +38,12 @@ class _DetailTweetPageState
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final _scrollController = AutoScrollController();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(
+    debugLabel: 'detail-tweet-scaffold-key',
+  );
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey(
+    debugLabel: 'detail-tweet-refresh-indicator-key',
+  );
 
   @override
   void initState() {
