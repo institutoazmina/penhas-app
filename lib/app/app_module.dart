@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'core/managers/app_configuration.dart';
 import 'core/managers/app_preferences_store.dart';
 import 'core/managers/audio_sync_manager.dart';
+import 'core/managers/background_task_manager.dart';
+import 'core/managers/impl/background_task_manager.dart';
 import 'core/managers/local_store.dart';
 import 'core/managers/modules_sevices.dart';
 import 'core/managers/user_profile_store.dart';
@@ -139,7 +141,10 @@ class AppModule extends Module {
         ),
         Bind.lazySingleton<IRemoteConfigService>(
           (i) => const RemoteConfigService(),
-        )
+        ),
+        Bind.lazySingleton<IBackgroundTaskManager>(
+          (i) => BackgroundTaskManager(),
+        ),
       ];
 
   @override
