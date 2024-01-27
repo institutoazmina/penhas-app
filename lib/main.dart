@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,20 +9,43 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider_android/path_provider_android.dart';
+import 'package:path_provider_ios/path_provider_ios.dart';
+import 'package:shared_preferences_android/shared_preferences_android.dart';
+import 'package:shared_preferences_ios/shared_preferences_ios.dart';
+import 'package:workmanager/workmanager.dart';
 
 import 'app/app_module.dart';
 import 'app/app_widget.dart';
+import 'app/core/managers/background_task_manager.dart';
 import 'app/core/remoteconfig/remote_config.dart';
 import 'firebase_options.dart';
 
 void main() {
   _runGuardedWithCrashlytics(() {
+    Workmanager().initialize(
+      callbackDispatcher,
+      isInDebugMode: kDebugMode,
+    );
+
     runApp(
       ModularApp(
         module: AppModule(),
         child: const AppWidget(),
       ),
     );
+  });
+}
+
+@pragma('vm:entry-point')
+void callbackDispatcher() {
+  _registerRequiredPlugins();
+
+  _runGuardedWithCrashlytics(() {
+    Modular.init(AppModule());
+
+    final taskManager = Modular.get<IBackgroundTaskManager>();
+    taskManager.runPendingTasks();
   });
 }
 
@@ -64,4 +88,14 @@ Future<void> _initRemoteConfig() async {
     remoteConfig: FirebaseRemoteConfig.instance,
   );
   await remoteConfig.initialize();
+}
+
+void _registerRequiredPlugins() {
+  if (Platform.isAndroid) {
+    PathProviderAndroid.registerWith();
+    SharedPreferencesAndroid.registerWith();
+  } else if (Platform.isIOS) {
+    PathProviderIOS.registerWith();
+    SharedPreferencesIOS.registerWith();
+  }
 }

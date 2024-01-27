@@ -64,11 +64,15 @@ dependencies:
   package_info: ^2.0.2
   path: ^1.8.0
   path_provider: ^2.0.8
+  path_provider_android: ^2.0.22
+  path_provider_ios: ^2.0.11
   permission_handler: ^8.3.0
   permission_handler_platform_interface: 3.7.0
   provider: ^6.0.1
   scroll_to_index: ^2.1.1
   shared_preferences: ^2.0.11
+  shared_preferences_android: ^2.0.15
+  shared_preferences_ios: ^2.1.1
   smooth_star_rating: ^1.1.1
   stack_trace: ^1.10.0
   synchronized: ^3.0.0+3
