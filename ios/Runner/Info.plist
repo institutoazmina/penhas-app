@@ -79,6 +79,7 @@
 	<string>$(GEO_API_KEY)</string>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
+		<string>SendPendingEscapeManualTask</string>
 	</array>
 </dict>
 </plist>

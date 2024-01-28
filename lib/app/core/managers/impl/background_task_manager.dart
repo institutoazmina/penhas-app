@@ -1,6 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:workmanager/workmanager.dart';
 
+import '../../../features/escape_manual/escape_manual_module.dart';
+import '../../../features/escape_manual/presentation/send_pending_escape_manual_task.dart';
 import '../../../shared/logger/log.dart';
 import '../background_task_manager.dart';
 
@@ -59,6 +61,17 @@ class BackgroundTaskRegistry extends IBackgroundTaskRegistry {
 
   @override
   TaskDefinition definitionByName(String taskName) {
+    if (taskName == sendPendingEscapeManualTask) {
+      return TaskDefinition(
+        taskProvider: () => SendPendingEscapeManualTask(
+          Modular.get(),
+        ),
+        dependencies: [
+          EscapeManualModule(),
+        ],
+      );
+    }
+
     throw UnimplementedError(
       'Task $taskName not implemented',
     );
