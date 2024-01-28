@@ -1,6 +1,7 @@
 import UIKit
 import Flutter
 import GoogleMaps
+import workmanager
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -16,6 +17,32 @@ import GoogleMaps
     }
 
     GeneratedPluginRegistrant.register(with: self)
+    UNUserNotificationCenter.current().delegate = self
+
+    WorkmanagerPlugin.setPluginRegistrantCallback { registry in
+      // The following code will be called upon WorkmanagerPlugin's registration.
+      // Note: all of the app's plugins may not be required in this context ;
+      // instead of using GeneratedPluginRegistrant.register(with: registry),
+      // you may want to register only specific plugins.
+      GeneratedPluginRegistrant.register(with: registry)
+    }
+
+    if let infoDictionary: [String: Any] = Bundle.main.infoDictionary {
+      if let taskIdentifiers = infoDictionary["BGTaskSchedulerPermittedIdentifiers"] {
+        for taskIdentifier in taskIdentifiers as! [String] {
+          WorkmanagerPlugin.registerTask(withIdentifier: taskIdentifier)
+        }
+      }
+    }
+
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  }
+
+  override func userNotificationCenter(
+    _ center: UNUserNotificationCenter,
+    willPresent notification: UNNotification,
+    withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+  ) {
+    completionHandler(.alert) // shows banner even if app is in foreground
   }
 }
