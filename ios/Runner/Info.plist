@@ -52,6 +52,7 @@
 	<array>
 		<string>location</string>
 		<string>audio</string>
+		<string>processing</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -76,5 +77,8 @@
 	<false/>
 	<key>GeoApiKey</key>
 	<string>$(GEO_API_KEY)</string>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+	</array>
 </dict>
 </plist>
