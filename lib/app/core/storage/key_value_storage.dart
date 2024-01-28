@@ -3,6 +3,8 @@ abstract class IKeyValueStorage {
 
   Future<void> put<T>(String key, T value);
 
+  Future<void> putAll<T>(Map<String, T> values);
+
   Future<void> remove(String key);
 
   Future<void> removeAll(Iterable<String> keys);

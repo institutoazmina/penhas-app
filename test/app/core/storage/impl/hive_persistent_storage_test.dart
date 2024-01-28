@@ -114,6 +114,25 @@ void main() {
     );
 
     test(
+      'putAll should call box.putAll',
+      () async {
+        // arrange
+        final values = {
+          'first key': 'first value',
+          'second key': 'second value',
+          'third key': 'third value',
+        };
+        when(() => mockBox.putAll(any())).thenAnswer((_) => Future.value());
+
+        // act
+        await sut.putAll(values);
+
+        // assert
+        verify(() => mockBox.putAll(values)).called(1);
+      },
+    );
+
+    test(
       'remove should call box.delete',
       () async {
         // arrange
