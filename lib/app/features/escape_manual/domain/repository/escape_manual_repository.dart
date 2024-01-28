@@ -11,4 +11,5 @@ abstract class IEscapeManualRepository {
   Stream<EscapeManualEntity> fetch();
   VoidResult updateTask(EscapeManualTaskEntity task);
   VoidResult removeTask(EscapeManualTaskEntity task);
+  VoidResult sendPendingTasks();
 }

@@ -76,6 +76,28 @@ class EscapeManualRemoteDatasource implements IEscapeManualRemoteDatasource {
     );
   }
 
+  @override
+  Future<List<EscapeManualTaskModel>> saveTasks(
+    List<EscapeManualTaskModel> tasks,
+  ) async {
+    final response = await _apiProvider.request(
+      method: 'POST',
+      path: '/me/tarefas/batch',
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
+      body: jsonEncode(
+        tasks.map((e) => e.asRequest).toList(),
+      ),
+    );
+
+    final updatedAt = DateTimeExt.fromHttpFormat(response.headers['date']!);
+
+    return tasks
+        .map(
+          (e) => e.copyWith(updatedAt: updatedAt),
+        )
+        .toList();
+  }
+
   Future<EscapeManualRemoteModel> _incrementalCache({
     required EscapeManualRemoteModel? cached,
     required EscapeManualRemoteModel newer,
@@ -101,7 +123,7 @@ class EscapeManualRemoteDatasource implements IEscapeManualRemoteDatasource {
   }
 }
 
-extension _EscapeManualTaskModelExt on EscapeManualTaskModel {
+extension EscapeManualTaskModelExt on EscapeManualTaskModel {
   Map<String, dynamic> get asRequest => {
         'id': id,
         'checkbox_feito': isDone ? 1 : 0,

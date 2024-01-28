@@ -82,6 +82,26 @@ class EscapeManualRepository implements IEscapeManualRepository {
         task.asLocalModel.copyWith(isRemoved: true),
       );
 
+  /// Send all pending tasks to the server
+  /// Returns a [Failure] if something goes wrong
+  /// or [void] if success
+  @override
+  VoidResult sendPendingTasks() async {
+    try {
+      final tasks = await _localDatasource.getTasks();
+      final pendingTasks = tasks.where((el) => el.updatedAt == null).toList();
+      if (pendingTasks.isEmpty) return right(null);
+
+      final updatedTasks = await _remoteDatasource.saveTasks(pendingTasks);
+      await _localDatasource.saveTasks(updatedTasks);
+
+      return right(null);
+    } catch (error, stack) {
+      logError(error, stack);
+      return left(MapExceptionToFailure.map(error));
+    }
+  }
+
   /// Apply local changes to the remote data
   /// if local task is newer than remote task
   /// or ignore the task if it was removed locally

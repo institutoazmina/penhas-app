@@ -5,10 +5,11 @@ import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/storage/collection_store.dart';
 import 'package:penhas/app/features/escape_manual/data/datasource/impl/escape_manual_local_datasource.dart';
 import 'package:penhas/app/features/escape_manual/data/model/escape_manual_local.dart';
+import 'package:penhas/app/features/escape_manual/data/model/escape_manual_task.dart';
 
 void main() {
   late IEscapeManualLocalDatasource sut;
-  late ICollectionStore<EscapeManualTaskLocalModel> mockStore;
+  late ICollectionStore<EscapeManualTaskModel> mockStore;
 
   setUpAll(() {
     registerFallbackValue(_FakeEscapeManualTaskLocalModel());
@@ -20,7 +21,23 @@ void main() {
   });
 
   group(EscapeManualLocalDatasource, () {
-    test('should call store watchAll', () {
+    test('getTasks should call store all', () async {
+      // arrange
+      final tasks = [
+        EscapeManualTaskLocalModel(id: '1'),
+        EscapeManualTaskLocalModel(id: '2'),
+      ];
+      when(() => mockStore.all()).thenAnswer((_) async => tasks);
+
+      // act
+      final actual = await sut.getTasks();
+
+      // assert
+      verify(() => mockStore.all()).called(1);
+      expect(actual, tasks);
+    });
+
+    test('watchAll should call store watchAll', () {
       // arrange
       final tasks = [
         EscapeManualTaskLocalModel(id: '1'),
@@ -38,7 +55,7 @@ void main() {
       verify(() => mockStore.watchAll()).called(1);
     });
 
-    test('should call store put', () async {
+    test('saveTask should call store put', () async {
       // arrange
       final task = EscapeManualTaskLocalModel(
         id: 'id',
@@ -57,7 +74,29 @@ void main() {
       expect(actual, task);
     });
 
-    test('should call store removeAll', () async {
+    test('saveTasks should call store putAll', () async {
+      // arrange
+      final tasks = [
+        EscapeManualTaskLocalModel(id: '0'),
+        EscapeManualTaskLocalModel(
+          id: '1',
+          type: EscapeManualTaskType.contacts,
+          updatedAt: DateTime(2023, 11, 13, 13, 57, 59),
+        ),
+      ];
+      when(() => mockStore.putAll(any())).thenAnswer((_) => Future.value());
+
+      // act
+      final actual = await sut.saveTasks(tasks);
+
+      // assert
+      verify(
+        () => mockStore.putAll({'0': tasks[0], '1': tasks[1]}),
+      ).called(1);
+      expect(actual, tasks);
+    });
+
+    test('clearBefore should call store removeAll', () async {
       // arrange
       final tasks = [
         EscapeManualTaskLocalModel(
@@ -93,7 +132,7 @@ void main() {
 }
 
 class _MockEscapeManualTaskStore extends Mock
-    implements ICollectionStore<EscapeManualTaskLocalModel> {}
+    implements ICollectionStore<EscapeManualTaskModel> {}
 
 class _FakeEscapeManualTaskLocalModel extends Fake
     implements EscapeManualTaskLocalModel {}

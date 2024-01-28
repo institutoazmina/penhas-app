@@ -15,12 +15,27 @@ class EscapeManualLocalDatasource implements IEscapeManualLocalDatasource {
   final ICollectionStore<EscapeManualTaskModel> _store;
 
   @override
+  Future<Iterable<EscapeManualTaskModel>> getTasks() => _store.all();
+
+  @override
   Stream<Iterable<EscapeManualTaskModel>> fetchTasks() => _store.watchAll();
 
   @override
   Future<EscapeManualTaskModel> saveTask(EscapeManualTaskModel task) async {
     await _store.put(task.id, task);
     return task;
+  }
+
+  @override
+  Future<List<EscapeManualTaskModel>> saveTasks(
+    List<EscapeManualTaskModel> tasks,
+  ) async {
+    final tasksMap = Map<String, EscapeManualTaskModel>.fromIterable(
+      tasks,
+      key: (task) => task.id,
+    );
+    await _store.putAll(tasksMap);
+    return tasks;
   }
 
   @override
