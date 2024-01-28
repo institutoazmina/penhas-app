@@ -3,6 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/managers/background_task_manager.dart';
 import 'package:penhas/app/core/managers/impl/background_task_manager.dart';
+import 'package:penhas/app/core/network/api_client.dart';
+import 'package:penhas/app/core/storage/cache_storage.dart';
+import 'package:penhas/app/core/storage/persistent_storage.dart';
+import 'package:penhas/app/features/escape_manual/presentation/send_pending_escape_manual_task.dart';
 import 'package:workmanager/workmanager.dart';
 
 import '../../../../utils/aditional_bind_module.dart';
@@ -151,7 +155,15 @@ void main() {
 
     parameterizedGroup<List<Bind>>(
       'definitionByName should return task definition for task',
-      () => {},
+      () => {
+        sendPendingEscapeManualTask: [
+          Bind<IPersistentStorageFactory>(
+            (i) => _MockPersistentStorageFactory(),
+          ),
+          Bind<IApiProvider>((i) => _MockApiProvider()),
+          Bind<ICacheStorage>((i) => _MockCacheStorage()),
+        ],
+      },
       (name, item) {
         test(
           name,
@@ -181,3 +193,10 @@ class _MockBackgroundTaskRegistry extends Mock
 class _MockWorkManager extends Mock implements Workmanager {}
 
 class _MockBackgroundTask extends Mock implements BackgroundTask {}
+
+class _MockPersistentStorageFactory extends Mock
+    implements IPersistentStorageFactory {}
+
+class _MockApiProvider extends Mock implements IApiProvider {}
+
+class _MockCacheStorage extends Mock implements ICacheStorage {}
