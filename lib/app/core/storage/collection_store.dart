@@ -9,6 +9,8 @@ abstract class ICollectionStore<T> {
 
   Future<void> put(String key, T value);
 
+  Future<void> putAll(Map<String, T> values);
+
   Future<void> removeAll(Iterable<String> keys);
 }
 
@@ -31,6 +33,13 @@ mixin SerializableCollectionStore<T> on ICollectionStore<T> {
 
   @override
   Future<void> put(String key, T value) => storage.put(key, serialize(value));
+
+  @override
+  Future<void> putAll(Map<String, T> values) => storage.putAll(
+        values.map(
+          (key, value) => MapEntry(key, serialize(value)),
+        ),
+      );
 
   @override
   Future<void> removeAll(Iterable<String> keys) => storage.removeAll(keys);
