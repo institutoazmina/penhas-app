@@ -430,6 +430,117 @@ void main() {
         },
       );
     });
+
+    group('saveTasks', () {
+      test(
+        'should call apiProvider request',
+        () async {
+          // arrange
+          final tasks = [
+            EscapeManualTaskRemoteModel(
+              id: 'id',
+              type: EscapeManualTaskType.contacts,
+              updatedAt: DateTime.now(),
+              isDone: Random().nextBool(),
+              isRemoved: Random().nextBool(),
+              description: 'description',
+              group: 'group',
+            ),
+            EscapeManualTaskRemoteModel(
+              id: 'id',
+              type: EscapeManualTaskType.contacts,
+              updatedAt: DateTime.now(),
+              isDone: Random().nextBool(),
+              isRemoved: Random().nextBool(),
+              description: 'description',
+              group: 'group',
+            ),
+          ];
+          when(
+            () => mockApiProvider.request(
+              method: any(named: 'method'),
+              path: any(named: 'path'),
+              body: any(named: 'body'),
+              headers: any(named: 'headers'),
+            ),
+          ).thenAnswer(
+            (_) async => Response(
+              '',
+              201,
+              headers: {'date': 'Wed, 13 Nov 2023 13:58:00 GMT'},
+            ),
+          );
+
+          // act
+          await sut.saveTasks(tasks);
+
+          // assert
+          verify(
+            () => mockApiProvider.request(
+              method: 'POST',
+              path: '/me/tarefas/batch',
+              body: jsonEncode(tasks.map((e) => e.asRequest).toList()),
+              headers: {'Content-Type': 'application/json; charset=utf-8'},
+            ),
+          ).called(1);
+          verifyNoMoreInteractions(mockApiProvider);
+        },
+      );
+
+      test(
+        'should return apiProvider request',
+        () async {
+          // arrange
+          final tasks = [
+            EscapeManualTaskRemoteModel(
+              id: 'id',
+              type: EscapeManualTaskType.contacts,
+              updatedAt: DateTime.now(),
+              isDone: Random().nextBool(),
+              isRemoved: Random().nextBool(),
+              description: 'description',
+              group: 'group',
+            ),
+            EscapeManualTaskRemoteModel(
+              id: 'id',
+              type: EscapeManualTaskType.contacts,
+              updatedAt: DateTime.now(),
+              isDone: Random().nextBool(),
+              isRemoved: Random().nextBool(),
+              description: 'description',
+              group: 'group',
+            ),
+          ];
+          final expected = tasks.map(
+            (e) => e.copyWith(
+              updatedAt: DateTime.utc(2023, 11, 13, 13, 58, 0),
+            ),
+          );
+          when(
+            () => mockApiProvider.request(
+              method: any(named: 'method'),
+              path: any(named: 'path'),
+              headers: any(named: 'headers'),
+              body: any(named: 'body'),
+            ),
+          ).thenAnswer(
+            (_) async => Response(
+              '',
+              201,
+              headers: {
+                'date': 'Wed, 13 Nov 2023 13:58:00 GMT',
+              },
+            ),
+          );
+
+          // act
+          final result = await sut.saveTasks(tasks);
+
+          // assert
+          expect(result, equals(expected));
+        },
+      );
+    });
   });
 }
 

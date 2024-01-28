@@ -5,6 +5,12 @@ import '../model/escape_manual_task.dart';
 abstract class IEscapeManualDatasource {
   /// Saves the task
   Future<EscapeManualTaskModel> saveTask(EscapeManualTaskModel task);
+
+  /// Update remote escape manual tasks in batch
+  /// Returns the updated tasks
+  Future<List<EscapeManualTaskModel>> saveTasks(
+    List<EscapeManualTaskModel> tasks,
+  );
 }
 
 abstract class IEscapeManualRemoteDatasource extends IEscapeManualDatasource {
@@ -16,6 +22,9 @@ abstract class IEscapeManualRemoteDatasource extends IEscapeManualDatasource {
 }
 
 abstract class IEscapeManualLocalDatasource extends IEscapeManualDatasource {
+  /// Retrieves the tasks not synced with the server from the local database
+  Future<Iterable<EscapeManualTaskModel>> getTasks();
+
   /// Retrieves the tasks not synced with the server from the local database
   /// and emits new data every time the local data changes
   Stream<Iterable<EscapeManualTaskModel>> fetchTasks();
