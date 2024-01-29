@@ -10,10 +10,8 @@ import workmanager
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
 
-    if let infoDictionary: [String: Any] = Bundle.main.infoDictionary {
-      if let clientID = infoDictionary["GeoApiKey"] {
-        GMSServices.provideAPIKey(clientID as! String)
-      }
+    if let clientID = Bundle.main.infoDictionary?["GeoApiKey"] {
+      GMSServices.provideAPIKey(clientID as! String)
     }
 
     GeneratedPluginRegistrant.register(with: self)
@@ -21,17 +19,15 @@ import workmanager
 
     WorkmanagerPlugin.setPluginRegistrantCallback { registry in
       // The following code will be called upon WorkmanagerPlugin's registration.
-      // Note: all of the app's plugins may not be required in this context ;
+      // All of the app's plugins may not be required in this context
       // instead of using GeneratedPluginRegistrant.register(with: registry),
       // you may want to register only specific plugins.
       GeneratedPluginRegistrant.register(with: registry)
     }
 
-    if let infoDictionary: [String: Any] = Bundle.main.infoDictionary {
-      if let taskIdentifiers = infoDictionary["BGTaskSchedulerPermittedIdentifiers"] {
-        for taskIdentifier in taskIdentifiers as! [String] {
-          WorkmanagerPlugin.registerTask(withIdentifier: taskIdentifier)
-        }
+    if let taskIdentifiers = Bundle.main.infoDictionary?["BGTaskSchedulerPermittedIdentifiers"] {
+      for taskIdentifier in taskIdentifiers as! [String] {
+        WorkmanagerPlugin.registerTask(withIdentifier: taskIdentifier)
       }
     }
 
