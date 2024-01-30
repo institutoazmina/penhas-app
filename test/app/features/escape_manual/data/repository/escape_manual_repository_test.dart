@@ -386,7 +386,7 @@ void main() {
       );
 
       test(
-        'should send tasks only pending tasks',
+        'should send only pending tasks',
         () async {
           // arrange
           final tasks = [
