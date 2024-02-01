@@ -162,6 +162,57 @@ void main() {
         verify(() => mockStorage.removeAll(keys)).called(1);
       },
     );
+
+    test(
+      'putAll should call storage.putAll',
+      () async {
+        // arrange
+        final values = <String, EscapeManualTaskModel>{
+          'first key': EscapeManualTaskLocalModel(
+            id: 'first key',
+            isDone: false,
+            isRemoved: false,
+            updatedAt: DateTime(2023, 11, 06, 18, 29, 33),
+          ),
+          'second key': EscapeManualTaskLocalModel(
+            id: 'second key',
+            isDone: false,
+            isRemoved: false,
+            updatedAt: DateTime(2023, 11, 06, 18, 29, 33),
+          ),
+        };
+        when(() => mockStorage.putAll(any<Map<String, String>>()))
+            .thenAnswer((_) => Future.value());
+
+        // act
+        await sut.putAll(values);
+
+        // assert
+        final verifier = verify(
+          () => mockStorage.putAll(captureAny<Map<String, String>>()),
+        )..called(1);
+
+        final captured = (verifier.captured.single as Map<String, String>)
+            .map((key, value) => MapEntry(key, jsonDecode(value)));
+
+        expect(captured, {
+          'first key': {
+            "id": "first key",
+            "type": "checkbox",
+            "isDone": false,
+            "isRemoved": false,
+            "updatedAt": "2023-11-06T18:29:33.000",
+          },
+          'second key': {
+            "id": "second key",
+            "type": "checkbox",
+            "isDone": false,
+            "isRemoved": false,
+            "updatedAt": "2023-11-06T18:29:33.000",
+          },
+        });
+      },
+    );
   });
 }
 

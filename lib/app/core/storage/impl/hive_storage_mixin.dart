@@ -17,6 +17,12 @@ mixin HiveStorage on IKeyValueStorage {
   }
 
   @override
+  Future<void> putAll<T>(Map<String, T> values) async {
+    final box = await this.box;
+    await box.putAll(values);
+  }
+
+  @override
   Future<void> remove(String key) async {
     final box = await this.box;
     await box.delete(key);

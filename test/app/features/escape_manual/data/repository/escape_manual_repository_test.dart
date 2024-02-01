@@ -356,6 +356,107 @@ void main() {
         },
       );
     });
+
+    group('sendPendingTasks', () {
+      test(
+        'should not send tasks if there are no pending tasks',
+        () async {
+          // arrange
+          when(() => mockLocalDatasource.getTasks()).thenAnswer(
+            (_) => Future.value([
+              EscapeManualTaskLocalModel(
+                id: 'id',
+                type: EscapeManualTaskType.contacts,
+                updatedAt: DateTime.now(),
+                isDone: true,
+                isRemoved: false,
+              ),
+            ]),
+          );
+
+          // act
+          final result = await sut.sendPendingTasks();
+
+          // assert
+          expect(result.isRight(), isTrue);
+          verify(() => mockLocalDatasource.getTasks()).called(1);
+          verifyNoMoreInteractions(mockLocalDatasource);
+          verifyNoMoreInteractions(mockRemoteDatasource);
+        },
+      );
+
+      test(
+        'should send only pending tasks',
+        () async {
+          // arrange
+          final tasks = [
+            EscapeManualTaskLocalModel(
+              id: 'id',
+              updatedAt: DateTime.now(),
+            ),
+            EscapeManualTaskLocalModel(
+              id: 'id2',
+            ),
+            EscapeManualTaskLocalModel(
+              id: 'id3',
+              updatedAt: DateTime.now(),
+            ),
+          ];
+          when(() => mockLocalDatasource.getTasks()).thenAnswer(
+            (_) => Future.value(tasks),
+          );
+          when(() => mockRemoteDatasource.saveTasks(any())).thenAnswer(
+            (invocation) async => invocation.positionalArguments[0],
+          );
+          when(() => mockLocalDatasource.saveTasks(any())).thenAnswer(
+            (invocation) async => invocation.positionalArguments[0],
+          );
+
+          // act
+          final result = await sut.sendPendingTasks();
+
+          // assert
+          expect(result.isRight(), isTrue);
+          verifyInOrder([
+            () => mockLocalDatasource.getTasks(),
+            () => mockRemoteDatasource.saveTasks([tasks[1]]),
+            () => mockLocalDatasource.saveTasks([tasks[1]]),
+          ]);
+          verifyNoMoreInteractions(mockLocalDatasource);
+          verifyNoMoreInteractions(mockRemoteDatasource);
+        },
+      );
+
+      test(
+        'should return failure when remote datasource saveTasks throws',
+        () async {
+          // arrange
+          final tasks = [
+            EscapeManualTaskLocalModel(
+              id: 'id',
+            ),
+          ];
+          when(() => mockLocalDatasource.getTasks()).thenAnswer(
+            (_) => Future.value(tasks),
+          );
+          when(() => mockRemoteDatasource.saveTasks(any()))
+              .thenThrow(Exception());
+
+          // act
+          final result = await sut.sendPendingTasks();
+
+          // assert
+          expect(result.isLeft(), isTrue);
+          expect(result.fold(id, (_) {}), isA<Failure>());
+          verifyInOrder([
+            () => mockLocalDatasource.getTasks(),
+            () => mockRemoteDatasource.saveTasks([tasks[0]]),
+          ]);
+          verifyNoMoreInteractions(mockLocalDatasource);
+          verifyNoMoreInteractions(mockRemoteDatasource);
+        },
+      );
+    });
   });
 }
 
