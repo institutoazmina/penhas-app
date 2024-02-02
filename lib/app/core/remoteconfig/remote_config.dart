@@ -1,13 +1,16 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:meta/meta.dart';
 
 import '../../shared/logger/log.dart';
 import 'i_remote_config.dart';
 
 class RemoteConfigService implements IRemoteConfigService {
-  RemoteConfigService({required FirebaseRemoteConfig remoteConfig})
-      : _remoteConfig = remoteConfig;
+  const RemoteConfigService();
 
-  final FirebaseRemoteConfig _remoteConfig;
+  static FirebaseRemoteConfig _remoteConfig = FirebaseRemoteConfig.instance;
+
+  @visibleForTesting
+  static set remoteConfig(FirebaseRemoteConfig value) => _remoteConfig = value;
 
   @override
   Future<void> initialize() async {
