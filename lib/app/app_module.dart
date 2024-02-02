@@ -143,7 +143,7 @@ class AppModule extends Module {
           (i) => const RemoteConfigService(),
         ),
         Bind.lazySingleton<IBackgroundTaskManager>(
-          (i) => BackgroundTaskManager(),
+          (i) => BackgroundTaskManager.instance,
         ),
       ];
 

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:workmanager/workmanager.dart';
 
@@ -13,6 +14,21 @@ class BackgroundTaskManager extends IBackgroundTaskManager {
 
   final Workmanager _workManager;
   final IBackgroundTaskRegistry _registry;
+
+  static IBackgroundTaskManager? _instance;
+
+  static IBackgroundTaskManager get instance =>
+      _instance ??= BackgroundTaskManager();
+
+  static set instance(IBackgroundTaskManager value) => _instance = value;
+
+  @override
+  void registerDispatcher(Function callbackDispatcher) {
+    _workManager.initialize(
+      callbackDispatcher,
+      isInDebugMode: kDebugMode,
+    );
+  }
 
   @override
   void schedule(String taskName) {

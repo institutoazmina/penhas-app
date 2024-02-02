@@ -8,6 +8,8 @@ typedef BackgroundTaskProvider = BackgroundTask Function();
 abstract class IBackgroundTaskManager {
   const IBackgroundTaskManager();
 
+  void registerDispatcher(Function callbackDispatcher);
+
   void schedule(String taskName);
 
   void runPendingTasks();
@@ -22,6 +24,7 @@ abstract class BackgroundTask {
 
 abstract class IBackgroundTaskRegistry {
   const IBackgroundTaskRegistry();
+
   TaskDefinition definitionByName(String taskName);
 }
 

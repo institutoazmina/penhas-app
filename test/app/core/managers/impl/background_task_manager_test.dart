@@ -6,6 +6,7 @@ import 'package:penhas/app/core/managers/impl/background_task_manager.dart';
 import 'package:workmanager/workmanager.dart';
 
 import '../../../../utils/aditional_bind_module.dart';
+import '../../../../utils/test_utils.dart';
 
 typedef BackgroundTaskHandler = Future<bool> Function(
     String taskName, Map<String, dynamic>? inputData);
@@ -38,8 +39,30 @@ void main() {
       taskHandler = null;
     });
 
+    test('registerDispatcher should initialize workManager', () {
+      // arrange
+      final mockDispatcher = () {};
+      when(
+        () => mockWorkManager.initialize(
+          any(),
+          isInDebugMode: any(named: 'isInDebugMode'),
+        ),
+      ).thenAnswer((_) => Future.value());
+
+      // act
+      sut.registerDispatcher(mockDispatcher);
+
+      // assert
+      verify(
+        () => mockWorkManager.initialize(
+          mockDispatcher,
+          isInDebugMode: any(named: 'isInDebugMode'),
+        ),
+      ).called(1);
+    });
+
     test(
-      'should schedule task',
+      'schedule should schedule task',
       () async {
         // arrange
         const taskName = 'taskName';
@@ -70,7 +93,7 @@ void main() {
     );
 
     test(
-      'should run pending tasks',
+      'runPendingTasks should run pending tasks',
       () async {
         // arrange
         const taskName = 'taskName';
@@ -115,6 +138,38 @@ void main() {
 
         // assert
         expect(actual, isFalse);
+      },
+    );
+  });
+
+  group(BackgroundTaskRegistry, () {
+    late IBackgroundTaskRegistry sut;
+
+    setUp(() {
+      sut = BackgroundTaskRegistry();
+    });
+
+    parameterizedGroup<List<Bind>>(
+      'definitionByName should return task definition for task',
+      () => {},
+      (name, item) {
+        test(
+          name,
+          () {
+            // arrange
+            final taskName = name;
+            Modular.init(AditionalBindModule(binds: item));
+
+            // act
+            final actual = sut.definitionByName(taskName);
+            actual.dependencies.forEach((element) {
+              Modular.bindModule(element);
+            });
+
+            // assert
+            expect(actual.taskProvider(), isNotNull);
+          },
+        );
       },
     );
   });
