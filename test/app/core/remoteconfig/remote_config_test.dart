@@ -3,18 +3,19 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/remoteconfig/remote_config.dart';
 
-class MockFirebaseRemoteConfig extends Mock implements FirebaseRemoteConfig {}
-
-class MyRemoteConfigSettings extends Fake implements RemoteConfigSettings {}
-
 void main() {
-  late MockFirebaseRemoteConfig remoteConfig;
+  late _MockFirebaseRemoteConfig remoteConfig;
   late RemoteConfigService sut;
 
+  setUpAll(() {
+    registerFallbackValue(_FakeRemoteConfigSettings());
+  });
+
   setUp(() {
-    remoteConfig = MockFirebaseRemoteConfig();
-    sut = RemoteConfigService(remoteConfig: remoteConfig);
-    registerFallbackValue(MyRemoteConfigSettings());
+    remoteConfig = _MockFirebaseRemoteConfig();
+    RemoteConfigService.remoteConfig = remoteConfig;
+
+    sut = const RemoteConfigService();
   });
 
   group(RemoteConfigService, () {
@@ -82,3 +83,7 @@ void main() {
     });
   });
 }
+
+class _MockFirebaseRemoteConfig extends Mock implements FirebaseRemoteConfig {}
+
+class _FakeRemoteConfigSettings extends Fake implements RemoteConfigSettings {}
