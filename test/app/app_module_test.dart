@@ -49,7 +49,7 @@ void main() {
     );
 
     test(
-      'IBackgroundTaskManager should be RemoteConfigService instance',
+      'IBackgroundTaskManager should be BackgroundTaskManager instance',
       () {
         // act
         final instance = Modular.get<IBackgroundTaskManager>();
