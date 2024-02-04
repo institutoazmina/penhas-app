@@ -1063,14 +1063,14 @@ packages:
     source: hosted
     version: "2.0.11"
   path_provider_android:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider_android
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.22"
   path_provider_ios:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider_ios
       url: "https://pub.dartlang.org"
@@ -1217,7 +1217,7 @@ packages:
     source: hosted
     version: "2.0.17"
   shared_preferences_android:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: shared_preferences_android
       url: "https://pub.dartlang.org"
@@ -1230,6 +1230,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
+  shared_preferences_ios:
+    dependency: "direct main"
+    description:
+      name: shared_preferences_ios
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.1"
   shared_preferences_linux:
     dependency: transitive
     description:
@@ -1643,6 +1650,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.5.2"
+  workmanager:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: main
+      resolved-ref: "789793533e4d44e6cd8aaf92a422b494a49f2fbf"
+      url: "https://github.com/pedrox-hs/flutter_workmanager.git"
+    source: git
+    version: "0.5.2"
   xdg_directories:
     dependency: transitive
     description:
