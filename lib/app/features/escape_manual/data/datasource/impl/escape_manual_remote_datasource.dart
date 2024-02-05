@@ -4,6 +4,7 @@ import '../../../../../core/extension/date_time.dart';
 import '../../../../../core/extension/iterable.dart';
 import '../../../../../core/network/api_client.dart';
 import '../../../../../core/storage/object_store.dart';
+import '../../../../../core/types/json.dart';
 import '../../../../../shared/logger/log.dart';
 import '../../../../appstate/data/model/quiz_session_model.dart';
 import '../../model/escape_manual_remote.dart';
@@ -15,12 +16,12 @@ export '../escape_manual_datasource.dart' show IEscapeManualRemoteDatasource;
 class EscapeManualRemoteDatasource implements IEscapeManualRemoteDatasource {
   EscapeManualRemoteDatasource({
     required IApiProvider apiProvider,
-    required IObjectStore<EscapeManualRemoteModel> cacheStorage,
+    required IObjectStore<JsonObject> cacheStorage,
   })  : _apiProvider = apiProvider,
         _cacheStorage = cacheStorage;
 
   final IApiProvider _apiProvider;
-  final IObjectStore<EscapeManualRemoteModel> _cacheStorage;
+  final IObjectStore<JsonObject> _cacheStorage;
 
   @override
   Future<QuizSessionModel> start(String sessionId) async {
@@ -35,7 +36,7 @@ class EscapeManualRemoteDatasource implements IEscapeManualRemoteDatasource {
   @override
   Future<EscapeManualRemoteModel> fetch() async {
     final cached = await _cacheStorage.retrieve();
-    final lastChangeAt = cached?.lastModifiedAt.secondsSinceEpoch ?? 0;
+    final lastChangeAt = cached?['consultado_em'] ?? 0;
 
     try {
       final response = await _apiProvider.get(
@@ -43,20 +44,20 @@ class EscapeManualRemoteDatasource implements IEscapeManualRemoteDatasource {
         parameters: {
           'modificado_apos': '$lastChangeAt',
         },
-      ).then(jsonDecode);
+      );
 
       final result = await _incrementalCache(
         cached: cached,
-        newer: EscapeManualRemoteModel.fromJson(response),
+        newer: jsonDecode(response),
       );
 
       await _cacheStorage.save(result);
 
-      return result;
+      return EscapeManualRemoteModel.fromJson(result);
     } catch (e, stack) {
       if (cached == null) rethrow;
       logError(e, stack);
-      return cached;
+      return EscapeManualRemoteModel.fromJson(cached);
     }
   }
 
@@ -98,28 +99,31 @@ class EscapeManualRemoteDatasource implements IEscapeManualRemoteDatasource {
         .toList();
   }
 
-  Future<EscapeManualRemoteModel> _incrementalCache({
-    required EscapeManualRemoteModel? cached,
-    required EscapeManualRemoteModel newer,
+  Future<JsonObject> _incrementalCache({
+    required JsonObject? cached,
+    required JsonObject newer,
   }) async {
     if (cached == null) return newer;
 
-    final removedTasks = newer.removedTasks;
-    final changedTasks = Map<String, EscapeManualTaskRemoteModel>.fromIterable(
-      newer.tasks,
-      key: (e) => '${e.id}',
+    final removedTasks =
+        (newer['tarefas_removidas'] as JsonList).map((e) => '$e');
+    final changedTasks = Map<String, JsonObject>.fromIterable(
+      newer['tarefas'] as JsonList,
+      key: (e) => '${(e as JsonObject)['id']}',
     );
 
-    final updatedTasks = cached.tasks
-        .where((el) => !removedTasks.contains(el.id))
-        .map((el) => changedTasks.remove(el.id) ?? el)
-        .whereType<EscapeManualTaskRemoteModel>();
+    final updatedTasks = (cached['tarefas'] as JsonList)
+        .cast<JsonObject>()
+        .where((el) => !removedTasks.contains('${el['id']}'))
+        .map((el) => changedTasks.remove('${el['id']}') ?? el)
+        .whereType<JsonObject>();
 
-    return cached.copyWith(
-      lastModifiedAt: newer.lastModifiedAt,
-      assistant: newer.assistant,
-      tasks: updatedTasks + changedTasks.values,
-    );
+    return {
+      ...cached,
+      'consultado_em': newer['consultado_em'],
+      'mf_assistant': newer['mf_assistant'],
+      'tarefas': updatedTasks + changedTasks.values,
+    };
   }
 }
 
