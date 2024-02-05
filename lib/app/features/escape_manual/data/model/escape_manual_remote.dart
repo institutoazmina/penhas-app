@@ -3,7 +3,6 @@ import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../core/extension/json_serializer.dart';
 import '../../../appstate/data/model/quiz_session_model.dart';
-import 'contact.dart';
 import 'escape_manual_mapper.dart'
     show readUserInputValue, userInputValueFromJson;
 import 'escape_manual_task.dart';
@@ -93,18 +92,12 @@ class EscapeManualTaskRemoteModel extends EscapeManualTaskModel {
     required this.type,
     required this.group,
     this.title,
-    required this.description,
+    this.description = '',
     this.isDone = false,
     this.value,
     required this.updatedAt,
     this.isRemoved = false,
-  })  : assert(type != EscapeManualTaskType.unknown),
-        assert(
-          type == EscapeManualTaskType.contacts
-              ? value is List<ContactEntity>?
-              : true,
-          'Invalid value: $value', // coverage:ignore-line
-        );
+  }) : super(type: type, value: value);
 
   factory EscapeManualTaskRemoteModel.fromJson(Map<String, dynamic> json) =>
       _$EscapeManualTaskRemoteModelFromJson(json);
@@ -114,7 +107,10 @@ class EscapeManualTaskRemoteModel extends EscapeManualTaskModel {
   final String id;
 
   @override
-  @JsonKey(name: 'tipo')
+  @JsonKey(
+    name: 'tipo',
+    unknownEnumValue: EscapeManualTaskType.unknown,
+  )
   final EscapeManualTaskType type;
 
   @JsonKey(name: 'agrupador')

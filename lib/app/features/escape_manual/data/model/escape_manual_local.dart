@@ -1,7 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../core/extension/json_serializer.dart';
-import '../../domain/entity/escape_manual.dart';
 import 'escape_manual_mapper.dart'
     show readUserInputValue, userInputValueFromJson;
 import 'escape_manual_task.dart';
@@ -21,12 +20,7 @@ class EscapeManualTaskLocalModel extends EscapeManualTaskModel {
     this.isDone = false,
     this.isRemoved = false,
     this.updatedAt,
-  })  : assert(type != EscapeManualTaskType.unknown),
-        assert(
-          type != EscapeManualTaskType.contacts ||
-              value is List<ContactEntity>?,
-          'Item $id with invalid value: $value', // coverage:ignore-line
-        );
+  }) : super(type: type, value: value);
 
   factory EscapeManualTaskLocalModel.fromJson(Map<String, dynamic> map) =>
       _$EscapeManualTaskLocalModelFromJson(map);

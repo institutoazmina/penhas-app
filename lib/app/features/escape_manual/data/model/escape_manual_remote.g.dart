@@ -71,11 +71,12 @@ EscapeManualTaskRemoteModel _$EscapeManualTaskRemoteModelFromJson(
         Map<String, dynamic> json) =>
     EscapeManualTaskRemoteModel(
       id: FromJson.parseAsString(json['id']),
-      type: $enumDecode(_$EscapeManualTaskTypeEnumMap, json['tipo']),
+      type: $enumDecode(_$EscapeManualTaskTypeEnumMap, json['tipo'],
+          unknownValue: EscapeManualTaskType.unknown),
       group: json['agrupador'] as String,
       title: const JsonEmptyStringToNullConverter()
           .fromJson(json['titulo'] as String?),
-      description: json['descricao'] as String,
+      description: json['descricao'] as String? ?? '',
       isDone: json['checkbox_feito'] == null
           ? false
           : const JsonBoolConverter().fromJson(json['checkbox_feito']),

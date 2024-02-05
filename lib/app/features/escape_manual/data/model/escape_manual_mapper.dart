@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 
+import '../../../../core/extension/iterable.dart';
 import '../../../../shared/logger/log.dart';
 import '../../domain/entity/escape_manual.dart';
 import 'escape_manual_local.dart';
@@ -38,7 +39,7 @@ extension EscapeManualTasksSectionMapper
             (el) => EscapeManualTasksSectionEntity(
               title: el.key,
               tasks: el.value
-                  .map<EscapeManualTaskEntity>((el) => el.asEntity)
+                  .mapNotNull<EscapeManualTaskEntity>((el) => el.asEntity)
                   .toList(),
             ),
           )
@@ -47,22 +48,26 @@ extension EscapeManualTasksSectionMapper
 
 extension EscapeManualTaskRemoteMapper on EscapeManualTaskRemoteModel {
   /// Maps a [EscapeManualTaskRemoteModel] to a [EscapeManualTaskEntity].
-  EscapeManualTaskEntity get asEntity {
-    if (type == EscapeManualTaskType.contacts) {
-      return EscapeManualContactsTaskEntity(
-        id: id,
-        description: description,
-        isDone: isDone,
-        value: value,
-      );
-    }
+  EscapeManualTaskEntity? get asEntity {
+    switch (type) {
+      case EscapeManualTaskType.normal:
+        return EscapeManualDefaultTaskEntity(
+          id: id,
+          description: description,
+          isDone: isDone,
+        );
 
-    assert(type != EscapeManualTaskType.unknown);
-    return EscapeManualDefaultTaskEntity(
-      id: id,
-      description: description,
-      isDone: isDone,
-    );
+      case EscapeManualTaskType.contacts:
+        return EscapeManualContactsTaskEntity(
+          id: id,
+          description: description,
+          isDone: isDone,
+          value: value,
+        );
+
+      case EscapeManualTaskType.unknown:
+        return null; // coverage:ignore-line
+    }
   }
 }
 
