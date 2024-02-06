@@ -6,6 +6,7 @@ import 'escape_manual_task_type.dart';
 abstract class EscapeManualTaskModel extends Equatable {
   /// Creates a [EscapeManualTaskModel] with the given [type] and [value].
   /// The constructor is just to assert the type of [value] based on the [type].
+  /// coverage:ignore-start
   const EscapeManualTaskModel({
     required EscapeManualTaskType type,
     dynamic value,
@@ -13,9 +14,10 @@ abstract class EscapeManualTaskModel extends Equatable {
           type == EscapeManualTaskType.contacts
               ? value is List<ContactEntity>?
               : true,
-          'Invalid value: $value for type $type', // coverage:ignore-line
+          'Invalid value: $value for type $type',
         ),
         assert(type != EscapeManualTaskType.unknown);
+  // coverage:ignore-end
 
   String get id;
 

@@ -65,8 +65,10 @@ extension EscapeManualTaskRemoteMapper on EscapeManualTaskRemoteModel {
           value: value,
         );
 
+      // coverage:ignore-start
       case EscapeManualTaskType.unknown:
-        return null; // coverage:ignore-line
+        return null;
+      // coverage:ignore-end
     }
   }
 }
