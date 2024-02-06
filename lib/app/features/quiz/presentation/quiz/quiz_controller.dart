@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../core/error/failures.dart';
@@ -29,7 +30,7 @@ abstract class _QuizControllerBase with Store {
     this._appStateUseCase,
     this._repository,
   ) {
-    final reversedCurrent = _quizSession.currentMessage!.reversed.toList();
+    final reversedCurrent = _quizSession.currentMessage.reversed.toList();
     _sessionId = _quizSession.sessionId;
 
     messages.addAll(reversedCurrent);
@@ -166,7 +167,7 @@ abstract class _QuizControllerBase with Store {
   }
 
   void _parseUserReply(List<QuizMessageEntity> messages) {
-    userReplyMessage = messages.firstWhere(
+    userReplyMessage = messages.firstWhereOrNull(
       (e) => e.type != QuizMessageType.displayText,
     );
   }
@@ -181,21 +182,24 @@ abstract class _QuizControllerBase with Store {
   }
 
   void _parseState(AppStateEntity state) {
-    if (state.quizSession?.isFinished ?? true) {
+    final quizSession = state.quizSession;
+    if (quizSession == null) return;
+
+    if (quizSession.isFinished) {
       _updateAppStates(
         state,
         (_) => AppNavigator.pushAndRemoveUntil(
-          AppRoute(state.quizSession?.endScreen ?? '/'),
+          AppRoute(quizSession.endScreen ?? '/'),
           removeUntil: '/',
         ),
       );
       return;
     }
 
-    _sessionId = state.quizSession!.sessionId;
+    _sessionId = quizSession.sessionId;
 
-    if (state.quizSession?.currentMessage != null) {
-      messages.insertAll(0, state.quizSession!.currentMessage!.reversed);
+    if (quizSession.currentMessage.isNotEmpty) {
+      messages.insertAll(0, quizSession.currentMessage.reversed);
     }
 
     _parseUserReply(messages);

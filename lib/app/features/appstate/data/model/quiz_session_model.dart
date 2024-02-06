@@ -3,7 +3,7 @@ import '../../domain/entities/app_state_entity.dart';
 class QuizSessionModel extends QuizSessionEntity {
   const QuizSessionModel({
     required String sessionId,
-    List<QuizMessageEntity>? currentMessage,
+    List<QuizMessageEntity> currentMessage = const [],
     bool isFinished = false,
     String? endScreen,
   }) : super(
@@ -28,8 +28,8 @@ class QuizSessionModel extends QuizSessionEntity {
     );
   }
 
-  static List<QuizMessageModel>? _parseQuizMessage(List<dynamic> data) {
-    if (data.isEmpty) return null;
+  static List<QuizMessageModel> _parseQuizMessage(List<dynamic> data) {
+    if (data.isEmpty) return [];
 
     return data
         .map((e) => e as Map<String, dynamic>)
@@ -67,7 +67,7 @@ class QuizSessionModel extends QuizSessionEntity {
   Map<String, Object?> toJson() => {
         'session_id': sessionId,
         'current_msgs': currentMessage
-            ?.whereType<QuizMessageModel>()
+            .whereType<QuizMessageModel>()
             .map((e) => e.toJson())
             .toList(),
         'finished': isFinished ? 1 : 0,
