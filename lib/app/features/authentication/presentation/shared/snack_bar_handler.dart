@@ -6,17 +6,29 @@ mixin SnackBarHandler {
   void showSnackBar({
     required GlobalKey<ScaffoldState> scaffoldKey,
     required String? message,
-    Duration? duration,
+    Duration duration = _defaultSnackBarDuration,
   }) {
-    if (message == null || message.isEmpty) {
-      return;
-    }
+    assert(message != null && message.isNotEmpty);
+    if (message == null || message.isEmpty) return;
 
-    scaffoldKey.currentState?.showSnackBar(
+    scaffoldKey.messenger?.showSnackBar(
       SnackBar(
         content: Text(message),
-        duration: duration ?? _defaultSnackBarDuration,
+        duration: duration,
       ),
     );
+  }
+}
+
+extension ScaffoldX on GlobalKey<ScaffoldState> {
+  ScaffoldMessengerState? get messenger {
+    final context = currentContext;
+    assert(context != null);
+    if (context == null) return null;
+    return ScaffoldMessenger.of(context);
+  }
+
+  void hideCurrentSnackBar() {
+    messenger?.hideCurrentSnackBar();
   }
 }
