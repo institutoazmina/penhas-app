@@ -8,6 +8,8 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../core/error/failures.dart';
 import '../../../core/extension/mobx.dart';
+import '../../../core/managers/background_task_manager.dart';
+import '../../../shared/logger/log.dart';
 import '../../appstate/domain/entities/app_state_entity.dart';
 import '../../authentication/presentation/shared/map_failure_message.dart';
 import '../../authentication/presentation/shared/page_progress_indicator.dart';
@@ -17,6 +19,7 @@ import '../domain/get_escape_manual.dart';
 import '../domain/start_escape_manual.dart';
 import '../domain/update_escape_manual_task.dart';
 import 'escape_manual_state.dart';
+import 'send_pending_escape_manual_task.dart';
 
 part 'escape_manual_controller.g.dart';
 
@@ -31,10 +34,12 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
     required StartEscapeManualUseCase startEscapeManual,
     required UpdateEscapeManualTaskUseCase updateTask,
     required DeleteEscapeManualTaskUseCase deleteTask,
+    required IBackgroundTaskManager backgroundTaskManager,
   })  : _getEscapeManual = getEscapeManual,
         _startEscapeManual = startEscapeManual,
         _updateTask = updateTask,
-        _deleteTask = deleteTask;
+        _deleteTask = deleteTask,
+        _backgroundTaskManager = backgroundTaskManager;
 
   @observable
   EscapeManualState state = const EscapeManualState.initial();
@@ -49,6 +54,7 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
   final StartEscapeManualUseCase _startEscapeManual;
   final UpdateEscapeManualTaskUseCase _updateTask;
   final DeleteEscapeManualTaskUseCase _deleteTask;
+  final IBackgroundTaskManager _backgroundTaskManager;
 
   @observable
   ObservableFuture? _pageProgress;
@@ -94,24 +100,14 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> updateTask(EscapeManualTaskEntity task) async {
-    final ObservableFuture<Either<Failure, void>> updateProgress;
-    _pageProgress = updateProgress = ObservableFuture(
-      _updateTask(task),
-    );
-
-    final result = await updateProgress;
-    result.fold(_handleErrorAsReaction, (_) {});
+    final result = await _updateTask(task);
+    result.fold(_onSaveTaskFailed, (_) {});
   }
 
   @action
   Future<void> deleteTask(EscapeManualTaskEntity task) async {
-    final ObservableFuture<Either<Failure, void>> deleteProgress;
-    _pageProgress = deleteProgress = ObservableFuture(
-      _deleteTask(task),
-    );
-
-    final result = await deleteProgress;
-    result.fold(_handleErrorAsReaction, (_) {});
+    final result = await _deleteTask(task);
+    result.fold(_onSaveTaskFailed, (_) {});
   }
 
   Future<void> editTask(EscapeManualEditableTaskEntity task) async {
@@ -162,5 +158,10 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
   void _handleErrorAsReaction(failure) {
     final errorMessage = mapFailureMessage(failure);
     _reaction = EscapeManualReaction.showSnackBar(errorMessage);
+  }
+
+  void _onSaveTaskFailed(e) {
+    logError(e);
+    _backgroundTaskManager.schedule(sendPendingEscapeManualTask);
   }
 }

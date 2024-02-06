@@ -1,6 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:workmanager/workmanager.dart';
 
+import '../../../features/escape_manual/escape_manual_module.dart';
+import '../../../features/escape_manual/presentation/send_pending_escape_manual_task.dart';
 import '../../../shared/logger/log.dart';
 import '../background_task_manager.dart';
 
@@ -13,6 +16,21 @@ class BackgroundTaskManager extends IBackgroundTaskManager {
 
   final Workmanager _workManager;
   final IBackgroundTaskRegistry _registry;
+
+  static IBackgroundTaskManager? _instance;
+
+  static IBackgroundTaskManager get instance =>
+      _instance ??= BackgroundTaskManager();
+
+  static set instance(IBackgroundTaskManager value) => _instance = value;
+
+  @override
+  void registerDispatcher(Function callbackDispatcher) {
+    _workManager.initialize(
+      callbackDispatcher,
+      isInDebugMode: kDebugMode,
+    );
+  }
 
   @override
   void schedule(String taskName) {
@@ -59,6 +77,17 @@ class BackgroundTaskRegistry extends IBackgroundTaskRegistry {
 
   @override
   TaskDefinition definitionByName(String taskName) {
+    if (taskName == sendPendingEscapeManualTask) {
+      return TaskDefinition(
+        taskProvider: () => SendPendingEscapeManualTask(
+          Modular.get(),
+        ),
+        dependencies: [
+          EscapeManualModule(),
+        ],
+      );
+    }
+
     throw UnimplementedError(
       'Task $taskName not implemented',
     );
