@@ -11,10 +11,10 @@ abstract class EscapeManualTaskModel extends Equatable {
     required EscapeManualTaskType type,
     dynamic value,
   })  : assert(
-          type == EscapeManualTaskType.contacts
-              ? value is List<ContactEntity>?
-              : true,
-          'Invalid value: $value for type $type',
+          type != EscapeManualTaskType.contacts ||
+              value is List<ContactEntity>?,
+          'The `value` must be a `List<ContactEntity>` '
+          'when the type is `contacts`',
         ),
         assert(type != EscapeManualTaskType.unknown);
   // coverage:ignore-end
