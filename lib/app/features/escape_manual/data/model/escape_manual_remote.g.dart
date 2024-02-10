@@ -84,6 +84,7 @@ EscapeManualTaskRemoteModel _$EscapeManualTaskRemoteModelFromJson(
           readUserInputValue(json, 'campo_livre') as Map<String, dynamic>),
       updatedAt: const JsonSecondsFromEpochConverter()
           .fromJson(json['atualizado_em'] as int),
+      rawType: readRawType(json, 'rawType') as String?,
     );
 
 Map<String, dynamic> _$EscapeManualTaskRemoteModelToJson(
@@ -91,7 +92,6 @@ Map<String, dynamic> _$EscapeManualTaskRemoteModelToJson(
   final val = <String, dynamic>{
     'id': instance.id,
     'tipo': _$EscapeManualTaskTypeEnumMap[instance.type]!,
-    'agrupador': instance.group,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -100,6 +100,8 @@ Map<String, dynamic> _$EscapeManualTaskRemoteModelToJson(
     }
   }
 
+  writeNotNull('rawType', instance.rawType);
+  val['agrupador'] = instance.group;
   writeNotNull(
       'titulo', const JsonEmptyStringToNullConverter().toJson(instance.title));
   val['descricao'] = instance.description;

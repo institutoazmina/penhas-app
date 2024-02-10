@@ -67,6 +67,7 @@ extension EscapeManualTaskRemoteMapper on EscapeManualTaskRemoteModel {
 
       // coverage:ignore-start
       case EscapeManualTaskType.unknown:
+        logError('Invalid type "$rawType" for task "$id"');
         return null;
       // coverage:ignore-end
     }
@@ -101,6 +102,9 @@ extension ContactEntityMapper on ContactEntity {
         phone: phone,
       );
 }
+
+String? readRawType(Map map, String key) =>
+    (map[key] ?? map['tipo']) as String?;
 
 Map<String, dynamic> readUserInputValue(Map map, String key) =>
     <String, dynamic>{

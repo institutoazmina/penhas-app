@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 import '../../../../core/extension/json_serializer.dart';
 import '../../../appstate/data/model/quiz_session_model.dart';
 import 'escape_manual_mapper.dart'
-    show readUserInputValue, userInputValueFromJson;
+    show readRawType, readUserInputValue, userInputValueFromJson;
 import 'escape_manual_task.dart';
 import 'escape_manual_task_type.dart';
 
@@ -97,6 +97,7 @@ class EscapeManualTaskRemoteModel extends EscapeManualTaskModel {
     this.value,
     required this.updatedAt,
     this.isRemoved = false,
+    this.rawType,
   }) : super(type: type, value: value);
 
   factory EscapeManualTaskRemoteModel.fromJson(Map<String, dynamic> json) =>
@@ -112,6 +113,9 @@ class EscapeManualTaskRemoteModel extends EscapeManualTaskModel {
     unknownEnumValue: EscapeManualTaskType.unknown,
   )
   final EscapeManualTaskType type;
+
+  @JsonKey(readValue: readRawType)
+  final String? rawType;
 
   @JsonKey(name: 'agrupador')
   final String group;
@@ -172,5 +176,6 @@ class EscapeManualTaskRemoteModel extends EscapeManualTaskModel {
         isDone: isDone ?? this.isDone,
         isRemoved: isRemoved ?? this.isRemoved,
         updatedAt: updatedAt ?? this.updatedAt,
+        rawType: rawType,
       );
 }
