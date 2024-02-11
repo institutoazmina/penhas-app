@@ -5,12 +5,14 @@ import '../../../../core/managers/location_services.dart';
 import '../../../../core/network/api_client.dart';
 import '../../../../core/network/api_server_configure.dart';
 import '../../../../core/network/network_info.dart';
+import '../../../../shared/widgets/dialog_route.dart';
 import '../../../appstate/domain/usecases/app_state_usecase.dart';
 import '../../data/datasources/quiz_data_source.dart';
 import '../../data/repositories/quiz_repository.dart';
 import '../../domain/repositories/i_quiz_repository.dart';
 import '../../domain/start_quiz.dart';
 import '../quiz_start/quiz_start_controller.dart';
+import '../quiz_start/quiz_start_page.dart';
 import '../tutorial/stealth_mode_tutorial_page_controller.dart';
 import 'quiz_controller.dart';
 import 'quiz_page.dart';
@@ -62,5 +64,10 @@ class QuizModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute(Modular.initialRoute, child: (_, args) => const QuizPage()),
+        ChildRoute(
+          '/start',
+          child: (_, args) => const QuizStartPage(),
+          routeGenerator: dialogRouteGenerator,
+        ),
       ];
 }
