@@ -1,9 +1,11 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
+import 'package:penhas/app/features/appstate/data/model/quiz_session_model.dart';
 import 'package:penhas/app/features/quiz/data/datasources/quiz_data_source.dart';
 import 'package:penhas/app/features/quiz/data/repositories/quiz_repository.dart';
 import 'package:penhas/app/features/quiz/domain/entities/quiz_request_entity.dart';
@@ -15,9 +17,10 @@ class MockNetworkInfo extends Mock implements INetworkInfo {}
 class MockQuizDataSource extends Mock implements IQuizDataSource {}
 
 void main() {
-  late INetworkInfo networkInfo;
-  late IQuizDataSource dataSource;
   late QuizRepository quizRepository;
+
+  late IQuizDataSource dataSource;
+  late INetworkInfo networkInfo;
   late QuizRequestEntity quizRequest;
   late Map<String, dynamic> jsonData;
 
@@ -139,5 +142,57 @@ void main() {
         expect(received.fold((l) => l, (r) => r), ServerFailure());
       },
     );
+
+    group('start', () {
+      test(
+        'should call datasource start',
+        () async {
+          // arrange
+          const quizSession = QuizSessionModel(
+            sessionId: 'session_id',
+          );
+          when(() => dataSource.start(any()))
+              .thenAnswer((_) async => quizSession);
+
+          // act
+          await quizRepository.start('session_id');
+
+          // assert
+          verify(() => dataSource.start('session_id')).called(1);
+        },
+      );
+
+      test(
+        'should return datasource start',
+        () async {
+          // arrange
+          const quizSession = QuizSessionModel(
+            sessionId: 'session_id',
+          );
+          when(() => dataSource.start(any()))
+              .thenAnswer((_) async => quizSession);
+
+          // act
+          final result = await quizRepository.start('session_id');
+
+          // assert
+          expect(result, right(quizSession));
+        },
+      );
+
+      test(
+        'should return failure when datasource start throws',
+        () async {
+          // arrange
+          when(() => dataSource.start(any())).thenThrow(Exception());
+
+          // act
+          final result = await quizRepository.start('session_id');
+
+          // assert
+          expect(result.isLeft(), isTrue);
+        },
+      );
+    });
   });
 }
