@@ -2,8 +2,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
+import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
+import 'package:penhas/app/features/appstate/data/model/quiz_session_model.dart';
 import 'package:penhas/app/features/quiz/data/datasources/quiz_data_source.dart';
 import 'package:penhas/app/features/quiz/domain/entities/quiz_request_entity.dart';
 
@@ -13,9 +15,13 @@ class MockHttpClient extends Mock implements http.Client {}
 
 class MockApiServerConfigure extends Mock implements IApiServerConfigure {}
 
+class _MockApiProvider extends Mock implements IApiProvider {}
+
 void main() {
-  late http.Client apiClient;
   late IQuizDataSource dataSource;
+
+  late IApiProvider mockApiProvider;
+  late http.Client apiClient;
   late QuizRequestEntity quizRequest;
   late IApiServerConfigure serverConfigure;
   late String bodyContent;
@@ -23,11 +29,13 @@ void main() {
   const sessionToken = 'my_really.long.JWT';
 
   setUp(() {
+    mockApiProvider = _MockApiProvider();
     apiClient = MockHttpClient();
     serverConfigure = MockApiServerConfigure();
     serverEndpoint = Uri.https('api.anyserver.io', '/');
 
     dataSource = QuizDataSource(
+      apiProvider: mockApiProvider,
       apiClient: apiClient,
       serverConfiguration: serverConfigure,
     );
@@ -170,6 +178,78 @@ void main() {
       expect(
         () async => await sut(quiz: quizRequest),
         throwsA(isA<Exception>()),
+      );
+    });
+
+    group('start', () {
+      test(
+        'should call apiProvider post',
+        () async {
+          // arrange
+          final response = JsonUtil.getStringSync(
+            from: 'quiz/quiz_start_response.json',
+          );
+          when(
+            () => mockApiProvider.post(
+              path: any(named: 'path'),
+              parameters: any(named: 'parameters'),
+            ),
+          ).thenAnswer((_) async => response);
+
+          // act
+          await dataSource.start('quiz_session_id');
+
+          // assert
+          verify(
+            () => mockApiProvider.post(
+              path: '/me/quiz',
+              parameters: {'session_id': 'quiz_session_id'},
+            ),
+          ).called(1);
+          verifyNoMoreInteractions(mockApiProvider);
+        },
+      );
+
+      test(
+        'should return apiProvider post',
+        () async {
+          // arrange
+          final response = JsonUtil.getStringSync(
+            from: 'quiz/quiz_start_response.json',
+          );
+          const expectedQuiz = QuizSessionModel(sessionId: 'session_id');
+          when(
+            () => mockApiProvider.post(
+              path: any(named: 'path'),
+              parameters: any(named: 'parameters'),
+            ),
+          ).thenAnswer((_) async => response);
+
+          // act
+          final result = await dataSource.start('quiz_session_id');
+
+          // assert
+          expect(result, expectedQuiz);
+        },
+      );
+
+      test(
+        'should throws a exception when apiProvider post throws',
+        () async {
+          // arrange
+          when(
+            () => mockApiProvider.post(
+              path: any(named: 'path'),
+              parameters: any(named: 'parameters'),
+            ),
+          ).thenThrow(Exception());
+
+          // act // assert
+          expectLater(
+            () async => dataSource.start('quiz_session_id'),
+            throwsA(isA<Exception>()),
+          );
+        },
       );
     });
   });

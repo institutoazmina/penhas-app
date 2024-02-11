@@ -2,6 +2,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../../core/managers/location_services.dart';
+import '../../../../core/network/api_client.dart';
 import '../../../../core/network/api_server_configure.dart';
 import '../../../../core/network/network_info.dart';
 import '../../../appstate/domain/usecases/app_state_usecase.dart';
@@ -30,6 +31,7 @@ class QuizModule extends Module {
         ),
         Bind.factory<IQuizDataSource>(
           (i) => QuizDataSource(
+            apiProvider: i.get<IApiProvider>(),
             apiClient: i.get<http.Client>(),
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
