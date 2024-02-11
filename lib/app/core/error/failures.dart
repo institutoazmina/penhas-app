@@ -39,6 +39,8 @@ class AudioDownloadFailure extends Failure {}
 
 class FileSystemFailure extends Failure {}
 
+class InvalidArgumentsFailure extends Failure {}
+
 class GpsFailure extends Failure {
   GpsFailure(this.message);
 

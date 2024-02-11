@@ -9,6 +9,7 @@ import '../../../appstate/domain/usecases/app_state_usecase.dart';
 import '../../data/datasources/quiz_data_source.dart';
 import '../../data/repositories/quiz_repository.dart';
 import '../../domain/repositories/i_quiz_repository.dart';
+import '../../domain/start_quiz.dart';
 import '../tutorial/stealth_mode_tutorial_page_controller.dart';
 import 'quiz_controller.dart';
 import 'quiz_page.dart';
@@ -20,6 +21,11 @@ class QuizModule extends Module {
           (i) => QuizController(
             quizSession: i.args?.data,
             appStateUseCase: i.get<AppStateUseCase>(),
+            repository: i.get<IQuizRepository>(),
+          ),
+        ),
+        Bind.factory<StartQuizUseCase>(
+          (i) => StartQuizUseCase(
             repository: i.get<IQuizRepository>(),
           ),
         ),
