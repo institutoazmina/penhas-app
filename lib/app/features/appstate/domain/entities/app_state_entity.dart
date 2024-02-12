@@ -74,8 +74,8 @@ class QuizSessionEntity extends Equatable {
   const QuizSessionEntity({
     required this.sessionId,
     this.currentMessage = const [],
-    required this.isFinished,
-    required this.endScreen,
+    this.isFinished = false,
+    this.endScreen,
   });
 
   final List<QuizMessageEntity> currentMessage;

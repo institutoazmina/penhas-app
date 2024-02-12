@@ -18,6 +18,8 @@ void main() {
     registerFallbackValue(FakeLaunchOptions());
   });
   group(AppNavigator, () {
+    late AppNavigator sut;
+
     late IModularNavigator mockModular;
     late UrlLauncherPlatform mockUrlLauncher;
     late AppRoute appRoute;
@@ -28,6 +30,7 @@ void main() {
       appRoute = AppRoute('/test?testKey=testValue');
       Modular.navigatorDelegate = mockModular;
       UrlLauncherPlatform.instance = mockUrlLauncher;
+      sut = AppNavigator();
     });
 
     test(
@@ -114,8 +117,7 @@ void main() {
             invocation.positionalArguments[0](FakeRoute());
           });
           // action
-          await AppNavigator.pushAndRemoveUntil(appRoute,
-              removeUntil: removeUntil);
+          await sut.pushAndRemoveUntil(appRoute, removeUntil: removeUntil);
           // expect
           verifyNever(() => mockModular.pushNamed(
                 any(),
@@ -135,8 +137,7 @@ void main() {
                 arguments: any(named: 'arguments'),
               )).thenAnswer((_) => Future.value());
           // action
-          await AppNavigator.pushAndRemoveUntil(appRoute,
-              removeUntil: removeUntil);
+          await sut.pushAndRemoveUntil(appRoute, removeUntil: removeUntil);
           // expect
           verify(() => mockModular.pushReplacementNamed(
                 appRoute.path,
@@ -161,8 +162,7 @@ void main() {
                 arguments: any(named: 'arguments'),
               )).thenAnswer((_) => Future.value());
           // action
-          await AppNavigator.pushAndRemoveUntil(appRoute,
-              removeUntil: removeUntil);
+          await sut.pushAndRemoveUntil(appRoute, removeUntil: removeUntil);
           // expect
           verify(() => mockModular.pushNamed(
                 appRoute.path,

@@ -5,6 +5,7 @@ import '../../../../core/managers/location_services.dart';
 import '../../../../core/network/api_client.dart';
 import '../../../../core/network/api_server_configure.dart';
 import '../../../../core/network/network_info.dart';
+import '../../../../shared/navigation/app_navigator.dart';
 import '../../../../shared/widgets/dialog_route.dart';
 import '../../../appstate/domain/usecases/app_state_usecase.dart';
 import '../../data/datasources/quiz_data_source.dart';
@@ -25,6 +26,7 @@ class QuizModule extends Module {
             quizSession: i.args?.data,
             appStateUseCase: i.get<AppStateUseCase>(),
             repository: i.get<IQuizRepository>(),
+            navigator: i.get<AppNavigator>(),
           ),
         ),
         Bind.factory<QuizStartController>(

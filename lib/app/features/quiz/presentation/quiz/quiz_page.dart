@@ -15,10 +15,10 @@ class QuizPage extends StatefulWidget {
   final String title;
 
   @override
-  _QuizPageState createState() => _QuizPageState();
+  State<QuizPage> createState() => QuizPageState();
 }
 
-class _QuizPageState extends ModularState<QuizPage, QuizController>
+class QuizPageState extends ModularState<QuizPage, QuizController>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();

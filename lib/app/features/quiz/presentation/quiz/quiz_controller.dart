@@ -21,7 +21,8 @@ class QuizController extends _QuizControllerBase with _$QuizController {
     required QuizSessionEntity quizSession,
     required AppStateUseCase appStateUseCase,
     required IQuizRepository repository,
-  }) : super(quizSession, appStateUseCase, repository);
+    required AppNavigator navigator,
+  }) : super(quizSession, appStateUseCase, repository, navigator);
 }
 
 abstract class _QuizControllerBase with Store {
@@ -29,6 +30,7 @@ abstract class _QuizControllerBase with Store {
     this._quizSession,
     this._appStateUseCase,
     this._repository,
+    this._navigator,
   ) {
     final reversedCurrent = _quizSession.currentMessage.reversed.toList();
     _sessionId = _quizSession.sessionId;
@@ -37,9 +39,11 @@ abstract class _QuizControllerBase with Store {
     _parseUserReply(reversedCurrent);
   }
 
-  final QuizSessionEntity _quizSession;
   final IQuizRepository _repository;
   final AppStateUseCase _appStateUseCase;
+  final AppNavigator _navigator;
+
+  final QuizSessionEntity _quizSession;
   String? _sessionId;
 
   ObservableList<QuizMessageEntity> messages =
@@ -190,7 +194,7 @@ abstract class _QuizControllerBase with Store {
     if (quizSession.isFinished) {
       _updateAppStates(
         state,
-        (_) => AppNavigator.pushAndRemoveUntil(
+        (_) => _navigator.pushAndRemoveUntil(
           AppRoute(quizSession.endScreen ?? '/'),
           removeUntil: '/',
         ),

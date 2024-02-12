@@ -16,33 +16,38 @@ class QuizButtonYesNoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const horizontalMargin = 24.0;
-    final buttonWidthSize =
-        (MediaQuery.of(context).size.width - ((horizontalMargin * 2) + 36)) / 2;
-    return Container(
-      padding: const EdgeInsets.fromLTRB(
-        horizontalMargin,
-        4.0,
-        horizontalMargin,
-        4.0,
-      ),
-      height: 56.0,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          _buildActionButton(
-            width: buttonWidthSize,
-            title: 'SIM',
-            actionResponse: {reference: 'Y'},
-            onPressed: onPressed,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final buttonWidthSize =
+            (constraints.maxWidth - ((horizontalMargin * 2) + 36)) / 2;
+
+        return Container(
+          padding: const EdgeInsets.fromLTRB(
+            horizontalMargin,
+            4.0,
+            horizontalMargin,
+            4.0,
           ),
-          _buildActionButton(
-            width: buttonWidthSize,
-            title: 'NÃO',
-            actionResponse: {reference: 'N'},
-            onPressed: onPressed,
-          )
-        ],
-      ),
+          height: 56.0,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              _buildActionButton(
+                width: buttonWidthSize,
+                title: 'SIM',
+                actionResponse: {reference: 'Y'},
+                onPressed: onPressed,
+              ),
+              _buildActionButton(
+                width: buttonWidthSize,
+                title: 'NÃO',
+                actionResponse: {reference: 'N'},
+                onPressed: onPressed,
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 
