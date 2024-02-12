@@ -3,25 +3,42 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../../../../core/error/exceptions.dart';
+import '../../../../core/network/api_client.dart';
 import '../../../../core/network/api_server_configure.dart';
 import '../../../appstate/data/model/app_state_model.dart';
+import '../../../appstate/data/model/quiz_session_model.dart';
 import '../../domain/entities/quiz_request_entity.dart';
 
 abstract class IQuizDataSource {
+  Future<QuizSessionModel> start(String sessionId);
+
   Future<AppStateModel> update({required QuizRequestEntity? quiz});
 }
 
 class QuizDataSource implements IQuizDataSource {
   QuizDataSource({
     required http.Client apiClient,
-    required serverConfiguration,
-  })  : _apiClient = apiClient,
+    required IApiProvider apiProvider,
+    required IApiServerConfigure serverConfiguration,
+  })  : _apiProvider = apiProvider,
+        _apiClient = apiClient,
         _serverConfiguration = serverConfiguration;
 
   final http.Client _apiClient;
+  final IApiProvider _apiProvider;
   final IApiServerConfigure _serverConfiguration;
   final Set<int> _successfulResponse = {200};
   final Set<int> _invalidSessionCode = {401, 403};
+
+  @override
+  Future<QuizSessionModel> start(String sessionId) async {
+    final response = await _apiProvider.post(
+      path: '/me/quiz',
+      parameters: {'session_id': sessionId},
+    ).then(jsonDecode);
+
+    return QuizSessionModel.fromJson(response['quiz_session']);
+  }
 
   @override
   Future<AppStateModel> update({required QuizRequestEntity? quiz}) async {

@@ -5,6 +5,7 @@ import '../../../../core/error/failures.dart';
 import '../../../../core/network/network_info.dart';
 import '../../../../shared/logger/log.dart';
 import '../../../appstate/domain/entities/app_state_entity.dart';
+import '../../../authentication/presentation/shared/map_exception_to_failure.dart';
 import '../../domain/entities/quiz_request_entity.dart';
 import '../../domain/repositories/i_quiz_repository.dart';
 import '../datasources/quiz_data_source.dart';
@@ -18,6 +19,17 @@ class QuizRepository implements IQuizRepository {
 
   final INetworkInfo _networkInfo;
   final IQuizDataSource _dataSource;
+
+  @override
+  QuizSessionResult start(String sessionId) async {
+    try {
+      final quizSession = await _dataSource.start(sessionId);
+      return right(quizSession);
+    } catch (error, stack) {
+      logError(error, stack);
+      return left(MapExceptionToFailure.map(error));
+    }
+  }
 
   @override
   Future<Either<Failure, AppStateEntity>> update({

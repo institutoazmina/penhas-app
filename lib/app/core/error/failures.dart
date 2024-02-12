@@ -9,6 +9,8 @@ abstract class Failure extends Equatable {
   bool get stringify => true;
 }
 
+class UnknownFailure extends Failure {}
+
 class ServerFailure extends Failure {}
 
 class ServerSideSessionFailed extends Failure {}
@@ -38,6 +40,8 @@ class RequiredParameter extends Failure {}
 class AudioDownloadFailure extends Failure {}
 
 class FileSystemFailure extends Failure {}
+
+class InvalidArgumentsFailure extends Failure {}
 
 class GpsFailure extends Failure {
   GpsFailure(this.message);

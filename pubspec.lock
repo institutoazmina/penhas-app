@@ -491,7 +491,7 @@ packages:
     description:
       path: flutter_modular
       ref: backward-compatibility
-      resolved-ref: "73fa319c100018633482ff395352f8ddbfadbd7e"
+      resolved-ref: "215924c83932f880799bc6f3ededfc5bf983fcbf"
       url: "https://github.com/pedrox-hs/modular.git"
     source: git
     version: "3.4.1+1"
