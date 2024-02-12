@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/storage/cache_storage.dart';
 import 'package:penhas/app/core/storage/object_store.dart';
+import 'package:penhas/app/core/types/json.dart';
 import 'package:penhas/app/features/escape_manual/data/datastore/escape_manual_cache_store.dart';
 import 'package:penhas/app/features/escape_manual/data/model/escape_manual_remote.dart';
 
@@ -11,7 +12,7 @@ import '../../../../../utils/json_util.dart';
 import '../model/escape_manual_fixtures.dart';
 
 void main() {
-  late IObjectStore<EscapeManualRemoteModel> sut;
+  late IObjectStore<JsonObject> sut;
 
   late ICacheStorage mockCacheStorage;
 
@@ -36,7 +37,11 @@ void main() {
             .thenAnswer((_) async => cached);
 
         // act
-        final actual = await sut.retrieve();
+        final actual = await sut.retrieve().then(
+              (value) => value != null
+                  ? EscapeManualRemoteModel.fromJson(value)
+                  : null,
+            );
 
         // assert
         expect(actual, equals(expected));
@@ -53,10 +58,10 @@ void main() {
             jsonEncode(updatedEscapeManualRemoteModelFixture);
 
         when(() => mockCacheStorage.putString(any(), any()))
-            .thenAnswer((_) async {});
+            .thenAnswer((_) => Future.value());
 
         // act
-        await sut.save(updatedEscapeManualRemoteModelFixture);
+        await sut.save(updatedEscapeManualRemoteModelFixture.asJsonObject);
 
         // assert
         final verificationResult = verify(

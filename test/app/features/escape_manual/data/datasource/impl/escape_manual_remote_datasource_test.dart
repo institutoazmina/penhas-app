@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/core/storage/object_store.dart';
+import 'package:penhas/app/core/types/json.dart';
 import 'package:penhas/app/features/appstate/data/model/quiz_session_model.dart';
 import 'package:penhas/app/features/escape_manual/data/datasource/impl/escape_manual_remote_datasource.dart';
 import 'package:penhas/app/features/escape_manual/data/model/escape_manual_remote.dart';
@@ -16,7 +17,7 @@ void main() {
   late IEscapeManualRemoteDatasource sut;
 
   late IApiProvider mockApiProvider;
-  late IObjectStore<EscapeManualRemoteModel> mockCacheStorage;
+  late IObjectStore<JsonObject> mockCacheStorage;
 
   setUpAll(() {
     registerFallbackValue(_FakeEscapeManualRemoteModel());
@@ -153,8 +154,7 @@ void main() {
             final response = JsonUtil.getStringSync(
               from: 'escape_manual/escape_manual_response.json',
             );
-            final expectedCachedData =
-                EscapeManualRemoteModel.fromJson(jsonDecode(response));
+            final expectedCachedData = jsonDecode(response);
             when(
               () => mockApiProvider.get(
                 path: any(named: 'path'),
@@ -225,8 +225,7 @@ void main() {
             final response = JsonUtil.getStringSync(
               from: 'escape_manual/escape_manual_response.json',
             );
-            final cachedData =
-                EscapeManualRemoteModel.fromJson(jsonDecode(response));
+            final cachedData = jsonDecode(response);
             const expectedLastModifiedAt = 1699916213;
 
             when(() => mockCacheStorage.retrieve())
@@ -264,8 +263,8 @@ void main() {
 
             final expectedEscapeManual = updatedEscapeManualRemoteModelFixture;
 
-            when(() => mockCacheStorage.retrieve())
-                .thenAnswer((_) async => escapeManualRemoteModelFixture);
+            when(() => mockCacheStorage.retrieve()).thenAnswer(
+                (_) async => escapeManualRemoteModelFixture.asJsonObject);
 
             when(
               () => mockApiProvider.get(
@@ -292,8 +291,8 @@ void main() {
 
             final expectedEscapeManual = updatedEscapeManualRemoteModelFixture;
 
-            when(() => mockCacheStorage.retrieve())
-                .thenAnswer((_) async => escapeManualRemoteModelFixture);
+            when(() => mockCacheStorage.retrieve()).thenAnswer(
+                (_) async => escapeManualRemoteModelFixture.asJsonObject);
 
             when(
               () => mockApiProvider.get(
@@ -306,7 +305,11 @@ void main() {
             await sut.fetch();
 
             // assert
-            verify(() => mockCacheStorage.save(expectedEscapeManual)).called(1);
+            final verifier = verify(() => mockCacheStorage.save(captureAny()))
+              ..called(1);
+            final captured =
+                EscapeManualRemoteModel.fromJson(verifier.captured.first);
+            expect(captured, equals(expectedEscapeManual));
           },
         );
 
@@ -315,8 +318,8 @@ void main() {
           () async {
             // arrange
             final expectedEscapeManual = escapeManualRemoteModelFixture;
-            when(() => mockCacheStorage.retrieve())
-                .thenAnswer((_) async => escapeManualRemoteModelFixture);
+            when(() => mockCacheStorage.retrieve()).thenAnswer(
+                (_) async => escapeManualRemoteModelFixture.asJsonObject);
             when(
               () => mockApiProvider.get(
                 path: any(named: 'path'),
@@ -547,7 +550,7 @@ void main() {
 class _MockApiProvider extends Mock implements IApiProvider {}
 
 class _MockEscapeManualStorage extends Mock
-    implements IObjectStore<EscapeManualRemoteModel> {}
+    implements IObjectStore<JsonObject> {}
 
 class _FakeEscapeManualRemoteModel extends Fake
     implements EscapeManualRemoteModel {}
