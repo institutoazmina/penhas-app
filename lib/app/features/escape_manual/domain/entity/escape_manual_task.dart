@@ -133,4 +133,10 @@ class EscapeManualButtonTaskEntity extends EscapeManualTaskEntity {
         );
 
   final ButtonEntity button;
+
+  @override
+  List<Object?> get props => [
+        ...super.props,
+        button,
+      ];
 }

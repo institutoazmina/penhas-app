@@ -349,3 +349,53 @@ final EscapeManualEditableTaskEntity escapeManualEditableTaskEntityFixture =
     ),
   ],
 );
+
+final escapeManualRemoteBroken = EscapeManualRemoteModel(
+  lastModifiedAt: DateTime.fromMillisecondsSinceEpoch(1699916213000),
+  assistant: EscapeManualAssistantRemoteModel(
+      title: 'action button',
+      subtitle: 'Explanation',
+      quizSession: QuizSessionModel(sessionId: 'abcdef')),
+  tasks: [
+    EscapeManualTaskRemoteModel(
+      id: '3',
+      type: EscapeManualTaskType.button,
+      group: 'Transporte',
+      updatedAt: DateTime.fromMillisecondsSinceEpoch(1706249823000),
+      value: ButtonModel(
+        label: 'Action Button',
+        route: '/quiz',
+        arguments: QuizSessionModel(sessionId: '12345'),
+      ),
+    )
+  ],
+);
+
+final escapeManualEntityBroken = EscapeManualEntity(
+  assistant: EscapeManualAssistantEntity(
+    explanation: 'Explanation',
+    action: EscapeManualAssistantActionEntity(
+      text: 'action button',
+      quizSession: QuizSessionModel(
+        sessionId: 'abcdef',
+      ),
+    ),
+  ),
+  sections: [
+    EscapeManualTasksSectionEntity(
+      title: 'Transporte',
+      tasks: [
+        EscapeManualButtonTaskEntity(
+          id: '3',
+          button: ButtonModel(
+            label: 'Action Button',
+            route: '/quiz',
+            arguments: QuizSessionModel(
+              sessionId: '12345',
+            ),
+          ),
+        ),
+      ],
+    ),
+  ],
+);

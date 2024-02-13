@@ -526,7 +526,7 @@ void main() {
           ).thenAnswer((_) => Future.value());
 
           // act
-          await sut.onTaskButtonPressed(task);
+          await sut.onButtonPressed(task.button);
 
           // assert
           verify(
@@ -563,7 +563,7 @@ void main() {
           sut.onReaction(onReactionMock);
 
           // act
-          await sut.onTaskButtonPressed(task);
+          await sut.onButtonPressed(task.button);
 
           // assert
           verify(
@@ -598,7 +598,7 @@ void main() {
           ).thenAnswer((_) => Future.value(right<Failure, void>(null)));
 
           // act
-          await sut.onTaskButtonPressed(task);
+          await sut.onButtonPressed(task.button);
           getEscapeManualCompleter.complete(escapeManualEntityFixture);
           await getEscapeManualCompleter.future;
 

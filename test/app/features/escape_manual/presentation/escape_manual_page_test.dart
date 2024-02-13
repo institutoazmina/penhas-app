@@ -25,8 +25,10 @@ void main() {
 
   setUpAll(() {
     initModule(module);
+
     registerFallbackValue(_FakeEscapeManualTaskEntity());
     registerFallbackValue(_FakeEscapeManualContactsTaskEntity());
+    registerFallbackValue(_FakeButtonEntity());
   });
 
   setUp(() {
@@ -324,6 +326,40 @@ void main() {
       },
     );
 
+    testWidgets(
+      'should call controller onButtonPressed when task button is pressed',
+      (tester) async {
+        // arrange
+        final task = escapeManualEntity.sections[1].tasks[0]
+            as EscapeManualButtonTaskEntity;
+        final expectedButton = task.button;
+
+        when(() => mockController.state)
+            .thenReturn(EscapeManualState.loaded(escapeManualEntity));
+        when(() => mockController.onButtonPressed(any()))
+            .thenAnswer((_) => Future.value());
+
+        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
+
+        // act
+        await tester.tap(
+          find.widgetWithText(ExpansionTile, 'Section 1'),
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(
+          find
+              .descendant(
+                of: find.byKey(Key('escape-manual-task-1-0')),
+                matching: find.textContaining('Task button'),
+              )
+              .first,
+        );
+
+        // assert
+        verify(() => mockController.onButtonPressed(expectedButton)).called(1);
+      },
+    );
+
     group('goldens', () {
       screenshotTest(
         'should populate load state',
@@ -464,10 +500,15 @@ class _MockEscapeManualController extends Mock
 class _MockReactionDisposer extends Mock implements mobx.ReactionDisposer {}
 
 class _FakeEscapeManualTaskEntity extends Fake
-    implements EscapeManualTaskEntity {}
+    implements EscapeManualTaskEntity {
+  @override
+  String get id => 'id';
+}
 
 class _FakeEscapeManualContactsTaskEntity extends Fake
     implements EscapeManualContactsTaskEntity {}
+
+class _FakeButtonEntity extends Fake implements ButtonEntity {}
 
 EscapeManualEntity get escapeManualEntity => EscapeManualEntity(
       assistant: EscapeManualAssistantEntity(
@@ -487,7 +528,7 @@ EscapeManualEntity get escapeManualEntity => EscapeManualEntity(
         (section) => EscapeManualTasksSectionEntity(
           title: 'Section $section',
           tasks: List.generate(
-            5,
+            6,
             (task) => _fakeTaskGenerator(section, task),
           ),
         ),
@@ -501,7 +542,7 @@ EscapeManualTaskEntity _fakeTaskGenerator(int section, int task) {
         id: '${section}-${task}',
         description: 'Task #${task} of section ${section}',
         button: ButtonEntity(
-          label: '',
+          label: 'Task button',
           route: '/route',
           arguments: null,
         ),
@@ -523,6 +564,8 @@ EscapeManualTaskEntity _fakeTaskGenerator(int section, int task) {
           ),
         ],
       );
+    case 5:
+      return _FakeEscapeManualTaskEntity();
     default:
       return EscapeManualDefaultTaskEntity(
         id: '${section}-${task}',

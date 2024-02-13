@@ -213,6 +213,7 @@ class _SectionTasksWidget extends StatelessWidget {
     if (task is EscapeManualTodoTaskEntity) {
       return _TaskWidget(task, key: key);
     }
+    // This is a fallback for unknown task types
     logError('Unknown task type: ${task.runtimeType}');
     return const SizedBox.shrink();
   }
@@ -466,7 +467,7 @@ class _ButtonTaskWidgetState
         title: TextButton(
           child: Text(task.button.label),
           onPressed: () {
-            controller.onTaskButtonPressed(task);
+            controller.onButtonPressed(task.button);
           },
           style: TextButton.styleFrom(
             primary: DesignSystemColors.white,

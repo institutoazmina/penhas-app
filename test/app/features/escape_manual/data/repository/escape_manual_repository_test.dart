@@ -8,6 +8,7 @@ import 'package:penhas/app/features/escape_manual/data/model/escape_manual_local
 import 'package:penhas/app/features/escape_manual/data/model/escape_manual_remote.dart';
 import 'package:penhas/app/features/escape_manual/data/repository/escape_manual_repository.dart';
 
+import '../../../../../utils/json_util.dart';
 import '../model/escape_manual_fixtures.dart';
 
 void main() {
@@ -137,6 +138,31 @@ void main() {
           expectLater(
             sut.fetch(),
             emitsError(isA<ServerFailure>()),
+          );
+        },
+      );
+
+      test(
+        'should not throws on broken response',
+        () async {
+          // arrange
+          final expectedEscapeManual = escapeManualEntityBroken;
+          final response = await JsonUtil.getJson(
+            from: 'escape_manual/escape_manual_broken_response.json',
+          );
+          when(() => mockRemoteDatasource.fetch()).thenAnswer(
+            (_) async => EscapeManualRemoteModel.fromJson(response),
+          );
+          when(() => mockLocalDatasource.fetchTasks())
+              .thenAnswer((_) => Stream.value([]));
+
+          // act
+          final actual = sut.fetch;
+
+          // assert
+          expectLater(
+            actual(),
+            emitsInOrder([expectedEscapeManual, emitsDone]),
           );
         },
       );

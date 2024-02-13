@@ -123,9 +123,9 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
     }
   }
 
-  Future<void> onTaskButtonPressed(EscapeManualButtonTaskEntity task) async {
+  Future<void> onButtonPressed(ButtonEntity button) async {
     final result = await Modular.to
-        .pushNamed(task.button.route, arguments: task.button.arguments)
+        .pushNamed(button.route, arguments: button.arguments)
         .catchError(
       (error, stack) {
         logError(error, stack);
