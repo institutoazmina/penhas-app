@@ -123,6 +123,24 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
     }
   }
 
+  Future<void> onTaskButtonPressed(EscapeManualButtonTaskEntity task) async {
+    final result = await Modular.to
+        .pushNamed(task.button.route, arguments: task.button.arguments)
+        .catchError(
+      (error, stack) {
+        logError(error, stack);
+        return left(UnknownFailure());
+      },
+    );
+
+    if (result is Either<Failure, dynamic>) {
+      result.fold(
+        _handleErrorAsReaction,
+        (_) => load(),
+      );
+    }
+  }
+
   void callTo(ContactEntity contact) {
     launchUrlString('tel:${contact.phone}');
   }
