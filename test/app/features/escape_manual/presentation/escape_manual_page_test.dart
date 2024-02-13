@@ -483,29 +483,46 @@ EscapeManualEntity get escapeManualEntity => EscapeManualEntity(
           title: 'Section $section',
           tasks: List.generate(
             5,
-            (task) => task != 4
-                ? EscapeManualDefaultTaskEntity(
-                    id: '${section}-${task}',
-                    description: 'Task #${task} of section ${section}',
-                    isDone: task == 2,
-                  )
-                : EscapeManualContactsTaskEntity(
-                    id: '${section}-${task}',
-                    description: 'Task #${task} of section ${section}',
-                    value: [
-                      ContactEntity(
-                        id: 2,
-                        name: 'Contact name 2',
-                        phone: '(11) 22222-2222',
-                      ),
-                      ContactEntity(
-                        id: 1,
-                        name: 'Contact name',
-                        phone: '(11) 1111-1111',
-                      ),
-                    ],
-                  ),
+            (task) => _fakeTaskGenerator(section, task),
           ),
         ),
       ),
     );
+
+EscapeManualTaskEntity _fakeTaskGenerator(int section, int task) {
+  switch (task) {
+    case 0:
+      return EscapeManualButtonTaskEntity(
+        id: '${section}-${task}',
+        description: 'Task #${task} of section ${section}',
+        button: ButtonEntity(
+          label: '',
+          route: '/route',
+          arguments: null,
+        ),
+      );
+    case 4:
+      return EscapeManualContactsTaskEntity(
+        id: '${section}-${task}',
+        description: 'Task #${task} of section ${section}',
+        value: [
+          ContactEntity(
+            id: 2,
+            name: 'Contact name 2',
+            phone: '(11) 22222-2222',
+          ),
+          ContactEntity(
+            id: 1,
+            name: 'Contact name',
+            phone: '(11) 1111-1111',
+          ),
+        ],
+      );
+    default:
+      return EscapeManualDefaultTaskEntity(
+        id: '${section}-${task}',
+        description: 'Task #${task} of section ${section}',
+        isDone: task == 2,
+      );
+  }
+}

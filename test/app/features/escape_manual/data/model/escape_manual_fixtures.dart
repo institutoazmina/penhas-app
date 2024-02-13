@@ -72,6 +72,16 @@ final escapeManualModelFixture = EscapeManualRemoteModel(
       ],
       updatedAt: DateTime.now(),
     ),
+    EscapeManualTaskRemoteModel(
+      id: '42',
+      type: EscapeManualTaskType.button,
+      group: 'Transporte',
+      updatedAt: DateTime.fromMillisecondsSinceEpoch(1706249823000),
+      value: ButtonModel(
+        label: 'Revisar Transporte',
+        route: '/quiz/start?session_id=abcdedfgh',
+      ),
+    ),
   ],
 );
 
@@ -119,6 +129,18 @@ final escapeManualEntityFixture = EscapeManualEntity(
         ),
       ],
     ),
+    EscapeManualTasksSectionEntity(
+      title: 'Transporte',
+      tasks: [
+        EscapeManualButtonTaskEntity(
+          id: '42',
+          button: ButtonModel(
+            label: 'Revisar Transporte',
+            route: '/quiz/start?session_id=abcdedfgh',
+          ),
+        ),
+      ],
+    ),
   ],
 );
 
@@ -157,6 +179,18 @@ final updatedEscapeManualEntityFixture = EscapeManualEntity(
               phone: '(00) 00000-0000',
             ),
           ],
+        ),
+      ],
+    ),
+    EscapeManualTasksSectionEntity(
+      title: 'Transporte',
+      tasks: [
+        EscapeManualButtonTaskEntity(
+          id: '42',
+          button: ButtonModel(
+            label: 'Revisar Transporte',
+            route: '/quiz/start?session_id=abcdedfgh',
+          ),
         ),
       ],
     ),
@@ -212,6 +246,16 @@ final escapeManualRemoteModelFixture = EscapeManualRemoteModel(
       updatedAt: DateTime.fromMillisecondsSinceEpoch(1689701025000),
       value: null,
     ),
+    EscapeManualTaskRemoteModel(
+      id: '42',
+      type: EscapeManualTaskType.button,
+      group: 'Transporte',
+      updatedAt: DateTime.fromMillisecondsSinceEpoch(1706249823000),
+      value: ButtonModel(
+        label: 'Revisar Transporte',
+        route: '/quiz/start?session_id=abcdedfgh',
+      ),
+    ),
   ],
 );
 
@@ -263,6 +307,16 @@ final updatedEscapeManualRemoteModelFixture = EscapeManualRemoteModel(
           phone: '(11) 99999-9999',
         ),
       ],
+    ),
+    EscapeManualTaskRemoteModel(
+      id: '42',
+      type: EscapeManualTaskType.button,
+      group: 'Transporte',
+      updatedAt: DateTime.fromMillisecondsSinceEpoch(1706249823000),
+      value: ButtonModel(
+        label: 'Revisar Transporte',
+        route: '/quiz/start?session_id=abcdedfgh',
+      ),
     ),
     EscapeManualTaskRemoteModel(
       id: '76',

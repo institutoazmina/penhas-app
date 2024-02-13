@@ -109,12 +109,12 @@ class EscapeManualContactsTaskEntity
 class EscapeManualButtonTaskEntity extends EscapeManualTaskEntity {
   const EscapeManualButtonTaskEntity({
     required String id,
-    required String description,
+    String? description,
     required this.button,
     bool isDone = false,
   }) : super(
           id: id,
-          description: description,
+          description: description ?? '',
           isDone: isDone,
         );
 
