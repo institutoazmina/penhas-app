@@ -8,6 +8,7 @@ import 'package:mobx/mobx.dart';
 
 import '../../../shared/design_system/button_shape.dart';
 import '../../../shared/design_system/colors.dart';
+import '../../../shared/logger/log.dart';
 import '../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../authentication/presentation/shared/snack_bar_handler.dart';
 import '../../support_center/presentation/pages/support_center_general_error.dart';
@@ -171,7 +172,10 @@ class _SectionTasksWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final qtyDoneTasks = section.tasks.where((task) => task.isDone).length;
+    final qtyDoneTasks = section.tasks
+        .whereType<EscapeManualTodoTaskEntity>()
+        .where((task) => task.isDone)
+        .length;
 
     return ExpansionTile(
       childrenPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
@@ -206,7 +210,11 @@ class _SectionTasksWidget extends StatelessWidget {
     if (task is EscapeManualButtonTaskEntity) {
       return _ButtonTaskWidget(task, key: key);
     }
-    return _TaskWidget(task, key: key);
+    if (task is EscapeManualTodoTaskEntity) {
+      return _TaskWidget(task, key: key);
+    }
+    logError('Unknown task type: ${task.runtimeType}');
+    return const SizedBox.shrink();
   }
 }
 
@@ -216,7 +224,7 @@ class _TaskWidget extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
-  final EscapeManualTaskEntity task;
+  final EscapeManualTodoTaskEntity task;
 
   @override
   State<_TaskWidget> createState() => _TaskWidgetState();
@@ -224,7 +232,7 @@ class _TaskWidget extends StatefulWidget {
 
 class _TaskWidgetState
     extends ModularState<_TaskWidget, EscapeManualController> {
-  EscapeManualTaskEntity get task => widget.task;
+  EscapeManualTodoTaskEntity get task => widget.task;
 
   late bool isChecked = task.isDone;
 

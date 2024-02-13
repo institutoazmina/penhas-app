@@ -73,12 +73,13 @@ class EscapeManualRepository implements IEscapeManualRepository {
 
   /// Update a task from the escape manual locally
   @override
-  VoidResult updateTask(EscapeManualTaskEntity task) =>
+  VoidResult updateTask(EscapeManualTodoTaskEntity task) =>
       _saveInAllDataSources(task.asLocalModel);
 
   /// Remove a task from the escape manual locally
   @override
-  VoidResult removeTask(EscapeManualTaskEntity task) => _saveInAllDataSources(
+  VoidResult removeTask(EscapeManualTodoTaskEntity task) =>
+      _saveInAllDataSources(
         task.asLocalModel.copyWith(isRemoved: true),
       );
 

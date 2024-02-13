@@ -42,4 +42,4 @@ class _MockEscapeManualRepository extends Mock
     implements IEscapeManualRepository {}
 
 class _FakeEscapeManualTaskEntity extends Fake
-    implements EscapeManualTaskEntity {}
+    implements EscapeManualTodoTaskEntity {}

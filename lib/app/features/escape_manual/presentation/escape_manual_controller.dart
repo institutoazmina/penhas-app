@@ -99,13 +99,13 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  Future<void> updateTask(EscapeManualTaskEntity task) async {
+  Future<void> updateTask(EscapeManualTodoTaskEntity task) async {
     final result = await _updateTask(task);
     result.fold(_onSaveTaskFailed, (_) {});
   }
 
   @action
-  Future<void> deleteTask(EscapeManualTaskEntity task) async {
+  Future<void> deleteTask(EscapeManualTodoTaskEntity task) async {
     final result = await _deleteTask(task);
     result.fold(_onSaveTaskFailed, (_) {});
   }

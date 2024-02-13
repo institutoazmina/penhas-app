@@ -29,8 +29,17 @@ int _compare(
   MapEntry<int, EscapeManualTaskEntity> a,
   MapEntry<int, EscapeManualTaskEntity> b,
 ) {
-  if (a.value.isDone == b.value.isDone) {
+  final aValue = a.value;
+  final bValue = b.value;
+
+  if (aValue is! EscapeManualTodoTaskEntity ||
+      bValue is! EscapeManualTodoTaskEntity) {
+    return 0;
+  }
+
+  if (aValue.isDone == bValue.isDone) {
     return a.key.compareTo(b.key);
   }
-  return a.value.isDone ? 1 : -1;
+
+  return aValue.isDone ? 1 : -1;
 }

@@ -10,27 +10,43 @@ abstract class EscapeManualTaskEntity extends Equatable {
   const EscapeManualTaskEntity({
     required this.id,
     required this.description,
-    required this.isDone,
   });
 
   final String id;
   final String description;
-  final bool isDone;
 
   @override
   List<Object?> get props => [
         id,
         description,
+      ];
+}
+
+abstract class EscapeManualTodoTaskEntity extends EscapeManualTaskEntity {
+  const EscapeManualTodoTaskEntity({
+    required String id,
+    required String description,
+    required this.isDone,
+  }) : super(
+          id: id,
+          description: description,
+        );
+
+  final bool isDone;
+
+  @override
+  List<Object?> get props => [
+        ...super.props,
         isDone,
       ];
 
-  EscapeManualTaskEntity copyWith({
+  EscapeManualTodoTaskEntity copyWith({
     bool? isDone,
   });
 }
 
 abstract class EscapeManualEditableTaskEntity<T extends Object>
-    extends EscapeManualTaskEntity {
+    extends EscapeManualTodoTaskEntity {
   const EscapeManualEditableTaskEntity({
     required String id,
     required String description,
@@ -51,13 +67,13 @@ abstract class EscapeManualEditableTaskEntity<T extends Object>
       ];
 
   @override
-  EscapeManualTaskEntity copyWith({
+  EscapeManualTodoTaskEntity copyWith({
     bool? isDone,
     T? value,
   });
 }
 
-class EscapeManualDefaultTaskEntity extends EscapeManualTaskEntity {
+class EscapeManualDefaultTaskEntity extends EscapeManualTodoTaskEntity {
   const EscapeManualDefaultTaskEntity({
     required String id,
     required String description,
@@ -69,7 +85,7 @@ class EscapeManualDefaultTaskEntity extends EscapeManualTaskEntity {
         );
 
   @override
-  EscapeManualTaskEntity copyWith({
+  EscapeManualTodoTaskEntity copyWith({
     bool? isDone,
   }) =>
       EscapeManualDefaultTaskEntity(
@@ -111,24 +127,10 @@ class EscapeManualButtonTaskEntity extends EscapeManualTaskEntity {
     required String id,
     String? description,
     required this.button,
-    bool isDone = false,
   }) : super(
           id: id,
           description: description ?? '',
-          isDone: isDone,
         );
 
   final ButtonEntity button;
-
-  @override
-  EscapeManualButtonTaskEntity copyWith({
-    bool? isDone,
-    ButtonEntity? button,
-  }) =>
-      EscapeManualButtonTaskEntity(
-        id: id,
-        description: description,
-        button: button ?? this.button,
-        isDone: isDone ?? this.isDone,
-      );
 }

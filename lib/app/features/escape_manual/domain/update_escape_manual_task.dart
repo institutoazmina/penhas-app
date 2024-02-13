@@ -11,6 +11,6 @@ class UpdateEscapeManualTaskUseCase {
 
   final IEscapeManualRepository _repository;
 
-  Future<Either<Failure, void>> call(EscapeManualTaskEntity escapeManual) =>
+  Future<Either<Failure, void>> call(EscapeManualTodoTaskEntity escapeManual) =>
       _repository.updateTask(escapeManual);
 }

@@ -69,7 +69,6 @@ extension EscapeManualTaskRemoteMapper on EscapeManualTaskRemoteModel {
         return EscapeManualButtonTaskEntity(
           id: id,
           description: description,
-          isDone: isDone,
           button: value,
         );
 
@@ -82,7 +81,7 @@ extension EscapeManualTaskRemoteMapper on EscapeManualTaskRemoteModel {
   }
 }
 
-extension EscapeManualTaskEntityMapper on EscapeManualTaskEntity {
+extension EscapeManualTaskEntityMapper on EscapeManualTodoTaskEntity {
   EscapeManualTaskType get type {
     if (this is EscapeManualContactsTaskEntity) {
       return EscapeManualTaskType.contacts;

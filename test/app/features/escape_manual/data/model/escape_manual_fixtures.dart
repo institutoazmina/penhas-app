@@ -329,7 +329,7 @@ final updatedEscapeManualRemoteModelFixture = EscapeManualRemoteModel(
   ],
 );
 
-final EscapeManualTaskEntity escapeManualTaskEntityFixture =
+final EscapeManualTodoTaskEntity escapeManualTaskEntityFixture =
     EscapeManualDefaultTaskEntity(
   id: '1',
   description: 'description',

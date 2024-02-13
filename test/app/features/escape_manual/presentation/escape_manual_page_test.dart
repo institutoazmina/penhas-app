@@ -167,8 +167,10 @@ void main() {
       'should call controller updateTask with done task when checkbox is pressed',
       (tester) async {
         // arrange
-        final expectedTask =
-            escapeManualEntity.sections[1].tasks[4].copyWith(isDone: true);
+        final expectedTask = (escapeManualEntity.sections[1].tasks[4]
+                as EscapeManualTodoTaskEntity)
+            .copyWith(isDone: true);
+
         when(() => mockController.state)
             .thenReturn(EscapeManualState.loaded(escapeManualEntity));
         when(() => mockController.updateTask(any()))
@@ -196,8 +198,10 @@ void main() {
       'should call controller updateTask with not done task when checkbox is pressed',
       (tester) async {
         // arrange
-        final expectedTask =
-            escapeManualEntity.sections[1].tasks[2].copyWith(isDone: false);
+        final expectedTask = (escapeManualEntity.sections[1].tasks[2]
+                as EscapeManualTodoTaskEntity)
+            .copyWith(isDone: false);
+
         when(() => mockController.state)
             .thenReturn(EscapeManualState.loaded(escapeManualEntity));
         when(() => mockController.updateTask(any()))
@@ -225,7 +229,8 @@ void main() {
       'should call controller deleteTask when delete button is pressed',
       (tester) async {
         // arrange
-        final expectedTask = escapeManualEntity.sections[1].tasks[1];
+        final expectedTask = escapeManualEntity.sections[1].tasks[1]
+            as EscapeManualTodoTaskEntity;
         when(() => mockController.state)
             .thenReturn(EscapeManualState.loaded(escapeManualEntity));
         when(() => mockController.deleteTask(any()))
