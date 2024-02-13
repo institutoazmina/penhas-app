@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+import '../../domain/entity/button.dart';
 import '../../domain/entity/contact.dart';
 import 'escape_manual_task_type.dart';
 
@@ -15,6 +16,10 @@ abstract class EscapeManualTaskModel extends Equatable {
               value is List<ContactEntity>?,
           'The `value` must be a `List<ContactEntity>` '
           'when the type is `contacts`',
+        ),
+        assert(
+          type == EscapeManualTaskType.button ? value is ButtonEntity : true,
+          'Invalid value: $value', // coverage:ignore-line
         ),
         assert(type != EscapeManualTaskType.unknown);
   // coverage:ignore-end

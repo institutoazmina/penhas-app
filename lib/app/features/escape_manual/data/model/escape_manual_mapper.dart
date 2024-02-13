@@ -65,6 +65,14 @@ extension EscapeManualTaskRemoteMapper on EscapeManualTaskRemoteModel {
           value: value,
         );
 
+      case EscapeManualTaskType.button:
+        return EscapeManualButtonTaskEntity(
+          id: id,
+          description: description,
+          isDone: isDone,
+          button: value,
+        );
+
       // coverage:ignore-start
       case EscapeManualTaskType.unknown:
         logError('Invalid type "$rawType" for task "$id"');
@@ -109,7 +117,7 @@ String? readRawType(Map map, String key) =>
 Map<String, dynamic> readUserInputValue(Map map, String key) =>
     <String, dynamic>{
       'type': map['type'] ?? map['tipo'],
-      'value': map[key],
+      'value': map[key] ?? map['data'],
     };
 
 dynamic userInputValueFromJson(Map<String, dynamic> json) {
@@ -121,6 +129,8 @@ dynamic userInputValueFromJson(Map<String, dynamic> json) {
   switch (type) {
     case escapeManualTaskTypeContacts:
       return ContactModel.fromJsonList(value);
+    case escapeManualTaskTypeButton:
+      return ButtonModel.fromJson(value);
     // coverage:ignore-start
     default: // track if this happens
       logError('Invalid value "$value" for type "$type"');
@@ -135,4 +145,18 @@ Object? _readTaskValue(EscapeManualTaskEntity entity) {
   }
   assert(entity is EscapeManualDefaultTaskEntity);
   return null;
+}
+
+Iterable<EscapeManualTaskRemoteModel> parseTasksFromJson(
+  List<dynamic>? tasks,
+) {
+  if (tasks == null) return const [];
+  return tasks.mapNotNull((e) {
+    try {
+      return EscapeManualTaskRemoteModel.fromJson(e as Map<String, dynamic>);
+    } catch (error, stack) {
+      logError(error, stack);
+      return null;
+    }
+  });
 }

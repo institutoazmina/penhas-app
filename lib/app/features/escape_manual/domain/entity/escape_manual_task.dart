@@ -1,8 +1,10 @@
 import 'package:equatable/equatable.dart';
 
+import 'button.dart';
 import 'contact.dart';
 
 export 'contact.dart';
+export 'button.dart';
 
 abstract class EscapeManualTaskEntity extends Equatable {
   const EscapeManualTaskEntity({
@@ -100,6 +102,33 @@ class EscapeManualContactsTaskEntity
         id: id,
         description: description,
         value: value ?? this.value,
+        isDone: isDone ?? this.isDone,
+      );
+}
+
+class EscapeManualButtonTaskEntity extends EscapeManualTaskEntity {
+  const EscapeManualButtonTaskEntity({
+    required String id,
+    required String description,
+    required this.button,
+    bool isDone = false,
+  }) : super(
+          id: id,
+          description: description,
+          isDone: isDone,
+        );
+
+  final ButtonEntity button;
+
+  @override
+  EscapeManualButtonTaskEntity copyWith({
+    bool? isDone,
+    ButtonEntity? button,
+  }) =>
+      EscapeManualButtonTaskEntity(
+        id: id,
+        description: description,
+        button: button ?? this.button,
         isDone: isDone ?? this.isDone,
       );
 }
