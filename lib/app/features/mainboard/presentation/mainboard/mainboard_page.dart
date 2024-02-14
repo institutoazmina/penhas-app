@@ -58,7 +58,7 @@ class _MainboardPageState
     return keyboardIsOpened
         ? Container()
         : Padding(
-            padding: const EdgeInsets.only(top: 30.0),
+            padding: const EdgeInsets.only(top: 8.0),
             child: SizedBox(
               width: 60.0,
               height: 60.0,
