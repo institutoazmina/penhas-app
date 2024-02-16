@@ -7,25 +7,50 @@ import '../../../domain/states/mainboard_state.dart';
 class MainboarButtonPage extends StatelessWidget {
   const MainboarButtonPage({
     Key? key,
+    required this.page,
+    required this.selectedPage,
     required this.onSelect,
-    required this.currentPage,
-    required this.pageSelected,
   }) : super(key: key);
 
-  final MainboardState currentPage;
-  final MainboardState? pageSelected;
-  final void Function(MainboardState) onSelect;
+  final MainboardState page;
+  final MainboardState selectedPage;
+  final ValueChanged<MainboardState> onSelect;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    final textColor = selectedPage.maybeWhen(
+      helpCenter: () => DesignSystemColors.white,
+      orElse: () => DesignSystemColors.buttonBarIconColor,
+    );
+
     return Expanded(
-      child: FlatButton(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        onPressed: () => onSelect(currentPage),
-        child: _buildBottomBarIcon(
-          currentPage,
-          pageSelected!,
+      child: InkResponse(
+        onTap: () => onSelect(page),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildBottomBarIcon(
+                page,
+                selectedPage,
+              ),
+              const SizedBox(height: 2),
+              Text(
+                page.label,
+                textAlign: TextAlign.center,
+                softWrap: true,
+                style: theme.textTheme.caption?.copyWith(
+                  fontSize: 12,
+                  color: textColor,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -66,6 +91,18 @@ class MainboarButtonPage extends StatelessWidget {
       width: 24,
       height: 24,
       fit: BoxFit.contain,
+      excludeFromSemantics: true,
     );
   }
+}
+
+extension MainboardStateExtension on MainboardState {
+  String get label => when(
+        feed: () => 'Ínicio',
+        compose: () => 'Publicar',
+        escapeManual: () => 'Manual de Fuga',
+        helpCenter: () => 'Socorro',
+        chat: () => 'Chat',
+        supportPoint: () => 'Pontos de Apoio',
+      );
 }
