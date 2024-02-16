@@ -33,9 +33,15 @@ class EscapeManualPage extends StatefulWidget {
 
 class _EscapeManualPageState
     extends ModularState<EscapeManualPage, EscapeManualController>
-    with SnackBarHandler {
+    with SnackBarHandler, AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   ReactionDisposer? _disposer;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(
+    debugLabel: 'escape-manual-scaffold-key',
+  );
 
   @override
   void didChangeDependencies() {
@@ -53,6 +59,7 @@ class _EscapeManualPageState
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       key: _scaffoldKey,
       body: Observer(

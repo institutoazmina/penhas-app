@@ -32,13 +32,19 @@ class FeedPage extends StatefulWidget {
 }
 
 class _FeedPageState extends ModularState<FeedPage, FeedController>
-    with SnackBarHandler {
+    with SnackBarHandler, AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   List<ReactionDisposer>? _disposers;
 
   final _scrollController = ScrollController();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(
+    debugLabel: 'feed-scaffold-key',
+  );
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey(
+    debugLabel: 'feed-refresh-indicator-key',
+  );
 
   PageProgressState _currentState = PageProgressState.initial;
 
@@ -71,6 +77,7 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       key: _scaffoldKey,
       body: _bodyBuilder(),
