@@ -33,7 +33,7 @@ class EscapeManualModule extends WidgetModule {
 
   @override
   final List<Bind<Object>> binds = [
-    Bind.factory(
+    Bind.lazySingleton(
       (i) => EscapeManualController(
         getEscapeManual: i.get(),
         startEscapeManual: i.get(),

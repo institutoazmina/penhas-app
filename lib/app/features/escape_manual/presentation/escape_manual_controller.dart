@@ -7,6 +7,7 @@ import 'package:mobx/mobx.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../core/error/failures.dart';
+import '../../../core/extension/either.dart';
 import '../../../core/extension/mobx.dart';
 import '../../../core/managers/background_task_manager.dart';
 import '../../../shared/logger/log.dart';
@@ -99,13 +100,13 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  Future<void> updateTask(EscapeManualTaskEntity task) async {
+  Future<void> updateTask(EscapeManualTodoTaskEntity task) async {
     final result = await _updateTask(task);
     result.fold(_onSaveTaskFailed, (_) {});
   }
 
   @action
-  Future<void> deleteTask(EscapeManualTaskEntity task) async {
+  Future<void> deleteTask(EscapeManualTodoTaskEntity task) async {
     final result = await _deleteTask(task);
     result.fold(_onSaveTaskFailed, (_) {});
   }
@@ -123,13 +124,27 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
     }
   }
 
+  Future<void> onButtonPressed(ButtonEntity button) async {
+    final result = await Modular.to
+        .pushNamed(button.route, arguments: button.arguments)
+        .toEither();
+
+    result.fold(
+      _handleErrorAsReaction,
+      (_) => load(),
+    );
+  }
+
   void callTo(ContactEntity contact) {
     launchUrlString('tel:${contact.phone}');
   }
 
-  ReactionDisposer onReaction(OnEscapeManualReaction fn) {
-    return reaction((_) => _reaction, fn);
-  }
+  ReactionDisposer onReaction(OnEscapeManualReaction fn) =>
+      reaction<EscapeManualReaction?>(
+        (_) => _reaction,
+        fn,
+        equals: (_, __) => false,
+      );
 
   Future<void> dispose() async {
     await subscription?.cancel();

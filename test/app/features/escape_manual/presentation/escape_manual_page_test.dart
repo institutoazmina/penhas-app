@@ -25,8 +25,10 @@ void main() {
 
   setUpAll(() {
     initModule(module);
+
     registerFallbackValue(_FakeEscapeManualTaskEntity());
     registerFallbackValue(_FakeEscapeManualContactsTaskEntity());
+    registerFallbackValue(_FakeButtonEntity());
   });
 
   setUp(() {
@@ -167,8 +169,10 @@ void main() {
       'should call controller updateTask with done task when checkbox is pressed',
       (tester) async {
         // arrange
-        final expectedTask =
-            escapeManualEntity.sections[1].tasks[4].copyWith(isDone: true);
+        final expectedTask = (escapeManualEntity.sections[1].tasks[4]
+                as EscapeManualTodoTaskEntity)
+            .copyWith(isDone: true);
+
         when(() => mockController.state)
             .thenReturn(EscapeManualState.loaded(escapeManualEntity));
         when(() => mockController.updateTask(any()))
@@ -196,8 +200,10 @@ void main() {
       'should call controller updateTask with not done task when checkbox is pressed',
       (tester) async {
         // arrange
-        final expectedTask =
-            escapeManualEntity.sections[1].tasks[2].copyWith(isDone: false);
+        final expectedTask = (escapeManualEntity.sections[1].tasks[2]
+                as EscapeManualTodoTaskEntity)
+            .copyWith(isDone: false);
+
         when(() => mockController.state)
             .thenReturn(EscapeManualState.loaded(escapeManualEntity));
         when(() => mockController.updateTask(any()))
@@ -225,7 +231,8 @@ void main() {
       'should call controller deleteTask when delete button is pressed',
       (tester) async {
         // arrange
-        final expectedTask = escapeManualEntity.sections[1].tasks[1];
+        final expectedTask = escapeManualEntity.sections[1].tasks[1]
+            as EscapeManualTodoTaskEntity;
         when(() => mockController.state)
             .thenReturn(EscapeManualState.loaded(escapeManualEntity));
         when(() => mockController.deleteTask(any()))
@@ -316,6 +323,40 @@ void main() {
 
         // assert
         verify(() => mockController.callTo(expectedContact)).called(1);
+      },
+    );
+
+    testWidgets(
+      'should call controller onButtonPressed when task button is pressed',
+      (tester) async {
+        // arrange
+        final task = escapeManualEntity.sections[1].tasks[0]
+            as EscapeManualButtonTaskEntity;
+        final expectedButton = task.button;
+
+        when(() => mockController.state)
+            .thenReturn(EscapeManualState.loaded(escapeManualEntity));
+        when(() => mockController.onButtonPressed(any()))
+            .thenAnswer((_) => Future.value());
+
+        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
+
+        // act
+        await tester.tap(
+          find.widgetWithText(ExpansionTile, 'Section 1'),
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(
+          find
+              .descendant(
+                of: find.byKey(Key('escape-manual-task-1-0')),
+                matching: find.textContaining('Task button'),
+              )
+              .first,
+        );
+
+        // assert
+        verify(() => mockController.onButtonPressed(expectedButton)).called(1);
       },
     );
 
@@ -459,10 +500,15 @@ class _MockEscapeManualController extends Mock
 class _MockReactionDisposer extends Mock implements mobx.ReactionDisposer {}
 
 class _FakeEscapeManualTaskEntity extends Fake
-    implements EscapeManualTaskEntity {}
+    implements EscapeManualTaskEntity {
+  @override
+  String get id => 'id';
+}
 
 class _FakeEscapeManualContactsTaskEntity extends Fake
     implements EscapeManualContactsTaskEntity {}
+
+class _FakeButtonEntity extends Fake implements ButtonEntity {}
 
 EscapeManualEntity get escapeManualEntity => EscapeManualEntity(
       assistant: EscapeManualAssistantEntity(
@@ -482,30 +528,49 @@ EscapeManualEntity get escapeManualEntity => EscapeManualEntity(
         (section) => EscapeManualTasksSectionEntity(
           title: 'Section $section',
           tasks: List.generate(
-            5,
-            (task) => task != 4
-                ? EscapeManualDefaultTaskEntity(
-                    id: '${section}-${task}',
-                    description: 'Task #${task} of section ${section}',
-                    isDone: task == 2,
-                  )
-                : EscapeManualContactsTaskEntity(
-                    id: '${section}-${task}',
-                    description: 'Task #${task} of section ${section}',
-                    value: [
-                      ContactEntity(
-                        id: 2,
-                        name: 'Contact name 2',
-                        phone: '(11) 22222-2222',
-                      ),
-                      ContactEntity(
-                        id: 1,
-                        name: 'Contact name',
-                        phone: '(11) 1111-1111',
-                      ),
-                    ],
-                  ),
+            6,
+            (task) => _fakeTaskGenerator(section, task),
           ),
         ),
       ),
     );
+
+EscapeManualTaskEntity _fakeTaskGenerator(int section, int task) {
+  switch (task) {
+    case 0:
+      return EscapeManualButtonTaskEntity(
+        id: '${section}-${task}',
+        description: 'Task #${task} of section ${section}',
+        button: ButtonEntity(
+          label: 'Task button',
+          route: '/route',
+          arguments: null,
+        ),
+      );
+    case 4:
+      return EscapeManualContactsTaskEntity(
+        id: '${section}-${task}',
+        description: 'Task #${task} of section ${section}',
+        value: [
+          ContactEntity(
+            id: 2,
+            name: 'Contact name 2',
+            phone: '(11) 22222-2222',
+          ),
+          ContactEntity(
+            id: 1,
+            name: 'Contact name',
+            phone: '(11) 1111-1111',
+          ),
+        ],
+      );
+    case 5:
+      return _FakeEscapeManualTaskEntity();
+    default:
+      return EscapeManualDefaultTaskEntity(
+        id: '${section}-${task}',
+        description: 'Task #${task} of section ${section}',
+        isDone: task == 2,
+      );
+  }
+}

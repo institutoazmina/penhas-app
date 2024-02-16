@@ -82,7 +82,7 @@ mixin _$EscapeManualController on _EscapeManualControllerBase, Store {
       AsyncAction('_EscapeManualControllerBase.updateTask');
 
   @override
-  Future<void> updateTask(EscapeManualTaskEntity task) {
+  Future<void> updateTask(EscapeManualTodoTaskEntity task) {
     return _$updateTaskAsyncAction.run(() => super.updateTask(task));
   }
 
@@ -90,7 +90,7 @@ mixin _$EscapeManualController on _EscapeManualControllerBase, Store {
       AsyncAction('_EscapeManualControllerBase.deleteTask');
 
   @override
-  Future<void> deleteTask(EscapeManualTaskEntity task) {
+  Future<void> deleteTask(EscapeManualTodoTaskEntity task) {
     return _$deleteTaskAsyncAction.run(() => super.deleteTask(task));
   }
 

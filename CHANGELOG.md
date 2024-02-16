@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Funcionamento offline do manual de fuga
 - Incluir/editar/exclusão de contatos de confiança
 - Sincronização das modificações das tarefas do manual de fuga para o servidor
+- Suporte ao botão na lista de tarefas, utilizado para voltar no bloco de transporte
 
 ## [3.4.0] - 2023-09-26
 

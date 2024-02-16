@@ -4,10 +4,15 @@ import 'package:json_annotation/json_annotation.dart';
 import '../../../../core/extension/json_serializer.dart';
 import '../../../appstate/data/model/quiz_session_model.dart';
 import 'escape_manual_mapper.dart'
-    show readRawType, readUserInputValue, userInputValueFromJson;
+    show
+        parseTasksFromJson,
+        readRawType,
+        readUserInputValue,
+        userInputValueFromJson;
 import 'escape_manual_task.dart';
 import 'escape_manual_task_type.dart';
 
+export 'button.dart';
 export 'contact.dart';
 export 'escape_manual_task_type.dart';
 
@@ -28,7 +33,7 @@ class EscapeManualRemoteModel extends Equatable {
   @JsonKey(name: 'mf_assistant')
   final EscapeManualAssistantRemoteModel assistant;
 
-  @JsonKey(name: 'tarefas')
+  @JsonKey(name: 'tarefas', fromJson: parseTasksFromJson)
   final Iterable<EscapeManualTaskRemoteModel> tasks;
 
   @JsonKey(name: 'tarefas_removidas', fromJson: FromJson.parseAsStringList)

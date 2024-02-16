@@ -11,6 +11,6 @@ class DeleteEscapeManualTaskUseCase {
 
   final IEscapeManualRepository _repository;
 
-  Future<Either<Failure, void>> call(EscapeManualTaskEntity task) =>
+  Future<Either<Failure, void>> call(EscapeManualTodoTaskEntity task) =>
       _repository.removeTask(task);
 }

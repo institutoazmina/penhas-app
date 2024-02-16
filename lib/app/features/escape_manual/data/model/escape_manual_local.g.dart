@@ -43,7 +43,8 @@ Map<String, dynamic> _$EscapeManualTaskLocalModelToJson(
 }
 
 const _$EscapeManualTaskTypeEnumMap = {
+  EscapeManualTaskType.unknown: 'unknown',
   EscapeManualTaskType.normal: 'checkbox',
   EscapeManualTaskType.contacts: 'checkbox_contato',
-  EscapeManualTaskType.unknown: 'unknown',
+  EscapeManualTaskType.button: 'button',
 };

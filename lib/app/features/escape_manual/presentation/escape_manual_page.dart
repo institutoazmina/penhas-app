@@ -8,6 +8,7 @@ import 'package:mobx/mobx.dart';
 
 import '../../../shared/design_system/button_shape.dart';
 import '../../../shared/design_system/colors.dart';
+import '../../../shared/logger/log.dart';
 import '../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../authentication/presentation/shared/snack_bar_handler.dart';
 import '../../support_center/presentation/pages/support_center_general_error.dart';
@@ -171,7 +172,10 @@ class _SectionTasksWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final qtyDoneTasks = section.tasks.where((task) => task.isDone).length;
+    final qtyDoneTasks = section.tasks
+        .whereType<EscapeManualTodoTaskEntity>()
+        .where((task) => task.isDone)
+        .length;
 
     return ExpansionTile(
       childrenPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
@@ -194,23 +198,34 @@ class _SectionTasksWidget extends StatelessWidget {
           ),
         ],
       ),
-      children: [
+      children: <Widget>[
         const _Divider(),
-        ...section.tasks.map(
-          (task) => _TaskWidget(
-            task,
-            key: Key('escape-manual-task-${task.id}'),
-          ),
-        ),
-      ].toList(),
+        ...section.tasks.map(_mapTaskToWidget),
+      ],
     );
+  }
+
+  Widget _mapTaskToWidget(EscapeManualTaskEntity task) {
+    final key = Key('escape-manual-task-${task.id}');
+    if (task is EscapeManualButtonTaskEntity) {
+      return _ButtonTaskWidget(task, key: key);
+    }
+    if (task is EscapeManualTodoTaskEntity) {
+      return _TaskWidget(task, key: key);
+    }
+    // This is a fallback for unknown task types
+    logError('Unknown task type: ${task.runtimeType}');
+    return const SizedBox.shrink();
   }
 }
 
 class _TaskWidget extends StatefulWidget {
-  const _TaskWidget(this.task, {Key? key}) : super(key: key);
+  const _TaskWidget(
+    this.task, {
+    Key? key,
+  }) : super(key: key);
 
-  final EscapeManualTaskEntity task;
+  final EscapeManualTodoTaskEntity task;
 
   @override
   State<_TaskWidget> createState() => _TaskWidgetState();
@@ -218,7 +233,7 @@ class _TaskWidget extends StatefulWidget {
 
 class _TaskWidgetState
     extends ModularState<_TaskWidget, EscapeManualController> {
-  EscapeManualTaskEntity get task => widget.task;
+  EscapeManualTodoTaskEntity get task => widget.task;
 
   late bool isChecked = task.isDone;
 
@@ -400,25 +415,72 @@ class _ContactWidget extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           TextButton.icon(
-              icon: const Icon(
-                Icons.phone_outlined,
-                size: 14,
+            icon: const Icon(
+              Icons.phone_outlined,
+              size: 14,
+            ),
+            label: const Text('Ligar'),
+            onPressed: () => onCallButtonPressed(contact),
+            style: TextButton.styleFrom(
+              primary: DesignSystemColors.white,
+              backgroundColor: DesignSystemColors.darkIndigoThree,
+              textStyle: Theme.of(context).textTheme.button?.copyWith(
+                    fontSize: 14,
+                  ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
               ),
-              label: const Text('Ligar'),
-              onPressed: () => onCallButtonPressed(contact),
-              style: TextButton.styleFrom(
-                primary: DesignSystemColors.white,
-                backgroundColor: DesignSystemColors.darkIndigoThree,
-                textStyle: Theme.of(context).textTheme.button?.copyWith(
-                      fontSize: 14,
-                    ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-              )),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+            ),
+          ),
         ],
+      ),
+    );
+  }
+}
+
+class _ButtonTaskWidget extends StatefulWidget {
+  const _ButtonTaskWidget(
+    this.task, {
+    Key? key,
+  }) : super(key: key);
+
+  final EscapeManualButtonTaskEntity task;
+
+  @override
+  State<_ButtonTaskWidget> createState() => _ButtonTaskWidgetState();
+}
+
+class _ButtonTaskWidgetState
+    extends ModularState<_ButtonTaskWidget, EscapeManualController> {
+  EscapeManualButtonTaskEntity get task => widget.task;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTileTheme(
+      horizontalTitleGap: 4,
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 8,
+          horizontal: 52,
+        ),
+        title: TextButton(
+          child: Text(task.button.label),
+          onPressed: () {
+            controller.onButtonPressed(task.button);
+          },
+          style: TextButton.styleFrom(
+            primary: DesignSystemColors.white,
+            backgroundColor: DesignSystemColors.darkIndigoThree,
+            textStyle: Theme.of(context).textTheme.button?.copyWith(
+                  fontSize: 14,
+                ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+          ),
+        ),
       ),
     );
   }

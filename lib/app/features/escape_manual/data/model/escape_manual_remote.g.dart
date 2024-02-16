@@ -13,10 +13,9 @@ EscapeManualRemoteModel _$EscapeManualRemoteModelFromJson(
           .fromJson(json['consultado_em'] as int),
       assistant: EscapeManualAssistantRemoteModel.fromJson(
           json['mf_assistant'] as Map<String, dynamic>),
-      tasks: (json['tarefas'] as List<dynamic>?)?.map((e) =>
-              EscapeManualTaskRemoteModel.fromJson(
-                  e as Map<String, dynamic>)) ??
-          const [],
+      tasks: json['tarefas'] == null
+          ? const []
+          : parseTasksFromJson(json['tarefas'] as List?),
       removedTasks: json['tarefas_removidas'] == null
           ? const []
           : FromJson.parseAsStringList(json['tarefas_removidas'] as List),
@@ -114,7 +113,8 @@ Map<String, dynamic> _$EscapeManualTaskRemoteModelToJson(
 }
 
 const _$EscapeManualTaskTypeEnumMap = {
+  EscapeManualTaskType.unknown: 'unknown',
   EscapeManualTaskType.normal: 'checkbox',
   EscapeManualTaskType.contacts: 'checkbox_contato',
-  EscapeManualTaskType.unknown: 'unknown',
+  EscapeManualTaskType.button: 'button',
 };

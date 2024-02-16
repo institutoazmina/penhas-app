@@ -62,6 +62,16 @@
             "id": 101,
             "tipo": "checkbox_contato",
             "titulo": ""
+        },
+        {
+            "agrupador": "Transporte",
+            "atualizado_em": 1706249823,
+            "id": 42,
+            "tipo": "button",
+            "data": {
+                "label": "Revisar Transporte",
+                "route": "/quiz/start?session_id=abcdedfgh"
+            }
         }
     ]
 }

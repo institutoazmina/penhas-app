@@ -112,6 +112,30 @@ void main() {
             .thenAnswer((_) async => Future.value());
       });
 
+      test(
+        'should not throws on broken response',
+        () async {
+          // arrange
+          final expected = escapeManualRemoteBroken;
+          final response = JsonUtil.getStringSync(
+            from: 'escape_manual/escape_manual_broken_response.json',
+          );
+          when(() => mockCacheStorage.retrieve()).thenAnswer((_) async => null);
+          when(
+            () => mockApiProvider.get(
+              path: any(named: 'path'),
+              parameters: any(named: 'parameters'),
+            ),
+          ).thenAnswer((_) async => response);
+
+          // act
+          final actual = await sut.fetch();
+
+          // assert
+          expect(actual, expected);
+        },
+      );
+
       group('given empty cache', () {
         setUp(() {
           when(() => mockCacheStorage.retrieve()).thenAnswer((_) async => null);

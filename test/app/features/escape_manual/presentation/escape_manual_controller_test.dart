@@ -21,6 +21,8 @@ import 'package:penhas/app/features/escape_manual/presentation/send_pending_esca
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:url_launcher_platform_interface/url_launcher_platform_interface.dart';
 
+import '../data/model/escape_manual_fixtures.dart';
+
 void main() {
   late EscapeManualController sut;
 
@@ -491,6 +493,117 @@ void main() {
               ),
             ),
           ).called(1);
+        },
+      );
+    });
+
+    group('onTaskButtonPressed', () {
+      late IModularNavigator mockNavigator;
+
+      setUp(() {
+        Modular.navigatorDelegate = mockNavigator = _MockModularNavigate();
+      });
+
+      test(
+        'should navigate to task.button.route',
+        () async {
+          // arrange
+          final task = EscapeManualButtonTaskEntity(
+            id: 'id',
+            description: 'description',
+            button: ButtonEntity(
+              label: 'label',
+              route: '/route',
+              arguments: 'arguments',
+            ),
+          );
+
+          when(
+            () => mockNavigator.pushNamed(
+              any(),
+              arguments: any(named: 'arguments'),
+            ),
+          ).thenAnswer((_) => Future.value());
+
+          // act
+          await sut.onButtonPressed(task.button);
+
+          // assert
+          verify(
+            () => mockNavigator.pushNamed(
+              task.button.route,
+              arguments: task.button.arguments,
+            ),
+          ).called(1);
+        },
+      );
+
+      test(
+        'should emit showSnackbar reaction when failed',
+        () async {
+          // arrange
+          final onReactionMock = _MockOnEscapeManualReaction();
+          final task = EscapeManualButtonTaskEntity(
+            id: 'id',
+            description: 'description',
+            button: ButtonEntity(
+              label: 'label',
+              route: '/route',
+              arguments: 'arguments',
+            ),
+          );
+
+          when(
+            () => mockNavigator.pushNamed(
+              any(),
+              arguments: any(named: 'arguments'),
+            ),
+          ).thenAnswer((_) => Future.error('error'));
+
+          sut.onReaction(onReactionMock);
+
+          // act
+          await sut.onButtonPressed(task.button);
+
+          // assert
+          verify(
+            () => onReactionMock.call(
+              const EscapeManualReaction.showSnackBar(
+                'Oops.. ocorreu um erro inesperado, tente novamente mais tarde.',
+              ),
+            ),
+          ).called(1);
+        },
+      );
+
+      test(
+        'should load when success',
+        () async {
+          // arrange
+          final task = EscapeManualButtonTaskEntity(
+            id: 'id',
+            description: 'description',
+            button: ButtonEntity(
+              label: 'label',
+              route: '/route',
+              arguments: 'arguments',
+            ),
+          );
+
+          when(
+            () => mockNavigator.pushNamed(
+              any(),
+              arguments: any(named: 'arguments'),
+            ),
+          ).thenAnswer((_) => Future.value(right<Failure, void>(null)));
+
+          // act
+          await sut.onButtonPressed(task.button);
+          getEscapeManualCompleter.complete(escapeManualEntityFixture);
+          await getEscapeManualCompleter.future;
+
+          // assert
+          verify(() => mockGetEscapeManual()).called(1);
         },
       );
     });

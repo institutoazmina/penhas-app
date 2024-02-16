@@ -72,6 +72,16 @@ final escapeManualModelFixture = EscapeManualRemoteModel(
       ],
       updatedAt: DateTime.now(),
     ),
+    EscapeManualTaskRemoteModel(
+      id: '42',
+      type: EscapeManualTaskType.button,
+      group: 'Transporte',
+      updatedAt: DateTime.fromMillisecondsSinceEpoch(1706249823000),
+      value: ButtonModel(
+        label: 'Revisar Transporte',
+        route: '/quiz/start?session_id=abcdedfgh',
+      ),
+    ),
   ],
 );
 
@@ -119,6 +129,18 @@ final escapeManualEntityFixture = EscapeManualEntity(
         ),
       ],
     ),
+    EscapeManualTasksSectionEntity(
+      title: 'Transporte',
+      tasks: [
+        EscapeManualButtonTaskEntity(
+          id: '42',
+          button: ButtonModel(
+            label: 'Revisar Transporte',
+            route: '/quiz/start?session_id=abcdedfgh',
+          ),
+        ),
+      ],
+    ),
   ],
 );
 
@@ -157,6 +179,18 @@ final updatedEscapeManualEntityFixture = EscapeManualEntity(
               phone: '(00) 00000-0000',
             ),
           ],
+        ),
+      ],
+    ),
+    EscapeManualTasksSectionEntity(
+      title: 'Transporte',
+      tasks: [
+        EscapeManualButtonTaskEntity(
+          id: '42',
+          button: ButtonModel(
+            label: 'Revisar Transporte',
+            route: '/quiz/start?session_id=abcdedfgh',
+          ),
         ),
       ],
     ),
@@ -212,6 +246,16 @@ final escapeManualRemoteModelFixture = EscapeManualRemoteModel(
       updatedAt: DateTime.fromMillisecondsSinceEpoch(1689701025000),
       value: null,
     ),
+    EscapeManualTaskRemoteModel(
+      id: '42',
+      type: EscapeManualTaskType.button,
+      group: 'Transporte',
+      updatedAt: DateTime.fromMillisecondsSinceEpoch(1706249823000),
+      value: ButtonModel(
+        label: 'Revisar Transporte',
+        route: '/quiz/start?session_id=abcdedfgh',
+      ),
+    ),
   ],
 );
 
@@ -265,6 +309,16 @@ final updatedEscapeManualRemoteModelFixture = EscapeManualRemoteModel(
       ],
     ),
     EscapeManualTaskRemoteModel(
+      id: '42',
+      type: EscapeManualTaskType.button,
+      group: 'Transporte',
+      updatedAt: DateTime.fromMillisecondsSinceEpoch(1706249823000),
+      value: ButtonModel(
+        label: 'Revisar Transporte',
+        route: '/quiz/start?session_id=abcdedfgh',
+      ),
+    ),
+    EscapeManualTaskRemoteModel(
       id: '76',
       type: EscapeManualTaskType.normal,
       group: 'Passos para fuga',
@@ -275,7 +329,7 @@ final updatedEscapeManualRemoteModelFixture = EscapeManualRemoteModel(
   ],
 );
 
-final EscapeManualTaskEntity escapeManualTaskEntityFixture =
+final EscapeManualTodoTaskEntity escapeManualTaskEntityFixture =
     EscapeManualDefaultTaskEntity(
   id: '1',
   description: 'description',
@@ -292,6 +346,56 @@ final EscapeManualEditableTaskEntity escapeManualEditableTaskEntityFixture =
       id: 1,
       name: 'Contact name',
       phone: '(00) 00000-0000',
+    ),
+  ],
+);
+
+final escapeManualRemoteBroken = EscapeManualRemoteModel(
+  lastModifiedAt: DateTime.fromMillisecondsSinceEpoch(1699916213000),
+  assistant: EscapeManualAssistantRemoteModel(
+      title: 'action button',
+      subtitle: 'Explanation',
+      quizSession: QuizSessionModel(sessionId: 'abcdef')),
+  tasks: [
+    EscapeManualTaskRemoteModel(
+      id: '3',
+      type: EscapeManualTaskType.button,
+      group: 'Transporte',
+      updatedAt: DateTime.fromMillisecondsSinceEpoch(1706249823000),
+      value: ButtonModel(
+        label: 'Action Button',
+        route: '/quiz',
+        arguments: QuizSessionModel(sessionId: '12345'),
+      ),
+    )
+  ],
+);
+
+final escapeManualEntityBroken = EscapeManualEntity(
+  assistant: EscapeManualAssistantEntity(
+    explanation: 'Explanation',
+    action: EscapeManualAssistantActionEntity(
+      text: 'action button',
+      quizSession: QuizSessionModel(
+        sessionId: 'abcdef',
+      ),
+    ),
+  ),
+  sections: [
+    EscapeManualTasksSectionEntity(
+      title: 'Transporte',
+      tasks: [
+        EscapeManualButtonTaskEntity(
+          id: '3',
+          button: ButtonModel(
+            label: 'Action Button',
+            route: '/quiz',
+            arguments: QuizSessionModel(
+              sessionId: '12345',
+            ),
+          ),
+        ),
+      ],
     ),
   ],
 );
