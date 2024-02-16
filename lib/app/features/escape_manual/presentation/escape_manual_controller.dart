@@ -7,6 +7,7 @@ import 'package:mobx/mobx.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../core/error/failures.dart';
+import '../../../core/extension/either.dart';
 import '../../../core/extension/mobx.dart';
 import '../../../core/managers/background_task_manager.dart';
 import '../../../shared/logger/log.dart';
@@ -126,19 +127,12 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
   Future<void> onButtonPressed(ButtonEntity button) async {
     final result = await Modular.to
         .pushNamed(button.route, arguments: button.arguments)
-        .catchError(
-      (error, stack) {
-        logError(error, stack);
-        return left(UnknownFailure());
-      },
-    );
+        .toEither();
 
-    if (result is Either<Failure, dynamic>) {
-      result.fold(
-        _handleErrorAsReaction,
-        (_) => load(),
-      );
-    }
+    result.fold(
+      _handleErrorAsReaction,
+      (_) => load(),
+    );
   }
 
   void callTo(ContactEntity contact) {

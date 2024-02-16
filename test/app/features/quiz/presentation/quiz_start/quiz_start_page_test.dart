@@ -50,7 +50,7 @@ void main() {
       (tester) async {
         // arrange
         when(
-          () => mockNavigator.pushNamed(
+          () => mockNavigator.pushReplacementNamed(
             any(),
             arguments: any(named: 'arguments'),
           ),
@@ -111,7 +111,7 @@ void main() {
         when(() => mockStartQuiz(any()))
             .thenAnswer((_) async => right(session));
         when(
-          () => mockNavigator.pushNamed(
+          () => mockNavigator.pushReplacementNamed(
             any(),
             arguments: any(named: 'arguments'),
           ),
@@ -128,40 +128,10 @@ void main() {
 
         // assert
         verify(
-          () => mockNavigator.pushNamed(
+          () => mockNavigator.pushReplacementNamed(
             '/quiz',
             arguments: session,
           ),
-        ).called(1);
-      },
-    );
-
-    testWidgets(
-      'should pop with failure when push /quiz fails',
-      (tester) async {
-        // arrange
-        final session = _FakeQuizSessionEntity();
-        when(() => mockStartQuiz(any()))
-            .thenAnswer((_) async => right(session));
-        when(
-          () => mockNavigator.pushNamed(
-            any(),
-            arguments: any(named: 'arguments'),
-          ),
-        ).thenAnswer((_) => Future.error(Exception()));
-
-        // act
-        await tester.pumpWidget(
-          buildTestableWidget(
-            QuizStartPage(),
-          ),
-        );
-
-        await tester.pump();
-
-        // assert
-        verify(
-          () => mockNavigator.pop<_PageResult>(left(UnknownFailure())),
         ).called(1);
       },
     );
