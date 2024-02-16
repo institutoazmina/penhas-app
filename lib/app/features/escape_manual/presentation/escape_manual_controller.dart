@@ -139,9 +139,12 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
     launchUrlString('tel:${contact.phone}');
   }
 
-  ReactionDisposer onReaction(OnEscapeManualReaction fn) {
-    return reaction((_) => _reaction, fn);
-  }
+  ReactionDisposer onReaction(OnEscapeManualReaction fn) =>
+      reaction<EscapeManualReaction?>(
+        (_) => _reaction,
+        fn,
+        equals: (_, __) => false,
+      );
 
   Future<void> dispose() async {
     await subscription?.cancel();
