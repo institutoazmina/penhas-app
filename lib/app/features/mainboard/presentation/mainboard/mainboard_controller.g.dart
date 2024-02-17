@@ -41,22 +41,6 @@ mixin _$MainboardController on _MainboardControllerBase, Store {
     });
   }
 
-  final _$securityStateAtom =
-      Atom(name: '_MainboardControllerBase.securityState');
-
-  @override
-  MainboardSecurityState get securityState {
-    _$securityStateAtom.reportRead();
-    return super.securityState;
-  }
-
-  @override
-  set securityState(MainboardSecurityState value) {
-    _$securityStateAtom.reportWrite(value, super.securityState, () {
-      super.securityState = value;
-    });
-  }
-
   final _$changeAppStateAsyncAction =
       AsyncAction('_MainboardControllerBase.changeAppState');
 
@@ -83,8 +67,7 @@ mixin _$MainboardController on _MainboardControllerBase, Store {
   String toString() {
     return '''
 selectedIndex: ${selectedIndex},
-notificationCounter: ${notificationCounter},
-securityState: ${securityState}
+notificationCounter: ${notificationCounter}
     ''';
   }
 }

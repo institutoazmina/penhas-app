@@ -14,7 +14,7 @@ class MainboarButtonPage extends StatelessWidget {
 
   final MainboardState page;
   final MainboardState selectedPage;
-  final ValueChanged<MainboardState> onSelect;
+  final VoidCallback onSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -27,36 +27,55 @@ class MainboarButtonPage extends StatelessWidget {
 
     return Expanded(
       child: InkResponse(
-        onTap: () => onSelect(page),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _buildBottomBarIcon(
-                page,
-                selectedPage,
-              ),
-              const SizedBox(height: 2),
-              Text(
-                page.label,
-                textAlign: TextAlign.center,
-                softWrap: true,
-                style: theme.textTheme.caption?.copyWith(
-                  fontSize: 12,
-                  color: textColor,
+        onTap: onSelect,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            minHeight: kBottomNavigationBarHeight,
+            minWidth: 80,
+            maxWidth: 168,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 2),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _BottomBarIcon(
+                  current: page,
+                  selected: selectedPage,
                 ),
-              ),
-            ],
+                const SizedBox(height: 2),
+                Text(
+                  page.label,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.caption?.copyWith(
+                    fontSize: 12,
+                    color: textColor,
+                    height: 1,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
+}
 
-  Widget _buildBottomBarIcon(MainboardState current, MainboardState selected) {
+class _BottomBarIcon extends StatelessWidget {
+  const _BottomBarIcon({
+    required this.current,
+    required this.selected,
+    Key? key,
+  }) : super(key: key);
+
+  final MainboardState current;
+  final MainboardState selected;
+
+  @override
+  Widget build(BuildContext context) {
     String asset;
     const String rootPath = 'assets/images/svg/bottom_bar';
 
@@ -85,13 +104,14 @@ class MainboarButtonPage extends StatelessWidget {
       orElse: () => DesignSystemColors.buttonBarIconColor,
     );
 
-    return SvgPicture.asset(
-      asset,
-      color: assetColor,
-      width: 24,
-      height: 24,
-      fit: BoxFit.contain,
-      excludeFromSemantics: true,
+    return SizedBox.square(
+      dimension: 24,
+      child: SvgPicture.asset(
+        asset,
+        color: assetColor,
+        fit: BoxFit.contain,
+        excludeFromSemantics: true,
+      ),
     );
   }
 }
