@@ -46,6 +46,8 @@ abstract class _MainboardStoreBase with Store {
     return _pageController;
   }
 
+  Future switchToPage(MainboardState to) => changePage(to: to);
+
   @action
   Future changePage({required MainboardState to}) async {
     await setupProgress;

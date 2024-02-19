@@ -55,7 +55,7 @@ class _MainboardPageState
         bottomNavigationBar: MainboardBottomNavigationPage(
           currentPage: controller.mainboardStore.selectedPage,
           pages: controller.mainboardStore.pages,
-          onSelect: (v) => controller.mainboardStore.changePage(to: v),
+          onSelect: controller.mainboardStore.switchToPage,
         ),
       ),
     );

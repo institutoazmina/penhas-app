@@ -19,15 +19,17 @@ abstract class _MainboardControllerBase with Store {
     required this.mainboardStore,
     required InactivityLogoutUseCase inactivityLogoutUseCase,
     required INotificationRepository notification,
+    Timer? notificationTimer,
   })  : _inactivityLogoutUseCase = inactivityLogoutUseCase,
-        _notification = notification {
+        _notification = notification,
+        _syncTimer = notificationTimer {
     setup();
   }
 
   final MainboardStore mainboardStore;
 
   Timer? _syncTimer;
-  final int _notificationInterval = 60;
+  final int notificationInterval = 60;
 
   final InactivityLogoutUseCase _inactivityLogoutUseCase;
   final INotificationRepository _notification;
@@ -71,7 +73,7 @@ extension _PrivateMethod on _MainboardControllerBase {
     }
 
     _syncTimer = Timer.periodic(
-      Duration(seconds: _notificationInterval),
+      Duration(seconds: notificationInterval),
       (timer) async {
         checkUnRead();
       },

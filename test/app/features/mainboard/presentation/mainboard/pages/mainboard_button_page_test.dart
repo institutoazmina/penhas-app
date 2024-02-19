@@ -5,6 +5,8 @@ import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/pages/mainboard_button_page.dart';
 
+import '../../../../../../utils/mock_callbacks.dart';
+
 void main() {
   group(MainboarButtonPage, () {
     testWidgets(
@@ -22,7 +24,7 @@ void main() {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   MainboarButtonPage(
-                    onSelect: (page) {},
+                    onSelect: () {},
                     page: page,
                     selectedPage: selectedPage,
                   ),
@@ -42,7 +44,7 @@ void main() {
       'should call onSelect when button is pressed',
       (tester) async {
         // arrange
-        final onSelect = _MockOnSelectPage();
+        final onSelect = MockVoidCallback();
         final page = MainboardState.helpCenter();
         final selectedPage = MainboardState.feed();
 
@@ -68,14 +70,8 @@ void main() {
         await tester.pump();
 
         // assert
-        verify(() => onSelect(page)).called(1);
+        verify(() => onSelect()).called(1);
       },
     );
   });
-}
-
-class _MockOnSelectPage extends Mock implements IOnSelectPage {}
-
-abstract class IOnSelectPage {
-  void call(MainboardState page);
 }
