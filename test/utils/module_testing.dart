@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:penhas/app/app_module.dart';
 
 Widget buildTestableApp({
@@ -7,20 +8,27 @@ Widget buildTestableApp({
   String? initialRoute,
   List<Module>? modules,
   List<Bind> overrides = const [],
-}) =>
-    ModularApp(
-      module: _TestModule(
-        home: home,
-        modules: modules ?? [AppModule()],
-        overrides: overrides,
-      ),
-      child: MediaQuery(
-        data: MediaQueryData(),
-        child: MaterialApp(
-          initialRoute: initialRoute,
-        ).modular(),
-      ),
-    );
+}) {
+  final testModule = _TestModule(
+    home: home,
+    modules: modules ?? [AppModule()],
+    overrides: overrides,
+  );
+
+  addTearDown(() {
+    Modular.removeModule(testModule);
+  });
+
+  return ModularApp(
+    module: testModule,
+    child: MediaQuery(
+      data: MediaQueryData(),
+      child: MaterialApp(
+        initialRoute: initialRoute,
+      ).modular(),
+    ),
+  );
+}
 
 class _TestModule extends Module {
   _TestModule({

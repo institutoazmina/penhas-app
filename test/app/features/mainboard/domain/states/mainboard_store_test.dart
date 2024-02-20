@@ -96,13 +96,13 @@ void main() {
       verify(() => pageController.jumpToPage(-1)).called(1);
     });
 
-    test('jumps to the correct page when changePage is called', () async {
+    test('jumps to the correct page when switchToPage is called', () async {
       // arrange
       await store.setupProgress;
       final expectedPage = MainboardState.chat();
       final expectedIndex = store.pages.indexOf(expectedPage);
       // act
-      await store.changePage(to: expectedPage);
+      await store.switchToPage(expectedPage);
       // assert
       expect(store.selectedPage, equals(expectedPage));
       verify(() => pageController.jumpToPage(expectedIndex)).called(1);

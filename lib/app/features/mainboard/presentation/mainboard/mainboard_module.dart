@@ -97,17 +97,13 @@ class MainboardModule extends Module {
         Bind.lazySingleton<MainboardStore>(
           (i) => MainboardStore(
             modulesServices: i.get<IAppModulesServices>(),
-            initialPage: i.args?.data is Map
-                // ignore: avoid_dynamic_calls
-                ? MainboardState.fromString(i.args?.data['page'])
-                : const MainboardState.feed(),
+            initialPage: MainboardState.fromString(i.args?.queryParams['page']),
           ),
         ),
         Bind.factory(
           (i) => MainboardController(
             mainboardStore: i.get<MainboardStore>(),
             inactivityLogoutUseCase: i.get<InactivityLogoutUseCase>(),
-            modulesServices: i.get<IAppModulesServices>(),
             notification: i.get<INotificationRepository>(),
           ),
         ),
