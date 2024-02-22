@@ -67,7 +67,9 @@ abstract class _QuizControllerBase with Store {
       QuizMessageEntity(
         ref: messageRemoved.ref,
         content: messageRemoved.content,
-        type: QuizMessageType.displayText,
+        type: messageRemoved.type != QuizMessageType.displayTextResponse
+            ? QuizMessageType.displayText
+            : messageRemoved.type,
       ),
     ]);
 
