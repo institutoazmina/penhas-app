@@ -10,17 +10,17 @@ import 'package:penhas/app/shared/design_system/theme.dart';
 import 'durations.dart';
 import 'golden_test_widget_app.dart';
 
-final testDevices = [
-  const Device(
+const testDevices = const [
+  Device(
     name: 'iPhone 6',
     size: Size(375, 667),
   ),
-  const Device(
+  Device(
     name: 'iPhone Pro',
     size: Size(390, 844),
     safeArea: EdgeInsets.only(top: 47, bottom: 34),
   ),
-  const Device(
+  Device(
     name: 'iPhone Pro Max',
     size: Size(428, 926),
     safeArea: EdgeInsets.only(top: 47, bottom: 34),
@@ -34,7 +34,7 @@ Future<void> screenshotTest(
   FutureOr<void> Function()? setUp,
   required Widget Function() pageBuilder,
   PumpAction? pumpBeforeTest,
-  List<Device>? devices,
+  List<Device> devices = testDevices,
   bool skip = false,
   List<String> tags = const ['golden'],
   Duration timeout = const Duration(seconds: 5),
@@ -47,8 +47,14 @@ Future<void> screenshotTest(
 
       return GoldenTestGroup(
         columns: 3,
-        children: (devices ?? testDevices)
-            .map((it) => GoldenTestWidgetApp(device: it, builder: pageBuilder))
+        children: devices
+            .map(
+              (it) => GoldenTestWidgetApp(
+                key: ValueKey(it),
+                device: it,
+                builder: pageBuilder,
+              ),
+            )
             .toList(),
       );
     },
