@@ -13,16 +13,23 @@ import 'quiz_single_choice_widget.dart';
 class QuizUserReplyWidget extends StatelessWidget {
   const QuizUserReplyWidget({
     Key? key,
-    required this.message,
+    required QuizMessageEntity? message,
     required this.onActionReply,
-  }) : super(key: key);
+  })  : _message = message,
+        super(key: key);
 
-  final QuizMessageEntity message;
+  final QuizMessageEntity? _message;
   final UserReaction onActionReply;
+
+  QuizMessageType? get type => _message?.type;
+  QuizMessageEntity get message => _message!;
 
   @override
   Widget build(BuildContext context) {
-    switch (message.type) {
+    final type = this.type;
+    if (type == null) return const SizedBox.shrink();
+
+    switch (type) {
       case QuizMessageType.yesno:
         return QuizButtonYesNoWidget(
           reference: message.ref,

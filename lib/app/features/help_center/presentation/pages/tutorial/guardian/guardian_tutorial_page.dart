@@ -64,7 +64,7 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
           icon: const Icon(Icons.cancel),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Navigator.of(context).pop(false),
         ),
       ),
       body: SafeArea(
@@ -145,7 +145,7 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
   }
 
   void _dispose() {
-    Navigator.of(context).pop();
+    Navigator.of(context).pop(true);
   }
 
   List<Widget> _buildPageIndicator() {

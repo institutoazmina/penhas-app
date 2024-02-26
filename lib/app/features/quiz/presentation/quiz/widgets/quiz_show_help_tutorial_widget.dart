@@ -40,7 +40,7 @@ class QuizShowHelpTutorialWidget extends StatelessWidget {
             context,
             TutorialScaleRoute(page: const GuardianTutorialPage()),
           ).then(
-            (value) => onPressed({reference: value ? '1' : '0'}),
+            (value) => onPressed({reference: value == true ? '1' : '0'}),
           );
         },
         shape: kButtonShapeFilled,

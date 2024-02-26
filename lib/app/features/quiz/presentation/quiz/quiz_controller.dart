@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../core/error/failures.dart';
@@ -20,7 +21,8 @@ class QuizController extends _QuizControllerBase with _$QuizController {
     required QuizSessionEntity quizSession,
     required AppStateUseCase appStateUseCase,
     required IQuizRepository repository,
-  }) : super(quizSession, appStateUseCase, repository);
+    required AppNavigator navigator,
+  }) : super(quizSession, appStateUseCase, repository, navigator);
 }
 
 abstract class _QuizControllerBase with Store {
@@ -28,17 +30,20 @@ abstract class _QuizControllerBase with Store {
     this._quizSession,
     this._appStateUseCase,
     this._repository,
+    this._navigator,
   ) {
-    final reversedCurrent = _quizSession.currentMessage!.reversed.toList();
+    final reversedCurrent = _quizSession.currentMessage.reversed.toList();
     _sessionId = _quizSession.sessionId;
 
     messages.addAll(reversedCurrent);
     _parseUserReply(reversedCurrent);
   }
 
-  final QuizSessionEntity _quizSession;
   final IQuizRepository _repository;
   final AppStateUseCase _appStateUseCase;
+  final AppNavigator _navigator;
+
+  final QuizSessionEntity _quizSession;
   String? _sessionId;
 
   ObservableList<QuizMessageEntity> messages =
@@ -66,7 +71,9 @@ abstract class _QuizControllerBase with Store {
       QuizMessageEntity(
         ref: messageRemoved.ref,
         content: messageRemoved.content,
-        type: QuizMessageType.displayText,
+        type: messageRemoved.type != QuizMessageType.displayTextResponse
+            ? QuizMessageType.displayText
+            : messageRemoved.type,
       ),
     ]);
 
@@ -166,7 +173,7 @@ abstract class _QuizControllerBase with Store {
   }
 
   void _parseUserReply(List<QuizMessageEntity> messages) {
-    userReplyMessage = messages.firstWhere(
+    userReplyMessage = messages.firstWhereOrNull(
       (e) => e.type != QuizMessageType.displayText,
     );
   }
@@ -181,18 +188,24 @@ abstract class _QuizControllerBase with Store {
   }
 
   void _parseState(AppStateEntity state) {
-    if (state.quizSession?.isFinished ?? true) {
+    final quizSession = state.quizSession;
+    if (quizSession == null) return;
+
+    if (quizSession.isFinished) {
       _updateAppStates(
         state,
-        (_) => AppNavigator.popAndPush(AppRoute(state.quizSession!.endScreen!)),
+        (_) => _navigator.pushAndRemoveUntil(
+          AppRoute(quizSession.endScreen ?? '/'),
+          removeUntil: '/',
+        ),
       );
       return;
     }
 
-    _sessionId = state.quizSession!.sessionId;
+    _sessionId = quizSession.sessionId;
 
-    if (state.quizSession?.currentMessage != null) {
-      messages.insertAll(0, state.quizSession!.currentMessage!.reversed);
+    if (quizSession.currentMessage.isNotEmpty) {
+      messages.insertAll(0, quizSession.currentMessage.reversed);
     }
 
     _parseUserReply(messages);

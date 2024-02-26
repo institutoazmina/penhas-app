@@ -22,7 +22,7 @@ class AppNavigator {
     }
   }
 
-  static Future<void> pushAndRemoveUntil(
+  Future<void> pushAndRemoveUntil(
     AppRoute route, {
     required String removeUntil,
   }) async {

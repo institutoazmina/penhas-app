@@ -121,7 +121,6 @@ void main() {
                 text: 'button text',
                 quizSession: QuizSessionEntity(
                   sessionId: 'session_id',
-                  currentMessage: null,
                   isFinished: false,
                   endScreen: null,
                 ),
@@ -150,7 +149,6 @@ void main() {
                 text: 'button text',
                 quizSession: QuizSessionEntity(
                   sessionId: 'session_id',
-                  currentMessage: null,
                   isFinished: false,
                   endScreen: null,
                 ),
@@ -386,7 +384,6 @@ void main() {
         text: 'button text',
         quizSession: QuizSessionEntity(
           sessionId: 'session_id',
-          currentMessage: null,
           isFinished: false,
           endScreen: null,
         ),

@@ -72,13 +72,13 @@ class AppStateEntity extends Equatable {
 @immutable
 class QuizSessionEntity extends Equatable {
   const QuizSessionEntity({
-    required this.currentMessage,
     required this.sessionId,
-    required this.isFinished,
-    required this.endScreen,
+    this.currentMessage = const [],
+    this.isFinished = false,
+    this.endScreen,
   });
 
-  final List<QuizMessageEntity>? currentMessage;
+  final List<QuizMessageEntity> currentMessage;
   final String sessionId;
   final bool isFinished;
   final String? endScreen;

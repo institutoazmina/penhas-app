@@ -117,7 +117,6 @@ void main() {
         const assistantAction = EscapeManualAssistantActionEntity(
           text: 'button',
           quizSession: QuizSessionEntity(
-            currentMessage: null,
             sessionId: 'session id',
             isFinished: false,
             endScreen: null,
@@ -517,7 +516,6 @@ EscapeManualEntity get escapeManualEntity => EscapeManualEntity(
           text: 'Action text',
           quizSession: QuizSessionEntity(
             sessionId: 'session id',
-            currentMessage: null,
             isFinished: false,
             endScreen: null,
           ),

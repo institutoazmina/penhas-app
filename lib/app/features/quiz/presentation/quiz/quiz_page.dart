@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../shared/design_system/colors.dart';
+import '../../../authentication/presentation/shared/snack_bar_handler.dart';
 import 'quiz_controller.dart';
 import 'widgets/quiz_message_widget.dart';
 import 'widgets/quiz_user_reply_widget.dart';
@@ -14,10 +15,11 @@ class QuizPage extends StatefulWidget {
   final String title;
 
   @override
-  _QuizPageState createState() => _QuizPageState();
+  State<QuizPage> createState() => QuizPageState();
 }
 
-class _QuizPageState extends ModularState<QuizPage, QuizController> {
+class QuizPageState extends ModularState<QuizPage, QuizController>
+    with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -30,10 +32,9 @@ class _QuizPageState extends ModularState<QuizPage, QuizController> {
           return;
         }
 
-        _scaffoldKey.currentState?.showSnackBar(
-          SnackBar(
-            content: Text(message),
-          ),
+        showSnackBar(
+          scaffoldKey: _scaffoldKey,
+          message: message,
         );
       }),
     ];
@@ -70,7 +71,7 @@ class _QuizPageState extends ModularState<QuizPage, QuizController> {
             Observer(
               builder: (_) {
                 return QuizUserReplyWidget(
-                  message: controller.userReplyMessage!,
+                  message: controller.userReplyMessage,
                   onActionReply: controller.onActionReply,
                 );
               },
@@ -93,13 +94,12 @@ class _QuizPageState extends ModularState<QuizPage, QuizController> {
     return AppBar(
       elevation: 0.0,
       backgroundColor: DesignSystemColors.ligthPurple,
-      title: const Center(
-        child: SizedBox(
-          width: 39.0,
-          height: 18.0,
-          child: Image(
-            image: AssetImage('assets/images/penhas_symbol/penhas_symbol.png'),
-          ),
+      centerTitle: true,
+      title: const SizedBox(
+        width: 39.0,
+        height: 18.0,
+        child: Image(
+          image: AssetImage('assets/images/penhas_symbol/penhas_symbol.png'),
         ),
       ),
     );
