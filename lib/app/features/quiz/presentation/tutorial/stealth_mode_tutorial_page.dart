@@ -116,7 +116,7 @@ class _StealthModeTutorialPageState extends ModularState<
       const TutorialPageViewWidget(
         title: 'Garanta sua privacidade',
         description:
-            'Aplique um disfarce de app de signo para esconder o verdadeiro conteúdo do PenhaS.\n\nPara entrar no app com o modo modo camuflado ativo, clique no botão "Diário astrológico" para ser direcionada para a tela de login.',
+            'Aplique um disfarce de app de signo para esconder o verdadeiro conteúdo do PenhaS.\n\nPara entrar no app com o modo camuflado ativo, clique no botão "Diário astrológico" para ser direcionada para a tela de login.',
         bodyWidget: Image(
           image: AssetImage(
             'assets/images/stealth_mode_tutorial_image_1/stealth_mode_tutorial_image_1.png',
