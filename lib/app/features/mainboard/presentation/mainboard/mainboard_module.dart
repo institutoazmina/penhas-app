@@ -97,7 +97,9 @@ class MainboardModule extends Module {
         Bind.lazySingleton<MainboardStore>(
           (i) => MainboardStore(
             modulesServices: i.get<IAppModulesServices>(),
-            initialPage: MainboardState.fromString(i.args?.queryParams['page']),
+            initialPage: MainboardState.fromString(
+              i.args?.queryParams['page'] ?? i.args?.data?['page'],
+            ),
           ),
         ),
         Bind.factory(
