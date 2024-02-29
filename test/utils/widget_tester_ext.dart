@@ -15,6 +15,14 @@ extension WidgetTesterExt on WidgetTester {
     }
   }
 
+  Future<void> enterTextAll(Finder finder, String text) async {
+    final evaluated = finder.evaluate();
+    assert(evaluated.isNotEmpty, finder.toString());
+    for (final element in evaluated) {
+      await enterText(find.byElementPredicate((e) => e == element), text);
+    }
+  }
+
   Future<void>
       withViewController<P extends StatefulWidget, S extends ModularState, C>(
     OnController<C> onController,

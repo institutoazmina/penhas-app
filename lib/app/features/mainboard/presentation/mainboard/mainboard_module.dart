@@ -109,7 +109,7 @@ class MainboardModule extends Module {
             notification: i.get<INotificationRepository>(),
           ),
         ),
-        Bind.lazySingleton(
+        Bind.lazySingleton<FeedUseCases>(
           (i) => FeedUseCases(
             repository: i.get<ITweetRepository>(),
             filterPreference: i.get<TweetFilterPreference>(),
@@ -387,7 +387,7 @@ class MainboardModule extends Module {
             useCase: i.get<TweetFilterPreference>(),
           ),
         ),
-        Bind.factory(
+        Bind.factory<ComposeTweetNavigator>(
           (i) => ComposeTweetNavigator(
             currentUri: i.args?.uri,
           ),
