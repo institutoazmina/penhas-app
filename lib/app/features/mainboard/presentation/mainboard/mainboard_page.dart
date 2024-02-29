@@ -15,11 +15,14 @@ class MainboardPage extends StatefulWidget {
     debugLabel: 'main-board-scaffold-key',
   );
 
+  static MainboardPageState? of(BuildContext context) =>
+      context.findAncestorStateOfType<MainboardPageState>();
+
   @override
-  _MainboardPageState createState() => _MainboardPageState();
+  MainboardPageState createState() => MainboardPageState();
 }
 
-class _MainboardPageState
+class MainboardPageState
     extends ModularState<MainboardPage, MainboardController>
     with WidgetsBindingObserver {
   @override

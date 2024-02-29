@@ -94,7 +94,7 @@ class MainboardModule extends Module {
         ...notificationBinds,
         ...menuBind,
         ...chatBinds,
-        Bind.lazySingleton<MainboardStore>(
+        Bind.factory<MainboardStore>(
           (i) => MainboardStore(
             modulesServices: i.get<IAppModulesServices>(),
             initialPage: MainboardState.fromString(
@@ -390,7 +390,6 @@ class MainboardModule extends Module {
         Bind.factory(
           (i) => ComposeTweetNavigator(
             currentUri: i.args?.uri,
-            mainboardStore: i.get<MainboardStore>(),
           ),
         ),
         Bind.factory<IUsersRepository>(
