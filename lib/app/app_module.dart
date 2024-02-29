@@ -36,7 +36,7 @@ import 'features/authentication/presentation/sign_in/sign_in_module.dart';
 import 'features/help_center/data/repositories/audio_sync_repository.dart';
 import 'features/main_menu/domain/repositories/user_profile_repository.dart';
 import 'features/mainboard/presentation/mainboard/mainboard_module.dart';
-import 'features/quiz/presentation/quiz/quiz_module.dart';
+import 'features/quiz/quiz_module.dart';
 import 'features/splash/splash_module.dart';
 import 'shared/navigation/app_navigator.dart';
 

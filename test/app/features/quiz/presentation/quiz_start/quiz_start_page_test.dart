@@ -6,8 +6,8 @@ import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/quiz/domain/start_quiz.dart';
-import 'package:penhas/app/features/quiz/presentation/quiz/quiz_module.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz_start/quiz_start_page.dart';
+import 'package:penhas/app/features/quiz/quiz_module.dart';
 
 import '../../../../../utils/module_testing.dart';
 
