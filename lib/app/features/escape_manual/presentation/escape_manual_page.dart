@@ -189,13 +189,16 @@ class _SectionTasksWidget extends StatelessWidget {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            section.title,
-            textAlign: TextAlign.start,
-            style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                  fontWeight: FontWeight.w700,
-                  color: DesignSystemColors.darkIndigoThree,
-                ),
+          Flexible(
+            child: Text(
+              section.title,
+              textAlign: TextAlign.start,
+              softWrap: true,
+              style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: DesignSystemColors.darkIndigoThree,
+                  ),
+            ),
           ),
           Text(
             '$qtyDoneTasks/${section.tasks.length}',
