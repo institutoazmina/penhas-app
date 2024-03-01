@@ -11,6 +11,7 @@ import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/core/remoteconfig/i_remote_config.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
+import 'package:penhas/app/features/quiz/presentation/new_quiz/quiz_page.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz/quiz_page.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz_bridge/quiz_bridge.dart';
 import 'package:penhas/app/features/quiz/quiz_module.dart';
@@ -83,13 +84,14 @@ void main() {
       (tester) async {
         // arrange
         when(() => mockRemoteConfig.getBool(any())).thenReturn(true);
+        when(() => mockRemoteConfig.getInt(any())).thenReturn(42);
         when(() => mockRemoteConfig.getList<String>(any())).thenReturn([]);
 
         // act
         await tester.pumpWidget(sut);
 
         // assert
-        expect(find.byKey(const Key('new-quiz-placeholder')), findsOneWidget);
+        expect(find.byType(NewQuizPage), findsOneWidget);
       },
     );
 

@@ -14,7 +14,9 @@ import 'data/datasources/quiz_data_source.dart';
 import 'data/repositories/quiz_repository.dart';
 import 'domain/quiz_remote_config.dart';
 import 'domain/repositories/i_quiz_repository.dart';
+import 'domain/send_answer.dart';
 import 'domain/start_quiz.dart';
+import 'presentation/new_quiz/quiz_controller.dart';
 import 'presentation/quiz/quiz_controller.dart';
 import 'presentation/quiz_bridge/quiz_bridge.dart';
 import 'presentation/quiz_start/quiz_start_controller.dart';
@@ -33,10 +35,26 @@ class QuizModule extends Module {
             navigator: i.get<AppNavigator>(),
           ),
         ),
+        Bind.factory<IQuizController>(
+          (i) => IQuizController.legacy(
+            quiz: i.args?.data,
+            sendAnswer: i.get<SendAnswerUseCase>(),
+            remoteConfig: QuizRemoteConfig(
+              remoteConfig: i.get<IRemoteConfigService>(),
+            ),
+            navigator: i.get<AppNavigator>(),
+          ),
+        ),
         Bind.factory<QuizStartController>(
           (i) => QuizStartController(
             sessionId: i.args?.queryParams['session_id'],
             startQuiz: i.get<StartQuizUseCase>(),
+          ),
+        ),
+        Bind.factory<SendAnswerUseCase>(
+          (i) => SendAnswerUseCase(
+            repository: i.get<IQuizRepository>(),
+            appStateUseCase: i.get<AppStateUseCase>(),
           ),
         ),
         Bind.factory<StartQuizUseCase>(

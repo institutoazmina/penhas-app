@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -10,6 +9,7 @@ import 'package:penhas/app/core/remoteconfig/i_remote_config.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/tutorial/guardian/guardian_tutorial_page.dart';
+import 'package:penhas/app/features/quiz/presentation/new_quiz/quiz_page.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz_start/quiz_start_page.dart';
 import 'package:penhas/app/features/quiz/presentation/tutorial/stealth_mode_tutorial_page.dart';
 import 'package:penhas/app/features/quiz/quiz_module.dart';
@@ -163,7 +163,7 @@ void main() {
 
         // assert
         // will be replaced by the NewQuizPage widget soon
-        expect(find.byKey(Key('new-quiz-placeholder')), findsOneWidget);
+        expect(find.byType(NewQuizPage), findsOneWidget);
       },
     );
   });
