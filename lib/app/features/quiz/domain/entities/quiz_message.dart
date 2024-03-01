@@ -9,12 +9,12 @@ class QuizMessage with _$QuizMessage {
   const QuizMessage._();
 
   const factory QuizMessage.text({
-    required String reference,
+    @Default('') String reference,
     required String content,
   }) = _TextMessage;
 
   const factory QuizMessage.sent({
-    required String reference,
+    @Default('') String reference,
     required String content,
     UserAnswer? answer,
     @Default(AnswerStatus.sending) AnswerStatus status,

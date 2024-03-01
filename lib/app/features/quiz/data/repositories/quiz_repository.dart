@@ -41,12 +41,7 @@ class QuizRepository implements IQuizRepository {
     required UserAnswer answer,
   }) async {
     final appState = await update(
-      quiz: QuizRequestEntity(
-        sessionId: quizId,
-        options: {
-          answer.reference: answer.value.raw,
-        },
-      ),
+      quiz: QuizMapper.toRequest(quizId, answer),
     );
 
     return appState.fold(

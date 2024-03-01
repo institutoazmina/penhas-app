@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$QuizMessageTearOff {
   const _$QuizMessageTearOff();
 
-  _TextMessage text({required String reference, required String content}) {
+  _TextMessage text({String reference = '', required String content}) {
     return _TextMessage(
       reference: reference,
       content: content,
@@ -25,7 +25,7 @@ class _$QuizMessageTearOff {
   }
 
   _SentMessage sent(
-      {required String reference,
+      {String reference = '',
       required String content,
       UserAnswer? answer,
       AnswerStatus status = AnswerStatus.sending}) {
@@ -217,9 +217,10 @@ class __$TextMessageCopyWithImpl<$Res> extends _$QuizMessageCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_TextMessage extends _TextMessage {
-  const _$_TextMessage({required this.reference, required this.content})
+  const _$_TextMessage({this.reference = '', required this.content})
       : super._();
 
+  @JsonKey()
   @override
   final String reference;
   @override
@@ -348,8 +349,8 @@ class _$_TextMessage extends _TextMessage {
 }
 
 abstract class _TextMessage extends QuizMessage {
-  const factory _TextMessage(
-      {required String reference, required String content}) = _$_TextMessage;
+  const factory _TextMessage({String reference, required String content}) =
+      _$_TextMessage;
   const _TextMessage._() : super._();
 
   @override
@@ -417,12 +418,13 @@ class __$SentMessageCopyWithImpl<$Res> extends _$QuizMessageCopyWithImpl<$Res>
 
 class _$_SentMessage extends _SentMessage {
   const _$_SentMessage(
-      {required this.reference,
+      {this.reference = '',
       required this.content,
       this.answer,
       this.status = AnswerStatus.sending})
       : super._();
 
+  @JsonKey()
   @override
   final String reference;
   @override
@@ -561,7 +563,7 @@ class _$_SentMessage extends _SentMessage {
 
 abstract class _SentMessage extends QuizMessage {
   const factory _SentMessage(
-      {required String reference,
+      {String reference,
       required String content,
       UserAnswer? answer,
       AnswerStatus status}) = _$_SentMessage;

@@ -1,0 +1,146 @@
+{
+  "quiz_session": {
+    "session_id": 42,
+    "end_screen": "/mainboard",
+    "finished": 1,
+    "current_msgs": [
+      {
+        "ref": "BT",
+        "type": "button",
+        "content": "Click on the button to continue",
+        "label": "OK"
+      },
+      {
+        "ref": "BTTC",
+        "type": "button",
+        "content": "Tutorial button",
+        "label": "View tutorial",
+        "action": "botao_tela_modo_camuflado",
+        "ending_action_text": "Tutorial seen",
+        "ending_cancel_text": "Tutorial not seen"
+      },
+      {
+        "ref": "BTTS",
+        "type": "button",
+        "content": "Tutorial button",
+        "label": "View tutorial",
+        "action": "botao_tela_socorro",
+        "ending_action_text": "Tutorial seen",
+        "ending_cancel_text": "Tutorial not seen"
+      },
+      {
+        "ref": "ST",
+        "type": "show_tutorial",
+        "label": "View tutorial"
+      },
+      {
+        "ref": "YN",
+        "type": "yesno",
+        "content": "Do you like this quiz?"
+      },
+      {
+        "ref": "YNM",
+        "type": "yesnomaybe",
+        "content": "Yes, no or maybe?"
+      },
+      {
+        "ref": "HBTN",
+        "type": "horizontal_buttons",
+        "content": "Click on one of the buttons",
+        "options": [
+          {
+            "display": "First option",
+            "index": "0"
+          },
+          {
+            "display": "Second option",
+            "index": "1"
+          },
+          {
+            "display": "Third option",
+            "index": "2"
+          }
+        ]
+      },
+      {
+        "type": "displaytext",
+        "content": "This is a text message",
+        "style": "normal"
+      },
+      {
+        "type": "displaytext",
+        "content": "This is a error message",
+        "style": "error"
+      },
+      {
+        "ref": "BTR",
+        "type": "button",
+        "content": "Try again later",
+        "label": "Try again now",
+        "action": "reload"
+      },
+      {
+        "ref": "DR",
+        "type": "yesno",
+        "display_response": "Sim"
+      },
+      {
+        "ref": "MC",
+        "type": "multiplechoices",
+        "content": "You can select multiple options",
+        "options": [
+          {
+            "display": "First option",
+            "index": "0"
+          },
+          {
+            "display": "Second option",
+            "index": "1"
+          },
+          {
+            "display": "Third option",
+            "index": "2"
+          }
+        ]
+      },
+      {
+        "ref": "OC",
+        "type": "onlychoice",
+        "content": "You can only select one option",
+        "options": [
+          {
+            "display": "First option",
+            "index": "0"
+          },
+          {
+            "display": "Second option",
+            "index": "1"
+          },
+          {
+            "display": "Third option",
+            "index": "2"
+          }
+        ]
+      },
+      {
+        "ref": "SC",
+        "type": "singlechoice",
+        "content": "You can only select one option",
+        "options": [
+          {
+            "display": "First option",
+            "index": "0"
+          },
+          {
+            "display": "Second option",
+            "index": "1"
+          },
+          {
+            "display": "Third option",
+            "index": "2"
+          }
+        ]
+      }
+    ]
+  }
+}

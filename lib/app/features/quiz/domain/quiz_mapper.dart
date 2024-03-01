@@ -5,10 +5,12 @@ import 'entities/quiz_message.dart';
 import 'entities/quiz_request_entity.dart';
 
 class QuizMapper {
-  static QuizRequestEntity toRequest(Quiz quiz, UserAnswer answer) {
+  static QuizRequestEntity toRequest(String quizId, UserAnswer answer) {
     return QuizRequestEntity(
-      sessionId: quiz.id,
-      options: const {},
+      sessionId: quizId,
+      options: {
+        answer.reference: answer.value.raw,
+      },
     );
   }
 
@@ -35,12 +37,14 @@ class QuizMessageMapper {
       );
       return;
     }
+
     if (message.content != null) {
       yield QuizMessage.text(
         reference: message.ref,
         content: message.content!,
       );
     }
+
     switch (message.type) {
       case QuizMessageType.button:
         yield QuizMessage.button(

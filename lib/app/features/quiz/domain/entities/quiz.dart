@@ -15,5 +15,5 @@ class Quiz extends Equatable {
   bool get isFinished => redirectTo != null;
 
   @override
-  List<Object?> get props => [messages];
+  List<Object?> get props => [id, messages, redirectTo, isFinished];
 }
