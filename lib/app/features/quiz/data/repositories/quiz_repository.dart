@@ -3,10 +3,14 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/network/network_info.dart';
+import '../../../../core/types/result.dart';
 import '../../../../shared/logger/log.dart';
 import '../../../appstate/domain/entities/app_state_entity.dart';
 import '../../../authentication/presentation/shared/map_exception_to_failure.dart';
+import '../../domain/entities/answer.dart';
+import '../../domain/entities/quiz.dart';
 import '../../domain/entities/quiz_request_entity.dart';
+import '../../domain/quiz_mapper.dart';
 import '../../domain/repositories/i_quiz_repository.dart';
 import '../datasources/quiz_data_source.dart';
 
@@ -29,6 +33,25 @@ class QuizRepository implements IQuizRepository {
       logError(error, stack);
       return left(MapExceptionToFailure.map(error));
     }
+  }
+
+  @override
+  Future<Result<Quiz>> send({
+    required String quizId,
+    required UserAnswer answer,
+  }) async {
+    final appState = await update(
+      quiz: QuizMapper.toRequest(quizId, answer),
+    );
+
+    return appState.fold(
+      left,
+      (appState) {
+        final quiz = appState.quizSession;
+        if (quiz == null) return left(ServerFailure());
+        return right(QuizMapper.fromLegacy(quiz));
+      },
+    );
   }
 
   @override

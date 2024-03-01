@@ -7,15 +7,15 @@ import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
-import 'package:penhas/app/features/quiz/presentation/quiz/quiz_module.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz/quiz_page.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz_start/quiz_start_page.dart';
 import 'package:penhas/app/features/quiz/presentation/tutorial/stealth_mode_tutorial_page.dart';
+import 'package:penhas/app/features/quiz/quiz_module.dart';
 import 'package:penhas/app/shared/navigation/app_navigator.dart';
 import 'package:permission_handler_platform_interface/permission_handler_platform_interface.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-import '../../../../../utils/module_testing.dart';
+import '../../../utils/module_testing.dart';
 
 void main() {
   group(QuizModule, () {

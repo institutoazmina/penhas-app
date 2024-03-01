@@ -18,9 +18,9 @@ import 'package:penhas/app/features/help_center/presentation/pages/tutorial/guar
 import 'package:penhas/app/features/quiz/domain/entities/quiz_request_entity.dart';
 import 'package:penhas/app/features/quiz/domain/repositories/i_quiz_repository.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz/quiz_controller.dart';
-import 'package:penhas/app/features/quiz/presentation/quiz/quiz_module.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz/quiz_page.dart';
 import 'package:penhas/app/features/quiz/presentation/tutorial/stealth_mode_tutorial_page.dart';
+import 'package:penhas/app/features/quiz/quiz_module.dart';
 import 'package:penhas/app/shared/navigation/app_navigator.dart';
 import 'package:penhas/app/shared/navigation/app_route.dart';
 

@@ -1,20 +1,34 @@
-import 'package:dartz/dartz.dart';
+import 'package:dartz/dartz.dart' show id, right;
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:penhas/app/app_module.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
+import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
 import 'package:penhas/app/features/appstate/data/model/quiz_session_model.dart';
 import 'package:penhas/app/features/quiz/data/datasources/quiz_data_source.dart';
 import 'package:penhas/app/features/quiz/data/repositories/quiz_repository.dart';
+import 'package:penhas/app/features/quiz/domain/entities/answer.dart';
+import 'package:penhas/app/features/quiz/domain/entities/quiz_message.dart';
 import 'package:penhas/app/features/quiz/domain/entities/quiz_request_entity.dart';
+import 'package:penhas/app/features/quiz/domain/repositories/i_quiz_repository.dart';
+import 'package:penhas/app/features/quiz/quiz_module.dart';
 
 import '../../../../../utils/json_util.dart';
+import '../quiz_fixtures.dart';
 
 class MockNetworkInfo extends Mock implements INetworkInfo {}
 
 class MockQuizDataSource extends Mock implements IQuizDataSource {}
+
+class _MockHttpClient extends Mock implements Client {}
+
+class _MockApiServerConfigure extends Mock implements IApiServerConfigure {}
 
 void main() {
   late QuizRepository quizRepository;
@@ -23,6 +37,10 @@ void main() {
   late INetworkInfo networkInfo;
   late QuizRequestEntity quizRequest;
   late Map<String, dynamic> jsonData;
+
+  setUpAll(() {
+    registerFallbackValue(Uri.parse(''));
+  });
 
   setUp(() async {
     networkInfo = MockNetworkInfo();
@@ -191,6 +209,92 @@ void main() {
 
           // assert
           expect(result.isLeft(), isTrue);
+        },
+      );
+    });
+
+    group('send', () {
+      late IQuizRepository sut;
+
+      late Client mockClient;
+      late IApiServerConfigure mockServerConfiguration;
+
+      setUp(() {
+        mockClient = _MockHttpClient();
+        mockServerConfiguration = _MockApiServerConfigure();
+
+        initModules(
+          [
+            AppModule(),
+            QuizModule(),
+          ],
+          replaceBinds: [
+            Bind.singleton<Client>((i) => mockClient),
+            Bind<IApiServerConfigure>((i) => mockServerConfiguration),
+            Bind<INetworkInfo>((i) => networkInfo),
+          ],
+        );
+
+        sut = Modular.get<IQuizRepository>();
+
+        when(() => mockServerConfiguration.baseUri)
+            .thenReturn(Uri.parse('http://example.com'));
+        when(() => mockServerConfiguration.userAgent)
+            .thenAnswer((_) async => 'userAgent');
+        when(() => mockServerConfiguration.apiToken)
+            .thenAnswer((_) async => 'apiToken');
+      });
+
+      tearDown(() {
+        Modular.removeModule(AppModule());
+        Modular.removeModule(QuizModule());
+      });
+
+      test(
+        'given no quiz when send should return left',
+        () async {
+          // arrange
+          final response = '{}';
+          when(() => mockClient.post(any(), headers: any(named: 'headers')))
+              .thenAnswer((_) async => Response(response, 200));
+
+          // act
+          final actual = await sut.send(
+            quizId: '200',
+            answer: UserAnswer(
+              value: AnswerValue('1'),
+              message: QuizMessage.button(reference: '', label: '', value: ''),
+            ),
+          );
+
+          // assert
+          expect(actual.isLeft(), isTrue);
+          expect(actual.fold(id, id), isA<Failure>());
+        },
+      );
+
+      test(
+        'when send success should return right',
+        () async {
+          // arrange
+          final response = JsonUtil.getStringSync(
+            from: 'quiz/all-messages.json',
+          );
+          when(() => mockClient.post(any(), headers: any(named: 'headers')))
+              .thenAnswer((_) async => Response(response, 200));
+
+          // act
+          final actual = await sut.send(
+            quizId: '200',
+            answer: UserAnswer(
+              value: AnswerValue('1'),
+              message: QuizMessage.button(reference: '', label: '', value: ''),
+            ),
+          );
+
+          // assert
+          expect(actual.isRight(), isTrue);
+          expect(actual.fold(id, id), quizFixture);
         },
       );
     });
