@@ -245,6 +245,11 @@ void main() {
             .thenAnswer((_) async => 'apiToken');
       });
 
+      tearDown(() {
+        Modular.removeModule(AppModule());
+        Modular.removeModule(QuizModule());
+      });
+
       test(
         'given no quiz when send should return left',
         () async {
