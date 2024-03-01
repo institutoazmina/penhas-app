@@ -17,11 +17,13 @@ void main() {
   late FeedUseCases mockUseCase;
   late ComposeTweetNavigator mockNavigator;
   late TextEditingController mockEditingController;
+  late BuildContext fakeContext = FakeContext();
 
   setUp(() {
     mockUseCase = FeedUseCasesMock();
     mockNavigator = ComposeTweetNavigatorMock();
     mockEditingController = TextEditingControllerMock();
+    fakeContext = FakeContext();
 
     sut = ComposeTweetController(
       useCase: mockUseCase,
@@ -233,10 +235,10 @@ void main() {
               .thenAnswer((_) async => right(const FeedCache(tweets: [])));
 
           // act
-          await sut.createTweetPressed();
+          await sut.createTweetPressed(fakeContext);
 
           // assert
-          verify(() => mockNavigator.navigateToFeed()).called(1);
+          verify(() => mockNavigator.navigateToFeed(fakeContext)).called(1);
         },
       );
 
@@ -287,3 +289,5 @@ class ComposeTweetNavigatorMock extends Mock implements ComposeTweetNavigator {}
 class FeedUseCasesMock extends Mock implements FeedUseCases {}
 
 class TextEditingControllerMock extends Mock implements TextEditingController {}
+
+class FakeContext extends Fake implements BuildContext {}

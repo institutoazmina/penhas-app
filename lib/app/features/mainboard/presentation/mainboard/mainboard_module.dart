@@ -94,10 +94,12 @@ class MainboardModule extends Module {
         ...notificationBinds,
         ...menuBind,
         ...chatBinds,
-        Bind.lazySingleton<MainboardStore>(
+        Bind.factory<MainboardStore>(
           (i) => MainboardStore(
             modulesServices: i.get<IAppModulesServices>(),
-            initialPage: MainboardState.fromString(i.args?.queryParams['page']),
+            initialPage: MainboardState.fromString(
+              i.args?.queryParams['page'] ?? i.args?.data?['page'],
+            ),
           ),
         ),
         Bind.factory(
@@ -107,7 +109,7 @@ class MainboardModule extends Module {
             notification: i.get<INotificationRepository>(),
           ),
         ),
-        Bind.lazySingleton(
+        Bind.lazySingleton<FeedUseCases>(
           (i) => FeedUseCases(
             repository: i.get<ITweetRepository>(),
             filterPreference: i.get<TweetFilterPreference>(),
@@ -385,10 +387,9 @@ class MainboardModule extends Module {
             useCase: i.get<TweetFilterPreference>(),
           ),
         ),
-        Bind.factory(
+        Bind.factory<ComposeTweetNavigator>(
           (i) => ComposeTweetNavigator(
             currentUri: i.args?.uri,
-            mainboardStore: i.get<MainboardStore>(),
           ),
         ),
         Bind.factory<IUsersRepository>(

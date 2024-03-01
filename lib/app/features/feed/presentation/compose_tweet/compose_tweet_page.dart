@@ -151,7 +151,8 @@ class _ComposeTweetPageState
                             builder: (_) {
                               return RaisedButton(
                                 onPressed: controller.isEnableCreateButton
-                                    ? () => controller.createTweetPressed()
+                                    ? () =>
+                                        controller.createTweetPressed(context)
                                     : null,
                                 elevation: 0.0,
                                 shape: kButtonShapeFilled,

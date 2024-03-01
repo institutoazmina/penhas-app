@@ -60,7 +60,7 @@ abstract class _ComposeTweetControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  Future<void> createTweetPressed() async {
+  Future<void> createTweetPressed([BuildContext? context]) async {
     errorMessage = '';
     if (!isEnableCreateButton) {
       return;
@@ -77,12 +77,12 @@ abstract class _ComposeTweetControllerBase with Store, MapFailureMessage {
     final Either<Failure, FeedCache> response = await _progress!;
     response.fold(
       (failure) => errorMessage = mapFailureMessage(failure),
-      (valid) => _updatedTweet(),
+      (valid) => _updatedTweet(context),
     );
   }
 
-  void _updatedTweet() {
+  void _updatedTweet([BuildContext? context]) {
     editingController.clear();
-    navigator.navigateToFeed();
+    navigator.navigateToFeed(context);
   }
 }

@@ -85,9 +85,9 @@ mixin _$ComposeTweetController on _ComposeTweetControllerBase, Store {
       AsyncAction('_ComposeTweetControllerBase.createTweetPressed');
 
   @override
-  Future<void> createTweetPressed() {
+  Future<void> createTweetPressed([BuildContext? context]) {
     return _$createTweetPressedAsyncAction
-        .run(() => super.createTweetPressed());
+        .run(() => super.createTweetPressed(context));
   }
 
   final _$_ComposeTweetControllerBaseActionController =
