@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -22,7 +24,7 @@ void main() {
     test(
       'getBool should call remote config getBool',
       () {
-        const expected = false;
+        final expected = Random().nextBool();
         when(() => remoteConfig.getBool(any())).thenReturn(expected);
 
         final result = sut.getBool('any_key');
@@ -32,16 +34,61 @@ void main() {
       },
     );
 
+    test(
+      'getInt should call remote config getInt',
+      () {
+        final expected = Random().nextInt(100);
+        when(() => remoteConfig.getInt(any())).thenReturn(expected);
+
+        final result = sut.getInt('any_key');
+
+        verify(() => remoteConfig.getInt('any_key')).called(1);
+        expect(result, expected);
+      },
+    );
+
+    test(
+      'getList should parse remote config getString as json list ignoring invalid values',
+      () {
+        const expected = ['foo', 'bar'];
+        when(() => remoteConfig.getString(any()))
+            .thenReturn('["foo", "bar", 0]');
+
+        final result = sut.getList<String>('any_key');
+
+        verify(() => remoteConfig.getString('any_key')).called(1);
+        expect(result, expected);
+      },
+    );
+
+    test(
+      'getList when invalid list should return empty list',
+      () {
+        const expected = [];
+        when(() => remoteConfig.getString(any())).thenReturn('"not a list"');
+
+        final result = sut.getList<String>('any_key');
+
+        verify(() => remoteConfig.getString('any_key')).called(1);
+        expect(result, expected);
+      },
+    );
+
     test('setDefaults', () async {
-      when(() => remoteConfig.setDefaults({
-            'feature_login_offline': false,
-          })).thenAnswer((_) async {});
+      when(() => remoteConfig.setDefaults(any())).thenAnswer((_) async {});
 
       await sut.initialize();
 
-      verify(() => remoteConfig.setDefaults({
+      verify(
+        () => remoteConfig.setDefaults(
+          {
             'feature_login_offline': false,
-          })).called(1);
+            'feature_new_quiz': false,
+            'feature_new_quiz_disabled_origins': '[]',
+            'config_quiz_animation_duration': 400,
+          },
+        ),
+      ).called(1);
     });
 
     test('activate', () async {

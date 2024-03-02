@@ -5,11 +5,13 @@ import '../../core/managers/location_services.dart';
 import '../../core/network/api_client.dart';
 import '../../core/network/api_server_configure.dart';
 import '../../core/network/network_info.dart';
+import '../../core/remoteconfig/i_remote_config.dart';
 import '../../shared/navigation/app_navigator.dart';
 import '../../shared/widgets/dialog_route.dart';
 import '../appstate/domain/usecases/app_state_usecase.dart';
 import 'data/datasources/quiz_data_source.dart';
 import 'data/repositories/quiz_repository.dart';
+import 'domain/quiz_remote_config.dart';
 import 'domain/repositories/i_quiz_repository.dart';
 import 'domain/start_quiz.dart';
 import 'presentation/quiz/quiz_controller.dart';
@@ -38,6 +40,11 @@ class QuizModule extends Module {
         Bind.factory<StartQuizUseCase>(
           (i) => StartQuizUseCase(
             repository: i.get<IQuizRepository>(),
+          ),
+        ),
+        Bind.factory<QuizRemoteConfig>(
+          (i) => QuizRemoteConfig(
+            remoteConfig: i.get<IRemoteConfigService>(),
           ),
         ),
         Bind.factory<IQuizRepository>(

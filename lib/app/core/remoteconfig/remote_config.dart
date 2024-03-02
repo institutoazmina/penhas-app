@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:meta/meta.dart';
 
@@ -50,5 +52,18 @@ class RemoteConfigService implements IRemoteConfigService {
   @override
   bool getBool(String key) {
     return _remoteConfig.getBool(key);
+  }
+
+  @override
+  int getInt(String key) => _remoteConfig.getInt(key);
+
+  @override
+  List<T> getList<T extends Object>(String key) {
+    final value = _remoteConfig.getString(key);
+    final jsonValue = jsonDecode(value);
+
+    if (jsonValue is! List) return const [];
+
+    return jsonValue.whereType<T>().toList();
   }
 }
