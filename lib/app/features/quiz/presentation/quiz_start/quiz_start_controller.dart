@@ -26,6 +26,9 @@ class QuizStartController {
   }
 
   void _handleSuccess(QuizSessionEntity session) {
-    Modular.to.pushReplacementNamed('/quiz', arguments: session);
+    Modular.to.pushReplacementNamed(
+      '/quiz?origin=start-quiz',
+      arguments: session,
+    );
   }
 }

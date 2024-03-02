@@ -463,7 +463,7 @@ void main() {
           // assert
           verify(
             () => mockNavigator.pushNamed(
-              '/quiz',
+              '/quiz?origin=escape-manual',
               arguments: assistantAction.quizSession,
             ),
           ).called(1);
