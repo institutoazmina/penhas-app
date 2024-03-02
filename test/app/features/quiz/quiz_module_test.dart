@@ -124,6 +124,7 @@ void main() {
         // arrange
         final mockRemoteConfig = _MockRemoteConfig();
         when(() => mockRemoteConfig.getBool(any())).thenReturn(true);
+        when(() => mockRemoteConfig.getInt(any())).thenReturn(42);
         when(() => mockRemoteConfig.getList<String>(any())).thenReturn([]);
         when(() => mockNavigator.args).thenReturn(
           ModularArguments(
