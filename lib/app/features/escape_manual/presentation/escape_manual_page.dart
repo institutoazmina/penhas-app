@@ -141,7 +141,10 @@ class _LoadedStateWidget extends StatelessWidget {
               onPressed: () {
                 openAssistantPressed(assistant.action);
               },
-              child: Text(assistant.action.text),
+              child: Text(
+                assistant.action.text,
+                textAlign: TextAlign.center,
+              ),
               style: OutlinedButton.styleFrom(
                 primary: DesignSystemColors.darkIndigoThree,
                 backgroundColor: DesignSystemColors.white,
