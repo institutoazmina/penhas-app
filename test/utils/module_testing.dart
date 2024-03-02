@@ -1,8 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular/src/presenters/navigation/modular_route_information_parser.dart';
+import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:penhas/app/app_module.dart';
+
+import 'aditional_bind_module.dart';
+
+void loadModules(
+  List<Module> modules, {
+  List<Bind> overrides = const [],
+}) {
+  modules = [
+    AditionalBindModule(binds: overrides),
+    ...modules,
+  ];
+  initModules(
+    modules,
+    replaceBinds: overrides,
+  );
+
+  addTearDown(() {
+    modules.forEach(Modular.removeModule);
+  });
+}
 
 Widget buildTestableApp({
   Widget? home,

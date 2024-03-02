@@ -14,15 +14,13 @@ import '../../domain/states/chat_main_talks_state.dart';
 
 part 'chat_main_talks_controller.g.dart';
 
-class ChatMainTalksController extends _ChatMainTalksControllerBase
-    with _$ChatMainTalksController {
-  ChatMainTalksController({
-    required IChatChannelRepository chatChannelRepository,
-  }) : super(chatChannelRepository);
-}
+class ChatMainTalksController = IChatMainTalksController
+    with _$ChatMainTalksController;
 
-abstract class _ChatMainTalksControllerBase with Store, MapFailureMessage {
-  _ChatMainTalksControllerBase(this._chatChannelRepository) {
+abstract class IChatMainTalksController with Store, MapFailureMessage {
+  IChatMainTalksController({
+    required IChatChannelRepository chatChannelRepository,
+  }) : _chatChannelRepository = chatChannelRepository {
     _init();
   }
 
@@ -68,7 +66,7 @@ abstract class _ChatMainTalksControllerBase with Store, MapFailureMessage {
   }
 }
 
-extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
+extension _ChatMainTalksControllerBasePrivate on IChatMainTalksController {
   Future<void> forwardToChat(ChatChannelOpenEntity session) async {
     return Modular.to
         .pushNamed('/mainboard/chat/${session.token}', arguments: session)
@@ -134,7 +132,7 @@ extension _ChatMainTalksControllerBasePrivate on _ChatMainTalksControllerBase {
       tiles.add(ChatMainAssistantCardTile(cards: cards));
     }
 
-    if (session.channels!.isNotEmpty) {
+    if (session.channels?.isNotEmpty == true) {
       final total = session.channels!.length;
       final title = total > 1 ? 'Suas conversas ($total)' : 'Sua conversa';
       tiles.add(ChatMainChannelHeaderTile(title: title));

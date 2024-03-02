@@ -19,7 +19,7 @@ class ChatMainTalksPage extends StatefulWidget {
 }
 
 class _ChatMainTalksPageState
-    extends ModularState<ChatMainTalksPage, ChatMainTalksController> {
+    extends ModularState<ChatMainTalksPage, IChatMainTalksController> {
   @override
   Widget build(BuildContext context) {
     return Container(
