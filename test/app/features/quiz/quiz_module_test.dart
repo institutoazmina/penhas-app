@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -5,9 +6,9 @@ import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:penhas/app/core/network/network_info.dart';
+import 'package:penhas/app/core/remoteconfig/i_remote_config.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
-import 'package:penhas/app/features/quiz/presentation/quiz/quiz_page.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz_start/quiz_start_page.dart';
 import 'package:penhas/app/features/quiz/presentation/tutorial/stealth_mode_tutorial_page.dart';
 import 'package:penhas/app/features/quiz/quiz_module.dart';
@@ -104,6 +105,9 @@ void main() {
       'initial route should be QuizPage widget',
       (tester) async {
         // arrange
+        final mockRemoteConfig = _MockRemoteConfig();
+        when(() => mockRemoteConfig.getBool(any())).thenReturn(true);
+        when(() => mockRemoteConfig.getList<String>(any())).thenReturn([]);
         when(() => mockNavigator.args).thenReturn(
           ModularArguments(
             data: QuizSessionEntity(
@@ -114,30 +118,25 @@ void main() {
             ),
           ),
         );
+        when(
+          () => mockNavigator.pushNamed(
+            any(),
+            arguments: any(named: 'arguments'),
+          ),
+        ).thenAnswer((_) => Future.value());
 
         await tester.pumpWidget(
           buildTestableApp(
             initialRoute: '/',
             modules: [QuizModule()],
             overrides: [
-              Bind.factory<AppStateUseCase>(
-                (i) => _MockAppStateUseCase(),
-              ),
-              Bind.factory<INetworkInfo>(
-                (i) => _MockNetworkInfo(),
-              ),
-              Bind.factory<IApiServerConfigure>(
-                (i) => _MockApiServerConfigure(),
-              ),
-              Bind.factory<http.Client>(
-                (i) => _MockHttpClient(),
-              ),
-              Bind.factory<IApiProvider>(
-                (i) => _MockApiProvider(),
-              ),
-              Bind.factory(
-                (i) => AppNavigator(),
-              ),
+              Bind<AppStateUseCase>((i) => _MockAppStateUseCase()),
+              Bind<INetworkInfo>((i) => _MockNetworkInfo()),
+              Bind<IApiServerConfigure>((i) => _MockApiServerConfigure()),
+              Bind<http.Client>((i) => _MockHttpClient()),
+              Bind<IApiProvider>((i) => _MockApiProvider()),
+              Bind<AppNavigator>((i) => AppNavigator()),
+              Bind<IRemoteConfigService>((i) => mockRemoteConfig),
             ],
           ),
         );
@@ -146,7 +145,8 @@ void main() {
         await tester.pump();
 
         // assert
-        expect(find.byType(QuizPage), findsOneWidget);
+        // will be replaced by the NewQuizPage widget soon
+        expect(find.byKey(Key('new-quiz-placeholder')), findsOneWidget);
       },
     );
   });
@@ -163,6 +163,8 @@ class _MockApiServerConfigure extends Mock implements IApiServerConfigure {}
 class _MockHttpClient extends Mock implements http.Client {}
 
 class _MockApiProvider extends Mock implements IApiProvider {}
+
+class _MockRemoteConfig extends Mock implements IRemoteConfigService {}
 
 class _MockPermissionHandlerPlatform extends Mock
     with MockPlatformInterfaceMixin
