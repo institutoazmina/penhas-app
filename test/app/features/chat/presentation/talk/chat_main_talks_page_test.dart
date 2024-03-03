@@ -76,7 +76,7 @@ void main() {
         // assert
         verify(
           () => mockNavigator.popAndPushNamed(
-            '/quiz',
+            '/quiz?origin=chat',
             arguments: QuizSessionEntity(
               sessionId: 'assistant-quiz-session',
             ),
