@@ -132,7 +132,7 @@ extension _ChatMainTalksControllerBasePrivate on IChatMainTalksController {
       tiles.add(ChatMainAssistantCardTile(cards: cards));
     }
 
-    if (session.channels?.isNotEmpty == true) {
+    if (session.channels?.isEmpty == false) {
       final total = session.channels!.length;
       final title = total > 1 ? 'Suas conversas ($total)' : 'Sua conversa';
       tiles.add(ChatMainChannelHeaderTile(title: title));
