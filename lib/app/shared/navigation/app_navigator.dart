@@ -6,12 +6,21 @@ import '../logger/log.dart';
 import 'app_route.dart';
 
 class AppNavigator {
+  const AppNavigator();
+
+  static AppNavigator? _instance;
+
+  static AppNavigator get instance => _instance ??= const AppNavigator();
+
   static void popAndPush(AppRoute route) {
     Modular.to.popAndPushNamed(route.path, arguments: route.args);
   }
 
+  Future<T?> navigateTo<T extends Object?>(AppRoute route) =>
+      Modular.to.pushNamed<T>(route.path, arguments: route.args);
+
   static void push(AppRoute route) {
-    Modular.to.pushNamed(route.path, arguments: route.args);
+    instance.navigateTo(route);
   }
 
   static void tryPopOrPushReplacement(AppRoute route) {
