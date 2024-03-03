@@ -9,6 +9,7 @@ import '../../core/remoteconfig/i_remote_config.dart';
 import '../../shared/navigation/app_navigator.dart';
 import '../../shared/widgets/dialog_route.dart';
 import '../appstate/domain/usecases/app_state_usecase.dart';
+import '../help_center/presentation/pages/tutorial/guardian/guardian_tutorial_page.dart';
 import 'data/datasources/quiz_data_source.dart';
 import 'data/repositories/quiz_repository.dart';
 import 'domain/quiz_remote_config.dart';
@@ -18,6 +19,7 @@ import 'presentation/quiz/quiz_controller.dart';
 import 'presentation/quiz_bridge/quiz_bridge.dart';
 import 'presentation/quiz_start/quiz_start_controller.dart';
 import 'presentation/quiz_start/quiz_start_page.dart';
+import 'presentation/tutorial/stealth_mode_tutorial_page.dart';
 import 'presentation/tutorial/stealth_mode_tutorial_page_controller.dart';
 
 class QuizModule extends Module {
@@ -77,6 +79,14 @@ class QuizModule extends Module {
           '/start',
           child: (_, args) => const QuizStartPage(),
           routeGenerator: dialogRouteGenerator,
+        ),
+        ChildRoute(
+          '/tutorial/help-center',
+          child: (_, __) => const GuardianTutorialPage(),
+        ),
+        ChildRoute(
+          '/tutorial/stealth',
+          child: (_, __) => const StealthModeTutorialPage(),
         ),
       ];
 }

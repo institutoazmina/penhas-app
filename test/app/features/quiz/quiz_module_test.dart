@@ -9,6 +9,7 @@ import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/core/remoteconfig/i_remote_config.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
+import 'package:penhas/app/features/help_center/presentation/pages/tutorial/guardian/guardian_tutorial_page.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz_start/quiz_start_page.dart';
 import 'package:penhas/app/features/quiz/presentation/tutorial/stealth_mode_tutorial_page.dart';
 import 'package:penhas/app/features/quiz/quiz_module.dart';
@@ -40,18 +41,34 @@ void main() {
           (_) async => PermissionStatus.granted,
         );
 
+        // act
         await tester.pumpWidget(
           buildTestableApp(
-            home: StealthModeTutorialPage(),
+            initialRoute: '/tutorial/stealth',
             modules: [QuizModule()],
           ),
         );
-
-        // act
-        await tester.pump();
+        await tester.pumpAndSettle();
 
         // assert
         expect(find.byType(StealthModeTutorialPage), findsOneWidget);
+      },
+    );
+
+    testWidgets(
+      'should start GuardianTutorialPage widget successfully',
+      (tester) async {
+        // act
+        await tester.pumpWidget(
+          buildTestableApp(
+            initialRoute: '/tutorial/help-center',
+            modules: [QuizModule()],
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        // assert
+        expect(find.byType(GuardianTutorialPage), findsOneWidget);
       },
     );
 
