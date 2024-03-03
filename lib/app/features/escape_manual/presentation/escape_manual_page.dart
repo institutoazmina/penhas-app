@@ -33,9 +33,15 @@ class EscapeManualPage extends StatefulWidget {
 
 class _EscapeManualPageState
     extends ModularState<EscapeManualPage, EscapeManualController>
-    with SnackBarHandler {
+    with SnackBarHandler, AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   ReactionDisposer? _disposer;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(
+    debugLabel: 'escape-manual-scaffold-key',
+  );
 
   @override
   void didChangeDependencies() {
@@ -53,6 +59,7 @@ class _EscapeManualPageState
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       key: _scaffoldKey,
       body: Observer(
@@ -134,7 +141,10 @@ class _LoadedStateWidget extends StatelessWidget {
               onPressed: () {
                 openAssistantPressed(assistant.action);
               },
-              child: Text(assistant.action.text),
+              child: Text(
+                assistant.action.text,
+                textAlign: TextAlign.center,
+              ),
               style: OutlinedButton.styleFrom(
                 primary: DesignSystemColors.darkIndigoThree,
                 backgroundColor: DesignSystemColors.white,
@@ -182,13 +192,16 @@ class _SectionTasksWidget extends StatelessWidget {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            section.title,
-            textAlign: TextAlign.start,
-            style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                  fontWeight: FontWeight.w700,
-                  color: DesignSystemColors.darkIndigoThree,
-                ),
+          Flexible(
+            child: Text(
+              section.title,
+              textAlign: TextAlign.start,
+              softWrap: true,
+              style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: DesignSystemColors.darkIndigoThree,
+                  ),
+            ),
           ),
           Text(
             '$qtyDoneTasks/${section.tasks.length}',
