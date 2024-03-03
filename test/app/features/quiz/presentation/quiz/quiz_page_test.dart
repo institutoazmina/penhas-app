@@ -11,6 +11,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/app_module.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/location_services.dart';
+import 'package:penhas/app/core/remoteconfig/i_remote_config.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
@@ -33,6 +34,7 @@ late IModularNavigator _mockNavigator;
 void main() {
   group(QuizPage, () {
     late AppNavigator _mockAppNavigator;
+    late IRemoteConfigService mockRemoteConfig;
 
     setUpAll(() {
       registerFallbackValue(_FakeQuizRequestEntity());
@@ -42,6 +44,9 @@ void main() {
     setUp(() {
       _mockAppNavigator = _MockAppNavigator();
       Modular.navigatorDelegate = _mockNavigator = _MockModularNavigate();
+      mockRemoteConfig = _MockRemoteConfig();
+
+      when(() => mockRemoteConfig.getBool(any())).thenReturn(false);
     });
 
     testWidgets(
@@ -66,6 +71,7 @@ void main() {
               Bind.factory<AppStateUseCase>(
                 (i) => _MockAppStateUseCase(),
               ),
+              Bind<IRemoteConfigService>((i) => mockRemoteConfig),
             ],
           ),
         );
@@ -124,6 +130,9 @@ void main() {
             ),
             Bind.factory<AppNavigator>(
               (i) => _mockAppNavigator,
+            ),
+            Bind<IRemoteConfigService>(
+              (i) => mockRemoteConfig,
             ),
           ],
         );
@@ -627,6 +636,8 @@ class _MockQuizRepository extends Mock implements IQuizRepository {}
 class _MockLocationServices extends Mock implements ILocationServices {}
 
 class _MockAppNavigator extends Mock implements AppNavigator {}
+
+class _MockRemoteConfig extends Mock implements IRemoteConfigService {}
 
 class _FakeQuizRequestEntity extends Fake implements QuizRequestEntity {}
 

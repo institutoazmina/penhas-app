@@ -6,13 +6,12 @@ class LoginOfflineToggleFeature {
   }) : _remoteConfig = remoteConfig;
 
   final IRemoteConfigService _remoteConfig;
-  static const String featureToggle = 'feature_login_offline';
 
   bool get isEnabled => _isEnabled();
 
   bool _isEnabled() {
     try {
-      return _remoteConfig.getBool(featureToggle);
+      return _remoteConfig.getBool(RemoteConfigKeys.featureLoginOffline);
     } catch (_) {
       return false;
     }

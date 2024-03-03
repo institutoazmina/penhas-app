@@ -156,9 +156,12 @@ void main() {
                 .thenAnswer((i) => Future.value());
 
             await theAppIsRunning(tester, const SplashPage());
-            verify(() => AppModulesMock.modularNavigator.popAndPushNamed(
-                '/quiz',
-                arguments: any(named: 'arguments'))).called(1);
+            verify(
+              () => AppModulesMock.modularNavigator.popAndPushNamed(
+                '/quiz?origin=splash',
+                arguments: any(named: 'arguments'),
+              ),
+            ).called(1);
           },
         );
         testWidgets(

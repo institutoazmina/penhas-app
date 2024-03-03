@@ -80,9 +80,11 @@ abstract class _SplashControllerBase with Store {
   }
 
   void _handleAppStates(AppStateEntity session) {
-    if (session.quizSession != null &&
-        session.quizSession!.isFinished == false) {
-      Modular.to.popAndPushNamed('/quiz', arguments: session.quizSession);
+    if (session.quizSession?.isFinished == false) {
+      Modular.to.popAndPushNamed(
+        '/quiz?origin=splash',
+        arguments: session.quizSession,
+      );
       return;
     }
 

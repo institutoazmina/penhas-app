@@ -54,7 +54,10 @@ abstract class _ChatMainTalksControllerBase with Store, MapFailureMessage {
   @action
   Future<void> openAssistantCard(ChatMainSupportTile data) async {
     if (data.quizSession != null) {
-      await Modular.to.popAndPushNamed('/quiz', arguments: data.quizSession);
+      await Modular.to.popAndPushNamed(
+        '/quiz?origin=chat',
+        arguments: data.quizSession,
+      );
       return;
     }
 

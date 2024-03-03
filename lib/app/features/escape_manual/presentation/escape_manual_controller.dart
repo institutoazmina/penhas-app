@@ -164,7 +164,7 @@ abstract class _EscapeManualControllerBase with Store, MapFailureMessage {
   void _handleOpenAssistant(QuizSessionEntity quizSession) {
     Modular.to
         .pushNamed(
-          '/quiz',
+          '/quiz?origin=escape-manual',
           arguments: quizSession,
         )
         .then((_) => load());

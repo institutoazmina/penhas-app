@@ -129,7 +129,7 @@ void main() {
         // assert
         verify(
           () => mockNavigator.pushReplacementNamed(
-            '/quiz',
+            '/quiz?origin=start-quiz',
             arguments: session,
           ),
         ).called(1);
