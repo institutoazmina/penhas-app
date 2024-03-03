@@ -27,7 +27,7 @@ class ChatMainModule extends WidgetModule {
             modulesServices: i.get<IAppModulesServices>(),
           ),
         ),
-        Bind.factory(
+        Bind.factory<IChatMainTalksController>(
           (i) => ChatMainTalksController(
             chatChannelRepository: i.get<IChatChannelRepository>(),
           ),

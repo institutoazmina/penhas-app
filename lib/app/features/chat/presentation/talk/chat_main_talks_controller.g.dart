@@ -8,9 +8,9 @@ part of 'chat_main_talks_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$ChatMainTalksController on _ChatMainTalksControllerBase, Store {
+mixin _$ChatMainTalksController on IChatMainTalksController, Store {
   final _$_fetchProgressAtom =
-      Atom(name: '_ChatMainTalksControllerBase._fetchProgress');
+      Atom(name: 'IChatMainTalksController._fetchProgress');
 
   @override
   ObservableFuture<Either<Failure, ChatChannelAvailableEntity>>?
@@ -28,7 +28,7 @@ mixin _$ChatMainTalksController on _ChatMainTalksControllerBase, Store {
   }
 
   final _$currentStateAtom =
-      Atom(name: '_ChatMainTalksControllerBase.currentState');
+      Atom(name: 'IChatMainTalksController.currentState');
 
   @override
   ChatMainTalksState get currentState {
@@ -43,8 +43,7 @@ mixin _$ChatMainTalksController on _ChatMainTalksControllerBase, Store {
     });
   }
 
-  final _$reloadAsyncAction =
-      AsyncAction('_ChatMainTalksControllerBase.reload');
+  final _$reloadAsyncAction = AsyncAction('IChatMainTalksController.reload');
 
   @override
   Future<void> reload() {
@@ -52,7 +51,7 @@ mixin _$ChatMainTalksController on _ChatMainTalksControllerBase, Store {
   }
 
   final _$openChannelAsyncAction =
-      AsyncAction('_ChatMainTalksControllerBase.openChannel');
+      AsyncAction('IChatMainTalksController.openChannel');
 
   @override
   Future<void> openChannel(ChatChannelEntity channel) {
@@ -60,7 +59,7 @@ mixin _$ChatMainTalksController on _ChatMainTalksControllerBase, Store {
   }
 
   final _$openAssistantCardAsyncAction =
-      AsyncAction('_ChatMainTalksControllerBase.openAssistantCard');
+      AsyncAction('IChatMainTalksController.openAssistantCard');
 
   @override
   Future<void> openAssistantCard(ChatMainSupportTile data) {
