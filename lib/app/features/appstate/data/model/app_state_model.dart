@@ -12,12 +12,14 @@ class AppStateModel extends AppStateEntity {
     QuizSessionEntity? quizSession,
     UserProfileEntity? userProfile,
     AppStateModeEntity appMode,
-    List<AppStateModuleEntity> modules,
-  ) : super(
+    List<AppStateModuleEntity> modules, [
+    Map<String, dynamic> analyticsProps = const {},
+  ]) : super(
           quizSession: quizSession,
           userProfile: userProfile,
           appMode: appMode,
           modules: modules,
+          analyticsProps: analyticsProps,
         );
 
   factory AppStateModel.fromJson(Map<String, dynamic> jsonData) {
@@ -31,7 +33,13 @@ class AppStateModel extends AppStateEntity {
     final List<AppStateModuleEntity> modules = jsonData.containsKey('modules')
         ? _parseAppModules(jsonData['modules'] as List<dynamic>)
         : [];
-    return AppStateModel(quizSession, userProfile, appMode, modules);
+    return AppStateModel(
+      quizSession,
+      userProfile,
+      appMode,
+      modules,
+      jsonData['analytics_props'] ?? {},
+    );
   }
 
   static QuizSessionEntity? _parseQuizSession(Map<String, dynamic>? session) {

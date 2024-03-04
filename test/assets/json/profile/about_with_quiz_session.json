@@ -55,5 +55,8 @@
     "raca": "pardo",
     "apelido": "maria",
     "avatar_url": "https:\/\/api.com\/avatar\/padrao.svg"
+  },
+  "analytics_props": {
+    "is_admin": true
   }
 }

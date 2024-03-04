@@ -50,12 +50,14 @@ class AppStateEntity extends Equatable {
     required this.userProfile,
     required this.appMode,
     required this.modules,
+    this.analyticsProps = const {},
   });
 
   final QuizSessionEntity? quizSession;
   final UserProfileEntity? userProfile;
   final AppStateModeEntity appMode;
   final List<AppStateModuleEntity> modules;
+  final Map<String, dynamic> analyticsProps;
 
   @override
   List<Object?> get props => [
@@ -63,6 +65,7 @@ class AppStateEntity extends Equatable {
         userProfile,
         appMode,
         modules,
+        analyticsProps,
       ];
 
   @override

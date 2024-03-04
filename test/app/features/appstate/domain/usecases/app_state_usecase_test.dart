@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:penhas/app/core/analytics/analytics_wrapper.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/managers/local_store.dart';
@@ -19,19 +20,23 @@ void main() {
   late IAppModulesServices appModulesServices;
   late IAppStateRepository appStateRepository;
   late LocalStore<UserProfileEntity> profileStore;
+  late AnalyticsWrapper analytics;
+
   late AppStateUseCase sut;
 
   setUp(() {
-    appStateRepository = MockAppStateRepository();
-    appConfiguration = MockAppConfiguration();
-    profileStore = MockUserProfileStore();
-    appModulesServices = MockAppModulesServices();
+    appStateRepository = _MockAppStateRepository();
+    appConfiguration = _MockAppConfiguration();
+    profileStore = _MockUserProfileStore();
+    appModulesServices = _MockAppModulesServices();
+    analytics = _MockAnalyticsWrapper();
 
     sut = AppStateUseCase(
       userProfileStore: profileStore,
       appConfiguration: appConfiguration,
       appStateRepository: appStateRepository,
       appModulesServices: appModulesServices,
+      analytics: analytics,
     );
   });
 
@@ -61,6 +66,8 @@ void main() {
         verify(() => profileStore.save(expectedModel.userProfile!)).called(1);
         verify(() => appModulesServices.save(expectedModel.modules)).called(1);
         verify(() => appConfiguration.saveAppModes(expectedModel.appMode))
+            .called(1);
+        verify(() => analytics.setProperties(expectedModel.analyticsProps))
             .called(1);
       });
       test('return ServerSideSessionFailed for a invalid session', () async {
@@ -103,6 +110,8 @@ void main() {
         verify(() => appModulesServices.save(expectedModel.modules)).called(1);
         verify(() => appConfiguration.saveAppModes(expectedModel.appMode))
             .called(1);
+        verify(() => analytics.setProperties(expectedModel.analyticsProps))
+            .called(1);
       });
       test('return ServerSideSessionFailed for a invalid session', () async {
         // arrange
@@ -121,11 +130,13 @@ void main() {
   });
 }
 
-class MockAppStateRepository extends Mock implements IAppStateRepository {}
+class _MockAppStateRepository extends Mock implements IAppStateRepository {}
 
-class MockAppConfiguration extends Mock implements IAppConfiguration {}
+class _MockAppConfiguration extends Mock implements IAppConfiguration {}
 
-class MockUserProfileStore extends Mock
+class _MockUserProfileStore extends Mock
     implements LocalStore<UserProfileEntity> {}
 
-class MockAppModulesServices extends Mock implements IAppModulesServices {}
+class _MockAppModulesServices extends Mock implements IAppModulesServices {}
+
+class _MockAnalyticsWrapper extends Mock implements AnalyticsWrapper {}

@@ -186,6 +186,9 @@ void main() {
         userProfile,
         appMode,
         modules,
+        {
+          'is_admin': true,
+        },
       );
       // act
       final result = AppStateModel.fromJson(jsonData);

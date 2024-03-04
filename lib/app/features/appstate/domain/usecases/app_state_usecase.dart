@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 
+import '../../../../core/analytics/analytics_wrapper.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/managers/app_configuration.dart';
 import '../../../../core/managers/local_store.dart';
@@ -15,15 +16,18 @@ class AppStateUseCase {
     required LocalStore<UserProfileEntity> userProfileStore,
     required IAppConfiguration appConfiguration,
     required IAppModulesServices appModulesServices,
+    required AnalyticsWrapper analytics,
   })  : _appStateRepository = appStateRepository,
         _appConfiguration = appConfiguration,
         _userProfileStore = userProfileStore,
-        _appModulesServices = appModulesServices;
+        _appModulesServices = appModulesServices,
+        _analytics = analytics;
 
   final IAppStateRepository _appStateRepository;
   final LocalStore<UserProfileEntity> _userProfileStore;
   final IAppConfiguration _appConfiguration;
   final IAppModulesServices _appModulesServices;
+  final AnalyticsWrapper _analytics;
 
   Future<Either<Failure, AppStateEntity>> check() async {
     final currentState = await _appStateRepository.check();
@@ -51,6 +55,7 @@ class AppStateUseCase {
     if (userProfile != null) {
       await _userProfileStore.save(userProfile);
     }
+    _analytics.setProperties(appStateEntity.analyticsProps);
     await _appConfiguration.saveAppModes(appStateEntity.appMode);
     await _appModulesServices.save(appStateEntity.modules);
     return right(appStateEntity);

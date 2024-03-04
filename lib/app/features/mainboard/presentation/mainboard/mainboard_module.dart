@@ -465,6 +465,7 @@ class MainboardModule extends Module {
             userProfileStore: i.get<LocalStore<UserProfileEntity>>(),
             appConfiguration: i.get<IAppConfiguration>(),
             appModulesServices: i.get<IAppModulesServices>(),
+            analytics: i.get(),
           ),
         ),
         Bind.factory<InactivityLogoutUseCase>(
