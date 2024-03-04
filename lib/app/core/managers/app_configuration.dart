@@ -1,4 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
+
 import '../../features/appstate/domain/entities/app_state_entity.dart';
 import '../../shared/logger/log.dart';
 import '../data/authorization_status.dart';
@@ -33,14 +37,17 @@ class AppConfiguration implements IAppConfiguration {
   AppConfiguration({
     String apiBaseUrl = _apiBaseUrl,
     required ILocalStorage storage,
+    HiveInterface? hive,
   })  : penhasServer = Uri.parse(apiBaseUrl),
-        _storage = storage;
+        _storage = storage,
+        _hive = hive ?? Hive;
 
   final _tokenKey = 'br.com.penhas.tokenServer';
   final _appModes = 'br.com.penhas.appConfigurationModes';
   final _offlineHash = 'br.com.penhas.offlineHash';
 
   final ILocalStorage _storage;
+  final HiveInterface _hive;
 
   @override
   Future<String> get apiToken =>
@@ -83,8 +90,9 @@ class AppConfiguration implements IAppConfiguration {
     await Future.wait([
       _storage.delete(_tokenKey),
       _storage.delete(_offlineHash),
+      _hive.deleteFromDisk(),
     ]);
-    return;
+    await _clearUserData();
   }
 
   @override
@@ -105,5 +113,28 @@ class AppConfiguration implements IAppConfiguration {
     return AppStateModeEntity(
       hasActivedGuardian: data['hasActivedGuardian'],
     );
+  }
+
+  Future<void> _clearUserData() async {
+    await Future.wait([
+      _clearCacheDir(),
+      _clearAppDir(),
+    ]);
+  }
+
+  Future<void> _clearCacheDir() async {
+    final cacheDir = await getTemporaryDirectory();
+
+    if (cacheDir.existsSync() && (Platform.isIOS || Platform.isAndroid)) {
+      cacheDir.deleteSync(recursive: true);
+    }
+  }
+
+  Future<void> _clearAppDir() async {
+    final appDir = await getApplicationSupportDirectory();
+
+    if (appDir.existsSync()) {
+      appDir.deleteSync(recursive: true);
+    }
   }
 }
