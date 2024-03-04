@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'core/analytics/analytics_wrapper.dart';
 import 'core/managers/app_configuration.dart';
 import 'core/managers/app_preferences_store.dart';
 import 'core/managers/audio_sync_manager.dart';
@@ -49,6 +50,7 @@ class AppModule extends Module {
             userProfileStore: i(),
             appConfiguration: i(),
             appModulesServices: i(),
+            analytics: i(),
           ),
         ),
         Bind.factory<IAppStateRepository>(
@@ -147,7 +149,10 @@ class AppModule extends Module {
           (i) => BackgroundTaskManager.instance,
         ),
         Bind.factory<AppNavigator>(
-          (i) => AppNavigator(),
+          (i) => const AppNavigator(),
+        ),
+        Bind.lazySingleton<AnalyticsWrapper>(
+          (i) => AnalyticsWrapper(),
         ),
       ];
 
