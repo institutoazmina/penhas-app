@@ -71,7 +71,6 @@ abstract class IQuizController with Store, MapFailureMessage {
   final List<QuizMessage> _messages;
   UserAnswer? _answerPendingToSend;
 
-  // fast animation only at start
   late Duration animationDuration = _remoteConfig.animationDuration;
 
   @action
@@ -84,6 +83,13 @@ abstract class IQuizController with Store, MapFailureMessage {
     _answerPendingToSend = null;
   }
 
+  Future<void> waitAnimationCompletion([
+    Duration? duration,
+  ]) =>
+      Future.delayed(duration ?? animationDuration);
+}
+
+extension _HelperMethods on IQuizController {
   Future<void> _sendUserAnswer(UserAnswer answer) async {
     answer = await _maybeHandleButtonAction(answer);
     _markAnswerAsSending(answer);
@@ -169,11 +175,6 @@ abstract class IQuizController with Store, MapFailureMessage {
     final message = _messages.last.maybeChangeStatus(status);
     _messages.replaceLast(message);
   }
-
-  Future<void> waitAnimationCompletion([
-    Duration? duration,
-  ]) =>
-      Future.delayed(duration ?? animationDuration);
 
   void _redirectIfFinished(Quiz quiz) {
     final redirectTo = quiz.redirectTo;
