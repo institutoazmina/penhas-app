@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../domain/quiz_remote_config.dart';
+import '../new_quiz/quiz_page.dart';
 import '../quiz/quiz_page.dart';
 
 class QuizBridgeBuilder {
@@ -13,9 +14,7 @@ class QuizBridgeBuilder {
     final origin = args.queryParams['origin'] ?? data;
 
     if (remoteConfig.isEnabledForOrigin(origin)) {
-      return Container(
-        key: const Key('new-quiz-placeholder'),
-      );
+      return const NewQuizPage();
     }
 
     return const QuizPage();

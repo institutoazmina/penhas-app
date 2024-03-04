@@ -26,4 +26,11 @@ extension ListExt<T> on List<T> {
     }
     return false;
   }
+
+  void replaceLast(T element) {
+    replaceRange(length - 1, length, [element]);
+  }
+
+  T? elementAtOrNull(int index) =>
+      index >= 0 && index < length ? this[index] : null;
 }

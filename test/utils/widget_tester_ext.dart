@@ -11,7 +11,12 @@ extension WidgetTesterExt on WidgetTester {
     final evaluated = finder.evaluate();
     assert(evaluated.isNotEmpty, finder.toString());
     for (final element in evaluated) {
-      await tapAt(getCenter(find.byElementPredicate((e) => e == element)));
+      await tapAt(
+        getCenter(
+          find.byElementPredicate((e) => e == element),
+          warnIfMissed: true,
+        ),
+      );
     }
   }
 

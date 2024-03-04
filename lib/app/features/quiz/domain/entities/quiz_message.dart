@@ -48,16 +48,6 @@ class QuizMessage with _$QuizMessage {
     required List<MessageOption> options,
   }) = _MultipleChoiceMessage;
 
-  QuizMessage maybeChangeStatus(AnswerStatus status) => maybeMap<QuizMessage>(
-        sent: (message) => message.copyWith(status: status),
-        orElse: () => this,
-      );
-
-  bool get isSent => maybeMap<bool>(
-        sent: (_) => true,
-        orElse: () => false,
-      );
-
   bool get isInteractive => maybeMap<bool>(
         text: (_) => false,
         sent: (_) => false,
@@ -91,4 +81,33 @@ class ButtonAction with _$ButtonAction {
     required String route,
     required String readableResult,
   }) = _NavigateAction;
+}
+
+extension SentQuizMessageExtension on QuizMessage {
+  QuizMessage maybeChangeStatus(AnswerStatus status) => maybeMap<QuizMessage>(
+        sent: (message) => message.copyWith(status: status),
+        orElse: () => this, // coverage:ignore-line
+      );
+}
+
+extension ButtonQuizMessageExtension on QuizMessage {
+  ButtonOption? findButtonWithValue(AnswerValue value) =>
+      mapOrNull<ButtonOption?>(
+        horizontalButtons: (message) {
+          return message.buttons.firstWhereOrNull(
+            (button) => button.value == value.raw,
+          );
+        },
+      );
+
+  QuizMessage clearActions() => maybeMap(
+        horizontalButtons: (message) => message.copyWith(
+          buttons: message.buttons
+              .map(
+                (e) => e.copyWith(action: null),
+              )
+              .toList(),
+        ),
+        orElse: () => this, // coverage:ignore-line
+      );
 }
