@@ -178,6 +178,13 @@ class QuizContentState extends ModularState<QuizContent, IQuizController>
     _maybeShowFab();
   }
 
+  /// Helper to request the screen to update the widget state
+  void _updateWidgetState([VoidCallback? callback]) {
+    setState(callback ?? () {});
+  }
+}
+
+extension _QuizContentStateHelpers on QuizContentState {
   /// Update the list with new messages
   /// It will add new messages sequentially and smoothly
   Future<void> _updateList(List<QuizMessage> newMessages) async {
@@ -231,13 +238,6 @@ class QuizContentState extends ModularState<QuizContent, IQuizController>
     );
   }
 
-  /// Helper to request the screen to update the widget state
-  void _updateWidgetState([VoidCallback? callback]) {
-    setState(callback ?? () {});
-  }
-}
-
-extension _QuizContentStateHelpers on QuizContentState {
   void _onFabTap() {
     _scrollController.scrollToEnd(animationDuration);
   }
