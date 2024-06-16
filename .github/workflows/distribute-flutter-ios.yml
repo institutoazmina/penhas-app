@@ -31,7 +31,7 @@ on:
 jobs:
 
   distribute:
-    runs-on: macos-latest
+    runs-on: macos-latest-large # remove "-large" after Flutter SDK upgrade
     environment: ${{ inputs.environment }}
     steps:
       - name: Checkout repository
