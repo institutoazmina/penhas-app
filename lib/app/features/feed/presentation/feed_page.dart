@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../shared/design_system/colors.dart';
@@ -48,6 +50,8 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
 
   PageProgressState _currentState = PageProgressState.initial;
 
+  bool _isFabCollapsed = false;
+
   @override
   void initState() {
     super.initState();
@@ -81,7 +85,15 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
     return Scaffold(
       key: _scaffoldKey,
       body: _bodyBuilder(),
-      floatingActionButton: _buildFabButton(),
+      floatingActionButton: Observer(
+        builder: (_) {
+          if (!controller.isComposeTweetFabVisible) {
+            return Container();
+          }
+
+          return _NewPostFab(isFabCollapsed: _isFabCollapsed);
+        },
+      ),
     );
   }
 
@@ -184,6 +196,17 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
       _refreshIndicatorKey.currentState?.show(atTop: false);
     }
 
+    if (notification is UserScrollNotification &&
+        notification.direction != ScrollDirection.idle) {
+      final isScrollToBottom =
+          notification.direction == ScrollDirection.reverse;
+      if (isScrollToBottom != _isFabCollapsed) {
+        setState(() {
+          _isFabCollapsed = isScrollToBottom;
+        });
+      }
+    }
+
     return true;
   }
 
@@ -205,20 +228,6 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
     );
   }
 
-  Widget _buildFabButton() => Observer(builder: (_) {
-        if (!controller.isComposeTweetFabVisible) return Container();
-
-        return FloatingActionButton(
-          heroTag: 'publish',
-          backgroundColor: DesignSystemColors.ligthPurple,
-          tooltip: 'Publicar',
-          onPressed: () {
-            Modular.to.pushNamed('/mainboard/compose');
-          },
-          child: const Icon(Icons.chat_bubble_outline),
-        );
-      });
-
   ReactionDisposer _showErrorMessage() {
     return reaction((_) => controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
@@ -237,6 +246,66 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
     return SupportCenterGeneralError(
       message: message,
       onPressed: controller.fetchNextPage,
+    );
+  }
+}
+
+class _NewPostFab extends StatelessWidget {
+  const _NewPostFab({
+    Key? key,
+    required bool isFabCollapsed,
+  })  : _isFabCollapsed = isFabCollapsed,
+        super(key: key);
+
+  final bool _isFabCollapsed;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        Modular.to.pushNamed('/mainboard/compose');
+      },
+      style: ElevatedButton.styleFrom(
+        primary: DesignSystemColors.ligthPurple,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(60),
+        ),
+        minimumSize: const Size.square(56),
+        fixedSize: const Size(double.infinity, 56),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            'assets/images/svg/bottom_bar/compose_tweet.svg',
+            color: DesignSystemColors.white,
+            width: 24,
+            height: 24,
+            fit: BoxFit.contain,
+            excludeFromSemantics: true,
+          ),
+          AnimatedContainer(
+            constraints: BoxConstraints(
+              maxWidth: _isFabCollapsed ? 0 : 100,
+            ),
+            duration: const Duration(milliseconds: 300),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text(
+                'Publicar',
+                style: Theme.of(context).textTheme.button?.copyWith(
+                      color: DesignSystemColors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                maxLines: 1,
+                overflow: TextOverflow.clip,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
