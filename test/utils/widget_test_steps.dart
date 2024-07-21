@@ -20,12 +20,14 @@ Future<void> iSeeButton({
     final targetText = find.text(text);
     expect(targetText, findsOneWidget);
 
-    final targetRaisedButton = find.ancestor(
+    final targetButton = find.ancestor(
       of: targetText,
-      matching: find.byType(RaisedButton),
+      matching: find.byWidgetPredicate(
+        (widget) => widget is ButtonStyleButton || widget is MaterialButton,
+      ),
     );
 
-    expect(targetRaisedButton, findsOneWidget);
+    expect(targetButton, findsOneWidget);
 
     return;
   }
