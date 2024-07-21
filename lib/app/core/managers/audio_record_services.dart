@@ -8,6 +8,7 @@ import 'package:logger/logger.dart' show Level;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../shared/design_system/buttons/styles.dart';
 import '../../shared/design_system/colors.dart';
 import '../../shared/design_system/text_styles.dart';
 import '../../shared/logger/log.dart';
@@ -289,17 +290,20 @@ extension _AudioRecordServices on AudioRecordServices {
                 borderRadius: BorderRadius.circular(10.0),
               ),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   child: const Text('Agora não'),
+                  style: TextButtonStyle.flat(),
                   onPressed: () async {
                     Navigator.of(context)
                         .pop(const AudioPermissionState.denied());
                   },
                 ),
-                SizedBox(
-                  width: 120,
-                  child: FlatButton(
-                    color: DesignSystemColors.easterPurple,
+                ConstrainedBox(
+                  constraints: const BoxConstraints(minWidth: 120),
+                  child: FilledButton(
+                    style: FilledButtonStyle.raised(
+                      color: DesignSystemColors.easterPurple,
+                    ),
                     child: const Text(
                       'Sim claro!',
                       style: TextStyle(color: Colors.white),
@@ -384,17 +388,20 @@ extension _AudioRecordServices on AudioRecordServices {
                 borderRadius: BorderRadius.circular(10.0),
               ),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   child: const Text('Não'),
+                  style: TextButtonStyle.flat(),
                   onPressed: () async {
                     Navigator.of(context)
                         .pop(const AudioPermissionState.denied());
                   },
                 ),
-                SizedBox(
-                  width: 120,
-                  child: FlatButton(
-                    color: DesignSystemColors.easterPurple,
+                ConstrainedBox(
+                  constraints: const BoxConstraints(minWidth: 120),
+                  child: FilledButton(
+                    style: FilledButtonStyle.raised(
+                      color: DesignSystemColors.easterPurple,
+                    ),
                     child: const Text(
                       'Sim',
                       style: TextStyle(color: Colors.white),
