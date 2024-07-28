@@ -35,7 +35,7 @@ apply plugin: 'com.google.firebase.crashlytics'
 def isFirebaseDistribution = System.getenv('IS_FIREBASE_DISTRIBUTION') == 'true'
 
 android {
-    compileSdkVersion 33
+    compileSdkVersion 34
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -48,7 +48,7 @@ android {
     defaultConfig {
         applicationId "penhas.com.br"
         minSdkVersion 22
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
