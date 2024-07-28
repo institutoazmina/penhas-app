@@ -995,12 +995,10 @@ packages:
   mocktail_image_network:
     dependency: "direct dev"
     description:
-      path: "packages/mocktail_image_network"
-      ref: HEAD
-      resolved-ref: "2fd21e9e7b4447907eb34428fbb8133c5976a90c"
-      url: "https://github.com/pedrox-hs/mocktail.git"
-    source: git
-    version: "1.1.0"
+      name: mocktail_image_network
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
   nested:
     dependency: transitive
     description:
