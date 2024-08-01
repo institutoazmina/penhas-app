@@ -31,20 +31,20 @@ on:
 jobs:
 
   distribute:
-    runs-on: macos-latest
+    runs-on: macos-12 # replace with "macos-latest" after Flutter SDK upgrade
     environment: ${{ inputs.environment }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3.3.0
 
       - name: Select Xcode version
-        run: sudo xcode-select -s /Applications/Xcode_14.2.app
+        run: sudo xcode-select -s /Applications/Xcode_15.4.app
 
       - name: Retrieve Flutter version from FVM config
         uses: kuhnroyal/flutter-fvm-config-action@v1
 
       - name: Setup Flutter SDK
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@v2.16.0
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: ${{ env.FLUTTER_CHANNEL }}
