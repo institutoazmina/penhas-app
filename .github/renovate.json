@@ -1,0 +1,19 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "dependencyDashboard": true,
+  "dependencyDashboardApproval": true,
+  "extends": [
+    "config:recommended"
+  ],
+  "labels": ["update dependencies"],
+  "packageRules": [
+    {
+      "matchPackageNames": [
+        "/^firebase_/",
+        "com.google.firebase:firebase-crashlytics-gradle"
+      ],
+      "groupName": "Firebase"
+    }
+  ],
+  "prConcurrentLimit": 3
+}
