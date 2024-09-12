@@ -256,20 +256,20 @@ flutter:
           style: normal
           weight: 900
         - asset: assets/fonts/lato/Lato-BlackItalic.ttf
-          weight: 900
           style: italic
+          weight: 900
         - asset: assets/fonts/lato/Lato-Bold.ttf
           style: normal
           weight: 700
         - asset: assets/fonts/lato/Lato-BoldItalic.ttf
-          weight: 700
           style: italic
+          weight: 700
         - asset: assets/fonts/lato/Lato-Regular.ttf
           style: normal
           weight: 400
         - asset: assets/fonts/lato/Lato-Italic.ttf
-          weight: 400
           style: italic
+          weight: 400
         - asset: assets/fonts/lato/Lato-Light.ttf
           style: normal
           weight: 300
