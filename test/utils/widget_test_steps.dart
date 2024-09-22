@@ -1,3 +1,4 @@
+import 'package:asuka/asuka.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/password_text_input.dart';
@@ -7,6 +8,7 @@ Future<void> theAppIsRunning(WidgetTester tester, Widget widget) async {
   await tester.pumpWidget(
     MaterialApp(
       debugShowCheckedModeBanner: false,
+      builder: Asuka.builder,
       home: widget,
     ),
   );
