@@ -54,6 +54,17 @@ Future<void> iTapText(WidgetTester tester, {required String text}) async {
   await tester.pump();
 }
 
+Future<void> iTapButton(WidgetTester tester, String text) async {
+  final targetButton = find.ancestor(
+    of: find.text(text),
+    matching: find.byWidgetPredicate(
+      (widget) => widget is ButtonStyleButton || widget is MaterialButton,
+    ),
+  );
+
+  await tester.tap(targetButton);
+}
+
 Future<void> iSeePasswordField({
   String? text,
   Key? key,
