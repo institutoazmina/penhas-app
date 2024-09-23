@@ -194,7 +194,7 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
   }
 
   void _dismissSnackBarForAction(Function action, {dynamic argument}) {
-    _scaffoldKey.currentState?.hideCurrentSnackBar();
+    _scaffoldKey.hideCurrentSnackBar();
 
     if (argument == null) {
       // ignore: avoid_dynamic_calls
