@@ -5,6 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../../../../shared/design_system/button_shape.dart';
+import '../../../../../../../shared/design_system/buttons/styles.dart';
 import '../../../../../../../shared/design_system/colors.dart';
 import '../../../../../../../shared/design_system/linear_gradient_design_system.dart';
 import '../../../../../../../shared/design_system/text_styles.dart';
@@ -146,11 +147,13 @@ class _SignUpThreePageState
   }
 
   Widget _buildNextButton() {
-    return RaisedButton(
+    return FilledButton(
       onPressed: () => controller.registerUserPress(),
-      elevation: 0,
-      color: DesignSystemColors.ligthPurple,
-      shape: kButtonShapeFilled,
+      style: FilledButtonStyle.raised(
+        elevation: 0,
+        color: DesignSystemColors.ligthPurple,
+        shape: kButtonShapeFilled,
+      ),
       child: const Text(
         'Cadastrar',
         style: kTextStyleDefaultFilledButtonLabel,
@@ -162,7 +165,7 @@ class _SignUpThreePageState
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
     }
-    WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
   }
 
   ReactionDisposer _showErrorMessage() {
