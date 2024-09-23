@@ -8,7 +8,6 @@ mixin SnackBarHandler {
     required String? message,
     Duration duration = _defaultSnackBarDuration,
   }) {
-    assert(message != null && message.isNotEmpty);
     if (message == null || message.isEmpty) return;
 
     scaffoldKey.messenger?.showSnackBar(
