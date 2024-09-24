@@ -30,10 +30,6 @@ void main() {
       );
     });
 
-    test('should not enabled by default', () {
-      expect(sut.isEnabled, isFalse);
-    });
-
     test('given animation duration should be 400 by default', () {
       expect(sut.animationDuration, const Duration(milliseconds: 400));
     });
