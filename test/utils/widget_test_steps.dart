@@ -1,3 +1,4 @@
+import 'package:asuka/asuka.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/password_text_input.dart';
@@ -7,6 +8,7 @@ Future<void> theAppIsRunning(WidgetTester tester, Widget widget) async {
   await tester.pumpWidget(
     MaterialApp(
       debugShowCheckedModeBanner: false,
+      builder: Asuka.builder,
       home: widget,
     ),
   );
@@ -50,6 +52,17 @@ Future<void> iDontSeeText(
 Future<void> iTapText(WidgetTester tester, {required String text}) async {
   await tester.tap(find.text(text));
   await tester.pump();
+}
+
+Future<void> iTapButton(WidgetTester tester, String text) async {
+  final targetButton = find.ancestor(
+    of: find.text(text),
+    matching: find.byWidgetPredicate(
+      (widget) => widget is ButtonStyleButton || widget is MaterialButton,
+    ),
+  );
+
+  await tester.tap(targetButton);
 }
 
 Future<void> iSeePasswordField({

@@ -8,10 +8,12 @@ class GoldenTestWidgetApp extends StatelessWidget {
     Key? key,
     required this.device,
     required this.builder,
+    this.transitionBuilder,
   }) : super(key: key);
 
   final Device device;
   final ValueGetter<Widget> builder;
+  final TransitionBuilder? transitionBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,7 @@ class GoldenTestWidgetApp extends StatelessWidget {
               width: device.size.width,
               child: MaterialApp(
                 theme: AppTheme.of(context),
+                builder: transitionBuilder,
                 home: builder(),
                 debugShowCheckedModeBanner: false,
               ),

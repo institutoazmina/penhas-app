@@ -1,6 +1,6 @@
-// ignore_for_file: prefer_const_constructors
-
+import 'package:asuka/asuka.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_sound/public/flutter_sound_recorder.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12,10 +12,14 @@ import 'package:penhas/app/core/states/audio_permission_state.dart';
 import 'package:permission_handler_platform_interface/permission_handler_platform_interface.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
+import '../../../utils/golden_tests.dart';
+import '../../../utils/widget_test_steps.dart';
+
 void main() {
   late IAudioRecordServices recordServices;
   late IAudioSyncManager audioSyncManager;
   late FlutterSoundRecorder soundRecorder;
+  late PermissionHandlerPlatform mockPermissionHandlerPlatform;
 
   setUpAll(() async {
     registerFallbackValue(Duration(milliseconds: 100));
@@ -28,12 +32,17 @@ void main() {
     audioSyncManager = MockAudioSyncManager();
     soundRecorder = MockFlutterSoundRecorder();
 
-    PermissionHandlerPlatform.instance = MockPermissionHandlerPlatform();
+    PermissionHandlerPlatform.instance =
+        mockPermissionHandlerPlatform = MockPermissionHandlerPlatform();
 
     recordServices = AudioRecordServices(
       audioSyncManager: audioSyncManager,
       recorder: soundRecorder,
     );
+  });
+
+  tearDown(() {
+    debugDefaultTargetPlatformOverride = null;
   });
 
   group(AudioRecordServices, () {
@@ -66,43 +75,242 @@ void main() {
       },
     );
 
-    test(
-      'requestPermission return a AudioPermissionState.granted for PermissionStatus.granted',
-      () async {
-        // arrange
-        final mockPermissionHandlerPlatform =
-            PermissionHandlerPlatform.instance;
-        debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+    group(
+      'requestPermission()',
+      () {
+        test(
+          'return a AudioPermissionState.granted for PermissionStatus.granted',
+          () async {
+            // arrange
+            final mockPermissionHandlerPlatform =
+                PermissionHandlerPlatform.instance;
+            debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
 
-        when((() => mockPermissionHandlerPlatform
-                .checkPermissionStatus(Permission.microphone)))
-            .thenAnswer((_) async => PermissionStatus.granted);
+            when((() => mockPermissionHandlerPlatform
+                    .checkPermissionStatus(Permission.microphone)))
+                .thenAnswer((_) async => PermissionStatus.granted);
 
-        // act
-        final result = await recordServices.requestPermission();
+            // act
+            final result = await recordServices.requestPermission();
 
-        // assert
-        expect(result, AudioPermissionState.granted());
-      },
-    );
+            // assert
+            expect(result, AudioPermissionState.granted());
+          },
+        );
 
-    test(
-      'requestPermission return a AudioPermissionState.restricted for PermissionStatus.restricted',
-      () async {
-        // arrange
-        final mockPermissionHandlerPlatform =
-            PermissionHandlerPlatform.instance;
-        debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+        test(
+          'return a AudioPermissionState.restricted for PermissionStatus.restricted',
+          () async {
+            // arrange
+            final mockPermissionHandlerPlatform =
+                PermissionHandlerPlatform.instance;
+            debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
 
-        when((() => mockPermissionHandlerPlatform
-                .checkPermissionStatus(Permission.microphone)))
-            .thenAnswer((_) async => PermissionStatus.restricted);
+            when((() => mockPermissionHandlerPlatform
+                    .checkPermissionStatus(Permission.microphone)))
+                .thenAnswer((_) async => PermissionStatus.restricted);
 
-        // act
-        final result = await recordServices.requestPermission();
+            // act
+            final result = await recordServices.requestPermission();
 
-        // assert
-        expect(result, AudioPermissionState.restricted());
+            // assert
+            expect(result, AudioPermissionState.restricted());
+          },
+        );
+
+        testWidgets(
+          'should request for microphone permission when limited',
+          (tester) async {
+            // arrange
+            when(
+              () => mockPermissionHandlerPlatform
+                  .checkPermissionStatus(Permission.microphone),
+            ).thenAnswer((_) async => PermissionStatus.limited);
+
+            await theAppIsRunning(tester, Container());
+
+            // act
+            recordServices.requestPermission();
+            await tester.pumpAndSettle();
+
+            // assert
+            await iSeeText('Acesso ao microfone');
+          },
+        );
+
+        testWidgets(
+          'should request for microphone permission when denied',
+          (tester) async {
+            // arrange
+            when(
+              () => mockPermissionHandlerPlatform
+                  .checkPermissionStatus(Permission.microphone),
+            ).thenAnswer((_) async => PermissionStatus.denied);
+
+            await theAppIsRunning(tester, Container());
+
+            // act
+            recordServices.requestPermission();
+            await tester.pumpAndSettle();
+
+            // assert
+            await iSeeText('Acesso ao microfone');
+          },
+        );
+
+        testWidgets(
+          'should return denied when "Agora não" is pressed',
+          (tester) async {
+            // arrange
+            when(
+              () => mockPermissionHandlerPlatform
+                  .checkPermissionStatus(Permission.microphone),
+            ).thenAnswer((_) async => PermissionStatus.denied);
+
+            await theAppIsRunning(tester, Container());
+
+            // act
+            final result = recordServices.requestPermission();
+            await tester.pumpAndSettle();
+            await iTapButton(tester, 'Agora não');
+
+            // assert
+            expectLater(
+              result,
+              completion(AudioPermissionState.denied()),
+            );
+          },
+        );
+
+        testWidgets(
+          'should return granted when "Sim claro!" is pressed',
+          (tester) async {
+            // arrange
+            when(
+              () => mockPermissionHandlerPlatform
+                  .checkPermissionStatus(Permission.microphone),
+            ).thenAnswer((_) async => PermissionStatus.denied);
+            when(
+              () => mockPermissionHandlerPlatform
+                  .requestPermissions([Permission.microphone]),
+            ).thenAnswer(
+              (invocation) async =>
+                  {Permission.microphone: PermissionStatus.granted},
+            );
+
+            await theAppIsRunning(tester, Container());
+
+            // act
+            final result = recordServices.requestPermission();
+            await tester.pumpAndSettle();
+            await iTapButton(tester, 'Sim claro!');
+
+            // assert
+            expectLater(
+              result,
+              completion(AudioPermissionState.granted()),
+            );
+          },
+        );
+
+        testWidgets(
+          'should show new dialog when "Sim claro!" is pressed and is permanently denied',
+          (tester) async {
+            // arrange
+            when(
+              () => mockPermissionHandlerPlatform
+                  .checkPermissionStatus(Permission.microphone),
+            ).thenAnswer((_) async => PermissionStatus.denied);
+            when(
+              () => mockPermissionHandlerPlatform
+                  .requestPermissions([Permission.microphone]),
+            ).thenAnswer(
+              (invocation) async =>
+                  {Permission.microphone: PermissionStatus.permanentlyDenied},
+            );
+
+            await theAppIsRunning(tester, Container());
+
+            // act
+            recordServices.requestPermission();
+            await tester.pumpAndSettle();
+            await iTapButton(tester, 'Sim claro!');
+            await tester.pumpAndSettle();
+
+            // assert
+            await iSeeText('Microfone bloqueado');
+          },
+        );
+
+        testWidgets(
+          'should request for microphone permission when permanentlyDenied',
+          (tester) async {
+            // arrange
+            when(
+              () => mockPermissionHandlerPlatform
+                  .checkPermissionStatus(Permission.microphone),
+            ).thenAnswer((_) async => PermissionStatus.permanentlyDenied);
+
+            await theAppIsRunning(tester, Container());
+
+            // act
+            recordServices.requestPermission();
+            await tester.pumpAndSettle();
+
+            // assert
+            await iSeeText('Microfone bloqueado');
+          },
+        );
+
+        testWidgets(
+          'should return denied when "Não" is pressed',
+          (tester) async {
+            // arrange
+            when(
+              () => mockPermissionHandlerPlatform
+                  .checkPermissionStatus(Permission.microphone),
+            ).thenAnswer((_) async => PermissionStatus.permanentlyDenied);
+
+            await theAppIsRunning(tester, Container());
+
+            // act
+            final result = recordServices.requestPermission();
+            await tester.pumpAndSettle();
+            await iTapButton(tester, 'Não');
+
+            // assert
+            expectLater(
+              result,
+              completion(AudioPermissionState.denied()),
+            );
+          },
+        );
+
+        testWidgets(
+          'should return undefined when "Sim" is pressed',
+          (tester) async {
+            // arrange
+            when(
+              () => mockPermissionHandlerPlatform
+                  .checkPermissionStatus(Permission.microphone),
+            ).thenAnswer((_) async => PermissionStatus.permanentlyDenied);
+            when(() => mockPermissionHandlerPlatform.openAppSettings())
+                .thenAnswer((_) async => true);
+
+            await theAppIsRunning(tester, Container());
+
+            // act
+            final result = recordServices.requestPermission();
+            await tester.pumpAndSettle();
+            await iTapButton(tester, 'Sim');
+
+            // assert
+            expectLater(
+              result,
+              completion(AudioPermissionState.undefined()),
+            );
+          },
+        );
       },
     );
 
@@ -126,75 +334,102 @@ void main() {
       },
     );
 
-    test(
-      'start() record audio for microphone permission granted',
-      () async {
-        // arrange
-        final mockPermissionHandlerPlatform =
-            PermissionHandlerPlatform.instance;
-        debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+    group(
+      'start()',
+      () {
+        test(
+          'record audio for microphone permission granted',
+          () async {
+            // arrange
+            final mockPermissionHandlerPlatform =
+                PermissionHandlerPlatform.instance;
+            debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
 
-        when((() => mockPermissionHandlerPlatform
-                .checkPermissionStatus(Permission.microphone)))
-            .thenAnswer((_) async => PermissionStatus.granted);
+            when((() => mockPermissionHandlerPlatform
+                    .checkPermissionStatus(Permission.microphone)))
+                .thenAnswer((_) async => PermissionStatus.granted);
 
-        when(() => soundRecorder.isStopped).thenReturn(true);
-        when(() => soundRecorder.openRecorder()).thenAnswer((_) async => null);
-        when(() => soundRecorder.setSubscriptionDuration(any()))
-            .thenAnswer((_) => Future.value());
-        when(() => soundRecorder.startRecorder(
-              codec: any(named: 'codec'),
-              toFile: any(named: 'toFile'),
-              bitRate: any(named: 'bitRate'),
-              sampleRate: any(named: 'sampleRate'),
-            )).thenAnswer((_) => Future.value());
+            when(() => soundRecorder.isStopped).thenReturn(true);
+            when(() => soundRecorder.openRecorder())
+                .thenAnswer((_) async => null);
+            when(() => soundRecorder.setSubscriptionDuration(any()))
+                .thenAnswer((_) => Future.value());
+            when(() => soundRecorder.startRecorder(
+                  codec: any(named: 'codec'),
+                  toFile: any(named: 'toFile'),
+                  bitRate: any(named: 'bitRate'),
+                  sampleRate: any(named: 'sampleRate'),
+                )).thenAnswer((_) => Future.value());
 
-        when(() => audioSyncManager.audioFile(
-              session: any(named: 'session'),
-              sequence: any(named: 'sequence'),
-            )).thenAnswer((_) async => '/tmp/file_name.txt');
+            when(() => audioSyncManager.audioFile(
+                  session: any(named: 'session'),
+                  sequence: any(named: 'sequence'),
+                )).thenAnswer((_) async => '/tmp/file_name.txt');
 
-        // act
-        await recordServices.start();
+            // act
+            await recordServices.start();
 
-        // assert
-        verify(() => soundRecorder.isStopped).called(1);
-        verify(() => soundRecorder.closeRecorder()).called(1);
-        verify(() => soundRecorder.openRecorder()).called(1);
-        verify(() => soundRecorder.startRecorder(
-            codec: any(named: 'codec'),
-            toFile: any(named: 'toFile'),
-            bitRate: any(named: 'bitRate'),
-            sampleRate: any(named: 'sampleRate'))).called(1);
-      },
-    );
+            // assert
+            verify(() => soundRecorder.isStopped).called(1);
+            verify(() => soundRecorder.closeRecorder()).called(1);
+            verify(() => soundRecorder.openRecorder()).called(1);
+            verify(() => soundRecorder.startRecorder(
+                codec: any(named: 'codec'),
+                toFile: any(named: 'toFile'),
+                bitRate: any(named: 'bitRate'),
+                sampleRate: any(named: 'sampleRate'))).called(1);
+          },
+        );
 
-    test(
-      'start() do not crash if soundRecorder crash',
-      () async {
-        // arrange
-        final mockPermissionHandlerPlatform =
-            PermissionHandlerPlatform.instance;
-        debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+        testWidgets(
+          'should request for microphone permission when denied',
+          (tester) async {
+            // arrange
+            when(
+              () => mockPermissionHandlerPlatform
+                  .checkPermissionStatus(Permission.microphone),
+            ).thenAnswer((_) async => PermissionStatus.denied);
 
-        when((() => mockPermissionHandlerPlatform
-                .checkPermissionStatus(Permission.microphone)))
-            .thenAnswer((_) async => PermissionStatus.granted);
+            await theAppIsRunning(tester, Container());
 
-        when(() => soundRecorder.isStopped).thenReturn(true);
-        when(() => soundRecorder.openRecorder()).thenAnswer((_) async => null);
-        when(() => soundRecorder.setSubscriptionDuration(any()))
-            .thenThrow(Exception());
+            // act
+            await recordServices.start();
+            await tester.pumpAndSettle();
 
-        when(() => audioSyncManager.audioFile(
-              session: any(named: 'session'),
-              sequence: any(named: 'sequence'),
-            )).thenAnswer((_) async => '/tmp/file_name.txt');
+            // assert
+            await iSeeText('Acesso ao microfone');
+          },
+        );
 
-        // act / assert
-        await expectLater(
-          recordServices.start(),
-          completion(isNull),
+        test(
+          'do not crash if soundRecorder crash',
+          () async {
+            // arrange
+            final mockPermissionHandlerPlatform =
+                PermissionHandlerPlatform.instance;
+            debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+
+            when((() => mockPermissionHandlerPlatform
+                    .checkPermissionStatus(Permission.microphone)))
+                .thenAnswer((_) async => PermissionStatus.granted);
+
+            when(() => soundRecorder.isStopped).thenReturn(true);
+            when(() => soundRecorder.openRecorder())
+                .thenAnswer((_) async => null);
+            when(() => soundRecorder.setSubscriptionDuration(any()))
+                .thenThrow(Exception());
+
+            when(() => audioSyncManager.audioFile(
+                  session: any(named: 'session'),
+                  sequence: any(named: 'sequence'),
+                )).thenAnswer((_) async => '/tmp/file_name.txt');
+
+            // act / assert
+            await expectLater(
+              recordServices.start(),
+              completion(isNull),
+            );
+          },
         );
       },
     );
@@ -287,6 +522,8 @@ void main() {
 
       when(() => soundRecorder.isStopped).thenReturn(true);
       when(() => soundRecorder.openRecorder()).thenAnswer((_) async => null);
+      when(() => soundRecorder.stopRecorder())
+          .thenAnswer((_) => Future.value());
       when(() => audioSyncManager.audioFile(
             session: any(named: 'session'),
             sequence: any(named: 'sequence'),
@@ -300,6 +537,32 @@ void main() {
 
       // assert
       verify(() => audioSyncManager.syncAudio()).called(1);
+    });
+
+    group('golden', () {
+      [
+        PermissionStatus.denied,
+        PermissionStatus.permanentlyDenied,
+        PermissionStatus.limited,
+      ].forEach((status) {
+        screenshotTest(
+          'requestPermission() should request for microphone permission when ${status.name}',
+          fileName:
+              'audio_record_services_requestPermission_dialog_${status.name}',
+          devices: [testDevices.first],
+          transitionBuilder: Asuka.builder,
+          setUp: () async {
+            when(
+              () => mockPermissionHandlerPlatform
+                  .checkPermissionStatus(Permission.microphone),
+            ).thenAnswer((_) async => status);
+          },
+          pageBuilder: () => FutureBuilder(
+            future: recordServices.requestPermission(),
+            builder: (_, __) => Container(),
+          ),
+        );
+      });
     });
   });
 }
