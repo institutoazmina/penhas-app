@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/quiz/domain/entities/quiz_message.dart';
-import 'package:penhas/app/features/quiz/presentation/new_quiz/quiz_page.dart';
+import 'package:penhas/app/features/quiz/presentation/quiz/quiz_page.dart';
 
 import '../../../../utils/golden_tests.dart';
 
@@ -46,7 +46,7 @@ class QuizMessageTestScope {
     screenshotTest(
       description,
       fileName: 'quiz_${message.type.name}_received',
-      pageBuilder: () => NewQuizPage(),
+      pageBuilder: () => QuizPage(),
       skip: skip,
     );
   }
@@ -60,7 +60,7 @@ class QuizMessageTestScope {
     screenshotTest(
       description,
       fileName: 'quiz_${message.type.name}_replyed',
-      pageBuilder: () => NewQuizPage(),
+      pageBuilder: () => QuizPage(),
       pumpBeforeTest: action,
       skip: skip,
     );

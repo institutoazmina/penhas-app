@@ -17,8 +17,8 @@ import 'quiz_controller.dart';
 
 const fabScrollOffset = 48.0;
 
-class NewQuizPage extends StatelessWidget {
-  const NewQuizPage({Key? key}) : super(key: key);
+class QuizPage extends StatelessWidget {
+  const QuizPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -274,7 +274,7 @@ extension _QuizContentStateHelpers on QuizContentState {
   /// the FAB only when has no pending messages
   void _scrollListener() {
     if (_hasPendingMessages) return;
-    WidgetsBinding.instance?.addPostFrameCallback((_) => _maybeShowFab());
+    WidgetsBinding.instance.addPostFrameCallback((_) => _maybeShowFab());
   }
 
   /// Dispatch the message updates to the list
