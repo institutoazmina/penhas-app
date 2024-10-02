@@ -6,7 +6,7 @@
 
 ## Requisitos
 
-- [FVM](https://fvm.app/) (recomendável) ou SDK Flutter ^2.10.0
+- [FVM](https://fvm.app/) (recomendável) ou SDK Flutter 3.0.5
 - Android SDK
 - XCode
 - Projetos Android e iOS no Firebase
@@ -124,5 +124,3 @@ Caso queira iniciar o app apontando para um ambiente diferente, isso pode ser fe
   ]
 }
 ```
-
-      
