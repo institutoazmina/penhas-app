@@ -28,6 +28,7 @@ class DesignSystemColors {
   static const splashColor = Color.fromARGB(16, 0, 0, 0);
   static const shadowColor = Color.fromARGB(25, 0, 0, 0);
   static const dialogBarrierColor = Colors.black54;
+  static const disabledColor = Colors.black38;
 
   static Color hexColor(String value) {
     String hexColor = value.toUpperCase().replaceAll('#', '');
