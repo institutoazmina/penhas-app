@@ -38,6 +38,7 @@ Future<void> screenshotTest(
   bool skip = false,
   List<String> tags = const ['golden'],
   Duration timeout = const Duration(seconds: 5),
+  TransitionBuilder? transitionBuilder,
 }) async {
   goldenTest(
     description,
@@ -52,6 +53,7 @@ Future<void> screenshotTest(
               (it) => GoldenTestWidgetApp(
                 key: ValueKey(it),
                 device: it,
+                transitionBuilder: transitionBuilder,
                 builder: pageBuilder,
               ),
             )
