@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../shared/design_system/buttons/styles.dart';
 import '../../../../shared/design_system/colors.dart';
 
 class LoginButton extends StatefulWidget {
@@ -19,15 +20,17 @@ class _LoginButtonState extends State<LoginButton> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 44,
-      child: RaisedButton(
+      child: FilledButton(
         onPressed: widget.onChanged,
-        elevation: 0,
-        color: DesignSystemColors.ligthPurple,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.0),
-            bottomLeft: Radius.circular(20.0),
-            bottomRight: Radius.circular(20.0),
+        style: FilledButtonStyle.raised(
+          elevation: 0,
+          color: DesignSystemColors.ligthPurple,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.0),
+              bottomLeft: Radius.circular(20.0),
+              bottomRight: Radius.circular(20.0),
+            ),
           ),
         ),
         child: const Text(
