@@ -139,7 +139,7 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
     final granted = await _supportCenterUseCase.askForLocationPermission(
       'Localização',
       const Text(
-        'Permintindo que a PenhaS tenha acesso a sua localização, será possivel apresentar os pontos de apoio mais próximo da onde você está.',
+        'Permitindo que a PenhaS tenha acesso a sua localização, será possível apresentar os pontos de apoio mais próximo da onde você está.',
         style: TextStyle(
           color: DesignSystemColors.darkIndigoThree,
           fontFamily: 'Lato',
