@@ -18,6 +18,12 @@
 
 Para ser possível executar o aplicativo, é necessário ter os arquivos de configuração do Firebase, para isso pode ser utilizado o Firebase CLI com o FlutterFire, siga o primeiro passo na [documentação oficial](https://firebase.google.com/docs/flutter/setup?platform=ios#install-cli-tools) para instalar as ferramentas de linha de comando.
 
+Instalar a gem do xcode para que o comando funcione corretamente (Obrigatório caso for buildar o app em iOS)
+
+```bash
+gem install xcodeproj
+```
+
 Após as ferramentas serem instaladas podemos baixar esses arquivos com o seguinte comando:
 
 ```bash
