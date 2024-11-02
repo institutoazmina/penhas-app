@@ -7,8 +7,6 @@ As configurações remotas atualmente disponíveis no _PenhaS_ são:
 | Chave | Tipo      | Valor Padrão | Descrição                                                                                                       |
 |---|-----------|--------------|-----------------------------------------------------------------------------------------------------------------|
 | **feature_login_offline** | `boolean` | `false`      | Habilita o login offline para a autenticação em modo camuflado                                                  |
-| **feature_new_quiz** | `boolean` | `false`      | Habilita a tela do quiz com animação                                                                            |
-| **feature_new_quiz_disabled_origins** | `String`  | `[]`         | String em formato de lista de JSON, contendo as origens que tem como destino o quiz que devem ser desabilitadas |
 | **config_quiz_animation_duration** | `int`     | `400`        | Tempo de duração das animações do quiz                                                                          |
 
 
