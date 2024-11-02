@@ -7,8 +7,6 @@ abstract class RemoteConfigKeys {
 
   static const Map<String, dynamic> defaults = {
     featureLoginOffline: false,
-    featureNewQuiz: false,
-    featureQuizDisabledOrigins: '[]',
     configQuizAnimationDuration: 400,
   };
 }
