@@ -18,11 +18,11 @@ jobs:
       changed_dart_files: ${{ steps.added-and-modified-files.outputs.dart }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.2.0
+        uses: actions/checkout@v4
 
       - id: changed-files
         name: Get changed files
-        uses: tj-actions/changed-files@v41
+        uses: tj-actions/changed-files@v45
         with:
           files: |
             **/*.dart
@@ -47,7 +47,7 @@ jobs:
     if: ${{ needs.check-changes.outputs.changed_files }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.2.0
+        uses: actions/checkout@v4
 
       - name: Retrieve Flutter version from FVM config
         uses: kuhnroyal/flutter-fvm-config-action@v1
@@ -86,7 +86,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.2.0
+        uses: actions/checkout@v4
 
       - name: Retrieve Flutter version from FVM config
         uses: kuhnroyal/flutter-fvm-config-action@v1
@@ -117,4 +117,4 @@ jobs:
         run: flutter test --timeout=1h --dart-define=isCI=true --coverage
 
       - name: Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
