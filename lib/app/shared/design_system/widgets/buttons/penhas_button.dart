@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'styles/filled_button_style.dart';
-import 'styles/penhas_button_style.dart';
 import 'styles/rounded_filled_button_style.dart';
 import 'styles/rounded_outlined_button_style.dart';
 import 'styles/text_button_style.dart';
@@ -41,17 +40,17 @@ class PenhasButton extends ElevatedButton {
   /// * [onPressed] é a ação a ser executada ao pressionar o botão.
   /// * [style] é a implementação da interface [PenhasButtonStyle] que define o estilo do botão.
   /// * [focusNode] é o [FocusNode] opcional para o botão.
-  PenhasButton({
+  const PenhasButton({
     Key? key,
     required VoidCallback? onPressed,
     required Widget? child,
-    required PenhasButtonStyle style,
+    required ButtonStyle style,
     FocusNode? focusNode,
   }) : super(
           key: key,
           onPressed: onPressed,
           child: child,
-          style: style.buttonStyle,
+          style: style,
           focusNode: focusNode,
         );
 

@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../../styles/penhas_colors.dart';
 import '../../../styles/penhas_text_style.dart';
-import 'penhas_button_style.dart';
 
-/// Uma implementação personalizada do [PenhasButtonStyle] para botão preenchido com cantos arredondados.
+/// Uma implementação personalizada de [ButtonStyle] para botões preenchidos com cantos arredondados.
 ///
 /// Este estilo de botão define uma série de propriedades para personalizar
 /// a aparência e o comportamento de um botão preenchido com cantos arredondados dentro da aplicação.
 ///
-/// Usa cores e textos de [PenhasColors] e [PenhasTextStyle] para manter
-/// a consistência visual.
+/// Utiliza cores e estilos de texto de [PenhasColors] e [PenhasTextStyle]
+/// para manter a consistência visual.
 ///
 /// Exemplo de uso:
 /// ```dart
@@ -21,35 +20,34 @@ import 'penhas_button_style.dart';
 /// )
 /// ```
 ///
+/// Propriedades definidas:
+/// * Cor de primeiro plano: [PenhasColors.white]
+/// * Cor de fundo: [PenhasColors.lightPurple]
+/// * Forma: [RoundedRectangleBorder] com um raio de 20.0 e borda na cor [PenhasColors.lightPurple]
+/// * Elevação: `0.0` (sem sombra)
+/// * Estilo de texto: cópia de [PenhasTextStyle.labelLarge] com cor ajustada para [PenhasColors.white]
+///
 /// Veja também:
-/// * [PenhasButtonStyle], a interface que esta classe implementa.
 /// * [PenhasColors], onde as cores usadas são definidas.
 /// * [PenhasTextStyle], onde os estilos de texto usados são definidos.
-class RoundedFilledButtonStyle implements PenhasButtonStyle {
-  /// Retorna um [ButtonStyle] personalizado para botão preenchido com cantos arredondados.
-  ///
-  /// O estilo define as seguintes propriedades:
-  /// * Cor de primeiro plano para [PenhasColors.white]
-  /// * Cor de fundo para [PenhasColors.lightPurple]
-  /// * Forma para um retângulo arredondado com um raio de 20.0 e borda na cor [PenhasColors.lightPurple]
-  /// * Elevação para `0.0` (sem sombra)
-  /// * Estilo de texto para uma cópia de [PenhasTextStyle.labelLarge] com a cor ajustada para [PenhasColors.white]
-  @override
-  ButtonStyle get buttonStyle => ButtonStyle(
-        foregroundColor: MaterialStateProperty.all<Color>(PenhasColors.white),
-        backgroundColor:
-            MaterialStateProperty.all<Color>(PenhasColors.lightPurple),
-        shape: MaterialStateProperty.all<OutlinedBorder>(
-          const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            side: BorderSide(color: PenhasColors.lightPurple),
+
+class RoundedFilledButtonStyle extends ButtonStyle {
+  RoundedFilledButtonStyle()
+      : super(
+          foregroundColor: MaterialStateProperty.all<Color>(PenhasColors.white),
+          backgroundColor:
+              MaterialStateProperty.all<Color>(PenhasColors.lightPurple),
+          shape: MaterialStateProperty.all<OutlinedBorder>(
+            const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              side: BorderSide(color: PenhasColors.lightPurple),
+            ),
           ),
-        ),
-        elevation: MaterialStateProperty.all<double>(0.0),
-        textStyle: MaterialStateProperty.all<TextStyle>(
-          PenhasTextStyle.labelLarge.copyWith(
-            color: PenhasColors.white,
+          elevation: MaterialStateProperty.all<double>(0.0),
+          textStyle: MaterialStateProperty.all<TextStyle>(
+            PenhasTextStyle.labelLarge.copyWith(
+              color: PenhasColors.white,
+            ),
           ),
-        ),
-      );
+        );
 }
