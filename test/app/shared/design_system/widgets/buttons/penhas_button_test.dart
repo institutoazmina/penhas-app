@@ -37,10 +37,10 @@ void main() {
               ),
             ),
             GoldenTestScenario(
-              name: 'PenhasButton.roundedFilledButton/RoundedFilledButtonStyle',
+              name: 'PenhasButton.roundedFilled/RoundedFilledButtonStyle',
               child: SizedBox(
                 width: 250,
-                child: PenhasButton.roundedFilledButton(
+                child: PenhasButton.roundedFilled(
                   onPressed: () {},
                   child: buttonWidget,
                 ),
@@ -58,11 +58,10 @@ void main() {
               ),
             ),
             GoldenTestScenario(
-              name:
-                  'PenhasButton.roundedOutlinedButton/RoundedOutlinedButtonStyle',
+              name: 'PenhasButton.roundedOutlined/RoundedOutlinedButtonStyle',
               child: SizedBox(
                 width: 250,
-                child: PenhasButton.roundedOutlinedButton(
+                child: PenhasButton.roundedOutlined(
                   onPressed: () {},
                   child: buttonWidget,
                 ),
@@ -80,10 +79,10 @@ void main() {
               ),
             ),
             GoldenTestScenario(
-              name: 'PenhasButton.textButton/TextButtonStyle',
+              name: 'PenhasButton.text/TextButtonStyle',
               child: SizedBox(
                 width: 250,
-                child: PenhasButton.textButton(
+                child: PenhasButton.text(
                   onPressed: () {},
                   child: buttonWidget,
                 ),
@@ -101,10 +100,10 @@ void main() {
               ),
             ),
             GoldenTestScenario(
-              name: 'PenhasButton.filledButton/FilledButtonStyle',
+              name: 'PenhasButton.filled/FilledButtonStyle',
               child: SizedBox(
                 width: 250,
-                child: PenhasButton.filledButton(
+                child: PenhasButton.filled(
                   onPressed: () {},
                   child: buttonWidget,
                 ),
