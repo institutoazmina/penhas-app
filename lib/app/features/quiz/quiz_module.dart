@@ -17,8 +17,7 @@ import 'domain/repositories/i_quiz_repository.dart';
 import 'domain/send_answer.dart';
 import 'domain/start_quiz.dart';
 import 'presentation/new_quiz/quiz_controller.dart';
-import 'presentation/quiz/quiz_controller.dart';
-import 'presentation/quiz_bridge/quiz_bridge.dart';
+import 'presentation/new_quiz/quiz_page.dart';
 import 'presentation/quiz_start/quiz_start_controller.dart';
 import 'presentation/quiz_start/quiz_start_page.dart';
 import 'presentation/tutorial/stealth_mode_tutorial_page.dart';
@@ -27,14 +26,6 @@ import 'presentation/tutorial/stealth_mode_tutorial_page_controller.dart';
 class QuizModule extends Module {
   @override
   List<Bind> get binds => [
-        Bind.factory(
-          (i) => QuizController(
-            quizSession: i.args?.data,
-            appStateUseCase: i.get<AppStateUseCase>(),
-            repository: i.get<IQuizRepository>(),
-            navigator: i.get<AppNavigator>(),
-          ),
-        ),
         Bind.factory<IQuizController>(
           (i) => IQuizController.legacy(
             quiz: i.args?.data,
@@ -92,7 +83,10 @@ class QuizModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-        ChildRoute(Modular.initialRoute, child: const QuizBridgeBuilder()),
+        ChildRoute(
+          Modular.initialRoute,
+          child: (_, __) => const NewQuizPage(),
+        ),
         ChildRoute(
           '/start',
           child: (_, args) => const QuizStartPage(),

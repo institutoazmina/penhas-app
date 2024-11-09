@@ -83,8 +83,6 @@ void main() {
         () => remoteConfig.setDefaults(
           {
             'feature_login_offline': false,
-            'feature_new_quiz': false,
-            'feature_new_quiz_disabled_origins': '[]',
             'config_quiz_animation_duration': 400,
           },
         ),
