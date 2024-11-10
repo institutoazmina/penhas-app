@@ -10,7 +10,7 @@ import 'package:penhas/app/features/quiz/domain/entities/answer.dart';
 import 'package:penhas/app/features/quiz/domain/entities/quiz.dart';
 import 'package:penhas/app/features/quiz/domain/entities/quiz_message.dart';
 import 'package:penhas/app/features/quiz/domain/send_answer.dart';
-import 'package:penhas/app/features/quiz/presentation/new_quiz/quiz_page.dart';
+import 'package:penhas/app/features/quiz/presentation/quiz/quiz_page.dart';
 import 'package:penhas/app/features/quiz/quiz_module.dart';
 import 'package:penhas/app/shared/navigation/app_navigator.dart';
 import 'package:penhas/app/shared/navigation/app_route.dart';
@@ -22,7 +22,7 @@ import '../../../../../utils/widget_tester_ext.dart';
 import '../quiz_test_helper.dart';
 
 void main() {
-  group(NewQuizPage, () {
+  group(QuizPage, () {
     late AppNavigator mockAppNavigator;
     late SendAnswerUseCase mockSendAnswer;
     late IRemoteConfigService mockRemoteConfig;
@@ -68,7 +68,7 @@ void main() {
       setUp: () {
         mockQuizArgs();
       },
-      pageBuilder: () => NewQuizPage(),
+      pageBuilder: () => QuizPage(),
     );
 
     screenshotTest(
@@ -77,7 +77,7 @@ void main() {
       setUp: () {
         mockQuizArgs([QuizOkButton()]);
       },
-      pageBuilder: () => NewQuizPage(),
+      pageBuilder: () => QuizPage(),
       pumpBeforeTest: (tester) async {
         when(
           () => mockSendAnswer(any(), any()),
@@ -94,7 +94,7 @@ void main() {
       setUp: () {
         mockQuizArgs([QuizOkButton()]);
       },
-      pageBuilder: () => NewQuizPage(),
+      pageBuilder: () => QuizPage(),
       pumpBeforeTest: (tester) async {
         when(
           () => mockSendAnswer(any(), any()),
@@ -130,7 +130,7 @@ void main() {
           ),
         ).thenAnswer((_) => Future.value());
 
-        await tester.pumpWidget(buildTestableWidget(NewQuizPage()));
+        await tester.pumpWidget(buildTestableWidget(QuizPage()));
 
         // act
         await tester.tapAll(find.text('OK'));
@@ -226,7 +226,7 @@ void main() {
           'should navigate to /quiz/tutorial/help-center when Show Tutorial button is pressed',
           (tester) async {
             // arrange
-            await tester.pumpWidget(buildTestableWidget(NewQuizPage()));
+            await tester.pumpWidget(buildTestableWidget(QuizPage()));
 
             // act
             await tester.tap(find.text('SHOW TUTORIAL'));
@@ -273,7 +273,7 @@ void main() {
           'should navigate to /quiz/tutorial/stealth when Show Tutorial button is pressed',
           (tester) async {
             // arrange
-            await tester.pumpWidget(buildTestableWidget(NewQuizPage()));
+            await tester.pumpWidget(buildTestableWidget(QuizPage()));
 
             // act
             await tester.tap(find.text('SHOW TUTORIAL'));
@@ -409,7 +409,7 @@ void main() {
           ),
         );
       },
-      pageBuilder: () => NewQuizPage(),
+      pageBuilder: () => QuizPage(),
       pumpBeforeTest: (tester) async {
         await tester.tapAll(find.text('OK'));
         await tester.pumpAndSettle();
@@ -432,7 +432,7 @@ void main() {
           ),
         );
       },
-      pageBuilder: () => NewQuizPage(),
+      pageBuilder: () => QuizPage(),
       pumpBeforeTest: (tester) async {
         await tester.tapAll(find.text('OK'));
         await tester.pumpAndSettle();
