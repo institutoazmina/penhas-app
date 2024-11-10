@@ -9,7 +9,7 @@ import 'package:penhas/app/core/remoteconfig/i_remote_config.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
 import 'package:penhas/app/features/help_center/presentation/pages/tutorial/guardian/guardian_tutorial_page.dart';
-import 'package:penhas/app/features/quiz/presentation/new_quiz/quiz_page.dart';
+import 'package:penhas/app/features/quiz/presentation/quiz/quiz_page.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz_start/quiz_start_page.dart';
 import 'package:penhas/app/features/quiz/presentation/tutorial/stealth_mode_tutorial_page.dart';
 import 'package:penhas/app/features/quiz/quiz_module.dart';
@@ -163,8 +163,8 @@ void main() {
         await tester.pump();
 
         // assert
-        // will be replaced by the NewQuizPage widget soon
-        expect(find.byType(NewQuizPage), findsOneWidget);
+        // will be replaced by the QuizPage widget soon
+        expect(find.byType(QuizPage), findsOneWidget);
       },
     );
   });

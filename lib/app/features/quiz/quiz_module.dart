@@ -16,8 +16,8 @@ import 'domain/quiz_remote_config.dart';
 import 'domain/repositories/i_quiz_repository.dart';
 import 'domain/send_answer.dart';
 import 'domain/start_quiz.dart';
-import 'presentation/new_quiz/quiz_controller.dart';
-import 'presentation/new_quiz/quiz_page.dart';
+import 'presentation/quiz/quiz_controller.dart';
+import 'presentation/quiz/quiz_page.dart';
 import 'presentation/quiz_start/quiz_start_controller.dart';
 import 'presentation/quiz_start/quiz_start_page.dart';
 import 'presentation/tutorial/stealth_mode_tutorial_page.dart';
@@ -85,7 +85,7 @@ class QuizModule extends Module {
   List<ModularRoute> get routes => [
         ChildRoute(
           Modular.initialRoute,
-          child: (_, __) => const NewQuizPage(),
+          child: (_, __) => const QuizPage(),
         ),
         ChildRoute(
           '/start',
