@@ -6,10 +6,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../../../../shared/design_system/button_shape.dart';
-import '../../../../../../shared/design_system/colors.dart';
 import '../../../../../../shared/design_system/linear_gradient_design_system.dart';
 import '../../../../../../shared/design_system/text_styles.dart';
+import '../../../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../../shared/page_progress_indicator.dart';
 import '../../../shared/snack_bar_handler.dart';
 import 'reset_password_two_controller.dart';
@@ -151,11 +150,8 @@ class _ResetPasswordTwoPageState
   }
 
   Widget _buildNextButton() {
-    return RaisedButton(
+    return PenhasButton.roundedFilled(
       onPressed: () => controller.nextStepPressed(),
-      elevation: 0,
-      color: DesignSystemColors.ligthPurple,
-      shape: kButtonShapeFilled,
       child: const Text(
         'Próximo',
         style: kTextStyleDefaultFilledButtonLabel,
@@ -181,6 +177,6 @@ class _ResetPasswordTwoPageState
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
     }
-    WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
   }
 }
