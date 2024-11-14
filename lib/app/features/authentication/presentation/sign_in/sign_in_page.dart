@@ -4,11 +4,11 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../../shared/design_system/button_shape.dart';
 import '../../../../shared/design_system/linear_gradient_design_system.dart';
 import '../../../../shared/design_system/link_button.dart';
 import '../../../../shared/design_system/logo.dart';
 import '../../../../shared/design_system/text_styles.dart';
+import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../../../shared/navigation/app_navigator.dart';
 import '../../../../shared/navigation/app_route.dart';
 import '../shared/input_box_style.dart';
@@ -159,11 +159,8 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
       padding: const EdgeInsets.only(top: 24),
       child: SizedBox(
         height: 44,
-        child: RaisedButton(
+        child: PenhasButton.roundedOutlined(
           onPressed: () => controller.registerUserPressed(),
-          elevation: 0,
-          color: Colors.transparent,
-          shape: kButtonShapeOutlineWhite,
           child: const Text(
             'Cadastrar',
             style: kTextStyleDefaultFilledButtonLabel,
@@ -177,6 +174,6 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
     }
-    WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
   }
 }
