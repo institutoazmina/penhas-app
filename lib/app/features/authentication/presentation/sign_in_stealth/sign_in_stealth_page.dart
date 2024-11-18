@@ -7,6 +7,7 @@ import 'package:mobx/mobx.dart';
 import '../../../../shared/design_system/linear_gradient_design_system.dart';
 import '../../../../shared/design_system/logo.dart';
 import '../../../../shared/design_system/text_styles.dart';
+import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../../zodiac/presentation/pages/zodiac_action_button.dart';
 import '../shared/login_button.dart';
 import '../shared/page_progress_indicator.dart';
@@ -161,10 +162,8 @@ class _SignInStealthPage
       padding: const EdgeInsets.only(top: 30),
       child: SizedBox(
         height: 44.0,
-        child: RaisedButton(
+        child: PenhasButton.text(
           onPressed: () => controller.resetPasswordPressed(),
-          elevation: 0,
-          color: Colors.transparent,
           child: const Text(
             'Esqueci minha senha',
             style: kTextStyleFeedTweetShowReply,
@@ -179,10 +178,8 @@ class _SignInStealthPage
       padding: const EdgeInsets.only(top: 8),
       child: SizedBox(
         height: 44.0,
-        child: RaisedButton(
+        child: PenhasButton.text(
           onPressed: () => controller.changeAccount(),
-          elevation: 0,
-          color: Colors.transparent,
           child: const Text(
             'Acessar outra conta',
             style: kTextStyleFeedTweetShowReply,
@@ -196,6 +193,6 @@ class _SignInStealthPage
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
     }
-    WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
   }
 }
