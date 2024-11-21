@@ -45,7 +45,7 @@ class _DetailTweetPageState
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _refreshIndicatorKey.currentState?.show(atTop: false);
     });
   }
