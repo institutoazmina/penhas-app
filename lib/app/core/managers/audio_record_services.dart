@@ -166,7 +166,6 @@ extension _AudioRecordServices on AudioRecordServices {
       if (!isRecorderStopped) {
         await _recorder.stopRecorder();
       }
-    //TODO: alterar para codigo comentado após upgrade do flutter e flutter_sound
       // await _recorder.closeRecorder();
       await _recorder.closeAudioSession();
     } catch (e, stack) {
@@ -176,7 +175,6 @@ extension _AudioRecordServices on AudioRecordServices {
 
   Future<void> _setupRecordEnvironment() async {
     await _releaseAudioSession();
-    //TODO: alterar para codigo comentado após upgrade do flutter e flutter_sound
     // await _recorder.openRecorder();
     await _recorder.openAudioSession();
 
