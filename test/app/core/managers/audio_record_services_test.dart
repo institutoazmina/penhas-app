@@ -479,7 +479,8 @@ void main() {
             .thenAnswer((_) async => PermissionStatus.granted);
 
         when(() => soundRecorder.isStopped).thenReturn(true);
-        when(() => soundRecorder.openAudioSession()).thenAnswer((_) async => null);
+        when(() => soundRecorder.openAudioSession())
+            .thenAnswer((_) async => null);
         when(() => soundRecorder.setSubscriptionDuration(any()))
             .thenAnswer((_) => Future.value());
         when(() => soundRecorder.startRecorder(
@@ -521,7 +522,8 @@ void main() {
           .thenAnswer((_) async => PermissionStatus.granted);
 
       when(() => soundRecorder.isStopped).thenReturn(true);
-      when(() => soundRecorder.openAudioSession()).thenAnswer((_) async => null);
+      when(() => soundRecorder.openAudioSession())
+          .thenAnswer((_) async => null);
       when(() => soundRecorder.stopRecorder())
           .thenAnswer((_) => Future.value());
       when(() => audioSyncManager.audioFile(
