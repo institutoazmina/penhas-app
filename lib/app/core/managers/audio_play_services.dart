@@ -64,7 +64,9 @@ class AudioPlayServices implements IAudioPlayServices {
 
   Future<void> _setupPlayEnvironment() async {
     await _releaseAudioSession();
-    await _playerModule.openPlayer();
+    //TODO: alterar para codigo comentado após upgrade do flutter e flutter_sound
+    // await _playerModule.openPlayer();
+    await _playerModule.openAudioSession();
 
     _playerSubscription = _playerModule.onProgress?.listen((e) {
       // what to do in onProgress?
@@ -76,7 +78,9 @@ class AudioPlayServices implements IAudioPlayServices {
       if (!_playerModule.isStopped) {
         await _playerModule.stopPlayer();
       }
-      await _playerModule.closePlayer();
+    //TODO: alterar para codigo comentado após upgrade do flutter e flutter_sound
+      // await _playerModule.closePlayer();
+      await _playerModule.closeAudioSession();
     } catch (e, stack) {
       logError(e, stack);
     }
