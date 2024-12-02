@@ -67,7 +67,7 @@ void main() {
         player: flutterSoundPlayer,
       );
 
-      when(() => flutterSoundPlayer.openPlayer()).thenAnswer(
+      when(() => flutterSoundPlayer.openAudioSession()).thenAnswer(
         (_) async => null,
       );
 
@@ -102,7 +102,7 @@ void main() {
       when(() => flutterSoundPlayer.isStopped).thenReturn(false);
       when(() => flutterSoundPlayer.stopPlayer())
           .thenAnswer((_) => Future.value());
-      when(() => flutterSoundPlayer.closePlayer())
+      when(() => flutterSoundPlayer.closeAudioSession())
           .thenAnswer((_) => Future.value());
 
       // act
@@ -111,7 +111,7 @@ void main() {
       // assert
       verify(() => flutterSoundPlayer.isStopped).called(1);
       verify(() => flutterSoundPlayer.stopPlayer()).called(1);
-      verify(() => flutterSoundPlayer.closePlayer()).called(1);
+      verify(() => flutterSoundPlayer.closeAudioSession()).called(1);
     });
   });
 }
