@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Modificado
+- downgrade flutter_sound
+
 ## [3.7.0] - 2024-10-25
 
 ## [3.6.1] - 2024-06-18
