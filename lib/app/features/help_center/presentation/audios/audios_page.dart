@@ -3,9 +3,11 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
+
 import '../../../../core/extension/asuka.dart';
 import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/design_system/text_styles.dart';
+import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../../authentication/presentation/shared/snack_bar_handler.dart';
 import '../../domain/entities/audio_entity.dart';
@@ -13,9 +15,9 @@ import '../../domain/entities/audio_play_tile_entity.dart';
 import '../../domain/states/audio_playing.dart';
 import '../../domain/states/audio_tile_action.dart';
 import '../../domain/states/audios_state.dart';
-import 'audios_controller.dart';
 import '../pages/audio/audio_play_widget.dart';
 import '../pages/guardian_error_page.dart';
+import 'audios_controller.dart';
 
 class AudiosPage extends StatefulWidget {
   const AudiosPage({Key? key, this.title = 'Audios'}) : super(key: key);
@@ -40,7 +42,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       controller.loadPage();
     });
   }
@@ -118,7 +120,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
                 ),
                 Expanded(
                   child: Scrollbar(
-                    isAlwaysShown: true,
+                    thumbVisibility: true,
                     child: ListView(
                       shrinkWrap: true,
                       children: [
@@ -218,7 +220,7 @@ class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
           borderRadius: BorderRadius.circular(10.0),
         ),
         actions: <Widget>[
-          FlatButton(
+          PenhasButton.text(
             child: const Text('Ok'),
             onPressed: () {
               Navigator.of(context).pop();
