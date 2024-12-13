@@ -3,8 +3,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../../shared/design_system/button_shape.dart';
 import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../shared/page_progress_indicator.dart';
 import '../shared/snack_bar_handler.dart';
 import 'deleted_account_controller.dart';
@@ -108,11 +108,8 @@ extension _MethodPrivate on _DeletedAccountPageState {
                   child: SizedBox(
                     height: 40,
                     width: 250,
-                    child: RaisedButton(
+                    child: PenhasButton.filled(
                       onPressed: () => controller.reactive(),
-                      elevation: 0,
-                      color: DesignSystemColors.ligthPurple,
-                      shape: kButtonShapeOutlinePurple,
                       child:
                           Text('Reativar Conta', style: activeButtonTextStyle),
                     ),
