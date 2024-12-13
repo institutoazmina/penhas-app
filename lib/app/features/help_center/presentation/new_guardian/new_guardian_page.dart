@@ -233,7 +233,6 @@ class _NewGuardianPageState
         width: 215,
         child: PenhasButton.roundedFilled(
           onPressed: () => controller.addGuardian(),
-          
           child: const Text(
             'Adicionar guardião',
             style: TextStyle(
