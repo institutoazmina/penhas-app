@@ -108,7 +108,7 @@ extension _MethodPrivate on _DeletedAccountPageState {
                   child: SizedBox(
                     height: 40,
                     width: 250,
-                    child: PenhasButton.filled(
+                    child: PenhasButton.roundedFilled(
                       onPressed: () => controller.reactive(),
                       child:
                           Text('Reativar Conta', style: activeButtonTextStyle),
