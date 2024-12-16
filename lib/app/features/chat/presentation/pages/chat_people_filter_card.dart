@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../shared/design_system/button_shape.dart';
 import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/design_system/text_styles.dart';
+import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 
 class ChatPeopleFilterCard extends StatelessWidget {
   const ChatPeopleFilterCard({
@@ -36,11 +36,8 @@ class ChatPeopleFilterCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              RaisedButton(
+              PenhasButton.roundedFilled(
                 onPressed: onPressed,
-                elevation: 0,
-                color: DesignSystemColors.ligthPurple,
-                shape: kButtonShapeFilled,
                 child: Text(
                   filterTitle,
                   style: kTextStyleDefaultFilledButtonLabel,
