@@ -26,7 +26,7 @@ class _AudioRecordState
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await controller.startAudioRecord();
     });
 
