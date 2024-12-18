@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../shared/design_system/button_shape.dart';
 import '../../../../../shared/design_system/colors.dart';
+import '../../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../chat/chat_channel_compose_type.dart';
 
 class ChatChannelMessageComposer extends StatefulWidget {
@@ -89,11 +89,8 @@ class _ChatChannelMessageComposerState
             child: SizedBox(
               height: 44,
               width: 200,
-              child: RaisedButton(
+              child: PenhasButton.roundedFilled(
                 onPressed: widget.onUnblockChannel,
-                elevation: 0,
-                color: DesignSystemColors.ligthPurple,
-                shape: kButtonShapeFilled,
                 child: Text(
                   ' Desbloquear o chat ',
                   style: buttomTitleStyle,
