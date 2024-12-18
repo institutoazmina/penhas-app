@@ -573,21 +573,21 @@ packages:
       name: flutter_sound
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "9.2.13"
+    version: "8.5.0"
   flutter_sound_platform_interface:
     dependency: transitive
     description:
       name: flutter_sound_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "9.2.13"
+    version: "8.5.0"
   flutter_sound_web:
     dependency: transitive
     description:
       name: flutter_sound_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "9.2.13"
+    version: "8.5.0"
   flutter_svg:
     dependency: "direct main"
     description:
