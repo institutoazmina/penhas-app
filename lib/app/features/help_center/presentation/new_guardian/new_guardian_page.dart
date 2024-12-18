@@ -8,6 +8,7 @@ import 'package:mobx/mobx.dart';
 import '../../../../core/extension/asuka.dart';
 import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/design_system/text_styles.dart';
+import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../../authentication/presentation/shared/input_box_style.dart';
 import '../../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../../authentication/presentation/shared/single_text_input.dart';
@@ -39,7 +40,7 @@ class _NewGuardianPageState
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       controller.loadPage();
     });
   }
@@ -230,13 +231,8 @@ class _NewGuardianPageState
       child: SizedBox(
         height: 40,
         width: 215,
-        child: RaisedButton(
+        child: PenhasButton.roundedFilled(
           onPressed: () => controller.addGuardian(),
-          elevation: 0,
-          color: DesignSystemColors.easterPurple,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
           child: const Text(
             'Adicionar guardião',
             style: TextStyle(
@@ -286,7 +282,7 @@ class _NewGuardianPageState
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
     }
-    WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
   }
 
   void _showSentInvite(GuardianAlertMessageAction action) {
@@ -313,7 +309,7 @@ class _NewGuardianPageState
             borderRadius: BorderRadius.circular(10.0),
           ),
           actions: <Widget>[
-            FlatButton(
+            PenhasButton.text(
               child: const Text('Fechar'),
               onPressed: () async {
                 Navigator.of(context).pop();
