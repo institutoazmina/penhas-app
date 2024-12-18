@@ -8,6 +8,7 @@ import 'package:mobx/mobx.dart';
 import '../../../core/extension/asuka.dart';
 import '../../../shared/design_system/colors.dart';
 import '../../../shared/design_system/text_styles.dart';
+import '../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../authentication/presentation/shared/snack_bar_handler.dart';
 import '../domain/states/guardian_alert_state.dart';
@@ -38,7 +39,7 @@ class _HelpCenterPageState
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       controller.checkLocalicationRequired();
     });
   }
@@ -240,7 +241,7 @@ class _HelpCenterPageState
             borderRadius: BorderRadius.circular(10.0),
           ),
           actions: <Widget>[
-            FlatButton(
+            PenhasButton.text(
               child: const Text('Fechar'),
               onPressed: () async {
                 Navigator.of(context).pop();
