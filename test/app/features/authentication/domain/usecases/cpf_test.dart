@@ -18,6 +18,19 @@ void main() {
         expect(cpf.mapFailure, '');
       });
       test(
+        'returns invalid Cpf when constructed with invalid value',
+        () {
+          // arrange
+          const cpfString = '52A.A82.247-25';
+          // act
+          final cpf = Cpf(cpfString);
+          // assert
+          expect(cpf.isValid, false);
+          expect(cpf.mapFailure, 'CPF inválido');
+          expect(cpf.value, left(CpfInvalidFailure()));
+        },
+      );
+      test(
         'returns invalid Cpf when constructed with empty value',
         () {
           // arrange
