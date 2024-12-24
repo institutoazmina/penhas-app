@@ -62,8 +62,6 @@ class Cpf extends Equatable with MapValidatorFailure {
     // Testar o segundo dígito verificador
     if (digitos[10] != dv2) return left(CpfInvalidFailure());
 
-    // final cleared = input.replaceAll('.', '').replaceAll('-', '');
-
     return right(numeros);
   }
 
