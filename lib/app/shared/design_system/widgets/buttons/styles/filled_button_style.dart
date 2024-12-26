@@ -33,9 +33,22 @@ import '../../../styles/penhas_text_style.dart';
 class FilledButtonStyle extends ButtonStyle {
   FilledButtonStyle()
       : super(
-          foregroundColor: MaterialStateProperty.all<Color>(PenhasColors.white),
-          backgroundColor:
-              MaterialStateProperty.all<Color>(PenhasColors.lightPurple),
+          foregroundColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+              if (states.contains(MaterialState.disabled)) {
+                return PenhasColors.white.withOpacity(0.5);
+              }
+              return PenhasColors.white;
+            },
+          ),
+          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+              if (states.contains(MaterialState.disabled)) {
+                return PenhasColors.lightPurple.withOpacity(0.5);
+              }
+              return PenhasColors.lightPurple;
+            },
+          ),
           elevation: MaterialStateProperty.all<double>(0.0),
           textStyle: MaterialStateProperty.all<TextStyle>(
             PenhasTextStyle.labelLarge.copyWith(
