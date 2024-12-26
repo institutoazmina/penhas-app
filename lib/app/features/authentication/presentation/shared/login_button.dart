@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 
 class LoginButton extends StatefulWidget {
   const LoginButton({
@@ -19,17 +19,8 @@ class _LoginButtonState extends State<LoginButton> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 44,
-      child: RaisedButton(
+      child: PenhasButton.roundedFilled(
         onPressed: widget.onChanged,
-        elevation: 0,
-        color: DesignSystemColors.ligthPurple,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.0),
-            bottomLeft: Radius.circular(20.0),
-            bottomRight: Radius.circular(20.0),
-          ),
-        ),
         child: const Text(
           'Entrar',
           style: TextStyle(

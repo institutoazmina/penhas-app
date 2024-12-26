@@ -3,9 +3,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../../shared/design_system/button_shape.dart';
 import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/design_system/text_styles.dart';
+import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../../authentication/presentation/shared/snack_bar_handler.dart';
 import '../../domain/entities/tweet_filter_session_entity.dart';
@@ -30,7 +30,7 @@ class _FilterTweetPageState
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       controller.getTags();
     });
   }
@@ -135,11 +135,8 @@ class _FilterTweetPageState
     return SizedBox(
       height: 40,
       width: 160,
-      child: FlatButton(
+      child: PenhasButton.text(
         onPressed: () => controller.reset(),
-        color: Colors.transparent,
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
         child: const Text(
           'Limpar',
           style: TextStyle(
@@ -159,11 +156,8 @@ class _FilterTweetPageState
     return SizedBox(
       height: 40,
       width: 160,
-      child: RaisedButton(
+      child: PenhasButton.roundedFilled(
         onPressed: () => _apply(),
-        elevation: 0,
-        color: DesignSystemColors.ligthPurple,
-        shape: kButtonShapeOutlinePurple,
         child: const Text(
           'Aplicar filtro',
           style: TextStyle(

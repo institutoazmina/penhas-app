@@ -166,8 +166,7 @@ extension _AudioRecordServices on AudioRecordServices {
       if (!isRecorderStopped) {
         await _recorder.stopRecorder();
       }
-
-      await _recorder.closeRecorder();
+      await _recorder.closeAudioSession();
     } catch (e, stack) {
       logError(e, stack);
     }
@@ -175,7 +174,7 @@ extension _AudioRecordServices on AudioRecordServices {
 
   Future<void> _setupRecordEnvironment() async {
     await _releaseAudioSession();
-    await _recorder.openRecorder();
+    await _recorder.openAudioSession();
 
     _currentDuration = Duration(
       milliseconds:
