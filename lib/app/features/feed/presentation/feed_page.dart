@@ -55,7 +55,7 @@ class _FeedPageState extends ModularState<FeedPage, FeedController>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _refreshIndicatorKey.currentState?.show();
     });
   }
