@@ -25,7 +25,6 @@ dependencies:
   asuka: ^2.0.1+3
   badges: ^2.0.2
   collection: ^1.15.0
-  cpfcnpj: ^1.0.3
   crypt: ^4.3.1
   crypto: ^3.0.1
   cupertino_icons: ^1.0.4
@@ -102,10 +101,6 @@ dev_dependencies:
   plugin_platform_interface: ^2.0.0
 
 dependency_overrides:
-  cpfcnpj:
-    git:
-      url: https://github.com/erickhaendel/dart-cpfcnpj.git
-      ref: "6258774d3de58ee9122f2b6047ebb0c5b833df19"
   data_connection_checker:
     git:
       url: https://github.com/uSlashVlad/data_connection_checker.git

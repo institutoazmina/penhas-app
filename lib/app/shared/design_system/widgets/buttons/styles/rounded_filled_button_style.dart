@@ -35,13 +35,24 @@ class RoundedFilledButtonStyle extends ButtonStyle {
   RoundedFilledButtonStyle()
       : super(
           foregroundColor: MaterialStateProperty.all<Color>(PenhasColors.white),
-          backgroundColor:
-              MaterialStateProperty.all<Color>(PenhasColors.lightPurple),
-          shape: MaterialStateProperty.all<OutlinedBorder>(
-            const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0)),
-              side: BorderSide(color: PenhasColors.lightPurple),
-            ),
+          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+            (states) {
+              return states.contains(MaterialState.disabled)
+                  ? PenhasColors.disabledBackground
+                  : PenhasColors.lightPurple;
+            },
+          ),
+          shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
+            (Set<MaterialState> states) {
+              return RoundedRectangleBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                side: BorderSide(
+                  color: states.contains(MaterialState.disabled)
+                      ? PenhasColors.disabledBackground
+                      : PenhasColors.lightPurple,
+                ),
+              );
+            },
           ),
           elevation: MaterialStateProperty.all<double>(0.0),
           textStyle: MaterialStateProperty.all<TextStyle>(
