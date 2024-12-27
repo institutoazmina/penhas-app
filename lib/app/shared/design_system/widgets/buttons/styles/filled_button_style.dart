@@ -34,8 +34,13 @@ class FilledButtonStyle extends ButtonStyle {
   FilledButtonStyle()
       : super(
           foregroundColor: MaterialStateProperty.all<Color>(PenhasColors.white),
-          backgroundColor:
-              MaterialStateProperty.all<Color>(PenhasColors.lightPurple),
+          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+              return states.contains(MaterialState.disabled)
+                  ? PenhasColors.disabledBackground
+                  : PenhasColors.lightPurple;
+            },
+          ),
           elevation: MaterialStateProperty.all<double>(0.0),
           textStyle: MaterialStateProperty.all<TextStyle>(
             PenhasTextStyle.labelLarge.copyWith(

@@ -33,13 +33,23 @@ import '../../../styles/penhas_text_style.dart';
 class TextButtonStyle extends ButtonStyle {
   TextButtonStyle()
       : super(
-          foregroundColor: MaterialStateProperty.all<Color>(PenhasColors.black),
+          foregroundColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+              return states.contains(MaterialState.disabled)
+                  ? PenhasColors.disabledBackground
+                  : PenhasColors.black;
+            },
+          ),
           backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
           elevation: MaterialStateProperty.all<double>(0.0),
-          textStyle: MaterialStateProperty.all<TextStyle>(
-            PenhasTextStyle.labelLarge.copyWith(
-              color: PenhasColors.white,
-            ),
+          textStyle: MaterialStateProperty.resolveWith<TextStyle>(
+            (Set<MaterialState> states) {
+              return PenhasTextStyle.labelLarge.copyWith(
+                color: states.contains(MaterialState.disabled)
+                    ? PenhasColors.disabledBackground
+                    : PenhasColors.white,
+              );
+            },
           ),
         );
 }
