@@ -35,11 +35,10 @@ class RoundedOutlinedButtonStyle extends ButtonStyle {
   RoundedOutlinedButtonStyle()
       : super(
           foregroundColor: MaterialStateProperty.resolveWith<Color>(
-            (Set<MaterialState> states) {
-              if (states.contains(MaterialState.disabled)) {
-                return PenhasColors.white.withOpacity(0.5);
-              }
-              return PenhasColors.white;
+            (states) {
+              return states.contains(MaterialState.disabled)
+                  ? PenhasColors.disabledBackground
+                  : PenhasColors.white;
             },
           ),
           backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
@@ -49,17 +48,21 @@ class RoundedOutlinedButtonStyle extends ButtonStyle {
                 borderRadius: const BorderRadius.all(Radius.circular(20.0)),
                 side: BorderSide(
                   color: states.contains(MaterialState.disabled)
-                      ? PenhasColors.white.withOpacity(0.5)
+                      ? PenhasColors.disabledBackground
                       : PenhasColors.white,
                 ),
               );
             },
           ),
           elevation: MaterialStateProperty.all<double>(0.0),
-          textStyle: MaterialStateProperty.all<TextStyle>(
-            PenhasTextStyle.labelLarge.copyWith(
-              color: PenhasColors.white,
-            ),
+          textStyle: MaterialStateProperty.resolveWith<TextStyle>(
+            (Set<MaterialState> states) {
+              return PenhasTextStyle.labelLarge.copyWith(
+                color: states.contains(MaterialState.disabled)
+                    ? PenhasColors.disabledBackground
+                    : PenhasColors.white,
+              );
+            },
           ),
         );
 }

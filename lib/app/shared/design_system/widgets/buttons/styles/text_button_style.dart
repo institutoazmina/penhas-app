@@ -35,10 +35,9 @@ class TextButtonStyle extends ButtonStyle {
       : super(
           foregroundColor: MaterialStateProperty.resolveWith<Color>(
             (Set<MaterialState> states) {
-              if (states.contains(MaterialState.disabled)) {
-                return PenhasColors.black.withOpacity(0.5);
-              }
-              return PenhasColors.black;
+              return states.contains(MaterialState.disabled)
+                  ? PenhasColors.disabledBackground
+                  : PenhasColors.black;
             },
           ),
           backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
@@ -47,7 +46,7 @@ class TextButtonStyle extends ButtonStyle {
             (Set<MaterialState> states) {
               return PenhasTextStyle.labelLarge.copyWith(
                 color: states.contains(MaterialState.disabled)
-                    ? PenhasColors.white.withOpacity(0.5)
+                    ? PenhasColors.disabledBackground
                     : PenhasColors.white,
               );
             },
