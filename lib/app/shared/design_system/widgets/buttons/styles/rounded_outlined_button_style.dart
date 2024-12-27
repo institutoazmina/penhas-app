@@ -34,19 +34,35 @@ import '../../../styles/penhas_text_style.dart';
 class RoundedOutlinedButtonStyle extends ButtonStyle {
   RoundedOutlinedButtonStyle()
       : super(
-          foregroundColor: MaterialStateProperty.all<Color>(PenhasColors.white),
+          foregroundColor: MaterialStateProperty.resolveWith<Color>(
+            (states) {
+              return states.contains(MaterialState.disabled)
+                  ? PenhasColors.disabledBackground
+                  : PenhasColors.white;
+            },
+          ),
           backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
-          shape: MaterialStateProperty.all<OutlinedBorder>(
-            const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0)),
-              side: BorderSide(color: PenhasColors.white),
-            ),
+          shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
+            (Set<MaterialState> states) {
+              return RoundedRectangleBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                side: BorderSide(
+                  color: states.contains(MaterialState.disabled)
+                      ? PenhasColors.disabledBackground
+                      : PenhasColors.lightPurple,
+                ),
+              );
+            },
           ),
           elevation: MaterialStateProperty.all<double>(0.0),
-          textStyle: MaterialStateProperty.all<TextStyle>(
-            PenhasTextStyle.labelLarge.copyWith(
-              color: PenhasColors.white,
-            ),
+          textStyle: MaterialStateProperty.resolveWith<TextStyle>(
+            (Set<MaterialState> states) {
+              return PenhasTextStyle.labelLarge.copyWith(
+                color: states.contains(MaterialState.disabled)
+                    ? PenhasColors.disabledBackground
+                    : PenhasColors.white,
+              );
+            },
           ),
         );
 }
