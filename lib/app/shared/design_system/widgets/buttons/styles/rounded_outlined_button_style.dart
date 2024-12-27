@@ -49,7 +49,7 @@ class RoundedOutlinedButtonStyle extends ButtonStyle {
                 side: BorderSide(
                   color: states.contains(MaterialState.disabled)
                       ? PenhasColors.disabledBackground
-                      : PenhasColors.white,
+                      : PenhasColors.lightPurple,
                 ),
               );
             },
