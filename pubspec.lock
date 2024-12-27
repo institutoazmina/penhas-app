@@ -239,15 +239,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
-  cpfcnpj:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: "6258774d3de58ee9122f2b6047ebb0c5b833df19"
-      resolved-ref: "6258774d3de58ee9122f2b6047ebb0c5b833df19"
-      url: "https://github.com/erickhaendel/dart-cpfcnpj.git"
-    source: git
-    version: "1.0.3"
   crypt:
     dependency: "direct main"
     description:
