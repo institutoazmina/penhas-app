@@ -37,11 +37,21 @@ void main() {
               ),
             ),
             GoldenTestScenario(
-              name: 'PenhasButton.roundedFilled/RoundedFilledButtonStyle',
+              name: 'PenhasButton.roundedFilled',
               child: SizedBox(
                 width: 250,
                 child: PenhasButton.roundedFilled(
                   onPressed: () {},
+                  child: buttonWidget,
+                ),
+              ),
+            ),
+            GoldenTestScenario(
+              name: 'PenhasButton.roundedFilled/disabled',
+              child: SizedBox(
+                width: 250,
+                child: PenhasButton.roundedFilled(
+                  onPressed: null,
                   child: buttonWidget,
                 ),
               ),
@@ -58,11 +68,21 @@ void main() {
               ),
             ),
             GoldenTestScenario(
-              name: 'PenhasButton.roundedOutlined/RoundedOutlinedButtonStyle',
+              name: 'PenhasButton.roundedOutlined',
               child: SizedBox(
                 width: 250,
                 child: PenhasButton.roundedOutlined(
                   onPressed: () {},
+                  child: buttonWidget,
+                ),
+              ),
+            ),
+            GoldenTestScenario(
+              name: 'PenhasButton.roundedOutlined/disabled',
+              child: SizedBox(
+                width: 250,
+                child: PenhasButton.roundedOutlined(
+                  onPressed: null,
                   child: buttonWidget,
                 ),
               ),
@@ -79,11 +99,21 @@ void main() {
               ),
             ),
             GoldenTestScenario(
-              name: 'PenhasButton.text/TextButtonStyle',
+              name: 'PenhasButton.text',
               child: SizedBox(
                 width: 250,
                 child: PenhasButton.text(
                   onPressed: () {},
+                  child: buttonWidget,
+                ),
+              ),
+            ),
+            GoldenTestScenario(
+              name: 'PenhasButton.text/disabled',
+              child: SizedBox(
+                width: 250,
+                child: PenhasButton.text(
+                  onPressed: null,
                   child: buttonWidget,
                 ),
               ),
@@ -100,11 +130,21 @@ void main() {
               ),
             ),
             GoldenTestScenario(
-              name: 'PenhasButton.filled/FilledButtonStyle',
+              name: 'PenhasButton.filled',
               child: SizedBox(
                 width: 250,
                 child: PenhasButton.filled(
                   onPressed: () {},
+                  child: buttonWidget,
+                ),
+              ),
+            ),
+            GoldenTestScenario(
+              name: 'PenhasButton.filled/disabled',
+              child: SizedBox(
+                width: 250,
+                child: PenhasButton.filled(
+                  onPressed: null,
                   child: buttonWidget,
                 ),
               ),
