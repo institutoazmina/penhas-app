@@ -35,7 +35,7 @@ void main() {
       );
 
       when(() => mockRepository.listChannel()).thenAnswer(
-        (_) async => right(_chatChannelAvailabelFixture),
+        (_) async => right(_chatChannelAvailableFixture),
       );
     });
 
@@ -147,7 +147,7 @@ class _MockModularNavigate extends Mock implements IModularNavigator {}
 class _MockChatChannelRepository extends Mock
     implements IChatChannelRepository {}
 
-final _chatChannelAvailabelFixture = ChatChannelAvailableEntity(
+final _chatChannelAvailableFixture = ChatChannelAvailableEntity(
   assistant: ChatAssistantEntity(
     avatar: null,
     quizSession: QuizSessionEntity(
