@@ -13,7 +13,7 @@ import '../../domain/entities/support_center_place_detail_entity.dart';
 import '../../domain/states/support_center_show_state.dart';
 import '../pages/support_center_detail_map.dart';
 import '../pages/support_center_general_error.dart';
-import '../pages/support_center_rate.dart';
+import '../pages/widget/support_center_rate_widget.dart';
 import 'support_center_show_controller.dart';
 
 class SupportCenterShowPage extends StatefulWidget {
@@ -155,7 +155,7 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
                 Expanded(child: Container()),
               ],
             ),
-            SupportCenterRate(
+            SupportCenterRateWidget(
               detail: detail,
               onRated: controller.onRate,
             ),

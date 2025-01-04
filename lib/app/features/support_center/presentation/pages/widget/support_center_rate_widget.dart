@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
-import '../../../../shared/design_system/colors.dart';
-import '../../domain/entities/support_center_place_detail_entity.dart';
-import 'support_center_rate_description.dart';
+import '../../../../../shared/design_system/colors.dart';
+import '../../../domain/entities/support_center_place_detail_entity.dart';
+import '../support_center_rate_description.dart';
 
-class SupportCenterRate extends StatelessWidget {
-  const SupportCenterRate({
+class SupportCenterRateWidget extends StatelessWidget {
+  const SupportCenterRateWidget({
     Key? key,
     required this.detail,
     required this.onRated,
@@ -46,7 +46,7 @@ class SupportCenterRate extends StatelessWidget {
   }
 }
 
-extension _TextStyle on SupportCenterRate {
+extension _TextStyle on SupportCenterRateWidget {
   TextStyle get rateTitleTextStyle => const TextStyle(
         color: DesignSystemColors.darkIndigoThree,
         fontFamily: 'Lato',
