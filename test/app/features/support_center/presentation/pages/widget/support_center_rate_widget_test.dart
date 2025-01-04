@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_detail_entity.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_entity.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/widget/smooth_star_rating_widget.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/widget/support_center_rate_widget.dart';
-import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 import '../../../../../../utils/golden_tests.dart';
 
@@ -68,15 +68,15 @@ void main() {
         );
 
         // Verify SmoothStarRating is displayed with correct initial rating
-        final starRating = tester.widget<SmoothStarRating>(
-          find.byType(SmoothStarRating),
+        final starRating = tester.widget<SmoothStarRatingWidget>(
+          find.byType(SmoothStarRatingWidget),
         );
         expect(starRating.rating, equals(3.0));
         expect(starRating.size, equals(40.0));
         expect(starRating.allowHalfRating, isFalse);
 
         // Test rating callback
-        await tester.tap(find.byType(SmoothStarRating));
+        await tester.tap(find.byType(SmoothStarRatingWidget));
         await tester.pumpAndSettle();
 
         expect(wasRated, isTrue);
