@@ -11,8 +11,8 @@ import '../../../../shared/logger/log.dart';
 import '../../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../domain/entities/support_center_place_detail_entity.dart';
 import '../../domain/states/support_center_show_state.dart';
-import '../pages/support_center_detail_map.dart';
 import '../pages/support_center_general_error.dart';
+import '../pages/widget/support_center_detail_map_widget.dart';
 import '../pages/widget/support_center_rate_widget.dart';
 import 'support_center_show_controller.dart';
 
@@ -74,7 +74,7 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
           children: [
             SizedBox(
               height: 160,
-              child: SupportCenterDetailMap(detail: detail),
+              child: SupportCenterDetailMapWidget(detail: detail),
             ),
             Container(
               padding:
