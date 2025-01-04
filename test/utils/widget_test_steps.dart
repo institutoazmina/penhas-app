@@ -247,3 +247,15 @@ Future<void> iTapDropdownFormItem<T>(
   await tester.tap(dropdownItem.last);
   await tester.pumpAndSettle();
 }
+
+extension WidgetTesterExtension on WidgetTester {
+  Future<void> theAppIsRunning(Widget widget) async {
+    await pumpWidget(
+      MaterialApp(
+        debugShowCheckedModeBanner: false,
+        builder: Asuka.builder,
+        home: widget,
+      ),
+    );
+  }
+}
