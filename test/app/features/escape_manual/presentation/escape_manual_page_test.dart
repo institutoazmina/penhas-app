@@ -10,6 +10,7 @@ import 'package:penhas/app/features/escape_manual/domain/entity/escape_manual.da
 import 'package:penhas/app/features/escape_manual/presentation/escape_manual_controller.dart';
 import 'package:penhas/app/features/escape_manual/presentation/escape_manual_page.dart';
 import 'package:penhas/app/features/escape_manual/presentation/escape_manual_state.dart';
+import 'package:penhas/app/shared/design_system/widgets/buttons/penhas_button.dart';
 
 import '../../../../utils/aditional_bind_module.dart';
 import '../../../../utils/golden_tests.dart';
@@ -157,7 +158,7 @@ void main() {
         clearInteractions(mockController);
 
         // act
-        await tester.tap(find.byIcon(Icons.loop));
+        await tester.tap(find.byType(PenhasButton));
 
         // assert
         verify(() => mockController.load()).called(1);
