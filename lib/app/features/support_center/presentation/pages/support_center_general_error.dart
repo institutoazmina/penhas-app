@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 
 class SupportCenterGeneralError extends StatelessWidget {
   const SupportCenterGeneralError({
@@ -63,24 +64,9 @@ class SupportCenterGeneralError extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 48.0),
-                child: FlatButton.icon(
+                child: PenhasButton.roundedFilled(
+                  child: const Text('Tentar novamente'),
                   onPressed: _onPressed,
-                  icon: const Icon(
-                    Icons.loop,
-                    color: DesignSystemColors.easterPurple,
-                    size: 60,
-                  ),
-                  label: Container(),
-                ),
-              ),
-              const Text(
-                'Tentar novamente',
-                style: TextStyle(
-                  fontFamily: 'Lato',
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.white,
-                  letterSpacing: 0.15,
                 ),
               ),
             ],
