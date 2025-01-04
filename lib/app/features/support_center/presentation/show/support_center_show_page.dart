@@ -5,8 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:map_launcher/map_launcher.dart';
 
-import '../../../../shared/design_system/button_shape.dart';
 import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../../../shared/logger/log.dart';
 import '../../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../domain/entities/support_center_place_detail_entity.dart';
@@ -139,15 +139,9 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
                     color: DesignSystemColors.systemBackgroundColor,
                     child: SizedBox(
                       height: 44,
-                      child: RaisedButton(
+                      child: PenhasButton.roundedFilled(
                         onPressed: () async => openMapsSheet(context, detail),
-                        elevation: 0,
-                        color: DesignSystemColors.ligthPurple,
-                        shape: kButtonShapeFilled,
-                        child: Text(
-                          'Traçar rota',
-                          style: buttonTitle,
-                        ),
+                        child: const Text('Traçar rota'),
                       ),
                     ),
                   ),
@@ -256,12 +250,6 @@ extension _TextStyle on _SupportCenterShowPageState {
         fontWeight: FontWeight.normal,
       );
 
-  TextStyle get buttonTitle => const TextStyle(
-        color: DesignSystemColors.white,
-        fontFamily: 'Lato',
-        fontSize: 12.0,
-        fontWeight: FontWeight.bold,
-      );
   TextStyle get mapTitleTextStyle => const TextStyle(
         color: Colors.black,
         fontFamily: 'Lato',
