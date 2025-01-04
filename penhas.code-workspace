@@ -16,6 +16,7 @@
 			"editor.defaultFormatter": "Dart-Code.dart-code",
 			"editor.inlayHints.enabled": "offUnlessPressed",
 		},
+		"cSpell.language": "en-US, pt-BR",
 		"cSpell.words": [
 			"Blockable",
 			"dartz",
@@ -41,6 +42,21 @@
 					"for": ["run-test", "run-test-file"]
 				},
 				"args": ["--update-goldens"]
+			},
+			{
+				"name": "Test Coverage",
+				"request": "launch",
+				"type": "dart",
+				"program": "test",
+				"flutterMode": "debug",
+				"codeLens": {
+					"title": "${debugType} (Coverage)",
+					"for": ["run-test", "run-test-file"]
+				},
+				"toolArgs": [
+					"--coverage", 
+					"--dart-define=isCI=true"
+				]
 			}
 		]
 	}
