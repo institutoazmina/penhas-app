@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 import '../../../../../shared/design_system/colors.dart';
 import '../../../domain/entities/support_center_place_detail_entity.dart';
 import '../support_center_rate_description.dart';
+import 'smooth_star_rating_widget.dart';
 
 class SupportCenterRateWidget extends StatelessWidget {
   const SupportCenterRateWidget({
@@ -31,9 +31,9 @@ class SupportCenterRateWidget extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0),
-            child: SmoothStarRating(
+            child: SmoothStarRatingWidget(
               allowHalfRating: false,
-              onRated: onRated,
+              onRatingChanged: onRated,
               rating: detail.ratedByClient!.toDouble(),
               size: 40.0,
               color: DesignSystemColors.pumpkinOrange,
