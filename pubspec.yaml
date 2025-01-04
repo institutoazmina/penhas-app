@@ -72,7 +72,6 @@ dependencies:
   shared_preferences: ^2.0.11
   shared_preferences_android: ^2.0.15
   shared_preferences_ios: ^2.1.1
-  smooth_star_rating: ^1.1.1
   stack_trace: ^1.10.0
   synchronized: ^3.0.0+3
   timeago: ^3.1.0
@@ -117,10 +116,6 @@ dependency_overrides:
     git:
       url: https://github.com/pedrox-hs/flutter_tags.git
       ref: null-safety
-  smooth_star_rating:
-    git:
-      url: https://github.com/bhavin-concetto/smoothratingbar.git
-      ref: "eb02312f9adc6a40e2488050fb2e58852a163bb8"
   workmanager:
     git:
       url: https://github.com/pedrox-hs/flutter_workmanager.git

@@ -1252,15 +1252,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-  smooth_star_rating:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: eb02312f9adc6a40e2488050fb2e58852a163bb8
-      resolved-ref: eb02312f9adc6a40e2488050fb2e58852a163bb8
-      url: "https://github.com/bhavin-concetto/smoothratingbar.git"
-    source: git
-    version: "1.1.1"
   source_gen:
     dependency: transitive
     description:
