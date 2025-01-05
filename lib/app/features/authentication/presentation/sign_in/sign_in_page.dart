@@ -157,14 +157,11 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
   Widget _buildRegisterButton() {
     return Padding(
       padding: const EdgeInsets.only(top: 24),
-      child: SizedBox(
-        height: 44,
-        child: PenhasButton.roundedOutlined(
-          onPressed: () => controller.registerUserPressed(),
-          child: const Text(
-            'Cadastrar',
-            style: kTextStyleDefaultFilledButtonLabel,
-          ),
+      child: PenhasButton.roundedOutlined(
+        onPressed: () => controller.registerUserPressed(),
+        child: const Text(
+          'Cadastrar',
+          style: kTextStyleDefaultFilledButtonLabel,
         ),
       ),
     );
