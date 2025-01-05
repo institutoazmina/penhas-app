@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'text_styles.dart';
+import 'widgets/buttons/penhas_button.dart';
 
 class LinkButton extends StatelessWidget {
   const LinkButton({Key? key, this.onPressed, this.text}) : super(key: key);
@@ -10,10 +11,8 @@ class LinkButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
+    return PenhasButton.text(
       onPressed: onPressed,
-      elevation: 0,
-      color: Colors.transparent,
       child: Text(
         text!,
         style: kTextStyleFeedTweetShowReply,
