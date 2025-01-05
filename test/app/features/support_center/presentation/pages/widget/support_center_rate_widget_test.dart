@@ -113,9 +113,11 @@ void main() {
     screenshotTest(
       'support_center_rate_widget',
       fileName: 'support_center_rate_widget',
-      pageBuilder: () => SupportCenterRateWidget(
-        detail: entityDetail,
-        onRated: (_) {},
+      pageBuilder: () => Scaffold(
+        body: SupportCenterRateWidget(
+          detail: entityDetail,
+          onRated: (_) {},
+        ),
       ),
     );
   });
