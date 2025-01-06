@@ -6,7 +6,7 @@ import 'izodiac.dart';
 
 class ZodiacSignScorpio implements IZodiac {
   @override
-  Widget get constelation =>
+  Widget get constellation =>
       SvgPicture.asset('assets/images/zodiac/svg/constelation_scorpio.svg');
 
   @override
@@ -23,7 +23,7 @@ class ZodiacSignScorpio implements IZodiac {
       ];
 
   @override
-  Widget get icone => Image.asset(
+  Widget get icon => Image.asset(
         'assets/images/zodiac/icon_scorpio/scorpio.png',
         color: DesignSystemColors.white,
         height: 24.0,
