@@ -86,8 +86,6 @@ dev_dependencies:
     sdk: flutter
   alchemist: ^0.3.3 # snapshot test
   build_runner: ^2.1.5
-  flutter_launcher_icons: ^0.9.2
-  flutter_launcher_name: ^0.0.2
   flutter_lints: ^1.0.4
   flutter_modular_test: ^1.0.1
   freezed: ^1.1.0
@@ -105,10 +103,6 @@ dependency_overrides:
     git:
       url: https://github.com/uSlashVlad/data_connection_checker.git
       ref: "1b983aa377d9984ab18292d5ff33768e284e93d6"
-  flutter_launcher_name:
-    git:
-      url: https://github.com/ride4sun/flutter_launcher_name
-      ref: "cd516a8e7483bfc7971ec9ac8f2d589e68247441"
   flutter_modular:
     git:
       url: https://github.com/pedrox-hs/modular.git
@@ -136,9 +130,6 @@ flutter_icons:
   ios: true
   android: true
   image_path: 'assets/images/icon/icon.png'
-
-flutter_launcher_name:
-  name: 'PenhaS'
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -275,5 +266,3 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 scripts:
   mobx: flutter pub run build_runner watch --delete-conflicting-outputs
-  icon: flutter pub run flutter_launcher_icons:main
-  name: flutter pub run flutter_launcher_name:main
