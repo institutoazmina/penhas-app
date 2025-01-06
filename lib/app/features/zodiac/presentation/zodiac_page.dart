@@ -7,7 +7,7 @@ import '../../../shared/design_system/logo.dart';
 import '../../../shared/design_system/text_styles.dart';
 import 'pages/zodiac_action_button.dart';
 import 'pages/zodiac_felling_page.dart';
-import 'pages/zodiac_rulling_page.dart';
+import 'pages/zodiac_ruling_page.dart';
 import 'pages/zodiac_sign_page.dart';
 import 'zodiac_controller.dart';
 
@@ -54,7 +54,7 @@ class _ZodiacPageState extends ModularState<ZodiacPage, ZodiacController> {
                       return ZodiacSignPage(sign: controller.sign);
                     },
                   ),
-                  const ZodiacRullingPage(),
+                  const ZodiacRulingPage(),
                   Observer(
                     name: 'ZodiacPage.build.ZodiacFellingPage',
                     builder: (_) {
@@ -75,10 +75,11 @@ class _ZodiacPageState extends ModularState<ZodiacPage, ZodiacController> {
       height: 44.0,
       child: Row(
         children: [
-          FlatButton(
-            padding: EdgeInsets.zero,
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
+          TextButton(
+            style: TextButton.styleFrom(
+              padding: EdgeInsets.zero,
+              splashFactory: NoSplash.splashFactory,
+            ),
             onPressed: () => controller.forwardStealthLogin(),
             child: const Text(
               'Diário astrólogico',
