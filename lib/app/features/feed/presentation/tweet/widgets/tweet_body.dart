@@ -16,8 +16,8 @@ class TweetBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final htmlBody = HtmlWidget(
       bodyContent!,
-      webViewJs: false,
       textStyle: kTextStyleFeedTweetBody,
+      factoryBuilder: () => DisabledWebViewJsWidgetFactory(),
     );
 
     return Padding(
@@ -25,4 +25,9 @@ class TweetBody extends StatelessWidget {
       child: htmlBody,
     );
   }
+}
+
+class DisabledWebViewJsWidgetFactory extends WidgetFactory {
+  @override
+  bool get webViewJs => false;
 }
