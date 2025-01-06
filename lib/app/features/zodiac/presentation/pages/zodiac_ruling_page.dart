@@ -3,8 +3,8 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../shared/design_system/text_styles.dart';
 
-class ZodiacRullingPage extends StatelessWidget {
-  const ZodiacRullingPage({
+class ZodiacRulingPage extends StatelessWidget {
+  const ZodiacRulingPage({
     Key? key,
   }) : super(key: key);
 
