@@ -17,7 +17,7 @@ class ZodiacSignPage extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 30),
-          child: sign.constelation,
+          child: sign.constellation,
         ),
         Padding(
           padding: const EdgeInsets.only(top: 30.0),
