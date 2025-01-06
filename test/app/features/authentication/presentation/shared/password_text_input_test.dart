@@ -6,12 +6,12 @@ import 'package:penhas/app/features/authentication/presentation/shared/password_
 import '../../../../../utils/golden_tests.dart';
 
 void main() {
-  group(PassordInputField, () {
+  group(PasswordInputField, () {
     testWidgets('widget test', (WidgetTester tester) async {
-      // Build the PassordInputField widget.
+      // Build the PasswordInputField widget.
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-          body: PassordInputField(
+          body: PasswordInputField(
             onChanged: (val) {},
             labelText: 'Password',
             errorText: '',
@@ -21,9 +21,9 @@ void main() {
       ));
 
       expect(
-        find.byType(PassordInputField),
+        find.byType(PasswordInputField),
         findsOneWidget,
-        reason: 'PassordInputField should be present',
+        reason: 'PasswordInputField should be present',
       );
 
       var textField = tester.widget<TextField>(find.byType(TextField));
@@ -69,7 +69,7 @@ void main() {
               children: [
                 GoldenTestScenario(
                   name: 'hint',
-                  child: PassordInputField(
+                  child: PasswordInputField(
                     isAutofocus: true,
                     errorText: '',
                     hintText: 'Hint text',
@@ -79,7 +79,7 @@ void main() {
                 ),
                 GoldenTestScenario(
                   name: 'input value',
-                  child: PassordInputField(
+                  child: PasswordInputField(
                     errorText: '',
                     hintText: 'Hint text',
                     labelText: 'P4Ssw0rd',
@@ -88,7 +88,7 @@ void main() {
                 ),
                 GoldenTestScenario(
                   name: 'with error',
-                  child: PassordInputField(
+                  child: PasswordInputField(
                     errorText: 'error',
                     hintText: 'Hint text',
                     labelText: 'Password',

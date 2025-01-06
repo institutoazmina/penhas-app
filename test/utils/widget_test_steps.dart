@@ -69,14 +69,14 @@ Future<void> iSeePasswordField({
   String? text,
   Key? key,
 }) async {
-  final finder = _getType(PassordInputField, text: text, key: key);
+  final finder = _getType(PasswordInputField, text: text, key: key);
 
   if (finder != null && finder.evaluate().isNotEmpty) {
     expect(finder, findsOneWidget);
     return;
   }
 
-  expect(find.byType(PassordInputField), findsOneWidget);
+  expect(find.byType(PasswordInputField), findsOneWidget);
 }
 
 Future<void> iEnterIntoPasswordField(
@@ -85,7 +85,7 @@ Future<void> iEnterIntoPasswordField(
   Key? key,
   required String password,
 }) async {
-  final finder = _getType(PassordInputField, text: text, key: key);
+  final finder = _getType(PasswordInputField, text: text, key: key);
 
   if (finder == null) {
     fail('did not find the PasswordInputField to enter the value $password');
@@ -133,7 +133,7 @@ Future<void> iSeePasswordFieldErrorMessage(
   Key? key,
   required String message,
 }) async {
-  final finder = _getType(PassordInputField, text: text, key: key);
+  final finder = _getType(PasswordInputField, text: text, key: key);
 
   if (finder == null) {
     fail('did not find the PasswordInputField widget');

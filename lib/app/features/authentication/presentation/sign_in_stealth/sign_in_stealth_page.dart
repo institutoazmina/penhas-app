@@ -139,8 +139,8 @@ class _SignInStealthPage
     );
   }
 
-  PassordInputField _buildPasswordField() {
-    return PassordInputField(
+  PasswordInputField _buildPasswordField() {
+    return PasswordInputField(
       labelText: 'Senha',
       hintText: 'Digite sua senha',
       errorText: controller.warningPassword,

@@ -126,7 +126,7 @@ class _ResetPasswordThreePageState
   }
 
   Widget _buildPasswordField() {
-    return PassordInputField(
+    return PasswordInputField(
       labelText: 'Senha',
       hintText: 'Digite sua nova senha',
       errorText: controller.warningPassword,
@@ -134,8 +134,8 @@ class _ResetPasswordThreePageState
     );
   }
 
-  PassordInputField _buildConfirmationPasswordField() {
-    return PassordInputField(
+  PasswordInputField _buildConfirmationPasswordField() {
+    return PasswordInputField(
       labelText: 'Confirmação de senha',
       hintText: 'Digite sua senha novamente',
       errorText: controller.warningConfirmationPassword,
