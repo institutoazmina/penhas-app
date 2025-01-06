@@ -1,11 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
 import 'package:penhas/app/core/data/authorization_status.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/storage/i_local_storage.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
+import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 void main() {
   group(AppConfiguration, () {
@@ -15,10 +18,16 @@ void main() {
 
     late ILocalStorage localStorage;
     late IAppConfiguration appConfiguration;
-
+    late MockHive mockHive;
     setUp(() {
+      mockHive = MockHive();
       localStorage = LocalStorageMock();
-      appConfiguration = AppConfiguration(storage: localStorage);
+      PathProviderPlatform.instance = MockPathProviderPlatform();
+
+      appConfiguration = AppConfiguration(
+        storage: localStorage,
+        hive: mockHive,
+      );
     });
 
     test(
@@ -210,6 +219,8 @@ void main() {
         when(() => localStorage.delete(any()))
             .thenAnswer((_) => Future.value());
 
+        when(() => mockHive.deleteFromDisk()).thenAnswer((_) => Future.value());
+
         // act
         await appConfiguration.logout();
 
@@ -222,3 +233,16 @@ void main() {
 }
 
 class LocalStorageMock extends Mock implements ILocalStorage {}
+
+class MockHive extends Mock implements HiveInterface {}
+
+class MockPathProviderPlatform extends Mock
+    with MockPlatformInterfaceMixin
+    implements PathProviderPlatform {
+  @override
+  Future<String?> getTemporaryPath() async => '/tmp';
+
+  @override
+  Future<String?> getApplicationSupportPath() async =>
+      '/tmp/invalid-app-support-path';
+}
