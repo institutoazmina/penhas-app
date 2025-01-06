@@ -29,25 +29,31 @@ class ZodiacActionButton extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          listOfSign[0].icone,
-          listOfSign[1].icone,
-          listOfSign[2].icone,
-          listOfSign[3].icone,
-          FlatButton(
-            onPressed: () {},
-            onLongPress: onPressed,
-            color: isRunning
-                ? DesignSystemColors.pinky
-                : DesignSystemColors.bluishPurple,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(isRunning ? 12 : 20),
+          listOfSign[0].icon,
+          listOfSign[1].icon,
+          listOfSign[2].icon,
+          listOfSign[3].icon,
+          SizedBox(
+            width: 70.0,
+            child: TextButton(
+              key: const Key('zodiac_action_button'),
+              onPressed: () {},
+              onLongPress: onPressed,
+              child: sign.icon,
+              style: TextButton.styleFrom(
+                backgroundColor: isRunning
+                    ? DesignSystemColors.pinky
+                    : DesignSystemColors.bluishPurple,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(isRunning ? 12 : 20),
+                ),
+              ),
             ),
-            child: sign.icone,
           ),
-          listOfSign[4].icone,
-          listOfSign[5].icone,
-          listOfSign[6].icone,
-          listOfSign[7].icone,
+          listOfSign[4].icon,
+          listOfSign[5].icon,
+          listOfSign[6].icon,
+          listOfSign[7].icon,
         ],
       ),
     );
