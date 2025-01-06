@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../core/extension/asuka.dart';
+import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../domain/entities/tweet_entity.dart';
 import '../../domain/usecases/feed_use_cases.dart';
 
@@ -60,13 +61,13 @@ class TweetController implements ITweetController {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            PenhasButton.text(
               child: const Text('Fechar'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
+            PenhasButton.text(
               child: const Text('Enviar'),
               onPressed: () {
                 _useCase
