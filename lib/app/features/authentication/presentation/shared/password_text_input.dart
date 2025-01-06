@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../shared/design_system/text_styles.dart';
 
-class PassordInputField extends StatefulWidget {
-  const PassordInputField({
+class PasswordInputField extends StatefulWidget {
+  const PasswordInputField({
     Key? key,
     this.style = kTextStyleDefaultTextFieldLabelStyle,
     this.isAutofocus = false,
@@ -21,11 +21,11 @@ class PassordInputField extends StatefulWidget {
   final bool isAutofocus;
 
   @override
-  _PassordInputFieldState createState() => _PassordInputFieldState();
+  _PasswordInputFieldState createState() => _PasswordInputFieldState();
 }
 
-class _PassordInputFieldState extends State<PassordInputField> {
-  _PassordInputFieldState();
+class _PasswordInputFieldState extends State<PasswordInputField> {
+  _PasswordInputFieldState();
 
   bool _isPasswordVisible = false;
 

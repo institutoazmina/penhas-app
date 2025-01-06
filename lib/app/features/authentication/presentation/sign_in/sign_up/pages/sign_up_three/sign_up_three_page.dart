@@ -126,8 +126,8 @@ class _SignUpThreePageState
     );
   }
 
-  PassordInputField _buildPasswordField() {
-    return PassordInputField(
+  PasswordInputField _buildPasswordField() {
+    return PasswordInputField(
       labelText: 'Senha',
       hintText: 'Digite sua senha',
       errorText: controller.warningPassword,
@@ -135,8 +135,8 @@ class _SignUpThreePageState
     );
   }
 
-  PassordInputField _buildConfirmationPasswordField() {
-    return PassordInputField(
+  PasswordInputField _buildConfirmationPasswordField() {
+    return PasswordInputField(
       labelText: 'Confirmação de senha',
       hintText: 'Digite sua senha novamente',
       errorText: controller.warningConfirmationPassword,

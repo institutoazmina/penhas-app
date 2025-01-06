@@ -136,7 +136,7 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
   Widget _buildPasswordField() {
     return Padding(
       padding: const EdgeInsets.only(top: 24),
-      child: PassordInputField(
+      child: PasswordInputField(
         labelText: 'Senha',
         hintText: 'Digite sua senha',
         errorText: controller.warningPassword,
