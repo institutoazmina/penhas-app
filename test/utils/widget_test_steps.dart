@@ -200,6 +200,17 @@ Future<void> iSeeWidget(Type type, {String? text, Key? key}) async {
   expect(find.byType(type), findsOneWidget);
 }
 
+void iDontSeeWidget(Type type, {String? text, Key? key}) async {
+  final finder = _getType(type, text: text, key: key);
+
+  if (finder != null && finder.evaluate().isNotEmpty) {
+    expect(finder, findsNothing);
+    return;
+  }
+
+  expect(find.byType(type), findsNothing);
+}
+
 Future<void> iEnterIntoWidgetInput(
   WidgetTester tester, {
   required type,

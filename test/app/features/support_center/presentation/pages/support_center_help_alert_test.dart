@@ -10,27 +10,20 @@ void main() {
     testWidgets('should render alert with correct text and button',
         (WidgetTester tester) async {
       // arrange
-      await theAppIsRunning(
-        tester,
-        const Scaffold(
-          body: SupportCenterHelpAlert(),
-        ),
+      await tester.theAppIsRunning(
+        const Scaffold(body: SupportCenterHelpAlert()),
       );
-
       // assert
-      expect(find.byType(AlertDialog), findsOneWidget);
-      expect(
-        find.text(
-          'Pontos de apoio são serviços que integram toda a rede de acolhimento a mulheres vítimas de violência, como por exemplo delegacia da mulher, hospital, centro de atendimento à mulher em situação de violência, entre outros.',
-        ),
-        findsOneWidget,
+      iSeeWidget(AlertDialog);
+      iSeeText(
+        'Pontos de apoio são serviços que integram toda a rede de acolhimento a mulheres vítimas de violência, como por exemplo delegacia da mulher, hospital, centro de atendimento à mulher em situação de violência, entre outros.',
       );
-      expect(find.text('Entendi'), findsOneWidget);
+      iSeeText('Entendi');
     });
 
     testWidgets('should close alert when clicking on Understand button',
         (WidgetTester tester) async {
-      // Arrange
+      // arrange
       await tester.pumpWidget(
         MaterialApp(
           home: Builder(
@@ -46,20 +39,14 @@ void main() {
           ),
         ),
       );
-
-      // Act
-      await tester.tap(find.text('Open Alert'));
-      await tester.pumpAndSettle();
-
-      // Assert alert is visible
-      expect(find.byType(AlertDialog), findsOneWidget);
-
+      // act
+      await tester.iTapText(text: 'Open Alert');
+      // assert alert is visible
+      iSeeWidget(AlertDialog);
       // Act - tap on Understand button
-      await tester.tap(find.text('Entendi'));
-      await tester.pumpAndSettle();
-
+      await tester.iTapText(text: 'Entendi');
       // Assert alert is closed
-      expect(find.byType(AlertDialog), findsNothing);
+      iDontSeeWidget(AlertDialog);
     });
   });
 
