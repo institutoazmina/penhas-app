@@ -140,7 +140,7 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
             right: 0,
             child: Column(
               children: [
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     controller.requestLocation((LatLng location) {
                       mapController!.animateCamera(
@@ -163,7 +163,7 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
                     ),
                   ),
                 ),
-                FlatButton(
+                TextButton(
                   onPressed: () =>
                       _dismissSnackBarForAction(controller.listPlaces),
                   child: CircleAvatar(
@@ -174,7 +174,7 @@ extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
                     ),
                   ),
                 ),
-                FlatButton(
+                TextButton(
                   onPressed: () =>
                       _dismissSnackBarForAction(controller.addPlace),
                   child: CircleAvatar(
