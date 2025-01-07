@@ -176,7 +176,7 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
         .map(
           (e) => FilterTagEntity(
             id: e.id,
-            isSelected: isSeleted(e.id),
+            isSelected: isSelected(e.id),
             label: e.label,
           ),
         )
@@ -192,7 +192,7 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     errorMessage = mapFailureMessage(failure);
   }
 
-  bool isSeleted(String id) {
+  bool isSelected(String id) {
     try {
       _tags.firstWhere((v) => v.id == id);
       return true;
