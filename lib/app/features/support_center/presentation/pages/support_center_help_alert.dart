@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/design_system/text_styles.dart';
+import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 
 class SupportCenterHelpAlert extends StatelessWidget {
   const SupportCenterHelpAlert({Key? key}) : super(key: key);
@@ -19,8 +19,7 @@ class SupportCenterHelpAlert extends StatelessWidget {
       actions: [
         SizedBox(
           width: 120,
-          child: FlatButton(
-            color: DesignSystemColors.easterPurple,
+          child: PenhasButton.filled(
             child: const Text('Entendi', style: TextStyle(color: Colors.white)),
             onPressed: () => Navigator.of(context).pop(),
           ),
