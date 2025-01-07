@@ -63,14 +63,19 @@ class SupportCenterGpsError extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 48.0),
-              child: FlatButton.icon(
+              child: TextButton.icon(
                 onPressed: _onPressed,
-                icon: const Icon(
-                  Icons.location_on,
-                  color: DesignSystemColors.easterPurple,
-                  size: 60,
+                icon: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(
+                      Icons.location_on,
+                      color: DesignSystemColors.easterPurple,
+                      size: 60,
+                    ),
+                  ],
                 ),
-                label: Container(),
+                label: const Text(''),
               ),
             ),
             const Text(
