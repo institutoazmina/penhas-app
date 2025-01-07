@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 
-import '../../../../shared/design_system/button_shape.dart';
 import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../domain/entities/filter_tag_entity.dart';
 
 class FilterLoadedStatePage extends StatelessWidget {
@@ -99,11 +99,8 @@ extension _FilterLoadedStatePageMethods on FilterLoadedStatePage {
     return SizedBox(
       height: 40,
       width: 160,
-      child: FlatButton(
+      child: PenhasButton.text(
         onPressed: onResetAction,
-        color: Colors.transparent,
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
         child: const Text(
           'Limpar',
           style: TextStyle(
@@ -123,11 +120,8 @@ extension _FilterLoadedStatePageMethods on FilterLoadedStatePage {
     return SizedBox(
       height: 40,
       width: 160,
-      child: RaisedButton(
+      child: PenhasButton.roundedFilled(
         onPressed: () => applyFilter(),
-        elevation: 0,
-        color: DesignSystemColors.ligthPurple,
-        shape: kButtonShapeOutlinePurple,
         child: const Text(
           'Aplicar filtro',
           style: TextStyle(
