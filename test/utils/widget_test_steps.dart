@@ -258,4 +258,9 @@ extension WidgetTesterExtension on WidgetTester {
       ),
     );
   }
+
+  Future<void> iTapText({required String text}) async {
+    await tap(find.text(text));
+    await pumpAndSettle();
+  }
 }
