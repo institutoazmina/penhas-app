@@ -66,33 +66,7 @@ void main() {
       pageBuilder: () => const SupportCenterPage(),
       setUp: () {
         when(() => supportCenterUseCase.fetch(any())).thenAnswer(
-          (_) => Future.value(dartz.Right(SupportCenterPlaceSessionEntity(
-            places: [
-              SupportCenterPlaceEntity(
-                id: '1',
-                name: 'Test Place',
-                distance: '0',
-                fullStreet: 'Test Street',
-                uf: 'SP',
-                category: SupportCenterPlaceCategoryEntity(
-                  id: 1,
-                  name: 'Test Category',
-                  color: '#000000',
-                ),
-                typeOfPlace: 'Test Type',
-                htmlContent: 'Test Content',
-                latitude: -23.123,
-                longitude: -46.123,
-                rate: '0',
-                ratedByClient: 0,
-              )
-            ],
-            hasMore: false,
-            nextPage: null,
-            maximumRate: 5,
-            latitude: -23.123,
-            longitude: -46.123,
-          ))),
+          (_) => Future.value(dartz.Right(centerPlace)),
         );
       },
     );
@@ -103,3 +77,31 @@ class MockSupportCenterUseCase extends Mock implements SupportCenterUseCase {}
 
 class FakeSupportCenterFetchRequest extends Fake
     implements SupportCenterFetchRequest {}
+
+final centerPlace = SupportCenterPlaceSessionEntity(
+  places: [
+    SupportCenterPlaceEntity(
+      id: '1',
+      name: 'Test Place',
+      distance: '0',
+      fullStreet: 'Test Street',
+      uf: 'SP',
+      category: SupportCenterPlaceCategoryEntity(
+        id: 1,
+        name: 'Test Category',
+        color: '#000000',
+      ),
+      typeOfPlace: 'Test Type',
+      htmlContent: 'Test Content',
+      latitude: -23.123,
+      longitude: -46.123,
+      rate: '0',
+      ratedByClient: 0,
+    )
+  ],
+  hasMore: false,
+  nextPage: null,
+  maximumRate: 5,
+  latitude: -23.123,
+  longitude: -46.123,
+);
