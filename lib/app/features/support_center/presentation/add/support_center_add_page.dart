@@ -74,14 +74,19 @@ class _SupportCenterAddPageState
     return SafeArea(
       child: PageProgressIndicator(
         progressState: controller.progressState,
-        child: SingleChildScrollView(
+        child: Scrollbar(
+          thickness: 8,
+          thumbVisibility: true,
           controller: _scrollController,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildInputPlaceInformation(context, controller.places),
-              buildPlaceAction(),
-            ],
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                buildInputPlaceInformation(context, controller.places),
+                buildPlaceAction(),
+              ],
+            ),
           ),
         ),
       ),
