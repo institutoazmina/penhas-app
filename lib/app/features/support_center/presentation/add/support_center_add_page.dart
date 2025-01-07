@@ -4,9 +4,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:mobx/mobx.dart';
+import 'package:penhas/app/shared/design_system/widgets/buttons/penhas_button.dart';
 
 import '../../../../core/extension/asuka.dart';
-import '../../../../shared/design_system/button_shape.dart';
 import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/design_system/text_styles.dart';
 import '../../../authentication/presentation/shared/page_progress_indicator.dart';
@@ -345,7 +345,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             child: SizedBox(
               height: 44,
-              child: RaisedButton(
+              child: PenhasButton.roundedFilled(
                 onPressed: () async {
                   controller.savePlace();
                   if (isNotValid()) {
@@ -356,9 +356,6 @@ extension _BuildWidget on _SupportCenterAddPageState {
                     );
                   }
                 },
-                elevation: 0,
-                color: DesignSystemColors.ligthPurple,
-                shape: kButtonShapeFilled,
                 child: Text(
                   'Adicionar ponto de apoio',
                   style: buttonTitle,
@@ -485,7 +482,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
             borderRadius: BorderRadius.circular(10.0),
           ),
           actions: <Widget>[
-            FlatButton(
+            PenhasButton.filled(
               child: const Text('Fechar'),
               onPressed: () async {
                 Navigator.of(context).pop();
