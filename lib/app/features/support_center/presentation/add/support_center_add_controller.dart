@@ -43,7 +43,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   String _phone2 = '';
   String _ddd2 = '';
   String? _is24h = '';
-  String? _hasWhatsapp = '';
+  String? _hasWhatsApp = '';
 
   final SupportCenterUseCase _supportCenterUseCase;
 
@@ -69,7 +69,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   String is24hSelected = '';
 
   @observable
-  String hasWhatsappSelected = '';
+  String hasWhatsAppSelected = '';
 
   @observable
   String ddd1Error = '';
@@ -170,8 +170,8 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
   }
 
   @action
-  void setHasWhasapp(String value) {
-    _hasWhatsapp = value;
+  void setHasWhatsApp(String value) {
+    _hasWhatsApp = value;
   }
 
   @action
@@ -322,7 +322,7 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
         ddd2: _ddd2,
         phone2: _phone2,
         is24h: _is24h,
-        hasWhatsapp: _hasWhatsapp,
+        hasWhatsapp: _hasWhatsApp,
       ),
     );
 

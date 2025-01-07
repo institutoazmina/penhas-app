@@ -54,13 +54,13 @@ class _SupportCenterAddPageState
 
   Widget buildBody(BuildContext context, SupportCenterAddState state) {
     return state.when(
-      initial: () => buildLodingCategories(),
+      initial: () => buildLoadingCategories(),
       loaded: () => buildLoaded(context),
       error: (msg) => buildError(),
     );
   }
 
-  Widget buildLodingCategories() {
+  Widget buildLoadingCategories() {
     return SafeArea(
       child: PageProgressIndicator(
         progressState: PageProgressState.loading,
@@ -164,7 +164,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
         children: [
           Text(
             'Adicione novos pontos de apoio para aumentar as opções de suporte das mulheres em situação de violência.',
-            style: introdutionText,
+            style: introductionText,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12.0),
@@ -173,7 +173,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
           ),
           Text(
             '* Marcam os campos com preenchimento obrigatório.',
-            style: introdutionText,
+            style: introductionText,
           ),
           SupportCenterInput(
             hintText: 'Nome *',
@@ -252,7 +252,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
             currentValue: controller.is24hSelected,
             dataSource: yesNoList,
             onChanged: (v) {
-              controller.setHasWhasapp(v);
+              controller.setHasWhatsApp(v);
             },
           ),
           SupportCenterInputDDD(
@@ -495,7 +495,7 @@ extension _BuildWidget on _SupportCenterAddPageState {
 }
 
 extension _SupportCenterAddPageStateTextStyle on _SupportCenterAddPageState {
-  TextStyle get introdutionText => const TextStyle(
+  TextStyle get introductionText => const TextStyle(
         color: DesignSystemColors.darkIndigoThree,
         fontFamily: 'Lato',
         fontSize: 14.0,
