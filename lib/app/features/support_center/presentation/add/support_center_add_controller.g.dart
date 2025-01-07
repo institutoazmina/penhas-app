@@ -130,19 +130,19 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$hasWhatsappSelectedAtom =
-      Atom(name: '_SupportCenterAddControllerBase.hasWhatsappSelected');
+  final _$hasWhatsAppSelectedAtom =
+      Atom(name: '_SupportCenterAddControllerBase.hasWhatsAppSelected');
 
   @override
-  String get hasWhatsappSelected {
-    _$hasWhatsappSelectedAtom.reportRead();
-    return super.hasWhatsappSelected;
+  String get hasWhatsAppSelected {
+    _$hasWhatsAppSelectedAtom.reportRead();
+    return super.hasWhatsAppSelected;
   }
 
   @override
-  set hasWhatsappSelected(String value) {
-    _$hasWhatsappSelectedAtom.reportWrite(value, super.hasWhatsappSelected, () {
-      super.hasWhatsappSelected = value;
+  set hasWhatsAppSelected(String value) {
+    _$hasWhatsAppSelectedAtom.reportWrite(value, super.hasWhatsAppSelected, () {
+      super.hasWhatsAppSelected = value;
     });
   }
 
@@ -502,11 +502,11 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
   }
 
   @override
-  void setHasWhasapp(String value) {
+  void setHasWhatsApp(String value) {
     final _$actionInfo = _$_SupportCenterAddControllerBaseActionController
-        .startAction(name: '_SupportCenterAddControllerBase.setHasWhasapp');
+        .startAction(name: '_SupportCenterAddControllerBase.setHasWhatsApp');
     try {
-      return super.setHasWhasapp(value);
+      return super.setHasWhatsApp(value);
     } finally {
       _$_SupportCenterAddControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -653,7 +653,7 @@ placeDescriptionError: ${placeDescriptionError},
 cityError: ${cityError},
 ufSelected: ${ufSelected},
 is24hSelected: ${is24hSelected},
-hasWhatsappSelected: ${hasWhatsappSelected},
+hasWhatsAppSelected: ${hasWhatsAppSelected},
 ddd1Error: ${ddd1Error},
 phone1Error: ${phone1Error},
 ddd2Error: ${ddd2Error},
