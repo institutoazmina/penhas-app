@@ -75,7 +75,7 @@ class SupportCenterGpsError extends StatelessWidget {
                     ),
                   ],
                 ),
-                label: const Text(''),
+                label: const SizedBox(),
               ),
             ),
             const Text(
