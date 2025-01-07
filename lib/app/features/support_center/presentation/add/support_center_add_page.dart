@@ -39,22 +39,17 @@ class _SupportCenterAddPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        title: const Text('Adicionar Ponto'),
-        elevation: 0.0,
-        backgroundColor: DesignSystemColors.easterPurple,
-      ),
-      body: Scrollbar(
-        thickness: 8,
-        isAlwaysShown: true,
-        child: Observer(
+        key: _scaffoldKey,
+        appBar: AppBar(
+          title: const Text('Adicionar Ponto'),
+          elevation: 0.0,
+          backgroundColor: DesignSystemColors.easterPurple,
+        ),
+        body: Observer(
           builder: (_) {
             return buildBody(context, controller.state);
           },
-        ),
-      ),
-    );
+        ));
   }
 
   Widget buildBody(BuildContext context, SupportCenterAddState state) {
