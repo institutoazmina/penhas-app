@@ -118,7 +118,7 @@ class _BottomBarIcon extends StatelessWidget {
 
 extension MainboardStateExtension on MainboardState {
   String get label => when(
-        feed: () => 'Ínicio',
+        feed: () => 'Início',
         compose: () => 'Publicar',
         escapeManual: () => 'Manual de Fuga',
         helpCenter: () => 'Socorro',
