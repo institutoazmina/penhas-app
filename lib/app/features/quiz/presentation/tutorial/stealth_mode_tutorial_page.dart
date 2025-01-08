@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../core/pages/tutorial_page_view_widget.dart';
 import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import 'stealth_mode_tutorial_page_controller.dart';
 
 class StealthModeTutorialPage extends StatefulWidget {
@@ -88,12 +89,7 @@ class _StealthModeTutorialPageState extends ModularState<
     return SizedBox(
       height: 40.0,
       width: 145.0,
-      child: RaisedButton(
-        color: DesignSystemColors.ligthPurple,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        padding: EdgeInsets.zero,
-        elevation: 0.0,
+      child: PenhasButton.roundedFilled(
         onPressed: () {
           isLastPage ? _dispose() : _nextPage();
         },
@@ -156,7 +152,7 @@ class _StealthModeTutorialPageState extends ModularState<
               alignment: FractionalOffset.center,
             ),
             if (!isPermissionGranted)
-              FlatButton(
+              PenhasButton.text(
                 onPressed: controller.requestLocationPermission,
                 child: const Text(
                   'AUTORIZAR LOCALIZAÇÃO',
