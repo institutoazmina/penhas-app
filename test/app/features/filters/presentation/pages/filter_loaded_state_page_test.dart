@@ -18,29 +18,31 @@ class MockResetAction extends Mock {
 }
 
 void main() {
-
-  setUp((){
+  setUp(() {
     registerFallbackValue(MockFilterCallback);
 
     initModules([
       FilterModule(),
     ]);
-    
   });
 
-  tearDown((){
+  tearDown(() {
     Modular.removeModule(FilterModule());
   });
 
-  group(FilterLoadedStatePage, (){
-     
+  group(FilterLoadedStatePage, () {
     final mockCallback = MockFilterCallback();
     final mockOnResetAction = MockResetAction();
     final testTags = [FilterTagEntity(isSelected: true, id: '', label: '')];
 
     testWidgets('should show Page successfully', (tester) async {
-     
-      await theAppIsRunning(tester,  FilterLoadedStatePage(onResetAction: mockOnResetAction, tags: testTags, onApplyFilterAction: (tags) => mockCallback(tags),));
+      await theAppIsRunning(
+          tester,
+          FilterLoadedStatePage(
+            onResetAction: mockOnResetAction,
+            tags: testTags,
+            onApplyFilterAction: (tags) => mockCallback(tags),
+          ));
 
       iSeeText('Filtros');
       iSeeText('Selecione os temas de seu interesse:');
@@ -49,27 +51,44 @@ void main() {
     });
 
     testWidgets('should call onResetAction when click limpar', (tester) async {
+      when(() => mockOnResetAction.call()).thenReturn(null);
 
-        when(() => mockOnResetAction.call()).thenReturn(null);
+      await theAppIsRunning(
+          tester,
+          FilterLoadedStatePage(
+            onResetAction: mockOnResetAction,
+            tags: testTags,
+            onApplyFilterAction: (tags) => mockCallback(tags),
+          ));
+      await iTapText(tester, text: 'Limpar');
 
-        await theAppIsRunning(tester,  FilterLoadedStatePage(onResetAction: mockOnResetAction, tags: testTags, onApplyFilterAction: (tags) => mockCallback(tags),));
-        await iTapText(tester, text: 'Limpar');
-
-        verify(() =>
-              mockOnResetAction.call()).called(1);
+      verify(() => mockOnResetAction.call()).called(1);
     });
 
-    testWidgets('should call onApplyFilterAction when click limpar', (tester) async {
+    testWidgets('should call onApplyFilterAction when click limpar',
+        (tester) async {
+      when(() => mockCallback.call(any())).thenReturn(null);
 
-        when(() => mockCallback.call(any())).thenReturn(null);
+      await theAppIsRunning(
+          tester,
+          FilterLoadedStatePage(
+            onResetAction: mockOnResetAction,
+            tags: testTags,
+            onApplyFilterAction: (tags) => mockCallback(tags),
+          ));
+      await iTapText(tester, text: 'Aplicar filtro');
 
-        await theAppIsRunning(tester,  FilterLoadedStatePage(onResetAction: mockOnResetAction, tags: testTags, onApplyFilterAction: (tags) => mockCallback(tags),));
-        await iTapText(tester, text: 'Aplicar filtro');
-
-        verify(() =>
-              mockCallback.call(any())).called(1);
+      verify(() => mockCallback.call(any())).called(1);
     });
 
-    screenshotTest('should render the page', fileName: 'filter_loaded_state_page', pageBuilder: () =>FilterLoadedStatePage(onResetAction: mockOnResetAction, tags: testTags, onApplyFilterAction: (tags) => mockCallback(tags),),);
+    screenshotTest(
+      'should render the page',
+      fileName: 'filter_loaded_state_page',
+      pageBuilder: () => FilterLoadedStatePage(
+        onResetAction: mockOnResetAction,
+        tags: testTags,
+        onApplyFilterAction: (tags) => mockCallback(tags),
+      ),
+    );
   });
 }
