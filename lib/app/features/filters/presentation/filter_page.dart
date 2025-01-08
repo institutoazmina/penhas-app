@@ -34,7 +34,7 @@ extension _FilterPageStateMethods on _FilterPageState {
       loaded: (skill) => FilterLoadedStatePage(
         tags: skill,
         onResetAction: controller.reset,
-        onAplyFilterAction: controller.setTags,
+        onApplyFilterAction: controller.setTags,
       ),
     );
   }
