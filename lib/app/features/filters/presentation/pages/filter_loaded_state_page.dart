@@ -10,11 +10,11 @@ class FilterLoadedStatePage extends StatelessWidget {
     Key? key,
     required this.tags,
     required this.onResetAction,
-    required this.onAplyFilterAction,
+    required this.onApplyFilterAction,
   }) : super(key: key);
 
   final void Function() onResetAction;
-  final void Function(List<FilterTagEntity>) onAplyFilterAction;
+  final void Function(List<FilterTagEntity>) onApplyFilterAction;
   final List<FilterTagEntity> tags;
 
   final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
@@ -138,10 +138,10 @@ extension _FilterLoadedStatePageMethods on FilterLoadedStatePage {
 
   void applyFilter() {
     if (_tagStateKey.currentState == null) {
-      onAplyFilterAction([]);
+      onApplyFilterAction([]);
     }
 
-    final List<FilterTagEntity> seletedTags = _tagStateKey
+    final List<FilterTagEntity> selectedTags = _tagStateKey
             .currentState?.getAllItem
             .where((e) => e.active)
             .map((e) => e.customData)
@@ -150,7 +150,7 @@ extension _FilterLoadedStatePageMethods on FilterLoadedStatePage {
             .toList() ??
         List.empty();
 
-    onAplyFilterAction(seletedTags);
+    onApplyFilterAction(selectedTags);
   }
 }
 
