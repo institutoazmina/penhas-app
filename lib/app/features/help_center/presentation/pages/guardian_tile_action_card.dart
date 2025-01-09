@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../core/extension/asuka.dart';
 import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/design_system/text_styles.dart';
+import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../../authentication/presentation/shared/input_box_style.dart';
 import '../../domain/entities/guardian_tile_entity.dart';
 
@@ -134,14 +135,13 @@ class GuardianTileActionCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.0),
           ),
           actions: <Widget>[
-            FlatButton(
+            PenhasButton.text(
               child: const Text('Fechar'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
-              color: DesignSystemColors.easterPurple,
+            PenhasButton.filled(
               child:
                   const Text('Enviar', style: TextStyle(color: Colors.white)),
               onPressed: () {
@@ -167,13 +167,13 @@ class GuardianTileActionCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.0),
         ),
         actions: <Widget>[
-          FlatButton(
+          PenhasButton.text(
             child: const Text('Não'),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
-          FlatButton(
+          PenhasButton.text(
             child: const Text('Sim'),
             onPressed: () {
               action!();
@@ -197,13 +197,13 @@ class GuardianTileActionCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.0),
         ),
         actions: <Widget>[
-          FlatButton(
+          PenhasButton.text(
             child: const Text('Não'),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
-          FlatButton(
+          PenhasButton.text(
             child: const Text('Sim'),
             onPressed: () {
               action!();
