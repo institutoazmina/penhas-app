@@ -19,7 +19,7 @@ void main() {
   });
 
   group(GuardianErrorPage, () {
-    testWidgets('Should show page succesfully', (tester) async {
+    testWidgets('Should show page successfully', (tester) async {
       await theAppIsRunning(
           tester,
           GuardianErrorPage(
