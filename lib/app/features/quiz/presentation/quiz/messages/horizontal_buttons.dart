@@ -105,13 +105,11 @@ class _FilledButton extends StatelessWidget {
   const _FilledButton(
     this.label, {
     Key? key,
-    this.width = double.infinity,
     this.onPressed,
   }) : super(key: key);
 
   final String label;
   final VoidCallback? onPressed;
-  final double width;
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +123,7 @@ class _FilledButton extends StatelessWidget {
         primary: DesignSystemColors.ligthPurple,
         elevation: 0,
         shape: kButtonShapeFilled,
-        minimumSize: Size(width, _buttonHeight),
+        minimumSize: const Size(double.infinity, _buttonHeight),
       ),
     );
   }
