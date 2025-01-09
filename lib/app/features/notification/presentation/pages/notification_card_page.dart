@@ -72,7 +72,7 @@ class NotificationCardPage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 12.0),
       child: HtmlWidget(
         notification.content!,
-        webViewJs: false,
+        factoryBuilder: () => DisabledWebViewJsWidgetFactory(),
         textStyle: contentTextStyle,
       ),
     );
@@ -100,4 +100,9 @@ extension _TextStyle on NotificationCardPage {
         fontSize: 14.0,
         fontWeight: FontWeight.normal,
       );
+}
+
+class DisabledWebViewJsWidgetFactory extends WidgetFactory {
+  @override
+  bool get webViewJs => false;
 }
