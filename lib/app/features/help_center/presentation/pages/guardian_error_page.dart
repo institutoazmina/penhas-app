@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
+import '../../../../shared/design_system/widgets/buttons/styles/text_button_style.dart';
 
 class GuardianErrorPage extends StatelessWidget {
   const GuardianErrorPage({
@@ -63,14 +65,19 @@ class GuardianErrorPage extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 48.0),
-                child: FlatButton.icon(
+                child: PenhasButton(
                   onPressed: _onPressed,
-                  icon: const Icon(
-                    Icons.loop,
-                    color: DesignSystemColors.easterPurple,
-                    size: 60,
+                  style: TextButtonStyle(),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        Icons.loop,
+                        color: DesignSystemColors.easterPurple,
+                        size: 60,
+                      ),
+                    ],
                   ),
-                  label: Container(),
                 ),
               ),
               const Text(
