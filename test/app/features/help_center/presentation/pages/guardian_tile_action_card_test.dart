@@ -26,17 +26,24 @@ void main() {
   late MockOnDeletePressed mockOnDeletePressed;
   late MockonResendPressed mockOnResendPressed;
 
-  setUp((){
+  setUp(() {
     mockOnEditPressed = MockOnEditPressed();
     mockOnDeletePressed = MockOnDeletePressed();
     mockOnResendPressed = MockonResendPressed();
-    card = GuardianTileCardEntity(deleteWarning: 'warning', onEditPressed: mockOnEditPressed, guardian: GuardianContactEntity(id: 1, mobile: 'mobile', name: 'name', status: 'status'));
+    card = GuardianTileCardEntity(
+        deleteWarning: 'warning',
+        onEditPressed: mockOnEditPressed,
+        guardian: GuardianContactEntity(
+            id: 1, mobile: 'mobile', name: 'name', status: 'status'));
   });
 
-  group(GuardianTileActionCard, (){
+  group(GuardianTileActionCard, () {
     testWidgets('Should show page successfully', (tester) async {
-
-      await theAppIsRunning(tester, GuardianTileActionCard(card: card,));
+      await theAppIsRunning(
+          tester,
+          GuardianTileActionCard(
+            card: card,
+          ));
 
       iSeeText('name');
       iSeeText('mobile');
@@ -44,42 +51,63 @@ void main() {
     });
 
     testWidgets('Should show page with edit button', (tester) async {
-
       when(() => mockOnEditPressed.call(any())).thenReturn(null);
 
-      await theAppIsRunning(tester, GuardianTileActionCard(card: card,));
+      await theAppIsRunning(
+          tester,
+          GuardianTileActionCard(
+            card: card,
+          ));
 
       final iconButtonFinder = find.byType(IconButton);
 
-    expect(iconButtonFinder, findsOneWidget);
+      expect(iconButtonFinder, findsOneWidget);
     });
 
     testWidgets('Should show page with delete button', (tester) async {
-
-     final cardWithDelete = GuardianTileCardEntity(deleteWarning: 'warning', onDeletePressed: mockOnDeletePressed, guardian: GuardianContactEntity(id: 1, mobile: 'mobile', name: 'name', status: 'status'));
+      final cardWithDelete = GuardianTileCardEntity(
+          deleteWarning: 'warning',
+          onDeletePressed: mockOnDeletePressed,
+          guardian: GuardianContactEntity(
+              id: 1, mobile: 'mobile', name: 'name', status: 'status'));
 
       when(() => mockOnDeletePressed.call()).thenReturn(null);
 
-      await theAppIsRunning(tester, GuardianTileActionCard(card: cardWithDelete,));
+      await theAppIsRunning(
+          tester,
+          GuardianTileActionCard(
+            card: cardWithDelete,
+          ));
 
       final iconButtonFinder = find.byType(IconButton);
 
-    expect(iconButtonFinder, findsOneWidget);
+      expect(iconButtonFinder, findsOneWidget);
     });
 
     testWidgets('Should show page with resend button', (tester) async {
-
-     final cardWithResend = GuardianTileCardEntity(deleteWarning: 'warning', onResendPressed: mockOnResendPressed, guardian: GuardianContactEntity(id: 1, mobile: 'mobile', name: 'name', status: 'status'));
+      final cardWithResend = GuardianTileCardEntity(
+          deleteWarning: 'warning',
+          onResendPressed: mockOnResendPressed,
+          guardian: GuardianContactEntity(
+              id: 1, mobile: 'mobile', name: 'name', status: 'status'));
 
       when(() => mockOnDeletePressed.call()).thenReturn(null);
 
-      await theAppIsRunning(tester, GuardianTileActionCard(card: cardWithResend,));
+      await theAppIsRunning(
+          tester,
+          GuardianTileActionCard(
+            card: cardWithResend,
+          ));
 
       final iconButtonFinder = find.byType(IconButton);
 
-    expect(iconButtonFinder, findsOneWidget);
+      expect(iconButtonFinder, findsOneWidget);
     });
 
-    screenshotTest('Should render page', fileName: 'guardian_tile_action', pageBuilder: ()=> GuardianTileActionCard(card: card,));
+    screenshotTest('Should render page',
+        fileName: 'guardian_tile_action',
+        pageBuilder: () => GuardianTileActionCard(
+              card: card,
+            ));
   });
 }
