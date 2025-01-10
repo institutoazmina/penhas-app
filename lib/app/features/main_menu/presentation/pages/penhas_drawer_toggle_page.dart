@@ -4,8 +4,8 @@ import '../../../../core/states/security_toggle_state.dart';
 import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/design_system/text_styles.dart';
 
-class PenhasDrawerTooglePage extends StatelessWidget {
-  const PenhasDrawerTooglePage({
+class PenhasDrawerTogglePage extends StatelessWidget {
+  const PenhasDrawerTogglePage({
     Key? key,
     required this.state,
   }) : super(key: key);
