@@ -10,7 +10,7 @@ import '../../../shared/design_system/text_styles.dart';
 import '../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../quiz/presentation/tutorial/stealth_mode_tutorial_page.dart';
 import 'pages/penhas_drawer_header_page.dart';
-import 'pages/penhas_drawer_toogle_page.dart';
+import 'pages/penhas_drawer_toggle_page.dart';
 import 'penhas_drawer_controller.dart';
 
 class PenhasDrawerPage extends StatefulWidget {
@@ -199,12 +199,11 @@ class _PenhasDrawerPageState
 
   Widget _buildSecurityToggle(bool isVisible, SecurityToggleState state) {
     if (!isVisible) return Container();
-
-    return PenhasDrawerTooglePage(state: state);
+    return PenhasDrawerTogglePage(state: state);
   }
 }
 
-extension _TextStyel on _PenhasDrawerPageState {
+extension _TextStyle on _PenhasDrawerPageState {
   TextStyle get securityContextTextStyle => const TextStyle(
         color: DesignSystemColors.darkIndigoThree,
         fontFamily: 'Lato',
