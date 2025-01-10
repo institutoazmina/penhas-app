@@ -172,7 +172,7 @@ extension _ProfileEditPage on _ProfileEditPageState {
           Padding(
             padding: const EdgeInsets.only(top: 16.0),
             child: Text(
-              'Informações exibidas para as usuários do PenhaS.',
+              'Informações exibidas para as usuárias do PenhaS.',
               style: profileHeaderContentTextStyle,
             ),
           ),
