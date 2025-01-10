@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../../../../../shared/design_system/colors.dart';
 import '../../../../../../authentication/presentation/shared/page_progress_indicator.dart';
 
-class ProfileSkillInitialStatePage extends StatelessWidget {
-  const ProfileSkillInitialStatePage({
+class ProfileSkillInitialWidget extends StatelessWidget {
+  const ProfileSkillInitialWidget({
     Key? key,
   }) : super(key: key);
 
