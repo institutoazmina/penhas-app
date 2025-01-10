@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 
-import '../../../../../../../shared/design_system/button_shape.dart';
 import '../../../../../../../shared/design_system/colors.dart';
+import '../../../../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../../../../../filters/domain/entities/filter_tag_entity.dart';
 
-class ProfilSkillLoadedStatePage extends StatelessWidget {
-  ProfilSkillLoadedStatePage({
+class ProfileSkillLoadedWidget extends StatelessWidget {
+  ProfileSkillLoadedWidget({
     Key? key,
     required this.tags,
     required this.onResetAction,
-    required this.onAplyFilterAction,
+    required this.onApplyFilterAction,
   }) : super(key: key);
 
   final void Function() onResetAction;
-  final void Function(List<FilterTagEntity>) onAplyFilterAction;
+  final void Function(List<FilterTagEntity>) onApplyFilterAction;
   final List<FilterTagEntity> tags;
 
   final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
@@ -72,7 +72,7 @@ class ProfilSkillLoadedStatePage extends StatelessWidget {
   }
 }
 
-extension _FilterLoadedStatePageMethods on ProfilSkillLoadedStatePage {
+extension _FilterLoadedStatePageMethods on ProfileSkillLoadedWidget {
   Tooltip builtTagItem(FilterTagEntity item, int index) {
     return Tooltip(
       message: item.label,
@@ -99,11 +99,8 @@ extension _FilterLoadedStatePageMethods on ProfilSkillLoadedStatePage {
     return SizedBox(
       height: 40,
       width: 160,
-      child: FlatButton(
+      child: PenhasButton.text(
         onPressed: onResetAction,
-        color: Colors.transparent,
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
         child: const Text(
           'Limpar',
           style: TextStyle(
@@ -123,11 +120,8 @@ extension _FilterLoadedStatePageMethods on ProfilSkillLoadedStatePage {
     return SizedBox(
       height: 40,
       width: 160,
-      child: RaisedButton(
+      child: PenhasButton.roundedFilled(
         onPressed: () => applyFilter(),
-        elevation: 0,
-        color: DesignSystemColors.ligthPurple,
-        shape: kButtonShapeOutlinePurple,
         child: const Text(
           'Atualizar',
           style: TextStyle(
@@ -144,10 +138,10 @@ extension _FilterLoadedStatePageMethods on ProfilSkillLoadedStatePage {
 
   void applyFilter() {
     if (_tagStateKey.currentState == null) {
-      onAplyFilterAction([]);
+      onApplyFilterAction([]);
     }
 
-    final List<FilterTagEntity> seletedTags = _tagStateKey
+    final List<FilterTagEntity> selectedTags = _tagStateKey
             .currentState?.getAllItem
             .where((e) => e.active)
             .map((e) => e.customData)
@@ -156,11 +150,11 @@ extension _FilterLoadedStatePageMethods on ProfilSkillLoadedStatePage {
             .toList() ??
         List.empty();
 
-    onAplyFilterAction(seletedTags);
+    onApplyFilterAction(selectedTags);
   }
 }
 
-extension _FilterLoadedStatePageTextStyle on ProfilSkillLoadedStatePage {
+extension _FilterLoadedStatePageTextStyle on ProfileSkillLoadedWidget {
   TextStyle get filterTitleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,
