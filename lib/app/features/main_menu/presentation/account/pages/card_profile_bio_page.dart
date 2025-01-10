@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../../core/extension/asuka.dart';
 import '../../../../../shared/design_system/colors.dart';
+import '../../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import 'card_profile_header_edit_page.dart';
 
 class CardProfileBioPage extends StatelessWidget {
@@ -69,13 +70,13 @@ extension _Modal on CardProfileBioPage {
           ),
         ),
         actions: <Widget>[
-          FlatButton(
+          PenhasButton.text(
             child: const Text('Fechar'),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
-          FlatButton(
+          PenhasButton.text(
             child: const Text('Enviar'),
             onPressed: () async {
               onChange(_controller.text);
