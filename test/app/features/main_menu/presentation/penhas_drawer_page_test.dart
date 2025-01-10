@@ -73,7 +73,6 @@ void main() {
         (_) => Future.value(userProfileEntity),
       );
       // act
-
       tester.theAppIsRunning(PenhasDrawerPage());
       // assert
     });
