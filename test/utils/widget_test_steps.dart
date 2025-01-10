@@ -274,4 +274,32 @@ extension WidgetTesterExtension on WidgetTester {
     await tap(find.text(text));
     await pumpAndSettle();
   }
+
+  Future<void> iTapWidget(Type type, {Key? key}) async {
+    final targetButton = _getType(type, key: key) ?? find.byType(type);
+
+    await tap(targetButton);
+    await pumpAndSettle();
+  }
+
+  Finder? _getType(Type type, {String? text, Key? key}) {
+    if (text != null) {
+      return find.ancestor(
+        of: find.text(text),
+        matching: find.byType(type),
+      );
+    }
+
+    if (key != null) {
+      final element = find.byKey(key);
+
+      for (var item in element.evaluate()) {
+        if (item.widget.runtimeType == type) {
+          return element;
+        }
+      }
+    }
+
+    return null;
+  }
 }
