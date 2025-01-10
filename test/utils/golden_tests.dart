@@ -36,6 +36,7 @@ Future<void> screenshotTest(
   PumpAction? pumpBeforeTest,
   List<Device> devices = testDevices,
   bool skip = false,
+  String? reason,
   List<String> tags = const ['golden'],
   Duration timeout = const Duration(seconds: 5),
   TransitionBuilder? transitionBuilder,
