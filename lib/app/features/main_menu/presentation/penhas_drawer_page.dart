@@ -46,14 +46,11 @@ class _PenhasDrawerPageState
                     userName: controller.userName,
                     userAvatar: _buildAvatar(controller.userAvatar),
                   ),
-                  _buildSecurityToggle(
-                    controller.showSecurityOptions,
-                    controller.anonymousModeState,
-                  ),
-                  _buildSecurityToggle(
-                    controller.showSecurityOptions,
-                    controller.stealthModeState,
-                  ),
+                  if (controller.showSecurityOptions)
+                    PenhasDrawerTogglePage(
+                        state: controller.anonymousModeState),
+                  if (controller.showSecurityOptions)
+                    PenhasDrawerTogglePage(state: controller.stealthModeState),
                   _buildStealthModeNotice(controller.showSecurityOptions),
                   _buildItemList(
                     title: 'Informações pessoais',
