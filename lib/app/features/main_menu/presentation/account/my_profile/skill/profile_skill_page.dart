@@ -4,8 +4,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../../authentication/presentation/shared/snack_bar_handler.dart';
 import '../../../../../filters/states/filter_state.dart';
-import 'pages/profile_skill_initial_state_page.dart';
-import 'pages/profile_skill_loaded_state_page.dart';
+import 'pages/profile_skill_initial_widget.dart';
+import 'pages/profile_skill_loaded_widget.dart';
 import 'profile_skill_controller.dart';
 
 class ProfileSkillPage extends StatefulWidget {
@@ -31,11 +31,11 @@ class _FilterPageState
 extension _FilterPageStateMethods on _FilterPageState {
   Widget pageBuilder(FilterState state) {
     return state.when(
-      initial: () => const ProfileSkillInitialStatePage(),
-      loaded: (skill) => ProfilSkillLoadedStatePage(
+      initial: () => const ProfileSkillInitialWidget(),
+      loaded: (skill) => ProfileSkillLoadedWidget(
         tags: skill,
         onResetAction: controller.reset,
-        onAplyFilterAction: controller.setTags,
+        onApplyFilterAction: controller.setTags,
       ),
     );
   }
