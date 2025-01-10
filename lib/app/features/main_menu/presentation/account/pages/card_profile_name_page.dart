@@ -4,14 +4,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../core/extension/asuka.dart';
 import '../../../../../shared/design_system/colors.dart';
+import '../../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import 'card_profile_header_edit_page.dart';
 
 class CardProfileNamePage extends StatelessWidget {
   const CardProfileNamePage({
     Key? key,
     required this.name,
-    required this.avatar,
     required this.onChange,
+    this.avatar,
   }) : super(key: key);
 
   final String? name;
@@ -45,11 +46,13 @@ class CardProfileNamePage extends StatelessWidget {
                   CircleAvatar(
                     radius: 21.0,
                     backgroundColor: const Color.fromRGBO(239, 239, 239, 1.0),
-                    child: SvgPicture.network(
-                      avatar!,
-                      height: 27.0,
-                      width: 32.0,
-                    ),
+                    child: (avatar == null || avatar!.isEmpty)
+                        ? const SizedBox.shrink()
+                        : SvgPicture.network(
+                            avatar!,
+                            height: 27.0,
+                            width: 32.0,
+                          ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 14.0),
@@ -91,13 +94,13 @@ extension _Dialog on CardProfileNamePage {
           ),
         ),
         actions: <Widget>[
-          FlatButton(
+          PenhasButton.text(
             child: const Text('Fechar'),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
-          FlatButton(
+          PenhasButton.text(
             child: const Text('Enviar'),
             onPressed: () async {
               onChange(_controller.text);
