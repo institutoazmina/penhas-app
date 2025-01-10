@@ -7,6 +7,7 @@ import '../../../core/pages/tutorial_scale_route.dart';
 import '../../../core/states/security_toggle_state.dart';
 import '../../../shared/design_system/colors.dart';
 import '../../../shared/design_system/text_styles.dart';
+import '../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../quiz/presentation/tutorial/stealth_mode_tutorial_page.dart';
 import 'pages/penhas_drawer_header_page.dart';
 import 'pages/penhas_drawer_toogle_page.dart';
@@ -98,7 +99,7 @@ class _PenhasDrawerPageState
                   Container(
                     constraints: const BoxConstraints(minHeight: 126.0),
                     alignment: Alignment.bottomCenter,
-                    child: FlatButton(
+                    child: PenhasButton.text(
                       onPressed: () => controller.logoutPressed(),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -138,7 +139,7 @@ class _PenhasDrawerPageState
                   'Indique que está em situação de violência para ficar anônima, e utilize o Modo camuflado para aplicar um disfarce de app de signo para esconder o verdadeiro conteúdo do PenhaS.',
                   style: securityContextTextStyle,
                 ),
-                FlatButton(
+                PenhasButton.text(
                   onPressed: () async {
                     Navigator.push(
                       context,
