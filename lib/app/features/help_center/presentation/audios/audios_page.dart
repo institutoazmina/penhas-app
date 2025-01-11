@@ -20,20 +20,23 @@ import '../pages/guardian_error_page.dart';
 import 'audios_controller.dart';
 
 class AudiosPage extends StatefulWidget {
-  const AudiosPage({Key? key, this.title = 'Audios'}) : super(key: key);
+  const AudiosPage({Key? key, this.title = 'Audios', required this.controller})
+      : super(key: key);
 
   final String title;
+  final AudiosController controller;
 
   @override
   _AudiosPageState createState() => _AudiosPageState();
 }
 
-class _AudiosPageState extends ModularState<AudiosPage, AudiosController>
-    with SnackBarHandler {
+class _AudiosPageState extends State<AudiosPage> with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
+
+  AudiosController get controller => widget.controller;
 
   PageProgressState _loadState = PageProgressState.initial;
   AudioEntity? _playingAudio;

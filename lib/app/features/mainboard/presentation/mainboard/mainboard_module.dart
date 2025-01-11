@@ -187,7 +187,9 @@ class MainboardModule extends Module {
         ),
         ChildRoute(
           '/helpcenter/audios',
-          child: (context, args) => const AudiosPage(),
+          child: (context, args) => AudiosPage(
+            controller: Modular.get<AudiosController>(),
+          ),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
