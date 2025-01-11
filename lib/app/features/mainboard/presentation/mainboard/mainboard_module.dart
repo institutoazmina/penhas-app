@@ -57,6 +57,7 @@ import '../../../help_center/presentation/guardians/guardians_controller.dart';
 import '../../../help_center/presentation/guardians/guardians_page.dart';
 import '../../../help_center/presentation/new_guardian/new_guardian_controller.dart';
 import '../../../help_center/presentation/new_guardian/new_guardian_page.dart';
+import '../../../help_center/presentation/pages/audio/audio_record_controller.dart';
 import '../../../help_center/presentation/pages/audio/audio_record_page.dart';
 import '../../../main_menu/domain/repositories/user_profile_repository.dart';
 import '../../../main_menu/domain/usecases/user_profile.dart';
@@ -191,7 +192,9 @@ class MainboardModule extends Module {
         ),
         ChildRoute(
           '/helpcenter/audioRecord',
-          child: (context, args) => const AudioRecordPage(),
+          child: (context, args) => AudioRecordPage(
+            controller: Modular.get<AudioRecordController>(),
+          ),
           transition: TransitionType.rightToLeft,
         )
       ];
