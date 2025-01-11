@@ -37,8 +37,8 @@ void main() {
 
     // act
     await tester.pumpWidget(
-      const MaterialApp(
-        home: AudiosPage(),
+       MaterialApp(
+        home: AudiosPage(controller: mockController,),
       ),
     );
 
@@ -83,8 +83,8 @@ void main() {
 
     // act
     await tester.pumpWidget(
-      const MaterialApp(
-        home: AudiosPage(),
+       MaterialApp(
+        home: AudiosPage(controller: mockController,),
       ),
     );
 
@@ -106,8 +106,8 @@ void main() {
 
     //act
     await tester.pumpWidget(
-      const MaterialApp(
-        home: AudiosPage(),
+       MaterialApp(
+        home: AudiosPage(controller: mockController,),
       ),
     );
     // assert
