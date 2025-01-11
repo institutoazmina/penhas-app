@@ -250,7 +250,9 @@ class MainboardModule extends Module {
         ),
         ChildRoute(
           '/menu/account_preference',
-          child: (context, args) => const AccountPreferencePage(),
+          child: (context, args) => AccountPreferencePage(
+            controller: Modular.get<AccountPreferenceController>(),
+          ),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(

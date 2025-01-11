@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../../shared/design_system/colors.dart';
@@ -13,17 +12,20 @@ import '../../../domain/states/account_preference_state.dart';
 import 'account_preference_controller.dart';
 
 class AccountPreferencePage extends StatefulWidget {
-  const AccountPreferencePage({Key? key}) : super(key: key);
+  const AccountPreferencePage({Key? key, required this.controller})
+      : super(key: key);
+
+  final AccountPreferenceController controller;
 
   @override
   _AccountPreferencePageState createState() => _AccountPreferencePageState();
 }
 
-class _AccountPreferencePageState
-    extends ModularState<AccountPreferencePage, AccountPreferenceController>
+class _AccountPreferencePageState extends State<AccountPreferencePage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  AccountPreferenceController get controller => widget.controller;
 
   @override
   void didChangeDependencies() {
