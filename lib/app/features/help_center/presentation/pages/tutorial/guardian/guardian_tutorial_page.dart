@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../../../core/pages/tutorial_page_view_widget.dart';
 import '../../../../../../shared/design_system/colors.dart';
+import '../../../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 
 class GuardianTutorialPage extends StatefulWidget {
   const GuardianTutorialPage({Key? key}) : super(key: key);
@@ -112,14 +113,8 @@ class _GuardianTutorialPageState extends State<GuardianTutorialPage> {
   SizedBox _buildActionButton() {
     final bool isLastPage = _currentPage == (_contentPageView.length - 1);
     return SizedBox(
-      height: 40.0,
       width: 145.0,
-      child: RaisedButton(
-        color: DesignSystemColors.ligthPurple,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        padding: EdgeInsets.zero,
-        elevation: 0.0,
+      child: PenhasButton.roundedFilled(
         onPressed: () {
           isLastPage ? _dispose() : _nextPage();
         },
