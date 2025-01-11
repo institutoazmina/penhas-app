@@ -159,7 +159,9 @@ class MainboardModule extends Module {
         ),
         ChildRoute(
           '/category',
-          child: (context, args) => const CategoryTweetPage(),
+          child: (context, args) => CategoryTweetPage(
+            controller: Modular.get<CategoryTweetController>(),
+          ),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
