@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../shared/design_system/colors.dart';
@@ -14,20 +13,22 @@ class CategoryTweetPage extends StatefulWidget {
   const CategoryTweetPage({
     Key? key,
     this.title = 'CategoryTweet',
+    required this.controller,
   }) : super(key: key);
 
   final String title;
+  final CategoryTweetController controller;
 
   @override
   _CategoryTweetPageState createState() => _CategoryTweetPageState();
 }
 
-class _CategoryTweetPageState
-    extends ModularState<CategoryTweetPage, CategoryTweetController>
+class _CategoryTweetPageState extends State<CategoryTweetPage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
+  CategoryTweetController get controller => widget.controller;
 
   @override
   void initState() {
