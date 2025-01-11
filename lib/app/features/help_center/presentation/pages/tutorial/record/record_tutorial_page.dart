@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../core/pages/tutorial_page_view_widget.dart';
 import '../../../../../../shared/design_system/colors.dart';
+import '../../../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 
 class RecordTutorialPage extends StatefulWidget {
   const RecordTutorialPage({Key? key}) : super(key: key);
@@ -127,12 +128,7 @@ class _RecordTutorialPageState extends State<RecordTutorialPage> {
     return SizedBox(
       height: 40.0,
       width: 145.0,
-      child: RaisedButton(
-        color: DesignSystemColors.ligthPurple,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        padding: EdgeInsets.zero,
-        elevation: 0.0,
+      child: PenhasButton.roundedFilled(
         onPressed: () {
           isLastPage ? _dispose() : _nextPage();
         },
