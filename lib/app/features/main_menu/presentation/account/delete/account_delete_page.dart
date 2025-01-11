@@ -4,8 +4,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../../../shared/design_system/button_shape.dart';
 import '../../../../../shared/design_system/colors.dart';
+import '../../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../../../authentication/presentation/shared/snack_bar_handler.dart';
 import '../../../../support_center/presentation/pages/support_center_general_error.dart';
@@ -154,11 +154,8 @@ extension _PageBuilder on _AccountDeletePageState {
                     child: SizedBox(
                       height: 40,
                       width: 250,
-                      child: RaisedButton(
+                      child: PenhasButton.roundedFilled(
                         onPressed: () => controller.delete(textController.text),
-                        elevation: 0,
-                        color: DesignSystemColors.ligthPurple,
-                        shape: kButtonShapeOutlinePurple,
                         child: Text('Excluir conta', style: buttonTextStyle),
                       ),
                     ),
