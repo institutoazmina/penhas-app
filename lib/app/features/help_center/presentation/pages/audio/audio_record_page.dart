@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../../core/managers/audio_record_services.dart';
 import '../../../../../shared/design_system/colors.dart';
@@ -10,18 +9,22 @@ import 'audio_record_controller.dart';
 import 'sound_record_widget.dart';
 
 class AudioRecordPage extends StatefulWidget {
-  const AudioRecordPage({Key? key}) : super(key: key);
+  const AudioRecordPage({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  final AudioRecordController controller;
 
   @override
   _AudioRecordState createState() => _AudioRecordState();
 }
 
-class _AudioRecordState
-    extends ModularState<AudioRecordPage, AudioRecordController>
-    with SnackBarHandler {
+class _AudioRecordState extends State<AudioRecordPage> with SnackBarHandler {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   AudioActivity? _audioActivity;
   StreamSubscription? _streamSubscription;
+  AudioRecordController get controller => widget.controller;
 
   @override
   void initState() {
