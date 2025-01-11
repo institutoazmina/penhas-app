@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../shared/design_system/colors.dart';
@@ -10,14 +9,18 @@ import '../shared/snack_bar_handler.dart';
 import 'deleted_account_controller.dart';
 
 class DeletedAccountPage extends StatefulWidget {
-  const DeletedAccountPage({Key? key}) : super(key: key);
+  const DeletedAccountPage({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  final DeletedAccountController controller;
 
   @override
   _DeletedAccountPageState createState() => _DeletedAccountPageState();
 }
 
-class _DeletedAccountPageState
-    extends ModularState<DeletedAccountPage, DeletedAccountController>
+class _DeletedAccountPageState extends State<DeletedAccountPage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -26,7 +29,7 @@ class _DeletedAccountPageState
   void didChangeDependencies() {
     super.didChangeDependencies();
     _disposers ??= [
-      reaction((_) => controller.errorMessage, (String? message) {
+      reaction((_) => widget.controller.errorMessage, (String? message) {
         showSnackBar(scaffoldKey: _scaffoldKey, message: message);
       }),
     ];
@@ -85,7 +88,7 @@ extension _MethodPrivate on _DeletedAccountPageState {
   Widget bodyBuilder() {
     return SafeArea(
       child: PageProgressIndicator(
-        progressState: controller.progressState,
+        progressState: widget.controller.progressState,
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -109,7 +112,7 @@ extension _MethodPrivate on _DeletedAccountPageState {
                     height: 40,
                     width: 250,
                     child: PenhasButton.roundedFilled(
-                      onPressed: () => controller.reactive(),
+                      onPressed: () => widget.controller.reactive(),
                       child:
                           Text('Reativar Conta', style: activeButtonTextStyle),
                     ),

@@ -164,7 +164,9 @@ class AppModule extends Module {
         ModuleRoute('/quiz', module: QuizModule()),
         ChildRoute(
           '/accountDeleted',
-          child: (context, args) => const DeletedAccountPage(),
+          child: (context, args) => DeletedAccountPage(
+            controller: Modular.get<DeletedAccountController>(),
+          ),
           transition: TransitionType.rightToLeft,
         )
       ];
