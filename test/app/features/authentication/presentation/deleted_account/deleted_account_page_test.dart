@@ -1,8 +1,5 @@
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:penhas/app/app_module.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/deleted_account/deleted_account_controller.dart';
@@ -14,29 +11,26 @@ import '../../../../../utils/widget_test_steps.dart';
 import '../mocks/app_modules_mock.dart';
 
 void main() {
+  late DeletedAccountController controller;
+
   setUp(() {
     AppModulesMock.init();
 
-    initModule(AppModule(), replaceBinds: [
-      Bind<DeletedAccountController>(
-        (i) => DeletedAccountController(
-          profileRepository: AppModulesMock.userProfileRepository,
-          appConfiguration: AppModulesMock.appConfiguration,
-          sessionToken: '',
-        ),
-      ),
-    ]);
-  });
-
-  tearDown(() {
-    Modular.removeModule(AppModule());
+    controller = DeletedAccountController(
+      profileRepository: AppModulesMock.userProfileRepository,
+      appConfiguration: AppModulesMock.appConfiguration,
+      sessionToken: '',
+    );
   });
 
   group(DeletedAccountPage, () {
     testWidgets(
       'shows screen widgets',
       (tester) async {
-        await theAppIsRunning(tester, const DeletedAccountPage());
+        await theAppIsRunning(
+          tester,
+          DeletedAccountPage(controller: controller),
+        );
         await iSeeText('Deseja reativar?');
         await iSeeText(
             'Esta conta está marcada para ser excluída.\n\nVocê pode interromper este processo agora reativando a conta.');
@@ -54,7 +48,10 @@ void main() {
               .reactivate(token: any(named: 'token')),
         ).thenFailure((_) => ServerFailure());
 
-        await theAppIsRunning(tester, const DeletedAccountPage());
+        await theAppIsRunning(
+          tester,
+          DeletedAccountPage(controller: controller),
+        );
         await iTapText(tester, text: 'Reativar Conta');
         await iSeeText(errorMessage);
       },
@@ -76,7 +73,10 @@ void main() {
           () => AppModulesMock.modularNavigator.pushReplacementNamed(any()),
         ).thenAnswer((_) => Future.value());
 
-        await theAppIsRunning(tester, const DeletedAccountPage());
+        await theAppIsRunning(
+          tester,
+          DeletedAccountPage(controller: controller),
+        );
         await iTapText(tester, text: 'Reativar Conta');
 
         verify(() => AppModulesMock.modularNavigator.pushReplacementNamed('/'))
@@ -88,7 +88,7 @@ void main() {
       screenshotTest(
         'looks as expected',
         fileName: 'deleted_account_page',
-        pageBuilder: () => const DeletedAccountPage(),
+        pageBuilder: () => DeletedAccountPage(controller: controller),
       );
     });
   });
