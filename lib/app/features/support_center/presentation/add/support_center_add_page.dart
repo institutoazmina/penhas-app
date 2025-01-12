@@ -43,6 +43,14 @@ class _SupportCenterAddPageState extends State<SupportCenterAddPage>
   SupportCenterAddController get controller => widget.controller;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.initialize();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
