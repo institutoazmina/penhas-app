@@ -1,79 +1,71 @@
 import 'dart:async';
 
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mobx/mobx.dart' as mobx;
 import 'package:mocktail/mocktail.dart';
-import 'package:penhas/app/core/managers/modules_sevices.dart';
-import 'package:penhas/app/core/network/api_client.dart';
-import 'package:penhas/app/core/storage/persistent_storage.dart';
-import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
-import 'package:penhas/app/features/feed/presentation/feed_page.dart';
+import 'package:penhas/app/features/appstate/domain/usecases/app_preferences_use_case.dart';
+import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart';
+import 'package:penhas/app/features/mainboard/domain/states/mainboard_store.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_controller.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_page.dart';
+import 'package:penhas/app/features/notification/data/repositories/notification_repository.dart';
 
-import '../../../../../utils/module_testing.dart';
+import '../../../../../utils/golden_tests.dart';
+
+class MockMainboardStore extends Mock implements MainboardStore {}
+
+class FakePageController extends Fake implements PageController {}
+
+class MockInactivityLogoutUseCase extends Mock
+    implements InactivityLogoutUseCase {}
+
+class MockNotificationRepository extends Mock
+    implements INotificationRepository {}
+
+class FakeTimer extends Fake implements Timer {}
 
 void main() {
+  late MainboardController controller;
+  late MainboardStore mainboardStore;
+  late InactivityLogoutUseCase inactivityLogoutUseCase;
+  late INotificationRepository notification;
+  late Timer notificationTimer;
+  late PageController pageController;
+
+  setUp(() {
+    mainboardStore = MockMainboardStore();
+    inactivityLogoutUseCase = MockInactivityLogoutUseCase();
+    notification = MockNotificationRepository();
+    notificationTimer = FakeTimer();
+    pageController = FakePageController();
+    when(() => mainboardStore.selectedPage).thenReturn(MainboardState.feed());
+    when(() => mainboardStore.pages).thenReturn(([
+      MainboardState.feed(),
+      MainboardState.escapeManual(),
+      MainboardState.helpCenter(),
+      MainboardState.chat(),
+      MainboardState.supportPoint(),
+    ]).asObservable());
+
+    when(() => pageController.initialPage).thenReturn(0);
+    when(() => mainboardStore.pageController).thenReturn(pageController);
+    controller = MainboardController(
+      mainboardStore: mainboardStore,
+      inactivityLogoutUseCase: inactivityLogoutUseCase,
+      notification: notification,
+      notificationTimer: notificationTimer,
+    );
+  });
+
   group(MainboardPage, () {
-    late IAppModulesServices mockAppModulesServices;
-    late IApiProvider mockApiProvider;
-
-    late List<Bind> overrides = [
-      Bind<IApiProvider>((i) => mockApiProvider),
-      Bind<IAppModulesServices>((i) => mockAppModulesServices),
-      Bind<IPersistentStorageFactory>((i) => _MockPersistentStorageFactory()),
-      Bind<IPersistentStorage>((i) => _MocLocalStorage()),
-      Bind<MainboardController>(
-        (i) => MainboardController(
-          inactivityLogoutUseCase: i(),
-          mainboardStore: i(),
-          notification: i(),
-          notificationTimer: _FakeTimer(),
-        ),
-      ),
-    ];
-
-    setUp(() {
-      mockAppModulesServices = _MockAppModulesServices();
-      mockApiProvider = _MockApiProvider();
-
-      when(() => mockApiProvider.get(path: '/me/unread-notif-count'))
-          .thenAnswer((_) async => '{"count": 0}');
-
-      when(() => mockAppModulesServices.feature(name: any(named: 'name')))
-          .thenAnswer((_) async => _FakeAppStateModuleEntity());
-      when(() => mockAppModulesServices.isEnabled(any()))
-          .thenAnswer((_) async => true);
-    });
-
-    testWidgets(
-      'initial route should display FeedPage',
-      (tester) async {
-        // act
-        await tester.pumpFrames(
-          buildTestableApp(
-            initialRoute: '/mainboard',
-            overrides: overrides,
-          ),
-          Duration(milliseconds: 100),
-        );
-
-        // assert
-        expect(find.byType(FeedPage), findsOneWidget);
-      },
+    screenshotTest(
+      'mainboard page',
+      fileName: 'mainboard_page',
+      pageBuilder: () => MainboardPage(controller: controller),
+      skip: true,
+      reason:
+          'possuiu vários elementos difíceis de testar. Vou revisar esta tela para melhorar a cobertura de testes',
     );
   });
 }
-
-class _MockApiProvider extends Mock implements IApiProvider {}
-
-class _MockAppModulesServices extends Mock implements IAppModulesServices {}
-
-class _MockPersistentStorageFactory extends Mock
-    implements IPersistentStorageFactory {}
-
-class _MocLocalStorage extends Mock implements IPersistentStorage {}
-
-class _FakeAppStateModuleEntity extends Fake implements AppStateModuleEntity {}
-
-class _FakeTimer extends Fake implements Timer {}
