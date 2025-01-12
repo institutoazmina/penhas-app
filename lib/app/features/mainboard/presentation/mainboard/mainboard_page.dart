@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../main_menu/presentation/penhas_drawer_page.dart';
 import 'mainboard_controller.dart';
@@ -9,7 +8,12 @@ import 'pages/mainboard_body_page.dart';
 import 'pages/mainboard_bottom_navigation_page.dart';
 
 class MainboardPage extends StatefulWidget {
-  const MainboardPage({Key? key}) : super(key: key);
+  const MainboardPage({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  final MainboardController controller;
 
   static final mainBoardKey = GlobalKey<ScaffoldState>(
     debugLabel: 'main-board-scaffold-key',
@@ -22,9 +26,10 @@ class MainboardPage extends StatefulWidget {
   MainboardPageState createState() => MainboardPageState();
 }
 
-class MainboardPageState
-    extends ModularState<MainboardPage, MainboardController>
+class MainboardPageState extends State<MainboardPage>
     with WidgetsBindingObserver {
+  MainboardController get controller => widget.controller;
+
   @override
   void initState() {
     super.initState();
