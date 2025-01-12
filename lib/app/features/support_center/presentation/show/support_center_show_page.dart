@@ -31,6 +31,14 @@ class _SupportCenterShowPageState extends State<SupportCenterShowPage> {
   SupportCenterShowController get controller => widget.controller;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.initialize();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
