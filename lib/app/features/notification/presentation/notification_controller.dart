@@ -19,9 +19,7 @@ class NotificationController extends _NotificationControllerBase
 }
 
 abstract class _NotificationControllerBase with Store, MapFailureMessage {
-  _NotificationControllerBase(this._repository) {
-    setup();
-  }
+  _NotificationControllerBase(this._repository);
 
   final INotificationRepository _repository;
 
@@ -37,16 +35,14 @@ abstract class _NotificationControllerBase with Store, MapFailureMessage {
 
   @action
   Future<void> retry() async {
-    loadNotification();
-  }
-}
-
-extension _PrivateMethod on _NotificationControllerBase {
-  Future<void> setup() async {
-    loadNotification();
+    await _loadNotification();
   }
 
-  Future<void> loadNotification() async {
+  Future<void> initialize() async {
+    await _loadNotification();
+  }
+
+  Future<void> _loadNotification() async {
     errorMessage = '';
     _loadNotifications = ObservableFuture(_repository.notifications());
 
@@ -54,12 +50,12 @@ extension _PrivateMethod on _NotificationControllerBase {
         await _loadNotifications!;
 
     response.fold(
-      (failure) => handleStateError(failure),
-      (session) => handleSession(session),
+      (failure) => _handleStateError(failure),
+      (session) => _handleSession(session),
     );
   }
 
-  void handleSession(NotificationSessionEntity session) {
+  void _handleSession(NotificationSessionEntity session) {
     if (session.notifications!.isEmpty) {
       state = const NotificationState.empty();
     } else {
@@ -67,7 +63,7 @@ extension _PrivateMethod on _NotificationControllerBase {
     }
   }
 
-  void handleStateError(Failure f) {
+  void _handleStateError(Failure f) {
     state = NotificationState.error(mapFailureMessage(f));
   }
 }
