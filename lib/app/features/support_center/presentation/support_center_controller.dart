@@ -29,9 +29,7 @@ class SupportCenterController extends _SupportCenterControllerBase
 }
 
 abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
-  _SupportCenterControllerBase(this._supportCenterUseCase) {
-    setup();
-  }
+  _SupportCenterControllerBase(this._supportCenterUseCase);
 
   List<FilterTagEntity> _tags = [];
   late SupportCenterPlaceSessionEntity currentPlaceSession;
@@ -71,6 +69,10 @@ abstract class _SupportCenterControllerBase with Store, MapFailureMessage {
 
   @observable
   String currentKeywords = '';
+
+  Future<void> initialize() async {
+    await setup();
+  }
 
   @computed
   PageProgressState get progressState {
@@ -271,7 +273,7 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     placeMarkers = Set<Marker>.from(places).asObservable();
 
     var markersPosition = placeMarkers.map((e) => e.position).toList();
-    latLngBounds = boundfromLatLng(markersPosition);
+    latLngBounds = boundFromLatLng(markersPosition);
   }
 
   void handleStateError(Failure f) {
@@ -283,7 +285,7 @@ extension _SupportCenterControllerBasePrivate on _SupportCenterControllerBase {
     state = SupportCenterState.error(mapFailureMessage(f));
   }
 
-  boundfromLatLng(List<LatLng> markersLatLngList) {
+  LatLngBounds boundFromLatLng(List<LatLng> markersLatLngList) {
     LatLngBounds brasilBounds = LatLngBounds(
         northeast: const LatLng(5.24448639569, -34.7299934555),
         southwest: const LatLng(-33.7683777809, -73.9872354804));
