@@ -127,7 +127,7 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
               child: HtmlWidget(
                 detail.place!.htmlContent!,
-                webViewJs: false,
+                factoryBuilder: () => _DisabledWebViewJsWidgetFactory(),
                 textStyle: htmlContentTextStyle,
               ),
             ),
@@ -268,4 +268,9 @@ extension _TextStyle on _SupportCenterShowPageState {
         color: DesignSystemColors.darkIndigoThree,
         fontWeight: FontWeight.normal,
       );
+}
+
+class _DisabledWebViewJsWidgetFactory extends WidgetFactory {
+  @override
+  bool get webViewJs => false;
 }
