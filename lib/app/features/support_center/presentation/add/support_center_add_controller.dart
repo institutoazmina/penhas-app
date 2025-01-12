@@ -21,9 +21,7 @@ class SupportCenterAddController extends _SupportCenterAddControllerBase
 }
 
 abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
-  _SupportCenterAddControllerBase(this._supportCenterUseCase) {
-    setup();
-  }
+  _SupportCenterAddControllerBase(this._supportCenterUseCase);
 
   String? _address;
   String _cep = '';
@@ -118,6 +116,10 @@ abstract class _SupportCenterAddControllerBase with Store, MapFailureMessage {
 
   @observable
   SupportCenterAddState state = const SupportCenterAddState.initial();
+
+  Future<void> initialize() async {
+    await setup();
+  }
 
   @computed
   PageProgressState get progressState {
