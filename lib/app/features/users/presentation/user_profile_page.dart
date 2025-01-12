@@ -142,7 +142,9 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
           CircleAvatar(
             radius: 34,
             backgroundColor: Colors.white38,
-            child: SvgPicture.network(user.avatar!),
+            child: user.avatar == null || user.avatar!.isEmpty
+                ? Container()
+                : SvgPicture.network(user.avatar!),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 12.0),
