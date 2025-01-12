@@ -22,9 +22,7 @@ abstract class _MainboardControllerBase with Store {
     Timer? notificationTimer,
   })  : _inactivityLogoutUseCase = inactivityLogoutUseCase,
         _notification = notification,
-        _syncTimer = notificationTimer {
-    setup();
-  }
+        _syncTimer = notificationTimer;
 
   final MainboardStore mainboardStore;
 
@@ -41,7 +39,7 @@ abstract class _MainboardControllerBase with Store {
   int notificationCounter = 0;
 
   @action
-  void resetNotificatinCounter() {
+  void resetNotificationCounter() {
     notificationCounter = 0;
   }
 
@@ -64,10 +62,13 @@ abstract class _MainboardControllerBase with Store {
         break;
     }
   }
-}
 
-extension _PrivateMethod on _MainboardControllerBase {
-  void setupUploadTimer() {
+  Future<void> initialize() async {
+    _setupUploadTimer();
+    _checkUnRead();
+  }
+
+  void _setupUploadTimer() {
     if (_syncTimer != null) {
       return;
     }
@@ -75,17 +76,12 @@ extension _PrivateMethod on _MainboardControllerBase {
     _syncTimer = Timer.periodic(
       Duration(seconds: notificationInterval),
       (timer) async {
-        checkUnRead();
+        _checkUnRead();
       },
     );
   }
 
-  Future<void> setup() async {
-    setupUploadTimer();
-    checkUnRead();
-  }
-
-  Future<void> checkUnRead() async {
+  Future<void> _checkUnRead() async {
     final result = await _notification.unread();
     final validField = result.getOrElse(() => const ValidField(message: '0'));
     notificationCounter = int.tryParse(validField.message!) ?? 0;

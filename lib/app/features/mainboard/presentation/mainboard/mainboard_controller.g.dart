@@ -53,11 +53,11 @@ mixin _$MainboardController on _MainboardControllerBase, Store {
       ActionController(name: '_MainboardControllerBase');
 
   @override
-  void resetNotificatinCounter() {
+  void resetNotificationCounter() {
     final _$actionInfo = _$_MainboardControllerBaseActionController.startAction(
-        name: '_MainboardControllerBase.resetNotificatinCounter');
+        name: '_MainboardControllerBase.resetNotificationCounter');
     try {
-      return super.resetNotificatinCounter();
+      return super.resetNotificationCounter();
     } finally {
       _$_MainboardControllerBaseActionController.endAction(_$actionInfo);
     }
