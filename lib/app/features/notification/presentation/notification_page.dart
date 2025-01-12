@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../shared/design_system/colors.dart';
 import '../../../shared/design_system/text_styles.dart';
@@ -13,15 +12,21 @@ import 'notification_controller.dart';
 import 'pages/notification_card_page.dart';
 
 class NotificationPage extends StatefulWidget {
-  const NotificationPage({Key? key}) : super(key: key);
+  const NotificationPage({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  final NotificationController controller;
 
   @override
   _NotificationState createState() => _NotificationState();
 }
 
-class _NotificationState
-    extends ModularState<NotificationPage, NotificationController>
-    with SnackBarHandler {
+class _NotificationState extends State<NotificationPage> with SnackBarHandler {
+  // Getter para acessar o controller
+  NotificationController get controller => widget.controller;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
