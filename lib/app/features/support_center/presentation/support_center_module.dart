@@ -49,5 +49,7 @@ class SupportCenterModule extends WidgetModule {
       ];
 
   @override
-  Widget get view => const SupportCenterPage();
+  Widget get view => SupportCenterPage(
+        controller: Modular.get<SupportCenterController>(),
+      );
 }
