@@ -34,6 +34,9 @@ class MainboardPageState extends State<MainboardPage>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.initialize();
+    });
   }
 
   @override
@@ -48,7 +51,7 @@ class MainboardPageState extends State<MainboardPage>
       builder: (context) => Scaffold(
         appBar: MainBoardAppBarPage(
           counter: controller.notificationCounter,
-          resetCounter: controller.resetNotificatinCounter,
+          resetCounter: controller.resetNotificationCounter,
           currentPage: controller.mainboardStore.selectedPage,
         ),
         drawer: const PenhasDrawerPage(),
