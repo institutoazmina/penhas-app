@@ -4,11 +4,11 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:mobx/mobx.dart';
-import 'package:penhas/app/shared/design_system/widgets/buttons/penhas_button.dart';
 
 import '../../../../core/extension/asuka.dart';
 import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/design_system/text_styles.dart';
+import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../../authentication/presentation/shared/snack_bar_handler.dart';
 import '../../../filters/domain/entities/filter_tag_entity.dart';
@@ -22,19 +22,25 @@ import '../pages/support_center_input_phone.dart';
 import 'support_center_add_controller.dart';
 
 class SupportCenterAddPage extends StatefulWidget {
-  const SupportCenterAddPage({Key? key}) : super(key: key);
+  const SupportCenterAddPage({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  final SupportCenterAddController controller;
 
   @override
   _SupportCenterAddPageState createState() => _SupportCenterAddPageState();
 }
 
-class _SupportCenterAddPageState
-    extends ModularState<SupportCenterAddPage, SupportCenterAddController>
+class _SupportCenterAddPageState extends State<SupportCenterAddPage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final _scrollController = ScrollController();
+
+  SupportCenterAddController get controller => widget.controller;
 
   @override
   Widget build(BuildContext context) {
