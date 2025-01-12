@@ -127,7 +127,9 @@ class MainboardModule extends Module {
   List<ModularRoute> get routes => [
         ChildRoute(
           Modular.initialRoute,
-          child: (_, args) => const MainboardPage(),
+          child: (_, args) => MainboardPage(
+            controller: Modular.get<MainboardController>(),
+          ),
         ),
         ...tweetRoutes,
         ...helpCenter,
