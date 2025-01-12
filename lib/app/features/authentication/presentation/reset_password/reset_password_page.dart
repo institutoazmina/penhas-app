@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
 
@@ -15,18 +14,20 @@ import '../shared/snack_bar_handler.dart';
 import 'reset_password_controller.dart';
 
 class ResetPasswordPage extends StatefulWidget {
-  const ResetPasswordPage({Key? key, this.title = 'ResetPassword'})
-      : super(key: key);
+  const ResetPasswordPage({
+    required this.controller,
+    Key? key,
+  }) : super(key: key);
 
-  final String title;
+  final ResetPasswordController controller;
 
   @override
   _ResetPasswordPageState createState() => _ResetPasswordPageState();
 }
 
-class _ResetPasswordPageState
-    extends ModularState<ResetPasswordPage, ResetPasswordController>
+class _ResetPasswordPageState extends State<ResetPasswordPage>
     with SnackBarHandler {
+  ResetPasswordController get controller => widget.controller;
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
