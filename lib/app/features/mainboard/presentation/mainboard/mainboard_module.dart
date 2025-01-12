@@ -74,6 +74,7 @@ import '../../../notification/data/repositories/notification_repository.dart';
 import '../../../notification/presentation/notification_controller.dart';
 import '../../../notification/presentation/notification_page.dart';
 import '../../../quiz/presentation/tutorial/stealth_mode_tutorial_page_controller.dart';
+import '../../../support_center/presentation/add/support_center_add_controller.dart';
 import '../../../support_center/presentation/add/support_center_add_page.dart';
 import '../../../support_center/presentation/list/support_center_list_page.dart';
 import '../../../support_center/presentation/show/support_center_show_controller.dart';
@@ -209,7 +210,9 @@ class MainboardModule extends Module {
   List<ModularRoute> get supportCenter => [
         ChildRoute(
           '/supportcenter/add',
-          child: (context, args) => const SupportCenterAddPage(),
+          child: (context, args) => SupportCenterAddPage(
+            controller: Modular.get<SupportCenterAddController>(),
+          ),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
