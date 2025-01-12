@@ -27,12 +27,20 @@ class SupportCenterPage extends StatefulWidget {
 
 class _SupportCenterPageState extends State<SupportCenterPage>
     with SnackBarHandler {
+  GoogleMapController? mapController;
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  GoogleMapController? mapController;
 
   // Getter para acessar o controller
   SupportCenterController get controller => widget.controller;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.initialize();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
