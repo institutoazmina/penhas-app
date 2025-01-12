@@ -36,11 +36,13 @@ class NotificationCardPage extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SvgPicture.network(
-                    notification.icon!,
-                    height: 24,
-                    width: 24,
-                  ),
+                  notification.icon == null || notification.icon!.isEmpty
+                      ? Container()
+                      : SvgPicture.network(
+                          notification.icon!,
+                          height: 24,
+                          width: 24,
+                        ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     child: Column(
