@@ -1,22 +1,20 @@
 import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/filters/domain/entities/filter_tag_entity.dart';
-import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_module.dart';
 import 'package:penhas/app/features/support_center/domain/entities/support_center_metadata_entity.dart';
 import 'package:penhas/app/features/support_center/domain/usecases/support_center_usecase.dart';
+import 'package:penhas/app/features/support_center/presentation/add/support_center_add_controller.dart';
 import 'package:penhas/app/features/support_center/presentation/add/support_center_add_page.dart';
-import 'package:penhas/app/features/support_center/presentation/support_center_module.dart';
 
 import '../../../../../utils/golden_tests.dart';
 
 void main() {
-  late MockSupportCenterUseCase mockSupportCenterUseCase;
+  late SupportCenterUseCase useCase;
+  late SupportCenterAddController controller;
 
   final devices = const [
     Device(
@@ -36,22 +34,11 @@ void main() {
   ];
 
   setUp(() {
-    mockSupportCenterUseCase = MockSupportCenterUseCase();
+    useCase = MockSupportCenterUseCase();
 
-    initModules(
-      [
-        MainboardModule(),
-        SupportCenterModule(),
-      ],
-      replaceBinds: [
-        Bind<SupportCenterUseCase>((i) => mockSupportCenterUseCase),
-      ],
+    controller = SupportCenterAddController(
+      supportCenterUseCase: useCase,
     );
-  });
-
-  tearDown(() {
-    Modular.removeModule(MainboardModule());
-    Modular.removeModule(SupportCenterModule());
   });
 
   group(SupportCenterAddPage, () {
@@ -59,13 +46,13 @@ void main() {
       'should show loading state when initial',
       (tester) async {
         // arrange
-        when(() => mockSupportCenterUseCase.metadata()).thenAnswer(
+        when(() => useCase.metadata()).thenAnswer(
           (_) async => dartz.Left(ServerFailure()),
         );
         // act
         await tester.pumpWidget(
           MaterialApp(
-            home: SupportCenterAddPage(),
+            home: SupportCenterAddPage(controller: controller),
           ),
         );
         // assert
@@ -75,7 +62,7 @@ void main() {
 
     testWidgets('should show loaded state with categories', (tester) async {
       // arrange
-      when(() => mockSupportCenterUseCase.metadata()).thenAnswer(
+      when(() => useCase.metadata()).thenAnswer(
         (_) async => dartz.Right(
           SupportCenterMetadataEntity(
             categories: [
@@ -95,8 +82,11 @@ void main() {
         ),
       );
       // act
-      final page = SupportCenterAddPage();
-      await tester.pumpWidget(MaterialApp(home: page));
+      await tester.pumpWidget(
+        MaterialApp(
+          home: SupportCenterAddPage(controller: controller),
+        ),
+      );
       await tester.pumpAndSettle();
       // assert
       expect(find.text('Adicionar Ponto'), findsOneWidget);
@@ -130,9 +120,9 @@ void main() {
     screenshotTest(
       'support center add page - error state',
       fileName: 'support_center_add_page_error',
-      pageBuilder: () => const SupportCenterAddPage(),
+      pageBuilder: () => SupportCenterAddPage(controller: controller),
       setUp: () {
-        when(() => mockSupportCenterUseCase.metadata()).thenAnswer(
+        when(() => useCase.metadata()).thenAnswer(
           (_) async => dartz.Left(ServerFailure()),
         );
       },
@@ -141,10 +131,10 @@ void main() {
     screenshotTest(
       'support center add page - loaded state',
       fileName: 'support_center_add_page_loaded',
-      pageBuilder: () => const SupportCenterAddPage(),
+      pageBuilder: () => SupportCenterAddPage(controller: controller),
       devices: devices,
       setUp: () {
-        when(() => mockSupportCenterUseCase.metadata()).thenAnswer(
+        when(() => useCase.metadata()).thenAnswer(
           (_) async => dartz.Right(
             SupportCenterMetadataEntity(
               categories: [
