@@ -226,7 +226,9 @@ class MainboardModule extends Module {
   List<ModularRoute> get notificationCenter => [
         ChildRoute(
           '/notification',
-          child: (context, args) => const NotificationPage(),
+          child: (context, args) => NotificationPage(
+            controller: Modular.get<NotificationController>(),
+          ),
           transition: TransitionType.rightToLeft,
         ),
       ];
