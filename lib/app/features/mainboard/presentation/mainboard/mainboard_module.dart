@@ -329,12 +329,16 @@ class MainboardModule extends Module {
   List<ModularRoute> get chat => [
         ChildRoute(
           '/chat/:token',
-          child: (context, args) => const ChatPage(),
+          child: (context, args) => ChatPage(
+            controller: Modular.get<ChatChannelController>(),
+          ),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/chat_from_feed',
-          child: (context, args) => const ChatPage(),
+          child: (context, args) => ChatPage(
+            controller: Modular.get<ChatChannelController>(),
+          ),
           transition: TransitionType.noTransition,
         ),
       ];
