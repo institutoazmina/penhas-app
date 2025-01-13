@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../shared/design_system/colors.dart';
@@ -15,13 +14,17 @@ import '../pages/channel/chat_channel_message_page.dart';
 import 'chat_channel_controller.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key}) : super(key: key);
+  const ChatPage({Key? key, required this.controller}) : super(key: key);
+
+  final ChatChannelController controller;
 
   @override
   _ChatPageState createState() => _ChatPageState();
 }
 
-class _ChatPageState extends ModularState<ChatPage, ChatChannelController> {
+class _ChatPageState extends State<ChatPage> {
+  ChatChannelController get controller => widget.controller;
+
   @override
   Widget build(BuildContext context) {
     return Observer(
