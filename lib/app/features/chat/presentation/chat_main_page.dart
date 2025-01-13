@@ -5,11 +5,15 @@ import 'package:flutter_modular/flutter_modular.dart';
 import '../../../shared/design_system/colors.dart';
 import '../domain/entities/chat_tab_item.dart';
 import 'chat_main_controller.dart';
+import 'people/chat_main_people_controller.dart';
 import 'people/chat_main_people_page.dart';
 import 'talk/chat_main_talks_page.dart';
 
 class ChatMainPage extends StatefulWidget {
-  const ChatMainPage({Key? key}) : super(key: key);
+  const ChatMainPage({Key? key, required this.chatMainPeopleController})
+      : super(key: key);
+
+  final ChatMainPeopleController chatMainPeopleController;
 
   @override
   _ChatMainPageState createState() => _ChatMainPageState();
@@ -17,6 +21,8 @@ class ChatMainPage extends StatefulWidget {
 
 class _ChatMainPageState
     extends ModularState<ChatMainPage, ChatMainController> {
+  ChatMainPeopleController get chatMainPeopleController =>
+      widget.chatMainPeopleController;
   @override
   Widget build(BuildContext context) {
     return Observer(
@@ -76,7 +82,9 @@ extension _ChatMainPageStatePrivate on _ChatMainPageState {
   Widget buildBody(List<ChatTabItem> items) {
     final widgets = items.map(
       (e) => e == ChatTabItem.people
-          ? const ChatMainPeoplePage()
+          ? ChatMainPeoplePage(
+              controller: chatMainPeopleController,
+            )
           : const ChatMainTalksPage(),
     );
     return TabBarView(children: widgets.toList());

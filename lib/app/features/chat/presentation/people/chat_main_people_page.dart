@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../shared/design_system/colors.dart';
 import '../../../authentication/presentation/shared/page_progress_indicator.dart';
@@ -12,14 +11,17 @@ import '../pages/chat_people_filter_card.dart';
 import 'chat_main_people_controller.dart';
 
 class ChatMainPeoplePage extends StatefulWidget {
-  const ChatMainPeoplePage({Key? key}) : super(key: key);
+  const ChatMainPeoplePage({Key? key, required this.controller})
+      : super(key: key);
+
+  final ChatMainPeopleController controller;
 
   @override
   _ChatMainPeoplePageState createState() => _ChatMainPeoplePageState();
 }
 
-class _ChatMainPeoplePageState
-    extends ModularState<ChatMainPeoplePage, ChatMainPeopleController> {
+class _ChatMainPeoplePageState extends State<ChatMainPeoplePage> {
+  ChatMainPeopleController get controller => widget.controller;
   @override
   Widget build(BuildContext context) {
     return Container(
