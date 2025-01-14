@@ -95,22 +95,40 @@ class ApiProvider implements IApiProvider {
   }
 
   @override
+  Future<String> get({
+    required String path,
+    Map<String, String> headers = const {},
+    Map<String, String?> parameters = const {},
+  }) async {
+    final streamedResponse = await _execute(
+      method: ApiHttpRequestMethod.get,
+      path: path,
+      body: '',
+      headers: headers,
+      parameters: parameters,
+    );
+
+    final response = await _parseStreamedResponse(streamedResponse);
+    return response.body;
+  }
+
+  @override
   Future<String> post({
     required String path,
     Map<String, String> headers = const {},
     Map<String, String?> parameters = const {},
     String? body,
   }) async {
-    final Uri uriRequest = _setupHttpRequest(
+    final streamedResponse = await _execute(
+      method: ApiHttpRequestMethod.post,
       path: path,
-      queryParameters: parameters,
+      body: body ?? '',
+      headers: headers,
+      parameters: parameters,
     );
-    final header = await _setupHttpHeader(headers);
-    final response =
-        await _httpClient.post(uriRequest, headers: header, body: body);
-    final parsed = await _parseResponse(response);
 
-    return parsed.body;
+    final response = await _parseStreamedResponse(streamedResponse);
+    return response.body;
   }
 
   @override
@@ -172,24 +190,6 @@ class ApiProvider implements IApiProvider {
     file.writeAsBytesSync(parsed.bodyBytes);
 
     return '{"message": "Ok"}';
-  }
-
-  @override
-  Future<String> get({
-    required String path,
-    Map<String, String> headers = const {},
-    Map<String, String?> parameters = const {},
-  }) async {
-    final streamedResponse = await _execute(
-      method: ApiHttpRequestMethod.get,
-      path: path,
-      body: '',
-      headers: headers,
-      parameters: parameters,
-    );
-
-    final response = await _parseStreamedResponse(streamedResponse);
-    return response.body;
   }
 }
 
