@@ -52,6 +52,7 @@ class ChatMainModule extends WidgetModule {
 
   @override
   Widget get view => ChatMainPage(
+        chatMainPeopleController: Modular.get<ChatMainPeopleController>(),
         controller: Modular.get<ChatMainController>(),
       );
 }
