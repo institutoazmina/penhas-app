@@ -79,7 +79,6 @@ class AppModule extends Module {
         Bind.factory<IApiProvider>(
           (i) => ApiProvider(
             serverConfiguration: i.get<IApiServerConfigure>(),
-            networkInfo: i.get<INetworkInfo>(),
           ),
         ),
         Bind.factory<DataConnectionChecker>((i) => DataConnectionChecker()),

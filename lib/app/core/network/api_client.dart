@@ -7,7 +7,6 @@ import '../../shared/logger/log.dart';
 import '../error/exceptions.dart';
 import 'api_server_configure.dart';
 import 'interfaces/api_http_request_method.dart';
-import 'network_info.dart';
 
 export 'package:http/http.dart' show Response;
 
@@ -56,14 +55,11 @@ abstract class IApiProvider {
 class ApiProvider implements IApiProvider {
   ApiProvider({
     required IApiServerConfigure serverConfiguration,
-    required INetworkInfo networkInfo,
     Client? apiClient,
-  })  : _networkInfo = networkInfo,
-        _httpClient = apiClient ?? Client(), // coverage:ignore-line
+  })  : _httpClient = apiClient ?? Client(), // coverage:ignore-line
         _serverConfiguration = serverConfiguration;
 
   final Client _httpClient;
-  final INetworkInfo _networkInfo;
   final IApiServerConfigure _serverConfiguration;
 
   static const _successfulResponse = {200, 201, 202, 204};
@@ -300,10 +296,6 @@ extension _ApiProvider on ApiProvider {
     } else if (serverExceptions.contains(statusCode)) {
       throw NetworkServerException();
     } else {
-      if (await _networkInfo.isConnected == false) {
-        throw InternetConnectionException();
-      }
-
       late String jsonData;
       if (response is StreamedResponse) {
         jsonData = await response.stream.bytesToString();
