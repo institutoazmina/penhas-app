@@ -133,18 +133,19 @@ class ApiProvider implements IApiProvider {
 
   @override
   Future<String> delete({
-    String? path,
+    required String path,
     Map<String, String?> parameters = const {},
   }) async {
-    final Uri uriRequest = _setupHttpRequest(
+    final streamedResponse = await _execute(
+      method: ApiHttpRequestMethod.delete,
       path: path,
-      queryParameters: parameters,
+      body: '',
+      headers: const {},
+      parameters: parameters,
     );
-    final header = await _setupHttpHeader({});
-    final response = await _httpClient.delete(uriRequest, headers: header);
-    final parsed = await _parseResponse(response);
 
-    return parsed.body;
+    final response = await _parseStreamedResponse(streamedResponse);
+    return response.body;
   }
 
   @override
