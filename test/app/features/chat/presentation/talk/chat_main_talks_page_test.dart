@@ -76,30 +76,30 @@ void main() {
     testWidgets(
       'should navigate to assistant quiz when open assistant card',
       (tester) => mockNetworkImages(() async {
-        when(() => controller.currentState).thenAnswer(
-            (_) => ChatMainTalksState.loaded(<ChatMainAssistantCardTile>[
-                  ChatMainAssistantCardTile(cards: [
-                    ChatMainSupportTile(
-                      quizSession: QuizSessionEntity(
-                        sessionId: 'assistant-quiz-session',
-                      ),
-                      channel: ChatChannelEntity(
-                        token: 'assistant-channel',
-                        lastMessageIsMime: false,
-                        lastMessageTime: DateTime.parse('2024-03-02'),
-                        user: ChatUserEntity(
-                          userId: null,
-                          activity: null,
-                          blockedMe: false,
-                          avatar: null,
-                          nickname: 'Assistente PenhaS',
-                        ),
-                      ),
-                      content: 'content',
-                      title: 'Assistente PenhaS',
-                    )
-                  ])
-                ]));
+        final chatMainAssistantCardTile = ChatMainAssistantCardTile(cards: [
+          ChatMainSupportTile(
+            quizSession: QuizSessionEntity(
+              sessionId: 'assistant-quiz-session',
+            ),
+            channel: ChatChannelEntity(
+              token: 'assistant-channel',
+              lastMessageIsMime: false,
+              lastMessageTime: DateTime.parse('2024-03-02'),
+              user: ChatUserEntity(
+                userId: null,
+                activity: null,
+                blockedMe: false,
+                avatar: null,
+                nickname: 'Assistente PenhaS',
+              ),
+            ),
+            content: 'content',
+            title: 'Assistente PenhaS',
+          )
+        ]);
+        when(() => controller.currentState).thenAnswer((_) =>
+            ChatMainTalksState.loaded(
+                <ChatMainAssistantCardTile>[chatMainAssistantCardTile]));
 
         when(() => controller.openAssistantCard(ChatMainSupportTile(
               quizSession: QuizSessionEntity(
@@ -152,50 +152,32 @@ void main() {
     testWidgets(
       'should navigate to support chat when open support card',
       (tester) => mockNetworkImages(() async {
+        final chatMainSupportTile = ChatMainSupportTile(
+          quizSession: QuizSessionEntity(
+            sessionId: 'assistant-quiz-session',
+          ),
+          channel: ChatChannelEntity(
+            token: 'support-channel',
+            lastMessageIsMime: false,
+            lastMessageTime: DateTime.parse('2024-03-02'),
+            user: ChatUserEntity(
+              userId: null,
+              activity: null,
+              blockedMe: false,
+              avatar: null,
+              nickname: 'Suporte PenhaS',
+            ),
+          ),
+          content: 'content',
+          title: 'Suporte PenhaS',
+        );
         when(() => controller.currentState).thenAnswer(
             (_) => ChatMainTalksState.loaded(<ChatMainAssistantCardTile>[
-                  ChatMainAssistantCardTile(cards: [
-                    ChatMainSupportTile(
-                      quizSession: QuizSessionEntity(
-                        sessionId: 'assistant-quiz-session',
-                      ),
-                      channel: ChatChannelEntity(
-                        token: 'support-channel',
-                        lastMessageIsMime: false,
-                        lastMessageTime: DateTime.parse('2024-03-02'),
-                        user: ChatUserEntity(
-                          userId: null,
-                          activity: null,
-                          blockedMe: false,
-                          avatar: null,
-                          nickname: 'Suporte PenhaS',
-                        ),
-                      ),
-                      content: 'content',
-                      title: 'Suporte PenhaS',
-                    )
-                  ])
+                  ChatMainAssistantCardTile(cards: [chatMainSupportTile])
                 ]));
 
-        when(() => controller.openAssistantCard(ChatMainSupportTile(
-              quizSession: QuizSessionEntity(
-                sessionId: 'assistant-quiz-session',
-              ),
-              channel: ChatChannelEntity(
-                token: 'support-channel',
-                lastMessageIsMime: false,
-                lastMessageTime: DateTime.parse('2024-03-02'),
-                user: ChatUserEntity(
-                  userId: null,
-                  activity: null,
-                  blockedMe: false,
-                  avatar: null,
-                  nickname: 'Suporte PenhaS',
-                ),
-              ),
-              content: 'content',
-              title: 'Suporte PenhaS',
-            ))).thenAnswer((_) async => Future.value());
+        when(() => controller.openAssistantCard(chatMainSupportTile))
+            .thenAnswer((_) async => Future.value());
 
         // arrange
         final widget = buildTestableWidget(ChatMainTalksPage(
@@ -227,45 +209,7 @@ void main() {
     testWidgets(
       'should navigate to chat page when open conversation card',
       (tester) => mockNetworkImages(() async {
-        when(() => controller.currentState).thenAnswer(
-            (_) => ChatMainTalksState.loaded(<ChatMainChannelCardTile>[
-                  ChatMainChannelCardTile(
-                    channel: ChatChannelEntity(
-                      token: 'talk-with-mary',
-                      lastMessageIsMime: false,
-                      lastMessageTime: DateTime.parse('2024-03-02'),
-                      user: ChatUserEntity(
-                        userId: null,
-                        activity: 'Ativo',
-                        blockedMe: false,
-                        avatar: 'http://example.com/avatar.svg',
-                        nickname: 'Mary',
-                      ),
-                    ),
-                  )
-                ]));
-
-        when(() => controller.openChannel(
-              ChatChannelEntity(
-                token: 'talk-with-mary',
-                lastMessageIsMime: false,
-                lastMessageTime: DateTime.parse('2024-03-02'),
-                user: ChatUserEntity(
-                  userId: null,
-                  activity: 'Ativo',
-                  blockedMe: false,
-                  avatar: 'http://example.com/avatar.svg',
-                  nickname: 'Mary',
-                ),
-              ),
-            )).thenAnswer((_) async => Future.value());
-
-        // arrange
-        final widget = buildTestableWidget(ChatMainTalksPage(
-          controller: controller,
-        ));
-        await tester.pumpWidget(widget);
-        ChatChannelEntity(
+        final chatChannelEntity = ChatChannelEntity(
           token: 'talk-with-mary',
           lastMessageIsMime: false,
           lastMessageTime: DateTime.parse('2024-03-02'),
@@ -277,6 +221,20 @@ void main() {
             nickname: 'Mary',
           ),
         );
+        when(() => controller.currentState).thenAnswer((_) =>
+            ChatMainTalksState.loaded(<ChatMainChannelCardTile>[
+              ChatMainChannelCardTile(channel: chatChannelEntity)
+            ]));
+
+        when(() => controller.openChannel(chatChannelEntity))
+            .thenAnswer((_) async => Future.value());
+
+        // arrange
+        final widget = buildTestableWidget(ChatMainTalksPage(
+          controller: controller,
+        ));
+        await tester.pumpWidget(widget);
+        chatChannelEntity;
         await tester.pumpAndSettle();
         when(
           () => mockNavigator.pushNamed(
@@ -289,6 +247,7 @@ void main() {
         await tester.tap(find.text('Mary'));
 
         // assert
+        verify(() => controller.openChannel(chatChannelEntity)).called(1);
         verify(
           () => mockNavigator.pushNamed(
             '/mainboard/chat/talk-with-mary',
