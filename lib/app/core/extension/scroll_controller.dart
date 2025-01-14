@@ -61,15 +61,11 @@ extension ScrollControllerExt on ScrollController {
         () async {
           final completer = Completer();
 
-          final addPostFrameCallback =
-              WidgetsBinding.instance?.addPostFrameCallback ??
-                  (callback) => callback(Duration.zero); // coverage:ignore-line
-
-          addPostFrameCallback((duration) async {
-            completer.complete(
-              action(duration),
-            );
-          });
+          WidgetsBinding.instance.addPostFrameCallback(
+            (duration) async {
+              completer.complete(action(duration));
+            },
+          );
 
           await completer.future;
         },
