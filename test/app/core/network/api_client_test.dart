@@ -50,16 +50,14 @@ void main() {
       const String path = 'some_path';
       final headers = <String, String>{'key1': 'value1'};
       final parameters = <String, String>{'param1': 'value1'};
-      final response = http.Response('{"key": "value"}', 200);
-      final expectUri = baseUri.replace(
-        path: path,
-        queryParameters: parameters,
+      final expected = '{"key": "value"}';
+
+      when(() => apiClient.send(any())).thenAnswer(
+        (_) async => http.StreamedResponse(
+          http.ByteStream.fromBytes(utf8.encode(expected)),
+          HttpStatus.ok,
+        ),
       );
-      when(() => networkInfo.isConnected).thenAnswer((_) async => false);
-      when(() => apiClient.get(
-            any(),
-            headers: any(named: 'headers'),
-          )).thenAnswer((_) async => response);
 
       final sut = ApiProvider(
         serverConfiguration: serverConfiguration,
@@ -68,19 +66,22 @@ void main() {
       );
       // act
       await sut.get(path: path, headers: headers, parameters: parameters);
-      final captured = verify(
-        () =>
-            apiClient.get(captureAny(), headers: captureAny(named: 'headers')),
-      ).captured;
+      final captured = verify(() => apiClient.send(captureAny())).captured;
       // assert
       expect(
-        captured.first,
-        expectUri,
+        captured.first.url,
+        Uri.https('api.example.com', 'some_path', {'param1': 'value1'}),
         reason: 'Concatenate path successfully',
       );
-
       // Verify request header builder
-      final capturedHeader = captured[1] as Map<String, String>;
+      final capturedHeader = captured.first.headers;
+
+      expect(captured.first.method, 'GET');
+      expect(
+        capturedHeader,
+        containsPair(
+            'Content-Type', 'application/x-www-form-urlencoded; charset=utf-8'),
+      );
       expect(
         capturedHeader,
         containsPair('X-Api-Key', 'my_strong_token'),
@@ -112,13 +113,12 @@ void main() {
         // arrange
         const String path = 'some_path';
         final localApiClient = MockClient();
-        final response = http.Response('{"key": "value"}', httpCode);
-        when(() => networkInfo.isConnected).thenAnswer((_) async => true);
+        final response = http.StreamedResponse(
+            http.ByteStream.fromBytes(utf8.encode('{"key": "value"}')),
+            httpCode);
 
-        when(() => localApiClient.get(
-              any(),
-              headers: any(named: 'headers'),
-            )).thenAnswer((_) async => response);
+        when(() => localApiClient.send(any()))
+            .thenAnswer((_) async => response);
 
         final sut = ApiProvider(
           serverConfiguration: serverConfiguration,
@@ -261,10 +261,12 @@ void main() {
           final parameters = <String, String>{'param1': 'value1'};
           const expected = '{"key": "value"}';
           when(() => networkInfo.isConnected).thenAnswer((_) async => false);
-          when(() => apiClient.get(
-                any(),
-                headers: any(named: 'headers'),
-              )).thenAnswer((_) async => http.Response(expected, 200));
+          when(() => apiClient.send(any())).thenAnswer(
+            (_) async => http.StreamedResponse(
+              http.ByteStream.fromBytes(utf8.encode(expected)),
+              HttpStatus.ok,
+            ),
+          );
 
           final sut = ApiProvider(
             serverConfiguration: serverConfiguration,
