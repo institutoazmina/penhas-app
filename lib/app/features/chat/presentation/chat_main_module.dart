@@ -51,5 +51,9 @@ class ChatMainModule extends WidgetModule {
       ];
 
   @override
-  Widget get view =>  ChatMainPage(iChatMainTalksController: Modular.get<IChatMainTalksController>(),);
+  Widget get view => ChatMainPage(
+        chatMainPeopleController: Modular.get<ChatMainPeopleController>(),
+        controller: Modular.get<ChatMainController>(),
+        iChatMainTalksController: Modular.get<IChatMainTalksController>(),
+      );
 }

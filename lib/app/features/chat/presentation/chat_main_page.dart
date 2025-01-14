@@ -1,26 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../shared/design_system/colors.dart';
 import '../domain/entities/chat_tab_item.dart';
 import 'chat_main_controller.dart';
+import 'people/chat_main_people_controller.dart';
 import 'people/chat_main_people_page.dart';
 import 'talk/chat_main_talks_controller.dart';
 import 'talk/chat_main_talks_page.dart';
 
 class ChatMainPage extends StatefulWidget {
-  const ChatMainPage({Key? key, required this.iChatMainTalksController})
+  const ChatMainPage(
+      {Key? key,
+      required this.chatMainPeopleController,
+      required this.controller,
+      required this.iChatMainTalksController})
       : super(key: key);
 
+  final ChatMainPeopleController chatMainPeopleController;
+  final ChatMainController controller;
   final IChatMainTalksController iChatMainTalksController;
 
   @override
   _ChatMainPageState createState() => _ChatMainPageState();
 }
 
-class _ChatMainPageState
-    extends ModularState<ChatMainPage, ChatMainController> {
+class _ChatMainPageState extends State<ChatMainPage> {
+  ChatMainController get controller => widget.controller;
+  ChatMainPeopleController get chatMainPeopleController =>
+      widget.chatMainPeopleController;
   IChatMainTalksController get iChatMainTalksController =>
       widget.iChatMainTalksController;
   @override
@@ -84,7 +92,9 @@ extension _ChatMainPageStatePrivate on _ChatMainPageState {
   Widget buildBody(List<ChatTabItem> items) {
     final widgets = items.map(
       (e) => e == ChatTabItem.people
-          ? const ChatMainPeoplePage()
+          ? ChatMainPeoplePage(
+              controller: chatMainPeopleController,
+            )
           : ChatMainTalksPage(
               controller: iChatMainTalksController,
             ),
