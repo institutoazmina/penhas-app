@@ -308,8 +308,10 @@ void main() {
           headers: headers,
           parameters: parameters,
         );
+        final captured = verify(() => apiClient.send(captureAny())).captured;
         // assert
         expect(actual, expected);
+        expect(captured.first.method, 'POST');
       });
     });
 
@@ -319,11 +321,12 @@ void main() {
         const String path = 'some_path';
         final parameters = <String, String>{'param1': 'value1'};
         const expected = '{}';
-        when(() => networkInfo.isConnected).thenAnswer((_) async => false);
-        when(() => apiClient.delete(
-              any(),
-              headers: any(named: 'headers'),
-            )).thenAnswer((_) async => http.Response(expected, 200));
+        when(() => apiClient.send(any())).thenAnswer(
+          (_) async => http.StreamedResponse(
+            http.ByteStream.fromBytes(utf8.encode(expected)),
+            HttpStatus.ok,
+          ),
+        );
 
         final sut = ApiProvider(
           serverConfiguration: serverConfiguration,
@@ -337,6 +340,8 @@ void main() {
         );
         // assert
         expect(actual, expected);
+        final captured = verify(() => apiClient.send(captureAny())).captured;
+        expect(captured.first.method, 'DELETE');
       });
     });
 
