@@ -10,21 +10,29 @@ import 'package:penhas/app/features/chat/domain/entities/chat_assistant_entity.d
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_available_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entity.dart';
+import 'package:penhas/app/features/chat/domain/entities/chat_main_tile_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
 import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
+import 'package:penhas/app/features/chat/domain/states/chat_main_talks_state.dart';
 import 'package:penhas/app/features/chat/presentation/chat_main_module.dart';
+import 'package:penhas/app/features/chat/presentation/talk/chat_main_talks_controller.dart';
 import 'package:penhas/app/features/chat/presentation/talk/chat_main_talks_page.dart';
 
 import '../../../../../utils/golden_tests.dart';
 import '../../../../../utils/module_testing.dart';
 
+class MockIChatMainTalksController extends Mock
+    implements IChatMainTalksController {}
+
 void main() {
   group(ChatMainTalksPage, () {
     late IChatChannelRepository mockRepository;
     late IModularNavigator mockNavigator;
+    late IChatMainTalksController controller;
 
     setUp(() {
       mockRepository = _MockChatChannelRepository();
+      controller = MockIChatMainTalksController();
       Modular.navigatorDelegate = mockNavigator = _MockModularNavigate();
 
       loadModules(
@@ -39,17 +47,26 @@ void main() {
       );
     });
 
-    screenshotTest(
-      'loaded state should be rendered',
-      fileName: 'chat_main_talks_page_initial_state',
-      pageBuilder: () => ChatMainTalksPage(),
-    );
+    screenshotTest('loaded state should be rendered',
+        fileName: 'chat_main_talks_page_initial_state', pageBuilder: () {
+      when(() => controller.currentState)
+          .thenAnswer((_) => ChatMainTalksState.initial());
+
+      return ChatMainTalksPage(
+        controller: controller,
+      );
+    });
 
     screenshotTest(
       'error state should be rendered',
       fileName: 'chat_main_talks_page_error_state',
-      pageBuilder: () => ChatMainTalksPage(),
+      pageBuilder: () => ChatMainTalksPage(
+        controller: controller,
+      ),
       setUp: () {
+        when(() => controller.currentState)
+            .thenAnswer((_) => ChatMainTalksState.error('error'));
+
         when(() => mockRepository.listChannel()).thenAnswer(
           (_) async => left(ServerFailure()),
         );
@@ -59,8 +76,55 @@ void main() {
     testWidgets(
       'should navigate to assistant quiz when open assistant card',
       (tester) => mockNetworkImages(() async {
+        when(() => controller.currentState).thenAnswer(
+            (_) => ChatMainTalksState.loaded(<ChatMainAssistantCardTile>[
+                  ChatMainAssistantCardTile(cards: [
+                    ChatMainSupportTile(
+                      quizSession: QuizSessionEntity(
+                        sessionId: 'assistant-quiz-session',
+                      ),
+                      channel: ChatChannelEntity(
+                        token: 'assistant-channel',
+                        lastMessageIsMime: false,
+                        lastMessageTime: DateTime.parse('2024-03-02'),
+                        user: ChatUserEntity(
+                          userId: null,
+                          activity: null,
+                          blockedMe: false,
+                          avatar: null,
+                          nickname: 'Assistente PenhaS',
+                        ),
+                      ),
+                      content: 'content',
+                      title: 'Assistente PenhaS',
+                    )
+                  ])
+                ]));
+
+        when(() => controller.openAssistantCard(ChatMainSupportTile(
+              quizSession: QuizSessionEntity(
+                sessionId: 'assistant-quiz-session',
+              ),
+              channel: ChatChannelEntity(
+                token: 'assistant-channel',
+                lastMessageIsMime: false,
+                lastMessageTime: DateTime.parse('2024-03-02'),
+                user: ChatUserEntity(
+                  userId: null,
+                  activity: null,
+                  blockedMe: false,
+                  avatar: null,
+                  nickname: 'Assistente PenhaS',
+                ),
+              ),
+              content: 'content',
+              title: 'Assistente PenhaS',
+            ))).thenAnswer((_) async => Future.value());
         // arrange
-        final widget = buildTestableWidget(ChatMainTalksPage());
+        final widget = buildTestableWidget(ChatMainTalksPage(
+          controller: controller,
+        ));
+
         await tester.pumpWidget(widget);
         await tester.pumpAndSettle();
         when(
@@ -88,8 +152,55 @@ void main() {
     testWidgets(
       'should navigate to support chat when open support card',
       (tester) => mockNetworkImages(() async {
+        when(() => controller.currentState).thenAnswer(
+            (_) => ChatMainTalksState.loaded(<ChatMainAssistantCardTile>[
+                  ChatMainAssistantCardTile(cards: [
+                    ChatMainSupportTile(
+                      quizSession: QuizSessionEntity(
+                        sessionId: 'assistant-quiz-session',
+                      ),
+                      channel: ChatChannelEntity(
+                        token: 'support-channel',
+                        lastMessageIsMime: false,
+                        lastMessageTime: DateTime.parse('2024-03-02'),
+                        user: ChatUserEntity(
+                          userId: null,
+                          activity: null,
+                          blockedMe: false,
+                          avatar: null,
+                          nickname: 'Suporte PenhaS',
+                        ),
+                      ),
+                      content: 'content',
+                      title: 'Suporte PenhaS',
+                    )
+                  ])
+                ]));
+
+        when(() => controller.openAssistantCard(ChatMainSupportTile(
+              quizSession: QuizSessionEntity(
+                sessionId: 'assistant-quiz-session',
+              ),
+              channel: ChatChannelEntity(
+                token: 'support-channel',
+                lastMessageIsMime: false,
+                lastMessageTime: DateTime.parse('2024-03-02'),
+                user: ChatUserEntity(
+                  userId: null,
+                  activity: null,
+                  blockedMe: false,
+                  avatar: null,
+                  nickname: 'Suporte PenhaS',
+                ),
+              ),
+              content: 'content',
+              title: 'Suporte PenhaS',
+            ))).thenAnswer((_) async => Future.value());
+
         // arrange
-        final widget = buildTestableWidget(ChatMainTalksPage());
+        final widget = buildTestableWidget(ChatMainTalksPage(
+          controller: controller,
+        ));
         await tester.pumpWidget(widget);
         await tester.pumpAndSettle();
         when(
@@ -116,9 +227,56 @@ void main() {
     testWidgets(
       'should navigate to chat page when open conversation card',
       (tester) => mockNetworkImages(() async {
+        when(() => controller.currentState).thenAnswer(
+            (_) => ChatMainTalksState.loaded(<ChatMainChannelCardTile>[
+                  ChatMainChannelCardTile(
+                    channel: ChatChannelEntity(
+                      token: 'talk-with-mary',
+                      lastMessageIsMime: false,
+                      lastMessageTime: DateTime.parse('2024-03-02'),
+                      user: ChatUserEntity(
+                        userId: null,
+                        activity: 'Ativo',
+                        blockedMe: false,
+                        avatar: 'http://example.com/avatar.svg',
+                        nickname: 'Mary',
+                      ),
+                    ),
+                  )
+                ]));
+
+        when(() => controller.openChannel(
+              ChatChannelEntity(
+                token: 'talk-with-mary',
+                lastMessageIsMime: false,
+                lastMessageTime: DateTime.parse('2024-03-02'),
+                user: ChatUserEntity(
+                  userId: null,
+                  activity: 'Ativo',
+                  blockedMe: false,
+                  avatar: 'http://example.com/avatar.svg',
+                  nickname: 'Mary',
+                ),
+              ),
+            )).thenAnswer((_) async => Future.value());
+
         // arrange
-        final widget = buildTestableWidget(ChatMainTalksPage());
+        final widget = buildTestableWidget(ChatMainTalksPage(
+          controller: controller,
+        ));
         await tester.pumpWidget(widget);
+        ChatChannelEntity(
+          token: 'talk-with-mary',
+          lastMessageIsMime: false,
+          lastMessageTime: DateTime.parse('2024-03-02'),
+          user: ChatUserEntity(
+            userId: null,
+            activity: 'Ativo',
+            blockedMe: false,
+            avatar: 'http://example.com/avatar.svg',
+            nickname: 'Mary',
+          ),
+        );
         await tester.pumpAndSettle();
         when(
           () => mockNavigator.pushNamed(

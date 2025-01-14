@@ -6,10 +6,14 @@ import '../../../shared/design_system/colors.dart';
 import '../domain/entities/chat_tab_item.dart';
 import 'chat_main_controller.dart';
 import 'people/chat_main_people_page.dart';
+import 'talk/chat_main_talks_controller.dart';
 import 'talk/chat_main_talks_page.dart';
 
 class ChatMainPage extends StatefulWidget {
-  const ChatMainPage({Key? key}) : super(key: key);
+  const ChatMainPage({Key? key, required this.iChatMainTalksController})
+      : super(key: key);
+
+  final IChatMainTalksController iChatMainTalksController;
 
   @override
   _ChatMainPageState createState() => _ChatMainPageState();
@@ -17,6 +21,8 @@ class ChatMainPage extends StatefulWidget {
 
 class _ChatMainPageState
     extends ModularState<ChatMainPage, ChatMainController> {
+  IChatMainTalksController get iChatMainTalksController =>
+      widget.iChatMainTalksController;
   @override
   Widget build(BuildContext context) {
     return Observer(
@@ -32,10 +38,12 @@ class _ChatMainPageState
 
 extension _ChatMainBuilder on _ChatMainPageState {
   Widget buildSupportChat() {
-    return const SafeArea(
+    return SafeArea(
       child: SizedBox.expand(
         child: Scaffold(
-          body: ChatMainTalksPage(),
+          body: ChatMainTalksPage(
+            controller: iChatMainTalksController,
+          ),
         ),
       ),
     );
@@ -77,7 +85,9 @@ extension _ChatMainPageStatePrivate on _ChatMainPageState {
     final widgets = items.map(
       (e) => e == ChatTabItem.people
           ? const ChatMainPeoplePage()
-          : const ChatMainTalksPage(),
+          : ChatMainTalksPage(
+              controller: iChatMainTalksController,
+            ),
     );
     return TabBarView(children: widgets.toList());
   }
