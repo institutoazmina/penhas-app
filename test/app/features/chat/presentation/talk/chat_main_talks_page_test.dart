@@ -21,18 +21,18 @@ import 'package:penhas/app/features/chat/presentation/talk/chat_main_talks_page.
 import '../../../../../utils/golden_tests.dart';
 import '../../../../../utils/module_testing.dart';
 
-class MockIChatMainTalksController extends Mock
-    implements IChatMainTalksController {}
+class MockChatMainTalksController extends Mock
+    implements ChatMainTalksController {}
 
 void main() {
   group(ChatMainTalksPage, () {
     late IChatChannelRepository mockRepository;
     late IModularNavigator mockNavigator;
-    late IChatMainTalksController controller;
+    late ChatMainTalksController controller;
 
     setUp(() {
       mockRepository = _MockChatChannelRepository();
-      controller = MockIChatMainTalksController();
+      controller = MockChatMainTalksController();
       Modular.navigatorDelegate = mockNavigator = _MockModularNavigate();
 
       loadModules(
