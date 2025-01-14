@@ -7,7 +7,6 @@ import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
-import 'package:penhas/app/core/network/network_info.dart';
 
 class MockFile extends Mock implements File {}
 
@@ -15,14 +14,11 @@ class MockClient extends Mock implements http.Client {}
 
 class FakeRequest extends Fake implements http.BaseRequest {}
 
-class MockNetworkInfo extends Mock implements INetworkInfo {}
-
 class MockApiServerConfigure extends Mock implements IApiServerConfigure {}
 
 void main() {
   late MockFile mockFile;
   late http.Client apiClient;
-  late INetworkInfo networkInfo;
   late IApiServerConfigure serverConfiguration;
   final baseUri = Uri.parse('https://api.example.com/api');
 
@@ -34,7 +30,6 @@ void main() {
   setUp(() {
     mockFile = MockFile();
     apiClient = MockClient();
-    networkInfo = MockNetworkInfo();
     serverConfiguration = MockApiServerConfigure();
 
     when(() => serverConfiguration.baseUri).thenReturn(baseUri);
@@ -61,7 +56,6 @@ void main() {
 
       final sut = ApiProvider(
         serverConfiguration: serverConfiguration,
-        networkInfo: networkInfo,
         apiClient: apiClient,
       );
       // act
@@ -122,7 +116,6 @@ void main() {
 
         final sut = ApiProvider(
           serverConfiguration: serverConfiguration,
-          networkInfo: networkInfo,
           apiClient: localApiClient,
         );
         // act
@@ -136,8 +129,6 @@ void main() {
       // arrange
       const String path = 'some_path';
       final localApiClient = MockClient();
-      when(() => networkInfo.isConnected).thenAnswer((_) async => true);
-
       when(() => localApiClient.get(
             any(),
             headers: any(named: 'headers'),
@@ -145,7 +136,6 @@ void main() {
 
       final sut = ApiProvider(
         serverConfiguration: serverConfiguration,
-        networkInfo: networkInfo,
         apiClient: localApiClient,
       );
       // act
@@ -166,11 +156,9 @@ void main() {
           (_) async =>
               http.StreamedResponse(http.ByteStream.fromBytes([]), 400),
         );
-        when(() => networkInfo.isConnected).thenAnswer((_) async => true);
 
         final sut = ApiProvider(
           serverConfiguration: serverConfiguration,
-          networkInfo: networkInfo,
           apiClient: apiClient,
         );
 
@@ -200,7 +188,6 @@ void main() {
 
           final sut = ApiProvider(
             serverConfiguration: serverConfiguration,
-            networkInfo: networkInfo,
             apiClient: apiClient,
           );
 
@@ -237,7 +224,6 @@ void main() {
 
           final sut = ApiProvider(
             serverConfiguration: serverConfiguration,
-            networkInfo: networkInfo,
             apiClient: apiClient,
           );
 
@@ -269,7 +255,6 @@ void main() {
 
           final sut = ApiProvider(
             serverConfiguration: serverConfiguration,
-            networkInfo: networkInfo,
             apiClient: apiClient,
           );
           // act
@@ -299,7 +284,6 @@ void main() {
         );
         final sut = ApiProvider(
           serverConfiguration: serverConfiguration,
-          networkInfo: networkInfo,
           apiClient: apiClient,
         );
         // act
@@ -330,7 +314,6 @@ void main() {
 
         final sut = ApiProvider(
           serverConfiguration: serverConfiguration,
-          networkInfo: networkInfo,
           apiClient: apiClient,
         );
         // act
@@ -358,7 +341,6 @@ void main() {
 
         final sut = ApiProvider(
           serverConfiguration: serverConfiguration,
-          networkInfo: networkInfo,
           apiClient: apiClient,
         );
         // action
@@ -385,7 +367,6 @@ void main() {
         );
         final sut = ApiProvider(
           serverConfiguration: serverConfiguration,
-          networkInfo: networkInfo,
           apiClient: apiClient,
         );
 
