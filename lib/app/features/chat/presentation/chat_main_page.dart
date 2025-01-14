@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../shared/design_system/colors.dart';
 import '../domain/entities/chat_tab_item.dart';
@@ -10,17 +9,21 @@ import 'people/chat_main_people_page.dart';
 import 'talk/chat_main_talks_page.dart';
 
 class ChatMainPage extends StatefulWidget {
-  const ChatMainPage({Key? key, required this.chatMainPeopleController})
+  const ChatMainPage(
+      {Key? key,
+      required this.chatMainPeopleController,
+      required this.controller})
       : super(key: key);
 
   final ChatMainPeopleController chatMainPeopleController;
+  final ChatMainController controller;
 
   @override
   _ChatMainPageState createState() => _ChatMainPageState();
 }
 
-class _ChatMainPageState
-    extends ModularState<ChatMainPage, ChatMainController> {
+class _ChatMainPageState extends State<ChatMainPage> {
+  ChatMainController get controller => widget.controller;
   ChatMainPeopleController get chatMainPeopleController =>
       widget.chatMainPeopleController;
   @override

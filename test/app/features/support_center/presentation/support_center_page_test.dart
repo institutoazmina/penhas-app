@@ -1,7 +1,5 @@
 import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter/services.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -10,7 +8,6 @@ import 'package:penhas/app/features/support_center/domain/entities/support_cente
 import 'package:penhas/app/features/support_center/domain/entities/support_center_place_session_entity.dart';
 import 'package:penhas/app/features/support_center/domain/usecases/support_center_usecase.dart';
 import 'package:penhas/app/features/support_center/presentation/support_center_controller.dart';
-import 'package:penhas/app/features/support_center/presentation/support_center_module.dart';
 import 'package:penhas/app/features/support_center/presentation/support_center_page.dart';
 
 import '../../../../utils/fake_google_map_platform_views_controller.dart';
@@ -22,22 +19,15 @@ void main() {
       FakeGoogleMapPlatformViewsController();
 
   late SupportCenterUseCase supportCenterUseCase;
+  late SupportCenterController controller;
 
   setUp(() {
     SystemChannels.platform_views.setMockMethodCallHandler(
         fakePlatformViewsController.fakePlatformViewsMethodHandler);
 
     supportCenterUseCase = MockSupportCenterUseCase();
-
-    initModule(
-      SupportCenterModule(),
-      replaceBinds: [
-        Bind.factory(
-          (i) => SupportCenterController(
-            supportCenterUseCase: supportCenterUseCase,
-          ),
-        ),
-      ],
+    controller = SupportCenterController(
+      supportCenterUseCase: supportCenterUseCase,
     );
   });
 
@@ -52,7 +42,7 @@ void main() {
     screenshotTest(
       'should render error state when server fails',
       fileName: 'support_center_page_error_state',
-      pageBuilder: () => const SupportCenterPage(),
+      pageBuilder: () => SupportCenterPage(controller: controller),
       setUp: () {
         when(() => supportCenterUseCase.fetch(any())).thenAnswer(
           (_) => Future.value(dartz.Left(ServerFailure())),
@@ -63,7 +53,7 @@ void main() {
     screenshotTest(
       'should render success state with map and markers',
       fileName: 'support_center_page_success_state',
-      pageBuilder: () => const SupportCenterPage(),
+      pageBuilder: () => SupportCenterPage(controller: controller),
       setUp: () {
         when(() => supportCenterUseCase.fetch(any())).thenAnswer(
           (_) => Future.value(dartz.Right(centerPlace)),

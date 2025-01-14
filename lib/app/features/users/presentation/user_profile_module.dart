@@ -29,10 +29,17 @@ class UserProfileModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-        ChildRoute('/profile', child: (_, args) => const UserProfilePage()),
+        ChildRoute(
+          '/profile',
+          child: (_, args) => UserProfilePage(
+            controller: Modular.get<UserProfileController>(),
+          ),
+        ),
         ChildRoute(
           '/profile_from_feed',
-          child: (_, args) => const UserProfilePage(),
+          child: (_, args) => UserProfilePage(
+            controller: Modular.get<UserProfileController>(),
+          ),
           transition: TransitionType.noTransition,
         ),
       ];

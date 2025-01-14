@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:map_launcher/map_launcher.dart';
@@ -17,14 +16,28 @@ import '../pages/widget/support_center_rate_widget.dart';
 import 'support_center_show_controller.dart';
 
 class SupportCenterShowPage extends StatefulWidget {
-  const SupportCenterShowPage({Key? key}) : super(key: key);
+  const SupportCenterShowPage({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  final SupportCenterShowController controller;
 
   @override
   _SupportCenterShowPageState createState() => _SupportCenterShowPageState();
 }
 
-class _SupportCenterShowPageState
-    extends ModularState<SupportCenterShowPage, SupportCenterShowController> {
+class _SupportCenterShowPageState extends State<SupportCenterShowPage> {
+  SupportCenterShowController get controller => widget.controller;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.initialize();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,7 +135,7 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
               child: HtmlWidget(
                 detail.place!.htmlContent!,
-                webViewJs: false,
+                factoryBuilder: () => _DisabledWebViewJsWidgetFactory(),
                 textStyle: htmlContentTextStyle,
               ),
             ),
@@ -263,4 +276,9 @@ extension _TextStyle on _SupportCenterShowPageState {
         color: DesignSystemColors.darkIndigoThree,
         fontWeight: FontWeight.normal,
       );
+}
+
+class _DisabledWebViewJsWidgetFactory extends WidgetFactory {
+  @override
+  bool get webViewJs => false;
 }

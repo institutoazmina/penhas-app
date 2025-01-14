@@ -9,6 +9,7 @@ import '../../../../core/managers/location_services.dart';
 import '../../../../core/managers/modules_sevices.dart';
 import '../../../../core/network/api_server_configure.dart';
 import '../../../../core/network/network_info.dart';
+import '../../../../core/remoteconfig/i_remote_config.dart';
 import '../../../appstate/domain/entities/user_profile_entity.dart';
 import '../../../appstate/domain/usecases/app_state_usecase.dart';
 import '../../../help_center/data/datasources/guardian_data_source.dart';
@@ -58,7 +59,7 @@ class SignInModule extends Module {
         ..._resetPassword,
         ..._signInAnonymous,
         ..._signInStealth,
-        ..._logginOfflineToggle
+        ..._loginOfflineToggle
       ];
 
   @override
@@ -80,7 +81,9 @@ class SignInModule extends Module {
         ),
         ChildRoute(
           '/reset_password',
-          child: (_, args) => const ResetPasswordPage(),
+          child: (_, args) => ResetPasswordPage(
+            controller: Modular.get<ResetPasswordController>(),
+          ),
         ),
         ChildRoute(
           '/reset_password/step2',
@@ -224,9 +227,10 @@ class SignInModule extends Module {
                 loginOfflineToggleFeature: i.get()))
       ];
 
-  List<Bind> get _logginOfflineToggle => [
-        Bind.factory<LoginOfflineToggleFeature>(
-            (i) => LoginOfflineToggleFeature(remoteConfig: i.get()))
+  List<Bind> get _loginOfflineToggle => [
+        Bind.factory<LoginOfflineToggleFeature>((_) =>
+            LoginOfflineToggleFeature(
+                remoteConfig: Modular.get<IRemoteConfigService>()))
       ];
 
   List<Bind> get _signInStealth => [

@@ -18,18 +18,24 @@ import 'user_profile_dialogs.dart';
 import 'user_profile_state.dart';
 
 class UserProfilePage extends StatefulWidget {
-  const UserProfilePage({Key? key}) : super(key: key);
+  const UserProfilePage({
+    required this.controller,
+    Key? key,
+  }) : super(key: key);
+
+  final UserProfileController controller;
 
   @override
   _UserProfilePageState createState() => _UserProfilePageState();
 }
 
-class _UserProfilePageState
-    extends ModularState<UserProfilePage, UserProfileController>
+class _UserProfilePageState extends State<UserProfilePage>
     with SnackBarHandler {
   ReactionDisposer? _disposer;
   late final _scaffoldKey = GlobalKey<ScaffoldState>();
   late final _progressDialogKey = GlobalKey();
+
+  UserProfileController get controller => widget.controller;
 
   @override
   void initState() {
@@ -118,7 +124,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
                 shape: kButtonShapeFilled,
                 child: Text(
                   'Conversar',
-                  style: buttomTitleStyle,
+                  style: buttonTitleStyle,
                 ),
               ),
             ),
@@ -136,7 +142,9 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
           CircleAvatar(
             radius: 34,
             backgroundColor: Colors.white38,
-            child: SvgPicture.network(user.avatar!),
+            child: user.avatar == null || user.avatar!.isEmpty
+                ? Container()
+                : SvgPicture.network(user.avatar!),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 12.0),
@@ -300,7 +308,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
         fontWeight: FontWeight.normal,
       );
 
-  TextStyle get buttomTitleStyle => const TextStyle(
+  TextStyle get buttonTitleStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 12.0,
         letterSpacing: 0.4,

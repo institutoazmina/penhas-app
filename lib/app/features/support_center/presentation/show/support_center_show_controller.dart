@@ -18,9 +18,7 @@ class SupportCenterShowController extends _SupportCenterShowControllerBase
 }
 
 abstract class _SupportCenterShowControllerBase with Store, MapFailureMessage {
-  _SupportCenterShowControllerBase(this._place, this._useCase) {
-    setup();
-  }
+  _SupportCenterShowControllerBase(this._place, this._useCase);
 
   final SupportCenterUseCase _useCase;
   final SupportCenterPlaceEntity? _place;
@@ -36,6 +34,10 @@ abstract class _SupportCenterShowControllerBase with Store, MapFailureMessage {
   @action
   Future<void> retry() async {
     setup();
+  }
+
+  Future<void> initialize() async {
+    await setup();
   }
 }
 

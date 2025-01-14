@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
@@ -15,18 +14,33 @@ import 'pages/support_center_input_filter.dart';
 import 'support_center_controller.dart';
 
 class SupportCenterPage extends StatefulWidget {
-  const SupportCenterPage({Key? key}) : super(key: key);
+  const SupportCenterPage({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  final SupportCenterController controller;
 
   @override
   _SupportCenterPageState createState() => _SupportCenterPageState();
 }
 
-class _SupportCenterPageState
-    extends ModularState<SupportCenterPage, SupportCenterController>
+class _SupportCenterPageState extends State<SupportCenterPage>
     with SnackBarHandler {
+  GoogleMapController? mapController;
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  GoogleMapController? mapController;
+
+  // Getter para acessar o controller
+  SupportCenterController get controller => widget.controller;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.initialize();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

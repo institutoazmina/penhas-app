@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../shared/design_system/colors.dart';
 import '../../../shared/design_system/logo.dart';
@@ -13,17 +12,19 @@ import 'zodiac_controller.dart';
 
 class ZodiacPage extends StatefulWidget {
   const ZodiacPage({
+    required this.controller,
     Key? key,
-    this.title = 'ZodiacPage',
   }) : super(key: key);
 
-  final String title;
+  final ZodiacController controller;
 
   @override
-  _ZodiacPageState createState() => _ZodiacPageState();
+  State<ZodiacPage> createState() => _ZodiacPageState();
 }
 
-class _ZodiacPageState extends ModularState<ZodiacPage, ZodiacController> {
+class _ZodiacPageState extends State<ZodiacPage> {
+  ZodiacController get controller => widget.controller;
+
   @override
   void dispose() {
     controller.dispose();
@@ -82,7 +83,7 @@ class _ZodiacPageState extends ModularState<ZodiacPage, ZodiacController> {
             ),
             onPressed: () => controller.forwardStealthLogin(),
             child: const Text(
-              'Diário astrólogico',
+              'Diário astrológico',
               style: kTextStyleFeedTweetShowReply,
             ),
           ),
