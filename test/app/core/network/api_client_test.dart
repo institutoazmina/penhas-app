@@ -260,7 +260,6 @@ void main() {
           final headers = <String, String>{'key1': 'value1'};
           final parameters = <String, String>{'param1': 'value1'};
           const expected = '{"key": "value"}';
-          when(() => networkInfo.isConnected).thenAnswer((_) async => false);
           when(() => apiClient.send(any())).thenAnswer(
             (_) async => http.StreamedResponse(
               http.ByteStream.fromBytes(utf8.encode(expected)),
@@ -292,12 +291,12 @@ void main() {
         final headers = <String, String>{'key1': 'value1'};
         final parameters = <String, String>{'param1': 'value1'};
         const expected = '{"key": "value"}';
-        when(() => networkInfo.isConnected).thenAnswer((_) async => false);
-        when(() => apiClient.post(
-              any(),
-              headers: any(named: 'headers'),
-            )).thenAnswer((_) async => http.Response(expected, 200));
-
+        when(() => apiClient.send(any())).thenAnswer(
+          (_) async => http.StreamedResponse(
+            http.ByteStream.fromBytes(utf8.encode(expected)),
+            HttpStatus.ok,
+          ),
+        );
         final sut = ApiProvider(
           serverConfiguration: serverConfiguration,
           networkInfo: networkInfo,
