@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../chat/presentation/chat_main_module.dart';
 import '../../../../escape_manual/escape_manual_module.dart';
+import '../../../../feed/presentation/compose_tweet/compose_tweet_controller.dart';
 import '../../../../feed/presentation/compose_tweet/compose_tweet_page.dart';
 import '../../../../feed/presentation/feed_module.dart';
 import '../../../../help_center/presentation/help_center_module.dart';
@@ -12,11 +13,12 @@ class MainboardBodyPage extends StatelessWidget {
   const MainboardBodyPage({
     Key? key,
     required this.pages,
-    required this.pageController,
+    required this.pageController, required this.composeTweetController,
   }) : super(key: key);
 
   final List<MainboardState> pages;
   final PageController pageController;
+  final ComposeTweetController composeTweetController;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class MainboardBodyPage extends StatelessWidget {
       chat: () => ChatMainModule(),
       feed: () => FeedModule(),
       escapeManual: () => EscapeManualModule(),
-      compose: () => const ComposeTweetPage(),
+      compose: () =>  ComposeTweetPage(composeTweetController: composeTweetController,),
       supportPoint: () => SupportCenterModule(),
       helpCenter: () => HelpCenterModule(),
     );

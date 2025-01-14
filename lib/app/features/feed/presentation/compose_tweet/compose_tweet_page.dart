@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
 
@@ -16,18 +15,19 @@ class ComposeTweetPage extends StatefulWidget {
   const ComposeTweetPage({
     Key? key,
     this.title = 'Publicar',
-    this.showAppBar = false,
+    this.showAppBar = false, required this.composeTweetController,
   }) : super(key: key);
 
   final String title;
   final bool showAppBar;
+  final ComposeTweetController composeTweetController;
 
   @override
   _ComposeTweetPageState createState() => _ComposeTweetPageState();
 }
 
 class _ComposeTweetPageState
-    extends ModularState<ComposeTweetPage, ComposeTweetController>
+    extends State<ComposeTweetPage>
     with SnackBarHandler {
   final String inputHint = 'Deixe seu comentário';
   final String anonymousHint =
@@ -35,6 +35,7 @@ class _ComposeTweetPageState
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
+   ComposeTweetController get controller => widget.composeTweetController;
 
   TextStyle get _kTextStyleNewTweetAnonymousHint => const TextStyle(
         fontFamily: 'Lato',
