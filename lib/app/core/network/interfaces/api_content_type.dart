@@ -1,0 +1,4 @@
+enum ApiContentType {
+  json,
+  formUrlEncoded,
+}
