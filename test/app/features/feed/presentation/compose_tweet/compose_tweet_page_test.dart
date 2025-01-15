@@ -10,10 +10,7 @@ import 'package:penhas/app/features/feed/presentation/compose_tweet/compose_twee
 import 'package:penhas/app/features/feed/presentation/compose_tweet/compose_tweet_page.dart';
 
 import '../../../../../utils/golden_tests.dart';
-import '../../../../../utils/widget_test_steps.dart';
 import '../../../../../utils/widget_tester_ext.dart';
-
-class MockComposeTweetController extends Mock implements ComposeTweetController{}
 
 void main() {
   late FeedUseCases mockFeedUseCases;
@@ -21,46 +18,41 @@ void main() {
   late ComposeTweetController composeTweetController;
   group(ComposeTweetPage, () {
     setUpAll(() {
-     registerFallbackValue(_FakeContext());
-      
+      registerFallbackValue(_FakeContext());
     });
 
     setUp(() {
       mockFeedUseCases = _MockFeedUseCases();
       mockNavigator = _MockComposeTweetNavigator();
-      composeTweetController = MockComposeTweetController();
-        when(() => composeTweetController.isAnonymousMode).thenReturn(false);
-        when(() => composeTweetController.isEnableCreateButton).thenReturn(true);
-        when(() => composeTweetController.createTweetPressed()).thenAnswer((_) async {});
-        
-        when(() => composeTweetController.editingController).thenReturn(TextEditingController());
-      
+      composeTweetController = ComposeTweetController(
+          navigator: mockNavigator, useCase: mockFeedUseCases);
     });
 
-    screenshotTest(
-      'should render ComposeTweetPage',
-      fileName: 'compose_tweet_page',
-      pageBuilder: () {
-       
-        return ComposeTweetPage(composeTweetController: composeTweetController,);}
-    );
+    screenshotTest('should render ComposeTweetPage',
+        fileName: 'compose_tweet_page', pageBuilder: () {
+      return ComposeTweetPage(
+        composeTweetController: composeTweetController,
+      );
+    });
 
-    screenshotTest(
-      'should render ComposeTweetPage with app bar',
-      fileName: 'compose_tweet_page_with_app_bar',
-      pageBuilder: () {
-      
-        return ComposeTweetPage(showAppBar: true, composeTweetController: composeTweetController,);}
-    );
+    screenshotTest('should render ComposeTweetPage with app bar',
+        fileName: 'compose_tweet_page_with_app_bar', pageBuilder: () {
+      return ComposeTweetPage(
+        showAppBar: true,
+        composeTweetController: composeTweetController,
+      );
+    });
 
     screenshotTest(
       'when user types a tweet, should enable create button',
       fileName: 'compose_tweet_page_with_text',
       pageBuilder: () {
-
-        return ComposeTweetPage(showAppBar: true, composeTweetController: composeTweetController,);},
+        return ComposeTweetPage(
+          showAppBar: true,
+          composeTweetController: composeTweetController,
+        );
+      },
       pumpBeforeTest: (tester) async {
-        
         await tester.enterTextAll(find.byType(TextField), 'Hello, world!');
         await tester.pumpAndSettle();
       },
@@ -69,9 +61,11 @@ void main() {
     screenshotTest(
       'when create tweet fails should show error message',
       fileName: 'compose_tweet_page_with_error',
-      pageBuilder: () => ComposeTweetPage(showAppBar: true, composeTweetController: composeTweetController,),
+      pageBuilder: () => ComposeTweetPage(
+        showAppBar: true,
+        composeTweetController: composeTweetController,
+      ),
       setUp: () {
-
         when(() => mockFeedUseCases.create(any())).thenAnswer(
           (_) async => left<Failure, FeedCache>(ServerFailure()),
         );
@@ -90,8 +84,10 @@ void main() {
         when(() => mockFeedUseCases.create(any())).thenAnswer(
           (_) async => right<Failure, FeedCache>(FeedCache(tweets: [])),
         );
-      
-        await tester.pumpWidget(buildTestableWidget(ComposeTweetPage(composeTweetController: composeTweetController,)));
+
+        await tester.pumpWidget(buildTestableWidget(ComposeTweetPage(
+          composeTweetController: composeTweetController,
+        )));
         await tester.pumpAndSettle();
 
         // act
@@ -116,7 +112,9 @@ void main() {
         when(() => mockNavigator.navigateToFeed(any()))
             .thenAnswer((_) => Future.value());
 
-        await tester.pumpWidget(buildTestableWidget(ComposeTweetPage(composeTweetController: composeTweetController,)));
+        await tester.pumpWidget(buildTestableWidget(ComposeTweetPage(
+          composeTweetController: composeTweetController,
+        )));
         await tester.pumpAndSettle();
 
         // act
@@ -124,8 +122,6 @@ void main() {
         await tester.pump();
         await tester.tap(find.text('Publicar'));
         await tester.pumpAndSettle();
-
-        await iSeeText('Publicar');
 
         // assert
         verify(() => mockNavigator.navigateToFeed(any(that: isNotNull)))
