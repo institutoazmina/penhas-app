@@ -14,14 +14,20 @@ class ChatMainTalksPage extends StatefulWidget {
   const ChatMainTalksPage({Key? key, required this.controller})
       : super(key: key);
 
-  final IChatMainTalksController controller;
+  final ChatMainTalksController controller;
 
   @override
   _ChatMainTalksPageState createState() => _ChatMainTalksPageState();
 }
 
 class _ChatMainTalksPageState extends State<ChatMainTalksPage> {
-  IChatMainTalksController get controller => widget.controller;
+  ChatMainTalksController get controller => widget.controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller.initialize();
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
