@@ -35,6 +35,14 @@ abstract class IApiProvider {
     String? body,
   });
 
+  Future<String> put({
+    required String path,
+    Map<String, String> headers,
+    Map<String, String?> parameters,
+    ApiContentType? contentType,
+    String? body,
+  });
+
   Future<String> delete({
     required String path,
     Map<String, String?> parameters,
@@ -123,6 +131,27 @@ class ApiProvider implements IApiProvider {
   }) async {
     final streamedResponse = await _execute(
       method: ApiHttpRequestMethod.post,
+      path: path,
+      body: body ?? '',
+      headers: headers,
+      parameters: parameters,
+      contentType: contentType,
+    );
+
+    final response = await _parseStreamedResponse(streamedResponse);
+    return response.body;
+  }
+
+  @override
+  Future<String> put({
+    required String path,
+    Map<String, String> headers = const {},
+    Map<String, String?> parameters = const {},
+    ApiContentType? contentType,
+    String? body,
+  }) async {
+    final streamedResponse = await _execute(
+      method: ApiHttpRequestMethod.put,
       path: path,
       body: body ?? '',
       headers: headers,
