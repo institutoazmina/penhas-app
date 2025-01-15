@@ -6,6 +6,7 @@ import 'package:http/http.dart';
 import '../../shared/logger/log.dart';
 import '../error/exceptions.dart';
 import 'api_server_configure.dart';
+import 'interfaces/api_content_type.dart';
 import 'interfaces/api_http_request_method.dart';
 
 export 'package:http/http.dart' show Response;
@@ -23,12 +24,14 @@ abstract class IApiProvider {
     required String path,
     Map<String, String> headers,
     Map<String, String?> parameters,
+    ApiContentType? contentType,
   });
 
   Future<String> post({
     required String path,
     Map<String, String> headers,
     Map<String, String?> parameters,
+    ApiContentType? contentType,
     String? body,
   });
 
@@ -95,6 +98,7 @@ class ApiProvider implements IApiProvider {
     required String path,
     Map<String, String> headers = const {},
     Map<String, String?> parameters = const {},
+    ApiContentType? contentType,
   }) async {
     final streamedResponse = await _execute(
       method: ApiHttpRequestMethod.get,
@@ -102,6 +106,7 @@ class ApiProvider implements IApiProvider {
       body: '',
       headers: headers,
       parameters: parameters,
+      contentType: contentType,
     );
 
     final response = await _parseStreamedResponse(streamedResponse);
@@ -113,6 +118,7 @@ class ApiProvider implements IApiProvider {
     required String path,
     Map<String, String> headers = const {},
     Map<String, String?> parameters = const {},
+    ApiContentType? contentType,
     String? body,
   }) async {
     final streamedResponse = await _execute(
@@ -121,6 +127,7 @@ class ApiProvider implements IApiProvider {
       body: body ?? '',
       headers: headers,
       parameters: parameters,
+      contentType: contentType,
     );
 
     final response = await _parseStreamedResponse(streamedResponse);
@@ -138,6 +145,7 @@ class ApiProvider implements IApiProvider {
       body: '',
       headers: const {},
       parameters: parameters,
+      contentType: null,
     );
 
     final response = await _parseStreamedResponse(streamedResponse);
@@ -193,12 +201,13 @@ class ApiProvider implements IApiProvider {
 extension _ApiProvider on ApiProvider {
   Future<StreamedResponse> _execute({
     required ApiHttpRequestMethod method,
+    required ApiContentType? contentType,
     required String path,
     required String body,
     Map<String, String> headers = const {},
     Map<String, String?> parameters = const {},
   }) async {
-    final header = await _setupHttpHeader(headers);
+    final header = await _setupHttpHeader(headers, contentType);
     final uriRequest = _setupHttpRequest(
       path: path,
       queryParameters: parameters,
@@ -222,12 +231,17 @@ extension _ApiProvider on ApiProvider {
 
   Future<Map<String, String>> _setupHttpHeader([
     Map<String, String> headers = const {},
+    ApiContentType? contentType,
   ]) async {
     final Map<String, String> httpHeaders = {
       'X-Api-Key': await _serverConfiguration.apiToken ?? '',
       'User-Agent': await _serverConfiguration.userAgent,
       ...headers,
     };
+
+    if (contentType != null) {
+      httpHeaders['Content-Type'] = contentType.stringify;
+    }
 
     if (!httpHeaders.containsKey('Content-Type')) {
       httpHeaders['Content-Type'] =
@@ -332,6 +346,17 @@ extension _ApiHttpRequestMethodStringify on ApiHttpRequestMethod {
         return 'PUT';
       case ApiHttpRequestMethod.delete:
         return 'DELETE';
+    }
+  }
+}
+
+extension _ApiContentTypeStringify on ApiContentType {
+  String get stringify {
+    switch (this) {
+      case ApiContentType.json:
+        return 'application/json; charset=utf-8';
+      case ApiContentType.formUrlEncoded:
+        return 'application/x-www-form-urlencoded; charset=utf-8';
     }
   }
 }
