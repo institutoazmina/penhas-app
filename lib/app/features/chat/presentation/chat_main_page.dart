@@ -14,12 +14,12 @@ class ChatMainPage extends StatefulWidget {
       {Key? key,
       required this.chatMainPeopleController,
       required this.controller,
-      required this.iChatMainTalksController})
+      required this.chatMainTalksController})
       : super(key: key);
 
   final ChatMainPeopleController chatMainPeopleController;
   final ChatMainController controller;
-  final IChatMainTalksController iChatMainTalksController;
+  final ChatMainTalksController chatMainTalksController;
 
   @override
   _ChatMainPageState createState() => _ChatMainPageState();
@@ -29,8 +29,10 @@ class _ChatMainPageState extends State<ChatMainPage> {
   ChatMainController get controller => widget.controller;
   ChatMainPeopleController get chatMainPeopleController =>
       widget.chatMainPeopleController;
-  IChatMainTalksController get iChatMainTalksController =>
-      widget.iChatMainTalksController;
+  ChatMainTalksController get chatMainTalksController =>
+      widget.chatMainTalksController;
+
+
   @override
   Widget build(BuildContext context) {
     return Observer(
@@ -50,7 +52,7 @@ extension _ChatMainBuilder on _ChatMainPageState {
       child: SizedBox.expand(
         child: Scaffold(
           body: ChatMainTalksPage(
-            controller: iChatMainTalksController,
+            controller: chatMainTalksController,
           ),
         ),
       ),
@@ -96,7 +98,7 @@ extension _ChatMainPageStatePrivate on _ChatMainPageState {
               controller: chatMainPeopleController,
             )
           : ChatMainTalksPage(
-              controller: iChatMainTalksController,
+              controller: chatMainTalksController,
             ),
     );
     return TabBarView(children: widgets.toList());

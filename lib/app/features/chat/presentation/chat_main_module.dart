@@ -27,7 +27,7 @@ class ChatMainModule extends WidgetModule {
             modulesServices: i.get<IAppModulesServices>(),
           ),
         ),
-        Bind.factory<IChatMainTalksController>(
+        Bind.factory<ChatMainTalksController>(
           (i) => ChatMainTalksController(
             chatChannelRepository: i.get<IChatChannelRepository>(),
           ),
@@ -54,6 +54,6 @@ class ChatMainModule extends WidgetModule {
   Widget get view => ChatMainPage(
         chatMainPeopleController: Modular.get<ChatMainPeopleController>(),
         controller: Modular.get<ChatMainController>(),
-        iChatMainTalksController: Modular.get<IChatMainTalksController>(),
+        chatMainTalksController: Modular.get<ChatMainTalksController>(),
       );
 }
