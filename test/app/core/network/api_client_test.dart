@@ -7,6 +7,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
+import 'package:penhas/app/core/network/interfaces/api_content_type.dart';
 
 class MockFile extends Mock implements File {}
 
@@ -97,6 +98,54 @@ void main() {
         reason: 'Custom property',
       );
     });
+    test(
+      'default content type is formUrlEncoded',
+      () async {
+        // arrange
+        const String path = 'some_path';
+        when(() => apiClient.send(any())).thenAnswer(
+          (_) async => http.StreamedResponse(
+            http.ByteStream.fromBytes(utf8.encode('{"key": "value"}')),
+            HttpStatus.ok,
+          ),
+        );
+        final sut = ApiProvider(
+          serverConfiguration: serverConfiguration,
+          apiClient: apiClient,
+        );
+        // act
+        await sut.get(path: path);
+        // assert
+        final captured = verify(() => apiClient.send(captureAny())).captured;
+        expect(captured.first.headers['Content-Type'],
+            'application/x-www-form-urlencoded; charset=utf-8');
+      },
+    );
+
+    test(
+      'content type is json',
+      () async {
+        // arrange
+        const String path = 'some_path';
+        when(() => apiClient.send(any())).thenAnswer(
+          (_) async => http.StreamedResponse(
+            http.ByteStream.fromBytes(utf8.encode('{"key": "value"}')),
+            HttpStatus.ok,
+          ),
+        );
+        final sut = ApiProvider(
+          serverConfiguration: serverConfiguration,
+          apiClient: apiClient,
+        );
+        // act
+        await sut.get(path: path, contentType: ApiContentType.json);
+        // assert
+        final captured = verify(() => apiClient.send(captureAny())).captured;
+        expect(captured.first.headers['Content-Type'],
+            'application/json; charset=utf-8');
+      },
+    );
+
     test('map correct exception from http code', () async {
       final errors = {
         401: throwsA(isA<ApiProviderSessionError>()),
