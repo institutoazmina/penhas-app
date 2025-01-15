@@ -32,7 +32,6 @@ class _ChatMainPageState extends State<ChatMainPage> {
   ChatMainTalksController get chatMainTalksController =>
       widget.chatMainTalksController;
 
-
   @override
   Widget build(BuildContext context) {
     return Observer(

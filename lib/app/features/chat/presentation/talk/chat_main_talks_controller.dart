@@ -25,8 +25,8 @@ abstract class IChatMainTalksController with Store, MapFailureMessage {
   final IChatChannelRepository _chatChannelRepository;
 
   Future<void> initialize() async {
-     await loadScreen();
-   }
+    await loadScreen();
+  }
 
   @observable
   ObservableFuture<Either<Failure, ChatChannelAvailableEntity>>? _fetchProgress;

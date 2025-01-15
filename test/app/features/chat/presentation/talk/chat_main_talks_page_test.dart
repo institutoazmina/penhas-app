@@ -24,11 +24,12 @@ void main() {
   group(ChatMainTalksPage, () {
     late IChatChannelRepository mockRepository;
     late IModularNavigator mockNavigator;
-late ChatMainTalksController controller;
+    late ChatMainTalksController controller;
     setUp(() {
       mockRepository = _MockChatChannelRepository();
       Modular.navigatorDelegate = mockNavigator = _MockModularNavigate();
-      controller = ChatMainTalksController(chatChannelRepository: mockRepository);
+      controller =
+          ChatMainTalksController(chatChannelRepository: mockRepository);
 
       when(() => mockRepository.listChannel()).thenAnswer(
         (_) async => right(_chatChannelAvailableFixture),
@@ -38,13 +39,17 @@ late ChatMainTalksController controller;
     screenshotTest(
       'loaded state should be rendered',
       fileName: 'chat_main_talks_page_initial_state',
-      pageBuilder: () => ChatMainTalksPage(controller: controller,),
+      pageBuilder: () => ChatMainTalksPage(
+        controller: controller,
+      ),
     );
 
     screenshotTest(
       'error state should be rendered',
       fileName: 'chat_main_talks_page_error_state',
-      pageBuilder: () => ChatMainTalksPage(controller: controller,),
+      pageBuilder: () => ChatMainTalksPage(
+        controller: controller,
+      ),
       setUp: () {
         when(() => mockRepository.listChannel()).thenAnswer(
           (_) async => left(ServerFailure()),
@@ -56,7 +61,9 @@ late ChatMainTalksController controller;
       'should navigate to assistant quiz when open assistant card',
       (tester) => mockNetworkImages(() async {
         // arrange
-        final widget = buildTestableWidget(ChatMainTalksPage(controller: controller,));
+        final widget = buildTestableWidget(ChatMainTalksPage(
+          controller: controller,
+        ));
         await tester.pumpWidget(widget);
         await tester.pumpAndSettle();
         when(
@@ -85,7 +92,9 @@ late ChatMainTalksController controller;
       'should navigate to support chat when open support card',
       (tester) => mockNetworkImages(() async {
         // arrange
-        final widget = buildTestableWidget(ChatMainTalksPage(controller: controller,));
+        final widget = buildTestableWidget(ChatMainTalksPage(
+          controller: controller,
+        ));
         await tester.pumpWidget(widget);
         await tester.pumpAndSettle();
         when(
@@ -113,7 +122,9 @@ late ChatMainTalksController controller;
       'should navigate to chat page when open conversation card',
       (tester) => mockNetworkImages(() async {
         // arrange
-        final widget = buildTestableWidget(ChatMainTalksPage(controller: controller,));
+        final widget = buildTestableWidget(ChatMainTalksPage(
+          controller: controller,
+        ));
         await tester.pumpWidget(widget);
         await tester.pumpAndSettle();
         when(
@@ -217,8 +228,6 @@ late ChatMainTalksController controller;
     );
   });
 }
-
- 
 
 class _MockModularNavigate extends Mock implements IModularNavigator {}
 

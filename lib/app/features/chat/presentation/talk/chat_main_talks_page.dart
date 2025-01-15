@@ -28,6 +28,7 @@ class _ChatMainTalksPageState extends State<ChatMainTalksPage> {
     super.initState();
     controller.initialize();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
