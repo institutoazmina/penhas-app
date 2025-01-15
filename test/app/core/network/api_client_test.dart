@@ -348,6 +348,36 @@ void main() {
       });
     });
 
+    group('put', () {
+      test('return response', () async {
+        // arrange
+        const String path = 'some_path';
+        final headers = <String, String>{'key1': 'value1'};
+        final parameters = <String, String>{'param1': 'value1'};
+        const expected = '{"key": "value"}';
+        when(() => apiClient.send(any())).thenAnswer(
+          (_) async => http.StreamedResponse(
+            http.ByteStream.fromBytes(utf8.encode(expected)),
+            HttpStatus.ok,
+          ),
+        );
+        final sut = ApiProvider(
+          serverConfiguration: serverConfiguration,
+          apiClient: apiClient,
+        );
+        // act
+        final actual = await sut.put(
+          path: path,
+          headers: headers,
+          parameters: parameters,
+        );
+        // assert
+        expect(actual, expected);
+        final captured = verify(() => apiClient.send(captureAny())).captured;
+        expect(captured.first.method, 'PUT');
+      });
+    });
+
     group('delete', () {
       test('return response', () async {
         // arrange
