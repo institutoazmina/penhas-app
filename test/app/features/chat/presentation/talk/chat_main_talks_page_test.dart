@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart' show right, left;
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12,27 +13,23 @@ import 'package:penhas/app/features/chat/domain/entities/chat_channel_entity.dar
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entity.dart';
 import 'package:penhas/app/features/chat/domain/entities/chat_user_entity.dart';
 import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
-import 'package:penhas/app/features/chat/presentation/chat_main_module.dart';
+import 'package:penhas/app/features/chat/presentation/pages/chat_assistant_card.dart';
+import 'package:penhas/app/features/chat/presentation/pages/chat_channel_card.dart';
+import 'package:penhas/app/features/chat/presentation/talk/chat_main_talks_controller.dart';
 import 'package:penhas/app/features/chat/presentation/talk/chat_main_talks_page.dart';
 
 import '../../../../../utils/golden_tests.dart';
-import '../../../../../utils/module_testing.dart';
 
 void main() {
   group(ChatMainTalksPage, () {
     late IChatChannelRepository mockRepository;
     late IModularNavigator mockNavigator;
-
+    late ChatMainTalksController controller;
     setUp(() {
       mockRepository = _MockChatChannelRepository();
       Modular.navigatorDelegate = mockNavigator = _MockModularNavigate();
-
-      loadModules(
-        [ChatMainModule()],
-        overrides: [
-          Bind<IChatChannelRepository>((i) => mockRepository),
-        ],
-      );
+      controller =
+          ChatMainTalksController(chatChannelRepository: mockRepository);
 
       when(() => mockRepository.listChannel()).thenAnswer(
         (_) async => right(_chatChannelAvailableFixture),
@@ -42,13 +39,17 @@ void main() {
     screenshotTest(
       'loaded state should be rendered',
       fileName: 'chat_main_talks_page_initial_state',
-      pageBuilder: () => ChatMainTalksPage(),
+      pageBuilder: () => ChatMainTalksPage(
+        controller: controller,
+      ),
     );
 
     screenshotTest(
       'error state should be rendered',
       fileName: 'chat_main_talks_page_error_state',
-      pageBuilder: () => ChatMainTalksPage(),
+      pageBuilder: () => ChatMainTalksPage(
+        controller: controller,
+      ),
       setUp: () {
         when(() => mockRepository.listChannel()).thenAnswer(
           (_) async => left(ServerFailure()),
@@ -60,7 +61,9 @@ void main() {
       'should navigate to assistant quiz when open assistant card',
       (tester) => mockNetworkImages(() async {
         // arrange
-        final widget = buildTestableWidget(ChatMainTalksPage());
+        final widget = buildTestableWidget(ChatMainTalksPage(
+          controller: controller,
+        ));
         await tester.pumpWidget(widget);
         await tester.pumpAndSettle();
         when(
@@ -89,7 +92,9 @@ void main() {
       'should navigate to support chat when open support card',
       (tester) => mockNetworkImages(() async {
         // arrange
-        final widget = buildTestableWidget(ChatMainTalksPage());
+        final widget = buildTestableWidget(ChatMainTalksPage(
+          controller: controller,
+        ));
         await tester.pumpWidget(widget);
         await tester.pumpAndSettle();
         when(
@@ -117,7 +122,9 @@ void main() {
       'should navigate to chat page when open conversation card',
       (tester) => mockNetworkImages(() async {
         // arrange
-        final widget = buildTestableWidget(ChatMainTalksPage());
+        final widget = buildTestableWidget(ChatMainTalksPage(
+          controller: controller,
+        ));
         await tester.pumpWidget(widget);
         await tester.pumpAndSettle();
         when(
@@ -135,6 +142,86 @@ void main() {
           () => mockNavigator.pushNamed(
             '/mainboard/chat/talk-with-mary',
             arguments: ChatChannelOpenEntity(token: 'talk-with-mary'),
+          ),
+        ).called(1);
+      }),
+    );
+
+    testWidgets(
+      'should display loading state',
+      (tester) => mockNetworkImages(() async {
+        // arrange
+        when(() => mockRepository.listChannel()).thenAnswer(
+          (_) async => right(_chatChannelAvailableFixture),
+        );
+        // act
+        await tester.pumpWidget(
+          MaterialApp(
+            home: ChatMainTalksPage(controller: controller),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        // Assert
+        expect(find.byType(ChatChannelCard), findsNWidgets(2));
+        expect(find.byType(ChatAssistantCard), findsNWidgets(2));
+        expect(find.text('Suas conversas (2)'), findsOneWidget);
+      }),
+    );
+
+    testWidgets(
+      'should trigger refresh and fetch new data when pull to refresh is activated',
+      (tester) => mockNetworkImages(() async {
+        // arrange
+        when(() => mockRepository.listChannel()).thenAnswer(
+          (_) async => right(_chatChannelAvailableFixture),
+        );
+        // act
+        await tester.pumpWidget(
+          MaterialApp(
+            home: ChatMainTalksPage(controller: controller),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        // Primeira chamada durante initialize
+        verify(() => mockRepository.listChannel()).called(1);
+
+        await tester.drag(find.byType(ListView), const Offset(0, 300));
+        await tester.pumpAndSettle();
+
+        // Assert
+        // Segunda chamada durante o refresh
+        verify(() => mockRepository.listChannel()).called(1);
+      }),
+    );
+
+    testWidgets(
+      'should navigate to chat when assistant card is tapped',
+      (tester) => mockNetworkImages(() async {
+        // arrange
+        when(() => mockRepository.listChannel()).thenAnswer(
+          (_) async => right(_chatChannelAvailableFixture),
+        );
+
+        when(() => mockNavigator.popAndPushNamed(any(),
+                arguments: any(named: 'arguments')))
+            .thenAnswer((_) => Future.value());
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: ChatMainTalksPage(controller: controller),
+          ),
+        );
+        await tester.pumpAndSettle();
+        // act
+        await tester.tap(find.text('Assistente PenhaS'));
+        await tester.pumpAndSettle();
+        // assert
+        verify(
+          () => mockNavigator.popAndPushNamed(
+            '/quiz?origin=chat',
+            arguments: any(named: 'arguments'),
           ),
         ).called(1);
       }),
