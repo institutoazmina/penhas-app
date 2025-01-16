@@ -6,7 +6,8 @@ import 'package:http/http.dart';
 import '../../shared/logger/log.dart';
 import '../error/exceptions.dart';
 import 'api_server_configure.dart';
-import 'network_info.dart';
+import 'interfaces/api_content_type.dart';
+import 'interfaces/api_http_request_method.dart';
 
 export 'package:http/http.dart' show Response;
 
@@ -23,12 +24,22 @@ abstract class IApiProvider {
     required String path,
     Map<String, String> headers,
     Map<String, String?> parameters,
+    ApiContentType? contentType,
   });
 
   Future<String> post({
     required String path,
     Map<String, String> headers,
     Map<String, String?> parameters,
+    ApiContentType? contentType,
+    String? body,
+  });
+
+  Future<String> put({
+    required String path,
+    Map<String, String> headers,
+    Map<String, String?> parameters,
+    ApiContentType? contentType,
     String? body,
   });
 
@@ -55,15 +66,17 @@ abstract class IApiProvider {
 class ApiProvider implements IApiProvider {
   ApiProvider({
     required IApiServerConfigure serverConfiguration,
-    required INetworkInfo networkInfo,
     Client? apiClient,
-  })  : _networkInfo = networkInfo,
-        _apiClient = apiClient ?? Client(), // coverage:ignore-line
+  })  : _httpClient = apiClient ?? Client(), // coverage:ignore-line
         _serverConfiguration = serverConfiguration;
 
-  final Client _apiClient;
-  final INetworkInfo _networkInfo;
+  final Client _httpClient;
   final IApiServerConfigure _serverConfiguration;
+
+  static const _successfulResponse = {200, 201, 202, 204};
+  static const _invalidRequest = {400, 401, 403, 422};
+  static const _serverExceptions = {500, 501, 505};
+  static const _serverTimeout = {502, 503, 504};
 
   @override
   Future<Response> request({
@@ -79,7 +92,7 @@ class ApiProvider implements IApiProvider {
     );
     final header = await _setupHttpHeader(headers);
 
-    final response = await _apiClient.send(
+    final response = await _httpClient.send(
       Request(method, uriRequest)
         ..body = body
         ..headers.addAll(header),
@@ -93,16 +106,19 @@ class ApiProvider implements IApiProvider {
     required String path,
     Map<String, String> headers = const {},
     Map<String, String?> parameters = const {},
+    ApiContentType? contentType,
   }) async {
-    final Uri uriRequest = _setupHttpRequest(
+    final streamedResponse = await _execute(
+      method: ApiHttpRequestMethod.get,
       path: path,
-      queryParameters: parameters,
+      body: '',
+      headers: headers,
+      parameters: parameters,
+      contentType: contentType,
     );
-    final header = await _setupHttpHeader(headers);
-    final response = await _apiClient.get(uriRequest, headers: header);
-    final parsed = await _parseResponse(response);
 
-    return parsed.body;
+    final response = await _parseStreamedResponse(streamedResponse);
+    return response.body;
   }
 
   @override
@@ -110,34 +126,59 @@ class ApiProvider implements IApiProvider {
     required String path,
     Map<String, String> headers = const {},
     Map<String, String?> parameters = const {},
+    ApiContentType? contentType,
     String? body,
   }) async {
-    final Uri uriRequest = _setupHttpRequest(
+    final streamedResponse = await _execute(
+      method: ApiHttpRequestMethod.post,
       path: path,
-      queryParameters: parameters,
+      body: body ?? '',
+      headers: headers,
+      parameters: parameters,
+      contentType: contentType,
     );
-    final header = await _setupHttpHeader(headers);
-    final response =
-        await _apiClient.post(uriRequest, headers: header, body: body);
-    final parsed = await _parseResponse(response);
 
-    return parsed.body;
+    final response = await _parseStreamedResponse(streamedResponse);
+    return response.body;
+  }
+
+  @override
+  Future<String> put({
+    required String path,
+    Map<String, String> headers = const {},
+    Map<String, String?> parameters = const {},
+    ApiContentType? contentType,
+    String? body,
+  }) async {
+    final streamedResponse = await _execute(
+      method: ApiHttpRequestMethod.put,
+      path: path,
+      body: body ?? '',
+      headers: headers,
+      parameters: parameters,
+      contentType: contentType,
+    );
+
+    final response = await _parseStreamedResponse(streamedResponse);
+    return response.body;
   }
 
   @override
   Future<String> delete({
-    String? path,
+    required String path,
     Map<String, String?> parameters = const {},
   }) async {
-    final Uri uriRequest = _setupHttpRequest(
+    final streamedResponse = await _execute(
+      method: ApiHttpRequestMethod.delete,
       path: path,
-      queryParameters: parameters,
+      body: '',
+      headers: const {},
+      parameters: parameters,
+      contentType: null,
     );
-    final header = await _setupHttpHeader({});
-    final response = await _apiClient.delete(uriRequest, headers: header);
-    final parsed = await _parseResponse(response);
 
-    return parsed.body;
+    final response = await _parseStreamedResponse(streamedResponse);
+    return response.body;
   }
 
   @override
@@ -158,7 +199,7 @@ class ApiProvider implements IApiProvider {
       ..fields.addAll(fields)
       ..files.add(file);
 
-    final response = await _apiClient.upload(request);
+    final response = await _httpClient.upload(request);
     final parsed = await _parseResponse(response);
 
     return parsed.body;
@@ -178,7 +219,7 @@ class ApiProvider implements IApiProvider {
 
     final header = await _setupHttpHeader(headers);
 
-    final response = await _apiClient.get(uriRequest, headers: header);
+    final response = await _httpClient.get(uriRequest, headers: header);
     final parsed = await _parseResponse(response);
     file.writeAsBytesSync(parsed.bodyBytes);
 
@@ -187,14 +228,49 @@ class ApiProvider implements IApiProvider {
 }
 
 extension _ApiProvider on ApiProvider {
+  Future<StreamedResponse> _execute({
+    required ApiHttpRequestMethod method,
+    required ApiContentType? contentType,
+    required String path,
+    required String body,
+    Map<String, String> headers = const {},
+    Map<String, String?> parameters = const {},
+  }) async {
+    final header = await _setupHttpHeader(headers, contentType);
+    final uriRequest = _setupHttpRequest(
+      path: path,
+      queryParameters: parameters,
+    );
+    final myRequest = Request(method.stringify, uriRequest)
+      ..headers.addAll(header)
+      ..body = body;
+
+    try {
+      final client = _httpClient;
+      final response = await client.send(myRequest);
+      return response;
+    } on SocketException catch (e, stack) {
+      logError(e, stack);
+      throw InternetConnectionException();
+    } catch (e, stack) {
+      logError(e, stack);
+      throw ApiProviderException(bodyContent: {'parserError': e.toString()});
+    }
+  }
+
   Future<Map<String, String>> _setupHttpHeader([
     Map<String, String> headers = const {},
+    ApiContentType? contentType,
   ]) async {
     final Map<String, String> httpHeaders = {
       'X-Api-Key': await _serverConfiguration.apiToken ?? '',
       'User-Agent': await _serverConfiguration.userAgent,
       ...headers,
     };
+
+    if (contentType != null) {
+      httpHeaders['Content-Type'] = contentType.stringify;
+    }
 
     if (!httpHeaders.containsKey('Content-Type')) {
       httpHeaders['Content-Type'] =
@@ -214,6 +290,33 @@ extension _ApiProvider on ApiProvider {
       path: path,
       queryParameters: query,
     );
+  }
+
+  Future<Response> _parseStreamedResponse(StreamedResponse response) async {
+    return response.stream.bytesToString().then((body) async {
+      final httpStatusCode = response.statusCode;
+
+      if (ApiProvider._successfulResponse.contains(httpStatusCode)) {
+        return Response(body, httpStatusCode);
+      } else if (ApiProvider._invalidRequest.contains(httpStatusCode)) {
+        throw ApiProviderSessionError();
+      } else if (ApiProvider._serverExceptions.contains(httpStatusCode)) {
+        throw NetworkServerException();
+      } else if (ApiProvider._serverTimeout.contains(httpStatusCode)) {
+        throw NetworkServerException();
+      } else {
+        throw ApiProviderException(bodyContent: _parseBody(body));
+      }
+    });
+  }
+
+  Map<String, dynamic> _parseBody(String body) {
+    try {
+      return jsonDecode(body);
+    } catch (e, stack) {
+      logError(e, stack);
+      return {'parserError': e.toString()};
+    }
   }
 
   Future<Response> _parseResponse(BaseResponse response) async {
@@ -236,10 +339,6 @@ extension _ApiProvider on ApiProvider {
     } else if (serverExceptions.contains(statusCode)) {
       throw NetworkServerException();
     } else {
-      if (await _networkInfo.isConnected == false) {
-        throw InternetConnectionException();
-      }
-
       late String jsonData;
       if (response is StreamedResponse) {
         jsonData = await response.stream.bytesToString();
@@ -263,4 +362,30 @@ extension _ApiProvider on ApiProvider {
 extension _HttpClientX on Client {
   Future<StreamedResponse> upload(MultipartRequest request) =>
       runWithClient(() => request.send(), () => this);
+}
+
+extension _ApiHttpRequestMethodStringify on ApiHttpRequestMethod {
+  String get stringify {
+    switch (this) {
+      case ApiHttpRequestMethod.get:
+        return 'GET';
+      case ApiHttpRequestMethod.post:
+        return 'POST';
+      case ApiHttpRequestMethod.put:
+        return 'PUT';
+      case ApiHttpRequestMethod.delete:
+        return 'DELETE';
+    }
+  }
+}
+
+extension _ApiContentTypeStringify on ApiContentType {
+  String get stringify {
+    switch (this) {
+      case ApiContentType.json:
+        return 'application/json; charset=utf-8';
+      case ApiContentType.formUrlEncoded:
+        return 'application/x-www-form-urlencoded; charset=utf-8';
+    }
+  }
 }
