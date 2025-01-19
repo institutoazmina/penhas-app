@@ -7,7 +7,6 @@ import '../../core/network/api_server_configure.dart';
 import '../../core/network/network_info.dart';
 import '../../core/remoteconfig/i_remote_config.dart';
 import '../../shared/navigation/app_navigator.dart';
-import '../../shared/widgets/dialog_route.dart';
 import '../appstate/domain/usecases/app_state_usecase.dart';
 import '../help_center/presentation/pages/tutorial/guardian/guardian_tutorial_page.dart';
 import 'data/datasources/quiz_data_source.dart';
@@ -92,7 +91,6 @@ class QuizModule extends Module {
           child: (_, args) => QuizStartPage(
             controller: Modular.get(),
           ),
-          routeGenerator: dialogRouteGenerator,
         ),
         ChildRoute(
           '/tutorial/help-center',
