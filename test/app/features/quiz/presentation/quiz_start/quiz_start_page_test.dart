@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart' show Either, left, right;
+import 'package:dartz/dartz.dart' show left, right;
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -8,10 +8,9 @@ import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.da
 import 'package:penhas/app/features/quiz/domain/start_quiz.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz_start/quiz_start_page.dart';
 import 'package:penhas/app/features/quiz/quiz_module.dart';
+import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
 
 import '../../../../../utils/module_testing.dart';
-
-typedef _PageResult = Either<Failure, dynamic>;
 
 class _MockStartQuizUseCase extends Mock implements StartQuizUseCase {}
 
@@ -81,7 +80,7 @@ void main() {
     );
 
     testWidgets(
-      'should pop with failure when start quiz fails',
+      'should display failure state when start quiz fails',
       (tester) async {
         // arrange
         final failure = UnknownFailure();
@@ -96,12 +95,10 @@ void main() {
           ),
         );
 
-        await tester.pump();
+        await tester.pumpAndSettle();
 
         // assert
-        verify(
-          () => mockNavigator.pop<_PageResult>(left(failure)),
-        ).called(1);
+        expect(find.byType(SupportCenterGeneralError), findsOneWidget);
       },
     );
 
