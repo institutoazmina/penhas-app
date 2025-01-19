@@ -89,7 +89,9 @@ class QuizModule extends Module {
         ),
         ChildRoute(
           '/start',
-          child: (_, args) => const QuizStartPage(),
+          child: (_, args) => QuizStartPage(
+            controller: Modular.get(),
+          ),
           routeGenerator: dialogRouteGenerator,
         ),
         ChildRoute(

@@ -90,7 +90,9 @@ void main() {
         // act
         await tester.pumpWidget(
           buildTestableWidget(
-            QuizStartPage(),
+            QuizStartPage(
+              controller: Modular.get(),
+            ),
           ),
         );
 
@@ -120,7 +122,9 @@ void main() {
         // act
         await tester.pumpWidget(
           buildTestableWidget(
-            QuizStartPage(),
+            QuizStartPage(
+              controller: Modular.get(),
+            ),
           ),
         );
 
