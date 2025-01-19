@@ -108,7 +108,7 @@ void main() {
         );
 
         // act
-        await tester.pump();
+        await tester.pumpAndSettle();
 
         // assert
         expect(find.byType(QuizStartPage), findsOneWidget);
@@ -160,10 +160,9 @@ void main() {
         );
 
         // act
-        await tester.pump();
+        await tester.pumpAndSettle();
 
         // assert
-        // will be replaced by the QuizPage widget soon
         expect(find.byType(QuizPage), findsOneWidget);
       },
     );
