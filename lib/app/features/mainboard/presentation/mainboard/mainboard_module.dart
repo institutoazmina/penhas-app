@@ -161,7 +161,7 @@ class MainboardModule extends Module {
         ChildRoute(
           '/tweet/:id',
           child: (context, args) => DetailTweetPage(
-            tweetController: Modular.get<ITweetController>(),
+            tweetController: Modular.get<ITweetController>(), detailTweetController: Modular.get<DetailTweetController>(),
           ),
           transition: TransitionType.rightToLeft,
         ),
