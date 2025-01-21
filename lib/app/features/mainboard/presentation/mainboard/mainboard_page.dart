@@ -11,7 +11,8 @@ import 'pages/mainboard_bottom_navigation_page.dart';
 class MainboardPage extends StatefulWidget {
   const MainboardPage({
     Key? key,
-    required this.controller, required this.composeTweetController,
+    required this.controller,
+    required this.composeTweetController,
   }) : super(key: key);
 
   final MainboardController controller;
@@ -31,7 +32,8 @@ class MainboardPage extends StatefulWidget {
 class MainboardPageState extends State<MainboardPage>
     with WidgetsBindingObserver {
   MainboardController get controller => widget.controller;
-  ComposeTweetController get composeTweetController => widget.composeTweetController;
+  ComposeTweetController get composeTweetController =>
+      widget.composeTweetController;
 
   @override
   void initState() {
@@ -63,7 +65,8 @@ class MainboardPageState extends State<MainboardPage>
           key: MainboardPage.mainBoardKey,
           body: MainboardBodyPage(
             pages: controller.mainboardStore.pages,
-            pageController: controller.mainboardStore.pageController, composeTweetController: composeTweetController,
+            pageController: controller.mainboardStore.pageController,
+            composeTweetController: composeTweetController,
           ),
         ),
         bottomNavigationBar: MainboardBottomNavigationPage(

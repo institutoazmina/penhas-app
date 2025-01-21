@@ -26,8 +26,8 @@ class MockNotificationRepository extends Mock
 
 class FakeTimer extends Fake implements Timer {}
 
-class MockComposeTweetController extends Mock implements ComposeTweetController {}
-
+class MockComposeTweetController extends Mock
+    implements ComposeTweetController {}
 
 void main() {
   late MainboardController controller;
@@ -68,7 +68,10 @@ void main() {
     screenshotTest(
       'mainboard page',
       fileName: 'mainboard_page',
-      pageBuilder: () => MainboardPage(controller: controller, composeTweetController: composeTweetController,),
+      pageBuilder: () => MainboardPage(
+        controller: controller,
+        composeTweetController: composeTweetController,
+      ),
       skip: true,
       reason:
           'possuiu vários elementos difíceis de testar. Vou revisar esta tela para melhorar a cobertura de testes',

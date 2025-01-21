@@ -130,7 +130,8 @@ class MainboardModule extends Module {
         ChildRoute(
           Modular.initialRoute,
           child: (_, args) => MainboardPage(
-            controller: Modular.get<MainboardController>(), composeTweetController: Modular.get<ComposeTweetController>(),
+            controller: Modular.get<MainboardController>(),
+            composeTweetController: Modular.get<ComposeTweetController>(),
           ),
         ),
         ...tweetRoutes,
@@ -151,7 +152,10 @@ class MainboardModule extends Module {
         ),
         ChildRoute(
           '/compose',
-          child: (_, args) =>  ComposeTweetPage(showAppBar: true, composeTweetController: Modular.get<ComposeTweetController>(),),
+          child: (_, args) => ComposeTweetPage(
+            showAppBar: true,
+            composeTweetController: Modular.get<ComposeTweetController>(),
+          ),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
