@@ -15,7 +15,8 @@ class ComposeTweetPage extends StatefulWidget {
   const ComposeTweetPage({
     Key? key,
     this.title = 'Publicar',
-    this.showAppBar = false, required this.composeTweetController,
+    this.showAppBar = false,
+    required this.composeTweetController,
   }) : super(key: key);
 
   final String title;
@@ -26,8 +27,7 @@ class ComposeTweetPage extends StatefulWidget {
   _ComposeTweetPageState createState() => _ComposeTweetPageState();
 }
 
-class _ComposeTweetPageState
-    extends State<ComposeTweetPage>
+class _ComposeTweetPageState extends State<ComposeTweetPage>
     with SnackBarHandler {
   final String inputHint = 'Deixe seu comentário';
   final String anonymousHint =
@@ -35,7 +35,7 @@ class _ComposeTweetPageState
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
-   ComposeTweetController get controller => widget.composeTweetController;
+  ComposeTweetController get controller => widget.composeTweetController;
 
   TextStyle get _kTextStyleNewTweetAnonymousHint => const TextStyle(
         fontFamily: 'Lato',

@@ -13,7 +13,8 @@ class MainboardBodyPage extends StatelessWidget {
   const MainboardBodyPage({
     Key? key,
     required this.pages,
-    required this.pageController, required this.composeTweetController,
+    required this.pageController,
+    required this.composeTweetController,
   }) : super(key: key);
 
   final List<MainboardState> pages;
@@ -34,7 +35,9 @@ class MainboardBodyPage extends StatelessWidget {
       chat: () => ChatMainModule(),
       feed: () => FeedModule(),
       escapeManual: () => EscapeManualModule(),
-      compose: () =>  ComposeTweetPage(composeTweetController: composeTweetController,),
+      compose: () => ComposeTweetPage(
+        composeTweetController: composeTweetController,
+      ),
       supportPoint: () => SupportCenterModule(),
       helpCenter: () => HelpCenterModule(),
     );
