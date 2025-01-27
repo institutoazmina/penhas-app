@@ -22,7 +22,8 @@ class DetailTweetPage extends StatefulWidget {
   const DetailTweetPage({
     Key? key,
     this.title = 'DetailTweet',
-    required this.tweetController, required this.detailTweetController,
+    required this.tweetController,
+    required this.detailTweetController,
   }) : super(key: key);
 
   final String title;
@@ -33,10 +34,9 @@ class DetailTweetPage extends StatefulWidget {
   _DetailTweetPageState createState() => _DetailTweetPageState();
 }
 
-class _DetailTweetPageState
-    extends State<DetailTweetPage>
+class _DetailTweetPageState extends State<DetailTweetPage>
     with SnackBarHandler {
-      DetailTweetController get _controller => widget.detailTweetController;
+  DetailTweetController get _controller => widget.detailTweetController;
   List<ReactionDisposer>? _disposers;
   final _scrollController = AutoScrollController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
