@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
+import '../../../feed/presentation/compose_tweet/compose_tweet_controller.dart';
 import '../../../main_menu/presentation/penhas_drawer_page.dart';
 import 'mainboard_controller.dart';
 import 'pages/mainboard_app_bar_page.dart';
@@ -11,9 +12,11 @@ class MainboardPage extends StatefulWidget {
   const MainboardPage({
     Key? key,
     required this.controller,
+    required this.composeTweetController,
   }) : super(key: key);
 
   final MainboardController controller;
+  final ComposeTweetController composeTweetController;
 
   static final mainBoardKey = GlobalKey<ScaffoldState>(
     debugLabel: 'main-board-scaffold-key',
@@ -29,6 +32,8 @@ class MainboardPage extends StatefulWidget {
 class MainboardPageState extends State<MainboardPage>
     with WidgetsBindingObserver {
   MainboardController get controller => widget.controller;
+  ComposeTweetController get composeTweetController =>
+      widget.composeTweetController;
 
   @override
   void initState() {
@@ -61,6 +66,7 @@ class MainboardPageState extends State<MainboardPage>
           body: MainboardBodyPage(
             pages: controller.mainboardStore.pages,
             pageController: controller.mainboardStore.pageController,
+            composeTweetController: composeTweetController,
           ),
         ),
         bottomNavigationBar: MainboardBottomNavigationPage(

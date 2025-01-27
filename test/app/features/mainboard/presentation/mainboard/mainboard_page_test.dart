@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mobx/mobx.dart' as mobx;
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_preferences_use_case.dart';
+import 'package:penhas/app/features/feed/presentation/compose_tweet/compose_tweet_controller.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_store.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_controller.dart';
@@ -25,8 +26,12 @@ class MockNotificationRepository extends Mock
 
 class FakeTimer extends Fake implements Timer {}
 
+class MockComposeTweetController extends Mock
+    implements ComposeTweetController {}
+
 void main() {
   late MainboardController controller;
+  late ComposeTweetController composeTweetController;
   late MainboardStore mainboardStore;
   late InactivityLogoutUseCase inactivityLogoutUseCase;
   late INotificationRepository notification;
@@ -56,13 +61,17 @@ void main() {
       notification: notification,
       notificationTimer: notificationTimer,
     );
+    composeTweetController = MockComposeTweetController();
   });
 
   group(MainboardPage, () {
     screenshotTest(
       'mainboard page',
       fileName: 'mainboard_page',
-      pageBuilder: () => MainboardPage(controller: controller),
+      pageBuilder: () => MainboardPage(
+        controller: controller,
+        composeTweetController: composeTweetController,
+      ),
       skip: true,
       reason:
           'possuiu vários elementos difíceis de testar. Vou revisar esta tela para melhorar a cobertura de testes',
