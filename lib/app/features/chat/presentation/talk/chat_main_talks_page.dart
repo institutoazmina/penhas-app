@@ -26,7 +26,9 @@ class _ChatMainTalksPageState extends State<ChatMainTalksPage> {
   @override
   void initState() {
     super.initState();
-    controller.initialize();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.initialize();
+    });
   }
 
   @override
