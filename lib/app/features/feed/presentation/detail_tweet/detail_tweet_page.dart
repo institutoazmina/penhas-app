@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
@@ -24,18 +23,20 @@ class DetailTweetPage extends StatefulWidget {
     Key? key,
     this.title = 'DetailTweet',
     required this.tweetController,
+    required this.detailTweetController,
   }) : super(key: key);
 
   final String title;
   final ITweetController tweetController;
+  final DetailTweetController detailTweetController;
 
   @override
   _DetailTweetPageState createState() => _DetailTweetPageState();
 }
 
-class _DetailTweetPageState
-    extends ModularState<DetailTweetPage, DetailTweetController>
+class _DetailTweetPageState extends State<DetailTweetPage>
     with SnackBarHandler {
+  DetailTweetController get _controller => widget.detailTweetController;
   List<ReactionDisposer>? _disposers;
   final _scrollController = AutoScrollController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -65,7 +66,7 @@ class _DetailTweetPageState
       d();
     }
     _scrollController.dispose();
-    controller.dispose();
+    _controller.dispose();
   }
 
   @override
@@ -96,8 +97,8 @@ class _DetailTweetPageState
   }
 
   Widget _buildTweetListWithParentButton() {
-    final String? parentId = controller.tweet?.parentId;
-    if (parentId == null || controller.isWithoutGoToParentAction) {
+    final String? parentId = _controller.tweet?.parentId;
+    if (parentId == null || _controller.isWithoutGoToParentAction) {
       return _buildTweetList();
     }
     return Column(
@@ -114,7 +115,7 @@ class _DetailTweetPageState
         horizontal: 12,
         vertical: 8,
       ),
-      itemCount: controller.listTweets.length,
+      itemCount: _controller.listTweets.length,
       controller: _scrollController,
       itemBuilder: _buildTweetItem,
       separatorBuilder: (_, __) => SizedBox(
@@ -125,7 +126,7 @@ class _DetailTweetPageState
   }
 
   Widget _buildReplyFab() {
-    if (!controller.allowReply) return Container();
+    if (!_controller.allowReply) return Container();
     return FloatingActionButton(
       heroTag: 'comment',
       backgroundColor: DesignSystemColors.ligthPurple,
@@ -145,12 +146,12 @@ class _DetailTweetPageState
   Future<void> _onRefresh() async {
     final bool isEndOfListView = _scrollController.position.extentAfter == 0;
     if (isEndOfListView) {
-      return controller.fetchNextPage();
+      return _controller.fetchNextPage();
     }
   }
 
   Widget _buildTweetItem(BuildContext context, int index) {
-    final TweetEntity tweet = controller.listTweets[index];
+    final TweetEntity tweet = _controller.listTweets[index];
     return AutoScrollTag(
       key: ValueKey(index),
       index: index,
@@ -159,15 +160,15 @@ class _DetailTweetPageState
         tweet: tweet,
         controller: widget.tweetController,
         isComment: index > 0,
-        isHighlighted: index == controller.selectedPosition,
-        onHighlightFinish: controller.highlightDone,
+        isHighlighted: index == _controller.selectedPosition,
+        onHighlightFinish: _controller.highlightDone,
       ),
     );
   }
 
   bool _handleScrollNotification(ScrollNotification notification) {
     final bool isEndOfListView = _scrollController.position.extentAfter == 0;
-    final bool isRefreshVisible = isEndOfListView && !controller.isFullyLoaded;
+    final bool isRefreshVisible = isEndOfListView && !_controller.isFullyLoaded;
 
     if (isRefreshVisible) {
       _refreshIndicatorKey.currentState?.show(atTop: false);
@@ -177,19 +178,19 @@ class _DetailTweetPageState
   }
 
   ReactionDisposer _showErrorMessage() {
-    return reaction((_) => controller.errorMessage, (String? message) {
+    return reaction((_) => _controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }
 
   void _navigateToComment() {
-    controller.reply();
+    _controller.reply();
   }
 
   void _scrollToSelectedPosition() {
-    if (controller.selectedPosition != invalidPosition) {
+    if (_controller.selectedPosition != invalidPosition) {
       _scrollController.scrollToIndex(
-        controller.selectedPosition,
+        _controller.selectedPosition,
         duration: const Duration(milliseconds: 100),
       );
     }

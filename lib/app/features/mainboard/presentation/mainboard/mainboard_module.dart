@@ -162,6 +162,7 @@ class MainboardModule extends Module {
           '/tweet/:id',
           child: (context, args) => DetailTweetPage(
             tweetController: Modular.get<ITweetController>(),
+            detailTweetController: Modular.get<DetailTweetController>(),
           ),
           transition: TransitionType.rightToLeft,
         ),
