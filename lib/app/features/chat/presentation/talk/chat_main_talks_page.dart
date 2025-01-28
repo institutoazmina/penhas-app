@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../shared/design_system/colors.dart';
 import '../../../authentication/presentation/shared/page_progress_indicator.dart';
@@ -12,14 +11,26 @@ import '../pages/chat_channel_card.dart';
 import 'chat_main_talks_controller.dart';
 
 class ChatMainTalksPage extends StatefulWidget {
-  const ChatMainTalksPage({Key? key}) : super(key: key);
+  const ChatMainTalksPage({Key? key, required this.controller})
+      : super(key: key);
+
+  final ChatMainTalksController controller;
 
   @override
   _ChatMainTalksPageState createState() => _ChatMainTalksPageState();
 }
 
-class _ChatMainTalksPageState
-    extends ModularState<ChatMainTalksPage, IChatMainTalksController> {
+class _ChatMainTalksPageState extends State<ChatMainTalksPage> {
+  ChatMainTalksController get controller => widget.controller;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.initialize();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(

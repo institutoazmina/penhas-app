@@ -6,17 +6,20 @@ import '../domain/entities/chat_tab_item.dart';
 import 'chat_main_controller.dart';
 import 'people/chat_main_people_controller.dart';
 import 'people/chat_main_people_page.dart';
+import 'talk/chat_main_talks_controller.dart';
 import 'talk/chat_main_talks_page.dart';
 
 class ChatMainPage extends StatefulWidget {
   const ChatMainPage(
       {Key? key,
       required this.chatMainPeopleController,
-      required this.controller})
+      required this.controller,
+      required this.chatMainTalksController})
       : super(key: key);
 
   final ChatMainPeopleController chatMainPeopleController;
   final ChatMainController controller;
+  final ChatMainTalksController chatMainTalksController;
 
   @override
   _ChatMainPageState createState() => _ChatMainPageState();
@@ -26,6 +29,9 @@ class _ChatMainPageState extends State<ChatMainPage> {
   ChatMainController get controller => widget.controller;
   ChatMainPeopleController get chatMainPeopleController =>
       widget.chatMainPeopleController;
+  ChatMainTalksController get chatMainTalksController =>
+      widget.chatMainTalksController;
+
   @override
   Widget build(BuildContext context) {
     return Observer(
@@ -41,10 +47,12 @@ class _ChatMainPageState extends State<ChatMainPage> {
 
 extension _ChatMainBuilder on _ChatMainPageState {
   Widget buildSupportChat() {
-    return const SafeArea(
+    return SafeArea(
       child: SizedBox.expand(
         child: Scaffold(
-          body: ChatMainTalksPage(),
+          body: ChatMainTalksPage(
+            controller: chatMainTalksController,
+          ),
         ),
       ),
     );
@@ -88,7 +96,9 @@ extension _ChatMainPageStatePrivate on _ChatMainPageState {
           ? ChatMainPeoplePage(
               controller: chatMainPeopleController,
             )
-          : const ChatMainTalksPage(),
+          : ChatMainTalksPage(
+              controller: chatMainTalksController,
+            ),
     );
     return TabBarView(children: widgets.toList());
   }

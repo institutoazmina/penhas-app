@@ -27,7 +27,7 @@ class ChatMainModule extends WidgetModule {
             modulesServices: i.get<IAppModulesServices>(),
           ),
         ),
-        Bind.factory<IChatMainTalksController>(
+        Bind.factory<ChatMainTalksController>(
           (i) => ChatMainTalksController(
             chatChannelRepository: i.get<IChatChannelRepository>(),
           ),
@@ -52,7 +52,13 @@ class ChatMainModule extends WidgetModule {
 
   @override
   Widget get view => ChatMainPage(
-        chatMainPeopleController: Modular.get<ChatMainPeopleController>(),
-        controller: Modular.get<ChatMainController>(),
+        chatMainPeopleController: ChatMainPeopleController(
+            skillRepository: Modular.get<IFilterSkillRepository>(),
+            usersRepository: Modular.get<IUsersRepository>()),
+        controller: ChatMainController(
+            chatToggleFeature: ChatPrivateToggleFeature(
+                modulesServices: Modular.get<IAppModulesServices>())),
+        chatMainTalksController: ChatMainTalksController(
+            chatChannelRepository: Modular.get<IChatChannelRepository>()),
       );
 }

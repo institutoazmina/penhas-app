@@ -50,6 +50,10 @@ class SupportCenterModule extends WidgetModule {
 
   @override
   Widget get view => SupportCenterPage(
-        controller: Modular.get<SupportCenterController>(),
+        controller: SupportCenterController(
+            supportCenterUseCase: SupportCenterUseCase(
+                locationService: Modular.get<ILocationServices>(),
+                supportCenterRepository: SupportCenterRepository(
+                    apiProvider: Modular.get<ApiProvider>()))),
       );
 }

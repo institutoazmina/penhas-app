@@ -20,13 +20,11 @@ class ChatMainTalksController = IChatMainTalksController
 abstract class IChatMainTalksController with Store, MapFailureMessage {
   IChatMainTalksController({
     required IChatChannelRepository chatChannelRepository,
-  }) : _chatChannelRepository = chatChannelRepository {
-    _init();
-  }
+  }) : _chatChannelRepository = chatChannelRepository;
 
   final IChatChannelRepository _chatChannelRepository;
 
-  Future<void> _init() async {
+  Future<void> initialize() async {
     await loadScreen();
   }
 
