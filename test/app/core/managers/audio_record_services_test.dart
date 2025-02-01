@@ -320,7 +320,7 @@ void main() {
         when(() => soundRecorder.isStopped).thenReturn(false);
         when(() => audioSyncManager.syncAudio()).thenAnswer((_) async => true);
         when(() => soundRecorder.stopRecorder()).thenAnswer((_) async => null);
-        when(() => soundRecorder.closeAudioSession())
+        when(() => soundRecorder.closeRecorder())
             .thenAnswer((_) => Future.value());
 
         // act
@@ -329,11 +329,11 @@ void main() {
         // assert
         verify(() => soundRecorder.isStopped).called(1);
         verify(() => soundRecorder.stopRecorder()).called(1);
-        verify(() => soundRecorder.closeAudioSession()).called(1);
+        verify(() => soundRecorder.closeRecorder()).called(1);
         verify(() => audioSyncManager.syncAudio()).called(1);
       },
     );
-
+  
     group(
       'start()',
       () {
@@ -350,7 +350,7 @@ void main() {
                 .thenAnswer((_) async => PermissionStatus.granted);
 
             when(() => soundRecorder.isStopped).thenReturn(true);
-            when(() => soundRecorder.openAudioSession())
+            when(() => soundRecorder.openRecorder())
                 .thenAnswer((_) async => null);
             when(() => soundRecorder.setSubscriptionDuration(any()))
                 .thenAnswer((_) => Future.value());
@@ -371,8 +371,8 @@ void main() {
 
             // assert
             verify(() => soundRecorder.isStopped).called(1);
-            verify(() => soundRecorder.closeAudioSession()).called(1);
-            verify(() => soundRecorder.openAudioSession()).called(1);
+            verify(() => soundRecorder.closeRecorder()).called(1);
+            verify(() => soundRecorder.openRecorder()).called(1);
             verify(() => soundRecorder.startRecorder(
                 codec: any(named: 'codec'),
                 toFile: any(named: 'toFile'),
@@ -414,7 +414,7 @@ void main() {
                 .thenAnswer((_) async => PermissionStatus.granted);
 
             when(() => soundRecorder.isStopped).thenReturn(true);
-            when(() => soundRecorder.openAudioSession())
+            when(() => soundRecorder.openRecorder())
                 .thenAnswer((_) async => null);
             when(() => soundRecorder.setSubscriptionDuration(any()))
                 .thenThrow(Exception());
@@ -479,7 +479,7 @@ void main() {
             .thenAnswer((_) async => PermissionStatus.granted);
 
         when(() => soundRecorder.isStopped).thenReturn(true);
-        when(() => soundRecorder.openAudioSession())
+        when(() => soundRecorder.openRecorder())
             .thenAnswer((_) async => null);
         when(() => soundRecorder.setSubscriptionDuration(any()))
             .thenAnswer((_) => Future.value());
@@ -522,7 +522,7 @@ void main() {
           .thenAnswer((_) async => PermissionStatus.granted);
 
       when(() => soundRecorder.isStopped).thenReturn(true);
-      when(() => soundRecorder.openAudioSession())
+      when(() => soundRecorder.openRecorder())
           .thenAnswer((_) async => null);
       when(() => soundRecorder.stopRecorder())
           .thenAnswer((_) => Future.value());

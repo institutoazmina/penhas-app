@@ -42,7 +42,7 @@ dependencies:
   flutter_modular: ^3.4.1+1
   flutter_phone_direct_caller: ^2.1.0
   flutter_secure_storage: ^6.1.0
-  flutter_sound: 8.5.0
+  flutter_sound: ^9.2.13
   flutter_svg: ^1.0.3
   flutter_tags: ^1.0.0-nullsafety.1
   flutter_widget_from_html: ^0.8.3+1
