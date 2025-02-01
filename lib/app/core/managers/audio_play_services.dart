@@ -64,7 +64,7 @@ class AudioPlayServices implements IAudioPlayServices {
 
   Future<void> _setupPlayEnvironment() async {
     await _releaseAudioSession();
-    await _playerModule.openAudioSession();
+    await _playerModule.openPlayer();
 
     _playerSubscription = _playerModule.onProgress?.listen((e) {
       // what to do in onProgress?
@@ -76,7 +76,7 @@ class AudioPlayServices implements IAudioPlayServices {
       if (!_playerModule.isStopped) {
         await _playerModule.stopPlayer();
       }
-      await _playerModule.closeAudioSession();
+      await _playerModule.closePlayer();
     } catch (e, stack) {
       logError(e, stack);
     }
