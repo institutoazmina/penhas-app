@@ -333,7 +333,7 @@ void main() {
         verify(() => audioSyncManager.syncAudio()).called(1);
       },
     );
-  
+
     group(
       'start()',
       () {
@@ -479,8 +479,7 @@ void main() {
             .thenAnswer((_) async => PermissionStatus.granted);
 
         when(() => soundRecorder.isStopped).thenReturn(true);
-        when(() => soundRecorder.openRecorder())
-            .thenAnswer((_) async => null);
+        when(() => soundRecorder.openRecorder()).thenAnswer((_) async => null);
         when(() => soundRecorder.setSubscriptionDuration(any()))
             .thenAnswer((_) => Future.value());
         when(() => soundRecorder.startRecorder(
@@ -522,8 +521,7 @@ void main() {
           .thenAnswer((_) async => PermissionStatus.granted);
 
       when(() => soundRecorder.isStopped).thenReturn(true);
-      when(() => soundRecorder.openRecorder())
-          .thenAnswer((_) async => null);
+      when(() => soundRecorder.openRecorder()).thenAnswer((_) async => null);
       when(() => soundRecorder.stopRecorder())
           .thenAnswer((_) => Future.value());
       when(() => audioSyncManager.audioFile(
