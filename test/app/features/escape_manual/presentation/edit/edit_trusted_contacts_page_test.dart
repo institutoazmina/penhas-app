@@ -10,7 +10,6 @@ import 'package:penhas/app/features/escape_manual/domain/escape_manual_toggle.da
 import 'package:penhas/app/features/escape_manual/presentation/edit/edit_trusted_contacts_controller.dart';
 import 'package:penhas/app/features/escape_manual/presentation/edit/edit_trusted_contacts_page.dart';
 
-import '../../../../../utils/aditional_bind_module.dart';
 import '../../../../../utils/golden_tests.dart';
 import '../../../../../utils/widget_tester_ext.dart';
 
@@ -25,6 +24,7 @@ final _contactPhone = '123456789';
 void main() {
   late IModularNavigator mockNavigator;
   late EscapeManualToggleFeature mockToggleFeature;
+  late EditTrustedContactsController controller;
   final contacts = <ContactEntity>[
     ContactEntity(
       id: _filledContactId,
@@ -32,17 +32,6 @@ void main() {
       phone: _contactPhone,
     ),
   ];
-
-  late Module module = AditionalBindModule(
-    binds: [
-      Bind.lazySingleton<EditTrustedContactsController>(
-        (_) => EditTrustedContactsController(
-          contacts: contacts,
-          escapeManualToggleFeature: mockToggleFeature,
-        ),
-      ),
-    ],
-  );
 
   setUp(() {
     mockToggleFeature = _MockEscapeManualToggleFeature();
@@ -53,11 +42,8 @@ void main() {
     when(() => mockToggleFeature.maxTrustedContacts)
         .thenAnswer((_) async => _maxTrustedContacts);
 
-    initModule(module);
-  });
-
-  tearDown(() {
-    Modular.removeModule(module);
+    controller = EditTrustedContactsController(
+        contacts: contacts, escapeManualToggleFeature: mockToggleFeature);
   });
 
   group(EditTrustedContactsPage, () {
@@ -66,7 +52,9 @@ void main() {
       (tester) async {
         // arrange
         await tester.pumpWidget(
-          buildTestableWidget(const EditTrustedContactsPage()),
+          buildTestableWidget(EditTrustedContactsPage(
+            controller: controller,
+          )),
         );
         await tester.pumpAndSettle();
 
@@ -87,7 +75,9 @@ void main() {
         // arrange
         final contactId = _nonFilledContactId;
         await tester.pumpWidget(
-          buildTestableWidget(const EditTrustedContactsPage()),
+          buildTestableWidget(EditTrustedContactsPage(
+            controller: controller,
+          )),
         );
         await tester.pumpAndSettle();
 
@@ -126,7 +116,9 @@ void main() {
         // arrange
         final contactId = _filledContactId;
         await tester.pumpWidget(
-          buildTestableWidget(const EditTrustedContactsPage()),
+          buildTestableWidget(EditTrustedContactsPage(
+            controller: controller,
+          )),
         );
         await tester.pumpAndSettle();
 
@@ -167,7 +159,7 @@ void main() {
         final newName = 'Mary';
         final newPhone = '987654321';
         await tester.pumpWidget(
-          buildTestableWidget(const EditTrustedContactsPage()),
+          buildTestableWidget(EditTrustedContactsPage(controller: controller)),
         );
         await tester.pumpAndSettle();
 
@@ -197,7 +189,7 @@ void main() {
         // arrange
         final contactId = _randomContactId;
         await tester.pumpWidget(
-          buildTestableWidget(const EditTrustedContactsPage()),
+          buildTestableWidget(EditTrustedContactsPage(controller: controller)),
         );
         await tester.pumpAndSettle();
 
@@ -228,7 +220,7 @@ void main() {
         final newName = 'Mary';
         final newPhone = '987654321';
         await tester.pumpWidget(
-          buildTestableWidget(const EditTrustedContactsPage()),
+          buildTestableWidget(EditTrustedContactsPage(controller: controller)),
         );
         await tester.pumpAndSettle();
 
@@ -258,7 +250,7 @@ void main() {
         // arrange
         final contactId = _filledContactId;
         await tester.pumpWidget(
-          buildTestableWidget(const EditTrustedContactsPage()),
+          buildTestableWidget(EditTrustedContactsPage(controller: controller)),
         );
         await tester.pumpAndSettle();
 
@@ -282,7 +274,7 @@ void main() {
         // arrange
         final contactId = _nonFilledContactId;
         await tester.pumpWidget(
-          buildTestableWidget(const EditTrustedContactsPage()),
+          buildTestableWidget(EditTrustedContactsPage(controller: controller)),
         );
         await tester.pumpAndSettle();
 
@@ -306,7 +298,7 @@ void main() {
         // arrange
         final contactId = _filledContactId;
         await tester.pumpWidget(
-          buildTestableWidget(const EditTrustedContactsPage()),
+          buildTestableWidget(EditTrustedContactsPage(controller: controller)),
         );
         await tester.pumpAndSettle();
 
@@ -334,7 +326,7 @@ void main() {
         // arrange
         final contactId = _filledContactId;
         await tester.pumpWidget(
-          buildTestableWidget(const EditTrustedContactsPage()),
+          buildTestableWidget(EditTrustedContactsPage(controller: controller)),
         );
         await tester.pumpAndSettle();
 
@@ -360,13 +352,13 @@ void main() {
       screenshotTest(
         'should render correctly',
         fileName: 'edit_trusted_contacts_page',
-        pageBuilder: () => const EditTrustedContactsPage(),
+        pageBuilder: () => EditTrustedContactsPage(controller: controller),
       );
 
       screenshotTest(
         'should show remove contact confirmation dialog',
         fileName: 'edit_trusted_contacts_page_with_remove_contact_dialog',
-        pageBuilder: () => EditTrustedContactsPage(),
+        pageBuilder: () => EditTrustedContactsPage(controller: controller),
         pumpBeforeTest: (tester) async {
           await tester.pumpAndSettle();
           await tester.tapAll(
@@ -382,7 +374,7 @@ void main() {
       screenshotTest(
         'should show update contact dialog',
         fileName: 'edit_trusted_contacts_page_with_update_contact_dialog',
-        pageBuilder: () => EditTrustedContactsPage(),
+        pageBuilder: () => EditTrustedContactsPage(controller: controller),
         pumpBeforeTest: (tester) async {
           await tester.pumpAndSettle();
           await tester.tapAll(
