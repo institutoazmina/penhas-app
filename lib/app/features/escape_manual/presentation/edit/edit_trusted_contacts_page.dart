@@ -15,16 +15,20 @@ import 'edit_trusted_contacts_state.dart';
 typedef OnContactActionPressed = void Function(ContactEntity contact);
 
 class EditTrustedContactsPage extends StatefulWidget {
-  const EditTrustedContactsPage({Key? key}) : super(key: key);
+  const EditTrustedContactsPage({Key? key, required this.controller})
+      : super(key: key);
+
+  final EditTrustedContactsController controller;
 
   @override
   State<EditTrustedContactsPage> createState() =>
       _EditTrustedContactsPageState();
 }
 
-class _EditTrustedContactsPageState extends ModularState<
-    EditTrustedContactsPage, EditTrustedContactsController> {
+class _EditTrustedContactsPageState extends State<EditTrustedContactsPage> {
   ReactionDisposer? _disposer;
+
+  EditTrustedContactsController get controller => widget.controller;
 
   @override
   void didChangeDependencies() {
