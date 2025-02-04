@@ -24,19 +24,22 @@ class FeedPage extends StatefulWidget {
     Key? key,
     this.title = 'Feed',
     required this.tweetController,
+    required this.feedController,
   }) : super(key: key);
 
   final String title;
   final ITweetController tweetController;
+  final FeedController feedController;
 
   @override
   _FeedPageState createState() => _FeedPageState();
 }
 
-class _FeedPageState extends ModularState<FeedPage, FeedController>
+class _FeedPageState extends State<FeedPage>
     with SnackBarHandler, AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
+  FeedController get controller => widget.feedController;
 
   List<ReactionDisposer>? _disposers;
 
