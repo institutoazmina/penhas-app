@@ -197,7 +197,9 @@ class MainboardModule extends Module {
         ),
         ChildRoute(
           '/helpcenter/guardians',
-          child: (context, args) => const GuardiansPage(),
+          child: (context, args) => GuardiansPage(
+            controller: Modular.get<GuardiansController>(),
+          ),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
