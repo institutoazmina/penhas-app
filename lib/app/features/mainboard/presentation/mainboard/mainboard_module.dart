@@ -180,7 +180,9 @@ class MainboardModule extends Module {
         ),
         ChildRoute(
           '/tweet/perfil_chat',
-          child: (context, args) => const FeedRoutingProfileChatPage(),
+          child: (context, args) => FeedRoutingProfileChatPage(
+            controller: Modular.get<FeedRoutingProfileChatController>(),
+          ),
           transition: TransitionType.rightToLeft,
         ),
       ];
