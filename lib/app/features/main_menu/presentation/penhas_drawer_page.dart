@@ -4,7 +4,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../core/pages/tutorial_scale_route.dart';
-import '../../../core/states/security_toggle_state.dart';
 import '../../../shared/design_system/colors.dart';
 import '../../../shared/design_system/text_styles.dart';
 import '../../../shared/design_system/widgets/buttons/penhas_button.dart';
@@ -14,19 +13,29 @@ import 'pages/penhas_drawer_toggle_page.dart';
 import 'penhas_drawer_controller.dart';
 
 class PenhasDrawerPage extends StatefulWidget {
-  const PenhasDrawerPage({Key? key, this.title = 'Penhas Drawer'})
+  const PenhasDrawerPage(
+      {Key? key, this.title = 'Penhas Drawer', required this.controller})
       : super(key: key);
 
   final String title;
+  final PenhasDrawerController controller;
 
   @override
   _PenhasDrawerPageState createState() => _PenhasDrawerPageState();
 }
 
-class _PenhasDrawerPageState
-    extends ModularState<PenhasDrawerPage, PenhasDrawerController> {
+class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
   final double listHeight = 80;
   final Color drawerGrey = const Color.fromRGBO(239, 239, 239, 1.0);
+  PenhasDrawerController get _controller => widget.controller;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _controller.init();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,15 +52,15 @@ class _PenhasDrawerPageState
               return ListView(
                 children: <Widget>[
                   PenhasDrawerHeaderPage(
-                    userName: controller.userName,
-                    userAvatar: _buildAvatar(controller.userAvatar),
+                    userName: _controller.userName,
+                    userAvatar: _buildAvatar(_controller.userAvatar),
                   ),
-                  if (controller.showSecurityOptions)
+                  if (_controller.showSecurityOptions)
                     PenhasDrawerTogglePage(
-                        state: controller.anonymousModeState),
-                  if (controller.showSecurityOptions)
-                    PenhasDrawerTogglePage(state: controller.stealthModeState),
-                  _buildStealthModeNotice(controller.showSecurityOptions),
+                        state: _controller.anonymousModeState),
+                  if (_controller.showSecurityOptions)
+                    PenhasDrawerTogglePage(state: _controller.stealthModeState),
+                  _buildStealthModeNotice(_controller.showSecurityOptions),
                   _buildItemList(
                     title: 'Informações pessoais',
                     icon: SvgPicture.asset(
@@ -97,7 +106,7 @@ class _PenhasDrawerPageState
                     constraints: const BoxConstraints(minHeight: 126.0),
                     alignment: Alignment.bottomCenter,
                     child: PenhasButton.text(
-                      onPressed: () => controller.logoutPressed(),
+                      onPressed: () => _controller.logoutPressed(),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const <Widget>[
@@ -192,11 +201,6 @@ class _PenhasDrawerPageState
         ),
       ),
     );
-  }
-
-  Widget _buildSecurityToggle(bool isVisible, SecurityToggleState state) {
-    if (!isVisible) return Container();
-    return PenhasDrawerTogglePage(state: state);
   }
 }
 

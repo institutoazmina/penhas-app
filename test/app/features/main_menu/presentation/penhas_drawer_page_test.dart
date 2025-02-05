@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
@@ -11,7 +9,6 @@ import 'package:penhas/app/features/help_center/domain/usecases/security_mode_ac
 import 'package:penhas/app/features/main_menu/domain/usecases/user_profile.dart';
 import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_controller.dart';
 import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_page.dart';
-import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_module.dart';
 
 import '../../../../utils/golden_tests.dart';
 import '../../../../utils/widget_test_steps.dart';
@@ -28,6 +25,7 @@ void main() {
   late MockAppConfiguration appConfiguration;
   late MockUserProfile userProfile;
   late MockAppModulesServices modulesServices;
+  late PenhasDrawerController penhasDrawerController;
 
   final userProfileEntity = UserProfileEntity(
     fullName: 'Penhas',
@@ -48,19 +46,10 @@ void main() {
     appConfiguration = MockAppConfiguration();
     userProfile = MockUserProfile();
     modulesServices = MockAppModulesServices();
-
-    initModule(
-      MainboardModule(),
-      replaceBinds: [
-        Bind.factory(
-          (i) => PenhasDrawerController(
-            appConfigure: appConfiguration,
-            userProfile: userProfile,
-            modulesServices: modulesServices,
-          ),
-        ),
-      ],
-    );
+    penhasDrawerController = PenhasDrawerController(
+        appConfigure: appConfiguration,
+        modulesServices: modulesServices,
+        userProfile: userProfile);
   });
 
   group(PenhasDrawerPage, () {
@@ -68,12 +57,15 @@ void main() {
       // arrange
       when(() => modulesServices.feature(
               name: SecurityModeActionFeature.featureCode))
-          .thenAnswer((_) => Future.value(null));
+          .thenAnswer((_) async => null);
+
       when(() => userProfile.currentProfile()).thenAnswer(
         (_) => Future.value(userProfileEntity),
       );
       // act
-      tester.theAppIsRunning(PenhasDrawerPage());
+      tester.theAppIsRunning(PenhasDrawerPage(
+        controller: penhasDrawerController,
+      ));
       // assert
     });
   });
@@ -81,7 +73,10 @@ void main() {
   screenshotTest(
     'should load penhas drawer page',
     fileName: 'penhas_drawer_page',
-    pageBuilder: () => Scaffold(body: PenhasDrawerPage()),
+    pageBuilder: () => Scaffold(
+        body: PenhasDrawerPage(
+      controller: penhasDrawerController,
+    )),
     setUp: () {
       when(() => modulesServices.feature(
               name: SecurityModeActionFeature.featureCode))
@@ -98,7 +93,10 @@ void main() {
   screenshotTest(
     'should show security mode toggle',
     fileName: 'penhas_drawer_page_security_mode_toggle',
-    pageBuilder: () => Scaffold(body: PenhasDrawerPage()),
+    pageBuilder: () => Scaffold(
+        body: PenhasDrawerPage(
+      controller: penhasDrawerController,
+    )),
     setUp: () {
       when(() => modulesServices.feature(
               name: SecurityModeActionFeature.featureCode))
