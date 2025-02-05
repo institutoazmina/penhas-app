@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:mobx/mobx.dart';
 
@@ -12,18 +11,20 @@ import '../../domain/entities/tweet_filter_session_entity.dart';
 import 'filter_tweet_controller.dart';
 
 class FilterTweetPage extends StatefulWidget {
-  const FilterTweetPage({Key? key}) : super(key: key);
+  const FilterTweetPage({Key? key, required this.controller}) : super(key: key);
+
+  final FilterTweetController controller;
 
   @override
   _FilterTweetPageState createState() => _FilterTweetPageState();
 }
 
-class _FilterTweetPageState
-    extends ModularState<FilterTweetPage, FilterTweetController>
+class _FilterTweetPageState extends State<FilterTweetPage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  FilterTweetController get _controller => widget.controller;
 
   PageProgressState _currentState = PageProgressState.initial;
 
@@ -31,7 +32,7 @@ class _FilterTweetPageState
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      controller.getTags();
+      _controller.getTags();
     });
   }
 
@@ -85,9 +86,9 @@ class _FilterTweetPageState
                         key: _tagStateKey,
                         alignment: WrapAlignment.start,
                         runAlignment: WrapAlignment.start,
-                        itemCount: controller.tags.length,
+                        itemCount: _controller.tags.length,
                         itemBuilder: (int index) {
-                          final item = controller.tags[index];
+                          final item = _controller.tags[index];
                           return _builtTagItem(item, index);
                         },
                       ),
@@ -136,7 +137,7 @@ class _FilterTweetPageState
       height: 40,
       width: 160,
       child: PenhasButton.text(
-        onPressed: () => controller.reset(),
+        onPressed: () => _controller.reset(),
         child: const Text(
           'Limpar',
           style: TextStyle(
@@ -173,13 +174,14 @@ class _FilterTweetPageState
   }
 
   ReactionDisposer _showErrorMessage() {
-    return reaction((_) => controller.errorMessage, (String? message) {
+    return reaction((_) => _controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }
 
   ReactionDisposer _showProgress() {
-    return reaction((_) => controller.currentState, (PageProgressState status) {
+    return reaction((_) => _controller.currentState,
+        (PageProgressState status) {
       setState(() {
         _currentState = status;
       });
@@ -198,6 +200,6 @@ class _FilterTweetPageState
             .toList() ??
         List.empty();
 
-    return controller.setTags(seletedTags).then((value) => true);
+    return _controller.setTags(seletedTags).then((value) => true);
   }
 }

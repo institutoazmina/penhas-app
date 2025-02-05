@@ -175,7 +175,9 @@ class MainboardModule extends Module {
         ),
         ChildRoute(
           '/tags',
-          child: (context, args) => const FilterTweetPage(),
+          child: (context, args) => FilterTweetPage(
+            controller: Modular.get<FilterTweetController>(),
+          ),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
