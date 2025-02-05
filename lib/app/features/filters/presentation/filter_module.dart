@@ -18,7 +18,9 @@ class FilterModule extends Module {
   List<ModularRoute> get routes => [
         ChildRoute(
           '/',
-          child: (context, args) => const FilterPage(),
+          child: (context, args) => FilterPage(
+            controller: Modular.get<FilterController>(),
+          ),
         )
       ];
 }
