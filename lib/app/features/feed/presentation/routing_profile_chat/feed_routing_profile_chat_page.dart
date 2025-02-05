@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../shared/design_system/colors.dart';
 import '../../../authentication/presentation/shared/page_progress_indicator.dart';
@@ -9,18 +8,24 @@ import '../../domain/states/feed_routing_state.dart';
 import 'feed_routing_profile_chat_controller.dart';
 
 class FeedRoutingProfileChatPage extends StatefulWidget {
-  const FeedRoutingProfileChatPage({Key? key}) : super(key: key);
+  const FeedRoutingProfileChatPage({Key? key, required this.controller})
+      : super(key: key);
+
+  final FeedRoutingProfileChatController controller;
 
   @override
   _FeedRoutingProfileChatPageState createState() =>
       _FeedRoutingProfileChatPageState();
 }
 
-class _FeedRoutingProfileChatPageState extends ModularState<
-    FeedRoutingProfileChatPage, FeedRoutingProfileChatController> {
+class _FeedRoutingProfileChatPageState
+    extends State<FeedRoutingProfileChatPage> {
+  FeedRoutingProfileChatController get _controller => widget.controller;
+
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (context) => pageBuilder(controller.routingState));
+    return Observer(
+        builder: (context) => pageBuilder(_controller.routingState));
   }
 }
 
@@ -59,7 +64,7 @@ extension _Bodybuilder on _FeedRoutingProfileChatPageState {
       body: SafeArea(
         child: SupportCenterGeneralError(
           message: message,
-          onPressed: controller.retry,
+          onPressed: _controller.retry,
         ),
       ),
     );
