@@ -192,7 +192,9 @@ class MainboardModule extends Module {
   List<ModularRoute> get helpCenter => [
         ChildRoute(
           '/helpcenter/newGuardian',
-          child: (context, args) => const NewGuardianPage(),
+          child: (context, args) => NewGuardianPage(
+            controller: Modular.get<NewGuardianController>(),
+          ),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
