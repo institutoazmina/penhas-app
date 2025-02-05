@@ -21,7 +21,11 @@ import 'pages/help_center/help_center_card_guardian.dart';
 import 'pages/help_center/help_center_card_record.dart';
 
 class HelpCenterPage extends StatefulWidget {
-  const HelpCenterPage({Key? key, this.title = 'HelpCenter'}) : super(key: key);
+  const HelpCenterPage(
+      {Key? key, this.title = 'HelpCenter', required this.controller})
+      : super(key: key);
+
+  final HelpCenterController controller;
 
   final String title;
 
@@ -29,18 +33,17 @@ class HelpCenterPage extends StatefulWidget {
   _HelpCenterPageState createState() => _HelpCenterPageState();
 }
 
-class _HelpCenterPageState
-    extends ModularState<HelpCenterPage, HelpCenterController>
-    with SnackBarHandler {
+class _HelpCenterPageState extends State<HelpCenterPage> with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _loadState = PageProgressState.initial;
+  HelpCenterController get _controller => widget.controller;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      controller.checkLocalicationRequired();
+      _controller.checkLocalicationRequired();
     });
   }
 
@@ -72,7 +75,7 @@ class _HelpCenterPageState
                   _warnningBuilder(),
                   Observer(
                     builder: (_) {
-                      return controller.isLocationPermissionRequired
+                      return _controller.isLocationPermissionRequired
                           ? _warrningLocation()
                           : Container();
                     },
@@ -90,14 +93,14 @@ class _HelpCenterPageState
 
   Widget _recordCardBuilder() {
     return HelpCenterCardRecord(
-      onPressed: () => controller.audios(),
+      onPressed: () => _controller.audios(),
     );
   }
 
   Widget _guardianCardBuilder() {
     return HelpCenterCardGuardian(
-      create: () => controller.newGuardian(),
-      manager: () => controller.guardians(),
+      create: () => _controller.newGuardian(),
+      manager: () => _controller.guardians(),
     );
   }
 
@@ -176,13 +179,13 @@ class _HelpCenterPageState
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           HelpCenterActionPolice(
-            onPressed: () => controller.triggerCallPolice(),
+            onPressed: () => _controller.triggerCallPolice(),
           ),
           HelpCenterActionGuardian(
-            onPressed: () => controller.triggerGuardian(),
+            onPressed: () => _controller.triggerGuardian(),
           ),
           HelpCenterActionRecord(
-            onPressed: () => controller.triggerAudioRecord(),
+            onPressed: () => _controller.triggerAudioRecord(),
           ),
         ],
       ),
@@ -190,13 +193,13 @@ class _HelpCenterPageState
   }
 
   ReactionDisposer _showErrorMessage() {
-    return reaction((_) => controller.errorMessage, (String? message) {
+    return reaction((_) => _controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }
 
   ReactionDisposer _showAlert() {
-    return reaction((_) => controller.alertState, (HelpCenterState status) {
+    return reaction((_) => _controller.alertState, (HelpCenterState status) {
       status.when(
         initial: () {},
         guardianTriggered: (action) => _showGuardianTrigger(action),
@@ -210,7 +213,7 @@ class _HelpCenterPageState
   }
 
   ReactionDisposer _showLoadProgress() {
-    return reaction((_) => controller.loadState, (PageProgressState status) {
+    return reaction((_) => _controller.loadState, (PageProgressState status) {
       setState(() {
         _loadState = status;
       });
