@@ -39,5 +39,12 @@ class HelpCenterModule extends WidgetModule {
       ];
 
   @override
-  Widget get view => const HelpCenterPage();
+  Widget get view => HelpCenterPage(
+        controller: HelpCenterController(
+            appConfiguration: Modular.get<IAppConfiguration>(),
+            audioServices: Modular.get<IAudioRecordServices>(),
+            featureToogle: Modular.get<SecurityModeActionFeature>(),
+            guardianRepository: Modular.get<IGuardianRepository>(),
+            locationService: Modular.get<ILocationServices>()),
+      );
 }
