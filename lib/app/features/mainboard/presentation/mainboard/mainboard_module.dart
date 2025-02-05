@@ -132,6 +132,7 @@ class MainboardModule extends Module {
           child: (_, args) => MainboardPage(
             controller: Modular.get<MainboardController>(),
             composeTweetController: Modular.get<ComposeTweetController>(),
+            penhasDrawerController: Modular.get<PenhasDrawerController>(),
           ),
         ),
         ...tweetRoutes,

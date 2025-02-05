@@ -23,15 +23,13 @@ abstract class _PenhasDrawerControllerBase with Store {
     this._appConfigure,
     this._userProfile,
     this._modulesServices,
-  ) {
-    _init();
-  }
+  );
 
   final UserProfile _userProfile;
   final IAppConfiguration _appConfigure;
   final IAppModulesServices _modulesServices;
 
-  Future<void> _init() async {
+  Future<void> init() async {
     showSecurityOptions = await _showSecurityModeToggle();
     await _updateProfileInformation();
   }
