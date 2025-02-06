@@ -18,22 +18,25 @@ import '../../../../../../../utils/widget_test_steps.dart';
 import '../../../mocks/app_modules_mock.dart';
 import '../../../mocks/authentication_modules_mock.dart';
 
-class MockIChangePasswordRepository extends Mock implements IChangePasswordRepository{
+class MockIChangePasswordRepository extends Mock
+    implements IChangePasswordRepository {
   @override
-  Future<Either<Failure, ValidField>> reset({EmailAddress? emailAddress,
-    SignUpPassword? password,
-    String? resetToken}) async {
-    return Future.value(Right(ValidField())); 
+  Future<Either<Failure, ValidField>> reset(
+      {EmailAddress? emailAddress,
+      SignUpPassword? password,
+      String? resetToken}) async {
+    return Future.value(Right(ValidField()));
   }
 }
 
-
-class MockIChangePasswordRepositoryWithError extends Mock implements IChangePasswordRepository{
+class MockIChangePasswordRepositoryWithError extends Mock
+    implements IChangePasswordRepository {
   @override
-  Future<Either<Failure, ValidField>> reset({EmailAddress? emailAddress,
-    SignUpPassword? password,
-    String? resetToken}) async {
-    return Future.value(Left(ServerFailure())); 
+  Future<Either<Failure, ValidField>> reset(
+      {EmailAddress? emailAddress,
+      SignUpPassword? password,
+      String? resetToken}) async {
+    return Future.value(Left(ServerFailure()));
   }
 }
 
@@ -50,14 +53,21 @@ void main() {
     userRegisterFormField.token = 'token';
     iChangePasswordRepository = MockIChangePasswordRepository();
     userRegisterFormFieldModel = UserRegisterFormFieldModel();
-    controller = ResetPasswordThreeController(iChangePasswordRepository, userRegisterFormFieldModel, AuthenticationModulesMock.passwordValidator);
+    controller = ResetPasswordThreeController(
+        iChangePasswordRepository,
+        userRegisterFormFieldModel,
+        AuthenticationModulesMock.passwordValidator);
   });
 
   group(ResetPasswordThreePage, () {
     testWidgets(
       'shows screen widgets',
       (tester) async {
-        await theAppIsRunning(tester,  ResetPasswordThreePage(controller: controller,));
+        await theAppIsRunning(
+            tester,
+            ResetPasswordThreePage(
+              controller: controller,
+            ));
 
         // check that required widgets are present
         await iSeeText('Configure uma nova senha');
@@ -75,7 +85,11 @@ void main() {
             any(), any())).thenAnswer((i) => failure(MinLengthRule()));
 
         // Input a invalid password
-        await theAppIsRunning(tester,  ResetPasswordThreePage(controller: controller,));
+        await theAppIsRunning(
+            tester,
+            ResetPasswordThreePage(
+              controller: controller,
+            ));
         await iEnterIntoPasswordField(tester, text: 'Senha', password: '1');
         await iSeePasswordFieldErrorMessage(tester,
             text: 'Senha', message: 'Senha precisa ter no mínimo 8 caracteres');
@@ -89,7 +103,11 @@ void main() {
             .validate(any(), any())).thenAnswer((i) => success('password'));
 
         // Input a invalid password
-        await theAppIsRunning(tester,  ResetPasswordThreePage(controller: controller,));
+        await theAppIsRunning(
+            tester,
+            ResetPasswordThreePage(
+              controller: controller,
+            ));
         await iEnterIntoPasswordField(tester,
             text: 'Senha', password: 'password');
         await iEnterIntoPasswordField(tester,
@@ -104,14 +122,18 @@ void main() {
       (tester) async {
         late IChangePasswordRepository iChangePasswordRepositoryError;
 
-         iChangePasswordRepositoryError = MockIChangePasswordRepositoryWithError();
+        iChangePasswordRepositoryError =
+            MockIChangePasswordRepositoryWithError();
 
-         final controllerError =  ResetPasswordThreeController(iChangePasswordRepositoryError, userRegisterFormFieldModel, AuthenticationModulesMock.passwordValidator);
+        final controllerError = ResetPasswordThreeController(
+            iChangePasswordRepositoryError,
+            userRegisterFormFieldModel,
+            AuthenticationModulesMock.passwordValidator);
 
         when(() => AppModulesMock.modularNavigator.pushNamedAndRemoveUntil(
-  any(), any(), forRoot: any(named: 'forRoot')
-)).thenAnswer((_) async => Future.value()); 
-    
+                any(), any(), forRoot: any(named: 'forRoot')))
+            .thenAnswer((_) async => Future.value());
+
         when(() => AuthenticationModulesMock.passwordValidator
             .validate(any(), any())).thenAnswer((i) => success('password'));
 
@@ -122,7 +144,11 @@ void main() {
             )).thenFailure((_) => ServerFailure());
 
         // Capture server side error message
-        await theAppIsRunning(tester,  ResetPasswordThreePage(controller: controllerError,));
+        await theAppIsRunning(
+            tester,
+            ResetPasswordThreePage(
+              controller: controllerError,
+            ));
         await iEnterIntoPasswordField(tester,
             text: 'Senha', password: 'password');
         await iEnterIntoPasswordField(tester,
@@ -150,7 +176,11 @@ void main() {
             any(), any())).thenAnswer((i) => Future.value());
 
         // Capture server side error message
-        await theAppIsRunning(tester,  ResetPasswordThreePage(controller: controller,));
+        await theAppIsRunning(
+            tester,
+            ResetPasswordThreePage(
+              controller: controller,
+            ));
         await iEnterIntoPasswordField(tester,
             text: 'Senha', password: 'password');
         await iEnterIntoPasswordField(tester,
@@ -166,7 +196,9 @@ void main() {
       screenshotTest(
         'looks as expected',
         fileName: 'reset_password_page_step_3',
-        pageBuilder: () =>  ResetPasswordThreePage(controller: controller,),
+        pageBuilder: () => ResetPasswordThreePage(
+          controller: controller,
+        ),
       );
     });
   });
