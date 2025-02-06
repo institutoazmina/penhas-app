@@ -15,7 +15,9 @@ class ProfileSkillModule extends Module {
   List<ModularRoute> get routes => [
         ChildRoute(
           '/',
-          child: (context, args) => const ProfileSkillPage(),
+          child: (context, args) => ProfileSkillPage(
+            controller: Modular.get<ProfileSkillController>(),
+          ),
         )
       ];
 }
