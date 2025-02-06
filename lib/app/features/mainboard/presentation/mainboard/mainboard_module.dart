@@ -148,7 +148,9 @@ class MainboardModule extends Module {
   List<ModularRoute> get tweetRoutes => [
         ChildRoute(
           '/reply',
-          child: (_, args) => const ReplyTweetPage(),
+          child: (_, args) => ReplyTweetPage(
+            controller: Modular.get<ReplyTweetController>(),
+          ),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
