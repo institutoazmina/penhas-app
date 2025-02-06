@@ -99,7 +99,9 @@ class SignInModule extends Module {
         ),
         ChildRoute(
           '/sign_in_anonymous',
-          child: (_, args) => const SignInAnonymousPage(),
+          child: (_, args) => SignInAnonymousPage(
+            controller: Modular.get<SignInAnonymousController>(),
+          ),
         ),
         ChildRoute(
           '/sign_in_stealth',

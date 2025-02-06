@@ -1,11 +1,9 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/extension/either.dart';
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/authenticate_user.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in_anonymous/sign_in_anonymous_controller.dart';
@@ -18,6 +16,7 @@ import '../mocks/app_modules_mock.dart';
 import '../mocks/authentication_modules_mock.dart';
 
 void main() {
+  late SignInAnonymousController controller;
   setUp(() {
     AppModulesMock.init();
     AuthenticationModulesMock.init();
@@ -41,20 +40,12 @@ void main() {
       (i) async => userProfileEntity,
     );
 
-    initModule(SignInModule(), replaceBinds: [
-      Bind<SignInAnonymousController>(
-        (i) => SignInAnonymousController(
+    controller = SignInAnonymousController(
           authenticateAnonymousUserUseCase:
               AuthenticationModulesMock.authenticateAnonymousUserUseCase,
           passwordValidator: AuthenticationModulesMock.passwordValidator,
           userProfileStore: AppModulesMock.userProfileStore,
-        ),
-      ),
-      Bind<AuthenticateAnonymousUserUseCase>((i) =>
-          AuthenticateAnonymousUserUseCase(
-              authenticationRepository: i.get(),
-              loginOfflineToggleFeature: i.get())),
-    ]);
+    );
   });
 
   tearDown(() {
@@ -65,7 +56,7 @@ void main() {
     testWidgets(
       'shows screen widgets',
       (tester) async {
-        await theAppIsRunning(tester, const SignInAnonymousPage());
+        await theAppIsRunning(tester,  SignInAnonymousPage(controller: controller,));
 
         // check if necessary widgets are present
         await iSeePasswordField(text: 'Senha');
@@ -85,7 +76,7 @@ void main() {
         when(() => AuthenticationModulesMock.passwordValidator
             .validate(any(), any())).thenAnswer((i) => failure(EmptyRule()));
 
-        await theAppIsRunning(tester, const SignInAnonymousPage());
+        await theAppIsRunning(tester,  SignInAnonymousPage(controller: controller,));
         await iDontSeeText(errorMessage);
         await iEnterIntoPasswordField(tester,
             text: 'Senha', password: validPassword);
@@ -124,7 +115,7 @@ void main() {
               .pushReplacementNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
-        await theAppIsRunning(tester, const SignInAnonymousPage());
+        await theAppIsRunning(tester,  SignInAnonymousPage(controller: controller,));
         await iEnterIntoPasswordField(tester,
             text: 'Senha', password: validPassword);
         await iTapText(tester, text: 'Entrar');
@@ -142,7 +133,7 @@ void main() {
               .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
-        await theAppIsRunning(tester, const SignInAnonymousPage());
+        await theAppIsRunning(tester,  SignInAnonymousPage(controller: controller,));
         await iTapText(tester, text: 'Esqueci minha senha');
 
         verify(() => AppModulesMock.modularNavigator
@@ -158,7 +149,7 @@ void main() {
               .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
-        await theAppIsRunning(tester, const SignInAnonymousPage());
+        await theAppIsRunning(tester,  SignInAnonymousPage(controller: controller,));
         await iTapText(tester, text: 'Acessar outra conta');
 
         verify(() =>
@@ -171,7 +162,7 @@ void main() {
       screenshotTest(
         'looks as expected',
         fileName: 'sign_in_anonymous_page',
-        pageBuilder: () => const SignInAnonymousPage(),
+        pageBuilder: () =>  SignInAnonymousPage(controller: controller,),
       );
     });
   });
