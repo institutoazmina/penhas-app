@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
@@ -19,6 +18,7 @@ import '../../../mocks/authentication_modules_mock.dart';
 void main() {
   late UserRegisterFormFieldModel userRegisterFormField;
   late Key tokenInputKey;
+  late ResetPasswordTwoController controller;
 
   setUp(() {
     AppModulesMock.init();
@@ -26,16 +26,9 @@ void main() {
     userRegisterFormField = UserRegisterFormFieldModel();
     tokenInputKey = const Key('reset_password_token');
 
-    initModule(
-      SignInModule(),
-      replaceBinds: [
-        Bind<ResetPasswordTwoController>(
-          (i) => ResetPasswordTwoController(
-            AuthenticationModulesMock.changePasswordRepository,
-            userRegisterFormField,
-          ),
-        ),
-      ],
+    controller = ResetPasswordTwoController(
+      AuthenticationModulesMock.changePasswordRepository,
+      userRegisterFormField,
     );
   });
 
@@ -47,7 +40,11 @@ void main() {
     testWidgets(
       'shows screen widgets',
       (tester) async {
-        await theAppIsRunning(tester, const ResetPasswordTwoPage());
+        await theAppIsRunning(
+            tester,
+            ResetPasswordTwoPage(
+              controller: controller,
+            ));
         await iSeeText('Verifique seu e-mail');
         await iSeeText(
             'Por favor, digite o código de verificação que enviamos para o e-mail de recuperação.');
@@ -60,7 +57,11 @@ void main() {
       (tester) async {
         const errorMessage = 'Precisa digitar o código enviado';
 
-        await theAppIsRunning(tester, const ResetPasswordTwoPage());
+        await theAppIsRunning(
+            tester,
+            ResetPasswordTwoPage(
+              controller: controller,
+            ));
         await iDontSeeText(errorMessage);
         await iTapText(tester, text: 'Próximo');
         await iSeeText(errorMessage);
@@ -80,7 +81,11 @@ void main() {
           ),
         ).thenFailure((_) => ServerFailure());
 
-        await theAppIsRunning(tester, const ResetPasswordTwoPage());
+        await theAppIsRunning(
+            tester,
+            ResetPasswordTwoPage(
+              controller: controller,
+            ));
         await iDontSeeText(errorMessage);
         await iEnterIntoWidgetInput(tester,
             type: TextFormField, key: tokenInputKey, value: '123456');
@@ -104,7 +109,11 @@ void main() {
               .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((i) => Future.value());
 
-        await theAppIsRunning(tester, const ResetPasswordTwoPage());
+        await theAppIsRunning(
+            tester,
+            ResetPasswordTwoPage(
+              controller: controller,
+            ));
         await iEnterIntoWidgetInput(tester,
             type: TextFormField, key: tokenInputKey, value: '123456');
         await iTapText(tester, text: 'Próximo');
@@ -118,7 +127,9 @@ void main() {
       screenshotTest(
         'looks as expected',
         fileName: 'reset_password_page_step_2',
-        pageBuilder: () => const ResetPasswordTwoPage(),
+        pageBuilder: () => ResetPasswordTwoPage(
+          controller: controller,
+        ),
       );
     });
   });
