@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../shared/design_system/linear_gradient_design_system.dart';
@@ -20,28 +19,31 @@ import '../shared/snack_bar_handler.dart';
 import 'sign_in_controller.dart';
 
 class SignInPage extends StatefulWidget {
-  const SignInPage({Key? key, this.title = 'Authentication'}) : super(key: key);
+  const SignInPage(
+      {Key? key, this.title = 'Authentication', required this.controller})
+      : super(key: key);
 
   final String title;
+  final SignInController controller;
 
   @override
   _SignInPageState createState() => _SignInPageState();
 }
 
-class _SignInPageState extends ModularState<SignInPage, SignInController>
-    with SnackBarHandler {
+class _SignInPageState extends State<SignInPage> with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
+  SignInController get _controller => widget.controller;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _disposers ??= [
-      reaction((_) => controller.errorMessage, (String? message) {
+      reaction((_) => _controller.errorMessage, (String? message) {
         showSnackBar(scaffoldKey: _scaffoldKey, message: message);
       }),
-      reaction((_) => controller.currentState, (PageProgressState status) {
+      reaction((_) => _controller.currentState, (PageProgressState status) {
         setState(() {
           _currentState = status;
         });
@@ -84,7 +86,7 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
                       _buildRegisterButton(),
                       const SizedBox(height: 16.0),
                       LinkButton(
-                        onPressed: controller.resetPasswordPressed,
+                        onPressed: _controller.resetPasswordPressed,
                         text: 'Esqueci minha senha',
                       ),
                       LinkButton(
@@ -123,11 +125,11 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
       padding: const EdgeInsets.only(top: 72),
       child: SingleTextInput(
         keyboardType: TextInputType.emailAddress,
-        onChanged: controller.setEmail,
+        onChanged: _controller.setEmail,
         boxDecoration: WhiteBoxDecorationStyle(
           labelText: 'E-mail',
           hintText: 'Digite seu e-mail',
-          errorText: controller.warningEmail,
+          errorText: _controller.warningEmail,
         ),
       ),
     );
@@ -139,8 +141,8 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
       child: PasswordInputField(
         labelText: 'Senha',
         hintText: 'Digite sua senha',
-        errorText: controller.warningPassword,
-        onChanged: controller.setPassword,
+        errorText: _controller.warningPassword,
+        onChanged: _controller.setPassword,
       ),
     );
   }
@@ -149,7 +151,7 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
     return Padding(
       padding: const EdgeInsets.only(top: 24.0),
       child: LoginButton(
-        onChanged: () async => controller.signInWithEmailAndPasswordPressed(),
+        onChanged: () async => _controller.signInWithEmailAndPasswordPressed(),
       ),
     );
   }
@@ -158,7 +160,7 @@ class _SignInPageState extends ModularState<SignInPage, SignInController>
     return Padding(
       padding: const EdgeInsets.only(top: 24),
       child: PenhasButton.roundedOutlined(
-        onPressed: () => controller.registerUserPressed(),
+        onPressed: () => _controller.registerUserPressed(),
         child: const Text(
           'Cadastrar',
           style: kTextStyleDefaultFilledButtonLabel,
