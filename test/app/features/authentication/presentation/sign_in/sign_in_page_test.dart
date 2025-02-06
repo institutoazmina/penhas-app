@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/extension/either.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/authenticate_user.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
@@ -21,6 +19,7 @@ import '../mocks/authentication_modules_mock.dart';
 void main() {
   late String validPassword;
   late String validEmail;
+  late SignInController controller;
 
   setUp(() {
     AppModulesMock.init();
@@ -28,21 +27,11 @@ void main() {
 
     validPassword = 'myStr0ngP4ssw0rd';
     validEmail = 'my@email.com';
-
-    initModule(
-      SignInModule(),
-      replaceBinds: [
-        Bind<SignInController>(
-          (i) => SignInController(
-              authenticateUserUseCase:
-                  AuthenticationModulesMock.authenticateUserUseCase,
-              passwordValidator: AuthenticationModulesMock.passwordValidator,
-              appStateUseCase: AppModulesMock.appStateUseCase),
-        ),
-        Bind<AuthenticateUserUseCase>(
-            (i) => AuthenticateUserUseCase(authenticationRepository: i.get()))
-      ],
-    );
+    controller = SignInController(
+        authenticateUserUseCase:
+            AuthenticationModulesMock.authenticateUserUseCase,
+        passwordValidator: AuthenticationModulesMock.passwordValidator,
+        appStateUseCase: AppModulesMock.appStateUseCase);
   });
 
   tearDown(() {
@@ -53,7 +42,11 @@ void main() {
     testWidgets(
       'shows screen widgets',
       (tester) async {
-        await theAppIsRunning(tester, const SignInPage());
+        await theAppIsRunning(
+            tester,
+            SignInPage(
+              controller: controller,
+            ));
 
         // check if necessary widgets are present
         await iSeeSingleTextInput(text: 'E-mail');
@@ -71,7 +64,11 @@ void main() {
         const errorMessage =
             'E-mail e senha precisam estarem corretos para continuar.';
 
-        await theAppIsRunning(tester, const SignInPage());
+        await theAppIsRunning(
+            tester,
+            SignInPage(
+              controller: controller,
+            ));
         await iDontSeeText(errorMessage);
         await iTapText(tester, text: 'Entrar');
         await iSeeText(errorMessage);
@@ -87,7 +84,7 @@ void main() {
         when(() => AuthenticationModulesMock.passwordValidator
             .validate(any(), any())).thenAnswer((_) => success(validPassword));
 
-        await theAppIsRunning(tester, const SignInPage());
+        await theAppIsRunning(tester, SignInPage(controller: controller));
         await iDontSeeText(errorMessage);
         await iEnterIntoSingleTextInput(tester,
             text: 'E-mail', value: 'my_mail');
@@ -107,7 +104,7 @@ void main() {
         when(() => AuthenticationModulesMock.passwordValidator
             .validate(any(), any())).thenAnswer((_) => failure(EmptyRule()));
 
-        await theAppIsRunning(tester, const SignInPage());
+        await theAppIsRunning(tester, SignInPage(controller: controller));
         await iDontSeeText(errorMessage);
         await iEnterIntoSingleTextInput(tester,
             text: 'E-mail', value: validEmail);
@@ -121,7 +118,7 @@ void main() {
     testWidgets(
       'displays error text for invalid email input',
       (tester) async {
-        await theAppIsRunning(tester, const SignInPage());
+        await theAppIsRunning(tester, SignInPage(controller: controller));
         // Update email with a invalid email
         await iEnterIntoSingleTextInput(tester,
             text: 'E-mail', value: 'invalidEmail');
@@ -152,7 +149,7 @@ void main() {
               email: any(named: 'email'), password: any(named: 'password')),
         ).thenFailure((i) => ServerFailure());
 
-        await theAppIsRunning(tester, const SignInPage());
+        await theAppIsRunning(tester, SignInPage(controller: controller));
         await iDontSeeText(errorMessage);
         await iEnterIntoSingleTextInput(tester,
             text: 'E-mail', value: validEmail);
@@ -183,7 +180,7 @@ void main() {
               .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
-        await theAppIsRunning(tester, const SignInPage());
+        await theAppIsRunning(tester, SignInPage(controller: controller));
         await iEnterIntoSingleTextInput(tester,
             text: 'E-mail', value: validEmail);
         await iEnterIntoPasswordField(tester,
@@ -215,7 +212,7 @@ void main() {
         when(() => AppModulesMock.appStateUseCase.check())
             .thenFailure((i) => ServerFailure());
 
-        await theAppIsRunning(tester, const SignInPage());
+        await theAppIsRunning(tester, SignInPage(controller: controller));
         await iEnterIntoSingleTextInput(tester,
             text: 'E-mail', value: validEmail);
         await iEnterIntoPasswordField(tester,
@@ -256,7 +253,7 @@ void main() {
               .popAndPushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
-        await theAppIsRunning(tester, const SignInPage());
+        await theAppIsRunning(tester, SignInPage(controller: controller));
         await iEnterIntoSingleTextInput(tester,
             text: 'E-mail', value: validEmail);
         await iEnterIntoPasswordField(tester,
@@ -277,7 +274,7 @@ void main() {
               .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
-        await theAppIsRunning(tester, const SignInPage());
+        await theAppIsRunning(tester, SignInPage(controller: controller));
         await iTapText(tester, text: 'Cadastrar');
 
         verify(() => AppModulesMock.modularNavigator
@@ -293,7 +290,7 @@ void main() {
               .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
-        await theAppIsRunning(tester, const SignInPage());
+        await theAppIsRunning(tester, SignInPage(controller: controller));
         await iTapText(tester, text: 'Esqueci minha senha');
 
         verify(() => AppModulesMock.modularNavigator
@@ -309,7 +306,7 @@ void main() {
               .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
-        await theAppIsRunning(tester, const SignInPage());
+        await theAppIsRunning(tester, SignInPage(controller: controller));
         await iTapText(tester, text: 'Termos de uso');
 
         verify(() => AppModulesMock.modularNavigator
@@ -325,7 +322,7 @@ void main() {
               .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
-        await theAppIsRunning(tester, const SignInPage());
+        await theAppIsRunning(tester, SignInPage(controller: controller));
         final expectedWidget = find.text('Política de privacidade');
         // Find the widget
         await tester.dragUntilVisible(
@@ -348,7 +345,7 @@ void main() {
         screenshotTest(
           'looks as expected',
           fileName: 'sign_in_page',
-          pageBuilder: () => const SignInPage(),
+          pageBuilder: () => SignInPage(controller: controller),
         );
       },
     );

@@ -65,7 +65,9 @@ class SignInModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute(Modular.initialRoute,
-            child: (_, args) => const SignInPage()),
+            child: (_, args) => SignInPage(
+                  controller: Modular.get<SignInController>(),
+                )),
         ChildRoute(
           '/signup',
           child: (_, args) => const SignUpPage(),
