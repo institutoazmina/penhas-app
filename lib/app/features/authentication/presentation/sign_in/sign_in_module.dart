@@ -91,7 +91,9 @@ class SignInModule extends Module {
         ),
         ChildRoute(
           '/reset_password/step3',
-          child: (_, args) => const ResetPasswordThreePage(),
+          child: (_, args) => ResetPasswordThreePage(
+            controller: Modular.get<ResetPasswordThreeController>(),
+          ),
         ),
         ChildRoute(
           '/sign_in_anonymous',

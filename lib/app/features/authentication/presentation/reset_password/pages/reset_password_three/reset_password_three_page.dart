@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
 
@@ -14,21 +13,23 @@ import '../../../shared/snack_bar_handler.dart';
 import 'reset_password_three_controller.dart';
 
 class ResetPasswordThreePage extends StatefulWidget {
-  const ResetPasswordThreePage({Key? key, this.title = 'ResetPasswordThree'})
+  const ResetPasswordThreePage(
+      {Key? key, this.title = 'ResetPasswordThree', required this.controller})
       : super(key: key);
 
   final String title;
+  final ResetPasswordThreeController controller;
 
   @override
   _ResetPasswordThreePageState createState() => _ResetPasswordThreePageState();
 }
 
-class _ResetPasswordThreePageState
-    extends ModularState<ResetPasswordThreePage, ResetPasswordThreeController>
+class _ResetPasswordThreePageState extends State<ResetPasswordThreePage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
+  ResetPasswordThreeController get _controller => widget.controller;
 
   @override
   void didChangeDependencies() {
@@ -129,8 +130,8 @@ class _ResetPasswordThreePageState
     return PasswordInputField(
       labelText: 'Senha',
       hintText: 'Digite sua nova senha',
-      errorText: controller.warningPassword,
-      onChanged: controller.setPassword,
+      errorText: _controller.warningPassword,
+      onChanged: _controller.setPassword,
     );
   }
 
@@ -138,14 +139,14 @@ class _ResetPasswordThreePageState
     return PasswordInputField(
       labelText: 'Confirmação de senha',
       hintText: 'Digite sua senha novamente',
-      errorText: controller.warningConfirmationPassword,
-      onChanged: controller.setConfirmationPassword,
+      errorText: _controller.warningConfirmationPassword,
+      onChanged: _controller.setConfirmationPassword,
     );
   }
 
   Widget _buildNextButton() {
     return PenhasButton.roundedFilled(
-      onPressed: controller.nextStepPressed,
+      onPressed: _controller.nextStepPressed,
       child: const Text(
         'Salvar',
         style: kTextStyleDefaultFilledButtonLabel,
@@ -161,13 +162,14 @@ class _ResetPasswordThreePageState
   }
 
   ReactionDisposer _showErrorMessage() {
-    return reaction((_) => controller.errorMessage, (String? message) {
+    return reaction((_) => _controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }
 
   ReactionDisposer _showProgress() {
-    return reaction((_) => controller.currentState, (PageProgressState status) {
+    return reaction((_) => _controller.currentState,
+        (PageProgressState status) {
       setState(() {
         _currentState = status;
       });
