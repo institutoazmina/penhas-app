@@ -41,10 +41,10 @@ void main() {
     );
 
     controller = SignInAnonymousController(
-          authenticateAnonymousUserUseCase:
-              AuthenticationModulesMock.authenticateAnonymousUserUseCase,
-          passwordValidator: AuthenticationModulesMock.passwordValidator,
-          userProfileStore: AppModulesMock.userProfileStore,
+      authenticateAnonymousUserUseCase:
+          AuthenticationModulesMock.authenticateAnonymousUserUseCase,
+      passwordValidator: AuthenticationModulesMock.passwordValidator,
+      userProfileStore: AppModulesMock.userProfileStore,
     );
   });
 
@@ -56,7 +56,11 @@ void main() {
     testWidgets(
       'shows screen widgets',
       (tester) async {
-        await theAppIsRunning(tester,  SignInAnonymousPage(controller: controller,));
+        await theAppIsRunning(
+            tester,
+            SignInAnonymousPage(
+              controller: controller,
+            ));
 
         // check if necessary widgets are present
         await iSeePasswordField(text: 'Senha');
@@ -76,7 +80,11 @@ void main() {
         when(() => AuthenticationModulesMock.passwordValidator
             .validate(any(), any())).thenAnswer((i) => failure(EmptyRule()));
 
-        await theAppIsRunning(tester,  SignInAnonymousPage(controller: controller,));
+        await theAppIsRunning(
+            tester,
+            SignInAnonymousPage(
+              controller: controller,
+            ));
         await iDontSeeText(errorMessage);
         await iEnterIntoPasswordField(tester,
             text: 'Senha', password: validPassword);
@@ -115,7 +123,11 @@ void main() {
               .pushReplacementNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
-        await theAppIsRunning(tester,  SignInAnonymousPage(controller: controller,));
+        await theAppIsRunning(
+            tester,
+            SignInAnonymousPage(
+              controller: controller,
+            ));
         await iEnterIntoPasswordField(tester,
             text: 'Senha', password: validPassword);
         await iTapText(tester, text: 'Entrar');
@@ -133,7 +145,11 @@ void main() {
               .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
-        await theAppIsRunning(tester,  SignInAnonymousPage(controller: controller,));
+        await theAppIsRunning(
+            tester,
+            SignInAnonymousPage(
+              controller: controller,
+            ));
         await iTapText(tester, text: 'Esqueci minha senha');
 
         verify(() => AppModulesMock.modularNavigator
@@ -149,7 +165,11 @@ void main() {
               .pushNamed(any(), arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
-        await theAppIsRunning(tester,  SignInAnonymousPage(controller: controller,));
+        await theAppIsRunning(
+            tester,
+            SignInAnonymousPage(
+              controller: controller,
+            ));
         await iTapText(tester, text: 'Acessar outra conta');
 
         verify(() =>
@@ -162,7 +182,9 @@ void main() {
       screenshotTest(
         'looks as expected',
         fileName: 'sign_in_anonymous_page',
-        pageBuilder: () =>  SignInAnonymousPage(controller: controller,),
+        pageBuilder: () => SignInAnonymousPage(
+          controller: controller,
+        ),
       );
     });
   });
