@@ -87,7 +87,9 @@ class SignInModule extends Module {
         ),
         ChildRoute(
           '/reset_password/step2',
-          child: (_, args) => const ResetPasswordTwoPage(),
+          child: (_, args) => ResetPasswordTwoPage(
+            controller: Modular.get<ResetPasswordTwoController>(),
+          ),
         ),
         ChildRoute(
           '/reset_password/step3',

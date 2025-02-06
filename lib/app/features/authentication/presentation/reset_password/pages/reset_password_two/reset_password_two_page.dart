@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:mobx/mobx.dart';
@@ -14,21 +13,24 @@ import '../../../shared/snack_bar_handler.dart';
 import 'reset_password_two_controller.dart';
 
 class ResetPasswordTwoPage extends StatefulWidget {
-  const ResetPasswordTwoPage({Key? key, this.title = 'ResetPasswordTwo'})
+  const ResetPasswordTwoPage(
+      {Key? key, this.title = 'ResetPasswordTwo', required this.controller})
       : super(key: key);
 
   final String title;
+  final ResetPasswordTwoController controller;
 
   @override
   _ResetPasswordTwoPageState createState() => _ResetPasswordTwoPageState();
 }
 
-class _ResetPasswordTwoPageState
-    extends ModularState<ResetPasswordTwoPage, ResetPasswordTwoController>
+class _ResetPasswordTwoPageState extends State<ResetPasswordTwoPage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
+
+  ResetPasswordTwoController get _controller => widget.controller;
 
   final _maskToken = MaskTextInputFormatter(
     mask: '# # # # # #',
@@ -113,8 +115,8 @@ class _ResetPasswordTwoPageState
                           return _buildInputField(
                             labelText: 'Token',
                             keyboardType: TextInputType.number,
-                            onChanged: controller.setToken,
-                            onError: controller.warrningToken,
+                            onChanged: _controller.setToken,
+                            onError: _controller.warrningToken,
                           );
                         },
                       ),
@@ -151,7 +153,7 @@ class _ResetPasswordTwoPageState
 
   Widget _buildNextButton() {
     return PenhasButton.roundedFilled(
-      onPressed: () => controller.nextStepPressed(),
+      onPressed: () => _controller.nextStepPressed(),
       child: const Text(
         'Próximo',
         style: kTextStyleDefaultFilledButtonLabel,
@@ -160,13 +162,14 @@ class _ResetPasswordTwoPageState
   }
 
   ReactionDisposer _showErrorMessage() {
-    return reaction((_) => controller.errorMessage, (String? message) {
+    return reaction((_) => _controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }
 
   ReactionDisposer _showProgress() {
-    return reaction((_) => controller.currentState, (PageProgressState status) {
+    return reaction((_) => _controller.currentState,
+        (PageProgressState status) {
       setState(() {
         _currentState = status;
       });
