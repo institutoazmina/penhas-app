@@ -22,7 +22,8 @@ void main() {
     AuthenticationModulesMock.init();
     cepKey = const Key('sign_up_cep');
     cpfKey = const Key('sign_up_cpf');
-    controller = SignUpController(AuthenticationModulesMock.userRegisterRepository);
+    controller =
+        SignUpController(AuthenticationModulesMock.userRegisterRepository);
   });
 
   group(
@@ -31,7 +32,11 @@ void main() {
       testWidgets(
         'shows screen widgets',
         (tester) async {
-          await theAppIsRunning(tester, SignUpPage(controller: controller,));
+          await theAppIsRunning(
+              tester,
+              SignUpPage(
+                controller: controller,
+              ));
           await iSeeText('Crie sua conta');
           await iSeeText(
               'Para sua segurança pedimos aos nossos usuários o CPF.');
