@@ -81,7 +81,9 @@ class SignInModule extends Module {
         ),
         ChildRoute(
           '/signup/step3',
-          child: (_, args) => const SignUpThreePage(),
+          child: (_, args) => SignUpThreePage(
+            controller: Modular.get<SignUpThreeController>(),
+          ),
         ),
         ChildRoute(
           '/reset_password',
