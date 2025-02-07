@@ -77,7 +77,9 @@ class SignInModule extends Module {
         ),
         ChildRoute(
           '/signup/step2',
-          child: (_, args) => const SignUpTwoPage(),
+          child: (_, args) => SignUpTwoPage(
+            controller: Modular.get<SignUpTwoController>(),
+          ),
         ),
         ChildRoute(
           '/signup/step3',

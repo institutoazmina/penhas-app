@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
-import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/pages/sign_up_two/sign_up_two_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/pages/sign_up_two/sign_up_two_page.dart';
 
@@ -20,6 +17,7 @@ void main() {
   late UserRegisterFormFieldModel userFormField;
   late Key genreDropdownList;
   late Key raceDropdownList;
+  late SignUpTwoController controller;
 
   setUp(() {
     AppModulesMock.init();
@@ -27,24 +25,15 @@ void main() {
     userFormField = UserRegisterFormFieldModel();
     genreDropdownList = const Key('genreDropdownList');
     raceDropdownList = const Key('raceDropdownList');
-
-    initModule(SignInModule(), replaceBinds: [
-      Bind<SignUpTwoController>(
-        (i) => SignUpTwoController(
-            AuthenticationModulesMock.userRegisterRepository, userFormField),
-      ),
-    ]);
-  });
-
-  tearDown(() {
-    Modular.removeModule(SignInModule());
+    controller = SignUpTwoController(
+        AuthenticationModulesMock.userRegisterRepository, userFormField);
   });
 
   group(SignUpTwoPage, () {
     testWidgets(
       'shows screen widgets',
       (tester) async {
-        await theAppIsRunning(tester, const SignUpTwoPage());
+        await theAppIsRunning(tester, SignUpTwoPage(controller: controller));
 
         // check if necessary widgets are present
         await iSeeText('Crie sua conta');
@@ -61,7 +50,7 @@ void main() {
     testWidgets(
       'checks the genre list',
       (tester) async {
-        await theAppIsRunning(tester, const SignUpTwoPage());
+        await theAppIsRunning(tester, SignUpTwoPage(controller: controller));
         final genreList = [
           'Feminino',
           'Masculino',
@@ -84,7 +73,7 @@ void main() {
     testWidgets(
       'checks the race list',
       (tester) async {
-        await theAppIsRunning(tester, const SignUpTwoPage());
+        await theAppIsRunning(tester, SignUpTwoPage(controller: controller));
 
         final raceList = [
           'Branca',
@@ -109,7 +98,7 @@ void main() {
     testWidgets(
       'does not forward for any invalid field',
       (tester) async {
-        await theAppIsRunning(tester, const SignUpTwoPage());
+        await theAppIsRunning(tester, SignUpTwoPage(controller: controller));
         await iTapText(tester, text: 'Próximo');
         await iSeeSingleTextInputErrorMessage(
           tester,
@@ -138,7 +127,7 @@ void main() {
               race: any(named: 'race'),
             )).thenFailure((_) => ServerFailure());
 
-        await theAppIsRunning(tester, const SignUpTwoPage());
+        await theAppIsRunning(tester, SignUpTwoPage(controller: controller));
         await iEnterIntoSingleTextInput(
           tester,
           text: 'Apelido',
@@ -187,7 +176,7 @@ void main() {
               arguments: any(named: 'arguments')),
         ).thenAnswer((_) => Future.value());
 
-        await theAppIsRunning(tester, const SignUpTwoPage());
+        await theAppIsRunning(tester, SignUpTwoPage(controller: controller));
         await iEnterIntoSingleTextInput(
           tester,
           text: 'Apelido',
@@ -225,7 +214,7 @@ void main() {
     screenshotTest(
       'looks as expected',
       fileName: 'sign_up_step_2_page',
-      pageBuilder: () => const SignUpTwoPage(),
+      pageBuilder: () => SignUpTwoPage(controller: controller),
     );
   });
 }
