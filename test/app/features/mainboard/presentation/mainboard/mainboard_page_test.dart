@@ -6,6 +6,7 @@ import 'package:mobx/mobx.dart' as mobx;
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_preferences_use_case.dart';
 import 'package:penhas/app/features/feed/presentation/compose_tweet/compose_tweet_controller.dart';
+import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_controller.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_store.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/mainboard_controller.dart';
@@ -29,6 +30,9 @@ class FakeTimer extends Fake implements Timer {}
 class MockComposeTweetController extends Mock
     implements ComposeTweetController {}
 
+class MockPenhasDrawerController extends Mock
+    implements PenhasDrawerController {}
+
 void main() {
   late MainboardController controller;
   late ComposeTweetController composeTweetController;
@@ -37,6 +41,7 @@ void main() {
   late INotificationRepository notification;
   late Timer notificationTimer;
   late PageController pageController;
+  late PenhasDrawerController penhasDrawerController;
 
   setUp(() {
     mainboardStore = MockMainboardStore();
@@ -44,6 +49,7 @@ void main() {
     notification = MockNotificationRepository();
     notificationTimer = FakeTimer();
     pageController = FakePageController();
+    penhasDrawerController = MockPenhasDrawerController();
     when(() => mainboardStore.selectedPage).thenReturn(MainboardState.feed());
     when(() => mainboardStore.pages).thenReturn(([
       MainboardState.feed(),
@@ -71,6 +77,7 @@ void main() {
       pageBuilder: () => MainboardPage(
         controller: controller,
         composeTweetController: composeTweetController,
+        penhasDrawerController: penhasDrawerController,
       ),
       skip: true,
       reason:

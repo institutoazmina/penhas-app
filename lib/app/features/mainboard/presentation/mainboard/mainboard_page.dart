@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../../feed/presentation/compose_tweet/compose_tweet_controller.dart';
+import '../../../main_menu/presentation/penhas_drawer_controller.dart';
 import '../../../main_menu/presentation/penhas_drawer_page.dart';
 import 'mainboard_controller.dart';
 import 'pages/mainboard_app_bar_page.dart';
@@ -13,10 +14,12 @@ class MainboardPage extends StatefulWidget {
     Key? key,
     required this.controller,
     required this.composeTweetController,
+    required this.penhasDrawerController,
   }) : super(key: key);
 
   final MainboardController controller;
   final ComposeTweetController composeTweetController;
+  final PenhasDrawerController penhasDrawerController;
 
   static final mainBoardKey = GlobalKey<ScaffoldState>(
     debugLabel: 'main-board-scaffold-key',
@@ -32,6 +35,8 @@ class MainboardPage extends StatefulWidget {
 class MainboardPageState extends State<MainboardPage>
     with WidgetsBindingObserver {
   MainboardController get controller => widget.controller;
+  PenhasDrawerController get _penhasDrawerController =>
+      widget.penhasDrawerController;
   ComposeTweetController get composeTweetController =>
       widget.composeTweetController;
 
@@ -59,7 +64,9 @@ class MainboardPageState extends State<MainboardPage>
           resetCounter: controller.resetNotificationCounter,
           currentPage: controller.mainboardStore.selectedPage,
         ),
-        drawer: const PenhasDrawerPage(),
+        drawer: PenhasDrawerPage(
+          controller: _penhasDrawerController,
+        ),
         backgroundColor: Colors.white,
         body: Scaffold(
           key: MainboardPage.mainBoardKey,

@@ -27,7 +27,9 @@ class EscapeManualModule extends WidgetModule {
   List<ModularRoute> get routes => [
         ChildRoute(
           '/edit/trusted_contacts',
-          child: (_, __) => const EditTrustedContactsPage(),
+          child: (_, __) => EditTrustedContactsPage(
+            controller: Modular.get<EditTrustedContactsController>(),
+          ),
         )
       ];
 
@@ -46,7 +48,7 @@ class EscapeManualModule extends WidgetModule {
       (i) => EditTrustedContactsController(
         contacts: i.args?.data,
         escapeManualToggleFeature: EscapeManualToggleFeature(
-          modulesServices: i(),
+          modulesServices: i.get(),
         ),
       ),
     ),

@@ -20,28 +20,29 @@ import '../pages/guardian_rate_limit_page.dart';
 import 'new_guardian_controller.dart';
 
 class NewGuardianPage extends StatefulWidget {
-  const NewGuardianPage({Key? key, this.title = 'NewGuardian'})
+  const NewGuardianPage(
+      {Key? key, this.title = 'NewGuardian', required this.controller})
       : super(key: key);
 
   final String title;
+  final NewGuardianController controller;
 
   @override
   _NewGuardianPageState createState() => _NewGuardianPageState();
 }
 
-class _NewGuardianPageState
-    extends ModularState<NewGuardianPage, NewGuardianController>
+class _NewGuardianPageState extends State<NewGuardianPage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  NewGuardianController get _controller => widget.controller;
   PageProgressState _loadState = PageProgressState.initial;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      controller.loadPage();
+      _controller.loadPage();
     });
   }
 
@@ -84,7 +85,7 @@ class _NewGuardianPageState
                 SliverFillRemaining(
                   hasScrollBody: false,
                   child: Observer(
-                    builder: (context) => _buildBody(controller.currentState),
+                    builder: (context) => _buildBody(_controller.currentState),
                   ),
                 )
               ],
@@ -101,7 +102,7 @@ class _NewGuardianPageState
       loaded: () => _buildInputScreen(),
       error: (message) => GuardianErrorPage(
         message: message,
-        onPressed: controller.loadPage,
+        onPressed: _controller.loadPage,
       ),
       rateLimit: (maxLimit) => GuardianRateLimitPage(maxLimit: maxLimit),
     );
@@ -147,10 +148,10 @@ class _NewGuardianPageState
         builder: (_) {
           return SingleTextInput(
             style: kTextStyleGreyDefaultTextFieldLabelStyle,
-            onChanged: controller.setGuardianName,
+            onChanged: _controller.setGuardianName,
             boxDecoration: PurpleBoxDecorationStyle(
               labelText: 'Nome do guardião',
-              errorText: controller.warningName,
+              errorText: _controller.warningName,
             ),
           );
         },
@@ -166,11 +167,11 @@ class _NewGuardianPageState
           return SingleTextInput(
             style: kTextStyleGreyDefaultTextFieldLabelStyle,
             keyboardType: TextInputType.phone,
-            onChanged: controller.setGuardianMobile,
+            onChanged: _controller.setGuardianMobile,
             boxDecoration: PurpleBoxDecorationStyle(
               labelText: 'Celular',
               hintText: 'Número do celular com o DDD',
-              errorText: controller.warningMobile,
+              errorText: _controller.warningMobile,
             ),
           );
         },
@@ -232,7 +233,7 @@ class _NewGuardianPageState
         height: 40,
         width: 215,
         child: PenhasButton.roundedFilled(
-          onPressed: () => controller.addGuardian(),
+          onPressed: () => _controller.addGuardian(),
           child: const Text(
             'Adicionar guardião',
             style: TextStyle(
@@ -248,13 +249,13 @@ class _NewGuardianPageState
   }
 
   ReactionDisposer _showErrorMessage() {
-    return reaction((_) => controller.errorMessage, (String? message) {
+    return reaction((_) => _controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }
 
   ReactionDisposer _showLoadProgress() {
-    return reaction((_) => controller.loadState, (PageProgressState status) {
+    return reaction((_) => _controller.loadState, (PageProgressState status) {
       setState(() {
         _loadState = status;
       });
@@ -262,7 +263,7 @@ class _NewGuardianPageState
   }
 
   ReactionDisposer _showCreateProgress() {
-    return reaction((_) => controller.createState, (PageProgressState status) {
+    return reaction((_) => _controller.createState, (PageProgressState status) {
       setState(() {
         _loadState = status;
       });
@@ -270,7 +271,7 @@ class _NewGuardianPageState
   }
 
   ReactionDisposer _showAlert() {
-    return reaction((_) => controller.alertState, (GuardianAlertState status) {
+    return reaction((_) => _controller.alertState, (GuardianAlertState status) {
       status.when(
         initial: () {},
         alert: (action) => _showSentInvite(action),

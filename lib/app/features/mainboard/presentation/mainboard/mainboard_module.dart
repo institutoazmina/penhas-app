@@ -132,6 +132,7 @@ class MainboardModule extends Module {
           child: (_, args) => MainboardPage(
             controller: Modular.get<MainboardController>(),
             composeTweetController: Modular.get<ComposeTweetController>(),
+            penhasDrawerController: Modular.get<PenhasDrawerController>(),
           ),
         ),
         ...tweetRoutes,
@@ -175,12 +176,16 @@ class MainboardModule extends Module {
         ),
         ChildRoute(
           '/tags',
-          child: (context, args) => const FilterTweetPage(),
+          child: (context, args) => FilterTweetPage(
+            controller: Modular.get<FilterTweetController>(),
+          ),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/tweet/perfil_chat',
-          child: (context, args) => const FeedRoutingProfileChatPage(),
+          child: (context, args) => FeedRoutingProfileChatPage(
+            controller: Modular.get<FeedRoutingProfileChatController>(),
+          ),
           transition: TransitionType.rightToLeft,
         ),
       ];
@@ -188,12 +193,16 @@ class MainboardModule extends Module {
   List<ModularRoute> get helpCenter => [
         ChildRoute(
           '/helpcenter/newGuardian',
-          child: (context, args) => const NewGuardianPage(),
+          child: (context, args) => NewGuardianPage(
+            controller: Modular.get<NewGuardianController>(),
+          ),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/helpcenter/guardians',
-          child: (context, args) => const GuardiansPage(),
+          child: (context, args) => GuardiansPage(
+            controller: Modular.get<GuardiansController>(),
+          ),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(

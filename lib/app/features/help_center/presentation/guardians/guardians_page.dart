@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../shared/design_system/colors.dart';
@@ -16,7 +15,11 @@ import '../pages/guardian_tile_header.dart';
 import 'guardians_controller.dart';
 
 class GuardiansPage extends StatefulWidget {
-  const GuardiansPage({Key? key, this.title = 'Guardians'}) : super(key: key);
+  const GuardiansPage(
+      {Key? key, this.title = 'Guardians', required this.controller})
+      : super(key: key);
+
+  final GuardiansController controller;
 
   final String title;
 
@@ -24,21 +27,20 @@ class GuardiansPage extends StatefulWidget {
   _GuardiansPageState createState() => _GuardiansPageState();
 }
 
-class _GuardiansPageState
-    extends ModularState<GuardiansPage, GuardiansController>
-    with SnackBarHandler {
+class _GuardiansPageState extends State<GuardiansPage> with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
   PageProgressState _loadState = PageProgressState.initial;
+  GuardiansController get _controller => widget.controller;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      controller.loadPage();
+      _controller.loadPage();
     });
   }
 
@@ -73,7 +75,7 @@ class _GuardiansPageState
         progressMessage: 'Carregando...',
         child: SafeArea(
           child: Observer(
-            builder: (context) => _buildBody(controller.currentState),
+            builder: (context) => _buildBody(_controller.currentState),
           ),
         ),
       ),
@@ -86,7 +88,7 @@ class _GuardiansPageState
       loaded: (tiles) => _buildInputScreen(tiles),
       error: (message) => GuardianErrorPage(
         message: message,
-        onPressed: controller.loadPage,
+        onPressed: _controller.loadPage,
       ),
     );
   }
@@ -98,7 +100,7 @@ class _GuardiansPageState
         padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 22.0),
         child: RefreshIndicator(
           key: _refreshIndicatorKey,
-          onRefresh: () async => controller.loadPage(),
+          onRefresh: () async => _controller.loadPage(),
           child: ListView.builder(
             itemCount: tiles.length,
             itemBuilder: (context, index) {
@@ -133,13 +135,13 @@ class _GuardiansPageState
   Widget _empty() => Container(color: DesignSystemColors.white);
 
   ReactionDisposer _showErrorMessage() {
-    return reaction((_) => controller.errorMessage, (String? message) {
+    return reaction((_) => _controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }
 
   ReactionDisposer _showLoadProgress() {
-    return reaction((_) => controller.loadState, (PageProgressState status) {
+    return reaction((_) => _controller.loadState, (PageProgressState status) {
       setState(() {
         _loadState = status;
       });
@@ -147,7 +149,7 @@ class _GuardiansPageState
   }
 
   ReactionDisposer _showUpdateProgress() {
-    return reaction((_) => controller.updateState, (PageProgressState status) {
+    return reaction((_) => _controller.updateState, (PageProgressState status) {
       setState(() {
         _loadState = status;
       });
