@@ -154,6 +154,32 @@ class ReplyTweet extends StatelessWidget {
           )
         : Container();
   }
+
+  Widget _buildCloseUser(TweetEntity tweet) {
+    if (tweet.badges.isEmpty) {
+      return const SizedBox.shrink();
+    } else {
+      var _emptyBadge = TweetBadgeEntity(
+          code: '',
+          description: '',
+          imageUrl: '',
+          name: '',
+          popUp: 0,
+          showDescription: 0,
+          style: '');
+      final badge = tweet.badges.firstWhere(
+        (badge) => badge.style == 'inline-block',
+        orElse: () => _emptyBadge,
+      );
+      if (badge.style != '') {
+        return UserCloseBadgeWidget(
+          badge: badge,
+        );
+      } else {
+        return const SizedBox.shrink();
+      }
+    }
+  }
 }
 
 class _RepliedTweet extends StatelessWidget {
