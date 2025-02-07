@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../../../../shared/design_system/linear_gradient_design_system.dart';
@@ -14,20 +13,22 @@ import '../../../../shared/snack_bar_handler.dart';
 import 'sign_up_two_controller.dart';
 
 class SignUpTwoPage extends StatefulWidget {
-  const SignUpTwoPage({Key? key, this.title = 'SignUpTwo'}) : super(key: key);
+  const SignUpTwoPage(
+      {Key? key, this.title = 'SignUpTwo', required this.controller})
+      : super(key: key);
 
   final String title;
+  final SignUpTwoController controller;
 
   @override
   _SignUpTwoPageState createState() => _SignUpTwoPageState();
 }
 
-class _SignUpTwoPageState
-    extends ModularState<SignUpTwoPage, SignUpTwoController>
-    with SnackBarHandler {
+class _SignUpTwoPageState extends State<SignUpTwoPage> with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
+  SignUpTwoController get _controller => widget.controller;
 
   final dataSourceGenre =
       _buildDataSource(SignUpTwoController.genreDataSource());
@@ -87,9 +88,9 @@ class _SignUpTwoPageState
                             context: context,
                             labelText: 'Gênero',
                             keyIdentification: const Key('genreDropdownList'),
-                            onError: controller.warningGenre,
-                            onChange: controller.setGenre,
-                            currentValue: controller.currentGenre,
+                            onError: _controller.warningGenre,
+                            onChange: _controller.setGenre,
+                            currentValue: _controller.currentGenre,
                             dataSource: dataSourceGenre,
                           );
                         },
@@ -101,9 +102,9 @@ class _SignUpTwoPageState
                             context: context,
                             labelText: 'Raça',
                             keyIdentification: const Key('raceDropdownList'),
-                            onError: controller.warningRace,
-                            onChange: controller.setRace,
-                            currentValue: controller.currentRace,
+                            onError: _controller.warningRace,
+                            onChange: _controller.setRace,
+                            currentValue: _controller.currentRace,
                             dataSource: dataSourceRace,
                           );
                         },
@@ -123,25 +124,25 @@ class _SignUpTwoPageState
 
   SingleTextInput _buildNickName() {
     return SingleTextInput(
-      onChanged: controller.setNickname,
+      onChanged: _controller.setNickname,
       boxDecoration: WhiteBoxDecorationStyle(
         labelText: 'Apelido',
-        errorText: controller.warningNickname,
+        errorText: _controller.warningNickname,
       ),
     );
   }
 
   Offstage _buildSocialName() {
     return Offstage(
-      offstage: !controller.hasSocialNameField,
+      offstage: !_controller.hasSocialNameField,
       child: Column(
         children: <Widget>[
           const SizedBox(height: 24.0),
           SingleTextInput(
-            onChanged: controller.setSocialName,
+            onChanged: _controller.setSocialName,
             boxDecoration: WhiteBoxDecorationStyle(
               labelText: 'Nome social',
-              errorText: controller.warningSocialName,
+              errorText: _controller.warningSocialName,
             ),
           ),
         ],
@@ -186,7 +187,7 @@ class _SignUpTwoPageState
 
   Widget _buildNextButton() {
     return PenhasButton.roundedFilled(
-      onPressed: () => controller.nextStepPressed(),
+      onPressed: () => _controller.nextStepPressed(),
       child: const Text(
         'Próximo',
         style: kTextStyleDefaultFilledButtonLabel,
@@ -208,13 +209,14 @@ class _SignUpTwoPageState
   }
 
   ReactionDisposer _showErrorMessage() {
-    return reaction((_) => controller.errorMessage, (String message) {
+    return reaction((_) => _controller.errorMessage, (String message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }
 
   ReactionDisposer _showProgress() {
-    return reaction((_) => controller.currentState, (PageProgressState status) {
+    return reaction((_) => _controller.currentState,
+        (PageProgressState status) {
       setState(() {
         _currentState = status;
       });
