@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import '../../../feed/presentation/compose_tweet/compose_tweet_controller.dart';
 import '../../../main_menu/presentation/penhas_drawer_controller.dart';
 import '../../../main_menu/presentation/penhas_drawer_page.dart';
+import '../../../quiz/presentation/tutorial/stealth_mode_tutorial_page_controller.dart';
 import 'mainboard_controller.dart';
 import 'pages/mainboard_app_bar_page.dart';
 import 'pages/mainboard_body_page.dart';
@@ -15,11 +16,13 @@ class MainboardPage extends StatefulWidget {
     required this.controller,
     required this.composeTweetController,
     required this.penhasDrawerController,
+    required this.stealthController,
   }) : super(key: key);
 
   final MainboardController controller;
   final ComposeTweetController composeTweetController;
   final PenhasDrawerController penhasDrawerController;
+  final StealthModeTutorialPageController stealthController;
 
   static final mainBoardKey = GlobalKey<ScaffoldState>(
     debugLabel: 'main-board-scaffold-key',
@@ -39,6 +42,8 @@ class MainboardPageState extends State<MainboardPage>
       widget.penhasDrawerController;
   ComposeTweetController get composeTweetController =>
       widget.composeTweetController;
+  StealthModeTutorialPageController get _stealthController =>
+      widget.stealthController;
 
   @override
   void initState() {
@@ -66,6 +71,7 @@ class MainboardPageState extends State<MainboardPage>
         ),
         drawer: PenhasDrawerPage(
           controller: _penhasDrawerController,
+          stealthController: _stealthController,
         ),
         backgroundColor: Colors.white,
         body: Scaffold(
