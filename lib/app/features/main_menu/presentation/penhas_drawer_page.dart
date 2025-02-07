@@ -8,17 +8,22 @@ import '../../../shared/design_system/colors.dart';
 import '../../../shared/design_system/text_styles.dart';
 import '../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../quiz/presentation/tutorial/stealth_mode_tutorial_page.dart';
+import '../../quiz/presentation/tutorial/stealth_mode_tutorial_page_controller.dart';
 import 'pages/penhas_drawer_header_page.dart';
 import 'pages/penhas_drawer_toggle_page.dart';
 import 'penhas_drawer_controller.dart';
 
 class PenhasDrawerPage extends StatefulWidget {
   const PenhasDrawerPage(
-      {Key? key, this.title = 'Penhas Drawer', required this.controller})
+      {Key? key,
+      this.title = 'Penhas Drawer',
+      required this.controller,
+      required this.stealthController})
       : super(key: key);
 
   final String title;
   final PenhasDrawerController controller;
+  final StealthModeTutorialPageController stealthController;
 
   @override
   _PenhasDrawerPageState createState() => _PenhasDrawerPageState();
@@ -28,6 +33,8 @@ class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
   final double listHeight = 80;
   final Color drawerGrey = const Color.fromRGBO(239, 239, 239, 1.0);
   PenhasDrawerController get _controller => widget.controller;
+  StealthModeTutorialPageController get _stealthController =>
+      widget.stealthController;
 
   @override
   void initState() {
@@ -149,7 +156,10 @@ class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
                   onPressed: () async {
                     Navigator.push(
                       context,
-                      TutorialScaleRoute(page: const StealthModeTutorialPage()),
+                      TutorialScaleRoute(
+                          page: StealthModeTutorialPage(
+                        controller: _stealthController,
+                      )),
                     );
                   },
                   child: Text(

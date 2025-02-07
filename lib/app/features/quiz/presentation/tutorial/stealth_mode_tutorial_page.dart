@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../core/pages/tutorial_page_view_widget.dart';
 import '../../../../shared/design_system/colors.dart';
@@ -8,18 +7,21 @@ import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import 'stealth_mode_tutorial_page_controller.dart';
 
 class StealthModeTutorialPage extends StatefulWidget {
-  const StealthModeTutorialPage({Key? key}) : super(key: key);
+  const StealthModeTutorialPage({Key? key, required this.controller})
+      : super(key: key);
+
+  final StealthModeTutorialPageController controller;
 
   @override
   _StealthModeTutorialPageState createState() =>
       _StealthModeTutorialPageState();
 }
 
-class _StealthModeTutorialPageState extends ModularState<
-    StealthModeTutorialPage, StealthModeTutorialPageController> {
+class _StealthModeTutorialPageState extends State<StealthModeTutorialPage> {
   List<TutorialPageViewWidget> _contentPageView = [];
   final PageController _pageController = PageController();
   int _currentPage = 0;
+  StealthModeTutorialPageController get _controller => widget.controller;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,7 @@ class _StealthModeTutorialPageState extends ModularState<
                     },
                     children: pages(
                       isPermissionGranted:
-                          controller.state.locationPermissionGranted,
+                          _controller.state.locationPermissionGranted,
                     )!,
                   ),
                 ),
@@ -153,7 +155,7 @@ class _StealthModeTutorialPageState extends ModularState<
             ),
             if (!isPermissionGranted)
               PenhasButton.text(
-                onPressed: controller.requestLocationPermission,
+                onPressed: _controller.requestLocationPermission,
                 child: const Text(
                   'AUTORIZAR LOCALIZAÇÃO',
                   style: TextStyle(

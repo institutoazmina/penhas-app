@@ -98,7 +98,9 @@ class QuizModule extends Module {
         ),
         ChildRoute(
           '/tutorial/stealth',
-          child: (_, __) => const StealthModeTutorialPage(),
+          child: (_, __) => StealthModeTutorialPage(
+            controller: Modular.get<StealthModeTutorialPageController>(),
+          ),
         ),
       ];
 }

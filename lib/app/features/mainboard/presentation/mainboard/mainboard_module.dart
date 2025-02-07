@@ -133,6 +133,7 @@ class MainboardModule extends Module {
             controller: Modular.get<MainboardController>(),
             composeTweetController: Modular.get<ComposeTweetController>(),
             penhasDrawerController: Modular.get<PenhasDrawerController>(),
+            stealthController: Modular.get<StealthModeTutorialPageController>(),
           ),
         ),
         ...tweetRoutes,
