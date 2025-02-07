@@ -65,6 +65,7 @@ void main() {
             content: 'content 1',
             avatar: 'https://site.com/avatar.svg',
             meta: const TweetMeta(liked: false, owner: false),
+            badges: [],
           );
 
           when(() => repository.report(option: any(named: 'option')))

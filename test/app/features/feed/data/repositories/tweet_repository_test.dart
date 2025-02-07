@@ -99,6 +99,7 @@ void main() {
               avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
               meta: const TweetMeta(liked: false, owner: true),
               lastReply: const [],
+              badges: [],
             ),
           );
           // act
@@ -184,6 +185,7 @@ void main() {
               avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
               meta: const TweetMeta(liked: true, owner: true),
               lastReply: const [],
+              badges: [],
             ),
           );
           // act
@@ -236,6 +238,7 @@ void main() {
               avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
               meta: const TweetMeta(liked: false, owner: true),
               lastReply: const [],
+              badges: [],
             ),
           );
           // act
@@ -296,6 +299,7 @@ void main() {
                   meta: const TweetMeta(
                       liked: false, owner: true, canReply: false),
                   lastReply: const [],
+                  badges: [],
                 )
               ],
               null,

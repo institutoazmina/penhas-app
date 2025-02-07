@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DesignSystemColors {
+  static const ligthPurple2 = Color.fromRGBO(160, 100, 255, 0.22);
   static const ligthPurple = Color.fromRGBO(160, 101, 255, 1);
   static const easterPurple = Color.fromRGBO(159, 99, 255, 1);
   static const darkIndigo = Color.fromRGBO(8, 8, 40, 1);

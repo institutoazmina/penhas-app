@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import 'tweet_badge_entity.dart';
+
 abstract class TweetTiles extends Equatable {}
 
 class TweetEntity extends TweetTiles {
@@ -16,6 +18,7 @@ class TweetEntity extends TweetTiles {
     required this.meta,
     this.parentId,
     this.lastReply = const [],
+    required this.badges,
   });
 
   final String id;
@@ -30,6 +33,7 @@ class TweetEntity extends TweetTiles {
   final String avatar;
   final TweetMeta meta;
   final List<TweetEntity> lastReply;
+  final List<TweetBadgeEntity> badges;
 
   @override
   List<Object?> get props => [
@@ -45,6 +49,7 @@ class TweetEntity extends TweetTiles {
         totalLikes,
         parentId,
         lastReply,
+        badges,
       ];
 
   TweetEntity copyWith({
@@ -60,6 +65,7 @@ class TweetEntity extends TweetTiles {
     TweetMeta? meta,
     String? parentId,
     List<TweetEntity>? lastReply,
+    List<TweetBadgeEntity>? badges,
   }) {
     return TweetEntity(
       id: id ?? this.id,
@@ -74,6 +80,7 @@ class TweetEntity extends TweetTiles {
       meta: meta ?? this.meta,
       parentId: parentId ?? this.parentId,
       lastReply: lastReply ?? this.lastReply,
+      badges: badges ?? this.badges,
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../shared/design_system/widgets/badges/user_close_badge_widget.dart';
+import '../../domain/entities/tweet_badge_entity.dart';
 import '../../domain/entities/tweet_entity.dart';
 import '../stores/tweet_controller.dart';
 import 'widgets/tweet_avatar.dart';
@@ -55,6 +57,16 @@ class SingleTweet extends StatelessWidget {
                       context: _context,
                       controller: controller,
                     ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          bottom: tweet.badges.isEmpty ? 0.0 : 8.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          _buildCloseUser(tweet),
+                        ],
+                      ),
+                    ),
                     TweetBody(content: tweet.content),
                     TweetBottom(tweet: tweet, controller: controller)
                   ],
@@ -65,5 +77,32 @@ class SingleTweet extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Widget _buildCloseUser(TweetEntity tweet) {
+  if (tweet.badges.isEmpty) {
+    return const SizedBox.shrink();
+  } else {
+    var _emptyBadge = TweetBadgeEntity(
+        code: '',
+        description: '',
+        imageUrl: '',
+        name: '',
+        popUp: 0,
+        showDescription: 0,
+        style: '');
+    final badge = tweet.badges.firstWhere(
+      (badge) => badge.style == 'inline-block',
+      orElse: () => _emptyBadge,
+    );
+    //Se for badge usuarias da sua regiao
+    if (badge.style != '') {
+      return UserCloseBadgeWidget(
+        badge: badge,
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
   }
 }

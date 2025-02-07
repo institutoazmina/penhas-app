@@ -64,5 +64,7 @@ class ZodiacModule extends WidgetModule {
       ];
 
   @override
-  Widget get view => ZodiacPage(controller: Modular.get<ZodiacController>());
+  Widget get view => ZodiacPage(
+      controller: ZodiacController(
+          securityAction: Modular.get(), userProfileStore: Modular.get()));
 }
