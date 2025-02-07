@@ -70,7 +70,9 @@ class SignInModule extends Module {
                 )),
         ChildRoute(
           '/signup',
-          child: (_, args) => const SignUpPage(),
+          child: (_, args) => SignUpPage(
+            controller: Modular.get<SignUpController>(),
+          ),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(

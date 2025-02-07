@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:mobx/mobx.dart';
@@ -17,19 +16,21 @@ import '../../shared/snack_bar_handler.dart';
 import 'sign_up_controller.dart';
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key, this.title = 'SignUp'}) : super(key: key);
+  const SignUpPage({Key? key, this.title = 'SignUp', required this.controller})
+      : super(key: key);
 
   final String title;
+  final SignUpController controller;
 
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
 
-class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
-    with SnackBarHandler {
+class _SignUpPageState extends State<SignUpPage> with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
+  SignUpController get _controller => widget.controller;
 
   final format = DateFormat('dd/MM/yyyy');
 
@@ -126,12 +127,12 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
     return SingleTextInput(
       key: const Key('sign_up_cep'),
       inputFormatter: _maskCep,
-      onChanged: controller.setCep,
+      onChanged: _controller.setCep,
       keyboardType: TextInputType.number,
       boxDecoration: WhiteBoxDecorationStyle(
         hintText: 'CEP',
         labelText: 'CEP',
-        errorText: controller.warningCep,
+        errorText: _controller.warningCep,
       ),
     );
   }
@@ -167,22 +168,22 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
     return SingleTextInput(
       key: const Key('sign_up_cpf'),
       inputFormatter: _maskCpf,
-      onChanged: controller.setCpf,
+      onChanged: _controller.setCpf,
       keyboardType: TextInputType.number,
       boxDecoration: WhiteBoxDecorationStyle(
         hintText: 'CPF',
         labelText: 'CPF',
-        errorText: controller.warningCpf,
+        errorText: _controller.warningCpf,
       ),
     );
   }
 
   SingleTextInput _buildFullName() {
     return SingleTextInput(
-      onChanged: controller.setFullname,
+      onChanged: _controller.setFullname,
       boxDecoration: WhiteBoxDecorationStyle(
         labelText: 'Nome completo',
-        errorText: controller.warningFullname,
+        errorText: _controller.warningFullname,
       ),
     );
   }
@@ -216,19 +217,19 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
   SingleTextInput _builBirthday() {
     return SingleTextInput(
       inputFormatter: _maskDate,
-      onChanged: controller.setBirthday,
+      onChanged: _controller.setBirthday,
       keyboardType: TextInputType.datetime,
       boxDecoration: WhiteBoxDecorationStyle(
         hintText: 'Dia / Mês / Ano',
         labelText: 'Data de nascimento',
-        errorText: controller.warningBirthday,
+        errorText: _controller.warningBirthday,
       ),
     );
   }
 
   Widget _buildNextButton() {
     return PenhasButton.roundedFilled(
-      onPressed: () => controller.nextStepPressed(),
+      onPressed: () => _controller.nextStepPressed(),
       child: const Text(
         'Próximo',
         style: kTextStyleDefaultFilledButtonLabel,
@@ -237,13 +238,14 @@ class _SignUpPageState extends ModularState<SignUpPage, SignUpController>
   }
 
   ReactionDisposer _showErrorMessage() {
-    return reaction((_) => controller.errorMessage, (String? message) {
+    return reaction((_) => _controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }
 
   ReactionDisposer _showProgress() {
-    return reaction((_) => controller.currentState, (PageProgressState status) {
+    return reaction((_) => _controller.currentState,
+        (PageProgressState status) {
       setState(() {
         _currentState = status;
       });
