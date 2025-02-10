@@ -23,11 +23,13 @@ class UserCloseBadgeWidget extends StatelessWidget {
             children: [
               Padding(
                   padding: const EdgeInsets.only(right: 8.0),
-                  child:  badge.imageUrl.isNotEmpty ? Image.network(
-                    badge.imageUrl,
-                    width: 12,
-                    height: 12,
-                  ) : const SizedBox.shrink()),
+                  child: badge.imageUrl.isNotEmpty
+                      ? Image.network(
+                          badge.imageUrl,
+                          width: 12,
+                          height: 12,
+                        )
+                      : const SizedBox.shrink()),
               Text(
                 badge.name,
                 style: kTextStyleFeedCloseUserTitle,
