@@ -47,6 +47,7 @@ class _TweetBottomState extends State<TweetBottom> {
       child: Row(
         children: <Widget>[
           IconButton(
+            padding: const EdgeInsets.only(right: 16.0),
             icon: _isLiked
                 ? const Icon(
                     Icons.favorite,
@@ -56,18 +57,21 @@ class _TweetBottomState extends State<TweetBottom> {
                 : const Icon(
                     Icons.favorite_border,
                     size: 30.0,
-                    color: DesignSystemColors.blueyGrey,
+                    color: DesignSystemColors.lightGrey,
                   ),
             onPressed: _toogleLike,
           ),
-          Text('$_likeCount', style: kTextStyleFeedTweetTime),
-          const SizedBox(width: 20),
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: Text('$_likeCount', style: kTextStyleFeedTweetTime),
+          ),
           if (_isReplyVisible)
             IconButton(
+              padding: const EdgeInsets.only(right: 16.0),
               icon: const Icon(
                 Icons.chat_bubble_outline,
                 size: 30.0,
-                color: DesignSystemColors.blueyGrey,
+                color: DesignSystemColors.lightGrey,
               ),
               onPressed: _allowReply ? _onReplyPressed : null,
             ),

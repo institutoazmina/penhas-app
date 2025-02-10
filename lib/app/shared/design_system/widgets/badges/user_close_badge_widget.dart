@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../features/feed/domain/entities/tweet_badge_entity.dart';
 import '../../colors.dart';
+import '../../text_styles.dart';
 
 class UserCloseBadgeWidget extends StatelessWidget {
   const UserCloseBadgeWidget({Key? key, required this.badge}) : super(key: key);
@@ -22,15 +23,14 @@ class UserCloseBadgeWidget extends StatelessWidget {
             children: [
               Padding(
                   padding: const EdgeInsets.only(right: 8.0),
-                  child: Image.network(badge.imageUrl, width: 8, height: 10,)),
+                  child: Image.network(
+                    badge.imageUrl,
+                    width: 12,
+                    height: 12,
+                  )),
               Text(
                 badge.name,
-                style: const TextStyle(
-                  fontFamily: 'Lato',
-                  fontSize: 13.0,
-                  fontWeight: FontWeight.bold,
-                  color: DesignSystemColors.darkIndigoThree,
-                ),
+                style: kTextStyleFeedCloseUserTitle,
               ),
             ],
           ),

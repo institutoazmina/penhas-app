@@ -30,7 +30,7 @@ class ReplyTweet extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        borderRadius: BorderRadius.all(Radius.circular(12.0)),
         boxShadow: [
           BoxShadow(
             color: Colors.black12,
@@ -40,7 +40,7 @@ class ReplyTweet extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.only(left: 18.0, top: 18.0, right: 18.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
@@ -54,7 +54,7 @@ class ReplyTweet extends StatelessWidget {
               ),
             ),
             const Text('Comentário', style: kTextStyleFeedTweetReplyHeader),
-            const SizedBox(height: 20),
+            const SizedBox(height: 8),
             // expanded replied tweets
             ..._expandeRepliedTweeters(_context),
             _buildReplyAction(),
@@ -97,9 +97,12 @@ class ReplyTweet extends StatelessWidget {
                     ),
                   ),
                   TweetBody(content: tweet.content),
-                  TweetBottom(
-                    tweet: tweet,
-                    controller: controller,
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: TweetBottom(
+                      tweet: tweet,
+                      controller: controller,
+                    ),
                   )
                 ],
               ),
@@ -148,32 +151,6 @@ class ReplyTweet extends StatelessWidget {
           )
         : Container();
   }
-
-  Widget _buildCloseUser(TweetEntity tweet) {
-    if (tweet.badges.isEmpty) {
-      return const SizedBox.shrink();
-    } else {
-      var _emptyBadge = TweetBadgeEntity(
-          code: '',
-          description: '',
-          imageUrl: '',
-          name: '',
-          popUp: 0,
-          showDescription: 0,
-          style: '');
-      final badge = tweet.badges.firstWhere(
-        (badge) => badge.style == 'inline-block',
-        orElse: () => _emptyBadge,
-      );
-      if (badge.style != '') {
-        return UserCloseBadgeWidget(
-          badge: badge,
-        );
-      } else {
-        return const SizedBox.shrink();
-      }
-    }
-  }
 }
 
 class _RepliedTweet extends StatelessWidget {
@@ -206,11 +183,50 @@ class _RepliedTweet extends StatelessWidget {
               context: context,
               controller: controller,
             ),
+            Padding(
+              padding: EdgeInsets.only(
+                  bottom: repliedTweet.badges.isEmpty ? 0.0 : 8.0),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _buildCloseUser(repliedTweet),
+                ],
+              ),
+            ),
             TweetBody(content: repliedTweet.content),
-            TweetBottom(tweet: repliedTweet, controller: controller),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: TweetBottom(tweet: repliedTweet, controller: controller),
+            ),
           ],
         ),
       ),
     );
+  }
+}
+
+Widget _buildCloseUser(TweetEntity tweet) {
+  if (tweet.badges.isEmpty) {
+    return const SizedBox.shrink();
+  } else {
+    var _emptyBadge = TweetBadgeEntity(
+        code: '',
+        description: '',
+        imageUrl: '',
+        name: '',
+        popUp: 0,
+        showDescription: 0,
+        style: '');
+    final badge = tweet.badges.firstWhere(
+      (badge) => badge.style == 'inline-block',
+      orElse: () => _emptyBadge,
+    );
+    if (badge.style != '') {
+      return UserCloseBadgeWidget(
+        badge: badge,
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
   }
 }

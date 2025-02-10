@@ -21,7 +21,7 @@ class TweetBody extends StatelessWidget {
     );
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 12.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 8.0),
       child: htmlBody,
     );
   }

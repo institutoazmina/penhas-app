@@ -165,9 +165,14 @@ class TweetTitle extends StatelessWidget {
         if (controller == null)
           Container()
         else
-          IconButton(
-            icon: const Icon(Icons.more_vert),
-            onPressed: () => _showTweetAction(),
+          SizedBox(
+            height: 38,
+            child: IconButton(
+              icon: const Icon(
+                Icons.more_vert,
+              ),
+              onPressed: () => _showTweetAction(),
+            ),
           ),
       ],
     );

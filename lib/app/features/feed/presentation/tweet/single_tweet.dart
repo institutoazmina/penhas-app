@@ -29,7 +29,7 @@ class SingleTweet extends StatelessWidget {
       child: Container(
         decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+          borderRadius: BorderRadius.all(Radius.circular(12.0)),
           boxShadow: [
             BoxShadow(
               color: Colors.black12,
@@ -96,7 +96,6 @@ Widget _buildCloseUser(TweetEntity tweet) {
       (badge) => badge.style == 'inline-block',
       orElse: () => _emptyBadge,
     );
-    //Se for badge usuarias da sua regiao
     if (badge.style != '') {
       return UserCloseBadgeWidget(
         badge: badge,
