@@ -22,7 +22,7 @@ class UserCloseBadgeWidget extends StatelessWidget {
             children: [
               Padding(
                   padding: const EdgeInsets.only(right: 8.0),
-                  child: Image.network(badge.imageUrl)),
+                  child: Image.network(badge.imageUrl, width: 8, height: 10,)),
               Text(
                 badge.name,
                 style: const TextStyle(
