@@ -30,7 +30,6 @@ class FeedCategoryFilter extends StatelessWidget {
             Icon(
               Icons.arrow_drop_down,
               color: DesignSystemColors.ligthPurple,
-              size: 30,
             ),
             Text('Categorias', style: kTextStyleFeedCategoryButtonLabel),
           ],

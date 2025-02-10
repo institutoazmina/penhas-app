@@ -34,7 +34,6 @@ class FeedTagsFilter extends StatelessWidget {
               child: Icon(
                 Icons.filter_list,
                 color: DesignSystemColors.ligthPurple,
-                size: 22.0,
               ),
             ),
             Text('Filtros por temas', style: kTextStyleFeedCategoryButtonLabel),

@@ -39,12 +39,15 @@ class SingleTweet extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(16.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Expanded(
-                child: TweetAvatar(tweet: tweet),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 8.0, right: 8.0),
+                  child: TweetAvatar(tweet: tweet),
+                ),
               ),
               const SizedBox(width: 6.0),
               Expanded(
