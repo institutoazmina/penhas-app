@@ -226,10 +226,35 @@ class _RepliedTweet extends StatelessWidget {
                 ],
               ),
             ),
-            TweetBody(content: repliedTweet.content),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 20.0),
-              child: TweetBottom(tweet: repliedTweet, controller: controller),
+            const SizedBox(width: 6.0),
+            Expanded(
+              flex: 5,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  TweetTitle(
+                    tweet: repliedTweet,
+                    context: context,
+                    controller: controller,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        bottom: repliedTweet.badges.isEmpty ? 0.0 : 8.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _buildCloseUser(repliedTweet),
+                      ],
+                    ),
+                  ),
+                  TweetBody(content: repliedTweet.content),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20.0),
+                    child: TweetBottom(
+                        tweet: repliedTweet, controller: controller),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
