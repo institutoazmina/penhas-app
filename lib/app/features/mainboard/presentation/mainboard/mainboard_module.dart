@@ -133,6 +133,7 @@ class MainboardModule extends Module {
             controller: Modular.get<MainboardController>(),
             composeTweetController: Modular.get<ComposeTweetController>(),
             penhasDrawerController: Modular.get<PenhasDrawerController>(),
+            stealthController: Modular.get<StealthModeTutorialPageController>(),
           ),
         ),
         ...tweetRoutes,
@@ -148,7 +149,9 @@ class MainboardModule extends Module {
   List<ModularRoute> get tweetRoutes => [
         ChildRoute(
           '/reply',
-          child: (_, args) => const ReplyTweetPage(),
+          child: (_, args) => ReplyTweetPage(
+            controller: Modular.get<ReplyTweetController>(),
+          ),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
@@ -276,7 +279,9 @@ class MainboardModule extends Module {
         ),
         ChildRoute(
           '/menu/profile_edit',
-          child: (context, args) => const ProfileEditPage(),
+          child: (context, args) => ProfileEditPage(
+            controller: Modular.get<ProfileEditController>(),
+          ),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(

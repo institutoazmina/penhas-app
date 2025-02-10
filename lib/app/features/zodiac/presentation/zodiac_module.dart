@@ -66,5 +66,6 @@ class ZodiacModule extends WidgetModule {
   @override
   Widget get view => ZodiacPage(
       controller: ZodiacController(
-          securityAction: Modular.get(), userProfileStore: Modular.get()));
+          securityAction: Modular.get<StealthSecurityAction>(),
+          userProfileStore: Modular.get<LocalStore<UserProfileEntity>>()));
 }

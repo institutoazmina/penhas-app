@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
+import 'package:penhas/app/core/managers/location_services.dart';
 import 'package:penhas/app/core/managers/modules_sevices.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
@@ -9,6 +10,7 @@ import 'package:penhas/app/features/help_center/domain/usecases/security_mode_ac
 import 'package:penhas/app/features/main_menu/domain/usecases/user_profile.dart';
 import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_controller.dart';
 import 'package:penhas/app/features/main_menu/presentation/penhas_drawer_page.dart';
+import 'package:penhas/app/features/quiz/presentation/tutorial/stealth_mode_tutorial_page_controller.dart';
 
 import '../../../../utils/golden_tests.dart';
 import '../../../../utils/widget_test_steps.dart';
@@ -21,11 +23,20 @@ class MockAppModulesServices extends Mock implements IAppModulesServices {}
 
 class FakeAppStateModuleEntity extends Fake implements AppStateModuleEntity {}
 
+class MockLocationServices extends Mock implements ILocationServices {
+  @override
+  Future<bool> isPermissionGranted() async {
+    return Future.value(true);
+  }
+}
+
 void main() {
   late MockAppConfiguration appConfiguration;
   late MockUserProfile userProfile;
   late MockAppModulesServices modulesServices;
   late PenhasDrawerController penhasDrawerController;
+  late ILocationServices locationServices;
+  late StealthModeTutorialPageController stealthController;
 
   final userProfileEntity = UserProfileEntity(
     fullName: 'Penhas',
@@ -46,10 +57,14 @@ void main() {
     appConfiguration = MockAppConfiguration();
     userProfile = MockUserProfile();
     modulesServices = MockAppModulesServices();
+    locationServices = MockLocationServices();
     penhasDrawerController = PenhasDrawerController(
         appConfigure: appConfiguration,
         modulesServices: modulesServices,
         userProfile: userProfile);
+    stealthController = StealthModeTutorialPageController(
+      locationService: locationServices,
+    );
   });
 
   group(PenhasDrawerPage, () {
@@ -65,6 +80,7 @@ void main() {
       // act
       tester.theAppIsRunning(PenhasDrawerPage(
         controller: penhasDrawerController,
+        stealthController: stealthController,
       ));
       // assert
     });
@@ -76,6 +92,7 @@ void main() {
     pageBuilder: () => Scaffold(
         body: PenhasDrawerPage(
       controller: penhasDrawerController,
+      stealthController: stealthController,
     )),
     setUp: () {
       when(() => modulesServices.feature(
@@ -96,6 +113,7 @@ void main() {
     pageBuilder: () => Scaffold(
         body: PenhasDrawerPage(
       controller: penhasDrawerController,
+      stealthController: stealthController,
     )),
     setUp: () {
       when(() => modulesServices.feature(

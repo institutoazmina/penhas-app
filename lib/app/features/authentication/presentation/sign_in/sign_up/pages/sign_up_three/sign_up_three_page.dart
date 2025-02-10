@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../../../../shared/design_system/linear_gradient_design_system.dart';
@@ -15,21 +14,23 @@ import '../../../../shared/snack_bar_handler.dart';
 import 'sign_up_three_controller.dart';
 
 class SignUpThreePage extends StatefulWidget {
-  const SignUpThreePage({Key? key, this.title = 'SignUpThree'})
+  const SignUpThreePage(
+      {Key? key, this.title = 'SignUpThree', required this.controller})
       : super(key: key);
 
   final String title;
+  final SignUpThreeController controller;
 
   @override
   _SignUpThreePageState createState() => _SignUpThreePageState();
 }
 
-class _SignUpThreePageState
-    extends ModularState<SignUpThreePage, SignUpThreeController>
+class _SignUpThreePageState extends State<SignUpThreePage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
+  SignUpThreeController get _controller => widget.controller;
 
   @override
   void didChangeDependencies() {
@@ -99,10 +100,10 @@ class _SignUpThreePageState
   SingleTextInput _buildEmailField() {
     return SingleTextInput(
       keyboardType: TextInputType.emailAddress,
-      onChanged: controller.setEmail,
+      onChanged: _controller.setEmail,
       boxDecoration: WhiteBoxDecorationStyle(
         labelText: 'E-mail',
-        errorText: controller.warningEmail,
+        errorText: _controller.warningEmail,
       ),
     );
   }
@@ -130,8 +131,8 @@ class _SignUpThreePageState
     return PasswordInputField(
       labelText: 'Senha',
       hintText: 'Digite sua senha',
-      errorText: controller.warningPassword,
-      onChanged: controller.setPassword,
+      errorText: _controller.warningPassword,
+      onChanged: _controller.setPassword,
     );
   }
 
@@ -139,14 +140,14 @@ class _SignUpThreePageState
     return PasswordInputField(
       labelText: 'Confirmação de senha',
       hintText: 'Digite sua senha novamente',
-      errorText: controller.warningConfirmationPassword,
-      onChanged: controller.setConfirmationPassword,
+      errorText: _controller.warningConfirmationPassword,
+      onChanged: _controller.setConfirmationPassword,
     );
   }
 
   Widget _buildNextButton() {
     return PenhasButton.roundedFilled(
-      onPressed: () => controller.registerUserPress(),
+      onPressed: () => _controller.registerUserPress(),
       child: const Text(
         'Cadastrar',
         style: kTextStyleDefaultFilledButtonLabel,
@@ -162,13 +163,14 @@ class _SignUpThreePageState
   }
 
   ReactionDisposer _showErrorMessage() {
-    return reaction((_) => controller.errorMessage, (String? message) {
+    return reaction((_) => _controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }
 
   ReactionDisposer _showProgress() {
-    return reaction((_) => controller.currentState, (PageProgressState status) {
+    return reaction((_) => _controller.currentState,
+        (PageProgressState status) {
       setState(() {
         _currentState = status;
       });

@@ -1,5 +1,3 @@
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -7,7 +5,6 @@ import 'package:penhas/app/core/extension/either.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
-import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/pages/sign_up_three/sign_up_three_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/pages/sign_up_three/sign_up_three_page.dart';
 
@@ -19,32 +16,24 @@ import '../../../../mocks/authentication_modules_mock.dart';
 
 void main() {
   late UserRegisterFormFieldModel userFormField;
+  late SignUpThreeController controller;
 
   setUp(() {
     AppModulesMock.init();
     AuthenticationModulesMock.init();
     userFormField = UserRegisterFormFieldModel();
-
-    initModule(SignInModule(), replaceBinds: [
-      Bind<SignUpThreeController>(
-        (i) => SignUpThreeController(
-          AuthenticationModulesMock.userRegisterRepository,
-          userFormField,
-          AuthenticationModulesMock.passwordValidator,
-        ),
-      ),
-    ]);
-  });
-
-  tearDown(() {
-    Modular.removeModule(SignInModule());
+    controller = SignUpThreeController(
+      AuthenticationModulesMock.userRegisterRepository,
+      userFormField,
+      AuthenticationModulesMock.passwordValidator,
+    );
   });
 
   group(SignUpThreePage, () {
     testWidgets(
       'shows screen widgets',
       (tester) async {
-        await theAppIsRunning(tester, const SignUpThreePage());
+        await theAppIsRunning(tester, SignUpThreePage(controller: controller));
 
         // check if necessary widgets are present
         await iSeeText('Crie sua conta');
@@ -63,7 +52,7 @@ void main() {
         when(() => AuthenticationModulesMock.passwordValidator.validate(
             any(), any())).thenAnswer((_) => failure(MinLengthRule()));
 
-        await theAppIsRunning(tester, const SignUpThreePage());
+        await theAppIsRunning(tester, SignUpThreePage(controller: controller));
         await iEnterIntoPasswordField(
           tester,
           text: 'Confirmação de senha',
@@ -110,7 +99,7 @@ void main() {
               race: any(named: 'race')),
         ).thenFailure((_) => ServerFailure());
 
-        await theAppIsRunning(tester, const SignUpThreePage());
+        await theAppIsRunning(tester, SignUpThreePage(controller: controller));
 
         await iEnterIntoSingleTextInput(
           tester,
@@ -159,7 +148,7 @@ void main() {
               .pushNamedAndRemoveUntil(any(), any()),
         ).thenAnswer((_) => Future.value());
 
-        await theAppIsRunning(tester, const SignUpThreePage());
+        await theAppIsRunning(tester, SignUpThreePage(controller: controller));
 
         await iEnterIntoSingleTextInput(
           tester,
@@ -185,7 +174,7 @@ void main() {
     screenshotTest(
       'looks as expected',
       fileName: 'sign_up_step_3_page',
-      pageBuilder: () => const SignUpThreePage(),
+      pageBuilder: () => SignUpThreePage(controller: controller),
     );
   });
 }

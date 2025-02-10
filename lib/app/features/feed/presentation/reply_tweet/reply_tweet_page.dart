@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
 
@@ -16,23 +15,25 @@ import '../tweet/widgets/tweet_title.dart';
 import 'reply_tweet_controller.dart';
 
 class ReplyTweetPage extends StatefulWidget {
-  const ReplyTweetPage({Key? key, this.title = 'ReplyTweet'}) : super(key: key);
+  const ReplyTweetPage(
+      {Key? key, this.title = 'ReplyTweet', required this.controller})
+      : super(key: key);
 
   final String title;
+  final ReplyTweetController controller;
 
   @override
   _ReplyTweetPageState createState() => _ReplyTweetPageState();
 }
 
-class _ReplyTweetPageState
-    extends ModularState<ReplyTweetPage, ReplyTweetController>
-    with SnackBarHandler {
+class _ReplyTweetPageState extends State<ReplyTweetPage> with SnackBarHandler {
   final String inputHint = 'Deixe seu comentário';
   final String anonymousHint =
       'Sua publicação é anônima. As usuárias do app podem comentar sua publicação, mas só você pode iniciar uma conversa com elas.';
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
+  ReplyTweetController get _controller => widget.controller;
 
   TextStyle get _kTextStyleNewTweetAnonymousHint => const TextStyle(
         fontFamily: 'Lato',
@@ -90,7 +91,7 @@ class _ReplyTweetPageState
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Expanded(
-                            child: TweetAvatar(tweet: controller.tweet!),
+                            child: TweetAvatar(tweet: _controller.tweet!),
                           ),
                           const SizedBox(
                             width: 6.0,
@@ -101,11 +102,11 @@ class _ReplyTweetPageState
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: <Widget>[
                                 TweetTitle(
-                                  tweet: controller.tweet!,
+                                  tweet: _controller.tweet!,
                                   context: context,
                                   controller: null,
                                 ),
-                                TweetBody(content: controller.tweet!.content),
+                                TweetBody(content: _controller.tweet!.content),
                               ],
                             ),
                           ),
@@ -115,10 +116,10 @@ class _ReplyTweetPageState
                         height: 160,
                         child: TextField(
                           maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                          controller: controller.editingController,
+                          controller: _controller.editingController,
                           maxLength: 2200,
                           maxLines: 15,
-                          onChanged: controller.setTweetContent,
+                          onChanged: _controller.setTweetContent,
                           decoration: InputDecoration(
                             filled: true,
                             enabledBorder: const OutlineInputBorder(
@@ -157,7 +158,7 @@ class _ReplyTweetPageState
                       Observer(
                         builder: (context) {
                           return Visibility(
-                            visible: controller.isAnonymousMode,
+                            visible: _controller.isAnonymousMode,
                             replacement: const SizedBox(height: 20.0),
                             child: _buildAnonymousWarning(),
                           );
@@ -171,8 +172,8 @@ class _ReplyTweetPageState
                           child: Observer(
                             builder: (_) {
                               return PenhasButton.roundedFilled(
-                                onPressed: controller.isEnableCreateButton
-                                    ? () => controller.replyTweetPressed()
+                                onPressed: _controller.isEnableCreateButton
+                                    ? () => _controller.replyTweetPressed()
                                     : null,
                                 child: const Text(
                                   'Publicar',
@@ -254,13 +255,14 @@ class _ReplyTweetPageState
   }
 
   ReactionDisposer _showErrorMessage() {
-    return reaction((_) => controller.errorMessage, (String? message) {
+    return reaction((_) => _controller.errorMessage, (String? message) {
       showSnackBar(scaffoldKey: _scaffoldKey, message: message);
     });
   }
 
   ReactionDisposer _showProgress() {
-    return reaction((_) => controller.currentState, (PageProgressState status) {
+    return reaction((_) => _controller.currentState,
+        (PageProgressState status) {
       setState(() {
         _currentState = status;
       });

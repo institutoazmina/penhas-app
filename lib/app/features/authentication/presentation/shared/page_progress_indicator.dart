@@ -39,9 +39,9 @@ class _PageProgressIndicator extends State<PageProgressIndicator>
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
     _animation.addStatusListener((status) {
       if (status == AnimationStatus.forward) {
-        setState(() => {_isProgressVisible = true});
+        setState(() => _isProgressVisible = true);
       } else if (status == AnimationStatus.dismissed) {
-        setState(() => {_isProgressVisible = false});
+        setState(() => _isProgressVisible = false);
       }
     });
 

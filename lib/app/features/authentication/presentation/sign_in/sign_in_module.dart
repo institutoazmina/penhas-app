@@ -65,19 +65,27 @@ class SignInModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute(Modular.initialRoute,
-            child: (_, args) => const SignInPage()),
+            child: (_, args) => SignInPage(
+                  controller: Modular.get<SignInController>(),
+                )),
         ChildRoute(
           '/signup',
-          child: (_, args) => const SignUpPage(),
+          child: (_, args) => SignUpPage(
+            controller: Modular.get<SignUpController>(),
+          ),
           transition: TransitionType.rightToLeft,
         ),
         ChildRoute(
           '/signup/step2',
-          child: (_, args) => const SignUpTwoPage(),
+          child: (_, args) => SignUpTwoPage(
+            controller: Modular.get<SignUpTwoController>(),
+          ),
         ),
         ChildRoute(
           '/signup/step3',
-          child: (_, args) => const SignUpThreePage(),
+          child: (_, args) => SignUpThreePage(
+            controller: Modular.get<SignUpThreeController>(),
+          ),
         ),
         ChildRoute(
           '/reset_password',
@@ -87,19 +95,27 @@ class SignInModule extends Module {
         ),
         ChildRoute(
           '/reset_password/step2',
-          child: (_, args) => const ResetPasswordTwoPage(),
+          child: (_, args) => ResetPasswordTwoPage(
+            controller: Modular.get<ResetPasswordTwoController>(),
+          ),
         ),
         ChildRoute(
           '/reset_password/step3',
-          child: (_, args) => const ResetPasswordThreePage(),
+          child: (_, args) => ResetPasswordThreePage(
+            controller: Modular.get<ResetPasswordThreeController>(),
+          ),
         ),
         ChildRoute(
           '/sign_in_anonymous',
-          child: (_, args) => const SignInAnonymousPage(),
+          child: (_, args) => SignInAnonymousPage(
+            controller: Modular.get<SignInAnonymousController>(),
+          ),
         ),
         ChildRoute(
           '/sign_in_stealth',
-          child: (_, args) => const SignInStealthPage(),
+          child: (_, args) => SignInStealthPage(
+            controller: Modular.get<SignInStealthController>(),
+          ),
         ),
         ChildRoute(
           '/terms_of_use',

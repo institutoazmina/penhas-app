@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/sign_up_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_up/sign_up_page.dart';
 
@@ -18,31 +15,28 @@ import '../../mocks/authentication_modules_mock.dart';
 void main() {
   late Key cepKey;
   late Key cpfKey;
+  late SignUpController controller;
 
   setUp(() {
     AppModulesMock.init();
     AuthenticationModulesMock.init();
     cepKey = const Key('sign_up_cep');
     cpfKey = const Key('sign_up_cpf');
-
-    initModule(SignInModule(), replaceBinds: [
-      Bind<SignUpController>(
-        (i) =>
-            SignUpController(AuthenticationModulesMock.userRegisterRepository),
-      ),
-    ]);
+    controller =
+        SignUpController(AuthenticationModulesMock.userRegisterRepository);
   });
 
-  tearDown(() {
-    Modular.removeModule(SignInModule());
-  });
   group(
     SignUpPage,
     () {
       testWidgets(
         'shows screen widgets',
         (tester) async {
-          await theAppIsRunning(tester, const SignUpPage());
+          await theAppIsRunning(
+              tester,
+              SignUpPage(
+                controller: controller,
+              ));
           await iSeeText('Crie sua conta');
           await iSeeText(
               'Para sua segurança pedimos aos nossos usuários o CPF.');
@@ -58,7 +52,7 @@ void main() {
       testWidgets(
           'displays a warning message if an invalid value is entered in a widget',
           (tester) async {
-        await theAppIsRunning(tester, const SignUpPage());
+        await theAppIsRunning(tester, SignUpPage(controller: controller));
         await iTapText(tester, text: 'Próximo');
         await iSeeSingleTextInputErrorMessage(tester,
             text: 'Nome completo', message: 'Nome inválido para o sistema');
@@ -82,7 +76,7 @@ void main() {
             ),
           ).thenFailure((_) => ServerFailure());
 
-          await theAppIsRunning(tester, const SignUpPage());
+          await theAppIsRunning(tester, SignUpPage(controller: controller));
           await iEnterIntoSingleTextInput(
             tester,
             text: 'Nome completo',
@@ -125,7 +119,7 @@ void main() {
                   .pushNamed(any(), arguments: any(named: 'arguments')))
               .thenAnswer((i) => Future.value());
 
-          await theAppIsRunning(tester, const SignUpPage());
+          await theAppIsRunning(tester, SignUpPage(controller: controller));
           await iEnterIntoSingleTextInput(
             tester,
             text: 'Nome completo',
@@ -156,7 +150,7 @@ void main() {
       screenshotTest(
         'looks as expected',
         fileName: 'sign_up_step_1_page',
-        pageBuilder: () => const SignUpPage(),
+        pageBuilder: () => SignUpPage(controller: controller),
       );
     },
   );

@@ -1,15 +1,16 @@
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/extension/either.dart';
+import 'package:penhas/app/features/authentication/domain/repositories/i_reset_password_repository.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/email_address.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
+import 'package:penhas/app/features/authentication/domain/usecases/sign_up_password.dart';
 import 'package:penhas/app/features/authentication/presentation/reset_password/pages/reset_password_three/reset_password_three_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/reset_password/pages/reset_password_three/reset_password_three_page.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
-import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 
 import '../../../../../../../utils/golden_tests.dart';
 import '../../../../../../../utils/mocktail_extension.dart';
@@ -17,38 +18,56 @@ import '../../../../../../../utils/widget_test_steps.dart';
 import '../../../mocks/app_modules_mock.dart';
 import '../../../mocks/authentication_modules_mock.dart';
 
+class MockIChangePasswordRepository extends Mock
+    implements IChangePasswordRepository {
+  @override
+  Future<Either<Failure, ValidField>> reset(
+      {EmailAddress? emailAddress,
+      SignUpPassword? password,
+      String? resetToken}) async {
+    return Future.value(Right(ValidField()));
+  }
+}
+
+class MockIChangePasswordRepositoryWithError extends Mock
+    implements IChangePasswordRepository {
+  @override
+  Future<Either<Failure, ValidField>> reset(
+      {EmailAddress? emailAddress,
+      SignUpPassword? password,
+      String? resetToken}) async {
+    return Future.value(Left(ServerFailure()));
+  }
+}
+
 void main() {
   late UserRegisterFormFieldModel userRegisterFormField;
+  late IChangePasswordRepository iChangePasswordRepository;
+  late ResetPasswordThreeController controller;
+  late UserRegisterFormFieldModel userRegisterFormFieldModel;
 
   setUp(() {
     AppModulesMock.init();
     AuthenticationModulesMock.init();
     userRegisterFormField = UserRegisterFormFieldModel();
     userRegisterFormField.token = 'token';
-
-    initModule(
-      SignInModule(),
-      replaceBinds: [
-        Bind<ResetPasswordThreeController>(
-          (i) => ResetPasswordThreeController(
-            AuthenticationModulesMock.changePasswordRepository,
-            userRegisterFormField,
-            AuthenticationModulesMock.passwordValidator,
-          ),
-        ),
-      ],
-    );
-  });
-
-  tearDown(() {
-    Modular.removeModule(SignInModule());
+    iChangePasswordRepository = MockIChangePasswordRepository();
+    userRegisterFormFieldModel = UserRegisterFormFieldModel();
+    controller = ResetPasswordThreeController(
+        iChangePasswordRepository,
+        userRegisterFormFieldModel,
+        AuthenticationModulesMock.passwordValidator);
   });
 
   group(ResetPasswordThreePage, () {
     testWidgets(
       'shows screen widgets',
       (tester) async {
-        await theAppIsRunning(tester, const ResetPasswordThreePage());
+        await theAppIsRunning(
+            tester,
+            ResetPasswordThreePage(
+              controller: controller,
+            ));
 
         // check that required widgets are present
         await iSeeText('Configure uma nova senha');
@@ -66,7 +85,11 @@ void main() {
             any(), any())).thenAnswer((i) => failure(MinLengthRule()));
 
         // Input a invalid password
-        await theAppIsRunning(tester, const ResetPasswordThreePage());
+        await theAppIsRunning(
+            tester,
+            ResetPasswordThreePage(
+              controller: controller,
+            ));
         await iEnterIntoPasswordField(tester, text: 'Senha', password: '1');
         await iSeePasswordFieldErrorMessage(tester,
             text: 'Senha', message: 'Senha precisa ter no mínimo 8 caracteres');
@@ -80,7 +103,11 @@ void main() {
             .validate(any(), any())).thenAnswer((i) => success('password'));
 
         // Input a invalid password
-        await theAppIsRunning(tester, const ResetPasswordThreePage());
+        await theAppIsRunning(
+            tester,
+            ResetPasswordThreePage(
+              controller: controller,
+            ));
         await iEnterIntoPasswordField(tester,
             text: 'Senha', password: 'password');
         await iEnterIntoPasswordField(tester,
@@ -93,6 +120,20 @@ void main() {
     testWidgets(
       'shows an error message from server side error when resetting the password',
       (tester) async {
+        late IChangePasswordRepository iChangePasswordRepositoryError;
+
+        iChangePasswordRepositoryError =
+            MockIChangePasswordRepositoryWithError();
+
+        final controllerError = ResetPasswordThreeController(
+            iChangePasswordRepositoryError,
+            userRegisterFormFieldModel,
+            AuthenticationModulesMock.passwordValidator);
+
+        when(() => AppModulesMock.modularNavigator.pushNamedAndRemoveUntil(
+                any(), any(), forRoot: any(named: 'forRoot')))
+            .thenAnswer((_) async => Future.value());
+
         when(() => AuthenticationModulesMock.passwordValidator
             .validate(any(), any())).thenAnswer((i) => success('password'));
 
@@ -103,12 +144,17 @@ void main() {
             )).thenFailure((_) => ServerFailure());
 
         // Capture server side error message
-        await theAppIsRunning(tester, const ResetPasswordThreePage());
+        await theAppIsRunning(
+            tester,
+            ResetPasswordThreePage(
+              controller: controllerError,
+            ));
         await iEnterIntoPasswordField(tester,
             text: 'Senha', password: 'password');
         await iEnterIntoPasswordField(tester,
             text: 'Confirmação de senha', password: 'password');
         await iTapText(tester, text: 'Salvar');
+        await tester.pumpAndSettle();
         await iSeeText(
             'O servidor está com problema neste momento, tente novamente.');
       },
@@ -130,7 +176,11 @@ void main() {
             any(), any())).thenAnswer((i) => Future.value());
 
         // Capture server side error message
-        await theAppIsRunning(tester, const ResetPasswordThreePage());
+        await theAppIsRunning(
+            tester,
+            ResetPasswordThreePage(
+              controller: controller,
+            ));
         await iEnterIntoPasswordField(tester,
             text: 'Senha', password: 'password');
         await iEnterIntoPasswordField(tester,
@@ -146,7 +196,9 @@ void main() {
       screenshotTest(
         'looks as expected',
         fileName: 'reset_password_page_step_3',
-        pageBuilder: () => const ResetPasswordThreePage(),
+        pageBuilder: () => ResetPasswordThreePage(
+          controller: controller,
+        ),
       );
     });
   });

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../shared/design_system/linear_gradient_design_system.dart';
@@ -16,30 +15,30 @@ import '../shared/snack_bar_handler.dart';
 import 'sign_in_stealth_controller.dart';
 
 class SignInStealthPage extends StatefulWidget {
-  const SignInStealthPage({Key? key, this.title = 'Authentication'})
+  const SignInStealthPage(
+      {Key? key, this.title = 'Authentication', required this.controller})
       : super(key: key);
 
   final String title;
+  final SignInStealthController controller;
 
   @override
   _SignInStealthPage createState() => _SignInStealthPage();
 }
 
-class _SignInStealthPage
-    extends ModularState<SignInStealthPage, SignInStealthController>
-    with SnackBarHandler {
+class _SignInStealthPage extends State<SignInStealthPage> with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
-
+  SignInStealthController get _controller => widget.controller;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _disposers ??= [
-      reaction((_) => controller.errorMessage, (String? message) {
+      reaction((_) => _controller.errorMessage, (String? message) {
         showSnackBar(scaffoldKey: _scaffoldKey, message: message);
       }),
-      reaction((_) => controller.currentState, (PageProgressState status) {
+      reaction((_) => _controller.currentState, (PageProgressState status) {
         setState(() {
           _currentState = status;
         });
@@ -86,10 +85,10 @@ class _SignInStealthPage
                           builder: (_) => Padding(
                             padding: const EdgeInsets.only(bottom: 44),
                             child: ZodiacActionButton(
-                              sign: controller.sign,
-                              isRunning: controller.isSecurityRunning,
-                              listOfSign: controller.signList,
-                              onPressed: () => controller.stealthAction(),
+                              sign: _controller.sign,
+                              isRunning: _controller.isSecurityRunning,
+                              listOfSign: _controller.signList,
+                              onPressed: () => _controller.stealthAction(),
                             ),
                           ),
                         ),
@@ -114,7 +113,7 @@ class _SignInStealthPage
     for (final d in _disposers!) {
       d();
     }
-    controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -124,14 +123,14 @@ class _SignInStealthPage
         Padding(
           padding: const EdgeInsets.only(top: 52.0),
           child: Text(
-            controller.userGreetings,
+            _controller.userGreetings,
             style: kTextStyleRegisterHeaderLabelStyle,
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(bottom: 12, top: 30),
           child: Text(
-            controller.userEmail!,
+            _controller.userEmail!,
             style: kTextStyleRegisterSubtitleLabelStyle,
           ),
         )
@@ -143,8 +142,8 @@ class _SignInStealthPage
     return PasswordInputField(
       labelText: 'Senha',
       hintText: 'Digite sua senha',
-      errorText: controller.warningPassword,
-      onChanged: controller.setPassword,
+      errorText: _controller.warningPassword,
+      onChanged: _controller.setPassword,
     );
   }
 
@@ -152,7 +151,7 @@ class _SignInStealthPage
     return Padding(
       padding: const EdgeInsets.only(top: 32.0),
       child: LoginButton(
-        onChanged: controller.signInWithEmailAndPasswordPressed,
+        onChanged: _controller.signInWithEmailAndPasswordPressed,
       ),
     );
   }
@@ -163,7 +162,7 @@ class _SignInStealthPage
       child: SizedBox(
         height: 44.0,
         child: PenhasButton.text(
-          onPressed: () => controller.resetPasswordPressed(),
+          onPressed: () => _controller.resetPasswordPressed(),
           child: const Text(
             'Esqueci minha senha',
             style: kTextStyleFeedTweetShowReply,
@@ -179,7 +178,7 @@ class _SignInStealthPage
       child: SizedBox(
         height: 44.0,
         child: PenhasButton.text(
-          onPressed: () => controller.changeAccount(),
+          onPressed: () => _controller.changeAccount(),
           child: const Text(
             'Acessar outra conta',
             style: kTextStyleFeedTweetShowReply,

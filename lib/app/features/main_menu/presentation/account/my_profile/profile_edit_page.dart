@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../../shared/design_system/colors.dart';
@@ -19,23 +18,25 @@ import '../pages/card_profile_skill_page.dart';
 import 'profile_edit_controller.dart';
 
 class ProfileEditPage extends StatefulWidget {
-  const ProfileEditPage({Key? key}) : super(key: key);
+  const ProfileEditPage({Key? key, required this.controller}) : super(key: key);
+
+  final ProfileEditController controller;
 
   @override
   _ProfileEditPageState createState() => _ProfileEditPageState();
 }
 
-class _ProfileEditPageState
-    extends ModularState<ProfileEditPage, ProfileEditController>
+class _ProfileEditPageState extends State<ProfileEditPage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  ProfileEditController get _controller => widget.controller;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _disposers ??= [
-      reaction((_) => controller.updateError, (String? message) {
+      reaction((_) => _controller.updateError, (String? message) {
         showSnackBar(scaffoldKey: _scaffoldKey, message: message);
       }),
     ];
@@ -51,7 +52,7 @@ class _ProfileEditPageState
         backgroundColor: DesignSystemColors.easterPurple,
       ),
       body: Observer(
-        builder: (context) => bodyBuilder(controller.state),
+        builder: (context) => bodyBuilder(_controller.state),
       ),
     );
   }
@@ -75,7 +76,7 @@ extension _PageBuilder on _ProfileEditPageState {
       ),
       error: (msg) => SupportCenterGeneralError(
         message: msg,
-        onPressed: controller.retry,
+        onPressed: _controller.retry,
       ),
     );
   }
@@ -97,7 +98,7 @@ extension _PageBuilder on _ProfileEditPageState {
     return SafeArea(
       child: PageProgressIndicator(
         progressMessage: 'Atualizando...',
-        progressState: controller.progressState,
+        progressState: _controller.progressState,
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -105,17 +106,17 @@ extension _PageBuilder on _ProfileEditPageState {
               CardProfileNamePage(
                 name: profile.nickname,
                 avatar: profile.avatar,
-                onChange: controller.editNickName,
+                onChange: _controller.editNickName,
               ),
               if (securityModeFeatureEnabled)
                 CardProfileBioPage(
                   content: profile.minibio ?? '',
-                  onChange: controller.editMinibio,
+                  onChange: _controller.editMinibio,
                 ),
               if (securityModeFeatureEnabled)
                 CardProfileSkillPage(
-                  skills: controller.profileSkill,
-                  onEditAction: controller.editSkill,
+                  skills: _controller.profileSkill,
+                  onEditAction: _controller.editSkill,
                 ),
               if (securityModeFeatureEnabled)
                 CardProfileSingleTilePage(
@@ -136,7 +137,7 @@ extension _PageBuilder on _ProfileEditPageState {
               ),
               CardProfileRacePage(
                 content: profile.race,
-                onChange: controller.updateRace,
+                onChange: _controller.updateRace,
               ),
               CardProfileSingleTilePage(
                 title: 'Sexo',
@@ -145,11 +146,11 @@ extension _PageBuilder on _ProfileEditPageState {
               ),
               CardProfileEmailPage(
                 content: profile.email,
-                onChange: controller.updatedEmail,
+                onChange: _controller.updatedEmail,
               ),
               CardProfilePasswordPage(
                 content: '************',
-                onChange: controller.updatePassword,
+                onChange: _controller.updatePassword,
               )
             ],
           ),

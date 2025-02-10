@@ -1,14 +1,10 @@
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/extension/either.dart';
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
-import 'package:penhas/app/features/authentication/domain/usecases/authenticate_user.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
-import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in_stealth/sign_in_stealth_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in_stealth/sign_in_stealth_page.dart';
 
@@ -19,6 +15,7 @@ import '../mocks/app_modules_mock.dart';
 import '../mocks/authentication_modules_mock.dart';
 
 void main() {
+  late SignInStealthController controller;
   setUp(() {
     AppModulesMock.init();
     AuthenticationModulesMock.init();
@@ -47,25 +44,13 @@ void main() {
     when(() => AuthenticationModulesMock.securityAction.dispose())
         .thenAnswer((i) => Future.value());
 
-    initModule(SignInModule(), replaceBinds: [
-      Bind<SignInStealthController>(
-        (i) => SignInStealthController(
-          authenticateStealthUserUseCase:
-              AuthenticationModulesMock.authenticateStealthUserUseCase,
-          passwordValidator: AuthenticationModulesMock.passwordValidator,
-          userProfileStore: AppModulesMock.userProfileStore,
-          securityAction: AuthenticationModulesMock.securityAction,
-        ),
-      ),
-      Bind<AuthenticateStealthUserUseCase>((i) =>
-          AuthenticateStealthUserUseCase(
-              authenticationRepository: i.get(),
-              loginOfflineToggleFeature: i.get())),
-    ]);
-  });
-
-  tearDown(() {
-    Modular.removeModule(SignInModule());
+    controller = SignInStealthController(
+      authenticateStealthUserUseCase:
+          AuthenticationModulesMock.authenticateStealthUserUseCase,
+      passwordValidator: AuthenticationModulesMock.passwordValidator,
+      userProfileStore: AppModulesMock.userProfileStore,
+      securityAction: AuthenticationModulesMock.securityAction,
+    );
   });
   group(
     SignInStealthPage,
@@ -73,7 +58,11 @@ void main() {
       testWidgets(
         'shows screen widgets',
         (tester) async {
-          await theAppIsRunning(tester, const SignInStealthPage());
+          await theAppIsRunning(
+              tester,
+              SignInStealthPage(
+                controller: controller,
+              ));
 
           await iSeePasswordField(text: 'Senha');
           await iSeeButton(text: 'Entrar');
@@ -88,7 +77,11 @@ void main() {
           when(() => AuthenticationModulesMock.passwordValidator
               .validate(any(), any())).thenAnswer((_) => failure(EmptyRule()));
 
-          await theAppIsRunning(tester, const SignInStealthPage());
+          await theAppIsRunning(
+              tester,
+              SignInStealthPage(
+                controller: controller,
+              ));
           await iTapText(tester, text: 'Entrar');
           await iSeeText(
               'E-mail e senha precisam estarem corretos para continuar.');
@@ -115,7 +108,8 @@ void main() {
             ),
           ).thenFailure((i) => ServerFailure());
 
-          await theAppIsRunning(tester, const SignInStealthPage());
+          await theAppIsRunning(
+              tester, SignInStealthPage(controller: controller));
 
           await iEnterIntoPasswordField(tester,
               text: 'Senha', password: password);
@@ -148,7 +142,8 @@ void main() {
                 sessionToken: sessionToken,
               ));
 
-          await theAppIsRunning(tester, const SignInStealthPage());
+          await theAppIsRunning(
+              tester, SignInStealthPage(controller: controller));
 
           await iEnterIntoPasswordField(tester,
               text: 'Senha', password: password);
@@ -164,7 +159,8 @@ void main() {
           when(() => AppModulesMock.modularNavigator.pushNamed(any()))
               .thenAnswer((_) => Future.value());
 
-          await theAppIsRunning(tester, const SignInStealthPage());
+          await theAppIsRunning(
+              tester, SignInStealthPage(controller: controller));
           await iTapText(tester, text: 'Esqueci minha senha');
 
           verify(() => AppModulesMock.modularNavigator
@@ -178,7 +174,8 @@ void main() {
           when(() => AppModulesMock.modularNavigator.pushNamed(any()))
               .thenAnswer((_) => Future.value());
 
-          await theAppIsRunning(tester, const SignInStealthPage());
+          await theAppIsRunning(
+              tester, SignInStealthPage(controller: controller));
           await iTapText(tester, text: 'Acessar outra conta');
 
           verify(() =>
@@ -193,7 +190,7 @@ void main() {
           screenshotTest(
             'looks as expected',
             fileName: 'sign_in_stealth_page',
-            pageBuilder: () => const SignInStealthPage(),
+            pageBuilder: () => SignInStealthPage(controller: controller),
           );
         },
       );
