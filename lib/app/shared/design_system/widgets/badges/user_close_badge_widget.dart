@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 
-import '../../../../features/feed/domain/entities/tweet_badge_entity.dart';
 import '../../colors.dart';
 import '../../text_styles.dart';
 
 class UserCloseBadgeWidget extends StatelessWidget {
-  const UserCloseBadgeWidget({Key? key, required this.badge}) : super(key: key);
+  const UserCloseBadgeWidget(
+      {Key? key,
+      required this.badgePopUp,
+      required this.badgeImageUrl,
+      required this.badgeName})
+      : super(key: key);
 
-  final TweetBadgeEntity badge;
+  final int badgePopUp;
+  final String badgeImageUrl;
+  final String badgeName;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: badge.popUp == 1 ? () {} : null,
+      onTap: badgePopUp == 1 ? () {} : null,
       child: Container(
         decoration: BoxDecoration(
             color: DesignSystemColors.ligthPurple2,
@@ -23,15 +29,15 @@ class UserCloseBadgeWidget extends StatelessWidget {
             children: [
               Padding(
                   padding: const EdgeInsets.only(right: 8.0),
-                  child: badge.imageUrl.isNotEmpty
+                  child: badgeImageUrl.isNotEmpty
                       ? Image.network(
-                          badge.imageUrl,
+                          badgeImageUrl,
                           width: 12,
                           height: 12,
                         )
                       : const SizedBox.shrink()),
               Text(
-                badge.name,
+                badgeName,
                 style: kTextStyleFeedCloseUserTitle,
               ),
             ],

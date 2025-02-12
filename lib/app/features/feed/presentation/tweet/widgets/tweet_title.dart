@@ -5,6 +5,7 @@ import 'package:timeago/timeago.dart' as timeago;
 
 import '../../../../../shared/design_system/text_styles.dart';
 import '../../../../../shared/design_system/widgets/badges/user_badge_widget.dart';
+import '../../../domain/entities/tweet_badge_entity.dart';
 import '../../../domain/entities/tweet_entity.dart';
 import '../../../domain/states/feed_router_type.dart';
 import '../../stores/tweet_controller.dart';
@@ -64,12 +65,16 @@ class TweetTitle extends StatelessWidget {
     if (tweet.badges.isEmpty) {
       return const SizedBox.shrink();
     } else {
-      tweet.badges.removeWhere(
-        (badge) => badge.style == 'inline-block',
-      );
+      var onlyInlineBadges = <TweetBadgeEntity>[];
+
+      for (final badge in tweet.badges) {
+        if (badge.style != 'inline-block') {
+          onlyInlineBadges.add(badge);
+        }
+      }
 
       return Row(
-        children: tweet.badges
+        children: onlyInlineBadges
             .map((badge) => Padding(
                 padding: const EdgeInsets.only(left: 4.0),
                 child: UserBadgeWidget(

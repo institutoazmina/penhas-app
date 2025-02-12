@@ -27,11 +27,13 @@ class UserBadgeWidget extends StatelessWidget {
           ? showChatAction(
               context, badgeShowDescription, badgeDescription, badgeName)
           : null,
-      child: Image.network(
-        badgeImageUrl,
-        height: 16,
-        width: 16,
-      ),
+      child: badgeImageUrl.isNotEmpty
+          ? Image.network(
+              badgeImageUrl,
+              height: 16,
+              width: 16,
+            )
+          : const SizedBox.shrink(),
     );
   }
 }

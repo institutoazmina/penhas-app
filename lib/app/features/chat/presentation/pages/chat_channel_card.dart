@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/design_system/widgets/badges/user_badge_widget.dart';
+import '../../../../shared/design_system/widgets/badges/user_close_badge_widget.dart';
 import '../../domain/entities/chat_badge_entity.dart';
 import '../../domain/entities/chat_channel_entity.dart';
 
@@ -32,7 +33,7 @@ class ChatChannelCard extends StatelessWidget {
           code: 'code',
           description: 'flower',
           imageUrl: 'https://cdn-icons-png.flaticon.com/512/503/503080.png',
-          name: 'flower',
+          name: 'Usuária perto de você',
           popUp: 0,
           showDescription: 0,
           style: 'inline-block')
@@ -40,7 +41,6 @@ class ChatChannelCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => onPressed(channel),
       child: Container(
-        height: 80,
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(color: Colors.grey[350]!),
@@ -71,6 +71,17 @@ class ChatChannelCard extends StatelessWidget {
                           _buildBadgeWidget(mockBadges),
                         ],
                       ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            bottom: _returnPadding(mockBadges),
+                            top: _returnPadding(mockBadges)),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _buildCloseUser(mockBadges),
+                          ],
+                        ),
+                      ),
                       Text(channel.user.activity!, style: cardStatusTextStyle),
                     ],
                   ),
@@ -91,12 +102,16 @@ class ChatChannelCard extends StatelessWidget {
     if (badges.isEmpty) {
       return const SizedBox.shrink();
     } else {
-      badges.removeWhere(
-        (badge) => badge.style == 'inline-block',
-      );
+      var onlyInlineBadges = <ChatBadgeEntity>[];
+
+      for (final badge in badges) {
+        if (badge.style != 'inline-block') {
+          onlyInlineBadges.add(badge);
+        }
+      }
 
       return Row(
-        children: badges
+        children: onlyInlineBadges
             .map((badge) => Padding(
                 padding: const EdgeInsets.only(left: 4.0),
                 child: UserBadgeWidget(
@@ -108,6 +123,42 @@ class ChatChannelCard extends StatelessWidget {
                 )))
             .toList(),
       );
+    }
+  }
+
+  double _returnPadding(List<ChatBadgeEntity> badge) {
+    if (badge.isEmpty) {
+      return 0.0;
+    } else {
+      return 4.0;
+    }
+  }
+
+  Widget _buildCloseUser(List<ChatBadgeEntity> badges) {
+    if (badges.isEmpty) {
+      return const SizedBox.shrink();
+    } else {
+      var _emptyBadge = ChatBadgeEntity(
+          code: '',
+          description: '',
+          imageUrl: '',
+          name: '',
+          popUp: 0,
+          showDescription: 0,
+          style: '');
+      final badge = badges.firstWhere(
+        (badge) => badge.style == 'inline-block',
+        orElse: () => _emptyBadge,
+      );
+      if (badge.style != '') {
+        return UserCloseBadgeWidget(
+          badgeImageUrl: badge.imageUrl,
+          badgeName: badge.name,
+          badgePopUp: badge.popUp,
+        );
+      } else {
+        return const SizedBox.shrink();
+      }
     }
   }
 
