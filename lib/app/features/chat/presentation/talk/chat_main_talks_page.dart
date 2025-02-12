@@ -76,14 +76,14 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
         child: ListView.builder(
           itemCount: tiles.length,
           itemBuilder: (context, index) {
-            return buildCard(tiles[index]);
+            return buildCard(tiles[index], index, tiles.length);
           },
         ),
       ),
     );
   }
 
-  Widget buildCard(ChatMainTileEntity tile) {
+  Widget buildCard(ChatMainTileEntity tile, int currentTile, int totalTiles) {
     if (tile is ChatMainAssistantCardTile) {
       return buildAssistantCard(tile);
     }
@@ -93,7 +93,11 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
     }
 
     if (tile is ChatMainChannelCardTile) {
-      return buildChannelCard(tile);
+      if (currentTile == totalTiles - 1) {
+        return buildChannelNoDividerCard(tile);
+      } else {
+        return buildChannelCard(tile);
+      }
     }
 
     return Container();
@@ -166,6 +170,17 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
           onPressed: controller.openChannel,
         ),
         _builderDivider(),
+      ],
+    );
+  }
+
+  Widget buildChannelNoDividerCard(ChatMainChannelCardTile tile) {
+    return Column(
+      children: [
+        ChatChannelCard(
+          channel: tile.channel,
+          onPressed: controller.openChannel,
+        ),
       ],
     );
   }

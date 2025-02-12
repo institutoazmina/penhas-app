@@ -113,6 +113,7 @@ class _DescriptionBottomSheetWidget extends StatelessWidget {
                       icon: const Icon(
                         Icons.close,
                         size: 32,
+                        color: DesignSystemColors.darkIndigoThree,
                       )),
                 ],
               ),

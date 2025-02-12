@@ -133,7 +133,7 @@ void main() {
 
 class _MockFeedUseCases extends Mock implements FeedUseCases {}
 
-class _MockComposeTweetNavigator extends Mock
-    implements ComposeTweetNavigator {}
+class _MockComposeTweetNavigator extends Mock implements ComposeTweetNavigator {
+}
 
 class _FakeContext extends Fake implements BuildContext {}

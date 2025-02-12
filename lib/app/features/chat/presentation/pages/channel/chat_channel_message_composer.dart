@@ -50,29 +50,39 @@ class _ChatChannelMessageComposerState
   }
 
   Widget _sentMessage() {
-    return Container(
-      height: 60.0,
-      color: Colors.white,
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              maxLines: null,
-              expands: true,
-              decoration: const InputDecoration.collapsed(
-                hintText: 'Digite uma mensagem',
+    return Padding(
+      padding:
+          const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0, top: 8),
+      child: Container(
+        height: 40.0,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              offset: Offset(0.0, 5.0),
+              blurRadius: 1.0,
+            )
+          ],
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        child: Row(
+          children: [
+            Expanded(
+              child: TextField(
+                maxLines: null,
+                expands: true,
+                decoration: const InputDecoration.collapsed(
+                  hintText: 'Digite uma mensagem',
+                ),
+                textCapitalization: TextCapitalization.sentences,
+                controller: _textController,
+                onSubmitted: (t) => _submitMessageAction(context),
               ),
-              textCapitalization: TextCapitalization.sentences,
-              controller: _textController,
-              onSubmitted: (t) => _submitMessageAction(context),
             ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.send),
-            onPressed: () => _submitMessageAction(context),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

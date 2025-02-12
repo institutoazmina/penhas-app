@@ -170,8 +170,8 @@ void main() {
 
 class MockAppStateUseCase extends Mock implements AppStateUseCase {}
 
-class MockUserProfileRepository extends Mock
-    implements IUserProfileRepository {}
+class MockUserProfileRepository extends Mock implements IUserProfileRepository {
+}
 
 class MockUserProfileStore extends Mock
     implements LocalStore<UserProfileEntity> {}

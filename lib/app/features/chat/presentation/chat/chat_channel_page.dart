@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/widgets/badges/user_badge_widget.dart';
+import '../../domain/entities/chat_badge_entity.dart';
 import '../../domain/entities/chat_channel_message.dart';
 import '../../domain/entities/chat_channel_session_entity.dart';
 import '../../domain/entities/chat_user_entity.dart';
@@ -56,10 +59,21 @@ extension _ChatPageStateMethods on _ChatPageState {
   ) {
     return Scaffold(
       appBar: AppBar(
+        leadingWidth: 35,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+            ),
+            onPressed: () => Modular.to.pop(),
+          ),
+        ),
         elevation: 0.0,
         backgroundColor: DesignSystemColors.easterPurple,
         title: headerTitle(user),
-        titleSpacing: 2.0,
+        titleSpacing: 1.0,
         actions: [
           IconButton(
             icon: const Icon(Icons.more_vert),
@@ -133,15 +147,129 @@ extension _ChatPageStateMethods on _ChatPageState {
             child: avatar,
           ),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(user.nickname!, style: titleTextStyle),
-            Text(user.activity!, style: statusTextStyle),
-          ],
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(right: _returnPadding(user.badges)),
+                child: _buildCloseBadgeWidget(user.badges),
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: _returnPadding(user.badges)),
+                child: Text(user.nickname!, style: titleTextStyle),
+              ),
+              _buildBadgeWidget(user.badges),
+            ],
+          ),
         )
       ],
     );
+  }
+
+  Widget _buildBadgeWidget(List<ChatBadgeEntity> badges) {
+    final mockBadges = <ChatBadgeEntity>[
+      ChatBadgeEntity(
+          code: 'code',
+          description: 'flower',
+          imageUrl: 'https://cdn-icons-png.flaticon.com/512/735/735643.png',
+          name: 'flower',
+          popUp: 1,
+          showDescription: 1,
+          style: 'inline'),
+      ChatBadgeEntity(
+          code: 'code',
+          description: 'flower',
+          imageUrl: 'https://cdn-icons-png.flaticon.com/512/503/503080.png',
+          name: 'Usuária perto de você',
+          popUp: 0,
+          showDescription: 0,
+          style: 'inline-block')
+    ];
+
+    // if (badges.isEmpty) {
+    //   return const SizedBox.shrink();
+    // } else {
+    var onlyInlineBadges = <ChatBadgeEntity>[];
+
+    for (final badge in mockBadges) {
+      if (badge.style != 'inline-block') {
+        onlyInlineBadges.add(badge);
+      }
+    }
+
+    return Row(
+      children: onlyInlineBadges
+          .map((badge) => Padding(
+              padding: const EdgeInsets.only(left: 4.0),
+              child: UserBadgeWidget(
+                badgeDescription: badge.description,
+                badgeImageUrl: badge.imageUrl,
+                badgeName: badge.name,
+                badgePopUp: badge.popUp,
+                badgeShowDescription: badge.showDescription,
+              )))
+          .toList(),
+    );
+    // }
+  }
+
+  Widget _buildCloseBadgeWidget(List<ChatBadgeEntity> badges) {
+    final mockBadges = <ChatBadgeEntity>[
+      ChatBadgeEntity(
+          code: 'code',
+          description: 'flower',
+          imageUrl:
+              'https://w7.pngwing.com/pngs/845/735/png-transparent-the-blue-flower-neon-ribbon-s-purple-blue-violet.png',
+          name: 'flower',
+          popUp: 1,
+          showDescription: 1,
+          style: 'inline'),
+      ChatBadgeEntity(
+          code: 'code',
+          description: 'flower',
+          imageUrl: 'https://cdn-icons-png.flaticon.com/512/503/503080.png',
+          name: 'Usuária perto de você',
+          popUp: 0,
+          showDescription: 0,
+          style: 'inline-block')
+    ];
+// if (badges.isEmpty) {
+//       return const SizedBox.shrink();
+//     } else {
+    var _emptyBadge = ChatBadgeEntity(
+        code: '',
+        description: '',
+        imageUrl: '',
+        name: '',
+        popUp: 0,
+        showDescription: 0,
+        style: '');
+    final badge = mockBadges.firstWhere(
+      (badge) => badge.style == 'inline-block',
+      orElse: () => _emptyBadge,
+    );
+    if (badge.style != '') {
+      return UserBadgeWidget(
+        badgeDescription: badge.description,
+        badgeImageUrl: badge.imageUrl,
+        badgeName: badge.name,
+        badgePopUp: badge.popUp,
+        badgeShowDescription: badge.showDescription,
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
+    // }
+  }
+
+  double _returnPadding(List<ChatBadgeEntity> badges) {
+    if (badges.isEmpty) {
+      return 0.0;
+    } else {
+      return 4.0;
+    }
   }
 
   Future<void> showChatAction(
@@ -235,14 +363,6 @@ extension _ChatPageStateStyle on _ChatPageState {
         color: DesignSystemColors.white,
         fontWeight: FontWeight.bold,
       );
-  TextStyle get statusTextStyle => const TextStyle(
-        fontFamily: 'Lato',
-        fontSize: 12.0,
-        letterSpacing: 0.4,
-        color: DesignSystemColors.white,
-        fontWeight: FontWeight.normal,
-      );
-
   TextStyle get headerMessageTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,

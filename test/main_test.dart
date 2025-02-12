@@ -79,7 +79,7 @@ void main() {
 
 class _MockBootstrap extends Mock implements Bootstrap {}
 
-class _MockBackgroundTaskManager extends Mock
-    implements BackgroundTaskManager {}
+class _MockBackgroundTaskManager extends Mock implements BackgroundTaskManager {
+}
 
 class _FakeRunner extends Fake implements Runner {}

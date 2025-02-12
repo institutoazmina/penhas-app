@@ -45,7 +45,9 @@ class ChatChannelCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(channel.user.nickname!, style: cardTitleTextStyle),
-                        Expanded(flex: 2, child: _buildBadgeWidget(channel.user.badges)),
+                        Expanded(
+                            flex: 2,
+                            child: _buildBadgeWidget(channel.user.badges)),
                         Text(
                           transformDate(channel.lastMessageTime!),
                           style: cardStatusTextStyle,
