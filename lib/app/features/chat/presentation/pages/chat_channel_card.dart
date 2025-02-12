@@ -19,25 +19,6 @@ class ChatChannelCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mockBadges = <ChatBadgeEntity>[
-      ChatBadgeEntity(
-          code: 'code',
-          description: 'flower',
-          imageUrl:
-              'https://w7.pngwing.com/pngs/845/735/png-transparent-the-blue-flower-neon-ribbon-s-purple-blue-violet.png',
-          name: 'flower',
-          popUp: 1,
-          showDescription: 1,
-          style: 'inline'),
-      ChatBadgeEntity(
-          code: 'code',
-          description: 'flower',
-          imageUrl: 'https://cdn-icons-png.flaticon.com/512/503/503080.png',
-          name: 'Usuária perto de você',
-          popUp: 0,
-          showDescription: 0,
-          style: 'inline-block')
-    ];
     return GestureDetector(
       onTap: () => onPressed(channel),
       child: Padding(
@@ -63,25 +44,22 @@ class ChatChannelCard extends StatelessWidget {
                     const SizedBox(width: 16),
                     Row(
                       children: [
-                        Text(channel.user.nickname!,
-                            style: cardTitleTextStyle),
-                        Expanded(
-                          flex: 2,
-                          child: _buildBadgeWidget(mockBadges)),
+                        Text(channel.user.nickname!, style: cardTitleTextStyle),
+                        Expanded(flex: 2, child: _buildBadgeWidget(channel.user.badges)),
                         Text(
-              transformDate(channel.lastMessageTime!),
-              style: cardStatusTextStyle,
-            ),
+                          transformDate(channel.lastMessageTime!),
+                          style: cardStatusTextStyle,
+                        ),
                       ],
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                          bottom: _returnPadding(mockBadges),
-                          top: _returnPadding(mockBadges)),
+                          bottom: _returnPadding(channel.user.badges),
+                          top: _returnPadding(channel.user.badges)),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          _buildCloseUser(mockBadges),
+                          _buildCloseUser(channel.user.badges),
                         ],
                       ),
                     ),
@@ -90,7 +68,6 @@ class ChatChannelCard extends StatelessWidget {
                 ),
               ),
             ),
-            
           ],
         ),
       ),

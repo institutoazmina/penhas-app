@@ -18,8 +18,8 @@ typedef Completer<T> = async.Completer<Either<Failure, T>>;
 
 class MockUsersRepository extends Mock implements IUsersRepository {}
 
-class MockChatChannelRepository extends Mock implements IChatChannelRepository {
-}
+class MockChatChannelRepository extends Mock
+    implements IChatChannelRepository {}
 
 class MockModularNavigate extends Mock implements IModularNavigator {}
 

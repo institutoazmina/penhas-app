@@ -170,14 +170,14 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
     );
   }
 
-  Widget _builderDivider(){
+  Widget _builderDivider() {
     return const Divider(
-            color: DesignSystemColors.blueyGrey,
-            thickness: 1.0,
-            indent: 20.0,
-            endIndent: 20.0,
-            height: 20,
-          );
+      color: DesignSystemColors.blueyGrey,
+      thickness: 1.0,
+      indent: 20.0,
+      endIndent: 20.0,
+      height: 20,
+    );
   }
 
   Widget buildNetworkIcon(ChatMainSupportTile data) {

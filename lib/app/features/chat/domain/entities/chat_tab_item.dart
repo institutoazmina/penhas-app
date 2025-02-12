@@ -7,7 +7,7 @@ extension ChatTabTitle on ChatTabItem {
   String? get title {
     switch (this) {
       case ChatTabItem.people:
-        return 'Pessoas';
+        return 'Todas as usuárias';
       case ChatTabItem.talks:
         return 'Conversas';
       default:

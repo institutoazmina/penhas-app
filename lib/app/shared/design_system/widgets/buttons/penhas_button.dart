@@ -66,6 +66,7 @@ class PenhasButton extends ElevatedButton {
     required Widget? child,
     required VoidCallback? onPressed,
     FocusNode? focusNode,
+    String? text,
   }) {
     return PenhasButton(
       child: child,
