@@ -43,12 +43,12 @@ void main() {
           lastMessageEtag: '4df2ae',
         ),
         user: ChatUserModel(
-          blockedMe: false,
-          activity: 'há pouco tempo',
-          nickname: 'Julia',
-          avatar: 'https://api.example.com/avatar/padrao.svg',
-          userId: 3191,
-        ),
+            blockedMe: false,
+            activity: 'há pouco tempo',
+            nickname: 'Julia',
+            avatar: 'https://api.example.com/avatar/padrao.svg',
+            userId: 3191,
+            badges: []),
       );
       // act
       final matcher = ChatChannelSessionModel.fromJson(jsonData);
@@ -80,12 +80,12 @@ void main() {
           lastMessageEtag: '4a295f',
         ),
         user: const ChatUserModel(
-          blockedMe: false,
-          activity: 'há pouco tempo',
-          nickname: 'Julia',
-          avatar: 'https://api.example.com/avatar/padrao.svg',
-          userId: 3191,
-        ),
+            blockedMe: false,
+            activity: 'há pouco tempo',
+            nickname: 'Julia',
+            avatar: 'https://api.example.com/avatar/padrao.svg',
+            userId: 3191,
+            badges: []),
       );
       // act
       final matcher = ChatChannelSessionModel.fromJson(jsonData);

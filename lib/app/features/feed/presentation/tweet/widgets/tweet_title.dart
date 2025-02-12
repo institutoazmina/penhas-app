@@ -73,7 +73,11 @@ class TweetTitle extends StatelessWidget {
             .map((badge) => Padding(
                 padding: const EdgeInsets.only(left: 4.0),
                 child: UserBadgeWidget(
-                  badge: badge,
+                  badgeDescription: badge.description,
+                  badgeImageUrl: badge.imageUrl,
+                  badgeName: badge.name,
+                  badgePopUp: badge.popUp,
+                  badgeShowDescription: badge.showDescription,
                 )))
             .toList(),
       );

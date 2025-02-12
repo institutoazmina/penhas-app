@@ -5,7 +5,6 @@ import 'package:penhas/app/features/chat/data/models/chat_assistant_model.dart';
 import 'package:penhas/app/features/chat/data/models/chat_channel_available_model.dart';
 import 'package:penhas/app/features/chat/data/models/chat_channel_model.dart';
 import 'package:penhas/app/features/chat/data/models/chat_user_model.dart';
-
 import 'package:penhas/app/features/chat/domain/entities/chat_channel_available_entity.dart';
 
 import '../../../../../utils/json_util.dart';
@@ -38,24 +37,24 @@ void main() {
             lastMessageTime: DateTime.parse('2020-10-04T09:20:37Z'),
             lastMessageIsMime: true,
             user: const ChatUserModel(
-              blockedMe: false,
-              activity: 'há pouco tempo',
-              nickname: 'Maria',
-              avatar: 'https://api.example.com/avatar/padrao.svg',
-              userId: null,
-            ),
+                blockedMe: false,
+                activity: 'há pouco tempo',
+                nickname: 'Maria',
+                avatar: 'https://api.example.com/avatar/padrao.svg',
+                userId: null,
+                badges: []),
           ),
           ChatChannelModel(
             token: '__my_very_secret_session__',
             lastMessageTime: DateTime.parse('2020-10-04T09:15:27Z'),
             lastMessageIsMime: true,
             user: const ChatUserModel(
-              blockedMe: false,
-              activity: 'há alguns dias',
-              nickname: 'Julia',
-              avatar: 'https://api.example.com/avatar/padrao.svg',
-              userId: null,
-            ),
+                blockedMe: false,
+                activity: 'há alguns dias',
+                nickname: 'Julia',
+                avatar: 'https://api.example.com/avatar/padrao.svg',
+                userId: null,
+                badges: []),
           ),
         ],
         support: ChatChannelModel(
@@ -63,12 +62,12 @@ void main() {
           lastMessageTime: DateTime.parse('2020-09-09T01:00:58Z'),
           lastMessageIsMime: true,
           user: const ChatUserModel(
-            blockedMe: false,
-            activity: '',
-            nickname: 'Suporte PenhaS',
-            avatar: 'https://api.example.com/avatar/suporte-chat.png',
-            userId: null,
-          ),
+              blockedMe: false,
+              activity: '',
+              nickname: 'Suporte PenhaS',
+              avatar: 'https://api.example.com/avatar/suporte-chat.png',
+              userId: null,
+              badges: []),
         ),
         assistant: const ChatAssistantModel(
           avatar: null,
@@ -107,12 +106,12 @@ void main() {
           lastMessageTime: DateTime.parse('2020-09-09T01:00:58Z'),
           lastMessageIsMime: true,
           user: const ChatUserModel(
-            blockedMe: false,
-            activity: '',
-            nickname: 'Suporte PenhaS',
-            avatar: 'https://api.example.com/avatar/suporte-chat.png',
-            userId: null,
-          ),
+              blockedMe: false,
+              activity: '',
+              nickname: 'Suporte PenhaS',
+              avatar: 'https://api.example.com/avatar/suporte-chat.png',
+              userId: null,
+              badges: []),
         ),
         assistant: const ChatAssistantModel(
           avatar: null,

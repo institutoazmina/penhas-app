@@ -1,21 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../../features/feed/domain/entities/tweet_badge_entity.dart';
 import '../../colors.dart';
 import '../../text_styles.dart';
 
 class UserBadgeWidget extends StatelessWidget {
-  const UserBadgeWidget({Key? key, required this.badge}) : super(key: key);
+  const UserBadgeWidget({
+    Key? key,
+    required this.badgePopUp,
+    required this.badgeImageUrl,
+    required this.badgeDescription,
+    required this.badgeName,
+    required this.badgeShowDescription,
+  }) : super(key: key);
 
-  final TweetBadgeEntity badge;
+  final int badgePopUp;
+  final String badgeImageUrl;
+  final int badgeShowDescription;
+  final String badgeDescription;
+  final String badgeName;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => badge.popUp == 1 ? showChatAction(context, badge) : null,
+      onTap: () => badgePopUp == 1
+          ? showChatAction(
+              context, badgeShowDescription, badgeDescription, badgeName)
+          : null,
       child: Image.network(
-        badge.imageUrl,
+        badgeImageUrl,
         height: 16,
         width: 16,
       ),
@@ -25,7 +38,9 @@ class UserBadgeWidget extends StatelessWidget {
 
 Future<void> showChatAction(
   BuildContext context,
-  TweetBadgeEntity badge,
+  int badgeShowDescription,
+  String badgeDescription,
+  String badgeName,
 ) async {
   await showModalBottomSheet(
     context: context,
@@ -34,7 +49,9 @@ Future<void> showChatAction(
       return Padding(
         padding: const EdgeInsets.all(8.0),
         child: _DescriptionBottomSheetWidget(
-          badge: badge,
+          badgeDescription: badgeDescription,
+          badgeName: badgeName,
+          badgeShowDescription: badgeShowDescription,
         ),
       );
     },
@@ -44,10 +61,13 @@ Future<void> showChatAction(
 class _DescriptionBottomSheetWidget extends StatelessWidget {
   const _DescriptionBottomSheetWidget({
     Key? key,
-    required this.badge,
+    required this.badgeShowDescription,
+    required this.badgeDescription,
+    required this.badgeName,
   }) : super(key: key);
-
-  final TweetBadgeEntity badge;
+  final int badgeShowDescription;
+  final String badgeDescription;
+  final String badgeName;
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +101,7 @@ class _DescriptionBottomSheetWidget extends StatelessWidget {
                 children: [
                   Expanded(
                       child: Text(
-                    badge.name,
+                    badgeName,
                     style: kTextStyleFeedTweetTitle,
                   )),
                   IconButton(
@@ -94,9 +114,9 @@ class _DescriptionBottomSheetWidget extends StatelessWidget {
                       )),
                 ],
               ),
-              badge.showDescription == 1
+              badgeShowDescription == 1
                   ? Text(
-                      badge.description,
+                      badgeDescription,
                       style: kTextStyleGuardianBodyTextStyle,
                     )
                   : const SizedBox.shrink(),

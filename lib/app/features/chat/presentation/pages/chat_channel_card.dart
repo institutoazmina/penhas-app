@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/widgets/badges/user_badge_widget.dart';
+import '../../domain/entities/chat_badge_entity.dart';
 import '../../domain/entities/chat_channel_entity.dart';
 
 class ChatChannelCard extends StatelessWidget {
@@ -16,6 +18,25 @@ class ChatChannelCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mockBadges = <ChatBadgeEntity>[
+      ChatBadgeEntity(
+          code: 'code',
+          description: 'flower',
+          imageUrl:
+              'https://w7.pngwing.com/pngs/845/735/png-transparent-the-blue-flower-neon-ribbon-s-purple-blue-violet.png',
+          name: 'flower',
+          popUp: 1,
+          showDescription: 1,
+          style: 'inline'),
+      ChatBadgeEntity(
+          code: 'code',
+          description: 'flower',
+          imageUrl: 'https://cdn-icons-png.flaticon.com/512/503/503080.png',
+          name: 'flower',
+          popUp: 0,
+          showDescription: 0,
+          style: 'inline-block')
+    ];
     return GestureDetector(
       onTap: () => onPressed(channel),
       child: Container(
@@ -43,7 +64,13 @@ class ChatChannelCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(width: 16),
-                      Text(channel.user.nickname!, style: cardTitleTextStyle),
+                      Row(
+                        children: [
+                          Text(channel.user.nickname!,
+                              style: cardTitleTextStyle),
+                          _buildBadgeWidget(mockBadges),
+                        ],
+                      ),
                       Text(channel.user.activity!, style: cardStatusTextStyle),
                     ],
                   ),
@@ -58,6 +85,30 @@ class ChatChannelCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildBadgeWidget(List<ChatBadgeEntity> badges) {
+    if (badges.isEmpty) {
+      return const SizedBox.shrink();
+    } else {
+      badges.removeWhere(
+        (badge) => badge.style == 'inline-block',
+      );
+
+      return Row(
+        children: badges
+            .map((badge) => Padding(
+                padding: const EdgeInsets.only(left: 4.0),
+                child: UserBadgeWidget(
+                  badgeDescription: badge.description,
+                  badgeImageUrl: badge.imageUrl,
+                  badgeName: badge.name,
+                  badgePopUp: badge.popUp,
+                  badgeShowDescription: badge.showDescription,
+                )))
+            .toList(),
+      );
+    }
   }
 
   String transformDate(DateTime time) {
