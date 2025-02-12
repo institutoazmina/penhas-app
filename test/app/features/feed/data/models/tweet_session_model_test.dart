@@ -44,6 +44,7 @@ void main() {
             avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
             meta: const TweetMeta(liked: false, owner: true),
             lastReply: const [],
+            badges: [],
           ),
           TweetRelatedNewsModel(
             header: 'google',
@@ -66,6 +67,7 @@ void main() {
             avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
             meta: const TweetMeta(liked: false, owner: true, canReply: false),
             lastReply: const [],
+            badges: [],
           ),
           TweetNewsModel(
             date: '18/06/2020',
@@ -148,8 +150,10 @@ void main() {
                 ),
                 parentId: '200528T2055370004',
                 lastReply: const [],
+                badges: [],
               )
             ],
+            badges: [],
           ),
         ],
         null,

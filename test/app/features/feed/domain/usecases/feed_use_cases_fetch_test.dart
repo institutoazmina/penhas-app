@@ -67,6 +67,7 @@ void main() {
               avatar: 'http://site.com/avatar_2.png',
               meta: const TweetMeta(liked: false, owner: true),
               lastReply: const [],
+              badges: [],
             ),
             TweetEntity(
               id: 'id_1',
@@ -80,6 +81,7 @@ void main() {
               avatar: 'http://site.com/avatar_1.png',
               meta: const TweetMeta(liked: false, owner: true),
               lastReply: const [],
+              badges: [],
             ),
           ],
         );
@@ -100,6 +102,7 @@ void main() {
               avatar: 'http://site.com/avatar_1.png',
               meta: const TweetMeta(liked: false, owner: true),
               lastReply: const [],
+              badges: [],
             ),
             TweetEntity(
               id: 'id_4',
@@ -113,6 +116,7 @@ void main() {
               avatar: 'http://site.com/avatar_2.png',
               meta: const TweetMeta(liked: false, owner: true),
               lastReply: const [],
+              badges: [],
             ),
           ],
         );
@@ -230,6 +234,7 @@ void main() {
               avatar: 'http://site.com/avatar_2.png',
               meta: const TweetMeta(liked: false, owner: true),
               lastReply: const [],
+              badges: [],
             ),
             TweetEntity(
               id: 'id_3',
@@ -243,6 +248,7 @@ void main() {
               avatar: 'http://site.com/avatar_1.png',
               meta: const TweetMeta(liked: false, owner: true),
               lastReply: const [],
+              badges: [],
             ),
           ],
         );
@@ -263,6 +269,7 @@ void main() {
               avatar: 'http://site.com/avatar_1.png',
               meta: const TweetMeta(liked: false, owner: true),
               lastReply: const [],
+              badges: [],
             ),
             TweetEntity(
               id: 'id_1',
@@ -276,6 +283,7 @@ void main() {
               avatar: 'http://site.com/avatar_2.png',
               meta: const TweetMeta(liked: false, owner: true),
               lastReply: const [],
+              badges: [],
             ),
           ],
         );
@@ -296,6 +304,7 @@ void main() {
               avatar: 'http://site.com/avatar_2.png',
               meta: const TweetMeta(liked: false, owner: true),
               lastReply: const [],
+              badges: [],
             ),
             TweetEntity(
               id: 'id_2',
@@ -309,6 +318,7 @@ void main() {
               avatar: 'http://site.com/avatar_1.png',
               meta: const TweetMeta(liked: false, owner: true),
               lastReply: const [],
+              badges: [],
             ),
           ],
         );

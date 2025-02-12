@@ -17,7 +17,6 @@ class FeedTagsFilter extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 32.0,
-      width: 160.0,
       child: PenhasButton.roundedOutlined(
         onPressed: () async {
           Modular.to.pushNamed('/mainboard/tags').then(
@@ -29,12 +28,13 @@ class FeedTagsFilter extends StatelessWidget {
           );
         },
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: const <Widget>[
-            Icon(
-              Icons.filter_list,
-              color: DesignSystemColors.ligthPurple,
-              size: 22.0,
+            Padding(
+              padding: EdgeInsets.only(right: 6.0),
+              child: Icon(
+                Icons.filter_list,
+                color: DesignSystemColors.ligthPurple,
+              ),
             ),
             Text('Filtros por temas', style: kTextStyleFeedCategoryButtonLabel),
           ],

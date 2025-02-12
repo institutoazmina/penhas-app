@@ -50,7 +50,7 @@ const kTextStyleDefaultFilledButtonLabel = TextStyle(
 
 const kTextStyleFeedCategoryButtonLabel = TextStyle(
   fontFamily: 'Lato',
-  fontSize: 12.0,
+  fontSize: 11.0,
   letterSpacing: 0.4,
   color: DesignSystemColors.ligthPurple,
   fontWeight: FontWeight.bold,
@@ -66,23 +66,30 @@ const kTextStyleFeedTweetInput = TextStyle(
 
 const kTextStyleFeedTweetTitle = TextStyle(
   fontFamily: 'Lato',
-  fontSize: 14.0,
+  fontSize: 16.0,
   letterSpacing: 0.1,
   color: DesignSystemColors.darkIndigoThree,
-  fontWeight: FontWeight.w900,
+  fontWeight: FontWeight.bold,
+);
+
+const kTextStyleFeedCloseUserTitle = TextStyle(
+  fontFamily: 'Lato',
+  fontSize: 13.0,
+  fontWeight: FontWeight.bold,
+  color: DesignSystemColors.darkIndigoThree,
 );
 
 const kTextStyleFeedTweetTime = TextStyle(
   fontFamily: 'Lato',
-  fontSize: 12.0,
+  fontSize: 11.0,
   letterSpacing: 0.5,
   color: DesignSystemColors.blueyGrey,
-  fontWeight: FontWeight.normal,
+  fontWeight: FontWeight.bold,
 );
 
 const kTextStyleFeedTweetBody = TextStyle(
   fontFamily: 'Lato',
-  fontSize: 14.0,
+  fontSize: 13.0,
   letterSpacing: 0.4,
   color: DesignSystemColors.darkIndigoThree,
   fontWeight: FontWeight.normal,

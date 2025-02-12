@@ -35,6 +35,7 @@ void main() {
       content: 'content 1',
       avatar: 'https:/site.com/avatas.svg',
       meta: const TweetMeta(liked: false, owner: false),
+      badges: [],
     );
   });
 

@@ -58,6 +58,7 @@ void main() {
           avatar: 'http://site.com/avatar_2.png',
           meta: const TweetMeta(liked: false, owner: true),
           lastReply: const [],
+          badges: [],
         );
         tweetEntity3 = TweetEntity(
           id: 'id_3',
@@ -72,6 +73,7 @@ void main() {
           avatar: 'http://site.com/avatar_1.png',
           meta: const TweetMeta(liked: false, owner: true),
           lastReply: const [],
+          badges: [],
         );
         tweetEntity2 = TweetEntity(
           id: 'id_2',
@@ -85,6 +87,7 @@ void main() {
           avatar: 'http://site.com/avatar_1.png',
           meta: const TweetMeta(liked: false, owner: true),
           lastReply: [tweetEntity3],
+          badges: [],
         );
 
         firstSessionResponse = TweetSessionEntity(
@@ -183,6 +186,7 @@ void main() {
           avatar: 'http://site.com/avatar_2.png',
           meta: const TweetMeta(liked: true, owner: true),
           lastReply: const [],
+          badges: [],
         );
         tweetEntity3 = TweetEntity(
           id: 'id_3',
@@ -197,6 +201,7 @@ void main() {
           avatar: 'http://site.com/avatar_1.png',
           meta: const TweetMeta(liked: true, owner: true),
           lastReply: const [],
+          badges: [],
         );
         tweetEntity2 = TweetEntity(
           id: 'id_2',
@@ -210,6 +215,7 @@ void main() {
           avatar: 'http://site.com/avatar_1.png',
           meta: const TweetMeta(liked: true, owner: true),
           lastReply: [tweetEntity3],
+          badges: [],
         );
 
         firstSessionResponse = TweetSessionEntity(

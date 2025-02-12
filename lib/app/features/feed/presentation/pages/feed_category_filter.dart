@@ -17,7 +17,6 @@ class FeedCategoryFilter extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 32.0,
-      width: 140.0,
       child: PenhasButton.roundedOutlined(
         onPressed: () async {
           Modular.to.pushNamed('/mainboard/category').then((reload) {
@@ -27,14 +26,12 @@ class FeedCategoryFilter extends StatelessWidget {
           });
         },
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: const <Widget>[
-            Text('Categorias', style: kTextStyleFeedCategoryButtonLabel),
             Icon(
               Icons.arrow_drop_down,
               color: DesignSystemColors.ligthPurple,
-              size: 32.0,
             ),
+            Text('Categorias', style: kTextStyleFeedCategoryButtonLabel),
           ],
         ),
       ),

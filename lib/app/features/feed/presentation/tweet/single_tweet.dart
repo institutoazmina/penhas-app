@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../shared/design_system/widgets/badges/user_close_badge_widget.dart';
+import '../../domain/entities/tweet_badge_entity.dart';
 import '../../domain/entities/tweet_entity.dart';
 import '../stores/tweet_controller.dart';
 import 'widgets/tweet_avatar.dart';
@@ -27,7 +29,7 @@ class SingleTweet extends StatelessWidget {
       child: Container(
         decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+          borderRadius: BorderRadius.all(Radius.circular(12.0)),
           boxShadow: [
             BoxShadow(
               color: Colors.black12,
@@ -37,12 +39,15 @@ class SingleTweet extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(16.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Expanded(
-                child: TweetAvatar(tweet: tweet),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 8.0, right: 8.0),
+                  child: TweetAvatar(tweet: tweet),
+                ),
               ),
               const SizedBox(width: 6.0),
               Expanded(
@@ -55,6 +60,16 @@ class SingleTweet extends StatelessWidget {
                       context: _context,
                       controller: controller,
                     ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          bottom: tweet.badges.isEmpty ? 0.0 : 8.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          _buildCloseUser(tweet),
+                        ],
+                      ),
+                    ),
                     TweetBody(content: tweet.content),
                     TweetBottom(tweet: tweet, controller: controller)
                   ],
@@ -65,5 +80,31 @@ class SingleTweet extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Widget _buildCloseUser(TweetEntity tweet) {
+  if (tweet.badges.isEmpty) {
+    return const SizedBox.shrink();
+  } else {
+    var _emptyBadge = TweetBadgeEntity(
+        code: '',
+        description: '',
+        imageUrl: '',
+        name: '',
+        popUp: 0,
+        showDescription: 0,
+        style: '');
+    final badge = tweet.badges.firstWhere(
+      (badge) => badge.style == 'inline-block',
+      orElse: () => _emptyBadge,
+    );
+    if (badge.style != '') {
+      return UserCloseBadgeWidget(
+        badge: badge,
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
   }
 }

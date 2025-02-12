@@ -1,20 +1,22 @@
+import '../../domain/entities/tweet_badge_entity.dart';
 import '../../domain/entities/tweet_entity.dart';
 
 class TweetModel extends TweetEntity {
-  TweetModel({
-    required String id,
-    required String userName,
-    required int clientId,
-    required String createdAt,
-    required int totalReply,
-    required int totalLikes,
-    required bool anonymous,
-    required String content,
-    required String avatar,
-    required TweetMeta meta,
-    String? parentId,
-    required List<TweetModel> lastReply,
-  }) : super(
+  TweetModel(
+      {required String id,
+      required String userName,
+      required int clientId,
+      required String createdAt,
+      required int totalReply,
+      required int totalLikes,
+      required bool anonymous,
+      required String content,
+      required String avatar,
+      required TweetMeta meta,
+      String? parentId,
+      required List<TweetModel> lastReply,
+      required List<TweetBadgeEntity> badges})
+      : super(
           id: id,
           userName: userName,
           clientId: clientId,
@@ -27,6 +29,7 @@ class TweetModel extends TweetEntity {
           meta: meta,
           parentId: parentId,
           lastReply: lastReply,
+          badges: badges,
         );
 
   factory TweetModel.fromJson(Map<String, dynamic> jsonData) {
@@ -42,6 +45,11 @@ class TweetModel extends TweetEntity {
       lastReply = [TweetModel.fromJson(jsonData['last_reply'])];
     }
 
+    List<TweetBadgeEntity> badges = [];
+    if (jsonData['badges'] != null) {
+      badges = _parseBadges(jsonData['badges']);
+    }
+
     return TweetModel(
       id: jsonData['id'],
       userName: jsonData['name'],
@@ -55,7 +63,42 @@ class TweetModel extends TweetEntity {
       meta: tweetMeta,
       parentId: meta['parent_id'],
       lastReply: lastReply,
+      badges: badges,
     );
+  }
+
+  static List<TweetBadgeEntity> _parseBadges(List<dynamic> badges) {
+    return badges.map((e) => TweetBadgeModel.fromJson(e)).toList();
+  }
+}
+
+class TweetBadgeModel extends TweetBadgeEntity {
+  TweetBadgeModel(
+      {required String code,
+      required String description,
+      required String imageUrl,
+      required String name,
+      required String style,
+      required int showDescription,
+      required int popUp})
+      : super(
+            code: code,
+            description: description,
+            imageUrl: imageUrl,
+            name: name,
+            style: style,
+            showDescription: showDescription,
+            popUp: popUp);
+
+  factory TweetBadgeModel.fromJson(Map<String, dynamic> jsonData) {
+    return TweetBadgeModel(
+        code: jsonData['code'],
+        description: jsonData['description'],
+        imageUrl: jsonData['image_url'],
+        name: jsonData['name'],
+        style: jsonData['style'],
+        showDescription: jsonData['show_description'],
+        popUp: jsonData['popup']);
   }
 }
 

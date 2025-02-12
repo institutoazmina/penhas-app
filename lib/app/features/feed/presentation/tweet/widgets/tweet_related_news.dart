@@ -69,7 +69,7 @@ class _TweetRelatedNewsContent extends StatelessWidget {
   Widget build(BuildContext context) {
     const boxRadius = BorderRadius.all(Radius.circular(8.0));
     return Padding(
-      padding: const EdgeInsets.only(left: 6, right: 6, bottom: 6),
+      padding: const EdgeInsets.only(left: 6, right: 6),
       child: Container(
         decoration: const BoxDecoration(
           color: Colors.white,

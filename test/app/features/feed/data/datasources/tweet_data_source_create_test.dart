@@ -145,6 +145,7 @@ void main() {
           avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
           meta: const TweetMeta(liked: false, owner: true),
           lastReply: const [],
+          badges: [],
         );
         // act
         final received = await dataSource.create(option: requestOption);

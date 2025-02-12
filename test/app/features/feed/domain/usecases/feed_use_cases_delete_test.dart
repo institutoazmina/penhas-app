@@ -67,6 +67,7 @@ void main() {
                 avatar: 'http://site.com/avatar_2.png',
                 meta: const TweetMeta(liked: false, owner: true),
                 lastReply: const [],
+                badges: [],
               ),
               TweetEntity(
                 id: 'id_1',
@@ -92,8 +93,10 @@ void main() {
                     avatar: 'http://site.com/2.svg',
                     meta: const TweetMeta(liked: false, owner: false),
                     lastReply: const [],
+                    badges: [],
                   ),
                 ],
+                badges: [],
               ),
             ],
           );
@@ -115,6 +118,7 @@ void main() {
               avatar: 'http://site.com/1.svg',
               meta: const TweetMeta(liked: false, owner: true),
               lastReply: const [],
+              badges: [],
             );
 
             final sut = FeedUseCases(
@@ -138,6 +142,7 @@ void main() {
                     avatar: 'http://site.com/avatar_2.png',
                     meta: const TweetMeta(liked: false, owner: true),
                     lastReply: const [],
+                    badges: [],
                   ),
                 ],
               ),
@@ -171,6 +176,7 @@ void main() {
             avatar: 'http://site.com/2.svg',
             meta: const TweetMeta(liked: false, owner: false),
             lastReply: const [],
+            badges: [],
           );
 
           final sut = FeedUseCases(
@@ -194,6 +200,7 @@ void main() {
                   avatar: 'http://site.com/avatar_2.png',
                   meta: const TweetMeta(liked: false, owner: true),
                   lastReply: const [],
+                  badges: [],
                 ),
                 TweetEntity(
                   id: 'id_1',
@@ -207,6 +214,7 @@ void main() {
                   avatar: 'http://site.com/avatar_1.png',
                   meta: const TweetMeta(liked: false, owner: true),
                   lastReply: const [],
+                  badges: [],
                 ),
               ],
             ),
