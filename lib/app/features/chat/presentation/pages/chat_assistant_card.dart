@@ -24,35 +24,49 @@ class ChatAssistantCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => onPressed(channel),
       child: Container(
-        height: 175,
-        width: 155,
+        height: 83,
+        width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
           color: DesignSystemColors.white,
+          borderRadius: BorderRadius.all(Radius.circular(12)),
           boxShadow: [
             BoxShadow(
               color: Colors.black12,
-              offset: Offset(0.0, 1.0),
-              blurRadius: 8.0,
+              offset: Offset(0.0, 5.0),
+              blurRadius: 1.0,
             )
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.only(left: 12, right: 12, top: 12.0),
-          child: Column(
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              icon,
               Padding(
-                padding: const EdgeInsets.only(top: 12, bottom: 12),
-                child: Text(
-                  title!,
-                  style: titleStyle,
-                  textAlign: TextAlign.center,
-                ),
+                padding: const EdgeInsets.only(right: 16, bottom: 10),
+                child: icon,
               ),
-              Text(
-                description!,
-                style: descriptionStyle,
-                textAlign: TextAlign.center,
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Text(
+                      title!,
+                      style: titleStyle,
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 280,
+                    child: Text(
+                      description!,
+                      style: descriptionStyle,
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

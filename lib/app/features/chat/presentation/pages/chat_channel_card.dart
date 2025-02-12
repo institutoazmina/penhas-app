@@ -40,59 +40,58 @@ class ChatChannelCard extends StatelessWidget {
     ];
     return GestureDetector(
       onTap: () => onPressed(channel),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(color: Colors.grey[350]!),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Row(
-            children: [
-              CircleAvatar(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32.0),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 25.0),
+              child: CircleAvatar(
                 backgroundColor: const Color.fromRGBO(239, 239, 239, 1.0),
                 radius: 20,
                 child: SvgPicture.network(channel.user.avatar!),
               ),
-              Expanded(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 16.0, top: 8.0, bottom: 16.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(width: 16),
-                      Row(
+            ),
+            Expanded(
+              child: Padding(
+                padding:
+                    const EdgeInsets.only(left: 16.0, top: 8.0, bottom: 16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(width: 16),
+                    Row(
+                      children: [
+                        Text(channel.user.nickname!,
+                            style: cardTitleTextStyle),
+                        Expanded(
+                          flex: 2,
+                          child: _buildBadgeWidget(mockBadges)),
+                        Text(
+              transformDate(channel.lastMessageTime!),
+              style: cardStatusTextStyle,
+            ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          bottom: _returnPadding(mockBadges),
+                          top: _returnPadding(mockBadges)),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(channel.user.nickname!,
-                              style: cardTitleTextStyle),
-                          _buildBadgeWidget(mockBadges),
+                          _buildCloseUser(mockBadges),
                         ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            bottom: _returnPadding(mockBadges),
-                            top: _returnPadding(mockBadges)),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            _buildCloseUser(mockBadges),
-                          ],
-                        ),
-                      ),
-                      Text(channel.user.activity!, style: cardStatusTextStyle),
-                    ],
-                  ),
+                    ),
+                    Text(channel.user.activity!, style: cardStatusTextStyle),
+                  ],
                 ),
               ),
-              Text(
-                transformDate(channel.lastMessageTime!),
-                style: cardStatusTextStyle,
-              ),
-            ],
-          ),
+            ),
+            
+          ],
         ),
       ),
     );
