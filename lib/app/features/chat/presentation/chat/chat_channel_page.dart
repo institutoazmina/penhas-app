@@ -169,99 +169,61 @@ extension _ChatPageStateMethods on _ChatPageState {
   }
 
   Widget _buildBadgeWidget(List<ChatBadgeEntity> badges) {
-    final mockBadges = <ChatBadgeEntity>[
-      ChatBadgeEntity(
-          code: 'code',
-          description: 'flower',
-          imageUrl: 'https://cdn-icons-png.flaticon.com/512/735/735643.png',
-          name: 'flower',
-          popUp: 1,
-          showDescription: 1,
-          style: 'inline'),
-      ChatBadgeEntity(
-          code: 'code',
-          description: 'flower',
-          imageUrl: 'https://cdn-icons-png.flaticon.com/512/503/503080.png',
-          name: 'Usuária perto de você',
-          popUp: 0,
-          showDescription: 0,
-          style: 'inline-block')
-    ];
+    if (badges.isEmpty) {
+      return const SizedBox.shrink();
+    } else {
+      var onlyInlineBadges = <ChatBadgeEntity>[];
 
-    // if (badges.isEmpty) {
-    //   return const SizedBox.shrink();
-    // } else {
-    var onlyInlineBadges = <ChatBadgeEntity>[];
-
-    for (final badge in mockBadges) {
-      if (badge.style != 'inline-block') {
-        onlyInlineBadges.add(badge);
+      for (final badge in badges) {
+        if (badge.style != 'inline-block') {
+          onlyInlineBadges.add(badge);
+        }
       }
-    }
 
-    return Row(
-      children: onlyInlineBadges
-          .map((badge) => Padding(
-              padding: const EdgeInsets.only(left: 4.0),
-              child: UserBadgeWidget(
-                badgeDescription: badge.description,
-                badgeImageUrl: badge.imageUrl,
-                badgeName: badge.name,
-                badgePopUp: badge.popUp,
-                badgeShowDescription: badge.showDescription,
-              )))
-          .toList(),
-    );
-    // }
+      return Row(
+        children: onlyInlineBadges
+            .map((badge) => Padding(
+                padding: const EdgeInsets.only(left: 4.0),
+                child: UserBadgeWidget(
+                  badgeDescription: badge.description,
+                  badgeImageUrl: badge.imageUrl,
+                  badgeName: badge.name,
+                  badgePopUp: badge.popUp,
+                  badgeShowDescription: badge.showDescription,
+                )))
+            .toList(),
+      );
+    }
   }
 
   Widget _buildCloseBadgeWidget(List<ChatBadgeEntity> badges) {
-    final mockBadges = <ChatBadgeEntity>[
-      ChatBadgeEntity(
-          code: 'code',
-          description: 'flower',
-          imageUrl:
-              'https://w7.pngwing.com/pngs/845/735/png-transparent-the-blue-flower-neon-ribbon-s-purple-blue-violet.png',
-          name: 'flower',
-          popUp: 1,
-          showDescription: 1,
-          style: 'inline'),
-      ChatBadgeEntity(
-          code: 'code',
-          description: 'flower',
-          imageUrl: 'https://cdn-icons-png.flaticon.com/512/503/503080.png',
-          name: 'Usuária perto de você',
+    if (badges.isEmpty) {
+      return const SizedBox.shrink();
+    } else {
+      var _emptyBadge = ChatBadgeEntity(
+          code: '',
+          description: '',
+          imageUrl: '',
+          name: '',
           popUp: 0,
           showDescription: 0,
-          style: 'inline-block')
-    ];
-// if (badges.isEmpty) {
-//       return const SizedBox.shrink();
-//     } else {
-    var _emptyBadge = ChatBadgeEntity(
-        code: '',
-        description: '',
-        imageUrl: '',
-        name: '',
-        popUp: 0,
-        showDescription: 0,
-        style: '');
-    final badge = mockBadges.firstWhere(
-      (badge) => badge.style == 'inline-block',
-      orElse: () => _emptyBadge,
-    );
-    if (badge.style != '') {
-      return UserBadgeWidget(
-        badgeDescription: badge.description,
-        badgeImageUrl: badge.imageUrl,
-        badgeName: badge.name,
-        badgePopUp: badge.popUp,
-        badgeShowDescription: badge.showDescription,
+          style: '');
+      final badge = badges.firstWhere(
+        (badge) => badge.style == 'inline-block',
+        orElse: () => _emptyBadge,
       );
-    } else {
-      return const SizedBox.shrink();
+      if (badge.style != '') {
+        return UserBadgeWidget(
+          badgeDescription: badge.description,
+          badgeImageUrl: badge.imageUrl,
+          badgeName: badge.name,
+          badgePopUp: badge.popUp,
+          badgeShowDescription: badge.showDescription,
+        );
+      } else {
+        return const SizedBox.shrink();
+      }
     }
-    // }
   }
 
   double _returnPadding(List<ChatBadgeEntity> badges) {
