@@ -59,7 +59,7 @@ class ChatAssistantCard extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: 280,
+                    width: 240,
                     child: Text(
                       description!,
                       style: descriptionStyle,
