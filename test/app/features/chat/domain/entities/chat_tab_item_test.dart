@@ -4,7 +4,7 @@ import 'package:penhas/app/features/chat/domain/entities/chat_tab_item.dart';
 void main() {
   group(ChatTabItem, () {
     test('people title is correct', () {
-      expect(ChatTabItem.people.title, 'Pessoas');
+      expect(ChatTabItem.people.title, 'Todas as usuárias');
     });
 
     test('talks title is correct', () {
