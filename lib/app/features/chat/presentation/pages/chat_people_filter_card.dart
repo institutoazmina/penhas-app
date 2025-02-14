@@ -7,17 +7,13 @@ import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 class ChatPeopleFilterCard extends StatelessWidget {
   const ChatPeopleFilterCard({
     Key? key,
-    this.totalOfFilter = 0,
     required this.onPressed,
   }) : super(key: key);
 
-  final int totalOfFilter;
   final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
-    final filterTitle =
-        (totalOfFilter > 0) ? 'Filtros ($totalOfFilter)' : 'Filtros';
     return Container(
       // height: 150,
       padding: const EdgeInsets.all(16.0),
@@ -34,12 +30,12 @@ class ChatPeopleFilterCard extends StatelessWidget {
             ),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               PenhasButton.roundedFilled(
                 onPressed: onPressed,
-                child: Text(
-                  filterTitle,
+                child: const Text(
+                  'Filtrar usuárias por tema',
                   style: kTextStyleDefaultFilledButtonLabel,
                 ),
               ),
@@ -53,7 +49,7 @@ class ChatPeopleFilterCard extends StatelessWidget {
 
 extension _ChatPeopleFilterCardTextStyle on ChatPeopleFilterCard {
   TextStyle get cardTitleTextStyle => const TextStyle(
-        fontSize: 14.0,
+        fontSize: 16.0,
         fontFamily: 'Lato',
         letterSpacing: 0.4,
         color: DesignSystemColors.darkIndigoThree,
@@ -62,7 +58,7 @@ extension _ChatPeopleFilterCardTextStyle on ChatPeopleFilterCard {
 
   TextStyle get describeTextStyle => const TextStyle(
         height: 1.3,
-        fontSize: 14.0,
+        fontSize: 13.0,
         fontFamily: 'Lato',
         letterSpacing: 0.4,
         color: DesignSystemColors.darkIndigoThree,

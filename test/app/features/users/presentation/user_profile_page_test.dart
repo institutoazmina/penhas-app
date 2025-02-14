@@ -39,6 +39,7 @@ void main() {
         clientId: 123,
         nickname: 'test',
         avatar: null,
+        badges: [],
       ),
     );
 

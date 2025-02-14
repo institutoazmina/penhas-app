@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
+import 'user_detail_badge_entity.dart';
+
 @immutable
 class UserDetailProfileEntity extends Equatable {
   const UserDetailProfileEntity({
@@ -10,6 +12,7 @@ class UserDetailProfileEntity extends Equatable {
     required this.miniBio,
     required this.skills,
     required this.activity,
+    required this.badges,
   });
 
   final String? nickname;
@@ -18,6 +21,7 @@ class UserDetailProfileEntity extends Equatable {
   final String? miniBio;
   final String? skills;
   final String? activity;
+  final List<UserDetailBadgeEntity>? badges;
 
   @override
   List<Object?> get props => [
@@ -27,5 +31,6 @@ class UserDetailProfileEntity extends Equatable {
         miniBio,
         skills,
         activity,
+        badges,
       ];
 }

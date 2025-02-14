@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/widgets/badges/user_badge_widget.dart';
+import '../../../../shared/design_system/widgets/badges/user_close_badge_widget.dart';
+import '../../../users/domain/entities/user_detail_badge_entity.dart';
 import '../../../users/domain/entities/user_detail_profile_entity.dart';
 
 class ChatPeopleCard extends StatelessWidget {
@@ -21,6 +24,7 @@ class ChatPeopleCard extends StatelessWidget {
       child: Container(
         height: 80,
         decoration: BoxDecoration(
+          color: DesignSystemColors.white,
           border: Border(
             bottom: BorderSide(color: Colors.grey[350]!),
           ),
@@ -43,8 +47,23 @@ class ChatPeopleCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(width: 16),
-                      Text(person.nickname!, style: cardTitleTextStyle),
-                      Text(person.activity!, style: cardStatusTextStyle),
+                      Row(
+                        children: [
+                          Text(person.nickname!, style: cardTitleTextStyle),
+                          _buildBadgeWidget(person.badges),
+                        ],
+                      ),
+                      person.badges != null
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 6.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  _buildCloseUser(person.badges),
+                                ],
+                              ),
+                            )
+                          : Text(person.activity!, style: cardStatusTextStyle),
                     ],
                   ),
                 ),
@@ -54,6 +73,62 @@ class ChatPeopleCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildBadgeWidget(List<UserDetailBadgeEntity>? badges) {
+    if (badges == null) {
+      return const SizedBox.shrink();
+    } else {
+      var onlyInlineBadges = <UserDetailBadgeEntity>[];
+
+      for (final badge in badges) {
+        if (badge.style != 'inline-block') {
+          onlyInlineBadges.add(badge);
+        }
+      }
+
+      return Row(
+        children: onlyInlineBadges
+            .map((badge) => Padding(
+                padding: const EdgeInsets.only(left: 4.0),
+                child: UserBadgeWidget(
+                  badgeDescription: badge.description,
+                  badgeImageUrl: badge.imageUrl,
+                  badgeName: badge.name,
+                  badgePopUp: badge.popUp,
+                  badgeShowDescription: badge.showDescription,
+                )))
+            .toList(),
+      );
+    }
+  }
+}
+
+Widget _buildCloseUser(List<UserDetailBadgeEntity>? badges) {
+  if (badges == null) {
+    return const SizedBox.shrink();
+  } else {
+    var _emptyBadge = UserDetailBadgeEntity(
+        code: '',
+        description: '',
+        imageUrl: '',
+        name: '',
+        popUp: 0,
+        showDescription: 0,
+        style: '');
+    final badge = badges.firstWhere(
+      (badge) => badge.style == 'inline-block',
+      orElse: () => _emptyBadge,
+    );
+    if (badge.style != '') {
+      return UserCloseBadgeWidget(
+        badgeImageUrl: badge.imageUrl,
+        badgeName: badge.name,
+        badgePopUp: badge.popUp,
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
   }
 }
 

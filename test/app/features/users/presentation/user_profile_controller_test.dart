@@ -42,6 +42,7 @@ void main() {
       clientId: clientId,
       miniBio: 'a mini bio',
       skills: 'many skills',
+      badges: [],
     );
     const user = UserDetailEntity(
       isMyself: false,

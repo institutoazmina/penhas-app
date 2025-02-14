@@ -100,6 +100,7 @@ void main() {
                 clientId: 123,
                 miniBio: 'my bio',
                 skills: 'all skills',
+                badges: [],
               ),
             );
 
