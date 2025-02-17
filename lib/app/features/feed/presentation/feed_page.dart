@@ -176,7 +176,7 @@ class _FeedPageState extends State<FeedPage>
         padding: const EdgeInsets.only(
           left: 12.0,
           right: 12.0,
-          bottom: 6.0,
+          bottom: 18.0,
           top: 6.0,
         ),
         child: Tweet(

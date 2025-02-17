@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../../../../../shared/design_system/text_styles.dart';
+import '../../../../../shared/design_system/widgets/badges/user_badge_widget.dart';
 import '../../../domain/entities/tweet_entity.dart';
 import '../../../domain/states/feed_router_type.dart';
 import '../../stores/tweet_controller.dart';
@@ -27,7 +28,7 @@ class TweetTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return tweet.anonymous
         ? _showAnonymousHeader()
-        : _showAuthenticatedHeader();
+        : _showAuthenticatedHeader(tweet);
   }
 
   Widget _buildTime() {
@@ -57,6 +58,26 @@ class TweetTitle extends StatelessWidget {
 
   String _stringfyFormatted(int value) {
     return value > 9 ? '$value' : '0$value';
+  }
+
+  Widget _buildBadgeWidget(TweetEntity tweet) {
+    if (tweet.badges.isEmpty) {
+      return const SizedBox.shrink();
+    } else {
+      tweet.badges.removeWhere(
+        (badge) => badge.style == 'inline-block',
+      );
+
+      return Row(
+        children: tweet.badges
+            .map((badge) => Padding(
+                padding: const EdgeInsets.only(left: 4.0),
+                child: UserBadgeWidget(
+                  badge: badge,
+                )))
+            .toList(),
+      );
+    }
   }
 
   DateTime _mapServerUtcToLocalDate(String? time) {
@@ -178,7 +199,7 @@ class TweetTitle extends StatelessWidget {
     );
   }
 
-  Widget _showAuthenticatedHeader() {
+  Widget _showAuthenticatedHeader(TweetEntity tweet) {
     return Row(
       children: <Widget>[
         Expanded(
@@ -205,9 +226,9 @@ class TweetTitle extends StatelessWidget {
 
   Widget _buttonTitle() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(tweet.userName, style: kTextStyleFeedTweetTitle),
+        Expanded(flex: 2, child: _buildBadgeWidget(tweet)),
         if (isDetail) _buildDetailTime() else _buildTime(),
       ],
     );
