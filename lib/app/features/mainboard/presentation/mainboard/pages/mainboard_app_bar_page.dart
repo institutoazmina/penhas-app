@@ -24,6 +24,7 @@ class MainBoardAppBarPage extends StatelessWidget
     return currentPage.maybeWhen(
       helpCenter: () => _helpCenterAppBar(),
       orElse: () => _defaultAppBar(),
+      chat: () => _chatAppBar(),
     );
   }
 
@@ -60,6 +61,16 @@ class MainBoardAppBarPage extends StatelessWidget
           resetCounter: resetCounter,
         )
       ],
+    );
+  }
+
+  Widget _chatAppBar() {
+    return AppBar(
+      elevation: 0.0,
+      leading: const SizedBox.shrink(),
+      centerTitle: true,
+      backgroundColor: DesignSystemColors.easterPurple,
+      title: const Text('Chat'),
     );
   }
 }
