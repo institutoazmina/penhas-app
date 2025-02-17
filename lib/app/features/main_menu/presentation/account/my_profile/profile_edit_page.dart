@@ -50,7 +50,10 @@ class _ProfileEditPageState extends State<ProfileEditPage>
       appBar: AppBar(
         elevation: 0.0,
         centerTitle: true,
-        leading: IconButton(icon: const Icon(Icons.arrow_back_ios), onPressed: Modular.to.pop,),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: Modular.to.pop,
+        ),
         title: const Text('Meu perfil'),
         backgroundColor: DesignSystemColors.easterPurple,
       ),

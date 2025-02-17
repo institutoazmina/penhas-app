@@ -71,51 +71,31 @@ class CardProfileNamePage extends StatelessWidget {
 }
 
 Widget _buildBadgeWidget(List<UserProfileBadgeEntity> badges) {
-  final mockBadges = <UserProfileBadgeEntity>[
-    UserProfileBadgeEntity(
-        code: 'code',
-        description: 'flower',
-        imageUrl:
-            'https://w7.pngwing.com/pngs/845/735/png-transparent-the-blue-flower-neon-ribbon-s-purple-blue-violet.png',
-        name: 'flower',
-        popUp: 1,
-        showDescription: 1,
-        style: 'inline'),
-    UserProfileBadgeEntity(
-        code: 'code',
-        description: 'flower',
-        imageUrl: 'https://cdn-icons-png.flaticon.com/512/503/503080.png',
-        name: 'Usuária perto de você',
-        popUp: 0,
-        showDescription: 0,
-        style: 'inline-block')
-  ];
+  if (badges.isEmpty) {
+    return const SizedBox.shrink();
+  } else {
+    var onlyInlineBadges = <UserProfileBadgeEntity>[];
 
-  // if (badges.isEmpty) {
-  //   return const SizedBox.shrink();
-  // } else {
-  var onlyInlineBadges = <UserProfileBadgeEntity>[];
-
-  for (final badge in mockBadges) {
-    if (badge.style != 'inline-block') {
-      onlyInlineBadges.add(badge);
+    for (final badge in badges) {
+      if (badge.style != 'inline-block') {
+        onlyInlineBadges.add(badge);
+      }
     }
-  }
 
-  return Row(
-    children: onlyInlineBadges
-        .map((badge) => Padding(
-            padding: const EdgeInsets.only(left: 4.0),
-            child: UserBadgeWidget(
-              badgeDescription: badge.description,
-              badgeImageUrl: badge.imageUrl,
-              badgeName: badge.name,
-              badgePopUp: badge.popUp,
-              badgeShowDescription: badge.showDescription,
-            )))
-        .toList(),
-  );
-  // }
+    return Row(
+      children: onlyInlineBadges
+          .map((badge) => Padding(
+              padding: const EdgeInsets.only(left: 4.0),
+              child: UserBadgeWidget(
+                badgeDescription: badge.description,
+                badgeImageUrl: badge.imageUrl,
+                badgeName: badge.name,
+                badgePopUp: badge.popUp,
+                badgeShowDescription: badge.showDescription,
+              )))
+          .toList(),
+    );
+  }
 }
 
 extension _TextStyle on CardProfileNamePage {

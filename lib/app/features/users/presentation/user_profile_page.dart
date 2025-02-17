@@ -6,10 +6,10 @@ import 'package:flutter_tags/flutter_tags.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../core/extension/asuka.dart';
-import '../../../shared/design_system/button_shape.dart';
 import '../../../shared/design_system/colors.dart';
 import '../../../shared/design_system/widgets/badges/user_badge_widget.dart';
 import '../../../shared/design_system/widgets/badges/user_close_badge_widget.dart';
+import '../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../authentication/presentation/shared/snack_bar_handler.dart';
 import '../../mainboard/presentation/mainboard/mainboard_page.dart';
@@ -57,15 +57,6 @@ class _UserProfilePageState extends State<UserProfilePage>
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: DesignSystemColors.systemBackgroundColor,
-      // appBar: AppBar(
-      //   elevation: 0,
-      //   backgroundColor: DesignSystemColors.easterPurple,
-      //   actions: [
-      //     Observer(
-      //       builder: (_) => _buildMenuAction(controller.menuState),
-      //     )
-      //   ],
-      // ),
       body: SingleChildScrollView(
         child: Observer(
           builder: (_) => bodyBuilder(controller.state),
@@ -120,14 +111,10 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
             ),
             child: SizedBox(
               height: 44,
-              // ignore: deprecated_member_use
-              child: RaisedButton(
+              child: PenhasButton.text(
                 onPressed: () => controller.openChannel(),
-                elevation: 0,
-                color: DesignSystemColors.ligthPurple,
-                shape: kButtonShapeFilled,
                 child: Text(
-                  'Conversar',
+                  'Conversar com ${user.profile.nickname} >',
                   style: buttonTitleStyle,
                 ),
               ),
@@ -140,7 +127,6 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
   Widget buildHeader(UserDetailProfileEntity user) {
     return Container(
       color: DesignSystemColors.easterPurple,
-      height: 210,
       child: Padding(
         padding: const EdgeInsets.only(top: 45.0),
         child: Column(
@@ -148,10 +134,13 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
             Row(
               children: [
                 IconButton(
-            icon: const Icon(Icons.arrow_back_ios,  color: DesignSystemColors.white,),
-            onPressed: Modular.to.pop,
-          ),
-          const Spacer(),
+                  icon: const Icon(
+                    Icons.arrow_back_ios,
+                    color: DesignSystemColors.white,
+                  ),
+                  onPressed: Modular.to.pop,
+                ),
+                const Spacer(),
                 CircleAvatar(
                   radius: 34,
                   backgroundColor: Colors.white38,
@@ -159,14 +148,13 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
                       ? Container()
                       : SvgPicture.network(user.avatar!),
                 ),
-          const Spacer(),
-
+                const Spacer(),
                 _buildMenuAction(controller.menuState),
-
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 12.0, bottom: 8),
+              padding: EdgeInsets.only(
+                  top: 12.0, bottom: user.badges == null ? 25 : 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -192,76 +180,37 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
   }
 
   Widget _buildBadgeWidget(List<UserDetailBadgeEntity>? badges) {
-  final mockBadges = <UserDetailBadgeEntity>[
-    UserDetailBadgeEntity(
-        code: 'code',
-        description: 'flower',
-        imageUrl:
-            'https://w7.pngwing.com/pngs/845/735/png-transparent-the-blue-flower-neon-ribbon-s-purple-blue-violet.png',
-        name: 'flower',
-        popUp: 1,
-        showDescription: 1,
-        style: 'inline'),
-    UserDetailBadgeEntity(
-        code: 'code',
-        description: 'flower',
-        imageUrl: 'https://cdn-icons-png.flaticon.com/512/503/503080.png',
-        name: 'Usuária perto de você',
-        popUp: 0,
-        showDescription: 0,
-        style: 'inline-block')
-  ];
+    if (badges == null || badges == []) {
+      return const SizedBox.shrink();
+    } else {
+      var onlyInlineBadges = <UserDetailBadgeEntity>[];
 
-  // if (badges.isEmpty) {
-  //   return const SizedBox.shrink();
-  // } else {
-  var onlyInlineBadges = <UserDetailBadgeEntity>[];
+      for (final badge in badges) {
+        if (badge.style != 'inline-block') {
+          onlyInlineBadges.add(badge);
+        }
+      }
 
-  for (final badge in mockBadges) {
-    if (badge.style != 'inline-block') {
-      onlyInlineBadges.add(badge);
+      return Row(
+        children: onlyInlineBadges
+            .map((badge) => Padding(
+                padding: const EdgeInsets.only(left: 4.0),
+                child: UserBadgeWidget(
+                  badgeDescription: badge.description,
+                  badgeImageUrl: badge.imageUrl,
+                  badgeName: badge.name,
+                  badgePopUp: badge.popUp,
+                  badgeShowDescription: badge.showDescription,
+                )))
+            .toList(),
+      );
     }
   }
 
-  return Row(
-    children: onlyInlineBadges
-        .map((badge) => Padding(
-            padding: const EdgeInsets.only(left: 4.0),
-            child: UserBadgeWidget(
-              badgeDescription: badge.description,
-              badgeImageUrl: badge.imageUrl,
-              badgeName: badge.name,
-              badgePopUp: badge.popUp,
-              badgeShowDescription: badge.showDescription,
-            )))
-        .toList(),
-  );
-  // }
-}
-
-Widget _buildCloseUser(List<UserDetailBadgeEntity>? badges) {
-  final mockBadges = <UserDetailBadgeEntity>[
-    UserDetailBadgeEntity(
-        code: 'code',
-        description: 'flower',
-        imageUrl:
-            'https://w7.pngwing.com/pngs/845/735/png-transparent-the-blue-flower-neon-ribbon-s-purple-blue-violet.png',
-        name: 'flower',
-        popUp: 1,
-        showDescription: 1,
-        style: 'inline'),
-    UserDetailBadgeEntity(
-        code: 'code',
-        description: 'flower',
-        imageUrl: 'https://cdn-icons-png.flaticon.com/512/503/503080.png',
-        name: 'Usuária perto de você',
-        popUp: 0,
-        showDescription: 0,
-        style: 'inline-block')
-  ];
-    // if (badges.isEmpty) {
-    //   return const SizedBox.shrink();
-    // } else {
+  Widget _buildCloseUser(List<UserDetailBadgeEntity>? badges) {
+    if (badges == null || badges == []) {
+      return const SizedBox.shrink();
+    } else {
       var _emptyBadge = UserDetailBadgeEntity(
           code: '',
           description: '',
@@ -270,14 +219,16 @@ Widget _buildCloseUser(List<UserDetailBadgeEntity>? badges) {
           popUp: 0,
           showDescription: 0,
           style: '');
-      final badge = mockBadges.firstWhere(
+      final badge = badges.firstWhere(
         (badge) => badge.style == 'inline-block',
         orElse: () => _emptyBadge,
       );
       if (badge.style != '') {
         return Container(
-          
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(6),color: DesignSystemColors.white,  ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            color: DesignSystemColors.white,
+          ),
           child: UserCloseBadgeWidget(
             badgeImageUrl: badge.imageUrl,
             badgeName: badge.name,
@@ -287,7 +238,7 @@ Widget _buildCloseUser(List<UserDetailBadgeEntity>? badges) {
       } else {
         return const SizedBox.shrink();
       }
-    // }
+    }
   }
 
   Widget buildContent(UserDetailProfileEntity user) {
@@ -439,9 +390,10 @@ Widget _buildCloseUser(List<UserDetailBadgeEntity>? badges) {
 
   TextStyle get buttonTitleStyle => const TextStyle(
         fontFamily: 'Lato',
-        fontSize: 12.0,
+        fontSize: 14.0,
         letterSpacing: 0.4,
-        color: DesignSystemColors.white,
+        color: DesignSystemColors.helpCenterBackGround,
         fontWeight: FontWeight.bold,
+        decoration: TextDecoration.underline,
       );
 }
