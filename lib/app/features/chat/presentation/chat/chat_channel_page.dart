@@ -65,9 +65,8 @@ extension _ChatPageStateMethods on _ChatPageState {
           child: IconButton(
             icon: const Icon(
               Icons.arrow_back_ios,
-              size: 20,
             ),
-            onPressed: () => Modular.to.pop(),
+            onPressed: Modular.to.pop,
           ),
         ),
         elevation: 0.0,

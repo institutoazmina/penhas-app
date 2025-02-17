@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../../shared/design_system/colors.dart';
@@ -43,6 +44,14 @@ class _AccountPreferencePageState extends State<AccountPreferencePage>
       key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0.0,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: DesignSystemColors.white,
+          ),
+          onPressed: Modular.to.pop,
+        ),
+        centerTitle: true,
         title: const Text('Configurações'),
         backgroundColor: DesignSystemColors.easterPurple,
       ),
@@ -96,9 +105,12 @@ extension _PageBuilder on _AccountPreferencePageState {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Marque abaixo quais notificações deseja receber',
-                style: kTextStyleAlertDialogTitle,
+              const Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: Text(
+                  'Marque abaixo quais notificações deseja receber',
+                  style: kTextStyleAlertDialogTitle,
+                ),
               ),
               const SizedBox(height: 16),
               Expanded(
