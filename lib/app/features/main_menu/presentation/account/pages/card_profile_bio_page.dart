@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../../core/extension/asuka.dart';
-import '../../../../../shared/design_system/colors.dart';
 import '../../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import 'card_profile_header_edit_page.dart';
 
@@ -19,31 +18,23 @@ class CardProfileBioPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: DesignSystemColors.pinkishGrey),
-        ),
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 16.0,
+        right: 16.0,
       ),
-      child: Padding(
-        padding: const EdgeInsets.only(
-          left: 16.0,
-          right: 16.0,
-          top: 16.0,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CardProfileHeaderEditPage(
-              title: 'Minibio',
-              onEditAction: () => showModal(context: context),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 4.0, bottom: 20.0),
-              child: Text(content),
-            )
-          ],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CardProfileHeaderEditPage(
+            title: 'Minibio',
+            onEditAction: () => showModal(context: context),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 4.0, bottom: 20.0),
+            child: Text(content),
+          )
+        ],
       ),
     );
   }

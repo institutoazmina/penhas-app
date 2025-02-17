@@ -32,6 +32,7 @@ void main() {
       stealthModeEnabled: true,
       anonymousModeEnabled: true,
       jaFoiVitimaDeViolencia: false,
+      badges: [],
     );
 
     when(() => AppModulesMock.userProfileStore.retrieve()).thenAnswer(

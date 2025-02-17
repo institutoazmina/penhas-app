@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
 
-abstract class UserDetailBadge extends Equatable {}
+abstract class UserProfileBadge extends Equatable {}
 
-class UserDetailBadgeEntity extends UserDetailBadge {
-  UserDetailBadgeEntity(
+class UserProfileBadgeEntity extends UserProfileBadge {
+  UserProfileBadgeEntity(
       {required this.code,
       required this.description,
       required this.imageUrl,

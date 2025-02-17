@@ -224,8 +224,6 @@ class PenhasTextStyle {
 }
 
 class _PenhasFontWeight {
-  static const FontWeight bold = FontWeight.w900;
   static const FontWeight medium = FontWeight.w700;
   static const FontWeight regular = FontWeight.w400;
-  static const FontWeight light = FontWeight.w300;
 }

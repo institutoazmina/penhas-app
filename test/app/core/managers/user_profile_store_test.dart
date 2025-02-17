@@ -40,6 +40,7 @@ void main() {
           'modo_anonimo_ativo': 0,
           'ja_foi_vitima_de_violencia': 0,
           'modo_camuflado_ativo': 1,
+          'badges': [],
         };
         when(() => storage.put(key, any())).thenAnswer((_) async {});
 
@@ -54,6 +55,7 @@ void main() {
           avatar: 'avatar',
           skill: const ['skill1', 'skill2'],
           stealthModeEnabled: true,
+          badges: [],
         );
 
         // act
@@ -114,6 +116,7 @@ void main() {
           stealthModeEnabled: false,
           anonymousModeEnabled: false,
           jaFoiVitimaDeViolencia: false,
+          badges: [],
         );
 
         when(() => storage.get(key)).thenAnswer((_) async => null);

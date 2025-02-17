@@ -20,7 +20,7 @@ class ChatUserModel extends ChatUserEntity {
 
   factory ChatUserModel.fromJson(Map<String, dynamic> jsonData) {
     List<ChatBadgeEntity> badges = [];
-    if (jsonData['badges'] != null) {
+    if (jsonData['other_badges'] != null) {
       badges = _parseBadges(jsonData['other_badges']);
     }
 

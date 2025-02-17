@@ -148,6 +148,7 @@ void main() {
         race: '',
         skill: [],
         stealthModeEnabled: false,
+        badges: [],
       );
       when(() => profileStore.retrieve()).thenAnswer((_) async => expected);
       // act

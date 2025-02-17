@@ -20,13 +20,6 @@ class CardProfileSingleTilePage extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: background,
-        border: Border(
-          bottom: BorderSide(
-            color: background == DesignSystemColors.white
-                ? DesignSystemColors.pinkishGrey
-                : background,
-          ),
-        ),
       ),
       child: Padding(
         padding: const EdgeInsets.only(
@@ -39,7 +32,7 @@ class CardProfileSingleTilePage extends StatelessWidget {
           children: [
             CardProfileHeaderEditPage(title: title, onEditAction: null),
             Padding(
-              padding: const EdgeInsets.only(top: 16.0, bottom: 20.0),
+              padding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
               child: Text(
                 content!,
                 style: contentTextStyle,

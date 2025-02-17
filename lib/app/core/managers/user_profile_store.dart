@@ -27,6 +27,7 @@ class UserProfileStore extends LocalStore<UserProfileEntity> {
         minibio: null,
         race: null,
         skill: const [],
+        badges: const [],
       );
 
   @override

@@ -17,40 +17,32 @@ class CardProfileSkillPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: DesignSystemColors.pinkishGrey),
-        ),
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 16.0,
+        right: 16.0,
       ),
-      child: Padding(
-        padding: const EdgeInsets.only(
-          left: 16.0,
-          right: 16.0,
-          top: 16.0,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CardProfileHeaderEditPage(
-              title: 'Disponível para falar sobre',
-              onEditAction: onEditAction,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CardProfileHeaderEditPage(
+            title: 'Disponível para falar sobre',
+            onEditAction: onEditAction,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 4.0, bottom: 8.0),
+            child: Tags(
+              spacing: 12.0,
+              alignment: WrapAlignment.start,
+              runAlignment: WrapAlignment.start,
+              itemCount: skills.length,
+              itemBuilder: (int index) {
+                final item = skills[index]!;
+                return builtTagItem(item, index);
+              },
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 4.0, bottom: 20.0),
-              child: Tags(
-                spacing: 12.0,
-                alignment: WrapAlignment.start,
-                runAlignment: WrapAlignment.start,
-                itemCount: skills.length,
-                itemBuilder: (int index) {
-                  final item = skills[index]!;
-                  return builtTagItem(item, index);
-                },
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
