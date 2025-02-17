@@ -32,20 +32,6 @@ class ChatChannelMessagePage extends StatelessWidget {
         : const Color.fromRGBO(239, 239, 239, 1.0);
     final Color textColor = content.content.isMe ? Colors.white : Colors.black;
 
-    const Radius radius = Radius.circular(16.0);
-
-    final BorderRadiusGeometry borderRadius = content.content.isMe
-        ? const BorderRadius.only(
-            topLeft: radius,
-            topRight: radius,
-            bottomLeft: radius,
-          )
-        : const BorderRadius.only(
-            topLeft: radius,
-            topRight: radius,
-            bottomRight: radius,
-          );
-
     final AlignmentGeometry alignment =
         content.content.isMe ? Alignment.centerRight : Alignment.centerLeft;
 
@@ -58,7 +44,16 @@ class ChatChannelMessagePage extends StatelessWidget {
       alignment: alignment,
       child: Container(
         padding: padding,
-        decoration: BoxDecoration(color: color, borderRadius: borderRadius),
+        decoration: BoxDecoration(
+            color: color,
+            borderRadius: const BorderRadius.all(Radius.circular(12)),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black12,
+                offset: Offset(0.0, 5.0),
+                blurRadius: 1.0,
+              )
+            ]),
         child: Container(
           constraints: const BoxConstraints(minWidth: 60.0),
           child: HtmlWidget(

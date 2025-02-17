@@ -1,37 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../../features/feed/domain/entities/tweet_badge_entity.dart';
 import '../../colors.dart';
 import '../../text_styles.dart';
 
 class UserBadgeWidget extends StatelessWidget {
-  const UserBadgeWidget({Key? key, required this.badge}) : super(key: key);
+  const UserBadgeWidget({
+    Key? key,
+    required this.badgePopUp,
+    required this.badgeImageUrl,
+    required this.badgeDescription,
+    required this.badgeName,
+    required this.badgeShowDescription,
+  }) : super(key: key);
 
-  final TweetBadgeEntity badge;
+  final int badgePopUp;
+  final String badgeImageUrl;
+  final int badgeShowDescription;
+  final String badgeDescription;
+  final String badgeName;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => badge.popUp == 1
-          ? showModalBottomSheet(
+      onTap: () async => badgePopUp == 1
+          ? await showModalBottomSheet(
               context: context,
               barrierColor: Colors.transparent,
               builder: (context) {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: _DescriptionBottomSheetWidget(
-                    badge: badge,
+                    badgeDescription: badgeDescription,
+                    badgeName: badgeName,
+                    badgeShowDescription: badgeShowDescription,
                   ),
                 );
               },
             )
           : null,
-      child: Image.network(
-        badge.imageUrl,
-        height: 16,
-        width: 16,
-      ),
+      child: badgeImageUrl.isNotEmpty
+          ? Image.network(
+              badgeImageUrl,
+              height: 16,
+              width: 16,
+            )
+          : const SizedBox.shrink(),
     );
   }
 }
@@ -39,10 +53,13 @@ class UserBadgeWidget extends StatelessWidget {
 class _DescriptionBottomSheetWidget extends StatelessWidget {
   const _DescriptionBottomSheetWidget({
     Key? key,
-    required this.badge,
+    required this.badgeShowDescription,
+    required this.badgeDescription,
+    required this.badgeName,
   }) : super(key: key);
-
-  final TweetBadgeEntity badge;
+  final int badgeShowDescription;
+  final String badgeDescription;
+  final String badgeName;
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +93,7 @@ class _DescriptionBottomSheetWidget extends StatelessWidget {
                 children: [
                   Expanded(
                       child: Text(
-                    badge.name,
+                    badgeName,
                     style: kTextStyleFeedTweetTitle,
                   )),
                   IconButton(
@@ -86,12 +103,13 @@ class _DescriptionBottomSheetWidget extends StatelessWidget {
                       icon: const Icon(
                         Icons.close,
                         size: 32,
+                        color: DesignSystemColors.darkIndigoThree,
                       )),
                 ],
               ),
-              badge.showDescription == 1
+              badgeShowDescription == 1
                   ? Text(
-                      badge.description,
+                      badgeDescription,
                       style: kTextStyleGuardianBodyTextStyle,
                     )
                   : const SizedBox.shrink(),

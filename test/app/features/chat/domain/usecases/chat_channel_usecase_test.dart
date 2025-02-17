@@ -378,12 +378,12 @@ ChatChannelSessionEntity buildChatChannelSession(
 
 ChatUserEntity buildChatUser({int? userId, String? nickname}) {
   return ChatUserEntity(
-    userId: userId ?? 128,
-    activity: 'five minutes ago',
-    avatar: 'https://api.example.com/avatar/padrao.svg',
-    blockedMe: false,
-    nickname: nickname ?? 'penhas',
-  );
+      userId: userId ?? 128,
+      activity: 'five minutes ago',
+      avatar: 'https://api.example.com/avatar/padrao.svg',
+      blockedMe: false,
+      nickname: nickname ?? 'penhas',
+      badges: []);
 }
 
 Future<void> load(

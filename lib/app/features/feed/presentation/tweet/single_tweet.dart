@@ -101,7 +101,9 @@ Widget _buildCloseUser(TweetEntity tweet) {
     );
     if (badge.style != '') {
       return UserCloseBadgeWidget(
-        badge: badge,
+        badgeImageUrl: badge.imageUrl,
+        badgeName: badge.name,
+        badgePopUp: badge.popUp,
       );
     } else {
       return const SizedBox.shrink();

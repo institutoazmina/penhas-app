@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../../../shared/design_system/colors.dart';
+import '../../../../shared/design_system/text_styles.dart';
 import '../../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../../support_center/presentation/pages/support_center_general_error.dart';
 import '../../domain/entities/chat_main_tile_entity.dart';
@@ -75,14 +76,14 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
         child: ListView.builder(
           itemCount: tiles.length,
           itemBuilder: (context, index) {
-            return buildCard(tiles[index]);
+            return buildCard(tiles[index], index, tiles.length);
           },
         ),
       ),
     );
   }
 
-  Widget buildCard(ChatMainTileEntity tile) {
+  Widget buildCard(ChatMainTileEntity tile, int currentTile, int totalTiles) {
     if (tile is ChatMainAssistantCardTile) {
       return buildAssistantCard(tile);
     }
@@ -92,7 +93,11 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
     }
 
     if (tile is ChatMainChannelCardTile) {
-      return buildChannelCard(tile);
+      if (currentTile == totalTiles - 1) {
+        return buildChannelNoDividerCard(tile);
+      } else {
+        return buildChannelCard(tile);
+      }
     }
 
     return Container();
@@ -105,20 +110,34 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ...tile.cards
-              .map(
-                (e) => ChatAssistantCard(
-                  title: e.title,
-                  description: e.content,
-                  icon: buildNetworkIcon(e),
-                  channel: e,
-                  onPressed: controller.openAssistantCard,
-                ),
-              )
-              .toList()
+          const Padding(
+            padding: EdgeInsets.only(bottom: 16.0),
+            child: Text(
+                'Precisa de ajuda? Entre em contato com o nosso suporte',
+                style: kTextStyleFeedTweetTitle),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ...tile.cards
+                  .map(
+                    (e) => Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: ChatAssistantCard(
+                        title: e.title,
+                        description: e.content,
+                        icon: buildNetworkIcon(e),
+                        channel: e,
+                        onPressed: controller.openAssistantCard,
+                      ),
+                    ),
+                  )
+                  .toList()
+            ],
+          ),
         ],
       ),
     );
@@ -126,18 +145,53 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
 
   Widget buildChannelHeader(ChatMainChannelHeaderTile tile) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-      child: Text(
-        tile.title,
-        style: talksDividerTitleTextStyle,
+      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _builderDivider(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18.0),
+            child: Text(
+              tile.title,
+              style: talksDividerTitleTextStyle,
+            ),
+          ),
+        ],
       ),
     );
   }
 
   Widget buildChannelCard(ChatMainChannelCardTile tile) {
-    return ChatChannelCard(
-      channel: tile.channel,
-      onPressed: controller.openChannel,
+    return Column(
+      children: [
+        ChatChannelCard(
+          channel: tile.channel,
+          onPressed: controller.openChannel,
+        ),
+        _builderDivider(),
+      ],
+    );
+  }
+
+  Widget buildChannelNoDividerCard(ChatMainChannelCardTile tile) {
+    return Column(
+      children: [
+        ChatChannelCard(
+          channel: tile.channel,
+          onPressed: controller.openChannel,
+        ),
+      ],
+    );
+  }
+
+  Widget _builderDivider() {
+    return const Divider(
+      color: DesignSystemColors.blueyGrey,
+      thickness: 1.0,
+      indent: 20.0,
+      endIndent: 20.0,
+      height: 20,
     );
   }
 
