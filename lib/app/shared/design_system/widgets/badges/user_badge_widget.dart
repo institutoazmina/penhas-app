@@ -13,7 +13,20 @@ class UserBadgeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => badge.popUp == 1 ? showChatAction(context, badge) : null,
+      onTap: () => badge.popUp == 1
+          ? showModalBottomSheet(
+              context: context,
+              barrierColor: Colors.transparent,
+              builder: (context) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: _DescriptionBottomSheetWidget(
+                    badge: badge,
+                  ),
+                );
+              },
+            )
+          : null,
       child: Image.network(
         badge.imageUrl,
         height: 16,
@@ -21,24 +34,6 @@ class UserBadgeWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-Future<void> showChatAction(
-  BuildContext context,
-  TweetBadgeEntity badge,
-) async {
-  await showModalBottomSheet(
-    context: context,
-    barrierColor: Colors.transparent,
-    builder: (context) {
-      return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: _DescriptionBottomSheetWidget(
-          badge: badge,
-        ),
-      );
-    },
-  );
 }
 
 class _DescriptionBottomSheetWidget extends StatelessWidget {
@@ -86,7 +81,7 @@ class _DescriptionBottomSheetWidget extends StatelessWidget {
                   )),
                   IconButton(
                       onPressed: () {
-                        _closeBottomSheet();
+                        Modular.to.pop();
                       },
                       icon: const Icon(
                         Icons.close,
@@ -106,8 +101,4 @@ class _DescriptionBottomSheetWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-void _closeBottomSheet() {
-  Modular.to.pop();
 }
