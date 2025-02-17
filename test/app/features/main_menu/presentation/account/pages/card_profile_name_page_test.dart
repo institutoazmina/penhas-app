@@ -14,6 +14,7 @@ void main() {
           body: CardProfileNamePage(
             name: 'PenhaS',
             onChange: (String newName) {},
+            badges: [],
           ),
         ),
       );
@@ -30,6 +31,7 @@ void main() {
         body: CardProfileNamePage(
           name: 'PenhaS',
           onChange: (String newName) {},
+          badges: [],
         ),
       ),
     );
