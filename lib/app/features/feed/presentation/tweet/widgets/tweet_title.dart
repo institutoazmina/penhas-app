@@ -64,29 +64,28 @@ class TweetTitle extends StatelessWidget {
   Widget _buildBadgeWidget(TweetEntity tweet) {
     if (tweet.badges.isEmpty) {
       return const SizedBox.shrink();
-    } else {
-      var onlyInlineBadges = <TweetBadgeEntity>[];
-
-      for (final badge in tweet.badges) {
-        if (badge.style != 'inline-block') {
-          onlyInlineBadges.add(badge);
-        }
-      }
-
-      return Row(
-        children: onlyInlineBadges
-            .map((badge) => Padding(
-                padding: const EdgeInsets.only(left: 4.0),
-                child: UserBadgeWidget(
-                  badgeDescription: badge.description,
-                  badgeImageUrl: badge.imageUrl,
-                  badgeName: badge.name,
-                  badgePopUp: badge.popUp,
-                  badgeShowDescription: badge.showDescription,
-                )))
-            .toList(),
-      );
     }
+    var onlyInlineBadges = <TweetBadgeEntity>[];
+
+    for (final badge in tweet.badges) {
+      if (badge.style != 'inline-block') {
+        onlyInlineBadges.add(badge);
+      }
+    }
+
+    return Row(
+      children: onlyInlineBadges
+          .map((badge) => Padding(
+              padding: const EdgeInsets.only(left: 4.0),
+              child: UserBadgeWidget(
+                badgeDescription: badge.description,
+                badgeImageUrl: badge.imageUrl,
+                badgeName: badge.name,
+                badgePopUp: badge.popUp,
+                badgeShowDescription: badge.showDescription,
+              )))
+          .toList(),
+    );
   }
 
   DateTime _mapServerUtcToLocalDate(String? time) {
