@@ -68,12 +68,9 @@ extension _ChatMainBuilder on _ChatMainPageState {
             children: [
               Row(
                 children: [
-                  Container(
-                    color: DesignSystemColors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: chatTabBar(controller.tabItems),
-                    ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: chatTabBar(controller.tabItems),
                   ),
                 ],
               ),
