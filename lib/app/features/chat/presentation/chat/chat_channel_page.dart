@@ -153,13 +153,13 @@ extension _ChatPageStateMethods on _ChatPageState {
             children: [
               Padding(
                 padding: EdgeInsets.only(right: _returnPadding(user.badges)),
-                child: _buildCloseBadgeWidget(user.badges),
+                child: buildCloseBadgeWidget(user.badges),
               ),
               Padding(
                 padding: EdgeInsets.only(right: _returnPadding(user.badges)),
                 child: Text(user.nickname!, style: titleTextStyle),
               ),
-              _buildBadgeWidget(user.badges),
+              buildBadgeWidget(user.badges),
             ],
           ),
         )
@@ -167,62 +167,59 @@ extension _ChatPageStateMethods on _ChatPageState {
     );
   }
 
-  Widget _buildBadgeWidget(List<ChatBadgeEntity> badges) {
+  Widget buildBadgeWidget(List<ChatBadgeEntity> badges) {
     if (badges.isEmpty) {
       return const SizedBox.shrink();
-    } else {
-      var onlyInlineBadges = <ChatBadgeEntity>[];
-
-      for (final badge in badges) {
-        if (badge.style != 'inline-block') {
-          onlyInlineBadges.add(badge);
-        }
-      }
-
-      return Row(
-        children: onlyInlineBadges
-            .map((badge) => Padding(
-                padding: const EdgeInsets.only(left: 4.0),
-                child: UserBadgeWidget(
-                  badgeDescription: badge.description,
-                  badgeImageUrl: badge.imageUrl,
-                  badgeName: badge.name,
-                  badgePopUp: badge.popUp,
-                  badgeShowDescription: badge.showDescription,
-                )))
-            .toList(),
-      );
     }
+    var onlyInlineBadges = <ChatBadgeEntity>[];
+
+    for (final badge in badges) {
+      if (badge.style != 'inline-block') {
+        onlyInlineBadges.add(badge);
+      }
+    }
+
+    return Row(
+      children: onlyInlineBadges
+          .map((badge) => Padding(
+              padding: const EdgeInsets.only(left: 4.0),
+              child: UserBadgeWidget(
+                badgeDescription: badge.description,
+                badgeImageUrl: badge.imageUrl,
+                badgeName: badge.name,
+                badgePopUp: badge.popUp,
+                badgeShowDescription: badge.showDescription,
+              )))
+          .toList(),
+    );
   }
 
-  Widget _buildCloseBadgeWidget(List<ChatBadgeEntity> badges) {
+  Widget buildCloseBadgeWidget(List<ChatBadgeEntity> badges) {
     if (badges.isEmpty) {
       return const SizedBox.shrink();
-    } else {
-      var _emptyBadge = ChatBadgeEntity(
-          code: '',
-          description: '',
-          imageUrl: '',
-          name: '',
-          popUp: 0,
-          showDescription: 0,
-          style: '');
-      final badge = badges.firstWhere(
-        (badge) => badge.style == 'inline-block',
-        orElse: () => _emptyBadge,
-      );
-      if (badge.style != '') {
-        return UserBadgeWidget(
-          badgeDescription: badge.description,
-          badgeImageUrl: badge.imageUrl,
-          badgeName: badge.name,
-          badgePopUp: badge.popUp,
-          badgeShowDescription: badge.showDescription,
-        );
-      } else {
-        return const SizedBox.shrink();
-      }
     }
+    final emptyBadge = ChatBadgeEntity(
+        code: '',
+        description: '',
+        imageUrl: '',
+        name: '',
+        popUp: 0,
+        showDescription: 0,
+        style: '');
+    final badge = badges.firstWhere(
+      (badge) => badge.style == 'inline-block',
+      orElse: () => emptyBadge,
+    );
+    if (badge.style == '') {
+      return const SizedBox.shrink();
+    }
+    return UserBadgeWidget(
+      badgeDescription: badge.description,
+      badgeImageUrl: badge.imageUrl,
+      badgeName: badge.name,
+      badgePopUp: badge.popUp,
+      badgeShowDescription: badge.showDescription,
+    );
   }
 
   double _returnPadding(List<ChatBadgeEntity> badges) {

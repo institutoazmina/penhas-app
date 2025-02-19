@@ -61,32 +61,31 @@ class TweetTitle extends StatelessWidget {
     return value > 9 ? '$value' : '0$value';
   }
 
-  Widget _buildBadgeWidget(TweetEntity tweet) {
+  Widget buildBadgeWidget(TweetEntity tweet) {
     if (tweet.badges.isEmpty) {
       return const SizedBox.shrink();
-    } else {
-      var onlyInlineBadges = <TweetBadgeEntity>[];
-
-      for (final badge in tweet.badges) {
-        if (badge.style != 'inline-block') {
-          onlyInlineBadges.add(badge);
-        }
-      }
-
-      return Row(
-        children: onlyInlineBadges
-            .map((badge) => Padding(
-                padding: const EdgeInsets.only(left: 4.0),
-                child: UserBadgeWidget(
-                  badgeDescription: badge.description,
-                  badgeImageUrl: badge.imageUrl,
-                  badgeName: badge.name,
-                  badgePopUp: badge.popUp,
-                  badgeShowDescription: badge.showDescription,
-                )))
-            .toList(),
-      );
     }
+    var onlyInlineBadges = <TweetBadgeEntity>[];
+
+    for (final badge in tweet.badges) {
+      if (badge.style != 'inline-block') {
+        onlyInlineBadges.add(badge);
+      }
+    }
+
+    return Row(
+      children: onlyInlineBadges
+          .map((badge) => Padding(
+              padding: const EdgeInsets.only(left: 4.0),
+              child: UserBadgeWidget(
+                badgeDescription: badge.description,
+                badgeImageUrl: badge.imageUrl,
+                badgeName: badge.name,
+                badgePopUp: badge.popUp,
+                badgeShowDescription: badge.showDescription,
+              )))
+          .toList(),
+    );
   }
 
   DateTime _mapServerUtcToLocalDate(String? time) {
@@ -237,7 +236,7 @@ class TweetTitle extends StatelessWidget {
     return Row(
       children: [
         Text(tweet.userName, style: kTextStyleFeedTweetTitle),
-        Expanded(flex: 2, child: _buildBadgeWidget(tweet)),
+        Expanded(flex: 2, child: buildBadgeWidget(tweet)),
         if (isDetail) _buildDetailTime() else _buildTime(),
       ],
     );

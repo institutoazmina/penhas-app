@@ -23,9 +23,21 @@ class UserBadgeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => badgePopUp == 1
-          ? showChatAction(
-              context, badgeShowDescription, badgeDescription, badgeName)
+      onTap: () async => badgePopUp == 1
+          ? await showModalBottomSheet(
+              context: context,
+              barrierColor: Colors.transparent,
+              builder: (context) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: _DescriptionBottomSheetWidget(
+                    badgeDescription: badgeDescription,
+                    badgeName: badgeName,
+                    badgeShowDescription: badgeShowDescription,
+                  ),
+                );
+              },
+            )
           : null,
       child: badgeImageUrl.isNotEmpty
           ? Image.network(
@@ -36,28 +48,6 @@ class UserBadgeWidget extends StatelessWidget {
           : const SizedBox.shrink(),
     );
   }
-}
-
-Future<void> showChatAction(
-  BuildContext context,
-  int badgeShowDescription,
-  String badgeDescription,
-  String badgeName,
-) async {
-  await showModalBottomSheet(
-    context: context,
-    barrierColor: Colors.transparent,
-    builder: (context) {
-      return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: _DescriptionBottomSheetWidget(
-          badgeDescription: badgeDescription,
-          badgeName: badgeName,
-          badgeShowDescription: badgeShowDescription,
-        ),
-      );
-    },
-  );
 }
 
 class _DescriptionBottomSheetWidget extends StatelessWidget {
@@ -108,7 +98,7 @@ class _DescriptionBottomSheetWidget extends StatelessWidget {
                   )),
                   IconButton(
                       onPressed: () {
-                        _closeBottomSheet();
+                        Modular.to.pop();
                       },
                       icon: const Icon(
                         Icons.close,
@@ -129,8 +119,4 @@ class _DescriptionBottomSheetWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-void _closeBottomSheet() {
-  Modular.to.pop();
 }
