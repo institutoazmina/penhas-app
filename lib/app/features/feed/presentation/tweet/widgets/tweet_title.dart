@@ -61,7 +61,7 @@ class TweetTitle extends StatelessWidget {
     return value > 9 ? '$value' : '0$value';
   }
 
-  Widget _buildBadgeWidget(TweetEntity tweet) {
+  Widget buildBadgeWidget(TweetEntity tweet) {
     if (tweet.badges.isEmpty) {
       return const SizedBox.shrink();
     }
@@ -236,7 +236,7 @@ class TweetTitle extends StatelessWidget {
     return Row(
       children: [
         Text(tweet.userName, style: kTextStyleFeedTweetTitle),
-        Expanded(flex: 2, child: _buildBadgeWidget(tweet)),
+        Expanded(flex: 2, child: buildBadgeWidget(tweet)),
         if (isDetail) _buildDetailTime() else _buildTime(),
       ],
     );

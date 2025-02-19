@@ -50,7 +50,7 @@ class ChatPeopleCard extends StatelessWidget {
                       Row(
                         children: [
                           Text(person.nickname!, style: cardTitleTextStyle),
-                          _buildBadgeWidget(person.badges),
+                          buildBadgeWidget(person.badges),
                         ],
                       ),
                       person.badges.isNotEmpty
@@ -59,7 +59,7 @@ class ChatPeopleCard extends StatelessWidget {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  _buildCloseUser(person.badges),
+                                  buildCloseUser(person.badges),
                                 ],
                               ),
                             )
@@ -75,7 +75,7 @@ class ChatPeopleCard extends StatelessWidget {
     );
   }
 
-  Widget _buildBadgeWidget(List<UserDetailBadgeEntity> badges) {
+  Widget buildBadgeWidget(List<UserDetailBadgeEntity> badges) {
     if (badges.isEmpty) {
       return const SizedBox.shrink();
     }
@@ -103,7 +103,7 @@ class ChatPeopleCard extends StatelessWidget {
   }
 }
 
-Widget _buildCloseUser(List<UserDetailBadgeEntity> badges) {
+Widget buildCloseUser(List<UserDetailBadgeEntity> badges) {
   if (badges.isEmpty) {
     return const SizedBox.shrink();
   }

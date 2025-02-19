@@ -47,7 +47,7 @@ class ChatChannelCard extends StatelessWidget {
                         Text(channel.user.nickname!, style: cardTitleTextStyle),
                         Expanded(
                             flex: 2,
-                            child: _buildBadgeWidget(channel.user.badges)),
+                            child: buildBadgeWidget(channel.user.badges)),
                         Text(
                           transformDate(channel.lastMessageTime!),
                           style: cardStatusTextStyle,
@@ -61,7 +61,7 @@ class ChatChannelCard extends StatelessWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          _buildCloseUser(channel.user.badges),
+                          buildCloseUser(channel.user.badges),
                         ],
                       ),
                     ),
@@ -76,7 +76,7 @@ class ChatChannelCard extends StatelessWidget {
     );
   }
 
-  Widget _buildBadgeWidget(List<ChatBadgeEntity> badges) {
+  Widget buildBadgeWidget(List<ChatBadgeEntity> badges) {
     if (badges.isEmpty) {
       return const SizedBox.shrink();
     }
@@ -111,7 +111,7 @@ class ChatChannelCard extends StatelessWidget {
     }
   }
 
-  Widget _buildCloseUser(List<ChatBadgeEntity> badges) {
+  Widget buildCloseUser(List<ChatBadgeEntity> badges) {
     if (badges.isEmpty) {
       return const SizedBox.shrink();
     }

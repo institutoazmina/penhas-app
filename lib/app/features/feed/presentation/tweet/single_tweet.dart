@@ -66,7 +66,7 @@ class SingleTweet extends StatelessWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          _buildCloseUser(tweet),
+                          buildCloseUser(tweet),
                         ],
                       ),
                     ),
@@ -83,7 +83,7 @@ class SingleTweet extends StatelessWidget {
   }
 }
 
-Widget _buildCloseUser(TweetEntity tweet) {
+Widget buildCloseUser(TweetEntity tweet) {
   if (tweet.badges.isEmpty) {
     return const SizedBox.shrink();
   }

@@ -51,6 +51,7 @@ void main() {
     jaFoiVitimaDeViolencia: false,
     skill: ['test'],
     genre: 'test',
+    badges: [],
   );
 
   setUp(() {
@@ -133,6 +134,7 @@ void main() {
         jaFoiVitimaDeViolencia: false,
         skill: ['test'],
         genre: 'test',
+        badges: [],
       );
 
       when(() => userProfile.currentProfile()).thenAnswer(

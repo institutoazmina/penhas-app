@@ -1,3 +1,4 @@
+import '../../domain/entities/user_profile_badge_entity.dart';
 import '../../domain/entities/user_profile_entity.dart';
 
 class UserProfileModel extends UserProfileEntity {
@@ -14,6 +15,7 @@ class UserProfileModel extends UserProfileEntity {
     bool stealthModeEnabled = false,
     bool anonymousModeEnabled = false,
     required DateTime birthdate,
+    List<UserProfileBadgeEntity> badges = const [],
   }) : super(
           fullName: fullName,
           race: race,
@@ -27,9 +29,15 @@ class UserProfileModel extends UserProfileEntity {
           stealthModeEnabled: stealthModeEnabled,
           anonymousModeEnabled: anonymousModeEnabled,
           birthdate: birthdate,
+          badges: badges,
         );
 
   factory UserProfileModel.fromJson(Map<String, dynamic> jsonData) {
+    List<UserProfileBadgeEntity> badges = [];
+    if (jsonData['badges'] != null) {
+      badges = _parseBadges(jsonData['badges']);
+    }
+
     return UserProfileModel(
       email: jsonData['email'],
       nickname: jsonData['apelido'],
@@ -45,7 +53,12 @@ class UserProfileModel extends UserProfileEntity {
       skill: (jsonData['skills'] as List<dynamic>? ?? [])
           .map((e) => e.toString())
           .toList(),
+      badges: badges,
     );
+  }
+
+  static List<UserProfileBadgeEntity> _parseBadges(List<dynamic> badges) {
+    return badges.map((e) => UserProfileBadgeModel.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() => {
@@ -60,6 +73,37 @@ class UserProfileModel extends UserProfileEntity {
         'raca': race,
         'genero': genre,
         'ja_foi_vitima_de_violencia': jaFoiVitimaDeViolencia ? 1 : 0,
-        'skills': skill
+        'skills': skill,
+        'badges': badges,
       };
+}
+
+class UserProfileBadgeModel extends UserProfileBadgeEntity {
+  UserProfileBadgeModel(
+      {required String code,
+      required String description,
+      required String imageUrl,
+      required String name,
+      required String style,
+      required int showDescription,
+      required int popUp})
+      : super(
+            code: code,
+            description: description,
+            imageUrl: imageUrl,
+            name: name,
+            style: style,
+            showDescription: showDescription,
+            popUp: popUp);
+
+  factory UserProfileBadgeModel.fromJson(Map<String, dynamic> jsonData) {
+    return UserProfileBadgeModel(
+        code: jsonData['code'],
+        description: jsonData['description'],
+        imageUrl: jsonData['image_url'],
+        name: jsonData['name'],
+        style: jsonData['style'],
+        showDescription: jsonData['show_description'],
+        popUp: jsonData['popup']);
+  }
 }

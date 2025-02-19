@@ -6,11 +6,14 @@ import 'package:flutter_tags/flutter_tags.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../core/extension/asuka.dart';
-import '../../../shared/design_system/button_shape.dart';
 import '../../../shared/design_system/colors.dart';
+import '../../../shared/design_system/widgets/badges/user_badge_widget.dart';
+import '../../../shared/design_system/widgets/badges/user_close_badge_widget.dart';
+import '../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../authentication/presentation/shared/snack_bar_handler.dart';
 import '../../mainboard/presentation/mainboard/mainboard_page.dart';
+import '../domain/entities/user_detail_badge_entity.dart';
 import '../domain/entities/user_detail_entity.dart';
 import '../domain/entities/user_detail_profile_entity.dart';
 import 'user_profile_controller.dart';
@@ -54,15 +57,6 @@ class _UserProfilePageState extends State<UserProfilePage>
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: DesignSystemColors.systemBackgroundColor,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: DesignSystemColors.easterPurple,
-        actions: [
-          Observer(
-            builder: (_) => _buildMenuAction(controller.menuState),
-          )
-        ],
-      ),
       body: SingleChildScrollView(
         child: Observer(
           builder: (_) => bodyBuilder(controller.state),
@@ -85,6 +79,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
         visible: () => IconButton(
           icon: const Icon(Icons.more_vert),
           onPressed: controller.onTapMenuOptions,
+          color: DesignSystemColors.white,
         ),
         hidden: () => Container(),
       );
@@ -116,14 +111,10 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
             ),
             child: SizedBox(
               height: 44,
-              // ignore: deprecated_member_use
-              child: RaisedButton(
+              child: PenhasButton.text(
                 onPressed: () => controller.openChannel(),
-                elevation: 0,
-                color: DesignSystemColors.ligthPurple,
-                shape: kButtonShapeFilled,
                 child: Text(
-                  'Conversar',
+                  'Conversar com ${user.profile.nickname} >',
                   style: buttonTitleStyle,
                 ),
               ),
@@ -136,24 +127,113 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
   Widget buildHeader(UserDetailProfileEntity user) {
     return Container(
       color: DesignSystemColors.easterPurple,
-      height: 120,
-      child: Column(
-        children: [
-          CircleAvatar(
-            radius: 34,
-            backgroundColor: Colors.white38,
-            child: user.avatar == null || user.avatar!.isEmpty
-                ? Container()
-                : SvgPicture.network(user.avatar!),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 12.0),
-            child: Text(
-              user.nickname!,
-              style: nameStyle,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 45.0),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back_ios,
+                    color: DesignSystemColors.white,
+                  ),
+                  onPressed: Modular.to.pop,
+                ),
+                const Spacer(),
+                CircleAvatar(
+                  radius: 34,
+                  backgroundColor: Colors.white38,
+                  child: user.avatar == null || user.avatar!.isEmpty
+                      ? Container()
+                      : SvgPicture.network(user.avatar!),
+                ),
+                const Spacer(),
+                _buildMenuAction(controller.menuState),
+              ],
             ),
-          )
-        ],
+            Padding(
+              padding: EdgeInsets.only(
+                  top: 12.0, bottom: user.badges == null ? 25 : 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    user.nickname!,
+                    style: nameStyle,
+                  ),
+                  buildBadgeWidget(user.badges),
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                buildCloseUser(user.badges),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildBadgeWidget(List<UserDetailBadgeEntity> badges) {
+    if (badges.isEmpty) {
+      return const SizedBox.shrink();
+    }
+    var onlyInlineBadges = <UserDetailBadgeEntity>[];
+
+    for (final badge in badges) {
+      if (badge.style != 'inline-block') {
+        onlyInlineBadges.add(badge);
+      }
+    }
+
+    return Row(
+      children: onlyInlineBadges
+          .map((badge) => Padding(
+              padding: const EdgeInsets.only(left: 4.0),
+              child: UserBadgeWidget(
+                badgeDescription: badge.description,
+                badgeImageUrl: badge.imageUrl,
+                badgeName: badge.name,
+                badgePopUp: badge.popUp,
+                badgeShowDescription: badge.showDescription,
+              )))
+          .toList(),
+    );
+  }
+
+  Widget buildCloseUser(List<UserDetailBadgeEntity> badges) {
+    if (badges.isEmpty) {
+      return const SizedBox.shrink();
+    }
+    final _emptyBadge = UserDetailBadgeEntity(
+        code: '',
+        description: '',
+        imageUrl: '',
+        name: '',
+        popUp: 0,
+        showDescription: 0,
+        style: '');
+    final badge = badges.firstWhere(
+      (badge) => badge.style == 'inline-block',
+      orElse: () => _emptyBadge,
+    );
+    if (badge.style == '') {
+      return const SizedBox.shrink();
+    }
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(6),
+        color: DesignSystemColors.white,
+      ),
+      child: UserCloseBadgeWidget(
+        badgeImageUrl: badge.imageUrl,
+        badgeName: badge.name,
+        badgePopUp: badge.popUp,
       ),
     );
   }
@@ -178,21 +258,18 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
               style: bodyStyle,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12.0),
+              padding: const EdgeInsets.only(bottom: 12.0),
               child: Text('Disponível para falar sobre', style: headerStyle),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12.0),
-              child: Tags(
-                spacing: 12,
-                alignment: WrapAlignment.start,
-                runAlignment: WrapAlignment.start,
-                itemCount: skills.length,
-                itemBuilder: (int index) {
-                  final item = skills[index];
-                  return builtTagItem(item, index);
-                },
-              ),
+            Tags(
+              spacing: 12,
+              alignment: WrapAlignment.start,
+              runAlignment: WrapAlignment.start,
+              itemCount: skills.length,
+              itemBuilder: (int index) {
+                final item = skills[index];
+                return builtTagItem(item, index);
+              },
             )
           ],
         ),
@@ -310,9 +387,10 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
 
   TextStyle get buttonTitleStyle => const TextStyle(
         fontFamily: 'Lato',
-        fontSize: 12.0,
+        fontSize: 14.0,
         letterSpacing: 0.4,
-        color: DesignSystemColors.white,
+        color: DesignSystemColors.helpCenterBackGround,
         fontWeight: FontWeight.bold,
+        decoration: TextDecoration.underline,
       );
 }

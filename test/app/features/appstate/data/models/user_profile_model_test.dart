@@ -60,7 +60,8 @@ void main() {
         'raca': 'pardo',
         'genero': 'Feminino',
         'ja_foi_vitima_de_violencia': 0,
-        'skills': []
+        'skills': [],
+        'badges': [],
       };
       final userModel = UserProfileModel(
         email: userProfileData['email'] as String?,

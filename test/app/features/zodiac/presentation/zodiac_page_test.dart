@@ -34,6 +34,7 @@ void main() {
       race: 'Race',
       nickname: 'Nickname',
       minibio: 'Minibio',
+      badges: [],
     );
 
     when(() => AppModulesMock.userProfileStore.retrieve())

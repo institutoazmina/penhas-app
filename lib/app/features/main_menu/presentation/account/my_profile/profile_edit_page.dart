@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../../shared/design_system/colors.dart';
@@ -48,6 +49,11 @@ class _ProfileEditPageState extends State<ProfileEditPage>
       key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0.0,
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: Modular.to.pop,
+        ),
         title: const Text('Meu perfil'),
         backgroundColor: DesignSystemColors.easterPurple,
       ),
@@ -102,32 +108,40 @@ extension _PageBuilder on _ProfileEditPageState {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              profileHeader(),
+              profileHeader(
+                  title: 'Dados do Perfil',
+                  subtitle: 'Informações exibidas para as usuárias do PenhaS.'),
               CardProfileNamePage(
                 name: profile.nickname,
                 avatar: profile.avatar,
+                badges: profile.badges,
                 onChange: _controller.editNickName,
               ),
+              _divider(),
               if (securityModeFeatureEnabled)
                 CardProfileBioPage(
                   content: profile.minibio ?? '',
                   onChange: _controller.editMinibio,
                 ),
+              _divider(),
               if (securityModeFeatureEnabled)
                 CardProfileSkillPage(
                   skills: _controller.profileSkill,
                   onEditAction: _controller.editSkill,
                 ),
+              _divider(),
               if (securityModeFeatureEnabled)
-                CardProfileSingleTilePage(
-                  title: 'Já foi vítima de violência contra a mulher?',
-                  content: profile.jaFoiVitimaDeViolencia ? 'Sim' : 'Não',
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: CardProfileSingleTilePage(
+                    title: 'Já foi vítima de violência contra a mulher?',
+                    content: profile.jaFoiVitimaDeViolencia ? 'Sim' : 'Não',
+                  ),
                 ),
-              const CardProfileSingleTilePage(
+              profileHeader(
                 title: 'Cadastro',
-                content:
+                subtitle:
                     'Informações privadas que nenhuma outra usuária terá acesso.',
-                background: DesignSystemColors.systemBackgroundColor,
               ),
               CardProfileSingleTilePage(
                 title: 'Data de Nascimento',
@@ -135,19 +149,23 @@ extension _PageBuilder on _ProfileEditPageState {
                     '${profile.birthdate.day}/${profile.birthdate.month}/${profile.birthdate.year}',
                 background: DesignSystemColors.systemBackgroundColor,
               ),
+              _divider(),
               CardProfileRacePage(
                 content: profile.race,
                 onChange: _controller.updateRace,
               ),
+              _divider(),
               CardProfileSingleTilePage(
                 title: 'Sexo',
                 content: profile.genre,
                 background: DesignSystemColors.systemBackgroundColor,
               ),
+              _divider(),
               CardProfileEmailPage(
                 content: profile.email,
                 onChange: _controller.updatedEmail,
               ),
+              _divider(),
               CardProfilePasswordPage(
                 content: '************',
                 onChange: _controller.updatePassword,
@@ -160,24 +178,39 @@ extension _PageBuilder on _ProfileEditPageState {
   }
 }
 
+Widget _divider() {
+  return const Padding(
+    padding: EdgeInsets.symmetric(horizontal: 16.0),
+    child: Divider(
+      color: DesignSystemColors.pinkishGrey,
+      thickness: 1,
+    ),
+  );
+}
+
 extension _Modal on _ProfileEditPageState {}
 
 extension _ProfileEditPage on _ProfileEditPageState {
-  Widget profileHeader() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Dados do Perfil', style: profileHeaderTitleTextStyle),
-          Padding(
-            padding: const EdgeInsets.only(top: 16.0),
-            child: Text(
-              'Informações exibidas para as usuárias do PenhaS.',
-              style: profileHeaderContentTextStyle,
+  Widget profileHeader({required String title, required String subtitle}) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      color: DesignSystemColors.helpCenterBackGround,
+      child: Padding(
+        padding:
+            const EdgeInsets.only(left: 16.0, right: 16.0, top: 25, bottom: 25),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title, style: profileHeaderTitleTextStyle),
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: Text(
+                subtitle,
+                style: profileHeaderContentTextStyle,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -188,7 +221,7 @@ extension _TextStyle on _ProfileEditPageState {
         fontFamily: 'Lato',
         fontSize: 20.0,
         letterSpacing: 0.63,
-        color: DesignSystemColors.darkIndigoThree,
+        color: DesignSystemColors.white,
         fontWeight: FontWeight.bold,
       );
 
@@ -196,7 +229,7 @@ extension _TextStyle on _ProfileEditPageState {
         fontFamily: 'Lato',
         fontSize: 14.0,
         letterSpacing: 0.63,
-        color: DesignSystemColors.darkIndigoThree,
+        color: DesignSystemColors.white,
         fontWeight: FontWeight.normal,
       );
 }
