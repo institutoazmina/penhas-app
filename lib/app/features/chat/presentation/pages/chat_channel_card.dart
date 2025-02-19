@@ -79,29 +79,28 @@ class ChatChannelCard extends StatelessWidget {
   Widget _buildBadgeWidget(List<ChatBadgeEntity> badges) {
     if (badges.isEmpty) {
       return const SizedBox.shrink();
-    } else {
-      var onlyInlineBadges = <ChatBadgeEntity>[];
-
-      for (final badge in badges) {
-        if (badge.style != 'inline-block') {
-          onlyInlineBadges.add(badge);
-        }
-      }
-
-      return Row(
-        children: onlyInlineBadges
-            .map((badge) => Padding(
-                padding: const EdgeInsets.only(left: 4.0),
-                child: UserBadgeWidget(
-                  badgeDescription: badge.description,
-                  badgeImageUrl: badge.imageUrl,
-                  badgeName: badge.name,
-                  badgePopUp: badge.popUp,
-                  badgeShowDescription: badge.showDescription,
-                )))
-            .toList(),
-      );
     }
+    var onlyInlineBadges = <ChatBadgeEntity>[];
+
+    for (final badge in badges) {
+      if (badge.style != 'inline-block') {
+        onlyInlineBadges.add(badge);
+      }
+    }
+
+    return Row(
+      children: onlyInlineBadges
+          .map((badge) => Padding(
+              padding: const EdgeInsets.only(left: 4.0),
+              child: UserBadgeWidget(
+                badgeDescription: badge.description,
+                badgeImageUrl: badge.imageUrl,
+                badgeName: badge.name,
+                badgePopUp: badge.popUp,
+                badgeShowDescription: badge.showDescription,
+              )))
+          .toList(),
+    );
   }
 
   double _returnPadding(List<ChatBadgeEntity> badge) {
@@ -115,29 +114,27 @@ class ChatChannelCard extends StatelessWidget {
   Widget _buildCloseUser(List<ChatBadgeEntity> badges) {
     if (badges.isEmpty) {
       return const SizedBox.shrink();
-    } else {
-      var _emptyBadge = ChatBadgeEntity(
-          code: '',
-          description: '',
-          imageUrl: '',
-          name: '',
-          popUp: 0,
-          showDescription: 0,
-          style: '');
-      final badge = badges.firstWhere(
-        (badge) => badge.style == 'inline-block',
-        orElse: () => _emptyBadge,
-      );
-      if (badge.style != '') {
-        return UserCloseBadgeWidget(
-          badgeImageUrl: badge.imageUrl,
-          badgeName: badge.name,
-          badgePopUp: badge.popUp,
-        );
-      } else {
-        return const SizedBox.shrink();
-      }
     }
+    final emptyBadge = ChatBadgeEntity(
+        code: '',
+        description: '',
+        imageUrl: '',
+        name: '',
+        popUp: 0,
+        showDescription: 0,
+        style: '');
+    final badge = badges.firstWhere(
+      (badge) => badge.style == 'inline-block',
+      orElse: () => emptyBadge,
+    );
+    if (badge.style.isEmpty) {
+      return const SizedBox.shrink();
+    }
+    return UserCloseBadgeWidget(
+      badgeImageUrl: badge.imageUrl,
+      badgeName: badge.name,
+      badgePopUp: badge.popUp,
+    );
   }
 
   String transformDate(DateTime time) {
