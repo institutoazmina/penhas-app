@@ -115,7 +115,7 @@ class ChatChannelCard extends StatelessWidget {
     if (badges.isEmpty) {
       return const SizedBox.shrink();
     }
-    var _emptyBadge = ChatBadgeEntity(
+    final emptyBadge = ChatBadgeEntity(
         code: '',
         description: '',
         imageUrl: '',
@@ -125,7 +125,7 @@ class ChatChannelCard extends StatelessWidget {
         style: '');
     final badge = badges.firstWhere(
       (badge) => badge.style == 'inline-block',
-      orElse: () => _emptyBadge,
+      orElse: () => emptyBadge,
     );
     if (badge.style.isEmpty) {
       return const SizedBox.shrink();

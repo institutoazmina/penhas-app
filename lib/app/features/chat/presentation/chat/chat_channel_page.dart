@@ -199,7 +199,7 @@ extension _ChatPageStateMethods on _ChatPageState {
     if (badges.isEmpty) {
       return const SizedBox.shrink();
     } else {
-      var _emptyBadge = ChatBadgeEntity(
+      final emptyBadge = ChatBadgeEntity(
           code: '',
           description: '',
           imageUrl: '',
@@ -209,7 +209,7 @@ extension _ChatPageStateMethods on _ChatPageState {
           style: '');
       final badge = badges.firstWhere(
         (badge) => badge.style == 'inline-block',
-        orElse: () => _emptyBadge,
+        orElse: () => emptyBadge,
       );
       if (badge.style != '') {
         return UserBadgeWidget(

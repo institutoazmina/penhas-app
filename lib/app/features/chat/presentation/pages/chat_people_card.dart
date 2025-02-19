@@ -107,7 +107,7 @@ Widget _buildCloseUser(List<UserDetailBadgeEntity> badges) {
   if (badges.isEmpty) {
     return const SizedBox.shrink();
   }
-  var _emptyBadge = UserDetailBadgeEntity(
+  final emptyBadge = UserDetailBadgeEntity(
       code: '',
       description: '',
       imageUrl: '',
@@ -117,7 +117,7 @@ Widget _buildCloseUser(List<UserDetailBadgeEntity> badges) {
       style: '');
   final badge = badges.firstWhere(
     (badge) => badge.style == 'inline-block',
-    orElse: () => _emptyBadge,
+    orElse: () => emptyBadge,
   );
   if (badge.style.isEmpty) {
     return const SizedBox.shrink();

@@ -87,7 +87,7 @@ Widget _buildCloseUser(TweetEntity tweet) {
   if (tweet.badges.isEmpty) {
     return const SizedBox.shrink();
   }
-  var _emptyBadge = TweetBadgeEntity(
+  final emptyBadge = TweetBadgeEntity(
       code: '',
       description: '',
       imageUrl: '',
@@ -97,7 +97,7 @@ Widget _buildCloseUser(TweetEntity tweet) {
       style: '');
   final badge = tweet.badges.firstWhere(
     (badge) => badge.style == 'inline-block',
-    orElse: () => _emptyBadge,
+    orElse: () => emptyBadge,
   );
   if (badge.style.isEmpty) {
     return const SizedBox.shrink();
