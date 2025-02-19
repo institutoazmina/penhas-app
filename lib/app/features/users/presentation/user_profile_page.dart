@@ -154,7 +154,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
             ),
             Padding(
               padding: EdgeInsets.only(
-                  top: 12.0, bottom: user.badges == null ? 25 : 8),
+                  top: 12.0, bottom: user.badges.isEmpty ? 25 : 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,

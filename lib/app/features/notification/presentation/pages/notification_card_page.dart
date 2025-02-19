@@ -16,50 +16,66 @@ class NotificationCardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     timeago.setLocaleMessages('pt_br', timeago.PtBrMessages());
-    return Container(
-      decoration: const BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: DesignSystemColors.pinkishGrey,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Container(
+        decoration: const BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: DesignSystemColors.pinkishGrey,
+            ),
           ),
         ),
-      ),
-      child: InkWell(
-        onTap: () {
-          Modular.to.pushNamed(notification.route!);
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(18.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  notification.icon == null || notification.icon!.isEmpty
-                      ? Container()
-                      : SvgPicture.network(
-                          notification.icon!,
-                          height: 24,
-                          width: 24,
-                        ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    child: Column(
-                      children: [
-                        Text(notification.name!, style: titleTextStyle),
-                        Text(
-                          timeago.format(notification.time!, locale: 'pt_br'),
-                          style: timeTextStyle,
-                        ),
-                      ],
+        child: InkWell(
+          onTap: () {
+            Modular.to.pushNamed(notification.route!);
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 18),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    notification.icon == null || notification.icon!.isEmpty
+                        ? Container()
+                        : SvgPicture.network(
+                            notification.icon!,
+                            height: 24,
+                            width: 24,
+                          ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 4.0),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 4.0),
+                                  child: Text(notification.name!,
+                                      style: titleTextStyle),
+                                ),
+                                Text(notification.title!,
+                                    style: titleTextStyle),
+                              ],
+                            ),
+                          ),
+                          Text(
+                            timeago.format(notification.time!, locale: 'pt_br'),
+                            style: timeTextStyle,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Text(notification.title!, style: titleTextStyle),
-                ],
-              ),
-              _notificationContent(notification.content),
-            ],
+                  ],
+                ),
+                _notificationContent(notification.content),
+              ],
+            ),
           ),
         ),
       ),
@@ -71,7 +87,7 @@ class NotificationCardPage extends StatelessWidget {
       return Container();
     }
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12.0),
+      padding: const EdgeInsets.only(top: 12.0, bottom: 12.0, left: 38),
       child: HtmlWidget(
         notification.content!,
         factoryBuilder: () => DisabledWebViewJsWidgetFactory(),

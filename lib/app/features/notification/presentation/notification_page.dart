@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../shared/design_system/colors.dart';
 import '../../../shared/design_system/text_styles.dart';
@@ -39,8 +40,16 @@ class _NotificationState extends State<NotificationPage> with SnackBarHandler {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: DesignSystemColors.white,
+          ),
+          onPressed: Modular.to.pop,
+        ),
         title: const Text('Notificações'),
         elevation: 0.0,
+        centerTitle: true,
         backgroundColor: DesignSystemColors.easterPurple,
       ),
       body: Observer(
@@ -88,14 +97,17 @@ extension _PageStateBuilder on _NotificationState {
 
   Widget buildLoaded(List<NotificationEntity> notifications) {
     return SafeArea(
-      child: ListView.builder(
-        itemCount: notifications.length,
-        itemBuilder: (BuildContext context, int index) {
-          final notification = notifications[index];
-          return NotificationCardPage(
-            notification: notification,
-          );
-        },
+      child: Padding(
+        padding: const EdgeInsets.only(top: 20),
+        child: ListView.builder(
+          itemCount: notifications.length,
+          itemBuilder: (BuildContext context, int index) {
+            final notification = notifications[index];
+            return NotificationCardPage(
+              notification: notification,
+            );
+          },
+        ),
       ),
     );
   }
