@@ -163,14 +163,14 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
                     user.nickname!,
                     style: nameStyle,
                   ),
-                  _buildBadgeWidget(user.badges),
+                  buildBadgeWidget(user.badges),
                 ],
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _buildCloseUser(user.badges),
+                buildCloseUser(user.badges),
               ],
             ),
           ],
@@ -179,66 +179,63 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
     );
   }
 
-  Widget _buildBadgeWidget(List<UserDetailBadgeEntity>? badges) {
-    if (badges == null || badges == []) {
+  Widget buildBadgeWidget(List<UserDetailBadgeEntity> badges) {
+    if (badges.isEmpty) {
       return const SizedBox.shrink();
-    } else {
-      var onlyInlineBadges = <UserDetailBadgeEntity>[];
-
-      for (final badge in badges) {
-        if (badge.style != 'inline-block') {
-          onlyInlineBadges.add(badge);
-        }
-      }
-
-      return Row(
-        children: onlyInlineBadges
-            .map((badge) => Padding(
-                padding: const EdgeInsets.only(left: 4.0),
-                child: UserBadgeWidget(
-                  badgeDescription: badge.description,
-                  badgeImageUrl: badge.imageUrl,
-                  badgeName: badge.name,
-                  badgePopUp: badge.popUp,
-                  badgeShowDescription: badge.showDescription,
-                )))
-            .toList(),
-      );
     }
+    var onlyInlineBadges = <UserDetailBadgeEntity>[];
+
+    for (final badge in badges) {
+      if (badge.style != 'inline-block') {
+        onlyInlineBadges.add(badge);
+      }
+    }
+
+    return Row(
+      children: onlyInlineBadges
+          .map((badge) => Padding(
+              padding: const EdgeInsets.only(left: 4.0),
+              child: UserBadgeWidget(
+                badgeDescription: badge.description,
+                badgeImageUrl: badge.imageUrl,
+                badgeName: badge.name,
+                badgePopUp: badge.popUp,
+                badgeShowDescription: badge.showDescription,
+              )))
+          .toList(),
+    );
   }
 
-  Widget _buildCloseUser(List<UserDetailBadgeEntity>? badges) {
-    if (badges == null || badges == []) {
+  Widget buildCloseUser(List<UserDetailBadgeEntity> badges) {
+    if (badges.isEmpty) {
       return const SizedBox.shrink();
-    } else {
-      var _emptyBadge = UserDetailBadgeEntity(
-          code: '',
-          description: '',
-          imageUrl: '',
-          name: '',
-          popUp: 0,
-          showDescription: 0,
-          style: '');
-      final badge = badges.firstWhere(
-        (badge) => badge.style == 'inline-block',
-        orElse: () => _emptyBadge,
-      );
-      if (badge.style != '') {
-        return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6),
-            color: DesignSystemColors.white,
-          ),
-          child: UserCloseBadgeWidget(
-            badgeImageUrl: badge.imageUrl,
-            badgeName: badge.name,
-            badgePopUp: badge.popUp,
-          ),
-        );
-      } else {
-        return const SizedBox.shrink();
-      }
     }
+    final _emptyBadge = UserDetailBadgeEntity(
+        code: '',
+        description: '',
+        imageUrl: '',
+        name: '',
+        popUp: 0,
+        showDescription: 0,
+        style: '');
+    final badge = badges.firstWhere(
+      (badge) => badge.style == 'inline-block',
+      orElse: () => _emptyBadge,
+    );
+    if (badge.style == '') {
+      return const SizedBox.shrink();
+    }
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(6),
+        color: DesignSystemColors.white,
+      ),
+      child: UserCloseBadgeWidget(
+        badgeImageUrl: badge.imageUrl,
+        badgeName: badge.name,
+        badgePopUp: badge.popUp,
+      ),
+    );
   }
 
   Widget buildContent(UserDetailProfileEntity user) {
