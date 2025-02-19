@@ -95,7 +95,7 @@ class ReplyTweet extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        _buildCloseUser(tweet),
+                        buildCloseUser(tweet),
                       ],
                     ),
                   ),
@@ -203,7 +203,7 @@ class _RepliedTweet extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        _buildCloseUser(repliedTweet),
+                        buildCloseUser(repliedTweet),
                       ],
                     ),
                   ),
@@ -223,30 +223,28 @@ class _RepliedTweet extends StatelessWidget {
   }
 }
 
-Widget _buildCloseUser(TweetEntity tweet) {
+Widget buildCloseUser(TweetEntity tweet) {
   if (tweet.badges.isEmpty) {
     return const SizedBox.shrink();
-  } else {
-    var _emptyBadge = TweetBadgeEntity(
-        code: '',
-        description: '',
-        imageUrl: '',
-        name: '',
-        popUp: 0,
-        showDescription: 0,
-        style: '');
-    final badge = tweet.badges.firstWhere(
-      (badge) => badge.style == 'inline-block',
-      orElse: () => _emptyBadge,
-    );
-    if (badge.style != '') {
-      return UserCloseBadgeWidget(
-        badgeImageUrl: badge.imageUrl,
-        badgeName: badge.name,
-        badgePopUp: badge.popUp,
-      );
-    } else {
-      return const SizedBox.shrink();
-    }
   }
+  final emptyBadge = TweetBadgeEntity(
+      code: '',
+      description: '',
+      imageUrl: '',
+      name: '',
+      popUp: 0,
+      showDescription: 0,
+      style: '');
+  final badge = tweet.badges.firstWhere(
+    (badge) => badge.style == 'inline-block',
+    orElse: () => emptyBadge,
+  );
+  if (badge.style.isEmpty) {
+    return const SizedBox.shrink();
+  }
+  return UserCloseBadgeWidget(
+    badgeImageUrl: badge.imageUrl,
+    badgeName: badge.name,
+    badgePopUp: badge.popUp,
+  );
 }

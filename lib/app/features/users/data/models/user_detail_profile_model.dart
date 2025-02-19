@@ -9,7 +9,7 @@ class UserDetailProfileModel extends UserDetailProfileEntity {
     String? miniBio,
     String? skills,
     String? activity,
-    List<UserDetailBadgeEntity>? badges,
+    List<UserDetailBadgeEntity> badges = const [],
   }) : super(
           nickname: nickname,
           avatar: avatar,
@@ -21,7 +21,7 @@ class UserDetailProfileModel extends UserDetailProfileEntity {
         );
 
   factory UserDetailProfileModel.fromJson(Map<String, dynamic> jsonData) {
-    List<UserDetailBadgeEntity>? badges;
+    List<UserDetailBadgeEntity> badges = [];
 
     if (jsonData['badges'] != null) {
       badges = _parseBadges(jsonData['badges']);

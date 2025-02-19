@@ -50,16 +50,16 @@ class ChatPeopleCard extends StatelessWidget {
                       Row(
                         children: [
                           Text(person.nickname!, style: cardTitleTextStyle),
-                          _buildBadgeWidget(person.badges),
+                          buildBadgeWidget(person.badges),
                         ],
                       ),
-                      person.badges != null
+                      person.badges.isNotEmpty
                           ? Padding(
                               padding: const EdgeInsets.only(top: 6.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  _buildCloseUser(person.badges),
+                                  buildCloseUser(person.badges),
                                 ],
                               ),
                             )
@@ -75,61 +75,59 @@ class ChatPeopleCard extends StatelessWidget {
     );
   }
 
-  Widget _buildBadgeWidget(List<UserDetailBadgeEntity>? badges) {
-    if (badges == null) {
+  Widget buildBadgeWidget(List<UserDetailBadgeEntity> badges) {
+    if (badges.isEmpty) {
       return const SizedBox.shrink();
-    } else {
-      var onlyInlineBadges = <UserDetailBadgeEntity>[];
-
-      for (final badge in badges) {
-        if (badge.style != 'inline-block') {
-          onlyInlineBadges.add(badge);
-        }
-      }
-
-      return Row(
-        children: onlyInlineBadges
-            .map((badge) => Padding(
-                padding: const EdgeInsets.only(left: 4.0),
-                child: UserBadgeWidget(
-                  badgeDescription: badge.description,
-                  badgeImageUrl: badge.imageUrl,
-                  badgeName: badge.name,
-                  badgePopUp: badge.popUp,
-                  badgeShowDescription: badge.showDescription,
-                )))
-            .toList(),
-      );
     }
+    var onlyInlineBadges = <UserDetailBadgeEntity>[];
+
+    for (final badge in badges) {
+      if (badge.style != 'inline-block') {
+        onlyInlineBadges.add(badge);
+      }
+    }
+
+    return Row(
+      children: onlyInlineBadges
+          .map((badge) => Padding(
+              padding: const EdgeInsets.only(left: 4.0),
+              child: UserBadgeWidget(
+                badgeDescription: badge.description,
+                badgeImageUrl: badge.imageUrl,
+                badgeName: badge.name,
+                badgePopUp: badge.popUp,
+                badgeShowDescription: badge.showDescription,
+              )))
+          .toList(),
+    );
   }
 }
 
-Widget _buildCloseUser(List<UserDetailBadgeEntity>? badges) {
-  if (badges == null) {
+Widget buildCloseUser(List<UserDetailBadgeEntity> badges) {
+  if (badges.isEmpty) {
     return const SizedBox.shrink();
-  } else {
-    var _emptyBadge = UserDetailBadgeEntity(
-        code: '',
-        description: '',
-        imageUrl: '',
-        name: '',
-        popUp: 0,
-        showDescription: 0,
-        style: '');
-    final badge = badges.firstWhere(
-      (badge) => badge.style == 'inline-block',
-      orElse: () => _emptyBadge,
-    );
-    if (badge.style != '') {
-      return UserCloseBadgeWidget(
-        badgeImageUrl: badge.imageUrl,
-        badgeName: badge.name,
-        badgePopUp: badge.popUp,
-      );
-    } else {
-      return const SizedBox.shrink();
-    }
   }
+  final emptyBadge = UserDetailBadgeEntity(
+      code: '',
+      description: '',
+      imageUrl: '',
+      name: '',
+      popUp: 0,
+      showDescription: 0,
+      style: '');
+  final badge = badges.firstWhere(
+    (badge) => badge.style == 'inline-block',
+    orElse: () => emptyBadge,
+  );
+  if (badge.style.isEmpty) {
+    return const SizedBox.shrink();
+  }
+
+  return UserCloseBadgeWidget(
+    badgeImageUrl: badge.imageUrl,
+    badgeName: badge.name,
+    badgePopUp: badge.popUp,
+  );
 }
 
 extension _ChatTalkCardPrivate on ChatPeopleCard {
