@@ -129,48 +129,55 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
       color: DesignSystemColors.easterPurple,
       child: Padding(
         padding: const EdgeInsets.only(top: 45.0),
-        child: Column(
+        child: Stack(
           children: [
-            Row(
-              children: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back_ios,
-                    color: DesignSystemColors.white,
-                  ),
-                  onPressed: Modular.to.pop,
-                ),
-                const Spacer(),
-                CircleAvatar(
-                  radius: 34,
-                  backgroundColor: Colors.white38,
-                  child: user.avatar == null || user.avatar!.isEmpty
-                      ? Container()
-                      : SvgPicture.network(user.avatar!),
-                ),
-                const Spacer(),
-                _buildMenuAction(controller.menuState),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                  top: 12.0, bottom: user.badges.isEmpty ? 25 : 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    user.nickname!,
-                    style: nameStyle,
-                  ),
-                  buildBadgeWidget(user.badges),
-                ],
+            IconButton(
+              icon: const Icon(
+                Icons.arrow_back_ios,
+                color: DesignSystemColors.white,
               ),
+              onPressed: Modular.to.pop,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Positioned(right: 0, child: _buildMenuAction(controller.menuState)),
+            Column(
               children: [
-                buildCloseUser(user.badges),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: CircleAvatar(
+                          radius: 34,
+                          backgroundColor: Colors.white38,
+                          child: user.avatar == null || user.avatar!.isEmpty
+                              ? Container()
+                              : SvgPicture.network(user.avatar!),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: 12.0, bottom: user.badges.isEmpty ? 25 : 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        user.nickname!,
+                        style: nameStyle,
+                      ),
+                      buildBadgeWidget(user.badges),
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    buildCloseUser(user.badges),
+                  ],
+                ),
               ],
             ),
           ],
@@ -238,68 +245,6 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
     );
   }
 
-  Widget _buildBadgeWidget(List<UserDetailBadgeEntity>? badges) {
-    if (badges == null || badges == []) {
-      return const SizedBox.shrink();
-    } else {
-      var onlyInlineBadges = <UserDetailBadgeEntity>[];
-
-      for (final badge in badges) {
-        if (badge.style != 'inline-block') {
-          onlyInlineBadges.add(badge);
-        }
-      }
-
-      return Row(
-        children: onlyInlineBadges
-            .map((badge) => Padding(
-                padding: const EdgeInsets.only(left: 4.0),
-                child: UserBadgeWidget(
-                  badgeDescription: badge.description,
-                  badgeImageUrl: badge.imageUrl,
-                  badgeName: badge.name,
-                  badgePopUp: badge.popUp,
-                  badgeShowDescription: badge.showDescription,
-                )))
-            .toList(),
-      );
-    }
-  }
-
-  Widget _buildCloseUser(List<UserDetailBadgeEntity>? badges) {
-    if (badges == null || badges == []) {
-      return const SizedBox.shrink();
-    } else {
-      var _emptyBadge = UserDetailBadgeEntity(
-          code: '',
-          description: '',
-          imageUrl: '',
-          name: '',
-          popUp: 0,
-          showDescription: 0,
-          style: '');
-      final badge = badges.firstWhere(
-        (badge) => badge.style == 'inline-block',
-        orElse: () => _emptyBadge,
-      );
-      if (badge.style != '') {
-        return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6),
-            color: DesignSystemColors.white,
-          ),
-          child: UserCloseBadgeWidget(
-            badgeImageUrl: badge.imageUrl,
-            badgeName: badge.name,
-            badgePopUp: badge.popUp,
-          ),
-        );
-      } else {
-        return const SizedBox.shrink();
-      }
-    }
-  }
-
   Widget buildContent(UserDetailProfileEntity user) {
     final List<String> skills = user.skills!.split(',');
     skills.removeWhere((e) => e.isEmpty);
@@ -315,9 +260,12 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
               padding: const EdgeInsets.symmetric(vertical: 12.0),
               child: Text('Minibio', style: headerStyle),
             ),
-            Text(
-              user.miniBio ?? '',
-              style: bodyStyle,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text(
+                user.miniBio ?? '',
+                style: bodyStyle,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 12.0),
