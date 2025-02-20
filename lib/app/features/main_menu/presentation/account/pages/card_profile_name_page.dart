@@ -57,7 +57,7 @@ class CardProfileNamePage extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(name!, style: nameTextStyle),
-                      _buildBadgeWidget(badges)
+                      buildBadgeWidget(badges)
                     ],
                   ),
                 )
@@ -70,32 +70,31 @@ class CardProfileNamePage extends StatelessWidget {
   }
 }
 
-Widget _buildBadgeWidget(List<UserProfileBadgeEntity> badges) {
+Widget buildBadgeWidget(List<UserProfileBadgeEntity> badges) {
   if (badges.isEmpty) {
     return const SizedBox.shrink();
-  } else {
-    var onlyInlineBadges = <UserProfileBadgeEntity>[];
-
-    for (final badge in badges) {
-      if (badge.style != 'inline-block') {
-        onlyInlineBadges.add(badge);
-      }
-    }
-
-    return Row(
-      children: onlyInlineBadges
-          .map((badge) => Padding(
-              padding: const EdgeInsets.only(left: 4.0),
-              child: UserBadgeWidget(
-                badgeDescription: badge.description,
-                badgeImageUrl: badge.imageUrl,
-                badgeName: badge.name,
-                badgePopUp: badge.popUp,
-                badgeShowDescription: badge.showDescription,
-              )))
-          .toList(),
-    );
   }
+  var onlyInlineBadges = <UserProfileBadgeEntity>[];
+
+  for (final badge in badges) {
+    if (badge.style != 'inline-block') {
+      onlyInlineBadges.add(badge);
+    }
+  }
+
+  return Row(
+    children: onlyInlineBadges
+        .map((badge) => Padding(
+            padding: const EdgeInsets.only(left: 4.0),
+            child: UserBadgeWidget(
+              badgeDescription: badge.description,
+              badgeImageUrl: badge.imageUrl,
+              badgeName: badge.name,
+              badgePopUp: badge.popUp,
+              badgeShowDescription: badge.showDescription,
+            )))
+        .toList(),
+  );
 }
 
 extension _TextStyle on CardProfileNamePage {

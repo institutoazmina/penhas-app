@@ -21,7 +21,7 @@ class UserDetailProfileEntity extends Equatable {
   final String? miniBio;
   final String? skills;
   final String? activity;
-  final List<UserDetailBadgeEntity>? badges;
+  final List<UserDetailBadgeEntity> badges;
 
   @override
   List<Object?> get props => [
