@@ -1,37 +1,42 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/api_provider_error_mapper.dart';
 import '../../../../core/error/failures.dart';
-import '../../../../core/network/network_info.dart';
+import '../../../../core/network/api_client.dart';
 import '../../../../core/types/result.dart';
 import '../../../../shared/logger/log.dart';
+import '../../../appstate/data/model/app_state_model.dart';
+import '../../../appstate/data/model/quiz_session_model.dart';
 import '../../../appstate/domain/entities/app_state_entity.dart';
-import '../../../authentication/presentation/shared/map_exception_to_failure.dart';
 import '../../domain/entities/answer.dart';
 import '../../domain/entities/quiz.dart';
 import '../../domain/entities/quiz_request_entity.dart';
 import '../../domain/quiz_mapper.dart';
 import '../../domain/repositories/i_quiz_repository.dart';
-import '../datasources/quiz_data_source.dart';
 
 class QuizRepository implements IQuizRepository {
-  QuizRepository({
-    required INetworkInfo networkInfo,
-    required IQuizDataSource dataSource,
-  })  : _dataSource = dataSource,
-        _networkInfo = networkInfo;
+  QuizRepository({required IApiProvider apiProvider})
+      : _apiProvider = apiProvider;
 
-  final INetworkInfo _networkInfo;
-  final IQuizDataSource _dataSource;
+  final IApiProvider _apiProvider;
 
   @override
   QuizSessionResult start(String sessionId) async {
     try {
-      final quizSession = await _dataSource.start(sessionId);
+      final quizSession = await _apiProvider
+          .post(
+            path: '/me/quiz',
+            parameters: {'session_id': sessionId},
+          )
+          .then((value) => jsonDecode(value))
+          .then((value) => QuizSessionModel.fromJson(value['quiz_session']));
+
       return right(quizSession);
     } catch (error, stack) {
       logError(error, stack);
-      return left(MapExceptionToFailure.map(error));
+      return left(ApiProviderErrorMapper.map(error));
     }
   }
 
@@ -56,39 +61,26 @@ class QuizRepository implements IQuizRepository {
 
   @override
   Future<Either<Failure, AppStateEntity>> update({
-    required QuizRequestEntity? quiz,
+    required QuizRequestEntity quiz,
   }) async {
     try {
-      final appState = await _dataSource.update(quiz: quiz);
-      return right(appState);
+      final Map<String, String> queryParameters = {
+        'session_id': '${quiz.sessionId}',
+      };
+      queryParameters.addAll(quiz.options);
+
+      final response = await _apiProvider
+          .post(
+            path: '/me/quiz',
+            parameters: queryParameters,
+          )
+          .then((value) => jsonDecode(value))
+          .then((value) => AppStateModel.fromJson(value));
+
+      return right(response);
     } catch (e, stack) {
       logError(e, stack);
-      return left(await _handleError(e));
+      return left(ApiProviderErrorMapper.map(e));
     }
-  }
-
-  Future<Failure> _handleError(Object error) async {
-    if (await _networkInfo.isConnected == false) {
-      return InternetConnectionFailure();
-    }
-
-    if (error is ApiProviderException) {
-      if (error.bodyContent['error'] == 'expired_jwt') {
-        return ServerSideSessionFailed();
-      }
-
-      return ServerSideFormFieldValidationFailure(
-        error: error.bodyContent['error'],
-        field: error.bodyContent['field'],
-        reason: error.bodyContent['reason'],
-        message: error.bodyContent['message'],
-      );
-    }
-
-    if (error is ApiProviderSessionError) {
-      return ServerSideSessionFailed();
-    }
-
-    return ServerFailure();
   }
 }
