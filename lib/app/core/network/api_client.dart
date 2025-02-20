@@ -67,16 +67,18 @@ class ApiProvider implements IApiProvider {
   ApiProvider({
     required IApiServerConfigure serverConfiguration,
     Client? apiClient,
-  })  : _httpClient = apiClient ?? Client(), // coverage:ignore-line
+  })  : _httpClient = apiClient ?? Client(),
         _serverConfiguration = serverConfiguration;
 
   final Client _httpClient;
   final IApiServerConfigure _serverConfiguration;
 
-  static const _successfulResponse = {200, 201, 202, 204};
-  static const _invalidRequest = {400, 401, 403, 422};
+  static const _successfulResponse = {200, 204};
   static const _serverExceptions = {500, 501, 505};
   static const _serverTimeout = {502, 503, 504};
+  static const _invalidSession = {401, 403};
+  static const _badRequest = 400;
+  static const _notFound = 404;
 
   @override
   Future<Response> request({
@@ -117,7 +119,7 @@ class ApiProvider implements IApiProvider {
       contentType: contentType,
     );
 
-    final response = await _parseStreamedResponse(streamedResponse);
+    final response = await _parseResponse(streamedResponse);
     return response.body;
   }
 
@@ -138,7 +140,7 @@ class ApiProvider implements IApiProvider {
       contentType: contentType,
     );
 
-    final response = await _parseStreamedResponse(streamedResponse);
+    final response = await _parseResponse(streamedResponse);
     return response.body;
   }
 
@@ -159,7 +161,7 @@ class ApiProvider implements IApiProvider {
       contentType: contentType,
     );
 
-    final response = await _parseStreamedResponse(streamedResponse);
+    final response = await _parseResponse(streamedResponse);
     return response.body;
   }
 
@@ -177,7 +179,7 @@ class ApiProvider implements IApiProvider {
       contentType: null,
     );
 
-    final response = await _parseStreamedResponse(streamedResponse);
+    final response = await _parseResponse(streamedResponse);
     return response.body;
   }
 
@@ -265,17 +267,9 @@ extension _ApiProvider on ApiProvider {
     final Map<String, String> httpHeaders = {
       'X-Api-Key': await _serverConfiguration.apiToken ?? '',
       'User-Agent': await _serverConfiguration.userAgent,
+      'Content-Type': contentType?.value ?? ApiContentType.formUrlEncoded.value,
       ...headers,
     };
-
-    if (contentType != null) {
-      httpHeaders['Content-Type'] = contentType.stringify;
-    }
-
-    if (!httpHeaders.containsKey('Content-Type')) {
-      httpHeaders['Content-Type'] =
-          'application/x-www-form-urlencoded; charset=utf-8';
-    }
 
     return httpHeaders;
   }
@@ -292,22 +286,27 @@ extension _ApiProvider on ApiProvider {
     );
   }
 
-  Future<Response> _parseStreamedResponse(StreamedResponse response) async {
-    return response.stream.bytesToString().then((body) async {
-      final httpStatusCode = response.statusCode;
+  Future<Response> _parseResponse(BaseResponse baseResponse) async {
+    final response = (baseResponse is StreamedResponse)
+        ? await Response.fromStream(baseResponse)
+        : baseResponse as Response;
+    final httpStatusCode = response.statusCode;
 
-      if (ApiProvider._successfulResponse.contains(httpStatusCode)) {
-        return Response(body, httpStatusCode);
-      } else if (ApiProvider._invalidRequest.contains(httpStatusCode)) {
-        throw ApiProviderSessionError();
-      } else if (ApiProvider._serverExceptions.contains(httpStatusCode)) {
-        throw NetworkServerException();
-      } else if (ApiProvider._serverTimeout.contains(httpStatusCode)) {
-        throw NetworkServerException();
-      } else {
-        throw ApiProviderException(bodyContent: _parseBody(body));
-      }
-    });
+    if (ApiProvider._successfulResponse.contains(httpStatusCode)) {
+      return response;
+    } else if (httpStatusCode == ApiProvider._badRequest) {
+      throw ApiProviderException(bodyContent: _parseBody(response.body));
+    } else if (ApiProvider._invalidSession.contains(httpStatusCode)) {
+      throw ApiProviderSessionError();
+    } else if (httpStatusCode == ApiProvider._notFound) {
+      throw ApiProviderException(bodyContent: _parseBody(response.body));
+    } else if (ApiProvider._serverExceptions.contains(httpStatusCode)) {
+      throw NetworkServerException();
+    } else if (ApiProvider._serverTimeout.contains(httpStatusCode)) {
+      throw NetworkServerException();
+    } else {
+      throw ApiProviderException(bodyContent: _parseBody(response.body));
+    }
   }
 
   Map<String, dynamic> _parseBody(String body) {
@@ -316,45 +315,6 @@ extension _ApiProvider on ApiProvider {
     } catch (e, stack) {
       logError(e, stack);
       return {'parserError': e.toString()};
-    }
-  }
-
-  Future<Response> _parseResponse(BaseResponse response) async {
-    final Set<int> successfulResponse = {200, 204};
-    final Set<int> invalidSessionCode = {401, 403};
-    final Set<int> serverExceptions = {500, 501, 502, 503, 504, 505};
-
-    final statusCode = response.statusCode;
-    if (successfulResponse.contains(statusCode)) {
-      if (response is StreamedResponse) {
-        return Response.fromStream(response);
-      } else {
-        return response as Response;
-      }
-    }
-
-    // Tratamento dos códigos com erro
-    if (invalidSessionCode.contains(statusCode)) {
-      throw ApiProviderSessionError();
-    } else if (serverExceptions.contains(statusCode)) {
-      throw NetworkServerException();
-    } else {
-      late String jsonData;
-      if (response is StreamedResponse) {
-        jsonData = await response.stream.bytesToString();
-      } else if (response is Response) {
-        jsonData = response.body;
-      }
-
-      Map<String, dynamic> bodyContent = <String, dynamic>{};
-      try {
-        bodyContent = jsonDecode(jsonData);
-      } catch (e, stack) {
-        logError(e, stack);
-        bodyContent = {'parserError': e.toString()};
-      }
-
-      throw ApiProviderException(bodyContent: bodyContent);
     }
   }
 }
@@ -375,17 +335,6 @@ extension _ApiHttpRequestMethodStringify on ApiHttpRequestMethod {
         return 'PUT';
       case ApiHttpRequestMethod.delete:
         return 'DELETE';
-    }
-  }
-}
-
-extension _ApiContentTypeStringify on ApiContentType {
-  String get stringify {
-    switch (this) {
-      case ApiContentType.json:
-        return 'application/json; charset=utf-8';
-      case ApiContentType.formUrlEncoded:
-        return 'application/x-www-form-urlencoded; charset=utf-8';
     }
   }
 }
