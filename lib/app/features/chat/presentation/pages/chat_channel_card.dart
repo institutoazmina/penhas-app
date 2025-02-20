@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/design_system/widgets/badges/user_badge_widget.dart';
 import '../../../../shared/design_system/widgets/badges/user_close_badge_widget.dart';
+import '../../data/models/chat_user_model.dart';
 import '../../domain/entities/chat_badge_entity.dart';
 import '../../domain/entities/chat_channel_entity.dart';
 
@@ -115,7 +116,7 @@ class ChatChannelCard extends StatelessWidget {
     if (badges.isEmpty) {
       return const SizedBox.shrink();
     }
-    final emptyBadge = ChatBadgeEntity(
+    final emptyBadge = ChatBadgeModel(
         code: '',
         description: '',
         imageUrl: '',

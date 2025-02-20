@@ -13,6 +13,7 @@ import '../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../authentication/presentation/shared/snack_bar_handler.dart';
 import '../../mainboard/presentation/mainboard/mainboard_page.dart';
+import '../data/models/user_detail_profile_model.dart';
 import '../domain/entities/user_detail_badge_entity.dart';
 import '../domain/entities/user_detail_entity.dart';
 import '../domain/entities/user_detail_profile_entity.dart';
@@ -217,7 +218,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
     if (badges.isEmpty) {
       return const SizedBox.shrink();
     }
-    final _emptyBadge = UserDetailBadgeEntity(
+    final _emptyBadge = UserDetailBadgeModel(
         code: '',
         description: '',
         imageUrl: '',
