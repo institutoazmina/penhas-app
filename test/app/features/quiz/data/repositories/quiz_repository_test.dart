@@ -1,212 +1,141 @@
 import 'package:dartz/dartz.dart' show id, right;
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:penhas/app/app_module.dart';
-import 'package:penhas/app/core/error/exceptions.dart';
 import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/network/api_server_configure.dart';
-import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
 import 'package:penhas/app/features/appstate/data/model/quiz_session_model.dart';
-import 'package:penhas/app/features/quiz/data/datasources/quiz_data_source.dart';
 import 'package:penhas/app/features/quiz/data/repositories/quiz_repository.dart';
 import 'package:penhas/app/features/quiz/domain/entities/answer.dart';
 import 'package:penhas/app/features/quiz/domain/entities/quiz_message.dart';
 import 'package:penhas/app/features/quiz/domain/entities/quiz_request_entity.dart';
-import 'package:penhas/app/features/quiz/domain/repositories/i_quiz_repository.dart';
-import 'package:penhas/app/features/quiz/quiz_module.dart';
 
+import '../../../../../utils/api_provider_mock.dart';
 import '../../../../../utils/json_util.dart';
 import '../quiz_fixtures.dart';
 
-class MockNetworkInfo extends Mock implements INetworkInfo {}
-
-class MockQuizDataSource extends Mock implements IQuizDataSource {}
-
-class _MockHttpClient extends Mock implements Client {}
-
-class _MockApiServerConfigure extends Mock implements IApiServerConfigure {}
-
 void main() {
   late QuizRepository quizRepository;
-
-  late IQuizDataSource dataSource;
-  late INetworkInfo networkInfo;
   late QuizRequestEntity quizRequest;
-  late Map<String, dynamic> jsonData;
 
-  setUpAll(() {
-    registerFallbackValue(Uri.parse(''));
-  });
+  const sessionToken = 'my_really.long.JWT';
 
   setUp(() async {
-    networkInfo = MockNetworkInfo();
-    dataSource = MockQuizDataSource();
-    quizRepository = QuizRepository(
-      dataSource: dataSource,
-      networkInfo: networkInfo,
-    );
+    ApiProviderMock.init();
 
+    final serverEndpoint = Uri.https('api.example.com', '/');
+    quizRepository = QuizRepository(apiProvider: ApiProviderMock.apiProvider);
     quizRequest = const QuizRequestEntity(
       sessionId: '200',
       options: {'YN1': 'Y'},
     );
 
-    jsonData =
-        await JsonUtil.getJson(from: 'profile/quiz_session_response.json');
-
-    when(() => networkInfo.isConnected).thenAnswer((_) async => true);
+    // MockApiServerConfigure configuration
+    when(() => ApiProviderMock.serverConfigure.baseUri)
+        .thenAnswer((_) => serverEndpoint);
+    when(() => ApiProviderMock.serverConfigure.apiToken)
+        .thenAnswer((_) async => sessionToken);
+    when(() => ApiProviderMock.serverConfigure.userAgent)
+        .thenAnswer((_) async => 'iOS 11.4/Simulator/1.0.0');
   });
 
+  void _setUpMockHttpClientResponse(String body, {int? statusCode}) {
+    ApiProviderMock.apiClientResponse(body, statusCode ?? 200);
+  }
+
   group(QuizRepository, () {
-    test(
-      'return a valid session for a valid update',
-      () async {
-        // arrange
-        final expectedSession = AppStateModel.fromJson(jsonData);
+    group('update', () {
+      test(
+        'return ServerSideSessionFailed on invalid session',
+        () async {
+          // arrange
+          _setUpMockHttpClientResponse('{}', statusCode: 401);
+          // act
+          final received = await quizRepository.update(quiz: quizRequest);
+          // assert
+          expect(received.fold((l) => l, (r) => r), ServerSideSessionFailed());
+        },
+      );
 
-        when(() => dataSource.update(quiz: any(named: 'quiz')))
-            .thenAnswer((_) => Future.value(expectedSession));
-        // act
-        final receivedSession = await quizRepository.update(quiz: quizRequest);
-        // assert
-        expect(receivedSession.fold((l) => l, (r) => r), expectedSession);
-      },
-    );
+      test(
+        'return ServerSideSessionFailed for an expired JWT',
+        () async {
+          // arrange
+          final bodyContent =
+              '{"error": "expired_jwt", "message": "Bad request - Invalid JWT"}';
+          _setUpMockHttpClientResponse(bodyContent, statusCode: 404);
+          // act
+          final received = await quizRepository.update(quiz: quizRequest);
+          // assert
+          expect(received.fold((l) => l, (r) => r), ServerSideSessionFailed());
+        },
+      );
 
-    test(
-      'return ServerSideSessionFailed for a invalid session',
-      () async {
-        // arrange
-        when(() => dataSource.update(quiz: any(named: 'quiz')))
-            .thenThrow(ApiProviderSessionError());
-        // act
-        final received = await quizRepository.update(quiz: quizRequest);
-        // assert
-        expect(received.fold((l) => l, (r) => r), ServerSideSessionFailed());
-      },
-    );
+      test(
+        'return ServerSideFormFieldValidationFailure when server returns a bad request',
+        () async {
+          // arrange
+          final bodyContent =
+              '{"error": "server_error", "message": "message_error", "field": "field_error", "reason": "reason_error"}';
+          final expected = ServerSideFormFieldValidationFailure(
+            error: 'server_error',
+            message: 'message_error',
+            field: 'field_error',
+            reason: 'reason_error',
+          );
+          _setUpMockHttpClientResponse(bodyContent, statusCode: 400);
+          // act
+          final received = await quizRepository.update(quiz: quizRequest);
+          // assert
+          expect(received.fold((l) => l, (r) => r), expected);
+        },
+      );
 
-    test(
-      'return ServerSideSessionFailed for a invalid JWT',
-      () async {
-        // arrange
-        when(() => dataSource.update(quiz: any(named: 'quiz'))).thenThrow(
-          const ApiProviderException(
-            bodyContent: {
-              'error': 'expired_jwt',
-              'message': 'Bad request - Invalid JWT'
-            },
-          ),
-        );
-        // act
-        final received = await quizRepository.update(quiz: quizRequest);
-        // assert
-        expect(received.fold((l) => l, (r) => r), ServerSideSessionFailed());
-      },
-    );
-
-    test(
-      'with internet off return InternetConnectionFailure',
-      () async {
-        // arrange
-        when(() => networkInfo.isConnected).thenAnswer((_) async => false);
-        // act
-        final received = await quizRepository.update(quiz: quizRequest);
-        // assert
-        expect(received.fold((l) => l, (r) => r), InternetConnectionFailure());
-      },
-    );
-
-    test(
-      'return ServerSideFormFieldValidationFailure for server error',
-      () async {
-        // arrange
-        final expected = ServerSideFormFieldValidationFailure(
-          error: 'server_error',
-          message: 'message_error',
-          field: 'field_error',
-          reason: 'reason_error',
-        );
-        when(() => dataSource.update(quiz: any(named: 'quiz'))).thenThrow(
-          const ApiProviderException(
-            bodyContent: {
-              'error': 'server_error',
-              'message': 'message_error',
-              'field': 'field_error',
-              'reason': 'reason_error',
-            },
-          ),
-        );
-        // act
-        final received = await quizRepository.update(quiz: quizRequest);
-        // assert
-        expect(received.fold((l) => l, (r) => r), expected);
-      },
-    );
-
-    test(
-      'return ServerFailure for a not mapped error',
-      () async {
-        // arrange
-        when(() => dataSource.update(quiz: any(named: 'quiz')))
-            .thenThrow(Exception());
-        // act
-        final received = await quizRepository.update(quiz: quizRequest);
-        // assert
-        expect(received.fold((l) => l, (r) => r), ServerFailure());
-      },
-    );
+      test(
+        'should return expected session on successful quiz update',
+        () async {
+          // arrange
+          final response = JsonUtil.getStringSync(
+            from: 'profile/quiz_session_response.json',
+          );
+          final expectedSession = AppStateModel.fromJson(
+            await JsonUtil.getJson(
+              from: 'profile/quiz_session_response.json',
+            ),
+          );
+          _setUpMockHttpClientResponse(response);
+          // act
+          final receivedSession =
+              await quizRepository.update(quiz: quizRequest);
+          // assert
+          expect(receivedSession.fold((l) => l, (r) => r), expectedSession);
+        },
+      );
+    });
 
     group('start', () {
       test(
-        'should call datasource start',
+        'return QuizSessionModel for valid session',
         () async {
           // arrange
-          const quizSession = QuizSessionModel(
-            sessionId: 'session_id',
+          final response = JsonUtil.getStringSync(
+            from: 'quiz/quiz_start_response.json',
           );
-          when(() => dataSource.start(any()))
-              .thenAnswer((_) async => quizSession);
-
+          const expectedQuiz = QuizSessionModel(sessionId: 'session_id');
+          _setUpMockHttpClientResponse(response);
           // act
-          await quizRepository.start('session_id');
-
+          final result = await quizRepository.start('quiz_session_id');
           // assert
-          verify(() => dataSource.start('session_id')).called(1);
+          expect(result.fold(id, id), expectedQuiz);
         },
       );
 
       test(
-        'should return datasource start',
+        'return a left failure when HTTP response indicates error for start',
         () async {
           // arrange
-          const quizSession = QuizSessionModel(
-            sessionId: 'session_id',
-          );
-          when(() => dataSource.start(any()))
-              .thenAnswer((_) async => quizSession);
-
+          _setUpMockHttpClientResponse('{}', statusCode: 400);
           // act
           final result = await quizRepository.start('session_id');
-
-          // assert
-          expect(result, right(quizSession));
-        },
-      );
-
-      test(
-        'should return failure when datasource start throws',
-        () async {
-          // arrange
-          when(() => dataSource.start(any())).thenThrow(Exception());
-
-          // act
-          final result = await quizRepository.start('session_id');
-
           // assert
           expect(result.isLeft(), isTrue);
         },
@@ -214,59 +143,19 @@ void main() {
     });
 
     group('send', () {
-      late IQuizRepository sut;
-
-      late Client mockClient;
-      late IApiServerConfigure mockServerConfiguration;
-
-      setUp(() {
-        mockClient = _MockHttpClient();
-        mockServerConfiguration = _MockApiServerConfigure();
-
-        initModules(
-          [
-            AppModule(),
-            QuizModule(),
-          ],
-          replaceBinds: [
-            Bind.singleton<Client>((i) => mockClient),
-            Bind<IApiServerConfigure>((i) => mockServerConfiguration),
-            Bind<INetworkInfo>((i) => networkInfo),
-          ],
-        );
-
-        sut = Modular.get<IQuizRepository>();
-
-        when(() => mockServerConfiguration.baseUri)
-            .thenReturn(Uri.parse('http://example.com'));
-        when(() => mockServerConfiguration.userAgent)
-            .thenAnswer((_) async => 'userAgent');
-        when(() => mockServerConfiguration.apiToken)
-            .thenAnswer((_) async => 'apiToken');
-      });
-
-      tearDown(() {
-        Modular.removeModule(AppModule());
-        Modular.removeModule(QuizModule());
-      });
-
       test(
-        'given no quiz when send should return left',
+        'return a Failure when no quiz is provided',
         () async {
           // arrange
-          final response = '{}';
-          when(() => mockClient.post(any(), headers: any(named: 'headers')))
-              .thenAnswer((_) async => Response(response, 200));
-
+          _setUpMockHttpClientResponse('{}');
           // act
-          final actual = await sut.send(
+          final actual = await quizRepository.send(
             quizId: '200',
             answer: UserAnswer(
               value: AnswerValue('1'),
               message: QuizMessage.button(reference: '', label: '', value: ''),
             ),
           );
-
           // assert
           expect(actual.isLeft(), isTrue);
           expect(actual.fold(id, id), isA<Failure>());
@@ -274,24 +163,21 @@ void main() {
       );
 
       test(
-        'when send success should return right',
+        'return expected quiz fixture when answer is sent successfully',
         () async {
           // arrange
           final response = JsonUtil.getStringSync(
             from: 'quiz/all-messages.json',
           );
-          when(() => mockClient.post(any(), headers: any(named: 'headers')))
-              .thenAnswer((_) async => Response(response, 200));
-
+          _setUpMockHttpClientResponse(response);
           // act
-          final actual = await sut.send(
+          final actual = await quizRepository.send(
             quizId: '200',
             answer: UserAnswer(
               value: AnswerValue('1'),
               message: QuizMessage.button(reference: '', label: '', value: ''),
             ),
           );
-
           // assert
           expect(actual.isRight(), isTrue);
           expect(actual.fold(id, id), quizFixture);
