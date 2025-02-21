@@ -46,7 +46,6 @@ import '../../../feed/presentation/routing_profile_chat/feed_routing_profile_cha
 import '../../../feed/presentation/stores/tweet_controller.dart';
 import '../../../filters/data/repositories/filter_skill_repository.dart';
 import '../../../filters/presentation/filter_module.dart';
-import '../../../help_center/data/datasources/guardian_data_source.dart';
 import '../../../help_center/data/repositories/audios_repository.dart';
 import '../../../help_center/data/repositories/guardian_repository.dart';
 import '../../../help_center/domain/usecases/security_mode_action_feature.dart';
@@ -549,16 +548,7 @@ class MainboardModule extends Module {
           ),
         ),
         Bind.factory<IGuardianRepository>(
-          (i) => GuardianRepository(
-            dataSource: i.get<IGuardianDataSource>(),
-            networkInfo: i.get<INetworkInfo>(),
-          ),
-        ),
-        Bind.factory<IGuardianDataSource>(
-          (i) => GuardianDataSource(
-            apiClient: i.get<http.Client>(),
-            serverConfiguration: i.get<IApiServerConfigure>(),
-          ),
+          (i) => GuardianRepository(apiProvider: i.get<IApiProvider>()),
         ),
       ];
 }
