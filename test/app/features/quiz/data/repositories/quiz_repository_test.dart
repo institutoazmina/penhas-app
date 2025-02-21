@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart' show id, right;
+import 'package:dartz/dartz.dart' show id;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/failures.dart';
