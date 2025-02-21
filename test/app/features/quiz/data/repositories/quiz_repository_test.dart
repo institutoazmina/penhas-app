@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart' show id;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/appstate/data/model/app_state_model.dart';
 import 'package:penhas/app/features/appstate/data/model/quiz_session_model.dart';
@@ -17,25 +16,14 @@ void main() {
   late QuizRepository quizRepository;
   late QuizRequestEntity quizRequest;
 
-  const sessionToken = 'my_really.long.JWT';
-
   setUp(() async {
     ApiProviderMock.init();
 
-    final serverEndpoint = Uri.https('api.example.com', '/');
     quizRepository = QuizRepository(apiProvider: ApiProviderMock.apiProvider);
     quizRequest = const QuizRequestEntity(
       sessionId: '200',
       options: {'YN1': 'Y'},
     );
-
-    // MockApiServerConfigure configuration
-    when(() => ApiProviderMock.serverConfigure.baseUri)
-        .thenAnswer((_) => serverEndpoint);
-    when(() => ApiProviderMock.serverConfigure.apiToken)
-        .thenAnswer((_) async => sessionToken);
-    when(() => ApiProviderMock.serverConfigure.userAgent)
-        .thenAnswer((_) async => 'iOS 11.4/Simulator/1.0.0');
   });
 
   void _setUpMockHttpClientResponse(String body, {int? statusCode}) {
