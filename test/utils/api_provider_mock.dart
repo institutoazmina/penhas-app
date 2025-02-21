@@ -29,13 +29,31 @@ class ApiProviderMock {
   }
 
   static void apiClientResponse(String body, int statusCode) {
-    final stream = Stream.value(body.codeUnits);
-    when(() => httpClient.send(any())).thenAnswer(
-      (_) async => StreamedResponse(
-        stream,
-        statusCode,
-      ),
+    // Mock o request para 'sinalizar' o encoding corretamente
+    // que será utilizado para decodificar o corpo da resposta
+    // Sem esta etapa o Response não codifica corretamente o corpo
+    // com emojis
+    final request = Request('POST', Uri.parse('https://example.com/api/data'))
+      ..headers['Content-Type'] = 'text/html; charset=utf-8';
+
+    final response = Response(
+      body,
+      statusCode,
+      headers: request.headers,
+      request: request,
     );
+
+    // mock the streamed response
+    final streamedResponse = StreamedResponse(
+      ByteStream.fromBytes(response.bodyBytes),
+      response.statusCode,
+      headers: response.headers,
+      request: response.request,
+      reasonPhrase: response.reasonPhrase,
+    );
+
+    when(() => httpClient.send(any()))
+        .thenAnswer((_) async => streamedResponse);
   }
 
   static Map<String, String> apiClientCapturedRequest() {
