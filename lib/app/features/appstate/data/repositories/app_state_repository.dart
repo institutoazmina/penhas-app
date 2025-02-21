@@ -1,32 +1,39 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/api_provider_error_mapper.dart';
 import '../../../../core/error/failures.dart';
-import '../../../../core/network/network_info.dart';
+import '../../../../core/network/api_client.dart';
+import '../../../../core/network/interfaces/api_content_type.dart';
 import '../../../../shared/logger/log.dart';
 import '../../domain/entities/app_state_entity.dart';
 import '../../domain/entities/update_user_profile_entity.dart';
 import '../../domain/repositories/i_app_state_repository.dart';
-import '../datasources/app_state_data_source.dart';
+import '../model/app_state_model.dart';
 
 class AppStateRepository implements IAppStateRepository {
   AppStateRepository({
-    required INetworkInfo networkInfo,
-    required IAppStateDataSource dataSource,
-  })  : _dataSource = dataSource,
-        _networkInfo = networkInfo;
+    required IApiProvider apiProvider,
+  }) : _apiProvider = apiProvider;
 
-  final INetworkInfo _networkInfo;
-  final IAppStateDataSource _dataSource;
+  final IApiProvider _apiProvider;
 
   @override
   Future<Either<Failure, AppStateEntity>> check() async {
     try {
-      final appState = await _dataSource.check();
+      final appState = await _apiProvider
+          .get(
+            path: '/me',
+            contentType: ApiContentType.json,
+          )
+          .then((value) => jsonDecode(value))
+          .then((value) => AppStateModel.fromJson(value));
+
       return right(appState);
     } catch (e, stack) {
       logError(e, stack);
-      return left(await _handleError(e));
+      return left(ApiProviderErrorMapper.map(e));
     }
   }
 
@@ -35,36 +42,28 @@ class AppStateRepository implements IAppStateRepository {
     UpdateUserProfileEntity update,
   ) async {
     try {
-      final appState = await _dataSource.update(update);
+      final parameters = {
+        'apelido': update.nickName,
+        'minibio': update.minibio,
+        'skills': update.skills?.join(','),
+        'senha_atual': update.oldPassword,
+        'senha': update.newPassword,
+        'email': update.email,
+      }..removeWhere((key, value) => value == null);
+
+      final appState = await _apiProvider
+          .put(
+            path: '/me',
+            parameters: parameters,
+            contentType: ApiContentType.formUrlEncoded,
+          )
+          .then((value) => jsonDecode(value))
+          .then((value) => AppStateModel.fromJson(value));
+
       return right(appState);
     } catch (e, stack) {
       logError(e, stack);
-      return left(await _handleError(e));
+      return left(ApiProviderErrorMapper.map(e));
     }
-  }
-
-  Future<Failure> _handleError(Object error) async {
-    if (await _networkInfo.isConnected == false) {
-      return InternetConnectionFailure();
-    }
-
-    if (error is ApiProviderException) {
-      if (error.bodyContent['error'] == 'expired_jwt') {
-        return ServerSideSessionFailed();
-      }
-
-      return ServerSideFormFieldValidationFailure(
-        error: error.bodyContent['error'],
-        field: error.bodyContent['field'],
-        reason: error.bodyContent['reason'],
-        message: error.bodyContent['message'],
-      );
-    }
-
-    if (error is ApiProviderSessionError) {
-      return ServerSideSessionFailed();
-    }
-
-    return ServerFailure();
   }
 }
