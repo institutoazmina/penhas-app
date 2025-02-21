@@ -11,7 +11,6 @@ import '../../../../core/managers/modules_sevices.dart';
 import '../../../../core/network/api_client.dart';
 import '../../../../core/network/api_server_configure.dart';
 import '../../../../core/network/network_info.dart';
-import '../../../appstate/data/datasources/app_state_data_source.dart';
 import '../../../appstate/data/repositories/app_state_repository.dart';
 import '../../../appstate/domain/entities/app_preferences_entity.dart';
 import '../../../appstate/domain/entities/user_profile_entity.dart';
@@ -517,16 +516,7 @@ class MainboardModule extends Module {
           ),
         ),
         Bind.factory<IAppStateRepository>(
-          (i) => AppStateRepository(
-            networkInfo: i.get<INetworkInfo>(),
-            dataSource: i.get<IAppStateDataSource>(),
-          ),
-        ),
-        Bind.factory<IAppStateDataSource>(
-          (i) => AppStateDataSource(
-            apiClient: i.get<http.Client>(),
-            serverConfiguration: i.get<IApiServerConfigure>(),
-          ),
+          (i) => AppStateRepository(apiProvider: i.get<IApiProvider>()),
         ),
         Bind.factory<StealthModeTutorialPageController>(
           (i) => StealthModeTutorialPageController(
