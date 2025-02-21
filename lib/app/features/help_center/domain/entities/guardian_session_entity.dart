@@ -2,8 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 @immutable
-class GuardianSessioEntity extends Equatable {
-  const GuardianSessioEntity({
+class GuardianSessionEntity extends Equatable {
+  const GuardianSessionEntity({
     required this.remainingInvites,
     required this.maximumInvites,
     required this.guards,

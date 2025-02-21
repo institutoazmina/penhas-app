@@ -24,7 +24,7 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
   final IGuardianRepository _guardianRepository;
 
   @observable
-  ObservableFuture<Either<Failure, GuardianSessioEntity>>? _fetchProgress;
+  ObservableFuture<Either<Failure, GuardianSessionEntity>>? _fetchProgress;
 
   @observable
   ObservableFuture<Either<Failure, dynamic>>? _updateProgress;
@@ -64,7 +64,7 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
     _resetErrorMessage();
     _fetchProgress = ObservableFuture(_guardianRepository.fetch());
 
-    final Either<Failure, GuardianSessioEntity> response =
+    final Either<Failure, GuardianSessionEntity> response =
         await _fetchProgress!;
 
     response.fold(
@@ -73,7 +73,7 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
     );
   }
 
-  void _handleSession(GuardianSessioEntity session) {
+  void _handleSession(GuardianSessionEntity session) {
     final headers =
         session.guards.expand((guardian) => _parseGuard(guardian)).toList();
 
@@ -104,7 +104,8 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
 
     if (cards.isEmpty) {
       cards = [
-        GuardianTileEmptyCardEntity(onPressed: () async => _onRegisterGuadian())
+        GuardianTileEmptyCardEntity(
+            onPressed: () async => _onRegisterGuardian())
       ];
     }
 
@@ -164,7 +165,7 @@ abstract class _GuardiansControllerBase with Store, MapFailureMessage {
     );
   }
 
-  Future<void> _onRegisterGuadian() async {
+  Future<void> _onRegisterGuardian() async {
     Modular.to.pushNamed('/mainboard/helpcenter/newGuardian').then(
       (value) {
         // Se o new_guardian inserir um usuário, aparecerá um popup

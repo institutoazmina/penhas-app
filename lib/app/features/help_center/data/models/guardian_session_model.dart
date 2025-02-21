@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 
 import '../../domain/entities/guardian_session_entity.dart';
 
-class GuardianSessionModel extends GuardianSessioEntity {
+class GuardianSessionModel extends GuardianSessionEntity {
   const GuardianSessionModel({
     required List<GuardianEntity> guards,
     required int remainingInvites,

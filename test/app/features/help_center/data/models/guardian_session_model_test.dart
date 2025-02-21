@@ -17,7 +17,7 @@ void main() {
         maximumInvites: 0,
       );
       // assert
-      expect(sessionModel, isA<GuardianSessioEntity>());
+      expect(sessionModel, isA<GuardianSessionEntity>());
     });
 
     test('should return a valid model with a valid JSON', () async {

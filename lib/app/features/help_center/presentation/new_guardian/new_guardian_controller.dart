@@ -1,8 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+
 import '../../../../core/error/failures.dart';
 import '../../../../core/managers/location_services.dart';
+import '../../../../shared/widgets/request_location_permission_content_widget.dart';
 import '../../../authentication/presentation/shared/map_failure_message.dart';
 import '../../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../data/models/alert_model.dart';
@@ -10,8 +12,6 @@ import '../../data/repositories/guardian_repository.dart';
 import '../../domain/entities/guardian_session_entity.dart';
 import '../../domain/states/guardian_alert_state.dart';
 import '../../domain/states/new_guardian_state.dart';
-
-import '../../../../shared/widgets/request_location_permission_content_widget.dart';
 
 part 'new_guardian_controller.g.dart';
 
@@ -35,7 +35,7 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
   String? guardianMobile;
 
   @observable
-  ObservableFuture<Either<Failure, GuardianSessioEntity>>? _fetchProgress;
+  ObservableFuture<Either<Failure, GuardianSessionEntity>>? _fetchProgress;
 
   @observable
   ObservableFuture<Either<Failure, AlertModel>>? _createProgress;
@@ -84,7 +84,7 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
     errorMessage = '';
     _fetchProgress = ObservableFuture(_guardianRepository.fetch());
 
-    final Either<Failure, GuardianSessioEntity> response =
+    final Either<Failure, GuardianSessionEntity> response =
         await _fetchProgress!;
 
     response.fold(
@@ -144,7 +144,7 @@ abstract class _NewGuardianControllerBase with Store, MapFailureMessage {
     );
   }
 
-  void _handleSession(GuardianSessioEntity session) {
+  void _handleSession(GuardianSessionEntity session) {
     if (session.remainingInvites == 0) {
       currentState = NewGuardianState.rateLimit(session.maximumInvites);
       return;
