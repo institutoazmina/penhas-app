@@ -18,6 +18,7 @@
 		},
 		"cSpell.language": "en-US, pt-BR",
 		"cSpell.words": [
+			"appstate",
 			"Blockable",
 			"dartz",
 			"datasources",
@@ -25,9 +26,13 @@
 			"easter",
 			"etag",
 			"Etag",
+			"helpcenter",
 			"mainboard",
 			"mocktail",
 			"penhas",
+			"remoteconfig",
+			"supportcenter",
+			"usecase",
 			"usecases"
 		]
 	},
