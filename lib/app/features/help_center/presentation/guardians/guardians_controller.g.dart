@@ -28,14 +28,14 @@ mixin _$GuardiansController on _GuardiansControllerBase, Store {
       Atom(name: '_GuardiansControllerBase._fetchProgress');
 
   @override
-  ObservableFuture<Either<Failure, GuardianSessioEntity>>? get _fetchProgress {
+  ObservableFuture<Either<Failure, GuardianSessionEntity>>? get _fetchProgress {
     _$_fetchProgressAtom.reportRead();
     return super._fetchProgress;
   }
 
   @override
   set _fetchProgress(
-      ObservableFuture<Either<Failure, GuardianSessioEntity>>? value) {
+      ObservableFuture<Either<Failure, GuardianSessionEntity>>? value) {
     _$_fetchProgressAtom.reportWrite(value, super._fetchProgress, () {
       super._fetchProgress = value;
     });

@@ -12,7 +12,7 @@ import '../datasources/guardian_data_source.dart';
 import '../models/alert_model.dart';
 
 abstract class IGuardianRepository {
-  Future<Either<Failure, GuardianSessioEntity>> fetch();
+  Future<Either<Failure, GuardianSessionEntity>> fetch();
   Future<Either<Failure, AlertModel>> create(GuardianContactEntity guardian);
   Future<Either<Failure, ValidField>> update(GuardianContactEntity guardian);
   Future<Either<Failure, ValidField>> delete(GuardianContactEntity guardian);
@@ -32,7 +32,7 @@ class GuardianRepository extends IGuardianRepository {
   final INetworkInfo _networkInfo;
 
   @override
-  Future<Either<Failure, GuardianSessioEntity>> fetch() async {
+  Future<Either<Failure, GuardianSessionEntity>> fetch() async {
     try {
       final result = await _dataSource!.fetch();
       return right(result);
