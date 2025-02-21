@@ -21,6 +21,17 @@ class ApiProviderMock {
       serverConfiguration: serverConfigure,
       apiClient: httpClient,
     );
+
+    const sessionToken = 'my_really.long.JWT';
+    final serverEndpoint = Uri.https('api.example.com', '/');
+
+    // MockApiServerConfigure configuration
+    when(() => ApiProviderMock.serverConfigure.baseUri)
+        .thenAnswer((_) => serverEndpoint);
+    when(() => ApiProviderMock.serverConfigure.apiToken)
+        .thenAnswer((_) async => sessionToken);
+    when(() => ApiProviderMock.serverConfigure.userAgent)
+        .thenAnswer((_) async => 'iOS 11.4/Simulator/1.0.0');
   }
 
   static void _initFallbacks() {
