@@ -82,11 +82,11 @@ class _DescriptionBottomSheetWidget extends StatelessWidget {
         decoration: BoxDecoration(
             color: DesignSystemColors.ligthPurple2,
             borderRadius: BorderRadius.circular(8.0)),
-        height: 120,
         child: Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,

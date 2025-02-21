@@ -25,7 +25,8 @@ class ChatMainPage extends StatefulWidget {
   _ChatMainPageState createState() => _ChatMainPageState();
 }
 
-class _ChatMainPageState extends State<ChatMainPage> {
+class _ChatMainPageState extends State<ChatMainPage>
+    with SingleTickerProviderStateMixin {
   ChatMainController get controller => widget.controller;
   ChatMainPeopleController get chatMainPeopleController =>
       widget.chatMainPeopleController;
@@ -65,9 +66,13 @@ extension _ChatMainBuilder on _ChatMainPageState {
           length: 2,
           child: Column(
             children: [
-              Container(
-                color: DesignSystemColors.systemBackgroundColor,
-                child: chatTabBar(controller.tabItems),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: chatTabBar(controller.tabItems),
+                  ),
+                ],
               ),
               Expanded(child: buildBody(controller.tabItems)),
             ],
@@ -81,12 +86,24 @@ extension _ChatMainBuilder on _ChatMainPageState {
 extension _ChatMainPageStatePrivate on _ChatMainPageState {
   PreferredSizeWidget chatTabBar(List<ChatTabItem> items) {
     return TabBar(
-      labelColor: DesignSystemColors.pinky,
+      isScrollable: true,
+      labelColor: DesignSystemColors.white,
+      indicatorColor: DesignSystemColors.white,
       labelStyle: chatTabSelectedTextStyle,
-      indicatorColor: DesignSystemColors.pinky,
-      unselectedLabelColor: DesignSystemColors.warnGrey,
+      unselectedLabelColor: DesignSystemColors.ligthPurple,
       unselectedLabelStyle: chatTabUnselectedTextStyle,
-      tabs: items.map((e) => Tab(text: e.title)).toList(),
+      padding: EdgeInsets.zero,
+      indicator: BoxDecoration(
+          color: DesignSystemColors.ligthPurple,
+          borderRadius: BorderRadius.circular(22),
+          border: Border.all(color: DesignSystemColors.ligthPurple, width: 1)),
+      indicatorPadding: const EdgeInsets.only(right: 16.0),
+      labelPadding: const EdgeInsets.only(right: 16.0),
+      tabs: items
+          .map((e) => _CustomTabWidget(
+                title: e.title!,
+              ))
+          .toList(),
     );
   }
 
@@ -104,12 +121,35 @@ extension _ChatMainPageStatePrivate on _ChatMainPageState {
   }
 }
 
+class _CustomTabWidget extends StatelessWidget {
+  const _CustomTabWidget({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(22),
+            border:
+                Border.all(color: DesignSystemColors.ligthPurple, width: 1)),
+        child: Padding(
+          padding: const EdgeInsets.only(
+              left: 16.0, right: 16.0, top: 4.0, bottom: 4.0),
+          child: Text(title),
+        ));
+  }
+}
+
 extension _ChatMainPageStateTextStyle on _ChatMainPageState {
   TextStyle get chatTabSelectedTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,
         letterSpacing: 0.4,
-        color: DesignSystemColors.pinky,
+        color: DesignSystemColors.white,
         fontWeight: FontWeight.bold,
       );
 
@@ -117,7 +157,7 @@ extension _ChatMainPageStateTextStyle on _ChatMainPageState {
         fontFamily: 'Lato',
         fontSize: 14.0,
         letterSpacing: 0.4,
-        color: DesignSystemColors.pinky,
+        color: DesignSystemColors.bluishPurple,
         fontWeight: FontWeight.normal,
       );
 }

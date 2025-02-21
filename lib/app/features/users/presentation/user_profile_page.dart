@@ -13,6 +13,7 @@ import '../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../authentication/presentation/shared/snack_bar_handler.dart';
 import '../../mainboard/presentation/mainboard/mainboard_page.dart';
+import '../data/models/user_detail_profile_model.dart';
 import '../domain/entities/user_detail_badge_entity.dart';
 import '../domain/entities/user_detail_entity.dart';
 import '../domain/entities/user_detail_profile_entity.dart';
@@ -129,48 +130,55 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
       color: DesignSystemColors.easterPurple,
       child: Padding(
         padding: const EdgeInsets.only(top: 45.0),
-        child: Column(
+        child: Stack(
           children: [
-            Row(
-              children: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back_ios,
-                    color: DesignSystemColors.white,
-                  ),
-                  onPressed: Modular.to.pop,
-                ),
-                const Spacer(),
-                CircleAvatar(
-                  radius: 34,
-                  backgroundColor: Colors.white38,
-                  child: user.avatar == null || user.avatar!.isEmpty
-                      ? Container()
-                      : SvgPicture.network(user.avatar!),
-                ),
-                const Spacer(),
-                _buildMenuAction(controller.menuState),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                  top: 12.0, bottom: user.badges.isEmpty ? 25 : 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    user.nickname!,
-                    style: nameStyle,
-                  ),
-                  buildBadgeWidget(user.badges),
-                ],
+            IconButton(
+              icon: const Icon(
+                Icons.arrow_back_ios,
+                color: DesignSystemColors.white,
               ),
+              onPressed: Modular.to.pop,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Positioned(right: 0, child: _buildMenuAction(controller.menuState)),
+            Column(
               children: [
-                buildCloseUser(user.badges),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: CircleAvatar(
+                          radius: 34,
+                          backgroundColor: Colors.white38,
+                          child: user.avatar == null || user.avatar!.isEmpty
+                              ? Container()
+                              : SvgPicture.network(user.avatar!),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: 12.0, bottom: user.badges.isEmpty ? 25 : 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        user.nickname!,
+                        style: nameStyle,
+                      ),
+                      buildBadgeWidget(user.badges),
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    buildCloseUser(user.badges),
+                  ],
+                ),
               ],
             ),
           ],
@@ -210,7 +218,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
     if (badges.isEmpty) {
       return const SizedBox.shrink();
     }
-    final _emptyBadge = UserDetailBadgeEntity(
+    final _emptyBadge = UserDetailBadgeModel(
         code: '',
         description: '',
         imageUrl: '',
@@ -253,9 +261,12 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
               padding: const EdgeInsets.symmetric(vertical: 12.0),
               child: Text('Minibio', style: headerStyle),
             ),
-            Text(
-              user.miniBio ?? '',
-              style: bodyStyle,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text(
+                user.miniBio ?? '',
+                style: bodyStyle,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 12.0),

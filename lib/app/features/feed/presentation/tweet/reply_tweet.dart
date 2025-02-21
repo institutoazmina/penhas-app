@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/design_system/text_styles.dart';
 import '../../../../shared/design_system/widgets/badges/user_close_badge_widget.dart';
-import '../../domain/entities/tweet_badge_entity.dart';
+import '../../data/models/tweet_model.dart';
 import '../../domain/entities/tweet_entity.dart';
 import '../stores/tweet_controller.dart';
 import 'widgets/tweet_avatar.dart';
@@ -227,7 +227,7 @@ Widget buildCloseUser(TweetEntity tweet) {
   if (tweet.badges.isEmpty) {
     return const SizedBox.shrink();
   }
-  final emptyBadge = TweetBadgeEntity(
+  final emptyBadge = TweetBadgeModel(
       code: '',
       description: '',
       imageUrl: '',

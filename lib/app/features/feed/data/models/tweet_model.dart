@@ -94,7 +94,7 @@ class TweetBadgeModel extends TweetBadgeEntity {
     return TweetBadgeModel(
         code: jsonData['code'],
         description: jsonData['description'],
-        imageUrl: jsonData['image_url'],
+        imageUrl: jsonData['image_url'] ?? '',
         name: jsonData['name'],
         style: jsonData['style'],
         showDescription: jsonData['show_description'],

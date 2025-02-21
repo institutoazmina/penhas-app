@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/design_system/widgets/badges/user_badge_widget.dart';
 import '../../../../shared/design_system/widgets/badges/user_close_badge_widget.dart';
+import '../../../users/data/models/user_detail_profile_model.dart';
 import '../../../users/domain/entities/user_detail_badge_entity.dart';
 import '../../../users/domain/entities/user_detail_profile_entity.dart';
 
@@ -107,7 +108,7 @@ Widget buildCloseUser(List<UserDetailBadgeEntity> badges) {
   if (badges.isEmpty) {
     return const SizedBox.shrink();
   }
-  final emptyBadge = UserDetailBadgeEntity(
+  final emptyBadge = UserDetailBadgeModel(
       code: '',
       description: '',
       imageUrl: '',
