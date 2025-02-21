@@ -25,7 +25,6 @@ import 'core/storage/local_storage_shared_preferences.dart';
 import 'core/storage/migrator_local_storage.dart';
 import 'core/storage/persistent_storage.dart';
 import 'core/storage/secure_local_storage.dart';
-import 'features/appstate/data/datasources/app_state_data_source.dart';
 import 'features/appstate/data/repositories/app_state_repository.dart';
 import 'features/appstate/domain/entities/app_preferences_entity.dart';
 import 'features/appstate/domain/entities/user_profile_entity.dart';
@@ -54,16 +53,7 @@ class AppModule extends Module {
           ),
         ),
         Bind.factory<IAppStateRepository>(
-          (i) => AppStateRepository(
-            networkInfo: i.get<INetworkInfo>(),
-            dataSource: i.get<IAppStateDataSource>(),
-          ),
-        ),
-        Bind.factory<IAppStateDataSource>(
-          (i) => AppStateDataSource(
-            apiClient: i.get<http.Client>(),
-            serverConfiguration: i.get<IApiServerConfigure>(),
-          ),
+          (i) => AppStateRepository(apiProvider: i.get<IApiProvider>()),
         ),
         Bind.factory<IApiServerConfigure>(
           (i) => ApiServerConfigure(
