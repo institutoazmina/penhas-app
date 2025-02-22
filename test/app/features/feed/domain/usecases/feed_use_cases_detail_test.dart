@@ -41,7 +41,7 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(const TweetRequestOption());
-    registerFallbackValue(TweetEngageRequestOption(tweetId: ''));
+    registerFallbackValue(TweetEngageRequestOption(tweetId: '', message: ''));
   });
 
   group(FeedUseCases, () {
