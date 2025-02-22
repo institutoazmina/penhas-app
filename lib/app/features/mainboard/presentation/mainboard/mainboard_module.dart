@@ -470,8 +470,7 @@ class MainboardModule extends Module {
         ),
         Bind.factory<ITweetFilterPreferenceRepository>(
           (i) => TweetFilterPreferenceRepository(
-            networkInfo: i.get<INetworkInfo>(),
-            dataSource: i.get<ITweetFilterPreferenceDataSource>(),
+            apiProvider: i.get<IApiProvider>(),
           ),
         ),
         Bind.lazySingleton(
