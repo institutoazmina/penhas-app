@@ -1,140 +1,165 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/entities/valid_fiel.dart';
-import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/api_provider_error_mapper.dart';
 import '../../../../core/error/failures.dart';
-import '../../../../core/network/network_info.dart';
+import '../../../../core/network/api_client.dart';
 import '../../../../shared/logger/log.dart';
 import '../../domain/entities/tweet_engage_request_option.dart';
 import '../../domain/entities/tweet_entity.dart';
 import '../../domain/entities/tweet_request_option.dart';
 import '../../domain/entities/tweet_session_entity.dart';
 import '../../domain/repositories/i_tweet_repositories.dart';
-import '../datasources/tweet_data_source.dart';
+import '../models/tweet_model.dart';
+import '../models/tweet_session_model.dart';
 
 class TweetRepository implements ITweetRepository {
   TweetRepository({
-    required INetworkInfo networkInfo,
-    required ITweetDataSource dataSource,
-  })  : _dataSource = dataSource,
-        _networkInfo = networkInfo;
+    required IApiProvider apiProvider,
+  }) : _apiProvider = apiProvider;
 
-  final INetworkInfo _networkInfo;
-  final ITweetDataSource _dataSource;
+  final IApiProvider _apiProvider;
+
+  @override
+  Future<Either<Failure, TweetEntity>> create({
+    required TweetCreateRequestOption option,
+  }) async {
+    try {
+      final bodyContent = Uri.encodeComponent(option.message);
+      final result = await _apiProvider
+          .post(path: '/me/tweets', body: 'content=$bodyContent')
+          .then((value) => jsonDecode(value))
+          .then((value) => TweetModel.fromJson(value));
+
+      return right(result);
+    } catch (e, stack) {
+      logError(e, stack);
+      return left(ApiProviderErrorMapper.map(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, TweetSessionEntity>> current({
+    required TweetEngageRequestOption option,
+  }) async {
+    try {
+      final Map<String, String> queryParameters = {'id': option.tweetId};
+      final result = await _apiProvider
+          .get(path: '/timeline', parameters: queryParameters)
+          .then((value) => jsonDecode(value))
+          .then((value) => TweetSessionModel.fromJson(value));
+
+      return right(result);
+    } catch (e, stack) {
+      logError(e, stack);
+      return left(ApiProviderErrorMapper.map(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ValidField>> delete({
+    required TweetEngageRequestOption option,
+  }) async {
+    try {
+      final result = await _apiProvider
+          .delete(path: '/me/tweets', parameters: {'id': option.tweetId})
+          .then((value) => jsonDecode(value))
+          .then((value) => ValidField.fromJson(value));
+      return right(result);
+    } catch (e, stack) {
+      logError(e, stack);
+      return left(ApiProviderErrorMapper.map(e));
+    }
+  }
 
   @override
   Future<Either<Failure, TweetSessionEntity>> fetch({
     required TweetRequestOption option,
   }) async {
     try {
-      final result = await _dataSource.fetch(option: option);
-      return right(result);
-    } catch (e, stack) {
-      logError(e, stack);
-      return left(await _handleError(e));
-    }
-  }
+      final Map<String, String?> queryParameters = {
+        'after': option.after,
+        'before': option.before,
+        'parent_id': option.parent,
+        'next_page': option.nextPageToken,
+        'rows': '${option.rows}',
+        'reply_to': option.replyTo,
+        'category': option.category,
+        'tags':
+            (option.tags == null || option.tags!.isEmpty) ? null : option.tags,
+      };
 
-  @override
-  Future<Either<Failure, TweetSessionEntity>> current({
-    TweetEngageRequestOption? option,
-  }) async {
-    try {
-      final result = await _dataSource.current(option: option);
-      return right(result);
-    } catch (e, stack) {
-      logError(e, stack);
-      return left(await _handleError(e));
-    }
-  }
+      final result = await _apiProvider
+          .get(path: '/timeline', parameters: queryParameters)
+          .then((value) => jsonDecode(value))
+          .then((value) => TweetSessionModel.fromJson(value));
 
-  @override
-  Future<Either<Failure, TweetEntity>> create({
-    TweetCreateRequestOption? option,
-  }) async {
-    try {
-      final result = await _dataSource.create(option: option);
       return right(result);
     } catch (e, stack) {
       logError(e, stack);
-      return left(await _handleError(e));
-    }
-  }
-
-  @override
-  Future<Either<Failure, TweetEntity>> reply({
-    TweetEngageRequestOption? option,
-  }) async {
-    try {
-      final result = await _dataSource.reply(option: option);
-      return right(result);
-    } catch (e, stack) {
-      logError(e, stack);
-      return left(await _handleError(e));
+      return left(ApiProviderErrorMapper.map(e));
     }
   }
 
   @override
   Future<Either<Failure, TweetEntity>> like({
-    TweetEngageRequestOption? option,
+    required TweetEngageRequestOption option,
   }) async {
     try {
-      final result = await _dataSource.like(option: option);
+      final result = await _apiProvider
+          .post(
+            path: '/timeline/${option.tweetId}/like',
+            parameters: {'remove': option.dislike ? '1' : null},
+          )
+          .then((value) => jsonDecode(value))
+          .then((value) => TweetModel.fromJson(value['tweet']));
       return right(result);
     } catch (e, stack) {
       logError(e, stack);
-      return left(await _handleError(e));
+      return left(ApiProviderErrorMapper.map(e));
     }
   }
 
   @override
-  Future<Either<Failure, ValidField>> delete({
-    TweetEngageRequestOption? option,
+  Future<Either<Failure, TweetEntity>> reply({
+    required TweetEngageRequestOption option,
   }) async {
     try {
-      final result = await _dataSource.delete(option: option);
+      final bodyContent = Uri.encodeComponent(option.message);
+      final result = await _apiProvider
+          .post(
+            path: '/timeline/${option.tweetId}/comment',
+            body: 'content=$bodyContent',
+          )
+          .then((value) => jsonDecode(value))
+          .then((value) => TweetModel.fromJson(value));
+
       return right(result);
     } catch (e, stack) {
       logError(e, stack);
-      return left(await _handleError(e));
+      return left(ApiProviderErrorMapper.map(e));
     }
   }
 
   @override
   Future<Either<Failure, ValidField>> report({
-    TweetEngageRequestOption? option,
+    required TweetEngageRequestOption option,
   }) async {
     try {
-      final result = await _dataSource.report(option: option);
+      final bodyContent = Uri.encodeComponent(option.message);
+      final result = await _apiProvider
+          .post(
+            path: '/timeline/${option.tweetId}/report',
+            body: 'reason=$bodyContent',
+          )
+          .then((value) => jsonDecode(value))
+          .then((value) => ValidField.fromJson(value));
       return right(result);
     } catch (e, stack) {
       logError(e, stack);
-      return left(await _handleError(e));
+      return left(ApiProviderErrorMapper.map(e));
     }
-  }
-
-  Future<Failure> _handleError(Object error) async {
-    if (await _networkInfo.isConnected == false) {
-      return InternetConnectionFailure();
-    }
-
-    if (error is ApiProviderException) {
-      if (error.bodyContent['error'] == 'expired_jwt') {
-        return ServerSideSessionFailed();
-      }
-
-      return ServerSideFormFieldValidationFailure(
-        error: error.bodyContent['error'],
-        field: error.bodyContent['field'],
-        reason: error.bodyContent['reason'],
-        message: error.bodyContent['message'],
-      );
-    }
-
-    if (error is ApiProviderSessionError) {
-      return ServerSideSessionFailed();
-    }
-
-    return ServerFailure();
   }
 }
