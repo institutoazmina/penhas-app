@@ -2,460 +2,257 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
-import 'package:penhas/app/core/error/exceptions.dart';
-import 'package:penhas/app/core/error/failures.dart';
-import 'package:penhas/app/core/extension/either.dart';
-import 'package:penhas/app/core/network/network_info.dart';
-import 'package:penhas/app/features/feed/data/datasources/tweet_data_source.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_model.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_session_model.dart';
 import 'package:penhas/app/features/feed/data/repositories/tweet_repository.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_engage_request_option.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_entity.dart';
 import 'package:penhas/app/features/feed/domain/entities/tweet_request_option.dart';
-import 'package:penhas/app/features/feed/domain/entities/tweet_session_entity.dart';
 import 'package:penhas/app/features/feed/domain/repositories/i_tweet_repositories.dart';
 
+import '../../../../../utils/api_provider_mock.dart';
 import '../../../../../utils/json_util.dart';
-
-class MockNetworkInfo extends Mock implements INetworkInfo {}
-
-class MockTweetDataSource extends Mock implements ITweetDataSource {}
 
 void main() {
   late ITweetRepository repository;
-  late INetworkInfo networkInfo;
-  late ITweetDataSource dataSource;
+  const contentType = 'application/x-www-form-urlencoded; charset=utf-8';
 
   setUp(() {
-    networkInfo = MockNetworkInfo();
-    dataSource = MockTweetDataSource();
+    ApiProviderMock.init();
 
-    repository =
-        TweetRepository(dataSource: dataSource, networkInfo: networkInfo);
+    repository = TweetRepository(apiProvider: ApiProviderMock.apiProvider);
   });
 
+  void _setUpMockHttpClientResponse(String body, {int? statusCode}) {
+    ApiProviderMock.apiClientResponse(body, statusCode ?? 200);
+  }
+
   group(TweetRepository, () {
-    late TweetSessionModel sessionModel;
+    test(
+      'create a tweet and return TweetModel when the session is valid',
+      () async {
+        // arrange
+        final jsonFile = 'feed/tweet_create_response.json';
+        _setUpMockHttpClientResponse(JsonUtil.getStringSync(from: jsonFile));
+        final jsonData = await JsonUtil.getJson(from: jsonFile);
+        final tweetModel = TweetModel.fromJson(jsonData);
+        final requestOption = TweetCreateRequestOption(message: 'Mensagem 1');
+        // act
+        final received = await repository.create(option: requestOption);
+        // assert
+        final request = verify(
+          () => ApiProviderMock.httpClient.send(captureAny()),
+        ).captured.single;
 
-    setUp(() async {
-      final jsonSession =
-          await JsonUtil.getJson(from: 'feed/retrieve_response.json');
-      sessionModel = TweetSessionModel.fromJson(jsonSession);
-      when(() => dataSource.fetch(option: any(named: 'option')))
-          .thenAnswer((_) => Future.value(sessionModel));
-    });
-    group(
-      'fetch()',
-      () {
-        test('retrieve tweets from a valid session', () async {
-          // arrange
-          final TweetSessionEntity expectedSession = sessionModel;
-          // act
-          final receivedSession =
-              await repository.fetch(option: const TweetRequestOption());
-          // assert
-          expect(receivedSession.get(), expectedSession);
-        });
-
-        test('map error from data source', () async {
-          // arrange
-          const apiProviderException = ApiProviderException(
-            bodyContent: {'error': 'expired_jwt'},
-          );
-          when(() => networkInfo.isConnected).thenAnswer((_) async => false);
-          when(() => dataSource.fetch(option: any(named: 'option')))
-              .thenThrow(apiProviderException);
-          // act
-          final receivedSession =
-              await repository.fetch(option: const TweetRequestOption());
-          // assert
-          expect(receivedSession, left(InternetConnectionFailure()));
-        });
+        expect(request.url.path, '/me/tweets');
+        expect(request.method, 'POST');
+        expect(request.headers['Content-Type'], contentType);
+        expect(request.body, 'content=Mensagem%201');
+        expect(received.fold(id, id), tweetModel);
       },
     );
-    group('create()', () {
-      setUp(() async {
-        final jsonData =
-            await JsonUtil.getJson(from: 'feed/tweet_create_response.json');
-        when(() => dataSource.create(option: any(named: 'option')))
-            .thenAnswer((_) => Future.value(TweetModel.fromJson(jsonData)));
-      });
-      test(
-        'create tweet from a valid session',
-        () async {
-          // arrange
-          final requestOption = TweetCreateRequestOption(message: 'Mensagem 1');
-          final expected = right(
-            TweetModel(
-              id: '200608T1805540001',
-              userName: 'maria',
-              clientId: 424,
-              createdAt: '2020-06-08 18:05:54',
-              totalReply: 0,
-              totalLikes: 0,
-              anonymous: false,
-              content: 'Mensagem 1',
-              avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-              meta: const TweetMeta(liked: false, owner: true),
-              lastReply: const [],
-              badges: [],
-            ),
-          );
-          // act
-          final received = await repository.create(option: requestOption);
-          // assert
-          expect(received, expected);
-        },
-      );
-      test('map erro from data source', () async {
-        // arrange
-        const apiProviderException = ApiProviderException(
-          bodyContent: {'error': 'expired_jwt'},
-        );
-        when(() => networkInfo.isConnected).thenAnswer((_) async => false);
-        when(() => dataSource.create(option: any(named: 'option')))
-            .thenThrow(apiProviderException);
-        // act
-        final receivedSession = await repository.create(
-            option: TweetCreateRequestOption(message: 'Mensagem 1'));
-        // assert
-        expect(receivedSession, left(InternetConnectionFailure()));
-      });
-    });
-    group('delete', () {
-      setUp(() {
-        when(() => dataSource.delete(option: any(named: 'option')))
-            .thenAnswer((_) => Future.value(const ValidField()));
-      });
-      test(
-        'delete tweet from a valid session',
-        () async {
-          // arrange
-          final requestOption = TweetEngageRequestOption(
-            tweetId: '200528T2055370004',
-          );
-          final expected = right(const ValidField());
-          // act
-          final received = await repository.delete(option: requestOption);
-          // assert
-          expect(received, expected);
-        },
-      );
-      test('map error from data source', () async {
-        // arrange
-        const apiProviderException = ApiProviderException(
-          bodyContent: {'error': 'expired_jwt'},
-        );
-        when(() => networkInfo.isConnected).thenAnswer((_) async => false);
-        when(() => dataSource.delete(option: any(named: 'option')))
-            .thenThrow(apiProviderException);
-        // act
-        final receivedSession = await repository.delete(
-            option: TweetEngageRequestOption(tweetId: '200528T2055370004'));
-        // assert
-        expect(receivedSession, left(InternetConnectionFailure()));
-      });
-    });
-    group('like()', () {
-      setUp(() async {
-        final jsonData =
-            await JsonUtil.getJson(from: 'feed/tweet_like_response.json');
-        final tweetModel = TweetModel.fromJson(jsonData['tweet']);
 
-        when(() => dataSource.like(option: any(named: 'option')))
-            .thenAnswer((_) => Future.value(tweetModel));
-      });
-      test(
-        'favorite a valid tweet',
-        () async {
-          // arrange
-          final requestOption =
-              TweetEngageRequestOption(tweetId: '200520T0032210001');
-          final expected = right(
-            TweetModel(
-              id: '200528T2055370004',
-              userName: 'penhas',
-              clientId: 551,
-              createdAt: '2020-05-28 20:55:37',
-              totalReply: 0,
-              totalLikes: 1,
-              anonymous: false,
-              content: 'sleep 6',
-              avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-              meta: const TweetMeta(liked: true, owner: true),
-              lastReply: const [],
-              badges: [],
-            ),
-          );
-          // act
-          final received = await repository.like(option: requestOption);
-          // assert
-          expect(received, expected);
-        },
-      );
-      test('map error from data source', () async {
+    test(
+      'get a tweet and return TweetSessionModel when the session is valid',
+      () async {
         // arrange
-        const apiProviderException = ApiProviderException(
-          bodyContent: {'error': 'expired_jwt'},
-        );
-        when(() => networkInfo.isConnected).thenAnswer((_) async => false);
-        when(() => dataSource.like(option: any(named: 'option')))
-            .thenThrow(apiProviderException);
-        // act
-        final receivedSession = await repository.like(
-            option: TweetEngageRequestOption(tweetId: '200528T2055370004'));
-        // assert
-        expect(receivedSession, left(InternetConnectionFailure()));
-      });
-    });
-    group('reply()', () {
-      setUp(() async {
-        final jsonData =
-            await JsonUtil.getJson(from: 'feed/tweet_reply_response.json');
-        when(() => dataSource.reply(option: any(named: 'option')))
-            .thenAnswer((_) => Future.value(TweetModel.fromJson(jsonData)));
-      });
-
-      test(
-        'reply a valid tweet',
-        () async {
-          // arrange
-          final requestOption = TweetEngageRequestOption(
-            tweetId: '200528T2055370004',
-            message: 'um breve comentario',
-          );
-          final expected = right(
-            TweetModel(
-              id: '200608T1809090001',
-              userName: 'rosa',
-              clientId: 551,
-              createdAt: '2020-06-08 18:09:09',
-              totalReply: 0,
-              totalLikes: 0,
-              anonymous: false,
-              content: 'um breve comentario',
-              avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-              meta: const TweetMeta(liked: false, owner: true),
-              lastReply: const [],
-              badges: [],
-            ),
-          );
-          // act
-          final received = await repository.reply(option: requestOption);
-          // assert
-          expect(received, expected);
-        },
-      );
-
-      test('map error from data source', () async {
-        // arrange
-        const apiProviderException = ApiProviderException(
-          bodyContent: {'error': 'expired_jwt'},
-        );
-        when(() => networkInfo.isConnected).thenAnswer((_) async => false);
-        when(() => dataSource.reply(option: any(named: 'option')))
-            .thenThrow(apiProviderException);
-        // act
-        final receivedSession = await repository.reply(
-            option: TweetEngageRequestOption(
+        final jsonFile = 'feed/tweet_current_response.json';
+        _setUpMockHttpClientResponse(JsonUtil.getStringSync(from: jsonFile));
+        final jsonData = await JsonUtil.getJson(from: jsonFile);
+        final tweetSession = TweetSessionModel.fromJson(jsonData);
+        final requestOption = TweetEngageRequestOption(
           tweetId: '200528T2055370004',
-        ));
-        // assert
-        expect(receivedSession, left(InternetConnectionFailure()));
-      });
-    });
-    group('current()', () {
-      setUp(() async {
-        final jsonData =
-            await JsonUtil.getJson(from: 'feed/tweet_current_response.json');
-        when(() => dataSource.current(option: any(named: 'option'))).thenAnswer(
-          (_) => Future.value(TweetSessionModel.fromJson(jsonData)),
+          message: '',
         );
-      });
-
-      test(
-        'get a current version of a tweet',
-        () async {
-          // arrange
-          final requestOption = TweetEngageRequestOption(
-            tweetId: '200528T2055370004',
-          );
-          final expected = right(
-            TweetSessionModel(
-              TweetSessionOrder.latestFirst,
-              null,
-              [
-                TweetModel(
-                  id: '200608T1545460001',
-                  userName: 'maria',
-                  clientId: 551,
-                  createdAt: '2020-06-08 15:45:46',
-                  totalReply: 0,
-                  totalLikes: 0,
-                  anonymous: false,
-                  content: 'Comentário 7',
-                  avatar: 'https://elasv2-api.appcivico.com/avatar/padrao.svg',
-                  meta: const TweetMeta(
-                      liked: false, owner: true, canReply: false),
-                  lastReply: const [],
-                  badges: [],
-                )
-              ],
-              null,
-              hasMore: false,
-            ),
-          );
-          // act
-          final received = await repository.current(option: requestOption);
-          // assert
-          expect(received, expected);
-        },
-      );
-
-      test('map error from data source', () async {
-        // arrange
-        const apiProviderException = ApiProviderException(
-          bodyContent: {'error': 'expired_jwt'},
-        );
-        when(() => networkInfo.isConnected).thenAnswer((_) async => false);
-        when(() => dataSource.current(option: any(named: 'option')))
-            .thenThrow(apiProviderException);
         // act
-        final receivedSession = await repository.current(
-            option: TweetEngageRequestOption(tweetId: '200528T2055370004'));
+        final received = await repository.current(option: requestOption);
         // assert
-        expect(receivedSession, left(InternetConnectionFailure()));
-      });
-    });
+        final request = verify(
+          () => ApiProviderMock.httpClient.send(captureAny()),
+        ).captured.single;
 
-    group(
-      'report()',
-      () {
-        setUp(() {
-          when(() => dataSource.report(option: any(named: 'option')))
-              .thenAnswer((_) => Future.value(const ValidField()));
-        });
-        test('report a valid tweet', () async {
-          // arrange
-          final requestOption = TweetEngageRequestOption(
-            tweetId: '200528T2055370004',
-            message: 'informação agressiva',
-          );
-          final expected = right(const ValidField());
-          // act
-          final received = await repository.report(option: requestOption);
-          // assert
-          expect(received, expected);
-        });
-
-        test('map error from data source', () async {
-          // arrange
-          const apiProviderException = ApiProviderException(
-            bodyContent: {'error': 'expired_jwt'},
-          );
-          when(() => networkInfo.isConnected).thenAnswer((_) async => false);
-          when(() => dataSource.report(option: any(named: 'option')))
-              .thenThrow(apiProviderException);
-          // act
-          final receivedSession = await repository.report(
-              option: TweetEngageRequestOption(tweetId: '200528T2055370004'));
-          // assert
-          expect(receivedSession, left(InternetConnectionFailure()));
-        });
+        expect(request.url.path, '/timeline');
+        expect(request.method, 'GET');
+        expect(request.headers['Content-Type'], contentType);
+        expect(request.url.queryParameters, {'id': '200528T2055370004'});
+        expect(received.fold(id, id), tweetSession);
       },
     );
 
-    group('mapping error', () {
-      late TweetEngageRequestOption requestOption;
-      setUp(() {
-        requestOption = TweetEngageRequestOption(tweetId: '200528T2055370004');
-      });
-
-      test(
-          'return an InternetConnectionFailure when the network is disconnected',
-          () async {
+    test(
+      'delete a tweet and return ValidField when the session is valid',
+      () async {
         // arrange
-        const apiProviderException = ApiProviderException(
-          bodyContent: {'error': 'expired_jwt'},
+        _setUpMockHttpClientResponse('{}');
+        final requestOption = TweetEngageRequestOption(
+          tweetId: '200528T2055370004',
+          message: '',
         );
-        when(() => networkInfo.isConnected).thenAnswer((_) async => false);
-        when(() => dataSource.report(option: any(named: 'option')))
-            .thenThrow(apiProviderException);
         // act
-        final receivedSession = await repository.report(option: requestOption);
+        final received = await repository.delete(option: requestOption);
         // assert
-        expect(receivedSession, left(InternetConnectionFailure()));
-      });
+        final request = verify(
+          () => ApiProviderMock.httpClient.send(captureAny()),
+        ).captured.single;
 
-      test('return a ServerFailure when the session is invalid', () async {
-        // arrange
-        const apiProviderException = ApiProviderException(
-          bodyContent: {'error': 'expired_jwt'},
-        );
-        when(() => networkInfo.isConnected).thenAnswer((_) async => true);
-        when(() => dataSource.report(option: any(named: 'option')))
-            .thenThrow(apiProviderException);
-        // act
-        final receivedSession = await repository.report(option: requestOption);
-        // assert
-        expect(receivedSession, left(ServerSideSessionFailed()));
-      });
+        expect(request.url.path, '/me/tweets');
+        expect(request.method, 'DELETE');
+        expect(request.url.queryParameters, {'id': '200528T2055370004'});
+        expect(received.fold(id, id), ValidField());
+      },
+    );
 
-      test(
-          'return a ServerSideFormFieldValidationFailure when got server error',
-          () async {
+    test(
+      'get tweets and return TweetSessionModel when the session is valid',
+      () async {
         // arrange
-        const apiProviderException = ApiProviderException(
-          bodyContent: {
-            'error': 'invalid_form',
-            'field': 'name',
-            'reason': 'invalid',
-            'message': 'Nome inválido',
-          },
-        );
-        when(() => networkInfo.isConnected).thenAnswer((_) async => true);
-        when(() => dataSource.report(option: any(named: 'option')))
-            .thenThrow(apiProviderException);
+        final jsonFile = 'feed/retrieve_response.json';
+        final jsonSession = await JsonUtil.getJson(from: jsonFile);
+        final tweetSession = TweetSessionModel.fromJson(jsonSession);
+        _setUpMockHttpClientResponse(JsonUtil.getStringSync(from: jsonFile));
         // act
-        final receivedSession = await repository.report(option: requestOption);
-        // assert
-        expect(
-          receivedSession,
-          left(
-            ServerSideFormFieldValidationFailure(
-              error: 'invalid_form',
-              field: 'name',
-              reason: 'invalid',
-              message: 'Nome inválido',
-            ),
+        final received = await repository.fetch(
+          option: const TweetRequestOption(
+            rows: 50,
+            after: '2025-02-22',
+            before: '2025-02-22',
+            parent: '200528T2055370004',
+            nextPageToken: '200528T2055370004',
+            replyTo: '200528T2055370004',
+            category: '200528T2055370004',
+            tags: 'tag1,tag2',
           ),
         );
-      });
-
-      test('return a ServerSideSessionFailed when got server error', () async {
-        // arrange
-        final apiProviderException = ApiProviderSessionError();
-        when(() => networkInfo.isConnected).thenAnswer((_) async => true);
-        when(() => dataSource.report(option: any(named: 'option')))
-            .thenThrow(apiProviderException);
-        // act
-        final receivedSession = await repository.report(option: requestOption);
         // assert
-        expect(receivedSession, left(ServerSideSessionFailed()));
-      });
+        final request = verify(
+          () => ApiProviderMock.httpClient.send(captureAny()),
+        ).captured.single;
 
-      test('return a ServerFailure for a not mapped error', () async {
+        expect(request.url.path, '/timeline');
+        expect(request.method, 'GET');
+        expect(request.headers['Content-Type'], contentType);
+        expect(request.url.queryParameters, {
+          'rows': '50',
+          'after': '2025-02-22',
+          'before': '2025-02-22',
+          'parent_id': '200528T2055370004',
+          'next_page': '200528T2055370004',
+          'reply_to': '200528T2055370004',
+          'category': '200528T2055370004',
+          'tags': 'tag1,tag2'
+        });
+        expect(received.fold(id, id), tweetSession);
+      },
+    );
+
+    test(
+      'like a tweet and return TweetModel when the session is valid',
+      () async {
         // arrange
-        final apiProviderException = NetworkServerException();
-        when(() => networkInfo.isConnected).thenAnswer((_) async => true);
-        when(() => dataSource.report(option: any(named: 'option')))
-            .thenThrow(apiProviderException);
+        final jsonFile = 'feed/tweet_like_response.json';
+        final jsonData = await JsonUtil.getJson(from: jsonFile);
+        final tweetModel =
+            TweetModel.fromJson(jsonData['tweet'] as Map<String, dynamic>);
+        _setUpMockHttpClientResponse(JsonUtil.getStringSync(from: jsonFile));
+
+        final requestOption = TweetEngageRequestOption(
+          tweetId: '200520T0032210001',
+          message: '',
+        );
         // act
-        final receivedSession = await repository.report(option: requestOption);
+        final received = await repository.like(option: requestOption);
         // assert
-        expect(receivedSession, left(ServerFailure()));
-      });
-    });
+        final request = verify(
+          () => ApiProviderMock.httpClient.send(captureAny()),
+        ).captured.single;
+
+        expect(request.url.path, '/timeline/200520T0032210001/like');
+        expect(request.method, 'POST');
+        expect(request.headers['Content-Type'], contentType);
+        expect(request.url.queryParameters, {});
+        expect(received.fold(id, id), tweetModel);
+      },
+    );
+
+    test(
+      'dislike a tweet and return TweetModel when the session is valid',
+      () async {
+        // arrange
+        final jsonFile = 'feed/tweet_like_response.json';
+        final jsonData = await JsonUtil.getJson(from: jsonFile);
+        final tweetModel =
+            TweetModel.fromJson(jsonData['tweet'] as Map<String, dynamic>);
+        _setUpMockHttpClientResponse(JsonUtil.getStringSync(from: jsonFile));
+
+        final requestOption = TweetEngageRequestOption(
+          tweetId: '200520T0032210001',
+          dislike: true,
+          message: '',
+        );
+        // act
+        final received = await repository.like(option: requestOption);
+        // assert
+        final request = verify(
+          () => ApiProviderMock.httpClient.send(captureAny()),
+        ).captured.single;
+
+        expect(request.url.path, '/timeline/200520T0032210001/like');
+        expect(request.method, 'POST');
+        expect(request.headers['Content-Type'], contentType);
+        expect(request.url.queryParameters, {'remove': '1'});
+        expect(received.fold(id, id), tweetModel);
+      },
+    );
+
+    test(
+      'reply to a tweet and return TweetModel when the session is valid',
+      () async {
+        // arrange
+        final jsonFile = 'feed/tweet_reply_response.json';
+        final jsonData = await JsonUtil.getJson(from: jsonFile);
+        final tweetModel = TweetModel.fromJson(jsonData);
+        _setUpMockHttpClientResponse(JsonUtil.getStringSync(from: jsonFile));
+
+        final requestOption = TweetEngageRequestOption(
+          tweetId: '200528T2055370004',
+          message: 'um breve comentário',
+        );
+        // act
+        final received = await repository.reply(option: requestOption);
+        // assert
+        final request = verify(
+          () => ApiProviderMock.httpClient.send(captureAny()),
+        ).captured.single;
+
+        expect(request.url.path, '/timeline/200528T2055370004/comment');
+        expect(request.method, 'POST');
+        expect(request.headers['Content-Type'], contentType);
+        expect(request.body, 'content=um%20breve%20coment%C3%A1rio');
+        expect(received.fold(id, id), tweetModel);
+      },
+    );
+
+    test(
+      'report a tweet and return ValidField when the session is valid',
+      () async {
+        // arrange
+        _setUpMockHttpClientResponse('{}');
+        final requestOption = TweetEngageRequestOption(
+          tweetId: '200528T2055370004',
+          message: 'informação agressiva',
+        );
+        // act
+        final received = await repository.report(option: requestOption);
+        // assert
+        final request = verify(
+          () => ApiProviderMock.httpClient.send(captureAny()),
+        ).captured.single;
+
+        expect(request.url.path, '/timeline/200528T2055370004/report');
+        expect(request.method, 'POST');
+        expect(request.headers['Content-Type'], contentType);
+        expect(request.body, 'reason=informa%C3%A7%C3%A3o%20agressiva');
+        expect(received.fold(id, id), ValidField());
+      },
+    );
   });
 }
