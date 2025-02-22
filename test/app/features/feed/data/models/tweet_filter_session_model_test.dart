@@ -9,7 +9,7 @@ void main() {
 
   setUp(() {});
 
-  group('TweetFilterSessionModel', () {
+  group(TweetFilterSessionModel, () {
     test('should be a subclass of TweetFilterSessionEntity', () async {
       // arrange
       sessionModel = const TweetFilterSessionModel(categories: [], tags: []);
@@ -20,7 +20,7 @@ void main() {
     test('should return a valid model with a valid JSON', () async {
       // arrange
       final jsonData =
-          await JsonUtil.getJson(from: 'feed/retrieve_fiters_tags.json');
+          await JsonUtil.getJson(from: 'feed/retrieve_filters_tags.json');
       const expected = TweetFilterSessionModel(
         categories: [
           TweetFilterEntity(id: 'all', isSelected: true, label: 'Tudo'),
