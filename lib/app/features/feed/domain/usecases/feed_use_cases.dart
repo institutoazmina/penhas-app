@@ -104,7 +104,7 @@ class FeedUseCases {
   Future<Either<Failure, FeedCache>> fetchNewestTweetDetail(String tweetId) =>
       fetchTweetDetail(tweetId);
 
-  Future<Either<Failure, FeedCache>> create(String? content) async {
+  Future<Either<Failure, FeedCache>> create(String content) async {
     final option = TweetCreateRequestOption(message: content);
     final result = await _repository.create(option: option);
 
@@ -112,7 +112,7 @@ class FeedUseCases {
   }
 
   Future<Either<Failure, FeedCache>> delete(TweetEntity tweet) async {
-    final option = TweetEngageRequestOption(tweetId: tweet.id);
+    final option = TweetEngageRequestOption(tweetId: tweet.id, message: '');
     final result = await _repository.delete(option: option);
 
     return result.map((session) {
@@ -122,12 +122,16 @@ class FeedUseCases {
   }
 
   Future<Either<Failure, FeedCache>> like(TweetEntity tweet) async {
-    final option = TweetEngageRequestOption(tweetId: tweet.id);
+    final option = TweetEngageRequestOption(tweetId: tweet.id, message: '');
     return _processTweetFavorite(option);
   }
 
   Future<Either<Failure, FeedCache>> unlike(TweetEntity tweet) async {
-    final option = TweetEngageRequestOption(tweetId: tweet.id, dislike: true);
+    final option = TweetEngageRequestOption(
+      tweetId: tweet.id,
+      dislike: true,
+      message: '',
+    );
     return _processTweetFavorite(option);
   }
 
@@ -144,7 +148,7 @@ class FeedUseCases {
 
   Future<Either<Failure, TweetEntity>> reply({
     required TweetEntity mainTweet,
-    required String? comment,
+    required String comment,
   }) async {
     final option = TweetEngageRequestOption(
       tweetId: mainTweet.id,

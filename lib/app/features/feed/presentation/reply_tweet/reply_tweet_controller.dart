@@ -65,10 +65,14 @@ abstract class _ReplyTweetControllerBase with Store, MapFailureMessage {
       return;
     }
 
+    if (tweet == null || tweetContent == null) {
+      return;
+    }
+
     _progress = ObservableFuture(
       useCase.reply(
         mainTweet: tweet!,
-        comment: tweetContent,
+        comment: tweetContent!,
       ),
     );
 
