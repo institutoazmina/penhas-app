@@ -1,5 +1,4 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:http/http.dart' as http;
 
 import '../../../../core/managers/app_configuration.dart';
 import '../../../../core/managers/audio_play_services.dart';
@@ -9,8 +8,6 @@ import '../../../../core/managers/local_store.dart';
 import '../../../../core/managers/location_services.dart';
 import '../../../../core/managers/modules_sevices.dart';
 import '../../../../core/network/api_client.dart';
-import '../../../../core/network/api_server_configure.dart';
-import '../../../../core/network/network_info.dart';
 import '../../../appstate/data/repositories/app_state_repository.dart';
 import '../../../appstate/domain/entities/app_preferences_entity.dart';
 import '../../../appstate/domain/entities/user_profile_entity.dart';
@@ -23,7 +20,6 @@ import '../../../chat/domain/usecases/chat_channel_usecase.dart';
 import '../../../chat/domain/usecases/get_chat_channel_token_usecase.dart';
 import '../../../chat/presentation/chat/chat_channel_controller.dart';
 import '../../../chat/presentation/chat/chat_channel_page.dart';
-import '../../../feed/data/datasources/tweet_data_source.dart';
 import '../../../feed/data/repositories/tweet_filter_preference_repository.dart';
 import '../../../feed/data/repositories/tweet_repository.dart';
 import '../../../feed/domain/repositories/i_tweet_repositories.dart';
@@ -450,16 +446,7 @@ class MainboardModule extends Module {
           (i) => TweetController(useCase: i.get<FeedUseCases>()),
         ),
         Bind.factory<ITweetRepository>(
-          (i) => TweetRepository(
-            networkInfo: i.get<INetworkInfo>(),
-            dataSource: i.get<ITweetDataSource>(),
-          ),
-        ),
-        Bind.factory<ITweetDataSource>(
-          (i) => TweetDataSource(
-            apiClient: i.get<http.Client>(),
-            serverConfiguration: i.get<IApiServerConfigure>(),
-          ),
+          (i) => TweetRepository(apiProvider: i.get<IApiProvider>()),
         ),
         Bind.factory<ITweetFilterPreferenceRepository>(
           (i) => TweetFilterPreferenceRepository(
