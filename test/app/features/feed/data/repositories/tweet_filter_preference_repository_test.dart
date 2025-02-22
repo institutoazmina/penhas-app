@@ -1,18 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:penhas/app/core/network/network_info.dart';
-import 'package:penhas/app/features/feed/data/datasources/tweet_filter_preference_data_source.dart';
 import 'package:penhas/app/features/feed/data/models/tweet_filter_session_model.dart';
 import 'package:penhas/app/features/feed/data/repositories/tweet_filter_preference_repository.dart';
 
 import '../../../../../utils/api_provider_mock.dart';
 import '../../../../../utils/json_util.dart';
-
-class MockINetworkInfo extends Mock implements INetworkInfo {}
-
-class MockITweetFilterPreferenceDataSource extends Mock
-    implements ITweetFilterPreferenceDataSource {}
 
 void main() {
   late ITweetFilterPreferenceRepository sut;

@@ -24,7 +24,6 @@ import '../../../chat/domain/usecases/get_chat_channel_token_usecase.dart';
 import '../../../chat/presentation/chat/chat_channel_controller.dart';
 import '../../../chat/presentation/chat/chat_channel_page.dart';
 import '../../../feed/data/datasources/tweet_data_source.dart';
-import '../../../feed/data/datasources/tweet_filter_preference_data_source.dart';
 import '../../../feed/data/repositories/tweet_filter_preference_repository.dart';
 import '../../../feed/data/repositories/tweet_repository.dart';
 import '../../../feed/domain/repositories/i_tweet_repositories.dart';
@@ -458,12 +457,6 @@ class MainboardModule extends Module {
         ),
         Bind.factory<ITweetDataSource>(
           (i) => TweetDataSource(
-            apiClient: i.get<http.Client>(),
-            serverConfiguration: i.get<IApiServerConfigure>(),
-          ),
-        ),
-        Bind.factory<ITweetFilterPreferenceDataSource>(
-          (i) => TweetFilterPreferenceDataSource(
             apiClient: i.get<http.Client>(),
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
