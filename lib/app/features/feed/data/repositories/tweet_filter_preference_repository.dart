@@ -1,11 +1,13 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/api_provider_error_mapper.dart';
 import '../../../../core/error/failures.dart';
-import '../../../../core/network/network_info.dart';
+import '../../../../core/network/api_client.dart';
 import '../../../../shared/logger/log.dart';
 import '../../domain/entities/tweet_filter_session_entity.dart';
-import '../datasources/tweet_filter_preference_data_source.dart';
+import '../models/tweet_filter_session_model.dart';
 
 abstract class ITweetFilterPreferenceRepository {
   Future<Either<Failure, TweetFilterSessionEntity>> retrieve();
@@ -14,47 +16,23 @@ abstract class ITweetFilterPreferenceRepository {
 class TweetFilterPreferenceRepository
     implements ITweetFilterPreferenceRepository {
   TweetFilterPreferenceRepository({
-    required INetworkInfo networkInfo,
-    required ITweetFilterPreferenceDataSource dataSource,
-  })  : _dataSource = dataSource,
-        _networkInfo = networkInfo;
+    required IApiProvider apiProvider,
+  }) : _apiProvider = apiProvider;
 
-  final INetworkInfo _networkInfo;
-  final ITweetFilterPreferenceDataSource _dataSource;
+  final IApiProvider _apiProvider;
 
   @override
   Future<Either<Failure, TweetFilterSessionEntity>> retrieve() async {
     try {
-      final result = await _dataSource.fetch();
+      final result = await _apiProvider
+          .get(path: '/filter-tags')
+          .then((value) => jsonDecode(value))
+          .then((value) => TweetFilterSessionModel.fromJson(value));
+
       return right(result);
     } catch (e, stack) {
       logError(e, stack);
-      return left(await _handleError(e));
+      return left(ApiProviderErrorMapper.map(e));
     }
-  }
-
-  Future<Failure> _handleError(Object error) async {
-    if (await _networkInfo.isConnected == false) {
-      return InternetConnectionFailure();
-    }
-
-    if (error is ApiProviderException) {
-      if (error.bodyContent['error'] == 'expired_jwt') {
-        return ServerSideSessionFailed();
-      }
-
-      return ServerSideFormFieldValidationFailure(
-        error: error.bodyContent['error'],
-        field: error.bodyContent['field'],
-        reason: error.bodyContent['reason'],
-        message: error.bodyContent['message'],
-      );
-    }
-
-    if (error is ApiProviderSessionError) {
-      return ServerSideSessionFailed();
-    }
-
-    return ServerFailure();
   }
 }
