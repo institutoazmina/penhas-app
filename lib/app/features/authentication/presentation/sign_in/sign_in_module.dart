@@ -18,7 +18,6 @@ import '../../../help_center/domain/usecases/security_mode_action_feature.dart';
 import '../../../zodiac/domain/usecases/stealth_security_action.dart';
 import '../../../zodiac/presentation/zodiac_module.dart';
 import '../../data/datasources/authentication_data_source.dart';
-import '../../data/datasources/change_password_data_source.dart';
 import '../../data/repositories/authentication_repository.dart';
 import '../../data/repositories/change_password_repository.dart';
 import '../../data/repositories/user_register_repository.dart';
@@ -138,12 +137,6 @@ class SignInModule extends Module {
         Bind.factory<IResetPasswordRepository>(
           (i) => ChangePasswordRepository(
             apiProvider: i.get<IApiProvider>(),
-            serverConfiguration: i.get<IApiServerConfigure>(),
-          ),
-        ),
-        Bind.factory<IChangePasswordDataSource>(
-          (i) => ChangePasswordDataSource(
-            apiClient: i.get<http.Client>(),
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
