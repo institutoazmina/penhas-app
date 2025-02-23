@@ -8,19 +8,19 @@ import '../usecases/sign_up_password.dart';
 
 abstract class IResetPasswordRepository {
   Future<Either<Failure, ResetPasswordResponseEntity>> request({
-    required EmailAddress? emailAddress,
+    required EmailAddress emailAddress,
   });
 }
 
 abstract class IChangePasswordRepository {
   Future<Either<Failure, ValidField>> validToken({
-    required EmailAddress? emailAddress,
-    required String? resetToken,
+    required EmailAddress emailAddress,
+    required String resetToken,
   });
 
   Future<Either<Failure, ValidField>> reset({
-    required EmailAddress? emailAddress,
-    required SignUpPassword? password,
-    required String? resetToken,
+    required EmailAddress emailAddress,
+    required SignUpPassword password,
+    required String resetToken,
   });
 }

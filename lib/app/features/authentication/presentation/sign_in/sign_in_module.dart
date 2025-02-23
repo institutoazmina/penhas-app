@@ -137,8 +137,8 @@ class SignInModule extends Module {
   List<Bind> get _interfaces => [
         Bind.factory<IResetPasswordRepository>(
           (i) => ChangePasswordRepository(
-            changePasswordDataSource: i.get<IChangePasswordDataSource>(),
-            networkInfo: i.get<INetworkInfo>(),
+            apiProvider: i.get<IApiProvider>(),
+            serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
         Bind.factory<IChangePasswordDataSource>(

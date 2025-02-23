@@ -1,94 +1,106 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/entities/valid_fiel.dart';
-import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/api_provider_error_mapper.dart';
 import '../../../../core/error/failures.dart';
-import '../../../../core/network/network_info.dart';
+import '../../../../core/network/api_client.dart';
+import '../../../../core/network/api_server_configure.dart';
 import '../../../../shared/logger/log.dart';
 import '../../domain/entities/reset_password_response_entity.dart';
 import '../../domain/repositories/i_reset_password_repository.dart';
 import '../../domain/usecases/email_address.dart';
 import '../../domain/usecases/sign_up_password.dart';
-import '../datasources/change_password_data_source.dart';
+import '../models/password_reset_response_model.dart';
 
 class ChangePasswordRepository
     implements IResetPasswordRepository, IChangePasswordRepository {
   ChangePasswordRepository({
-    required IChangePasswordDataSource changePasswordDataSource,
-    required INetworkInfo networkInfo,
-  })  : _networkInfo = networkInfo,
-        _dataSource = changePasswordDataSource;
+    required IApiProvider apiProvider,
+    required IApiServerConfigure serverConfiguration,
+  })  : _apiProvider = apiProvider,
+        _serverConfiguration = serverConfiguration;
 
-  final IChangePasswordDataSource _dataSource;
-  final INetworkInfo _networkInfo;
-
+  final IApiProvider _apiProvider;
+  final IApiServerConfigure _serverConfiguration;
   @override
   Future<Either<Failure, ResetPasswordResponseEntity>> request({
-    EmailAddress? emailAddress,
+    required EmailAddress emailAddress,
   }) async {
     try {
-      final ResetPasswordResponseEntity result =
-          await _dataSource.request(emailAddress: emailAddress);
-      return right(result);
+      final userAgent = await _serverConfiguration.userAgent;
+      final response = await _apiProvider
+          .post(
+            path: '/reset-password/request-new',
+            parameters: {
+              'email': emailAddress.rawValue,
+              'app_version': userAgent,
+            },
+          )
+          .then((value) => jsonDecode(value))
+          .then((value) => PasswordResetResponseModel.fromJson(value));
+
+      return right(response);
     } catch (e, stack) {
       logError(e, stack);
-      final fail = await _handleError(e);
-      return left(fail);
+      return left(ApiProviderErrorMapper.map(e));
     }
   }
 
   @override
   Future<Either<Failure, ValidField>> reset({
-    EmailAddress? emailAddress,
-    SignUpPassword? password,
-    String? resetToken,
+    required EmailAddress emailAddress,
+    required SignUpPassword password,
+    required String resetToken,
   }) async {
     try {
-      await _dataSource.reset(
-        emailAddress: emailAddress,
-        password: password,
-        resetToken: resetToken,
-      );
-      return right(const ValidField());
+      final userAgent = await _serverConfiguration.userAgent;
+      final response = await _apiProvider
+          .post(
+            path: '/reset-password/write-new',
+            parameters: {
+              'dry': '0',
+              'email': emailAddress.rawValue,
+              'senha': password.rawValue,
+              'token': resetToken,
+              'app_version': userAgent,
+            },
+          )
+          .then((value) => jsonDecode(value))
+          .then((value) => ValidField.fromJson(value));
+
+      return right(response);
     } catch (e, stack) {
       logError(e, stack);
-      final fail = await _handleError(e);
-      return left(fail);
+      return left(ApiProviderErrorMapper.map(e));
     }
-  }
-
-  Future<Failure> _handleError(Object error) async {
-    if (await _networkInfo.isConnected == false) {
-      return InternetConnectionFailure();
-    }
-
-    if (error is ApiProviderException) {
-      return ServerSideFormFieldValidationFailure(
-        error: error.bodyContent['error'],
-        field: error.bodyContent['field'],
-        reason: error.bodyContent['reason'],
-        message: error.bodyContent['message'],
-      );
-    }
-
-    return ServerFailure();
   }
 
   @override
   Future<Either<Failure, ValidField>> validToken({
-    EmailAddress? emailAddress,
-    String? resetToken,
+    required EmailAddress emailAddress,
+    required String resetToken,
   }) async {
     try {
-      await _dataSource.validToken(
-        emailAddress: emailAddress,
-        resetToken: resetToken,
-      );
-      return right(const ValidField());
+      final userAgent = await _serverConfiguration.userAgent;
+      final response = await _apiProvider
+          .post(
+            path: '/reset-password/write-new',
+            parameters: {
+              'dry': '1',
+              'email': emailAddress.rawValue,
+              'token': resetToken,
+              'app_version': userAgent,
+            },
+          )
+          .then((value) => jsonDecode(value))
+          .then((value) => ValidField.fromJson(value));
+
+      return right(response);
     } catch (e, stack) {
       logError(e, stack);
-      final fail = await _handleError(e);
-      return left(fail);
+      return left(ApiProviderErrorMapper.map(e));
     }
   }
 }
