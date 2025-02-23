@@ -19,7 +19,6 @@ import '../../../zodiac/domain/usecases/stealth_security_action.dart';
 import '../../../zodiac/presentation/zodiac_module.dart';
 import '../../data/datasources/authentication_data_source.dart';
 import '../../data/datasources/change_password_data_source.dart';
-import '../../data/datasources/user_register_data_source.dart';
 import '../../data/repositories/authentication_repository.dart';
 import '../../data/repositories/change_password_repository.dart';
 import '../../data/repositories/user_register_repository.dart';
@@ -166,12 +165,6 @@ class SignInModule extends Module {
             apiProvider: i.get<IApiProvider>(),
             appConfiguration: i.get<IAppConfiguration>(),
             serverConfigure: i.get<IApiServerConfigure>(),
-          ),
-        ),
-        Bind.factory<IUserRegisterDataSource>(
-          (i) => UserRegisterDataSource(
-            apiClient: i.get<http.Client>(),
-            serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
         Bind.factory<PasswordValidator>((_) => PasswordValidator())
