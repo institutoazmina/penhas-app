@@ -63,8 +63,8 @@ abstract class _ResetPasswordTwoControllerBase with Store, MapFailureMessage {
 
     _progress = ObservableFuture(
       repository.validToken(
-        emailAddress: _userRegisterModel!.emailAddress,
-        resetToken: _userRegisterModel!.token,
+        emailAddress: _userRegisterModel!.emailAddress!,
+        resetToken: _userRegisterModel!.token!,
       ),
     );
 
