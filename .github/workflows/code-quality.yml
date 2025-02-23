@@ -9,6 +9,11 @@ concurrency:
   group: qa-${{ github.ref }}
   cancel-in-progress: true
 
+# Add this permissions section
+permissions:
+  contents: read
+  pull-requests: read
+
 jobs:
   check-changes:
     name: Check changed files
