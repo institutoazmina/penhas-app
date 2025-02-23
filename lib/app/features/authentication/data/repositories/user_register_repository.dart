@@ -1,10 +1,13 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/entities/valid_fiel.dart';
-import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/api_provider_error_mapper.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/managers/app_configuration.dart';
-import '../../../../core/network/network_info.dart';
+import '../../../../core/network/api_client.dart';
+import '../../../../core/network/api_server_configure.dart';
 import '../../../../shared/logger/log.dart';
 import '../../domain/entities/session_entity.dart';
 import '../../domain/repositories/i_user_register_repository.dart';
@@ -17,23 +20,110 @@ import '../../domain/usecases/genre.dart';
 import '../../domain/usecases/human_race.dart';
 import '../../domain/usecases/nickname.dart';
 import '../../domain/usecases/sign_up_password.dart';
-import '../datasources/user_register_data_source.dart';
+import '../models/session_model.dart';
 
 class UserRegisterRepository implements IUserRegisterRepository {
   UserRegisterRepository({
-    required INetworkInfo? networkInfo,
-    required IAppConfiguration? appConfiguration,
-    required IUserRegisterDataSource? dataSource,
-  })  : _dataSource = dataSource,
-        _networkInfo = networkInfo,
-        _appConfiguration = appConfiguration;
+    required IApiProvider apiProvider,
+    required IAppConfiguration appConfiguration,
+    required IApiServerConfigure serverConfigure,
+  })  : _apiProvider = apiProvider,
+        _appConfiguration = appConfiguration,
+        _serverConfigure = serverConfigure;
 
-  final INetworkInfo? _networkInfo;
-  final IUserRegisterDataSource? _dataSource;
-  final IAppConfiguration? _appConfiguration;
-
+  final IApiProvider _apiProvider;
+  final IApiServerConfigure _serverConfigure;
+  final IAppConfiguration _appConfiguration;
   @override
   Future<Either<Failure, ValidField>> checkField({
+    EmailAddress? emailAddress,
+    SignUpPassword? password,
+    Cep? cep,
+    Fullname? fullname,
+    Cpf? cpf,
+    HumanRace? race,
+    Fullname? socialName,
+    Nickname? nickName,
+    Birthday? birthday,
+    Genre? genre,
+  }) async {
+    try {
+      Map<String, String?> queryParameters = await _buildParameters(
+        true,
+        emailAddress,
+        password,
+        cep,
+        cpf,
+        fullname,
+        socialName,
+        nickName,
+        birthday,
+        genre,
+        race,
+      );
+
+      final result = await _apiProvider
+          .post(
+            path: '/signup',
+            parameters: queryParameters,
+          )
+          .then((value) => jsonDecode(value))
+          .then((value) => ValidField.fromJson(value));
+
+      return right(result);
+    } catch (e, stack) {
+      logError(e, stack);
+      return left(ApiProviderErrorMapper.map(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, SessionEntity>> signup({
+    required EmailAddress? emailAddress,
+    required SignUpPassword? password,
+    required Cep? cep,
+    required Fullname? fullname,
+    required Cpf? cpf,
+    required HumanRace? race,
+    Fullname? socialName,
+    required Nickname? nickName,
+    required Birthday? birthday,
+    required Genre? genre,
+  }) async {
+    try {
+      Map<String, String?> queryParameters = await _buildParameters(
+        false,
+        emailAddress,
+        password,
+        cep,
+        cpf,
+        fullname,
+        socialName,
+        nickName,
+        birthday,
+        genre,
+        race,
+      );
+
+      final result = await _apiProvider
+          .post(
+            path: '/signup',
+            parameters: queryParameters,
+          )
+          .then((value) => jsonDecode(value))
+          .then((value) => SessionModel.fromJson(value));
+
+      await _appConfiguration.saveApiToken(token: result.sessionToken);
+
+      return right(result);
+    } catch (e, stack) {
+      logError(e, stack);
+      return left(ApiProviderErrorMapper.map(e));
+    }
+  }
+
+  Future<Map<String, String?>> _buildParameters(
+    bool isCheckField,
     EmailAddress? emailAddress,
     SignUpPassword? password,
     Cep? cep,
@@ -44,82 +134,22 @@ class UserRegisterRepository implements IUserRegisterRepository {
     Birthday? birthday,
     Genre? genre,
     HumanRace? race,
-  }) async {
-    try {
-      await _dataSource!.checkField(
-        emailAddress: emailAddress,
-        password: password,
-        cep: cep,
-        cpf: cpf,
-        fullname: fullname,
-        nickName: nickName,
-        birthday: birthday,
-        genre: genre,
-        race: race,
-      );
-
-      return right(const ValidField());
-    } catch (e, stack) {
-      logError(e, stack);
-      return left(await _handleError(e));
-    }
-  }
-
-  @override
-  Future<Either<Failure, SessionEntity>> signup({
-    required EmailAddress? emailAddress,
-    required SignUpPassword? password,
-    required Cep? cep,
-    required Cpf? cpf,
-    required Fullname? fullname,
-    Fullname? socialName,
-    required Nickname? nickName,
-    required Birthday? birthday,
-    required Genre? genre,
-    required HumanRace? race,
-  }) async {
-    try {
-      final session = await _dataSource!.register(
-        emailAddress: emailAddress,
-        password: password,
-        cep: cep,
-        cpf: cpf,
-        fullname: fullname,
-        nickName: nickName,
-        birthday: birthday,
-        genre: genre,
-        race: race,
-        socialName: socialName,
-      );
-
-      await _appConfiguration!.saveApiToken(token: session.sessionToken);
-
-      return right(
-        SessionEntity(
-          sessionToken: session.sessionToken,
-          deletedScheduled: session.deletedScheduled,
-        ),
-      );
-    } catch (e, stack) {
-      logError(e, stack);
-      return left(await _handleError(e));
-    }
-  }
-
-  Future<Failure> _handleError(Object error) async {
-    if (await _networkInfo!.isConnected == false) {
-      return InternetConnectionFailure();
-    }
-
-    if (error is ApiProviderException) {
-      return ServerSideFormFieldValidationFailure(
-        error: error.bodyContent['error'],
-        field: error.bodyContent['field'],
-        reason: error.bodyContent['reason'],
-        message: error.bodyContent['message'],
-      );
-    }
-
-    return ServerFailure();
+  ) async {
+    final userAgent = await _serverConfigure.userAgent;
+    final Map<String, String?> queryParameters = {
+      'app_version': userAgent,
+      'dry': isCheckField ? '1' : '0',
+      'email': emailAddress?.rawValue,
+      'senha': password?.rawValue,
+      'cep': cep?.rawValue,
+      'nome_completo': fullname?.rawValue,
+      'nome_social': socialName?.rawValue,
+      'apelido': nickName?.rawValue,
+      'dt_nasc': birthday?.rawValue,
+      'genero': genre?.rawValue,
+      'raca': race?.rawValue,
+      'cpf': cpf?.rawValue,
+    }..removeWhere((k, v) => v == null);
+    return queryParameters;
   }
 }
