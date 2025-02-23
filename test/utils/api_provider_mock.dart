@@ -67,6 +67,10 @@ class ApiProviderMock {
         .thenAnswer((_) async => streamedResponse);
   }
 
+  static void apiClientException(Exception error) {
+    when(() => httpClient.send(any())).thenThrow(error);
+  }
+
   static Map<String, String> apiClientCapturedRequest() {
     final captured =
         verify(() => ApiProviderMock.httpClient.send(captureAny())).captured;

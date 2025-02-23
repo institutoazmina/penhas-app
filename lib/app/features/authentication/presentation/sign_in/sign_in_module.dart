@@ -9,7 +9,6 @@ import '../../../../core/managers/location_services.dart';
 import '../../../../core/managers/modules_sevices.dart';
 import '../../../../core/network/api_client.dart';
 import '../../../../core/network/api_server_configure.dart';
-import '../../../../core/network/network_info.dart';
 import '../../../../core/remoteconfig/i_remote_config.dart';
 import '../../../appstate/domain/entities/user_profile_entity.dart';
 import '../../../appstate/domain/usecases/app_state_usecase.dart';
@@ -142,9 +141,9 @@ class SignInModule extends Module {
         ),
         Bind.factory<IAuthenticationRepository>(
           (i) => AuthenticationRepository(
-            dataSource: i.get<IAuthenticationDataSource>(),
-            networkInfo: i.get<INetworkInfo>(),
+            apiProvider: i.get<IApiProvider>(),
             appConfiguration: i.get<IAppConfiguration>(),
+            serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
         Bind.factory<IAuthenticationDataSource>(

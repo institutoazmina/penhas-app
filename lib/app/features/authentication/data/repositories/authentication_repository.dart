@@ -1,51 +1,65 @@
+import 'dart:convert';
+
 import 'package:crypt/crypt.dart';
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/api_provider_error_mapper.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/managers/app_configuration.dart';
-import '../../../../core/network/network_info.dart';
+import '../../../../core/network/api_client.dart';
+import '../../../../core/network/api_server_configure.dart';
 import '../../../../shared/logger/log.dart';
 import '../../domain/entities/session_entity.dart';
 import '../../domain/repositories/i_authentication_repository.dart';
 import '../../domain/usecases/email_address.dart';
 import '../../domain/usecases/sign_in_password.dart';
-import '../datasources/authentication_data_source.dart';
 import '../models/session_model.dart';
 
 class AuthenticationRepository implements IAuthenticationRepository {
   AuthenticationRepository({
-    required INetworkInfo networkInfo,
+    required IApiProvider apiProvider,
     required IAppConfiguration appConfiguration,
-    required IAuthenticationDataSource dataSource,
-  })  : _dataSource = dataSource,
-        _networkInfo = networkInfo,
-        _appConfiguration = appConfiguration;
+    required IApiServerConfigure serverConfiguration,
+  })  : _appConfiguration = appConfiguration,
+        _apiProvider = apiProvider,
+        _serverConfiguration = serverConfiguration;
 
-  final IAuthenticationDataSource _dataSource;
-  final INetworkInfo _networkInfo;
+  final IApiProvider _apiProvider;
   final IAppConfiguration _appConfiguration;
-
+  final IApiServerConfigure _serverConfiguration;
   @override
   Future<Either<Failure, SessionEntity>> signInWithEmailAndPassword({
     required EmailAddress emailAddress,
     required SignInPassword password,
   }) async {
     try {
-      final result = await _dataSource.signInWithEmailAndPassword(
-        emailAddress: emailAddress,
-        password: password,
+      final userAgent = await _serverConfiguration.userAgent;
+      final parameters = {'app_version': userAgent};
+      final body = Uri.encodeComponent(
+        'email=${emailAddress.rawValue}&senha=${password.rawValue}',
       );
 
-      if (!result.deletedScheduled) {
-        await _saveUserData(
-            result: result, password: password, email: emailAddress);
+      final result = await _apiProvider
+          .post(
+            path: '/login',
+            parameters: parameters,
+            body: body,
+          )
+          .then((value) => jsonDecode(value))
+          .then((value) => SessionModel.fromJson(value));
+
+      if (result.deletedScheduled == false) {
+        await _saveAuthenticationCredentials(
+          result: result,
+          password: password,
+          email: emailAddress,
+        );
       }
 
       return right(result);
-    } catch (error, stack) {
-      logError(error, stack);
-      return _handleError(error);
+    } catch (e, stack) {
+      logError(e, stack);
+      return left(ApiProviderErrorMapper.map(e));
     }
   }
 
@@ -54,75 +68,69 @@ class AuthenticationRepository implements IAuthenticationRepository {
     required EmailAddress emailAddress,
     required SignInPassword password,
   }) async {
+    final result = await signInWithEmailAndPassword(
+      emailAddress: emailAddress,
+      password: password,
+    );
+
+    if (result.isRight()) {
+      return result;
+    }
+
     try {
-      if (await _networkInfo.isConnected == false) {
-        final session =
-            await _loginOffline(password: password, email: emailAddress);
-        if (session != null) {
-          return right(session);
-        }
-      }
-      return signInWithEmailAndPassword(
-        emailAddress: emailAddress,
+      final session = await _validateOfflineCredentials(
         password: password,
+        email: emailAddress,
       );
-    } catch (error, stack) {
-      logError(error, stack);
-      return _handleError(error);
+
+      if (session != null) {
+        return right(session);
+      }
+
+      return result;
+    } catch (e, stack) {
+      logError(e, stack);
+      return left(ApiProviderErrorMapper.map(e));
     }
   }
 
-  Crypt _createsHash({
+  Crypt _generatePasswordHash({
     required EmailAddress email,
     required SignInPassword password,
   }) {
-    final hash = Crypt.sha256(password.rawValue!, salt: email.rawValue);
-    return hash;
+    return Crypt.sha256(
+      password.rawValue ?? '',
+      salt: email.rawValue ?? '',
+    );
   }
 
-  Future<SessionModel?> _loginOffline({
+  Future<SessionModel?> _validateOfflineCredentials({
     required EmailAddress email,
     required SignInPassword password,
   }) async {
     final currentHash = await _appConfiguration.offlineHash;
     final sessionToken = await _appConfiguration.apiToken;
-    final newHash = _createsHash(password: password, email: email);
 
-    final isCorrectPassword = Crypt(currentHash) == newHash;
-    if (!isCorrectPassword) return null;
+    if (currentHash.isEmpty || sessionToken.isEmpty) {
+      return null;
+    }
 
-    final session = await _dataSource.signInWithOfflineHash(
-      sessionToken: sessionToken,
-    );
-    return session;
+    final newHash = _generatePasswordHash(password: password, email: email);
+
+    if (Crypt(currentHash) == newHash) {
+      return SessionModel(sessionToken: sessionToken);
+    }
+
+    return null;
   }
 
-  _saveUserData({
+  Future<void> _saveAuthenticationCredentials({
     required SessionModel result,
     required EmailAddress email,
     required SignInPassword password,
   }) async {
     await _appConfiguration.saveApiToken(token: result.sessionToken);
-    final hash = _createsHash(password: password, email: email);
+    final hash = _generatePasswordHash(password: password, email: email);
     await _appConfiguration.saveHash(hash: hash.toString());
-  }
-
-  Future<Either<Failure, SessionEntity>> _handleError(Object error) async {
-    if (await _networkInfo.isConnected == false) {
-      return left(InternetConnectionFailure());
-    }
-
-    if (error is ApiProviderException) {
-      return left(
-        ServerSideFormFieldValidationFailure(
-          error: error.bodyContent['error'],
-          field: error.bodyContent['field'],
-          message: error.bodyContent['message'],
-          reason: error.bodyContent['reason'],
-        ),
-      );
-    }
-
-    return left(ServerFailure());
   }
 }
