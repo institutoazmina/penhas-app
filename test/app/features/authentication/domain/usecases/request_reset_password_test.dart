@@ -28,8 +28,7 @@ void main() {
       'received a ResetPasswordResponseEntity for successful request',
       () async {
         // arrange
-        when(() => repository.request(emailAddress: any(named: 'emailAddress')))
-            .thenAnswer(
+        when(() => repository.request(emailAddress: emailAddress)).thenAnswer(
           (_) async => right(
             const ResetPasswordResponseEntity(
               message: responseMessage,

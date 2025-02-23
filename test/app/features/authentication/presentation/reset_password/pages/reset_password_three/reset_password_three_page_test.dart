@@ -18,13 +18,18 @@ import '../../../../../../../utils/widget_test_steps.dart';
 import '../../../mocks/app_modules_mock.dart';
 import '../../../mocks/authentication_modules_mock.dart';
 
+class FakeEmailAddress extends Fake implements EmailAddress {}
+
+class FakeSignUpPassword extends Fake implements SignUpPassword {}
+
 class MockIChangePasswordRepository extends Mock
     implements IChangePasswordRepository {
   @override
-  Future<Either<Failure, ValidField>> reset(
-      {EmailAddress? emailAddress,
-      SignUpPassword? password,
-      String? resetToken}) async {
+  Future<Either<Failure, ValidField>> reset({
+    required EmailAddress emailAddress,
+    required SignUpPassword password,
+    required String resetToken,
+  }) async {
     return Future.value(Right(ValidField()));
   }
 }
@@ -32,16 +37,16 @@ class MockIChangePasswordRepository extends Mock
 class MockIChangePasswordRepositoryWithError extends Mock
     implements IChangePasswordRepository {
   @override
-  Future<Either<Failure, ValidField>> reset(
-      {EmailAddress? emailAddress,
-      SignUpPassword? password,
-      String? resetToken}) async {
+  Future<Either<Failure, ValidField>> reset({
+    required EmailAddress emailAddress,
+    required SignUpPassword password,
+    required String resetToken,
+  }) async {
     return Future.value(Left(ServerFailure()));
   }
 }
 
 void main() {
-  late UserRegisterFormFieldModel userRegisterFormField;
   late IChangePasswordRepository iChangePasswordRepository;
   late ResetPasswordThreeController controller;
   late UserRegisterFormFieldModel userRegisterFormFieldModel;
@@ -49,14 +54,21 @@ void main() {
   setUp(() {
     AppModulesMock.init();
     AuthenticationModulesMock.init();
-    userRegisterFormField = UserRegisterFormFieldModel();
-    userRegisterFormField.token = 'token';
     iChangePasswordRepository = MockIChangePasswordRepository();
-    userRegisterFormFieldModel = UserRegisterFormFieldModel();
+    userRegisterFormFieldModel = UserRegisterFormFieldModel()
+      ..emailAddress = EmailAddress('email@email.com')
+      ..password = SignUpPassword(
+          'password', AuthenticationModulesMock.passwordValidator)
+      ..token = 'token';
     controller = ResetPasswordThreeController(
         iChangePasswordRepository,
         userRegisterFormFieldModel,
         AuthenticationModulesMock.passwordValidator);
+  });
+
+  setUpAll(() {
+    registerFallbackValue(FakeEmailAddress());
+    registerFallbackValue(FakeSignUpPassword());
   });
 
   group(ResetPasswordThreePage, () {

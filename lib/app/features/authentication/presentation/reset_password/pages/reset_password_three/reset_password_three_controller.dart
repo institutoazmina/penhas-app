@@ -99,10 +99,11 @@ abstract class _ResetPasswordThreeControllerBase with Store, MapFailureMessage {
   }
 
   bool _isValidToProceed() {
-    bool isValid = _userRegisterModel!.password!.isValid;
+    bool isValid = _userRegisterModel?.password?.isValid ?? false;
 
     if (!isValid) {
-      warningPassword = _userRegisterModel!.password!.mapFailure;
+      warningPassword = _userRegisterModel?.password?.mapFailure ??
+          SignUpPassword('', _passwordValidator).mapFailure;
     }
 
     if (_userRegisterModel!.validatePasswordConfirmation.isNotEmpty) {
