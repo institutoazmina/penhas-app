@@ -61,7 +61,7 @@ abstract class _ResetPasswordControllerBase with Store, MapFailureMessage {
     }
 
     _progress = ObservableFuture(
-      repository.request(emailAddress: _userRegisterModel.emailAddress),
+      repository.request(emailAddress: _userRegisterModel.emailAddress!),
     );
 
     final Either<Failure, ResetPasswordResponseEntity> response =

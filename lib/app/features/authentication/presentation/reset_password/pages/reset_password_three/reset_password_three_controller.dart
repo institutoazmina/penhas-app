@@ -85,9 +85,9 @@ abstract class _ResetPasswordThreeControllerBase with Store, MapFailureMessage {
 
     _progress = ObservableFuture(
       _repository.reset(
-        emailAddress: _userRegisterModel!.emailAddress,
-        password: _userRegisterModel!.password,
-        resetToken: _userRegisterModel!.token,
+        emailAddress: _userRegisterModel!.emailAddress!,
+        password: _userRegisterModel!.password!,
+        resetToken: _userRegisterModel!.token!,
       ),
     );
 
