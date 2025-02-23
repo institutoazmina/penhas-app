@@ -1,5 +1,4 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:http/http.dart' as http;
 
 import '../../../../core/managers/app_configuration.dart';
 import '../../../../core/managers/audio_record_services.dart';
@@ -16,7 +15,6 @@ import '../../../help_center/data/repositories/guardian_repository.dart';
 import '../../../help_center/domain/usecases/security_mode_action_feature.dart';
 import '../../../zodiac/domain/usecases/stealth_security_action.dart';
 import '../../../zodiac/presentation/zodiac_module.dart';
-import '../../data/datasources/authentication_data_source.dart';
 import '../../data/repositories/authentication_repository.dart';
 import '../../data/repositories/change_password_repository.dart';
 import '../../data/repositories/user_register_repository.dart';
@@ -143,12 +141,6 @@ class SignInModule extends Module {
           (i) => AuthenticationRepository(
             apiProvider: i.get<IApiProvider>(),
             appConfiguration: i.get<IAppConfiguration>(),
-            serverConfiguration: i.get<IApiServerConfigure>(),
-          ),
-        ),
-        Bind.factory<IAuthenticationDataSource>(
-          (i) => AuthenticationDataSource(
-            apiClient: i.get<http.Client>(),
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
