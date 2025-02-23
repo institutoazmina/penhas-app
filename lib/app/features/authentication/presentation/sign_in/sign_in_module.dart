@@ -163,9 +163,9 @@ class SignInModule extends Module {
         ),
         Bind.factory<IUserRegisterRepository>(
           (i) => UserRegisterRepository(
-            dataSource: i.get<IUserRegisterDataSource>(),
-            networkInfo: i.get<INetworkInfo>(),
+            apiProvider: i.get<IApiProvider>(),
             appConfiguration: i.get<IAppConfiguration>(),
+            serverConfigure: i.get<IApiServerConfigure>(),
           ),
         ),
         Bind.factory<IUserRegisterDataSource>(
