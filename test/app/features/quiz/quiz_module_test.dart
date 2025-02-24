@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/network/api_client.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
-import 'package:penhas/app/core/network/network_info.dart';
 import 'package:penhas/app/core/remoteconfig/i_remote_config.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/appstate/domain/usecases/app_state_usecase.dart';
@@ -91,9 +90,6 @@ void main() {
               Bind.factory<AppStateUseCase>(
                 (i) => _MockAppStateUseCase(),
               ),
-              Bind.factory<INetworkInfo>(
-                (i) => _MockNetworkInfo(),
-              ),
               Bind.factory<IApiServerConfigure>(
                 (i) => _MockApiServerConfigure(),
               ),
@@ -149,7 +145,6 @@ void main() {
             modules: [QuizModule()],
             overrides: [
               Bind<AppStateUseCase>((i) => _MockAppStateUseCase()),
-              Bind<INetworkInfo>((i) => _MockNetworkInfo()),
               Bind<IApiServerConfigure>((i) => _MockApiServerConfigure()),
               Bind<http.Client>((i) => _MockHttpClient()),
               Bind<IApiProvider>((i) => _MockApiProvider()),
@@ -172,8 +167,6 @@ void main() {
 class _MockModularNavigate extends Mock implements IModularNavigator {}
 
 class _MockAppStateUseCase extends Mock implements AppStateUseCase {}
-
-class _MockNetworkInfo extends Mock implements INetworkInfo {}
 
 class _MockApiServerConfigure extends Mock implements IApiServerConfigure {}
 
