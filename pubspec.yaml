@@ -29,7 +29,6 @@ dependencies:
   crypto: ^3.0.1
   cupertino_icons: ^1.0.4
   dartz: ^0.10.1
-  data_connection_checker: ^0.4.0-nullsafety
   device_info: ^2.0.3
   email_validator: ^2.0.1
   equatable: ^2.0.3
@@ -98,10 +97,6 @@ dev_dependencies:
   plugin_platform_interface: ^2.0.0
 
 dependency_overrides:
-  data_connection_checker:
-    git:
-      url: https://github.com/uSlashVlad/data_connection_checker.git
-      ref: "1b983aa377d9984ab18292d5ff33768e284e93d6"
   flutter_modular:
     git:
       url: https://github.com/pedrox-hs/modular.git
