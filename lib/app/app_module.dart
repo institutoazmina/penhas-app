@@ -1,4 +1,3 @@
-import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,7 +13,6 @@ import 'core/managers/modules_sevices.dart';
 import 'core/managers/user_profile_store.dart';
 import 'core/network/api_client.dart';
 import 'core/network/api_server_configure.dart';
-import 'core/network/network_info.dart';
 import 'core/remoteconfig/i_remote_config.dart';
 import 'core/remoteconfig/remote_config.dart';
 import 'core/storage/cache_storage.dart';
@@ -61,17 +59,11 @@ class AppModule extends Module {
           ),
         ),
         Bind.factory<http.Client>((i) => http.Client()),
-        Bind.factory<INetworkInfo>(
-          (i) => NetworkInfo(
-            i.get<DataConnectionChecker>(),
-          ),
-        ),
         Bind.factory<IApiProvider>(
           (i) => ApiProvider(
             serverConfiguration: i.get<IApiServerConfigure>(),
           ),
         ),
-        Bind.factory<DataConnectionChecker>((i) => DataConnectionChecker()),
         Bind.factory<IUserProfileRepository>(
           (i) => UserProfileRepository(
             apiProvider: i.get<IApiProvider>(),
