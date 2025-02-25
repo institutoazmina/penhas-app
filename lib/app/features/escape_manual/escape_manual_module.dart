@@ -1,6 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../core/managers/background_task_manager.dart';
+import '../../core/network/api_client.dart';
+import '../../core/storage/cache_storage.dart';
+import '../../core/storage/persistent_storage.dart';
 import 'data/datasource/impl/escape_manual_local_datasource.dart';
 import 'data/datasource/impl/escape_manual_remote_datasource.dart';
 import 'data/datastore/escape_manual_cache_store.dart';
@@ -21,7 +25,36 @@ class EscapeManualModule extends WidgetModule {
   EscapeManualModule({Key? key}) : super(key: key);
 
   @override
-  Widget get view => const EscapeManualPage();
+  Widget get view => EscapeManualPage(
+        controller: EscapeManualController(
+            backgroundTaskManager: Modular.get<IBackgroundTaskManager>(),
+            deleteTask: DeleteEscapeManualTaskUseCase(
+                repository: EscapeManualRepository(
+                    localDatasource: EscapeManualLocalDatasource(
+                        store: EscapeManualTasksStore(
+                            storageFactory:
+                                Modular.get<IPersistentStorageFactory>())),
+                    remoteDatasource: EscapeManualRemoteDatasource(
+                        apiProvider: Modular.get<IApiProvider>(),
+                        cacheStorage: EscapeManualCacheStore(
+                            storage: Modular.get<ICacheStorage>())))),
+            getEscapeManual: GetEscapeManualUseCase(
+                repository: EscapeManualRepository(
+                    localDatasource: EscapeManualLocalDatasource(
+                        store: EscapeManualTasksStore(
+                            storageFactory:
+                                Modular.get<IPersistentStorageFactory>())),
+                    remoteDatasource: EscapeManualRemoteDatasource(
+                        apiProvider: Modular.get<IApiProvider>(),
+                        cacheStorage: EscapeManualCacheStore(
+                            storage: Modular.get<ICacheStorage>())))),
+            startEscapeManual: StartEscapeManualUseCase(
+                repository: EscapeManualRepository(
+                    localDatasource: EscapeManualLocalDatasource(
+                        store: EscapeManualTasksStore(storageFactory: Modular.get<IPersistentStorageFactory>())),
+                    remoteDatasource: EscapeManualRemoteDatasource(apiProvider: Modular.get<IApiProvider>(), cacheStorage: EscapeManualCacheStore(storage: Modular.get<ICacheStorage>())))),
+            updateTask: UpdateEscapeManualTaskUseCase(repository: EscapeManualRepository(localDatasource: EscapeManualLocalDatasource(store: EscapeManualTasksStore(storageFactory: Modular.get<IPersistentStorageFactory>())), remoteDatasource: EscapeManualRemoteDatasource(apiProvider: Modular.get<IApiProvider>(), cacheStorage: EscapeManualCacheStore(storage: Modular.get<ICacheStorage>()))))),
+      );
 
   @override
   List<ModularRoute> get routes => [

@@ -18,8 +18,8 @@ import 'package:penhas/app/features/chat/domain/repositories/chat_channel_reposi
 import 'package:penhas/app/features/chat/domain/states/chat_channel_usecase_event.dart';
 import 'package:penhas/app/features/chat/domain/usecases/chat_channel_usecase.dart';
 
-class MockChatChannelRepository extends Mock implements IChatChannelRepository {
-}
+class MockChatChannelRepository extends Mock
+    implements IChatChannelRepository {}
 
 void main() {
   late String channelToken;
