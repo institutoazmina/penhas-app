@@ -25,17 +25,20 @@ typedef OnCallButtonPressed = void Function(
 );
 
 class EscapeManualPage extends StatefulWidget {
-  const EscapeManualPage({Key? key}) : super(key: key);
+  const EscapeManualPage({Key? key, required this.controller})
+      : super(key: key);
+
+  final EscapeManualController controller;
 
   @override
   State<EscapeManualPage> createState() => _EscapeManualPageState();
 }
 
-class _EscapeManualPageState
-    extends ModularState<EscapeManualPage, EscapeManualController>
+class _EscapeManualPageState extends State<EscapeManualPage>
     with SnackBarHandler, AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
+  EscapeManualController get _controller => widget.controller;
 
   ReactionDisposer? _disposer;
 
@@ -46,14 +49,14 @@ class _EscapeManualPageState
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _disposer ??= controller.onReaction(_onReaction);
-    controller.load();
+    _disposer ??= _controller.onReaction(_onReaction);
+    _controller.load();
   }
 
   @override
   void dispose() {
     _disposer?.call();
-    controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -65,16 +68,16 @@ class _EscapeManualPageState
       body: Observer(
         builder: (_) => PageProgressIndicator(
           progressMessage: 'Carregando...',
-          progressState: controller.progressState,
-          child: controller.state.when(
+          progressState: _controller.progressState,
+          child: _controller.state.when(
             initial: () => _InitialStateWidget(),
             loaded: (data) => _LoadedStateWidget(
               escapeManual: data,
-              openAssistantPressed: controller.openAssistant,
+              openAssistantPressed: _controller.openAssistant,
             ),
             error: (message) => _ErrorStateWidget(
               message: message,
-              onRetryPressed: controller.load,
+              onRetryPressed: _controller.load,
             ),
           ),
         ),

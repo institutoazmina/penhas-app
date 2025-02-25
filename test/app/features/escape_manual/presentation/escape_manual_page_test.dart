@@ -56,7 +56,9 @@ void main() {
       'should call load',
       (tester) async {
         // act
-        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
+        await tester.pumpWidget(buildTestableWidget(EscapeManualPage(
+          controller: mockController,
+        )));
 
         // assert
         verify(() => mockController.load()).called(1);
@@ -71,7 +73,8 @@ void main() {
             .thenReturn(PageProgressState.loading);
 
         // act
-        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
+        await tester.pumpWidget(
+            buildTestableWidget(EscapeManualPage(controller: mockController)));
 
         // assert
         expect(find.text('Carregando...'), findsOneWidget);
@@ -87,7 +90,8 @@ void main() {
             .thenReturn(PageProgressState.initial);
 
         // act
-        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
+        await tester.pumpWidget(
+            buildTestableWidget(EscapeManualPage(controller: mockController)));
 
         // assert
         expect(find.text('Carregando...'), findsNothing);
@@ -103,7 +107,8 @@ void main() {
             .thenReturn(PageProgressState.loaded);
 
         // act
-        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
+        await tester.pumpWidget(
+            buildTestableWidget(EscapeManualPage(controller: mockController)));
 
         // assert
         expect(find.text('Carregando...'), findsNothing);
@@ -138,7 +143,8 @@ void main() {
         when(() => mockController.openAssistant(assistantAction))
             .thenAnswer((_) => Future.value());
 
-        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
+        await tester.pumpWidget(
+            buildTestableWidget(EscapeManualPage(controller: mockController)));
 
         // act
         await tester.tap(find.widgetWithText(OutlinedButton, 'button'));
@@ -154,7 +160,8 @@ void main() {
         // arrange
         when(() => mockController.state)
             .thenReturn(const EscapeManualState.error('error message'));
-        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
+        await tester.pumpWidget(
+            buildTestableWidget(EscapeManualPage(controller: mockController)));
         clearInteractions(mockController);
 
         // act
@@ -177,7 +184,8 @@ void main() {
             .thenReturn(EscapeManualState.loaded(escapeManualEntity));
         when(() => mockController.updateTask(any()))
             .thenAnswer((_) => Future.value());
-        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
+        await tester.pumpWidget(
+            buildTestableWidget(EscapeManualPage(controller: mockController)));
 
         // act
         await tester.tapAll(
@@ -208,7 +216,8 @@ void main() {
             .thenReturn(EscapeManualState.loaded(escapeManualEntity));
         when(() => mockController.updateTask(any()))
             .thenAnswer((_) => Future.value());
-        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
+        await tester.pumpWidget(
+            buildTestableWidget(EscapeManualPage(controller: mockController)));
 
         // act
         await tester.tapAll(
@@ -237,7 +246,8 @@ void main() {
             .thenReturn(EscapeManualState.loaded(escapeManualEntity));
         when(() => mockController.deleteTask(any()))
             .thenAnswer((_) => Future.value());
-        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
+        await tester.pumpWidget(
+            buildTestableWidget(EscapeManualPage(controller: mockController)));
 
         // act
         await tester.tapAll(
@@ -269,7 +279,8 @@ void main() {
             .thenReturn(EscapeManualState.loaded(escapeManualEntity));
         when(() => mockController.editTask(any()))
             .thenAnswer((_) => Future.value());
-        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
+        await tester.pumpWidget(
+            buildTestableWidget(EscapeManualPage(controller: mockController)));
 
         // act
         await tester.tapAll(
@@ -305,7 +316,8 @@ void main() {
         final expectedContact = task.value![1];
         when(() => mockController.state)
             .thenReturn(EscapeManualState.loaded(escapeManualEntity));
-        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
+        await tester.pumpWidget(
+            buildTestableWidget(EscapeManualPage(controller: mockController)));
 
         // act
         await tester.tap(
@@ -339,7 +351,8 @@ void main() {
         when(() => mockController.onButtonPressed(any()))
             .thenAnswer((_) => Future.value());
 
-        await tester.pumpWidget(buildTestableWidget(const EscapeManualPage()));
+        await tester.pumpWidget(
+            buildTestableWidget(EscapeManualPage(controller: mockController)));
 
         // act
         await tester.tap(
@@ -369,7 +382,7 @@ void main() {
             EscapeManualState.loaded(escapeManualEntity),
           );
         },
-        pageBuilder: () => const EscapeManualPage(),
+        pageBuilder: () => EscapeManualPage(controller: mockController),
       );
 
       screenshotTest(
@@ -380,7 +393,7 @@ void main() {
             EscapeManualState.loaded(escapeManualEntity),
           );
         },
-        pageBuilder: () => const EscapeManualPage(),
+        pageBuilder: () => EscapeManualPage(controller: mockController),
         pumpBeforeTest: (tester) async {
           await tester.tapAll(
             find.widgetWithText(ExpansionTile, 'Section 1'),
@@ -396,7 +409,7 @@ void main() {
             EscapeManualState.loaded(escapeManualEntity),
           );
         },
-        pageBuilder: () => const EscapeManualPage(),
+        pageBuilder: () => EscapeManualPage(controller: mockController),
         pumpBeforeTest: (tester) async {
           await tester.tapAll(
             find.widgetWithText(ExpansionTile, 'Section 1'),
@@ -419,7 +432,7 @@ void main() {
             EscapeManualState.loaded(escapeManualEntity),
           );
         },
-        pageBuilder: () => const EscapeManualPage(),
+        pageBuilder: () => EscapeManualPage(controller: mockController),
         pumpBeforeTest: (tester) async {
           await tester.tapAll(
             find.widgetWithText(ExpansionTile, 'Section 1'),
@@ -442,7 +455,7 @@ void main() {
             EscapeManualState.loaded(escapeManualEntity),
           );
         },
-        pageBuilder: () => const EscapeManualPage(),
+        pageBuilder: () => EscapeManualPage(controller: mockController),
         pumpBeforeTest: (tester) async {
           await tester.tapAll(
             find.widgetWithText(ExpansionTile, 'Section 1'),
@@ -464,7 +477,7 @@ void main() {
           when(() => mockController.state)
               .thenReturn(const EscapeManualState.error('error message'));
         },
-        pageBuilder: () => const EscapeManualPage(),
+        pageBuilder: () => EscapeManualPage(controller: mockController),
       );
 
       screenshotTest(
@@ -488,7 +501,7 @@ void main() {
             },
           );
         },
-        pageBuilder: () => const EscapeManualPage(),
+        pageBuilder: () => EscapeManualPage(controller: mockController),
       );
     });
   });
