@@ -32,8 +32,8 @@ class AppModulesMock {
 /// Mock classes
 ///
 
-class MockUserProfileRepository extends Mock
-    implements IUserProfileRepository {}
+class MockUserProfileRepository extends Mock implements IUserProfileRepository {
+}
 
 class MockAppConfiguration extends Mock implements IAppConfiguration {}
 

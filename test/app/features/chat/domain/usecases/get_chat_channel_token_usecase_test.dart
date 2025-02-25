@@ -6,8 +6,8 @@ import 'package:penhas/app/features/chat/domain/entities/chat_channel_open_entit
 import 'package:penhas/app/features/chat/domain/repositories/chat_channel_repository.dart';
 import 'package:penhas/app/features/chat/domain/usecases/get_chat_channel_token_usecase.dart';
 
-class MockChatChannelRepository extends Mock
-    implements IChatChannelRepository {}
+class MockChatChannelRepository extends Mock implements IChatChannelRepository {
+}
 
 void main() {
   late GetChatChannelTokenUseCase sut;
