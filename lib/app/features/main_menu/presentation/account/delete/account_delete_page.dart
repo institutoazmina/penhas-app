@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:mobx/mobx.dart';
 
@@ -13,16 +12,19 @@ import '../../../domain/states/profile_delete_state.dart';
 import 'account_delete_controller.dart';
 
 class AccountDeletePage extends StatefulWidget {
-  const AccountDeletePage({Key? key}) : super(key: key);
+  const AccountDeletePage({Key? key, required this.controller})
+      : super(key: key);
+
+  final AccountDeleteController controller;
 
   @override
   _AccountDeletePageState createState() => _AccountDeletePageState();
 }
 
-class _AccountDeletePageState
-    extends ModularState<AccountDeletePage, AccountDeleteController>
+class _AccountDeletePageState extends State<AccountDeletePage>
     with SnackBarHandler {
   bool _isPasswordVisible = false;
+  AccountDeleteController get _controller => widget.controller;
   final textController = TextEditingController();
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -31,10 +33,16 @@ class _AccountDeletePageState
   void didChangeDependencies() {
     super.didChangeDependencies();
     _disposers ??= [
-      reaction((_) => controller.errorMessage, (String? message) {
+      reaction((_) => _controller.errorMessage, (String? message) {
         showSnackBar(scaffoldKey: _scaffoldKey, message: message);
       }),
     ];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.loadPage();
   }
 
   @override
@@ -47,7 +55,7 @@ class _AccountDeletePageState
         backgroundColor: DesignSystemColors.easterPurple,
       ),
       body: Observer(
-        builder: (context) => bodyBuilder(controller.state),
+        builder: (context) => bodyBuilder(_controller.state),
       ),
     );
   }
@@ -74,7 +82,7 @@ extension _PageBuilder on _AccountDeletePageState {
       loaded: (msg) => bodyLoaded(msg),
       error: (msg) => SupportCenterGeneralError(
         message: msg,
-        onPressed: controller.retry,
+        onPressed: _controller.retry,
       ),
     );
   }
@@ -93,7 +101,7 @@ extension _PageBuilder on _AccountDeletePageState {
     return SafeArea(
       child: PageProgressIndicator(
         progressMessage: 'Processando...',
-        progressState: controller.progressState,
+        progressState: _controller.progressState,
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(
@@ -155,7 +163,8 @@ extension _PageBuilder on _AccountDeletePageState {
                       height: 40,
                       width: 250,
                       child: PenhasButton.roundedFilled(
-                        onPressed: () => controller.delete(textController.text),
+                        onPressed: () =>
+                            _controller.delete(textController.text),
                         child: Text('Excluir conta', style: buttonTextStyle),
                       ),
                     ),
