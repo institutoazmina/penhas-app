@@ -27,7 +27,6 @@ typedef OnCallButtonPressed = void Function(
 class EscapeManualPage extends StatefulWidget {
   const EscapeManualPage({Key? key, required this.controller})
       : super(key: key);
-
   final EscapeManualController controller;
 
   @override
