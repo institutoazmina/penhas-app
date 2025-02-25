@@ -25,9 +25,7 @@ abstract class _AccountDeleteControllerBase with Store, MapFailureMessage {
   _AccountDeleteControllerBase(
     this._profileRepository,
     this._appConfiguration,
-  ) {
-    loadPage();
-  }
+  );
 
   final IAppConfiguration _appConfiguration;
   final IUserProfileRepository _profileRepository;
@@ -61,13 +59,6 @@ abstract class _AccountDeleteControllerBase with Store, MapFailureMessage {
     );
   }
 
-  @action
-  Future<void> retry() async {
-    loadPage();
-  }
-}
-
-extension _PrivateMethods on _AccountDeleteControllerBase {
   Future<void> loadPage() async {
     final response = await _profileRepository.deleteNotice();
 
@@ -77,6 +68,13 @@ extension _PrivateMethods on _AccountDeleteControllerBase {
     );
   }
 
+  @action
+  Future<void> retry() async {
+    loadPage();
+  }
+}
+
+extension _PrivateMethods on _AccountDeleteControllerBase {
   void handleLoadPageError(Failure failure) {
     final message = mapFailureMessage(failure);
     state = ProfileDeleteState.error(message);

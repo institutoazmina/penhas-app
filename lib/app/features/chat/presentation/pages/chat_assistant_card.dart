@@ -38,7 +38,7 @@ class ChatAssistantCard extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
+          padding: const EdgeInsets.only(left: 20),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -47,7 +47,6 @@ class ChatAssistantCard extends StatelessWidget {
                 child: icon,
               ),
               Column(
-                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
@@ -58,13 +57,11 @@ class ChatAssistantCard extends StatelessWidget {
                       textAlign: TextAlign.left,
                     ),
                   ),
-                  SizedBox(
-                    width: 240,
-                    child: Text(
-                      description!,
-                      style: descriptionStyle,
-                      textAlign: TextAlign.left,
-                    ),
+                  Text(
+                    description!,
+                    style: descriptionStyle,
+                    textAlign: TextAlign.left,
+                    softWrap: true,
                   ),
                 ],
               ),

@@ -286,7 +286,9 @@ class MainboardModule extends Module {
         ),
         ChildRoute(
           '/menu/account_delete',
-          child: (context, args) => const AccountDeletePage(),
+          child: (context, args) => AccountDeletePage(
+            controller: Modular.get<AccountDeleteController>(),
+          ),
           transition: TransitionType.rightToLeft,
         ),
         ModuleRoute(
