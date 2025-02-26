@@ -1,4 +1,4 @@
-import 'package:flutter/services.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -8,24 +8,56 @@ import 'package:platform/platform.dart';
 
 class MockAppConfiguration extends Mock implements IAppConfiguration {}
 
-const deviceInfoChannel = 'dev.fluttercommunity.plus/device_info';
+class MockDeviceInfoPlugin extends Mock implements DeviceInfoPlugin {}
+
+class MockAndroidDeviceInfo extends Mock implements AndroidDeviceInfo {}
+
+class MockIosDeviceInfo extends Mock implements IosDeviceInfo {}
+
+class MockAndroidBuildVersion extends Mock implements AndroidBuildVersion {}
+
 void main() {
   late IAppConfiguration appConfiguration;
+  late DeviceInfoPlugin deviceInfoPlugin;
+  late AndroidDeviceInfo androidInfo;
+  late IosDeviceInfo iosInfo;
+  late AndroidBuildVersion androidBuildVersion;
+
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() {
     appConfiguration = MockAppConfiguration();
+    deviceInfoPlugin = MockDeviceInfoPlugin();
+    androidInfo = MockAndroidDeviceInfo();
+    iosInfo = MockIosDeviceInfo();
+    androidBuildVersion = MockAndroidBuildVersion();
+
+    // Setup for PackageInfo
+    PackageInfo.setMockInitialValues(
+      appName: 'MyApp',
+      packageName: 'MyPackage',
+      version: '42',
+      buildNumber: '4242',
+      buildSignature: 'buildSignature',
+    );
   });
+
   group(ApiServerConfigure, () {
+    // Helper function to create SUT with injected deviceInfoPlugin
+    ApiServerConfigure createSut({Platform? platform}) {
+      return ApiServerConfigure(
+        appConfiguration: appConfiguration,
+        platform: platform ?? FakePlatform(),
+        deviceInfoPlugin: deviceInfoPlugin, // Inject the mock
+      );
+    }
+
     test('return baseUri', () {
       // arrange
       final expected = Uri.parse('https://api.example.com');
       when(() => appConfiguration.penhasServer)
           .thenReturn(Uri.parse('https://api.example.com'));
-      final sut = ApiServerConfigure(
-        appConfiguration: appConfiguration,
-        platform: FakePlatform(),
-      );
+      final sut = createSut();
       // action
       final actual = sut.baseUri;
       // assert
@@ -36,10 +68,7 @@ void main() {
       // arrange
       const expected = 'my_secret_token';
       when(() => appConfiguration.apiToken).thenAnswer((_) async => expected);
-      final sut = ApiServerConfigure(
-        appConfiguration: appConfiguration,
-        platform: FakePlatform(),
-      );
+      final sut = createSut();
       // action
       final actual = await sut.apiToken;
       // assert
@@ -49,18 +78,15 @@ void main() {
     test('crash return default userAgent', () async {
       // arrange
       const expected = 'Error 0.0.0/Invalid Model/42';
-      PackageInfo.setMockInitialValues(
-        appName: 'MyApp',
-        packageName: 'MyPackage',
-        version: '42',
-        buildNumber: '4242',
-        buildSignature: 'buildSignature',
-      );
+
+      // Mock the deviceInfoPlugin to throw an exception
+      when(() => deviceInfoPlugin.androidInfo)
+          .thenThrow(Exception('Test exception'));
+      when(() => deviceInfoPlugin.iosInfo)
+          .thenThrow(Exception('Test exception'));
+
       // action
-      final sut = ApiServerConfigure(
-        appConfiguration: appConfiguration,
-        platform: FakePlatform(),
-      );
+      final sut = createSut();
 
       final actual = await sut.userAgent;
       // assert
@@ -70,22 +96,17 @@ void main() {
     test('in Android return userAgent with Android info', () async {
       // arrange
       const expected = 'Android release/Google model/42';
-      PackageInfo.setMockInitialValues(
-        appName: 'MyApp',
-        packageName: 'MyPackage',
-        version: '42',
-        buildNumber: '4242',
-        buildSignature: 'buildSignature',
-      );
 
-      final sut = ApiServerConfigure(
-        appConfiguration: appConfiguration,
-        platform: FakePlatform(operatingSystem: 'android'),
-      );
-      const channelDeviceInfo = MethodChannel(deviceInfoChannel);
-      channelDeviceInfo.setMockMethodCallHandler((call) async {
-        return _fakeAndroidDeviceInfo();
-      });
+      // Setup Android device info mocks
+      when(() => androidInfo.version).thenReturn(androidBuildVersion);
+      when(() => androidBuildVersion.release).thenReturn('release');
+      when(() => androidInfo.brand).thenReturn('Google');
+      when(() => androidInfo.model).thenReturn('model');
+      when(() => deviceInfoPlugin.androidInfo)
+          .thenAnswer((_) async => androidInfo);
+
+      final sut = createSut(platform: FakePlatform(operatingSystem: 'android'));
+
       // action
       final actual = await sut.userAgent;
       // assert
@@ -95,30 +116,13 @@ void main() {
     test('in iOS return userAgent with iOS info', () async {
       // arrange
       const expected = 'iOS systemVersion/model/42';
-      const channelDeviceInfo = MethodChannel(deviceInfoChannel);
-      PackageInfo.setMockInitialValues(
-        appName: 'MyApp',
-        packageName: 'MyPackage',
-        version: '42',
-        buildNumber: '4242',
-        buildSignature: 'buildSignature',
-      );
-      final sut = ApiServerConfigure(
-        appConfiguration: appConfiguration,
-        platform: FakePlatform(operatingSystem: 'ios'),
-      );
-      channelDeviceInfo.setMockMethodCallHandler((call) async {
-        return {
-          'appName': 'MyApp',
-          'packageName': 'MyPackage',
-          'version': '42',
-          'buildNumber': '4242'
-        };
-      });
 
-      channelDeviceInfo.setMockMethodCallHandler((call) async {
-        return _fakeiOSDeviceInfo();
-      });
+      // Setup iOS device info mocks
+      when(() => iosInfo.systemVersion).thenReturn('systemVersion');
+      when(() => iosInfo.model).thenReturn('model');
+      when(() => deviceInfoPlugin.iosInfo).thenAnswer((_) async => iosInfo);
+
+      final sut = createSut(platform: FakePlatform(operatingSystem: 'ios'));
 
       // action
       final actual = await sut.userAgent;
@@ -126,73 +130,4 @@ void main() {
       expect(actual, expected);
     });
   });
-}
-
-Map<String, Object> _fakeiOSDeviceInfo() {
-  const iosUtsnameMap = <String, dynamic>{
-    'release': 'release',
-    'version': 'version',
-    'machine': 'machine',
-    'sysname': 'sysname',
-    'nodename': 'nodename',
-  };
-  return {
-    'name': 'name',
-    'model': 'model',
-    'utsname': iosUtsnameMap,
-    'systemName': 'systemName',
-    'isPhysicalDevice': 'true',
-    'systemVersion': 'systemVersion',
-    'localizedModel': 'localizedModel',
-    'identifierForVendor': 'identifierForVendor',
-  };
-}
-
-Map<String, Object> _fakeAndroidDeviceInfo() {
-  const fakeAndroidBuildVersion = {
-    'sdkInt': 16,
-    'baseOS': 'baseOS',
-    'previewSdkInt': 30,
-    'release': 'release',
-    'codename': 'codename',
-    'incremental': 'incremental',
-    'securityPatch': 'securityPatch',
-  };
-
-  const fakeDisplayMetrics = {
-    'widthPx': 1080.0,
-    'heightPx': 2220.0,
-    'xDpi': 530.0859,
-    'yDpi': 529.4639,
-  };
-
-  const fakeSupportedAbis = ['arm64-v8a', 'x86', 'x86_64'];
-  const fakeSupported32BitAbis = ['x86 (IA-32)', 'MMX'];
-  const fakeSupported64BitAbis = ['x86-64', 'MMX', 'SSSE3'];
-  const fakeSystemFeatures = ['FEATURE_AUDIO_PRO', 'FEATURE_AUDIO_OUTPUT'];
-
-  return {
-    'id': 'id',
-    'host': 'host',
-    'tags': 'tags',
-    'type': 'type',
-    'model': 'model',
-    'board': 'board',
-    'brand': 'Google',
-    'device': 'device',
-    'product': 'product',
-    'display': 'display',
-    'hardware': 'hardware',
-    'isPhysicalDevice': true,
-    'bootloader': 'bootloader',
-    'fingerprint': 'fingerprint',
-    'manufacturer': 'manufacturer',
-    'supportedAbis': fakeSupportedAbis,
-    'systemFeatures': fakeSystemFeatures,
-    'version': fakeAndroidBuildVersion,
-    'supported64BitAbis': fakeSupported64BitAbis,
-    'supported32BitAbis': fakeSupported32BitAbis,
-    'displayMetrics': fakeDisplayMetrics,
-    'serialNumber': 'SERIAL',
-  };
 }

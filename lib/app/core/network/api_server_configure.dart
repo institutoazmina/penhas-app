@@ -14,11 +14,14 @@ class ApiServerConfigure implements IApiServerConfigure {
   ApiServerConfigure({
     required IAppConfiguration appConfiguration,
     Platform? platform,
+    DeviceInfoPlugin? deviceInfoPlugin,
   })  : _appConfiguration = appConfiguration,
-        _platform = platform ?? const LocalPlatform();
+        _platform = platform ?? const LocalPlatform(),
+        _deviceInfoPlugin = deviceInfoPlugin ?? DeviceInfoPlugin();
 
   final IAppConfiguration _appConfiguration;
   final Platform _platform;
+  final DeviceInfoPlugin _deviceInfoPlugin;
 
   @override
   Uri get baseUri => _appConfiguration.penhasServer;
@@ -42,14 +45,13 @@ class ApiServerConfigure implements IApiServerConfigure {
   }
 
   Future<String> _deviceInfo() async {
-    final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
     _DeviceInfo deviceData = _DeviceInfo('Error', '0.0.0', 'Invalid Model');
 
     try {
       if (_platform.isAndroid) {
-        deviceData = _readAndroidBuildData(await deviceInfoPlugin.androidInfo);
+        deviceData = _readAndroidBuildData(await _deviceInfoPlugin.androidInfo);
       } else if (_platform.isIOS) {
-        deviceData = _readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
+        deviceData = _readIosDeviceInfo(await _deviceInfoPlugin.iosInfo);
       }
     } catch (_) {
       deviceData = _DeviceInfo('Error', '0.0.0', 'Invalid Model');
