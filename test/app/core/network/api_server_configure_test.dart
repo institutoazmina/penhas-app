@@ -1,29 +1,20 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:penhas/app/core/managers/app_configuration.dart';
 import 'package:penhas/app/core/network/api_server_configure.dart';
 import 'package:platform/platform.dart';
 
 class MockAppConfiguration extends Mock implements IAppConfiguration {}
 
-class MockPlatform extends Mock implements Platform {}
-
-const packageInfoChannel = 'dev.fluttercommunity.plus/package_info';
 const deviceInfoChannel = 'dev.fluttercommunity.plus/device_info';
 void main() {
   late IAppConfiguration appConfiguration;
-  late Platform platform;
-  late ApiServerConfigure sut;
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() {
     appConfiguration = MockAppConfiguration();
-    platform = MockPlatform();
-    sut = ApiServerConfigure(
-      appConfiguration: appConfiguration,
-      platform: platform,
-    );
   });
   group(ApiServerConfigure, () {
     test('return baseUri', () {
@@ -31,6 +22,10 @@ void main() {
       final expected = Uri.parse('https://api.example.com');
       when(() => appConfiguration.penhasServer)
           .thenReturn(Uri.parse('https://api.example.com'));
+      final sut = ApiServerConfigure(
+        appConfiguration: appConfiguration,
+        platform: FakePlatform(),
+      );
       // action
       final actual = sut.baseUri;
       // assert
@@ -41,6 +36,10 @@ void main() {
       // arrange
       const expected = 'my_secret_token';
       when(() => appConfiguration.apiToken).thenAnswer((_) async => expected);
+      final sut = ApiServerConfigure(
+        appConfiguration: appConfiguration,
+        platform: FakePlatform(),
+      );
       // action
       final actual = await sut.apiToken;
       // assert
@@ -50,18 +49,19 @@ void main() {
     test('crash return default userAgent', () async {
       // arrange
       const expected = 'Error 0.0.0/Invalid Model/42';
-      const channelPackage = MethodChannel(packageInfoChannel);
-
-      channelPackage.setMockMethodCallHandler((call) async {
-        return {
-          'appName': 'MyApp',
-          'packageName': 'MyPackage',
-          'version': '42',
-          'buildNumber': '4242'
-        };
-      });
-
+      PackageInfo.setMockInitialValues(
+        appName: 'MyApp',
+        packageName: 'MyPackage',
+        version: '42',
+        buildNumber: '4242',
+        buildSignature: 'buildSignature',
+      );
       // action
+      final sut = ApiServerConfigure(
+        appConfiguration: appConfiguration,
+        platform: FakePlatform(),
+      );
+
       final actual = await sut.userAgent;
       // assert
       expect(actual, expected);
@@ -70,23 +70,22 @@ void main() {
     test('in Android return userAgent with Android info', () async {
       // arrange
       const expected = 'Android release/Google model/42';
-      const channelPackage = MethodChannel(packageInfoChannel);
+      PackageInfo.setMockInitialValues(
+        appName: 'MyApp',
+        packageName: 'MyPackage',
+        version: '42',
+        buildNumber: '4242',
+        buildSignature: 'buildSignature',
+      );
+
+      final sut = ApiServerConfigure(
+        appConfiguration: appConfiguration,
+        platform: FakePlatform(operatingSystem: 'android'),
+      );
       const channelDeviceInfo = MethodChannel(deviceInfoChannel);
-
-      channelPackage.setMockMethodCallHandler((call) async {
-        return {
-          'appName': 'MyApp',
-          'packageName': 'MyPackage',
-          'version': '42',
-          'buildNumber': '4242'
-        };
-      });
-      when(() => platform.isAndroid).thenReturn(true);
-
       channelDeviceInfo.setMockMethodCallHandler((call) async {
         return _fakeAndroidDeviceInfo();
       });
-
       // action
       final actual = await sut.userAgent;
       // assert
@@ -96,10 +95,19 @@ void main() {
     test('in iOS return userAgent with iOS info', () async {
       // arrange
       const expected = 'iOS systemVersion/model/42';
-      const channelPackage = MethodChannel(packageInfoChannel);
       const channelDeviceInfo = MethodChannel(deviceInfoChannel);
-
-      channelPackage.setMockMethodCallHandler((call) async {
+      PackageInfo.setMockInitialValues(
+        appName: 'MyApp',
+        packageName: 'MyPackage',
+        version: '42',
+        buildNumber: '4242',
+        buildSignature: 'buildSignature',
+      );
+      final sut = ApiServerConfigure(
+        appConfiguration: appConfiguration,
+        platform: FakePlatform(operatingSystem: 'ios'),
+      );
+      channelDeviceInfo.setMockMethodCallHandler((call) async {
         return {
           'appName': 'MyApp',
           'packageName': 'MyPackage',
@@ -107,8 +115,6 @@ void main() {
           'buildNumber': '4242'
         };
       });
-      when(() => platform.isAndroid).thenReturn(false);
-      when(() => platform.isIOS).thenReturn(true);
 
       channelDeviceInfo.setMockMethodCallHandler((call) async {
         return _fakeiOSDeviceInfo();
