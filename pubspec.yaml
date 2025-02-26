@@ -29,7 +29,7 @@ dependencies:
   crypto: ^3.0.1
   cupertino_icons: ^1.0.4
   dartz: ^0.10.1
-  device_info: ^2.0.3
+  device_info_plus:
   email_validator: ^2.0.1
   equatable: ^2.0.3
   firebase_analytics: '9.3.1'
@@ -59,7 +59,7 @@ dependencies:
   mask_text_input_formatter: ^2.0.0
   meta: ^1.7.0
   mobx: ^2.0.5
-  package_info: ^2.0.2
+  package_info_plus:
   path: ^1.8.0
   path_provider: ^2.0.8
   path_provider_android: ^2.0.22
