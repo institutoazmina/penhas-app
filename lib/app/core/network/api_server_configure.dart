@@ -1,5 +1,5 @@
-import 'package:device_info/device_info.dart';
-import 'package:package_info/package_info.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:platform/platform.dart';
 
 import '../managers/app_configuration.dart';
@@ -61,13 +61,17 @@ class ApiServerConfigure implements IApiServerConfigure {
   _DeviceInfo _readAndroidBuildData(AndroidDeviceInfo build) {
     return _DeviceInfo(
       'Android',
-      build.version.release,
+      build.version.release ?? '0.0.0',
       '${build.brand} ${build.model}',
     );
   }
 
   _DeviceInfo _readIosDeviceInfo(IosDeviceInfo data) {
-    return _DeviceInfo('iOS', data.systemVersion, data.model);
+    return _DeviceInfo(
+      'iOS',
+      data.systemVersion ?? '0.0.0',
+      data.model ?? 'Invalid Model',
+    );
   }
 }
 

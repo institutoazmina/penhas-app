@@ -9,6 +9,8 @@ class MockAppConfiguration extends Mock implements IAppConfiguration {}
 
 class MockPlatform extends Mock implements Platform {}
 
+const packageInfoChannel = 'dev.fluttercommunity.plus/package_info';
+const deviceInfoChannel = 'dev.fluttercommunity.plus/device_info';
 void main() {
   late IAppConfiguration appConfiguration;
   late Platform platform;
@@ -48,7 +50,7 @@ void main() {
     test('crash return default userAgent', () async {
       // arrange
       const expected = 'Error 0.0.0/Invalid Model/42';
-      const channelPackage = MethodChannel('plugins.flutter.io/package_info');
+      const channelPackage = MethodChannel(packageInfoChannel);
 
       channelPackage.setMockMethodCallHandler((call) async {
         return {
@@ -68,8 +70,8 @@ void main() {
     test('in Android return userAgent with Android info', () async {
       // arrange
       const expected = 'Android release/Google model/42';
-      const channelPackage = MethodChannel('plugins.flutter.io/package_info');
-      const channelDeviceInfo = MethodChannel('plugins.flutter.io/device_info');
+      const channelPackage = MethodChannel(packageInfoChannel);
+      const channelDeviceInfo = MethodChannel(deviceInfoChannel);
 
       channelPackage.setMockMethodCallHandler((call) async {
         return {
@@ -94,8 +96,8 @@ void main() {
     test('in iOS return userAgent with iOS info', () async {
       // arrange
       const expected = 'iOS systemVersion/model/42';
-      const channelPackage = MethodChannel('plugins.flutter.io/package_info');
-      const channelDeviceInfo = MethodChannel('plugins.flutter.io/device_info');
+      const channelPackage = MethodChannel(packageInfoChannel);
+      const channelDeviceInfo = MethodChannel(deviceInfoChannel);
 
       channelPackage.setMockMethodCallHandler((call) async {
         return {
