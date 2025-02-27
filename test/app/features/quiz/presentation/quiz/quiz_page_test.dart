@@ -368,8 +368,6 @@ void main() {
           },
         );
       },
-      skip: true
-
     );
 
     quizMessageTestGroup(
@@ -397,8 +395,6 @@ void main() {
           },
         );
       },
-      skip: true
-
     );
 
     quizMessageTestGroup(
@@ -426,7 +422,6 @@ void main() {
           },
         );
       },
-      skip: true,
     );
 
     screenshotTest(
