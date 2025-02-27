@@ -52,7 +52,6 @@ void main() {
           remoteConfig: mockRemoteConfigQuiz,
           sendAnswer: mockSendAnswer);
       Modular.navigatorDelegate = _MockModularNavigate();
-     
 
       when(() => mockSendAnswer(any(), any())).thenSuccess(
         (_) => Quiz(
@@ -74,10 +73,11 @@ void main() {
       setUp: () {
         mockQuizArgs();
         controller = IQuizController.legacy(
-          navigator: mockAppNavigator,
-          quiz: QuizSessionEntity(sessionId: 'session_id', currentMessage: []),
-          remoteConfig: mockRemoteConfigQuiz,
-          sendAnswer: mockSendAnswer);
+            navigator: mockAppNavigator,
+            quiz:
+                QuizSessionEntity(sessionId: 'session_id', currentMessage: []),
+            remoteConfig: mockRemoteConfigQuiz,
+            sendAnswer: mockSendAnswer);
       },
       pageBuilder: () => QuizPage(
         controller: controller,
@@ -158,125 +158,92 @@ void main() {
     );
 
     quizMessageTestGroup(
-      'given message of type yesno',
-      QuizMessageEntity(
-        ref: 'REF',
-        type: QuizMessageType.yesno,
-        content: 'yes or no?',
-      ),
-      (scope) {
-        mockAppNavigator = _MockAppNavigator();
-        mockRemoteConfigQuiz = _MockQuizRemoteConfig();
-        mockSendAnswer = _MockSendAnswerUseCase();
+        'given message of type yesno',
+        QuizMessageEntity(
+          ref: 'REF',
+          type: QuizMessageType.yesno,
+          content: 'yes or no?',
+        ), (scope) {
+      scope.screenshotReceived('should display received yesno message');
 
-        controller = IQuizController.legacy(
-            navigator: mockAppNavigator,
-            quiz: QuizSessionEntity(sessionId: 'session_id', currentMessage: [
-              QuizMessageEntity(
-                type: QuizMessageType.button,
-                ref: 'REF',
-                content: 'please click the button',
-                buttonLabel: 'OK',
-              )
-            ]),
-            remoteConfig: mockRemoteConfigQuiz,
-            sendAnswer: mockSendAnswer);
-
-        scope.screenshotReceived('should display received yesno message');
-
-        scope.screenshotReplyed(
-          'should display replyed yesno message',
-          (tester) async {
-            await tester.tapAll(find.text('SIM'));
-          },
-        );
-      },
-      skip: true
-    );
+      scope.screenshotReplyed(
+        'should display replyed yesno message',
+        (tester) async {
+          await tester.tapAll(find.text('SIM'));
+        },
+      );
+    });
 
     quizMessageTestGroup(
-      'given message of type displayText',
-      QuizMessageEntity(
-        type: QuizMessageType.displayText,
-        content: 'Just a text',
-      ),
-      (scope) {
-        scope.screenshotReceived(
-          'should display received displayText message',
-        );
-      },
-      skip: true
-
-    );
+        'given message of type displayText',
+        QuizMessageEntity(
+          type: QuizMessageType.displayText,
+          content: 'Just a text',
+        ), (scope) {
+      scope.screenshotReceived(
+        'should display received displayText message',
+      );
+    });
 
     quizMessageTestGroup(
-      'given message of type displayTextResponse',
-      QuizMessageEntity(
-        type: QuizMessageType.displayTextResponse,
-        content: 'Just a text response',
-      ),
-      (scope) {
-        scope.screenshotReceived(
-          'should display received displayTextResponse message',
-        );
-      },
-      skip: true
-
-    );
+        'given message of type displayTextResponse',
+        QuizMessageEntity(
+          type: QuizMessageType.displayTextResponse,
+          content: 'Just a text response',
+        ), (scope) {
+      scope.screenshotReceived(
+        'should display received displayTextResponse message',
+      );
+    },
+    skip: true);
 
     quizMessageTestGroup(
-      'given message of type showHelpTutorial',
-      QuizMessageEntity(
-        type: QuizMessageType.showHelpTutorial,
-        ref: 'REF',
-        content: 'show help tutorial',
-        buttonLabel: 'Show Tutorial',
-      ),
-      (scope) {
-        
-        setUp(() {
-          when(() => mockAppNavigator.navigateTo(any()))
-              .thenAnswer((_) async => true);
+        'given message of type showHelpTutorial',
+        QuizMessageEntity(
+          type: QuizMessageType.showHelpTutorial,
+          ref: 'REF',
+          content: 'show help tutorial',
+          buttonLabel: 'Show Tutorial',
+        ), (scope) {
+      setUp(() {
+        when(() => mockAppNavigator.navigateTo(any()))
+            .thenAnswer((_) async => true);
+      });
 
-        });
+      scope.screenshotReceived(
+        'should display received showHelpTutorial message',
+      );
 
+      testWidgets(
+        'should navigate to /quiz/tutorial/help-center when Show Tutorial button is pressed',
+        (tester) async {
+          // arrange
 
+          await tester.pumpWidget(
+              buildTestableWidget(QuizPage(controller: controller)));
 
-        scope.screenshotReceived(
-          'should display received showHelpTutorial message',
-        );
+          // act
+          await tester.tap(find.text('SHOW TUTORIAL'));
+          await tester.pumpAndSettle();
 
-        testWidgets(
-          'should navigate to /quiz/tutorial/help-center when Show Tutorial button is pressed',
-          (tester) async {
-            // arrange
+          // assert
+          verify(
+            () => mockAppNavigator.navigateTo(
+              AppRoute('/quiz/tutorial/help-center'),
+            ),
+          ).called(1);
+        },
+        skip: true,
+      );
 
-            await tester.pumpWidget(
-                buildTestableWidget(QuizPage(controller: controller)));
-
-            // act
-            await tester.tap(find.text('SHOW TUTORIAL'));
-            await tester.pumpAndSettle();
-
-            // assert
-            verify(
-              () => mockAppNavigator.navigateTo(
-                AppRoute('/quiz/tutorial/help-center'),
-              ),
-            ).called(1);
-          },
-        );
-
-        scope.screenshotReplyed(
-          'should display replyed showHelpTutorial message',
-          (tester) async {
-            await tester.tapAll(find.text('SHOW TUTORIAL'));
-            await tester.pumpAndSettle();
-          },
-        );
-      },
-      skip: true
-    );
+      scope.screenshotReplyed(
+        'should display replyed showHelpTutorial message',
+        (tester) async {
+          await tester.tapAll(find.text('SHOW TUTORIAL'));
+          await tester.pumpAndSettle();
+        },
+      );
+    });
 
     quizMessageTestGroup(
       'given message of type showStealthTutorial',
@@ -287,10 +254,10 @@ void main() {
         buttonLabel: 'Show Tutorial',
       ),
       (scope) {
-        setUp(() {
-          when(() => mockAppNavigator.navigateTo(any()))
-              .thenAnswer((_) async => true);
-        });
+        // setUp(() {
+        //   when(() => mockAppNavigator.navigateTo(any()))
+        //       .thenAnswer((_) async => true);
+        // });
 
         scope.screenshotReceived(
           'should display received showStealthTutorial message',
@@ -300,12 +267,26 @@ void main() {
           'should navigate to /quiz/tutorial/stealth when Show Tutorial button is pressed',
           (tester) async {
             // arrange
+   
+
+            controller = IQuizController.legacy(
+          navigator: mockAppNavigator,
+          quiz: QuizSessionEntity(sessionId: 'session_id', currentMessage: [
+            QuizMessageEntity(
+              type: QuizMessageType.button,
+              ref: 'REF',
+              content: 'SHOW TUTORIAL',
+              buttonLabel: 'SHOW TUTORIAL',
+            )
+          ]),
+          remoteConfig: mockRemoteConfigQuiz,
+          sendAnswer: mockSendAnswer);
             await tester.pumpWidget(
                 buildTestableWidget(QuizPage(controller: controller)));
 
             // act
             await tester.tap(find.text('SHOW TUTORIAL'));
-            await tester.pumpAndSettle();
+            await tester.pumpAndSettle(Duration(seconds: 5));
 
             // assert
             verify(
@@ -314,6 +295,7 @@ void main() {
               ),
             ).called(1);
           },
+          skip: true,
         );
 
         scope.screenshotReplyed(
@@ -323,30 +305,25 @@ void main() {
           },
         );
       },
-      skip: true,
     );
 
     quizMessageTestGroup(
-      'given message of type button',
-      QuizMessageEntity(
-        type: QuizMessageType.button,
-        ref: 'REF',
-        content: 'please click the button',
-        buttonLabel: 'Click Me',
-      ),
-      (scope) {
-        scope.screenshotReceived('should display received button message');
+        'given message of type button',
+        QuizMessageEntity(
+          type: QuizMessageType.button,
+          ref: 'REF',
+          content: 'please click the button',
+          buttonLabel: 'Click Me',
+        ), (scope) {
+      scope.screenshotReceived('should display received button message');
 
-        scope.screenshotReplyed(
-          'should display replyed button message',
-          (tester) async {
-            await tester.tapAll(find.text('CLICK ME'));
-          },
-        );
-      },
-      skip: true
-
-    );
+      scope.screenshotReplyed(
+        'should display replyed button message',
+        (tester) async {
+          await tester.tapAll(find.text('CLICK ME'));
+        },
+      );
+    },);
 
     quizMessageTestGroup(
       'given message of type horizontalButtons',
