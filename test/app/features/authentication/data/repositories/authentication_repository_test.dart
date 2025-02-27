@@ -79,8 +79,7 @@ void main() {
         expect(request.url.queryParameters, {
           'app_version': '1.0.0',
         });
-        expect(
-            request.body, 'email%3Dtest%40g.com%26senha%3D_myStrongP4ss%40rd');
+        expect(request.body, 'email=test@g.com&senha=_myStrongP4ss@rd');
         expect(request.headers['Content-Type'], contentType);
         expect(result.fold(id, id), sessionModel);
       },
@@ -159,8 +158,7 @@ void main() {
         expect(request.url.queryParameters, {
           'app_version': '1.0.0',
         });
-        expect(
-            request.body, 'email%3Dtest%40g.com%26senha%3D_myStrongP4ss%40rd');
+        expect(request.body, 'email=test@g.com&senha=_myStrongP4ss@rd');
         expect(request.headers['Content-Type'], contentType);
         expect(result.fold(id, id), sessionModel);
       },

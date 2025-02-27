@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../colors.dart';
 import '../../text_styles.dart';
@@ -40,10 +41,11 @@ class UserBadgeWidget extends StatelessWidget {
             )
           : null,
       child: badgeImageUrl.isNotEmpty
-          ? Image.network(
+          ? SvgPicture.network(
               badgeImageUrl,
               height: 16,
               width: 16,
+              color: DesignSystemColors.bluishPurple,
             )
           : const SizedBox.shrink(),
     );

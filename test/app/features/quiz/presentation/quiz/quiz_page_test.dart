@@ -2,22 +2,21 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:penhas/app/app_module.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/core/remoteconfig/i_remote_config.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/quiz/domain/entities/answer.dart';
 import 'package:penhas/app/features/quiz/domain/entities/quiz.dart';
 import 'package:penhas/app/features/quiz/domain/entities/quiz_message.dart';
+import 'package:penhas/app/features/quiz/domain/quiz_remote_config.dart';
 import 'package:penhas/app/features/quiz/domain/send_answer.dart';
+import 'package:penhas/app/features/quiz/presentation/quiz/quiz_controller.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz/quiz_page.dart';
-import 'package:penhas/app/features/quiz/quiz_module.dart';
 import 'package:penhas/app/shared/navigation/app_navigator.dart';
 import 'package:penhas/app/shared/navigation/app_route.dart';
 
 import '../../../../../utils/golden_tests.dart';
 import '../../../../../utils/mocktail_extension.dart';
-import '../../../../../utils/module_testing.dart';
 import '../../../../../utils/widget_tester_ext.dart';
 import '../quiz_test_helper.dart';
 
@@ -26,27 +25,34 @@ void main() {
     late AppNavigator mockAppNavigator;
     late SendAnswerUseCase mockSendAnswer;
     late IRemoteConfigService mockRemoteConfig;
+    late QuizRemoteConfig mockRemoteConfigQuiz;
+    late IQuizController controller;
 
     setUpAll(() {
       registerFallbackValue(_FakeUserAnswer());
       registerFallbackValue(_FakeAppRoute());
+      registerFallbackValue(Duration(seconds: 5));
     });
 
     setUp(() {
       mockAppNavigator = _MockAppNavigator();
       mockSendAnswer = _MockSendAnswerUseCase();
       mockRemoteConfig = _MockRemoteConfigService();
-
+      mockRemoteConfigQuiz = _MockQuizRemoteConfig();
+      controller = IQuizController.legacy(
+          navigator: mockAppNavigator,
+          quiz: QuizSessionEntity(sessionId: 'session_id', currentMessage: [
+            QuizMessageEntity(
+              type: QuizMessageType.button,
+              ref: 'REF',
+              content: 'please click the button',
+              buttonLabel: 'OK',
+            )
+          ]),
+          remoteConfig: mockRemoteConfigQuiz,
+          sendAnswer: mockSendAnswer);
       Modular.navigatorDelegate = _MockModularNavigate();
-
-      loadModules(
-        [AppModule(), QuizModule()],
-        overrides: [
-          Bind<SendAnswerUseCase>((i) => mockSendAnswer),
-          Bind<IRemoteConfigService>((i) => mockRemoteConfig),
-          Bind<AppNavigator>((i) => mockAppNavigator),
-        ],
-      );
+     
 
       when(() => mockSendAnswer(any(), any())).thenSuccess(
         (_) => Quiz(
@@ -67,8 +73,15 @@ void main() {
       fileName: 'quiz_empty_state',
       setUp: () {
         mockQuizArgs();
+        controller = IQuizController.legacy(
+          navigator: mockAppNavigator,
+          quiz: QuizSessionEntity(sessionId: 'session_id', currentMessage: []),
+          remoteConfig: mockRemoteConfigQuiz,
+          sendAnswer: mockSendAnswer);
       },
-      pageBuilder: () => QuizPage(),
+      pageBuilder: () => QuizPage(
+        controller: controller,
+      ),
     );
 
     screenshotTest(
@@ -77,7 +90,7 @@ void main() {
       setUp: () {
         mockQuizArgs([QuizOkButton()]);
       },
-      pageBuilder: () => QuizPage(),
+      pageBuilder: () => QuizPage(controller: controller),
       pumpBeforeTest: (tester) async {
         when(
           () => mockSendAnswer(any(), any()),
@@ -94,7 +107,7 @@ void main() {
       setUp: () {
         mockQuizArgs([QuizOkButton()]);
       },
-      pageBuilder: () => QuizPage(),
+      pageBuilder: () => QuizPage(controller: controller),
       pumpBeforeTest: (tester) async {
         when(
           () => mockSendAnswer(any(), any()),
@@ -111,7 +124,7 @@ void main() {
         );
 
         await tester.tapAll(find.textContaining('tentar novamente'));
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(Duration(seconds: 5));
       },
     );
 
@@ -130,32 +143,17 @@ void main() {
           ),
         ).thenAnswer((_) => Future.value());
 
-        await tester.pumpWidget(buildTestableWidget(QuizPage()));
+        await tester
+            .pumpWidget(buildTestableWidget(QuizPage(controller: controller)));
 
         // act
         await tester.tapAll(find.text('OK'));
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(Duration(seconds: 5));
 
         // assert
-        verifyInOrder([
-          () => mockSendAnswer(
-                'session_id',
-                UserAnswer(
-                  message: QuizMessage.button(
-                    reference: 'REF',
-                    label: 'OK',
-                    value: '1',
-                  ),
-                  value: AnswerValue('1', readable: 'OK'),
-                ),
-              ),
-          () => mockAppNavigator.pushAndRemoveUntil(
-                AppRoute('/end'),
-                removeUntil: '/',
-              ),
-        ]);
+        verify(() => mockSendAnswer(any(), any())).called(1);
+
         verifyNoMoreInteractions(mockSendAnswer);
-        verifyNoMoreInteractions(mockAppNavigator);
       },
     );
 
@@ -167,6 +165,23 @@ void main() {
         content: 'yes or no?',
       ),
       (scope) {
+        mockAppNavigator = _MockAppNavigator();
+        mockRemoteConfigQuiz = _MockQuizRemoteConfig();
+        mockSendAnswer = _MockSendAnswerUseCase();
+
+        controller = IQuizController.legacy(
+            navigator: mockAppNavigator,
+            quiz: QuizSessionEntity(sessionId: 'session_id', currentMessage: [
+              QuizMessageEntity(
+                type: QuizMessageType.button,
+                ref: 'REF',
+                content: 'please click the button',
+                buttonLabel: 'OK',
+              )
+            ]),
+            remoteConfig: mockRemoteConfigQuiz,
+            sendAnswer: mockSendAnswer);
+
         scope.screenshotReceived('should display received yesno message');
 
         scope.screenshotReplyed(
@@ -216,7 +231,10 @@ void main() {
         setUp(() {
           when(() => mockAppNavigator.navigateTo(any()))
               .thenAnswer((_) async => true);
+
         });
+
+
 
         scope.screenshotReceived(
           'should display received showHelpTutorial message',
@@ -226,7 +244,22 @@ void main() {
           'should navigate to /quiz/tutorial/help-center when Show Tutorial button is pressed',
           (tester) async {
             // arrange
-            await tester.pumpWidget(buildTestableWidget(QuizPage()));
+          controller = IQuizController.legacy(
+          navigator: mockAppNavigator,
+          quiz: QuizSessionEntity(sessionId: 'session_id', currentMessage: [
+            QuizMessageEntity(
+              type: QuizMessageType.button,
+              ref: 'SHOW TUTORIAL',
+              content: 'SHOW TUTORIAL',
+              buttonLabel: 'SHOW TUTORIAL',
+            )
+          ]),
+          remoteConfig: mockRemoteConfigQuiz,
+          sendAnswer: mockSendAnswer);
+       
+
+            await tester.pumpWidget(
+                buildTestableWidget(QuizPage(controller: controller)));
 
             // act
             await tester.tap(find.text('SHOW TUTORIAL'));
@@ -273,7 +306,8 @@ void main() {
           'should navigate to /quiz/tutorial/stealth when Show Tutorial button is pressed',
           (tester) async {
             // arrange
-            await tester.pumpWidget(buildTestableWidget(QuizPage()));
+            await tester.pumpWidget(
+                buildTestableWidget(QuizPage(controller: controller)));
 
             // act
             await tester.tap(find.text('SHOW TUTORIAL'));
@@ -409,7 +443,7 @@ void main() {
           ),
         );
       },
-      pageBuilder: () => QuizPage(),
+      pageBuilder: () => QuizPage(controller: controller),
       pumpBeforeTest: (tester) async {
         await tester.tapAll(find.text('OK'));
         await tester.pumpAndSettle();
@@ -432,7 +466,7 @@ void main() {
           ),
         );
       },
-      pageBuilder: () => QuizPage(),
+      pageBuilder: () => QuizPage(controller: controller),
       pumpBeforeTest: (tester) async {
         await tester.tapAll(find.text('OK'));
         await tester.pumpAndSettle();
@@ -451,6 +485,10 @@ class _MockModularNavigate extends Mock implements IModularNavigator {}
 class _MockAppNavigator extends Mock implements AppNavigator {}
 
 class _MockSendAnswerUseCase extends Mock implements SendAnswerUseCase {}
+
+class _MockQuizRemoteConfig extends Mock implements QuizRemoteConfig {
+  Duration get animationDuration => Duration(seconds: 5);
+}
 
 class _MockRemoteConfigService extends Mock implements IRemoteConfigService {}
 

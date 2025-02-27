@@ -70,7 +70,9 @@ class QuizModule extends Module {
   List<ModularRoute> get routes => [
         ChildRoute(
           Modular.initialRoute,
-          child: (_, __) => const QuizPage(),
+          child: (_, __) => QuizPage(
+            controller: Modular.get<IQuizController>(),
+          ),
         ),
         ChildRoute(
           '/start',
