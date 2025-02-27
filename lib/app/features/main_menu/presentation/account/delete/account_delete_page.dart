@@ -12,7 +12,6 @@ import '../../../domain/states/profile_delete_state.dart';
 import 'account_delete_controller.dart';
 
 class AccountDeletePage extends StatefulWidget {
-
   const AccountDeletePage({Key? key, required this.controller})
       : super(key: key);
   final AccountDeleteController controller;
