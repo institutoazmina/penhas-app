@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:scroll_to_index/util.dart';
 
@@ -18,7 +17,8 @@ import 'quiz_controller.dart';
 const fabScrollOffset = 48.0;
 
 class QuizPage extends StatelessWidget {
-  const QuizPage({Key? key}) : super(key: key);
+  const QuizPage({Key? key, required this.controller}) : super(key: key);
+  final IQuizController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +42,7 @@ class QuizPage extends StatelessWidget {
         child: LayoutBuilder(builder: (_, constraints) {
           return QuizContent(
             constraints: constraints,
+            controller: controller,
           );
         }),
       ),
@@ -53,7 +54,9 @@ class QuizContent extends StatefulWidget {
   const QuizContent({
     Key? key,
     required this.constraints,
+    required this.controller,
   }) : super(key: key);
+  final IQuizController controller;
 
   final BoxConstraints constraints;
 
@@ -64,9 +67,10 @@ class QuizContent extends StatefulWidget {
   State<QuizContent> createState() => QuizContentState();
 }
 
-class QuizContentState extends ModularState<QuizContent, IQuizController>
+class QuizContentState extends State<QuizContent>
     with TickerProviderStateMixin<QuizContent>
     implements ScrollOverflowListener {
+  IQuizController get _controller => widget.controller;
   final _listKey = GlobalKey<SliverAnimatedListState>();
 
   @override
@@ -77,9 +81,9 @@ class QuizContentState extends ModularState<QuizContent, IQuizController>
       AnimationController(value: 1, duration: animationDuration, vsync: this)
         ..addListener(_updateWidgetState);
 
-  Duration get animationDuration => controller.animationDuration;
+  Duration get animationDuration => _controller.animationDuration;
 
-  late final List<QuizMessage> _currentMessages = controller.messages.toList();
+  late final List<QuizMessage> _currentMessages = _controller.messages.toList();
 
   List<ReactionDisposer>? _disposer;
 
@@ -129,7 +133,7 @@ class QuizContentState extends ModularState<QuizContent, IQuizController>
                 const SizedBox(height: 8.0),
                 InteractionBox(
                   animation: _animationController.view,
-                  message: controller.interactiveMessage,
+                  message: _controller.interactiveMessage,
                 ),
               ],
             ),
@@ -166,11 +170,11 @@ class QuizContentState extends ModularState<QuizContent, IQuizController>
 
   void onReply(UserAnswer reply) async {
     await _hideInteractiveMessage();
-    controller.onReplyMessage(reply);
+    _controller.onReplyMessage(reply);
   }
 
   void onRetry(UserAnswer reply) async {
-    controller.onReplyMessage(reply);
+    _controller.onReplyMessage(reply);
   }
 
   @override
@@ -228,7 +232,7 @@ extension _QuizContentStateHelpers on QuizContentState {
 
     _currentMessages.add(newMessage);
     _listKey.currentState?.insertItem(index, duration: animationDuration);
-    await controller.waitAnimationCompletion();
+    await _controller.waitAnimationCompletion();
 
     // smooth scroll to show each new message
     _scrollController.maybeScrollToEnd(
@@ -259,7 +263,7 @@ extension _QuizContentStateHelpers on QuizContentState {
   void _showInteractiveMessage() async {
     _updateWidgetState();
     _animationController.forward();
-    await controller.waitAnimationCompletion();
+    await _controller.waitAnimationCompletion();
   }
 
   /// Hide the interactive message with a smooth animation
@@ -267,7 +271,7 @@ extension _QuizContentStateHelpers on QuizContentState {
   Future<void> _hideInteractiveMessage() async {
     _animationController.reverse();
     // wait for the hide interactive message animation
-    await controller.waitAnimationCompletion();
+    await _controller.waitAnimationCompletion();
   }
 
   /// listen to the scroll updates to show/hide
@@ -280,9 +284,9 @@ extension _QuizContentStateHelpers on QuizContentState {
   /// Dispatch the message updates to the list
   /// Preventing concurrent updates to allow smooth the list updates
   ReactionDisposer _listenToMessagesUpdates() => reaction<List<QuizMessage>>(
-        (_) => controller.messages,
+        (_) => _controller.messages,
         (newMessages) => co(
-          controller,
+          _controller,
           () async => _updateList(newMessages),
         ),
         equals: const ListEquality().equals,
@@ -292,7 +296,7 @@ extension _QuizContentStateHelpers on QuizContentState {
   /// Listen to error messages to show a snackbar
   /// with the error message
   ReactionDisposer _listenToErrorMessage() => reaction<String?>(
-        (_) => controller.errorMessage,
+        (_) => _controller.errorMessage,
         (message) {
           if (message == null || message.isEmpty) return;
           ScaffoldMessenger.of(context).showSnackBar(
