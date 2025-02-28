@@ -10,6 +10,7 @@ class UserBadgeWidget extends StatelessWidget {
     Key? key,
     required this.badgePopUp,
     required this.badgeImageUrl,
+    this.badgeImageUrlBlack,
     required this.badgeDescription,
     required this.badgeName,
     required this.badgeShowDescription,
@@ -18,6 +19,7 @@ class UserBadgeWidget extends StatelessWidget {
 
   final int badgePopUp;
   final String badgeImageUrl;
+  final String? badgeImageUrlBlack;
   final int badgeShowDescription;
   final String badgeDescription;
   final String badgeName;
@@ -44,15 +46,31 @@ class UserBadgeWidget extends StatelessWidget {
           : null,
       child: badgeImageUrl.isNotEmpty
           ? SvgPicture.network(
-              badgeImageUrl,
+              returnCorrectImage(
+                  badgeImageUrl, badgeImageUrlBlack, isLightBackground),
               height: 16,
               width: 16,
-              color: isLightBackground
-                  ? DesignSystemColors.bluishPurple
-                  : DesignSystemColors.white,
+              color: returnCorrectColor(isLightBackground),
             )
           : const SizedBox.shrink(),
     );
+  }
+
+  String returnCorrectImage(String badgeImageUrl, String? badgeImageUrlBlack,
+      bool isLightBackground) {
+    if (isLightBackground) {
+      return badgeImageUrlBlack ?? badgeImageUrl;
+    } else {
+      return badgeImageUrl;
+    }
+  }
+
+  Color returnCorrectColor(bool isLightBackground) {
+    if (isLightBackground) {
+      return DesignSystemColors.bluishPurple;
+    } else {
+      return DesignSystemColors.white;
+    }
   }
 }
 

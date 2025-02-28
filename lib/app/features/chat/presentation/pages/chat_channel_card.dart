@@ -100,6 +100,7 @@ class ChatChannelCard extends StatelessWidget {
                 badgePopUp: badge.popUp,
                 badgeShowDescription: badge.showDescription,
                 isLightBackground: true,
+                badgeImageUrlBlack: badge.imageUrlBlack,
               )))
           .toList(),
     );

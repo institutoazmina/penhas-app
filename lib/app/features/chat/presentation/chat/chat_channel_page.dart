@@ -190,6 +190,7 @@ extension _ChatPageStateMethods on _ChatPageState {
                 badgePopUp: badge.popUp,
                 badgeShowDescription: badge.showDescription,
                 isLightBackground: false,
+                badgeImageUrlBlack: badge.imageUrlBlack,
               )))
           .toList(),
     );
@@ -222,6 +223,7 @@ extension _ChatPageStateMethods on _ChatPageState {
       badgePopUp: badge.popUp,
       badgeShowDescription: badge.showDescription,
       isLightBackground: false,
+      badgeImageUrlBlack: badge.imageUrlBlack,
     );
   }
 
