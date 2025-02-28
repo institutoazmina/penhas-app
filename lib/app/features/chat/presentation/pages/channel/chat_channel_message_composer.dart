@@ -76,6 +76,7 @@ class _ChatChannelMessageComposerState
                 decoration: const InputDecoration.collapsed(
                   hintText: 'Digite uma mensagem',
                 ),
+                textInputAction: TextInputAction.send,
                 textCapitalization: TextCapitalization.sentences,
                 controller: _textController,
                 onSubmitted: (t) => _submitMessageAction(context),
