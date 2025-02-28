@@ -48,6 +48,10 @@ IQuizController returnCorrectController(QuizMessageType type) {
   final controllerTutorial = MockIQuizControllerTutorial();
   final controllerTextResponse = MockIQuizControllerTextResponse();
   final controllerYesNo = MockIQuizControllerYesNo();
+  final controllerDisplayText = MockIQuizControllerDisplayText();
+  if(type == QuizMessageType.displayText){
+    return controllerDisplayText;
+  }
   if(type == QuizMessageType.yesno){
     return controllerYesNo;
   }
@@ -72,6 +76,7 @@ IQuizController returnCorrectController(QuizMessageType type) {
   if(type == QuizMessageType.showHelpTutorial){
     return controllerTutorial;
   }
+
 
   return controller;
 }
@@ -237,7 +242,11 @@ class MockIQuizControllerButton extends Mock implements IQuizController {
   @override
   List<QuizMessage> get messages => [
         QuizMessage.text(content: 'text'),
-        QuizMessage.button(reference: 'CLICK ME', label: 'CLICK ME', value: 'CLICK ME')
+        QuizMessage.button(
+          reference: 'REF',
+          label: 'CLICK ME',
+          value: '1',
+        ),
       ];
 }
 
@@ -276,7 +285,23 @@ class MockIQuizControllerTextResponse extends Mock implements IQuizController {
 
   @override
   List<QuizMessage> get messages => [
-        QuizMessage.sent(content: 'Just a text response') ,
+        QuizMessage.sent(
+        reference: 'REF',
+        content: 'Just a text response',
+        status: AnswerStatus.sent,
+      ) ,
+      ];
+}
+
+class MockIQuizControllerDisplayText extends Mock implements IQuizController {
+  @override
+  Future<void> onReplyMessage(UserAnswer answer) async {
+    return Future.value();
+  }
+
+  @override
+  List<QuizMessage> get messages => [
+        QuizMessage.text(content: 'Just a text') ,
       ];
 }
 
