@@ -189,6 +189,7 @@ extension _ChatPageStateMethods on _ChatPageState {
                 badgeName: badge.name,
                 badgePopUp: badge.popUp,
                 badgeShowDescription: badge.showDescription,
+                isLightBackground: false,
               )))
           .toList(),
     );
@@ -205,7 +206,8 @@ extension _ChatPageStateMethods on _ChatPageState {
         name: '',
         popUp: 0,
         showDescription: 0,
-        style: '');
+        style: '',
+        imageUrlBlack: '');
     final badge = badges.firstWhere(
       (badge) => badge.style == 'inline-block',
       orElse: () => emptyBadge,
@@ -215,10 +217,11 @@ extension _ChatPageStateMethods on _ChatPageState {
     }
     return UserBadgeWidget(
       badgeDescription: badge.description,
-      badgeImageUrl: badge.imageUrl,
+      badgeImageUrl: badge.imageUrlBlack,
       badgeName: badge.name,
       badgePopUp: badge.popUp,
       badgeShowDescription: badge.showDescription,
+      isLightBackground: false,
     );
   }
 

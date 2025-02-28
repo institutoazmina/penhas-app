@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../colors.dart';
 import '../../text_styles.dart';
@@ -12,6 +13,7 @@ class UserBadgeWidget extends StatelessWidget {
     required this.badgeDescription,
     required this.badgeName,
     required this.badgeShowDescription,
+    required this.isLightBackground,
   }) : super(key: key);
 
   final int badgePopUp;
@@ -19,6 +21,7 @@ class UserBadgeWidget extends StatelessWidget {
   final int badgeShowDescription;
   final String badgeDescription;
   final String badgeName;
+  final bool isLightBackground;
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +43,13 @@ class UserBadgeWidget extends StatelessWidget {
             )
           : null,
       child: badgeImageUrl.isNotEmpty
-          ? Image.network(
+          ? SvgPicture.network(
               badgeImageUrl,
               height: 16,
               width: 16,
+              color: isLightBackground
+                  ? DesignSystemColors.bluishPurple
+                  : DesignSystemColors.white,
             )
           : const SizedBox.shrink(),
     );

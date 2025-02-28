@@ -7,6 +7,7 @@ class ChatBadgeEntity extends ChatBadge {
       {required this.code,
       required this.description,
       required this.imageUrl,
+      required this.imageUrlBlack,
       required this.name,
       required this.style,
       required this.showDescription,
@@ -15,6 +16,7 @@ class ChatBadgeEntity extends ChatBadge {
   final String code;
   final String description;
   final String imageUrl;
+  final String imageUrlBlack;
   final String name;
   final String style;
   final int showDescription;
