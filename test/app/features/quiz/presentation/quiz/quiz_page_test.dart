@@ -205,36 +205,33 @@ void main() {
           content: 'show help tutorial',
           buttonLabel: 'Show Tutorial',
         ), (scope) {
-      setUp(() {
-        when(() => mockAppNavigator.navigateTo(any()))
-            .thenAnswer((_) async => true);
-      });
-
+    
       scope.screenshotReceived(
         'should display received showHelpTutorial message',
       );
 
       testWidgets(
-        'should navigate to /quiz/tutorial/help-center when Show Tutorial button is pressed',
-        (tester) async {
-          // arrange
-
-          await tester.pumpWidget(
+  'should navigate to /quiz/tutorial/help-center when Show Tutorial button is pressed',
+  (tester) async {
+    // arrange
+   
+    await tester.pumpWidget(
               buildTestableWidget(QuizPage(controller: controller)));
 
-          // act
-          await tester.tap(find.text('SHOW TUTORIAL'));
-          await tester.pumpAndSettle();
+    // act
+    await tester.tap(find.text('SHOW TUTORIAL'));
+    await tester.pumpAndSettle();
 
-          // assert
+    // assert
           verify(
             () => mockAppNavigator.navigateTo(
               AppRoute('/quiz/tutorial/help-center'),
             ),
           ).called(1);
-        },
+  },
         skip: true,
-      );
+);
+
 
       scope.screenshotReplyed(
         'should display replyed showHelpTutorial message',
@@ -268,19 +265,6 @@ void main() {
           (tester) async {
             // arrange
    
-
-            controller = IQuizController.legacy(
-          navigator: mockAppNavigator,
-          quiz: QuizSessionEntity(sessionId: 'session_id', currentMessage: [
-            QuizMessageEntity(
-              type: QuizMessageType.button,
-              ref: 'REF',
-              content: 'SHOW TUTORIAL',
-              buttonLabel: 'SHOW TUTORIAL',
-            )
-          ]),
-          remoteConfig: mockRemoteConfigQuiz,
-          sendAnswer: mockSendAnswer);
             await tester.pumpWidget(
                 buildTestableWidget(QuizPage(controller: controller)));
 
@@ -454,9 +438,30 @@ void main() {
   });
 }
 
-class _MockModularNavigate extends Mock implements IModularNavigator {}
+class MockIQuizControllerTutorial extends Mock implements IQuizController {
+  @override
+  Future<void> onReplyMessage(UserAnswer answer) async {
+    return Future.value();
+  }
 
-class _MockAppNavigator extends Mock implements AppNavigator {}
+  @override
+  List<QuizMessage> get messages => [
+     QuizMessage.button(
+          reference: 'REF',
+          label: 'SHOW TUTORIAL',
+          value: '1',
+          action: const ButtonAction.navigate(
+            route: '/quiz/tutorial/help-center',
+            readableResult: 'SHOW TUTORIAL',
+          ),
+        ),];
+}
+
+class _MockModularNavigate extends Mock implements IModularNavigator {
+}
+
+class _MockAppNavigator extends Mock implements AppNavigator {
+}
 
 class _MockSendAnswerUseCase extends Mock implements SendAnswerUseCase {}
 
@@ -468,4 +473,9 @@ class _MockRemoteConfigService extends Mock implements IRemoteConfigService {}
 
 class _FakeUserAnswer extends Fake implements UserAnswer {}
 
-class _FakeAppRoute extends Fake implements AppRoute {}
+class _MockAppRoute extends Mock implements AppRoute{}
+
+class _FakeAppRoute extends Fake implements AppRoute {
+  // @override
+  // String get path => '/quiz/tutorial/help-center';
+}
