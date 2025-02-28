@@ -186,16 +186,17 @@ void main() {
     });
 
     quizMessageTestGroup(
-        'given message of type displayTextResponse',
-        QuizMessageEntity(
-          type: QuizMessageType.displayTextResponse,
-          content: 'Just a text response',
-        ), (scope) {
-      scope.screenshotReceived(
-        'should display received displayTextResponse message',
-      );
-    },
-);
+      'given message of type displayTextResponse',
+      QuizMessageEntity(
+        type: QuizMessageType.displayTextResponse,
+        content: 'Just a text response',
+      ),
+      (scope) {
+        scope.screenshotReceived(
+          'should display received displayTextResponse message',
+        );
+      },
+    );
 
     quizMessageTestGroup(
         'given message of type showHelpTutorial',
@@ -205,33 +206,37 @@ void main() {
           content: 'show help tutorial',
           buttonLabel: 'Show Tutorial',
         ), (scope) {
-    
       scope.screenshotReceived(
         'should display received showHelpTutorial message',
       );
 
       testWidgets(
-  'should navigate to /quiz/tutorial/help-center when Show Tutorial button is pressed',
-  (tester) async {
-    // arrange
-   
-    await tester.pumpWidget(
-              buildTestableWidget(QuizPage(controller: controller)));
+        'should navigate to /quiz/tutorial/help-center when Show Tutorial button is pressed',
+        (tester) async {
+          // arrange
+          final controllerTutorial = MockIQuizControllerStealthTutorial();
 
-    // act
-    await tester.tap(find.text('SHOW TUTORIAL'));
-    await tester.pumpAndSettle();
+          when(() => controllerTutorial.animationDuration)
+              .thenReturn(Duration(seconds: 10));
+          when(() => controllerTutorial.waitAnimationCompletion())
+              .thenAnswer((_) async => Future.value());
 
-    // assert
+          await tester.pumpWidget(
+              buildTestableWidget(QuizPage(controller: controllerTutorial)));
+
+          // act
+          await tester.tap(find.text('SHOW TUTORIAL'));
+          await tester.pumpAndSettle();
+
+          // assert
           verify(
             () => mockAppNavigator.navigateTo(
               AppRoute('/quiz/tutorial/help-center'),
             ),
           ).called(1);
-  },
+        },
         skip: true,
-);
-
+      );
 
       scope.screenshotReplyed(
         'should display replyed showHelpTutorial message',
@@ -264,7 +269,7 @@ void main() {
           'should navigate to /quiz/tutorial/stealth when Show Tutorial button is pressed',
           (tester) async {
             // arrange
-   
+
             await tester.pumpWidget(
                 buildTestableWidget(QuizPage(controller: controller)));
 
@@ -292,22 +297,24 @@ void main() {
     );
 
     quizMessageTestGroup(
-        'given message of type button',
-        QuizMessageEntity(
-          type: QuizMessageType.button,
-          ref: 'REF',
-          content: 'please click the button',
-          buttonLabel: 'Click Me',
-        ), (scope) {
-      scope.screenshotReceived('should display received button message');
+      'given message of type button',
+      QuizMessageEntity(
+        type: QuizMessageType.button,
+        ref: 'REF',
+        content: 'please click the button',
+        buttonLabel: 'Click Me',
+      ),
+      (scope) {
+        scope.screenshotReceived('should display received button message');
 
-      scope.screenshotReplyed(
-        'should display replyed button message',
-        (tester) async {
-          await tester.tapAll(find.text('CLICK ME'));
-        },
-      );
-    },);
+        scope.screenshotReplyed(
+          'should display replyed button message',
+          (tester) async {
+            await tester.tapAll(find.text('CLICK ME'));
+          },
+        );
+      },
+    );
 
     quizMessageTestGroup(
       'given message of type horizontalButtons',
@@ -446,7 +453,7 @@ class MockIQuizControllerTutorial extends Mock implements IQuizController {
 
   @override
   List<QuizMessage> get messages => [
-     QuizMessage.button(
+        QuizMessage.button(
           reference: 'REF',
           label: 'SHOW TUTORIAL',
           value: '1',
@@ -454,14 +461,13 @@ class MockIQuizControllerTutorial extends Mock implements IQuizController {
             route: '/quiz/tutorial/help-center',
             readableResult: 'SHOW TUTORIAL',
           ),
-        ),];
+        ),
+      ];
 }
 
-class _MockModularNavigate extends Mock implements IModularNavigator {
-}
+class _MockModularNavigate extends Mock implements IModularNavigator {}
 
-class _MockAppNavigator extends Mock implements AppNavigator {
-}
+class _MockAppNavigator extends Mock implements AppNavigator {}
 
 class _MockSendAnswerUseCase extends Mock implements SendAnswerUseCase {}
 
@@ -473,9 +479,21 @@ class _MockRemoteConfigService extends Mock implements IRemoteConfigService {}
 
 class _FakeUserAnswer extends Fake implements UserAnswer {}
 
-class _MockAppRoute extends Mock implements AppRoute{}
+class _FakeAppRoute extends Fake implements AppRoute {}
 
-class _FakeAppRoute extends Fake implements AppRoute {
-  // @override
-  // String get path => '/quiz/tutorial/help-center';
+class MockIQuizControllerStealthTutorial extends Mock
+    implements IQuizController {
+  @override
+  Future<void> onReplyMessage(UserAnswer answer) async {
+    return Future.value();
+  }
+
+  @override
+  List<QuizMessage> get messages => [
+        QuizMessage.text(content: 'text'),
+        QuizMessage.button(
+            reference: 'SHOW TUTORIAL',
+            label: 'SHOW TUTORIAL',
+            value: 'SHOW TUTORIAL')
+      ];
 }
