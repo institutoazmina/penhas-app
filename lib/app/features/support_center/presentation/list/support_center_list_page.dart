@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../shared/design_system/colors.dart';
 import '../../domain/entities/support_center_place_entity.dart';
@@ -9,14 +8,17 @@ import 'support_center_list_controller.dart';
 typedef ActionOnSelected = void Function(SupportCenterPlaceEntity place);
 
 class SupportCenterListPage extends StatefulWidget {
-  const SupportCenterListPage({Key? key}) : super(key: key);
+  const SupportCenterListPage({Key? key, required this.controller})
+      : super(key: key);
+
+  final SupportCenterListController controller;
 
   @override
   _SupportCenterListPageState createState() => _SupportCenterListPageState();
 }
 
-class _SupportCenterListPageState
-    extends ModularState<SupportCenterListPage, SupportCenterListController> {
+class _SupportCenterListPageState extends State<SupportCenterListPage> {
+  SupportCenterListController get _controller => widget.controller;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,12 +46,12 @@ class _SupportCenterListPageState
                   ),
                   Expanded(
                     child: ListView.builder(
-                      itemCount: controller.places.length,
+                      itemCount: _controller.places.length,
                       itemBuilder: (BuildContext context, int index) {
-                        final place = controller.places[index];
+                        final place = _controller.places[index];
                         return Card(
                           place: place,
-                          onSelected: controller.selected,
+                          onSelected: _controller.selected,
                         );
                       },
                     ),
