@@ -195,7 +195,7 @@ void main() {
         'should display received displayTextResponse message',
       );
     },
-    skip: true);
+);
 
     quizMessageTestGroup(
         'given message of type showHelpTutorial',
@@ -254,10 +254,10 @@ void main() {
         buttonLabel: 'Show Tutorial',
       ),
       (scope) {
-        // setUp(() {
-        //   when(() => mockAppNavigator.navigateTo(any()))
-        //       .thenAnswer((_) async => true);
-        // });
+        setUp(() {
+          when(() => mockAppNavigator.navigateTo(any()))
+              .thenAnswer((_) async => true);
+        });
 
         scope.screenshotReceived(
           'should display received showStealthTutorial message',
