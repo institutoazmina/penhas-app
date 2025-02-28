@@ -92,6 +92,7 @@ Widget buildBadgeWidget(List<UserProfileBadgeEntity> badges) {
               badgeName: badge.name,
               badgePopUp: badge.popUp,
               badgeShowDescription: badge.showDescription,
+              isLightBackground: true,
             )))
         .toList(),
   );

@@ -209,6 +209,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
                 badgeName: badge.name,
                 badgePopUp: badge.popUp,
                 badgeShowDescription: badge.showDescription,
+                isLightBackground: false,
               )))
           .toList(),
     );

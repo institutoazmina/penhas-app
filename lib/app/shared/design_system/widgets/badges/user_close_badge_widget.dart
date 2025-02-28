@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../colors.dart';
 import '../../text_styles.dart';
@@ -30,14 +31,11 @@ class UserCloseBadgeWidget extends StatelessWidget {
               Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: badgeImageUrl.isNotEmpty
-                      ? Image.network(
+                      ? SvgPicture.network(
                           badgeImageUrl,
                           width: 12,
                           height: 12,
                           color: DesignSystemColors.darkIndigoThree,
-                          errorBuilder: (context, error, stackTrace) {
-                            return const SizedBox.shrink();
-                          },
                         )
                       : const SizedBox.shrink()),
               Text(
