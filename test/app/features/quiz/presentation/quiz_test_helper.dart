@@ -271,10 +271,15 @@ class MockIQuizControllerTutorial extends Mock implements IQuizController {
 
   @override
   List<QuizMessage> get messages => [
-        QuizMessage.text(content: 'text'),
-
-        QuizMessage.button(reference: 'SHOW TUTORIAL', label: 'SHOW TUTORIAL', value: 'SHOW TUTORIAL')
-      ];
+     QuizMessage.button(
+          reference: 'REF',
+          label: 'SHOW TUTORIAL',
+          value: '1',
+          action: const ButtonAction.navigate(
+            route: '/quiz/tutorial/help-center',
+            readableResult: 'SHOW TUTORIAL',
+          ),
+        ),];
 }
 
 class MockIQuizControllerTextResponse extends Mock implements IQuizController {
