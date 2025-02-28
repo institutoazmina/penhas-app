@@ -6,7 +6,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:meta/meta.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
+import 'package:penhas/app/features/quiz/domain/entities/answer.dart';
 import 'package:penhas/app/features/quiz/domain/entities/quiz_message.dart';
+import 'package:penhas/app/features/quiz/presentation/quiz/quiz_controller.dart';
 import 'package:penhas/app/features/quiz/presentation/quiz/quiz_page.dart';
 
 import '../../../../utils/golden_tests.dart';
@@ -33,6 +35,51 @@ void quizMessageTestGroup(
   );
 }
 
+IQuizController returnCorrectController(QuizMessageType type) {
+  final controller = MockIQuizController();
+  final controllerWithMultipleChoices = MockIQuizControllerWithMessages();
+  final controllerWithHorizontalButtons =
+      MockIQuizControllerWithHorizontalButtons();
+  final controllerSingleChoice = MockIQuizControllerSingleChoice();
+  final controllerButton = MockIQuizControllerButton();
+  final controllerStealthTutorial = MockIQuizControllerStealthTutorial();
+  final controllerTutorial = MockIQuizControllerTutorial();
+  final controllerTextResponse = MockIQuizControllerTextResponse();
+  final controllerYesNo = MockIQuizControllerYesNo();
+  final controllerDisplayText = MockIQuizControllerDisplayText();
+  switch (type) {
+    case QuizMessageType.displayText:
+      return controllerDisplayText;
+
+    case QuizMessageType.button:
+      return controllerButton;
+
+    case QuizMessageType.horizontalButtons:
+      return controllerWithHorizontalButtons;
+
+    case QuizMessageType.yesno:
+      return controllerYesNo;
+
+    case QuizMessageType.showStealthTutorial:
+      return controllerStealthTutorial;
+
+    case QuizMessageType.showHelpTutorial:
+      return controllerTutorial;
+
+    case QuizMessageType.forceReload:
+      break;
+    case QuizMessageType.multipleChoices:
+      return controllerWithMultipleChoices;
+
+    case QuizMessageType.singleChoice:
+      return controllerSingleChoice;
+
+    case QuizMessageType.displayTextResponse:
+      return controllerTextResponse;
+  }
+  return controller;
+}
+
 class QuizMessageTestScope {
   QuizMessageTestScope(this.message);
 
@@ -43,12 +90,18 @@ class QuizMessageTestScope {
     String description, {
     bool skip = false,
   }) {
-    screenshotTest(
-      description,
-      fileName: 'quiz_${message.type.name}_received',
-      pageBuilder: () => QuizPage(),
-      skip: skip,
-    );
+    final rightController = returnCorrectController(message.type);
+
+    screenshotTest(description,
+        fileName: 'quiz_${message.type.name}_received',
+        pageBuilder: () => QuizPage(
+              controller: rightController,
+            ),
+        skip: skip,
+        setUp: () {
+          when(() => rightController.animationDuration)
+              .thenReturn(Duration(seconds: 5));
+        });
   }
 
   @isTest
@@ -57,13 +110,23 @@ class QuizMessageTestScope {
     PumpAction action, {
     bool skip = false,
   }) {
-    screenshotTest(
-      description,
-      fileName: 'quiz_${message.type.name}_replyed',
-      pageBuilder: () => QuizPage(),
-      pumpBeforeTest: action,
-      skip: skip,
-    );
+    final rightController = returnCorrectController(message.type);
+
+    screenshotTest(description,
+        fileName: 'quiz_${message.type.name}_replyed',
+        pageBuilder: () => QuizPage(
+              controller: rightController,
+            ),
+        pumpBeforeTest: action,
+        skip: skip,
+        setUp: () {
+          when(() => rightController.animationDuration)
+              .thenReturn(Duration(seconds: 5));
+          when(rightController.waitAnimationCompletion)
+              .thenAnswer((_) async {});
+          when(() => rightController.onReplyMessage(any()))
+              .thenAnswer((_) async => Future.value());
+        });
   }
 }
 
@@ -107,4 +170,122 @@ class QuizOkButton extends QuizMessageEntity {
           content: 'please click the button',
           buttonLabel: 'OK',
         );
+}
+
+//Mocks
+class MockIQuizController extends Mock implements IQuizController {
+  @override
+  List<QuizMessage> get messages => [];
+}
+
+class MockIQuizControllerWithMessages extends Mock implements IQuizController {
+  // @override
+  // Future<void> onReplyMessage(UserAnswer answer) async {
+  //   // UserAnswer(message: QuizMessage.text(content: 'content'), value: AnswerValue('value'))
+  //   return Future.value();
+  // }
+
+  @override
+  List<QuizMessage> get messages => [
+        QuizMessage.multipleChoices(reference: 'reference', options: [
+          MessageOption(label: 'Option 1', value: 'Option 1'),
+          MessageOption(label: 'Option 2', value: 'Option 2'),
+          MessageOption(label: 'Option 1', value: 'Option 1'),
+          MessageOption(label: 'Option 3', value: 'Option 3'),
+        ])
+      ];
+}
+
+class MockIQuizControllerSingleChoice extends Mock implements IQuizController {
+  @override
+  List<QuizMessage> get messages => [
+        QuizMessage.singleChoice(reference: 'reference', options: [
+          MessageOption(label: 'Option 1', value: 'Option 1'),
+          MessageOption(label: 'Option 2', value: 'Option 2'),
+          MessageOption(label: 'Option 1', value: 'Option 1')
+        ])
+      ];
+}
+
+class MockIQuizControllerWithHorizontalButtons extends Mock
+    implements IQuizController {
+  @override
+  List<QuizMessage> get messages => [
+        QuizMessage.horizontalButtons(reference: 'reference', buttons: [
+          ButtonOption(label: '1', value: '1'),
+          ButtonOption(label: 'OPTION 3', value: 'OPTION 3'),
+          ButtonOption(label: '2', value: '2')
+        ])
+      ];
+}
+
+class MockIQuizControllerButton extends Mock implements IQuizController {
+  @override
+  List<QuizMessage> get messages => [
+        QuizMessage.text(content: 'text'),
+        QuizMessage.button(
+          reference: 'REF',
+          label: 'CLICK ME',
+          value: '1',
+        ),
+      ];
+}
+
+class MockIQuizControllerStealthTutorial extends Mock
+    implements IQuizController {
+  @override
+  List<QuizMessage> get messages => [
+        QuizMessage.text(content: 'text'),
+        QuizMessage.button(
+            reference: 'SHOW TUTORIAL',
+            label: 'SHOW TUTORIAL',
+            value: 'SHOW TUTORIAL')
+      ];
+}
+
+class MockIQuizControllerTutorial extends Mock implements IQuizController {
+  @override
+  List<QuizMessage> get messages => [
+        QuizMessage.button(
+          reference: 'REF',
+          label: 'SHOW TUTORIAL',
+          value: '1',
+          action: const ButtonAction.navigate(
+            route: '/quiz/tutorial/help-center',
+            readableResult: 'SHOW TUTORIAL',
+          ),
+        ),
+      ];
+}
+
+class MockIQuizControllerTextResponse extends Mock implements IQuizController {
+  @override
+  List<QuizMessage> get messages => [
+        QuizMessage.sent(
+          reference: 'REF',
+          content: 'Just a text response',
+          status: AnswerStatus.sent,
+        ),
+      ];
+}
+
+class MockIQuizControllerDisplayText extends Mock implements IQuizController {
+  @override
+  List<QuizMessage> get messages => [
+        QuizMessage.text(content: 'Just a text'),
+      ];
+}
+
+class MockIQuizControllerYesNo extends Mock implements IQuizController {
+  @override
+  List<QuizMessage> get messages => [
+        QuizMessage.text(content: 'text'),
+        QuizMessage.horizontalButtons(
+          reference: 'REF',
+          buttons: const [
+            ButtonOption(label: 'SIM', value: 'Y'),
+            ButtonOption(label: 'NÃO', value: 'N'),
+          ],
+        ),
+      ];
 }

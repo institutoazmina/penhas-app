@@ -35,9 +35,7 @@ class AuthenticationRepository implements IAuthenticationRepository {
     try {
       final userAgent = await _serverConfiguration.userAgent;
       final parameters = {'app_version': userAgent};
-      final body = Uri.encodeComponent(
-        'email=${emailAddress.rawValue}&senha=${password.rawValue}',
-      );
+      final body = 'email=${emailAddress.rawValue}&senha=${password.rawValue}';
 
       final result = await _apiProvider
           .post(
