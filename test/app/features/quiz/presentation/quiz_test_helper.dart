@@ -124,6 +124,8 @@ class QuizMessageTestScope {
               .thenReturn(Duration(seconds: 5));
           when(rightController.waitAnimationCompletion)
               .thenAnswer((_) async {});
+          when(() => rightController.onReplyMessage(any()))
+              .thenAnswer((_) async => Future.value());
         });
   }
 }
@@ -173,19 +175,15 @@ class QuizOkButton extends QuizMessageEntity {
 //Mocks
 class MockIQuizController extends Mock implements IQuizController {
   @override
-  Future<void> onReplyMessage(UserAnswer answer) async {
-    return Future.value();
-  }
-
-  @override
   List<QuizMessage> get messages => [];
 }
 
 class MockIQuizControllerWithMessages extends Mock implements IQuizController {
-  @override
-  Future<void> onReplyMessage(UserAnswer answer) async {
-    return Future.value();
-  }
+  // @override
+  // Future<void> onReplyMessage(UserAnswer answer) async {
+  //   // UserAnswer(message: QuizMessage.text(content: 'content'), value: AnswerValue('value'))
+  //   return Future.value();
+  // }
 
   @override
   List<QuizMessage> get messages => [
@@ -200,11 +198,6 @@ class MockIQuizControllerWithMessages extends Mock implements IQuizController {
 
 class MockIQuizControllerSingleChoice extends Mock implements IQuizController {
   @override
-  Future<void> onReplyMessage(UserAnswer answer) async {
-    return Future.value();
-  }
-
-  @override
   List<QuizMessage> get messages => [
         QuizMessage.singleChoice(reference: 'reference', options: [
           MessageOption(label: 'Option 1', value: 'Option 1'),
@@ -217,11 +210,6 @@ class MockIQuizControllerSingleChoice extends Mock implements IQuizController {
 class MockIQuizControllerWithHorizontalButtons extends Mock
     implements IQuizController {
   @override
-  Future<void> onReplyMessage(UserAnswer answer) async {
-    return Future.value();
-  }
-
-  @override
   List<QuizMessage> get messages => [
         QuizMessage.horizontalButtons(reference: 'reference', buttons: [
           ButtonOption(label: '1', value: '1'),
@@ -232,11 +220,6 @@ class MockIQuizControllerWithHorizontalButtons extends Mock
 }
 
 class MockIQuizControllerButton extends Mock implements IQuizController {
-  @override
-  Future<void> onReplyMessage(UserAnswer answer) async {
-    return Future.value();
-  }
-
   @override
   List<QuizMessage> get messages => [
         QuizMessage.text(content: 'text'),
@@ -251,11 +234,6 @@ class MockIQuizControllerButton extends Mock implements IQuizController {
 class MockIQuizControllerStealthTutorial extends Mock
     implements IQuizController {
   @override
-  Future<void> onReplyMessage(UserAnswer answer) async {
-    return Future.value();
-  }
-
-  @override
   List<QuizMessage> get messages => [
         QuizMessage.text(content: 'text'),
         QuizMessage.button(
@@ -266,11 +244,6 @@ class MockIQuizControllerStealthTutorial extends Mock
 }
 
 class MockIQuizControllerTutorial extends Mock implements IQuizController {
-  @override
-  Future<void> onReplyMessage(UserAnswer answer) async {
-    return Future.value();
-  }
-
   @override
   List<QuizMessage> get messages => [
         QuizMessage.button(
@@ -287,11 +260,6 @@ class MockIQuizControllerTutorial extends Mock implements IQuizController {
 
 class MockIQuizControllerTextResponse extends Mock implements IQuizController {
   @override
-  Future<void> onReplyMessage(UserAnswer answer) async {
-    return Future.value();
-  }
-
-  @override
   List<QuizMessage> get messages => [
         QuizMessage.sent(
           reference: 'REF',
@@ -303,22 +271,12 @@ class MockIQuizControllerTextResponse extends Mock implements IQuizController {
 
 class MockIQuizControllerDisplayText extends Mock implements IQuizController {
   @override
-  Future<void> onReplyMessage(UserAnswer answer) async {
-    return Future.value();
-  }
-
-  @override
   List<QuizMessage> get messages => [
         QuizMessage.text(content: 'Just a text'),
       ];
 }
 
 class MockIQuizControllerYesNo extends Mock implements IQuizController {
-  @override
-  Future<void> onReplyMessage(UserAnswer answer) async {
-    return Future.value();
-  }
-
   @override
   List<QuizMessage> get messages => [
         QuizMessage.text(content: 'text'),
