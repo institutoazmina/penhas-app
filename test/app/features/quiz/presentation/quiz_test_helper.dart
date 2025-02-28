@@ -77,32 +77,6 @@ IQuizController returnCorrectController(QuizMessageType type) {
     case QuizMessageType.displayTextResponse:
       return controllerTextResponse;
   }
-
-  if (type == QuizMessageType.yesno) {
-    return controllerYesNo;
-  }
-  if (type == QuizMessageType.displayTextResponse) {
-    return controllerTextResponse;
-  }
-  if (type == QuizMessageType.horizontalButtons) {
-    return controllerWithHorizontalButtons;
-  }
-  if (type == QuizMessageType.multipleChoices) {
-    return controllerWithMultipleChoices;
-  }
-  if (type == QuizMessageType.singleChoice) {
-    return controllerSingleChoice;
-  }
-  if (type == QuizMessageType.button) {
-    return controllerButton;
-  }
-  if (type == QuizMessageType.showStealthTutorial) {
-    return controllerStealthTutorial;
-  }
-  if (type == QuizMessageType.showHelpTutorial) {
-    return controllerTutorial;
-  }
-
   return controller;
 }
 
