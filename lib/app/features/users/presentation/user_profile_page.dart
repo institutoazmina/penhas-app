@@ -293,6 +293,7 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
       message: item,
       child: TagItem(
         activeColor: DesignSystemColors.easterPurple,
+        backgroundColor: DesignSystemColors.easterPurple,
         title: item,
         index: index,
         elevation: 0,
