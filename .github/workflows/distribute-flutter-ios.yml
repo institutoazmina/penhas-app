@@ -33,6 +33,14 @@ jobs:
   distribute:
     runs-on: macos-latest
     environment: ${{ inputs.environment }}
+    
+    # Add permissions here
+    permissions:
+      contents: read  # Only read access to the repository contents
+      actions: write  # If you need to trigger other workflows
+      checks: write   # If you need to create or update checks
+      deployments: write  # If you need to create deployments
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
