@@ -16,6 +16,12 @@ on:
         type: environment
         required: true
 
+# Define permissions for the GITHUB_TOKEN
+permissions:
+  contents: read  # Required to read the repository contents
+  packages: write # Required if you are publishing packages
+  actions: read   # Required if you are using reusable workflows
+
 jobs:
 
   distribute-android:

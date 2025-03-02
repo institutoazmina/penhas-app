@@ -20,6 +20,13 @@ on:
       TESTER_EMAIL:
         required: false
 
+# Define permissions for GITHUB_TOKEN
+permissions:
+  contents: read  # Required for actions/checkout
+  id-token: write # Required for some authentication tasks
+  packages: write # Required if you're publishing packages
+  actions: write  # Required if you're triggering other workflows
+
 jobs:
   distribute:
     runs-on: ubuntu-latest
