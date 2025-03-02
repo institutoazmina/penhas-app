@@ -179,12 +179,6 @@ class MockIQuizController extends Mock implements IQuizController {
 }
 
 class MockIQuizControllerWithMessages extends Mock implements IQuizController {
-  // @override
-  // Future<void> onReplyMessage(UserAnswer answer) async {
-  //   // UserAnswer(message: QuizMessage.text(content: 'content'), value: AnswerValue('value'))
-  //   return Future.value();
-  // }
-
   @override
   List<QuizMessage> get messages => [
         QuizMessage.multipleChoices(reference: 'reference', options: [
