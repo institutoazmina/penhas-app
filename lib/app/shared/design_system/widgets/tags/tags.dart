@@ -196,8 +196,10 @@ class _TagItemState extends State<TagItem> {
       decoration: BoxDecoration(
         borderRadius: widget.borderRadius,
         border: Border.all(
-          color: _active ? widget.activeColor : widget.backgroundColor,
-          width: 1.0,
+          color: _active
+              ? widget.activeColor
+              : widget.activeColor.withOpacity(0.5),
+          width: 0.5,
         ),
       ),
       child: Text(
