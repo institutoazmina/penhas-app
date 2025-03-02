@@ -93,6 +93,7 @@ class TagItem extends StatefulWidget {
     this.active = false,
     this.customData,
     this.activeColor = Colors.blue,
+    this.backgroundColor = Colors.white,
     this.textColor = Colors.black,
     this.textActiveColor = Colors.white,
     this.elevation = 0.0,
@@ -117,6 +118,9 @@ class TagItem extends StatefulWidget {
 
   /// Color when the tag is active
   final Color activeColor;
+
+  /// background color [ItemTags]
+  final Color backgroundColor;
 
   /// Text color when the tag is inactive
   final Color textColor;
@@ -168,7 +172,7 @@ class _TagItemState extends State<TagItem> {
     return Material(
       elevation: widget.elevation,
       borderRadius: widget.borderRadius,
-      color: _active ? widget.activeColor : Colors.white,
+      color: _active ? widget.activeColor : widget.backgroundColor,
       child: widget.pressEnabled
           ? InkWell(
               borderRadius: widget.borderRadius,
@@ -192,8 +196,7 @@ class _TagItemState extends State<TagItem> {
       decoration: BoxDecoration(
         borderRadius: widget.borderRadius,
         border: Border.all(
-          color:
-              _active ? widget.activeColor : widget.textColor.withOpacity(0.3),
+          color: _active ? widget.activeColor : widget.backgroundColor,
           width: 1.0,
         ),
       ),
