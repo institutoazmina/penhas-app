@@ -12,6 +12,12 @@ concurrency:
 jobs:
   check:
     runs-on: ubuntu-latest
+
+    # Define permissions for the GITHUB_TOKEN
+    permissions:
+      contents: read  # Only read access to repository contents
+      pull-requests: read  # Only read access to pull requests
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
