@@ -43,7 +43,6 @@ dependencies:
   flutter_secure_storage: ^6.1.0
   flutter_sound: ^9.2.13
   flutter_svg: ^1.0.3
-  flutter_tags: ^1.0.0-nullsafety.1
   flutter_widget_from_html: ^0.8.3+1
   freezed_annotation: ^1.1.0
   geolocator: ^9.0.2
@@ -107,10 +106,6 @@ dependency_overrides:
       url: https://github.com/pedrox-hs/modular.git
       path: flutter_modular_test
       ref: backward-compatibility
-  flutter_tags:
-    git:
-      url: https://github.com/pedrox-hs/flutter_tags.git
-      ref: null-safety
   workmanager:
     git:
       url: https://github.com/pedrox-hs/flutter_workmanager.git

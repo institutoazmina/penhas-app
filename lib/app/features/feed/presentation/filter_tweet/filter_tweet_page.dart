@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tags/flutter_tags.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/design_system/text_styles.dart';
 import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
+import '../../../../shared/design_system/widgets/tags/tags.dart';
 import '../../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../../authentication/presentation/shared/snack_bar_handler.dart';
 import '../../domain/entities/tweet_filter_session_entity.dart';
@@ -113,7 +113,7 @@ class _FilterTweetPageState extends State<FilterTweetPage>
   Tooltip _builtTagItem(TweetFilterEntity item, int index) {
     return Tooltip(
       message: item.label,
-      child: ItemTags(
+      child: TagItem(
         activeColor: DesignSystemColors.easterPurple,
         title: item.label!,
         index: index,
@@ -193,13 +193,13 @@ class _FilterTweetPageState extends State<FilterTweetPage>
       return Future.value(true);
     }
 
-    final List<String> seletedTags = _tagStateKey.currentState?.getAllItem
+    final List<String> selectedTags = _tagStateKey.currentState?.getAllItem
             .where((e) => e.active)
             .map((e) => e.customData)
             .whereType<String>()
             .toList() ??
         List.empty();
 
-    return _controller.setTags(seletedTags).then((value) => true);
+    return _controller.setTags(selectedTags).then((value) => true);
   }
 }

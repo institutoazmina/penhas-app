@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_tags/flutter_tags.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../core/extension/asuka.dart';
@@ -10,6 +9,7 @@ import '../../../shared/design_system/colors.dart';
 import '../../../shared/design_system/widgets/badges/user_badge_widget.dart';
 import '../../../shared/design_system/widgets/badges/user_close_badge_widget.dart';
 import '../../../shared/design_system/widgets/buttons/penhas_button.dart';
+import '../../../shared/design_system/widgets/tags/tags.dart';
 import '../../authentication/presentation/shared/page_progress_indicator.dart';
 import '../../authentication/presentation/shared/snack_bar_handler.dart';
 import '../../mainboard/presentation/mainboard/mainboard_page.dart';
@@ -291,9 +291,8 @@ extension _UserProfilePagePrivate on _UserProfilePageState {
   Tooltip builtTagItem(String item, int index) {
     return Tooltip(
       message: item,
-      child: ItemTags(
+      child: TagItem(
         activeColor: DesignSystemColors.easterPurple,
-        color: DesignSystemColors.easterPurple,
         title: item,
         index: index,
         elevation: 0,
