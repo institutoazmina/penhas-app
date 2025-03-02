@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tags/flutter_tags.dart';
 
 import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/design_system/text_styles.dart';
+import '../../../../shared/design_system/widgets/tags/tags.dart';
 import '../../domain/entities/izodiac.dart';
 
 class ZodiacFellingPage extends StatelessWidget {

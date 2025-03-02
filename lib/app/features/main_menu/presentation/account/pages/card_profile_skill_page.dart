@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tags/flutter_tags.dart';
 
 import '../../../../../shared/design_system/colors.dart';
+import '../../../../../shared/design_system/widgets/tags/tags.dart';
 import '../../../../filters/domain/entities/filter_tag_entity.dart';
 import 'card_profile_header_edit_page.dart';
 
@@ -52,7 +52,7 @@ extension _TextStyle on CardProfileSkillPage {
   Tooltip builtTagItem(FilterTagEntity item, int index) {
     return Tooltip(
       message: item.label,
-      child: ItemTags(
+      child: TagItem(
         activeColor: DesignSystemColors.easterPurple,
         title: item.label!,
         index: index,
