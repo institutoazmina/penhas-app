@@ -83,6 +83,7 @@ class TweetTitle extends StatelessWidget {
                 badgeName: badge.name,
                 badgePopUp: badge.popUp,
                 badgeShowDescription: badge.showDescription,
+                isLightBackground: true,
               )))
           .toList(),
     );

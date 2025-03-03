@@ -95,10 +95,12 @@ class ChatChannelCard extends StatelessWidget {
               padding: const EdgeInsets.only(left: 4.0),
               child: UserBadgeWidget(
                 badgeDescription: badge.description,
-                badgeImageUrl: badge.imageUrl,
+                badgeImageUrl: badge.imageUrlBlack,
                 badgeName: badge.name,
                 badgePopUp: badge.popUp,
                 badgeShowDescription: badge.showDescription,
+                isLightBackground: true,
+                badgeImageUrlBlack: badge.imageUrlBlack,
               )))
           .toList(),
     );
@@ -123,7 +125,8 @@ class ChatChannelCard extends StatelessWidget {
         name: '',
         popUp: 0,
         showDescription: 0,
-        style: '');
+        style: '',
+        imageUrlBlack: '');
     final badge = badges.firstWhere(
       (badge) => badge.style == 'inline-block',
       orElse: () => emptyBadge,
