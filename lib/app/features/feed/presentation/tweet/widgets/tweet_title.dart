@@ -43,10 +43,10 @@ class TweetTitle extends StatelessWidget {
 
   Widget _buildDetailTime() {
     final parsedTime = _mapServerUtcToLocalDate(tweet.createdAt);
-    final hour = _stringfyFormatted(parsedTime.hour);
-    final minute = _stringfyFormatted(parsedTime.minute);
-    final day = _stringfyFormatted(parsedTime.day);
-    final month = _stringfyFormatted(parsedTime.month);
+    final hour = _stringifyFormatted(parsedTime.hour);
+    final minute = _stringifyFormatted(parsedTime.minute);
+    final day = _stringifyFormatted(parsedTime.day);
+    final month = _stringifyFormatted(parsedTime.month);
 
     return Padding(
       padding: const EdgeInsets.only(left: 8.0),
@@ -57,7 +57,7 @@ class TweetTitle extends StatelessWidget {
     );
   }
 
-  String _stringfyFormatted(int value) {
+  String _stringifyFormatted(int value) {
     return value > 9 ? '$value' : '0$value';
   }
 
@@ -212,7 +212,6 @@ class TweetTitle extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
-          // ignore: deprecated_member_use
           child: FlatButton(
             onPressed: () => _showUserProfile(),
             color: Colors.transparent,
