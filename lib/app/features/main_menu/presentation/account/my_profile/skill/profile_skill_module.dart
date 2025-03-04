@@ -7,7 +7,7 @@ class ProfileSkillModule extends Module {
   @override
   List<Bind> get binds => [
         Bind.factory(
-          (i) => ProfileSkillController(tags: i.args?.data),
+          (i) => ProfileSkillController(tags: i.args.data),
         ),
       ];
 

@@ -162,13 +162,13 @@ class SignInModule extends Module {
         Bind.factory<SignUpTwoController>(
           (i) => SignUpTwoController(
             i.get<IUserRegisterRepository>(),
-            i.args?.data,
+            i.args.data,
           ),
         ),
         Bind.factory<SignUpThreeController>(
           (i) => SignUpThreeController(
             i.get<IUserRegisterRepository>(),
-            i.args?.data!,
+            i.args.data!,
             i.get<PasswordValidator>(),
           ),
         ),
@@ -181,13 +181,13 @@ class SignInModule extends Module {
         Bind.factory<ResetPasswordTwoController>(
           (i) => ResetPasswordTwoController(
             i.get<IChangePasswordRepository>(),
-            i.args?.data,
+            i.args.data,
           ),
         ),
         Bind.factory<ResetPasswordThreeController>(
           (i) => ResetPasswordThreeController(
             i.get<IChangePasswordRepository>(),
-            i.args?.data,
+            i.args.data,
             i.get<PasswordValidator>(),
           ),
         ),

@@ -38,12 +38,12 @@ class SupportCenterModule extends WidgetModule {
           ),
         ),
         Bind.factory(
-          (i) => SupportCenterListController(i.args?.data),
+          (i) => SupportCenterListController(i.args.data),
         ),
         Bind.factory(
           (i) => SupportCenterShowController(
             supportCenterUseCase: i.get<SupportCenterUseCase>(),
-            place: i.args?.data,
+            place: i.args.data,
           ),
         ),
       ];
