@@ -5,6 +5,7 @@ import 'package:timeago/timeago.dart' as timeago;
 
 import '../../../../../shared/design_system/text_styles.dart';
 import '../../../../../shared/design_system/widgets/badges/user_badge_widget.dart';
+import '../../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../../domain/entities/tweet_badge_entity.dart';
 import '../../../domain/entities/tweet_entity.dart';
 import '../../../domain/states/feed_router_type.dart';
@@ -212,12 +213,8 @@ class TweetTitle extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
-          child: FlatButton(
+          child: PenhasButton.text(
             onPressed: () => _showUserProfile(),
-            color: Colors.transparent,
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            padding: EdgeInsets.zero,
             child: _buttonTitle(),
           ),
         ),
