@@ -2,7 +2,6 @@ import 'package:asuka/asuka.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import 'shared/design_system/theme.dart';
 
@@ -32,6 +31,6 @@ class AppWidget extends StatelessWidget {
       supportedLocales: const [
         Locale('pt', 'BR'),
       ],
-    ).modular();
+    );
   }
 }
