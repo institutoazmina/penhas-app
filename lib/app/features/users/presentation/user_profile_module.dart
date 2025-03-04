@@ -10,7 +10,7 @@ class UserProfileModule extends Module {
   List<Bind> get binds => [
         Bind.factory(
           (i) => UserProfileController(
-            person: i.args?.data,
+            person: i.args.data,
             getChatChannelToken: i(),
             reportUser: i(),
             blockUser: i(),

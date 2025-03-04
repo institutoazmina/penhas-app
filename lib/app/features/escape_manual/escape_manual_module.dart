@@ -79,7 +79,7 @@ class EscapeManualModule extends WidgetModule {
     ),
     Bind.factory(
       (i) => EditTrustedContactsController(
-        contacts: i.args?.data,
+        contacts: i.args.data,
         escapeManualToggleFeature: EscapeManualToggleFeature(
           modulesServices: i.get(),
         ),

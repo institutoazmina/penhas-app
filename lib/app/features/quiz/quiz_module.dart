@@ -23,7 +23,7 @@ class QuizModule extends Module {
   List<Bind> get binds => [
         Bind.factory<IQuizController>(
           (i) => IQuizController.legacy(
-            quiz: i.args?.data,
+            quiz: i.args.data,
             sendAnswer: i.get<SendAnswerUseCase>(),
             remoteConfig: QuizRemoteConfig(
               remoteConfig: i.get<IRemoteConfigService>(),
@@ -33,7 +33,7 @@ class QuizModule extends Module {
         ),
         Bind.factory<QuizStartController>(
           (i) => QuizStartController(
-            sessionId: i.args?.queryParams['session_id'],
+            sessionId: i.args.queryParams['session_id'],
             startQuiz: i.get<StartQuizUseCase>(),
           ),
         ),
