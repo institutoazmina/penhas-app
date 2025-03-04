@@ -74,7 +74,7 @@ class AppModule extends Module {
           (i) => DeletedAccountController(
             profileRepository: i.get<IUserProfileRepository>(),
             appConfiguration: i.get<IAppConfiguration>(),
-            sessionToken: i.args?.data,
+            sessionToken: i.args.data,
           ),
         ),
         Bind.factory<IAppConfiguration>(
