@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/design_system/text_styles.dart';
 import '../../../../shared/design_system/widgets/badges/user_close_badge_widget.dart';
+import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../data/models/tweet_model.dart';
 import '../../domain/entities/tweet_entity.dart';
 import '../stores/tweet_controller.dart';
@@ -139,16 +140,12 @@ class ReplyTweet extends StatelessWidget {
                   color: DesignSystemColors.warnGrey,
                 ),
               ),
-              // ignore: deprecated_member_use
-              FlatButton(
-                onPressed: () => controller.detail(tweet),
-                color: Colors.white,
-                highlightColor: Colors.white,
-                splashColor: Colors.white,
+              PenhasButton.text(
                 child: const Text(
                   'Ver todos os comentários',
                   style: kTextStyleFeedTweetShowReply,
                 ),
+                onPressed: () => controller.detail(tweet),
               ),
             ],
           )
