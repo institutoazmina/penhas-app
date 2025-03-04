@@ -63,7 +63,7 @@ class ApiServerConfigure implements IApiServerConfigure {
   _DeviceInfo _readAndroidBuildData(AndroidDeviceInfo build) {
     return _DeviceInfo(
       'Android',
-      build.version.release ?? '0.0.0',
+      build.version.release,
       '${build.brand} ${build.model}',
     );
   }
