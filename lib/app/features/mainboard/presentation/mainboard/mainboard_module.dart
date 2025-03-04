@@ -269,7 +269,7 @@ class MainboardModule extends Module {
         ChildRoute(
           '/menu/about',
           child: (context, args) => AboutPenhasPage(
-            baseUrl: inject<IAppConfiguration>().penhasServer,
+            baseUrl: Modular.get<IAppConfiguration>().penhasServer,
           ),
           transition: TransitionType.rightToLeft,
         ),

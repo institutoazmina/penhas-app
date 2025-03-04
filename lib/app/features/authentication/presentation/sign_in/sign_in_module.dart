@@ -115,13 +115,13 @@ class SignInModule extends Module {
         ChildRoute(
           '/terms_of_use',
           child: (_, args) => TermsOfUsePage(
-            baseUrl: inject<IAppConfiguration>().penhasServer,
+            baseUrl: Modular.get<IAppConfiguration>().penhasServer,
           ),
         ),
         ChildRoute(
           '/privacy_policy',
           child: (_, args) => PrivacyPolicyPage(
-            baseUrl: inject<IAppConfiguration>().penhasServer,
+            baseUrl: Modular.get<IAppConfiguration>().penhasServer,
           ),
         ),
         ChildRoute(
