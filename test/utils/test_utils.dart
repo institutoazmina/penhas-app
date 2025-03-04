@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:alchemist/alchemist.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
@@ -67,4 +68,13 @@ void parameterizedGroup<T>(
       body(entry.key, entry.value);
     }
   }, skip: skip);
+}
+
+Widget buildTestableWidget(Widget widget) {
+  return MediaQuery(
+    data: const MediaQueryData(),
+    child: MaterialApp(
+      home: widget,
+    ),
+  );
 }
