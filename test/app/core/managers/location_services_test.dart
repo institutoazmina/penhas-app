@@ -40,14 +40,17 @@ void main() {
         debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
 
         final position = Position(
-            longitude: -0.01,
-            latitude: .01,
-            timestamp: DateTime(2023, 2, 3, 9, 20),
-            accuracy: 0.1,
-            altitude: 100.01,
-            heading: 1.1,
-            speed: 12.0,
-            speedAccuracy: 0.0);
+          longitude: -0.01,
+          latitude: .01,
+          timestamp: DateTime(2023, 2, 3, 9, 20),
+          accuracy: 0.1,
+          altitude: 100.01,
+          heading: 1.1,
+          speed: 12.0,
+          speedAccuracy: 0.0,
+          altitudeAccuracy: 0.0,
+          headingAccuracy: 0.0,
+        );
 
         when((() => mockPermissionHandlerPlatform
                 .checkPermissionStatus(Permission.location)))
@@ -472,14 +475,17 @@ class MockGeolocatorPlatform extends Mock
   Future<Position> getCurrentPosition(
       {LocationSettings? locationSettings}) async {
     return Position(
-        longitude: -0.01,
-        latitude: .01,
-        timestamp: DateTime(2023, 2, 3, 9, 20),
-        accuracy: 0.1,
-        altitude: 100.01,
-        heading: 1.1,
-        speed: 12.0,
-        speedAccuracy: 0.0);
+      longitude: -0.01,
+      latitude: .01,
+      timestamp: DateTime(2023, 2, 3, 9, 20),
+      accuracy: 0.1,
+      altitude: 100.01,
+      heading: 1.1,
+      speed: 12.0,
+      speedAccuracy: 0.0,
+      altitudeAccuracy: 0.0,
+      headingAccuracy: 0.0,
+    );
   }
 }
 
