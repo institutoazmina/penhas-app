@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../../domain/entities/tweet_entity.dart';
 import '../../../domain/states/feed_router_type.dart';
 
@@ -37,13 +38,8 @@ extension _PrivateMethod on TweetAvatar {
   }
 
   Widget authenticatedAvatar() {
-    // ignore: deprecated_member_use
-    return FlatButton(
+    return PenhasButton.text(
       onPressed: () => showUserProfile(),
-      color: Colors.transparent,
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      padding: EdgeInsets.zero,
       child: avatar(),
     );
   }
