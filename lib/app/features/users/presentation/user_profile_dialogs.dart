@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../shared/design_system/text_styles.dart';
+import '../../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../../shared/widgets/bottom_sheet_actions_widget.dart';
 import 'user_profile_state.dart';
 
@@ -62,13 +63,11 @@ class ReportUserDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
       ),
       actions: <Widget>[
-        // ignore: deprecated_member_use
-        FlatButton(
+        PenhasButton.text(
           child: const Text('Fechar'),
           onPressed: () => Navigator.pop(context),
         ),
-        // ignore: deprecated_member_use
-        FlatButton(
+        PenhasButton.text(
           child: const Text('Enviar'),
           onPressed: () {
             if (_formKey.currentState!.validate()) {
@@ -100,13 +99,11 @@ class UserBlockConfirmationDialog extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.0),
         ),
         actions: <Widget>[
-          // ignore: deprecated_member_use
-          FlatButton(
+          PenhasButton.text(
             child: const Text('Sim'),
             onPressed: () => Navigator.pop(context, true),
           ),
-          // ignore: deprecated_member_use
-          FlatButton(
+          PenhasButton.text(
             child: const Text('Não'),
             onPressed: () => Navigator.pop(context),
           ),
