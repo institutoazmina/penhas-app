@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'chat_channel_usecase_event.dart';
@@ -11,47 +12,7 @@ part of 'chat_channel_usecase_event.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ChatChannelUseCaseEventTearOff {
-  const _$ChatChannelUseCaseEventTearOff();
-
-  _Initial initial() {
-    return const _Initial();
-  }
-
-  _Loaded loaded() {
-    return const _Loaded();
-  }
-
-  _UpdateUser updateUser(ChatUserEntity user) {
-    return _UpdateUser(
-      user,
-    );
-  }
-
-  _UpdateMetadata updateMetadata(ChatChannelSessionMetadataEntity metadata) {
-    return _UpdateMetadata(
-      metadata,
-    );
-  }
-
-  _UpdateMessage updateMessage(List<ChatChannelMessage> messages) {
-    return _UpdateMessage(
-      messages,
-    );
-  }
-
-  _ErrorOnLoading errorOnLoading(String message) {
-    return _ErrorOnLoading(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $ChatChannelUseCaseEvent = _$ChatChannelUseCaseEventTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ChatChannelUseCaseEvent {
@@ -138,43 +99,37 @@ class _$ChatChannelUseCaseEventCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+abstract class _$$_InitialCopyWith<$Res> {
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res>
+class __$$_InitialCopyWithImpl<$Res>
     extends _$ChatChannelUseCaseEventCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, (v) => _then(v as _$_Initial));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  _$_Initial get _value => super._value as _$_Initial;
 }
 
 /// @nodoc
 
-class _$_Initial with DiagnosticableTreeMixin implements _Initial {
+class _$_Initial implements _Initial {
   const _$_Initial();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'ChatChannelUseCaseEvent.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('type', 'ChatChannelUseCaseEvent.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
+        (other.runtimeType == runtimeType && other is _$_Initial);
   }
 
   @override
@@ -273,43 +228,36 @@ abstract class _Initial implements ChatChannelUseCaseEvent {
 }
 
 /// @nodoc
-abstract class _$LoadedCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
-      __$LoadedCopyWithImpl<$Res>;
+abstract class _$$_LoadedCopyWith<$Res> {
+  factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
+      __$$_LoadedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoadedCopyWithImpl<$Res>
+class __$$_LoadedCopyWithImpl<$Res>
     extends _$ChatChannelUseCaseEventCopyWithImpl<$Res>
-    implements _$LoadedCopyWith<$Res> {
-  __$LoadedCopyWithImpl(_Loaded _value, $Res Function(_Loaded) _then)
-      : super(_value, (v) => _then(v as _Loaded));
+    implements _$$_LoadedCopyWith<$Res> {
+  __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
+      : super(_value, (v) => _then(v as _$_Loaded));
 
   @override
-  _Loaded get _value => super._value as _Loaded;
+  _$_Loaded get _value => super._value as _$_Loaded;
 }
 
 /// @nodoc
 
-class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
+class _$_Loaded implements _Loaded {
   const _$_Loaded();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'ChatChannelUseCaseEvent.loaded()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('type', 'ChatChannelUseCaseEvent.loaded'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Loaded);
+        (other.runtimeType == runtimeType && other is _$_Loaded);
   }
 
   @override
@@ -408,29 +356,29 @@ abstract class _Loaded implements ChatChannelUseCaseEvent {
 }
 
 /// @nodoc
-abstract class _$UpdateUserCopyWith<$Res> {
-  factory _$UpdateUserCopyWith(
-          _UpdateUser value, $Res Function(_UpdateUser) then) =
-      __$UpdateUserCopyWithImpl<$Res>;
+abstract class _$$_UpdateUserCopyWith<$Res> {
+  factory _$$_UpdateUserCopyWith(
+          _$_UpdateUser value, $Res Function(_$_UpdateUser) then) =
+      __$$_UpdateUserCopyWithImpl<$Res>;
   $Res call({ChatUserEntity user});
 }
 
 /// @nodoc
-class __$UpdateUserCopyWithImpl<$Res>
+class __$$_UpdateUserCopyWithImpl<$Res>
     extends _$ChatChannelUseCaseEventCopyWithImpl<$Res>
-    implements _$UpdateUserCopyWith<$Res> {
-  __$UpdateUserCopyWithImpl(
-      _UpdateUser _value, $Res Function(_UpdateUser) _then)
-      : super(_value, (v) => _then(v as _UpdateUser));
+    implements _$$_UpdateUserCopyWith<$Res> {
+  __$$_UpdateUserCopyWithImpl(
+      _$_UpdateUser _value, $Res Function(_$_UpdateUser) _then)
+      : super(_value, (v) => _then(v as _$_UpdateUser));
 
   @override
-  _UpdateUser get _value => super._value as _UpdateUser;
+  _$_UpdateUser get _value => super._value as _$_UpdateUser;
 
   @override
   $Res call({
     Object? user = freezed,
   }) {
-    return _then(_UpdateUser(
+    return _then(_$_UpdateUser(
       user == freezed
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -441,30 +389,22 @@ class __$UpdateUserCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
+class _$_UpdateUser implements _UpdateUser {
   const _$_UpdateUser(this.user);
 
   @override
   final ChatUserEntity user;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'ChatChannelUseCaseEvent.updateUser(user: $user)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'ChatChannelUseCaseEvent.updateUser'))
-      ..add(DiagnosticsProperty('user', user));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _UpdateUser &&
+            other is _$_UpdateUser &&
             const DeepCollectionEquality().equals(other.user, user));
   }
 
@@ -474,8 +414,8 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
 
   @JsonKey(ignore: true)
   @override
-  _$UpdateUserCopyWith<_UpdateUser> get copyWith =>
-      __$UpdateUserCopyWithImpl<_UpdateUser>(this, _$identity);
+  _$$_UpdateUserCopyWith<_$_UpdateUser> get copyWith =>
+      __$$_UpdateUserCopyWithImpl<_$_UpdateUser>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -566,38 +506,38 @@ class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
 }
 
 abstract class _UpdateUser implements ChatChannelUseCaseEvent {
-  const factory _UpdateUser(ChatUserEntity user) = _$_UpdateUser;
+  const factory _UpdateUser(final ChatUserEntity user) = _$_UpdateUser;
 
   ChatUserEntity get user;
   @JsonKey(ignore: true)
-  _$UpdateUserCopyWith<_UpdateUser> get copyWith =>
+  _$$_UpdateUserCopyWith<_$_UpdateUser> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$UpdateMetadataCopyWith<$Res> {
-  factory _$UpdateMetadataCopyWith(
-          _UpdateMetadata value, $Res Function(_UpdateMetadata) then) =
-      __$UpdateMetadataCopyWithImpl<$Res>;
+abstract class _$$_UpdateMetadataCopyWith<$Res> {
+  factory _$$_UpdateMetadataCopyWith(
+          _$_UpdateMetadata value, $Res Function(_$_UpdateMetadata) then) =
+      __$$_UpdateMetadataCopyWithImpl<$Res>;
   $Res call({ChatChannelSessionMetadataEntity metadata});
 }
 
 /// @nodoc
-class __$UpdateMetadataCopyWithImpl<$Res>
+class __$$_UpdateMetadataCopyWithImpl<$Res>
     extends _$ChatChannelUseCaseEventCopyWithImpl<$Res>
-    implements _$UpdateMetadataCopyWith<$Res> {
-  __$UpdateMetadataCopyWithImpl(
-      _UpdateMetadata _value, $Res Function(_UpdateMetadata) _then)
-      : super(_value, (v) => _then(v as _UpdateMetadata));
+    implements _$$_UpdateMetadataCopyWith<$Res> {
+  __$$_UpdateMetadataCopyWithImpl(
+      _$_UpdateMetadata _value, $Res Function(_$_UpdateMetadata) _then)
+      : super(_value, (v) => _then(v as _$_UpdateMetadata));
 
   @override
-  _UpdateMetadata get _value => super._value as _UpdateMetadata;
+  _$_UpdateMetadata get _value => super._value as _$_UpdateMetadata;
 
   @override
   $Res call({
     Object? metadata = freezed,
   }) {
-    return _then(_UpdateMetadata(
+    return _then(_$_UpdateMetadata(
       metadata == freezed
           ? _value.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
@@ -608,33 +548,22 @@ class __$UpdateMetadataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_UpdateMetadata
-    with DiagnosticableTreeMixin
-    implements _UpdateMetadata {
+class _$_UpdateMetadata implements _UpdateMetadata {
   const _$_UpdateMetadata(this.metadata);
 
   @override
   final ChatChannelSessionMetadataEntity metadata;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'ChatChannelUseCaseEvent.updateMetadata(metadata: $metadata)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(
-          DiagnosticsProperty('type', 'ChatChannelUseCaseEvent.updateMetadata'))
-      ..add(DiagnosticsProperty('metadata', metadata));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _UpdateMetadata &&
+            other is _$_UpdateMetadata &&
             const DeepCollectionEquality().equals(other.metadata, metadata));
   }
 
@@ -644,8 +573,8 @@ class _$_UpdateMetadata
 
   @JsonKey(ignore: true)
   @override
-  _$UpdateMetadataCopyWith<_UpdateMetadata> get copyWith =>
-      __$UpdateMetadataCopyWithImpl<_UpdateMetadata>(this, _$identity);
+  _$$_UpdateMetadataCopyWith<_$_UpdateMetadata> get copyWith =>
+      __$$_UpdateMetadataCopyWithImpl<_$_UpdateMetadata>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -736,41 +665,41 @@ class _$_UpdateMetadata
 }
 
 abstract class _UpdateMetadata implements ChatChannelUseCaseEvent {
-  const factory _UpdateMetadata(ChatChannelSessionMetadataEntity metadata) =
-      _$_UpdateMetadata;
+  const factory _UpdateMetadata(
+      final ChatChannelSessionMetadataEntity metadata) = _$_UpdateMetadata;
 
   ChatChannelSessionMetadataEntity get metadata;
   @JsonKey(ignore: true)
-  _$UpdateMetadataCopyWith<_UpdateMetadata> get copyWith =>
+  _$$_UpdateMetadataCopyWith<_$_UpdateMetadata> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$UpdateMessageCopyWith<$Res> {
-  factory _$UpdateMessageCopyWith(
-          _UpdateMessage value, $Res Function(_UpdateMessage) then) =
-      __$UpdateMessageCopyWithImpl<$Res>;
+abstract class _$$_UpdateMessageCopyWith<$Res> {
+  factory _$$_UpdateMessageCopyWith(
+          _$_UpdateMessage value, $Res Function(_$_UpdateMessage) then) =
+      __$$_UpdateMessageCopyWithImpl<$Res>;
   $Res call({List<ChatChannelMessage> messages});
 }
 
 /// @nodoc
-class __$UpdateMessageCopyWithImpl<$Res>
+class __$$_UpdateMessageCopyWithImpl<$Res>
     extends _$ChatChannelUseCaseEventCopyWithImpl<$Res>
-    implements _$UpdateMessageCopyWith<$Res> {
-  __$UpdateMessageCopyWithImpl(
-      _UpdateMessage _value, $Res Function(_UpdateMessage) _then)
-      : super(_value, (v) => _then(v as _UpdateMessage));
+    implements _$$_UpdateMessageCopyWith<$Res> {
+  __$$_UpdateMessageCopyWithImpl(
+      _$_UpdateMessage _value, $Res Function(_$_UpdateMessage) _then)
+      : super(_value, (v) => _then(v as _$_UpdateMessage));
 
   @override
-  _UpdateMessage get _value => super._value as _UpdateMessage;
+  _$_UpdateMessage get _value => super._value as _$_UpdateMessage;
 
   @override
   $Res call({
     Object? messages = freezed,
   }) {
-    return _then(_UpdateMessage(
+    return _then(_$_UpdateMessage(
       messages == freezed
-          ? _value.messages
+          ? _value._messages
           : messages // ignore: cast_nullable_to_non_nullable
               as List<ChatChannelMessage>,
     ));
@@ -779,42 +708,38 @@ class __$UpdateMessageCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_UpdateMessage with DiagnosticableTreeMixin implements _UpdateMessage {
-  const _$_UpdateMessage(this.messages);
+class _$_UpdateMessage implements _UpdateMessage {
+  const _$_UpdateMessage(final List<ChatChannelMessage> messages)
+      : _messages = messages;
 
+  final List<ChatChannelMessage> _messages;
   @override
-  final List<ChatChannelMessage> messages;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatChannelUseCaseEvent.updateMessage(messages: $messages)';
+  List<ChatChannelMessage> get messages {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_messages);
   }
 
   @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(
-          DiagnosticsProperty('type', 'ChatChannelUseCaseEvent.updateMessage'))
-      ..add(DiagnosticsProperty('messages', messages));
+  String toString() {
+    return 'ChatChannelUseCaseEvent.updateMessage(messages: $messages)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _UpdateMessage &&
-            const DeepCollectionEquality().equals(other.messages, messages));
+            other is _$_UpdateMessage &&
+            const DeepCollectionEquality().equals(other._messages, _messages));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(messages));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_messages));
 
   @JsonKey(ignore: true)
   @override
-  _$UpdateMessageCopyWith<_UpdateMessage> get copyWith =>
-      __$UpdateMessageCopyWithImpl<_UpdateMessage>(this, _$identity);
+  _$$_UpdateMessageCopyWith<_$_UpdateMessage> get copyWith =>
+      __$$_UpdateMessageCopyWithImpl<_$_UpdateMessage>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -905,39 +830,39 @@ class _$_UpdateMessage with DiagnosticableTreeMixin implements _UpdateMessage {
 }
 
 abstract class _UpdateMessage implements ChatChannelUseCaseEvent {
-  const factory _UpdateMessage(List<ChatChannelMessage> messages) =
+  const factory _UpdateMessage(final List<ChatChannelMessage> messages) =
       _$_UpdateMessage;
 
   List<ChatChannelMessage> get messages;
   @JsonKey(ignore: true)
-  _$UpdateMessageCopyWith<_UpdateMessage> get copyWith =>
+  _$$_UpdateMessageCopyWith<_$_UpdateMessage> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$ErrorOnLoadingCopyWith<$Res> {
-  factory _$ErrorOnLoadingCopyWith(
-          _ErrorOnLoading value, $Res Function(_ErrorOnLoading) then) =
-      __$ErrorOnLoadingCopyWithImpl<$Res>;
+abstract class _$$_ErrorOnLoadingCopyWith<$Res> {
+  factory _$$_ErrorOnLoadingCopyWith(
+          _$_ErrorOnLoading value, $Res Function(_$_ErrorOnLoading) then) =
+      __$$_ErrorOnLoadingCopyWithImpl<$Res>;
   $Res call({String message});
 }
 
 /// @nodoc
-class __$ErrorOnLoadingCopyWithImpl<$Res>
+class __$$_ErrorOnLoadingCopyWithImpl<$Res>
     extends _$ChatChannelUseCaseEventCopyWithImpl<$Res>
-    implements _$ErrorOnLoadingCopyWith<$Res> {
-  __$ErrorOnLoadingCopyWithImpl(
-      _ErrorOnLoading _value, $Res Function(_ErrorOnLoading) _then)
-      : super(_value, (v) => _then(v as _ErrorOnLoading));
+    implements _$$_ErrorOnLoadingCopyWith<$Res> {
+  __$$_ErrorOnLoadingCopyWithImpl(
+      _$_ErrorOnLoading _value, $Res Function(_$_ErrorOnLoading) _then)
+      : super(_value, (v) => _then(v as _$_ErrorOnLoading));
 
   @override
-  _ErrorOnLoading get _value => super._value as _ErrorOnLoading;
+  _$_ErrorOnLoading get _value => super._value as _$_ErrorOnLoading;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_ErrorOnLoading(
+    return _then(_$_ErrorOnLoading(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -948,33 +873,22 @@ class __$ErrorOnLoadingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ErrorOnLoading
-    with DiagnosticableTreeMixin
-    implements _ErrorOnLoading {
+class _$_ErrorOnLoading implements _ErrorOnLoading {
   const _$_ErrorOnLoading(this.message);
 
   @override
   final String message;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'ChatChannelUseCaseEvent.errorOnLoading(message: $message)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(
-          DiagnosticsProperty('type', 'ChatChannelUseCaseEvent.errorOnLoading'))
-      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ErrorOnLoading &&
+            other is _$_ErrorOnLoading &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -984,8 +898,8 @@ class _$_ErrorOnLoading
 
   @JsonKey(ignore: true)
   @override
-  _$ErrorOnLoadingCopyWith<_ErrorOnLoading> get copyWith =>
-      __$ErrorOnLoadingCopyWithImpl<_ErrorOnLoading>(this, _$identity);
+  _$$_ErrorOnLoadingCopyWith<_$_ErrorOnLoading> get copyWith =>
+      __$$_ErrorOnLoadingCopyWithImpl<_$_ErrorOnLoading>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1076,10 +990,10 @@ class _$_ErrorOnLoading
 }
 
 abstract class _ErrorOnLoading implements ChatChannelUseCaseEvent {
-  const factory _ErrorOnLoading(String message) = _$_ErrorOnLoading;
+  const factory _ErrorOnLoading(final String message) = _$_ErrorOnLoading;
 
   String get message;
   @JsonKey(ignore: true)
-  _$ErrorOnLoadingCopyWith<_ErrorOnLoading> get copyWith =>
+  _$$_ErrorOnLoadingCopyWith<_$_ErrorOnLoading> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -6,7 +6,7 @@ part of 'sign_in_anonymous_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$SignInAnonymousController on _SignInAnonymousController, Store {
   Computed<PageProgressState>? _$currentStateComputed;
@@ -17,7 +17,8 @@ mixin _$SignInAnonymousController on _SignInAnonymousController, Store {
               name: '_SignInAnonymousController.currentState'))
       .value;
 
-  final _$_progressAtom = Atom(name: '_SignInAnonymousController._progress');
+  late final _$_progressAtom =
+      Atom(name: '_SignInAnonymousController._progress', context: context);
 
   @override
   ObservableFuture<Either<Failure, SessionEntity>>? get _progress {
@@ -32,8 +33,8 @@ mixin _$SignInAnonymousController on _SignInAnonymousController, Store {
     });
   }
 
-  final _$userGreetingsAtom =
-      Atom(name: '_SignInAnonymousController.userGreetings');
+  late final _$userGreetingsAtom =
+      Atom(name: '_SignInAnonymousController.userGreetings', context: context);
 
   @override
   String get userGreetings {
@@ -48,7 +49,8 @@ mixin _$SignInAnonymousController on _SignInAnonymousController, Store {
     });
   }
 
-  final _$userEmailAtom = Atom(name: '_SignInAnonymousController.userEmail');
+  late final _$userEmailAtom =
+      Atom(name: '_SignInAnonymousController.userEmail', context: context);
 
   @override
   String? get userEmail {
@@ -63,8 +65,8 @@ mixin _$SignInAnonymousController on _SignInAnonymousController, Store {
     });
   }
 
-  final _$warningPasswordAtom =
-      Atom(name: '_SignInAnonymousController.warningPassword');
+  late final _$warningPasswordAtom = Atom(
+      name: '_SignInAnonymousController.warningPassword', context: context);
 
   @override
   String get warningPassword {
@@ -79,8 +81,8 @@ mixin _$SignInAnonymousController on _SignInAnonymousController, Store {
     });
   }
 
-  final _$errorMessageAtom =
-      Atom(name: '_SignInAnonymousController.errorMessage');
+  late final _$errorMessageAtom =
+      Atom(name: '_SignInAnonymousController.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -95,8 +97,9 @@ mixin _$SignInAnonymousController on _SignInAnonymousController, Store {
     });
   }
 
-  final _$signInWithEmailAndPasswordPressedAsyncAction = AsyncAction(
-      '_SignInAnonymousController.signInWithEmailAndPasswordPressed');
+  late final _$signInWithEmailAndPasswordPressedAsyncAction = AsyncAction(
+      '_SignInAnonymousController.signInWithEmailAndPasswordPressed',
+      context: context);
 
   @override
   Future<void> signInWithEmailAndPasswordPressed() {
@@ -104,16 +107,17 @@ mixin _$SignInAnonymousController on _SignInAnonymousController, Store {
         .run(() => super.signInWithEmailAndPasswordPressed());
   }
 
-  final _$changeAccountAsyncAction =
-      AsyncAction('_SignInAnonymousController.changeAccount');
+  late final _$changeAccountAsyncAction =
+      AsyncAction('_SignInAnonymousController.changeAccount', context: context);
 
   @override
   Future<void> changeAccount() {
     return _$changeAccountAsyncAction.run(() => super.changeAccount());
   }
 
-  final _$resetPasswordPressedAsyncAction =
-      AsyncAction('_SignInAnonymousController.resetPasswordPressed');
+  late final _$resetPasswordPressedAsyncAction = AsyncAction(
+      '_SignInAnonymousController.resetPasswordPressed',
+      context: context);
 
   @override
   Future<void> resetPasswordPressed() {
@@ -121,8 +125,8 @@ mixin _$SignInAnonymousController on _SignInAnonymousController, Store {
         .run(() => super.resetPasswordPressed());
   }
 
-  final _$_SignInAnonymousControllerActionController =
-      ActionController(name: '_SignInAnonymousController');
+  late final _$_SignInAnonymousControllerActionController =
+      ActionController(name: '_SignInAnonymousController', context: context);
 
   @override
   void setPassword(String password) {

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'guardian_alert_state.dart';
@@ -11,25 +12,7 @@ part of 'guardian_alert_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$GuardianAlertStateTearOff {
-  const _$GuardianAlertStateTearOff();
-
-  _Initial initial() {
-    return const _Initial();
-  }
-
-  _Alert alert(GuardianAlertMessageAction action) {
-    return _Alert(
-      action,
-    );
-  }
-}
-
-/// @nodoc
-const $GuardianAlertState = _$GuardianAlertStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$GuardianAlertState {
@@ -91,42 +74,37 @@ class _$GuardianAlertStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+abstract class _$$_InitialCopyWith<$Res> {
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res>
+class __$$_InitialCopyWithImpl<$Res>
     extends _$GuardianAlertStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, (v) => _then(v as _$_Initial));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  _$_Initial get _value => super._value as _$_Initial;
 }
 
 /// @nodoc
 
-class _$_Initial with DiagnosticableTreeMixin implements _Initial {
+class _$_Initial implements _Initial {
   const _$_Initial();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'GuardianAlertState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'GuardianAlertState.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
+        (other.runtimeType == runtimeType && other is _$_Initial);
   }
 
   @override
@@ -200,26 +178,27 @@ abstract class _Initial implements GuardianAlertState {
 }
 
 /// @nodoc
-abstract class _$AlertCopyWith<$Res> {
-  factory _$AlertCopyWith(_Alert value, $Res Function(_Alert) then) =
-      __$AlertCopyWithImpl<$Res>;
+abstract class _$$_AlertCopyWith<$Res> {
+  factory _$$_AlertCopyWith(_$_Alert value, $Res Function(_$_Alert) then) =
+      __$$_AlertCopyWithImpl<$Res>;
   $Res call({GuardianAlertMessageAction action});
 }
 
 /// @nodoc
-class __$AlertCopyWithImpl<$Res> extends _$GuardianAlertStateCopyWithImpl<$Res>
-    implements _$AlertCopyWith<$Res> {
-  __$AlertCopyWithImpl(_Alert _value, $Res Function(_Alert) _then)
-      : super(_value, (v) => _then(v as _Alert));
+class __$$_AlertCopyWithImpl<$Res>
+    extends _$GuardianAlertStateCopyWithImpl<$Res>
+    implements _$$_AlertCopyWith<$Res> {
+  __$$_AlertCopyWithImpl(_$_Alert _value, $Res Function(_$_Alert) _then)
+      : super(_value, (v) => _then(v as _$_Alert));
 
   @override
-  _Alert get _value => super._value as _Alert;
+  _$_Alert get _value => super._value as _$_Alert;
 
   @override
   $Res call({
     Object? action = freezed,
   }) {
-    return _then(_Alert(
+    return _then(_$_Alert(
       action == freezed
           ? _value.action
           : action // ignore: cast_nullable_to_non_nullable
@@ -230,30 +209,22 @@ class __$AlertCopyWithImpl<$Res> extends _$GuardianAlertStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Alert with DiagnosticableTreeMixin implements _Alert {
+class _$_Alert implements _Alert {
   const _$_Alert(this.action);
 
   @override
   final GuardianAlertMessageAction action;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'GuardianAlertState.alert(action: $action)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'GuardianAlertState.alert'))
-      ..add(DiagnosticsProperty('action', action));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Alert &&
+            other is _$_Alert &&
             const DeepCollectionEquality().equals(other.action, action));
   }
 
@@ -263,8 +234,8 @@ class _$_Alert with DiagnosticableTreeMixin implements _Alert {
 
   @JsonKey(ignore: true)
   @override
-  _$AlertCopyWith<_Alert> get copyWith =>
-      __$AlertCopyWithImpl<_Alert>(this, _$identity);
+  _$$_AlertCopyWith<_$_Alert> get copyWith =>
+      __$$_AlertCopyWithImpl<_$_Alert>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -330,9 +301,10 @@ class _$_Alert with DiagnosticableTreeMixin implements _Alert {
 }
 
 abstract class _Alert implements GuardianAlertState {
-  const factory _Alert(GuardianAlertMessageAction action) = _$_Alert;
+  const factory _Alert(final GuardianAlertMessageAction action) = _$_Alert;
 
   GuardianAlertMessageAction get action;
   @JsonKey(ignore: true)
-  _$AlertCopyWith<_Alert> get copyWith => throw _privateConstructorUsedError;
+  _$$_AlertCopyWith<_$_Alert> get copyWith =>
+      throw _privateConstructorUsedError;
 }

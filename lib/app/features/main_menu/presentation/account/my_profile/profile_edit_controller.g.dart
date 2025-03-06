@@ -6,7 +6,7 @@ part of 'profile_edit_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ProfileEditController on _ProfileEditControllerBase, Store {
   Computed<PageProgressState>? _$progressStateComputed;
@@ -17,7 +17,8 @@ mixin _$ProfileEditController on _ProfileEditControllerBase, Store {
               name: '_ProfileEditControllerBase.progressState'))
       .value;
 
-  final _$_progressAtom = Atom(name: '_ProfileEditControllerBase._progress');
+  late final _$_progressAtom =
+      Atom(name: '_ProfileEditControllerBase._progress', context: context);
 
   @override
   ObservableFuture<Either<Failure, AppStateEntity>>? get _progress {
@@ -32,8 +33,8 @@ mixin _$ProfileEditController on _ProfileEditControllerBase, Store {
     });
   }
 
-  final _$profileSkillAtom =
-      Atom(name: '_ProfileEditControllerBase.profileSkill');
+  late final _$profileSkillAtom =
+      Atom(name: '_ProfileEditControllerBase.profileSkill', context: context);
 
   @override
   ObservableList<FilterTagEntity?> get profileSkill {
@@ -48,7 +49,8 @@ mixin _$ProfileEditController on _ProfileEditControllerBase, Store {
     });
   }
 
-  final _$stateAtom = Atom(name: '_ProfileEditControllerBase.state');
+  late final _$stateAtom =
+      Atom(name: '_ProfileEditControllerBase.state', context: context);
 
   @override
   ProfileEditState get state {
@@ -63,8 +65,8 @@ mixin _$ProfileEditController on _ProfileEditControllerBase, Store {
     });
   }
 
-  final _$updateErrorAtom =
-      Atom(name: '_ProfileEditControllerBase.updateError');
+  late final _$updateErrorAtom =
+      Atom(name: '_ProfileEditControllerBase.updateError', context: context);
 
   @override
   String? get updateError {
@@ -79,39 +81,40 @@ mixin _$ProfileEditController on _ProfileEditControllerBase, Store {
     });
   }
 
-  final _$retryAsyncAction = AsyncAction('_ProfileEditControllerBase.retry');
+  late final _$retryAsyncAction =
+      AsyncAction('_ProfileEditControllerBase.retry', context: context);
 
   @override
   Future<void> retry() {
     return _$retryAsyncAction.run(() => super.retry());
   }
 
-  final _$editNickNameAsyncAction =
-      AsyncAction('_ProfileEditControllerBase.editNickName');
+  late final _$editNickNameAsyncAction =
+      AsyncAction('_ProfileEditControllerBase.editNickName', context: context);
 
   @override
   Future<void> editNickName(String name) {
     return _$editNickNameAsyncAction.run(() => super.editNickName(name));
   }
 
-  final _$editMinibioAsyncAction =
-      AsyncAction('_ProfileEditControllerBase.editMinibio');
+  late final _$editMinibioAsyncAction =
+      AsyncAction('_ProfileEditControllerBase.editMinibio', context: context);
 
   @override
   Future<void> editMinibio(String content) {
     return _$editMinibioAsyncAction.run(() => super.editMinibio(content));
   }
 
-  final _$updateRaceAsyncAction =
-      AsyncAction('_ProfileEditControllerBase.updateRace');
+  late final _$updateRaceAsyncAction =
+      AsyncAction('_ProfileEditControllerBase.updateRace', context: context);
 
   @override
   Future<void> updateRace(String id) {
     return _$updateRaceAsyncAction.run(() => super.updateRace(id));
   }
 
-  final _$updatedEmailAsyncAction =
-      AsyncAction('_ProfileEditControllerBase.updatedEmail');
+  late final _$updatedEmailAsyncAction =
+      AsyncAction('_ProfileEditControllerBase.updatedEmail', context: context);
 
   @override
   Future<void> updatedEmail(String email, String password) {
@@ -119,8 +122,9 @@ mixin _$ProfileEditController on _ProfileEditControllerBase, Store {
         .run(() => super.updatedEmail(email, password));
   }
 
-  final _$updatePasswordAsyncAction =
-      AsyncAction('_ProfileEditControllerBase.updatePassword');
+  late final _$updatePasswordAsyncAction = AsyncAction(
+      '_ProfileEditControllerBase.updatePassword',
+      context: context);
 
   @override
   Future<void> updatePassword(String newPassword, String oldPassword) {
@@ -128,8 +132,8 @@ mixin _$ProfileEditController on _ProfileEditControllerBase, Store {
         .run(() => super.updatePassword(newPassword, oldPassword));
   }
 
-  final _$editSkillAsyncAction =
-      AsyncAction('_ProfileEditControllerBase.editSkill');
+  late final _$editSkillAsyncAction =
+      AsyncAction('_ProfileEditControllerBase.editSkill', context: context);
 
   @override
   Future<void> editSkill() {

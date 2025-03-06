@@ -6,7 +6,7 @@ part of 'reset_password_three_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ResetPasswordThreeController
     on _ResetPasswordThreeControllerBase, Store {
@@ -18,8 +18,8 @@ mixin _$ResetPasswordThreeController
               name: '_ResetPasswordThreeControllerBase.currentState'))
       .value;
 
-  final _$_progressAtom =
-      Atom(name: '_ResetPasswordThreeControllerBase._progress');
+  late final _$_progressAtom = Atom(
+      name: '_ResetPasswordThreeControllerBase._progress', context: context);
 
   @override
   ObservableFuture<Either<Failure, ValidField>>? get _progress {
@@ -34,8 +34,8 @@ mixin _$ResetPasswordThreeController
     });
   }
 
-  final _$errorMessageAtom =
-      Atom(name: '_ResetPasswordThreeControllerBase.errorMessage');
+  late final _$errorMessageAtom = Atom(
+      name: '_ResetPasswordThreeControllerBase.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -50,8 +50,9 @@ mixin _$ResetPasswordThreeController
     });
   }
 
-  final _$warningPasswordAtom =
-      Atom(name: '_ResetPasswordThreeControllerBase.warningPassword');
+  late final _$warningPasswordAtom = Atom(
+      name: '_ResetPasswordThreeControllerBase.warningPassword',
+      context: context);
 
   @override
   String get warningPassword {
@@ -66,8 +67,9 @@ mixin _$ResetPasswordThreeController
     });
   }
 
-  final _$warningConfirmationPasswordAtom = Atom(
-      name: '_ResetPasswordThreeControllerBase.warningConfirmationPassword');
+  late final _$warningConfirmationPasswordAtom = Atom(
+      name: '_ResetPasswordThreeControllerBase.warningConfirmationPassword',
+      context: context);
 
   @override
   String get warningConfirmationPassword {
@@ -83,16 +85,18 @@ mixin _$ResetPasswordThreeController
     });
   }
 
-  final _$nextStepPressedAsyncAction =
-      AsyncAction('_ResetPasswordThreeControllerBase.nextStepPressed');
+  late final _$nextStepPressedAsyncAction = AsyncAction(
+      '_ResetPasswordThreeControllerBase.nextStepPressed',
+      context: context);
 
   @override
   Future<void> nextStepPressed() {
     return _$nextStepPressedAsyncAction.run(() => super.nextStepPressed());
   }
 
-  final _$_ResetPasswordThreeControllerBaseActionController =
-      ActionController(name: '_ResetPasswordThreeControllerBase');
+  late final _$_ResetPasswordThreeControllerBaseActionController =
+      ActionController(
+          name: '_ResetPasswordThreeControllerBase', context: context);
 
   @override
   void setPassword(String password) {

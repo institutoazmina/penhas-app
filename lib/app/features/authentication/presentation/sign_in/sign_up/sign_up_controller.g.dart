@@ -6,7 +6,7 @@ part of 'sign_up_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$SignUpController on _SignUpControllerBase, Store {
   Computed<PageProgressState>? _$currentStateComputed;
@@ -17,7 +17,8 @@ mixin _$SignUpController on _SignUpControllerBase, Store {
               name: '_SignUpControllerBase.currentState'))
       .value;
 
-  final _$_progressAtom = Atom(name: '_SignUpControllerBase._progress');
+  late final _$_progressAtom =
+      Atom(name: '_SignUpControllerBase._progress', context: context);
 
   @override
   ObservableFuture<Either<Failure, ValidField>>? get _progress {
@@ -32,7 +33,8 @@ mixin _$SignUpController on _SignUpControllerBase, Store {
     });
   }
 
-  final _$errorMessageAtom = Atom(name: '_SignUpControllerBase.errorMessage');
+  late final _$errorMessageAtom =
+      Atom(name: '_SignUpControllerBase.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -47,8 +49,8 @@ mixin _$SignUpController on _SignUpControllerBase, Store {
     });
   }
 
-  final _$warningFullnameAtom =
-      Atom(name: '_SignUpControllerBase.warningFullname');
+  late final _$warningFullnameAtom =
+      Atom(name: '_SignUpControllerBase.warningFullname', context: context);
 
   @override
   String? get warningFullname {
@@ -63,8 +65,8 @@ mixin _$SignUpController on _SignUpControllerBase, Store {
     });
   }
 
-  final _$warningBirthdayAtom =
-      Atom(name: '_SignUpControllerBase.warningBirthday');
+  late final _$warningBirthdayAtom =
+      Atom(name: '_SignUpControllerBase.warningBirthday', context: context);
 
   @override
   String? get warningBirthday {
@@ -79,7 +81,8 @@ mixin _$SignUpController on _SignUpControllerBase, Store {
     });
   }
 
-  final _$warningCpfAtom = Atom(name: '_SignUpControllerBase.warningCpf');
+  late final _$warningCpfAtom =
+      Atom(name: '_SignUpControllerBase.warningCpf', context: context);
 
   @override
   String? get warningCpf {
@@ -94,7 +97,8 @@ mixin _$SignUpController on _SignUpControllerBase, Store {
     });
   }
 
-  final _$warningCepAtom = Atom(name: '_SignUpControllerBase.warningCep');
+  late final _$warningCepAtom =
+      Atom(name: '_SignUpControllerBase.warningCep', context: context);
 
   @override
   String? get warningCep {
@@ -109,16 +113,16 @@ mixin _$SignUpController on _SignUpControllerBase, Store {
     });
   }
 
-  final _$nextStepPressedAsyncAction =
-      AsyncAction('_SignUpControllerBase.nextStepPressed');
+  late final _$nextStepPressedAsyncAction =
+      AsyncAction('_SignUpControllerBase.nextStepPressed', context: context);
 
   @override
   Future<void> nextStepPressed() {
     return _$nextStepPressedAsyncAction.run(() => super.nextStepPressed());
   }
 
-  final _$_SignUpControllerBaseActionController =
-      ActionController(name: '_SignUpControllerBase');
+  late final _$_SignUpControllerBaseActionController =
+      ActionController(name: '_SignUpControllerBase', context: context);
 
   @override
   void setFullname(String fullname) {

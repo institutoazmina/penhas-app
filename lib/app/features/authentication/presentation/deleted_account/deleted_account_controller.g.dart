@@ -6,7 +6,7 @@ part of 'deleted_account_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$DeletedAccountController on _DeletedAccountControllerBase, Store {
   Computed<PageProgressState>? _$progressStateComputed;
@@ -17,7 +17,8 @@ mixin _$DeletedAccountController on _DeletedAccountControllerBase, Store {
               name: '_DeletedAccountControllerBase.progressState'))
       .value;
 
-  final _$_progressAtom = Atom(name: '_DeletedAccountControllerBase._progress');
+  late final _$_progressAtom =
+      Atom(name: '_DeletedAccountControllerBase._progress', context: context);
 
   @override
   ObservableFuture<Either<Failure, ValidField>>? get _progress {
@@ -32,8 +33,8 @@ mixin _$DeletedAccountController on _DeletedAccountControllerBase, Store {
     });
   }
 
-  final _$errorMessageAtom =
-      Atom(name: '_DeletedAccountControllerBase.errorMessage');
+  late final _$errorMessageAtom = Atom(
+      name: '_DeletedAccountControllerBase.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -48,8 +49,8 @@ mixin _$DeletedAccountController on _DeletedAccountControllerBase, Store {
     });
   }
 
-  final _$reactiveAsyncAction =
-      AsyncAction('_DeletedAccountControllerBase.reactive');
+  late final _$reactiveAsyncAction =
+      AsyncAction('_DeletedAccountControllerBase.reactive', context: context);
 
   @override
   Future<void> reactive() {

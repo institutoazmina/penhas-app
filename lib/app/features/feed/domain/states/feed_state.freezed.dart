@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'feed_state.dart';
@@ -11,31 +12,7 @@ part of 'feed_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$FeedStateTearOff {
-  const _$FeedStateTearOff();
-
-  _InitialState initial() {
-    return const _InitialState();
-  }
-
-  _LoadedState loaded(List<TweetTiles> items) {
-    return _LoadedState(
-      items,
-    );
-  }
-
-  _ErrorState error(String message) {
-    return _ErrorState(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $FeedState = _$FeedStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$FeedState {
@@ -101,21 +78,21 @@ class _$FeedStateCopyWithImpl<$Res> implements $FeedStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$InitialStateCopyWith<$Res> {
-  factory _$InitialStateCopyWith(
-          _InitialState value, $Res Function(_InitialState) then) =
-      __$InitialStateCopyWithImpl<$Res>;
+abstract class _$$_InitialStateCopyWith<$Res> {
+  factory _$$_InitialStateCopyWith(
+          _$_InitialState value, $Res Function(_$_InitialState) then) =
+      __$$_InitialStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialStateCopyWithImpl<$Res> extends _$FeedStateCopyWithImpl<$Res>
-    implements _$InitialStateCopyWith<$Res> {
-  __$InitialStateCopyWithImpl(
-      _InitialState _value, $Res Function(_InitialState) _then)
-      : super(_value, (v) => _then(v as _InitialState));
+class __$$_InitialStateCopyWithImpl<$Res> extends _$FeedStateCopyWithImpl<$Res>
+    implements _$$_InitialStateCopyWith<$Res> {
+  __$$_InitialStateCopyWithImpl(
+      _$_InitialState _value, $Res Function(_$_InitialState) _then)
+      : super(_value, (v) => _then(v as _$_InitialState));
 
   @override
-  _InitialState get _value => super._value as _InitialState;
+  _$_InitialState get _value => super._value as _$_InitialState;
 }
 
 /// @nodoc
@@ -131,7 +108,7 @@ class _$_InitialState implements _InitialState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _InitialState);
+        (other.runtimeType == runtimeType && other is _$_InitialState);
   }
 
   @override
@@ -211,30 +188,30 @@ abstract class _InitialState implements FeedState {
 }
 
 /// @nodoc
-abstract class _$LoadedStateCopyWith<$Res> {
-  factory _$LoadedStateCopyWith(
-          _LoadedState value, $Res Function(_LoadedState) then) =
-      __$LoadedStateCopyWithImpl<$Res>;
+abstract class _$$_LoadedStateCopyWith<$Res> {
+  factory _$$_LoadedStateCopyWith(
+          _$_LoadedState value, $Res Function(_$_LoadedState) then) =
+      __$$_LoadedStateCopyWithImpl<$Res>;
   $Res call({List<TweetTiles> items});
 }
 
 /// @nodoc
-class __$LoadedStateCopyWithImpl<$Res> extends _$FeedStateCopyWithImpl<$Res>
-    implements _$LoadedStateCopyWith<$Res> {
-  __$LoadedStateCopyWithImpl(
-      _LoadedState _value, $Res Function(_LoadedState) _then)
-      : super(_value, (v) => _then(v as _LoadedState));
+class __$$_LoadedStateCopyWithImpl<$Res> extends _$FeedStateCopyWithImpl<$Res>
+    implements _$$_LoadedStateCopyWith<$Res> {
+  __$$_LoadedStateCopyWithImpl(
+      _$_LoadedState _value, $Res Function(_$_LoadedState) _then)
+      : super(_value, (v) => _then(v as _$_LoadedState));
 
   @override
-  _LoadedState get _value => super._value as _LoadedState;
+  _$_LoadedState get _value => super._value as _$_LoadedState;
 
   @override
   $Res call({
     Object? items = freezed,
   }) {
-    return _then(_LoadedState(
+    return _then(_$_LoadedState(
       items == freezed
-          ? _value.items
+          ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
               as List<TweetTiles>,
     ));
@@ -244,10 +221,14 @@ class __$LoadedStateCopyWithImpl<$Res> extends _$FeedStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadedState implements _LoadedState {
-  const _$_LoadedState(this.items);
+  const _$_LoadedState(final List<TweetTiles> items) : _items = items;
 
+  final List<TweetTiles> _items;
   @override
-  final List<TweetTiles> items;
+  List<TweetTiles> get items {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_items);
+  }
 
   @override
   String toString() {
@@ -258,18 +239,18 @@ class _$_LoadedState implements _LoadedState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _LoadedState &&
-            const DeepCollectionEquality().equals(other.items, items));
+            other is _$_LoadedState &&
+            const DeepCollectionEquality().equals(other._items, _items));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(items));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_items));
 
   @JsonKey(ignore: true)
   @override
-  _$LoadedStateCopyWith<_LoadedState> get copyWith =>
-      __$LoadedStateCopyWithImpl<_LoadedState>(this, _$identity);
+  _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
+      __$$_LoadedStateCopyWithImpl<_$_LoadedState>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -341,37 +322,37 @@ class _$_LoadedState implements _LoadedState {
 }
 
 abstract class _LoadedState implements FeedState {
-  const factory _LoadedState(List<TweetTiles> items) = _$_LoadedState;
+  const factory _LoadedState(final List<TweetTiles> items) = _$_LoadedState;
 
   List<TweetTiles> get items;
   @JsonKey(ignore: true)
-  _$LoadedStateCopyWith<_LoadedState> get copyWith =>
+  _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$ErrorStateCopyWith<$Res> {
-  factory _$ErrorStateCopyWith(
-          _ErrorState value, $Res Function(_ErrorState) then) =
-      __$ErrorStateCopyWithImpl<$Res>;
+abstract class _$$_ErrorStateCopyWith<$Res> {
+  factory _$$_ErrorStateCopyWith(
+          _$_ErrorState value, $Res Function(_$_ErrorState) then) =
+      __$$_ErrorStateCopyWithImpl<$Res>;
   $Res call({String message});
 }
 
 /// @nodoc
-class __$ErrorStateCopyWithImpl<$Res> extends _$FeedStateCopyWithImpl<$Res>
-    implements _$ErrorStateCopyWith<$Res> {
-  __$ErrorStateCopyWithImpl(
-      _ErrorState _value, $Res Function(_ErrorState) _then)
-      : super(_value, (v) => _then(v as _ErrorState));
+class __$$_ErrorStateCopyWithImpl<$Res> extends _$FeedStateCopyWithImpl<$Res>
+    implements _$$_ErrorStateCopyWith<$Res> {
+  __$$_ErrorStateCopyWithImpl(
+      _$_ErrorState _value, $Res Function(_$_ErrorState) _then)
+      : super(_value, (v) => _then(v as _$_ErrorState));
 
   @override
-  _ErrorState get _value => super._value as _ErrorState;
+  _$_ErrorState get _value => super._value as _$_ErrorState;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_ErrorState(
+    return _then(_$_ErrorState(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -397,7 +378,7 @@ class _$_ErrorState implements _ErrorState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ErrorState &&
+            other is _$_ErrorState &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -407,8 +388,8 @@ class _$_ErrorState implements _ErrorState {
 
   @JsonKey(ignore: true)
   @override
-  _$ErrorStateCopyWith<_ErrorState> get copyWith =>
-      __$ErrorStateCopyWithImpl<_ErrorState>(this, _$identity);
+  _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
+      __$$_ErrorStateCopyWithImpl<_$_ErrorState>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -480,10 +461,10 @@ class _$_ErrorState implements _ErrorState {
 }
 
 abstract class _ErrorState implements FeedState {
-  const factory _ErrorState(String message) = _$_ErrorState;
+  const factory _ErrorState(final String message) = _$_ErrorState;
 
   String get message;
   @JsonKey(ignore: true)
-  _$ErrorStateCopyWith<_ErrorState> get copyWith =>
+  _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
       throw _privateConstructorUsedError;
 }

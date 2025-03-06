@@ -6,7 +6,7 @@ part of 'guardians_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$GuardiansController on _GuardiansControllerBase, Store {
   Computed<PageProgressState>? _$loadStateComputed;
@@ -24,8 +24,8 @@ mixin _$GuardiansController on _GuardiansControllerBase, Store {
               name: '_GuardiansControllerBase.updateState'))
       .value;
 
-  final _$_fetchProgressAtom =
-      Atom(name: '_GuardiansControllerBase._fetchProgress');
+  late final _$_fetchProgressAtom =
+      Atom(name: '_GuardiansControllerBase._fetchProgress', context: context);
 
   @override
   ObservableFuture<Either<Failure, GuardianSessionEntity>>? get _fetchProgress {
@@ -41,8 +41,8 @@ mixin _$GuardiansController on _GuardiansControllerBase, Store {
     });
   }
 
-  final _$_updateProgressAtom =
-      Atom(name: '_GuardiansControllerBase._updateProgress');
+  late final _$_updateProgressAtom =
+      Atom(name: '_GuardiansControllerBase._updateProgress', context: context);
 
   @override
   ObservableFuture<Either<Failure, dynamic>>? get _updateProgress {
@@ -57,8 +57,8 @@ mixin _$GuardiansController on _GuardiansControllerBase, Store {
     });
   }
 
-  final _$errorMessageAtom =
-      Atom(name: '_GuardiansControllerBase.errorMessage');
+  late final _$errorMessageAtom =
+      Atom(name: '_GuardiansControllerBase.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -73,8 +73,8 @@ mixin _$GuardiansController on _GuardiansControllerBase, Store {
     });
   }
 
-  final _$currentStateAtom =
-      Atom(name: '_GuardiansControllerBase.currentState');
+  late final _$currentStateAtom =
+      Atom(name: '_GuardiansControllerBase.currentState', context: context);
 
   @override
   GuardianState get currentState {
@@ -89,8 +89,8 @@ mixin _$GuardiansController on _GuardiansControllerBase, Store {
     });
   }
 
-  final _$loadPageAsyncAction =
-      AsyncAction('_GuardiansControllerBase.loadPage');
+  late final _$loadPageAsyncAction =
+      AsyncAction('_GuardiansControllerBase.loadPage', context: context);
 
   @override
   Future<void> loadPage() {

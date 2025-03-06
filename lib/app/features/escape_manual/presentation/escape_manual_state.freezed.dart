@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'escape_manual_state.dart';
@@ -11,31 +12,7 @@ part of 'escape_manual_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$EscapeManualStateTearOff {
-  const _$EscapeManualStateTearOff();
-
-  _InitialState initial() {
-    return const _InitialState();
-  }
-
-  _LoadedState loaded(EscapeManualEntity data) {
-    return _LoadedState(
-      data,
-    );
-  }
-
-  _ErrorState error(String message) {
-    return _ErrorState(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $EscapeManualState = _$EscapeManualStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$EscapeManualState {
@@ -103,22 +80,22 @@ class _$EscapeManualStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialStateCopyWith<$Res> {
-  factory _$InitialStateCopyWith(
-          _InitialState value, $Res Function(_InitialState) then) =
-      __$InitialStateCopyWithImpl<$Res>;
+abstract class _$$_InitialStateCopyWith<$Res> {
+  factory _$$_InitialStateCopyWith(
+          _$_InitialState value, $Res Function(_$_InitialState) then) =
+      __$$_InitialStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialStateCopyWithImpl<$Res>
+class __$$_InitialStateCopyWithImpl<$Res>
     extends _$EscapeManualStateCopyWithImpl<$Res>
-    implements _$InitialStateCopyWith<$Res> {
-  __$InitialStateCopyWithImpl(
-      _InitialState _value, $Res Function(_InitialState) _then)
-      : super(_value, (v) => _then(v as _InitialState));
+    implements _$$_InitialStateCopyWith<$Res> {
+  __$$_InitialStateCopyWithImpl(
+      _$_InitialState _value, $Res Function(_$_InitialState) _then)
+      : super(_value, (v) => _then(v as _$_InitialState));
 
   @override
-  _InitialState get _value => super._value as _InitialState;
+  _$_InitialState get _value => super._value as _$_InitialState;
 }
 
 /// @nodoc
@@ -134,7 +111,7 @@ class _$_InitialState implements _InitialState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _InitialState);
+        (other.runtimeType == runtimeType && other is _$_InitialState);
   }
 
   @override
@@ -214,29 +191,29 @@ abstract class _InitialState implements EscapeManualState {
 }
 
 /// @nodoc
-abstract class _$LoadedStateCopyWith<$Res> {
-  factory _$LoadedStateCopyWith(
-          _LoadedState value, $Res Function(_LoadedState) then) =
-      __$LoadedStateCopyWithImpl<$Res>;
+abstract class _$$_LoadedStateCopyWith<$Res> {
+  factory _$$_LoadedStateCopyWith(
+          _$_LoadedState value, $Res Function(_$_LoadedState) then) =
+      __$$_LoadedStateCopyWithImpl<$Res>;
   $Res call({EscapeManualEntity data});
 }
 
 /// @nodoc
-class __$LoadedStateCopyWithImpl<$Res>
+class __$$_LoadedStateCopyWithImpl<$Res>
     extends _$EscapeManualStateCopyWithImpl<$Res>
-    implements _$LoadedStateCopyWith<$Res> {
-  __$LoadedStateCopyWithImpl(
-      _LoadedState _value, $Res Function(_LoadedState) _then)
-      : super(_value, (v) => _then(v as _LoadedState));
+    implements _$$_LoadedStateCopyWith<$Res> {
+  __$$_LoadedStateCopyWithImpl(
+      _$_LoadedState _value, $Res Function(_$_LoadedState) _then)
+      : super(_value, (v) => _then(v as _$_LoadedState));
 
   @override
-  _LoadedState get _value => super._value as _LoadedState;
+  _$_LoadedState get _value => super._value as _$_LoadedState;
 
   @override
   $Res call({
     Object? data = freezed,
   }) {
-    return _then(_LoadedState(
+    return _then(_$_LoadedState(
       data == freezed
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
@@ -262,7 +239,7 @@ class _$_LoadedState implements _LoadedState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _LoadedState &&
+            other is _$_LoadedState &&
             const DeepCollectionEquality().equals(other.data, data));
   }
 
@@ -272,8 +249,8 @@ class _$_LoadedState implements _LoadedState {
 
   @JsonKey(ignore: true)
   @override
-  _$LoadedStateCopyWith<_LoadedState> get copyWith =>
-      __$LoadedStateCopyWithImpl<_LoadedState>(this, _$identity);
+  _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
+      __$$_LoadedStateCopyWithImpl<_$_LoadedState>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -345,38 +322,38 @@ class _$_LoadedState implements _LoadedState {
 }
 
 abstract class _LoadedState implements EscapeManualState {
-  const factory _LoadedState(EscapeManualEntity data) = _$_LoadedState;
+  const factory _LoadedState(final EscapeManualEntity data) = _$_LoadedState;
 
   EscapeManualEntity get data;
   @JsonKey(ignore: true)
-  _$LoadedStateCopyWith<_LoadedState> get copyWith =>
+  _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$ErrorStateCopyWith<$Res> {
-  factory _$ErrorStateCopyWith(
-          _ErrorState value, $Res Function(_ErrorState) then) =
-      __$ErrorStateCopyWithImpl<$Res>;
+abstract class _$$_ErrorStateCopyWith<$Res> {
+  factory _$$_ErrorStateCopyWith(
+          _$_ErrorState value, $Res Function(_$_ErrorState) then) =
+      __$$_ErrorStateCopyWithImpl<$Res>;
   $Res call({String message});
 }
 
 /// @nodoc
-class __$ErrorStateCopyWithImpl<$Res>
+class __$$_ErrorStateCopyWithImpl<$Res>
     extends _$EscapeManualStateCopyWithImpl<$Res>
-    implements _$ErrorStateCopyWith<$Res> {
-  __$ErrorStateCopyWithImpl(
-      _ErrorState _value, $Res Function(_ErrorState) _then)
-      : super(_value, (v) => _then(v as _ErrorState));
+    implements _$$_ErrorStateCopyWith<$Res> {
+  __$$_ErrorStateCopyWithImpl(
+      _$_ErrorState _value, $Res Function(_$_ErrorState) _then)
+      : super(_value, (v) => _then(v as _$_ErrorState));
 
   @override
-  _ErrorState get _value => super._value as _ErrorState;
+  _$_ErrorState get _value => super._value as _$_ErrorState;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_ErrorState(
+    return _then(_$_ErrorState(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -402,7 +379,7 @@ class _$_ErrorState implements _ErrorState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ErrorState &&
+            other is _$_ErrorState &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -412,8 +389,8 @@ class _$_ErrorState implements _ErrorState {
 
   @JsonKey(ignore: true)
   @override
-  _$ErrorStateCopyWith<_ErrorState> get copyWith =>
-      __$ErrorStateCopyWithImpl<_ErrorState>(this, _$identity);
+  _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
+      __$$_ErrorStateCopyWithImpl<_$_ErrorState>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -485,32 +462,17 @@ class _$_ErrorState implements _ErrorState {
 }
 
 abstract class _ErrorState implements EscapeManualState {
-  const factory _ErrorState(String message) = _$_ErrorState;
+  const factory _ErrorState(final String message) = _$_ErrorState;
 
   String get message;
   @JsonKey(ignore: true)
-  _$ErrorStateCopyWith<_ErrorState> get copyWith =>
+  _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-class _$EscapeManualReactionTearOff {
-  const _$EscapeManualReactionTearOff();
-
-  _ShowSnackbarReaction showSnackBar(String message) {
-    return _ShowSnackbarReaction(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $EscapeManualReaction = _$EscapeManualReactionTearOff();
-
-/// @nodoc
 mixin _$EscapeManualReaction {
   String get message => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String message) showSnackBar,
@@ -580,31 +542,31 @@ class _$EscapeManualReactionCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$ShowSnackbarReactionCopyWith<$Res>
+abstract class _$$_ShowSnackbarReactionCopyWith<$Res>
     implements $EscapeManualReactionCopyWith<$Res> {
-  factory _$ShowSnackbarReactionCopyWith(_ShowSnackbarReaction value,
-          $Res Function(_ShowSnackbarReaction) then) =
-      __$ShowSnackbarReactionCopyWithImpl<$Res>;
+  factory _$$_ShowSnackbarReactionCopyWith(_$_ShowSnackbarReaction value,
+          $Res Function(_$_ShowSnackbarReaction) then) =
+      __$$_ShowSnackbarReactionCopyWithImpl<$Res>;
   @override
   $Res call({String message});
 }
 
 /// @nodoc
-class __$ShowSnackbarReactionCopyWithImpl<$Res>
+class __$$_ShowSnackbarReactionCopyWithImpl<$Res>
     extends _$EscapeManualReactionCopyWithImpl<$Res>
-    implements _$ShowSnackbarReactionCopyWith<$Res> {
-  __$ShowSnackbarReactionCopyWithImpl(
-      _ShowSnackbarReaction _value, $Res Function(_ShowSnackbarReaction) _then)
-      : super(_value, (v) => _then(v as _ShowSnackbarReaction));
+    implements _$$_ShowSnackbarReactionCopyWith<$Res> {
+  __$$_ShowSnackbarReactionCopyWithImpl(_$_ShowSnackbarReaction _value,
+      $Res Function(_$_ShowSnackbarReaction) _then)
+      : super(_value, (v) => _then(v as _$_ShowSnackbarReaction));
 
   @override
-  _ShowSnackbarReaction get _value => super._value as _ShowSnackbarReaction;
+  _$_ShowSnackbarReaction get _value => super._value as _$_ShowSnackbarReaction;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_ShowSnackbarReaction(
+    return _then(_$_ShowSnackbarReaction(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -630,7 +592,7 @@ class _$_ShowSnackbarReaction implements _ShowSnackbarReaction {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ShowSnackbarReaction &&
+            other is _$_ShowSnackbarReaction &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -640,8 +602,8 @@ class _$_ShowSnackbarReaction implements _ShowSnackbarReaction {
 
   @JsonKey(ignore: true)
   @override
-  _$ShowSnackbarReactionCopyWith<_ShowSnackbarReaction> get copyWith =>
-      __$ShowSnackbarReactionCopyWithImpl<_ShowSnackbarReaction>(
+  _$$_ShowSnackbarReactionCopyWith<_$_ShowSnackbarReaction> get copyWith =>
+      __$$_ShowSnackbarReactionCopyWithImpl<_$_ShowSnackbarReaction>(
           this, _$identity);
 
   @override
@@ -702,12 +664,13 @@ class _$_ShowSnackbarReaction implements _ShowSnackbarReaction {
 }
 
 abstract class _ShowSnackbarReaction implements EscapeManualReaction {
-  const factory _ShowSnackbarReaction(String message) = _$_ShowSnackbarReaction;
+  const factory _ShowSnackbarReaction(final String message) =
+      _$_ShowSnackbarReaction;
 
   @override
   String get message;
   @override
   @JsonKey(ignore: true)
-  _$ShowSnackbarReactionCopyWith<_ShowSnackbarReaction> get copyWith =>
+  _$$_ShowSnackbarReactionCopyWith<_$_ShowSnackbarReaction> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -6,7 +6,7 @@ part of 'feed_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$FeedController on _FeedControllerBase, Store {
   Computed<PageProgressState>? _$fetchStateComputed;
@@ -24,7 +24,8 @@ mixin _$FeedController on _FeedControllerBase, Store {
               name: '_FeedControllerBase.reloadState'))
       .value;
 
-  final _$stateAtom = Atom(name: '_FeedControllerBase.state');
+  late final _$stateAtom =
+      Atom(name: '_FeedControllerBase.state', context: context);
 
   @override
   FeedState get state {
@@ -39,8 +40,8 @@ mixin _$FeedController on _FeedControllerBase, Store {
     });
   }
 
-  final _$isComposeTweetFabVisibleAtom =
-      Atom(name: '_FeedControllerBase.isComposeTweetFabVisible');
+  late final _$isComposeTweetFabVisibleAtom = Atom(
+      name: '_FeedControllerBase.isComposeTweetFabVisible', context: context);
 
   @override
   bool get isComposeTweetFabVisible {
@@ -56,7 +57,8 @@ mixin _$FeedController on _FeedControllerBase, Store {
     });
   }
 
-  final _$securityStateAtom = Atom(name: '_FeedControllerBase.securityState');
+  late final _$securityStateAtom =
+      Atom(name: '_FeedControllerBase.securityState', context: context);
 
   @override
   FeedSecurityState get securityState {
@@ -71,7 +73,8 @@ mixin _$FeedController on _FeedControllerBase, Store {
     });
   }
 
-  final _$errorMessageAtom = Atom(name: '_FeedControllerBase.errorMessage');
+  late final _$errorMessageAtom =
+      Atom(name: '_FeedControllerBase.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -86,7 +89,8 @@ mixin _$FeedController on _FeedControllerBase, Store {
     });
   }
 
-  final _$_fetchProgressAtom = Atom(name: '_FeedControllerBase._fetchProgress');
+  late final _$_fetchProgressAtom =
+      Atom(name: '_FeedControllerBase._fetchProgress', context: context);
 
   @override
   ObservableFuture<Either<Failure, FeedCache>>? get _fetchProgress {
@@ -101,8 +105,8 @@ mixin _$FeedController on _FeedControllerBase, Store {
     });
   }
 
-  final _$_reloadProgressAtom =
-      Atom(name: '_FeedControllerBase._reloadProgress');
+  late final _$_reloadProgressAtom =
+      Atom(name: '_FeedControllerBase._reloadProgress', context: context);
 
   @override
   ObservableFuture<Either<Failure, FeedCache>>? get _reloadProgress {
@@ -117,22 +121,24 @@ mixin _$FeedController on _FeedControllerBase, Store {
     });
   }
 
-  final _$reloadFeedAsyncAction = AsyncAction('_FeedControllerBase.reloadFeed');
+  late final _$reloadFeedAsyncAction =
+      AsyncAction('_FeedControllerBase.reloadFeed', context: context);
 
   @override
   Future<void> reloadFeed() {
     return _$reloadFeedAsyncAction.run(() => super.reloadFeed());
   }
 
-  final _$disposeAsyncAction = AsyncAction('_FeedControllerBase.dispose');
+  late final _$disposeAsyncAction =
+      AsyncAction('_FeedControllerBase.dispose', context: context);
 
   @override
   Future<void> dispose() {
     return _$disposeAsyncAction.run(() => super.dispose());
   }
 
-  final _$_FeedControllerBaseActionController =
-      ActionController(name: '_FeedControllerBase');
+  late final _$_FeedControllerBaseActionController =
+      ActionController(name: '_FeedControllerBase', context: context);
 
   @override
   Future<void> fetchNextPage() {

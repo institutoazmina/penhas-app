@@ -6,10 +6,11 @@ part of 'zodiac_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ZodiacController on _ZodiacControllerBase, Store {
-  final _$signAtom = Atom(name: '_ZodiacControllerBase.sign');
+  late final _$signAtom =
+      Atom(name: '_ZodiacControllerBase.sign', context: context);
 
   @override
   IZodiac get sign {
@@ -24,7 +25,8 @@ mixin _$ZodiacController on _ZodiacControllerBase, Store {
     });
   }
 
-  final _$signListAtom = Atom(name: '_ZodiacControllerBase.signList');
+  late final _$signListAtom =
+      Atom(name: '_ZodiacControllerBase.signList', context: context);
 
   @override
   ObservableList<IZodiac> get signList {
@@ -39,8 +41,8 @@ mixin _$ZodiacController on _ZodiacControllerBase, Store {
     });
   }
 
-  final _$isSecurityRunningAtom =
-      Atom(name: '_ZodiacControllerBase.isSecurityRunning');
+  late final _$isSecurityRunningAtom =
+      Atom(name: '_ZodiacControllerBase.isSecurityRunning', context: context);
 
   @override
   bool get isSecurityRunning {
@@ -55,8 +57,8 @@ mixin _$ZodiacController on _ZodiacControllerBase, Store {
     });
   }
 
-  final _$_ZodiacControllerBaseActionController =
-      ActionController(name: '_ZodiacControllerBase');
+  late final _$_ZodiacControllerBaseActionController =
+      ActionController(name: '_ZodiacControllerBase', context: context);
 
   @override
   void forwardStealthLogin() {

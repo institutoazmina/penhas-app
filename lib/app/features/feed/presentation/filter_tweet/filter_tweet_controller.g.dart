@@ -6,7 +6,7 @@ part of 'filter_tweet_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$FilterTweetController on _FilterTweetControllerBase, Store {
   Computed<PageProgressState>? _$currentStateComputed;
@@ -17,7 +17,8 @@ mixin _$FilterTweetController on _FilterTweetControllerBase, Store {
               name: '_FilterTweetControllerBase.currentState'))
       .value;
 
-  final _$_progressAtom = Atom(name: '_FilterTweetControllerBase._progress');
+  late final _$_progressAtom =
+      Atom(name: '_FilterTweetControllerBase._progress', context: context);
 
   @override
   ObservableFuture<Either<Failure, TweetFilterSessionEntity>>? get _progress {
@@ -33,7 +34,8 @@ mixin _$FilterTweetController on _FilterTweetControllerBase, Store {
     });
   }
 
-  final _$tagsAtom = Atom(name: '_FilterTweetControllerBase.tags');
+  late final _$tagsAtom =
+      Atom(name: '_FilterTweetControllerBase.tags', context: context);
 
   @override
   ObservableList<TweetFilterEntity> get tags {
@@ -48,8 +50,8 @@ mixin _$FilterTweetController on _FilterTweetControllerBase, Store {
     });
   }
 
-  final _$errorMessageAtom =
-      Atom(name: '_FilterTweetControllerBase.errorMessage');
+  late final _$errorMessageAtom =
+      Atom(name: '_FilterTweetControllerBase.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -64,23 +66,24 @@ mixin _$FilterTweetController on _FilterTweetControllerBase, Store {
     });
   }
 
-  final _$getTagsAsyncAction =
-      AsyncAction('_FilterTweetControllerBase.getTags');
+  late final _$getTagsAsyncAction =
+      AsyncAction('_FilterTweetControllerBase.getTags', context: context);
 
   @override
   Future<void> getTags() {
     return _$getTagsAsyncAction.run(() => super.getTags());
   }
 
-  final _$setTagsAsyncAction =
-      AsyncAction('_FilterTweetControllerBase.setTags');
+  late final _$setTagsAsyncAction =
+      AsyncAction('_FilterTweetControllerBase.setTags', context: context);
 
   @override
   Future<void> setTags(List<String?> tags) {
     return _$setTagsAsyncAction.run(() => super.setTags(tags));
   }
 
-  final _$resetAsyncAction = AsyncAction('_FilterTweetControllerBase.reset');
+  late final _$resetAsyncAction =
+      AsyncAction('_FilterTweetControllerBase.reset', context: context);
 
   @override
   Future<void> reset() {

@@ -6,7 +6,7 @@ part of 'sign_up_two_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
   Computed<PageProgressState>? _$currentStateComputed;
@@ -17,7 +17,8 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
               name: '_SignUpTwoControllerBase.currentState'))
       .value;
 
-  final _$_progressAtom = Atom(name: '_SignUpTwoControllerBase._progress');
+  late final _$_progressAtom =
+      Atom(name: '_SignUpTwoControllerBase._progress', context: context);
 
   @override
   ObservableFuture<Either<Failure, ValidField>>? get _progress {
@@ -32,8 +33,8 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
     });
   }
 
-  final _$warningNicknameAtom =
-      Atom(name: '_SignUpTwoControllerBase.warningNickname');
+  late final _$warningNicknameAtom =
+      Atom(name: '_SignUpTwoControllerBase.warningNickname', context: context);
 
   @override
   String get warningNickname {
@@ -48,8 +49,8 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
     });
   }
 
-  final _$warningSocialNameAtom =
-      Atom(name: '_SignUpTwoControllerBase.warningSocialName');
+  late final _$warningSocialNameAtom = Atom(
+      name: '_SignUpTwoControllerBase.warningSocialName', context: context);
 
   @override
   String get warningSocialName {
@@ -64,8 +65,8 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
     });
   }
 
-  final _$warningGenreAtom =
-      Atom(name: '_SignUpTwoControllerBase.warningGenre');
+  late final _$warningGenreAtom =
+      Atom(name: '_SignUpTwoControllerBase.warningGenre', context: context);
 
   @override
   String get warningGenre {
@@ -80,7 +81,8 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
     });
   }
 
-  final _$warningRaceAtom = Atom(name: '_SignUpTwoControllerBase.warningRace');
+  late final _$warningRaceAtom =
+      Atom(name: '_SignUpTwoControllerBase.warningRace', context: context);
 
   @override
   String get warningRace {
@@ -95,8 +97,8 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
     });
   }
 
-  final _$currentGenreAtom =
-      Atom(name: '_SignUpTwoControllerBase.currentGenre');
+  late final _$currentGenreAtom =
+      Atom(name: '_SignUpTwoControllerBase.currentGenre', context: context);
 
   @override
   String get currentGenre {
@@ -111,7 +113,8 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
     });
   }
 
-  final _$currentRaceAtom = Atom(name: '_SignUpTwoControllerBase.currentRace');
+  late final _$currentRaceAtom =
+      Atom(name: '_SignUpTwoControllerBase.currentRace', context: context);
 
   @override
   String get currentRace {
@@ -126,8 +129,8 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
     });
   }
 
-  final _$errorMessageAtom =
-      Atom(name: '_SignUpTwoControllerBase.errorMessage');
+  late final _$errorMessageAtom =
+      Atom(name: '_SignUpTwoControllerBase.errorMessage', context: context);
 
   @override
   String get errorMessage {
@@ -142,8 +145,8 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
     });
   }
 
-  final _$hasSocialNameFieldAtom =
-      Atom(name: '_SignUpTwoControllerBase.hasSocialNameField');
+  late final _$hasSocialNameFieldAtom = Atom(
+      name: '_SignUpTwoControllerBase.hasSocialNameField', context: context);
 
   @override
   bool get hasSocialNameField {
@@ -158,16 +161,16 @@ mixin _$SignUpTwoController on _SignUpTwoControllerBase, Store {
     });
   }
 
-  final _$nextStepPressedAsyncAction =
-      AsyncAction('_SignUpTwoControllerBase.nextStepPressed');
+  late final _$nextStepPressedAsyncAction =
+      AsyncAction('_SignUpTwoControllerBase.nextStepPressed', context: context);
 
   @override
   Future<void> nextStepPressed() {
     return _$nextStepPressedAsyncAction.run(() => super.nextStepPressed());
   }
 
-  final _$_SignUpTwoControllerBaseActionController =
-      ActionController(name: '_SignUpTwoControllerBase');
+  late final _$_SignUpTwoControllerBaseActionController =
+      ActionController(name: '_SignUpTwoControllerBase', context: context);
 
   @override
   void setNickname(String name) {

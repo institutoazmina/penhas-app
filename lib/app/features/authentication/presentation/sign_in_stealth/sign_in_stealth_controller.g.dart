@@ -6,7 +6,7 @@ part of 'sign_in_stealth_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$SignInStealthController on _SignInStealthController, Store {
   Computed<PageProgressState>? _$currentStateComputed;
@@ -17,7 +17,8 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
               name: '_SignInStealthController.currentState'))
       .value;
 
-  final _$_progressAtom = Atom(name: '_SignInStealthController._progress');
+  late final _$_progressAtom =
+      Atom(name: '_SignInStealthController._progress', context: context);
 
   @override
   ObservableFuture<Either<Failure, SessionEntity>>? get _progress {
@@ -32,8 +33,8 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
     });
   }
 
-  final _$userGreetingsAtom =
-      Atom(name: '_SignInStealthController.userGreetings');
+  late final _$userGreetingsAtom =
+      Atom(name: '_SignInStealthController.userGreetings', context: context);
 
   @override
   String get userGreetings {
@@ -48,7 +49,8 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
     });
   }
 
-  final _$userEmailAtom = Atom(name: '_SignInStealthController.userEmail');
+  late final _$userEmailAtom =
+      Atom(name: '_SignInStealthController.userEmail', context: context);
 
   @override
   String? get userEmail {
@@ -63,8 +65,8 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
     });
   }
 
-  final _$warningPasswordAtom =
-      Atom(name: '_SignInStealthController.warningPassword');
+  late final _$warningPasswordAtom =
+      Atom(name: '_SignInStealthController.warningPassword', context: context);
 
   @override
   String get warningPassword {
@@ -79,8 +81,8 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
     });
   }
 
-  final _$errorMessageAtom =
-      Atom(name: '_SignInStealthController.errorMessage');
+  late final _$errorMessageAtom =
+      Atom(name: '_SignInStealthController.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -95,7 +97,8 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
     });
   }
 
-  final _$signAtom = Atom(name: '_SignInStealthController.sign');
+  late final _$signAtom =
+      Atom(name: '_SignInStealthController.sign', context: context);
 
   @override
   IZodiac get sign {
@@ -110,7 +113,8 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
     });
   }
 
-  final _$signListAtom = Atom(name: '_SignInStealthController.signList');
+  late final _$signListAtom =
+      Atom(name: '_SignInStealthController.signList', context: context);
 
   @override
   ObservableList<IZodiac> get signList {
@@ -125,8 +129,8 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
     });
   }
 
-  final _$isSecurityRunningAtom =
-      Atom(name: '_SignInStealthController.isSecurityRunning');
+  late final _$isSecurityRunningAtom = Atom(
+      name: '_SignInStealthController.isSecurityRunning', context: context);
 
   @override
   bool get isSecurityRunning {
@@ -141,8 +145,9 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
     });
   }
 
-  final _$signInWithEmailAndPasswordPressedAsyncAction =
-      AsyncAction('_SignInStealthController.signInWithEmailAndPasswordPressed');
+  late final _$signInWithEmailAndPasswordPressedAsyncAction = AsyncAction(
+      '_SignInStealthController.signInWithEmailAndPasswordPressed',
+      context: context);
 
   @override
   Future<void> signInWithEmailAndPasswordPressed() {
@@ -150,16 +155,17 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
         .run(() => super.signInWithEmailAndPasswordPressed());
   }
 
-  final _$changeAccountAsyncAction =
-      AsyncAction('_SignInStealthController.changeAccount');
+  late final _$changeAccountAsyncAction =
+      AsyncAction('_SignInStealthController.changeAccount', context: context);
 
   @override
   Future<void> changeAccount() {
     return _$changeAccountAsyncAction.run(() => super.changeAccount());
   }
 
-  final _$resetPasswordPressedAsyncAction =
-      AsyncAction('_SignInStealthController.resetPasswordPressed');
+  late final _$resetPasswordPressedAsyncAction = AsyncAction(
+      '_SignInStealthController.resetPasswordPressed',
+      context: context);
 
   @override
   Future<void> resetPasswordPressed() {
@@ -167,8 +173,8 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
         .run(() => super.resetPasswordPressed());
   }
 
-  final _$_SignInStealthControllerActionController =
-      ActionController(name: '_SignInStealthController');
+  late final _$_SignInStealthControllerActionController =
+      ActionController(name: '_SignInStealthController', context: context);
 
   @override
   void setPassword(String password) {

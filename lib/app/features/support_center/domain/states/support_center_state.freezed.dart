@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'support_center_state.dart';
@@ -11,31 +12,7 @@ part of 'support_center_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$SupportCenterStateTearOff {
-  const _$SupportCenterStateTearOff();
-
-  _Loaded loaded() {
-    return const _Loaded();
-  }
-
-  _ErrorDetails error(String message) {
-    return _ErrorDetails(
-      message,
-    );
-  }
-
-  _GpsError gpsError(String message) {
-    return _GpsError(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $SupportCenterState = _$SupportCenterStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$SupportCenterState {
@@ -103,41 +80,36 @@ class _$SupportCenterStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$LoadedCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
-      __$LoadedCopyWithImpl<$Res>;
+abstract class _$$_LoadedCopyWith<$Res> {
+  factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
+      __$$_LoadedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoadedCopyWithImpl<$Res> extends _$SupportCenterStateCopyWithImpl<$Res>
-    implements _$LoadedCopyWith<$Res> {
-  __$LoadedCopyWithImpl(_Loaded _value, $Res Function(_Loaded) _then)
-      : super(_value, (v) => _then(v as _Loaded));
+class __$$_LoadedCopyWithImpl<$Res>
+    extends _$SupportCenterStateCopyWithImpl<$Res>
+    implements _$$_LoadedCopyWith<$Res> {
+  __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
+      : super(_value, (v) => _then(v as _$_Loaded));
 
   @override
-  _Loaded get _value => super._value as _Loaded;
+  _$_Loaded get _value => super._value as _$_Loaded;
 }
 
 /// @nodoc
 
-class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
+class _$_Loaded implements _Loaded {
   const _$_Loaded();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'SupportCenterState.loaded()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'SupportCenterState.loaded'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Loaded);
+        (other.runtimeType == runtimeType && other is _$_Loaded);
   }
 
   @override
@@ -217,29 +189,29 @@ abstract class _Loaded implements SupportCenterState {
 }
 
 /// @nodoc
-abstract class _$ErrorDetailsCopyWith<$Res> {
-  factory _$ErrorDetailsCopyWith(
-          _ErrorDetails value, $Res Function(_ErrorDetails) then) =
-      __$ErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$_ErrorDetailsCopyWith<$Res> {
+  factory _$$_ErrorDetailsCopyWith(
+          _$_ErrorDetails value, $Res Function(_$_ErrorDetails) then) =
+      __$$_ErrorDetailsCopyWithImpl<$Res>;
   $Res call({String message});
 }
 
 /// @nodoc
-class __$ErrorDetailsCopyWithImpl<$Res>
+class __$$_ErrorDetailsCopyWithImpl<$Res>
     extends _$SupportCenterStateCopyWithImpl<$Res>
-    implements _$ErrorDetailsCopyWith<$Res> {
-  __$ErrorDetailsCopyWithImpl(
-      _ErrorDetails _value, $Res Function(_ErrorDetails) _then)
-      : super(_value, (v) => _then(v as _ErrorDetails));
+    implements _$$_ErrorDetailsCopyWith<$Res> {
+  __$$_ErrorDetailsCopyWithImpl(
+      _$_ErrorDetails _value, $Res Function(_$_ErrorDetails) _then)
+      : super(_value, (v) => _then(v as _$_ErrorDetails));
 
   @override
-  _ErrorDetails get _value => super._value as _ErrorDetails;
+  _$_ErrorDetails get _value => super._value as _$_ErrorDetails;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_ErrorDetails(
+    return _then(_$_ErrorDetails(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -250,30 +222,22 @@ class __$ErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
+class _$_ErrorDetails implements _ErrorDetails {
   const _$_ErrorDetails(this.message);
 
   @override
   final String message;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'SupportCenterState.error(message: $message)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'SupportCenterState.error'))
-      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ErrorDetails &&
+            other is _$_ErrorDetails &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -283,8 +247,8 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
 
   @JsonKey(ignore: true)
   @override
-  _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith =>
-      __$ErrorDetailsCopyWithImpl<_ErrorDetails>(this, _$identity);
+  _$$_ErrorDetailsCopyWith<_$_ErrorDetails> get copyWith =>
+      __$$_ErrorDetailsCopyWithImpl<_$_ErrorDetails>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -356,36 +320,38 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
 }
 
 abstract class _ErrorDetails implements SupportCenterState {
-  const factory _ErrorDetails(String message) = _$_ErrorDetails;
+  const factory _ErrorDetails(final String message) = _$_ErrorDetails;
 
   String get message;
   @JsonKey(ignore: true)
-  _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith =>
+  _$$_ErrorDetailsCopyWith<_$_ErrorDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$GpsErrorCopyWith<$Res> {
-  factory _$GpsErrorCopyWith(_GpsError value, $Res Function(_GpsError) then) =
-      __$GpsErrorCopyWithImpl<$Res>;
+abstract class _$$_GpsErrorCopyWith<$Res> {
+  factory _$$_GpsErrorCopyWith(
+          _$_GpsError value, $Res Function(_$_GpsError) then) =
+      __$$_GpsErrorCopyWithImpl<$Res>;
   $Res call({String message});
 }
 
 /// @nodoc
-class __$GpsErrorCopyWithImpl<$Res>
+class __$$_GpsErrorCopyWithImpl<$Res>
     extends _$SupportCenterStateCopyWithImpl<$Res>
-    implements _$GpsErrorCopyWith<$Res> {
-  __$GpsErrorCopyWithImpl(_GpsError _value, $Res Function(_GpsError) _then)
-      : super(_value, (v) => _then(v as _GpsError));
+    implements _$$_GpsErrorCopyWith<$Res> {
+  __$$_GpsErrorCopyWithImpl(
+      _$_GpsError _value, $Res Function(_$_GpsError) _then)
+      : super(_value, (v) => _then(v as _$_GpsError));
 
   @override
-  _GpsError get _value => super._value as _GpsError;
+  _$_GpsError get _value => super._value as _$_GpsError;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_GpsError(
+    return _then(_$_GpsError(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -396,30 +362,22 @@ class __$GpsErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_GpsError with DiagnosticableTreeMixin implements _GpsError {
+class _$_GpsError implements _GpsError {
   const _$_GpsError(this.message);
 
   @override
   final String message;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'SupportCenterState.gpsError(message: $message)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'SupportCenterState.gpsError'))
-      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _GpsError &&
+            other is _$_GpsError &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -429,8 +387,8 @@ class _$_GpsError with DiagnosticableTreeMixin implements _GpsError {
 
   @JsonKey(ignore: true)
   @override
-  _$GpsErrorCopyWith<_GpsError> get copyWith =>
-      __$GpsErrorCopyWithImpl<_GpsError>(this, _$identity);
+  _$$_GpsErrorCopyWith<_$_GpsError> get copyWith =>
+      __$$_GpsErrorCopyWithImpl<_$_GpsError>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -502,10 +460,10 @@ class _$_GpsError with DiagnosticableTreeMixin implements _GpsError {
 }
 
 abstract class _GpsError implements SupportCenterState {
-  const factory _GpsError(String message) = _$_GpsError;
+  const factory _GpsError(final String message) = _$_GpsError;
 
   String get message;
   @JsonKey(ignore: true)
-  _$GpsErrorCopyWith<_GpsError> get copyWith =>
+  _$$_GpsErrorCopyWith<_$_GpsError> get copyWith =>
       throw _privateConstructorUsedError;
 }

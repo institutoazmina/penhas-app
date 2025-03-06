@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'feed_security_state.dart';
@@ -11,23 +12,7 @@ part of 'feed_security_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$FeedSecurityStateTearOff {
-  const _$FeedSecurityStateTearOff();
-
-  _Enable enable() {
-    return const _Enable();
-  }
-
-  _Disable disable() {
-    return const _Disable();
-  }
-}
-
-/// @nodoc
-const $FeedSecurityState = _$FeedSecurityStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$FeedSecurityState {
@@ -89,41 +74,36 @@ class _$FeedSecurityStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$EnableCopyWith<$Res> {
-  factory _$EnableCopyWith(_Enable value, $Res Function(_Enable) then) =
-      __$EnableCopyWithImpl<$Res>;
+abstract class _$$_EnableCopyWith<$Res> {
+  factory _$$_EnableCopyWith(_$_Enable value, $Res Function(_$_Enable) then) =
+      __$$_EnableCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$EnableCopyWithImpl<$Res> extends _$FeedSecurityStateCopyWithImpl<$Res>
-    implements _$EnableCopyWith<$Res> {
-  __$EnableCopyWithImpl(_Enable _value, $Res Function(_Enable) _then)
-      : super(_value, (v) => _then(v as _Enable));
+class __$$_EnableCopyWithImpl<$Res>
+    extends _$FeedSecurityStateCopyWithImpl<$Res>
+    implements _$$_EnableCopyWith<$Res> {
+  __$$_EnableCopyWithImpl(_$_Enable _value, $Res Function(_$_Enable) _then)
+      : super(_value, (v) => _then(v as _$_Enable));
 
   @override
-  _Enable get _value => super._value as _Enable;
+  _$_Enable get _value => super._value as _$_Enable;
 }
 
 /// @nodoc
 
-class _$_Enable with DiagnosticableTreeMixin implements _Enable {
+class _$_Enable implements _Enable {
   const _$_Enable();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'FeedSecurityState.enable()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'FeedSecurityState.enable'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Enable);
+        (other.runtimeType == runtimeType && other is _$_Enable);
   }
 
   @override
@@ -197,41 +177,37 @@ abstract class _Enable implements FeedSecurityState {
 }
 
 /// @nodoc
-abstract class _$DisableCopyWith<$Res> {
-  factory _$DisableCopyWith(_Disable value, $Res Function(_Disable) then) =
-      __$DisableCopyWithImpl<$Res>;
+abstract class _$$_DisableCopyWith<$Res> {
+  factory _$$_DisableCopyWith(
+          _$_Disable value, $Res Function(_$_Disable) then) =
+      __$$_DisableCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$DisableCopyWithImpl<$Res> extends _$FeedSecurityStateCopyWithImpl<$Res>
-    implements _$DisableCopyWith<$Res> {
-  __$DisableCopyWithImpl(_Disable _value, $Res Function(_Disable) _then)
-      : super(_value, (v) => _then(v as _Disable));
+class __$$_DisableCopyWithImpl<$Res>
+    extends _$FeedSecurityStateCopyWithImpl<$Res>
+    implements _$$_DisableCopyWith<$Res> {
+  __$$_DisableCopyWithImpl(_$_Disable _value, $Res Function(_$_Disable) _then)
+      : super(_value, (v) => _then(v as _$_Disable));
 
   @override
-  _Disable get _value => super._value as _Disable;
+  _$_Disable get _value => super._value as _$_Disable;
 }
 
 /// @nodoc
 
-class _$_Disable with DiagnosticableTreeMixin implements _Disable {
+class _$_Disable implements _Disable {
   const _$_Disable();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'FeedSecurityState.disable()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'FeedSecurityState.disable'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Disable);
+        (other.runtimeType == runtimeType && other is _$_Disable);
   }
 
   @override

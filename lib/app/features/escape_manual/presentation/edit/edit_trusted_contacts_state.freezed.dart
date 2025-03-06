@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'edit_trusted_contacts_state.dart';
@@ -11,26 +12,11 @@ part of 'edit_trusted_contacts_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$EditTrustedContactsStateTearOff {
-  const _$EditTrustedContactsStateTearOff();
-
-  _LoadedState loaded(List<ContactEntity> contacts) {
-    return _LoadedState(
-      contacts,
-    );
-  }
-}
-
-/// @nodoc
-const $EditTrustedContactsState = _$EditTrustedContactsStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$EditTrustedContactsState {
   List<ContactEntity> get contacts => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(List<ContactEntity> contacts) loaded,
@@ -100,33 +86,33 @@ class _$EditTrustedContactsStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$LoadedStateCopyWith<$Res>
+abstract class _$$_LoadedStateCopyWith<$Res>
     implements $EditTrustedContactsStateCopyWith<$Res> {
-  factory _$LoadedStateCopyWith(
-          _LoadedState value, $Res Function(_LoadedState) then) =
-      __$LoadedStateCopyWithImpl<$Res>;
+  factory _$$_LoadedStateCopyWith(
+          _$_LoadedState value, $Res Function(_$_LoadedState) then) =
+      __$$_LoadedStateCopyWithImpl<$Res>;
   @override
   $Res call({List<ContactEntity> contacts});
 }
 
 /// @nodoc
-class __$LoadedStateCopyWithImpl<$Res>
+class __$$_LoadedStateCopyWithImpl<$Res>
     extends _$EditTrustedContactsStateCopyWithImpl<$Res>
-    implements _$LoadedStateCopyWith<$Res> {
-  __$LoadedStateCopyWithImpl(
-      _LoadedState _value, $Res Function(_LoadedState) _then)
-      : super(_value, (v) => _then(v as _LoadedState));
+    implements _$$_LoadedStateCopyWith<$Res> {
+  __$$_LoadedStateCopyWithImpl(
+      _$_LoadedState _value, $Res Function(_$_LoadedState) _then)
+      : super(_value, (v) => _then(v as _$_LoadedState));
 
   @override
-  _LoadedState get _value => super._value as _LoadedState;
+  _$_LoadedState get _value => super._value as _$_LoadedState;
 
   @override
   $Res call({
     Object? contacts = freezed,
   }) {
-    return _then(_LoadedState(
+    return _then(_$_LoadedState(
       contacts == freezed
-          ? _value.contacts
+          ? _value._contacts
           : contacts // ignore: cast_nullable_to_non_nullable
               as List<ContactEntity>,
     ));
@@ -136,10 +122,15 @@ class __$LoadedStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadedState implements _LoadedState {
-  const _$_LoadedState(this.contacts);
+  const _$_LoadedState(final List<ContactEntity> contacts)
+      : _contacts = contacts;
 
+  final List<ContactEntity> _contacts;
   @override
-  final List<ContactEntity> contacts;
+  List<ContactEntity> get contacts {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_contacts);
+  }
 
   @override
   String toString() {
@@ -150,18 +141,18 @@ class _$_LoadedState implements _LoadedState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _LoadedState &&
-            const DeepCollectionEquality().equals(other.contacts, contacts));
+            other is _$_LoadedState &&
+            const DeepCollectionEquality().equals(other._contacts, _contacts));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(contacts));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_contacts));
 
   @JsonKey(ignore: true)
   @override
-  _$LoadedStateCopyWith<_LoadedState> get copyWith =>
-      __$LoadedStateCopyWithImpl<_LoadedState>(this, _$identity);
+  _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
+      __$$_LoadedStateCopyWithImpl<_$_LoadedState>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -221,40 +212,20 @@ class _$_LoadedState implements _LoadedState {
 }
 
 abstract class _LoadedState implements EditTrustedContactsState {
-  const factory _LoadedState(List<ContactEntity> contacts) = _$_LoadedState;
+  const factory _LoadedState(final List<ContactEntity> contacts) =
+      _$_LoadedState;
 
   @override
   List<ContactEntity> get contacts;
   @override
   @JsonKey(ignore: true)
-  _$LoadedStateCopyWith<_LoadedState> get copyWith =>
+  _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-class _$EditTrustedContactsReactionTearOff {
-  const _$EditTrustedContactsReactionTearOff();
-
-  _RequestContactInfo requestContactInfo(ContactEntity contact) {
-    return _RequestContactInfo(
-      contact,
-    );
-  }
-
-  _AskForDeleteConfirmation askForDeleteConfirmation(ContactEntity contact) {
-    return _AskForDeleteConfirmation(
-      contact,
-    );
-  }
-}
-
-/// @nodoc
-const $EditTrustedContactsReaction = _$EditTrustedContactsReactionTearOff();
-
-/// @nodoc
 mixin _$EditTrustedContactsReaction {
   ContactEntity get contact => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(ContactEntity contact) requestContactInfo,
@@ -332,31 +303,31 @@ class _$EditTrustedContactsReactionCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$RequestContactInfoCopyWith<$Res>
+abstract class _$$_RequestContactInfoCopyWith<$Res>
     implements $EditTrustedContactsReactionCopyWith<$Res> {
-  factory _$RequestContactInfoCopyWith(
-          _RequestContactInfo value, $Res Function(_RequestContactInfo) then) =
-      __$RequestContactInfoCopyWithImpl<$Res>;
+  factory _$$_RequestContactInfoCopyWith(_$_RequestContactInfo value,
+          $Res Function(_$_RequestContactInfo) then) =
+      __$$_RequestContactInfoCopyWithImpl<$Res>;
   @override
   $Res call({ContactEntity contact});
 }
 
 /// @nodoc
-class __$RequestContactInfoCopyWithImpl<$Res>
+class __$$_RequestContactInfoCopyWithImpl<$Res>
     extends _$EditTrustedContactsReactionCopyWithImpl<$Res>
-    implements _$RequestContactInfoCopyWith<$Res> {
-  __$RequestContactInfoCopyWithImpl(
-      _RequestContactInfo _value, $Res Function(_RequestContactInfo) _then)
-      : super(_value, (v) => _then(v as _RequestContactInfo));
+    implements _$$_RequestContactInfoCopyWith<$Res> {
+  __$$_RequestContactInfoCopyWithImpl(
+      _$_RequestContactInfo _value, $Res Function(_$_RequestContactInfo) _then)
+      : super(_value, (v) => _then(v as _$_RequestContactInfo));
 
   @override
-  _RequestContactInfo get _value => super._value as _RequestContactInfo;
+  _$_RequestContactInfo get _value => super._value as _$_RequestContactInfo;
 
   @override
   $Res call({
     Object? contact = freezed,
   }) {
-    return _then(_RequestContactInfo(
+    return _then(_$_RequestContactInfo(
       contact == freezed
           ? _value.contact
           : contact // ignore: cast_nullable_to_non_nullable
@@ -382,7 +353,7 @@ class _$_RequestContactInfo implements _RequestContactInfo {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _RequestContactInfo &&
+            other is _$_RequestContactInfo &&
             const DeepCollectionEquality().equals(other.contact, contact));
   }
 
@@ -392,8 +363,9 @@ class _$_RequestContactInfo implements _RequestContactInfo {
 
   @JsonKey(ignore: true)
   @override
-  _$RequestContactInfoCopyWith<_RequestContactInfo> get copyWith =>
-      __$RequestContactInfoCopyWithImpl<_RequestContactInfo>(this, _$identity);
+  _$$_RequestContactInfoCopyWith<_$_RequestContactInfo> get copyWith =>
+      __$$_RequestContactInfoCopyWithImpl<_$_RequestContactInfo>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -460,44 +432,45 @@ class _$_RequestContactInfo implements _RequestContactInfo {
 }
 
 abstract class _RequestContactInfo implements EditTrustedContactsReaction {
-  const factory _RequestContactInfo(ContactEntity contact) =
+  const factory _RequestContactInfo(final ContactEntity contact) =
       _$_RequestContactInfo;
 
   @override
   ContactEntity get contact;
   @override
   @JsonKey(ignore: true)
-  _$RequestContactInfoCopyWith<_RequestContactInfo> get copyWith =>
+  _$$_RequestContactInfoCopyWith<_$_RequestContactInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$AskForDeleteConfirmationCopyWith<$Res>
+abstract class _$$_AskForDeleteConfirmationCopyWith<$Res>
     implements $EditTrustedContactsReactionCopyWith<$Res> {
-  factory _$AskForDeleteConfirmationCopyWith(_AskForDeleteConfirmation value,
-          $Res Function(_AskForDeleteConfirmation) then) =
-      __$AskForDeleteConfirmationCopyWithImpl<$Res>;
+  factory _$$_AskForDeleteConfirmationCopyWith(
+          _$_AskForDeleteConfirmation value,
+          $Res Function(_$_AskForDeleteConfirmation) then) =
+      __$$_AskForDeleteConfirmationCopyWithImpl<$Res>;
   @override
   $Res call({ContactEntity contact});
 }
 
 /// @nodoc
-class __$AskForDeleteConfirmationCopyWithImpl<$Res>
+class __$$_AskForDeleteConfirmationCopyWithImpl<$Res>
     extends _$EditTrustedContactsReactionCopyWithImpl<$Res>
-    implements _$AskForDeleteConfirmationCopyWith<$Res> {
-  __$AskForDeleteConfirmationCopyWithImpl(_AskForDeleteConfirmation _value,
-      $Res Function(_AskForDeleteConfirmation) _then)
-      : super(_value, (v) => _then(v as _AskForDeleteConfirmation));
+    implements _$$_AskForDeleteConfirmationCopyWith<$Res> {
+  __$$_AskForDeleteConfirmationCopyWithImpl(_$_AskForDeleteConfirmation _value,
+      $Res Function(_$_AskForDeleteConfirmation) _then)
+      : super(_value, (v) => _then(v as _$_AskForDeleteConfirmation));
 
   @override
-  _AskForDeleteConfirmation get _value =>
-      super._value as _AskForDeleteConfirmation;
+  _$_AskForDeleteConfirmation get _value =>
+      super._value as _$_AskForDeleteConfirmation;
 
   @override
   $Res call({
     Object? contact = freezed,
   }) {
-    return _then(_AskForDeleteConfirmation(
+    return _then(_$_AskForDeleteConfirmation(
       contact == freezed
           ? _value.contact
           : contact // ignore: cast_nullable_to_non_nullable
@@ -523,7 +496,7 @@ class _$_AskForDeleteConfirmation implements _AskForDeleteConfirmation {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _AskForDeleteConfirmation &&
+            other is _$_AskForDeleteConfirmation &&
             const DeepCollectionEquality().equals(other.contact, contact));
   }
 
@@ -533,9 +506,9 @@ class _$_AskForDeleteConfirmation implements _AskForDeleteConfirmation {
 
   @JsonKey(ignore: true)
   @override
-  _$AskForDeleteConfirmationCopyWith<_AskForDeleteConfirmation> get copyWith =>
-      __$AskForDeleteConfirmationCopyWithImpl<_AskForDeleteConfirmation>(
-          this, _$identity);
+  _$$_AskForDeleteConfirmationCopyWith<_$_AskForDeleteConfirmation>
+      get copyWith => __$$_AskForDeleteConfirmationCopyWithImpl<
+          _$_AskForDeleteConfirmation>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -603,13 +576,13 @@ class _$_AskForDeleteConfirmation implements _AskForDeleteConfirmation {
 
 abstract class _AskForDeleteConfirmation
     implements EditTrustedContactsReaction {
-  const factory _AskForDeleteConfirmation(ContactEntity contact) =
+  const factory _AskForDeleteConfirmation(final ContactEntity contact) =
       _$_AskForDeleteConfirmation;
 
   @override
   ContactEntity get contact;
   @override
   @JsonKey(ignore: true)
-  _$AskForDeleteConfirmationCopyWith<_AskForDeleteConfirmation> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_AskForDeleteConfirmationCopyWith<_$_AskForDeleteConfirmation>
+      get copyWith => throw _privateConstructorUsedError;
 }

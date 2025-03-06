@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'help_center_state.dart';
@@ -11,31 +12,7 @@ part of 'help_center_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$HelpCenterStateTearOff {
-  const _$HelpCenterStateTearOff();
-
-  _Initial initial() {
-    return const _Initial();
-  }
-
-  _GuardianTriggered guardianTriggered(GuardianAlertMessageAction action) {
-    return _GuardianTriggered(
-      action,
-    );
-  }
-
-  _CallingPolice callingPolice(String callingNumber) {
-    return _CallingPolice(
-      callingNumber,
-    );
-  }
-}
-
-/// @nodoc
-const $HelpCenterState = _$HelpCenterStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$HelpCenterState {
@@ -104,41 +81,36 @@ class _$HelpCenterStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+abstract class _$$_InitialCopyWith<$Res> {
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res> extends _$HelpCenterStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
+class __$$_InitialCopyWithImpl<$Res> extends _$HelpCenterStateCopyWithImpl<$Res>
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, (v) => _then(v as _$_Initial));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  _$_Initial get _value => super._value as _$_Initial;
 }
 
 /// @nodoc
 
-class _$_Initial with DiagnosticableTreeMixin implements _Initial {
+class _$_Initial implements _Initial {
   const _$_Initial();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'HelpCenterState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'HelpCenterState.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
+        (other.runtimeType == runtimeType && other is _$_Initial);
   }
 
   @override
@@ -219,29 +191,29 @@ abstract class _Initial implements HelpCenterState {
 }
 
 /// @nodoc
-abstract class _$GuardianTriggeredCopyWith<$Res> {
-  factory _$GuardianTriggeredCopyWith(
-          _GuardianTriggered value, $Res Function(_GuardianTriggered) then) =
-      __$GuardianTriggeredCopyWithImpl<$Res>;
+abstract class _$$_GuardianTriggeredCopyWith<$Res> {
+  factory _$$_GuardianTriggeredCopyWith(_$_GuardianTriggered value,
+          $Res Function(_$_GuardianTriggered) then) =
+      __$$_GuardianTriggeredCopyWithImpl<$Res>;
   $Res call({GuardianAlertMessageAction action});
 }
 
 /// @nodoc
-class __$GuardianTriggeredCopyWithImpl<$Res>
+class __$$_GuardianTriggeredCopyWithImpl<$Res>
     extends _$HelpCenterStateCopyWithImpl<$Res>
-    implements _$GuardianTriggeredCopyWith<$Res> {
-  __$GuardianTriggeredCopyWithImpl(
-      _GuardianTriggered _value, $Res Function(_GuardianTriggered) _then)
-      : super(_value, (v) => _then(v as _GuardianTriggered));
+    implements _$$_GuardianTriggeredCopyWith<$Res> {
+  __$$_GuardianTriggeredCopyWithImpl(
+      _$_GuardianTriggered _value, $Res Function(_$_GuardianTriggered) _then)
+      : super(_value, (v) => _then(v as _$_GuardianTriggered));
 
   @override
-  _GuardianTriggered get _value => super._value as _GuardianTriggered;
+  _$_GuardianTriggered get _value => super._value as _$_GuardianTriggered;
 
   @override
   $Res call({
     Object? action = freezed,
   }) {
-    return _then(_GuardianTriggered(
+    return _then(_$_GuardianTriggered(
       action == freezed
           ? _value.action
           : action // ignore: cast_nullable_to_non_nullable
@@ -252,32 +224,22 @@ class __$GuardianTriggeredCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_GuardianTriggered
-    with DiagnosticableTreeMixin
-    implements _GuardianTriggered {
+class _$_GuardianTriggered implements _GuardianTriggered {
   const _$_GuardianTriggered(this.action);
 
   @override
   final GuardianAlertMessageAction action;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'HelpCenterState.guardianTriggered(action: $action)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'HelpCenterState.guardianTriggered'))
-      ..add(DiagnosticsProperty('action', action));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _GuardianTriggered &&
+            other is _$_GuardianTriggered &&
             const DeepCollectionEquality().equals(other.action, action));
   }
 
@@ -287,8 +249,9 @@ class _$_GuardianTriggered
 
   @JsonKey(ignore: true)
   @override
-  _$GuardianTriggeredCopyWith<_GuardianTriggered> get copyWith =>
-      __$GuardianTriggeredCopyWithImpl<_GuardianTriggered>(this, _$identity);
+  _$$_GuardianTriggeredCopyWith<_$_GuardianTriggered> get copyWith =>
+      __$$_GuardianTriggeredCopyWithImpl<_$_GuardianTriggered>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -361,39 +324,39 @@ class _$_GuardianTriggered
 }
 
 abstract class _GuardianTriggered implements HelpCenterState {
-  const factory _GuardianTriggered(GuardianAlertMessageAction action) =
+  const factory _GuardianTriggered(final GuardianAlertMessageAction action) =
       _$_GuardianTriggered;
 
   GuardianAlertMessageAction get action;
   @JsonKey(ignore: true)
-  _$GuardianTriggeredCopyWith<_GuardianTriggered> get copyWith =>
+  _$$_GuardianTriggeredCopyWith<_$_GuardianTriggered> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$CallingPoliceCopyWith<$Res> {
-  factory _$CallingPoliceCopyWith(
-          _CallingPolice value, $Res Function(_CallingPolice) then) =
-      __$CallingPoliceCopyWithImpl<$Res>;
+abstract class _$$_CallingPoliceCopyWith<$Res> {
+  factory _$$_CallingPoliceCopyWith(
+          _$_CallingPolice value, $Res Function(_$_CallingPolice) then) =
+      __$$_CallingPoliceCopyWithImpl<$Res>;
   $Res call({String callingNumber});
 }
 
 /// @nodoc
-class __$CallingPoliceCopyWithImpl<$Res>
+class __$$_CallingPoliceCopyWithImpl<$Res>
     extends _$HelpCenterStateCopyWithImpl<$Res>
-    implements _$CallingPoliceCopyWith<$Res> {
-  __$CallingPoliceCopyWithImpl(
-      _CallingPolice _value, $Res Function(_CallingPolice) _then)
-      : super(_value, (v) => _then(v as _CallingPolice));
+    implements _$$_CallingPoliceCopyWith<$Res> {
+  __$$_CallingPoliceCopyWithImpl(
+      _$_CallingPolice _value, $Res Function(_$_CallingPolice) _then)
+      : super(_value, (v) => _then(v as _$_CallingPolice));
 
   @override
-  _CallingPolice get _value => super._value as _CallingPolice;
+  _$_CallingPolice get _value => super._value as _$_CallingPolice;
 
   @override
   $Res call({
     Object? callingNumber = freezed,
   }) {
-    return _then(_CallingPolice(
+    return _then(_$_CallingPolice(
       callingNumber == freezed
           ? _value.callingNumber
           : callingNumber // ignore: cast_nullable_to_non_nullable
@@ -404,30 +367,22 @@ class __$CallingPoliceCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CallingPolice with DiagnosticableTreeMixin implements _CallingPolice {
+class _$_CallingPolice implements _CallingPolice {
   const _$_CallingPolice(this.callingNumber);
 
   @override
   final String callingNumber;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'HelpCenterState.callingPolice(callingNumber: $callingNumber)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'HelpCenterState.callingPolice'))
-      ..add(DiagnosticsProperty('callingNumber', callingNumber));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _CallingPolice &&
+            other is _$_CallingPolice &&
             const DeepCollectionEquality()
                 .equals(other.callingNumber, callingNumber));
   }
@@ -438,8 +393,8 @@ class _$_CallingPolice with DiagnosticableTreeMixin implements _CallingPolice {
 
   @JsonKey(ignore: true)
   @override
-  _$CallingPoliceCopyWith<_CallingPolice> get copyWith =>
-      __$CallingPoliceCopyWithImpl<_CallingPolice>(this, _$identity);
+  _$$_CallingPoliceCopyWith<_$_CallingPolice> get copyWith =>
+      __$$_CallingPoliceCopyWithImpl<_$_CallingPolice>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -512,10 +467,10 @@ class _$_CallingPolice with DiagnosticableTreeMixin implements _CallingPolice {
 }
 
 abstract class _CallingPolice implements HelpCenterState {
-  const factory _CallingPolice(String callingNumber) = _$_CallingPolice;
+  const factory _CallingPolice(final String callingNumber) = _$_CallingPolice;
 
   String get callingNumber;
   @JsonKey(ignore: true)
-  _$CallingPoliceCopyWith<_CallingPolice> get copyWith =>
+  _$$_CallingPoliceCopyWith<_$_CallingPolice> get copyWith =>
       throw _privateConstructorUsedError;
 }
