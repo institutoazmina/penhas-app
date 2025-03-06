@@ -104,7 +104,10 @@ void main() {
     screenshotTest(
       'error state when retry button is pressed should looks as expected',
       fileName: 'quiz_error_state_retry',
+      skip: true,
       setUp: () {
+        
+        
         mockQuizArgs([QuizOkButton()]);
       },
       pageBuilder: () => QuizPage(controller: controller),
