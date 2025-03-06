@@ -124,7 +124,7 @@ class HelpCenterButtonPage extends StatelessWidget {
             Text(
               page.label,
               maxLines: 2,
-              style: theme.textTheme.caption?.copyWith(
+              style: theme.textTheme.bodySmall?.copyWith(
                 fontSize: 12,
                 color: textColor,
               ),

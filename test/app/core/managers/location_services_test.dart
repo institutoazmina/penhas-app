@@ -48,6 +48,8 @@ void main() {
           heading: 1.1,
           speed: 12.0,
           speedAccuracy: 0.0,
+          altitudeAccuracy: 0.1,
+          headingAccuracy: 0.1,
         );
 
         when((() => mockPermissionHandlerPlatform
@@ -481,6 +483,8 @@ class MockGeolocatorPlatform extends Mock
       heading: 1.1,
       speed: 12.0,
       speedAccuracy: 0.0,
+      altitudeAccuracy: 0.1,
+      headingAccuracy: 0.1,
     );
   }
 }

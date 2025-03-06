@@ -12,7 +12,7 @@ class TextButtonStyle extends ButtonStyle {
     ),
   }) =>
       TextButton.styleFrom(
-        primary: color,
+        foregroundColor: color,
         padding: padding,
         minimumSize: minimumSize,
         shape: shape,

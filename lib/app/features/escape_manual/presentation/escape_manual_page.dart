@@ -148,9 +148,9 @@ class _LoadedStateWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               style: OutlinedButton.styleFrom(
-                primary: DesignSystemColors.darkIndigoThree,
+                foregroundColor: DesignSystemColors.darkIndigoThree,
                 backgroundColor: DesignSystemColors.white,
-                textStyle: textTheme.button?.copyWith(
+                textStyle: textTheme.labelLarge?.copyWith(
                   fontSize: 18,
                 ),
                 minimumSize: const Size(double.infinity, 50),
@@ -199,7 +199,7 @@ class _SectionTasksWidget extends StatelessWidget {
               section.title,
               textAlign: TextAlign.start,
               softWrap: true,
-              style: Theme.of(context).textTheme.subtitle1?.copyWith(
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w700,
                     color: DesignSystemColors.darkIndigoThree,
                   ),
@@ -207,7 +207,7 @@ class _SectionTasksWidget extends StatelessWidget {
           ),
           Text(
             '$qtyDoneTasks/${section.tasks.length}',
-            style: Theme.of(context).textTheme.caption?.copyWith(
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: DesignSystemColors.brownishGrey,
                 ),
           ),
@@ -437,9 +437,9 @@ class _ContactWidget extends StatelessWidget {
             label: const Text('Ligar'),
             onPressed: () => onCallButtonPressed(contact),
             style: TextButton.styleFrom(
-              primary: DesignSystemColors.white,
+              foregroundColor: DesignSystemColors.white,
               backgroundColor: DesignSystemColors.darkIndigoThree,
-              textStyle: Theme.of(context).textTheme.button?.copyWith(
+              textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
                     fontSize: 14,
                   ),
               shape: RoundedRectangleBorder(
@@ -485,9 +485,9 @@ class _ButtonTaskWidgetState
             controller.onButtonPressed(task.button);
           },
           style: TextButton.styleFrom(
-            primary: DesignSystemColors.white,
+            foregroundColor: DesignSystemColors.white,
             backgroundColor: DesignSystemColors.darkIndigoThree,
-            textStyle: Theme.of(context).textTheme.button?.copyWith(
+            textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
                   fontSize: 14,
                 ),
             shape: RoundedRectangleBorder(

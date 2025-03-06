@@ -11,7 +11,7 @@ class OutlinedButtonStyle extends ButtonStyle {
     BorderSide? side,
   }) =>
       OutlinedButton.styleFrom(
-        primary: color,
+        foregroundColor: color,
         padding: padding,
         minimumSize: minimumSize,
         shape: shape,

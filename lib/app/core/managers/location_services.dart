@@ -7,6 +7,7 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../shared/design_system/buttons/styles.dart';
 import '../../shared/design_system/colors.dart';
 import '../../shared/design_system/text_styles.dart';
+import '../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../shared/logger/log.dart';
 import '../entities/user_location.dart';
 import '../extension/asuka.dart';
@@ -110,7 +111,7 @@ class LocationServices implements ILocationServices {
                 ),
                 ConstrainedBox(
                   constraints: const BoxConstraints(minWidth: 120),
-                  child: FilledButton(
+                  child: PenhasButton(
                     style: FilledButtonStyle.raised(
                       color: DesignSystemColors.easterPurple,
                     ),
@@ -219,7 +220,7 @@ class LocationServices implements ILocationServices {
                 ),
                 ConstrainedBox(
                   constraints: const BoxConstraints(minWidth: 120),
-                  child: FilledButton(
+                  child: PenhasButton(
                     style: FilledButtonStyle.raised(
                       color: DesignSystemColors.easterPurple,
                     ),

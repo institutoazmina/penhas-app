@@ -43,7 +43,7 @@ class ChoicesBox extends StatelessWidget {
                   style: kTextStyleDefaultFilledButtonLabel,
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: DesignSystemColors.ligthPurple,
+                  backgroundColor: DesignSystemColors.ligthPurple,
                   elevation: 0,
                   shape: kButtonShapeFilled,
                   minimumSize: const Size(double.infinity, 52),

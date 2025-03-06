@@ -150,7 +150,7 @@ class _PrimaryButton extends StatelessWidget {
       child: Text(text),
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        primary: DesignSystemColors.ligthPurple,
+        backgroundColor: DesignSystemColors.ligthPurple,
         elevation: 0,
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         minimumSize: const Size(88.0, 36.0),
@@ -186,7 +186,7 @@ class _SecondaryButton extends StatelessWidget {
       child: Text(text),
       onPressed: onPressed,
       style: TextButton.styleFrom(
-        primary: const Color(0xFF8D929D),
+        foregroundColor: const Color(0xFF8D929D),
         backgroundColor: Colors.transparent,
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         minimumSize: const Size(88.0, 36.0),

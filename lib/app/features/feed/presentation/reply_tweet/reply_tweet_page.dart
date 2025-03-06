@@ -147,12 +147,12 @@ class _ReplyTweetPageState extends State<ReplyTweetPage> with SnackBarHandler {
                             hintText: inputHint,
                             counterText: '',
                           ),
-                          toolbarOptions: const ToolbarOptions(
-                            copy: true,
-                            cut: true,
-                            selectAll: true,
-                            paste: true,
-                          ),
+                          contextMenuBuilder: (BuildContext context,
+                              EditableTextState editableTextState) {
+                            return AdaptiveTextSelectionToolbar.editableText(
+                              editableTextState: editableTextState,
+                            );
+                          },
                         ),
                       ),
                       Observer(

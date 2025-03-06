@@ -95,45 +95,42 @@ class _ComposeTweetPageState extends State<ComposeTweetPage>
                   child: Column(
                     children: <Widget>[
                       TextField(
-                        maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                        controller: controller.editingController,
-                        maxLength: 2200,
-                        maxLines: 10,
-                        onChanged: controller.setTweetContent,
-                        decoration: InputDecoration(
-                          filled: true,
-                          enabledBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(12),
-                              topRight: Radius.circular(12),
-                              bottomRight: Radius.circular(12),
+                          maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                          controller: controller.editingController,
+                          maxLength: 2200,
+                          maxLines: 10,
+                          onChanged: controller.setTweetContent,
+                          decoration: InputDecoration(
+                            filled: true,
+                            enabledBorder: const OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(12),
+                                topRight: Radius.circular(12),
+                                bottomRight: Radius.circular(12),
+                              ),
+                              borderSide: BorderSide(
+                                color: DesignSystemColors.ligthPurple,
+                              ),
                             ),
-                            borderSide: BorderSide(
-                              color: DesignSystemColors.ligthPurple,
+                            focusedBorder: const OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(12),
+                                topRight: Radius.circular(12),
+                                bottomRight: Radius.circular(12),
+                              ),
+                              borderSide: BorderSide(
+                                color: DesignSystemColors.ligthPurple,
+                                width: 2.0,
+                              ),
                             ),
+                            alignLabelWithHint: true,
+                            counterText: '',
+                            hintText: inputHint,
                           ),
-                          focusedBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(12),
-                              topRight: Radius.circular(12),
-                              bottomRight: Radius.circular(12),
-                            ),
-                            borderSide: BorderSide(
-                              color: DesignSystemColors.ligthPurple,
-                              width: 2.0,
-                            ),
-                          ),
-                          alignLabelWithHint: true,
-                          counterText: '',
-                          hintText: inputHint,
-                        ),
-                        toolbarOptions: const ToolbarOptions(
-                          copy: true,
-                          cut: true,
-                          selectAll: true,
-                          paste: true,
-                        ),
-                      ),
+                          contextMenuBuilder: (context, editableTextState) {
+                            return AdaptiveTextSelectionToolbar.editableText(
+                                editableTextState: editableTextState);
+                          }),
                       Observer(
                         builder: (context) {
                           return Visibility(

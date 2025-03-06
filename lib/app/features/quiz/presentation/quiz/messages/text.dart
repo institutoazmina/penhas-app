@@ -111,7 +111,7 @@ class TextMessageWidget extends StatelessWidget {
                 constraints: const BoxConstraints(minWidth: 60.0),
                 child: HtmlWidget(
                   content,
-                  textStyle: theme.textTheme.bodyText1?.copyWith(
+                  textStyle: theme.textTheme.bodyLarge?.copyWith(
                     color: textColor,
                     fontSize: 15,
                   ),
@@ -170,7 +170,7 @@ class _SendingMessageWidget extends StatelessWidget {
         children: [
           Text(
             'Enviando...',
-            style: theme.textTheme.caption,
+            style: theme.textTheme.bodySmall,
           ),
           const SizedBox(width: 8.0),
           const SizedBox.square(
@@ -198,7 +198,7 @@ class _FailToSendMessageWidget extends StatelessWidget {
         children: [
           Text(
             'Falha ao enviar, toque para tentar novamente.',
-            style: theme.textTheme.caption?.copyWith(color: Colors.red),
+            style: theme.textTheme.bodySmall?.copyWith(color: Colors.red),
           ),
           const SizedBox(width: 4.0),
           const SizedBox.square(
