@@ -6,10 +6,11 @@ part of 'mainboard_store.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$MainboardStore on _MainboardStoreBase, Store {
-  final _$pagesAtom = Atom(name: '_MainboardStoreBase.pages');
+  late final _$pagesAtom =
+      Atom(name: '_MainboardStoreBase.pages', context: context);
 
   @override
   ObservableList<MainboardState> get pages {
@@ -24,7 +25,8 @@ mixin _$MainboardStore on _MainboardStoreBase, Store {
     });
   }
 
-  final _$selectedPageAtom = Atom(name: '_MainboardStoreBase.selectedPage');
+  late final _$selectedPageAtom =
+      Atom(name: '_MainboardStoreBase.selectedPage', context: context);
 
   @override
   MainboardState get selectedPage {
@@ -39,7 +41,8 @@ mixin _$MainboardStore on _MainboardStoreBase, Store {
     });
   }
 
-  final _$changePageAsyncAction = AsyncAction('_MainboardStoreBase.changePage');
+  late final _$changePageAsyncAction =
+      AsyncAction('_MainboardStoreBase.changePage', context: context);
 
   @override
   Future<dynamic> changePage({required MainboardState to}) {

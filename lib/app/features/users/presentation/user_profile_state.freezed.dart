@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'user_profile_state.dart';
@@ -11,31 +12,7 @@ part of 'user_profile_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$UserProfileStateTearOff {
-  const _$UserProfileStateTearOff();
-
-  _Initial initial() {
-    return const _Initial();
-  }
-
-  _Loaded loaded(UserDetailEntity person) {
-    return _Loaded(
-      person,
-    );
-  }
-
-  _ErrorDetails error(String message) {
-    return _ErrorDetails(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $UserProfileState = _$UserProfileStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$UserProfileState {
@@ -103,19 +80,21 @@ class _$UserProfileStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+abstract class _$$_InitialCopyWith<$Res> {
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res> extends _$UserProfileStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
+class __$$_InitialCopyWithImpl<$Res>
+    extends _$UserProfileStateCopyWithImpl<$Res>
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, (v) => _then(v as _$_Initial));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  _$_Initial get _value => super._value as _$_Initial;
 }
 
 /// @nodoc
@@ -131,7 +110,7 @@ class _$_Initial implements _Initial {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
+        (other.runtimeType == runtimeType && other is _$_Initial);
   }
 
   @override
@@ -211,26 +190,26 @@ abstract class _Initial implements UserProfileState {
 }
 
 /// @nodoc
-abstract class _$LoadedCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
-      __$LoadedCopyWithImpl<$Res>;
+abstract class _$$_LoadedCopyWith<$Res> {
+  factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
+      __$$_LoadedCopyWithImpl<$Res>;
   $Res call({UserDetailEntity person});
 }
 
 /// @nodoc
-class __$LoadedCopyWithImpl<$Res> extends _$UserProfileStateCopyWithImpl<$Res>
-    implements _$LoadedCopyWith<$Res> {
-  __$LoadedCopyWithImpl(_Loaded _value, $Res Function(_Loaded) _then)
-      : super(_value, (v) => _then(v as _Loaded));
+class __$$_LoadedCopyWithImpl<$Res> extends _$UserProfileStateCopyWithImpl<$Res>
+    implements _$$_LoadedCopyWith<$Res> {
+  __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
+      : super(_value, (v) => _then(v as _$_Loaded));
 
   @override
-  _Loaded get _value => super._value as _Loaded;
+  _$_Loaded get _value => super._value as _$_Loaded;
 
   @override
   $Res call({
     Object? person = freezed,
   }) {
-    return _then(_Loaded(
+    return _then(_$_Loaded(
       person == freezed
           ? _value.person
           : person // ignore: cast_nullable_to_non_nullable
@@ -256,7 +235,7 @@ class _$_Loaded implements _Loaded {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Loaded &&
+            other is _$_Loaded &&
             const DeepCollectionEquality().equals(other.person, person));
   }
 
@@ -266,8 +245,8 @@ class _$_Loaded implements _Loaded {
 
   @JsonKey(ignore: true)
   @override
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      __$$_LoadedCopyWithImpl<_$_Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -339,37 +318,38 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements UserProfileState {
-  const factory _Loaded(UserDetailEntity person) = _$_Loaded;
+  const factory _Loaded(final UserDetailEntity person) = _$_Loaded;
 
   UserDetailEntity get person;
   @JsonKey(ignore: true)
-  _$LoadedCopyWith<_Loaded> get copyWith => throw _privateConstructorUsedError;
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$ErrorDetailsCopyWith<$Res> {
-  factory _$ErrorDetailsCopyWith(
-          _ErrorDetails value, $Res Function(_ErrorDetails) then) =
-      __$ErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$_ErrorDetailsCopyWith<$Res> {
+  factory _$$_ErrorDetailsCopyWith(
+          _$_ErrorDetails value, $Res Function(_$_ErrorDetails) then) =
+      __$$_ErrorDetailsCopyWithImpl<$Res>;
   $Res call({String message});
 }
 
 /// @nodoc
-class __$ErrorDetailsCopyWithImpl<$Res>
+class __$$_ErrorDetailsCopyWithImpl<$Res>
     extends _$UserProfileStateCopyWithImpl<$Res>
-    implements _$ErrorDetailsCopyWith<$Res> {
-  __$ErrorDetailsCopyWithImpl(
-      _ErrorDetails _value, $Res Function(_ErrorDetails) _then)
-      : super(_value, (v) => _then(v as _ErrorDetails));
+    implements _$$_ErrorDetailsCopyWith<$Res> {
+  __$$_ErrorDetailsCopyWithImpl(
+      _$_ErrorDetails _value, $Res Function(_$_ErrorDetails) _then)
+      : super(_value, (v) => _then(v as _$_ErrorDetails));
 
   @override
-  _ErrorDetails get _value => super._value as _ErrorDetails;
+  _$_ErrorDetails get _value => super._value as _$_ErrorDetails;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_ErrorDetails(
+    return _then(_$_ErrorDetails(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -395,7 +375,7 @@ class _$_ErrorDetails implements _ErrorDetails {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ErrorDetails &&
+            other is _$_ErrorDetails &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -405,8 +385,8 @@ class _$_ErrorDetails implements _ErrorDetails {
 
   @JsonKey(ignore: true)
   @override
-  _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith =>
-      __$ErrorDetailsCopyWithImpl<_ErrorDetails>(this, _$identity);
+  _$$_ErrorDetailsCopyWith<_$_ErrorDetails> get copyWith =>
+      __$$_ErrorDetailsCopyWithImpl<_$_ErrorDetails>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -478,29 +458,13 @@ class _$_ErrorDetails implements _ErrorDetails {
 }
 
 abstract class _ErrorDetails implements UserProfileState {
-  const factory _ErrorDetails(String message) = _$_ErrorDetails;
+  const factory _ErrorDetails(final String message) = _$_ErrorDetails;
 
   String get message;
   @JsonKey(ignore: true)
-  _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith =>
+  _$$_ErrorDetailsCopyWith<_$_ErrorDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$UserMenuStateTearOff {
-  const _$UserMenuStateTearOff();
-
-  _MenuStateHidden hidden() {
-    return const _MenuStateHidden();
-  }
-
-  _MenuStateVisible visible() {
-    return const _MenuStateVisible();
-  }
-}
-
-/// @nodoc
-const $UserMenuState = _$UserMenuStateTearOff();
 
 /// @nodoc
 mixin _$UserMenuState {
@@ -562,22 +526,22 @@ class _$UserMenuStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$MenuStateHiddenCopyWith<$Res> {
-  factory _$MenuStateHiddenCopyWith(
-          _MenuStateHidden value, $Res Function(_MenuStateHidden) then) =
-      __$MenuStateHiddenCopyWithImpl<$Res>;
+abstract class _$$_MenuStateHiddenCopyWith<$Res> {
+  factory _$$_MenuStateHiddenCopyWith(
+          _$_MenuStateHidden value, $Res Function(_$_MenuStateHidden) then) =
+      __$$_MenuStateHiddenCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$MenuStateHiddenCopyWithImpl<$Res>
+class __$$_MenuStateHiddenCopyWithImpl<$Res>
     extends _$UserMenuStateCopyWithImpl<$Res>
-    implements _$MenuStateHiddenCopyWith<$Res> {
-  __$MenuStateHiddenCopyWithImpl(
-      _MenuStateHidden _value, $Res Function(_MenuStateHidden) _then)
-      : super(_value, (v) => _then(v as _MenuStateHidden));
+    implements _$$_MenuStateHiddenCopyWith<$Res> {
+  __$$_MenuStateHiddenCopyWithImpl(
+      _$_MenuStateHidden _value, $Res Function(_$_MenuStateHidden) _then)
+      : super(_value, (v) => _then(v as _$_MenuStateHidden));
 
   @override
-  _MenuStateHidden get _value => super._value as _MenuStateHidden;
+  _$_MenuStateHidden get _value => super._value as _$_MenuStateHidden;
 }
 
 /// @nodoc
@@ -593,7 +557,7 @@ class _$_MenuStateHidden implements _MenuStateHidden {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _MenuStateHidden);
+        (other.runtimeType == runtimeType && other is _$_MenuStateHidden);
   }
 
   @override
@@ -667,22 +631,22 @@ abstract class _MenuStateHidden implements UserMenuState {
 }
 
 /// @nodoc
-abstract class _$MenuStateVisibleCopyWith<$Res> {
-  factory _$MenuStateVisibleCopyWith(
-          _MenuStateVisible value, $Res Function(_MenuStateVisible) then) =
-      __$MenuStateVisibleCopyWithImpl<$Res>;
+abstract class _$$_MenuStateVisibleCopyWith<$Res> {
+  factory _$$_MenuStateVisibleCopyWith(
+          _$_MenuStateVisible value, $Res Function(_$_MenuStateVisible) then) =
+      __$$_MenuStateVisibleCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$MenuStateVisibleCopyWithImpl<$Res>
+class __$$_MenuStateVisibleCopyWithImpl<$Res>
     extends _$UserMenuStateCopyWithImpl<$Res>
-    implements _$MenuStateVisibleCopyWith<$Res> {
-  __$MenuStateVisibleCopyWithImpl(
-      _MenuStateVisible _value, $Res Function(_MenuStateVisible) _then)
-      : super(_value, (v) => _then(v as _MenuStateVisible));
+    implements _$$_MenuStateVisibleCopyWith<$Res> {
+  __$$_MenuStateVisibleCopyWithImpl(
+      _$_MenuStateVisible _value, $Res Function(_$_MenuStateVisible) _then)
+      : super(_value, (v) => _then(v as _$_MenuStateVisible));
 
   @override
-  _MenuStateVisible get _value => super._value as _MenuStateVisible;
+  _$_MenuStateVisible get _value => super._value as _$_MenuStateVisible;
 }
 
 /// @nodoc
@@ -698,7 +662,7 @@ class _$_MenuStateVisible implements _MenuStateVisible {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _MenuStateVisible);
+        (other.runtimeType == runtimeType && other is _$_MenuStateVisible);
   }
 
   @override
@@ -770,48 +734,6 @@ class _$_MenuStateVisible implements _MenuStateVisible {
 abstract class _MenuStateVisible implements UserMenuState {
   const factory _MenuStateVisible() = _$_MenuStateVisible;
 }
-
-/// @nodoc
-class _$UserProfileReactionTearOff {
-  const _$UserProfileReactionTearOff();
-
-  _ReactionShowSnackBar showSnackBar(String message,
-      {bool inMainboardPage = false}) {
-    return _ReactionShowSnackBar(
-      message,
-      inMainboardPage: inMainboardPage,
-    );
-  }
-
-  _ReactionShowProfileOptions showProfileOptions() {
-    return _ReactionShowProfileOptions();
-  }
-
-  _ReactionAskReportReasonDialog askReportReasonDialog(
-      [String? reason = null]) {
-    return _ReactionAskReportReasonDialog(
-      reason,
-    );
-  }
-
-  _ReactionShowBlockConfirmationDialog showBlockConfirmationDialog(
-      String message) {
-    return _ReactionShowBlockConfirmationDialog(
-      message,
-    );
-  }
-
-  _ReactionShowProgressDialog showProgressDialog() {
-    return _ReactionShowProgressDialog();
-  }
-
-  _ReactionDismissProgressDialog dismissProgressDialog() {
-    return _ReactionDismissProgressDialog();
-  }
-}
-
-/// @nodoc
-const $UserProfileReaction = _$UserProfileReactionTearOff();
 
 /// @nodoc
 mixin _$UserProfileReaction {
@@ -909,30 +831,30 @@ class _$UserProfileReactionCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$ReactionShowSnackBarCopyWith<$Res> {
-  factory _$ReactionShowSnackBarCopyWith(_ReactionShowSnackBar value,
-          $Res Function(_ReactionShowSnackBar) then) =
-      __$ReactionShowSnackBarCopyWithImpl<$Res>;
+abstract class _$$_ReactionShowSnackBarCopyWith<$Res> {
+  factory _$$_ReactionShowSnackBarCopyWith(_$_ReactionShowSnackBar value,
+          $Res Function(_$_ReactionShowSnackBar) then) =
+      __$$_ReactionShowSnackBarCopyWithImpl<$Res>;
   $Res call({String message, bool inMainboardPage});
 }
 
 /// @nodoc
-class __$ReactionShowSnackBarCopyWithImpl<$Res>
+class __$$_ReactionShowSnackBarCopyWithImpl<$Res>
     extends _$UserProfileReactionCopyWithImpl<$Res>
-    implements _$ReactionShowSnackBarCopyWith<$Res> {
-  __$ReactionShowSnackBarCopyWithImpl(
-      _ReactionShowSnackBar _value, $Res Function(_ReactionShowSnackBar) _then)
-      : super(_value, (v) => _then(v as _ReactionShowSnackBar));
+    implements _$$_ReactionShowSnackBarCopyWith<$Res> {
+  __$$_ReactionShowSnackBarCopyWithImpl(_$_ReactionShowSnackBar _value,
+      $Res Function(_$_ReactionShowSnackBar) _then)
+      : super(_value, (v) => _then(v as _$_ReactionShowSnackBar));
 
   @override
-  _ReactionShowSnackBar get _value => super._value as _ReactionShowSnackBar;
+  _$_ReactionShowSnackBar get _value => super._value as _$_ReactionShowSnackBar;
 
   @override
   $Res call({
     Object? message = freezed,
     Object? inMainboardPage = freezed,
   }) {
-    return _then(_ReactionShowSnackBar(
+    return _then(_$_ReactionShowSnackBar(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -952,8 +874,8 @@ class _$_ReactionShowSnackBar implements _ReactionShowSnackBar {
 
   @override
   final String message;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool inMainboardPage;
 
   @override
@@ -965,7 +887,7 @@ class _$_ReactionShowSnackBar implements _ReactionShowSnackBar {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ReactionShowSnackBar &&
+            other is _$_ReactionShowSnackBar &&
             const DeepCollectionEquality().equals(other.message, message) &&
             const DeepCollectionEquality()
                 .equals(other.inMainboardPage, inMainboardPage));
@@ -979,8 +901,8 @@ class _$_ReactionShowSnackBar implements _ReactionShowSnackBar {
 
   @JsonKey(ignore: true)
   @override
-  _$ReactionShowSnackBarCopyWith<_ReactionShowSnackBar> get copyWith =>
-      __$ReactionShowSnackBarCopyWithImpl<_ReactionShowSnackBar>(
+  _$$_ReactionShowSnackBarCopyWith<_$_ReactionShowSnackBar> get copyWith =>
+      __$$_ReactionShowSnackBarCopyWithImpl<_$_ReactionShowSnackBar>(
           this, _$identity);
 
   @override
@@ -1083,35 +1005,36 @@ class _$_ReactionShowSnackBar implements _ReactionShowSnackBar {
 }
 
 abstract class _ReactionShowSnackBar implements UserProfileReaction {
-  factory _ReactionShowSnackBar(String message, {bool inMainboardPage}) =
-      _$_ReactionShowSnackBar;
+  factory _ReactionShowSnackBar(final String message,
+      {final bool inMainboardPage}) = _$_ReactionShowSnackBar;
 
   String get message;
   bool get inMainboardPage;
   @JsonKey(ignore: true)
-  _$ReactionShowSnackBarCopyWith<_ReactionShowSnackBar> get copyWith =>
+  _$$_ReactionShowSnackBarCopyWith<_$_ReactionShowSnackBar> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$ReactionShowProfileOptionsCopyWith<$Res> {
-  factory _$ReactionShowProfileOptionsCopyWith(
-          _ReactionShowProfileOptions value,
-          $Res Function(_ReactionShowProfileOptions) then) =
-      __$ReactionShowProfileOptionsCopyWithImpl<$Res>;
+abstract class _$$_ReactionShowProfileOptionsCopyWith<$Res> {
+  factory _$$_ReactionShowProfileOptionsCopyWith(
+          _$_ReactionShowProfileOptions value,
+          $Res Function(_$_ReactionShowProfileOptions) then) =
+      __$$_ReactionShowProfileOptionsCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$ReactionShowProfileOptionsCopyWithImpl<$Res>
+class __$$_ReactionShowProfileOptionsCopyWithImpl<$Res>
     extends _$UserProfileReactionCopyWithImpl<$Res>
-    implements _$ReactionShowProfileOptionsCopyWith<$Res> {
-  __$ReactionShowProfileOptionsCopyWithImpl(_ReactionShowProfileOptions _value,
-      $Res Function(_ReactionShowProfileOptions) _then)
-      : super(_value, (v) => _then(v as _ReactionShowProfileOptions));
+    implements _$$_ReactionShowProfileOptionsCopyWith<$Res> {
+  __$$_ReactionShowProfileOptionsCopyWithImpl(
+      _$_ReactionShowProfileOptions _value,
+      $Res Function(_$_ReactionShowProfileOptions) _then)
+      : super(_value, (v) => _then(v as _$_ReactionShowProfileOptions));
 
   @override
-  _ReactionShowProfileOptions get _value =>
-      super._value as _ReactionShowProfileOptions;
+  _$_ReactionShowProfileOptions get _value =>
+      super._value as _$_ReactionShowProfileOptions;
 }
 
 /// @nodoc
@@ -1128,7 +1051,7 @@ class _$_ReactionShowProfileOptions implements _ReactionShowProfileOptions {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ReactionShowProfileOptions);
+            other is _$_ReactionShowProfileOptions);
   }
 
   @override
@@ -1238,32 +1161,32 @@ abstract class _ReactionShowProfileOptions implements UserProfileReaction {
 }
 
 /// @nodoc
-abstract class _$ReactionAskReportReasonDialogCopyWith<$Res> {
-  factory _$ReactionAskReportReasonDialogCopyWith(
-          _ReactionAskReportReasonDialog value,
-          $Res Function(_ReactionAskReportReasonDialog) then) =
-      __$ReactionAskReportReasonDialogCopyWithImpl<$Res>;
+abstract class _$$_ReactionAskReportReasonDialogCopyWith<$Res> {
+  factory _$$_ReactionAskReportReasonDialogCopyWith(
+          _$_ReactionAskReportReasonDialog value,
+          $Res Function(_$_ReactionAskReportReasonDialog) then) =
+      __$$_ReactionAskReportReasonDialogCopyWithImpl<$Res>;
   $Res call({String? reason});
 }
 
 /// @nodoc
-class __$ReactionAskReportReasonDialogCopyWithImpl<$Res>
+class __$$_ReactionAskReportReasonDialogCopyWithImpl<$Res>
     extends _$UserProfileReactionCopyWithImpl<$Res>
-    implements _$ReactionAskReportReasonDialogCopyWith<$Res> {
-  __$ReactionAskReportReasonDialogCopyWithImpl(
-      _ReactionAskReportReasonDialog _value,
-      $Res Function(_ReactionAskReportReasonDialog) _then)
-      : super(_value, (v) => _then(v as _ReactionAskReportReasonDialog));
+    implements _$$_ReactionAskReportReasonDialogCopyWith<$Res> {
+  __$$_ReactionAskReportReasonDialogCopyWithImpl(
+      _$_ReactionAskReportReasonDialog _value,
+      $Res Function(_$_ReactionAskReportReasonDialog) _then)
+      : super(_value, (v) => _then(v as _$_ReactionAskReportReasonDialog));
 
   @override
-  _ReactionAskReportReasonDialog get _value =>
-      super._value as _ReactionAskReportReasonDialog;
+  _$_ReactionAskReportReasonDialog get _value =>
+      super._value as _$_ReactionAskReportReasonDialog;
 
   @override
   $Res call({
     Object? reason = freezed,
   }) {
-    return _then(_ReactionAskReportReasonDialog(
+    return _then(_$_ReactionAskReportReasonDialog(
       reason == freezed
           ? _value.reason
           : reason // ignore: cast_nullable_to_non_nullable
@@ -1278,8 +1201,8 @@ class _$_ReactionAskReportReasonDialog
     implements _ReactionAskReportReasonDialog {
   _$_ReactionAskReportReasonDialog([this.reason = null]);
 
-  @JsonKey()
   @override
+  @JsonKey()
   final String? reason;
 
   @override
@@ -1291,7 +1214,7 @@ class _$_ReactionAskReportReasonDialog
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ReactionAskReportReasonDialog &&
+            other is _$_ReactionAskReportReasonDialog &&
             const DeepCollectionEquality().equals(other.reason, reason));
   }
 
@@ -1301,9 +1224,9 @@ class _$_ReactionAskReportReasonDialog
 
   @JsonKey(ignore: true)
   @override
-  _$ReactionAskReportReasonDialogCopyWith<_ReactionAskReportReasonDialog>
-      get copyWith => __$ReactionAskReportReasonDialogCopyWithImpl<
-          _ReactionAskReportReasonDialog>(this, _$identity);
+  _$$_ReactionAskReportReasonDialogCopyWith<_$_ReactionAskReportReasonDialog>
+      get copyWith => __$$_ReactionAskReportReasonDialogCopyWithImpl<
+          _$_ReactionAskReportReasonDialog>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1405,42 +1328,43 @@ class _$_ReactionAskReportReasonDialog
 }
 
 abstract class _ReactionAskReportReasonDialog implements UserProfileReaction {
-  factory _ReactionAskReportReasonDialog([String? reason]) =
+  factory _ReactionAskReportReasonDialog([final String? reason]) =
       _$_ReactionAskReportReasonDialog;
 
   String? get reason;
   @JsonKey(ignore: true)
-  _$ReactionAskReportReasonDialogCopyWith<_ReactionAskReportReasonDialog>
+  _$$_ReactionAskReportReasonDialogCopyWith<_$_ReactionAskReportReasonDialog>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$ReactionShowBlockConfirmationDialogCopyWith<$Res> {
-  factory _$ReactionShowBlockConfirmationDialogCopyWith(
-          _ReactionShowBlockConfirmationDialog value,
-          $Res Function(_ReactionShowBlockConfirmationDialog) then) =
-      __$ReactionShowBlockConfirmationDialogCopyWithImpl<$Res>;
+abstract class _$$_ReactionShowBlockConfirmationDialogCopyWith<$Res> {
+  factory _$$_ReactionShowBlockConfirmationDialogCopyWith(
+          _$_ReactionShowBlockConfirmationDialog value,
+          $Res Function(_$_ReactionShowBlockConfirmationDialog) then) =
+      __$$_ReactionShowBlockConfirmationDialogCopyWithImpl<$Res>;
   $Res call({String message});
 }
 
 /// @nodoc
-class __$ReactionShowBlockConfirmationDialogCopyWithImpl<$Res>
+class __$$_ReactionShowBlockConfirmationDialogCopyWithImpl<$Res>
     extends _$UserProfileReactionCopyWithImpl<$Res>
-    implements _$ReactionShowBlockConfirmationDialogCopyWith<$Res> {
-  __$ReactionShowBlockConfirmationDialogCopyWithImpl(
-      _ReactionShowBlockConfirmationDialog _value,
-      $Res Function(_ReactionShowBlockConfirmationDialog) _then)
-      : super(_value, (v) => _then(v as _ReactionShowBlockConfirmationDialog));
+    implements _$$_ReactionShowBlockConfirmationDialogCopyWith<$Res> {
+  __$$_ReactionShowBlockConfirmationDialogCopyWithImpl(
+      _$_ReactionShowBlockConfirmationDialog _value,
+      $Res Function(_$_ReactionShowBlockConfirmationDialog) _then)
+      : super(
+            _value, (v) => _then(v as _$_ReactionShowBlockConfirmationDialog));
 
   @override
-  _ReactionShowBlockConfirmationDialog get _value =>
-      super._value as _ReactionShowBlockConfirmationDialog;
+  _$_ReactionShowBlockConfirmationDialog get _value =>
+      super._value as _$_ReactionShowBlockConfirmationDialog;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_ReactionShowBlockConfirmationDialog(
+    return _then(_$_ReactionShowBlockConfirmationDialog(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -1467,7 +1391,7 @@ class _$_ReactionShowBlockConfirmationDialog
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ReactionShowBlockConfirmationDialog &&
+            other is _$_ReactionShowBlockConfirmationDialog &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -1477,10 +1401,10 @@ class _$_ReactionShowBlockConfirmationDialog
 
   @JsonKey(ignore: true)
   @override
-  _$ReactionShowBlockConfirmationDialogCopyWith<
-          _ReactionShowBlockConfirmationDialog>
-      get copyWith => __$ReactionShowBlockConfirmationDialogCopyWithImpl<
-          _ReactionShowBlockConfirmationDialog>(this, _$identity);
+  _$$_ReactionShowBlockConfirmationDialogCopyWith<
+          _$_ReactionShowBlockConfirmationDialog>
+      get copyWith => __$$_ReactionShowBlockConfirmationDialogCopyWithImpl<
+          _$_ReactionShowBlockConfirmationDialog>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1583,35 +1507,36 @@ class _$_ReactionShowBlockConfirmationDialog
 
 abstract class _ReactionShowBlockConfirmationDialog
     implements UserProfileReaction {
-  factory _ReactionShowBlockConfirmationDialog(String message) =
+  factory _ReactionShowBlockConfirmationDialog(final String message) =
       _$_ReactionShowBlockConfirmationDialog;
 
   String get message;
   @JsonKey(ignore: true)
-  _$ReactionShowBlockConfirmationDialogCopyWith<
-          _ReactionShowBlockConfirmationDialog>
+  _$$_ReactionShowBlockConfirmationDialogCopyWith<
+          _$_ReactionShowBlockConfirmationDialog>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$ReactionShowProgressDialogCopyWith<$Res> {
-  factory _$ReactionShowProgressDialogCopyWith(
-          _ReactionShowProgressDialog value,
-          $Res Function(_ReactionShowProgressDialog) then) =
-      __$ReactionShowProgressDialogCopyWithImpl<$Res>;
+abstract class _$$_ReactionShowProgressDialogCopyWith<$Res> {
+  factory _$$_ReactionShowProgressDialogCopyWith(
+          _$_ReactionShowProgressDialog value,
+          $Res Function(_$_ReactionShowProgressDialog) then) =
+      __$$_ReactionShowProgressDialogCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$ReactionShowProgressDialogCopyWithImpl<$Res>
+class __$$_ReactionShowProgressDialogCopyWithImpl<$Res>
     extends _$UserProfileReactionCopyWithImpl<$Res>
-    implements _$ReactionShowProgressDialogCopyWith<$Res> {
-  __$ReactionShowProgressDialogCopyWithImpl(_ReactionShowProgressDialog _value,
-      $Res Function(_ReactionShowProgressDialog) _then)
-      : super(_value, (v) => _then(v as _ReactionShowProgressDialog));
+    implements _$$_ReactionShowProgressDialogCopyWith<$Res> {
+  __$$_ReactionShowProgressDialogCopyWithImpl(
+      _$_ReactionShowProgressDialog _value,
+      $Res Function(_$_ReactionShowProgressDialog) _then)
+      : super(_value, (v) => _then(v as _$_ReactionShowProgressDialog));
 
   @override
-  _ReactionShowProgressDialog get _value =>
-      super._value as _ReactionShowProgressDialog;
+  _$_ReactionShowProgressDialog get _value =>
+      super._value as _$_ReactionShowProgressDialog;
 }
 
 /// @nodoc
@@ -1628,7 +1553,7 @@ class _$_ReactionShowProgressDialog implements _ReactionShowProgressDialog {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ReactionShowProgressDialog);
+            other is _$_ReactionShowProgressDialog);
   }
 
   @override
@@ -1738,25 +1663,25 @@ abstract class _ReactionShowProgressDialog implements UserProfileReaction {
 }
 
 /// @nodoc
-abstract class _$ReactionDismissProgressDialogCopyWith<$Res> {
-  factory _$ReactionDismissProgressDialogCopyWith(
-          _ReactionDismissProgressDialog value,
-          $Res Function(_ReactionDismissProgressDialog) then) =
-      __$ReactionDismissProgressDialogCopyWithImpl<$Res>;
+abstract class _$$_ReactionDismissProgressDialogCopyWith<$Res> {
+  factory _$$_ReactionDismissProgressDialogCopyWith(
+          _$_ReactionDismissProgressDialog value,
+          $Res Function(_$_ReactionDismissProgressDialog) then) =
+      __$$_ReactionDismissProgressDialogCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$ReactionDismissProgressDialogCopyWithImpl<$Res>
+class __$$_ReactionDismissProgressDialogCopyWithImpl<$Res>
     extends _$UserProfileReactionCopyWithImpl<$Res>
-    implements _$ReactionDismissProgressDialogCopyWith<$Res> {
-  __$ReactionDismissProgressDialogCopyWithImpl(
-      _ReactionDismissProgressDialog _value,
-      $Res Function(_ReactionDismissProgressDialog) _then)
-      : super(_value, (v) => _then(v as _ReactionDismissProgressDialog));
+    implements _$$_ReactionDismissProgressDialogCopyWith<$Res> {
+  __$$_ReactionDismissProgressDialogCopyWithImpl(
+      _$_ReactionDismissProgressDialog _value,
+      $Res Function(_$_ReactionDismissProgressDialog) _then)
+      : super(_value, (v) => _then(v as _$_ReactionDismissProgressDialog));
 
   @override
-  _ReactionDismissProgressDialog get _value =>
-      super._value as _ReactionDismissProgressDialog;
+  _$_ReactionDismissProgressDialog get _value =>
+      super._value as _$_ReactionDismissProgressDialog;
 }
 
 /// @nodoc
@@ -1774,7 +1699,7 @@ class _$_ReactionDismissProgressDialog
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ReactionDismissProgressDialog);
+            other is _$_ReactionDismissProgressDialog);
   }
 
   @override
@@ -1884,22 +1809,6 @@ abstract class _ReactionDismissProgressDialog implements UserProfileReaction {
 }
 
 /// @nodoc
-class _$UserProfileSelectedOptionTearOff {
-  const _$UserProfileSelectedOptionTearOff();
-
-  _SelectedOptionReport report() {
-    return _SelectedOptionReport();
-  }
-
-  _SelectedOptionBlock block() {
-    return _SelectedOptionBlock();
-  }
-}
-
-/// @nodoc
-const $UserProfileSelectedOption = _$UserProfileSelectedOptionTearOff();
-
-/// @nodoc
 mixin _$UserProfileSelectedOption {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -1959,22 +1868,22 @@ class _$UserProfileSelectedOptionCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$SelectedOptionReportCopyWith<$Res> {
-  factory _$SelectedOptionReportCopyWith(_SelectedOptionReport value,
-          $Res Function(_SelectedOptionReport) then) =
-      __$SelectedOptionReportCopyWithImpl<$Res>;
+abstract class _$$_SelectedOptionReportCopyWith<$Res> {
+  factory _$$_SelectedOptionReportCopyWith(_$_SelectedOptionReport value,
+          $Res Function(_$_SelectedOptionReport) then) =
+      __$$_SelectedOptionReportCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$SelectedOptionReportCopyWithImpl<$Res>
+class __$$_SelectedOptionReportCopyWithImpl<$Res>
     extends _$UserProfileSelectedOptionCopyWithImpl<$Res>
-    implements _$SelectedOptionReportCopyWith<$Res> {
-  __$SelectedOptionReportCopyWithImpl(
-      _SelectedOptionReport _value, $Res Function(_SelectedOptionReport) _then)
-      : super(_value, (v) => _then(v as _SelectedOptionReport));
+    implements _$$_SelectedOptionReportCopyWith<$Res> {
+  __$$_SelectedOptionReportCopyWithImpl(_$_SelectedOptionReport _value,
+      $Res Function(_$_SelectedOptionReport) _then)
+      : super(_value, (v) => _then(v as _$_SelectedOptionReport));
 
   @override
-  _SelectedOptionReport get _value => super._value as _SelectedOptionReport;
+  _$_SelectedOptionReport get _value => super._value as _$_SelectedOptionReport;
 }
 
 /// @nodoc
@@ -1990,7 +1899,7 @@ class _$_SelectedOptionReport implements _SelectedOptionReport {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _SelectedOptionReport);
+        (other.runtimeType == runtimeType && other is _$_SelectedOptionReport);
   }
 
   @override
@@ -2064,22 +1973,22 @@ abstract class _SelectedOptionReport implements UserProfileSelectedOption {
 }
 
 /// @nodoc
-abstract class _$SelectedOptionBlockCopyWith<$Res> {
-  factory _$SelectedOptionBlockCopyWith(_SelectedOptionBlock value,
-          $Res Function(_SelectedOptionBlock) then) =
-      __$SelectedOptionBlockCopyWithImpl<$Res>;
+abstract class _$$_SelectedOptionBlockCopyWith<$Res> {
+  factory _$$_SelectedOptionBlockCopyWith(_$_SelectedOptionBlock value,
+          $Res Function(_$_SelectedOptionBlock) then) =
+      __$$_SelectedOptionBlockCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$SelectedOptionBlockCopyWithImpl<$Res>
+class __$$_SelectedOptionBlockCopyWithImpl<$Res>
     extends _$UserProfileSelectedOptionCopyWithImpl<$Res>
-    implements _$SelectedOptionBlockCopyWith<$Res> {
-  __$SelectedOptionBlockCopyWithImpl(
-      _SelectedOptionBlock _value, $Res Function(_SelectedOptionBlock) _then)
-      : super(_value, (v) => _then(v as _SelectedOptionBlock));
+    implements _$$_SelectedOptionBlockCopyWith<$Res> {
+  __$$_SelectedOptionBlockCopyWithImpl(_$_SelectedOptionBlock _value,
+      $Res Function(_$_SelectedOptionBlock) _then)
+      : super(_value, (v) => _then(v as _$_SelectedOptionBlock));
 
   @override
-  _SelectedOptionBlock get _value => super._value as _SelectedOptionBlock;
+  _$_SelectedOptionBlock get _value => super._value as _$_SelectedOptionBlock;
 }
 
 /// @nodoc
@@ -2095,7 +2004,7 @@ class _$_SelectedOptionBlock implements _SelectedOptionBlock {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _SelectedOptionBlock);
+        (other.runtimeType == runtimeType && other is _$_SelectedOptionBlock);
   }
 
   @override

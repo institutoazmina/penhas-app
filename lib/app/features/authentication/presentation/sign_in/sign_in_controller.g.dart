@@ -6,7 +6,7 @@ part of 'sign_in_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$SignInController on _SignInControllerBase, Store {
   Computed<PageProgressState>? _$currentStateComputed;
@@ -17,7 +17,8 @@ mixin _$SignInController on _SignInControllerBase, Store {
               name: '_SignInControllerBase.currentState'))
       .value;
 
-  final _$_progressAtom = Atom(name: '_SignInControllerBase._progress');
+  late final _$_progressAtom =
+      Atom(name: '_SignInControllerBase._progress', context: context);
 
   @override
   ObservableFuture<Either<Failure, SessionEntity>>? get _progress {
@@ -32,7 +33,8 @@ mixin _$SignInController on _SignInControllerBase, Store {
     });
   }
 
-  final _$warningEmailAtom = Atom(name: '_SignInControllerBase.warningEmail');
+  late final _$warningEmailAtom =
+      Atom(name: '_SignInControllerBase.warningEmail', context: context);
 
   @override
   String get warningEmail {
@@ -47,8 +49,8 @@ mixin _$SignInController on _SignInControllerBase, Store {
     });
   }
 
-  final _$warningPasswordAtom =
-      Atom(name: '_SignInControllerBase.warningPassword');
+  late final _$warningPasswordAtom =
+      Atom(name: '_SignInControllerBase.warningPassword', context: context);
 
   @override
   String get warningPassword {
@@ -63,7 +65,8 @@ mixin _$SignInController on _SignInControllerBase, Store {
     });
   }
 
-  final _$errorMessageAtom = Atom(name: '_SignInControllerBase.errorMessage');
+  late final _$errorMessageAtom =
+      Atom(name: '_SignInControllerBase.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -78,8 +81,9 @@ mixin _$SignInController on _SignInControllerBase, Store {
     });
   }
 
-  final _$signInWithEmailAndPasswordPressedAsyncAction =
-      AsyncAction('_SignInControllerBase.signInWithEmailAndPasswordPressed');
+  late final _$signInWithEmailAndPasswordPressedAsyncAction = AsyncAction(
+      '_SignInControllerBase.signInWithEmailAndPasswordPressed',
+      context: context);
 
   @override
   Future<void> signInWithEmailAndPasswordPressed() {
@@ -87,8 +91,9 @@ mixin _$SignInController on _SignInControllerBase, Store {
         .run(() => super.signInWithEmailAndPasswordPressed());
   }
 
-  final _$registerUserPressedAsyncAction =
-      AsyncAction('_SignInControllerBase.registerUserPressed');
+  late final _$registerUserPressedAsyncAction = AsyncAction(
+      '_SignInControllerBase.registerUserPressed',
+      context: context);
 
   @override
   Future<void> registerUserPressed() {
@@ -96,8 +101,9 @@ mixin _$SignInController on _SignInControllerBase, Store {
         .run(() => super.registerUserPressed());
   }
 
-  final _$resetPasswordPressedAsyncAction =
-      AsyncAction('_SignInControllerBase.resetPasswordPressed');
+  late final _$resetPasswordPressedAsyncAction = AsyncAction(
+      '_SignInControllerBase.resetPasswordPressed',
+      context: context);
 
   @override
   Future<void> resetPasswordPressed() {
@@ -105,8 +111,8 @@ mixin _$SignInController on _SignInControllerBase, Store {
         .run(() => super.resetPasswordPressed());
   }
 
-  final _$_SignInControllerBaseActionController =
-      ActionController(name: '_SignInControllerBase');
+  late final _$_SignInControllerBaseActionController =
+      ActionController(name: '_SignInControllerBase', context: context);
 
   @override
   void setEmail(String address) {

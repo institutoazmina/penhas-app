@@ -6,10 +6,11 @@ part of 'support_center_show_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$SupportCenterShowController on _SupportCenterShowControllerBase, Store {
-  final _$stateAtom = Atom(name: '_SupportCenterShowControllerBase.state');
+  late final _$stateAtom =
+      Atom(name: '_SupportCenterShowControllerBase.state', context: context);
 
   @override
   SupportCenterShowState get state {
@@ -24,16 +25,16 @@ mixin _$SupportCenterShowController on _SupportCenterShowControllerBase, Store {
     });
   }
 
-  final _$onRateAsyncAction =
-      AsyncAction('_SupportCenterShowControllerBase.onRate');
+  late final _$onRateAsyncAction =
+      AsyncAction('_SupportCenterShowControllerBase.onRate', context: context);
 
   @override
   Future<void> onRate(double value) {
     return _$onRateAsyncAction.run(() => super.onRate(value));
   }
 
-  final _$retryAsyncAction =
-      AsyncAction('_SupportCenterShowControllerBase.retry');
+  late final _$retryAsyncAction =
+      AsyncAction('_SupportCenterShowControllerBase.retry', context: context);
 
   @override
   Future<void> retry() {

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'chat_channel_state.dart';
@@ -11,29 +12,7 @@ part of 'chat_channel_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ChatChannelStateTearOff {
-  const _$ChatChannelStateTearOff();
-
-  _Initial initial() {
-    return const _Initial();
-  }
-
-  _Loaded loaded() {
-    return const _Loaded();
-  }
-
-  _ErrorDetails error(String message) {
-    return _ErrorDetails(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $ChatChannelState = _$ChatChannelStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ChatChannelState {
@@ -101,41 +80,37 @@ class _$ChatChannelStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+abstract class _$$_InitialCopyWith<$Res> {
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res> extends _$ChatChannelStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
+class __$$_InitialCopyWithImpl<$Res>
+    extends _$ChatChannelStateCopyWithImpl<$Res>
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, (v) => _then(v as _$_Initial));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  _$_Initial get _value => super._value as _$_Initial;
 }
 
 /// @nodoc
 
-class _$_Initial with DiagnosticableTreeMixin implements _Initial {
+class _$_Initial implements _Initial {
   const _$_Initial();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'ChatChannelState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'ChatChannelState.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
+        (other.runtimeType == runtimeType && other is _$_Initial);
   }
 
   @override
@@ -215,41 +190,35 @@ abstract class _Initial implements ChatChannelState {
 }
 
 /// @nodoc
-abstract class _$LoadedCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
-      __$LoadedCopyWithImpl<$Res>;
+abstract class _$$_LoadedCopyWith<$Res> {
+  factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
+      __$$_LoadedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoadedCopyWithImpl<$Res> extends _$ChatChannelStateCopyWithImpl<$Res>
-    implements _$LoadedCopyWith<$Res> {
-  __$LoadedCopyWithImpl(_Loaded _value, $Res Function(_Loaded) _then)
-      : super(_value, (v) => _then(v as _Loaded));
+class __$$_LoadedCopyWithImpl<$Res> extends _$ChatChannelStateCopyWithImpl<$Res>
+    implements _$$_LoadedCopyWith<$Res> {
+  __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
+      : super(_value, (v) => _then(v as _$_Loaded));
 
   @override
-  _Loaded get _value => super._value as _Loaded;
+  _$_Loaded get _value => super._value as _$_Loaded;
 }
 
 /// @nodoc
 
-class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
+class _$_Loaded implements _Loaded {
   const _$_Loaded();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'ChatChannelState.loaded()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'ChatChannelState.loaded'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Loaded);
+        (other.runtimeType == runtimeType && other is _$_Loaded);
   }
 
   @override
@@ -329,29 +298,29 @@ abstract class _Loaded implements ChatChannelState {
 }
 
 /// @nodoc
-abstract class _$ErrorDetailsCopyWith<$Res> {
-  factory _$ErrorDetailsCopyWith(
-          _ErrorDetails value, $Res Function(_ErrorDetails) then) =
-      __$ErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$_ErrorDetailsCopyWith<$Res> {
+  factory _$$_ErrorDetailsCopyWith(
+          _$_ErrorDetails value, $Res Function(_$_ErrorDetails) then) =
+      __$$_ErrorDetailsCopyWithImpl<$Res>;
   $Res call({String message});
 }
 
 /// @nodoc
-class __$ErrorDetailsCopyWithImpl<$Res>
+class __$$_ErrorDetailsCopyWithImpl<$Res>
     extends _$ChatChannelStateCopyWithImpl<$Res>
-    implements _$ErrorDetailsCopyWith<$Res> {
-  __$ErrorDetailsCopyWithImpl(
-      _ErrorDetails _value, $Res Function(_ErrorDetails) _then)
-      : super(_value, (v) => _then(v as _ErrorDetails));
+    implements _$$_ErrorDetailsCopyWith<$Res> {
+  __$$_ErrorDetailsCopyWithImpl(
+      _$_ErrorDetails _value, $Res Function(_$_ErrorDetails) _then)
+      : super(_value, (v) => _then(v as _$_ErrorDetails));
 
   @override
-  _ErrorDetails get _value => super._value as _ErrorDetails;
+  _$_ErrorDetails get _value => super._value as _$_ErrorDetails;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_ErrorDetails(
+    return _then(_$_ErrorDetails(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -362,30 +331,22 @@ class __$ErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
+class _$_ErrorDetails implements _ErrorDetails {
   const _$_ErrorDetails(this.message);
 
   @override
   final String message;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'ChatChannelState.error(message: $message)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'ChatChannelState.error'))
-      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ErrorDetails &&
+            other is _$_ErrorDetails &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -395,8 +356,8 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
 
   @JsonKey(ignore: true)
   @override
-  _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith =>
-      __$ErrorDetailsCopyWithImpl<_ErrorDetails>(this, _$identity);
+  _$$_ErrorDetailsCopyWith<_$_ErrorDetails> get copyWith =>
+      __$$_ErrorDetailsCopyWithImpl<_$_ErrorDetails>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -468,10 +429,10 @@ class _$_ErrorDetails with DiagnosticableTreeMixin implements _ErrorDetails {
 }
 
 abstract class _ErrorDetails implements ChatChannelState {
-  const factory _ErrorDetails(String message) = _$_ErrorDetails;
+  const factory _ErrorDetails(final String message) = _$_ErrorDetails;
 
   String get message;
   @JsonKey(ignore: true)
-  _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith =>
+  _$$_ErrorDetailsCopyWith<_$_ErrorDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }

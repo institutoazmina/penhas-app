@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../entities/audio_play_tile_entity.dart';
 
 part 'audios_state.freezed.dart';

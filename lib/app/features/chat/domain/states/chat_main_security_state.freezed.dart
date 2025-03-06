@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'chat_main_security_state.dart';
@@ -11,23 +12,7 @@ part of 'chat_main_security_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ChatMainSecurityStateTearOff {
-  const _$ChatMainSecurityStateTearOff();
-
-  _OnlySupport onlySupport() {
-    return const _OnlySupport();
-  }
-
-  _SupportAndPrivate supportAndPrivate() {
-    return const _SupportAndPrivate();
-  }
-}
-
-/// @nodoc
-const $ChatMainSecurityState = _$ChatMainSecurityStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ChatMainSecurityState {
@@ -89,45 +74,38 @@ class _$ChatMainSecurityStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$OnlySupportCopyWith<$Res> {
-  factory _$OnlySupportCopyWith(
-          _OnlySupport value, $Res Function(_OnlySupport) then) =
-      __$OnlySupportCopyWithImpl<$Res>;
+abstract class _$$_OnlySupportCopyWith<$Res> {
+  factory _$$_OnlySupportCopyWith(
+          _$_OnlySupport value, $Res Function(_$_OnlySupport) then) =
+      __$$_OnlySupportCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$OnlySupportCopyWithImpl<$Res>
+class __$$_OnlySupportCopyWithImpl<$Res>
     extends _$ChatMainSecurityStateCopyWithImpl<$Res>
-    implements _$OnlySupportCopyWith<$Res> {
-  __$OnlySupportCopyWithImpl(
-      _OnlySupport _value, $Res Function(_OnlySupport) _then)
-      : super(_value, (v) => _then(v as _OnlySupport));
+    implements _$$_OnlySupportCopyWith<$Res> {
+  __$$_OnlySupportCopyWithImpl(
+      _$_OnlySupport _value, $Res Function(_$_OnlySupport) _then)
+      : super(_value, (v) => _then(v as _$_OnlySupport));
 
   @override
-  _OnlySupport get _value => super._value as _OnlySupport;
+  _$_OnlySupport get _value => super._value as _$_OnlySupport;
 }
 
 /// @nodoc
 
-class _$_OnlySupport with DiagnosticableTreeMixin implements _OnlySupport {
+class _$_OnlySupport implements _OnlySupport {
   const _$_OnlySupport();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'ChatMainSecurityState.onlySupport()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('type', 'ChatMainSecurityState.onlySupport'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _OnlySupport);
+        (other.runtimeType == runtimeType && other is _$_OnlySupport);
   }
 
   @override
@@ -201,47 +179,38 @@ abstract class _OnlySupport implements ChatMainSecurityState {
 }
 
 /// @nodoc
-abstract class _$SupportAndPrivateCopyWith<$Res> {
-  factory _$SupportAndPrivateCopyWith(
-          _SupportAndPrivate value, $Res Function(_SupportAndPrivate) then) =
-      __$SupportAndPrivateCopyWithImpl<$Res>;
+abstract class _$$_SupportAndPrivateCopyWith<$Res> {
+  factory _$$_SupportAndPrivateCopyWith(_$_SupportAndPrivate value,
+          $Res Function(_$_SupportAndPrivate) then) =
+      __$$_SupportAndPrivateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$SupportAndPrivateCopyWithImpl<$Res>
+class __$$_SupportAndPrivateCopyWithImpl<$Res>
     extends _$ChatMainSecurityStateCopyWithImpl<$Res>
-    implements _$SupportAndPrivateCopyWith<$Res> {
-  __$SupportAndPrivateCopyWithImpl(
-      _SupportAndPrivate _value, $Res Function(_SupportAndPrivate) _then)
-      : super(_value, (v) => _then(v as _SupportAndPrivate));
+    implements _$$_SupportAndPrivateCopyWith<$Res> {
+  __$$_SupportAndPrivateCopyWithImpl(
+      _$_SupportAndPrivate _value, $Res Function(_$_SupportAndPrivate) _then)
+      : super(_value, (v) => _then(v as _$_SupportAndPrivate));
 
   @override
-  _SupportAndPrivate get _value => super._value as _SupportAndPrivate;
+  _$_SupportAndPrivate get _value => super._value as _$_SupportAndPrivate;
 }
 
 /// @nodoc
 
-class _$_SupportAndPrivate
-    with DiagnosticableTreeMixin
-    implements _SupportAndPrivate {
+class _$_SupportAndPrivate implements _SupportAndPrivate {
   const _$_SupportAndPrivate();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'ChatMainSecurityState.supportAndPrivate()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(
-        DiagnosticsProperty('type', 'ChatMainSecurityState.supportAndPrivate'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _SupportAndPrivate);
+        (other.runtimeType == runtimeType && other is _$_SupportAndPrivate);
   }
 
   @override

@@ -6,7 +6,7 @@ part of 'account_preference_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AccountPreferenceController on _AccountPreferenceControllerBase, Store {
   Computed<PageProgressState>? _$progressComputed;
@@ -17,8 +17,8 @@ mixin _$AccountPreferenceController on _AccountPreferenceControllerBase, Store {
               name: '_AccountPreferenceControllerBase.progress'))
           .value;
 
-  final _$_progressAtom =
-      Atom(name: '_AccountPreferenceControllerBase._progress');
+  late final _$_progressAtom = Atom(
+      name: '_AccountPreferenceControllerBase._progress', context: context);
 
   @override
   ObservableFuture<Either<Failure, AccountPreferenceSessionEntity>>?
@@ -36,7 +36,8 @@ mixin _$AccountPreferenceController on _AccountPreferenceControllerBase, Store {
     });
   }
 
-  final _$stateAtom = Atom(name: '_AccountPreferenceControllerBase.state');
+  late final _$stateAtom =
+      Atom(name: '_AccountPreferenceControllerBase.state', context: context);
 
   @override
   AccountPreferenceState get state {
@@ -51,8 +52,8 @@ mixin _$AccountPreferenceController on _AccountPreferenceControllerBase, Store {
     });
   }
 
-  final _$messageErrorAtom =
-      Atom(name: '_AccountPreferenceControllerBase.messageError');
+  late final _$messageErrorAtom = Atom(
+      name: '_AccountPreferenceControllerBase.messageError', context: context);
 
   @override
   String? get messageError {
@@ -67,16 +68,16 @@ mixin _$AccountPreferenceController on _AccountPreferenceControllerBase, Store {
     });
   }
 
-  final _$retryAsyncAction =
-      AsyncAction('_AccountPreferenceControllerBase.retry');
+  late final _$retryAsyncAction =
+      AsyncAction('_AccountPreferenceControllerBase.retry', context: context);
 
   @override
   Future<void> retry() {
     return _$retryAsyncAction.run(() => super.retry());
   }
 
-  final _$updateAsyncAction =
-      AsyncAction('_AccountPreferenceControllerBase.update');
+  late final _$updateAsyncAction =
+      AsyncAction('_AccountPreferenceControllerBase.update', context: context);
 
   @override
   Future<void> update(String key, {required bool status}) {

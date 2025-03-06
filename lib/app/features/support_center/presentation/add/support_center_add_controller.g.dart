@@ -6,7 +6,7 @@ part of 'support_center_add_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
   Computed<PageProgressState>? _$progressStateComputed;
@@ -17,8 +17,9 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
               name: '_SupportCenterAddControllerBase.progressState'))
       .value;
 
-  final _$_savingSuggestionAtom =
-      Atom(name: '_SupportCenterAddControllerBase._savingSuggestion');
+  late final _$_savingSuggestionAtom = Atom(
+      name: '_SupportCenterAddControllerBase._savingSuggestion',
+      context: context);
 
   @override
   ObservableFuture<Either<Failure, AlertModel>>? get _savingSuggestion {
@@ -33,8 +34,8 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$addressErrorAtom =
-      Atom(name: '_SupportCenterAddControllerBase.addressError');
+  late final _$addressErrorAtom = Atom(
+      name: '_SupportCenterAddControllerBase.addressError', context: context);
 
   @override
   String get addressError {
@@ -49,8 +50,8 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$placeNameErrorAtom =
-      Atom(name: '_SupportCenterAddControllerBase.placeNameError');
+  late final _$placeNameErrorAtom = Atom(
+      name: '_SupportCenterAddControllerBase.placeNameError', context: context);
 
   @override
   String get placeNameError {
@@ -65,8 +66,9 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$placeDescriptionErrorAtom =
-      Atom(name: '_SupportCenterAddControllerBase.placeDescriptionError');
+  late final _$placeDescriptionErrorAtom = Atom(
+      name: '_SupportCenterAddControllerBase.placeDescriptionError',
+      context: context);
 
   @override
   String get placeDescriptionError {
@@ -82,8 +84,8 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$cityErrorAtom =
-      Atom(name: '_SupportCenterAddControllerBase.cityError');
+  late final _$cityErrorAtom =
+      Atom(name: '_SupportCenterAddControllerBase.cityError', context: context);
 
   @override
   String get cityError {
@@ -98,8 +100,8 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$ufSelectedAtom =
-      Atom(name: '_SupportCenterAddControllerBase.ufSelected');
+  late final _$ufSelectedAtom = Atom(
+      name: '_SupportCenterAddControllerBase.ufSelected', context: context);
 
   @override
   String get ufSelected {
@@ -114,8 +116,8 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$is24hSelectedAtom =
-      Atom(name: '_SupportCenterAddControllerBase.is24hSelected');
+  late final _$is24hSelectedAtom = Atom(
+      name: '_SupportCenterAddControllerBase.is24hSelected', context: context);
 
   @override
   String get is24hSelected {
@@ -130,8 +132,9 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$hasWhatsAppSelectedAtom =
-      Atom(name: '_SupportCenterAddControllerBase.hasWhatsAppSelected');
+  late final _$hasWhatsAppSelectedAtom = Atom(
+      name: '_SupportCenterAddControllerBase.hasWhatsAppSelected',
+      context: context);
 
   @override
   String get hasWhatsAppSelected {
@@ -146,8 +149,8 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$ddd1ErrorAtom =
-      Atom(name: '_SupportCenterAddControllerBase.ddd1Error');
+  late final _$ddd1ErrorAtom =
+      Atom(name: '_SupportCenterAddControllerBase.ddd1Error', context: context);
 
   @override
   String get ddd1Error {
@@ -162,8 +165,8 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$phone1ErrorAtom =
-      Atom(name: '_SupportCenterAddControllerBase.phone1Error');
+  late final _$phone1ErrorAtom = Atom(
+      name: '_SupportCenterAddControllerBase.phone1Error', context: context);
 
   @override
   String get phone1Error {
@@ -178,8 +181,8 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$ddd2ErrorAtom =
-      Atom(name: '_SupportCenterAddControllerBase.ddd2Error');
+  late final _$ddd2ErrorAtom =
+      Atom(name: '_SupportCenterAddControllerBase.ddd2Error', context: context);
 
   @override
   String get ddd2Error {
@@ -194,8 +197,8 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$phone2ErrorAtom =
-      Atom(name: '_SupportCenterAddControllerBase.phone2Error');
+  late final _$phone2ErrorAtom = Atom(
+      name: '_SupportCenterAddControllerBase.phone2Error', context: context);
 
   @override
   String get phone2Error {
@@ -210,8 +213,8 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$errorMessageAtom =
-      Atom(name: '_SupportCenterAddControllerBase.errorMessage');
+  late final _$errorMessageAtom = Atom(
+      name: '_SupportCenterAddControllerBase.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -226,7 +229,8 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$placesAtom = Atom(name: '_SupportCenterAddControllerBase.places');
+  late final _$placesAtom =
+      Atom(name: '_SupportCenterAddControllerBase.places', context: context);
 
   @override
   ObservableList<FilterTagEntity> get places {
@@ -241,7 +245,8 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$coverageAtom = Atom(name: '_SupportCenterAddControllerBase.coverage');
+  late final _$coverageAtom =
+      Atom(name: '_SupportCenterAddControllerBase.coverage', context: context);
 
   @override
   ObservableList<FilterTagEntity> get coverage {
@@ -256,8 +261,9 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$categorySelectedAtom =
-      Atom(name: '_SupportCenterAddControllerBase.categorySelected');
+  late final _$categorySelectedAtom = Atom(
+      name: '_SupportCenterAddControllerBase.categorySelected',
+      context: context);
 
   @override
   String get categorySelected {
@@ -272,8 +278,9 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$coverageSelectedAtom =
-      Atom(name: '_SupportCenterAddControllerBase.coverageSelected');
+  late final _$coverageSelectedAtom = Atom(
+      name: '_SupportCenterAddControllerBase.coverageSelected',
+      context: context);
 
   @override
   String get coverageSelected {
@@ -288,8 +295,8 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$categoryErrorAtom =
-      Atom(name: '_SupportCenterAddControllerBase.categoryError');
+  late final _$categoryErrorAtom = Atom(
+      name: '_SupportCenterAddControllerBase.categoryError', context: context);
 
   @override
   String get categoryError {
@@ -304,8 +311,8 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$coverageErrorAtom =
-      Atom(name: '_SupportCenterAddControllerBase.coverageError');
+  late final _$coverageErrorAtom = Atom(
+      name: '_SupportCenterAddControllerBase.coverageError', context: context);
 
   @override
   String get coverageError {
@@ -320,7 +327,8 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$cepErrorAtom = Atom(name: '_SupportCenterAddControllerBase.cepError');
+  late final _$cepErrorAtom =
+      Atom(name: '_SupportCenterAddControllerBase.cepError', context: context);
 
   @override
   String get cepError {
@@ -335,8 +343,8 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$emailErrorAtom =
-      Atom(name: '_SupportCenterAddControllerBase.emailError');
+  late final _$emailErrorAtom = Atom(
+      name: '_SupportCenterAddControllerBase.emailError', context: context);
 
   @override
   String get emailError {
@@ -351,8 +359,8 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$numberErrorAtom =
-      Atom(name: '_SupportCenterAddControllerBase.numberError');
+  late final _$numberErrorAtom = Atom(
+      name: '_SupportCenterAddControllerBase.numberError', context: context);
 
   @override
   String get numberError {
@@ -367,7 +375,8 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$ufErrorAtom = Atom(name: '_SupportCenterAddControllerBase.ufError');
+  late final _$ufErrorAtom =
+      Atom(name: '_SupportCenterAddControllerBase.ufError', context: context);
 
   @override
   String get ufError {
@@ -382,7 +391,8 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$stateAtom = Atom(name: '_SupportCenterAddControllerBase.state');
+  late final _$stateAtom =
+      Atom(name: '_SupportCenterAddControllerBase.state', context: context);
 
   @override
   SupportCenterAddState get state {
@@ -397,8 +407,8 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$alertStateAtom =
-      Atom(name: '_SupportCenterAddControllerBase.alertState');
+  late final _$alertStateAtom = Atom(
+      name: '_SupportCenterAddControllerBase.alertState', context: context);
 
   @override
   GuardianAlertState get alertState {
@@ -413,16 +423,18 @@ mixin _$SupportCenterAddController on _SupportCenterAddControllerBase, Store {
     });
   }
 
-  final _$savePlaceAsyncAction =
-      AsyncAction('_SupportCenterAddControllerBase.savePlace');
+  late final _$savePlaceAsyncAction = AsyncAction(
+      '_SupportCenterAddControllerBase.savePlace',
+      context: context);
 
   @override
   Future<void> savePlace() {
     return _$savePlaceAsyncAction.run(() => super.savePlace());
   }
 
-  final _$_SupportCenterAddControllerBaseActionController =
-      ActionController(name: '_SupportCenterAddControllerBase');
+  late final _$_SupportCenterAddControllerBaseActionController =
+      ActionController(
+          name: '_SupportCenterAddControllerBase', context: context);
 
   @override
   void setAddress(String address) {

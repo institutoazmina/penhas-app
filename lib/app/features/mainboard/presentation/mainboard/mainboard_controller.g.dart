@@ -6,11 +6,11 @@ part of 'mainboard_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$MainboardController on _MainboardControllerBase, Store {
-  final _$selectedIndexAtom =
-      Atom(name: '_MainboardControllerBase.selectedIndex');
+  late final _$selectedIndexAtom =
+      Atom(name: '_MainboardControllerBase.selectedIndex', context: context);
 
   @override
   int get selectedIndex {
@@ -25,8 +25,8 @@ mixin _$MainboardController on _MainboardControllerBase, Store {
     });
   }
 
-  final _$notificationCounterAtom =
-      Atom(name: '_MainboardControllerBase.notificationCounter');
+  late final _$notificationCounterAtom = Atom(
+      name: '_MainboardControllerBase.notificationCounter', context: context);
 
   @override
   int get notificationCounter {
@@ -41,16 +41,16 @@ mixin _$MainboardController on _MainboardControllerBase, Store {
     });
   }
 
-  final _$changeAppStateAsyncAction =
-      AsyncAction('_MainboardControllerBase.changeAppState');
+  late final _$changeAppStateAsyncAction =
+      AsyncAction('_MainboardControllerBase.changeAppState', context: context);
 
   @override
   Future<void> changeAppState(material.AppLifecycleState state) {
     return _$changeAppStateAsyncAction.run(() => super.changeAppState(state));
   }
 
-  final _$_MainboardControllerBaseActionController =
-      ActionController(name: '_MainboardControllerBase');
+  late final _$_MainboardControllerBaseActionController =
+      ActionController(name: '_MainboardControllerBase', context: context);
 
   @override
   void resetNotificationCounter() {

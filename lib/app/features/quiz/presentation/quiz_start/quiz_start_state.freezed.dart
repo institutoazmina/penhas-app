@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'quiz_start_state.dart';
@@ -11,25 +12,7 @@ part of 'quiz_start_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$QuizStartStateTearOff {
-  const _$QuizStartStateTearOff();
-
-  _InitialState initial() {
-    return const _InitialState();
-  }
-
-  _ErrorState error(String message) {
-    return _ErrorState(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $QuizStartState = _$QuizStartStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$QuizStartState {
@@ -91,22 +74,22 @@ class _$QuizStartStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialStateCopyWith<$Res> {
-  factory _$InitialStateCopyWith(
-          _InitialState value, $Res Function(_InitialState) then) =
-      __$InitialStateCopyWithImpl<$Res>;
+abstract class _$$_InitialStateCopyWith<$Res> {
+  factory _$$_InitialStateCopyWith(
+          _$_InitialState value, $Res Function(_$_InitialState) then) =
+      __$$_InitialStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialStateCopyWithImpl<$Res>
+class __$$_InitialStateCopyWithImpl<$Res>
     extends _$QuizStartStateCopyWithImpl<$Res>
-    implements _$InitialStateCopyWith<$Res> {
-  __$InitialStateCopyWithImpl(
-      _InitialState _value, $Res Function(_InitialState) _then)
-      : super(_value, (v) => _then(v as _InitialState));
+    implements _$$_InitialStateCopyWith<$Res> {
+  __$$_InitialStateCopyWithImpl(
+      _$_InitialState _value, $Res Function(_$_InitialState) _then)
+      : super(_value, (v) => _then(v as _$_InitialState));
 
   @override
-  _InitialState get _value => super._value as _InitialState;
+  _$_InitialState get _value => super._value as _$_InitialState;
 }
 
 /// @nodoc
@@ -122,7 +105,7 @@ class _$_InitialState implements _InitialState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _InitialState);
+        (other.runtimeType == runtimeType && other is _$_InitialState);
   }
 
   @override
@@ -196,28 +179,29 @@ abstract class _InitialState implements QuizStartState {
 }
 
 /// @nodoc
-abstract class _$ErrorStateCopyWith<$Res> {
-  factory _$ErrorStateCopyWith(
-          _ErrorState value, $Res Function(_ErrorState) then) =
-      __$ErrorStateCopyWithImpl<$Res>;
+abstract class _$$_ErrorStateCopyWith<$Res> {
+  factory _$$_ErrorStateCopyWith(
+          _$_ErrorState value, $Res Function(_$_ErrorState) then) =
+      __$$_ErrorStateCopyWithImpl<$Res>;
   $Res call({String message});
 }
 
 /// @nodoc
-class __$ErrorStateCopyWithImpl<$Res> extends _$QuizStartStateCopyWithImpl<$Res>
-    implements _$ErrorStateCopyWith<$Res> {
-  __$ErrorStateCopyWithImpl(
-      _ErrorState _value, $Res Function(_ErrorState) _then)
-      : super(_value, (v) => _then(v as _ErrorState));
+class __$$_ErrorStateCopyWithImpl<$Res>
+    extends _$QuizStartStateCopyWithImpl<$Res>
+    implements _$$_ErrorStateCopyWith<$Res> {
+  __$$_ErrorStateCopyWithImpl(
+      _$_ErrorState _value, $Res Function(_$_ErrorState) _then)
+      : super(_value, (v) => _then(v as _$_ErrorState));
 
   @override
-  _ErrorState get _value => super._value as _ErrorState;
+  _$_ErrorState get _value => super._value as _$_ErrorState;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_ErrorState(
+    return _then(_$_ErrorState(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -243,7 +227,7 @@ class _$_ErrorState implements _ErrorState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ErrorState &&
+            other is _$_ErrorState &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -253,8 +237,8 @@ class _$_ErrorState implements _ErrorState {
 
   @JsonKey(ignore: true)
   @override
-  _$ErrorStateCopyWith<_ErrorState> get copyWith =>
-      __$ErrorStateCopyWithImpl<_ErrorState>(this, _$identity);
+  _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
+      __$$_ErrorStateCopyWithImpl<_$_ErrorState>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -320,10 +304,10 @@ class _$_ErrorState implements _ErrorState {
 }
 
 abstract class _ErrorState implements QuizStartState {
-  const factory _ErrorState(String message) = _$_ErrorState;
+  const factory _ErrorState(final String message) = _$_ErrorState;
 
   String get message;
   @JsonKey(ignore: true)
-  _$ErrorStateCopyWith<_ErrorState> get copyWith =>
+  _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
       throw _privateConstructorUsedError;
 }

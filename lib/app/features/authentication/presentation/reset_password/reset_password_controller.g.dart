@@ -6,7 +6,7 @@ part of 'reset_password_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ResetPasswordController on _ResetPasswordControllerBase, Store {
   Computed<PageProgressState>? _$currentStateComputed;
@@ -17,7 +17,8 @@ mixin _$ResetPasswordController on _ResetPasswordControllerBase, Store {
               name: '_ResetPasswordControllerBase.currentState'))
       .value;
 
-  final _$_progressAtom = Atom(name: '_ResetPasswordControllerBase._progress');
+  late final _$_progressAtom =
+      Atom(name: '_ResetPasswordControllerBase._progress', context: context);
 
   @override
   ObservableFuture<Either<Failure, ResetPasswordResponseEntity>>?
@@ -34,8 +35,8 @@ mixin _$ResetPasswordController on _ResetPasswordControllerBase, Store {
     });
   }
 
-  final _$errorMessageAtom =
-      Atom(name: '_ResetPasswordControllerBase.errorMessage');
+  late final _$errorMessageAtom =
+      Atom(name: '_ResetPasswordControllerBase.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -50,8 +51,8 @@ mixin _$ResetPasswordController on _ResetPasswordControllerBase, Store {
     });
   }
 
-  final _$warningEmailAtom =
-      Atom(name: '_ResetPasswordControllerBase.warningEmail');
+  late final _$warningEmailAtom =
+      Atom(name: '_ResetPasswordControllerBase.warningEmail', context: context);
 
   @override
   String get warningEmail {
@@ -66,16 +67,17 @@ mixin _$ResetPasswordController on _ResetPasswordControllerBase, Store {
     });
   }
 
-  final _$nextStepPressedAsyncAction =
-      AsyncAction('_ResetPasswordControllerBase.nextStepPressed');
+  late final _$nextStepPressedAsyncAction = AsyncAction(
+      '_ResetPasswordControllerBase.nextStepPressed',
+      context: context);
 
   @override
   Future<void> nextStepPressed() {
     return _$nextStepPressedAsyncAction.run(() => super.nextStepPressed());
   }
 
-  final _$_ResetPasswordControllerBaseActionController =
-      ActionController(name: '_ResetPasswordControllerBase');
+  late final _$_ResetPasswordControllerBaseActionController =
+      ActionController(name: '_ResetPasswordControllerBase', context: context);
 
   @override
   void setEmail(String address) {

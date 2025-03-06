@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'mainboard_state.dart';
@@ -11,39 +12,7 @@ part of 'mainboard_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$MainboardStateTearOff {
-  const _$MainboardStateTearOff();
-
-  _Chat chat() {
-    return const _Chat();
-  }
-
-  _Feed feed() {
-    return const _Feed();
-  }
-
-  _EscapeManual escapeManual() {
-    return const _EscapeManual();
-  }
-
-  _Compose compose() {
-    return const _Compose();
-  }
-
-  _SupportPoint supportPoint() {
-    return const _SupportPoint();
-  }
-
-  _HelpCenter helpCenter() {
-    return const _HelpCenter();
-  }
-}
-
-/// @nodoc
-const $MainboardState = _$MainboardStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$MainboardState {
@@ -129,41 +98,35 @@ class _$MainboardStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$ChatCopyWith<$Res> {
-  factory _$ChatCopyWith(_Chat value, $Res Function(_Chat) then) =
-      __$ChatCopyWithImpl<$Res>;
+abstract class _$$_ChatCopyWith<$Res> {
+  factory _$$_ChatCopyWith(_$_Chat value, $Res Function(_$_Chat) then) =
+      __$$_ChatCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$ChatCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
-    implements _$ChatCopyWith<$Res> {
-  __$ChatCopyWithImpl(_Chat _value, $Res Function(_Chat) _then)
-      : super(_value, (v) => _then(v as _Chat));
+class __$$_ChatCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
+    implements _$$_ChatCopyWith<$Res> {
+  __$$_ChatCopyWithImpl(_$_Chat _value, $Res Function(_$_Chat) _then)
+      : super(_value, (v) => _then(v as _$_Chat));
 
   @override
-  _Chat get _value => super._value as _Chat;
+  _$_Chat get _value => super._value as _$_Chat;
 }
 
 /// @nodoc
 
-class _$_Chat with DiagnosticableTreeMixin implements _Chat {
+class _$_Chat implements _Chat {
   const _$_Chat();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'MainboardState.chat()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'MainboardState.chat'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Chat);
+        (other.runtimeType == runtimeType && other is _$_Chat);
   }
 
   @override
@@ -261,41 +224,35 @@ abstract class _Chat implements MainboardState {
 }
 
 /// @nodoc
-abstract class _$FeedCopyWith<$Res> {
-  factory _$FeedCopyWith(_Feed value, $Res Function(_Feed) then) =
-      __$FeedCopyWithImpl<$Res>;
+abstract class _$$_FeedCopyWith<$Res> {
+  factory _$$_FeedCopyWith(_$_Feed value, $Res Function(_$_Feed) then) =
+      __$$_FeedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$FeedCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
-    implements _$FeedCopyWith<$Res> {
-  __$FeedCopyWithImpl(_Feed _value, $Res Function(_Feed) _then)
-      : super(_value, (v) => _then(v as _Feed));
+class __$$_FeedCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
+    implements _$$_FeedCopyWith<$Res> {
+  __$$_FeedCopyWithImpl(_$_Feed _value, $Res Function(_$_Feed) _then)
+      : super(_value, (v) => _then(v as _$_Feed));
 
   @override
-  _Feed get _value => super._value as _Feed;
+  _$_Feed get _value => super._value as _$_Feed;
 }
 
 /// @nodoc
 
-class _$_Feed with DiagnosticableTreeMixin implements _Feed {
+class _$_Feed implements _Feed {
   const _$_Feed();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'MainboardState.feed()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'MainboardState.feed'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Feed);
+        (other.runtimeType == runtimeType && other is _$_Feed);
   }
 
   @override
@@ -393,44 +350,38 @@ abstract class _Feed implements MainboardState {
 }
 
 /// @nodoc
-abstract class _$EscapeManualCopyWith<$Res> {
-  factory _$EscapeManualCopyWith(
-          _EscapeManual value, $Res Function(_EscapeManual) then) =
-      __$EscapeManualCopyWithImpl<$Res>;
+abstract class _$$_EscapeManualCopyWith<$Res> {
+  factory _$$_EscapeManualCopyWith(
+          _$_EscapeManual value, $Res Function(_$_EscapeManual) then) =
+      __$$_EscapeManualCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$EscapeManualCopyWithImpl<$Res>
+class __$$_EscapeManualCopyWithImpl<$Res>
     extends _$MainboardStateCopyWithImpl<$Res>
-    implements _$EscapeManualCopyWith<$Res> {
-  __$EscapeManualCopyWithImpl(
-      _EscapeManual _value, $Res Function(_EscapeManual) _then)
-      : super(_value, (v) => _then(v as _EscapeManual));
+    implements _$$_EscapeManualCopyWith<$Res> {
+  __$$_EscapeManualCopyWithImpl(
+      _$_EscapeManual _value, $Res Function(_$_EscapeManual) _then)
+      : super(_value, (v) => _then(v as _$_EscapeManual));
 
   @override
-  _EscapeManual get _value => super._value as _EscapeManual;
+  _$_EscapeManual get _value => super._value as _$_EscapeManual;
 }
 
 /// @nodoc
 
-class _$_EscapeManual with DiagnosticableTreeMixin implements _EscapeManual {
+class _$_EscapeManual implements _EscapeManual {
   const _$_EscapeManual();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'MainboardState.escapeManual()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'MainboardState.escapeManual'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _EscapeManual);
+        (other.runtimeType == runtimeType && other is _$_EscapeManual);
   }
 
   @override
@@ -528,41 +479,36 @@ abstract class _EscapeManual implements MainboardState {
 }
 
 /// @nodoc
-abstract class _$ComposeCopyWith<$Res> {
-  factory _$ComposeCopyWith(_Compose value, $Res Function(_Compose) then) =
-      __$ComposeCopyWithImpl<$Res>;
+abstract class _$$_ComposeCopyWith<$Res> {
+  factory _$$_ComposeCopyWith(
+          _$_Compose value, $Res Function(_$_Compose) then) =
+      __$$_ComposeCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$ComposeCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
-    implements _$ComposeCopyWith<$Res> {
-  __$ComposeCopyWithImpl(_Compose _value, $Res Function(_Compose) _then)
-      : super(_value, (v) => _then(v as _Compose));
+class __$$_ComposeCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
+    implements _$$_ComposeCopyWith<$Res> {
+  __$$_ComposeCopyWithImpl(_$_Compose _value, $Res Function(_$_Compose) _then)
+      : super(_value, (v) => _then(v as _$_Compose));
 
   @override
-  _Compose get _value => super._value as _Compose;
+  _$_Compose get _value => super._value as _$_Compose;
 }
 
 /// @nodoc
 
-class _$_Compose with DiagnosticableTreeMixin implements _Compose {
+class _$_Compose implements _Compose {
   const _$_Compose();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'MainboardState.compose()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'MainboardState.compose'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Compose);
+        (other.runtimeType == runtimeType && other is _$_Compose);
   }
 
   @override
@@ -660,44 +606,38 @@ abstract class _Compose implements MainboardState {
 }
 
 /// @nodoc
-abstract class _$SupportPointCopyWith<$Res> {
-  factory _$SupportPointCopyWith(
-          _SupportPoint value, $Res Function(_SupportPoint) then) =
-      __$SupportPointCopyWithImpl<$Res>;
+abstract class _$$_SupportPointCopyWith<$Res> {
+  factory _$$_SupportPointCopyWith(
+          _$_SupportPoint value, $Res Function(_$_SupportPoint) then) =
+      __$$_SupportPointCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$SupportPointCopyWithImpl<$Res>
+class __$$_SupportPointCopyWithImpl<$Res>
     extends _$MainboardStateCopyWithImpl<$Res>
-    implements _$SupportPointCopyWith<$Res> {
-  __$SupportPointCopyWithImpl(
-      _SupportPoint _value, $Res Function(_SupportPoint) _then)
-      : super(_value, (v) => _then(v as _SupportPoint));
+    implements _$$_SupportPointCopyWith<$Res> {
+  __$$_SupportPointCopyWithImpl(
+      _$_SupportPoint _value, $Res Function(_$_SupportPoint) _then)
+      : super(_value, (v) => _then(v as _$_SupportPoint));
 
   @override
-  _SupportPoint get _value => super._value as _SupportPoint;
+  _$_SupportPoint get _value => super._value as _$_SupportPoint;
 }
 
 /// @nodoc
 
-class _$_SupportPoint with DiagnosticableTreeMixin implements _SupportPoint {
+class _$_SupportPoint implements _SupportPoint {
   const _$_SupportPoint();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'MainboardState.supportPoint()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'MainboardState.supportPoint'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _SupportPoint);
+        (other.runtimeType == runtimeType && other is _$_SupportPoint);
   }
 
   @override
@@ -795,43 +735,38 @@ abstract class _SupportPoint implements MainboardState {
 }
 
 /// @nodoc
-abstract class _$HelpCenterCopyWith<$Res> {
-  factory _$HelpCenterCopyWith(
-          _HelpCenter value, $Res Function(_HelpCenter) then) =
-      __$HelpCenterCopyWithImpl<$Res>;
+abstract class _$$_HelpCenterCopyWith<$Res> {
+  factory _$$_HelpCenterCopyWith(
+          _$_HelpCenter value, $Res Function(_$_HelpCenter) then) =
+      __$$_HelpCenterCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$HelpCenterCopyWithImpl<$Res> extends _$MainboardStateCopyWithImpl<$Res>
-    implements _$HelpCenterCopyWith<$Res> {
-  __$HelpCenterCopyWithImpl(
-      _HelpCenter _value, $Res Function(_HelpCenter) _then)
-      : super(_value, (v) => _then(v as _HelpCenter));
+class __$$_HelpCenterCopyWithImpl<$Res>
+    extends _$MainboardStateCopyWithImpl<$Res>
+    implements _$$_HelpCenterCopyWith<$Res> {
+  __$$_HelpCenterCopyWithImpl(
+      _$_HelpCenter _value, $Res Function(_$_HelpCenter) _then)
+      : super(_value, (v) => _then(v as _$_HelpCenter));
 
   @override
-  _HelpCenter get _value => super._value as _HelpCenter;
+  _$_HelpCenter get _value => super._value as _$_HelpCenter;
 }
 
 /// @nodoc
 
-class _$_HelpCenter with DiagnosticableTreeMixin implements _HelpCenter {
+class _$_HelpCenter implements _HelpCenter {
   const _$_HelpCenter();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'MainboardState.helpCenter()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'MainboardState.helpCenter'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _HelpCenter);
+        (other.runtimeType == runtimeType && other is _$_HelpCenter);
   }
 
   @override

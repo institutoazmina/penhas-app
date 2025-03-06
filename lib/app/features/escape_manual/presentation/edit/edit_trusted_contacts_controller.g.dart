@@ -6,7 +6,7 @@ part of 'edit_trusted_contacts_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$EditTrustedContactsController
     on _EditTrustedContactsControllerBase, Store {
@@ -18,8 +18,8 @@ mixin _$EditTrustedContactsController
               name: '_EditTrustedContactsControllerBase.state'))
           .value;
 
-  final _$contactsAtom =
-      Atom(name: '_EditTrustedContactsControllerBase.contacts');
+  late final _$contactsAtom = Atom(
+      name: '_EditTrustedContactsControllerBase.contacts', context: context);
 
   @override
   List<ContactEntity> get contacts {
@@ -34,8 +34,9 @@ mixin _$EditTrustedContactsController
     });
   }
 
-  final _$_maxTrustedContactsAtom =
-      Atom(name: '_EditTrustedContactsControllerBase._maxTrustedContacts');
+  late final _$_maxTrustedContactsAtom = Atom(
+      name: '_EditTrustedContactsControllerBase._maxTrustedContacts',
+      context: context);
 
   @override
   int get _maxTrustedContacts {
@@ -50,8 +51,8 @@ mixin _$EditTrustedContactsController
     });
   }
 
-  final _$_reactionAtom =
-      Atom(name: '_EditTrustedContactsControllerBase._reaction');
+  late final _$_reactionAtom = Atom(
+      name: '_EditTrustedContactsControllerBase._reaction', context: context);
 
   @override
   EditTrustedContactsReaction? get _reaction {
@@ -66,24 +67,27 @@ mixin _$EditTrustedContactsController
     });
   }
 
-  final _$updateContactAsyncAction =
-      AsyncAction('_EditTrustedContactsControllerBase.updateContact');
+  late final _$updateContactAsyncAction = AsyncAction(
+      '_EditTrustedContactsControllerBase.updateContact',
+      context: context);
 
   @override
   Future<void> updateContact(ContactEntity contact) {
     return _$updateContactAsyncAction.run(() => super.updateContact(contact));
   }
 
-  final _$removeContactAsyncAction =
-      AsyncAction('_EditTrustedContactsControllerBase.removeContact');
+  late final _$removeContactAsyncAction = AsyncAction(
+      '_EditTrustedContactsControllerBase.removeContact',
+      context: context);
 
   @override
   Future<void> removeContact(ContactEntity contact) {
     return _$removeContactAsyncAction.run(() => super.removeContact(contact));
   }
 
-  final _$_EditTrustedContactsControllerBaseActionController =
-      ActionController(name: '_EditTrustedContactsControllerBase');
+  late final _$_EditTrustedContactsControllerBaseActionController =
+      ActionController(
+          name: '_EditTrustedContactsControllerBase', context: context);
 
   @override
   void onUpdateContactPressed(ContactEntity contact) {

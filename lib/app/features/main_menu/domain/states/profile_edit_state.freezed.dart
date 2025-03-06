@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'profile_edit_state.dart';
@@ -11,33 +12,7 @@ part of 'profile_edit_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ProfileEditStateTearOff {
-  const _$ProfileEditStateTearOff();
-
-  _Initial initial() {
-    return const _Initial();
-  }
-
-  _Loaded loaded(UserProfileEntity profile,
-      {required bool securityModeFeatureEnabled}) {
-    return _Loaded(
-      profile,
-      securityModeFeatureEnabled: securityModeFeatureEnabled,
-    );
-  }
-
-  _ErrorDetails error(String message) {
-    return _ErrorDetails(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $ProfileEditState = _$ProfileEditStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ProfileEditState {
@@ -111,19 +86,21 @@ class _$ProfileEditStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+abstract class _$$_InitialCopyWith<$Res> {
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res> extends _$ProfileEditStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
+class __$$_InitialCopyWithImpl<$Res>
+    extends _$ProfileEditStateCopyWithImpl<$Res>
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, (v) => _then(v as _$_Initial));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  _$_Initial get _value => super._value as _$_Initial;
 }
 
 /// @nodoc
@@ -139,7 +116,7 @@ class _$_Initial implements _Initial {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
+        (other.runtimeType == runtimeType && other is _$_Initial);
   }
 
   @override
@@ -225,27 +202,27 @@ abstract class _Initial implements ProfileEditState {
 }
 
 /// @nodoc
-abstract class _$LoadedCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
-      __$LoadedCopyWithImpl<$Res>;
+abstract class _$$_LoadedCopyWith<$Res> {
+  factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
+      __$$_LoadedCopyWithImpl<$Res>;
   $Res call({UserProfileEntity profile, bool securityModeFeatureEnabled});
 }
 
 /// @nodoc
-class __$LoadedCopyWithImpl<$Res> extends _$ProfileEditStateCopyWithImpl<$Res>
-    implements _$LoadedCopyWith<$Res> {
-  __$LoadedCopyWithImpl(_Loaded _value, $Res Function(_Loaded) _then)
-      : super(_value, (v) => _then(v as _Loaded));
+class __$$_LoadedCopyWithImpl<$Res> extends _$ProfileEditStateCopyWithImpl<$Res>
+    implements _$$_LoadedCopyWith<$Res> {
+  __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
+      : super(_value, (v) => _then(v as _$_Loaded));
 
   @override
-  _Loaded get _value => super._value as _Loaded;
+  _$_Loaded get _value => super._value as _$_Loaded;
 
   @override
   $Res call({
     Object? profile = freezed,
     Object? securityModeFeatureEnabled = freezed,
   }) {
-    return _then(_Loaded(
+    return _then(_$_Loaded(
       profile == freezed
           ? _value.profile
           : profile // ignore: cast_nullable_to_non_nullable
@@ -277,7 +254,7 @@ class _$_Loaded implements _Loaded {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Loaded &&
+            other is _$_Loaded &&
             const DeepCollectionEquality().equals(other.profile, profile) &&
             const DeepCollectionEquality().equals(
                 other.securityModeFeatureEnabled, securityModeFeatureEnabled));
@@ -291,8 +268,8 @@ class _$_Loaded implements _Loaded {
 
   @JsonKey(ignore: true)
   @override
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      __$$_LoadedCopyWithImpl<_$_Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -370,39 +347,40 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements ProfileEditState {
-  const factory _Loaded(UserProfileEntity profile,
-      {required bool securityModeFeatureEnabled}) = _$_Loaded;
+  const factory _Loaded(final UserProfileEntity profile,
+      {required final bool securityModeFeatureEnabled}) = _$_Loaded;
 
   UserProfileEntity get profile;
   bool get securityModeFeatureEnabled;
   @JsonKey(ignore: true)
-  _$LoadedCopyWith<_Loaded> get copyWith => throw _privateConstructorUsedError;
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$ErrorDetailsCopyWith<$Res> {
-  factory _$ErrorDetailsCopyWith(
-          _ErrorDetails value, $Res Function(_ErrorDetails) then) =
-      __$ErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$_ErrorDetailsCopyWith<$Res> {
+  factory _$$_ErrorDetailsCopyWith(
+          _$_ErrorDetails value, $Res Function(_$_ErrorDetails) then) =
+      __$$_ErrorDetailsCopyWithImpl<$Res>;
   $Res call({String message});
 }
 
 /// @nodoc
-class __$ErrorDetailsCopyWithImpl<$Res>
+class __$$_ErrorDetailsCopyWithImpl<$Res>
     extends _$ProfileEditStateCopyWithImpl<$Res>
-    implements _$ErrorDetailsCopyWith<$Res> {
-  __$ErrorDetailsCopyWithImpl(
-      _ErrorDetails _value, $Res Function(_ErrorDetails) _then)
-      : super(_value, (v) => _then(v as _ErrorDetails));
+    implements _$$_ErrorDetailsCopyWith<$Res> {
+  __$$_ErrorDetailsCopyWithImpl(
+      _$_ErrorDetails _value, $Res Function(_$_ErrorDetails) _then)
+      : super(_value, (v) => _then(v as _$_ErrorDetails));
 
   @override
-  _ErrorDetails get _value => super._value as _ErrorDetails;
+  _$_ErrorDetails get _value => super._value as _$_ErrorDetails;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_ErrorDetails(
+    return _then(_$_ErrorDetails(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -428,7 +406,7 @@ class _$_ErrorDetails implements _ErrorDetails {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ErrorDetails &&
+            other is _$_ErrorDetails &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -438,8 +416,8 @@ class _$_ErrorDetails implements _ErrorDetails {
 
   @JsonKey(ignore: true)
   @override
-  _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith =>
-      __$ErrorDetailsCopyWithImpl<_ErrorDetails>(this, _$identity);
+  _$$_ErrorDetailsCopyWith<_$_ErrorDetails> get copyWith =>
+      __$$_ErrorDetailsCopyWithImpl<_$_ErrorDetails>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -517,10 +495,10 @@ class _$_ErrorDetails implements _ErrorDetails {
 }
 
 abstract class _ErrorDetails implements ProfileEditState {
-  const factory _ErrorDetails(String message) = _$_ErrorDetails;
+  const factory _ErrorDetails(final String message) = _$_ErrorDetails;
 
   String get message;
   @JsonKey(ignore: true)
-  _$ErrorDetailsCopyWith<_ErrorDetails> get copyWith =>
+  _$$_ErrorDetailsCopyWith<_$_ErrorDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }

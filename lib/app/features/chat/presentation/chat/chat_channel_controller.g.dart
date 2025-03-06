@@ -6,7 +6,7 @@ part of 'chat_channel_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ChatChannelController on _ChatChannelControllerBase, Store {
   Computed<ChatChannelComposerType>? _$composerTypeComputed;
@@ -17,8 +17,8 @@ mixin _$ChatChannelController on _ChatChannelControllerBase, Store {
               name: '_ChatChannelControllerBase.composerType'))
       .value;
 
-  final _$currentStateAtom =
-      Atom(name: '_ChatChannelControllerBase.currentState');
+  late final _$currentStateAtom =
+      Atom(name: '_ChatChannelControllerBase.currentState', context: context);
 
   @override
   ChatChannelState get currentState {
@@ -33,7 +33,8 @@ mixin _$ChatChannelController on _ChatChannelControllerBase, Store {
     });
   }
 
-  final _$userAtom = Atom(name: '_ChatChannelControllerBase.user');
+  late final _$userAtom =
+      Atom(name: '_ChatChannelControllerBase.user', context: context);
 
   @override
   ChatUserEntity get user {
@@ -48,7 +49,8 @@ mixin _$ChatChannelController on _ChatChannelControllerBase, Store {
     });
   }
 
-  final _$metadataAtom = Atom(name: '_ChatChannelControllerBase.metadata');
+  late final _$metadataAtom =
+      Atom(name: '_ChatChannelControllerBase.metadata', context: context);
 
   @override
   ChatChannelSessionMetadataEntity get metadata {
@@ -63,8 +65,8 @@ mixin _$ChatChannelController on _ChatChannelControllerBase, Store {
     });
   }
 
-  final _$channelMessagesAtom =
-      Atom(name: '_ChatChannelControllerBase.channelMessages');
+  late final _$channelMessagesAtom = Atom(
+      name: '_ChatChannelControllerBase.channelMessages', context: context);
 
   @override
   ObservableList<ChatChannelMessage> get channelMessages {
@@ -79,32 +81,32 @@ mixin _$ChatChannelController on _ChatChannelControllerBase, Store {
     });
   }
 
-  final _$blockChatAsyncAction =
-      AsyncAction('_ChatChannelControllerBase.blockChat');
+  late final _$blockChatAsyncAction =
+      AsyncAction('_ChatChannelControllerBase.blockChat', context: context);
 
   @override
   Future<void> blockChat() {
     return _$blockChatAsyncAction.run(() => super.blockChat());
   }
 
-  final _$unBlockChatAsyncAction =
-      AsyncAction('_ChatChannelControllerBase.unBlockChat');
+  late final _$unBlockChatAsyncAction =
+      AsyncAction('_ChatChannelControllerBase.unBlockChat', context: context);
 
   @override
   Future<void> unBlockChat() {
     return _$unBlockChatAsyncAction.run(() => super.unBlockChat());
   }
 
-  final _$deleteSessionAsyncAction =
-      AsyncAction('_ChatChannelControllerBase.deleteSession');
+  late final _$deleteSessionAsyncAction =
+      AsyncAction('_ChatChannelControllerBase.deleteSession', context: context);
 
   @override
   Future<void> deleteSession() {
     return _$deleteSessionAsyncAction.run(() => super.deleteSession());
   }
 
-  final _$sentMessageAsyncAction =
-      AsyncAction('_ChatChannelControllerBase.sentMessage');
+  late final _$sentMessageAsyncAction =
+      AsyncAction('_ChatChannelControllerBase.sentMessage', context: context);
 
   @override
   Future<void> sentMessage(String message) {

@@ -6,7 +6,7 @@ part of 'new_guardian_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$NewGuardianController on _NewGuardianControllerBase, Store {
   Computed<PageProgressState>? _$loadStateComputed;
@@ -24,8 +24,8 @@ mixin _$NewGuardianController on _NewGuardianControllerBase, Store {
               name: '_NewGuardianControllerBase.createState'))
       .value;
 
-  final _$_fetchProgressAtom =
-      Atom(name: '_NewGuardianControllerBase._fetchProgress');
+  late final _$_fetchProgressAtom =
+      Atom(name: '_NewGuardianControllerBase._fetchProgress', context: context);
 
   @override
   ObservableFuture<Either<Failure, GuardianSessionEntity>>? get _fetchProgress {
@@ -41,8 +41,8 @@ mixin _$NewGuardianController on _NewGuardianControllerBase, Store {
     });
   }
 
-  final _$_createProgressAtom =
-      Atom(name: '_NewGuardianControllerBase._createProgress');
+  late final _$_createProgressAtom = Atom(
+      name: '_NewGuardianControllerBase._createProgress', context: context);
 
   @override
   ObservableFuture<Either<Failure, AlertModel>>? get _createProgress {
@@ -57,8 +57,8 @@ mixin _$NewGuardianController on _NewGuardianControllerBase, Store {
     });
   }
 
-  final _$errorMessageAtom =
-      Atom(name: '_NewGuardianControllerBase.errorMessage');
+  late final _$errorMessageAtom =
+      Atom(name: '_NewGuardianControllerBase.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -73,8 +73,8 @@ mixin _$NewGuardianController on _NewGuardianControllerBase, Store {
     });
   }
 
-  final _$warningMobileAtom =
-      Atom(name: '_NewGuardianControllerBase.warningMobile');
+  late final _$warningMobileAtom =
+      Atom(name: '_NewGuardianControllerBase.warningMobile', context: context);
 
   @override
   String get warningMobile {
@@ -89,8 +89,8 @@ mixin _$NewGuardianController on _NewGuardianControllerBase, Store {
     });
   }
 
-  final _$warningNameAtom =
-      Atom(name: '_NewGuardianControllerBase.warningName');
+  late final _$warningNameAtom =
+      Atom(name: '_NewGuardianControllerBase.warningName', context: context);
 
   @override
   String get warningName {
@@ -105,8 +105,8 @@ mixin _$NewGuardianController on _NewGuardianControllerBase, Store {
     });
   }
 
-  final _$currentStateAtom =
-      Atom(name: '_NewGuardianControllerBase.currentState');
+  late final _$currentStateAtom =
+      Atom(name: '_NewGuardianControllerBase.currentState', context: context);
 
   @override
   NewGuardianState get currentState {
@@ -121,7 +121,8 @@ mixin _$NewGuardianController on _NewGuardianControllerBase, Store {
     });
   }
 
-  final _$alertStateAtom = Atom(name: '_NewGuardianControllerBase.alertState');
+  late final _$alertStateAtom =
+      Atom(name: '_NewGuardianControllerBase.alertState', context: context);
 
   @override
   GuardianAlertState get alertState {
@@ -136,24 +137,24 @@ mixin _$NewGuardianController on _NewGuardianControllerBase, Store {
     });
   }
 
-  final _$loadPageAsyncAction =
-      AsyncAction('_NewGuardianControllerBase.loadPage');
+  late final _$loadPageAsyncAction =
+      AsyncAction('_NewGuardianControllerBase.loadPage', context: context);
 
   @override
   Future<void> loadPage() {
     return _$loadPageAsyncAction.run(() => super.loadPage());
   }
 
-  final _$addGuardianAsyncAction =
-      AsyncAction('_NewGuardianControllerBase.addGuardian');
+  late final _$addGuardianAsyncAction =
+      AsyncAction('_NewGuardianControllerBase.addGuardian', context: context);
 
   @override
   Future<void> addGuardian() {
     return _$addGuardianAsyncAction.run(() => super.addGuardian());
   }
 
-  final _$_NewGuardianControllerBaseActionController =
-      ActionController(name: '_NewGuardianControllerBase');
+  late final _$_NewGuardianControllerBaseActionController =
+      ActionController(name: '_NewGuardianControllerBase', context: context);
 
   @override
   void setGuardianName(String name) {

@@ -6,7 +6,7 @@ part of 'account_delete_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AccountDeleteController on _AccountDeleteControllerBase, Store {
   Computed<PageProgressState>? _$progressStateComputed;
@@ -17,7 +17,8 @@ mixin _$AccountDeleteController on _AccountDeleteControllerBase, Store {
               name: '_AccountDeleteControllerBase.progressState'))
       .value;
 
-  final _$_progressAtom = Atom(name: '_AccountDeleteControllerBase._progress');
+  late final _$_progressAtom =
+      Atom(name: '_AccountDeleteControllerBase._progress', context: context);
 
   @override
   ObservableFuture<Either<Failure, ValidField>>? get _progress {
@@ -32,7 +33,8 @@ mixin _$AccountDeleteController on _AccountDeleteControllerBase, Store {
     });
   }
 
-  final _$stateAtom = Atom(name: '_AccountDeleteControllerBase.state');
+  late final _$stateAtom =
+      Atom(name: '_AccountDeleteControllerBase.state', context: context);
 
   @override
   ProfileDeleteState get state {
@@ -47,8 +49,8 @@ mixin _$AccountDeleteController on _AccountDeleteControllerBase, Store {
     });
   }
 
-  final _$errorMessageAtom =
-      Atom(name: '_AccountDeleteControllerBase.errorMessage');
+  late final _$errorMessageAtom =
+      Atom(name: '_AccountDeleteControllerBase.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -63,15 +65,16 @@ mixin _$AccountDeleteController on _AccountDeleteControllerBase, Store {
     });
   }
 
-  final _$deleteAsyncAction =
-      AsyncAction('_AccountDeleteControllerBase.delete');
+  late final _$deleteAsyncAction =
+      AsyncAction('_AccountDeleteControllerBase.delete', context: context);
 
   @override
   Future<void> delete(String password) {
     return _$deleteAsyncAction.run(() => super.delete(password));
   }
 
-  final _$retryAsyncAction = AsyncAction('_AccountDeleteControllerBase.retry');
+  late final _$retryAsyncAction =
+      AsyncAction('_AccountDeleteControllerBase.retry', context: context);
 
   @override
   Future<void> retry() {

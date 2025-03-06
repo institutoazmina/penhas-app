@@ -6,10 +6,11 @@ part of 'user_profile_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$UserProfileController on _UserProfileControllerBase, Store {
-  final _$stateAtom = Atom(name: '_UserProfileControllerBase.state');
+  late final _$stateAtom =
+      Atom(name: '_UserProfileControllerBase.state', context: context);
 
   @override
   UserProfileState get state {
@@ -24,7 +25,8 @@ mixin _$UserProfileController on _UserProfileControllerBase, Store {
     });
   }
 
-  final _$menuStateAtom = Atom(name: '_UserProfileControllerBase.menuState');
+  late final _$menuStateAtom =
+      Atom(name: '_UserProfileControllerBase.menuState', context: context);
 
   @override
   UserMenuState get menuState {
@@ -39,7 +41,8 @@ mixin _$UserProfileController on _UserProfileControllerBase, Store {
     });
   }
 
-  final _$reactionAtom = Atom(name: '_UserProfileControllerBase.reaction');
+  late final _$reactionAtom =
+      Atom(name: '_UserProfileControllerBase.reaction', context: context);
 
   @override
   UserProfileReaction? get reaction {
@@ -54,16 +57,17 @@ mixin _$UserProfileController on _UserProfileControllerBase, Store {
     });
   }
 
-  final _$openChannelAsyncAction =
-      AsyncAction('_UserProfileControllerBase.openChannel');
+  late final _$openChannelAsyncAction =
+      AsyncAction('_UserProfileControllerBase.openChannel', context: context);
 
   @override
   Future<void> openChannel() {
     return _$openChannelAsyncAction.run(() => super.openChannel());
   }
 
-  final _$onSendReportPressedAsyncAction =
-      AsyncAction('_UserProfileControllerBase.onSendReportPressed');
+  late final _$onSendReportPressedAsyncAction = AsyncAction(
+      '_UserProfileControllerBase.onSendReportPressed',
+      context: context);
 
   @override
   Future<void> onSendReportPressed(String reason) {
@@ -71,8 +75,9 @@ mixin _$UserProfileController on _UserProfileControllerBase, Store {
         .run(() => super.onSendReportPressed(reason));
   }
 
-  final _$onConfirmBlockPressedAsyncAction =
-      AsyncAction('_UserProfileControllerBase.onConfirmBlockPressed');
+  late final _$onConfirmBlockPressedAsyncAction = AsyncAction(
+      '_UserProfileControllerBase.onConfirmBlockPressed',
+      context: context);
 
   @override
   Future<void> onConfirmBlockPressed() {
@@ -80,8 +85,8 @@ mixin _$UserProfileController on _UserProfileControllerBase, Store {
         .run(() => super.onConfirmBlockPressed());
   }
 
-  final _$_UserProfileControllerBaseActionController =
-      ActionController(name: '_UserProfileControllerBase');
+  late final _$_UserProfileControllerBaseActionController =
+      ActionController(name: '_UserProfileControllerBase', context: context);
 
   @override
   void onTapMenuOptions() {

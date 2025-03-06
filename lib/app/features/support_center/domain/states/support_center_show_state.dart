@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../entities/support_center_place_detail_entity.dart';

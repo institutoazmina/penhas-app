@@ -6,11 +6,11 @@ part of 'chat_main_people_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ChatMainPeopleController on _ChatMainPeopleControllerBase, Store {
-  final _$currentStateAtom =
-      Atom(name: '_ChatMainPeopleControllerBase.currentState');
+  late final _$currentStateAtom = Atom(
+      name: '_ChatMainPeopleControllerBase.currentState', context: context);
 
   @override
   ChatMainTalksState get currentState {
@@ -25,24 +25,24 @@ mixin _$ChatMainPeopleController on _ChatMainPeopleControllerBase, Store {
     });
   }
 
-  final _$reloadAsyncAction =
-      AsyncAction('_ChatMainPeopleControllerBase.reload');
+  late final _$reloadAsyncAction =
+      AsyncAction('_ChatMainPeopleControllerBase.reload', context: context);
 
   @override
   Future<void> reload() {
     return _$reloadAsyncAction.run(() => super.reload());
   }
 
-  final _$filterAsyncAction =
-      AsyncAction('_ChatMainPeopleControllerBase.filter');
+  late final _$filterAsyncAction =
+      AsyncAction('_ChatMainPeopleControllerBase.filter', context: context);
 
   @override
   Future<void> filter() {
     return _$filterAsyncAction.run(() => super.filter());
   }
 
-  final _$_ChatMainPeopleControllerBaseActionController =
-      ActionController(name: '_ChatMainPeopleControllerBase');
+  late final _$_ChatMainPeopleControllerBaseActionController =
+      ActionController(name: '_ChatMainPeopleControllerBase', context: context);
 
   @override
   Future<void> profile(UserDetailProfileEntity profile) {

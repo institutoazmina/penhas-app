@@ -6,7 +6,7 @@ part of 'help_center_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$HelpCenterController on _HelpCenterControllerBase, Store {
   Computed<PageProgressState>? _$loadStateComputed;
@@ -17,8 +17,8 @@ mixin _$HelpCenterController on _HelpCenterControllerBase, Store {
               name: '_HelpCenterControllerBase.loadState'))
       .value;
 
-  final _$_alertProgressAtom =
-      Atom(name: '_HelpCenterControllerBase._alertProgress');
+  late final _$_alertProgressAtom =
+      Atom(name: '_HelpCenterControllerBase._alertProgress', context: context);
 
   @override
   ObservableFuture<Either<Failure, AlertModel>>? get _alertProgress {
@@ -33,7 +33,8 @@ mixin _$HelpCenterController on _HelpCenterControllerBase, Store {
     });
   }
 
-  final _$alertStateAtom = Atom(name: '_HelpCenterControllerBase.alertState');
+  late final _$alertStateAtom =
+      Atom(name: '_HelpCenterControllerBase.alertState', context: context);
 
   @override
   HelpCenterState get alertState {
@@ -48,8 +49,9 @@ mixin _$HelpCenterController on _HelpCenterControllerBase, Store {
     });
   }
 
-  final _$isLocationPermissionRequiredAtom =
-      Atom(name: '_HelpCenterControllerBase.isLocationPermissionRequired');
+  late final _$isLocationPermissionRequiredAtom = Atom(
+      name: '_HelpCenterControllerBase.isLocationPermissionRequired',
+      context: context);
 
   @override
   bool get isLocationPermissionRequired {
@@ -65,8 +67,8 @@ mixin _$HelpCenterController on _HelpCenterControllerBase, Store {
     });
   }
 
-  final _$errorMessageAtom =
-      Atom(name: '_HelpCenterControllerBase.errorMessage');
+  late final _$errorMessageAtom =
+      Atom(name: '_HelpCenterControllerBase.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -81,24 +83,27 @@ mixin _$HelpCenterController on _HelpCenterControllerBase, Store {
     });
   }
 
-  final _$triggerGuardianAsyncAction =
-      AsyncAction('_HelpCenterControllerBase.triggerGuardian');
+  late final _$triggerGuardianAsyncAction = AsyncAction(
+      '_HelpCenterControllerBase.triggerGuardian',
+      context: context);
 
   @override
   Future<void> triggerGuardian() {
     return _$triggerGuardianAsyncAction.run(() => super.triggerGuardian());
   }
 
-  final _$triggerCallPoliceAsyncAction =
-      AsyncAction('_HelpCenterControllerBase.triggerCallPolice');
+  late final _$triggerCallPoliceAsyncAction = AsyncAction(
+      '_HelpCenterControllerBase.triggerCallPolice',
+      context: context);
 
   @override
   Future<void> triggerCallPolice() {
     return _$triggerCallPoliceAsyncAction.run(() => super.triggerCallPolice());
   }
 
-  final _$triggerAudioRecordAsyncAction =
-      AsyncAction('_HelpCenterControllerBase.triggerAudioRecord');
+  late final _$triggerAudioRecordAsyncAction = AsyncAction(
+      '_HelpCenterControllerBase.triggerAudioRecord',
+      context: context);
 
   @override
   Future<void> triggerAudioRecord() {
@@ -106,8 +111,9 @@ mixin _$HelpCenterController on _HelpCenterControllerBase, Store {
         .run(() => super.triggerAudioRecord());
   }
 
-  final _$checkLocalicationRequiredAsyncAction =
-      AsyncAction('_HelpCenterControllerBase.checkLocalicationRequired');
+  late final _$checkLocalicationRequiredAsyncAction = AsyncAction(
+      '_HelpCenterControllerBase.checkLocalicationRequired',
+      context: context);
 
   @override
   Future<void> checkLocalicationRequired() {
@@ -115,8 +121,8 @@ mixin _$HelpCenterController on _HelpCenterControllerBase, Store {
         .run(() => super.checkLocalicationRequired());
   }
 
-  final _$_HelpCenterControllerBaseActionController =
-      ActionController(name: '_HelpCenterControllerBase');
+  late final _$_HelpCenterControllerBaseActionController =
+      ActionController(name: '_HelpCenterControllerBase', context: context);
 
   @override
   void newGuardian() {

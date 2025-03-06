@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'chat_main_security_state.freezed.dart';

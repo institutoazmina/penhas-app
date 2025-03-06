@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'filter_action_observer.dart';
@@ -11,25 +12,7 @@ part of 'filter_action_observer.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$FilterActionObserverTearOff {
-  const _$FilterActionObserverTearOff();
-
-  _Reset reset() {
-    return const _Reset();
-  }
-
-  _Updated updated(List<FilterTagEntity> tags) {
-    return _Updated(
-      tags,
-    );
-  }
-}
-
-/// @nodoc
-const $FilterActionObserver = _$FilterActionObserverTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$FilterActionObserver {
@@ -91,42 +74,36 @@ class _$FilterActionObserverCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$ResetCopyWith<$Res> {
-  factory _$ResetCopyWith(_Reset value, $Res Function(_Reset) then) =
-      __$ResetCopyWithImpl<$Res>;
+abstract class _$$_ResetCopyWith<$Res> {
+  factory _$$_ResetCopyWith(_$_Reset value, $Res Function(_$_Reset) then) =
+      __$$_ResetCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$ResetCopyWithImpl<$Res>
+class __$$_ResetCopyWithImpl<$Res>
     extends _$FilterActionObserverCopyWithImpl<$Res>
-    implements _$ResetCopyWith<$Res> {
-  __$ResetCopyWithImpl(_Reset _value, $Res Function(_Reset) _then)
-      : super(_value, (v) => _then(v as _Reset));
+    implements _$$_ResetCopyWith<$Res> {
+  __$$_ResetCopyWithImpl(_$_Reset _value, $Res Function(_$_Reset) _then)
+      : super(_value, (v) => _then(v as _$_Reset));
 
   @override
-  _Reset get _value => super._value as _Reset;
+  _$_Reset get _value => super._value as _$_Reset;
 }
 
 /// @nodoc
 
-class _$_Reset with DiagnosticableTreeMixin implements _Reset {
+class _$_Reset implements _Reset {
   const _$_Reset();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'FilterActionObserver.reset()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'FilterActionObserver.reset'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Reset);
+        (other.runtimeType == runtimeType && other is _$_Reset);
   }
 
   @override
@@ -200,29 +177,30 @@ abstract class _Reset implements FilterActionObserver {
 }
 
 /// @nodoc
-abstract class _$UpdatedCopyWith<$Res> {
-  factory _$UpdatedCopyWith(_Updated value, $Res Function(_Updated) then) =
-      __$UpdatedCopyWithImpl<$Res>;
+abstract class _$$_UpdatedCopyWith<$Res> {
+  factory _$$_UpdatedCopyWith(
+          _$_Updated value, $Res Function(_$_Updated) then) =
+      __$$_UpdatedCopyWithImpl<$Res>;
   $Res call({List<FilterTagEntity> tags});
 }
 
 /// @nodoc
-class __$UpdatedCopyWithImpl<$Res>
+class __$$_UpdatedCopyWithImpl<$Res>
     extends _$FilterActionObserverCopyWithImpl<$Res>
-    implements _$UpdatedCopyWith<$Res> {
-  __$UpdatedCopyWithImpl(_Updated _value, $Res Function(_Updated) _then)
-      : super(_value, (v) => _then(v as _Updated));
+    implements _$$_UpdatedCopyWith<$Res> {
+  __$$_UpdatedCopyWithImpl(_$_Updated _value, $Res Function(_$_Updated) _then)
+      : super(_value, (v) => _then(v as _$_Updated));
 
   @override
-  _Updated get _value => super._value as _Updated;
+  _$_Updated get _value => super._value as _$_Updated;
 
   @override
   $Res call({
     Object? tags = freezed,
   }) {
-    return _then(_Updated(
+    return _then(_$_Updated(
       tags == freezed
-          ? _value.tags
+          ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<FilterTagEntity>,
     ));
@@ -231,41 +209,37 @@ class __$UpdatedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Updated with DiagnosticableTreeMixin implements _Updated {
-  const _$_Updated(this.tags);
+class _$_Updated implements _Updated {
+  const _$_Updated(final List<FilterTagEntity> tags) : _tags = tags;
 
+  final List<FilterTagEntity> _tags;
   @override
-  final List<FilterTagEntity> tags;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'FilterActionObserver.updated(tags: $tags)';
+  List<FilterTagEntity> get tags {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_tags);
   }
 
   @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'FilterActionObserver.updated'))
-      ..add(DiagnosticsProperty('tags', tags));
+  String toString() {
+    return 'FilterActionObserver.updated(tags: $tags)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Updated &&
-            const DeepCollectionEquality().equals(other.tags, tags));
+            other is _$_Updated &&
+            const DeepCollectionEquality().equals(other._tags, _tags));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(tags));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_tags));
 
   @JsonKey(ignore: true)
   @override
-  _$UpdatedCopyWith<_Updated> get copyWith =>
-      __$UpdatedCopyWithImpl<_Updated>(this, _$identity);
+  _$$_UpdatedCopyWith<_$_Updated> get copyWith =>
+      __$$_UpdatedCopyWithImpl<_$_Updated>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -331,10 +305,10 @@ class _$_Updated with DiagnosticableTreeMixin implements _Updated {
 }
 
 abstract class _Updated implements FilterActionObserver {
-  const factory _Updated(List<FilterTagEntity> tags) = _$_Updated;
+  const factory _Updated(final List<FilterTagEntity> tags) = _$_Updated;
 
   List<FilterTagEntity> get tags;
   @JsonKey(ignore: true)
-  _$UpdatedCopyWith<_Updated> get copyWith =>
+  _$$_UpdatedCopyWith<_$_Updated> get copyWith =>
       throw _privateConstructorUsedError;
 }

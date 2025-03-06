@@ -6,7 +6,7 @@ part of 'detail_tweet_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$DetailTweetController on _DetailTweetControllerBase, Store {
   Computed<PageProgressState>? _$currentStateComputed;
@@ -17,7 +17,8 @@ mixin _$DetailTweetController on _DetailTweetControllerBase, Store {
               name: '_DetailTweetControllerBase.currentState'))
       .value;
 
-  final _$_progressAtom = Atom(name: '_DetailTweetControllerBase._progress');
+  late final _$_progressAtom =
+      Atom(name: '_DetailTweetControllerBase._progress', context: context);
 
   @override
   ObservableFuture<Either<Failure, FeedCache>>? get _progress {
@@ -32,7 +33,8 @@ mixin _$DetailTweetController on _DetailTweetControllerBase, Store {
     });
   }
 
-  final _$listTweetsAtom = Atom(name: '_DetailTweetControllerBase.listTweets');
+  late final _$listTweetsAtom =
+      Atom(name: '_DetailTweetControllerBase.listTweets', context: context);
 
   @override
   ObservableList<TweetEntity> get listTweets {
@@ -47,8 +49,8 @@ mixin _$DetailTweetController on _DetailTweetControllerBase, Store {
     });
   }
 
-  final _$isAnonymousModeAtom =
-      Atom(name: '_DetailTweetControllerBase.isAnonymousMode');
+  late final _$isAnonymousModeAtom = Atom(
+      name: '_DetailTweetControllerBase.isAnonymousMode', context: context);
 
   @override
   bool get isAnonymousMode {
@@ -63,8 +65,9 @@ mixin _$DetailTweetController on _DetailTweetControllerBase, Store {
     });
   }
 
-  final _$isEnableCreateButtonAtom =
-      Atom(name: '_DetailTweetControllerBase.isEnableCreateButton');
+  late final _$isEnableCreateButtonAtom = Atom(
+      name: '_DetailTweetControllerBase.isEnableCreateButton',
+      context: context);
 
   @override
   bool get isEnableCreateButton {
@@ -80,8 +83,8 @@ mixin _$DetailTweetController on _DetailTweetControllerBase, Store {
     });
   }
 
-  final _$editingControllerAtom =
-      Atom(name: '_DetailTweetControllerBase.editingController');
+  late final _$editingControllerAtom = Atom(
+      name: '_DetailTweetControllerBase.editingController', context: context);
 
   @override
   TextEditingController get editingController {
@@ -96,8 +99,8 @@ mixin _$DetailTweetController on _DetailTweetControllerBase, Store {
     });
   }
 
-  final _$errorMessageAtom =
-      Atom(name: '_DetailTweetControllerBase.errorMessage');
+  late final _$errorMessageAtom =
+      Atom(name: '_DetailTweetControllerBase.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -112,8 +115,8 @@ mixin _$DetailTweetController on _DetailTweetControllerBase, Store {
     });
   }
 
-  final _$highlightPendingAtom =
-      Atom(name: '_DetailTweetControllerBase.highlightPending');
+  late final _$highlightPendingAtom = Atom(
+      name: '_DetailTweetControllerBase.highlightPending', context: context);
 
   @override
   bool get highlightPending {
@@ -128,16 +131,16 @@ mixin _$DetailTweetController on _DetailTweetControllerBase, Store {
     });
   }
 
-  final _$getDetailAsyncAction =
-      AsyncAction('_DetailTweetControllerBase.getDetail');
+  late final _$getDetailAsyncAction =
+      AsyncAction('_DetailTweetControllerBase.getDetail', context: context);
 
   @override
   Future<void> getDetail() {
     return _$getDetailAsyncAction.run(() => super.getDetail());
   }
 
-  final _$fetchNextPageAsyncAction =
-      AsyncAction('_DetailTweetControllerBase.fetchNextPage');
+  late final _$fetchNextPageAsyncAction =
+      AsyncAction('_DetailTweetControllerBase.fetchNextPage', context: context);
 
   @override
   Future<void> fetchNextPage() {

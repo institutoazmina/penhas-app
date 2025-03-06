@@ -6,7 +6,7 @@ part of 'audios_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AudiosController on _AudiosControllerBase, Store {
   Computed<PageProgressState>? _$loadStateComputed;
@@ -24,8 +24,8 @@ mixin _$AudiosController on _AudiosControllerBase, Store {
               name: '_AudiosControllerBase.updateState'))
       .value;
 
-  final _$_fetchProgressAtom =
-      Atom(name: '_AudiosControllerBase._fetchProgress');
+  late final _$_fetchProgressAtom =
+      Atom(name: '_AudiosControllerBase._fetchProgress', context: context);
 
   @override
   ObservableFuture<Either<Failure, AudioModel>>? get _fetchProgress {
@@ -40,8 +40,8 @@ mixin _$AudiosController on _AudiosControllerBase, Store {
     });
   }
 
-  final _$_updateProgressAtom =
-      Atom(name: '_AudiosControllerBase._updateProgress');
+  late final _$_updateProgressAtom =
+      Atom(name: '_AudiosControllerBase._updateProgress', context: context);
 
   @override
   ObservableFuture<Either<Failure, ValidField>>? get _updateProgress {
@@ -56,7 +56,8 @@ mixin _$AudiosController on _AudiosControllerBase, Store {
     });
   }
 
-  final _$errorMessageAtom = Atom(name: '_AudiosControllerBase.errorMessage');
+  late final _$errorMessageAtom =
+      Atom(name: '_AudiosControllerBase.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -71,7 +72,8 @@ mixin _$AudiosController on _AudiosControllerBase, Store {
     });
   }
 
-  final _$currentStateAtom = Atom(name: '_AudiosControllerBase.currentState');
+  late final _$currentStateAtom =
+      Atom(name: '_AudiosControllerBase.currentState', context: context);
 
   @override
   AudiosState get currentState {
@@ -86,8 +88,8 @@ mixin _$AudiosController on _AudiosControllerBase, Store {
     });
   }
 
-  final _$actionSheetStateAtom =
-      Atom(name: '_AudiosControllerBase.actionSheetState');
+  late final _$actionSheetStateAtom =
+      Atom(name: '_AudiosControllerBase.actionSheetState', context: context);
 
   @override
   AudioTileAction get actionSheetState {
@@ -102,8 +104,8 @@ mixin _$AudiosController on _AudiosControllerBase, Store {
     });
   }
 
-  final _$playingAudioStateAtom =
-      Atom(name: '_AudiosControllerBase.playingAudioState');
+  late final _$playingAudioStateAtom =
+      Atom(name: '_AudiosControllerBase.playingAudioState', context: context);
 
   @override
   AudioPlaying get playingAudioState {
@@ -118,14 +120,16 @@ mixin _$AudiosController on _AudiosControllerBase, Store {
     });
   }
 
-  final _$loadPageAsyncAction = AsyncAction('_AudiosControllerBase.loadPage');
+  late final _$loadPageAsyncAction =
+      AsyncAction('_AudiosControllerBase.loadPage', context: context);
 
   @override
   Future<void> loadPage() {
     return _$loadPageAsyncAction.run(() => super.loadPage());
   }
 
-  final _$deleteAsyncAction = AsyncAction('_AudiosControllerBase.delete');
+  late final _$deleteAsyncAction =
+      AsyncAction('_AudiosControllerBase.delete', context: context);
 
   @override
   Future<void> delete(AudioEntity audio) {

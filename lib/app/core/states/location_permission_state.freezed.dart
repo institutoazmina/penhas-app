@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'location_permission_state.dart';
@@ -11,35 +12,7 @@ part of 'location_permission_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$LocationPermissionStateTearOff {
-  const _$LocationPermissionStateTearOff();
-
-  _Granted granted() {
-    return const _Granted();
-  }
-
-  _Denied denied() {
-    return const _Denied();
-  }
-
-  _PermanentlyDenied permanentlyDenied() {
-    return const _PermanentlyDenied();
-  }
-
-  _Restricted restricted() {
-    return const _Restricted();
-  }
-
-  _Undefined undefined() {
-    return const _Undefined();
-  }
-}
-
-/// @nodoc
-const $LocationPermissionState = _$LocationPermissionStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$LocationPermissionState {
@@ -119,43 +92,37 @@ class _$LocationPermissionStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$GrantedCopyWith<$Res> {
-  factory _$GrantedCopyWith(_Granted value, $Res Function(_Granted) then) =
-      __$GrantedCopyWithImpl<$Res>;
+abstract class _$$_GrantedCopyWith<$Res> {
+  factory _$$_GrantedCopyWith(
+          _$_Granted value, $Res Function(_$_Granted) then) =
+      __$$_GrantedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$GrantedCopyWithImpl<$Res>
+class __$$_GrantedCopyWithImpl<$Res>
     extends _$LocationPermissionStateCopyWithImpl<$Res>
-    implements _$GrantedCopyWith<$Res> {
-  __$GrantedCopyWithImpl(_Granted _value, $Res Function(_Granted) _then)
-      : super(_value, (v) => _then(v as _Granted));
+    implements _$$_GrantedCopyWith<$Res> {
+  __$$_GrantedCopyWithImpl(_$_Granted _value, $Res Function(_$_Granted) _then)
+      : super(_value, (v) => _then(v as _$_Granted));
 
   @override
-  _Granted get _value => super._value as _Granted;
+  _$_Granted get _value => super._value as _$_Granted;
 }
 
 /// @nodoc
 
-class _$_Granted with DiagnosticableTreeMixin implements _Granted {
+class _$_Granted implements _Granted {
   const _$_Granted();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'LocationPermissionState.granted()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('type', 'LocationPermissionState.granted'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Granted);
+        (other.runtimeType == runtimeType && other is _$_Granted);
   }
 
   @override
@@ -247,43 +214,36 @@ abstract class _Granted implements LocationPermissionState {
 }
 
 /// @nodoc
-abstract class _$DeniedCopyWith<$Res> {
-  factory _$DeniedCopyWith(_Denied value, $Res Function(_Denied) then) =
-      __$DeniedCopyWithImpl<$Res>;
+abstract class _$$_DeniedCopyWith<$Res> {
+  factory _$$_DeniedCopyWith(_$_Denied value, $Res Function(_$_Denied) then) =
+      __$$_DeniedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$DeniedCopyWithImpl<$Res>
+class __$$_DeniedCopyWithImpl<$Res>
     extends _$LocationPermissionStateCopyWithImpl<$Res>
-    implements _$DeniedCopyWith<$Res> {
-  __$DeniedCopyWithImpl(_Denied _value, $Res Function(_Denied) _then)
-      : super(_value, (v) => _then(v as _Denied));
+    implements _$$_DeniedCopyWith<$Res> {
+  __$$_DeniedCopyWithImpl(_$_Denied _value, $Res Function(_$_Denied) _then)
+      : super(_value, (v) => _then(v as _$_Denied));
 
   @override
-  _Denied get _value => super._value as _Denied;
+  _$_Denied get _value => super._value as _$_Denied;
 }
 
 /// @nodoc
 
-class _$_Denied with DiagnosticableTreeMixin implements _Denied {
+class _$_Denied implements _Denied {
   const _$_Denied();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'LocationPermissionState.denied()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('type', 'LocationPermissionState.denied'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Denied);
+        (other.runtimeType == runtimeType && other is _$_Denied);
   }
 
   @override
@@ -375,47 +335,38 @@ abstract class _Denied implements LocationPermissionState {
 }
 
 /// @nodoc
-abstract class _$PermanentlyDeniedCopyWith<$Res> {
-  factory _$PermanentlyDeniedCopyWith(
-          _PermanentlyDenied value, $Res Function(_PermanentlyDenied) then) =
-      __$PermanentlyDeniedCopyWithImpl<$Res>;
+abstract class _$$_PermanentlyDeniedCopyWith<$Res> {
+  factory _$$_PermanentlyDeniedCopyWith(_$_PermanentlyDenied value,
+          $Res Function(_$_PermanentlyDenied) then) =
+      __$$_PermanentlyDeniedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$PermanentlyDeniedCopyWithImpl<$Res>
+class __$$_PermanentlyDeniedCopyWithImpl<$Res>
     extends _$LocationPermissionStateCopyWithImpl<$Res>
-    implements _$PermanentlyDeniedCopyWith<$Res> {
-  __$PermanentlyDeniedCopyWithImpl(
-      _PermanentlyDenied _value, $Res Function(_PermanentlyDenied) _then)
-      : super(_value, (v) => _then(v as _PermanentlyDenied));
+    implements _$$_PermanentlyDeniedCopyWith<$Res> {
+  __$$_PermanentlyDeniedCopyWithImpl(
+      _$_PermanentlyDenied _value, $Res Function(_$_PermanentlyDenied) _then)
+      : super(_value, (v) => _then(v as _$_PermanentlyDenied));
 
   @override
-  _PermanentlyDenied get _value => super._value as _PermanentlyDenied;
+  _$_PermanentlyDenied get _value => super._value as _$_PermanentlyDenied;
 }
 
 /// @nodoc
 
-class _$_PermanentlyDenied
-    with DiagnosticableTreeMixin
-    implements _PermanentlyDenied {
+class _$_PermanentlyDenied implements _PermanentlyDenied {
   const _$_PermanentlyDenied();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'LocationPermissionState.permanentlyDenied()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty(
-        'type', 'LocationPermissionState.permanentlyDenied'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _PermanentlyDenied);
+        (other.runtimeType == runtimeType && other is _$_PermanentlyDenied);
   }
 
   @override
@@ -507,45 +458,38 @@ abstract class _PermanentlyDenied implements LocationPermissionState {
 }
 
 /// @nodoc
-abstract class _$RestrictedCopyWith<$Res> {
-  factory _$RestrictedCopyWith(
-          _Restricted value, $Res Function(_Restricted) then) =
-      __$RestrictedCopyWithImpl<$Res>;
+abstract class _$$_RestrictedCopyWith<$Res> {
+  factory _$$_RestrictedCopyWith(
+          _$_Restricted value, $Res Function(_$_Restricted) then) =
+      __$$_RestrictedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$RestrictedCopyWithImpl<$Res>
+class __$$_RestrictedCopyWithImpl<$Res>
     extends _$LocationPermissionStateCopyWithImpl<$Res>
-    implements _$RestrictedCopyWith<$Res> {
-  __$RestrictedCopyWithImpl(
-      _Restricted _value, $Res Function(_Restricted) _then)
-      : super(_value, (v) => _then(v as _Restricted));
+    implements _$$_RestrictedCopyWith<$Res> {
+  __$$_RestrictedCopyWithImpl(
+      _$_Restricted _value, $Res Function(_$_Restricted) _then)
+      : super(_value, (v) => _then(v as _$_Restricted));
 
   @override
-  _Restricted get _value => super._value as _Restricted;
+  _$_Restricted get _value => super._value as _$_Restricted;
 }
 
 /// @nodoc
 
-class _$_Restricted with DiagnosticableTreeMixin implements _Restricted {
+class _$_Restricted implements _Restricted {
   const _$_Restricted();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'LocationPermissionState.restricted()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('type', 'LocationPermissionState.restricted'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Restricted);
+        (other.runtimeType == runtimeType && other is _$_Restricted);
   }
 
   @override
@@ -637,44 +581,38 @@ abstract class _Restricted implements LocationPermissionState {
 }
 
 /// @nodoc
-abstract class _$UndefinedCopyWith<$Res> {
-  factory _$UndefinedCopyWith(
-          _Undefined value, $Res Function(_Undefined) then) =
-      __$UndefinedCopyWithImpl<$Res>;
+abstract class _$$_UndefinedCopyWith<$Res> {
+  factory _$$_UndefinedCopyWith(
+          _$_Undefined value, $Res Function(_$_Undefined) then) =
+      __$$_UndefinedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$UndefinedCopyWithImpl<$Res>
+class __$$_UndefinedCopyWithImpl<$Res>
     extends _$LocationPermissionStateCopyWithImpl<$Res>
-    implements _$UndefinedCopyWith<$Res> {
-  __$UndefinedCopyWithImpl(_Undefined _value, $Res Function(_Undefined) _then)
-      : super(_value, (v) => _then(v as _Undefined));
+    implements _$$_UndefinedCopyWith<$Res> {
+  __$$_UndefinedCopyWithImpl(
+      _$_Undefined _value, $Res Function(_$_Undefined) _then)
+      : super(_value, (v) => _then(v as _$_Undefined));
 
   @override
-  _Undefined get _value => super._value as _Undefined;
+  _$_Undefined get _value => super._value as _$_Undefined;
 }
 
 /// @nodoc
 
-class _$_Undefined with DiagnosticableTreeMixin implements _Undefined {
+class _$_Undefined implements _Undefined {
   const _$_Undefined();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'LocationPermissionState.undefined()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('type', 'LocationPermissionState.undefined'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Undefined);
+        (other.runtimeType == runtimeType && other is _$_Undefined);
   }
 
   @override

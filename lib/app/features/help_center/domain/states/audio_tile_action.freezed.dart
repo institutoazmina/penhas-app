@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'audio_tile_action.dart';
@@ -11,31 +12,7 @@ part of 'audio_tile_action.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$AudioTileActionTearOff {
-  const _$AudioTileActionTearOff();
-
-  _Initial initial() {
-    return const _Initial();
-  }
-
-  _Notice notice(String message) {
-    return _Notice(
-      message,
-    );
-  }
-
-  _ActionSheet actionSheet(AudioEntity audio) {
-    return _ActionSheet(
-      audio,
-    );
-  }
-}
-
-/// @nodoc
-const $AudioTileAction = _$AudioTileActionTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$AudioTileAction {
@@ -103,41 +80,36 @@ class _$AudioTileActionCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+abstract class _$$_InitialCopyWith<$Res> {
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res> extends _$AudioTileActionCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
+class __$$_InitialCopyWithImpl<$Res> extends _$AudioTileActionCopyWithImpl<$Res>
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, (v) => _then(v as _$_Initial));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  _$_Initial get _value => super._value as _$_Initial;
 }
 
 /// @nodoc
 
-class _$_Initial with DiagnosticableTreeMixin implements _Initial {
+class _$_Initial implements _Initial {
   const _$_Initial();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioTileAction.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'AudioTileAction.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
+        (other.runtimeType == runtimeType && other is _$_Initial);
   }
 
   @override
@@ -217,26 +189,26 @@ abstract class _Initial implements AudioTileAction {
 }
 
 /// @nodoc
-abstract class _$NoticeCopyWith<$Res> {
-  factory _$NoticeCopyWith(_Notice value, $Res Function(_Notice) then) =
-      __$NoticeCopyWithImpl<$Res>;
+abstract class _$$_NoticeCopyWith<$Res> {
+  factory _$$_NoticeCopyWith(_$_Notice value, $Res Function(_$_Notice) then) =
+      __$$_NoticeCopyWithImpl<$Res>;
   $Res call({String message});
 }
 
 /// @nodoc
-class __$NoticeCopyWithImpl<$Res> extends _$AudioTileActionCopyWithImpl<$Res>
-    implements _$NoticeCopyWith<$Res> {
-  __$NoticeCopyWithImpl(_Notice _value, $Res Function(_Notice) _then)
-      : super(_value, (v) => _then(v as _Notice));
+class __$$_NoticeCopyWithImpl<$Res> extends _$AudioTileActionCopyWithImpl<$Res>
+    implements _$$_NoticeCopyWith<$Res> {
+  __$$_NoticeCopyWithImpl(_$_Notice _value, $Res Function(_$_Notice) _then)
+      : super(_value, (v) => _then(v as _$_Notice));
 
   @override
-  _Notice get _value => super._value as _Notice;
+  _$_Notice get _value => super._value as _$_Notice;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_Notice(
+    return _then(_$_Notice(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -247,30 +219,22 @@ class __$NoticeCopyWithImpl<$Res> extends _$AudioTileActionCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Notice with DiagnosticableTreeMixin implements _Notice {
+class _$_Notice implements _Notice {
   const _$_Notice(this.message);
 
   @override
   final String message;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioTileAction.notice(message: $message)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AudioTileAction.notice'))
-      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Notice &&
+            other is _$_Notice &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -280,8 +244,8 @@ class _$_Notice with DiagnosticableTreeMixin implements _Notice {
 
   @JsonKey(ignore: true)
   @override
-  _$NoticeCopyWith<_Notice> get copyWith =>
-      __$NoticeCopyWithImpl<_Notice>(this, _$identity);
+  _$$_NoticeCopyWith<_$_Notice> get copyWith =>
+      __$$_NoticeCopyWithImpl<_$_Notice>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -353,37 +317,38 @@ class _$_Notice with DiagnosticableTreeMixin implements _Notice {
 }
 
 abstract class _Notice implements AudioTileAction {
-  const factory _Notice(String message) = _$_Notice;
+  const factory _Notice(final String message) = _$_Notice;
 
   String get message;
   @JsonKey(ignore: true)
-  _$NoticeCopyWith<_Notice> get copyWith => throw _privateConstructorUsedError;
+  _$$_NoticeCopyWith<_$_Notice> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$ActionSheetCopyWith<$Res> {
-  factory _$ActionSheetCopyWith(
-          _ActionSheet value, $Res Function(_ActionSheet) then) =
-      __$ActionSheetCopyWithImpl<$Res>;
+abstract class _$$_ActionSheetCopyWith<$Res> {
+  factory _$$_ActionSheetCopyWith(
+          _$_ActionSheet value, $Res Function(_$_ActionSheet) then) =
+      __$$_ActionSheetCopyWithImpl<$Res>;
   $Res call({AudioEntity audio});
 }
 
 /// @nodoc
-class __$ActionSheetCopyWithImpl<$Res>
+class __$$_ActionSheetCopyWithImpl<$Res>
     extends _$AudioTileActionCopyWithImpl<$Res>
-    implements _$ActionSheetCopyWith<$Res> {
-  __$ActionSheetCopyWithImpl(
-      _ActionSheet _value, $Res Function(_ActionSheet) _then)
-      : super(_value, (v) => _then(v as _ActionSheet));
+    implements _$$_ActionSheetCopyWith<$Res> {
+  __$$_ActionSheetCopyWithImpl(
+      _$_ActionSheet _value, $Res Function(_$_ActionSheet) _then)
+      : super(_value, (v) => _then(v as _$_ActionSheet));
 
   @override
-  _ActionSheet get _value => super._value as _ActionSheet;
+  _$_ActionSheet get _value => super._value as _$_ActionSheet;
 
   @override
   $Res call({
     Object? audio = freezed,
   }) {
-    return _then(_ActionSheet(
+    return _then(_$_ActionSheet(
       audio == freezed
           ? _value.audio
           : audio // ignore: cast_nullable_to_non_nullable
@@ -394,30 +359,22 @@ class __$ActionSheetCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ActionSheet with DiagnosticableTreeMixin implements _ActionSheet {
+class _$_ActionSheet implements _ActionSheet {
   const _$_ActionSheet(this.audio);
 
   @override
   final AudioEntity audio;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioTileAction.actionSheet(audio: $audio)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AudioTileAction.actionSheet'))
-      ..add(DiagnosticsProperty('audio', audio));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ActionSheet &&
+            other is _$_ActionSheet &&
             const DeepCollectionEquality().equals(other.audio, audio));
   }
 
@@ -427,8 +384,8 @@ class _$_ActionSheet with DiagnosticableTreeMixin implements _ActionSheet {
 
   @JsonKey(ignore: true)
   @override
-  _$ActionSheetCopyWith<_ActionSheet> get copyWith =>
-      __$ActionSheetCopyWithImpl<_ActionSheet>(this, _$identity);
+  _$$_ActionSheetCopyWith<_$_ActionSheet> get copyWith =>
+      __$$_ActionSheetCopyWithImpl<_$_ActionSheet>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -500,10 +457,10 @@ class _$_ActionSheet with DiagnosticableTreeMixin implements _ActionSheet {
 }
 
 abstract class _ActionSheet implements AudioTileAction {
-  const factory _ActionSheet(AudioEntity audio) = _$_ActionSheet;
+  const factory _ActionSheet(final AudioEntity audio) = _$_ActionSheet;
 
   AudioEntity get audio;
   @JsonKey(ignore: true)
-  _$ActionSheetCopyWith<_ActionSheet> get copyWith =>
+  _$$_ActionSheetCopyWith<_$_ActionSheet> get copyWith =>
       throw _privateConstructorUsedError;
 }

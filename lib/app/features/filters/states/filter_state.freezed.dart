@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'filter_state.dart';
@@ -11,25 +12,7 @@ part of 'filter_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$FilterStateTearOff {
-  const _$FilterStateTearOff();
-
-  _Initial initial() {
-    return const _Initial();
-  }
-
-  _Loaded loaded(List<FilterTagEntity> tags) {
-    return _Loaded(
-      tags,
-    );
-  }
-}
-
-/// @nodoc
-const $FilterState = _$FilterStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$FilterState {
@@ -90,41 +73,36 @@ class _$FilterStateCopyWithImpl<$Res> implements $FilterStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+abstract class _$$_InitialCopyWith<$Res> {
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res> extends _$FilterStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
+class __$$_InitialCopyWithImpl<$Res> extends _$FilterStateCopyWithImpl<$Res>
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, (v) => _then(v as _$_Initial));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  _$_Initial get _value => super._value as _$_Initial;
 }
 
 /// @nodoc
 
-class _$_Initial with DiagnosticableTreeMixin implements _Initial {
+class _$_Initial implements _Initial {
   const _$_Initial();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'FilterState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'FilterState.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
+        (other.runtimeType == runtimeType && other is _$_Initial);
   }
 
   @override
@@ -198,28 +176,28 @@ abstract class _Initial implements FilterState {
 }
 
 /// @nodoc
-abstract class _$LoadedCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
-      __$LoadedCopyWithImpl<$Res>;
+abstract class _$$_LoadedCopyWith<$Res> {
+  factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
+      __$$_LoadedCopyWithImpl<$Res>;
   $Res call({List<FilterTagEntity> tags});
 }
 
 /// @nodoc
-class __$LoadedCopyWithImpl<$Res> extends _$FilterStateCopyWithImpl<$Res>
-    implements _$LoadedCopyWith<$Res> {
-  __$LoadedCopyWithImpl(_Loaded _value, $Res Function(_Loaded) _then)
-      : super(_value, (v) => _then(v as _Loaded));
+class __$$_LoadedCopyWithImpl<$Res> extends _$FilterStateCopyWithImpl<$Res>
+    implements _$$_LoadedCopyWith<$Res> {
+  __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
+      : super(_value, (v) => _then(v as _$_Loaded));
 
   @override
-  _Loaded get _value => super._value as _Loaded;
+  _$_Loaded get _value => super._value as _$_Loaded;
 
   @override
   $Res call({
     Object? tags = freezed,
   }) {
-    return _then(_Loaded(
+    return _then(_$_Loaded(
       tags == freezed
-          ? _value.tags
+          ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<FilterTagEntity>,
     ));
@@ -228,41 +206,37 @@ class __$LoadedCopyWithImpl<$Res> extends _$FilterStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
-  const _$_Loaded(this.tags);
+class _$_Loaded implements _Loaded {
+  const _$_Loaded(final List<FilterTagEntity> tags) : _tags = tags;
 
+  final List<FilterTagEntity> _tags;
   @override
-  final List<FilterTagEntity> tags;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'FilterState.loaded(tags: $tags)';
+  List<FilterTagEntity> get tags {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_tags);
   }
 
   @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'FilterState.loaded'))
-      ..add(DiagnosticsProperty('tags', tags));
+  String toString() {
+    return 'FilterState.loaded(tags: $tags)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Loaded &&
-            const DeepCollectionEquality().equals(other.tags, tags));
+            other is _$_Loaded &&
+            const DeepCollectionEquality().equals(other._tags, _tags));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(tags));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_tags));
 
   @JsonKey(ignore: true)
   @override
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      __$$_LoadedCopyWithImpl<_$_Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -328,9 +302,10 @@ class _$_Loaded with DiagnosticableTreeMixin implements _Loaded {
 }
 
 abstract class _Loaded implements FilterState {
-  const factory _Loaded(List<FilterTagEntity> tags) = _$_Loaded;
+  const factory _Loaded(final List<FilterTagEntity> tags) = _$_Loaded;
 
   List<FilterTagEntity> get tags;
   @JsonKey(ignore: true)
-  _$LoadedCopyWith<_Loaded> get copyWith => throw _privateConstructorUsedError;
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }

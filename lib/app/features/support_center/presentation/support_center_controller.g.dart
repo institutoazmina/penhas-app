@@ -6,7 +6,7 @@ part of 'support_center_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
   Computed<PageProgressState>? _$progressStateComputed;
@@ -17,8 +17,8 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
               name: '_SupportCenterControllerBase.progressState'))
       .value;
 
-  final _$_loadCategoriesAtom =
-      Atom(name: '_SupportCenterControllerBase._loadCategories');
+  late final _$_loadCategoriesAtom = Atom(
+      name: '_SupportCenterControllerBase._loadCategories', context: context);
 
   @override
   ObservableFuture<Either<Failure, SupportCenterMetadataEntity?>>?
@@ -35,8 +35,9 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
     });
   }
 
-  final _$_loadSupportCenterAtom =
-      Atom(name: '_SupportCenterControllerBase._loadSupportCenter');
+  late final _$_loadSupportCenterAtom = Atom(
+      name: '_SupportCenterControllerBase._loadSupportCenter',
+      context: context);
 
   @override
   ObservableFuture<Either<Failure, SupportCenterPlaceSessionEntity>>?
@@ -54,8 +55,9 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
     });
   }
 
-  final _$categoriesSelectedAtom =
-      Atom(name: '_SupportCenterControllerBase.categoriesSelected');
+  late final _$categoriesSelectedAtom = Atom(
+      name: '_SupportCenterControllerBase.categoriesSelected',
+      context: context);
 
   @override
   int get categoriesSelected {
@@ -70,8 +72,8 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
     });
   }
 
-  final _$errorMessageAtom =
-      Atom(name: '_SupportCenterControllerBase.errorMessage');
+  late final _$errorMessageAtom =
+      Atom(name: '_SupportCenterControllerBase.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -86,8 +88,8 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
     });
   }
 
-  final _$placeMarkersAtom =
-      Atom(name: '_SupportCenterControllerBase.placeMarkers');
+  late final _$placeMarkersAtom =
+      Atom(name: '_SupportCenterControllerBase.placeMarkers', context: context);
 
   @override
   ObservableSet<Marker> get placeMarkers {
@@ -102,8 +104,8 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
     });
   }
 
-  final _$latLngBoundsAtom =
-      Atom(name: '_SupportCenterControllerBase.latLngBounds');
+  late final _$latLngBoundsAtom =
+      Atom(name: '_SupportCenterControllerBase.latLngBounds', context: context);
 
   @override
   LatLngBounds get latLngBounds {
@@ -118,8 +120,8 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
     });
   }
 
-  final _$useLatLngBoundsAtom =
-      Atom(name: '_SupportCenterControllerBase.useLatLngBounds');
+  late final _$useLatLngBoundsAtom = Atom(
+      name: '_SupportCenterControllerBase.useLatLngBounds', context: context);
 
   @override
   bool get useLatLngBounds {
@@ -134,8 +136,8 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
     });
   }
 
-  final _$initialPositionAtom =
-      Atom(name: '_SupportCenterControllerBase.initialPosition');
+  late final _$initialPositionAtom = Atom(
+      name: '_SupportCenterControllerBase.initialPosition', context: context);
 
   @override
   LatLng get initialPosition {
@@ -150,7 +152,8 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
     });
   }
 
-  final _$stateAtom = Atom(name: '_SupportCenterControllerBase.state');
+  late final _$stateAtom =
+      Atom(name: '_SupportCenterControllerBase.state', context: context);
 
   @override
   SupportCenterState get state {
@@ -165,8 +168,8 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
     });
   }
 
-  final _$currentKeywordsAtom =
-      Atom(name: '_SupportCenterControllerBase.currentKeywords');
+  late final _$currentKeywordsAtom = Atom(
+      name: '_SupportCenterControllerBase.currentKeywords', context: context);
 
   @override
   String get currentKeywords {
@@ -181,16 +184,18 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
     });
   }
 
-  final _$onFilterActionAsyncAction =
-      AsyncAction('_SupportCenterControllerBase.onFilterAction');
+  late final _$onFilterActionAsyncAction = AsyncAction(
+      '_SupportCenterControllerBase.onFilterAction',
+      context: context);
 
   @override
   Future<void> onFilterAction() {
     return _$onFilterActionAsyncAction.run(() => super.onFilterAction());
   }
 
-  final _$onKeywordsActionAsyncAction =
-      AsyncAction('_SupportCenterControllerBase.onKeywordsAction');
+  late final _$onKeywordsActionAsyncAction = AsyncAction(
+      '_SupportCenterControllerBase.onKeywordsAction',
+      context: context);
 
   @override
   Future<void> onKeywordsAction(String keywords) {
@@ -198,47 +203,49 @@ mixin _$SupportCenterController on _SupportCenterControllerBase, Store {
         .run(() => super.onKeywordsAction(keywords));
   }
 
-  final _$addPlaceAsyncAction =
-      AsyncAction('_SupportCenterControllerBase.addPlace');
+  late final _$addPlaceAsyncAction =
+      AsyncAction('_SupportCenterControllerBase.addPlace', context: context);
 
   @override
   Future<void> addPlace() {
     return _$addPlaceAsyncAction.run(() => super.addPlace());
   }
 
-  final _$listPlacesAsyncAction =
-      AsyncAction('_SupportCenterControllerBase.listPlaces');
+  late final _$listPlacesAsyncAction =
+      AsyncAction('_SupportCenterControllerBase.listPlaces', context: context);
 
   @override
   Future<void> listPlaces() {
     return _$listPlacesAsyncAction.run(() => super.listPlaces());
   }
 
-  final _$locationAsyncAction =
-      AsyncAction('_SupportCenterControllerBase.location');
+  late final _$locationAsyncAction =
+      AsyncAction('_SupportCenterControllerBase.location', context: context);
 
   @override
   Future<void> location() {
     return _$locationAsyncAction.run(() => super.location());
   }
 
-  final _$placeDetailAsyncAction =
-      AsyncAction('_SupportCenterControllerBase.placeDetail');
+  late final _$placeDetailAsyncAction =
+      AsyncAction('_SupportCenterControllerBase.placeDetail', context: context);
 
   @override
   Future<void> placeDetail() {
     return _$placeDetailAsyncAction.run(() => super.placeDetail());
   }
 
-  final _$retryAsyncAction = AsyncAction('_SupportCenterControllerBase.retry');
+  late final _$retryAsyncAction =
+      AsyncAction('_SupportCenterControllerBase.retry', context: context);
 
   @override
   Future<void> retry() {
     return _$retryAsyncAction.run(() => super.retry());
   }
 
-  final _$requestLocationAsyncAction =
-      AsyncAction('_SupportCenterControllerBase.requestLocation');
+  late final _$requestLocationAsyncAction = AsyncAction(
+      '_SupportCenterControllerBase.requestLocation',
+      context: context);
 
   @override
   Future<void> requestLocation(void Function(LatLng) callback) {
