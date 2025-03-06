@@ -5,7 +5,6 @@ import 'package:mobx/mobx.dart';
 import 'package:scroll_to_index/util.dart';
 
 import '../../../../core/extension/animated_list.dart';
-import '../../../../core/extension/list.dart';
 import '../../../../core/extension/scroll_controller.dart';
 import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/logger/log.dart';

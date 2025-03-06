@@ -269,7 +269,7 @@ class _NewPostFab extends StatelessWidget {
         Modular.to.pushNamed('/mainboard/compose');
       },
       style: ElevatedButton.styleFrom(
-        primary: DesignSystemColors.ligthPurple,
+        backgroundColor: DesignSystemColors.ligthPurple,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(60),
         ),
@@ -298,7 +298,7 @@ class _NewPostFab extends StatelessWidget {
               padding: const EdgeInsets.only(left: 8.0),
               child: Text(
                 'Publicar',
-                style: Theme.of(context).textTheme.button?.copyWith(
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
                       color: DesignSystemColors.white,
                       fontWeight: FontWeight.bold,
                     ),

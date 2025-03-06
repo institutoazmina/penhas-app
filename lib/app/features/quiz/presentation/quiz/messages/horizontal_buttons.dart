@@ -120,7 +120,7 @@ class _FilledButton extends StatelessWidget {
         style: kTextStyleDefaultFilledButtonLabel,
       ),
       style: ElevatedButton.styleFrom(
-        primary: DesignSystemColors.ligthPurple,
+        backgroundColor: DesignSystemColors.ligthPurple,
         elevation: 0,
         shape: kButtonShapeFilled,
         minimumSize: const Size(double.infinity, _buttonHeight),
@@ -148,13 +148,13 @@ class _OutlinedButton extends StatelessWidget {
       onPressed: onPressed,
       child: Text(
         label.toUpperCase(),
-        style: theme.textTheme.button?.copyWith(
+        style: theme.textTheme.labelLarge?.copyWith(
           color: DesignSystemColors.ligthPurple,
           fontWeight: FontWeight.w600,
         ),
       ),
       style: OutlinedButton.styleFrom(
-        primary: DesignSystemColors.ligthPurple,
+        foregroundColor: DesignSystemColors.ligthPurple,
         backgroundColor: Colors.white,
         elevation: 0,
         shape: kButtonShapeOutlinePurple,

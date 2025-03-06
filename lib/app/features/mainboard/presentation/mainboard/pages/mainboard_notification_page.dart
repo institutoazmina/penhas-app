@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as bdg;
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -15,7 +15,7 @@ class MainboardNotificationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: Badge(
+      icon: bdg.Badge(
         elevation: 0.0,
         position: _badgePosition(counter),
         showBadge: counter > 0,
@@ -37,11 +37,11 @@ class MainboardNotificationPage extends StatelessWidget {
     );
   }
 
-  BadgePosition? _badgePosition(int counter) {
+  bdg.BadgePosition? _badgePosition(int counter) {
     if (counter < 10) {
-      return const BadgePosition(end: -4, top: -8);
+      return const bdg.BadgePosition(end: -4, top: -8);
     } else if (counter < 100) {
-      return const BadgePosition(end: -8, top: -8);
+      return const bdg.BadgePosition(end: -8, top: -8);
     }
 
     return null;

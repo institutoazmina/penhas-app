@@ -11,6 +11,7 @@ import 'package:uuid/uuid.dart';
 import '../../shared/design_system/buttons/styles.dart';
 import '../../shared/design_system/colors.dart';
 import '../../shared/design_system/text_styles.dart';
+import '../../shared/design_system/widgets/buttons/penhas_button.dart';
 import '../../shared/logger/log.dart';
 import '../extension/asuka.dart';
 import '../states/audio_permission_state.dart';
@@ -299,7 +300,7 @@ extension _AudioRecordServices on AudioRecordServices {
                 ),
                 ConstrainedBox(
                   constraints: const BoxConstraints(minWidth: 120),
-                  child: FilledButton(
+                  child: PenhasButton(
                     style: FilledButtonStyle.raised(
                       color: DesignSystemColors.easterPurple,
                     ),
@@ -397,7 +398,7 @@ extension _AudioRecordServices on AudioRecordServices {
                 ),
                 ConstrainedBox(
                   constraints: const BoxConstraints(minWidth: 120),
-                  child: FilledButton(
+                  child: PenhasButton(
                     style: FilledButtonStyle.raised(
                       color: DesignSystemColors.easterPurple,
                     ),

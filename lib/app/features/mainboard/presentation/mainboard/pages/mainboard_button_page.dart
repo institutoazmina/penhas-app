@@ -49,7 +49,7 @@ class MainboarButtonPage extends StatelessWidget {
                 Text(
                   page.label,
                   textAlign: TextAlign.center,
-                  style: theme.textTheme.caption?.copyWith(
+                  style: theme.textTheme.bodySmall?.copyWith(
                     fontSize: 12,
                     color: textColor,
                     height: 1,
