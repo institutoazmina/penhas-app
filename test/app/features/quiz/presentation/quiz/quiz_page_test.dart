@@ -106,8 +106,6 @@ void main() {
       fileName: 'quiz_error_state_retry',
       skip: true,
       setUp: () {
-        
-        
         mockQuizArgs([QuizOkButton()]);
       },
       pageBuilder: () => QuizPage(controller: controller),
