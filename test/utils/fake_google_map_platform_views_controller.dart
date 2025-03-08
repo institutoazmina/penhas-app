@@ -41,7 +41,8 @@ class FakePlatformGoogleMap {
       : cameraPosition =
             CameraPosition.fromMap(params['initialCameraPosition']),
         channel = MethodChannel('plugins.flutter.io/google_maps_$id') {
-    channel.setMockMethodCallHandler(onMethodCall);
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(SystemChannels.platform_views, onMethodCall);
   }
 
   MethodChannel channel;

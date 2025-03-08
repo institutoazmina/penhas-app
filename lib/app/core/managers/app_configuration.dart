@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -10,7 +11,9 @@ import '../storage/i_local_storage.dart';
 
 const String _apiBaseUrl = String.fromEnvironment(
   'PENHAS_BASE_URL',
-  defaultValue: 'https://api.penhas.com.br',
+  defaultValue:
+      // 'https://api.penhas.com.br',
+      'https://dev-penhas-api.appcivico.com',
 );
 
 abstract class IAppConfiguration {
