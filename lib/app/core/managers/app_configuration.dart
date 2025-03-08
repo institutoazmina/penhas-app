@@ -11,9 +11,7 @@ import '../storage/i_local_storage.dart';
 
 const String _apiBaseUrl = String.fromEnvironment(
   'PENHAS_BASE_URL',
-  defaultValue:
-      // 'https://api.penhas.com.br',
-      'https://dev-penhas-api.appcivico.com',
+  defaultValue: 'https://api.penhas.com.br',
 );
 
 abstract class IAppConfiguration {
