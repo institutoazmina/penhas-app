@@ -22,9 +22,9 @@ void main() {
   late SupportCenterController controller;
 
   setUp(() {
-    SystemChannels.platform_views.setMockMethodCallHandler(
-        fakePlatformViewsController.fakePlatformViewsMethodHandler);
-
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(SystemChannels.platform_views,
+            fakePlatformViewsController.fakePlatformViewsMethodHandler);
     supportCenterUseCase = MockSupportCenterUseCase();
     controller = SupportCenterController(
       supportCenterUseCase: supportCenterUseCase,
