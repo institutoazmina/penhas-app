@@ -15,7 +15,7 @@ version: 3.7.1+68
 publish_to: none
 
 environment:
-  sdk: '>=2.16.2 <3.0.0'
+  sdk: '>=2.16.2 <4.0.0'
 
 dependencies:
   flutter:
@@ -76,7 +76,7 @@ dependencies:
   url_launcher: ^6.1.7
   uuid: ^3.0.5
   webview_flutter: ^3.0.0
-  workmanager: ^0.4.1
+  workmanager: ^0.5.1
 
 dev_dependencies:
   flutter_test:
@@ -94,12 +94,6 @@ dev_dependencies:
   mocktail: ^1.0.0
   mocktail_image_network: ^1.2.0
   plugin_platform_interface: ^2.0.0
-
-dependency_overrides:
-  workmanager:
-    git:
-      url: https://github.com/pedrox-hs/flutter_workmanager.git
-      ref: main
 
 flutter_icons:
   ios: true
