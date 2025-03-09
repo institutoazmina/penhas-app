@@ -38,7 +38,7 @@ dependencies:
   firebase_crashlytics: '2.9.0'
   firebase_remote_config: ^2.0.20
   flutter_mobx: ^2.0.5
-  flutter_modular: ^3.4.1+1
+  flutter_modular: ^5.0.3
   flutter_phone_direct_caller: ^2.1.0
   flutter_secure_storage: ^6.1.0
   flutter_sound: ^9.2.13
@@ -84,7 +84,7 @@ dev_dependencies:
   alchemist: ^0.6.0 # snapshot test
   build_runner: ^2.1.5
   flutter_lints: ^1.0.4
-  flutter_modular_test: ^1.0.1
+  modular_test: any
   freezed: ^2.0.4
   geolocator_platform_interface: ^4.0.3
   golden_toolkit: ^0.13.0 # snapshot test
@@ -96,16 +96,6 @@ dev_dependencies:
   plugin_platform_interface: ^2.0.0
 
 dependency_overrides:
-  flutter_modular:
-    git:
-      url: https://github.com/pedrox-hs/modular.git
-      path: flutter_modular
-      ref: backward-compatibility
-  flutter_modular_test:
-    git:
-      url: https://github.com/pedrox-hs/modular.git
-      path: flutter_modular_test
-      ref: backward-compatibility
   workmanager:
     git:
       url: https://github.com/pedrox-hs/flutter_workmanager.git

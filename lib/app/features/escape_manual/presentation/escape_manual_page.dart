@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:mobx/mobx.dart';
@@ -37,7 +36,7 @@ class _EscapeManualPageState extends State<EscapeManualPage>
     with SnackBarHandler, AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
-  EscapeManualController get _controller => widget.controller;
+  EscapeManualController get controller => widget.controller;
 
   ReactionDisposer? _disposer;
 
@@ -48,14 +47,14 @@ class _EscapeManualPageState extends State<EscapeManualPage>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _disposer ??= _controller.onReaction(_onReaction);
-    _controller.load();
+    _disposer ??= controller.onReaction(_onReaction);
+    controller.load();
   }
 
   @override
   void dispose() {
     _disposer?.call();
-    _controller.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -67,16 +66,17 @@ class _EscapeManualPageState extends State<EscapeManualPage>
       body: Observer(
         builder: (_) => PageProgressIndicator(
           progressMessage: 'Carregando...',
-          progressState: _controller.progressState,
-          child: _controller.state.when(
+          progressState: controller.progressState,
+          child: controller.state.when(
             initial: () => _InitialStateWidget(),
             loaded: (data) => _LoadedStateWidget(
               escapeManual: data,
-              openAssistantPressed: _controller.openAssistant,
+              openAssistantPressed: controller.openAssistant,
+              controller: controller,
             ),
             error: (message) => _ErrorStateWidget(
               message: message,
-              onRetryPressed: _controller.load,
+              onRetryPressed: controller.load,
             ),
           ),
         ),
@@ -110,10 +110,12 @@ class _LoadedStateWidget extends StatelessWidget {
   const _LoadedStateWidget({
     required this.escapeManual,
     required this.openAssistantPressed,
+    required this.controller,
   });
 
   final EscapeManualEntity escapeManual;
   final OpenAssistantPressed openAssistantPressed;
+  final EscapeManualController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +168,7 @@ class _LoadedStateWidget extends StatelessWidget {
             itemCount: sections.length,
             itemBuilder: (context, index) {
               final section = sections[index];
-              return _SectionTasksWidget(section);
+              return _SectionTasksWidget(section, controller);
             },
             separatorBuilder: (context, index) => const _Divider(),
           ),
@@ -178,9 +180,10 @@ class _LoadedStateWidget extends StatelessWidget {
 }
 
 class _SectionTasksWidget extends StatelessWidget {
-  const _SectionTasksWidget(this.section);
+  const _SectionTasksWidget(this.section, this.controller);
 
   final EscapeManualTasksSectionEntity section;
+  final EscapeManualController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -223,10 +226,10 @@ class _SectionTasksWidget extends StatelessWidget {
   Widget _mapTaskToWidget(EscapeManualTaskEntity task) {
     final key = Key('escape-manual-task-${task.id}');
     if (task is EscapeManualButtonTaskEntity) {
-      return _ButtonTaskWidget(task, key: key);
+      return _ButtonTaskWidget(task, controller: controller, key: key);
     }
     if (task is EscapeManualTodoTaskEntity) {
-      return _TaskWidget(task, key: key);
+      return _TaskWidget(task, controller, key: key);
     }
     // This is a fallback for unknown task types
     logError('Unknown task type: ${task.runtimeType}');
@@ -236,19 +239,21 @@ class _SectionTasksWidget extends StatelessWidget {
 
 class _TaskWidget extends StatefulWidget {
   const _TaskWidget(
-    this.task, {
+    this.task,
+    this.controller, {
     Key? key,
   }) : super(key: key);
 
   final EscapeManualTodoTaskEntity task;
+  final EscapeManualController controller;
 
   @override
   State<_TaskWidget> createState() => _TaskWidgetState();
 }
 
-class _TaskWidgetState
-    extends ModularState<_TaskWidget, EscapeManualController> {
+class _TaskWidgetState extends State<_TaskWidget> {
   EscapeManualTodoTaskEntity get task => widget.task;
+  EscapeManualController get controller => widget.controller;
 
   late bool isChecked = task.isDone;
 
@@ -458,17 +463,18 @@ class _ButtonTaskWidget extends StatefulWidget {
   const _ButtonTaskWidget(
     this.task, {
     Key? key,
+    required this.controller,
   }) : super(key: key);
 
   final EscapeManualButtonTaskEntity task;
-
+  final EscapeManualController controller;
   @override
   State<_ButtonTaskWidget> createState() => _ButtonTaskWidgetState();
 }
 
-class _ButtonTaskWidgetState
-    extends ModularState<_ButtonTaskWidget, EscapeManualController> {
+class _ButtonTaskWidgetState extends State<_ButtonTaskWidget> {
   EscapeManualButtonTaskEntity get task => widget.task;
+  EscapeManualController get controller => widget.controller;
 
   @override
   Widget build(BuildContext context) {
