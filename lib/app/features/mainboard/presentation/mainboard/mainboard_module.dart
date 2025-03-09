@@ -95,7 +95,7 @@ class MainboardModule extends Module {
           (i) => MainboardStore(
             modulesServices: i.get<IAppModulesServices>(),
             initialPage: MainboardState.fromString(
-              i.args?.queryParams['page'] ?? i.args?.data?['page'],
+              i.args.queryParams['page'] ?? i.args.data?['page'],
             ),
           ),
         ),
@@ -269,7 +269,7 @@ class MainboardModule extends Module {
         ChildRoute(
           '/menu/about',
           child: (context, args) => AboutPenhasPage(
-            baseUrl: inject<IAppConfiguration>().penhasServer,
+            baseUrl: Modular.get<IAppConfiguration>().penhasServer,
           ),
           transition: TransitionType.rightToLeft,
         ),
@@ -373,8 +373,8 @@ class MainboardModule extends Module {
         ),
         Bind.factory(
           (i) => ChatChannelUseCase(
-            session: i.args?.data ??
-                ChatChannelOpenEntity(token: i.args?.params['token']),
+            session: i.args.data ??
+                ChatChannelOpenEntity(token: i.args.params['token']),
             channelRepository: i.get<IChatChannelRepository>(),
           ),
         ),
@@ -406,15 +406,15 @@ class MainboardModule extends Module {
         Bind.factory(
           (i) => ReplyTweetController(
             useCase: i.get<FeedUseCases>(),
-            tweet: i.args?.data,
+            tweet: i.args.data,
           ),
         ),
         Bind.factory(
           (i) => DetailTweetController(
             useCase: i.get<FeedUseCases>(),
-            tweetId: i.args?.params['id'],
-            tweet: i.args?.data,
-            commentId: i.args?.queryParams['comment_id'],
+            tweetId: i.args.params['id'],
+            tweet: i.args.data,
+            commentId: i.args.queryParams['comment_id'],
           ),
         ),
         Bind.factory(
@@ -429,7 +429,7 @@ class MainboardModule extends Module {
         ),
         Bind.factory<ComposeTweetNavigator>(
           (i) => ComposeTweetNavigator(
-            currentUri: i.args?.uri,
+            currentUri: i.args.uri,
           ),
         ),
         Bind.factory<IUsersRepository>(
@@ -441,7 +441,7 @@ class MainboardModule extends Module {
           (i) => FeedRoutingProfileChatController(
             usersRepository: i.get<IUsersRepository>(),
             channelRepository: i.get<IChatChannelRepository>(),
-            routerType: i.args?.data,
+            routerType: i.args.data,
           ),
         )
       ];

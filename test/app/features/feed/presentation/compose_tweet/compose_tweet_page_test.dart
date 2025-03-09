@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart' show left, right;
 import 'package:flutter/material.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -10,6 +9,7 @@ import 'package:penhas/app/features/feed/presentation/compose_tweet/compose_twee
 import 'package:penhas/app/features/feed/presentation/compose_tweet/compose_tweet_page.dart';
 
 import '../../../../../utils/golden_tests.dart';
+import '../../../../../utils/test_utils.dart';
 import '../../../../../utils/widget_tester_ext.dart';
 
 void main() {

@@ -9,7 +9,7 @@ class FilterModule extends Module {
   List<Bind> get binds => [
         Bind.factory(
           (i) => FilterController(
-            tags: i.args?.data as List<FilterTagEntity>? ?? [],
+            tags: i.args.data as List<FilterTagEntity>? ?? [],
           ),
         ),
       ];

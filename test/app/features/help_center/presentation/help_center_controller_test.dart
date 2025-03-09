@@ -1,6 +1,5 @@
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:modular_test/modular_test.dart';
 import 'package:penhas/app/features/help_center/presentation/help_center_module.dart';
 
 void main() {

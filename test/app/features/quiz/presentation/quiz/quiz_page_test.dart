@@ -1,5 +1,4 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -17,6 +16,7 @@ import 'package:penhas/app/shared/navigation/app_route.dart';
 
 import '../../../../../utils/golden_tests.dart';
 import '../../../../../utils/mocktail_extension.dart';
+import '../../../../../utils/test_utils.dart';
 import '../../../../../utils/widget_tester_ext.dart';
 import '../quiz_test_helper.dart';
 
@@ -240,7 +240,7 @@ void main() {
       );
 
       scope.screenshotReplyed(
-        'should display replyed showHelpTutorial message',
+        'should display replayed showHelpTutorial message',
         (tester) async {
           await tester.tapAll(find.text('SHOW TUTORIAL'));
           await tester.pumpAndSettle();

@@ -502,12 +502,11 @@ packages:
   flutter_modular:
     dependency: "direct main"
     description:
-      path: flutter_modular
-      ref: backward-compatibility
-      resolved-ref: "215924c83932f880799bc6f3ededfc5bf983fcbf"
-      url: "https://github.com/pedrox-hs/modular.git"
-    source: git
-    version: "3.4.1+1"
+      name: flutter_modular
+      sha256: "061f0bcc8f8c438d4c82f4ff70a9e61f109961c92b4e1eaf1bbfab75f577fe0e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.3"
   flutter_modular_annotations:
     dependency: transitive
     description:
@@ -516,15 +515,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.2"
-  flutter_modular_test:
-    dependency: "direct dev"
-    description:
-      path: flutter_modular_test
-      ref: backward-compatibility
-      resolved-ref: "215924c83932f880799bc6f3ededfc5bf983fcbf"
-      url: "https://github.com/pedrox-hs/modular.git"
-    source: git
-    version: "1.0.2"
   flutter_phone_direct_caller:
     dependency: "direct main"
     description:
@@ -1087,6 +1077,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  modular_core:
+    dependency: transitive
+    description:
+      name: modular_core
+      sha256: "84cfe65d2ab15b0265a5bdb07a7a0408b06f8d92fee6fb94a3c85e97cbc2d6af"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.3+1"
+  modular_interfaces:
+    dependency: transitive
+    description:
+      name: modular_interfaces
+      sha256: "89db18038048d63de80871189ddc52363814e8181615459e5d88ed0a921acc1f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2"
+  modular_test:
+    dependency: "direct dev"
+    description:
+      name: modular_test
+      sha256: "97e20e1ffb690b78df9cd21fa5e4c5a64b59bad482329316123d93217924af61"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   nested:
     dependency: transitive
     description:
@@ -1564,14 +1578,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
-  triple:
-    dependency: transitive
-    description:
-      name: triple
-      sha256: ecade2cfd2bd6860d96ece3c819a5166164eaff604a1569e253f519c5abd6f51
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.5.0+1"
   typed_data:
     dependency: transitive
     description:
@@ -1799,12 +1805,11 @@ packages:
   workmanager:
     dependency: "direct main"
     description:
-      path: "."
-      ref: main
-      resolved-ref: "789793533e4d44e6cd8aaf92a422b494a49f2fbf"
-      url: "https://github.com/pedrox-hs/flutter_workmanager.git"
-    source: git
-    version: "0.5.2"
+      name: workmanager
+      sha256: e0be7e35d644643f164ee45d2ce14414f0e0fdde19456aa66065f35a0b1d2ea1
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.1"
   xdg_directories:
     dependency: transitive
     description:

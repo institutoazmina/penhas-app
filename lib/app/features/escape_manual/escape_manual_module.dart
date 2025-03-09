@@ -57,6 +57,7 @@ class EscapeManualModule extends WidgetModule {
       );
 
   @override
+  // ignore: override_on_non_overriding_member
   List<ModularRoute> get routes => [
         ChildRoute(
           '/edit/trusted_contacts',
@@ -79,7 +80,7 @@ class EscapeManualModule extends WidgetModule {
     ),
     Bind.factory(
       (i) => EditTrustedContactsController(
-        contacts: i.args?.data,
+        contacts: i.args.data,
         escapeManualToggleFeature: EscapeManualToggleFeature(
           modulesServices: i.get(),
         ),

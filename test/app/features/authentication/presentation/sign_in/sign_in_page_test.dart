@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/failures.dart';
@@ -7,7 +6,6 @@ import 'package:penhas/app/core/extension/either.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_controller.dart';
-import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_page.dart';
 
 import '../../../../../utils/golden_tests.dart';
@@ -32,10 +30,6 @@ void main() {
             AuthenticationModulesMock.authenticateUserUseCase,
         passwordValidator: AuthenticationModulesMock.passwordValidator,
         appStateUseCase: AppModulesMock.appStateUseCase);
-  });
-
-  tearDown(() {
-    Modular.removeModule(SignInModule());
   });
 
   group(SignInPage, () {

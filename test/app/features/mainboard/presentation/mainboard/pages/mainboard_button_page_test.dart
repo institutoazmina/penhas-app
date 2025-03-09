@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/features/mainboard/domain/states/mainboard_state.dart';
 import 'package:penhas/app/features/mainboard/presentation/mainboard/pages/mainboard_button_page.dart';
 
 import '../../../../../../utils/mock_callbacks.dart';
+import '../../../../../../utils/test_utils.dart';
 
 void main() {
   group(MainboarButtonPage, () {
