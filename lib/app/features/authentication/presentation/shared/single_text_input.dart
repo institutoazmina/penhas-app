@@ -30,7 +30,7 @@ class SingleTextInput extends StatelessWidget {
       key: const Key('singleTextInput'),
       style: _style,
       keyboardType: _keyboardType,
-      inputFormatters: _inputFormatter == null ? null : [_inputFormatter!],
+      inputFormatters: _inputFormatter == null ? null : [_inputFormatter],
       onChanged: _onChanged,
       decoration: _boxDecoration,
     );
