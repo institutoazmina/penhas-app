@@ -25,8 +25,8 @@ class FeedCategoryFilter extends StatelessWidget {
             }
           });
         },
-        child: Row(
-          children: const <Widget>[
+        child: const Row(
+          children: <Widget>[
             Icon(
               Icons.arrow_drop_down,
               color: DesignSystemColors.ligthPurple,
