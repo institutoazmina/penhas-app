@@ -1,11 +1,9 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:workmanager/workmanager.dart';
 
-import '../../../features/escape_manual/escape_manual_module.dart';
-import '../../../features/escape_manual/presentation/send_pending_escape_manual_task.dart';
 import '../../../shared/logger/log.dart';
 import '../background_task_manager.dart';
+import '../background_task_registry.dart';
 
 class BackgroundTaskManager extends IBackgroundTaskManager {
   BackgroundTaskManager({
@@ -59,37 +57,8 @@ class BackgroundTaskManager extends IBackgroundTaskManager {
 
   Future<void> _runTaskByName(String taskName) async {
     final taskDefinition = _registry.definitionByName(taskName);
-    for (final module in taskDefinition.dependencies) {
-      Modular.bindModule(module);
-    }
 
     final task = taskDefinition.taskProvider();
     await task.execute();
-
-    for (final module in taskDefinition.dependencies) {
-      Modular.removeModule(module);
-    }
-  }
-}
-
-class BackgroundTaskRegistry extends IBackgroundTaskRegistry {
-  const BackgroundTaskRegistry();
-
-  @override
-  TaskDefinition definitionByName(String taskName) {
-    if (taskName == sendPendingEscapeManualTask) {
-      return TaskDefinition(
-        taskProvider: () => SendPendingEscapeManualTask(
-          Modular.get(),
-        ),
-        dependencies: [
-          EscapeManualModule(),
-        ],
-      );
-    }
-
-    throw UnimplementedError(
-      'Task $taskName not implemented',
-    );
   }
 }

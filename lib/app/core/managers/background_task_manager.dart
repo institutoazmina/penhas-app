@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter_modular/flutter_modular.dart';
-
 typedef BackgroundTaskProvider = BackgroundTask Function();
 
 /// The background task manager is used to schedule and run tasks in background.
@@ -32,12 +30,8 @@ abstract class IBackgroundTaskRegistry {
 class TaskDefinition {
   const TaskDefinition({
     required this.taskProvider,
-    this.dependencies = const [],
   });
 
   /// The task provider is used to create a new instance of the task.
   final BackgroundTaskProvider taskProvider;
-
-  /// The dependencies are used to inject dependencies into the task.
-  final List<Module> dependencies;
 }
