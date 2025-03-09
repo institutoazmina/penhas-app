@@ -48,10 +48,13 @@ class _SignInStealthPage extends State<SignInStealthPage> with SnackBarHandler {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, dynamic result) async {
+        if (didPop) {
+          return;
+        }
         SystemNavigator.pop();
-        return false;
       },
       child: SizedBox.expand(
         child: DecoratedBox(
