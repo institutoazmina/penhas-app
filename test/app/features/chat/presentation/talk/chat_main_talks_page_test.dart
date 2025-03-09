@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart' show right, left;
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mocktail_image_network/mocktail_image_network.dart';
@@ -19,6 +18,7 @@ import 'package:penhas/app/features/chat/presentation/talk/chat_main_talks_contr
 import 'package:penhas/app/features/chat/presentation/talk/chat_main_talks_page.dart';
 
 import '../../../../../utils/golden_tests.dart';
+import '../../../../../utils/test_utils.dart';
 
 void main() {
   group(ChatMainTalksPage, () {

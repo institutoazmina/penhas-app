@@ -57,6 +57,7 @@ class EscapeManualModule extends WidgetModule {
       );
 
   @override
+  // ignore: override_on_non_overriding_member
   List<ModularRoute> get routes => [
         ChildRoute(
           '/edit/trusted_contacts',
