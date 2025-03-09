@@ -68,9 +68,9 @@ class GuardianErrorPage extends StatelessWidget {
                 child: PenhasButton(
                   onPressed: _onPressed,
                   style: TextButtonStyle(),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Icon(
                         Icons.loop,
                         color: DesignSystemColors.easterPurple,

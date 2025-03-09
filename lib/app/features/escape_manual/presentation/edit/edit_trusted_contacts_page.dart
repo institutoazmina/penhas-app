@@ -39,10 +39,12 @@ class _EditTrustedContactsPageState extends State<EditTrustedContactsPage> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return WillPopScope(
-      onWillPop: () async {
-        Timer.run(() => Modular.to.pop(controller.contacts));
-        return false;
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, dynamic result) async {
+        if (didPop) {
+          Timer.run(() => Modular.to.pop(controller.contacts));
+        }
       },
       child: Scaffold(
         appBar: AppBar(

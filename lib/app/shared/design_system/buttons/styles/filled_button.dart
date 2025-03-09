@@ -17,10 +17,10 @@ class FilledButtonStyle extends ButtonStyle {
     ),
   }) =>
       ButtonStyle(
-        foregroundColor: MaterialStateProperty.all<Color>(textColor),
-        backgroundColor: MaterialStateProperty.resolveWith(
+        foregroundColor: WidgetStateProperty.all<Color>(textColor),
+        backgroundColor: WidgetStateProperty.resolveWith(
           (states) =>
-              states.contains(MaterialState.disabled) ? disabledColor : color,
+              states.contains(WidgetState.disabled) ? disabledColor : color,
         ),
         elevation: ButtonStyleButton.allOrNull(elevation),
         padding: ButtonStyleButton.allOrNull(padding),

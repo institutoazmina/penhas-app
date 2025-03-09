@@ -59,6 +59,7 @@ abstract class _MainboardControllerBase with Store {
         break;
       case material.AppLifecycleState.detached:
       case material.AppLifecycleState.paused:
+      case material.AppLifecycleState.hidden:
         break;
     }
   }

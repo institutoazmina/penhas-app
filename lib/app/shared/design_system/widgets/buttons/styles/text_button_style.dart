@@ -33,19 +33,19 @@ import '../../../styles/penhas_text_style.dart';
 class TextButtonStyle extends ButtonStyle {
   TextButtonStyle()
       : super(
-          foregroundColor: MaterialStateProperty.resolveWith<Color>(
-            (Set<MaterialState> states) {
-              return states.contains(MaterialState.disabled)
+          foregroundColor: WidgetStateProperty.resolveWith<Color>(
+            (Set<WidgetState> states) {
+              return states.contains(WidgetState.disabled)
                   ? PenhasColors.disabledBackground
                   : PenhasColors.black;
             },
           ),
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
-          elevation: MaterialStateProperty.all<double>(0.0),
-          textStyle: MaterialStateProperty.resolveWith<TextStyle>(
-            (Set<MaterialState> states) {
+          backgroundColor: WidgetStateProperty.all<Color>(Colors.transparent),
+          elevation: WidgetStateProperty.all<double>(0.0),
+          textStyle: WidgetStateProperty.resolveWith<TextStyle>(
+            (Set<WidgetState> states) {
               return PenhasTextStyle.labelLarge.copyWith(
-                color: states.contains(MaterialState.disabled)
+                color: states.contains(WidgetState.disabled)
                     ? PenhasColors.disabledBackground
                     : PenhasColors.white,
               );

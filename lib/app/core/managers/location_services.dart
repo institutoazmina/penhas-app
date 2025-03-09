@@ -158,8 +158,8 @@ class LocationServices implements ILocationServices {
           barrierDismissible: false,
           builder: (context) {
             return AlertDialog(
-              title: Column(
-                children: const <Widget>[
+              title: const Column(
+                children: <Widget>[
                   Icon(
                     Icons.location_off,
                     color: DesignSystemColors.easterPurple,

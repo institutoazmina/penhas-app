@@ -1,5 +1,3 @@
-import 'package:collection/collection.dart';
-
 import '../../domain/entities/tweet_entity.dart';
 import '../../domain/entities/tweet_session_entity.dart';
 import 'tweet_model.dart';
@@ -47,7 +45,7 @@ class TweetSessionModel extends TweetSessionEntity {
     return tweets
         .map((e) => e as Map<String, dynamic>)
         .map(_parseJson)
-        .whereNotNull()
+        .nonNulls
         .toList();
   }
 

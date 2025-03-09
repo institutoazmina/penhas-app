@@ -93,7 +93,7 @@ class _DescriptionBottomSheetWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: Colors.grey.withAlpha(50),
             spreadRadius: 3,
             blurRadius: 5,
             offset: const Offset(0, 5),

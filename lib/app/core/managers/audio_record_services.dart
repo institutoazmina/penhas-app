@@ -246,8 +246,8 @@ extension _AudioRecordServices on AudioRecordServices {
           barrierDismissible: false,
           builder: (context) {
             return AlertDialog(
-              title: Column(
-                children: const <Widget>[
+              title: const Column(
+                children: <Widget>[
                   Icon(
                     Icons.mic_none,
                     color: DesignSystemColors.easterPurple,
@@ -336,8 +336,8 @@ extension _AudioRecordServices on AudioRecordServices {
           barrierDismissible: false,
           builder: (context) {
             return AlertDialog(
-              title: Column(
-                children: const <Widget>[
+              title: const Column(
+                children: <Widget>[
                   Icon(
                     Icons.mic_off,
                     color: DesignSystemColors.easterPurple,

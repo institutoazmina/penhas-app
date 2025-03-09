@@ -114,9 +114,9 @@ class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
                     alignment: Alignment.bottomCenter,
                     child: PenhasButton.text(
                       onPressed: () => _controller.logoutPressed(),
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const <Widget>[
+                        children: <Widget>[
                           Icon(
                             Icons.power_settings_new,
                             size: 40,

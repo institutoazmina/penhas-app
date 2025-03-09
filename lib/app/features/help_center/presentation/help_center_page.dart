@@ -142,15 +142,15 @@ class _HelpCenterPageState extends State<HelpCenterPage> with SnackBarHandler {
       padding: const EdgeInsets.only(bottom: 20.0),
       child: Container(
         color: DesignSystemColors.nigthBlue,
-        child: Padding(
-          padding: const EdgeInsets.only(
+        child: const Padding(
+          padding: EdgeInsets.only(
             left: 16.0,
             right: 16.0,
             top: 12.0,
             bottom: 12.0,
           ),
           child: Row(
-            children: const <Widget>[
+            children: <Widget>[
               Expanded(
                 child: Icon(
                   Icons.location_off,

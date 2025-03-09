@@ -1,10 +1,10 @@
+import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/managers/impl/background_task_manager.dart';
 import 'package:penhas/bootstrap/bootstrap.dart';
 import 'package:penhas/bootstrap/impl/background_tasks_runner.dart';
 import 'package:penhas/bootstrap/impl/main_app_runner.dart';
 import 'package:penhas/main.dart' as app;
-import 'package:test/test.dart';
 
 void main() {
   late Bootstrap mockBootstrap;

@@ -56,15 +56,15 @@ abstract class _ResetPasswordTwoControllerBase with Store, MapFailureMessage {
   Future<void> nextStepPressed() async {
     errorMessage = '';
     if (_userRegisterModel!.token == null ||
-        _userRegisterModel!.token!.length < 6) {
+        _userRegisterModel.token!.length < 6) {
       errorMessage = _warningToken;
       return;
     }
 
     _progress = ObservableFuture(
       repository.validToken(
-        emailAddress: _userRegisterModel!.emailAddress!,
-        resetToken: _userRegisterModel!.token!,
+        emailAddress: _userRegisterModel.emailAddress!,
+        resetToken: _userRegisterModel.token!,
       ),
     );
 

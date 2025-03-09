@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/escape_manual/domain/send_pending_escape_manual_tasks.dart';
 import 'package:penhas/app/features/escape_manual/presentation/send_pending_escape_manual_task.dart';
-import 'package:test/test.dart';
 
 void main() {
   late SendPendingEscapeManualTask sut;
