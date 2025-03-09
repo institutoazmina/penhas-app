@@ -1,5 +1,3 @@
-import 'package:collection/collection.dart';
-
 import '../../domain/entities/user_search_session_entity.dart';
 import 'user_detail_profile_model.dart';
 
@@ -14,7 +12,7 @@ class UserSearchSessionModel extends UserSearchSessionEntity {
     final List jsonProfiles = jsonData['rows'];
     final List<UserDetailProfileModel> users = jsonProfiles
         .map((e) => UserDetailProfileModel.fromJson(e))
-        .whereNotNull()
+        .nonNulls
         .toList();
 
     return UserSearchSessionModel(
