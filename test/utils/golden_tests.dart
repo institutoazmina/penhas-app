@@ -18,12 +18,12 @@ const testDevices = const [
   Device(
     name: 'iPhone Pro',
     size: Size(390, 844),
-    safeArea: EdgeInsets.only(top: 47, bottom: 34),
+    // safeArea: EdgeInsets.only(top: 47, bottom: 34),
   ),
   Device(
     name: 'iPhone Pro Max',
     size: Size(428, 926),
-    safeArea: EdgeInsets.only(top: 47, bottom: 34),
+    // safeArea: EdgeInsets.only(top: 47, bottom: 34),
   ),
 ];
 

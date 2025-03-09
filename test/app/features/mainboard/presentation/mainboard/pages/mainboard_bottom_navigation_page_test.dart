@@ -66,14 +66,14 @@ void main() {
       (name, pages) {
         widgetScreenshotTest(
           '$name should looks as expected',
-          fileName: 'bottom_navigation_${name.replaceAll(' ', '_')}}',
+          fileName: 'bottom_navigation_${name.replaceAll(' ', '_')}',
           widgetBuilder: (_) => SizedBox(
-            width: 400,
+            width: 500,
             height: kBottomNavigationBarHeight * 2 * pages.length,
             child: Scaffold(
               body: GoldenTestGroup(
                 columns: 1,
-                columnWidthBuilder: (__) => const FixedColumnWidth(400),
+                columnWidthBuilder: (__) => const FixedColumnWidth(500),
                 children: pages
                     .map(
                       (page) => GoldenTestScenario(
