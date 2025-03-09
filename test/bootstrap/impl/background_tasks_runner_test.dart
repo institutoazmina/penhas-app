@@ -4,6 +4,7 @@ import 'package:firebase_core_platform_interface/firebase_core_platform_interfac
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_crashlytics_platform_interface/firebase_crashlytics_platform_interface.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
 import 'package:penhas/app/core/managers/background_task_manager.dart';
@@ -13,7 +14,6 @@ import 'package:penhas/app/shared/logger/crashlytics.dart';
 import 'package:penhas/bootstrap/bootstrap.dart';
 import 'package:penhas/bootstrap/impl/background_tasks_runner.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import 'package:test/test.dart';
 
 void main() {
   late BackgroundTasksRunner sut;
