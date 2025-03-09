@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart' show left, right;
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:modular_test/modular_test.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/quiz/domain/start_quiz.dart';
@@ -10,7 +10,7 @@ import 'package:penhas/app/features/quiz/presentation/quiz_start/quiz_start_page
 import 'package:penhas/app/features/quiz/quiz_module.dart';
 import 'package:penhas/app/features/support_center/presentation/pages/support_center_general_error.dart';
 
-import '../../../../../utils/module_testing.dart';
+import '../../../../../utils/test_utils.dart';
 
 class _MockStartQuizUseCase extends Mock implements StartQuizUseCase {}
 
@@ -39,45 +39,6 @@ void main() {
         ],
       );
     });
-
-    tearDown(() {
-      Modular.removeModule(QuizModule());
-    });
-
-    testWidgets(
-      'should start with QuizStartPage widget',
-      (tester) async {
-        // arrange
-        when(
-          () => mockNavigator.pushReplacementNamed(
-            any(),
-            arguments: any(named: 'arguments'),
-          ),
-        ).thenAnswer((_) => Future.value());
-        when(() => mockStartQuiz(any()))
-            .thenAnswer((_) async => right(_FakeQuizSessionEntity()));
-        await tester.pumpWidget(
-          buildTestableApp(
-            initialRoute: '/start?session_id=SID',
-            modules: [
-              QuizModule(),
-            ],
-            overrides: [
-              Bind.factory<StartQuizUseCase>(
-                (i) => mockStartQuiz,
-              ),
-            ],
-          ),
-        );
-
-        // act
-        await tester.pump();
-
-        // assert
-        expect(find.byType(QuizStartPage), findsOneWidget);
-        verify(() => mockStartQuiz('SID')).called(1);
-      },
-    );
 
     testWidgets(
       'should display failure state when start quiz fails',

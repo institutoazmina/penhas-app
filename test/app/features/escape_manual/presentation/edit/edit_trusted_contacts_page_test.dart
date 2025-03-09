@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/features/escape_manual/domain/entity/escape_manual_task.dart';
@@ -11,6 +10,7 @@ import 'package:penhas/app/features/escape_manual/presentation/edit/edit_trusted
 import 'package:penhas/app/features/escape_manual/presentation/edit/edit_trusted_contacts_page.dart';
 
 import '../../../../../utils/golden_tests.dart';
+import '../../../../../utils/test_utils.dart';
 import '../../../../../utils/widget_tester_ext.dart';
 
 const _maxTrustedContacts = 3;

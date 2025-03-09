@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobx/mobx.dart' as mobx;
 import 'package:mocktail/mocktail.dart';
@@ -12,21 +10,14 @@ import 'package:penhas/app/features/escape_manual/presentation/escape_manual_pag
 import 'package:penhas/app/features/escape_manual/presentation/escape_manual_state.dart';
 import 'package:penhas/app/shared/design_system/widgets/buttons/penhas_button.dart';
 
-import '../../../../utils/aditional_bind_module.dart';
 import '../../../../utils/golden_tests.dart';
+import '../../../../utils/test_utils.dart';
 import '../../../../utils/widget_tester_ext.dart';
 
 void main() {
   late EscapeManualController mockController;
-  late Module module = AditionalBindModule(
-    binds: [
-      Bind.factory<EscapeManualController>((_) => mockController),
-    ],
-  );
 
   setUpAll(() {
-    initModule(module);
-
     registerFallbackValue(_FakeEscapeManualTaskEntity());
     registerFallbackValue(_FakeEscapeManualContactsTaskEntity());
     registerFallbackValue(_FakeButtonEntity());
@@ -45,10 +36,6 @@ void main() {
 
     when(() => mockController.dispose()).thenAnswer((_) async {});
     when(() => mockController.updateTask(any())).thenAnswer((_) async {});
-  });
-
-  tearDownAll(() {
-    Modular.removeModule(module);
   });
 
   group(EscapeManualPage, () {

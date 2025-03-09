@@ -1,11 +1,9 @@
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/extension/either.dart';
 import 'package:penhas/app/features/appstate/domain/entities/user_profile_entity.dart';
 import 'package:penhas/app/features/authentication/domain/entities/session_entity.dart';
 import 'package:penhas/app/features/authentication/domain/usecases/password_validator.dart';
-import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in_anonymous/sign_in_anonymous_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/sign_in_anonymous/sign_in_anonymous_page.dart';
 
@@ -47,10 +45,6 @@ void main() {
       passwordValidator: AuthenticationModulesMock.passwordValidator,
       userProfileStore: AppModulesMock.userProfileStore,
     );
-  });
-
-  tearDown(() {
-    Modular.removeModule(SignInModule());
   });
 
   group(SignInAnonymousPage, () {

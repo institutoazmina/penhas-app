@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/entities/valid_fiel.dart';
@@ -8,7 +7,6 @@ import 'package:penhas/app/features/authentication/domain/usecases/email_address
 import 'package:penhas/app/features/authentication/presentation/reset_password/pages/reset_password_two/reset_password_two_controller.dart';
 import 'package:penhas/app/features/authentication/presentation/reset_password/pages/reset_password_two/reset_password_two_page.dart';
 import 'package:penhas/app/features/authentication/presentation/shared/user_register_form_field_model.dart';
-import 'package:penhas/app/features/authentication/presentation/sign_in/sign_in_module.dart';
 
 import '../../../../../../../utils/golden_tests.dart';
 import '../../../../../../../utils/mocktail_extension.dart';
@@ -40,10 +38,6 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(FakeEmailAddress());
-  });
-
-  tearDown(() {
-    Modular.removeModule(SignInModule());
   });
 
   group(ResetPasswordTwoPage, () {

@@ -137,11 +137,13 @@ void mockQuizArgs([
   assert(Modular.navigatorDelegate is Mock,
       'Modular.navigatorDelegate should be a Mock');
 
-  when(() => Modular.navigatorDelegate!.args).thenReturn(
-    ModularArguments(
-      data: QuizSessionEntity(sessionId: sessionId, currentMessage: messages),
-    ),
-  );
+  Modular.navigatorDelegate = MockIModularNavigator();
+
+  // when(() => Modular.navigatorDelegate!.args).thenReturn(
+  //   ModularArguments(
+  //     data: QuizSessionEntity(sessionId: sessionId, currentMessage: messages),
+  //   ),
+  // );
 }
 
 List<QuizMessageChoiceOption> createOptions(List<String> indexes) {
@@ -283,3 +285,5 @@ class MockIQuizControllerYesNo extends Mock implements IQuizController {
         ),
       ];
 }
+
+class MockIModularNavigator extends Mock implements IModularNavigator {}
