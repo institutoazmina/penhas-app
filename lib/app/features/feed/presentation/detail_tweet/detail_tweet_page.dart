@@ -16,7 +16,7 @@ import '../tweet/widgets/tweet_title.dart';
 import 'detail_tweet_controller.dart';
 
 Color _defaultColor = Colors.white;
-Color _highlightColor = DesignSystemColors.ligthPurple.withOpacity(0.1);
+Color _highlightColor = DesignSystemColors.ligthPurple.withAlpha(25);
 
 class DetailTweetPage extends StatefulWidget {
   const DetailTweetPage({

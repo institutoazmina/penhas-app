@@ -34,7 +34,7 @@ class HelpCenterCardGuardian extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.5),
+              color: Colors.black.withAlpha(50),
               offset: const Offset(0.0, 2.0),
               blurRadius: 4.0,
             )

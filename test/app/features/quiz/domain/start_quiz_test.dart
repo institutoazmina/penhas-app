@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:penhas/app/core/error/failures.dart';
 import 'package:penhas/app/features/appstate/domain/entities/app_state_entity.dart';
 import 'package:penhas/app/features/quiz/domain/repositories/i_quiz_repository.dart';
 import 'package:penhas/app/features/quiz/domain/start_quiz.dart';
-import 'package:test/test.dart';
 
 class _MockQuizRepository extends Mock implements IQuizRepository {}
 

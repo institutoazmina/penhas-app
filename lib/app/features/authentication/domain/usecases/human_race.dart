@@ -22,8 +22,6 @@ extension EnumHumanRace on HumanRace {
         return 'amarelo';
       case HumanRace.notDeclared:
         return 'nao_declarado';
-      default:
-        return 'nao_declarado';
     }
   }
 

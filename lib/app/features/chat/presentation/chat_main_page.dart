@@ -99,11 +99,7 @@ extension _ChatMainPageStatePrivate on _ChatMainPageState {
           border: Border.all(color: DesignSystemColors.ligthPurple, width: 1)),
       indicatorPadding: const EdgeInsets.only(right: 16.0),
       labelPadding: const EdgeInsets.only(right: 16.0),
-      tabs: items
-          .map((e) => _CustomTabWidget(
-                title: e.title!,
-              ))
-          .toList(),
+      tabs: items.map((e) => _CustomTabWidget(title: e.title)).toList(),
     );
   }
 

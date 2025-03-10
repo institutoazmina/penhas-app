@@ -158,8 +158,8 @@ class LocationServices implements ILocationServices {
           barrierDismissible: false,
           builder: (context) {
             return AlertDialog(
-              title: Column(
-                children: const <Widget>[
+              title: const Column(
+                children: <Widget>[
                   Icon(
                     Icons.location_off,
                     color: DesignSystemColors.easterPurple,
@@ -263,6 +263,8 @@ extension PermissionStatusMap on PermissionStatus {
         return const LocationPermissionState.permanentlyDenied();
       case PermissionStatus.limited:
         return const LocationPermissionState.undefined();
+      case PermissionStatus.provisional:
+        return const LocationPermissionState.granted();
     }
   }
 }

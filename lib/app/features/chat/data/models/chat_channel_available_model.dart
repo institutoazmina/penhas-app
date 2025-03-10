@@ -1,5 +1,3 @@
-import 'package:collection/collection.dart';
-
 import '../../domain/entities/chat_channel_available_entity.dart';
 import 'chat_assistant_model.dart';
 import 'chat_channel_model.dart';
@@ -30,7 +28,7 @@ class ChatChannelAvailableModel extends ChatChannelAvailableEntity {
     final List<ChatChannelModel> channels = jsonChannels
         .map((e) => e as Map<String, dynamic>)
         .map((e) => ChatChannelModel.fromJson(e))
-        .whereNotNull()
+        .nonNulls
         .toList();
 
     return ChatChannelAvailableModel(

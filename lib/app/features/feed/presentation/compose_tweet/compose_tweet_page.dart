@@ -191,7 +191,8 @@ class _ComposeTweetPageState extends State<ComposeTweetPage>
                   children: <Widget>[
                     SvgPicture.asset(
                       'assets/images/svg/drawer/user_profile.svg',
-                      color: DesignSystemColors.darkIndigoThree,
+                      colorFilter: const ColorFilter.mode(
+                          DesignSystemColors.darkIndigoThree, BlendMode.color),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 12.0),

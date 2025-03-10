@@ -50,7 +50,8 @@ class UserBadgeWidget extends StatelessWidget {
                   badgeImageUrl, badgeImageUrlBlack, isLightBackground),
               height: 16,
               width: 16,
-              color: returnCorrectColor(isLightBackground),
+              colorFilter: ColorFilter.mode(
+                  returnCorrectColor(isLightBackground), BlendMode.color),
             )
           : const SizedBox.shrink(),
     );
@@ -93,7 +94,7 @@ class _DescriptionBottomSheetWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: Colors.grey.withAlpha(50),
             spreadRadius: 3,
             blurRadius: 5,
             offset: const Offset(0, 5),
