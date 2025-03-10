@@ -75,7 +75,7 @@ dependencies:
   url_launcher: ^6.1.7
   uuid: ^4.3.3
   webview_flutter: ^4.10.0
-  workmanager: ^0.5.2
+  flutter_background_service: ^5.1.0
 
 dev_dependencies:
   flutter_test:

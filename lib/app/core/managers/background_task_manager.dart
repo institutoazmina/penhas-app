@@ -6,7 +6,7 @@ typedef BackgroundTaskProvider = BackgroundTask Function();
 abstract class IBackgroundTaskManager {
   const IBackgroundTaskManager();
 
-  void registerDispatcher(Function callbackDispatcher);
+  Future<void> registerDispatcher(Function callbackDispatcher);
 
   void schedule(String taskName);
 
