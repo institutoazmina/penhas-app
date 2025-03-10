@@ -21,11 +21,13 @@ class GuardianTileActionCard extends StatelessWidget {
 
   Widget get _canEditIcon => SvgPicture.asset(
         'assets/images/svg/help_center/guardians/guardians_edit.svg',
-        color: DesignSystemColors.pumpkinOrange,
+        colorFilter: const ColorFilter.mode(
+            DesignSystemColors.pumpkinOrange, BlendMode.color),
       );
   Widget get _canDeleteIcon => SvgPicture.asset(
         'assets/images/svg/help_center/guardians/guardians_delete.svg',
-        color: DesignSystemColors.pumpkinOrange,
+        colorFilter: const ColorFilter.mode(
+            DesignSystemColors.pumpkinOrange, BlendMode.color),
       );
   Widget get _canResendIcon => const Icon(
         Icons.autorenew,

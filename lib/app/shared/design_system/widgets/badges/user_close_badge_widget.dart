@@ -35,7 +35,9 @@ class UserCloseBadgeWidget extends StatelessWidget {
                           badgeImageUrl,
                           width: 12,
                           height: 12,
-                          color: DesignSystemColors.darkIndigoThree,
+                          colorFilter: const ColorFilter.mode(
+                              DesignSystemColors.darkIndigoThree,
+                              BlendMode.color),
                         )
                       : const SizedBox.shrink()),
               Text(

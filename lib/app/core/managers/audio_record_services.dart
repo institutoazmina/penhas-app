@@ -149,6 +149,8 @@ extension _PermissionStatusMap on PermissionStatus {
         return const AudioPermissionState.permanentlyDenied();
       case PermissionStatus.limited:
         return const AudioPermissionState.undefined();
+      case PermissionStatus.provisional:
+        return const AudioPermissionState.granted();
     }
   }
 }

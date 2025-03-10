@@ -216,7 +216,8 @@ class _ContactCard extends StatelessWidget {
               onPressed: onUpdatePressed,
               icon: SvgPicture.asset(
                 'assets/images/svg/actions/edit.svg',
-                color: DesignSystemColors.pumpkinOrange,
+                colorFilter: const ColorFilter.mode(
+                    DesignSystemColors.pumpkinOrange, BlendMode.color),
                 height: theme.iconTheme.size,
                 width: theme.iconTheme.size,
               ),
@@ -226,7 +227,8 @@ class _ContactCard extends StatelessWidget {
               onPressed: onRemovePressed,
               icon: SvgPicture.asset(
                 'assets/images/svg/actions/close.svg',
-                color: DesignSystemColors.pumpkinOrange,
+                colorFilter: const ColorFilter.mode(
+                    DesignSystemColors.pumpkinOrange, BlendMode.color),
                 height: theme.iconTheme.size,
                 width: theme.iconTheme.size,
               ),
