@@ -24,10 +24,10 @@ class GuardiansPage extends StatefulWidget {
   final String title;
 
   @override
-  _GuardiansPageState createState() => _GuardiansPageState();
+  GuardiansPageState createState() => GuardiansPageState();
 }
 
-class _GuardiansPageState extends State<GuardiansPage> with SnackBarHandler {
+class GuardiansPageState extends State<GuardiansPage> with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =

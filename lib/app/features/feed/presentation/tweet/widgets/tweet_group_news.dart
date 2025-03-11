@@ -14,10 +14,10 @@ class TweetGroupNews extends StatefulWidget {
   final TweetNewsGroupEntity _group;
 
   @override
-  _TweetGroupNewsState createState() => _TweetGroupNewsState();
+  TweetGroupNewsState createState() => TweetGroupNewsState();
 }
 
-class _TweetGroupNewsState extends State<TweetGroupNews> {
+class TweetGroupNewsState extends State<TweetGroupNews> {
   int _currentPage = 0;
 
   @override

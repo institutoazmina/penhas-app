@@ -21,10 +21,10 @@ class ResetPasswordTwoPage extends StatefulWidget {
   final ResetPasswordTwoController controller;
 
   @override
-  _ResetPasswordTwoPageState createState() => _ResetPasswordTwoPageState();
+  ResetPasswordTwoPageState createState() => ResetPasswordTwoPageState();
 }
 
-class _ResetPasswordTwoPageState extends State<ResetPasswordTwoPage>
+class ResetPasswordTwoPageState extends State<ResetPasswordTwoPage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -95,7 +95,8 @@ class _ResetPasswordTwoPageState extends State<ResetPasswordTwoPage>
                             width: 102,
                             child: SvgPicture.asset(
                               'assets/images/svg/reset_password/recovery_password_step_2.svg',
-                              color: Colors.white,
+                              colorFilter: const ColorFilter.mode(
+                                  Colors.white, BlendMode.color),
                             ),
                           ),
                         ],

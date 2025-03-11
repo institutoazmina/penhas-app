@@ -60,8 +60,8 @@ class SmoothStarRatingWidget extends StatelessWidget {
       },
       onHorizontalDragUpdate: (dragDetails) {
         RenderBox box = context.findRenderObject() as RenderBox;
-        var _pos = box.globalToLocal(dragDetails.globalPosition);
-        var i = _pos.dx / size;
+        var pos = box.globalToLocal(dragDetails.globalPosition);
+        var i = pos.dx / size;
         var newRating = allowHalfRating ? i : i.round().toDouble();
         if (newRating > starCount) {
           newRating = starCount.toDouble();

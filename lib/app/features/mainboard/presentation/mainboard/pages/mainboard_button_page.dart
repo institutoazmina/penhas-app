@@ -108,7 +108,7 @@ class _BottomBarIcon extends StatelessWidget {
       dimension: 24,
       child: SvgPicture.asset(
         asset,
-        color: assetColor,
+        colorFilter: ColorFilter.mode(assetColor, BlendMode.color),
         fit: BoxFit.contain,
         excludeFromSemantics: true,
       ),

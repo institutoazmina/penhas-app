@@ -8,10 +8,10 @@ class RecordTutorialPage extends StatefulWidget {
   const RecordTutorialPage({Key? key}) : super(key: key);
 
   @override
-  _RecordTutorialPageState createState() => _RecordTutorialPageState();
+  RecordTutorialPageState createState() => RecordTutorialPageState();
 }
 
-class _RecordTutorialPageState extends State<RecordTutorialPage> {
+class RecordTutorialPageState extends State<RecordTutorialPage> {
   final List<TutorialPageViewWidget> _contentPageView = [
     const TutorialPageViewWidget(
       description:

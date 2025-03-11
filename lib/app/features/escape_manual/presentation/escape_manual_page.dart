@@ -145,10 +145,6 @@ class _LoadedStateWidget extends StatelessWidget {
               onPressed: () {
                 openAssistantPressed(assistant.action);
               },
-              child: Text(
-                assistant.action.text,
-                textAlign: TextAlign.center,
-              ),
               style: OutlinedButton.styleFrom(
                 foregroundColor: DesignSystemColors.darkIndigoThree,
                 backgroundColor: DesignSystemColors.white,
@@ -157,6 +153,10 @@ class _LoadedStateWidget extends StatelessWidget {
                 ),
                 minimumSize: const Size(double.infinity, 50),
                 shape: kButtonShapeOutlineWhite,
+              ),
+              child: Text(
+                assistant.action.text,
+                textAlign: TextAlign.center,
               ),
             ),
           ),
@@ -354,7 +354,8 @@ class _TaskActionWidget extends PopupMenuItem {
             children: [
               SvgPicture.asset(
                 icon,
-                color: DesignSystemColors.darkIndigoThree,
+                colorFilter: const ColorFilter.mode(
+                    DesignSystemColors.darkIndigoThree, BlendMode.color),
                 height: size,
                 width: size,
               ),
@@ -486,7 +487,6 @@ class _ButtonTaskWidgetState extends State<_ButtonTaskWidget> {
           horizontal: 52,
         ),
         title: TextButton(
-          child: Text(task.button.label),
           onPressed: () {
             controller.onButtonPressed(task.button);
           },
@@ -501,6 +501,7 @@ class _ButtonTaskWidgetState extends State<_ButtonTaskWidget> {
             ),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
           ),
+          child: Text(task.button.label),
         ),
       ),
     );

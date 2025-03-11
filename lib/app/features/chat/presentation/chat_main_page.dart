@@ -22,10 +22,10 @@ class ChatMainPage extends StatefulWidget {
   final ChatMainTalksController chatMainTalksController;
 
   @override
-  _ChatMainPageState createState() => _ChatMainPageState();
+  ChatMainPageState createState() => ChatMainPageState();
 }
 
-class _ChatMainPageState extends State<ChatMainPage>
+class ChatMainPageState extends State<ChatMainPage>
     with SingleTickerProviderStateMixin {
   ChatMainController get controller => widget.controller;
   ChatMainPeopleController get chatMainPeopleController =>
@@ -46,7 +46,7 @@ class _ChatMainPageState extends State<ChatMainPage>
   }
 }
 
-extension _ChatMainBuilder on _ChatMainPageState {
+extension _ChatMainBuilder on ChatMainPageState {
   Widget buildSupportChat() {
     return SafeArea(
       child: SizedBox.expand(
@@ -83,7 +83,7 @@ extension _ChatMainBuilder on _ChatMainPageState {
   }
 }
 
-extension _ChatMainPageStatePrivate on _ChatMainPageState {
+extension _ChatMainPageStatePrivate on ChatMainPageState {
   PreferredSizeWidget chatTabBar(List<ChatTabItem> items) {
     return TabBar(
       isScrollable: true,
@@ -144,7 +144,7 @@ class _CustomTabWidget extends StatelessWidget {
   }
 }
 
-extension _ChatMainPageStateTextStyle on _ChatMainPageState {
+extension _ChatMainPageStateTextStyle on ChatMainPageState {
   TextStyle get chatTabSelectedTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,

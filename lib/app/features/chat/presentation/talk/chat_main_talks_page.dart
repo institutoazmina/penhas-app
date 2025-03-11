@@ -18,10 +18,10 @@ class ChatMainTalksPage extends StatefulWidget {
   final ChatMainTalksController controller;
 
   @override
-  _ChatMainTalksPageState createState() => _ChatMainTalksPageState();
+  ChatMainTalksPageState createState() => ChatMainTalksPageState();
 }
 
-class _ChatMainTalksPageState extends State<ChatMainTalksPage> {
+class ChatMainTalksPageState extends State<ChatMainTalksPage> {
   ChatMainTalksController get controller => widget.controller;
 
   @override
@@ -45,7 +45,7 @@ class _ChatMainTalksPageState extends State<ChatMainTalksPage> {
   }
 }
 
-extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
+extension _ChatMainTalksPageBodyBuilder on ChatMainTalksPageState {
   Widget bodyBuilder(ChatMainTalksState state) {
     return state.when(
       initial: () => empty(),
@@ -122,20 +122,18 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ...tile.cards
-                  .map(
-                    (e) => Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
-                      child: ChatAssistantCard(
-                        title: e.title,
-                        description: e.content,
-                        icon: buildNetworkIcon(e),
-                        channel: e,
-                        onPressed: controller.openAssistantCard,
-                      ),
-                    ),
-                  )
-                  .toList()
+              ...tile.cards.map(
+                (e) => Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: ChatAssistantCard(
+                    title: e.title,
+                    description: e.content,
+                    icon: buildNetworkIcon(e),
+                    channel: e,
+                    onPressed: controller.openAssistantCard,
+                  ),
+                ),
+              )
             ],
           ),
         ],
@@ -212,7 +210,7 @@ extension _ChatMainTalksPageBodyBuilder on _ChatMainTalksPageState {
   }
 }
 
-extension _ChatMainTalksPageTextStyle on _ChatMainTalksPageState {
+extension _ChatMainTalksPageTextStyle on ChatMainTalksPageState {
   TextStyle get talksDividerTitleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 16.0,

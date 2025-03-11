@@ -65,8 +65,8 @@ class SupportCenterGeneralError extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 48.0),
                 child: PenhasButton.roundedFilled(
-                  child: const Text('Tentar novamente'),
                   onPressed: _onPressed,
+                  child: const Text('Tentar novamente'),
                 ),
               ),
             ],

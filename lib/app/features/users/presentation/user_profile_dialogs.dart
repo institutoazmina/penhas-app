@@ -40,7 +40,7 @@ class ReportUserDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _controller = TextEditingController(text: reason);
+    final controller = TextEditingController(text: reason);
 
     return AlertDialog(
       title: const Text('Denunciar', style: kTextStyleAlertDialogTitle),
@@ -48,7 +48,7 @@ class ReportUserDialog extends StatelessWidget {
         key: _formKey,
         child: TextFormField(
           maxLengthEnforcement: MaxLengthEnforcement.enforced,
-          controller: _controller,
+          controller: controller,
           maxLength: 500,
           maxLines: 5,
           decoration: const InputDecoration(
@@ -71,7 +71,7 @@ class ReportUserDialog extends StatelessWidget {
           child: const Text('Enviar'),
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              Navigator.pop(context, _controller.text);
+              Navigator.pop(context, controller.text);
             }
           },
         ),

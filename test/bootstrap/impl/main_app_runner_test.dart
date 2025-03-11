@@ -5,6 +5,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_crashlytics_platform_interface/firebase_crashlytics_platform_interface.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
 import 'package:penhas/app/core/remoteconfig/remote_config.dart';
@@ -12,7 +13,6 @@ import 'package:penhas/app/shared/logger/crashlytics.dart';
 import 'package:penhas/bootstrap/bootstrap.dart';
 import 'package:penhas/bootstrap/impl/main_app_runner.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import 'package:test/test.dart';
 
 import '../../utils/mock_callbacks.dart';
 
@@ -101,7 +101,9 @@ class _MockFirebaseAnalyticsPlatform extends Mock
     with MockPlatformInterfaceMixin
     implements FirebaseAnalyticsPlatform {
   @override
-  FirebaseAnalyticsPlatform delegateFor({required FirebaseApp app}) => this;
+  FirebaseAnalyticsPlatform delegateFor(
+          {required FirebaseApp app, Map<String, dynamic>? webOptions}) =>
+      this;
 
   @override
   Future<void> setAnalyticsCollectionEnabled(bool enabled) => Future.value();

@@ -22,10 +22,10 @@ class SupportCenterPage extends StatefulWidget {
   final SupportCenterController controller;
 
   @override
-  _SupportCenterPageState createState() => _SupportCenterPageState();
+  SupportCenterPageState createState() => SupportCenterPageState();
 }
 
-class _SupportCenterPageState extends State<SupportCenterPage>
+class SupportCenterPageState extends State<SupportCenterPage>
     with SnackBarHandler {
   GoogleMapController? mapController;
   List<ReactionDisposer>? _disposers;
@@ -84,7 +84,7 @@ class _SupportCenterPageState extends State<SupportCenterPage>
   }
 }
 
-extension _SupportCenterPageStateBuilder on _SupportCenterPageState {
+extension _SupportCenterPageStateBuilder on SupportCenterPageState {
   Widget bodyBuilder(SupportCenterState state) {
     return state.when(
       loaded: () => loadedSupportCenterPage(),

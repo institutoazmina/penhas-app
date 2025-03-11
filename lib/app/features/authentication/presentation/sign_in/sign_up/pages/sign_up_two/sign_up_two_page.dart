@@ -21,10 +21,10 @@ class SignUpTwoPage extends StatefulWidget {
   final SignUpTwoController controller;
 
   @override
-  _SignUpTwoPageState createState() => _SignUpTwoPageState();
+  SignUpTwoPageState createState() => SignUpTwoPageState();
 }
 
-class _SignUpTwoPageState extends State<SignUpTwoPage> with SnackBarHandler {
+class SignUpTwoPageState extends State<SignUpTwoPage> with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;

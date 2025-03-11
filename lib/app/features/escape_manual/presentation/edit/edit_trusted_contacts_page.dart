@@ -39,10 +39,11 @@ class _EditTrustedContactsPageState extends State<EditTrustedContactsPage> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        if (didPop) return;
         Timer.run(() => Modular.to.pop(controller.contacts));
-        return false;
       },
       child: Scaffold(
         appBar: AppBar(
@@ -214,7 +215,8 @@ class _ContactCard extends StatelessWidget {
               onPressed: onUpdatePressed,
               icon: SvgPicture.asset(
                 'assets/images/svg/actions/edit.svg',
-                color: DesignSystemColors.pumpkinOrange,
+                colorFilter: const ColorFilter.mode(
+                    DesignSystemColors.pumpkinOrange, BlendMode.color),
                 height: theme.iconTheme.size,
                 width: theme.iconTheme.size,
               ),
@@ -224,7 +226,8 @@ class _ContactCard extends StatelessWidget {
               onPressed: onRemovePressed,
               icon: SvgPicture.asset(
                 'assets/images/svg/actions/close.svg',
-                color: DesignSystemColors.pumpkinOrange,
+                colorFilter: const ColorFilter.mode(
+                    DesignSystemColors.pumpkinOrange, BlendMode.color),
                 height: theme.iconTheme.size,
                 width: theme.iconTheme.size,
               ),

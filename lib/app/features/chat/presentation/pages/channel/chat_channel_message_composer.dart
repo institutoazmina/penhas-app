@@ -17,11 +17,11 @@ class ChatChannelMessageComposer extends StatefulWidget {
   final void Function() onUnblockChannel;
 
   @override
-  _ChatChannelMessageComposerState createState() =>
-      _ChatChannelMessageComposerState();
+  ChatChannelMessageComposerState createState() =>
+      ChatChannelMessageComposerState();
 }
 
-class _ChatChannelMessageComposerState
+class ChatChannelMessageComposerState
     extends State<ChatChannelMessageComposer> {
   final TextEditingController _textController = TextEditingController();
 
@@ -146,7 +146,7 @@ class _ChatChannelMessageComposerState
 }
 
 extension _ChatChannelMessageComposerStatePrivate
-    on _ChatChannelMessageComposerState {
+    on ChatChannelMessageComposerState {
   TextStyle get buttomTitleStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 12.0,

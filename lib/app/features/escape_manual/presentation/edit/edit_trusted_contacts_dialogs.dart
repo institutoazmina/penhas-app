@@ -147,7 +147,6 @@ class _PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return ElevatedButton(
-      child: Text(text),
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: DesignSystemColors.ligthPurple,
@@ -165,6 +164,7 @@ class _PrimaryButton extends StatelessWidget {
           color: DesignSystemColors.white,
         ),
       ),
+      child: Text(text),
     );
   }
 }
@@ -183,7 +183,6 @@ class _SecondaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return TextButton(
-      child: Text(text),
       onPressed: onPressed,
       style: TextButton.styleFrom(
         foregroundColor: const Color(0xFF8D929D),
@@ -196,6 +195,7 @@ class _SecondaryButton extends StatelessWidget {
           fontWeight: FontWeight.w700,
         ),
       ),
+      child: Text(text),
     );
   }
 }

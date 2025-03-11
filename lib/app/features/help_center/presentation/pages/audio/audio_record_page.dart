@@ -17,10 +17,10 @@ class AudioRecordPage extends StatefulWidget {
   final AudioRecordController controller;
 
   @override
-  _AudioRecordState createState() => _AudioRecordState();
+  AudioRecordState createState() => AudioRecordState();
 }
 
-class _AudioRecordState extends State<AudioRecordPage> with SnackBarHandler {
+class AudioRecordState extends State<AudioRecordPage> with SnackBarHandler {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   AudioActivity? _audioActivity;
   StreamSubscription? _streamSubscription;
@@ -50,10 +50,11 @@ class _AudioRecordState extends State<AudioRecordPage> with SnackBarHandler {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        if (didPop) return;
         controller.stopAudioRecord();
-        return false;
       },
       child: Scaffold(
         key: _scaffoldKey,

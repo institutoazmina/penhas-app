@@ -14,10 +14,10 @@ class SupportCenterListPage extends StatefulWidget {
   final SupportCenterListController controller;
 
   @override
-  _SupportCenterListPageState createState() => _SupportCenterListPageState();
+  SupportCenterListPageState createState() => SupportCenterListPageState();
 }
 
-class _SupportCenterListPageState extends State<SupportCenterListPage> {
+class SupportCenterListPageState extends State<SupportCenterListPage> {
   SupportCenterListController get _controller => widget.controller;
   @override
   Widget build(BuildContext context) {

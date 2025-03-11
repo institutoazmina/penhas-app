@@ -24,10 +24,10 @@ class SupportCenterShowPage extends StatefulWidget {
   final SupportCenterShowController controller;
 
   @override
-  _SupportCenterShowPageState createState() => _SupportCenterShowPageState();
+  SupportCenterShowPageState createState() => SupportCenterShowPageState();
 }
 
-class _SupportCenterShowPageState extends State<SupportCenterShowPage> {
+class SupportCenterShowPageState extends State<SupportCenterShowPage> {
   SupportCenterShowController get controller => widget.controller;
 
   @override
@@ -55,7 +55,7 @@ class _SupportCenterShowPageState extends State<SupportCenterShowPage> {
   }
 }
 
-extension _PageStateBuilder on _SupportCenterShowPageState {
+extension _PageStateBuilder on SupportCenterShowPageState {
   Widget bodyBuilder(BuildContext context, SupportCenterShowState state) {
     return state.when(
       initial: () => buildInitialState(),
@@ -173,7 +173,7 @@ extension _PageStateBuilder on _SupportCenterShowPageState {
   }
 }
 
-extension _Maps on _SupportCenterShowPageState {
+extension _Maps on SupportCenterShowPageState {
   double fullWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
   }
@@ -188,6 +188,7 @@ extension _Maps on _SupportCenterShowPageState {
       final availableMaps = await MapLauncher.installedMaps;
 
       showModalBottomSheet(
+        // ignore: use_build_context_synchronously
         context: context,
         backgroundColor: Colors.white,
         shape: const RoundedRectangleBorder(
@@ -255,7 +256,7 @@ extension _Maps on _SupportCenterShowPageState {
   }
 }
 
-extension _TextStyle on _SupportCenterShowPageState {
+extension _TextStyle on SupportCenterShowPageState {
   TextStyle get placeTypeTextStyle => const TextStyle(
         color: DesignSystemColors.brownishGrey,
         fontFamily: 'Lato',

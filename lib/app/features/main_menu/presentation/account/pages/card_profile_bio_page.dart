@@ -44,15 +44,15 @@ extension _Modal on CardProfileBioPage {
   void showModal({
     required BuildContext context,
   }) {
-    final TextEditingController _controller = TextEditingController();
-    _controller.text = content;
+    final TextEditingController controller = TextEditingController();
+    controller.text = content;
 
     Modular.to.showDialog(
       builder: (context) => AlertDialog(
         title: const Text('Editar'),
         content: TextFormField(
           maxLengthEnforcement: MaxLengthEnforcement.enforced,
-          controller: _controller,
+          controller: controller,
           maxLines: 5,
           maxLength: 2200,
           decoration: const InputDecoration(
@@ -70,7 +70,7 @@ extension _Modal on CardProfileBioPage {
           PenhasButton.text(
             child: const Text('Enviar'),
             onPressed: () async {
-              onChange(_controller.text);
+              onChange(controller.text);
               Navigator.of(context).pop();
             },
           ),

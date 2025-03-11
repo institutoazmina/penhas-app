@@ -26,10 +26,10 @@ class PenhasDrawerPage extends StatefulWidget {
   final StealthModeTutorialPageController stealthController;
 
   @override
-  _PenhasDrawerPageState createState() => _PenhasDrawerPageState();
+  PenhasDrawerPageState createState() => PenhasDrawerPageState();
 }
 
-class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
+class PenhasDrawerPageState extends State<PenhasDrawerPage> {
   final double listHeight = 80;
   final Color drawerGrey = const Color.fromRGBO(239, 239, 239, 1.0);
   PenhasDrawerController get _controller => widget.controller;
@@ -72,7 +72,8 @@ class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
                     title: 'Informações pessoais',
                     icon: SvgPicture.asset(
                       'assets/images/svg/drawer/user_profile.svg',
-                      color: DesignSystemColors.darkIndigoThree,
+                      colorFilter: const ColorFilter.mode(
+                          DesignSystemColors.darkIndigoThree, BlendMode.color),
                     ),
                     onPressed: () {
                       Modular.to.pushNamed('/mainboard/menu/profile_edit');
@@ -82,7 +83,8 @@ class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
                     title: 'Configurações',
                     icon: SvgPicture.asset(
                       'assets/images/svg/drawer/account_setting.svg',
-                      color: DesignSystemColors.darkIndigoThree,
+                      colorFilter: const ColorFilter.mode(
+                          DesignSystemColors.darkIndigoThree, BlendMode.color),
                     ),
                     onPressed: () {
                       Modular.to
@@ -93,7 +95,8 @@ class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
                     title: 'Exclusão da conta',
                     icon: SvgPicture.asset(
                       'assets/images/svg/drawer/trash.svg',
-                      color: DesignSystemColors.darkIndigoThree,
+                      colorFilter: const ColorFilter.mode(
+                          DesignSystemColors.darkIndigoThree, BlendMode.color),
                     ),
                     onPressed: () {
                       Modular.to.pushNamed('/mainboard/menu/account_delete');
@@ -103,7 +106,8 @@ class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
                     title: 'Sobre o PenhaS',
                     icon: SvgPicture.asset(
                       'assets/images/svg/drawer/menu_penhas_icone.svg',
-                      color: DesignSystemColors.darkIndigoThree,
+                      colorFilter: const ColorFilter.mode(
+                          DesignSystemColors.darkIndigoThree, BlendMode.color),
                     ),
                     onPressed: () {
                       Modular.to.pushNamed('/mainboard/menu/about');
@@ -114,9 +118,9 @@ class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
                     alignment: Alignment.bottomCenter,
                     child: PenhasButton.text(
                       onPressed: () => _controller.logoutPressed(),
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const <Widget>[
+                        children: <Widget>[
                           Icon(
                             Icons.power_settings_new,
                             size: 40,
@@ -179,7 +183,8 @@ class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
 
     return SvgPicture.network(
       avatarPath,
-      color: DesignSystemColors.darkIndigo,
+      colorFilter: const ColorFilter.mode(
+          DesignSystemColors.darkIndigo, BlendMode.color),
       height: 36,
     );
   }
@@ -214,7 +219,7 @@ class _PenhasDrawerPageState extends State<PenhasDrawerPage> {
   }
 }
 
-extension _TextStyle on _PenhasDrawerPageState {
+extension _TextStyle on PenhasDrawerPageState {
   TextStyle get securityContextTextStyle => const TextStyle(
         color: DesignSystemColors.darkIndigoThree,
         fontFamily: 'Lato',

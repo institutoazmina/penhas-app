@@ -13,11 +13,10 @@ class StealthModeTutorialPage extends StatefulWidget {
   final StealthModeTutorialPageController controller;
 
   @override
-  _StealthModeTutorialPageState createState() =>
-      _StealthModeTutorialPageState();
+  StealthModeTutorialPageState createState() => StealthModeTutorialPageState();
 }
 
-class _StealthModeTutorialPageState extends State<StealthModeTutorialPage> {
+class StealthModeTutorialPageState extends State<StealthModeTutorialPage> {
   List<TutorialPageViewWidget> _contentPageView = [];
   final PageController _pageController = PageController();
   int _currentPage = 0;

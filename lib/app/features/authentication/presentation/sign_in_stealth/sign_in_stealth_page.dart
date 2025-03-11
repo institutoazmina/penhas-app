@@ -23,10 +23,11 @@ class SignInStealthPage extends StatefulWidget {
   final SignInStealthController controller;
 
   @override
-  _SignInStealthPage createState() => _SignInStealthPage();
+  SignInStealthPageState createState() => SignInStealthPageState();
 }
 
-class _SignInStealthPage extends State<SignInStealthPage> with SnackBarHandler {
+class SignInStealthPageState extends State<SignInStealthPage>
+    with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;
@@ -48,10 +49,11 @@ class _SignInStealthPage extends State<SignInStealthPage> with SnackBarHandler {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        if (didPop) return;
         SystemNavigator.pop();
-        return false;
       },
       child: SizedBox.expand(
         child: DecoratedBox(

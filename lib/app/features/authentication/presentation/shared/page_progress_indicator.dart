@@ -15,12 +15,12 @@ class PageProgressIndicator extends StatefulWidget {
   final String progressMessage;
 
   @override
-  _PageProgressIndicator createState() => _PageProgressIndicator();
+  PageProgressIndicatorState createState() => PageProgressIndicatorState();
 }
 
-class _PageProgressIndicator extends State<PageProgressIndicator>
+class PageProgressIndicatorState extends State<PageProgressIndicator>
     with SingleTickerProviderStateMixin {
-  _PageProgressIndicator();
+  PageProgressIndicatorState();
 
   late AnimationController _controller;
   late Animation<double> _animation;

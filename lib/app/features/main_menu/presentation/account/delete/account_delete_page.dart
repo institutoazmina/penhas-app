@@ -17,10 +17,10 @@ class AccountDeletePage extends StatefulWidget {
   final AccountDeleteController controller;
 
   @override
-  _AccountDeletePageState createState() => _AccountDeletePageState();
+  AccountDeletePageState createState() => AccountDeletePageState();
 }
 
-class _AccountDeletePageState extends State<AccountDeletePage>
+class AccountDeletePageState extends State<AccountDeletePage>
     with SnackBarHandler {
   bool _isPasswordVisible = false;
   AccountDeleteController get _controller => widget.controller;
@@ -74,7 +74,7 @@ class _AccountDeletePageState extends State<AccountDeletePage>
   }
 }
 
-extension _PageBuilder on _AccountDeletePageState {
+extension _PageBuilder on AccountDeletePageState {
   Widget bodyBuilder(ProfileDeleteState state) {
     return state.when(
       initial: () => bodyLoading(),
@@ -178,7 +178,7 @@ extension _PageBuilder on _AccountDeletePageState {
   }
 }
 
-extension _TextStyle on _AccountDeletePageState {
+extension _TextStyle on AccountDeletePageState {
   TextStyle get titleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 20.0,

@@ -24,11 +24,10 @@ class ProfileEditPage extends StatefulWidget {
   final ProfileEditController controller;
 
   @override
-  _ProfileEditPageState createState() => _ProfileEditPageState();
+  ProfileEditPageState createState() => ProfileEditPageState();
 }
 
-class _ProfileEditPageState extends State<ProfileEditPage>
-    with SnackBarHandler {
+class ProfileEditPageState extends State<ProfileEditPage> with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   ProfileEditController get _controller => widget.controller;
@@ -72,7 +71,7 @@ class _ProfileEditPageState extends State<ProfileEditPage>
   }
 }
 
-extension _PageBuilder on _ProfileEditPageState {
+extension _PageBuilder on ProfileEditPageState {
   Widget bodyBuilder(ProfileEditState state) {
     return state.when(
       initial: () => bodyLoading(),
@@ -188,9 +187,9 @@ Widget _divider() {
   );
 }
 
-extension _Modal on _ProfileEditPageState {}
+extension _Modal on ProfileEditPageState {}
 
-extension _ProfileEditPage on _ProfileEditPageState {
+extension _ProfileEditPage on ProfileEditPageState {
   Widget profileHeader({required String title, required String subtitle}) {
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -216,7 +215,7 @@ extension _ProfileEditPage on _ProfileEditPageState {
   }
 }
 
-extension _TextStyle on _ProfileEditPageState {
+extension _TextStyle on ProfileEditPageState {
   TextStyle get profileHeaderTitleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 20.0,

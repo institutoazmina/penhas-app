@@ -114,7 +114,8 @@ class HelpCenterButtonPage extends StatelessWidget {
                   onPressed: onSelect,
                   child: SvgPicture.asset(
                     'assets/images/svg/bottom_bar/emergency_controll.svg',
-                    color: Colors.white,
+                    colorFilter: const ColorFilter.mode(
+                        DesignSystemColors.white, BlendMode.color),
                     semanticsLabel: page.label,
                   ),
                 ),

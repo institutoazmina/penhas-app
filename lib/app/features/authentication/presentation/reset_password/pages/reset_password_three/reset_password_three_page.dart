@@ -21,10 +21,10 @@ class ResetPasswordThreePage extends StatefulWidget {
   final ResetPasswordThreeController controller;
 
   @override
-  _ResetPasswordThreePageState createState() => _ResetPasswordThreePageState();
+  ResetPasswordThreePageState createState() => ResetPasswordThreePageState();
 }
 
-class _ResetPasswordThreePageState extends State<ResetPasswordThreePage>
+class ResetPasswordThreePageState extends State<ResetPasswordThreePage>
     with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -89,7 +89,8 @@ class _ResetPasswordThreePageState extends State<ResetPasswordThreePage>
                             width: 102,
                             child: SvgPicture.asset(
                               'assets/images/svg/reset_password/recovery_password_step_2.svg',
-                              color: Colors.white,
+                              colorFilter: const ColorFilter.mode(
+                                  Colors.white, BlendMode.color),
                             ),
                           ),
                         ],

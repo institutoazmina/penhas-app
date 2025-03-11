@@ -16,10 +16,10 @@ class TweetBottom extends StatefulWidget {
   final ITweetController controller;
 
   @override
-  _TweetBottomState createState() => _TweetBottomState();
+  TweetBottomState createState() => TweetBottomState();
 }
 
-class _TweetBottomState extends State<TweetBottom> {
+class TweetBottomState extends State<TweetBottom> {
   late bool _isLiked;
   late int _likeCount;
 

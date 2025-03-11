@@ -69,10 +69,10 @@ class PenhasButton extends ElevatedButton {
     String? text,
   }) {
     return PenhasButton(
-      child: child,
       onPressed: onPressed,
       focusNode: focusNode,
       style: RoundedFilledButtonStyle(),
+      child: child,
     );
   }
 
@@ -84,10 +84,10 @@ class PenhasButton extends ElevatedButton {
     FocusNode? focusNode,
   }) {
     return PenhasButton(
-      child: child,
       onPressed: onPressed,
       focusNode: focusNode,
       style: RoundedOutlinedButtonStyle(),
+      child: child,
     );
   }
 
@@ -99,10 +99,10 @@ class PenhasButton extends ElevatedButton {
     FocusNode? focusNode,
   }) {
     return PenhasButton(
-      child: child,
       onPressed: onPressed,
       focusNode: focusNode,
       style: TextButtonStyle(),
+      child: child,
     );
   }
 
@@ -114,10 +114,10 @@ class PenhasButton extends ElevatedButton {
     FocusNode? focusNode,
   }) {
     return PenhasButton(
-      child: child,
       onPressed: onPressed,
       focusNode: focusNode,
       style: FilledButtonStyle(),
+      child: child,
     );
   }
 }

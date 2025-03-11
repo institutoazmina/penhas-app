@@ -19,9 +19,10 @@ class TermsOfUsePage extends StatelessWidget {
         title: const Text('Termos de Uso'),
         backgroundColor: DesignSystemColors.easterPurple,
       ),
-      body: WebView(
-        initialUrl: baseUrl.resolve('web/termos-de-uso').toString(),
-        javascriptMode: JavascriptMode.unrestricted,
+      body: WebViewWidget(
+        controller: WebViewController()
+          ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..loadRequest(baseUrl.resolve('web/termos-de-uso')),
       ),
     );
   }
