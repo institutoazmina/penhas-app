@@ -8,24 +8,24 @@ part of 'feed_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$FeedController on _FeedControllerBase, Store {
+mixin _$FeedController on FeedControllerBase, Store {
   Computed<PageProgressState>? _$fetchStateComputed;
 
   @override
   PageProgressState get fetchState => (_$fetchStateComputed ??=
           Computed<PageProgressState>(() => super.fetchState,
-              name: '_FeedControllerBase.fetchState'))
+              name: 'FeedControllerBase.fetchState'))
       .value;
   Computed<PageProgressState>? _$reloadStateComputed;
 
   @override
   PageProgressState get reloadState => (_$reloadStateComputed ??=
           Computed<PageProgressState>(() => super.reloadState,
-              name: '_FeedControllerBase.reloadState'))
+              name: 'FeedControllerBase.reloadState'))
       .value;
 
   late final _$stateAtom =
-      Atom(name: '_FeedControllerBase.state', context: context);
+      Atom(name: 'FeedControllerBase.state', context: context);
 
   @override
   FeedState get state {
@@ -41,7 +41,7 @@ mixin _$FeedController on _FeedControllerBase, Store {
   }
 
   late final _$isComposeTweetFabVisibleAtom = Atom(
-      name: '_FeedControllerBase.isComposeTweetFabVisible', context: context);
+      name: 'FeedControllerBase.isComposeTweetFabVisible', context: context);
 
   @override
   bool get isComposeTweetFabVisible {
@@ -58,7 +58,7 @@ mixin _$FeedController on _FeedControllerBase, Store {
   }
 
   late final _$securityStateAtom =
-      Atom(name: '_FeedControllerBase.securityState', context: context);
+      Atom(name: 'FeedControllerBase.securityState', context: context);
 
   @override
   FeedSecurityState get securityState {
@@ -74,7 +74,7 @@ mixin _$FeedController on _FeedControllerBase, Store {
   }
 
   late final _$errorMessageAtom =
-      Atom(name: '_FeedControllerBase.errorMessage', context: context);
+      Atom(name: 'FeedControllerBase.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -90,7 +90,7 @@ mixin _$FeedController on _FeedControllerBase, Store {
   }
 
   late final _$_fetchProgressAtom =
-      Atom(name: '_FeedControllerBase._fetchProgress', context: context);
+      Atom(name: 'FeedControllerBase._fetchProgress', context: context);
 
   @override
   ObservableFuture<Either<Failure, FeedCache>>? get _fetchProgress {
@@ -106,7 +106,7 @@ mixin _$FeedController on _FeedControllerBase, Store {
   }
 
   late final _$_reloadProgressAtom =
-      Atom(name: '_FeedControllerBase._reloadProgress', context: context);
+      Atom(name: 'FeedControllerBase._reloadProgress', context: context);
 
   @override
   ObservableFuture<Either<Failure, FeedCache>>? get _reloadProgress {
@@ -122,7 +122,7 @@ mixin _$FeedController on _FeedControllerBase, Store {
   }
 
   late final _$reloadFeedAsyncAction =
-      AsyncAction('_FeedControllerBase.reloadFeed', context: context);
+      AsyncAction('FeedControllerBase.reloadFeed', context: context);
 
   @override
   Future<void> reloadFeed() {
@@ -130,35 +130,35 @@ mixin _$FeedController on _FeedControllerBase, Store {
   }
 
   late final _$disposeAsyncAction =
-      AsyncAction('_FeedControllerBase.dispose', context: context);
+      AsyncAction('FeedControllerBase.dispose', context: context);
 
   @override
   Future<void> dispose() {
     return _$disposeAsyncAction.run(() => super.dispose());
   }
 
-  late final _$_FeedControllerBaseActionController =
-      ActionController(name: '_FeedControllerBase', context: context);
+  late final _$FeedControllerBaseActionController =
+      ActionController(name: 'FeedControllerBase', context: context);
 
   @override
   Future<void> fetchNextPage() {
-    final _$actionInfo = _$_FeedControllerBaseActionController.startAction(
-        name: '_FeedControllerBase.fetchNextPage');
+    final _$actionInfo = _$FeedControllerBaseActionController.startAction(
+        name: 'FeedControllerBase.fetchNextPage');
     try {
       return super.fetchNextPage();
     } finally {
-      _$_FeedControllerBaseActionController.endAction(_$actionInfo);
+      _$FeedControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   Future<void> fetchOldestPage() {
-    final _$actionInfo = _$_FeedControllerBaseActionController.startAction(
-        name: '_FeedControllerBase.fetchOldestPage');
+    final _$actionInfo = _$FeedControllerBaseActionController.startAction(
+        name: 'FeedControllerBase.fetchOldestPage');
     try {
       return super.fetchOldestPage();
     } finally {
-      _$_FeedControllerBaseActionController.endAction(_$actionInfo);
+      _$FeedControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 

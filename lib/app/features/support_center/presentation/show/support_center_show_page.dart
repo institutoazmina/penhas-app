@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:map_launcher/map_launcher.dart';
 
 import '../../../../shared/design_system/colors.dart';
@@ -133,11 +132,12 @@ extension _PageStateBuilder on SupportCenterShowPageState {
             Container(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-              child: HtmlWidget(
-                detail.place!.htmlContent!,
-                factoryBuilder: () => _DisabledWebViewJsWidgetFactory(),
-                textStyle: htmlContentTextStyle,
-              ),
+              child: SizedBox.shrink(),
+              // TODO: HtmlWidget(
+              //   detail.place!.htmlContent!,
+              //   factoryBuilder: () => _DisabledWebViewJsWidgetFactory(),
+              //   textStyle: htmlContentTextStyle,
+              // ),
             ),
             Row(
               children: [
@@ -279,7 +279,7 @@ extension _TextStyle on SupportCenterShowPageState {
       );
 }
 
-class _DisabledWebViewJsWidgetFactory extends WidgetFactory {
-  @override
-  bool get webViewJs => false;
-}
+// TODO: class _DisabledWebViewJsWidgetFactory extends WidgetFactory {
+//   @override
+//   bool get webViewJs => false;
+// }

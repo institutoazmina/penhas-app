@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../../../../shared/design_system/colors.dart';
@@ -88,11 +87,12 @@ class NotificationCardPage extends StatelessWidget {
     }
     return Padding(
       padding: const EdgeInsets.only(top: 12.0, bottom: 12.0, left: 38),
-      child: HtmlWidget(
-        notification.content!,
-        factoryBuilder: () => DisabledWebViewJsWidgetFactory(),
-        textStyle: contentTextStyle,
-      ),
+      child: SizedBox.shrink(),
+      // TODO: HtmlWidget(
+      //   notification.content!,
+      //   factoryBuilder: () => DisabledWebViewJsWidgetFactory(),
+      //   textStyle: contentTextStyle,
+      // ),
     );
   }
 }
@@ -120,7 +120,7 @@ extension _TextStyle on NotificationCardPage {
       );
 }
 
-class DisabledWebViewJsWidgetFactory extends WidgetFactory {
-  @override
-  bool get webViewJs => false;
-}
+// TODO: class DisabledWebViewJsWidgetFactory extends WidgetFactory {
+//   @override
+//   bool get webViewJs => false;
+// }

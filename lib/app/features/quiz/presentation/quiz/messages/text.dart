@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 import '../../../../../shared/design_system/colors.dart';
 import '../../../domain/entities/answer.dart';
@@ -7,7 +6,6 @@ import '../../../domain/entities/answer.dart';
 class TextMessageWidget extends StatelessWidget {
   const TextMessageWidget._(
     this.content, {
-    Key? key,
     required this.backgroundColor,
     required this.textColor,
     this.margin,
@@ -16,7 +14,7 @@ class TextMessageWidget extends StatelessWidget {
     this.alignment,
     this.bottom,
     this.onTap,
-  }) : super(key: key);
+  });
 
   factory TextMessageWidget.sent(
     String content,
@@ -109,13 +107,14 @@ class TextMessageWidget extends StatelessWidget {
               ),
               child: ConstrainedBox(
                 constraints: const BoxConstraints(minWidth: 60.0),
-                child: HtmlWidget(
-                  content,
-                  textStyle: theme.textTheme.bodyLarge?.copyWith(
-                    color: textColor,
-                    fontSize: 15,
-                  ),
-                ),
+                child: SizedBox.shrink()
+                // tODO: HtmlWidget(
+                //   content,
+                //   textStyle: theme.textTheme.bodyLarge?.copyWith(
+                //     color: textColor,
+                //     fontSize: 15,
+                //   ),
+                // ),
               ),
             ),
           ),
@@ -131,9 +130,7 @@ class TextMessageWidget extends StatelessWidget {
 
 class _MessageStatusWidget extends StatefulWidget {
   const _MessageStatusWidget(
-    this.status, {
-    Key? key,
-  }) : super(key: key);
+    this.status);
 
   final AnswerStatus status;
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../../shared/design_system/colors.dart';
@@ -116,9 +115,10 @@ extension _PageBuilder on AccountDeletePageState {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: HtmlWidget(
-                    bodyMessage,
-                  ),
+                  child: SizedBox.shrink()
+                  // TODO: HtmlWidget(
+                  //   bodyMessage,
+                  // ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),

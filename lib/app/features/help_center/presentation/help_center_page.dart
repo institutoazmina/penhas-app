@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/extension/asuka.dart';
 import '../../../shared/design_system/colors.dart';
@@ -209,7 +209,12 @@ class HelpCenterPageState extends State<HelpCenterPage> with SnackBarHandler {
   }
 
   Future<void> _actionOnTap(String callingNumber) async {
-    await FlutterPhoneDirectCaller.callNumber(callingNumber);
+    final phoneUri = Uri.parse(callingNumber);
+    if (await canLaunchUrl(phoneUri)) {
+    await launchUrl(phoneUri);
+  } else {
+    throw 'Could not launch $phoneUri';
+  }
   }
 
   ReactionDisposer _showLoadProgress() {

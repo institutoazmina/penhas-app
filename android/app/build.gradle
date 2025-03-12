@@ -32,7 +32,7 @@ if (secretsPropertiesFile.exists()){
 def isFirebaseDistribution = System.getenv('IS_FIREBASE_DISTRIBUTION') == 'true'
 
 android {
-    namespace 'penhas.com.br'
+    namespace 'br.com.azmina.penhas'
     compileSdkVersion 34
 
     sourceSets {
@@ -52,6 +52,15 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         manifestPlaceholders["GEO_API_KEY"] = System.getenv('GEO_API_KEY') ?: secretsProperties.getProperty('GEO_API_KEY')
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17  // Set Java source compatibility to 17
+        targetCompatibility = JavaVersion.VERSION_17  // Set Java target compatibility to 17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"  // Set Kotlin to use Java 17
     }
 
     signingConfigs {

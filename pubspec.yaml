@@ -15,7 +15,7 @@ version: 3.7.1+68
 publish_to: none
 
 environment:
-  sdk: '>=2.16.2 <4.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   flutter:
@@ -39,11 +39,10 @@ dependencies:
   firebase_remote_config: ^5.0.0
   flutter_mobx: ^2.0.5
   flutter_modular: ^5.0.3
-  flutter_phone_direct_caller: ^2.1.0
   flutter_secure_storage: ^9.2.4
   flutter_sound: ^9.3.0+1
   flutter_svg: ^2.0.10+1
-  flutter_widget_from_html: ^0.15.3
+  # flutter_widget_from_html: ^0.15.3
   freezed_annotation: ^2.1.0
   geolocator: ^12.0.0
   google_maps_flutter: ^2.1.1
@@ -51,7 +50,7 @@ dependencies:
   http: ^1.2.2
   http_parser: ^4.0.0
   intl: ^0.18.1
-  json_annotation: ^4.6.0
+  json_annotation: ^4.9.0
   logger: ^2.5.0
   logging: ^1.0.2
   map_launcher: ^3.5.0

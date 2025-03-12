@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'new_guardian_state.dart';
 
@@ -12,7 +12,7 @@ part of 'new_guardian_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$NewGuardianState {
@@ -26,10 +26,10 @@ mixin _$NewGuardianState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loaded,
-    TResult Function(String message)? error,
-    TResult Function(int maxLimit)? rateLimit,
+    TResult? Function()? initial,
+    TResult? Function()? loaded,
+    TResult? Function(String message)? error,
+    TResult? Function(int maxLimit)? rateLimit,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,10 +51,10 @@ mixin _$NewGuardianState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_ErrorDetails value)? error,
-    TResult Function(_RateLimit value)? rateLimit,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_ErrorDetails value)? error,
+    TResult? Function(_RateLimit value)? rateLimit,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -72,41 +72,40 @@ mixin _$NewGuardianState {
 abstract class $NewGuardianStateCopyWith<$Res> {
   factory $NewGuardianStateCopyWith(
           NewGuardianState value, $Res Function(NewGuardianState) then) =
-      _$NewGuardianStateCopyWithImpl<$Res>;
+      _$NewGuardianStateCopyWithImpl<$Res, NewGuardianState>;
 }
 
 /// @nodoc
-class _$NewGuardianStateCopyWithImpl<$Res>
+class _$NewGuardianStateCopyWithImpl<$Res, $Val extends NewGuardianState>
     implements $NewGuardianStateCopyWith<$Res> {
   _$NewGuardianStateCopyWithImpl(this._value, this._then);
 
-  final NewGuardianState _value;
   // ignore: unused_field
-  final $Res Function(NewGuardianState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$$_InitialCopyWith<$Res> {
-  factory _$$_InitialCopyWith(
-          _$_Initial value, $Res Function(_$_Initial) then) =
-      __$$_InitialCopyWithImpl<$Res>;
+abstract class _$$InitialImplCopyWith<$Res> {
+  factory _$$InitialImplCopyWith(
+          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
+      __$$InitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res>
-    extends _$NewGuardianStateCopyWithImpl<$Res>
-    implements _$$_InitialCopyWith<$Res> {
-  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
-
-  @override
-  _$_Initial get _value => super._value as _$_Initial;
+class __$$InitialImplCopyWithImpl<$Res>
+    extends _$NewGuardianStateCopyWithImpl<$Res, _$InitialImpl>
+    implements _$$InitialImplCopyWith<$Res> {
+  __$$InitialImplCopyWithImpl(
+      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Initial implements _Initial {
-  const _$_Initial();
+class _$InitialImpl implements _Initial {
+  const _$InitialImpl();
 
   @override
   String toString() {
@@ -114,9 +113,9 @@ class _$_Initial implements _Initial {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Initial);
+        (other.runtimeType == runtimeType && other is _$InitialImpl);
   }
 
   @override
@@ -136,10 +135,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loaded,
-    TResult Function(String message)? error,
-    TResult Function(int maxLimit)? rateLimit,
+    TResult? Function()? initial,
+    TResult? Function()? loaded,
+    TResult? Function(String message)? error,
+    TResult? Function(int maxLimit)? rateLimit,
   }) {
     return initial?.call();
   }
@@ -173,10 +172,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_ErrorDetails value)? error,
-    TResult Function(_RateLimit value)? rateLimit,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_ErrorDetails value)? error,
+    TResult? Function(_RateLimit value)? rateLimit,
   }) {
     return initial?.call(this);
   }
@@ -198,29 +197,29 @@ class _$_Initial implements _Initial {
 }
 
 abstract class _Initial implements NewGuardianState {
-  const factory _Initial() = _$_Initial;
+  const factory _Initial() = _$InitialImpl;
 }
 
 /// @nodoc
-abstract class _$$_LoadedCopyWith<$Res> {
-  factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
-      __$$_LoadedCopyWithImpl<$Res>;
+abstract class _$$LoadedImplCopyWith<$Res> {
+  factory _$$LoadedImplCopyWith(
+          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
+      __$$LoadedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_LoadedCopyWithImpl<$Res> extends _$NewGuardianStateCopyWithImpl<$Res>
-    implements _$$_LoadedCopyWith<$Res> {
-  __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
-      : super(_value, (v) => _then(v as _$_Loaded));
-
-  @override
-  _$_Loaded get _value => super._value as _$_Loaded;
+class __$$LoadedImplCopyWithImpl<$Res>
+    extends _$NewGuardianStateCopyWithImpl<$Res, _$LoadedImpl>
+    implements _$$LoadedImplCopyWith<$Res> {
+  __$$LoadedImplCopyWithImpl(
+      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Loaded implements _Loaded {
-  const _$_Loaded();
+class _$LoadedImpl implements _Loaded {
+  const _$LoadedImpl();
 
   @override
   String toString() {
@@ -228,9 +227,9 @@ class _$_Loaded implements _Loaded {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Loaded);
+        (other.runtimeType == runtimeType && other is _$LoadedImpl);
   }
 
   @override
@@ -250,10 +249,10 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loaded,
-    TResult Function(String message)? error,
-    TResult Function(int maxLimit)? rateLimit,
+    TResult? Function()? initial,
+    TResult? Function()? loaded,
+    TResult? Function(String message)? error,
+    TResult? Function(int maxLimit)? rateLimit,
   }) {
     return loaded?.call();
   }
@@ -287,10 +286,10 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_ErrorDetails value)? error,
-    TResult Function(_RateLimit value)? rateLimit,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_ErrorDetails value)? error,
+    TResult? Function(_RateLimit value)? rateLimit,
   }) {
     return loaded?.call(this);
   }
@@ -312,34 +311,33 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements NewGuardianState {
-  const factory _Loaded() = _$_Loaded;
+  const factory _Loaded() = _$LoadedImpl;
 }
 
 /// @nodoc
-abstract class _$$_ErrorDetailsCopyWith<$Res> {
-  factory _$$_ErrorDetailsCopyWith(
-          _$_ErrorDetails value, $Res Function(_$_ErrorDetails) then) =
-      __$$_ErrorDetailsCopyWithImpl<$Res>;
+abstract class _$$ErrorDetailsImplCopyWith<$Res> {
+  factory _$$ErrorDetailsImplCopyWith(
+          _$ErrorDetailsImpl value, $Res Function(_$ErrorDetailsImpl) then) =
+      __$$ErrorDetailsImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$$_ErrorDetailsCopyWithImpl<$Res>
-    extends _$NewGuardianStateCopyWithImpl<$Res>
-    implements _$$_ErrorDetailsCopyWith<$Res> {
-  __$$_ErrorDetailsCopyWithImpl(
-      _$_ErrorDetails _value, $Res Function(_$_ErrorDetails) _then)
-      : super(_value, (v) => _then(v as _$_ErrorDetails));
+class __$$ErrorDetailsImplCopyWithImpl<$Res>
+    extends _$NewGuardianStateCopyWithImpl<$Res, _$ErrorDetailsImpl>
+    implements _$$ErrorDetailsImplCopyWith<$Res> {
+  __$$ErrorDetailsImplCopyWithImpl(
+      _$ErrorDetailsImpl _value, $Res Function(_$ErrorDetailsImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_ErrorDetails get _value => super._value as _$_ErrorDetails;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? message = freezed,
+    Object? message = null,
   }) {
-    return _then(_$_ErrorDetails(
-      message == freezed
+    return _then(_$ErrorDetailsImpl(
+      null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
@@ -349,8 +347,8 @@ class __$$_ErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ErrorDetails implements _ErrorDetails {
-  const _$_ErrorDetails(this.message);
+class _$ErrorDetailsImpl implements _ErrorDetails {
+  const _$ErrorDetailsImpl(this.message);
 
   @override
   final String message;
@@ -361,21 +359,21 @@ class _$_ErrorDetails implements _ErrorDetails {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ErrorDetails &&
-            const DeepCollectionEquality().equals(other.message, message));
+            other is _$ErrorDetailsImpl &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
-  _$$_ErrorDetailsCopyWith<_$_ErrorDetails> get copyWith =>
-      __$$_ErrorDetailsCopyWithImpl<_$_ErrorDetails>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$ErrorDetailsImplCopyWith<_$ErrorDetailsImpl> get copyWith =>
+      __$$ErrorDetailsImplCopyWithImpl<_$ErrorDetailsImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -391,10 +389,10 @@ class _$_ErrorDetails implements _ErrorDetails {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loaded,
-    TResult Function(String message)? error,
-    TResult Function(int maxLimit)? rateLimit,
+    TResult? Function()? initial,
+    TResult? Function()? loaded,
+    TResult? Function(String message)? error,
+    TResult? Function(int maxLimit)? rateLimit,
   }) {
     return error?.call(message);
   }
@@ -428,10 +426,10 @@ class _$_ErrorDetails implements _ErrorDetails {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_ErrorDetails value)? error,
-    TResult Function(_RateLimit value)? rateLimit,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_ErrorDetails value)? error,
+    TResult? Function(_RateLimit value)? rateLimit,
   }) {
     return error?.call(this);
   }
@@ -453,39 +451,38 @@ class _$_ErrorDetails implements _ErrorDetails {
 }
 
 abstract class _ErrorDetails implements NewGuardianState {
-  const factory _ErrorDetails(final String message) = _$_ErrorDetails;
+  const factory _ErrorDetails(final String message) = _$ErrorDetailsImpl;
 
   String get message;
   @JsonKey(ignore: true)
-  _$$_ErrorDetailsCopyWith<_$_ErrorDetails> get copyWith =>
+  _$$ErrorDetailsImplCopyWith<_$ErrorDetailsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_RateLimitCopyWith<$Res> {
-  factory _$$_RateLimitCopyWith(
-          _$_RateLimit value, $Res Function(_$_RateLimit) then) =
-      __$$_RateLimitCopyWithImpl<$Res>;
+abstract class _$$RateLimitImplCopyWith<$Res> {
+  factory _$$RateLimitImplCopyWith(
+          _$RateLimitImpl value, $Res Function(_$RateLimitImpl) then) =
+      __$$RateLimitImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({int maxLimit});
 }
 
 /// @nodoc
-class __$$_RateLimitCopyWithImpl<$Res>
-    extends _$NewGuardianStateCopyWithImpl<$Res>
-    implements _$$_RateLimitCopyWith<$Res> {
-  __$$_RateLimitCopyWithImpl(
-      _$_RateLimit _value, $Res Function(_$_RateLimit) _then)
-      : super(_value, (v) => _then(v as _$_RateLimit));
+class __$$RateLimitImplCopyWithImpl<$Res>
+    extends _$NewGuardianStateCopyWithImpl<$Res, _$RateLimitImpl>
+    implements _$$RateLimitImplCopyWith<$Res> {
+  __$$RateLimitImplCopyWithImpl(
+      _$RateLimitImpl _value, $Res Function(_$RateLimitImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_RateLimit get _value => super._value as _$_RateLimit;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? maxLimit = freezed,
+    Object? maxLimit = null,
   }) {
-    return _then(_$_RateLimit(
-      maxLimit == freezed
+    return _then(_$RateLimitImpl(
+      null == maxLimit
           ? _value.maxLimit
           : maxLimit // ignore: cast_nullable_to_non_nullable
               as int,
@@ -495,8 +492,8 @@ class __$$_RateLimitCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RateLimit implements _RateLimit {
-  const _$_RateLimit(this.maxLimit);
+class _$RateLimitImpl implements _RateLimit {
+  const _$RateLimitImpl(this.maxLimit);
 
   @override
   final int maxLimit;
@@ -507,21 +504,22 @@ class _$_RateLimit implements _RateLimit {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RateLimit &&
-            const DeepCollectionEquality().equals(other.maxLimit, maxLimit));
+            other is _$RateLimitImpl &&
+            (identical(other.maxLimit, maxLimit) ||
+                other.maxLimit == maxLimit));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(maxLimit));
+  int get hashCode => Object.hash(runtimeType, maxLimit);
 
   @JsonKey(ignore: true)
   @override
-  _$$_RateLimitCopyWith<_$_RateLimit> get copyWith =>
-      __$$_RateLimitCopyWithImpl<_$_RateLimit>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$RateLimitImplCopyWith<_$RateLimitImpl> get copyWith =>
+      __$$RateLimitImplCopyWithImpl<_$RateLimitImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -537,10 +535,10 @@ class _$_RateLimit implements _RateLimit {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loaded,
-    TResult Function(String message)? error,
-    TResult Function(int maxLimit)? rateLimit,
+    TResult? Function()? initial,
+    TResult? Function()? loaded,
+    TResult? Function(String message)? error,
+    TResult? Function(int maxLimit)? rateLimit,
   }) {
     return rateLimit?.call(maxLimit);
   }
@@ -574,10 +572,10 @@ class _$_RateLimit implements _RateLimit {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_ErrorDetails value)? error,
-    TResult Function(_RateLimit value)? rateLimit,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_ErrorDetails value)? error,
+    TResult? Function(_RateLimit value)? rateLimit,
   }) {
     return rateLimit?.call(this);
   }
@@ -599,10 +597,10 @@ class _$_RateLimit implements _RateLimit {
 }
 
 abstract class _RateLimit implements NewGuardianState {
-  const factory _RateLimit(final int maxLimit) = _$_RateLimit;
+  const factory _RateLimit(final int maxLimit) = _$RateLimitImpl;
 
   int get maxLimit;
   @JsonKey(ignore: true)
-  _$$_RateLimitCopyWith<_$_RateLimit> get copyWith =>
+  _$$RateLimitImplCopyWith<_$RateLimitImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
