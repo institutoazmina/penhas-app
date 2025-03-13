@@ -4,20 +4,13 @@ import 'chat_user_model.dart';
 
 class ChatChannelSessionModel extends ChatChannelSessionEntity {
   const ChatChannelSessionModel({
-    required bool? hasMore,
-    required String? newer,
-    required String? older,
-    required List<ChatMessageModel>? messages,
-    required ChatChannelSessionMetadataModel? metadata,
-    required ChatUserModel? user,
-  }) : super(
-          hasMore: hasMore,
-          newer: newer,
-          older: older,
-          messages: messages,
-          metadata: metadata,
-          user: user,
-        );
+    required super.hasMore,
+    required super.newer,
+    required super.older,
+    required List<ChatMessageModel>? super.messages,
+    required ChatChannelSessionMetadataModel? super.metadata,
+    required ChatUserModel? super.user,
+  });
 
   factory ChatChannelSessionModel.fromJson(Map<String, dynamic> jsonData) {
     final List jsonMessages = jsonData['messages'];
@@ -37,20 +30,13 @@ class ChatChannelSessionModel extends ChatChannelSessionEntity {
 
 class ChatChannelSessionMetadataModel extends ChatChannelSessionMetadataEntity {
   const ChatChannelSessionMetadataModel({
-    required bool canSendMessage,
-    required bool didBlocked,
-    required String? headerMessage,
-    required String? headerWarning,
-    required bool isBlockable,
-    required String? lastMessageEtag,
-  }) : super(
-          canSendMessage: canSendMessage,
-          didBlocked: didBlocked,
-          headerMessage: headerMessage,
-          headerWarning: headerWarning,
-          isBlockable: isBlockable,
-          lastMessageEtag: lastMessageEtag,
-        );
+    required super.canSendMessage,
+    required super.didBlocked,
+    required super.headerMessage,
+    required super.headerWarning,
+    required super.isBlockable,
+    required super.lastMessageEtag,
+  });
 
   factory ChatChannelSessionMetadataModel.fromJson(
     Map<String, dynamic> jsonData,

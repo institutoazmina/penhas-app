@@ -5,12 +5,11 @@ import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 
 class SupportCenterGeneralError extends StatelessWidget {
   const SupportCenterGeneralError({
-    Key? key,
+    super.key,
     required String message,
     required VoidCallback onPressed,
   })  : _message = message,
-        _onPressed = onPressed,
-        super(key: key);
+        _onPressed = onPressed;
 
   final String _message;
   final VoidCallback _onPressed;

@@ -9,11 +9,11 @@ import 'mainboard_notification_page.dart';
 class MainBoardAppBarPage extends StatelessWidget
     implements PreferredSizeWidget {
   const MainBoardAppBarPage({
-    Key? key,
+    super.key,
     required this.counter,
     required this.currentPage,
     required this.resetCounter,
-  }) : super(key: key);
+  });
 
   final int counter;
   final MainboardState currentPage;

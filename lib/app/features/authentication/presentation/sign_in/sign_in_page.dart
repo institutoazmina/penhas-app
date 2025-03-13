@@ -20,8 +20,7 @@ import 'sign_in_controller.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage(
-      {Key? key, this.title = 'Authentication', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'Authentication', required this.controller});
 
   final String title;
   final SignInController controller;

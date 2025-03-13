@@ -16,8 +16,7 @@ import 'sign_in_stealth_controller.dart';
 
 class SignInStealthPage extends StatefulWidget {
   const SignInStealthPage(
-      {Key? key, this.title = 'Authentication', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'Authentication', required this.controller});
 
   final String title;
   final SignInStealthController controller;

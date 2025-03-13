@@ -15,8 +15,7 @@ import 'edit_trusted_contacts_state.dart';
 typedef OnContactActionPressed = void Function(ContactEntity contact);
 
 class EditTrustedContactsPage extends StatefulWidget {
-  const EditTrustedContactsPage({Key? key, required this.controller})
-      : super(key: key);
+  const EditTrustedContactsPage({super.key, required this.controller});
 
   final EditTrustedContactsController controller;
 
@@ -130,11 +129,10 @@ class _EditTrustedContactsPageState extends State<EditTrustedContactsPage> {
 
 class _LoadedStateWidget extends StatelessWidget {
   const _LoadedStateWidget({
-    Key? key,
     required this.contacts,
     required this.onUpdateContactPressed,
     required this.onRemoveContactPressed,
-  }) : super(key: key);
+  });
 
   final List<ContactEntity> contacts;
   final OnContactActionPressed onUpdateContactPressed;
@@ -162,11 +160,11 @@ class _LoadedStateWidget extends StatelessWidget {
 
 class _ContactCard extends StatelessWidget {
   const _ContactCard({
-    Key? key,
+    super.key,
     required this.contact,
     required this.onUpdatePressed,
     required this.onRemovePressed,
-  }) : super(key: key);
+  });
 
   final ContactEntity contact;
   final VoidCallback onUpdatePressed;

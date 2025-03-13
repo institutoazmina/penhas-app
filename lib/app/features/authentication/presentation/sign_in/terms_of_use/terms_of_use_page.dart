@@ -5,9 +5,9 @@ import '../../../../../shared/design_system/colors.dart';
 
 class TermsOfUsePage extends StatelessWidget {
   const TermsOfUsePage({
-    Key? key,
+    super.key,
     required this.baseUrl,
-  }) : super(key: key);
+  });
 
   final Uri baseUrl;
 

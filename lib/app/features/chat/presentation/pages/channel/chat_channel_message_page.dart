@@ -54,13 +54,13 @@ class ChatChannelMessagePage extends StatelessWidget {
               )
             ]),
         child: Container(
-          constraints: const BoxConstraints(minWidth: 60.0),
-          child: SizedBox.shrink()
-          // TODO HtmlWidget(
-          //   content.content.message!,
-          //   textStyle: TextStyle(fontSize: 15.0, color: textColor),
-          // ),
-        ),
+            constraints: const BoxConstraints(minWidth: 60.0),
+            child: SizedBox.shrink()
+            // TODO HtmlWidget(
+            //   content.content.message!,
+            //   textStyle: TextStyle(fontSize: 15.0, color: textColor),
+            // ),
+            ),
       ),
     );
   }

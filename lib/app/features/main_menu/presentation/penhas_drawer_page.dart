@@ -15,11 +15,10 @@ import 'penhas_drawer_controller.dart';
 
 class PenhasDrawerPage extends StatefulWidget {
   const PenhasDrawerPage(
-      {Key? key,
+      {super.key,
       this.title = 'Penhas Drawer',
       required this.controller,
-      required this.stealthController})
-      : super(key: key);
+      required this.stealthController});
 
   final String title;
   final PenhasDrawerController controller;

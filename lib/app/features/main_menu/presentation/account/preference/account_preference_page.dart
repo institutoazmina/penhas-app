@@ -13,8 +13,7 @@ import '../../../domain/states/account_preference_state.dart';
 import 'account_preference_controller.dart';
 
 class AccountPreferencePage extends StatefulWidget {
-  const AccountPreferencePage({Key? key, required this.controller})
-      : super(key: key);
+  const AccountPreferencePage({super.key, required this.controller});
 
   final AccountPreferenceController controller;
 

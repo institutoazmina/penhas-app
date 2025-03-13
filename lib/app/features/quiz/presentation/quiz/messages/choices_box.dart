@@ -6,10 +6,10 @@ import '../../../../../shared/design_system/text_styles.dart';
 
 class ChoicesBox extends StatelessWidget {
   const ChoicesBox({
-    Key? key,
+    super.key,
     required this.children,
     this.onSend,
-  }) : super(key: key);
+  });
 
   final List<Widget> children;
   final VoidCallback? onSend;

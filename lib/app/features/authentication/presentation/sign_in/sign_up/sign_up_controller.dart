@@ -16,7 +16,7 @@ import '../../shared/user_register_form_field_model.dart';
 part 'sign_up_controller.g.dart';
 
 class SignUpController extends _SignUpControllerBase with _$SignUpController {
-  SignUpController(IUserRegisterRepository repository) : super(repository);
+  SignUpController(super.repository);
 }
 
 abstract class _SignUpControllerBase with Store, MapFailureMessage {

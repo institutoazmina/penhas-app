@@ -5,8 +5,8 @@ import '../../../../../../authentication/presentation/shared/page_progress_indic
 
 class ProfileSkillInitialWidget extends StatelessWidget {
   const ProfileSkillInitialWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

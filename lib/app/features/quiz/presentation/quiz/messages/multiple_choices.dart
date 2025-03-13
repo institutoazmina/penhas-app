@@ -6,10 +6,10 @@ import 'choices_box.dart';
 
 class MultipleChoicesMessageWidget extends StatefulWidget {
   const MultipleChoicesMessageWidget({
-    Key? key,
+    super.key,
     required this.options,
     this.onReply,
-  }) : super(key: key);
+  });
 
   final List<MessageOption> options;
   final ValueChanged<AnswerValue>? onReply;
@@ -70,10 +70,10 @@ class _MultipleChoicesMessageWidgetState
 class CheckboxOption extends StatelessWidget {
   const CheckboxOption(
     this.option, {
-    Key? key,
+    super.key,
     required this.isChecked,
     this.onChange,
-  }) : super(key: key);
+  });
 
   final MessageOption option;
   final bool isChecked;

@@ -106,16 +106,16 @@ class TextMessageWidget extends StatelessWidget {
                 borderRadius: borderRadius,
               ),
               child: ConstrainedBox(
-                constraints: const BoxConstraints(minWidth: 60.0),
-                child: SizedBox.shrink()
-                // tODO: HtmlWidget(
-                //   content,
-                //   textStyle: theme.textTheme.bodyLarge?.copyWith(
-                //     color: textColor,
-                //     fontSize: 15,
-                //   ),
-                // ),
-              ),
+                  constraints: const BoxConstraints(minWidth: 60.0),
+                  child: SizedBox.shrink()
+                  // TODO: HtmlWidget(
+                  //   content,
+                  //   textStyle: theme.textTheme.bodyLarge?.copyWith(
+                  //     color: textColor,
+                  //     fontSize: 15,
+                  //   ),
+                  // ),
+                  ),
             ),
           ),
           ConstrainedBox(
@@ -129,8 +129,7 @@ class TextMessageWidget extends StatelessWidget {
 }
 
 class _MessageStatusWidget extends StatefulWidget {
-  const _MessageStatusWidget(
-    this.status);
+  const _MessageStatusWidget(this.status);
 
   final AnswerStatus status;
 

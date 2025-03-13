@@ -12,7 +12,7 @@ import 'help_center_page.dart';
 import 'pages/audio/audio_record_controller.dart';
 
 class HelpCenterModule extends WidgetModule {
-  HelpCenterModule({Key? key}) : super(key: key);
+  HelpCenterModule({super.key});
 
   @override
   List<Bind> get binds => [

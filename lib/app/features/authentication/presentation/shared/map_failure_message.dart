@@ -13,13 +13,13 @@ mixin MapFailureMessage {
     var message = genericFailure;
 
     switch (failure.runtimeType) {
-      case InternetConnectionFailure:
+      case const (InternetConnectionFailure):
         message = internetConnectionFailure;
         break;
-      case ServerFailure:
+      case const (ServerFailure):
         message = serverFailure;
         break;
-      case ServerSideFormFieldValidationFailure:
+      case const (ServerSideFormFieldValidationFailure):
         message = mapServerSideValidationFailure(
           failure as ServerSideFormFieldValidationFailure,
         );

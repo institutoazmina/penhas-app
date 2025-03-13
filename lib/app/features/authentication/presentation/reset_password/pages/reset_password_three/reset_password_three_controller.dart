@@ -17,10 +17,10 @@ part 'reset_password_three_controller.g.dart';
 class ResetPasswordThreeController extends _ResetPasswordThreeControllerBase
     with _$ResetPasswordThreeController {
   ResetPasswordThreeController(
-    IChangePasswordRepository repository,
-    UserRegisterFormFieldModel? userRegisterModel,
-    PasswordValidator passwordValidator,
-  ) : super(repository, userRegisterModel, passwordValidator);
+    super.repository,
+    super.userRegisterModel,
+    super.passwordValidator,
+  );
 }
 
 abstract class _ResetPasswordThreeControllerBase with Store, MapFailureMessage {

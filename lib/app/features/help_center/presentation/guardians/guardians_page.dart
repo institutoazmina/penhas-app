@@ -16,8 +16,7 @@ import 'guardians_controller.dart';
 
 class GuardiansPage extends StatefulWidget {
   const GuardiansPage(
-      {Key? key, this.title = 'Guardians', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'Guardians', required this.controller});
 
   final GuardiansController controller;
 

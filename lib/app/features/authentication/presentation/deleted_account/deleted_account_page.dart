@@ -10,9 +10,9 @@ import 'deleted_account_controller.dart';
 
 class DeletedAccountPage extends StatefulWidget {
   const DeletedAccountPage({
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final DeletedAccountController controller;
 

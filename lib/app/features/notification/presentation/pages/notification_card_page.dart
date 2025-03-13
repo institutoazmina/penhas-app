@@ -7,8 +7,7 @@ import '../../../../shared/design_system/colors.dart';
 import '../../domain/entities/notification_session_entity.dart';
 
 class NotificationCardPage extends StatelessWidget {
-  const NotificationCardPage({Key? key, required this.notification})
-      : super(key: key);
+  const NotificationCardPage({super.key, required this.notification});
 
   final NotificationEntity notification;
 

@@ -14,9 +14,9 @@ import 'pages/notification_card_page.dart';
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final NotificationController controller;
 

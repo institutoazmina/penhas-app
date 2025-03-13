@@ -19,7 +19,7 @@ import '../pages/card_profile_skill_page.dart';
 import 'profile_edit_controller.dart';
 
 class ProfileEditPage extends StatefulWidget {
-  const ProfileEditPage({Key? key, required this.controller}) : super(key: key);
+  const ProfileEditPage({super.key, required this.controller});
 
   final ProfileEditController controller;
 

@@ -4,12 +4,12 @@ import '../../../../shared/design_system/colors.dart';
 
 class SupportCenterInput extends StatelessWidget {
   const SupportCenterInput({
-    Key? key,
+    super.key,
     this.maxLines = 1,
     required this.hintText,
     required this.errorText,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   final int maxLines;
   final String hintText;

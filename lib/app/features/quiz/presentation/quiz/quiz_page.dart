@@ -16,7 +16,7 @@ import 'quiz_controller.dart';
 const fabScrollOffset = 48.0;
 
 class QuizPage extends StatelessWidget {
-  const QuizPage({Key? key, required this.controller}) : super(key: key);
+  const QuizPage({super.key, required this.controller});
   final IQuizController controller;
 
   @override
@@ -51,10 +51,10 @@ class QuizPage extends StatelessWidget {
 
 class QuizContent extends StatefulWidget {
   const QuizContent({
-    Key? key,
+    super.key,
     required this.constraints,
     required this.controller,
-  }) : super(key: key);
+  });
   final IQuizController controller;
 
   final BoxConstraints constraints;

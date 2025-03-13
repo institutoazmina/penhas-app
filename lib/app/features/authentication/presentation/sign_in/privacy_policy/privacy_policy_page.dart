@@ -5,9 +5,9 @@ import '../../../../../shared/design_system/colors.dart';
 
 class PrivacyPolicyPage extends StatelessWidget {
   const PrivacyPolicyPage({
-    Key? key,
+    super.key,
     required this.baseUrl,
-  }) : super(key: key);
+  });
 
   final Uri baseUrl;
 

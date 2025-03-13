@@ -11,8 +11,7 @@ import '../../../domain/states/profile_delete_state.dart';
 import 'account_delete_controller.dart';
 
 class AccountDeletePage extends StatefulWidget {
-  const AccountDeletePage({Key? key, required this.controller})
-      : super(key: key);
+  const AccountDeletePage({super.key, required this.controller});
   final AccountDeleteController controller;
 
   @override
@@ -114,12 +113,12 @@ extension _PageBuilder on AccountDeletePageState {
                   style: titleTextStyle,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: SizedBox.shrink()
-                  // TODO: HtmlWidget(
-                  //   bodyMessage,
-                  // ),
-                ),
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    child: SizedBox.shrink()
+                    // TODO: HtmlWidget(
+                    //   bodyMessage,
+                    // ),
+                    ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
                   child: TextField(

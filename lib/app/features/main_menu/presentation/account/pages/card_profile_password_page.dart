@@ -8,10 +8,10 @@ import 'card_profile_header_edit_page.dart';
 
 class CardProfilePasswordPage extends StatelessWidget {
   const CardProfilePasswordPage({
-    Key? key,
+    super.key,
     required this.content,
     required this.onChange,
-  }) : super(key: key);
+  });
 
   final String content;
   final void Function(String, String) onChange;

@@ -24,8 +24,8 @@ import 'user_profile_state.dart';
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({
     required this.controller,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final UserProfileController controller;
 

@@ -6,7 +6,7 @@ import '../../../../../../shared/design_system/colors.dart';
 import '../../../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 
 class GuardianTutorialPage extends StatefulWidget {
-  const GuardianTutorialPage({Key? key}) : super(key: key);
+  const GuardianTutorialPage({super.key});
 
   @override
   GuardianTutorialPageState createState() => GuardianTutorialPageState();

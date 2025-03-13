@@ -12,8 +12,7 @@ import '../pages/chat_channel_card.dart';
 import 'chat_main_talks_controller.dart';
 
 class ChatMainTalksPage extends StatefulWidget {
-  const ChatMainTalksPage({Key? key, required this.controller})
-      : super(key: key);
+  const ChatMainTalksPage({super.key, required this.controller});
 
   final ChatMainTalksController controller;
 

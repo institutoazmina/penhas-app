@@ -7,11 +7,11 @@ import '../../../domain/entities/audio_play_tile_entity.dart';
 
 class AudioPlayWidget extends StatelessWidget {
   const AudioPlayWidget({
-    Key? key,
+    super.key,
     required this.audioPlay,
     required this.isPlaying,
     required this.backgroundColor,
-  }) : super(key: key);
+  });
 
   final AudioPlayTileEntity audioPlay;
   final bool isPlaying;

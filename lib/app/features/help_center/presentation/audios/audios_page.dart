@@ -20,8 +20,8 @@ import '../pages/guardian_error_page.dart';
 import 'audios_controller.dart';
 
 class AudiosPage extends StatefulWidget {
-  const AudiosPage({Key? key, this.title = 'Audios', required this.controller})
-      : super(key: key);
+  const AudiosPage(
+      {super.key, this.title = 'Audios', required this.controller});
 
   final String title;
   final AudiosController controller;

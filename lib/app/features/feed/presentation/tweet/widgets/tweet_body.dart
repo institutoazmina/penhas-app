@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 
 class TweetBody extends StatelessWidget {
   const TweetBody({
-    Key? key,
+    super.key,
     required String? content,
-  })  : bodyContent = content,
-        super(key: key);
+  }) : bodyContent = content;
 
   final String? bodyContent;
 

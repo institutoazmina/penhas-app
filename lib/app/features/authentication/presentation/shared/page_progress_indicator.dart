@@ -4,11 +4,11 @@ enum PageProgressState { initial, loading, loaded }
 
 class PageProgressIndicator extends StatefulWidget {
   const PageProgressIndicator({
-    Key? key,
+    super.key,
     required this.child,
     required this.progressState,
     this.progressMessage = 'Processando',
-  }) : super(key: key);
+  });
 
   final Widget child;
   final PageProgressState progressState;

@@ -14,8 +14,7 @@ import 'reset_password_two_controller.dart';
 
 class ResetPasswordTwoPage extends StatefulWidget {
   const ResetPasswordTwoPage(
-      {Key? key, this.title = 'ResetPasswordTwo', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'ResetPasswordTwo', required this.controller});
 
   final String title;
   final ResetPasswordTwoController controller;

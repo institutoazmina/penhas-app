@@ -14,8 +14,7 @@ part 'reset_password_controller.g.dart';
 
 class ResetPasswordController extends _ResetPasswordControllerBase
     with _$ResetPasswordController {
-  ResetPasswordController(IResetPasswordRepository repository)
-      : super(repository);
+  ResetPasswordController(super.repository);
 }
 
 abstract class _ResetPasswordControllerBase with Store, MapFailureMessage {

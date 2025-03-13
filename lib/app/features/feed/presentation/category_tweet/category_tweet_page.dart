@@ -11,10 +11,10 @@ import 'category_tweet_controller.dart';
 
 class CategoryTweetPage extends StatefulWidget {
   const CategoryTweetPage({
-    Key? key,
+    super.key,
     this.title = 'CategoryTweet',
     required this.controller,
-  }) : super(key: key);
+  });
 
   final String title;
   final CategoryTweetController controller;

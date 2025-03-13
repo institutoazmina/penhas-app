@@ -9,12 +9,12 @@ import 'support_center_help_alert.dart';
 
 class SupportCenterInputFilter extends StatelessWidget {
   SupportCenterInputFilter({
-    Key? key,
+    super.key,
     this.totalOfFilter = 0,
     this.initialValue,
     required this.onFilterAction,
     required this.onKeywordsAction,
-  }) : super(key: key);
+  });
 
   final int totalOfFilter;
   final String? initialValue;

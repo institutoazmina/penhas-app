@@ -21,11 +21,11 @@ import 'tweet/widgets/tweet_related_news.dart';
 
 class FeedPage extends StatefulWidget {
   const FeedPage({
-    Key? key,
+    super.key,
     this.title = 'Feed',
     required this.tweetController,
     required this.feedController,
-  }) : super(key: key);
+  });
 
   final String title;
   final ITweetController tweetController;
@@ -255,10 +255,8 @@ class FeedPageState extends State<FeedPage>
 
 class _NewPostFab extends StatelessWidget {
   const _NewPostFab({
-    Key? key,
     required bool isFabCollapsed,
-  })  : _isFabCollapsed = isFabCollapsed,
-        super(key: key);
+  }) : _isFabCollapsed = isFabCollapsed;
 
   final bool _isFabCollapsed;
 

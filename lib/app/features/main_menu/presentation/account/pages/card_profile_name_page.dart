@@ -11,12 +11,12 @@ import 'card_profile_header_edit_page.dart';
 
 class CardProfileNamePage extends StatelessWidget {
   const CardProfileNamePage({
-    Key? key,
+    super.key,
     required this.name,
     required this.onChange,
     this.avatar,
     required this.badges,
-  }) : super(key: key);
+  });
 
   final String? name;
   final String? avatar;

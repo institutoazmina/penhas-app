@@ -7,11 +7,11 @@ import 'mainboard_button_page.dart';
 
 class MainboardBottomNavigationPage extends StatelessWidget {
   const MainboardBottomNavigationPage({
-    Key? key,
+    super.key,
     required this.pages,
     required this.currentPage,
     required this.onSelect,
-  }) : super(key: key);
+  });
 
   final MainboardState currentPage;
   final List<MainboardState> pages;
@@ -54,8 +54,8 @@ class MainboardNavigationButton extends StatelessWidget {
     required this.page,
     required this.selectedPage,
     required this.onSelect,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final MainboardState page;
   final MainboardState selectedPage;
@@ -80,11 +80,11 @@ class MainboardNavigationButton extends StatelessWidget {
 
 class HelpCenterButtonPage extends StatelessWidget {
   const HelpCenterButtonPage({
-    Key? key,
+    super.key,
     required this.page,
     required this.selectedPage,
     required this.onSelect,
-  }) : super(key: key);
+  });
 
   final MainboardState page;
   final MainboardState selectedPage;

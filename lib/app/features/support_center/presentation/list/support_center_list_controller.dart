@@ -8,8 +8,7 @@ part 'support_center_list_controller.g.dart';
 
 class SupportCenterListController extends _SupportCenterListControllerBase
     with _$SupportCenterListController {
-  SupportCenterListController(SupportCenterPlaceSessionEntity session)
-      : super(session);
+  SupportCenterListController(super.session);
 }
 
 abstract class _SupportCenterListControllerBase with Store {

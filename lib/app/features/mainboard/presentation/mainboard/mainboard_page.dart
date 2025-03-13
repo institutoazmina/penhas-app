@@ -12,12 +12,12 @@ import 'pages/mainboard_bottom_navigation_page.dart';
 
 class MainboardPage extends StatefulWidget {
   const MainboardPage({
-    Key? key,
+    super.key,
     required this.controller,
     required this.composeTweetController,
     required this.penhasDrawerController,
     required this.stealthController,
-  }) : super(key: key);
+  });
 
   final MainboardController controller;
   final ComposeTweetController composeTweetController;

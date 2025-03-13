@@ -23,9 +23,9 @@ import 'support_center_add_controller.dart';
 
 class SupportCenterAddPage extends StatefulWidget {
   const SupportCenterAddPage({
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final SupportCenterAddController controller;
 

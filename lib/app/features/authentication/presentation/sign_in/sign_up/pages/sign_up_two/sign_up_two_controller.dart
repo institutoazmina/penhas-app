@@ -25,9 +25,9 @@ class MenuItemModel {
 class SignUpTwoController extends _SignUpTwoControllerBase
     with _$SignUpTwoController {
   SignUpTwoController(
-    IUserRegisterRepository repository,
-    UserRegisterFormFieldModel userFormFielModel,
-  ) : super(repository, userFormFielModel);
+    super.repository,
+    super.userFormFielModel,
+  );
 
   static List<MenuItemModel> genreDataSource() {
     return Genre.values

@@ -21,8 +21,7 @@ import 'new_guardian_controller.dart';
 
 class NewGuardianPage extends StatefulWidget {
   const NewGuardianPage(
-      {Key? key, this.title = 'NewGuardian', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'NewGuardian', required this.controller});
 
   final String title;
   final NewGuardianController controller;

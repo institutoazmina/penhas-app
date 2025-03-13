@@ -5,10 +5,10 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class MainboardNotificationPage extends StatelessWidget {
   const MainboardNotificationPage({
-    Key? key,
+    super.key,
     required this.counter,
     required this.resetCounter,
-  }) : super(key: key);
+  });
 
   final int counter;
   final void Function() resetCounter;

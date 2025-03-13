@@ -5,10 +5,10 @@ import '../../../../../shared/design_system/colors.dart';
 
 class CardProfileHeaderEditPage extends StatelessWidget {
   const CardProfileHeaderEditPage({
-    Key? key,
+    super.key,
     required this.title,
     required this.onEditAction,
-  }) : super(key: key);
+  });
 
   final String title;
   final void Function()? onEditAction;

@@ -3,10 +3,9 @@ import 'package:flutter_svg/svg.dart';
 
 class GuardianRateLimitPage extends StatelessWidget {
   const GuardianRateLimitPage({
-    Key? key,
+    super.key,
     required int maxLimit,
-  })  : _maxLimit = maxLimit,
-        super(key: key);
+  }) : _maxLimit = maxLimit;
 
   final int _maxLimit;
 

@@ -23,8 +23,7 @@ typedef OnCallButtonPressed = void Function(
 );
 
 class EscapeManualPage extends StatefulWidget {
-  const EscapeManualPage({Key? key, required this.controller})
-      : super(key: key);
+  const EscapeManualPage({super.key, required this.controller});
   final EscapeManualController controller;
 
   @override
@@ -100,9 +99,9 @@ class _InitialStateWidget extends Container {
 
 class _ErrorStateWidget extends SupportCenterGeneralError {
   const _ErrorStateWidget({
-    required String message,
+    required super.message,
     required VoidCallback onRetryPressed,
-  }) : super(message: message, onPressed: onRetryPressed);
+  }) : super(onPressed: onRetryPressed);
 }
 
 class _LoadedStateWidget extends StatelessWidget {
@@ -240,8 +239,8 @@ class _TaskWidget extends StatefulWidget {
   const _TaskWidget(
     this.task,
     this.controller, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final EscapeManualTodoTaskEntity task;
   final EscapeManualController controller;
@@ -380,9 +379,8 @@ class _Divider extends Divider {
 class _TrustedContactsWidget extends StatelessWidget {
   const _TrustedContactsWidget(
     this.task, {
-    Key? key,
     required this.onCallButtonPressed,
-  }) : super(key: key);
+  });
 
   final EscapeManualContactsTaskEntity task;
   final OnCallButtonPressed onCallButtonPressed;
@@ -412,9 +410,8 @@ class _TrustedContactsWidget extends StatelessWidget {
 class _ContactWidget extends StatelessWidget {
   const _ContactWidget(
     this.contact, {
-    Key? key,
     required this.onCallButtonPressed,
-  }) : super(key: key);
+  });
 
   final ContactEntity contact;
   final OnCallButtonPressed onCallButtonPressed;
@@ -463,9 +460,9 @@ class _ContactWidget extends StatelessWidget {
 class _ButtonTaskWidget extends StatefulWidget {
   const _ButtonTaskWidget(
     this.task, {
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final EscapeManualButtonTaskEntity task;
   final EscapeManualController controller;

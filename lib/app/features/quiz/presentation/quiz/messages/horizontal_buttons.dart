@@ -18,8 +18,8 @@ class HorizontalButtonsMessageWidget extends StatelessWidget {
   const HorizontalButtonsMessageWidget(
     this.buttons,
     this.onReply, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final List<ButtonOption> buttons;
   final ValueChanged<AnswerValue> onReply;
@@ -45,9 +45,8 @@ class HorizontalButtonsMessageWidget extends StatelessWidget {
 class _SingleButton extends StatelessWidget {
   const _SingleButton._(
     this.button, {
-    Key? key,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   factory _SingleButton(
     ButtonOption button, {
@@ -70,9 +69,8 @@ class _SingleButton extends StatelessWidget {
 class _ButtonGroup extends StatelessWidget {
   const _ButtonGroup(
     this.buttons, {
-    Key? key,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final List<ButtonOption> buttons;
   final OnButtonPressed onPressed;
@@ -104,9 +102,8 @@ class _ButtonGroup extends StatelessWidget {
 class _FilledButton extends StatelessWidget {
   const _FilledButton(
     this.label, {
-    Key? key,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   final String label;
   final VoidCallback? onPressed;
@@ -132,10 +129,9 @@ class _FilledButton extends StatelessWidget {
 class _OutlinedButton extends StatelessWidget {
   const _OutlinedButton(
     this.label, {
-    Key? key,
     this.width = double.infinity,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   final String label;
   final VoidCallback? onPressed;

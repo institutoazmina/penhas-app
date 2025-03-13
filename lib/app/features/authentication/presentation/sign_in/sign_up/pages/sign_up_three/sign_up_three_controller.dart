@@ -18,10 +18,10 @@ part 'sign_up_three_controller.g.dart';
 class SignUpThreeController extends _SignUpThreeControllerBase
     with _$SignUpThreeController {
   SignUpThreeController(
-    IUserRegisterRepository repository,
-    UserRegisterFormFieldModel userFormFielModel,
-    PasswordValidator passwordValidator,
-  ) : super(repository, userFormFielModel, passwordValidator);
+    super.repository,
+    super.userFormFielModel,
+    super.passwordValidator,
+  );
 }
 
 abstract class _SignUpThreeControllerBase with Store, MapFailureMessage {

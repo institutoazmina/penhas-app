@@ -22,8 +22,7 @@ import 'pages/help_center/help_center_card_record.dart';
 
 class HelpCenterPage extends StatefulWidget {
   const HelpCenterPage(
-      {Key? key, this.title = 'HelpCenter', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'HelpCenter', required this.controller});
 
   final HelpCenterController controller;
 
@@ -211,10 +210,10 @@ class HelpCenterPageState extends State<HelpCenterPage> with SnackBarHandler {
   Future<void> _actionOnTap(String callingNumber) async {
     final phoneUri = Uri.parse(callingNumber);
     if (await canLaunchUrl(phoneUri)) {
-    await launchUrl(phoneUri);
-  } else {
-    throw 'Could not launch $phoneUri';
-  }
+      await launchUrl(phoneUri);
+    } else {
+      throw 'Could not launch $phoneUri';
+    }
   }
 
   ReactionDisposer _showLoadProgress() {

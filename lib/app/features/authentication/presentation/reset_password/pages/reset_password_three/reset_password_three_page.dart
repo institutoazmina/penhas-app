@@ -14,8 +14,7 @@ import 'reset_password_three_controller.dart';
 
 class ResetPasswordThreePage extends StatefulWidget {
   const ResetPasswordThreePage(
-      {Key? key, this.title = 'ResetPasswordThree', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'ResetPasswordThree', required this.controller});
 
   final String title;
   final ResetPasswordThreeController controller;

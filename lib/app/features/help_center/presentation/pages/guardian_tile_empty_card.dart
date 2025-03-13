@@ -6,7 +6,7 @@ import '../../../../shared/design_system/text_styles.dart';
 import '../../domain/entities/guardian_tile_entity.dart';
 
 class GuardianTileEmptyCard extends StatelessWidget {
-  const GuardianTileEmptyCard({Key? key, required this.card}) : super(key: key);
+  const GuardianTileEmptyCard({super.key, required this.card});
 
   final GuardianTileEmptyCardEntity card;
 

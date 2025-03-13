@@ -5,7 +5,7 @@ import '../../../../../../shared/design_system/colors.dart';
 import '../../../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 
 class RecordTutorialPage extends StatefulWidget {
-  const RecordTutorialPage({Key? key}) : super(key: key);
+  const RecordTutorialPage({super.key});
 
   @override
   RecordTutorialPageState createState() => RecordTutorialPageState();

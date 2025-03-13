@@ -11,11 +11,10 @@ import 'talk/chat_main_talks_page.dart';
 
 class ChatMainPage extends StatefulWidget {
   const ChatMainPage(
-      {Key? key,
+      {super.key,
       required this.chatMainPeopleController,
       required this.controller,
-      required this.chatMainTalksController})
-      : super(key: key);
+      required this.chatMainTalksController});
 
   final ChatMainPeopleController chatMainPeopleController;
   final ChatMainController controller;
@@ -123,9 +122,8 @@ extension _ChatMainPageStatePrivate on ChatMainPageState {
 
 class _CustomTabWidget extends StatelessWidget {
   const _CustomTabWidget({
-    Key? key,
     required this.title,
-  }) : super(key: key);
+  });
 
   final String title;
 

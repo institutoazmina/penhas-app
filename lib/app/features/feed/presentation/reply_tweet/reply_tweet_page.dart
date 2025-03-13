@@ -16,8 +16,7 @@ import 'reply_tweet_controller.dart';
 
 class ReplyTweetPage extends StatefulWidget {
   const ReplyTweetPage(
-      {Key? key, this.title = 'ReplyTweet', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'ReplyTweet', required this.controller});
 
   final String title;
   final ReplyTweetController controller;

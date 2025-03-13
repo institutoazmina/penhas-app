@@ -6,9 +6,9 @@ import '../../../../shared/navigation/app_navigator.dart';
 
 class AboutPenhasPage extends StatelessWidget {
   const AboutPenhasPage({
-    Key? key,
+    super.key,
     required this.baseUrl,
-  }) : super(key: key);
+  });
 
   final Uri baseUrl;
 

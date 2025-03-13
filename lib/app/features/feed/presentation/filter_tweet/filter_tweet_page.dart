@@ -11,7 +11,7 @@ import '../../domain/entities/tweet_filter_session_entity.dart';
 import 'filter_tweet_controller.dart';
 
 class FilterTweetPage extends StatefulWidget {
-  const FilterTweetPage({Key? key, required this.controller}) : super(key: key);
+  const FilterTweetPage({super.key, required this.controller});
 
   final FilterTweetController controller;
 

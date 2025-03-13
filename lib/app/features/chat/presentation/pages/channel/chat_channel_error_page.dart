@@ -5,9 +5,9 @@ import '../../../../../shared/design_system/colors.dart';
 
 class ChatChannelErrorPage extends StatelessWidget {
   const ChatChannelErrorPage({
-    Key? key,
+    super.key,
     required this.message,
-  }) : super(key: key);
+  });
 
   final String message;
 

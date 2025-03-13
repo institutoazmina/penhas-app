@@ -13,9 +13,9 @@ import '../../domain/entities/guardian_tile_entity.dart';
 
 class GuardianTileActionCard extends StatelessWidget {
   const GuardianTileActionCard({
-    Key? key,
+    super.key,
     required this.card,
-  }) : super(key: key);
+  });
 
   final GuardianTileCardEntity card;
 

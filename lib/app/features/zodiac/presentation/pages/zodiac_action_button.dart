@@ -9,8 +9,8 @@ class ZodiacActionButton extends StatelessWidget {
     required this.listOfSign,
     required this.isRunning,
     required this.onPressed,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final IZodiac sign;
   final List<IZodiac> listOfSign;

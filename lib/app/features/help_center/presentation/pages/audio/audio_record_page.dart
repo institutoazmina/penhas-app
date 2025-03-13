@@ -10,9 +10,9 @@ import 'sound_record_widget.dart';
 
 class AudioRecordPage extends StatefulWidget {
   const AudioRecordPage({
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final AudioRecordController controller;
 

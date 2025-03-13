@@ -7,10 +7,10 @@ import 'single_tweet.dart';
 
 class Tweet extends StatelessWidget {
   const Tweet({
-    Key? key,
+    super.key,
     required this.model,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final TweetEntity model;
   final ITweetController controller;

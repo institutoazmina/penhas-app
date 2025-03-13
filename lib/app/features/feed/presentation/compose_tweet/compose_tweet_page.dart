@@ -13,11 +13,11 @@ import 'compose_tweet_controller.dart';
 
 class ComposeTweetPage extends StatefulWidget {
   const ComposeTweetPage({
-    Key? key,
+    super.key,
     this.title = 'Publicar',
     this.showAppBar = false,
     required this.composeTweetController,
-  }) : super(key: key);
+  });
 
   final String title;
   final bool showAppBar;

@@ -14,8 +14,7 @@ import 'sign_up_two_controller.dart';
 
 class SignUpTwoPage extends StatefulWidget {
   const SignUpTwoPage(
-      {Key? key, this.title = 'SignUpTwo', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'SignUpTwo', required this.controller});
 
   final String title;
   final SignUpTwoController controller;

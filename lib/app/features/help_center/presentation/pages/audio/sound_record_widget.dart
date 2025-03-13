@@ -4,8 +4,7 @@ import '../../../../../core/managers/audio_record_services.dart';
 import '../../../../../shared/design_system/colors.dart';
 
 class SoundRecordWidget extends StatefulWidget {
-  const SoundRecordWidget({Key? key, this.audioActivity, this.onPressed})
-      : super(key: key);
+  const SoundRecordWidget({super.key, this.audioActivity, this.onPressed});
 
   final AudioActivity? audioActivity;
   final VoidCallback? onPressed;

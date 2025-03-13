@@ -8,10 +8,10 @@ import 'card_profile_header_edit_page.dart';
 
 class CardProfileBioPage extends StatelessWidget {
   const CardProfileBioPage({
-    Key? key,
+    super.key,
     required this.content,
     required this.onChange,
-  }) : super(key: key);
+  });
 
   final String content;
   final void Function(String) onChange;

@@ -15,8 +15,7 @@ import 'sign_in_anonymous_controller.dart';
 
 class SignInAnonymousPage extends StatefulWidget {
   const SignInAnonymousPage(
-      {Key? key, this.title = 'Authentication', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'Authentication', required this.controller});
 
   final String title;
   final SignInAnonymousController controller;
