@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 
@@ -113,12 +114,11 @@ extension _PageBuilder on AccountDeletePageState {
                   style: titleTextStyle,
                 ),
                 Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20.0),
-                    child: SizedBox.shrink()
-                    // TODO: HtmlWidget(
-                    //   bodyMessage,
-                    // ),
-                    ),
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: Html(
+                    data: bodyMessage,
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
                   child: TextField(

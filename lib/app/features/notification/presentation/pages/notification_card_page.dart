@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -86,12 +87,13 @@ class NotificationCardPage extends StatelessWidget {
     }
     return Padding(
       padding: const EdgeInsets.only(top: 12.0, bottom: 12.0, left: 38),
-      child: SizedBox.shrink(),
-      // TODO: HtmlWidget(
-      //   notification.content!,
-      //   factoryBuilder: () => DisabledWebViewJsWidgetFactory(),
-      //   textStyle: contentTextStyle,
-      // ),
+      child: Html(
+        data: notification.content!,
+        style: {
+          'body': Style.fromTextStyle(contentTextStyle),
+          'iframe': Style(display: Display.none)
+        },
+      ),
     );
   }
 }

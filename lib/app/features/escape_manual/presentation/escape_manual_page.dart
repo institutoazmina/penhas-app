@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobx/mobx.dart';
@@ -279,14 +280,18 @@ class _TaskWidgetState extends State<_TaskWidget> {
             title: Semantics(
               label: task.description,
               excludeSemantics: true,
-              child: SizedBox.shrink(),
-              // TODO HtmlWidget(
-              //   task.description,
-              //   textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              //         fontSize: 16,
-              //         color: DesignSystemColors.darkIndigoThree,
-              //       ),
-              // ),
+              child: Html(
+                data: task.description,
+                style: {
+                  'body': Style.fromTextStyle(
+                    Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              fontSize: 16,
+                              color: DesignSystemColors.darkIndigoThree,
+                            ) ??
+                        const TextStyle(fontSize: 16),
+                  )
+                },
+              ),
             ),
             subtitle: task is EscapeManualContactsTaskEntity
                 ? _TrustedContactsWidget(

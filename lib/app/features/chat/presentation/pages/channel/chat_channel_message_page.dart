@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 import '../../../../../shared/design_system/colors.dart';
 import '../../../domain/entities/chat_channel_message.dart';
@@ -55,12 +56,15 @@ class ChatChannelMessagePage extends StatelessWidget {
             ]),
         child: Container(
             constraints: const BoxConstraints(minWidth: 60.0),
-            child: SizedBox.shrink()
-            // TODO HtmlWidget(
-            //   content.content.message!,
-            //   textStyle: TextStyle(fontSize: 15.0, color: textColor),
-            // ),
-            ),
+            child: Html(
+              data: content.content.message!,
+              style: {
+                'body': Style(
+                  fontSize: FontSize(15.0),
+                  color: textColor,
+                ),
+              },
+            )),
       ),
     );
   }

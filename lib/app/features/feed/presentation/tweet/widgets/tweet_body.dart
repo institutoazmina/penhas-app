@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+
+import '../../../../../shared/design_system/text_styles.dart';
 
 class TweetBody extends StatelessWidget {
   const TweetBody({
@@ -10,20 +13,17 @@ class TweetBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: final htmlBody = HtmlWidget(
-    //   bodyContent!,
-    //   textStyle: kTextStyleFeedTweetBody,
-    //   factoryBuilder: () => DisabledWebViewJsWidgetFactory(),
-    // );
+    final htmlBody = Html(
+      data: bodyContent!,
+      style: {
+        'body': Style.fromTextStyle(kTextStyleFeedTweetBody),
+        'iframe': Style(display: Display.none),
+      },
+    );
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 8.0),
-      child: SizedBox.shrink(),
+      child: htmlBody,
     );
   }
 }
-
-// class DisabledWebViewJsWidgetFactory extends WidgetFactory {
-//   @override
-//   bool get webViewJs => false;
-// }

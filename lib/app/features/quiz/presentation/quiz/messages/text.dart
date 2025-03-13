@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 import '../../../../../shared/design_system/colors.dart';
 import '../../../domain/entities/answer.dart';
@@ -106,16 +107,20 @@ class TextMessageWidget extends StatelessWidget {
                 borderRadius: borderRadius,
               ),
               child: ConstrainedBox(
-                  constraints: const BoxConstraints(minWidth: 60.0),
-                  child: SizedBox.shrink()
-                  // TODO: HtmlWidget(
-                  //   content,
-                  //   textStyle: theme.textTheme.bodyLarge?.copyWith(
-                  //     color: textColor,
-                  //     fontSize: 15,
-                  //   ),
-                  // ),
-                  ),
+                constraints: const BoxConstraints(minWidth: 60.0),
+                child: Html(
+                  data: content,
+                  style: {
+                    'body': Style.fromTextStyle(
+                      theme.textTheme.bodyLarge?.copyWith(
+                            color: textColor,
+                            fontSize: 15,
+                          ) ??
+                          const TextStyle(fontSize: 15),
+                    )
+                  },
+                ),
+              ),
             ),
           ),
           ConstrainedBox(

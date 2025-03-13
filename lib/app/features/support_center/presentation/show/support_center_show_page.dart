@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:map_launcher/map_launcher.dart';
@@ -132,12 +133,10 @@ extension _PageStateBuilder on SupportCenterShowPageState {
             Container(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-              child: SizedBox.shrink(),
-              // TODO: HtmlWidget(
-              //   detail.place!.htmlContent!,
-              //   factoryBuilder: () => _DisabledWebViewJsWidgetFactory(),
-              //   textStyle: htmlContentTextStyle,
-              // ),
+              child: Html(data: detail.place!.htmlContent!, style: {
+                'body': Style.fromTextStyle(htmlContentTextStyle),
+                'iframe': Style(display: Display.none),
+              }),
             ),
             Row(
               children: [
