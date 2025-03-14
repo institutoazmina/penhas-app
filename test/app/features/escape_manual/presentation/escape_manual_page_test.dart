@@ -159,44 +159,42 @@ void main() {
       },
     );
 
-   testWidgets(
-  'should call controller updateTask with done task when checkbox is pressed',
-  (tester) async {
-    // arrange
-    final expectedTask = (escapeManualEntity.sections[1].tasks[4]
-            as EscapeManualTodoTaskEntity)
-        .copyWith(isDone: true);
+    testWidgets(
+      'should call controller updateTask with done task when checkbox is pressed',
+      (tester) async {
+        // arrange
+        final expectedTask = (escapeManualEntity.sections[1].tasks[4]
+                as EscapeManualTodoTaskEntity)
+            .copyWith(isDone: true);
 
-    when(() => mockController.state)
-        .thenReturn(EscapeManualState.loaded(escapeManualEntity));
-    when(() => mockController.updateTask(any()))
-        .thenAnswer((_) => Future.value());
+        when(() => mockController.state)
+            .thenReturn(EscapeManualState.loaded(escapeManualEntity));
+        when(() => mockController.updateTask(any()))
+            .thenAnswer((_) => Future.value());
 
-    await tester.pumpWidget(
-      buildTestableWidget(EscapeManualPage(controller: mockController)),
+        await tester.pumpWidget(
+          buildTestableWidget(EscapeManualPage(controller: mockController)),
+        );
+
+        // act
+        await tester.tap(find.widgetWithText(ExpansionTile, 'Section 1'));
+        await tester.pumpAndSettle();
+
+        final checkboxFinder = find.descendant(
+          of: find.byKey(Key('escape-manual-task-1-4')),
+          matching: find.byType(Checkbox),
+        );
+
+        await tester.ensureVisible(checkboxFinder);
+        await tester.pumpAndSettle();
+
+        await tester.tap(checkboxFinder);
+        await tester.pumpAndSettle();
+
+        // assert
+        verify(() => mockController.updateTask(expectedTask)).called(1);
+      },
     );
-
-    // act
-    await tester.tap(find.widgetWithText(ExpansionTile, 'Section 1'));
-    await tester.pumpAndSettle(); 
-
-    final checkboxFinder = find.descendant(
-      of: find.byKey(Key('escape-manual-task-1-4')),
-      matching: find.byType(Checkbox),
-    );
-
-    await tester.ensureVisible(checkboxFinder);
-    await tester.pumpAndSettle();
-
-    await tester.tap(checkboxFinder);
-    await tester.pumpAndSettle(); 
-
-    // assert
-    verify(() => mockController.updateTask(expectedTask)).called(1);
-  },
-);
-
-
 
     testWidgets(
       'should call controller updateTask with not done task when checkbox is pressed',
@@ -266,57 +264,56 @@ void main() {
 
     testWidgets(
       skip: true,
-  'should call controller editTask when edit button is pressed',
-  (tester) async {
-    // arrange
-    final expectedTask = escapeManualEntity.sections[1].tasks[4];
-    when(() => mockController.state)
-        .thenReturn(EscapeManualState.loaded(escapeManualEntity));
-    when(() => mockController.editTask(any()))
-        .thenAnswer((_) => Future.value());
+      'should call controller editTask when edit button is pressed',
+      (tester) async {
+        // arrange
+        final expectedTask = escapeManualEntity.sections[1].tasks[4];
+        when(() => mockController.state)
+            .thenReturn(EscapeManualState.loaded(escapeManualEntity));
+        when(() => mockController.editTask(any()))
+            .thenAnswer((_) => Future.value());
 
-    await tester.pumpWidget(
-      buildTestableWidget(EscapeManualPage(controller: mockController)),
+        await tester.pumpWidget(
+          buildTestableWidget(EscapeManualPage(controller: mockController)),
+        );
+
+        // act
+        // Ensure section 1 is expanded and settled
+        await tester.tap(find.widgetWithText(ExpansionTile, 'Section 1'));
+        await tester.pumpAndSettle(); // Wait for expansion to complete
+
+        // Locate the task widget by its key
+        final taskKey = find.byKey(Key('escape-manual-task-1-4'));
+
+        // Use the descendant finder to get the PopupMenuButton inside the specific task
+        final popupMenuButtonFinder = find.descendant(
+          of: taskKey,
+          matching: find.byType(PopupMenuButton),
+        );
+
+        // Ensure that exactly one PopupMenuButton is found
+        expect(popupMenuButtonFinder, findsOneWidget);
+
+        // Tap on the PopupMenuButton to show the menu
+        await tester.tap(popupMenuButtonFinder);
+        await tester.pumpAndSettle(); // Wait for the menu to appear
+
+        // Debug: Print the widget tree to see the available PopupMenuItems
+        final popupMenuItems = tester.widgetList(find.byType(PopupMenuItem));
+        print('PopupMenuItems found: $popupMenuItems');
+
+        // Tap the 'Editar' option from the popup menu
+        await tester.tap(find.textContaining('Editar'));
+        await tester.pumpAndSettle(); // Wait for the interaction to settle
+
+        // assert
+        verify(
+          () => mockController.editTask(
+            expectedTask as EscapeManualContactsTaskEntity,
+          ),
+        ).called(1);
+      },
     );
-
-    // act
-    // Ensure section 1 is expanded and settled
-    await tester.tap(find.widgetWithText(ExpansionTile, 'Section 1'));
-    await tester.pumpAndSettle(); // Wait for expansion to complete
-
-    // Locate the task widget by its key
-    final taskKey = find.byKey(Key('escape-manual-task-1-4'));
-    
-    // Use the descendant finder to get the PopupMenuButton inside the specific task
-    final popupMenuButtonFinder = find.descendant(
-      of: taskKey,
-      matching: find.byType(PopupMenuButton),
-    );
-
-    // Ensure that exactly one PopupMenuButton is found
-    expect(popupMenuButtonFinder, findsOneWidget);
-
-    // Tap on the PopupMenuButton to show the menu
-    await tester.tap(popupMenuButtonFinder);
-    await tester.pumpAndSettle(); // Wait for the menu to appear
-
-    // Debug: Print the widget tree to see the available PopupMenuItems
-    final popupMenuItems = tester.widgetList(find.byType(PopupMenuItem));
-    print('PopupMenuItems found: $popupMenuItems');
-
-    // Tap the 'Editar' option from the popup menu
-    await tester.tap(find.textContaining('Editar'));
-    await tester.pumpAndSettle(); // Wait for the interaction to settle
-
-    // assert
-    verify(
-      () => mockController.editTask(
-        expectedTask as EscapeManualContactsTaskEntity,
-      ),
-    ).called(1);
-  },
-);
-
 
     testWidgets(
       skip: true,

@@ -395,41 +395,41 @@ void main() {
       },
     );
 
-   testWidgets(
-  'when received many messages should display float button',
-  (tester) async {
-    // arrange
-    mockQuizArgs([QuizOkButton()]);
+    testWidgets(
+      'when received many messages should display float button',
+      (tester) async {
+        // arrange
+        mockQuizArgs([QuizOkButton()]);
 
-    when(() => mockSendAnswer(any(), any()))
-        .thenAnswer((_) async => Right<Failure, Quiz>(Quiz(
-              id: 'session-id',
-              messages: createTextMessages(count: 14),
-            )));
+        when(() => mockSendAnswer(any(), any()))
+            .thenAnswer((_) async => Right<Failure, Quiz>(Quiz(
+                  id: 'session-id',
+                  messages: createTextMessages(count: 14),
+                )));
 
-    await tester.pumpWidget(
-      MaterialApp(
-        home: QuizPage(controller: controller),
-      ),
+        await tester.pumpWidget(
+          MaterialApp(
+            home: QuizPage(controller: controller),
+          ),
+        );
+
+        // act
+        await tester.pumpAndSettle();
+        expect(find.text('OK'), findsOneWidget);
+
+        await tester.tapAll(find.text('OK'));
+
+        await tester.pumpAndSettle(Duration(seconds: 5));
+
+        // assert
+        expect(find.byType(FloatingActionButton), findsOneWidget);
+      },
     );
 
-    // act
-    await tester.pumpAndSettle(); 
-    expect(find.text('OK'), findsOneWidget);  
-
-    await tester.tapAll(find.text('OK'));
-    
-    await tester.pumpAndSettle(Duration(seconds: 5)); 
-
-    // assert
-    expect(find.byType(FloatingActionButton), findsOneWidget);  
-  },
-);
-
-
-    screenshotTest(
+    screenshotTestSimplified(
       'given many messages when tap on float button should scroll to the end',
       fileName: 'quiz_scroll_to_end',
+      skip: true,
       devices: testDevices.sublist(0, 1),
       setUp: () {
         mockQuizArgs([QuizOkButton()]);

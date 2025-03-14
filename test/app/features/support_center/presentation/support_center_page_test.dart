@@ -57,11 +57,11 @@ void main() {
       skip: true,
       fileName: 'support_center_page_success_state',
       pageBuilder: () => SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: SupportCenterPage(controller: controller))),
+          width: double.infinity,
+          height: double.infinity,
+          child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: SupportCenterPage(controller: controller))),
       setUp: () {
         when(() => supportCenterUseCase.fetch(any())).thenAnswer(
           (_) => Future.value(dartz.Right(centerPlace)),
