@@ -2,16 +2,11 @@ import '../../domain/entities/app_state_entity.dart';
 
 class QuizSessionModel extends QuizSessionEntity {
   const QuizSessionModel({
-    required String sessionId,
-    List<QuizMessageEntity> currentMessage = const [],
-    bool isFinished = false,
-    String? endScreen,
-  }) : super(
-          currentMessage: currentMessage,
-          sessionId: sessionId,
-          isFinished: isFinished,
-          endScreen: endScreen,
-        );
+    required super.sessionId,
+    super.currentMessage,
+    super.isFinished,
+    super.endScreen,
+  });
 
   factory QuizSessionModel.fromJson(Map<String, dynamic> jsonData) {
     final currentMessage = jsonData['current_msgs'] ?? [];
@@ -77,21 +72,15 @@ class QuizSessionModel extends QuizSessionEntity {
 
 class QuizMessageModel extends QuizMessageEntity {
   const QuizMessageModel({
-    required String? content,
-    required QuizMessageType type,
+    required super.content,
+    required super.type,
     String? ref,
-    String? style,
-    String? action,
-    String? buttonLabel,
-    List<QuizMessageChoiceOption>? options,
+    super.style,
+    super.action,
+    super.buttonLabel,
+    super.options,
   }) : super(
-          content: content,
-          type: type,
           ref: ref ?? '',
-          style: style,
-          action: action,
-          buttonLabel: buttonLabel,
-          options: options,
         );
 
   factory QuizMessageModel.fromJson(Map<String, dynamic> jsonData) {
@@ -155,9 +144,9 @@ class QuizMessageModel extends QuizMessageEntity {
 
 class QuizMessageChoiceOptionModel extends QuizMessageChoiceOption {
   const QuizMessageChoiceOptionModel({
-    required String display,
-    required String index,
-  }) : super(display: display, index: index);
+    required super.display,
+    required super.index,
+  });
 
   factory QuizMessageChoiceOptionModel.fromJson(Map<String, dynamic> jsonData) {
     return QuizMessageChoiceOptionModel(

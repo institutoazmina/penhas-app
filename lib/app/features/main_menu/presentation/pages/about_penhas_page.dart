@@ -6,9 +6,9 @@ import '../../../../shared/navigation/app_navigator.dart';
 
 class AboutPenhasPage extends StatelessWidget {
   const AboutPenhasPage({
-    Key? key,
+    super.key,
     required this.baseUrl,
-  }) : super(key: key);
+  });
 
   final Uri baseUrl;
 
@@ -20,17 +20,20 @@ class AboutPenhasPage extends StatelessWidget {
         title: const Text('Sobre o PenhaS'),
         backgroundColor: DesignSystemColors.easterPurple,
       ),
-      body: WebView(
-        initialUrl: baseUrl.resolve('web/faq').toString(),
-        javascriptMode: JavascriptMode.unrestricted,
-        navigationDelegate: (NavigationRequest nav) async {
-          if (nav.url.startsWith('mailto')) {
-            AppNavigator.launchURL(nav.url);
+      body: WebViewWidget(
+        controller: WebViewController()
+          ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..setNavigationDelegate(NavigationDelegate(
+            onNavigationRequest: (request) {
+              if (request.url.startsWith('mailto')) {
+                AppNavigator.launchURL(request.url);
 
-            return NavigationDecision.prevent;
-          }
-          return NavigationDecision.navigate;
-        },
+                return NavigationDecision.prevent;
+              }
+              return NavigationDecision.navigate;
+            },
+          ))
+          ..loadRequest(baseUrl.resolve('web/faq')),
       ),
     );
   }

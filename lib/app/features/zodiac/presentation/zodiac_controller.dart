@@ -35,10 +35,9 @@ abstract class _ZodiacControllerBase with Store {
 
   Future<void> _init() async {
     final zodiac = Zodiac();
-    final _userProfile = await _userProfileStore.retrieve();
-    sign = zodiac.sign(_userProfile.birthdate);
-    signList =
-        zodiac.pickEightRandomSign(_userProfile.birthdate).asObservable();
+    final userProfile = await _userProfileStore.retrieve();
+    sign = zodiac.sign(userProfile.birthdate);
+    signList = zodiac.pickEightRandomSign(userProfile.birthdate).asObservable();
 
     _registerDataSource();
   }

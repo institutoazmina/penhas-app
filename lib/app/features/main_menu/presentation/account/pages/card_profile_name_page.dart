@@ -11,12 +11,12 @@ import 'card_profile_header_edit_page.dart';
 
 class CardProfileNamePage extends StatelessWidget {
   const CardProfileNamePage({
-    Key? key,
+    super.key,
     required this.name,
     required this.onChange,
     this.avatar,
     required this.badges,
-  }) : super(key: key);
+  });
 
   final String? name;
   final String? avatar;
@@ -110,14 +110,14 @@ extension _TextStyle on CardProfileNamePage {
 
 extension _Dialog on CardProfileNamePage {
   void showModal({required BuildContext context}) {
-    final TextEditingController _controller = TextEditingController();
-    _controller.text = name!;
+    final TextEditingController controller = TextEditingController();
+    controller.text = name!;
 
     Modular.to.showDialog(
       builder: (context) => AlertDialog(
         title: const Text('Editar'),
         content: TextFormField(
-          controller: _controller,
+          controller: controller,
           decoration: const InputDecoration(
             hintText: 'Digite o novo nome',
             filled: true,
@@ -133,7 +133,7 @@ extension _Dialog on CardProfileNamePage {
           PenhasButton.text(
             child: const Text('Enviar'),
             onPressed: () async {
-              onChange(_controller.text);
+              onChange(controller.text);
               Navigator.of(context).pop();
             },
           ),

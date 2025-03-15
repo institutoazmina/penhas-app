@@ -14,17 +14,18 @@ import 'pages/notification_card_page.dart';
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final NotificationController controller;
 
   @override
-  _NotificationState createState() => _NotificationState();
+  NotificationPageState createState() => NotificationPageState();
 }
 
-class _NotificationState extends State<NotificationPage> with SnackBarHandler {
+class NotificationPageState extends State<NotificationPage>
+    with SnackBarHandler {
   // Getter para acessar o controller
   NotificationController get controller => widget.controller;
 
@@ -61,7 +62,7 @@ class _NotificationState extends State<NotificationPage> with SnackBarHandler {
   }
 }
 
-extension _PageStateBuilder on _NotificationState {
+extension _PageStateBuilder on NotificationPageState {
   Widget bodyBuilder(NotificationState state) {
     return state.when(
       initial: () => buildInitialState(),

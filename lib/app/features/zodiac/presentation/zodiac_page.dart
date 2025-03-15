@@ -13,8 +13,8 @@ import 'zodiac_controller.dart';
 class ZodiacPage extends StatefulWidget {
   const ZodiacPage({
     required this.controller,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final ZodiacController controller;
 

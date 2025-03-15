@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'chat_channel_usecase_event.dart';
 
@@ -12,7 +12,7 @@ part of 'chat_channel_usecase_event.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$ChatChannelUseCaseEvent {
@@ -29,12 +29,13 @@ mixin _$ChatChannelUseCaseEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loaded,
-    TResult Function(ChatUserEntity user)? updateUser,
-    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetadata,
-    TResult Function(List<ChatChannelMessage> messages)? updateMessage,
-    TResult Function(String message)? errorOnLoading,
+    TResult? Function()? initial,
+    TResult? Function()? loaded,
+    TResult? Function(ChatUserEntity user)? updateUser,
+    TResult? Function(ChatChannelSessionMetadataEntity metadata)?
+        updateMetadata,
+    TResult? Function(List<ChatChannelMessage> messages)? updateMessage,
+    TResult? Function(String message)? errorOnLoading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,12 +61,12 @@ mixin _$ChatChannelUseCaseEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UpdateMetadata value)? updateMetadata,
-    TResult Function(_UpdateMessage value)? updateMessage,
-    TResult Function(_ErrorOnLoading value)? errorOnLoading,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_UpdateUser value)? updateUser,
+    TResult? Function(_UpdateMetadata value)? updateMetadata,
+    TResult? Function(_UpdateMessage value)? updateMessage,
+    TResult? Function(_ErrorOnLoading value)? errorOnLoading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -85,41 +86,41 @@ mixin _$ChatChannelUseCaseEvent {
 abstract class $ChatChannelUseCaseEventCopyWith<$Res> {
   factory $ChatChannelUseCaseEventCopyWith(ChatChannelUseCaseEvent value,
           $Res Function(ChatChannelUseCaseEvent) then) =
-      _$ChatChannelUseCaseEventCopyWithImpl<$Res>;
+      _$ChatChannelUseCaseEventCopyWithImpl<$Res, ChatChannelUseCaseEvent>;
 }
 
 /// @nodoc
-class _$ChatChannelUseCaseEventCopyWithImpl<$Res>
+class _$ChatChannelUseCaseEventCopyWithImpl<$Res,
+        $Val extends ChatChannelUseCaseEvent>
     implements $ChatChannelUseCaseEventCopyWith<$Res> {
   _$ChatChannelUseCaseEventCopyWithImpl(this._value, this._then);
 
-  final ChatChannelUseCaseEvent _value;
   // ignore: unused_field
-  final $Res Function(ChatChannelUseCaseEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$$_InitialCopyWith<$Res> {
-  factory _$$_InitialCopyWith(
-          _$_Initial value, $Res Function(_$_Initial) then) =
-      __$$_InitialCopyWithImpl<$Res>;
+abstract class _$$InitialImplCopyWith<$Res> {
+  factory _$$InitialImplCopyWith(
+          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
+      __$$InitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res>
-    extends _$ChatChannelUseCaseEventCopyWithImpl<$Res>
-    implements _$$_InitialCopyWith<$Res> {
-  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
-
-  @override
-  _$_Initial get _value => super._value as _$_Initial;
+class __$$InitialImplCopyWithImpl<$Res>
+    extends _$ChatChannelUseCaseEventCopyWithImpl<$Res, _$InitialImpl>
+    implements _$$InitialImplCopyWith<$Res> {
+  __$$InitialImplCopyWithImpl(
+      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Initial implements _Initial {
-  const _$_Initial();
+class _$InitialImpl implements _Initial {
+  const _$InitialImpl();
 
   @override
   String toString() {
@@ -127,9 +128,9 @@ class _$_Initial implements _Initial {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Initial);
+        (other.runtimeType == runtimeType && other is _$InitialImpl);
   }
 
   @override
@@ -152,12 +153,13 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loaded,
-    TResult Function(ChatUserEntity user)? updateUser,
-    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetadata,
-    TResult Function(List<ChatChannelMessage> messages)? updateMessage,
-    TResult Function(String message)? errorOnLoading,
+    TResult? Function()? initial,
+    TResult? Function()? loaded,
+    TResult? Function(ChatUserEntity user)? updateUser,
+    TResult? Function(ChatChannelSessionMetadataEntity metadata)?
+        updateMetadata,
+    TResult? Function(List<ChatChannelMessage> messages)? updateMessage,
+    TResult? Function(String message)? errorOnLoading,
   }) {
     return initial?.call();
   }
@@ -195,12 +197,12 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UpdateMetadata value)? updateMetadata,
-    TResult Function(_UpdateMessage value)? updateMessage,
-    TResult Function(_ErrorOnLoading value)? errorOnLoading,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_UpdateUser value)? updateUser,
+    TResult? Function(_UpdateMetadata value)? updateMetadata,
+    TResult? Function(_UpdateMessage value)? updateMessage,
+    TResult? Function(_ErrorOnLoading value)? errorOnLoading,
   }) {
     return initial?.call(this);
   }
@@ -224,30 +226,29 @@ class _$_Initial implements _Initial {
 }
 
 abstract class _Initial implements ChatChannelUseCaseEvent {
-  const factory _Initial() = _$_Initial;
+  const factory _Initial() = _$InitialImpl;
 }
 
 /// @nodoc
-abstract class _$$_LoadedCopyWith<$Res> {
-  factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
-      __$$_LoadedCopyWithImpl<$Res>;
+abstract class _$$LoadedImplCopyWith<$Res> {
+  factory _$$LoadedImplCopyWith(
+          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
+      __$$LoadedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_LoadedCopyWithImpl<$Res>
-    extends _$ChatChannelUseCaseEventCopyWithImpl<$Res>
-    implements _$$_LoadedCopyWith<$Res> {
-  __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
-      : super(_value, (v) => _then(v as _$_Loaded));
-
-  @override
-  _$_Loaded get _value => super._value as _$_Loaded;
+class __$$LoadedImplCopyWithImpl<$Res>
+    extends _$ChatChannelUseCaseEventCopyWithImpl<$Res, _$LoadedImpl>
+    implements _$$LoadedImplCopyWith<$Res> {
+  __$$LoadedImplCopyWithImpl(
+      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Loaded implements _Loaded {
-  const _$_Loaded();
+class _$LoadedImpl implements _Loaded {
+  const _$LoadedImpl();
 
   @override
   String toString() {
@@ -255,9 +256,9 @@ class _$_Loaded implements _Loaded {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Loaded);
+        (other.runtimeType == runtimeType && other is _$LoadedImpl);
   }
 
   @override
@@ -280,12 +281,13 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loaded,
-    TResult Function(ChatUserEntity user)? updateUser,
-    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetadata,
-    TResult Function(List<ChatChannelMessage> messages)? updateMessage,
-    TResult Function(String message)? errorOnLoading,
+    TResult? Function()? initial,
+    TResult? Function()? loaded,
+    TResult? Function(ChatUserEntity user)? updateUser,
+    TResult? Function(ChatChannelSessionMetadataEntity metadata)?
+        updateMetadata,
+    TResult? Function(List<ChatChannelMessage> messages)? updateMessage,
+    TResult? Function(String message)? errorOnLoading,
   }) {
     return loaded?.call();
   }
@@ -323,12 +325,12 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UpdateMetadata value)? updateMetadata,
-    TResult Function(_UpdateMessage value)? updateMessage,
-    TResult Function(_ErrorOnLoading value)? errorOnLoading,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_UpdateUser value)? updateUser,
+    TResult? Function(_UpdateMetadata value)? updateMetadata,
+    TResult? Function(_UpdateMessage value)? updateMessage,
+    TResult? Function(_ErrorOnLoading value)? errorOnLoading,
   }) {
     return loaded?.call(this);
   }
@@ -352,34 +354,33 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements ChatChannelUseCaseEvent {
-  const factory _Loaded() = _$_Loaded;
+  const factory _Loaded() = _$LoadedImpl;
 }
 
 /// @nodoc
-abstract class _$$_UpdateUserCopyWith<$Res> {
-  factory _$$_UpdateUserCopyWith(
-          _$_UpdateUser value, $Res Function(_$_UpdateUser) then) =
-      __$$_UpdateUserCopyWithImpl<$Res>;
+abstract class _$$UpdateUserImplCopyWith<$Res> {
+  factory _$$UpdateUserImplCopyWith(
+          _$UpdateUserImpl value, $Res Function(_$UpdateUserImpl) then) =
+      __$$UpdateUserImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({ChatUserEntity user});
 }
 
 /// @nodoc
-class __$$_UpdateUserCopyWithImpl<$Res>
-    extends _$ChatChannelUseCaseEventCopyWithImpl<$Res>
-    implements _$$_UpdateUserCopyWith<$Res> {
-  __$$_UpdateUserCopyWithImpl(
-      _$_UpdateUser _value, $Res Function(_$_UpdateUser) _then)
-      : super(_value, (v) => _then(v as _$_UpdateUser));
+class __$$UpdateUserImplCopyWithImpl<$Res>
+    extends _$ChatChannelUseCaseEventCopyWithImpl<$Res, _$UpdateUserImpl>
+    implements _$$UpdateUserImplCopyWith<$Res> {
+  __$$UpdateUserImplCopyWithImpl(
+      _$UpdateUserImpl _value, $Res Function(_$UpdateUserImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_UpdateUser get _value => super._value as _$_UpdateUser;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = freezed,
+    Object? user = null,
   }) {
-    return _then(_$_UpdateUser(
-      user == freezed
+    return _then(_$UpdateUserImpl(
+      null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as ChatUserEntity,
@@ -389,8 +390,8 @@ class __$$_UpdateUserCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_UpdateUser implements _UpdateUser {
-  const _$_UpdateUser(this.user);
+class _$UpdateUserImpl implements _UpdateUser {
+  const _$UpdateUserImpl(this.user);
 
   @override
   final ChatUserEntity user;
@@ -401,21 +402,21 @@ class _$_UpdateUser implements _UpdateUser {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UpdateUser &&
-            const DeepCollectionEquality().equals(other.user, user));
+            other is _$UpdateUserImpl &&
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(user));
+  int get hashCode => Object.hash(runtimeType, user);
 
   @JsonKey(ignore: true)
   @override
-  _$$_UpdateUserCopyWith<_$_UpdateUser> get copyWith =>
-      __$$_UpdateUserCopyWithImpl<_$_UpdateUser>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$UpdateUserImplCopyWith<_$UpdateUserImpl> get copyWith =>
+      __$$UpdateUserImplCopyWithImpl<_$UpdateUserImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -434,12 +435,13 @@ class _$_UpdateUser implements _UpdateUser {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loaded,
-    TResult Function(ChatUserEntity user)? updateUser,
-    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetadata,
-    TResult Function(List<ChatChannelMessage> messages)? updateMessage,
-    TResult Function(String message)? errorOnLoading,
+    TResult? Function()? initial,
+    TResult? Function()? loaded,
+    TResult? Function(ChatUserEntity user)? updateUser,
+    TResult? Function(ChatChannelSessionMetadataEntity metadata)?
+        updateMetadata,
+    TResult? Function(List<ChatChannelMessage> messages)? updateMessage,
+    TResult? Function(String message)? errorOnLoading,
   }) {
     return updateUser?.call(user);
   }
@@ -477,12 +479,12 @@ class _$_UpdateUser implements _UpdateUser {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UpdateMetadata value)? updateMetadata,
-    TResult Function(_UpdateMessage value)? updateMessage,
-    TResult Function(_ErrorOnLoading value)? errorOnLoading,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_UpdateUser value)? updateUser,
+    TResult? Function(_UpdateMetadata value)? updateMetadata,
+    TResult? Function(_UpdateMessage value)? updateMessage,
+    TResult? Function(_ErrorOnLoading value)? errorOnLoading,
   }) {
     return updateUser?.call(this);
   }
@@ -506,39 +508,38 @@ class _$_UpdateUser implements _UpdateUser {
 }
 
 abstract class _UpdateUser implements ChatChannelUseCaseEvent {
-  const factory _UpdateUser(final ChatUserEntity user) = _$_UpdateUser;
+  const factory _UpdateUser(final ChatUserEntity user) = _$UpdateUserImpl;
 
   ChatUserEntity get user;
   @JsonKey(ignore: true)
-  _$$_UpdateUserCopyWith<_$_UpdateUser> get copyWith =>
+  _$$UpdateUserImplCopyWith<_$UpdateUserImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_UpdateMetadataCopyWith<$Res> {
-  factory _$$_UpdateMetadataCopyWith(
-          _$_UpdateMetadata value, $Res Function(_$_UpdateMetadata) then) =
-      __$$_UpdateMetadataCopyWithImpl<$Res>;
+abstract class _$$UpdateMetadataImplCopyWith<$Res> {
+  factory _$$UpdateMetadataImplCopyWith(_$UpdateMetadataImpl value,
+          $Res Function(_$UpdateMetadataImpl) then) =
+      __$$UpdateMetadataImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({ChatChannelSessionMetadataEntity metadata});
 }
 
 /// @nodoc
-class __$$_UpdateMetadataCopyWithImpl<$Res>
-    extends _$ChatChannelUseCaseEventCopyWithImpl<$Res>
-    implements _$$_UpdateMetadataCopyWith<$Res> {
-  __$$_UpdateMetadataCopyWithImpl(
-      _$_UpdateMetadata _value, $Res Function(_$_UpdateMetadata) _then)
-      : super(_value, (v) => _then(v as _$_UpdateMetadata));
+class __$$UpdateMetadataImplCopyWithImpl<$Res>
+    extends _$ChatChannelUseCaseEventCopyWithImpl<$Res, _$UpdateMetadataImpl>
+    implements _$$UpdateMetadataImplCopyWith<$Res> {
+  __$$UpdateMetadataImplCopyWithImpl(
+      _$UpdateMetadataImpl _value, $Res Function(_$UpdateMetadataImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_UpdateMetadata get _value => super._value as _$_UpdateMetadata;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? metadata = freezed,
+    Object? metadata = null,
   }) {
-    return _then(_$_UpdateMetadata(
-      metadata == freezed
+    return _then(_$UpdateMetadataImpl(
+      null == metadata
           ? _value.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
               as ChatChannelSessionMetadataEntity,
@@ -548,8 +549,8 @@ class __$$_UpdateMetadataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_UpdateMetadata implements _UpdateMetadata {
-  const _$_UpdateMetadata(this.metadata);
+class _$UpdateMetadataImpl implements _UpdateMetadata {
+  const _$UpdateMetadataImpl(this.metadata);
 
   @override
   final ChatChannelSessionMetadataEntity metadata;
@@ -560,21 +561,23 @@ class _$_UpdateMetadata implements _UpdateMetadata {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UpdateMetadata &&
-            const DeepCollectionEquality().equals(other.metadata, metadata));
+            other is _$UpdateMetadataImpl &&
+            (identical(other.metadata, metadata) ||
+                other.metadata == metadata));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(metadata));
+  int get hashCode => Object.hash(runtimeType, metadata);
 
   @JsonKey(ignore: true)
   @override
-  _$$_UpdateMetadataCopyWith<_$_UpdateMetadata> get copyWith =>
-      __$$_UpdateMetadataCopyWithImpl<_$_UpdateMetadata>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$UpdateMetadataImplCopyWith<_$UpdateMetadataImpl> get copyWith =>
+      __$$UpdateMetadataImplCopyWithImpl<_$UpdateMetadataImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -593,12 +596,13 @@ class _$_UpdateMetadata implements _UpdateMetadata {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loaded,
-    TResult Function(ChatUserEntity user)? updateUser,
-    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetadata,
-    TResult Function(List<ChatChannelMessage> messages)? updateMessage,
-    TResult Function(String message)? errorOnLoading,
+    TResult? Function()? initial,
+    TResult? Function()? loaded,
+    TResult? Function(ChatUserEntity user)? updateUser,
+    TResult? Function(ChatChannelSessionMetadataEntity metadata)?
+        updateMetadata,
+    TResult? Function(List<ChatChannelMessage> messages)? updateMessage,
+    TResult? Function(String message)? errorOnLoading,
   }) {
     return updateMetadata?.call(metadata);
   }
@@ -636,12 +640,12 @@ class _$_UpdateMetadata implements _UpdateMetadata {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UpdateMetadata value)? updateMetadata,
-    TResult Function(_UpdateMessage value)? updateMessage,
-    TResult Function(_ErrorOnLoading value)? errorOnLoading,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_UpdateUser value)? updateUser,
+    TResult? Function(_UpdateMetadata value)? updateMetadata,
+    TResult? Function(_UpdateMessage value)? updateMessage,
+    TResult? Function(_ErrorOnLoading value)? errorOnLoading,
   }) {
     return updateMetadata?.call(this);
   }
@@ -666,39 +670,38 @@ class _$_UpdateMetadata implements _UpdateMetadata {
 
 abstract class _UpdateMetadata implements ChatChannelUseCaseEvent {
   const factory _UpdateMetadata(
-      final ChatChannelSessionMetadataEntity metadata) = _$_UpdateMetadata;
+      final ChatChannelSessionMetadataEntity metadata) = _$UpdateMetadataImpl;
 
   ChatChannelSessionMetadataEntity get metadata;
   @JsonKey(ignore: true)
-  _$$_UpdateMetadataCopyWith<_$_UpdateMetadata> get copyWith =>
+  _$$UpdateMetadataImplCopyWith<_$UpdateMetadataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_UpdateMessageCopyWith<$Res> {
-  factory _$$_UpdateMessageCopyWith(
-          _$_UpdateMessage value, $Res Function(_$_UpdateMessage) then) =
-      __$$_UpdateMessageCopyWithImpl<$Res>;
+abstract class _$$UpdateMessageImplCopyWith<$Res> {
+  factory _$$UpdateMessageImplCopyWith(
+          _$UpdateMessageImpl value, $Res Function(_$UpdateMessageImpl) then) =
+      __$$UpdateMessageImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({List<ChatChannelMessage> messages});
 }
 
 /// @nodoc
-class __$$_UpdateMessageCopyWithImpl<$Res>
-    extends _$ChatChannelUseCaseEventCopyWithImpl<$Res>
-    implements _$$_UpdateMessageCopyWith<$Res> {
-  __$$_UpdateMessageCopyWithImpl(
-      _$_UpdateMessage _value, $Res Function(_$_UpdateMessage) _then)
-      : super(_value, (v) => _then(v as _$_UpdateMessage));
+class __$$UpdateMessageImplCopyWithImpl<$Res>
+    extends _$ChatChannelUseCaseEventCopyWithImpl<$Res, _$UpdateMessageImpl>
+    implements _$$UpdateMessageImplCopyWith<$Res> {
+  __$$UpdateMessageImplCopyWithImpl(
+      _$UpdateMessageImpl _value, $Res Function(_$UpdateMessageImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_UpdateMessage get _value => super._value as _$_UpdateMessage;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? messages = freezed,
+    Object? messages = null,
   }) {
-    return _then(_$_UpdateMessage(
-      messages == freezed
+    return _then(_$UpdateMessageImpl(
+      null == messages
           ? _value._messages
           : messages // ignore: cast_nullable_to_non_nullable
               as List<ChatChannelMessage>,
@@ -708,13 +711,14 @@ class __$$_UpdateMessageCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_UpdateMessage implements _UpdateMessage {
-  const _$_UpdateMessage(final List<ChatChannelMessage> messages)
+class _$UpdateMessageImpl implements _UpdateMessage {
+  const _$UpdateMessageImpl(final List<ChatChannelMessage> messages)
       : _messages = messages;
 
   final List<ChatChannelMessage> _messages;
   @override
   List<ChatChannelMessage> get messages {
+    if (_messages is EqualUnmodifiableListView) return _messages;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_messages);
   }
@@ -725,10 +729,10 @@ class _$_UpdateMessage implements _UpdateMessage {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UpdateMessage &&
+            other is _$UpdateMessageImpl &&
             const DeepCollectionEquality().equals(other._messages, _messages));
   }
 
@@ -738,8 +742,9 @@ class _$_UpdateMessage implements _UpdateMessage {
 
   @JsonKey(ignore: true)
   @override
-  _$$_UpdateMessageCopyWith<_$_UpdateMessage> get copyWith =>
-      __$$_UpdateMessageCopyWithImpl<_$_UpdateMessage>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$UpdateMessageImplCopyWith<_$UpdateMessageImpl> get copyWith =>
+      __$$UpdateMessageImplCopyWithImpl<_$UpdateMessageImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -758,12 +763,13 @@ class _$_UpdateMessage implements _UpdateMessage {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loaded,
-    TResult Function(ChatUserEntity user)? updateUser,
-    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetadata,
-    TResult Function(List<ChatChannelMessage> messages)? updateMessage,
-    TResult Function(String message)? errorOnLoading,
+    TResult? Function()? initial,
+    TResult? Function()? loaded,
+    TResult? Function(ChatUserEntity user)? updateUser,
+    TResult? Function(ChatChannelSessionMetadataEntity metadata)?
+        updateMetadata,
+    TResult? Function(List<ChatChannelMessage> messages)? updateMessage,
+    TResult? Function(String message)? errorOnLoading,
   }) {
     return updateMessage?.call(messages);
   }
@@ -801,12 +807,12 @@ class _$_UpdateMessage implements _UpdateMessage {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UpdateMetadata value)? updateMetadata,
-    TResult Function(_UpdateMessage value)? updateMessage,
-    TResult Function(_ErrorOnLoading value)? errorOnLoading,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_UpdateUser value)? updateUser,
+    TResult? Function(_UpdateMetadata value)? updateMetadata,
+    TResult? Function(_UpdateMessage value)? updateMessage,
+    TResult? Function(_ErrorOnLoading value)? errorOnLoading,
   }) {
     return updateMessage?.call(this);
   }
@@ -831,39 +837,38 @@ class _$_UpdateMessage implements _UpdateMessage {
 
 abstract class _UpdateMessage implements ChatChannelUseCaseEvent {
   const factory _UpdateMessage(final List<ChatChannelMessage> messages) =
-      _$_UpdateMessage;
+      _$UpdateMessageImpl;
 
   List<ChatChannelMessage> get messages;
   @JsonKey(ignore: true)
-  _$$_UpdateMessageCopyWith<_$_UpdateMessage> get copyWith =>
+  _$$UpdateMessageImplCopyWith<_$UpdateMessageImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ErrorOnLoadingCopyWith<$Res> {
-  factory _$$_ErrorOnLoadingCopyWith(
-          _$_ErrorOnLoading value, $Res Function(_$_ErrorOnLoading) then) =
-      __$$_ErrorOnLoadingCopyWithImpl<$Res>;
+abstract class _$$ErrorOnLoadingImplCopyWith<$Res> {
+  factory _$$ErrorOnLoadingImplCopyWith(_$ErrorOnLoadingImpl value,
+          $Res Function(_$ErrorOnLoadingImpl) then) =
+      __$$ErrorOnLoadingImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$$_ErrorOnLoadingCopyWithImpl<$Res>
-    extends _$ChatChannelUseCaseEventCopyWithImpl<$Res>
-    implements _$$_ErrorOnLoadingCopyWith<$Res> {
-  __$$_ErrorOnLoadingCopyWithImpl(
-      _$_ErrorOnLoading _value, $Res Function(_$_ErrorOnLoading) _then)
-      : super(_value, (v) => _then(v as _$_ErrorOnLoading));
+class __$$ErrorOnLoadingImplCopyWithImpl<$Res>
+    extends _$ChatChannelUseCaseEventCopyWithImpl<$Res, _$ErrorOnLoadingImpl>
+    implements _$$ErrorOnLoadingImplCopyWith<$Res> {
+  __$$ErrorOnLoadingImplCopyWithImpl(
+      _$ErrorOnLoadingImpl _value, $Res Function(_$ErrorOnLoadingImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_ErrorOnLoading get _value => super._value as _$_ErrorOnLoading;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? message = freezed,
+    Object? message = null,
   }) {
-    return _then(_$_ErrorOnLoading(
-      message == freezed
+    return _then(_$ErrorOnLoadingImpl(
+      null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
@@ -873,8 +878,8 @@ class __$$_ErrorOnLoadingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ErrorOnLoading implements _ErrorOnLoading {
-  const _$_ErrorOnLoading(this.message);
+class _$ErrorOnLoadingImpl implements _ErrorOnLoading {
+  const _$ErrorOnLoadingImpl(this.message);
 
   @override
   final String message;
@@ -885,21 +890,22 @@ class _$_ErrorOnLoading implements _ErrorOnLoading {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ErrorOnLoading &&
-            const DeepCollectionEquality().equals(other.message, message));
+            other is _$ErrorOnLoadingImpl &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
-  _$$_ErrorOnLoadingCopyWith<_$_ErrorOnLoading> get copyWith =>
-      __$$_ErrorOnLoadingCopyWithImpl<_$_ErrorOnLoading>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$ErrorOnLoadingImplCopyWith<_$ErrorOnLoadingImpl> get copyWith =>
+      __$$ErrorOnLoadingImplCopyWithImpl<_$ErrorOnLoadingImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -918,12 +924,13 @@ class _$_ErrorOnLoading implements _ErrorOnLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loaded,
-    TResult Function(ChatUserEntity user)? updateUser,
-    TResult Function(ChatChannelSessionMetadataEntity metadata)? updateMetadata,
-    TResult Function(List<ChatChannelMessage> messages)? updateMessage,
-    TResult Function(String message)? errorOnLoading,
+    TResult? Function()? initial,
+    TResult? Function()? loaded,
+    TResult? Function(ChatUserEntity user)? updateUser,
+    TResult? Function(ChatChannelSessionMetadataEntity metadata)?
+        updateMetadata,
+    TResult? Function(List<ChatChannelMessage> messages)? updateMessage,
+    TResult? Function(String message)? errorOnLoading,
   }) {
     return errorOnLoading?.call(message);
   }
@@ -961,12 +968,12 @@ class _$_ErrorOnLoading implements _ErrorOnLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UpdateMetadata value)? updateMetadata,
-    TResult Function(_UpdateMessage value)? updateMessage,
-    TResult Function(_ErrorOnLoading value)? errorOnLoading,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_UpdateUser value)? updateUser,
+    TResult? Function(_UpdateMetadata value)? updateMetadata,
+    TResult? Function(_UpdateMessage value)? updateMessage,
+    TResult? Function(_ErrorOnLoading value)? errorOnLoading,
   }) {
     return errorOnLoading?.call(this);
   }
@@ -990,10 +997,10 @@ class _$_ErrorOnLoading implements _ErrorOnLoading {
 }
 
 abstract class _ErrorOnLoading implements ChatChannelUseCaseEvent {
-  const factory _ErrorOnLoading(final String message) = _$_ErrorOnLoading;
+  const factory _ErrorOnLoading(final String message) = _$ErrorOnLoadingImpl;
 
   String get message;
   @JsonKey(ignore: true)
-  _$$_ErrorOnLoadingCopyWith<_$_ErrorOnLoading> get copyWith =>
+  _$$ErrorOnLoadingImplCopyWith<_$ErrorOnLoadingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

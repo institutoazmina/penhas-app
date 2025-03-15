@@ -8,9 +8,9 @@ import 'quiz_start_controller.dart';
 
 class QuizStartPage extends StatefulWidget {
   const QuizStartPage({
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final QuizStartController controller;
 

@@ -4,9 +4,9 @@ import '../../../../shared/design_system/colors.dart';
 
 class GuardianTileDescription extends StatelessWidget {
   const GuardianTileDescription({
-    Key? key,
+    super.key,
     required this.description,
-  }) : super(key: key);
+  });
 
   final String? description;
 

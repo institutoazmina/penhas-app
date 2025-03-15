@@ -17,15 +17,15 @@ import '../pages/channel/chat_channel_message_page.dart';
 import 'chat_channel_controller.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key, required this.controller}) : super(key: key);
+  const ChatPage({super.key, required this.controller});
 
   final ChatChannelController controller;
 
   @override
-  _ChatPageState createState() => _ChatPageState();
+  ChatPageState createState() => ChatPageState();
 }
 
-class _ChatPageState extends State<ChatPage> {
+class ChatPageState extends State<ChatPage> {
   ChatChannelController get controller => widget.controller;
 
   @override
@@ -44,7 +44,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 }
 
-extension _ChatPageStateMethods on _ChatPageState {
+extension _ChatPageStateMethods on ChatPageState {
   Widget pageBuilder(ChatChannelState state) {
     return state.when(
       initial: () => const ChatChannelInitialPage(),
@@ -318,7 +318,7 @@ extension _ChatPageStateMethods on _ChatPageState {
   }
 }
 
-extension _ChatPageStateStyle on _ChatPageState {
+extension _ChatPageStateStyle on ChatPageState {
   TextStyle get titleTextStyle => const TextStyle(
         fontFamily: 'Lato',
         fontSize: 14.0,

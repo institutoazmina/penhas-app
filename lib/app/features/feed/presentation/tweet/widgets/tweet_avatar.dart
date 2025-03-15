@@ -8,9 +8,9 @@ import '../../../domain/states/feed_router_type.dart';
 
 class TweetAvatar extends StatelessWidget {
   const TweetAvatar({
-    Key? key,
+    super.key,
     required this.tweet,
-  }) : super(key: key);
+  });
 
   final TweetEntity tweet;
 

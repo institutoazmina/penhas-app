@@ -16,17 +16,16 @@ import 'reply_tweet_controller.dart';
 
 class ReplyTweetPage extends StatefulWidget {
   const ReplyTweetPage(
-      {Key? key, this.title = 'ReplyTweet', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'ReplyTweet', required this.controller});
 
   final String title;
   final ReplyTweetController controller;
 
   @override
-  _ReplyTweetPageState createState() => _ReplyTweetPageState();
+  ReplyTweetPageState createState() => ReplyTweetPageState();
 }
 
-class _ReplyTweetPageState extends State<ReplyTweetPage> with SnackBarHandler {
+class ReplyTweetPageState extends State<ReplyTweetPage> with SnackBarHandler {
   final String inputHint = 'Deixe seu comentário';
   final String anonymousHint =
       'Sua publicação é anônima. As usuárias do app podem comentar sua publicação, mas só você pode iniciar uma conversa com elas.';
@@ -221,7 +220,8 @@ class _ReplyTweetPageState extends State<ReplyTweetPage> with SnackBarHandler {
                   children: <Widget>[
                     SvgPicture.asset(
                       'assets/images/svg/drawer/user_profile.svg',
-                      color: DesignSystemColors.darkIndigoThree,
+                      colorFilter: const ColorFilter.mode(
+                          DesignSystemColors.darkIndigoThree, BlendMode.color),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 12.0),

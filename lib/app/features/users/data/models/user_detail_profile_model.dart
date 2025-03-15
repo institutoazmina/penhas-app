@@ -3,22 +3,14 @@ import '../../domain/entities/user_detail_profile_entity.dart';
 
 class UserDetailProfileModel extends UserDetailProfileEntity {
   const UserDetailProfileModel({
-    String? nickname,
-    String? avatar,
-    int? clientId,
-    String? miniBio,
-    String? skills,
-    String? activity,
-    List<UserDetailBadgeEntity> badges = const [],
-  }) : super(
-          nickname: nickname,
-          avatar: avatar,
-          clientId: clientId,
-          miniBio: miniBio,
-          skills: skills,
-          activity: activity,
-          badges: badges,
-        );
+    super.nickname,
+    super.avatar,
+    super.clientId,
+    super.miniBio,
+    super.skills,
+    super.activity,
+    super.badges = const [],
+  });
 
   factory UserDetailProfileModel.fromJson(Map<String, dynamic> jsonData) {
     List<UserDetailBadgeEntity> badges = [];
@@ -44,21 +36,13 @@ class UserDetailProfileModel extends UserDetailProfileEntity {
 
 class UserDetailBadgeModel extends UserDetailBadgeEntity {
   UserDetailBadgeModel(
-      {required String code,
-      required String description,
-      required String imageUrl,
-      required String name,
-      required String style,
-      required int showDescription,
-      required int popUp})
-      : super(
-            code: code,
-            description: description,
-            imageUrl: imageUrl,
-            name: name,
-            style: style,
-            showDescription: showDescription,
-            popUp: popUp);
+      {required super.code,
+      required super.description,
+      required super.imageUrl,
+      required super.name,
+      required super.style,
+      required super.showDescription,
+      required super.popUp});
 
   factory UserDetailBadgeModel.fromJson(Map<String, dynamic> jsonData) {
     return UserDetailBadgeModel(

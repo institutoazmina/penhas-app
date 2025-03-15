@@ -4,14 +4,10 @@ import '../../domain/entities/support_center_place_entity.dart';
 
 class SupportCenterPlaceDetailModel extends SupportCenterPlaceDetailEntity {
   const SupportCenterPlaceDetailModel({
-    required int? maximumRate,
-    required int? ratedByClient,
-    required SupportCenterPlaceEntity? place,
-  }) : super(
-          maximumRate: maximumRate,
-          ratedByClient: ratedByClient,
-          place: place,
-        );
+    required super.maximumRate,
+    required super.ratedByClient,
+    required super.place,
+  });
 
   factory SupportCenterPlaceDetailModel.fromJson(
     Map<String, dynamic> jsonData,

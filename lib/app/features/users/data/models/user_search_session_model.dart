@@ -5,10 +5,10 @@ import 'user_detail_profile_model.dart';
 
 class UserSearchSessionModel extends UserSearchSessionEntity {
   const UserSearchSessionModel({
-    required bool hasMore,
-    required String? nextPage,
-    required List<UserDetailProfileModel>? users,
-  }) : super(hasMore: hasMore, nextPage: nextPage, users: users);
+    required super.hasMore,
+    required super.nextPage,
+    required List<UserDetailProfileModel>? super.users,
+  });
 
   factory UserSearchSessionModel.fromJson(Map<String, dynamic> jsonData) {
     final List jsonProfiles = jsonData['rows'];

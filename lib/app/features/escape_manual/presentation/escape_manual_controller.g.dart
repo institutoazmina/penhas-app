@@ -8,17 +8,17 @@ part of 'escape_manual_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$EscapeManualController on _EscapeManualControllerBase, Store {
+mixin _$EscapeManualController on EscapeManualControllerBase, Store {
   Computed<PageProgressState>? _$progressStateComputed;
 
   @override
   PageProgressState get progressState => (_$progressStateComputed ??=
           Computed<PageProgressState>(() => super.progressState,
-              name: '_EscapeManualControllerBase.progressState'))
+              name: 'EscapeManualControllerBase.progressState'))
       .value;
 
   late final _$stateAtom =
-      Atom(name: '_EscapeManualControllerBase.state', context: context);
+      Atom(name: 'EscapeManualControllerBase.state', context: context);
 
   @override
   EscapeManualState get state {
@@ -34,7 +34,7 @@ mixin _$EscapeManualController on _EscapeManualControllerBase, Store {
   }
 
   late final _$_reactionAtom =
-      Atom(name: '_EscapeManualControllerBase._reaction', context: context);
+      Atom(name: 'EscapeManualControllerBase._reaction', context: context);
 
   @override
   EscapeManualReaction? get _reaction {
@@ -50,7 +50,7 @@ mixin _$EscapeManualController on _EscapeManualControllerBase, Store {
   }
 
   late final _$_pageProgressAtom =
-      Atom(name: '_EscapeManualControllerBase._pageProgress', context: context);
+      Atom(name: 'EscapeManualControllerBase._pageProgress', context: context);
 
   @override
   ObservableFuture<dynamic>? get _pageProgress {
@@ -66,16 +66,15 @@ mixin _$EscapeManualController on _EscapeManualControllerBase, Store {
   }
 
   late final _$loadAsyncAction =
-      AsyncAction('_EscapeManualControllerBase.load', context: context);
+      AsyncAction('EscapeManualControllerBase.load', context: context);
 
   @override
   Future<void> load() {
     return _$loadAsyncAction.run(() => super.load());
   }
 
-  late final _$openAssistantAsyncAction = AsyncAction(
-      '_EscapeManualControllerBase.openAssistant',
-      context: context);
+  late final _$openAssistantAsyncAction =
+      AsyncAction('EscapeManualControllerBase.openAssistant', context: context);
 
   @override
   Future<void> openAssistant(EscapeManualAssistantActionEntity action) {
@@ -83,7 +82,7 @@ mixin _$EscapeManualController on _EscapeManualControllerBase, Store {
   }
 
   late final _$updateTaskAsyncAction =
-      AsyncAction('_EscapeManualControllerBase.updateTask', context: context);
+      AsyncAction('EscapeManualControllerBase.updateTask', context: context);
 
   @override
   Future<void> updateTask(EscapeManualTodoTaskEntity task) {
@@ -91,7 +90,7 @@ mixin _$EscapeManualController on _EscapeManualControllerBase, Store {
   }
 
   late final _$deleteTaskAsyncAction =
-      AsyncAction('_EscapeManualControllerBase.deleteTask', context: context);
+      AsyncAction('EscapeManualControllerBase.deleteTask', context: context);
 
   @override
   Future<void> deleteTask(EscapeManualTodoTaskEntity task) {

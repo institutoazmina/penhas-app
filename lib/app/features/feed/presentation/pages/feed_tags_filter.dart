@@ -7,9 +7,9 @@ import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
 
 class FeedTagsFilter extends StatelessWidget {
   const FeedTagsFilter({
-    Key? key,
+    super.key,
     required this.reloadFeed,
-  }) : super(key: key);
+  });
 
   final void Function() reloadFeed;
 
@@ -27,8 +27,8 @@ class FeedTagsFilter extends StatelessWidget {
             },
           );
         },
-        child: Row(
-          children: const <Widget>[
+        child: const Row(
+          children: <Widget>[
             Padding(
               padding: EdgeInsets.only(right: 6.0),
               child: Icon(

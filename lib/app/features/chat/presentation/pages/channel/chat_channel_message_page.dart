@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 import '../../../../../shared/design_system/colors.dart';
 import '../../../domain/entities/chat_channel_message.dart';
 
 class ChatChannelMessagePage extends StatelessWidget {
   const ChatChannelMessagePage({
-    Key? key,
+    super.key,
     required this.content,
-  }) : super(key: key);
+  });
 
   final ChatChannelMessage content;
 
@@ -55,12 +55,16 @@ class ChatChannelMessagePage extends StatelessWidget {
               )
             ]),
         child: Container(
-          constraints: const BoxConstraints(minWidth: 60.0),
-          child: HtmlWidget(
-            content.content.message!,
-            textStyle: TextStyle(fontSize: 15.0, color: textColor),
-          ),
-        ),
+            constraints: const BoxConstraints(minWidth: 60.0),
+            child: Html(
+              data: content.content.message!,
+              style: {
+                'body': Style(
+                  fontSize: FontSize(15.0),
+                  color: textColor,
+                ),
+              },
+            )),
       ),
     );
   }

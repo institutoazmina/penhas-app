@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'feed_security_state.dart';
 
@@ -12,7 +12,7 @@ part of 'feed_security_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$FeedSecurityState {
@@ -24,8 +24,8 @@ mixin _$FeedSecurityState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? enable,
-    TResult Function()? disable,
+    TResult? Function()? enable,
+    TResult? Function()? disable,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,8 +43,8 @@ mixin _$FeedSecurityState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Enable value)? enable,
-    TResult Function(_Disable value)? disable,
+    TResult? Function(_Enable value)? enable,
+    TResult? Function(_Disable value)? disable,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,40 +60,40 @@ mixin _$FeedSecurityState {
 abstract class $FeedSecurityStateCopyWith<$Res> {
   factory $FeedSecurityStateCopyWith(
           FeedSecurityState value, $Res Function(FeedSecurityState) then) =
-      _$FeedSecurityStateCopyWithImpl<$Res>;
+      _$FeedSecurityStateCopyWithImpl<$Res, FeedSecurityState>;
 }
 
 /// @nodoc
-class _$FeedSecurityStateCopyWithImpl<$Res>
+class _$FeedSecurityStateCopyWithImpl<$Res, $Val extends FeedSecurityState>
     implements $FeedSecurityStateCopyWith<$Res> {
   _$FeedSecurityStateCopyWithImpl(this._value, this._then);
 
-  final FeedSecurityState _value;
   // ignore: unused_field
-  final $Res Function(FeedSecurityState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$$_EnableCopyWith<$Res> {
-  factory _$$_EnableCopyWith(_$_Enable value, $Res Function(_$_Enable) then) =
-      __$$_EnableCopyWithImpl<$Res>;
+abstract class _$$EnableImplCopyWith<$Res> {
+  factory _$$EnableImplCopyWith(
+          _$EnableImpl value, $Res Function(_$EnableImpl) then) =
+      __$$EnableImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_EnableCopyWithImpl<$Res>
-    extends _$FeedSecurityStateCopyWithImpl<$Res>
-    implements _$$_EnableCopyWith<$Res> {
-  __$$_EnableCopyWithImpl(_$_Enable _value, $Res Function(_$_Enable) _then)
-      : super(_value, (v) => _then(v as _$_Enable));
-
-  @override
-  _$_Enable get _value => super._value as _$_Enable;
+class __$$EnableImplCopyWithImpl<$Res>
+    extends _$FeedSecurityStateCopyWithImpl<$Res, _$EnableImpl>
+    implements _$$EnableImplCopyWith<$Res> {
+  __$$EnableImplCopyWithImpl(
+      _$EnableImpl _value, $Res Function(_$EnableImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Enable implements _Enable {
-  const _$_Enable();
+class _$EnableImpl implements _Enable {
+  const _$EnableImpl();
 
   @override
   String toString() {
@@ -101,9 +101,9 @@ class _$_Enable implements _Enable {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Enable);
+        (other.runtimeType == runtimeType && other is _$EnableImpl);
   }
 
   @override
@@ -121,8 +121,8 @@ class _$_Enable implements _Enable {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? enable,
-    TResult Function()? disable,
+    TResult? Function()? enable,
+    TResult? Function()? disable,
   }) {
     return enable?.call();
   }
@@ -152,8 +152,8 @@ class _$_Enable implements _Enable {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Enable value)? enable,
-    TResult Function(_Disable value)? disable,
+    TResult? Function(_Enable value)? enable,
+    TResult? Function(_Disable value)? disable,
   }) {
     return enable?.call(this);
   }
@@ -173,31 +173,29 @@ class _$_Enable implements _Enable {
 }
 
 abstract class _Enable implements FeedSecurityState {
-  const factory _Enable() = _$_Enable;
+  const factory _Enable() = _$EnableImpl;
 }
 
 /// @nodoc
-abstract class _$$_DisableCopyWith<$Res> {
-  factory _$$_DisableCopyWith(
-          _$_Disable value, $Res Function(_$_Disable) then) =
-      __$$_DisableCopyWithImpl<$Res>;
+abstract class _$$DisableImplCopyWith<$Res> {
+  factory _$$DisableImplCopyWith(
+          _$DisableImpl value, $Res Function(_$DisableImpl) then) =
+      __$$DisableImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_DisableCopyWithImpl<$Res>
-    extends _$FeedSecurityStateCopyWithImpl<$Res>
-    implements _$$_DisableCopyWith<$Res> {
-  __$$_DisableCopyWithImpl(_$_Disable _value, $Res Function(_$_Disable) _then)
-      : super(_value, (v) => _then(v as _$_Disable));
-
-  @override
-  _$_Disable get _value => super._value as _$_Disable;
+class __$$DisableImplCopyWithImpl<$Res>
+    extends _$FeedSecurityStateCopyWithImpl<$Res, _$DisableImpl>
+    implements _$$DisableImplCopyWith<$Res> {
+  __$$DisableImplCopyWithImpl(
+      _$DisableImpl _value, $Res Function(_$DisableImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Disable implements _Disable {
-  const _$_Disable();
+class _$DisableImpl implements _Disable {
+  const _$DisableImpl();
 
   @override
   String toString() {
@@ -205,9 +203,9 @@ class _$_Disable implements _Disable {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Disable);
+        (other.runtimeType == runtimeType && other is _$DisableImpl);
   }
 
   @override
@@ -225,8 +223,8 @@ class _$_Disable implements _Disable {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? enable,
-    TResult Function()? disable,
+    TResult? Function()? enable,
+    TResult? Function()? disable,
   }) {
     return disable?.call();
   }
@@ -256,8 +254,8 @@ class _$_Disable implements _Disable {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Enable value)? enable,
-    TResult Function(_Disable value)? disable,
+    TResult? Function(_Enable value)? enable,
+    TResult? Function(_Disable value)? disable,
   }) {
     return disable?.call(this);
   }
@@ -277,5 +275,5 @@ class _$_Disable implements _Disable {
 }
 
 abstract class _Disable implements FeedSecurityState {
-  const factory _Disable() = _$_Disable;
+  const factory _Disable() = _$DisableImpl;
 }

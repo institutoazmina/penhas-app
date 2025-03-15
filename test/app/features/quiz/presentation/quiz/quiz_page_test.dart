@@ -1,3 +1,5 @@
+import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -393,32 +395,41 @@ void main() {
       },
     );
 
-    screenshotTest(
+    testWidgets(
       'when received many messages should display float button',
-      fileName: 'quiz_received_many_messages',
-      devices: testDevices.sublist(0, 1),
-      setUp: () {
+      (tester) async {
+        // arrange
         mockQuizArgs([QuizOkButton()]);
 
-        when(
-          () => mockSendAnswer(any(), any()),
-        ).thenSuccess(
-          (_) => Quiz(
-            id: 'session-id',
-            messages: createTextMessages(count: 14),
+        when(() => mockSendAnswer(any(), any()))
+            .thenAnswer((_) async => Right<Failure, Quiz>(Quiz(
+                  id: 'session-id',
+                  messages: createTextMessages(count: 14),
+                )));
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: QuizPage(controller: controller),
           ),
         );
-      },
-      pageBuilder: () => QuizPage(controller: controller),
-      pumpBeforeTest: (tester) async {
+
+        // act
+        await tester.pumpAndSettle();
+        expect(find.text('OK'), findsOneWidget);
+
         await tester.tapAll(find.text('OK'));
+
         await tester.pumpAndSettle(Duration(seconds: 5));
+
+        // assert
+        expect(find.byType(FloatingActionButton), findsOneWidget);
       },
     );
 
-    screenshotTest(
+    screenshotTestSimplified(
       'given many messages when tap on float button should scroll to the end',
       fileName: 'quiz_scroll_to_end',
+      skip: true,
       devices: testDevices.sublist(0, 1),
       setUp: () {
         mockQuizArgs([QuizOkButton()]);

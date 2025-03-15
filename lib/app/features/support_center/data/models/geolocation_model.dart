@@ -1,16 +1,11 @@
-import '../../../../core/entities/user_location.dart';
 import '../../domain/entities/geolocation_entity.dart';
 
 class GeoLocationModel extends GeolocationEntity {
   const GeoLocationModel({
-    String? label,
-    String? locationToken,
-    UserLocationEntity? userLocation,
-  }) : super(
-          label: label,
-          locationToken: locationToken,
-          userLocation: userLocation,
-        );
+    super.label,
+    super.locationToken,
+    super.userLocation,
+  });
 
   factory GeoLocationModel.fromJson(Map<String, dynamic> jsonData) =>
       GeoLocationModel(

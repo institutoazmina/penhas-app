@@ -5,8 +5,8 @@ import '../../../authentication/presentation/shared/page_progress_indicator.dart
 
 class FilterInitialStatePage extends StatelessWidget {
   const FilterInitialStatePage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

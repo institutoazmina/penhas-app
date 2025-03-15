@@ -1,13 +1,14 @@
 import 'package:badges/badges.dart' as bdg;
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class MainboardNotificationPage extends StatelessWidget {
   const MainboardNotificationPage({
-    Key? key,
+    super.key,
     required this.counter,
     required this.resetCounter,
-  }) : super(key: key);
+  });
 
   final int counter;
   final void Function() resetCounter;
@@ -16,10 +17,11 @@ class MainboardNotificationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       icon: bdg.Badge(
-        elevation: 0.0,
+        badgeStyle: const BadgeStyle(
+          elevation: 0.0,
+        ),
         position: _badgePosition(counter),
         showBadge: counter > 0,
-        toAnimate: false,
         badgeContent: Text(
           counter > 99 ? '+99' : counter.toString(),
           style: const TextStyle(
@@ -39,9 +41,9 @@ class MainboardNotificationPage extends StatelessWidget {
 
   bdg.BadgePosition? _badgePosition(int counter) {
     if (counter < 10) {
-      return const bdg.BadgePosition(end: -4, top: -8);
+      return bdg.BadgePosition.custom(end: -4, top: -8);
     } else if (counter < 100) {
-      return const bdg.BadgePosition(end: -8, top: -8);
+      return bdg.BadgePosition.custom(end: -8, top: -8);
     }
 
     return null;

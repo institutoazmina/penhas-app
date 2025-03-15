@@ -16,17 +16,17 @@ import '../../shared/snack_bar_handler.dart';
 import 'sign_up_controller.dart';
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key, this.title = 'SignUp', required this.controller})
-      : super(key: key);
+  const SignUpPage(
+      {super.key, this.title = 'SignUp', required this.controller});
 
   final String title;
   final SignUpController controller;
 
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  SignUpPageState createState() => SignUpPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> with SnackBarHandler {
+class SignUpPageState extends State<SignUpPage> with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;

@@ -16,16 +16,16 @@ import 'reset_password_controller.dart';
 class ResetPasswordPage extends StatefulWidget {
   const ResetPasswordPage({
     required this.controller,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final ResetPasswordController controller;
 
   @override
-  _ResetPasswordPageState createState() => _ResetPasswordPageState();
+  ResetPasswordPageState createState() => ResetPasswordPageState();
 }
 
-class _ResetPasswordPageState extends State<ResetPasswordPage>
+class ResetPasswordPageState extends State<ResetPasswordPage>
     with SnackBarHandler {
   ResetPasswordController get controller => widget.controller;
   List<ReactionDisposer>? _disposers;
@@ -90,7 +90,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage>
                             width: 102,
                             child: SvgPicture.asset(
                               'assets/images/svg/reset_password/recovery_password_step_1.svg',
-                              color: Colors.white,
+                              colorFilter: const ColorFilter.mode(
+                                  Colors.white, BlendMode.color),
                             ),
                           ),
                         ],

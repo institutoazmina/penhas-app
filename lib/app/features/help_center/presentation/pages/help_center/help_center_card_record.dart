@@ -8,9 +8,9 @@ import '../tutorial/record/record_tutorial_page.dart';
 
 class HelpCenterCardRecord extends StatelessWidget {
   const HelpCenterCardRecord({
-    Key? key,
+    super.key,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final VoidCallback onPressed;
 

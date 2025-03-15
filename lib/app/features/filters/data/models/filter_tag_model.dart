@@ -5,10 +5,10 @@ import '../../domain/entities/filter_tag_entity.dart';
 @immutable
 class FilterTagModel extends FilterTagEntity {
   const FilterTagModel({
-    required String id,
-    required String? label,
-    required bool isSelected,
-  }) : super(id: id, label: label, isSelected: isSelected);
+    required super.id,
+    required super.label,
+    required super.isSelected,
+  });
 
   static FilterTagModel? fromJson(Map<String, dynamic>? jsonData) {
     if (jsonData == null) return null;

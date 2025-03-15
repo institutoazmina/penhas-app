@@ -4,20 +4,13 @@ import '../../domain/entities/support_center_place_session_entity.dart';
 
 class SupportCenterPlaceSessionModel extends SupportCenterPlaceSessionEntity {
   const SupportCenterPlaceSessionModel({
-    int? maximumRate,
-    double? latitude,
-    double? longitude,
-    bool? hasMore,
-    String? nextPage,
-    List<SupportCenterPlaceEntity> places = const [],
-  }) : super(
-          maximumRate: maximumRate,
-          latitude: latitude,
-          longitude: longitude,
-          nextPage: nextPage,
-          hasMore: hasMore,
-          places: places,
-        );
+    super.maximumRate,
+    super.latitude,
+    super.longitude,
+    super.hasMore,
+    super.nextPage,
+    super.places = const [],
+  });
 
   factory SupportCenterPlaceSessionModel.fromJson(
     Map<String, dynamic> jsonData,

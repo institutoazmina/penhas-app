@@ -8,16 +8,15 @@ import 'support_center_list_controller.dart';
 typedef ActionOnSelected = void Function(SupportCenterPlaceEntity place);
 
 class SupportCenterListPage extends StatefulWidget {
-  const SupportCenterListPage({Key? key, required this.controller})
-      : super(key: key);
+  const SupportCenterListPage({super.key, required this.controller});
 
   final SupportCenterListController controller;
 
   @override
-  _SupportCenterListPageState createState() => _SupportCenterListPageState();
+  SupportCenterListPageState createState() => SupportCenterListPageState();
 }
 
-class _SupportCenterListPageState extends State<SupportCenterListPage> {
+class SupportCenterListPageState extends State<SupportCenterListPage> {
   SupportCenterListController get _controller => widget.controller;
   @override
   Widget build(BuildContext context) {
@@ -68,10 +67,10 @@ class _SupportCenterListPageState extends State<SupportCenterListPage> {
 
 class Card extends StatelessWidget {
   const Card({
-    Key? key,
+    super.key,
     required this.place,
     required this.onSelected,
-  }) : super(key: key);
+  });
   final SupportCenterPlaceEntity place;
   final ActionOnSelected onSelected;
 

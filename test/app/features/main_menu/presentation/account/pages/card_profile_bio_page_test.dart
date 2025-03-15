@@ -6,7 +6,7 @@ import '../../../../../../utils/golden_tests.dart';
 
 void main() {
   group(CardProfileBioPage, () {
-    screenshotTest(
+    screenshotTestSimplified(
       'should render correctly',
       fileName: 'card_profile_bio_page',
       pageBuilder: () => Scaffold(

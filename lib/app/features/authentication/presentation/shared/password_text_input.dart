@@ -4,14 +4,14 @@ import '../../../../shared/design_system/text_styles.dart';
 
 class PasswordInputField extends StatefulWidget {
   const PasswordInputField({
-    Key? key,
+    super.key,
     this.style = kTextStyleDefaultTextFieldLabelStyle,
     this.isAutofocus = false,
     required this.onChanged,
     required this.labelText,
     required this.errorText,
     required this.hintText,
-  }) : super(key: key);
+  });
 
   final TextStyle style;
   final void Function(String) onChanged;
@@ -21,11 +21,11 @@ class PasswordInputField extends StatefulWidget {
   final bool isAutofocus;
 
   @override
-  _PasswordInputFieldState createState() => _PasswordInputFieldState();
+  PasswordInputFieldState createState() => PasswordInputFieldState();
 }
 
-class _PasswordInputFieldState extends State<PasswordInputField> {
-  _PasswordInputFieldState();
+class PasswordInputFieldState extends State<PasswordInputField> {
+  PasswordInputFieldState();
 
   bool _isPasswordVisible = false;
 

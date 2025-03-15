@@ -6,9 +6,9 @@ import '../../../domain/entities/support_center_place_detail_entity.dart';
 
 class SupportCenterDetailMapWidget extends StatelessWidget {
   const SupportCenterDetailMapWidget({
-    Key? key,
+    super.key,
     required this.detail,
-  }) : super(key: key);
+  });
 
   final SupportCenterPlaceDetailEntity detail;
 

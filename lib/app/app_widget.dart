@@ -6,7 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'shared/design_system/theme.dart';
 
 class AppWidget extends StatelessWidget {
-  const AppWidget({Key? key}) : super(key: key);
+  const AppWidget({super.key});
 
   static FirebaseAnalytics get _analytics => FirebaseAnalytics.instance;
   static FirebaseAnalyticsObserver observer =

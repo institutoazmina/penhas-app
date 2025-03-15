@@ -6,10 +6,10 @@ import 'choices_box.dart';
 
 class SingleChoiceMessageWidget extends StatefulWidget {
   const SingleChoiceMessageWidget({
-    Key? key,
+    super.key,
     required this.options,
     this.onReply,
-  }) : super(key: key);
+  });
 
   final List<MessageOption> options;
   final ValueChanged<AnswerValue>? onReply;
@@ -55,10 +55,10 @@ class _SingleChoiceMessageWidgetState extends State<SingleChoiceMessageWidget> {
 class RadioOption extends StatelessWidget {
   const RadioOption(
     this.option, {
-    Key? key,
+    super.key,
     required this.selectedValue,
     this.onChanged,
-  }) : super(key: key);
+  });
 
   final MessageOption option;
   final MessageOption? selectedValue;

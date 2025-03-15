@@ -149,6 +149,8 @@ extension _PermissionStatusMap on PermissionStatus {
         return const AudioPermissionState.permanentlyDenied();
       case PermissionStatus.limited:
         return const AudioPermissionState.undefined();
+      case PermissionStatus.provisional:
+        return const AudioPermissionState.granted();
     }
   }
 }
@@ -246,8 +248,8 @@ extension _AudioRecordServices on AudioRecordServices {
           barrierDismissible: false,
           builder: (context) {
             return AlertDialog(
-              title: Column(
-                children: const <Widget>[
+              title: const Column(
+                children: <Widget>[
                   Icon(
                     Icons.mic_none,
                     color: DesignSystemColors.easterPurple,
@@ -291,12 +293,12 @@ extension _AudioRecordServices on AudioRecordServices {
               ),
               actions: <Widget>[
                 TextButton(
-                  child: const Text('Agora não'),
                   style: TextButtonStyle.flat(),
                   onPressed: () async {
                     Navigator.of(context)
                         .pop(const AudioPermissionState.denied());
                   },
+                  child: const Text('Agora não'),
                 ),
                 ConstrainedBox(
                   constraints: const BoxConstraints(minWidth: 120),
@@ -336,8 +338,8 @@ extension _AudioRecordServices on AudioRecordServices {
           barrierDismissible: false,
           builder: (context) {
             return AlertDialog(
-              title: Column(
-                children: const <Widget>[
+              title: const Column(
+                children: <Widget>[
                   Icon(
                     Icons.mic_off,
                     color: DesignSystemColors.easterPurple,
@@ -389,12 +391,12 @@ extension _AudioRecordServices on AudioRecordServices {
               ),
               actions: <Widget>[
                 TextButton(
-                  child: const Text('Não'),
                   style: TextButtonStyle.flat(),
                   onPressed: () async {
                     Navigator.of(context)
                         .pop(const AudioPermissionState.denied());
                   },
+                  child: const Text('Não'),
                 ),
                 ConstrainedBox(
                   constraints: const BoxConstraints(minWidth: 120),

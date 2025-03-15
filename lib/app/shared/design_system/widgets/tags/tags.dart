@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 /// A custom Tags widget that replaces the flutter_tags package
 class Tags extends StatefulWidget {
   const Tags({
-    Key? key,
+    super.key,
     required this.itemCount,
     required this.itemBuilder,
     this.spacing = 8.0,
@@ -11,7 +11,7 @@ class Tags extends StatefulWidget {
     this.alignment = WrapAlignment.start,
     this.runAlignment = WrapAlignment.start,
     this.crossAxisAlignment = WrapCrossAlignment.start,
-  }) : super(key: key);
+  });
 
   /// Number of tag items
   final int itemCount;
@@ -87,7 +87,7 @@ class TagsState extends State<Tags> {
 /// A custom tag item that replaces ItemTags from flutter_tags
 class TagItem extends StatefulWidget {
   const TagItem({
-    Key? key,
+    super.key,
     required this.index,
     required this.title,
     this.active = false,
@@ -102,7 +102,7 @@ class TagItem extends StatefulWidget {
     this.textStyle,
     this.onPressed,
     this.pressEnabled = true,
-  }) : super(key: key);
+  });
 
   /// Index of the tag
   final int index;

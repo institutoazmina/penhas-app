@@ -1,92 +1,57 @@
-import 'package:flutter/material.dart';
-import 'package:mocktail/mocktail.dart';
+import 'package:flutter/widgets.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
-class WebViewMocks {
-  static late WebViewPlatform webViewPlatform;
-  static late WebViewPlatformController webViewPlatformController;
-  static late MockWebViewCookieManagerPlatform webViewCookieManagerPlatform;
-
-  static void init() {
-    _initMocks();
-    _initFallbacks();
+/// Fake implementation of WebViewPlatform for testing.
+class FakeWebViewPlatform extends WebViewPlatform {
+  @override
+  PlatformWebViewController createPlatformWebViewController(
+      PlatformWebViewControllerCreationParams params) {
+    return FakeWebViewController(params);
   }
 
-  static void _initMocks() {
-    webViewPlatform = MockWebViewPlatform();
-    webViewPlatformController = MockWebViewPlatformController();
-    webViewCookieManagerPlatform = MockWebViewCookieManagerPlatform();
-  }
-
-  static void _initFallbacks() {
-    registerFallbackValue(FakeBuildContext());
-    registerFallbackValue(FakeCreationParams());
-    registerFallbackValue(FakeWebViewPlatformCallbacksHandler());
-    registerFallbackValue(FakeJavascriptChannelRegistry());
-    registerFallbackValue(FakeWebSettings());
+  @override
+  PlatformWebViewWidget createPlatformWebViewWidget(
+      PlatformWebViewWidgetCreationParams params) {
+    return FakeWebViewWidget(params);
   }
 }
 
-class MockWebViewPlatform extends Mock implements WebViewPlatform {}
-
-class MockWebViewPlatformController extends Mock
-    implements WebViewPlatformController {}
-
-class FakeBuildContext extends Fake implements BuildContext {}
-
-class FakeCreationParams extends Fake implements CreationParams {}
-
-class FakeWebViewPlatformCallbacksHandler extends Fake
-    implements WebViewPlatformCallbacksHandler {}
-
-class FakeJavascriptChannelRegistry extends Fake
-    implements JavascriptChannelRegistry {}
-
-class FakeWebSettings extends Fake implements WebSettings {}
-
-class MockWebViewCookieManagerPlatform extends WebViewCookieManagerPlatform {
-  List<WebViewCookie> setCookieCalls = <WebViewCookie>[];
+/// Fake WebView Controller Implementation
+class FakeWebViewController extends PlatformWebViewController {
+  FakeWebViewController(PlatformWebViewControllerCreationParams params)
+      : super.implementation(params);
 
   @override
-  Future<bool> clearCookies() async => true;
-
-  @override
-  Future<void> setCookie(WebViewCookie cookie) async {
-    setCookieCalls.add(cookie);
+  Future<void> loadRequest(LoadRequestParams params) async {
+    // Mock the behavior when loadRequest is called.
+    // In a real scenario, this would trigger the webview to load a URL, but here we mock it.
+    print('Mock loadRequest called with URL: ${params.uri}');
+    // You can simulate additional behaviors here, like sending success or failure callbacks.
   }
 
-  void reset() {
-    setCookieCalls = <WebViewCookie>[];
+  @override
+  Future<void> setJavaScriptMode(JavaScriptMode javaScriptMode) async {
+    // Simulate setting JavaScript mode.
+  }
+
+  @override
+  Future<void> clearCache() async {
+    // Simulate clearing cache.
+  }
+
+  @override
+  Future<void> enableZoom(bool enabled) async {
+    // Simulate enabling/disabling zoom.
   }
 }
 
-class TestPlatformWebView extends StatefulWidget {
-  const TestPlatformWebView({
-    Key? key,
-    required this.mockWebViewPlatformController,
-    this.onWebViewPlatformCreated,
-  }) : super(key: key);
-
-  final WebViewPlatformController mockWebViewPlatformController;
-  final WebViewPlatformCreatedCallback? onWebViewPlatformCreated;
-
-  @override
-  State<StatefulWidget> createState() => TestPlatformWebViewState();
-}
-
-class TestPlatformWebViewState extends State<TestPlatformWebView> {
-  @override
-  void initState() {
-    super.initState();
-    final WebViewPlatformCreatedCallback? onWebViewPlatformCreated =
-        widget.onWebViewPlatformCreated;
-    if (onWebViewPlatformCreated != null) {
-      onWebViewPlatformCreated(widget.mockWebViewPlatformController);
-    }
-  }
+/// Fake WebView Widget
+class FakeWebViewWidget extends PlatformWebViewWidget {
+  FakeWebViewWidget(PlatformWebViewWidgetCreationParams params)
+      : super.implementation(params);
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const SizedBox.shrink(); // Return an empty widget for testing.
   }
 }

@@ -5,8 +5,8 @@ import '../../../../shared/design_system/text_styles.dart';
 
 class ZodiacRulingPage extends StatelessWidget {
   const ZodiacRulingPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

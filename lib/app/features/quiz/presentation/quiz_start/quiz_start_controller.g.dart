@@ -8,17 +8,17 @@ part of 'quiz_start_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$QuizStartController on _QuizStartControllerBase, Store {
+mixin _$QuizStartController on QuizStartControllerBase, Store {
   Computed<PageProgressState>? _$progressStateComputed;
 
   @override
   PageProgressState get progressState => (_$progressStateComputed ??=
           Computed<PageProgressState>(() => super.progressState,
-              name: '_QuizStartControllerBase.progressState'))
+              name: 'QuizStartControllerBase.progressState'))
       .value;
 
   late final _$stateAtom =
-      Atom(name: '_QuizStartControllerBase.state', context: context);
+      Atom(name: 'QuizStartControllerBase.state', context: context);
 
   @override
   QuizStartState get state {
@@ -34,7 +34,7 @@ mixin _$QuizStartController on _QuizStartControllerBase, Store {
   }
 
   late final _$_pageProgressAtom =
-      Atom(name: '_QuizStartControllerBase._pageProgress', context: context);
+      Atom(name: 'QuizStartControllerBase._pageProgress', context: context);
 
   @override
   ObservableFuture<Either<Failure, QuizSessionEntity>>? get _pageProgress {

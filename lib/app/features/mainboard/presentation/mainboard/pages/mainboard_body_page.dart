@@ -11,11 +11,11 @@ import '../../../domain/states/mainboard_state.dart';
 
 class MainboardBodyPage extends StatelessWidget {
   const MainboardBodyPage({
-    Key? key,
+    super.key,
     required this.pages,
     required this.pageController,
     required this.composeTweetController,
-  }) : super(key: key);
+  });
 
   final List<MainboardState> pages;
   final PageController pageController;

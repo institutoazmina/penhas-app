@@ -16,9 +16,9 @@ const String _warningToken = 'Precisa digitar o código enviado';
 class ResetPasswordTwoController extends _ResetPasswordTwoControllerBase
     with _$ResetPasswordTwoController {
   ResetPasswordTwoController(
-    IChangePasswordRepository repository,
-    UserRegisterFormFieldModel? userRegisterModel,
-  ) : super(repository, userRegisterModel);
+    super.repository,
+    super.userRegisterModel,
+  );
 }
 
 abstract class _ResetPasswordTwoControllerBase with Store, MapFailureMessage {

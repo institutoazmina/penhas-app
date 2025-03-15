@@ -6,9 +6,9 @@ import '../../../../../shared/design_system/text_styles.dart';
 
 class HelpCenterActionGuardian extends StatelessWidget {
   const HelpCenterActionGuardian({
-    Key? key,
+    super.key,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final VoidCallback onPressed;
 

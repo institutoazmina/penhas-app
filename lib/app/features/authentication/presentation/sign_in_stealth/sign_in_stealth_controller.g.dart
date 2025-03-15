@@ -8,17 +8,17 @@ part of 'sign_in_stealth_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$SignInStealthController on _SignInStealthController, Store {
+mixin _$SignInStealthController on SignInStealthControllerBase, Store {
   Computed<PageProgressState>? _$currentStateComputed;
 
   @override
   PageProgressState get currentState => (_$currentStateComputed ??=
           Computed<PageProgressState>(() => super.currentState,
-              name: '_SignInStealthController.currentState'))
+              name: 'SignInStealthControllerBase.currentState'))
       .value;
 
   late final _$_progressAtom =
-      Atom(name: '_SignInStealthController._progress', context: context);
+      Atom(name: 'SignInStealthControllerBase._progress', context: context);
 
   @override
   ObservableFuture<Either<Failure, SessionEntity>>? get _progress {
@@ -34,7 +34,7 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
   }
 
   late final _$userGreetingsAtom =
-      Atom(name: '_SignInStealthController.userGreetings', context: context);
+      Atom(name: 'SignInStealthControllerBase.userGreetings', context: context);
 
   @override
   String get userGreetings {
@@ -50,7 +50,7 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
   }
 
   late final _$userEmailAtom =
-      Atom(name: '_SignInStealthController.userEmail', context: context);
+      Atom(name: 'SignInStealthControllerBase.userEmail', context: context);
 
   @override
   String? get userEmail {
@@ -65,8 +65,8 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
     });
   }
 
-  late final _$warningPasswordAtom =
-      Atom(name: '_SignInStealthController.warningPassword', context: context);
+  late final _$warningPasswordAtom = Atom(
+      name: 'SignInStealthControllerBase.warningPassword', context: context);
 
   @override
   String get warningPassword {
@@ -82,7 +82,7 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
   }
 
   late final _$errorMessageAtom =
-      Atom(name: '_SignInStealthController.errorMessage', context: context);
+      Atom(name: 'SignInStealthControllerBase.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -98,7 +98,7 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
   }
 
   late final _$signAtom =
-      Atom(name: '_SignInStealthController.sign', context: context);
+      Atom(name: 'SignInStealthControllerBase.sign', context: context);
 
   @override
   IZodiac get sign {
@@ -114,7 +114,7 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
   }
 
   late final _$signListAtom =
-      Atom(name: '_SignInStealthController.signList', context: context);
+      Atom(name: 'SignInStealthControllerBase.signList', context: context);
 
   @override
   ObservableList<IZodiac> get signList {
@@ -130,7 +130,7 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
   }
 
   late final _$isSecurityRunningAtom = Atom(
-      name: '_SignInStealthController.isSecurityRunning', context: context);
+      name: 'SignInStealthControllerBase.isSecurityRunning', context: context);
 
   @override
   bool get isSecurityRunning {
@@ -146,7 +146,7 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
   }
 
   late final _$signInWithEmailAndPasswordPressedAsyncAction = AsyncAction(
-      '_SignInStealthController.signInWithEmailAndPasswordPressed',
+      'SignInStealthControllerBase.signInWithEmailAndPasswordPressed',
       context: context);
 
   @override
@@ -155,8 +155,9 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
         .run(() => super.signInWithEmailAndPasswordPressed());
   }
 
-  late final _$changeAccountAsyncAction =
-      AsyncAction('_SignInStealthController.changeAccount', context: context);
+  late final _$changeAccountAsyncAction = AsyncAction(
+      'SignInStealthControllerBase.changeAccount',
+      context: context);
 
   @override
   Future<void> changeAccount() {
@@ -164,7 +165,7 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
   }
 
   late final _$resetPasswordPressedAsyncAction = AsyncAction(
-      '_SignInStealthController.resetPasswordPressed',
+      'SignInStealthControllerBase.resetPasswordPressed',
       context: context);
 
   @override
@@ -173,39 +174,39 @@ mixin _$SignInStealthController on _SignInStealthController, Store {
         .run(() => super.resetPasswordPressed());
   }
 
-  late final _$_SignInStealthControllerActionController =
-      ActionController(name: '_SignInStealthController', context: context);
+  late final _$SignInStealthControllerBaseActionController =
+      ActionController(name: 'SignInStealthControllerBase', context: context);
 
   @override
   void setPassword(String password) {
-    final _$actionInfo = _$_SignInStealthControllerActionController.startAction(
-        name: '_SignInStealthController.setPassword');
+    final _$actionInfo = _$SignInStealthControllerBaseActionController
+        .startAction(name: 'SignInStealthControllerBase.setPassword');
     try {
       return super.setPassword(password);
     } finally {
-      _$_SignInStealthControllerActionController.endAction(_$actionInfo);
+      _$SignInStealthControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void stealthAction() {
-    final _$actionInfo = _$_SignInStealthControllerActionController.startAction(
-        name: '_SignInStealthController.stealthAction');
+    final _$actionInfo = _$SignInStealthControllerBaseActionController
+        .startAction(name: 'SignInStealthControllerBase.stealthAction');
     try {
       return super.stealthAction();
     } finally {
-      _$_SignInStealthControllerActionController.endAction(_$actionInfo);
+      _$SignInStealthControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void dispose() {
-    final _$actionInfo = _$_SignInStealthControllerActionController.startAction(
-        name: '_SignInStealthController.dispose');
+    final _$actionInfo = _$SignInStealthControllerBaseActionController
+        .startAction(name: 'SignInStealthControllerBase.dispose');
     try {
       return super.dispose();
     } finally {
-      _$_SignInStealthControllerActionController.endAction(_$actionInfo);
+      _$SignInStealthControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 

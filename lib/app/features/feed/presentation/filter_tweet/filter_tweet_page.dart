@@ -11,16 +11,15 @@ import '../../domain/entities/tweet_filter_session_entity.dart';
 import 'filter_tweet_controller.dart';
 
 class FilterTweetPage extends StatefulWidget {
-  const FilterTweetPage({Key? key, required this.controller}) : super(key: key);
+  const FilterTweetPage({super.key, required this.controller});
 
   final FilterTweetController controller;
 
   @override
-  _FilterTweetPageState createState() => _FilterTweetPageState();
+  FilterTweetPageState createState() => FilterTweetPageState();
 }
 
-class _FilterTweetPageState extends State<FilterTweetPage>
-    with SnackBarHandler {
+class FilterTweetPageState extends State<FilterTweetPage> with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();

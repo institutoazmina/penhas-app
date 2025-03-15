@@ -50,7 +50,7 @@ void main() {
       await iSeeText('Marque abaixo quais notificações deseja receber');
     });
 
-    screenshotTest('should render page loaded',
+    screenshotTestSimplified('should render page loaded',
         fileName: 'account_preference_page', pageBuilder: () {
       final preferences = <AccountPreferenceEntity>[
         AccountPreferenceEntity(key: 'fake', label: 'label', value: true)

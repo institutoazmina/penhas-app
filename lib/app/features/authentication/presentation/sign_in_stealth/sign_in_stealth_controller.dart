@@ -23,11 +23,11 @@ import '../shared/page_progress_indicator.dart';
 
 part 'sign_in_stealth_controller.g.dart';
 
-class SignInStealthController = _SignInStealthController
+class SignInStealthController = SignInStealthControllerBase
     with _$SignInStealthController;
 
-abstract class _SignInStealthController with Store, MapFailureMessage {
-  _SignInStealthController(
+abstract class SignInStealthControllerBase with Store, MapFailureMessage {
+  SignInStealthControllerBase(
       {required AuthenticateStealthUserUseCase authenticateStealthUserUseCase,
       required LocalStore<UserProfileEntity> userProfileStore,
       required StealthSecurityAction securityAction,

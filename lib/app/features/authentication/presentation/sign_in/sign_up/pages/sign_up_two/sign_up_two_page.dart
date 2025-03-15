@@ -14,17 +14,16 @@ import 'sign_up_two_controller.dart';
 
 class SignUpTwoPage extends StatefulWidget {
   const SignUpTwoPage(
-      {Key? key, this.title = 'SignUpTwo', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'SignUpTwo', required this.controller});
 
   final String title;
   final SignUpTwoController controller;
 
   @override
-  _SignUpTwoPageState createState() => _SignUpTwoPageState();
+  SignUpTwoPageState createState() => SignUpTwoPageState();
 }
 
-class _SignUpTwoPageState extends State<SignUpTwoPage> with SnackBarHandler {
+class SignUpTwoPageState extends State<SignUpTwoPage> with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;

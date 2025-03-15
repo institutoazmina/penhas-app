@@ -10,9 +10,8 @@ class TweetSessionModel extends TweetSessionEntity {
     TweetTiles? parent,
     List<TweetTiles> tweets,
     String? nextPage, {
-    required bool hasMore,
+    required super.hasMore,
   }) : super(
-          hasMore: hasMore,
           orderBy: orderBy,
           parent: parent,
           tweets: tweets,

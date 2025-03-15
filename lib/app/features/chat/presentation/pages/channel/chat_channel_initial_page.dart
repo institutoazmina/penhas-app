@@ -6,8 +6,8 @@ import '../../../../authentication/presentation/shared/page_progress_indicator.d
 
 class ChatChannelInitialPage extends StatelessWidget {
   const ChatChannelInitialPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -15,18 +15,16 @@ import 'sign_up_three_controller.dart';
 
 class SignUpThreePage extends StatefulWidget {
   const SignUpThreePage(
-      {Key? key, this.title = 'SignUpThree', required this.controller})
-      : super(key: key);
+      {super.key, this.title = 'SignUpThree', required this.controller});
 
   final String title;
   final SignUpThreeController controller;
 
   @override
-  _SignUpThreePageState createState() => _SignUpThreePageState();
+  SignUpThreePageState createState() => SignUpThreePageState();
 }
 
-class _SignUpThreePageState extends State<SignUpThreePage>
-    with SnackBarHandler {
+class SignUpThreePageState extends State<SignUpThreePage> with SnackBarHandler {
   List<ReactionDisposer>? _disposers;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PageProgressState _currentState = PageProgressState.initial;

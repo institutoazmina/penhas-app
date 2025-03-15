@@ -16,10 +16,10 @@ import '../shared/page_progress_indicator.dart';
 
 part 'sign_in_controller.g.dart';
 
-class SignInController = _SignInControllerBase with _$SignInController;
+class SignInController = SignInControllerBase with _$SignInController;
 
-abstract class _SignInControllerBase with Store, MapFailureMessage {
-  _SignInControllerBase({
+abstract class SignInControllerBase with Store, MapFailureMessage {
+  SignInControllerBase({
     required AuthenticateUserUseCase authenticateUserUseCase,
     required PasswordValidator passwordValidator,
     required AppStateUseCase appStateUseCase,

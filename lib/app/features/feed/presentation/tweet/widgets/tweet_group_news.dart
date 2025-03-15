@@ -7,17 +7,16 @@ import '../../../../../shared/navigation/app_navigator.dart';
 import '../../../domain/entities/tweet_entity.dart';
 
 class TweetGroupNews extends StatefulWidget {
-  const TweetGroupNews({Key? key, required TweetNewsGroupEntity group})
-      : _group = group,
-        super(key: key);
+  const TweetGroupNews({super.key, required TweetNewsGroupEntity group})
+      : _group = group;
 
   final TweetNewsGroupEntity _group;
 
   @override
-  _TweetGroupNewsState createState() => _TweetGroupNewsState();
+  TweetGroupNewsState createState() => TweetGroupNewsState();
 }
 
-class _TweetGroupNewsState extends State<TweetGroupNews> {
+class TweetGroupNewsState extends State<TweetGroupNews> {
   int _currentPage = 0;
 
   @override
@@ -103,9 +102,8 @@ class _TweetGroupNewsState extends State<TweetGroupNews> {
 
 class _NewsItem extends StatelessWidget {
   const _NewsItem({
-    Key? key,
     required this.news,
-  }) : super(key: key);
+  });
 
   final TweetNewsEntity news;
 

@@ -5,9 +5,9 @@ import '../../../../../shared/design_system/colors.dart';
 
 class PrivacyPolicyPage extends StatelessWidget {
   const PrivacyPolicyPage({
-    Key? key,
+    super.key,
     required this.baseUrl,
-  }) : super(key: key);
+  });
 
   final Uri baseUrl;
 
@@ -19,9 +19,10 @@ class PrivacyPolicyPage extends StatelessWidget {
         title: const Text('Política de privacidade'),
         backgroundColor: DesignSystemColors.easterPurple,
       ),
-      body: WebView(
-        initialUrl: baseUrl.resolve('web/politica-privacidade').toString(),
-        javascriptMode: JavascriptMode.unrestricted,
+      body: WebViewWidget(
+        controller: WebViewController()
+          ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..loadRequest(baseUrl.resolve('web/politica-privacidade')),
       ),
     );
   }

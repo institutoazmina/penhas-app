@@ -5,7 +5,7 @@ import '../../../../shared/design_system/text_styles.dart';
 
 class SingleTextInput extends StatelessWidget {
   const SingleTextInput({
-    Key? key,
+    super.key,
     TextInputFormatter? inputFormatter,
     TextInputType keyboardType = TextInputType.text,
     TextStyle style = kTextStyleDefaultTextFieldLabelStyle,
@@ -15,8 +15,7 @@ class SingleTextInput extends StatelessWidget {
         _style = style,
         _onChanged = onChanged,
         _inputFormatter = inputFormatter,
-        _boxDecoration = boxDecoration,
-        super(key: key);
+        _boxDecoration = boxDecoration;
 
   final TextInputType _keyboardType;
   final TextStyle _style;

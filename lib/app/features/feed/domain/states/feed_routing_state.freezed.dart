@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'feed_routing_state.dart';
 
@@ -12,7 +12,7 @@ part of 'feed_routing_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$FeedRoutingState {
@@ -25,8 +25,8 @@ mixin _$FeedRoutingState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String title)? initial,
-    TResult Function(String title, String message)? error,
+    TResult? Function(String title)? initial,
+    TResult? Function(String title, String message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -44,8 +44,8 @@ mixin _$FeedRoutingState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_ErrorDetails value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_ErrorDetails value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -65,58 +65,61 @@ mixin _$FeedRoutingState {
 abstract class $FeedRoutingStateCopyWith<$Res> {
   factory $FeedRoutingStateCopyWith(
           FeedRoutingState value, $Res Function(FeedRoutingState) then) =
-      _$FeedRoutingStateCopyWithImpl<$Res>;
+      _$FeedRoutingStateCopyWithImpl<$Res, FeedRoutingState>;
+  @useResult
   $Res call({String title});
 }
 
 /// @nodoc
-class _$FeedRoutingStateCopyWithImpl<$Res>
+class _$FeedRoutingStateCopyWithImpl<$Res, $Val extends FeedRoutingState>
     implements $FeedRoutingStateCopyWith<$Res> {
   _$FeedRoutingStateCopyWithImpl(this._value, this._then);
 
-  final FeedRoutingState _value;
   // ignore: unused_field
-  final $Res Function(FeedRoutingState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = freezed,
+    Object? title = null,
   }) {
     return _then(_value.copyWith(
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_InitialCopyWith<$Res>
+abstract class _$$InitialImplCopyWith<$Res>
     implements $FeedRoutingStateCopyWith<$Res> {
-  factory _$$_InitialCopyWith(
-          _$_Initial value, $Res Function(_$_Initial) then) =
-      __$$_InitialCopyWithImpl<$Res>;
+  factory _$$InitialImplCopyWith(
+          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
+      __$$InitialImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String title});
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res>
-    extends _$FeedRoutingStateCopyWithImpl<$Res>
-    implements _$$_InitialCopyWith<$Res> {
-  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
+class __$$InitialImplCopyWithImpl<$Res>
+    extends _$FeedRoutingStateCopyWithImpl<$Res, _$InitialImpl>
+    implements _$$InitialImplCopyWith<$Res> {
+  __$$InitialImplCopyWithImpl(
+      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_Initial get _value => super._value as _$_Initial;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = freezed,
+    Object? title = null,
   }) {
-    return _then(_$_Initial(
-      title == freezed
+    return _then(_$InitialImpl(
+      null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
@@ -126,8 +129,8 @@ class __$$_InitialCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Initial implements _Initial {
-  const _$_Initial(this.title);
+class _$InitialImpl implements _Initial {
+  const _$InitialImpl(this.title);
 
   @override
   final String title;
@@ -138,21 +141,21 @@ class _$_Initial implements _Initial {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Initial &&
-            const DeepCollectionEquality().equals(other.title, title));
+            other is _$InitialImpl &&
+            (identical(other.title, title) || other.title == title));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(title));
+  int get hashCode => Object.hash(runtimeType, title);
 
   @JsonKey(ignore: true)
   @override
-  _$$_InitialCopyWith<_$_Initial> get copyWith =>
-      __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
+      __$$InitialImplCopyWithImpl<_$InitialImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -166,8 +169,8 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String title)? initial,
-    TResult Function(String title, String message)? error,
+    TResult? Function(String title)? initial,
+    TResult? Function(String title, String message)? error,
   }) {
     return initial?.call(title);
   }
@@ -197,8 +200,8 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_ErrorDetails value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_ErrorDetails value)? error,
   }) {
     return initial?.call(this);
   }
@@ -218,48 +221,47 @@ class _$_Initial implements _Initial {
 }
 
 abstract class _Initial implements FeedRoutingState {
-  const factory _Initial(final String title) = _$_Initial;
+  const factory _Initial(final String title) = _$InitialImpl;
 
   @override
   String get title;
   @override
   @JsonKey(ignore: true)
-  _$$_InitialCopyWith<_$_Initial> get copyWith =>
+  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ErrorDetailsCopyWith<$Res>
+abstract class _$$ErrorDetailsImplCopyWith<$Res>
     implements $FeedRoutingStateCopyWith<$Res> {
-  factory _$$_ErrorDetailsCopyWith(
-          _$_ErrorDetails value, $Res Function(_$_ErrorDetails) then) =
-      __$$_ErrorDetailsCopyWithImpl<$Res>;
+  factory _$$ErrorDetailsImplCopyWith(
+          _$ErrorDetailsImpl value, $Res Function(_$ErrorDetailsImpl) then) =
+      __$$ErrorDetailsImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String title, String message});
 }
 
 /// @nodoc
-class __$$_ErrorDetailsCopyWithImpl<$Res>
-    extends _$FeedRoutingStateCopyWithImpl<$Res>
-    implements _$$_ErrorDetailsCopyWith<$Res> {
-  __$$_ErrorDetailsCopyWithImpl(
-      _$_ErrorDetails _value, $Res Function(_$_ErrorDetails) _then)
-      : super(_value, (v) => _then(v as _$_ErrorDetails));
+class __$$ErrorDetailsImplCopyWithImpl<$Res>
+    extends _$FeedRoutingStateCopyWithImpl<$Res, _$ErrorDetailsImpl>
+    implements _$$ErrorDetailsImplCopyWith<$Res> {
+  __$$ErrorDetailsImplCopyWithImpl(
+      _$ErrorDetailsImpl _value, $Res Function(_$ErrorDetailsImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_ErrorDetails get _value => super._value as _$_ErrorDetails;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = freezed,
-    Object? message = freezed,
+    Object? title = null,
+    Object? message = null,
   }) {
-    return _then(_$_ErrorDetails(
-      title == freezed
+    return _then(_$ErrorDetailsImpl(
+      null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      message == freezed
+      null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
@@ -269,8 +271,8 @@ class __$$_ErrorDetailsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ErrorDetails implements _ErrorDetails {
-  const _$_ErrorDetails(this.title, this.message);
+class _$ErrorDetailsImpl implements _ErrorDetails {
+  const _$ErrorDetailsImpl(this.title, this.message);
 
   @override
   final String title;
@@ -283,24 +285,22 @@ class _$_ErrorDetails implements _ErrorDetails {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ErrorDetails &&
-            const DeepCollectionEquality().equals(other.title, title) &&
-            const DeepCollectionEquality().equals(other.message, message));
+            other is _$ErrorDetailsImpl &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(title),
-      const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, title, message);
 
   @JsonKey(ignore: true)
   @override
-  _$$_ErrorDetailsCopyWith<_$_ErrorDetails> get copyWith =>
-      __$$_ErrorDetailsCopyWithImpl<_$_ErrorDetails>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$ErrorDetailsImplCopyWith<_$ErrorDetailsImpl> get copyWith =>
+      __$$ErrorDetailsImplCopyWithImpl<_$ErrorDetailsImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -314,8 +314,8 @@ class _$_ErrorDetails implements _ErrorDetails {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String title)? initial,
-    TResult Function(String title, String message)? error,
+    TResult? Function(String title)? initial,
+    TResult? Function(String title, String message)? error,
   }) {
     return error?.call(title, message);
   }
@@ -345,8 +345,8 @@ class _$_ErrorDetails implements _ErrorDetails {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_ErrorDetails value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_ErrorDetails value)? error,
   }) {
     return error?.call(this);
   }
@@ -367,13 +367,13 @@ class _$_ErrorDetails implements _ErrorDetails {
 
 abstract class _ErrorDetails implements FeedRoutingState {
   const factory _ErrorDetails(final String title, final String message) =
-      _$_ErrorDetails;
+      _$ErrorDetailsImpl;
 
   @override
   String get title;
   String get message;
   @override
   @JsonKey(ignore: true)
-  _$$_ErrorDetailsCopyWith<_$_ErrorDetails> get copyWith =>
+  _$$ErrorDetailsImplCopyWith<_$ErrorDetailsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

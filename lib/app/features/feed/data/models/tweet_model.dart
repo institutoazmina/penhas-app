@@ -3,34 +3,19 @@ import '../../domain/entities/tweet_entity.dart';
 
 class TweetModel extends TweetEntity {
   TweetModel(
-      {required String id,
-      required String userName,
-      required int clientId,
-      required String createdAt,
-      required int totalReply,
-      required int totalLikes,
-      required bool anonymous,
-      required String content,
-      required String avatar,
-      required TweetMeta meta,
-      String? parentId,
-      required List<TweetModel> lastReply,
-      required List<TweetBadgeEntity> badges})
-      : super(
-          id: id,
-          userName: userName,
-          clientId: clientId,
-          createdAt: createdAt,
-          totalReply: totalReply,
-          totalLikes: totalLikes,
-          anonymous: anonymous,
-          content: content,
-          avatar: avatar,
-          meta: meta,
-          parentId: parentId,
-          lastReply: lastReply,
-          badges: badges,
-        );
+      {required super.id,
+      required super.userName,
+      required super.clientId,
+      required super.createdAt,
+      required super.totalReply,
+      required super.totalLikes,
+      required super.anonymous,
+      required super.content,
+      required super.avatar,
+      required super.meta,
+      super.parentId,
+      required List<TweetModel> super.lastReply,
+      required super.badges});
 
   factory TweetModel.fromJson(Map<String, dynamic> jsonData) {
     final meta = jsonData['meta'] as Map<String, dynamic>;
@@ -74,21 +59,13 @@ class TweetModel extends TweetEntity {
 
 class TweetBadgeModel extends TweetBadgeEntity {
   TweetBadgeModel(
-      {required String code,
-      required String description,
-      required String imageUrl,
-      required String name,
-      required String style,
-      required int showDescription,
-      required int popUp})
-      : super(
-            code: code,
-            description: description,
-            imageUrl: imageUrl,
-            name: name,
-            style: style,
-            showDescription: showDescription,
-            popUp: popUp);
+      {required super.code,
+      required super.description,
+      required super.imageUrl,
+      required super.name,
+      required super.style,
+      required super.showDescription,
+      required super.popUp});
 
   factory TweetBadgeModel.fromJson(Map<String, dynamic> jsonData) {
     return TweetBadgeModel(
@@ -104,9 +81,9 @@ class TweetBadgeModel extends TweetBadgeEntity {
 
 class TweetRelatedNewsModel extends TweetRelatedNewsEntity {
   TweetRelatedNewsModel({
-    required String header,
-    required List<TweetNewsModel> news,
-  }) : super(header: header, news: news);
+    required super.header,
+    required List<TweetNewsModel> super.news,
+  });
 
   factory TweetRelatedNewsModel.fromJson(Map<String, dynamic> jsonData) {
     final List<TweetNewsModel> news = _parseNews(jsonData['news']);
@@ -124,9 +101,9 @@ class TweetRelatedNewsModel extends TweetRelatedNewsEntity {
 
 class TweetNewsGroupModel extends TweetNewsGroupEntity {
   TweetNewsGroupModel({
-    required String header,
-    required List<TweetNewsModel> news,
-  }) : super(header: header, news: news);
+    required super.header,
+    required List<TweetNewsModel> super.news,
+  });
 
   factory TweetNewsGroupModel.fromJson(Map<String, dynamic> jsonData) {
     final List<TweetNewsModel> news = _parseNews(jsonData['news']);
@@ -143,18 +120,12 @@ class TweetNewsGroupModel extends TweetNewsGroupEntity {
 
 class TweetNewsModel extends TweetNewsEntity {
   TweetNewsModel({
-    String? date,
-    required String newsUri,
-    String? imageUri,
-    String? source,
-    required String title,
-  }) : super(
-          date: date,
-          newsUri: newsUri,
-          imageUri: imageUri,
-          source: source,
-          title: title,
-        );
+    super.date,
+    required super.newsUri,
+    super.imageUri,
+    super.source,
+    required super.title,
+  });
 
   factory TweetNewsModel.fromJson(Map<String, dynamic> jsonData) =>
       TweetNewsModel(

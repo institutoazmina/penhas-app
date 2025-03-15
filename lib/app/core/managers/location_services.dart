@@ -102,12 +102,12 @@ class LocationServices implements ILocationServices {
               ),
               actions: <Widget>[
                 TextButton(
-                  child: const Text('Agora não'),
                   style: TextButtonStyle.flat(),
                   onPressed: () async {
                     Navigator.of(context)
                         .pop(const LocationPermissionState.denied());
                   },
+                  child: const Text('Agora não'),
                 ),
                 ConstrainedBox(
                   constraints: const BoxConstraints(minWidth: 120),
@@ -158,8 +158,8 @@ class LocationServices implements ILocationServices {
           barrierDismissible: false,
           builder: (context) {
             return AlertDialog(
-              title: Column(
-                children: const <Widget>[
+              title: const Column(
+                children: <Widget>[
                   Icon(
                     Icons.location_off,
                     color: DesignSystemColors.easterPurple,
@@ -211,12 +211,12 @@ class LocationServices implements ILocationServices {
               ),
               actions: <Widget>[
                 TextButton(
-                  child: const Text('Não'),
                   style: TextButtonStyle.flat(),
                   onPressed: () async {
                     Navigator.of(context)
                         .pop(const LocationPermissionState.denied());
                   },
+                  child: const Text('Não'),
                 ),
                 ConstrainedBox(
                   constraints: const BoxConstraints(minWidth: 120),
@@ -263,6 +263,8 @@ extension PermissionStatusMap on PermissionStatus {
         return const LocationPermissionState.permanentlyDenied();
       case PermissionStatus.limited:
         return const LocationPermissionState.undefined();
+      case PermissionStatus.provisional:
+        return const LocationPermissionState.granted();
     }
   }
 }

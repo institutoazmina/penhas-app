@@ -6,9 +6,9 @@ import '../../../../shared/design_system/text_styles.dart';
 
 class PenhasDrawerTogglePage extends StatelessWidget {
   const PenhasDrawerTogglePage({
-    Key? key,
+    super.key,
     required this.state,
-  }) : super(key: key);
+  });
 
   final SecurityToggleState state;
 

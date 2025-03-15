@@ -349,13 +349,13 @@ void main() {
     );
 
     group('golden', () {
-      screenshotTest(
+      screenshotTestSimplified(
         'should render correctly',
         fileName: 'edit_trusted_contacts_page',
         pageBuilder: () => EditTrustedContactsPage(controller: controller),
       );
 
-      screenshotTest(
+      screenshotTestSimplified(
         'should show remove contact confirmation dialog',
         fileName: 'edit_trusted_contacts_page_with_remove_contact_dialog',
         pageBuilder: () => EditTrustedContactsPage(controller: controller),
@@ -371,7 +371,7 @@ void main() {
         },
       );
 
-      screenshotTest(
+      screenshotTestSimplified(
         'should show update contact dialog',
         fileName: 'edit_trusted_contacts_page_with_update_contact_dialog',
         pageBuilder: () => EditTrustedContactsPage(controller: controller),

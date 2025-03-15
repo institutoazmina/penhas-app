@@ -3,34 +3,20 @@ import '../../domain/entities/user_profile_entity.dart';
 
 class UserProfileModel extends UserProfileEntity {
   const UserProfileModel({
-    String? fullName,
-    String? email,
-    String? genre,
-    String? race,
-    bool jaFoiVitimaDeViolencia = false,
-    List<String> skill = const [],
-    String? nickname,
-    String? avatar,
-    String? minibio,
-    bool stealthModeEnabled = false,
-    bool anonymousModeEnabled = false,
-    required DateTime birthdate,
-    List<UserProfileBadgeEntity> badges = const [],
-  }) : super(
-          fullName: fullName,
-          race: race,
-          genre: genre,
-          jaFoiVitimaDeViolencia: jaFoiVitimaDeViolencia,
-          skill: skill,
-          email: email,
-          avatar: avatar,
-          nickname: nickname,
-          minibio: minibio,
-          stealthModeEnabled: stealthModeEnabled,
-          anonymousModeEnabled: anonymousModeEnabled,
-          birthdate: birthdate,
-          badges: badges,
-        );
+    super.fullName,
+    super.email,
+    super.genre,
+    super.race,
+    super.jaFoiVitimaDeViolencia = false,
+    super.skill = const [],
+    super.nickname,
+    super.avatar,
+    super.minibio,
+    super.stealthModeEnabled = false,
+    super.anonymousModeEnabled = false,
+    required super.birthdate,
+    super.badges = const [],
+  });
 
   factory UserProfileModel.fromJson(Map<String, dynamic> jsonData) {
     List<UserProfileBadgeEntity> badges = [];
@@ -80,21 +66,13 @@ class UserProfileModel extends UserProfileEntity {
 
 class UserProfileBadgeModel extends UserProfileBadgeEntity {
   UserProfileBadgeModel(
-      {required String code,
-      required String description,
-      required String imageUrl,
-      required String name,
-      required String style,
-      required int showDescription,
-      required int popUp})
-      : super(
-            code: code,
-            description: description,
-            imageUrl: imageUrl,
-            name: name,
-            style: style,
-            showDescription: showDescription,
-            popUp: popUp);
+      {required super.code,
+      required super.description,
+      required super.imageUrl,
+      required super.name,
+      required super.style,
+      required super.showDescription,
+      required super.popUp});
 
   factory UserProfileBadgeModel.fromJson(Map<String, dynamic> jsonData) {
     return UserProfileBadgeModel(

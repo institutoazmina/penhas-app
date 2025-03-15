@@ -4,17 +4,16 @@ import '../../../../../core/managers/audio_record_services.dart';
 import '../../../../../shared/design_system/colors.dart';
 
 class SoundRecordWidget extends StatefulWidget {
-  const SoundRecordWidget({Key? key, this.audioActivity, this.onPressed})
-      : super(key: key);
+  const SoundRecordWidget({super.key, this.audioActivity, this.onPressed});
 
   final AudioActivity? audioActivity;
   final VoidCallback? onPressed;
 
   @override
-  _SoundRecordWidgetState createState() => _SoundRecordWidgetState();
+  SoundRecordWidgetState createState() => SoundRecordWidgetState();
 }
 
-class _SoundRecordWidgetState extends State<SoundRecordWidget>
+class SoundRecordWidgetState extends State<SoundRecordWidget>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animationController =
       AnimationController(vsync: this, duration: const Duration(seconds: 2));
