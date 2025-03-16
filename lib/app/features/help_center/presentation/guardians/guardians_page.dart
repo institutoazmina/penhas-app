@@ -68,6 +68,7 @@ class GuardiansPageState extends State<GuardiansPage> with SnackBarHandler {
       appBar: AppBar(
         title: const Text('Meus Guardiões'),
         backgroundColor: DesignSystemColors.ligthPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: PageProgressIndicator(
         progressState: _loadState,

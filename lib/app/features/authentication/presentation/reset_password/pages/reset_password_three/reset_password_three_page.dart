@@ -89,7 +89,7 @@ class ResetPasswordThreePageState extends State<ResetPasswordThreePage>
                             child: SvgPicture.asset(
                               'assets/images/svg/reset_password/recovery_password_step_2.svg',
                               colorFilter: const ColorFilter.mode(
-                                  Colors.white, BlendMode.color),
+                                  Colors.white, BlendMode.srcIn),
                             ),
                           ),
                         ],

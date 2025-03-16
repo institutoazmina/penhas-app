@@ -14,6 +14,7 @@ class ProfileSkillInitialWidget extends StatelessWidget {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: DesignSystemColors.ligthPurple,
+        foregroundColor: DesignSystemColors.white,
         title: const Text('Habilidades'),
       ),
       body: PageProgressIndicator(

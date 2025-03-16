@@ -59,6 +59,7 @@ class FilterTweetPageState extends State<FilterTweetPage> with SnackBarHandler {
       appBar: AppBar(
         title: const Text('Filtrar temas'),
         backgroundColor: DesignSystemColors.ligthPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: PageProgressIndicator(
         progressState: _currentState,

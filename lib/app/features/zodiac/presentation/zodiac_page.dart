@@ -98,6 +98,7 @@ class _ZodiacPageState extends State<ZodiacPage> {
       toolbarHeight: 120,
       centerTitle: true,
       backgroundColor: DesignSystemColors.easterPurple,
+      foregroundColor: DesignSystemColors.white,
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

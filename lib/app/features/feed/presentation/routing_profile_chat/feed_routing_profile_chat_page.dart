@@ -42,6 +42,7 @@ extension _Bodybuilder on FeedRoutingProfileChatPageState {
         elevation: 0,
         title: Text(title),
         backgroundColor: DesignSystemColors.easterPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: SafeArea(
         child: PageProgressIndicator(
@@ -59,6 +60,7 @@ extension _Bodybuilder on FeedRoutingProfileChatPageState {
         elevation: 0,
         title: Text(title),
         backgroundColor: DesignSystemColors.easterPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: SafeArea(
         child: SupportCenterGeneralError(

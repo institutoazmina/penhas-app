@@ -25,6 +25,7 @@ class ProfileSkillLoadedWidget extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Habilidades'),
         backgroundColor: DesignSystemColors.ligthPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: SizedBox.expand(
         child: SafeArea(

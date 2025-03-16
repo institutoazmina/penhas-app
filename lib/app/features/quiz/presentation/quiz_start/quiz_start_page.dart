@@ -36,6 +36,7 @@ class _QuizStartPageState extends State<QuizStartPage> {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: DesignSystemColors.ligthPurple,
+        foregroundColor: DesignSystemColors.white,
         centerTitle: true,
         title: const SizedBox(
           width: 39,

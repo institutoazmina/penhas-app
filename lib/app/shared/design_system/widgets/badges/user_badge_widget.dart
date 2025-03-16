@@ -51,7 +51,7 @@ class UserBadgeWidget extends StatelessWidget {
               height: 16,
               width: 16,
               colorFilter: ColorFilter.mode(
-                  returnCorrectColor(isLightBackground), BlendMode.color),
+                  returnCorrectColor(isLightBackground), BlendMode.srcIn),
             )
           : const SizedBox.shrink(),
     );

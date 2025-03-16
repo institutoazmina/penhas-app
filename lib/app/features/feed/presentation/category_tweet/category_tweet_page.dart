@@ -128,6 +128,7 @@ class CategoryTweetPageState extends State<CategoryTweetPage>
     return AppBar(
       title: const Text('Categoria'),
       backgroundColor: DesignSystemColors.ligthPurple,
+      foregroundColor: DesignSystemColors.white,
     );
   }
 

@@ -80,6 +80,7 @@ class AudiosPageState extends State<AudiosPage> with SnackBarHandler {
         elevation: 0.0,
         title: const Text('Minhas gravações'),
         backgroundColor: DesignSystemColors.ligthPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: PageProgressIndicator(
         progressState: _loadState,

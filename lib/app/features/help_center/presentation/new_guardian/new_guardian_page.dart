@@ -70,6 +70,7 @@ class NewGuardianPageState extends State<NewGuardianPage> with SnackBarHandler {
       appBar: AppBar(
         title: const Text('Novo Guardião'),
         backgroundColor: DesignSystemColors.ligthPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: PageProgressIndicator(
         progressState: _loadState,

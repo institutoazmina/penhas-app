@@ -15,6 +15,7 @@ class ChatChannelErrorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: DesignSystemColors.white,
         centerTitle: true,
         leading: Padding(
           padding: const EdgeInsets.only(left: 8.0),

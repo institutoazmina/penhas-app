@@ -58,6 +58,7 @@ class SupportCenterAddPageState extends State<SupportCenterAddPage>
           title: const Text('Adicionar Ponto'),
           elevation: 0.0,
           backgroundColor: DesignSystemColors.easterPurple,
+          foregroundColor: DesignSystemColors.white,
         ),
         body: Observer(
           builder: (_) {

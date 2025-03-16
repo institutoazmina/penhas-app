@@ -41,6 +41,7 @@ class NotificationPageState extends State<NotificationPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: DesignSystemColors.white,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios,

@@ -60,6 +60,7 @@ class AudioRecordState extends State<AudioRecordPage> with SnackBarHandler {
         key: _scaffoldKey,
         appBar: AppBar(
           backgroundColor: DesignSystemColors.ligthPurple,
+          foregroundColor: DesignSystemColors.white,
         ),
         body: SoundRecordWidget(
           audioActivity: _audioActivity,

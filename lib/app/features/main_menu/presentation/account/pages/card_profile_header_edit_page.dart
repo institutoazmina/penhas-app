@@ -26,7 +26,7 @@ class CardProfileHeaderEditPage extends StatelessWidget {
             icon: SvgPicture.asset(
               'assets/images/svg/profile/edit.svg',
               colorFilter: const ColorFilter.mode(
-                  DesignSystemColors.pinky, BlendMode.color),
+                  DesignSystemColors.pinky, BlendMode.srcIn),
             ),
             onPressed: onEditAction,
           ),

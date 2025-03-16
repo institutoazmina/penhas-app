@@ -115,7 +115,7 @@ class HelpCenterButtonPage extends StatelessWidget {
                   child: SvgPicture.asset(
                     'assets/images/svg/bottom_bar/emergency_controll.svg',
                     colorFilter: const ColorFilter.mode(
-                        DesignSystemColors.white, BlendMode.color),
+                        DesignSystemColors.white, BlendMode.srcIn),
                     semanticsLabel: page.label,
                   ),
                 ),

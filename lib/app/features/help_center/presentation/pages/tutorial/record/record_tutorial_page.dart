@@ -73,6 +73,7 @@ class RecordTutorialPageState extends State<RecordTutorialPage> {
       backgroundColor: DesignSystemColors.charcoalGrey,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        foregroundColor: DesignSystemColors.white,
         elevation: 0.0,
         leading: IconButton(
           splashColor: Colors.transparent,

@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../../../shared/design_system/colors.dart';
 import '../../../../shared/design_system/linear_gradient_design_system.dart';
 import '../../../../shared/design_system/text_styles.dart';
 import '../../../../shared/design_system/widgets/buttons/penhas_button.dart';
@@ -57,6 +58,7 @@ class ResetPasswordPageState extends State<ResetPasswordPage>
         child: Scaffold(
           key: _scaffoldKey,
           appBar: AppBar(
+            foregroundColor: DesignSystemColors.white,
             backgroundColor: Colors.transparent,
             elevation: 0,
           ),
@@ -91,7 +93,7 @@ class ResetPasswordPageState extends State<ResetPasswordPage>
                             child: SvgPicture.asset(
                               'assets/images/svg/reset_password/recovery_password_step_1.svg',
                               colorFilter: const ColorFilter.mode(
-                                  Colors.white, BlendMode.color),
+                                  Colors.white, BlendMode.srcIn),
                             ),
                           ),
                         ],

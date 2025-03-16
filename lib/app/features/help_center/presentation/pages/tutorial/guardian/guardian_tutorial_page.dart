@@ -60,6 +60,7 @@ class GuardianTutorialPageState extends State<GuardianTutorialPage> {
       backgroundColor: DesignSystemColors.charcoalGrey,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        foregroundColor: DesignSystemColors.white,
         elevation: 0.0,
         leading: IconButton(
           splashColor: Colors.transparent,

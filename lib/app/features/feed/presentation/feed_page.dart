@@ -282,7 +282,7 @@ class _NewPostFab extends StatelessWidget {
           SvgPicture.asset(
             'assets/images/svg/bottom_bar/compose_tweet.svg',
             colorFilter: const ColorFilter.mode(
-                DesignSystemColors.white, BlendMode.color),
+                DesignSystemColors.white, BlendMode.srcIn),
             width: 24,
             height: 24,
             fit: BoxFit.contain,

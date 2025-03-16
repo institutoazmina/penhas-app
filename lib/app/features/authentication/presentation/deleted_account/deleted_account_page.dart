@@ -43,6 +43,7 @@ class DeletedAccountPageState extends State<DeletedAccountPage>
         title: const Text('Conta excluída'),
         elevation: 0.0,
         backgroundColor: DesignSystemColors.easterPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: Observer(
         builder: (context) => bodyBuilder(),

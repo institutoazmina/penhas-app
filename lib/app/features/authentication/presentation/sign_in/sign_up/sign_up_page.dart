@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../../../../shared/design_system/colors.dart';
 import '../../../../../shared/design_system/linear_gradient_design_system.dart';
 import '../../../../../shared/design_system/text_styles.dart';
 import '../../../../../shared/design_system/widgets/buttons/penhas_button.dart';
@@ -74,6 +75,7 @@ class SignUpPageState extends State<SignUpPage> with SnackBarHandler {
         child: Scaffold(
           key: _scaffoldKey,
           appBar: AppBar(
+            foregroundColor: DesignSystemColors.white,
             backgroundColor: Colors.transparent,
             elevation: 0,
           ),

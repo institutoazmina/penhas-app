@@ -45,6 +45,7 @@ class SupportCenterShowPageState extends State<SupportCenterShowPage> {
         title: const Text('Detalhe do Ponto'),
         elevation: 0.0,
         backgroundColor: DesignSystemColors.easterPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: Observer(
         builder: (_) {

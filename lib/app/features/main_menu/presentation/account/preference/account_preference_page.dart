@@ -43,6 +43,7 @@ class AccountPreferencePageState extends State<AccountPreferencePage>
       key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0.0,
+        foregroundColor: DesignSystemColors.white,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios,

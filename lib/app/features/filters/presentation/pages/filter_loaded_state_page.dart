@@ -25,6 +25,7 @@ class FilterLoadedStatePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Filtros'),
         backgroundColor: DesignSystemColors.ligthPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: SizedBox.expand(
         child: SafeArea(

@@ -51,6 +51,7 @@ class AccountDeletePageState extends State<AccountDeletePage>
         elevation: 0.0,
         title: const Text('Exclusão de conta'),
         backgroundColor: DesignSystemColors.easterPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: Observer(
         builder: (context) => bodyBuilder(_controller.state),

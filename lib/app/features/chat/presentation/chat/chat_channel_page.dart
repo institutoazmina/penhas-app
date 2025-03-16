@@ -59,6 +59,7 @@ extension _ChatPageStateMethods on ChatPageState {
   ) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: DesignSystemColors.white,
         leadingWidth: 35,
         leading: Padding(
           padding: const EdgeInsets.only(left: 8.0),

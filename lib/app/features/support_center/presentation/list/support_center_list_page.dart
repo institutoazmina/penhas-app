@@ -25,6 +25,7 @@ class SupportCenterListPageState extends State<SupportCenterListPage> {
         title: const Text('Lista'),
         elevation: 0.0,
         backgroundColor: DesignSystemColors.easterPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: Observer(
         builder: (_) {

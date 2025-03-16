@@ -49,6 +49,7 @@ class _EditTrustedContactsPageState extends State<EditTrustedContactsPage> {
           title: const Text('Editar'),
           elevation: 0,
           backgroundColor: DesignSystemColors.easterPurple,
+          foregroundColor: DesignSystemColors.white,
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 0),
@@ -214,7 +215,7 @@ class _ContactCard extends StatelessWidget {
               icon: SvgPicture.asset(
                 'assets/images/svg/actions/edit.svg',
                 colorFilter: const ColorFilter.mode(
-                    DesignSystemColors.pumpkinOrange, BlendMode.color),
+                    DesignSystemColors.pumpkinOrange, BlendMode.srcIn),
                 height: theme.iconTheme.size,
                 width: theme.iconTheme.size,
               ),
@@ -225,7 +226,7 @@ class _ContactCard extends StatelessWidget {
               icon: SvgPicture.asset(
                 'assets/images/svg/actions/close.svg',
                 colorFilter: const ColorFilter.mode(
-                    DesignSystemColors.pumpkinOrange, BlendMode.color),
+                    DesignSystemColors.pumpkinOrange, BlendMode.srcIn),
                 height: theme.iconTheme.size,
                 width: theme.iconTheme.size,
               ),

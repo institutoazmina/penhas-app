@@ -55,6 +55,7 @@ class ProfileEditPageState extends State<ProfileEditPage> with SnackBarHandler {
         ),
         title: const Text('Meu perfil'),
         backgroundColor: DesignSystemColors.easterPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: Observer(
         builder: (context) => bodyBuilder(_controller.state),

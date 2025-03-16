@@ -15,6 +15,7 @@ class FilterInitialStatePage extends StatelessWidget {
         elevation: 0.0,
         backgroundColor: DesignSystemColors.ligthPurple,
         title: const Text('Filtros'),
+        foregroundColor: DesignSystemColors.white,
       ),
       body: PageProgressIndicator(
         progressMessage: 'Carregando...',

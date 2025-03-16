@@ -18,6 +18,7 @@ class PrivacyPolicyPage extends StatelessWidget {
         elevation: 0.0,
         title: const Text('Política de privacidade'),
         backgroundColor: DesignSystemColors.easterPurple,
+        foregroundColor: DesignSystemColors.white,
       ),
       body: WebViewWidget(
         controller: WebViewController()

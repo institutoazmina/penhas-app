@@ -359,7 +359,7 @@ class _TaskActionWidget extends PopupMenuItem {
               SvgPicture.asset(
                 icon,
                 colorFilter: const ColorFilter.mode(
-                    DesignSystemColors.darkIndigoThree, BlendMode.color),
+                    DesignSystemColors.darkIndigoThree, BlendMode.srcIn),
                 height: size,
                 width: size,
               ),

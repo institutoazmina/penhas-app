@@ -139,6 +139,7 @@ class DetailTweetPageState extends State<DetailTweetPage> with SnackBarHandler {
     return AppBar(
       title: const Text('Detalhe'),
       backgroundColor: DesignSystemColors.ligthPurple,
+      foregroundColor: DesignSystemColors.white,
     );
   }
 

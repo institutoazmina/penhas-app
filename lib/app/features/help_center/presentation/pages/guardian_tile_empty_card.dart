@@ -24,7 +24,7 @@ class GuardianTileEmptyCard extends StatelessWidget {
               child: SvgPicture.asset(
                 'assets/images/svg/bottom_bar/emergency_controll.svg',
                 colorFilter: const ColorFilter.mode(
-                    DesignSystemColors.cobaltTwo, BlendMode.color),
+                    DesignSystemColors.cobaltTwo, BlendMode.srcIn),
                 height: 60,
               ),
             ),

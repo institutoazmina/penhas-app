@@ -22,12 +22,12 @@ class GuardianTileActionCard extends StatelessWidget {
   Widget get _canEditIcon => SvgPicture.asset(
         'assets/images/svg/help_center/guardians/guardians_edit.svg',
         colorFilter: const ColorFilter.mode(
-            DesignSystemColors.pumpkinOrange, BlendMode.color),
+            DesignSystemColors.pumpkinOrange, BlendMode.srcIn),
       );
   Widget get _canDeleteIcon => SvgPicture.asset(
         'assets/images/svg/help_center/guardians/guardians_delete.svg',
         colorFilter: const ColorFilter.mode(
-            DesignSystemColors.pumpkinOrange, BlendMode.color),
+            DesignSystemColors.pumpkinOrange, BlendMode.srcIn),
       );
   Widget get _canResendIcon => const Icon(
         Icons.autorenew,
