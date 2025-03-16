@@ -72,6 +72,7 @@ import '../../../help_center/presentation/audios/audios_controller.dart';
 import '../../../help_center/presentation/audios/audios_page.dart';
 import '../../../help_center/presentation/guardians/guardians_controller.dart';
 import '../../../help_center/presentation/guardians/guardians_page.dart';
+import '../../../help_center/presentation/help_center_controller.dart';
 import '../../../help_center/presentation/new_guardian/new_guardian_controller.dart';
 import '../../../help_center/presentation/new_guardian/new_guardian_page.dart';
 import '../../../help_center/presentation/pages/audio/audio_record_controller.dart';
@@ -589,6 +590,26 @@ class MainboardModule extends Module {
         ),
         Bind.factory<IGuardianRepository>(
           (i) => GuardianRepository(apiProvider: i.get<IApiProvider>()),
+        ),
+        Bind.factory<HelpCenterController>(
+          (i) => HelpCenterController(
+            locationService: i.get<ILocationServices>(),
+            appConfiguration: i.get<IAppConfiguration>(),
+            guardianRepository: i.get<IGuardianRepository>(),
+            featureToogle: i.get<SecurityModeActionFeature>(),
+            audioServices: i.get<IAudioRecordServices>(),
+          ),
+        ),
+        Bind.factory<SecurityModeActionFeature>(
+          (i) => SecurityModeActionFeature(
+            modulesServices: i.get<IAppModulesServices>(),
+          ),
+        ),
+        Bind.factory(
+          (i) => AudioRecordController(
+            featureToogle: i.get<SecurityModeActionFeature>(),
+            audioServices: i.get<IAudioRecordServices>(),
+          ),
         ),
       ];
 
