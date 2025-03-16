@@ -11,13 +11,14 @@ import 'talk/chat_main_talks_page.dart';
 
 class ChatMainPage extends StatefulWidget {
   const ChatMainPage(
-      {super.key,
-      required this.chatMainPeopleController,
+      {Key? key,
       required this.controller,
-      required this.chatMainTalksController});
+      required this.chatMainPeopleController,
+      required this.chatMainTalksController})
+      : super(key: key);
 
-  final ChatMainPeopleController chatMainPeopleController;
   final ChatMainController controller;
+  final ChatMainPeopleController chatMainPeopleController;
   final ChatMainTalksController chatMainTalksController;
 
   @override
