@@ -92,12 +92,15 @@ import '../../../notification/data/repositories/notification_repository.dart';
 import '../../../notification/presentation/notification_controller.dart';
 import '../../../notification/presentation/notification_page.dart';
 import '../../../quiz/presentation/tutorial/stealth_mode_tutorial_page_controller.dart';
+import '../../../support_center/data/repositories/support_center_repository.dart';
+import '../../../support_center/domain/usecases/support_center_usecase.dart';
 import '../../../support_center/presentation/add/support_center_add_controller.dart';
 import '../../../support_center/presentation/add/support_center_add_page.dart';
 import '../../../support_center/presentation/list/support_center_list_controller.dart';
 import '../../../support_center/presentation/list/support_center_list_page.dart';
 import '../../../support_center/presentation/show/support_center_show_controller.dart';
 import '../../../support_center/presentation/show/support_center_show_page.dart';
+import '../../../support_center/presentation/support_center_controller.dart';
 import '../../../users/data/repositories/users_repository.dart';
 import '../../../users/presentation/user_profile_module.dart';
 import '../../domain/states/mainboard_state.dart';
@@ -117,6 +120,7 @@ class MainboardModule extends Module {
         ...menuBind,
         ...chatBinds,
         ...feedBinds,
+        ...supportCenterBinds,
         Bind.factory<MainboardStore>(
           (i) => MainboardStore(
             modulesServices: i.get<IAppModulesServices>(),
@@ -721,6 +725,39 @@ class MainboardModule extends Module {
         Bind.factory<EscapeManualTasksStore>(
           (i) => EscapeManualTasksStore(
             storageFactory: i.get<IPersistentStorageFactory>(),
+          ),
+        ),
+      ];
+
+  List<Bind> get supportCenterBinds => [
+        Bind.factory<ISupportCenterRepository>(
+          (i) => SupportCenterRepository(
+            apiProvider: i.get<IApiProvider>(),
+          ),
+        ),
+        Bind.factory<SupportCenterUseCase>(
+          (i) => SupportCenterUseCase(
+            locationService: i.get<ILocationServices>(),
+            supportCenterRepository: i.get<ISupportCenterRepository>(),
+          ),
+        ),
+        Bind.factory<SupportCenterController>(
+          (i) => SupportCenterController(
+            supportCenterUseCase: i.get<SupportCenterUseCase>(),
+          ),
+        ),
+        Bind.factory(
+          (i) => SupportCenterAddController(
+            supportCenterUseCase: i.get<SupportCenterUseCase>(),
+          ),
+        ),
+        Bind.factory(
+          (i) => SupportCenterListController(i.args.data),
+        ),
+        Bind.factory(
+          (i) => SupportCenterShowController(
+            supportCenterUseCase: i.get<SupportCenterUseCase>(),
+            place: i.args.data,
           ),
         ),
       ];
