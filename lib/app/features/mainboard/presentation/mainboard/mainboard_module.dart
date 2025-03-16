@@ -20,11 +20,14 @@ import '../../../chat/domain/usecases/chat_channel_usecase.dart';
 import '../../../chat/domain/usecases/get_chat_channel_token_usecase.dart';
 import '../../../chat/presentation/chat/chat_channel_controller.dart';
 import '../../../chat/presentation/chat/chat_channel_page.dart';
+import '../../../escape_manual/domain/escape_manual_toggle.dart';
 import '../../../feed/data/repositories/tweet_filter_preference_repository.dart';
 import '../../../feed/data/repositories/tweet_repository.dart';
 import '../../../feed/domain/repositories/i_tweet_repositories.dart';
+import '../../../feed/domain/usecases/compose_tweet_fab_toggle.dart';
 import '../../../feed/domain/usecases/feed_use_cases.dart';
 import '../../../feed/domain/usecases/tweet_filter_preference.dart';
+import '../../../feed/domain/usecases/tweet_toggle_feature.dart';
 import '../../../feed/presentation/category_tweet/category_tweet_controller.dart';
 import '../../../feed/presentation/category_tweet/category_tweet_page.dart';
 import '../../../feed/presentation/compose_tweet/compose_tweet_controller.dart';
@@ -32,6 +35,7 @@ import '../../../feed/presentation/compose_tweet/compose_tweet_navigator.dart';
 import '../../../feed/presentation/compose_tweet/compose_tweet_page.dart';
 import '../../../feed/presentation/detail_tweet/detail_tweet_controller.dart';
 import '../../../feed/presentation/detail_tweet/detail_tweet_page.dart';
+import '../../../feed/presentation/feed_controller.dart';
 import '../../../feed/presentation/filter_tweet/filter_tweet_controller.dart';
 import '../../../feed/presentation/filter_tweet/filter_tweet_page.dart';
 import '../../../feed/presentation/reply_tweet/reply_tweet_controller.dart';
@@ -91,6 +95,7 @@ class MainboardModule extends Module {
         ...notificationBinds,
         ...menuBind,
         ...chatBinds,
+        ...feedBind,
         Bind.factory<MainboardStore>(
           (i) => MainboardStore(
             modulesServices: i.get<IAppModulesServices>(),
@@ -533,6 +538,51 @@ class MainboardModule extends Module {
         ),
         Bind.factory<IGuardianRepository>(
           (i) => GuardianRepository(apiProvider: i.get<IApiProvider>()),
+        ),
+      ];
+
+  List<Bind> get feedBind => [
+        Bind.factory<ITweetRepository>(
+          (i) => TweetRepository(apiProvider: i.get<IApiProvider>()),
+        ),
+        Bind.factory<ITweetFilterPreferenceRepository>(
+          (i) => TweetFilterPreferenceRepository(
+            apiProvider: i.get<IApiProvider>(),
+          ),
+        ),
+        Bind<FeedUseCases>(
+          (i) => FeedUseCases(
+            repository: i<ITweetRepository>(),
+            filterPreference: i<TweetFilterPreference>(),
+          ),
+        ),
+        Bind.factory<SecurityModeActionFeature>(
+          (i) => SecurityModeActionFeature(
+            modulesServices: i.get<IAppModulesServices>(),
+          ),
+        ),
+        Bind.factory<EscapeManualToggleFeature>(
+          (i) => EscapeManualToggleFeature(
+            modulesServices: i.get<IAppModulesServices>(),
+          ),
+        ),
+        Bind.factory<TweetToggleFeature>(
+          (i) => TweetToggleFeature(
+            modulesServices: i.get<IAppModulesServices>(),
+          ),
+        ),
+        Bind.factory<ComposeTweetFabToggleFeature>(
+          (i) => ComposeTweetFabToggleFeature(
+            escapeManualToggleFeature: i.get<EscapeManualToggleFeature>(),
+            tweetToggleFeature: i.get<TweetToggleFeature>(),
+          ),
+        ),
+        Bind.factory(
+          (i) => FeedController(
+            useCase: i.get<FeedUseCases>(),
+            securityModeActionFeature: i.get<SecurityModeActionFeature>(),
+            composeTweetFabToggleFeature: i.get<ComposeTweetFabToggleFeature>(),
+          ),
         ),
       ];
 }
