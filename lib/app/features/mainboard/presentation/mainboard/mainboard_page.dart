@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_svg/svg.dart';
 
+import '../../../../shared/design_system/colors.dart';
 import '../../../feed/presentation/compose_tweet/compose_tweet_controller.dart';
 import '../../../main_menu/presentation/penhas_drawer_controller.dart';
 import '../../../main_menu/presentation/penhas_drawer_page.dart';
 import '../../../quiz/presentation/tutorial/stealth_mode_tutorial_page_controller.dart';
+import '../../domain/states/mainboard_state.dart';
 import 'mainboard_controller.dart';
 import 'pages/mainboard_app_bar_page.dart';
 import 'pages/mainboard_body_page.dart';
@@ -86,6 +89,19 @@ class MainboardPageState extends State<MainboardPage>
           currentPage: controller.mainboardStore.selectedPage,
           pages: controller.mainboardStore.pages,
           onSelect: controller.mainboardStore.switchToPage,
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: FloatingActionButton(
+          shape: const CircleBorder(),
+          backgroundColor: DesignSystemColors.ligthPurple,
+          onPressed: () => controller.mainboardStore
+              .switchToPage(const MainboardState.helpCenter()),
+          child: SvgPicture.asset(
+            'assets/images/svg/bottom_bar/emergency_controll.svg',
+            colorFilter: const ColorFilter.mode(
+                DesignSystemColors.white, BlendMode.srcIn),
+            semanticsLabel: 'Socorro',
+          ),
         ),
       ),
     );

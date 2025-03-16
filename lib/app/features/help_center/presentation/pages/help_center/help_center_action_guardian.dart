@@ -18,7 +18,6 @@ class HelpCenterActionGuardian extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         width: 95,
-        height: 95,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0),
           border: Border.all(width: 2, color: DesignSystemColors.easterPurple),
