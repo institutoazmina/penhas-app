@@ -20,9 +20,13 @@ import '../../../appstate/domain/usecases/app_state_usecase.dart';
 import '../../../chat/domain/entities/chat_channel_open_entity.dart';
 import '../../../chat/domain/repositories/chat_channel_repository.dart';
 import '../../../chat/domain/usecases/chat_channel_usecase.dart';
+import '../../../chat/domain/usecases/chat_toggle_feature.dart';
 import '../../../chat/domain/usecases/get_chat_channel_token_usecase.dart';
 import '../../../chat/presentation/chat/chat_channel_controller.dart';
 import '../../../chat/presentation/chat/chat_channel_page.dart';
+import '../../../chat/presentation/chat_main_controller.dart';
+import '../../../chat/presentation/people/chat_main_people_controller.dart';
+import '../../../chat/presentation/talk/chat_main_talks_controller.dart';
 import '../../../escape_manual/data/datasource/escape_manual_datasource.dart';
 import '../../../escape_manual/data/datasource/impl/escape_manual_local_datasource.dart';
 import '../../../escape_manual/data/datasource/impl/escape_manual_remote_datasource.dart';
@@ -382,6 +386,11 @@ class MainboardModule extends Module {
       ];
 
   List<Bind> get chatBinds => [
+        Bind.factory<ChatMainController>(
+          (i) => ChatMainController(
+            chatToggleFeature: i.get<ChatPrivateToggleFeature>(),
+          ),
+        ),
         Bind.factory<IChatChannelRepository>(
           (i) => ChatChannelRepository(
             apiProvider: i.get<IApiProvider>(),
@@ -401,6 +410,32 @@ class MainboardModule extends Module {
         ),
         Bind.factory(
           (i) => GetChatChannelTokenUseCase(repository: i()),
+        ),
+        Bind.factory<ChatPrivateToggleFeature>(
+          (i) => ChatPrivateToggleFeature(
+            modulesServices: i.get<IAppModulesServices>(),
+          ),
+        ),
+        Bind.factory<ChatMainTalksController>(
+          (i) => ChatMainTalksController(
+            chatChannelRepository: i.get<IChatChannelRepository>(),
+          ),
+        ),
+        Bind.factory<ChatMainPeopleController>(
+          (i) => ChatMainPeopleController(
+            usersRepository: i.get<IUsersRepository>(),
+            skillRepository: i.get<IFilterSkillRepository>(),
+          ),
+        ),
+        Bind.factory<IUsersRepository>(
+          (i) => UsersRepository(
+            apiProvider: i.get<IApiProvider>(),
+          ),
+        ),
+        Bind.factory<IChatChannelRepository>(
+          (i) => ChatChannelRepository(
+            apiProvider: i.get<IApiProvider>(),
+          ),
         ),
       ];
 
