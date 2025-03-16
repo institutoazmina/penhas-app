@@ -93,7 +93,7 @@ class _TweetRelatedNewsContent extends StatelessWidget {
                   Text(
                     _entity.title,
                     overflow: TextOverflow.ellipsis,
-                    maxLines: 3,
+                    maxLines: 2,
                     style: kTextStyleDrawerUsername,
                   ),
                   if (_entity.source != null)

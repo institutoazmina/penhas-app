@@ -86,6 +86,8 @@ extension _ChatMainBuilder on ChatMainPageState {
 extension _ChatMainPageStatePrivate on ChatMainPageState {
   PreferredSizeWidget chatTabBar(List<ChatTabItem> items) {
     return TabBar(
+      dividerColor: Colors.transparent,
+      tabAlignment: TabAlignment.start,
       isScrollable: true,
       labelColor: DesignSystemColors.white,
       indicatorColor: DesignSystemColors.white,
@@ -97,7 +99,6 @@ extension _ChatMainPageStatePrivate on ChatMainPageState {
           color: DesignSystemColors.ligthPurple,
           borderRadius: BorderRadius.circular(22),
           border: Border.all(color: DesignSystemColors.ligthPurple, width: 1)),
-      indicatorPadding: const EdgeInsets.only(right: 16.0),
       labelPadding: const EdgeInsets.only(right: 16.0),
       tabs: items
           .map((e) => _CustomTabWidget(

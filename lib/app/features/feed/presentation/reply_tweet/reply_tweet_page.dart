@@ -198,6 +198,7 @@ class ReplyTweetPageState extends State<ReplyTweetPage> with SnackBarHandler {
     return AppBar(
       title: const Text('Comentário'),
       backgroundColor: DesignSystemColors.ligthPurple,
+      foregroundColor: DesignSystemColors.white,
     );
   }
 
