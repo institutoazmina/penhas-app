@@ -22,6 +22,8 @@ permissions:
   packages: write # Required if you are publishing packages
   actions: write  # Required if you are using reusable workflows
   id-token: write   
+  checks: write
+  deployments: write
 
 jobs:
 
