@@ -59,7 +59,7 @@ platform :ios do
 
   desc 'Registers devices to the Apple Dev Portal'
   private_lane :sync_device_info do
-    if File.exists?(ios_devices_file)
+    if File.exist?(ios_devices_file)
       register_devices(
         devices_file: ios_devices_file,
       )
