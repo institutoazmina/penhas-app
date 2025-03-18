@@ -114,12 +114,6 @@ platform :ios do
     download_udids(app_id: app_id)
     new_devices = sync_device_info || []
 
-    # Ensure provisioning profile is updated before generating the IPA
-    profile_uuid = update_profile(
-      profile_type: profile_type_edirock,
-      force: new_devices.any?,
-    )
-
     generate_ipa(
       profile_type: profile_type_edirock,
       force_profile: new_devices.any?,

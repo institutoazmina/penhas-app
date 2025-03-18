@@ -85,6 +85,22 @@ jobs:
           KEYCHAIN_PATH: ${{ runner.temp }}/app-signing.keychain-db
           KEYCHAIN_PWD: ${{ secrets.KEYCHAIN_PWD }}
 
+      - name: Check available signing identities
+        run: security find-identity -p codesigning -v
+      
+      - name: Import certificate into keychain
+        run: |
+          security import $CERTIFICATE_PATH -k $KEYCHAIN_PATH -P "$CERTIFICATE_PWD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KEYCHAIN_PWD" $KEYCHAIN_PATH
+        env:
+          CERTIFICATE_PATH: ${{ runner.temp }}/build_certificate.p12
+          CERTIFICATE_PWD: ${{ secrets.CERTIFICATE_PWD }}
+          KEYCHAIN_PATH: ${{ runner.temp }}/app-signing.keychain-db
+          KEYCHAIN_PWD: ${{ secrets.KEYCHAIN_PWD }}
+
+      - name: Debug Provisioning Profiles
+        run: ls -al ~/Library/MobileDevice/Provisioning\ Profiles/
+
       - name: Run lane to distribute
         uses: maierj/fastlane-action@v3.0.0
         with:
