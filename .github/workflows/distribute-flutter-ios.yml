@@ -97,6 +97,15 @@ jobs:
           CERTIFICATE_PWD: ${{ secrets.CERTIFICATE_PWD }}
           KEYCHAIN_PATH: ${{ runner.temp }}/app-signing.keychain-db
           KEYCHAIN_PWD: ${{ secrets.KEYCHAIN_PWD }}
+            
+      
+      - name: Force Provisioning Profile Download
+        run: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles/
+          fastlane sigh --adhoc --force
+      
+      - name: Debug Fastlane Authentication
+        run: fastlane verify_app_store_auth
 
       - name: Debug Provisioning Profiles
         run: ls -al ~/Library/MobileDevice/Provisioning\ Profiles/

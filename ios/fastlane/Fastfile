@@ -45,7 +45,8 @@ platform :ios do
       output_path: "#{$project_path}/ios/certificates",
       skip_certificate_verification: true,
       adhoc: is_edirock,
-      force: sigh_force,
+      force: true, # Ensures a fresh download
+      skip_certificate_verification: true,
     )
   end
 
