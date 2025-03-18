@@ -98,7 +98,9 @@ jobs:
           KEYCHAIN_PATH: ${{ runner.temp }}/app-signing.keychain-db
           KEYCHAIN_PWD: ${{ secrets.KEYCHAIN_PWD }}
             
-      
+      - name: Set Fastlane Apple ID
+        run: echo "FASTLANE_USER=${{ secrets.APPLE_ID }}" >> $GITHUB_ENV
+
       - name: Force Provisioning Profile Download
         run: |
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles/
