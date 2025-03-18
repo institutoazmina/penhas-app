@@ -20,7 +20,7 @@ apple_api_key_path = ENV['APPLE_API_KEY_PATH']
 testers_group = 'iostestersgroup'
 
 platform :ios do
-  ENV["FASTLANE_USER"] = ENV["APPLE_ID"]
+
   desc 'Build release IPA'
   lane :build do
     sh("flutter build ios --release --no-codesign --config-only --dart-define=PENHAS_BASE_URL=#{$api_base_url}")
@@ -45,9 +45,7 @@ platform :ios do
       output_path: "#{$project_path}/ios/certificates",
       skip_certificate_verification: true,
       adhoc: is_edirock,
-      force: true, # Ensures a fresh download
-      skip_certificate_verification: true,
-      username: ENV["APPLE_ID"]
+      force: sigh_force,
     )
   end
 
@@ -142,8 +140,6 @@ platform :ios do
       in_house: api_key_json['in_house'] || false,
       is_key_content_base64: true,
     )
-
-    ENV["FASTLANE_USER"] = ENV["APPLE_ID"]
   end
 
   desc 'Check if json credentials is valid'
